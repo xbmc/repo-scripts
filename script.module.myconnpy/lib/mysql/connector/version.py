@@ -1,8 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 # MySQL Connector/Python - MySQL driver written in Python.
-# Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2012, 2013, Oracle and/or its affiliates. All rights reserved.
 
 # MySQL Connector/Python is licensed under the terms of the GPLv2
 # <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most
@@ -23,49 +20,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+"""MySQL Connector/Python version information
 
-from __future__ import print_function
-
-import sys, os
-
-import mysql.connector
-
+The file version.py gets installed and is available after installation
+as mysql.connector.version.
 """
 
-Example using MySQL Connector/Python showing:
-* using warnings
+VERSION = (1, 1, 6, '', 0)
 
-"""
+if VERSION[3] and VERSION[4]:
+    VERSION_TEXT = '{0}.{1}.{2}{3}{4}'.format(*VERSION)
+else:
+    VERSION_TEXT = '{0}.{1}.{2}'.format(*VERSION[0:3])
 
-STMT = "SELECT 'abc'+1"
-
-def main(config):
-    output = []
-    config['get_warnings'] = True
-    db = mysql.connector.Connect(**config)
-    cursor = db.cursor()
-    db.sql_mode = ''
-    
-    output.append("Executing '%s'" % STMT)
-    cursor.execute(STMT)
-    cursor.fetchall()
-    
-    warnings = cursor.fetchwarnings()
-    if warnings:
-        for w in warnings:
-            output.append("%d: %s" % (w[1],w[2]))
-    else:
-        raise StandardError("Got no warnings")
-
-    cursor.close()
-    db.close()
-    return output
-    
-if __name__ == '__main__':
-    #
-    # Configure MySQL login and database to use in config.py
-    #
-    from config import Config
-    config = Config.dbinfo().copy()
-    out = main(config)
-    print('\n'.join(out))
+LICENSE = 'GPLv2 with FOSS License Exception'
+EDITION = ''  # Added in package names, after the version

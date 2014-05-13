@@ -1,6 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# MySQL Connector/Python - MySQL driver written in Python.
+# Copyright (c) 2009, 2013, Oracle and/or its affiliates. All rights reserved.
+
+# MySQL Connector/Python is licensed under the terms of the GPLv2
+# <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most
+# MySQL Connectors. There are special exceptions to the terms and
+# conditions of the GPLv2 as it is applied to this software, see the
+# FOSS License Exception
+# <http://www.mysql.com/about/legal/licensing/foss-exception.html>.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+
+from __future__ import print_function
+
 import sys, os
 
 import mysql.connector
@@ -8,11 +33,12 @@ import mysql.connector
 """
 
 Example using MySQL Connector/Python showing:
-* sending multiple statements and retriving their results
+* sending multiple statements and iterating over the results
 
 """
 
 def main(config):
+    output = []
     db = mysql.connector.Connect(**config)
     cursor = db.cursor()
     
@@ -39,25 +65,26 @@ def main(config):
         "SELECT name FROM names",
         ]
     
-    cursor.execute(' ; '.join(stmts))
-    # 1st INSERT-statement
-    print "Inserted %d row" % (cursor.rowcount)
-    
-    # 1st SELECT
-    if cursor.next_resultset():
-        print "Number of rows: %d" % cursor.fetchone()[0]
-    
-    # 2nd INSERT
-    if cursor.next_resultset():
-        print "Inserted %d rows" % (cursor.rowcount)
-    
-    # 2nd SELECT
-    if cursor.next_resultset():
-        print "Names in table:", ' '.join([ n[0] for n in cursor.fetchall()])
+    # Note 'multi=True' when calling cursor.execute()
+    for result in cursor.execute(' ; '.join(stmts), multi=True):
+        if result.with_rows:
+            if result.statement == stmts[3]:
+                output.append("Names in table: " + 
+                    ' '.join([ name[0] for name in result]))
+            else:
+                output.append("Number of rows: %d" % result.fetchone()[0])
+        else:
+            if result.rowcount > 1:
+                tmp = 's'
+            else:
+                tmp = ''
+            output.append("Inserted %d row%s" % (result.rowcount, tmp))
     
     cursor.execute(stmt_drop)
 
+    cursor.close()
     db.close()
+    return output
 
 if __name__ == '__main__':
     #
@@ -65,4 +92,5 @@ if __name__ == '__main__':
     #
     from config import Config
     config = Config.dbinfo().copy()
-    main(config)
+    out = main(config)
+    print('\n'.join(out))

@@ -1,80 +1,44 @@
+MySQL Connector/Python 1.1
 
-MySQL Connector/Python                          MySQL driver written in Python
-==============================================================================
-Copyright (c) 2009,2010, Oracle and/or its affiliates. All rights reserved.
-Use is subject to license terms. (See COPYING)
+This is a release of MySQL Connector/Python, Oracle's dual-
+license Python Driver for MySQL. For the avoidance of
+doubt, this particular copy of the software is released
+under the version 2 of the GNU General Public License.
+MySQL Connector/Python is brought to you by Oracle.
 
-MySQL Connector/Python is implementing the MySQL Client/Server protocol
-completely in Python. This means you don't have to compile anything or MySQL
-(client library) doesn't even have to be installed on the machine.
+Copyright (c) 2011, 2014, Oracle and/or its affiliates. All rights reserved.
 
-Disclaimer
-=====================
+License information can be found in the COPYING file.
 
-!!!!!!!!!!! THIS IS STILL IN DEVELOPMENT !!!!!!!!!!!!!!!!!!!
-!!!!!!!! EXPECT THING TO NOT WORK OR GO WRONG !!!!!!!!!!!!!!
-!!!! DO NOT USE IN PRODUCTION etc.. etc... !!!!!!!!!!!!!!!!!
+MySQL FOSS License Exception
+We want free and open source software applications under 
+certain licenses to be able to use the GPL-licensed MySQL 
+Connector/Python (specified GPL-licensed MySQL client libraries)
+despite the fact that not all such FOSS licenses are 
+compatible with version 2 of the GNU General Public License.
+Therefore there are special exceptions to the terms and
+conditions of the GPLv2 as applied to these client libraries, 
+which are identified and described in more detail in the 
+FOSS License Exception at
+<http://www.mysql.com/about/legal/licensing/foss-exception.html>
 
-Ah, and make backups!
+This software is OSI Certified Open Source Software.
+OSI Certified is a certification mark of the Open Source Initiative.
 
-Dependencies
-=====================
+This distribution may include materials developed by third
+parties. For license and attribution notices for these
+materials, please refer to the documentation that accompanies
+this distribution (see the "Licenses for Third-Party Components"
+appendix) or view the online documentation at 
+<http://dev.mysql.com/doc/>
+A copy of the license/notices is also reproduced below.
 
-* Python 2.5 or greater
-* Python 3.1 or greater
+GPLv2 Disclaimer
+For the avoidance of doubt, except that if any license choice
+other than GPL or LGPL is available it will apply instead, 
+Oracle elects to use only the General Public License version 2 
+(GPLv2) at this time for any software where a choice of GPL 
+license versions is made available with the language indicating 
+that GPLv2 or any later version may be used, or where a choice 
+of which version of the GPL is applied is otherwise unspecified.
 
-Connects to:
-* MySQL 4.1 or greater
-* Will not work with MySQL servers using 'old passwords'!
-
-Installation
-=====================
-
-To install MySQL Connector/Python, first unpack the ZIP archive or
-'tar ball' you download:
-
-  shell> unzip mysql-connector-python-0.2.0-devel.zip
-    or
-  shell> tar xzf mysql-connector-python-0.2.0-devel.tar.gz
-
-Then simply execute the setup.py script with the 'install' argument:
-
-  shell> cd mysql-connector-python-0.2.0/
-  shell> python setup.py install
-
-setup.py will figure out which Python version you have and install the
-correct modules.
-
-Usage
-=====================
-
-There are examples provided for both Python v2 and v3. Please check
-the following directories which comes with the MySQL Connector/Python
-distribution:
-
-* For Python v2:  python2/examples/
-* For Python v3:  python3/examples/
-
-Simply execute the examples as follows after installation:
-
- shell> python engines.py
-
-Testing
-=====================
-
-Unit tests are provided and can be run using the unittests.py script. Mind
-that you best edit the file so the connection parameters are correct for your
-MySQL Server.
-
-Report problems
-=====================
-
-Report problems using LaunchPad's bug system here:
-  https://bugs.launchpad.net/myconnpy
-
-Credits
-=====================
-
-* Andy Dustman - we owe you big time for MySQLdb
-* Jess Balint - early development of native Python driver, helped a bit
-* Everyone reporting bugs through Launchpad

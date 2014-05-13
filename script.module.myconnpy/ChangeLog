@@ -1,48 +1,94 @@
 MySQL Connector/Python - Release Notes / ChangeLog
-Copyright (c) 2009,2011, Oracle and/or its affiliates. All rights reserved.
-Use is subject to license terms. (See COPYING)
+Copyright (c) 2009, 2014, Oracle and/or its affiliates. All rights reserved.
 
------------------------------------------------------------------------
-0.3.2
------------------------------------------------------------------------
-Bugs fixed:
-o lp:701081 - Doesn't install with Python 2.4
-
------------------------------------------------------------------------
-0.3.1
------------------------------------------------------------------------
-Bugs fixed:
-o lp:695514 - Infinite recursion when setting connection client_flags
-o lp:691836 - Incorrect substitution by cursor.execute when tuple args
-  contains '%s'
-
------------------------------------------------------------------------
-0.3.0
------------------------------------------------------------------------
-Highlights:
-o Python v2.4 support is back.
-o Support for compressed protocol.
-o Support for SSL connections (when Python's ssl module is available)
-o Support for packets which are bigger than 16MB.
-o Max allowed packetsize defaults to 1GB.
-o Some performance improvements.
-
-Changes:
-o Changing code in python2/ and some unittest code to support Python v2.4.
-o Max allowed packetsize is now set to the default of 1GB when authenticating.
-o It was not possible to read and send big packets (>=16MB).
-o (Py2) MySQLConnection.recv() has been refactor and simplified.
-o (Py3) MySQLConnection.recv() refactored to use bytearray() instead
-  of doing string like operations with bytes.
-o Adding utils.int8store()
-o Fixing utils.read_lc_string() to read big strings.
-o (Py3) Optimized utils.read_lc_string_list() using memoryview
-o (Py3) Refactored utils.read_lc_int()
-o Adding support for the MySQL compressed protocol. To use you need to set
-the client constants.ClientFlag.COMPRESS
-o Supporting SSL connections when Python's ssl module is available. SSL
-certificates and keys can be given during connection using the ssl_ca, ssl_cert, ssl_key=None arguments for MySQLConnection.connect().
+Full release notes:
+ http://dev.mysql.com/doc/relnotes/connector-python/en/
 
 
-Bugs fixed:
+1.1.6 (2014-01-11)
+------------------
+* BUG#18187561: Fixed Django backend errors with time functions
 
+1.1.5 (2014-01-31)
+------------------
+* BUG#17857712: Added fixes to use CPY with Django 1.6
+* BUG#18040042: Fixed clearing session with pooled connection
+* BUG#17826833: Fixed executemany for INSERT with no VALUES-clause
+* BUG#17573172: Added support for access modes for START TRANSACTION
+* BUG#18054810: Fixed output of pylint to include msg_id
+* BUG#17889076: Fixed error handling for unittests.py using -t option
+* BUG#17780576: Added support for utf8mb4 character set
+* BUG#17958420: Fix error handling parse_column_count()
+
+1.1.4 (2013-12-11)
+------------------
+* BUG#17890173: Improve performance reading results
+* BUG#17589172: Fixed GPL to/from community RPM upgrades
+* BUG#17035093: Removed extra empty feature in MSI
+* BUG#17888821: Updated MSI upgrade codes
+* BUG#17943078: Adding support for building OS X packages
+
+1.1.3b1 (2013-11-15)
+--------------------
+* WL#7298: Refactored unittesting
+* WL#7230: Added unit tests performing code analysis
+* BUG#17079344: Fixed saving multi-byte strings with \x5c
+* BUG#17578937: Fixed reconnecting of pooled connections
+* BUG#17620395: Fixed packaging on older Debian systems
+* BUG#17372107: Fixed TCP/IP connection for older FreeBSD
+
+
+1.1.2a1 (2013-01-15)
+--------------------
+
+* BUG#17547529: pid option changed to pid-file
+* BUG#17414258: Added check to disallow changing size of pool
+* BUG#17422299: Fixed cmd_shutdown() for MySQL 5.6
+* BUG#17406263: Fixed error message when pool is exhausted
+* BUG#17461777: Fixed reconnect() to stop once it succeeds
+* BUG#17215197: Added prepared argument for MySQLConnection.cursor()
+* BUG#17424009: Fixed RuntimeError on exit using Python v3
+* BUG#17406398: Adding constraints on the pool name
+* BUG#17401406: Adding constraints on pool size
+* BUG#17353327: Fixed commercial MSI upgrade error
+* BUG#17485966: Removed alpha/beta tags from distributions
+* BUG#17473273: Fixed last_executed_query() for Django
+* BUG#13551483: Added converter_class connection argument
+* BUG#13369592: Added compress connection argument
+* BUG#17353301: Fixed MSI to remove previous installations
+* BUG#14273043: Fix warnings.py example
+
+
+1.1.1a1 (2013-08-28)
+--------------------
+
+* WL#6499: Adding database backend for Django
+* WL#6080: Added Connection Pooling
+* WL#7080: Added Distutils command to create Debian packages
+* BUG#17022399: Fixed error message executing while disconnected
+* BUG#16933795: Fixed errors.Error to retain the given message
+* BUG#17065366: Fixed executemany using MySQL functions as values
+* BUG#17041240: Fixed error closing cursor with unread results
+* BUG#17041412: Fixed fetchall() to include self._nextrow
+* BUG#17002411: Fixed loading data using LOAD DATA LOCAL INFILE
+* BUG#16234441: Fixed shutdown using different shutdown types
+* BUG#16660356: Fixed executemany() to do nothing given nothing
+* BUG#16655208: Fixed Unicode database names with Python v2
+* BUG#17028999: Added timing for individual unittests
+* BUG#16656621: Fixed rollback to consume unread results
+* BUG#17028999: Added timing for individual unittests
+* BUG#16662920: Fixed fetching remaining rows in buffered cursors
+* BUG#16736916: Fixed FileNotFound with LOAD DATA INFILE
+* BUG#16972089: Fixed hyphen in version by removing it
+* BUG#16748411: Fixed catching errors of socket.getaddrinfo()
+
+
+1.1.0a1 (2013-06-12)
+--------------------
+
+* BUG#16896702: Updated errors using MySQL 5.7.1
+* WL#6148: Added support for MySQL Prepared Statements
+* BUG#16234372: Fixed relative imports in Python v3 code
+* WL#6573: Added method to start transactions explicitly
+* WL#6517: Added more standard attributes for getting the version
+* WL#6574: Added the possibility to check for an ongoing transaction
