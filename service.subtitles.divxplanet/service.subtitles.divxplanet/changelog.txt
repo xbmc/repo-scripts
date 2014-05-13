@@ -1,0 +1,13 @@
+0.0.3
+- added tags required for XBMC addon database
+- removed dummy translations
+- removed print statements
+
+0.0.2
+- fixed empty year search on tv shows
+- fixed empty result crash
+- normalized saved filenames
+- cleaned up text in parantheses in tv show titles
+
+0.0.1
+- move the service out of XBMC Subtitles
