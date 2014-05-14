@@ -1,0 +1,9 @@
+This addon will automatically scan your library for watched movies, TV show episodes and music videos, and delete them from the file system based on numerous critia such as age, rating, free disk space, etc. All these options and more can be configured via the addon's settings. Also make sure you set the correct path to the disk you wish to check for free space, especially when you store your videos on a secondary drive or a network share. Through the settings you can view which videos have been cleaned.
+
+Beware!
+This addon has the potential to erase your entire video collection! Please make sure you understand exactly what this addon is designed to do before enabling any type of cleaning in the settings. I will not be held responsible for loss of data due to user error.
+
+Originally developed by Andrew 'drewzh' Higginson (xbmcfilecleaner@drewzh.com)
+
+The log viewer reuses artwork from Confluence, which is licensed under GPLv2.
+See https://raw.githubusercontent.com/xbmc/xbmc/master/LICENSE.GPL
