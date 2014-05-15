@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.wunderground" name="Weather Underground" version="3.0.4" provider-name="Team XBMC">
+<addon id="weather.wunderground" name="Weather Underground" version="3.0.5" provider-name="Team XBMC">
 	<requires>
 		<import addon="xbmc.python" version="2.12.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -18,6 +18,7 @@
 		<summary lang="de">Wettervorhersage von wunderground.com</summary>
 		<summary lang="el">Πρόγνωση καιρού από το wunderground.com</summary>
 		<summary lang="en">Weather forecast from wunderground.com</summary>
+		<summary lang="en_NZ">Weather forecast from wunderground.com</summary>
 		<summary lang="es">Predicción meteorológica de wunderground.com</summary>
 		<summary lang="es_AR">Pronóstico meteorológico de wunderground.com</summary>
 		<summary lang="es_MX">Pronóstico de wunderground.com</summary>
@@ -73,6 +74,7 @@
 		<description lang="de">Wettervorhersage bereitgestellt durch Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="el">Η πρόγνωση καιρού παρέχεται από το Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="en">Weather forecast provided by Weather Underground (http://www.wunderground.com/)</description>
+		<description lang="en_NZ">Weather forecast provided by Weather Underground (http://www.wunderground.com/)</description>
 		<description lang="es">Predicción meteorológica proporcionada por Weather Underground&#10;(http://www.wunderground.com/)</description>
 		<description lang="es_AR">Pronóstico meteorológico proporcionado por Weather Underground&#10;(http://www.wunderground.com/)</description>
 		<description lang="es_MX">Pronóstico del tiempo por Weather Underground&#10;(http://www.wunderground.com/)</description>
@@ -127,6 +129,7 @@
 		<disclaimer lang="de">Mit Benutzung dieses Addons bestätigen Sie die Nutzungsbedingungen, zu finden unter http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="el">Χρήση αυτού του πρόσθετου συνεπάγεται την αποδοχή των Όρων Χρήσης της Υπηρεσίας (Terms of Service) οι οποίοι βρίσκονται στο http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="en">Use of this add-on implies that you have agreed to the Terms of Service located at http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
+		<disclaimer lang="en_NZ">Use of this add-on implies that you have agreed to the Terms of Service located at http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="es">Al usar este complemento, aceptas los términos de uso de http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="es_AR">Al usar este complemento, aceptas los términos de uso de http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
 		<disclaimer lang="es_MX">El uso de este add-on implica que usted esta de acuerdo con los Términos de Servicio localizados en http://www.wunderground.com/weather/api/d/terms.html</disclaimer>
@@ -171,10 +174,10 @@
 		<disclaimer lang="zh_TW">使用這個附加元件代表你同意 http://www.wunderground.com/weather/api/d/terms.html 所載之使用者條款</disclaimer>
 		<language></language>
 		<platform>all</platform>
-		<forum>http://forum.xbmc.org/showthread.php?tid=116668</forum>
-		<source>https://github.com/XBMC-Addons/weather.wunderground/</source>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum>http://forum.xbmc.org/showthread.php?tid=116668</forum>
 		<website></website>
 		<email></email>
+		<source>https://github.com/XBMC-Addons/weather.wunderground/</source>
 	</extension>
 </addon>
