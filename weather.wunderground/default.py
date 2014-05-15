@@ -188,7 +188,7 @@ def parse_data(json):
 
 def properties(data,loc,locid):
 # standard properties
-    weathercode = WEATHER_CODES[data['current_observation']['icon_url'][31:-4]]
+    weathercode = WEATHER_CODES[os.path.splitext(os.path.basename(data['current_observation']['icon_url']))[0]]
     set_property('Current.Location'      , loc)
     set_property('Current.Condition'     , data['current_observation']['weather'])
     set_property('Current.Temperature'   , str(data['current_observation']['temp_c']))
@@ -201,7 +201,7 @@ def properties(data,loc,locid):
     set_property('Current.OutlookIcon'   , '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
     set_property('Current.FanartCode'    , weathercode)
     for count, item in enumerate(data['forecast']['simpleforecast']['forecastday']):
-        weathercode = WEATHER_CODES[item['icon_url'][31:-4]]
+        weathercode = WEATHER_CODES[os.path.splitext(os.path.basename(item['icon_url']))[0]]
         set_property('Day%i.Title'       % count, item['date']['weekday'])
         set_property('Day%i.HighTemp'    % count, str(item['high']['celsius']))
         set_property('Day%i.LowTemp'     % count, str(item['low']['celsius']))
@@ -307,7 +307,7 @@ def properties(data,loc,locid):
 # daily properties
     set_property('Daily.IsFetched', 'true')
     for count, item in enumerate(data['forecast']['simpleforecast']['forecastday']):
-        weathercode = WEATHER_CODES[item['icon_url'][31:-4]]
+        weathercode = WEATHER_CODES[os.path.splitext(os.path.basename(item['icon_url']))[0]]
         set_property('Daily.%i.LongDay'              % (count+1), item['date']['weekday'])
         set_property('Daily.%i.ShortDay'             % (count+1), item['date']['weekday_short'])
         if DATEFORMAT[1] == 'd':
@@ -360,7 +360,7 @@ def properties(data,loc,locid):
     count = 0
     for item in data['forecast']['simpleforecast']['forecastday']:
         if date(item['date']['year'], item['date']['month'], item['date']['day']).isoweekday() in weekend:
-            weathercode = WEATHER_CODES[item['icon_url'][31:-4]]
+            weathercode = WEATHER_CODES[os.path.splitext(os.path.basename(item['icon_url']))[0]]
             set_property('Weekend.%i.LongDay'                  % (count+1), item['date']['weekday'])
             set_property('Weekend.%i.ShortDay'                 % (count+1), item['date']['weekday_short'])
             if DATEFORMAT[1] == 'd':
@@ -434,7 +434,7 @@ def properties(data,loc,locid):
 # 36 hour properties
     set_property('36Hour.IsFetched', 'true')
     for count, item in enumerate(data['forecast']['txt_forecast']['forecastday']):
-        weathercode = WEATHER_CODES[item['icon_url'][31:-4]]
+        weathercode = WEATHER_CODES[os.path.splitext(os.path.basename(item['icon_url']))[0]]
         if 'F' in TEMPUNIT:
             try:
                 fcast = item['fcttext'].split('.')
@@ -480,7 +480,7 @@ def properties(data,loc,locid):
 # hourly properties
     set_property('Hourly.IsFetched', 'true')
     for count, item in enumerate(data['hourly_forecast']):
-        weathercode = WEATHER_CODES[item['icon_url'][31:-4]]
+        weathercode = WEATHER_CODES[os.path.splitext(os.path.basename(item['icon_url']))[0]]
         if TIMEFORMAT != '/':
             set_property('Hourly.%i.Time'            % (count+1), item['FCTTIME']['civil'])
         else:
