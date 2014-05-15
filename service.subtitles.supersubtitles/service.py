@@ -156,10 +156,12 @@ def send_request(params):
         return urllib2.urlopen(request)
     except urllib2.HTTPError as e:
         errorlog("HTTP Error: %s, %s" % (e.code, url))
-        return None
     except urllib2.URLError as e:
         errorlog("URL Error %s, %s" % (e.reason, url))
-        return None
+    except Exception as e:
+        errorlog("Unexpected exception: %s" % e.message)
+
+    return None
 
 
 def query_data(params):
@@ -167,8 +169,10 @@ def query_data(params):
     if response:
         try:
             return json.load(response, 'utf-8')
-        except json.JSONDecodeError as e:
-            errorlog(e.message)
+        except ValueError as e:
+            errorlog("Json Decode Error: %s" % e.message)
+        except Exception as e:
+            errorlog("Unexpected exception: %s" % e.message)
     return None
 
 
@@ -292,7 +296,7 @@ def search(item):
             listitem.setProperty('hearing_imp', ('false', 'true')[it.get('hearing', False)])
 
             qparams = {'action': 'download', 'actionsortorder': str(index).zfill(2), 'id': it['id'],
-                       'filename': it['filename']}
+                       'filename': it['filename'].encode('utf8')}
             url = "plugin://%s/?%s" % (__scriptid__, urllib.urlencode(qparams))
 
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
