@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <addon id="script.lazytv.SANNAME"
        name="CLONENAME"
-       version="0.9.4"
+       version="0.9.7"
        provider-name="KodeKarnage">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -20,6 +20,7 @@
         <license>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</license>
         <email>subliminal.karnage at gmail dot com</email>
         <forum>http://forum.xbmc.org/showthread.php?tid=170975</forum>
+        <website>http://wiki.xbmc.org/index.php?title=Add-on:LazyTV</website>
         <source>https://github.com/KODeKarnage/script.lazytv/</source>
     </extension>
 </addon>

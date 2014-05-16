@@ -1,0 +1,205 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General Settings"
+msgstr "Allgemeine Einstellungen"
+
+msgctxt "#32001"
+msgid "Primary Function"
+msgstr "Primäre Funktion"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Liste mit nächster Episode für alle Serien erstellen"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Wiedergabeliste erstellen und starten"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Beim Start selbst festlegen"
+
+msgctxt "#32006"
+msgid "Playlist Selection Method"
+msgstr "Auswahlmethode der Wiedergabeliste"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Beim Start selbst festlegen"
+
+msgctxt "#32008"
+msgid "Choose a default Playlist"
+msgstr "Standard Wiedergabeliste"
+
+msgctxt "#32009"
+msgid "Select default playlist"
+msgstr "Standard-Wiedergabeliste"
+
+msgctxt "#32013"
+msgid "Choose shows by ..."
+msgstr "Serie auswählen nach ..."
+
+msgctxt "#32014"
+msgid "Manual Selection"
+msgstr "Manuelle Auswahl"
+
+msgctxt "#32015"
+msgid "Smart Playlist"
+msgstr "Smart Playlist"
+
+msgctxt "#32016"
+msgid "Click here to select TV Shows"
+msgstr "TV-Sendungen auswählen"
+
+msgctxt "#32030"
+msgid "Player Options"
+msgstr "Wiedergabeprogrammoptionen"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "Anzahl Serien in Wiedergabeliste"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "mehrere Episoden einer Serie erlauben"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Episoden von nicht begonnenen Serien berücksichtigen"
+
+msgctxt "#32060"
+msgid "List Options"
+msgstr "Optionen auflisten"
+
+msgctxt "#32064"
+msgid "Show Name"
+msgstr "Namen anzeigen"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Staffel"
+
+msgctxt "#32080"
+msgid "Other Settings"
+msgstr "Zusätzliche Einstellungen"
+
+msgctxt "#32087"
+msgid "Clone LazyTV Now"
+msgstr "LazyTV jetzt klonen"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "Diese Erweiterung findet die nächste ungesehene Episode für jede TV-Serie"
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "Liste oder zufällige Wiedergabeliste erstellen?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "Zeigen"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Überrasche mich!"
+
+msgctxt "#32104"
+msgid "Select the playlist"
+msgstr "Wählen Sie die Wiedergabeliste"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Schließen"
+
+msgctxt "#32112"
+msgid "Never"
+msgstr "Nie"
+
+msgctxt "#32113"
+msgid "day"
+msgstr "Tag"
+
+msgctxt "#32114"
+msgid "days"
+msgstr "Tage"
+
+msgctxt "#32116"
+msgid "Please wait and try again."
+msgstr "Bitte warten und erneut versuchen."
+
+msgctxt "#32141"
+msgid "Operation cancelled."
+msgstr "Vorgang abgebrochen."
+
+msgctxt "#32144"
+msgid "Do you wish to continue?"
+msgstr "Wollen Sie fortfahren?"
+
+msgctxt "#32146"
+msgid "Cloning successful."
+msgstr "Klonen erfolgreich."
+
+msgctxt "#32149"
+msgid "Update successful."
+msgstr "Upgrade erfolgreich."
+
+msgctxt "#32161"
+msgid "%s (%sx%s) is in your library."
+msgstr "%s (%sx%s) ist in der Bibliothek."
+
+msgctxt "#32162"
+msgid "Would you like to watch it now?"
+msgstr "Möchten Sie es jetzt ansehen?"
+
+msgctxt "#32163"
+msgid "\"Now Playing\""
+msgstr "Läuft gerade"
+
+msgctxt "#32165"
+msgid "No, thank you. (Autoclosing in %s seconds)"
+msgstr "Nein Danke (schließt automatisch in %s Sekunden)"
+
+msgctxt "#32166"
+msgid "Yes, start %s %s now."
+msgstr "Ja, starte %s %s jetzt."
+
+msgctxt "#32168"
+msgid "%s %s is in your library."
+msgstr "%s %s ist in der Bibliothek."
+
+msgctxt "#32169"
+msgid "Would you like to watch it now?"
+msgstr "Möchten Sie es jetzt ansehen?"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Speichern"
+
+msgctxt "#32171"
+msgid "Select All"
+msgstr "Alle auswählen"
+
+msgctxt "#32172"
+msgid "Unselect All"
+msgstr "Auswahl aufheben"
+
+msgctxt "#32173"
+msgid "Database analysis complete"
+msgstr "Datenbankanalyse komplett"

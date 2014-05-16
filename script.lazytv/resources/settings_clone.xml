@@ -30,16 +30,16 @@
  <setting id="limitshows" type="bool" label="32061" default="false"/>
  <setting id="window_length" label="32062" enable="eq(-1,true)" type="slider" default="10" range="1,1,30" option="int" />
  <setting type="lsep" label="32063" enable="false"/>
- <setting id="sort_by" type="enum" label="Sort by..." lvalues="32064|32065|32066|32067|32068" default="32065"/>
+ <setting id="sort_by" type="enum" label="32070" lvalues="32064|32065|32066|32067|32068" default="32065"/>
+ <setting id="sort_reverse" type="bool" label="32071" default="false"/>
  <setting id="excl_randos" type="bool" label="32069 " default="false"/>
  <!-- gap -->
  </category>
  <category label="32080">
- <setting type="lsep" label="32084" enable="false"/>
  <setting type="lsep" label=""/>
  <setting id="logging" type="bool" label="32085" default="true"/>
- <setting type="lsep" label="32086" enable="false"/>
- <setting type="action" label="32087" option="close" action="RunScript($CWD/resources/clone.py)"/>
+ <setting type="lsep" label="" enable="false"/>
+ <setting type="action" label="32094" option="close" action="RunScript($CWD/resources/episode_exporter.py)"/>
 
  <setting id="first_run" type="bool" default="true" visible="false"/>
  <setting id="users_spl" type="text" visible="false" default='none'/>

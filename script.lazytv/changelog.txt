@@ -1,3 +1,17 @@
+0.9.7
+Features:
+* option to reverse the order of the shows in the list view
+* added an option for LazyTV to create and maintain a smartplaylist that can be used in other addons (PseudoTV) or as a criteria in other playlists
+* added option to change default behaviour of the next episode available prompt
+* added a script in the Settings that will copy the next to watch episode from the last 10 watched TV Shows to a folder of your choice
+* added in more language support
+
+Bug Fixes:
+* fixed bug to prevent next episode notification displaying when episode is playing in a playlist
+* fixed the resume partially watched feature in the list view
+* fixed "ignore the in title" bug
+* fixed end of series multi episode bug
+
 0.9.3
 - general: prompt if the next episode is available with autoclose
 - general: posts a warning you if you are beginning to watch a TV episode that has an unwatched episode before it in your library

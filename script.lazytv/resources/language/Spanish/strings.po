@@ -1,0 +1,73 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Producir una lista de 'siguientes episodios' de cada serie"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Crear y reproducir una lista aleatoria"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Permiteme elegir al iniciar"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Permiteme elegir al iniciar"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "Nº de shows in la lista de reproducción"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "Permitir multiples episodios del mismo Show"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Incluir episodios de series no vistas"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Temporada"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "Este complemento busca el siguiente episodio en cada show de TV."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "¿Desea una lista o una lista aleatoria?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "Muestramelo"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Sorprendeme"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Cerrar"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Guardar"

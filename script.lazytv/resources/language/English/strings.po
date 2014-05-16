@@ -196,6 +196,14 @@ msgctxt "#32069"
 msgid "Exclude random play shows"
 msgstr ""
 
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr ""
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr ""
+
 
 # -- 4th page --
 
@@ -239,11 +247,28 @@ msgctxt "#32089"
 msgid "Email +1 to the author (no data is sent)"
 msgstr ""
 
+msgctxt "#32090"
+msgid "Default action"
+msgstr ""
+
+msgctxt "#32091"
+msgid "No, dont play next episode."
+msgstr ""
+
+msgctxt "#32092"
+msgid "Yes, play next episode."
+msgstr ""
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr ""
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr ""
 
 
-
-
-#empty strings from id 32089 to 32100
+#empty strings from id 32095 to 32100
 #dialog
 
 
@@ -443,6 +468,39 @@ msgstr ""
 msgctxt "#32173"
 msgid "Database analysis complete"
 msgstr ""
+
+
+
+
+# ---- episode_exporter ----
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr ""
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr ""
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr ""
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr ""
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr ""
+
+
+
+
 
 
 

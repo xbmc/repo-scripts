@@ -78,6 +78,7 @@ movies           = True if __setting__('movies') == 'true' else False
 moviesw          = True if __setting__('moviesw') == 'true' else False
 noshow           = True if __setting__('noshow') == 'true' else False
 excl_randos      = True if __setting__('excl_randos') == 'true' else False
+sort_reverse     = True if __setting__('sort_reverse') == 'true' else False
 
 
 try:
@@ -170,7 +171,7 @@ def order_name(raw_name):
 
 	name = raw_name.lower()
 
-	if language in ['English', 'Russian','Polish','Turkish']:
+	if language in ['English', 'Russian','Polish','Turkish'] or 'English' in language:
 		if name.startswith('the '):
 			new_name = name[4:]
 		else:
@@ -247,7 +248,11 @@ def next_show_engine(showid, epid=[],eps = [], Season = 'null', Episode = 'null'
 	else:
 		if not eps:
 			return 'null', ['null','null', 'null','null']
-		next_ep = eps[1]
+		try:
+			next_ep = eps[1]
+		except:
+			return 'null', ['null','null', 'null','null']
+			
 		newod = eps[1:]
 
 	#get details of next_ep
@@ -302,12 +307,11 @@ class yGUI(xbmcgui.WindowXMLDialog):
 
 			self.pctplyd  = WINDOW.getProperty("%s.%s.PercentPlayed" % ('LazyTV', show[1]))
 
-
 			if show[0] == 0:
 				self.lw_time = lang(32112)
 			else:
 				self.gap = round((self.now - show[0]) / 86400.0, 1)
-				if self.gap > 1.0:
+				if self.gap == 1.0:
 					self.lw_time = ' '.join([str(self.gap),lang(32114)])
 				else:
 					self.lw_time = ' '.join([str(self.gap),lang(32113)])
@@ -397,7 +401,7 @@ def sort_shows(nepl_retrieved, nepl_stored):
 		# SORT BY show name
 		log('sort by name')
 		nepl_inter  = [[x['label'], day_conv(x['lastplayed']) if x['lastplayed'] else 0, x['tvshowid']] for x in nepl_retrieved if x['tvshowid'] in nepl_stored]
-		nepl_inter.sort(key= lambda x: order_name(x[0]) )
+		nepl_inter.sort(key= lambda x: order_name(x[0]), reverse = sort_reverse )
 		nepl        = [x[1:] for x in nepl_inter]
 
 	elif sort_by == 2:
@@ -407,7 +411,8 @@ def sort_shows(nepl_retrieved, nepl_stored):
 								, day_conv(x['lastplayed']) if x['lastplayed'] else 0
 								, x['tvshowid']]
 							for x in nepl_retrieved if x['tvshowid'] in nepl_stored]
-		nepl_inter.sort(reverse = True)
+
+		nepl_inter.sort(reverse = sort_reverse == False)
 		nepl        = [x[1:] for x in nepl_inter]
 
 	elif sort_by == 3:
@@ -418,7 +423,7 @@ def sort_shows(nepl_retrieved, nepl_stored):
 							, x['tvshowid']]
 						for x in nepl_retrieved if x['tvshowid'] in nepl_stored]
 
-		nepl_inter.sort(reverse = True)
+		nepl_inter.sort(reverse = sort_reverse == False)
 
 		nepl        = [x[1:] for x in nepl_inter]
 
@@ -430,15 +435,24 @@ def sort_shows(nepl_retrieved, nepl_stored):
 						, day_conv(x['lastplayed']) if x['lastplayed'] else 0
 						, x['tvshowid']]
 					for x in nepl_retrieved if x['tvshowid'] in nepl_stored]
-
-		nepl_inter.sort(reverse = True)
+		
+		nepl_inter.sort(reverse = sort_reverse == False)
 
 		nepl        = [x[1:] for x in nepl_inter]
 
 	else:
 		# SORT BY LAST WATCHED
 		log('sort by last watched')
-		nepl        = [[day_conv(x['lastplayed']) if x['lastplayed'] else 0, x['tvshowid']] for x in nepl_retrieved if x['tvshowid'] in nepl_stored]
+		nepl_inter        = [[day_conv(x['lastplayed']) if x['lastplayed'] else 0, x['tvshowid']] for x in nepl_retrieved if x['tvshowid'] in nepl_stored]
+
+		# this sorting section needs to ignore everything that has never been played
+		nepl_nev = [x for x in nepl_inter if x[0] == 0]
+		nepl_w = [x for x in nepl_inter if x[0] != 0]
+
+		nepl_w.sort(reverse = sort_reverse == False)
+
+		nepl = nepl_w + nepl_nev
+
 
 	return nepl
 
@@ -659,6 +673,9 @@ def create_next_episode_list(population):
 	if da_show != 'null':
 		# this fix clears the playlist, adds the episode to the playlist, and then starts the playlist
 		# it is needed because .strms will not start if using the executeJSONRPC method
+
+		# but it introduces the problem that the episode wont resume anymore.
+		WINDOW.setProperty("%s.playlist_running"	% ('LazyTV'), 'listview')
 
 		json_query(clear_playlist, False)
 
