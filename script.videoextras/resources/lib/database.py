@@ -6,7 +6,6 @@ import sqlite3
 import xbmcgui
 
 __addon__     = xbmcaddon.Addon(id='script.videoextras')
-__addonid__   = __addon__.getAddonInfo('id')
 
 # Import the common settings
 from settings import Settings
@@ -23,6 +22,8 @@ class ExtrasDB():
         self.configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
         self.databasefile = os_path_join(self.configPath, "extras_database.db")
         log("ExtrasDB: Database file location = %s" % self.databasefile)
+        # Make sure that the database exists if this is the first time
+        self.createDatabase()
 
     def cleanDatabase(self):
         isYes = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32024) + "?")

@@ -1,3 +1,9 @@
+v1.1.2
+- Display album art when Play All is selected
+- Use VideoExtras icon for OSD thumb-nail (if no thumbnail set)
+- Record the play state of videos played via "Play All"
+- Add support for custom extras path for music videos
+
 v1.1.1
 - Fix bug with default name when accessing across file systems
 - Fix small chance where "play all" will display Info screen

@@ -98,9 +98,9 @@ class VideoExtrasService():
 
     # Regenerates all of the cached extras
     def cacheAllExtras(self):
-        self.createExtrasCache('GetMovies', 'movies', 'movieid')
-        self.createExtrasCache('GetTVShows', 'tvshows', 'tvshowid')
-        self.createExtrasCache('GetMusicVideos', 'musicvideos', 'musicvideoid')
+        self.createExtrasCache('GetMovies', Settings.MOVIES, 'movieid')
+        self.createExtrasCache('GetTVShows', Settings.TVSHOWS, 'tvshowid')
+        self.createExtrasCache('GetMusicVideos', Settings.MUSICVIDEOS, 'musicvideoid')
 
     # Checks all the given movies/TV/music videos to see if they have any extras
     # and if they do, then cretaes a cached file containing the titles of the video
@@ -122,7 +122,8 @@ class VideoExtrasService():
                     sys.exit()
                 
                 log("VideoExtrasService: %s detected: %s = %s" % (target, item['title'], item['file']))
-                videoExtras = VideoExtrasBase(item['file'])
+                videoExtras = VideoExtrasBase(item['file'], target)
+                # Only checking for the existence of extras - no need for DB or default Fanart
                 firstExtraFile = videoExtras.findExtras(True)
                 # Check if any extras exist for this movie
                 if firstExtraFile:
@@ -210,7 +211,7 @@ if __name__ == '__main__':
             service.cacheAllExtras()
 
         except:
-            log("VideoExtrasService: %s" % traceback.format_exc())
+            log("VideoExtrasService: %s" % traceback.format_exc(), xbmc.LOGERROR)
     else:
         # Service not enabled
         log("VideoExtrasService: Service disabled in settings")

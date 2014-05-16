@@ -76,12 +76,12 @@ if __name__ == '__main__':
         extrasDb.cleanDatabase()
 
         # Also tidy up any of the cache files that exist
-        removeCacheFile('movies', True)
-        removeCacheFile('tvshows', True)
-        removeCacheFile('musicvideos', True)
+        removeCacheFile(Settings.MOVIES, True)
+        removeCacheFile(Settings.TVSHOWS, True)
+        removeCacheFile(Settings.MUSICVIDEOS, True)
 
         removeCacheFile('overlay_image_used.txt')
 
     except:
-        log("VideoExtrasCleanup: %s" % traceback.format_exc())
+        log("VideoExtrasCleanup: %s" % traceback.format_exc(), xbmc.LOGERROR)
 

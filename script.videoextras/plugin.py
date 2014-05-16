@@ -41,8 +41,7 @@ from settings import os_path_split
 from database import ExtrasDB
 
 # Load the core Video Extras classes
-from core import ExtrasItem
-from core import SourceDetails
+from ExtrasItem import ExtrasItem
 from core import VideoExtrasBase
 
 # Load the Video Extras Player that handles playing the extras files
@@ -55,9 +54,9 @@ from dialogs import VideoExtrasResumeWindow
 # Class to handle the navigation information for the plugin
 ###################################################################
 class MenuNavigator():
-    MOVIES = 'movies'
-    TVSHOWS = 'tvshows'
-    MUSICVIDEOS = 'musicvideos'
+    MOVIES = Settings.MOVIES
+    TVSHOWS = Settings.TVSHOWS
+    MUSICVIDEOS = Settings.MUSICVIDEOS
 
     def __init__(self, base_url, addon_handle):
         self.base_url = base_url
@@ -114,10 +113,19 @@ class MenuNavigator():
             li = xbmcgui.ListItem(videoItem['title'], iconImage=videoItem['thumbnail'])
             # Remove the default context menu
             li.addContextMenuItems( [], replaceItems=True )
+            # Get the title of the video owning the extras
+            parentTitle = ""
+            try:
+                parentTitle = videoItem['title'].encode("utf-8")
+            except:
+                log("setVideoList: failed to encode parent title %s" % parentTitle)
+            
             # Set the background image
             if videoItem['fanart'] != None:
                 li.setProperty( "Fanart_Image", videoItem['fanart'] )
-            url = self._build_url({'mode': 'listextras', 'foldername': target, 'path': videoItem['file'].encode("utf-8")})
+            else:
+                videoItem['fanart'] = ""
+            url = self._build_url({'mode': 'listextras', 'foldername': target, 'path': videoItem['file'].encode("utf-8"), 'parentTitle': parentTitle, 'defaultFanArt': videoItem['fanart']})
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
@@ -165,7 +173,8 @@ class MenuNavigator():
         # Otherwise, need to do the lookup the old fashioned way of looking for the 
         # extras files on the file system (This is much slower)
         else:
-            videoExtras = VideoExtrasBase(file)
+            videoExtras = VideoExtrasBase(file, target)
+            # We are only checking for existence of extras, no need for fanart
             firstExtraFile = videoExtras.findExtras(True)
             if firstExtraFile:
                 log("MenuNavigator: Extras found for (%d) %s" % (dbid, file))
@@ -174,29 +183,36 @@ class MenuNavigator():
         return False
 
     # Shows all the extras for a given movie or TV Show
-    def showExtras(self, path, target):
+    def showExtras(self, path, target, extrasParentTitle="", extrasDefaultFanArt=""):
         # Check if the use database setting is enabled
         extrasDb = None
         if Settings.isDatabaseEnabled():
             extrasDb = ExtrasDB()
 
         # Create the extras class that will be used to process the extras
-        videoExtras = VideoExtrasBase(path)
+        videoExtras = VideoExtrasBase(path, target)
 
         # Perform the search command
-        files = videoExtras.findExtras(extrasDb=extrasDb)
+        files = videoExtras.findExtras(extrasDb=extrasDb, defaultFanArt=extrasDefaultFanArt)
 
         if len(files) > 0:
             # Start by adding an option to Play All
             anItem = xbmcgui.ListItem(__addon__.getLocalizedString(32101))
+            # Get the first items fanart for the play all option
+            anItem.setProperty( "Fanart_Image", files[0].getFanArt() )
+
             anItem.addContextMenuItems( [], replaceItems=True )
-            url = self._build_url({'mode': 'playallextras', 'foldername': target, 'path': path})
+            url = self._build_url({'mode': 'playallextras', 'foldername': target, 'path': path, 'parentTitle': extrasParentTitle})
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=anItem, isFolder=False)
+
+        tvShowTitle = ""
+        if target == MenuNavigator.TVSHOWS:
+            tvShowTitle = extrasParentTitle
 
         # Add each of the extras to the list to display
         for anExtra in files:
             # Create the list item
-            li = anExtra.createListItem()
+            li = anExtra.createListItem(parentTitle=extrasParentTitle, tvShowTitle=tvShowTitle)
             # Hack, if the "TotalTime" and "ResumeTime" are set on the list item
             # and it is partially watched, then XBMC will display the continue dialog
             # However we can not get what the user selects from this dialog, so it
@@ -206,39 +222,40 @@ class MenuNavigator():
             li.setProperty("TotalTime", "")
 
             li.addContextMenuItems( [], replaceItems=True )
-            li.addContextMenuItems(self._getContextMenu(anExtra, target, path), replaceItems=True )
-            url = self._build_url({'mode': 'playextra', 'foldername': target, 'path': path, 'filename': anExtra.getFilename().encode("utf-8")})
+            li.addContextMenuItems(self._getContextMenu(anExtra, target, path, extrasParentTitle), replaceItems=True )
+            url = self._build_url({'mode': 'playextra', 'foldername': target, 'path': path, 'filename': anExtra.getFilename().encode("utf-8"), 'parentTitle': extrasParentTitle})
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
 
     # Play all the extras for a given movie or TV Show
-    def playAllExtras(self, path, target):
+    def playAllExtras(self, path, target, extrasParentTitle):
         # Check if the use database setting is enabled
         extrasDb = None
         if Settings.isDatabaseEnabled():
             extrasDb = ExtrasDB()
 
         # Create the extras class that will be used to process the extras
-        videoExtras = VideoExtrasBase(path)
+        videoExtras = VideoExtrasBase(path, target)
 
         # Perform the search command
+        # No need for fanart default as only getting a list to play, not display
         files = videoExtras.findExtras(extrasDb=extrasDb)
 
-        extrasPlayer = ExtrasPlayer()
-        extrasPlayer.playAll( files )
+        ExtrasPlayer.playAll( files, extrasParentTitle )
 
 
-    def playExtra(self, path, filename, forceResume=False, fromStart=False):
+    def playExtra(self, path, target, filename, extrasParentTitle="", forceResume=False, fromStart=False):
          # Check if the use database setting is enabled
         extrasDb = None
         if Settings.isDatabaseEnabled():
             extrasDb = ExtrasDB()
 
         # Create the extras class that will be used to process the extras
-        videoExtras = VideoExtrasBase(path)
+        videoExtras = VideoExtrasBase(path, target)
 
         # Perform the search command
+        # No need for fanart default as only getting a list to play, not display
         files = videoExtras.findExtras(extrasDb=extrasDb)
         for anExtra in files:
             if anExtra.isFilenameMatch( filename ):
@@ -261,17 +278,18 @@ class MenuNavigator():
                         anExtra.setResumePoint(0)
                     # Default is to actually resume
 
-                ExtrasPlayer.performPlayAction(anExtra)
+                ExtrasPlayer.performPlayAction(anExtra, extrasParentTitle)
 
-    def markAsWatched(self, path, filename):
+    def markAsWatched(self, path, target, filename):
         # If marking as watched we need to set the resume time so it doesn't
         # start in the middle the next time it starts
         if Settings.isDatabaseEnabled():
             # Create the extras class that will be used to process the extras
-            videoExtras = VideoExtrasBase(path)
+            videoExtras = VideoExtrasBase(path, target)
     
             # Perform the search command
             extrasDb = ExtrasDB()
+            # We are only updating the DB for an entry already shown, no need for fanart
             files = videoExtras.findExtras(extrasDb=extrasDb)
             for anExtra in files:
                 if anExtra.isFilenameMatch( filename ):
@@ -281,15 +299,16 @@ class MenuNavigator():
                     # Update the display
                     xbmc.executebuiltin("Container.Refresh")
 
-    def markAsUnwatched(self, path, filename):
+    def markAsUnwatched(self, path, target, filename):
         # If marking as watched we need to set the resume time so it doesn't
         # start in the middle the next time it starts
         if Settings.isDatabaseEnabled():
             # Create the extras class that will be used to process the extras
-            videoExtras = VideoExtrasBase(path)
+            videoExtras = VideoExtrasBase(path, target)
     
             # Perform the search command
             extrasDb = ExtrasDB()
+            # We are only updating the DB for an entry already shown, no need for fanart
             files = videoExtras.findExtras(extrasDb=extrasDb)
             for anExtra in files:
                 if anExtra.isFilenameMatch( filename ):
@@ -299,11 +318,12 @@ class MenuNavigator():
                     # Update the display
                     xbmc.executebuiltin("Container.Refresh")
 
-    def editTitle(self, path, filename):
+    def editTitle(self, target, path, filename):
         # Create the extras class that will be used to process the extras
-        videoExtras = VideoExtrasBase(path)
+        videoExtras = VideoExtrasBase(path, target)
 
         # Perform the search command
+        # We are only updating the NFO for an entry already shown, no need for fanart
         files = videoExtras.findExtras()
         for anExtra in files:
             if anExtra.isFilenameMatch( filename ):
@@ -322,22 +342,23 @@ class MenuNavigator():
                         
                     # Only set the title if it has changed
                     if (newtitle != anExtra.getDisplayName()) and (len(newtitle) > 0):
-                        result = anExtra.setTitle(newtitle)
+                        isTv = (target == MenuNavigator.TVSHOWS)
+                        result = anExtra.setTitle(newtitle, isTV=isTv)
                         if not result:
                             xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32109))
                         else:
                             # Update the display
                             xbmc.executebuiltin("Container.Refresh")
 
-    def _getContextMenu(self, extraItem, target, path):
+    def _getContextMenu(self, extraItem, target, path, extrasParentTitle):
         ctxtMenu = []
         # Resume
         if extraItem.getResumePoint() > 0:
-            cmd = self._build_url({'mode': 'resumeextra', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
+            cmd = self._build_url({'mode': 'resumeextra', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8"), 'parentTitle': extrasParentTitle})
             ctxtMenu.append(("%s %s" % (__addon__.getLocalizedString(32104), extraItem.getDisplayResumePoint()), 'XBMC.RunPlugin(%s)' % cmd))
 
         # Play Now
-        cmd = self._build_url({'mode': 'beginextra', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
+        cmd = self._build_url({'mode': 'beginextra', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8"), 'parentTitle': extrasParentTitle})
         ctxtMenu.append((__addon__.getLocalizedString(32105), 'XBMC.RunPlugin(%s)' % cmd))
 
         # Mark As Watched
@@ -395,12 +416,20 @@ if __name__ == '__main__':
         # Get the actual path that was navigated to
         path = args.get('path', None)
         foldername = args.get('foldername', None)
+        parentTitle = args.get('parentTitle', None)
+        defaultFanArt = args.get('defaultFanArt', None)
         
         if (path != None) and (len(path) > 0) and (foldername != None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to load extras for %s" % path[0])
+            extrasParentTitle = ""
+            if (parentTitle != None) and (len(parentTitle) > 0):
+                extrasParentTitle = parentTitle[0]
+            extrasDefaultFanArt = ""
+            if (defaultFanArt != None) and (len(defaultFanArt) > 0):
+                extrasDefaultFanArt = defaultFanArt[0]
     
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.showExtras(path[0], foldername[0])
+            menuNav.showExtras(path[0], foldername[0], extrasParentTitle, extrasDefaultFanArt)
 
     elif mode[0] == 'playallextras':
         log("VideoExtrasPlugin: Mode is PLAY ALL EXTRAS")
@@ -408,82 +437,103 @@ if __name__ == '__main__':
         # Get the actual path that was navigated to
         path = args.get('path', None)
         foldername = args.get('foldername', None)
-        
+        parentTitle = args.get('parentTitle', None)
+
         if (path != None) and (len(path) > 0) and (foldername != None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to play all extras for %s" % path[0])
-    
+            extrasParentTitle = ""
+            if (parentTitle != None) and (len(parentTitle) > 0):
+                extrasParentTitle = parentTitle[0]
+
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.playAllExtras(path[0], foldername[0])
+            menuNav.playAllExtras(path[0], foldername[0], extrasParentTitle)
 
     elif mode[0] == 'playextra':
         log("VideoExtrasPlugin: Mode is PLAY EXTRA")
 
         # Get the actual path that was navigated to
         path = args.get('path', None)
+        foldername = args.get('foldername', None)
         filename = args.get('filename', None)
+        parentTitle = args.get('parentTitle', None)
         
-        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0):
+        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0) and (foldername != None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to play extras for %s" % path[0])
             log("VideoExtrasPlugin: Extras file to play %s" % filename[0])
+            extrasParentTitle = ""
+            if (parentTitle != None) and (len(parentTitle) > 0):
+                extrasParentTitle = parentTitle[0]
     
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.playExtra(path[0], filename[0])
+            menuNav.playExtra(path[0], foldername[0], filename[0], extrasParentTitle)
 
     elif mode[0] == 'resumeextra':
         log("VideoExtrasPlugin: Mode is RESUME EXTRA")
 
         # Get the actual path that was navigated to
         path = args.get('path', None)
+        foldername = args.get('foldername', None)
         filename = args.get('filename', None)
+        parentTitle = args.get('parentTitle', None)
         
-        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0):
+        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0) and (foldername != None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to play extras for %s" % path[0])
             log("VideoExtrasPlugin: Extras file to play %s" % filename[0])
+            extrasParentTitle = ""
+            if (parentTitle != None) and (len(parentTitle) > 0):
+                extrasParentTitle = parentTitle[0]
     
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.playExtra(path[0], filename[0], forceResume=True)
+            menuNav.playExtra(path[0], foldername[0], filename[0], extrasParentTitle, forceResume=True)
 
     elif mode[0] == 'beginextra':
         log("VideoExtrasPlugin: Mode is BEGIN EXTRA")
 
         # Get the actual path that was navigated to
         path = args.get('path', None)
+        foldername = args.get('foldername', None)
         filename = args.get('filename', None)
+        parentTitle = args.get('parentTitle', None)
         
-        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0):
+        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0) and (foldername != None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to play extras for %s" % path[0])
             log("VideoExtrasPlugin: Extras file to play %s" % filename[0])
+            extrasParentTitle = ""
+            if (parentTitle != None) and (len(parentTitle) > 0):
+                extrasParentTitle = parentTitle[0]
     
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.playExtra(path[0], filename[0], fromStart=True)
+            menuNav.playExtra(path[0], foldername[0], filename[0], extrasParentTitle, fromStart=True)
 
     elif mode[0] == 'markwatched':
         log("VideoExtrasPlugin: Mode is MARK WATCHED")
 
         # Get the actual path that was navigated to
         path = args.get('path', None)
+        foldername = args.get('foldername', None)
         filename = args.get('filename', None)
         
-        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0):
+        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0) and (foldername != None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to play extras for %s" % path[0])
             log("VideoExtrasPlugin: Extras file to play %s" % filename[0])
     
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.markAsWatched(path[0], filename[0])
+            menuNav.markAsWatched(path[0], foldername[0], filename[0])
  
     elif mode[0] == 'markunwatched':
         log("VideoExtrasPlugin: Mode is MARK UNWATCHED")
 
         # Get the actual path that was navigated to
         path = args.get('path', None)
+        foldername = args.get('foldername', None)
         filename = args.get('filename', None)
         
-        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0):
+        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0) and (foldername != None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to play extras for %s" % path[0])
             log("VideoExtrasPlugin: Extras file to play %s" % filename[0])
     
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.markAsUnwatched(path[0], filename[0])
+            menuNav.markAsUnwatched(path[0], foldername[0], filename[0])
 
     elif mode[0] == 'edittitle':
         log("VideoExtrasPlugin: Mode is EDIT TITLE")
@@ -491,11 +541,12 @@ if __name__ == '__main__':
         # Get the actual path that was navigated to
         path = args.get('path', None)
         filename = args.get('filename', None)
+        foldername = args.get('foldername', None)
         
-        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0):
+        if (path != None) and (len(path) > 0) and (filename != None) and (len(filename) > 0) and (foldername != None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to play extras for %s" % path[0])
             log("VideoExtrasPlugin: Extras file to play %s" % filename[0])
     
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.editTitle(path[0], filename[0])
+            menuNav.editTitle(foldername[0], path[0], filename[0])
  
