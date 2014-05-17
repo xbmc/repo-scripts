@@ -114,14 +114,22 @@ class Main:
                         plot = __localize__(32014)
                     else:
                         plot = item['plot']
+                    if len(item['studio']) > 0:
+                        studio = item['studio'][0]
+                    else:
+                        studio = ""
+                    if len(item['country']) > 0:
+                        country = item['country'][0]
+                    else:
+                        country = ""
                     # create a list item
                     liz = xbmcgui.ListItem(item['title'])
                     liz.setInfo( type="Video", infoLabels={ "Title": item['title'] })
                     liz.setInfo( type="Video", infoLabels={ "OriginalTitle": item['originaltitle'] })
                     liz.setInfo( type="Video", infoLabels={ "Year": item['year'] })
                     liz.setInfo( type="Video", infoLabels={ "Genre": " / ".join(item['genre']) })
-                    liz.setInfo( type="Video", infoLabels={ "Studio": item.get('studio' })
-                    liz.setInfo( type="Video", infoLabels={ "Country": item.get('country') })
+                    liz.setInfo( type="Video", infoLabels={ "Studio": studio })
+                    liz.setInfo( type="Video", infoLabels={ "Country": country })
                     liz.setInfo( type="Video", infoLabels={ "Plot": plot })
                     liz.setInfo( type="Video", infoLabels={ "PlotOutline": item['plotoutline'] })
                     liz.setInfo( type="Video", infoLabels={ "Tagline": item['tagline'] })
@@ -176,11 +184,15 @@ class Main:
                             plot = __localize__(32014)
                         else:
                             plot = item2['plot']
+                        if len(item['studio']) > 0:
+                            studio = item['studio'][0]
+                        else:
+                            studio = ""
                         liz = xbmcgui.ListItem(item2['title'])
                         liz.setInfo( type="Video", infoLabels={ "Title": item2['title'] })
                         liz.setInfo( type="Video", infoLabels={ "Episode": item2['episode'] })
                         liz.setInfo( type="Video", infoLabels={ "Season": item2['season'] })
-                        liz.setInfo( type="Video", infoLabels={ "Studio": item.get('studio') })
+                        liz.setInfo( type="Video", infoLabels={ "Studio": studio })
                         liz.setInfo( type="Video", infoLabels={ "Premiered": item2['firstaired'] })
                         liz.setInfo( type="Video", infoLabels={ "Plot": plot })
                         liz.setInfo( type="Video", infoLabels={ "TVshowTitle": item2['showtitle'] })
