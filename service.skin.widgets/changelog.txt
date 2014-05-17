@@ -1,3 +1,6 @@
+v0.0.29
+- Fix script error on XBMC Helix due to empty array
+
 v0.0.27
 - Fix setting properties reload on settings change
 

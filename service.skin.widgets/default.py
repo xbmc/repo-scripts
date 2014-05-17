@@ -199,13 +199,21 @@ class Main:
                     play = 'XBMC.RunScript(' + __addonid__ + ',movieid=' + str(item.get('movieid')) + ')'
                     streaminfo = media_streamdetails(item['file'].encode('utf-8').lower(),
                                                item['streamdetails'])
+                    if len(item['studio']) > 0:
+                        studio = item['studio'][0]
+                    else:
+                        studio = ""
+                    if len(item['country']) > 0:
+                        country = item['country'][0]
+                    else:
+                        country = ""
                     self.WINDOW.setProperty("%s.%d.DBID"           % (request, count), str(item.get('movieid')))
                     self.WINDOW.setProperty("%s.%d.Title"           % (request, count), item['title'])
                     self.WINDOW.setProperty("%s.%d.OriginalTitle"   % (request, count), item['originaltitle'])
                     self.WINDOW.setProperty("%s.%d.Year"            % (request, count), str(item['year']))
                     self.WINDOW.setProperty("%s.%d.Genre"           % (request, count), " / ".join(item['genre']))
-                    self.WINDOW.setProperty("%s.%d.Studio"          % (request, count), item.get('studio'))
-                    self.WINDOW.setProperty("%s.%d.Country"         % (request, count), item.get('country'))
+                    self.WINDOW.setProperty("%s.%d.Studio"          % (request, count), studio)
+                    self.WINDOW.setProperty("%s.%d.Country"         % (request, count), country)
                     self.WINDOW.setProperty("%s.%d.Plot"            % (request, count), plot)
                     self.WINDOW.setProperty("%s.%d.PlotOutline"     % (request, count), item['plotoutline'])
                     self.WINDOW.setProperty("%s.%d.Tagline"         % (request, count), item['tagline'])
@@ -277,6 +285,10 @@ class Main:
                     play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(item2.get('episodeid')) + ')'
                     streaminfo = media_streamdetails(item['file'].encode('utf-8').lower(),
                                                      item2['streamdetails'])
+                    if len(item['studio']) > 0:
+                        studio = item['studio'][0]
+                    else:
+                        studio = ""
                     self.WINDOW.setProperty("%s.%d.DBID"                % (request, count), str(item2.get('episodeid')))
                     self.WINDOW.setProperty("%s.%d.Title"               % (request, count), item2['title'])
                     self.WINDOW.setProperty("%s.%d.Episode"             % (request, count), episode)
@@ -296,7 +308,7 @@ class Main:
                     self.WINDOW.setProperty("%s.%d.Art(tvshow.landscape)"% (request, count), art2.get('tvshow.landscape',''))
                     self.WINDOW.setProperty("%s.%d.Art(tvshow.characterart)"% (request, count), art2.get('tvshow.characterart',''))
                     #self.WINDOW.setProperty("%s.%d.Art(season.poster)" % (request, count), seasonthumb)
-                    self.WINDOW.setProperty("%s.%d.Studio"              % (request, count), item.get('studio'))
+                    self.WINDOW.setProperty("%s.%d.Studio"              % (request, count), studio)
                     self.WINDOW.setProperty("%s.%d.mpaa"                % (request, count), item['mpaa'])
                     self.WINDOW.setProperty("%s.%d.Resume"              % (request, count), resume)
                     self.WINDOW.setProperty("%s.%d.PercentPlayed"       % (request, count), played)
