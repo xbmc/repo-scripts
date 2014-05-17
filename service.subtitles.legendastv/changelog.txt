@@ -1,0 +1,5 @@
+2.2.0
+- Fix decompressing the downloaded subtitle
+
+2.1.2
+- move the service out of XBMC Subtitles
