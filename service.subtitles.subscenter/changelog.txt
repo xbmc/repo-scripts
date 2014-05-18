@@ -1,3 +1,10 @@
+3.2.1 - by CaTz 16/05/2014
+- Improvement of RLS title parsing
+
+3.2.0 - by maortal 14/05/2014
+- Performance boost replaced decode with unicode method (should be replaced again if XBMC moves to python3)
+- Fix android issues with re.sub (duo to usage of python 2.6)
+
 3.1.9 - by CaTz 11/05/2014
 - Advanced Movie Title / TV-show parsing (includes release)
 

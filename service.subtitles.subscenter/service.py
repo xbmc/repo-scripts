@@ -17,10 +17,10 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
 __language__ = __addon__.getLocalizedString
 
-__cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode("utf-8")
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
+__cwd__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('path')),'utf-8')
+__profile__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('profile')),'utf-8')
+__resource__ = unicode(xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')),'utf-8')
+__temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp')),'utf-8')
 
 sys.path.append(__resource__)
 
@@ -96,6 +96,7 @@ def get_params(string=""):
 params = get_params()
 
 if params['action'] in ['search', 'manualsearch']:
+    log(__scriptname__, "Version: '%s'" % (__version__))
     log(__scriptname__, "action '%s' called" % (params['action']))
 
     if params['action'] == 'manualsearch':
@@ -112,10 +113,10 @@ if params['action'] in ['search', 'manualsearch']:
     item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
         else normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")) # try to get original title
     item['file_original_path'] = urllib.unquote(
-        xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path of a playing file
+        unicode(xbmc.Player().getPlayingFile(),'utf-8'))  # Full path of a playing file
     item['3let_language'] = []
 
-    for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
+    for lang in unicode(urllib.unquote(params['languages']),'utf-8').split(","):
         item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
     if item['title'] == "":

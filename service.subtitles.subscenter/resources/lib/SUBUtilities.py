@@ -27,10 +27,11 @@ __addon__ = xbmcaddon.Addon()
 __version__ = __addon__.getAddonInfo('version')  # Module version
 __scriptname__ = __addon__.getAddonInfo('name')
 __language__ = __addon__.getLocalizedString
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
+__profile__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('profile')), 'utf-8')
+__temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp')), 'utf-8')
 
 cache = StorageServer.StorageServer(__scriptname__, int(24 * 364 / 2))  # 6 months
+regexHelper = re.compile('\W+', re.UNICODE)
 
 #===============================================================================
 # Private utility functions
@@ -42,19 +43,22 @@ def normalizeString(str):
 
 
 def clean_title(item):
-    item["title"] = os.path.splitext(item["title"])[0]
-    item["tvshow"] = os.path.splitext(item["tvshow"])[0]
+    item["title"] = unicode(os.path.splitext(item["title"])[0], "utf-8")
+    item["tvshow"] = unicode(os.path.splitext(item["tvshow"])[0], "utf-8")
 
 
 def parse_rls_title(item):
-    groups = re.findall(r"(.*)(?:s|season)(\d{2})(?:e|x|episode|\n)(\d{2})", item["title"], re.I)
+    item["title"] = regexHelper.sub(' ', item["title"])
+    item["tvshow"] = regexHelper.sub(' ', item["tvshow"])
+
+    groups = re.findall(r"(.*) (?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", item["title"], re.I)
 
     if len(groups) == 0:
-        groups = re.findall(r"(.*)(?:s|season)(\d{2})(?:e|x|episode|\n)(\d{2})", item["tvshow"], re.I)
+        groups = re.findall(r"(.*) (?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", item["tvshow"], re.I)
 
     if len(groups) > 0 and len(groups[0]) == 3:
         title, season, episode = groups[0]
-        item["tvshow"] = re.sub('\W+', ' ', title, 0, re.UNICODE).strip()
+        item["tvshow"] = regexHelper.sub(' ', title).strip()
         item["season"] = str(int(season))
         item["episode"] = str(int(episode))
         log(__scriptname__, "TV Parsed Item: %s" % (item,))
@@ -63,7 +67,7 @@ def parse_rls_title(item):
         groups = re.findall(r"(.*)(\d{4})", item["title"], re.I)
         if len(groups) > 0 and len(groups[0]) >= 1:
             title = groups[0][0]
-            item["title"] = re.sub('\W+', ' ', title, 0, re.UNICODE).strip()
+            item["title"] = regexHelper.sub(' ', title).strip()
             item["year"] = groups[0][1] if len(groups[0]) == 2 else item["year"]
 
             log(__scriptname__, "MOVIE Parsed Item: %s" % (item,))
@@ -79,7 +83,7 @@ def log(module, msg):
 
 
 def get_cache_key(prefix="", str=""):
-    str = re.sub('\W+', '_', str.decode("utf-8"), 0, re.UNICODE).lower()
+    str = regexHelper.sub('_', str).lower()
     return prefix + str
 
 
@@ -108,7 +112,7 @@ class SubscenterHelper:
                 results = eval(results)
 
         if not results:
-            query = {"q": search_string.lower() + "'"}  # hack to prevent redirection in hebrew search
+            query = {"q": search_string.encode("utf-8").lower() + "'"}  # hack to prevent redirection in hebrew search
             search_result = self.urlHandler.request(self.BASE_URL + "/he/subtitle/search/?" + urllib.urlencode(query))
             if search_result is None:
                 return results  # return empty set
@@ -129,21 +133,21 @@ class SubscenterHelper:
 
     def _filter_urls(self, urls, search_string, item):
         filtered = []
-        search_string = search_string.decode("utf-8").lower()
-        search_string = re.sub('\W+', ' ', search_string, 0, re.UNICODE)
+        search_string = regexHelper.sub(' ', search_string.lower())
+
         h = HTMLParser.HTMLParser()
 
         log(__scriptname__, "urls: %s" % urls)
 
         for i, (content_type, slug, heb_name, eng_name, year) in enumerate(urls):
-            eng_name = eng_name.decode("utf-8")
-            heb_name = heb_name.decode("utf-8")
+            eng_name = unicode(eng_name, 'utf-8')
+            heb_name = unicode(heb_name, 'utf-8')
 
             eng_name = h.unescape(eng_name).replace(' ...', '').lower()
             heb_name = h.unescape(heb_name).replace(' ...', '')
 
-            eng_name = re.sub('\W+', ' ', eng_name, 0, re.UNICODE)
-            heb_name = re.sub('\W+', ' ', heb_name, 0, re.UNICODE)
+            eng_name = regexHelper.sub(' ', eng_name)
+            heb_name = regexHelper.sub(' ', heb_name)
 
             if ((content_type == "movie" and not item["tvshow"]) or
                     (content_type == "series" and item["tvshow"])) and \
@@ -199,9 +203,9 @@ class SubscenterHelper:
         file_name = os.path.basename(file_original_path)
         folder_name = os.path.split(os.path.dirname(file_original_path))[-1]
 
-        subsfile = re.sub('\W+', '.', subsfile).lower()
-        file_name = re.sub('\W+', '.', file_name).lower()
-        folder_name = re.sub('\W+', '.', folder_name).lower()
+        subsfile = re.sub(r'\W+', '.', subsfile).lower()
+        file_name = re.sub(r'\W+', '.', file_name).lower()
+        folder_name = re.sub(r'\W+', '.', folder_name).lower()
         log(__scriptname__, "# Comparing Releases:\n [subtitle-rls] %s \n [filename-rls] %s \n [folder-rls] %s" % (
             subsfile, file_name, folder_name))
 
