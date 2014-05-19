@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: mysql-connector-python
-Version: 1.1.6
+Version: 1.1.7
 Summary: MySQL driver written in Python
 Home-page: http://dev.mysql.com/doc/connector-python/en/index.html
 Author: Oracle and/or its affiliates

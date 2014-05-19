@@ -5,6 +5,13 @@ Full release notes:
  http://dev.mysql.com/doc/relnotes/connector-python/en/
 
 
+1.1.7 (2014-04-16)
+------------------
+* BUG#18465605: Fixed testing using relative server folder
+* BUG#18465031: Fixed Python v3 tests on Windows
+* BUG#18380100: Fix introspection for Django and Python v3
+* BUG#18144971: Error with unicode arguments in prepared statements
+
 1.1.6 (2014-01-11)
 ------------------
 * BUG#18187561: Fixed Django backend errors with time functions

@@ -1434,7 +1434,8 @@ class MySQLConnection(object):
                     long_data_used[param_id] = (binary,)
 
         execute_packet = self._protocol.make_stmt_execute(
-            statement_id, data, tuple(parameters), flags, long_data_used)
+            statement_id, data, tuple(parameters), flags,
+            long_data_used, self.charset)
         packet = self._send_cmd(ServerCmd.STMT_EXECUTE, packet=execute_packet)
         result = self._handle_binary_result(packet)
         return result
