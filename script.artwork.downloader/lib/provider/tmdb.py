@@ -31,8 +31,8 @@ from operator import itemgetter
 __localize__    = ( sys.modules[ "__main__" ].__localize__ )
 
 API_KEY = '4be68d7eab1fbd1b6fd8a3b80a65a95e'
+API_CFG = 'http://api.themoviedb.org/3/configuration?api_key=%s'
 API_URL = 'http://api.themoviedb.org/3/movie/%s/images?api_key=%s'
-BASE_IMAGEURL = "http://d3gtl9l2a4fn1j.cloudfront.net/t/p/"
 
 class TMDBProvider():
 
@@ -40,8 +40,12 @@ class TMDBProvider():
         self.name = 'TMDB'
 
     def get_image_list(self, media_id):
-        data = get_data(API_URL%(media_id, API_KEY), 'json')
         image_list = []
+        api_cfg = get_data(API_CFG%(API_KEY), 'json')
+        if api_cfg == "Empty" or not api_cfg:
+            return image_list
+        BASE_IMAGEURL = api_cfg['images'].get('base_url')
+        data = get_data(API_URL%(media_id, API_KEY), 'json')
         if data == "Empty" or not data:
             return image_list
         else:

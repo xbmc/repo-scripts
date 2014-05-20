@@ -1,3 +1,6 @@
+v12.0.26
+- Call TMDb config to get up-to-date image base URL
+
 v12.0.25
 - Always apply language filters else you end up with a random language
 
