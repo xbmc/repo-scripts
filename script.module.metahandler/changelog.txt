@@ -1,3 +1,13 @@
+[B]Version 1.5.0[/B]
+- Rework TMDB api key so that it can be set when initializing metahandlers - soon will require individual keys
+- Added option in addon settings to delete metahandlers cache db to restart fresh
+- Fixed refresh episode meta data to hold watched status
+- Updated tvdbapi calls for better accuracy
+- Added new config table to cache db - comes with new _set_config(setting, value) and _get_config(setting) methods
+- Get and set TMDB config values, cache in config table
+- Properly set TMDB image locations
+- Temporary SQL update added to clean existing DB's of hardcoded TMDB image url's - keep only filenames
+
 [B]Version 1.4.0[/B]
 - New TMDB API key
 - Updated calls to TMDB so we only make one request per movie

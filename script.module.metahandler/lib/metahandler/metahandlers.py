@@ -34,7 +34,7 @@ from thetvdbapi import TheTVDB
 import xbmc
 import xbmcvfs
 
-''' Use t0mm0's common library for http calls '''
+''' Use t0mm0.common library for http calls '''
 from t0mm0.common.net import Net
 net = Net()
 
@@ -95,15 +95,19 @@ class MetaData:
     '''  
 
      
-    def __init__(self, preparezip=False):
+    def __init__(self, preparezip=False, tmdb_api_key='af95ef8a4fe1e697f86b8c194f2e5e11'):
 
         #Check if a path has been set in the addon settings
         settings_path = common.addon.get_setting('meta_folder_location')
         
+        # TMDB constants
+        self.tmdb_image_url = ''
+        self.tmdb_api_key = tmdb_api_key
+               
         if settings_path:
             self.path = xbmc.translatePath(settings_path)
         else:
-            self.path = xbmc.translatePath('special://profile/addon_data/script.module.metahandler')
+            self.path = common.profile_path();
         
         self.cache_path = make_dir(self.path, 'meta_cache')
 
@@ -147,7 +151,7 @@ class MetaData:
             db_user = common.addon.get_setting('db_user')
             db_pass = common.addon.get_setting('db_pass')
             db_name = common.addon.get_setting('db_name')
-            self.dbcon = database.connect(db_name, db_user, db_pass, db_address, buffered=True)
+            self.dbcon = database.connect(database=db_name, user=db_user, password=db_pass, host=db_address, buffered=True)
             self.dbcur = self.dbcon.cursor(cursor_class=MySQLCursorDict, buffered=True)
         else:
             self.dbcon = database.connect(self.videocache)
@@ -156,7 +160,70 @@ class MetaData:
 
         # initialize cache db
         self._cache_create_movie_db()
+        
+        # Check TMDB configuration, update if necessary
+        self._set_tmdb_config()
 
+        ## !!!!!!!!!!!!!!!!!! Temporary code to update movie_meta columns cover_url and backdrop_url to store only filename !!!!!!!!!!!!!!!!!!!!!
+ 
+        ## We have matches with outdated url, so lets strip the url out and only keep filename 
+        try:
+
+            if DB == 'mysql':
+                sql_select = "SELECT imdb_id, tmdb_id, cover_url, backdrop_url "\
+                                "FROM movie_meta "\
+                                "where substring(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
+                                "or substring(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net'"
+                self.dbcur.execute(sql_select)
+                matchedrows = self.dbcur.fetchall()[0]
+                
+                if matchedrows:
+                    sql_update = "UPDATE movie_meta "\
+                                    "SET cover_url = SUBSTRING_INDEX(cover_url, '/', -1), "\
+                                    "backdrop_url = SUBSTRING_INDEX(backdrop_url, '/', -1) "\
+                                    "where substring(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
+                                    "or substring(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net'"
+                    self.dbcur.execute(sql_update)
+                    self.dbcon.commit()
+                    common.addon.log('MySQL rows successfully updated')
+
+                else:
+                    common.addon.log('No MySQL rows requiring update')                    
+                
+            else:
+          
+                sql_select = "SELECT imdb_id, tmdb_id, cover_url, backdrop_url "\
+                                "FROM movie_meta "\
+                                "where substr(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
+                                "or substr(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net'"
+                self.dbcur.execute(sql_select)
+                matchedrows = self.dbcur.fetchone()
+
+                if matchedrows:
+                    sql_update = "update movie_meta "\
+                                    "set cover_url = "\
+                                        "case when substr(cover_url, length(cover_url) - 31, 1) = '/' "\
+                                        "   then substr(cover_url, length(cover_url) - 31, 32) "\
+                                        "else substr(cover_url, length(cover_url) - 30, 31) "\
+                                        "end, "\
+                                        "backdrop_url = "\
+                                        "case when substr(backdrop_url, length(backdrop_url) - 31, 1) = '/' "\
+                                        "   then substr(backdrop_url, length(backdrop_url) - 31, 32) "\
+                                        "else substr(backdrop_url, length(backdrop_url) - 30, 31) "\
+                                        "end "\
+                                        "where substr(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
+                                        "or substr(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net'"
+                    self.dbcur.execute(sql_update)
+                    self.dbcon.commit()
+                    common.addon.log('SQLite rows successfully updated')
+                else:
+                    common.addon.log('No SQLite rows requiring update')                    
+               
+        except Exception, e:
+            common.addon.log('************* Error updating cover and backdrop columns: %s' % e, 4)
+            pass
+        
+        ## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     def __del__(self):
         ''' Cleanup db when object destroyed '''
@@ -307,6 +374,21 @@ class MetaData:
             self.dbcur.execute(sql_create)
         common.addon.log('Table addons initialized', 0)
 
+        # Create Configuration table
+        sql_create = "CREATE TABLE IF NOT EXISTS config ("\
+                           "setting TEXT, "\
+                           "value TEXT, "\
+                           "UNIQUE(setting)"\
+                           ");"
+
+        if DB == 'mysql':
+            sql_create = sql_create.replace("setting TEXT", "setting VARCHAR(255)")
+            sql_create = sql_create.replace("value TEXT", "value VARCHAR(255)")
+            self.dbcur.execute(sql_create)
+        else:
+            self.dbcur.execute(sql_create)
+        common.addon.log('Table config initialized', 0)
+        
 
     def _init_movie_meta(self, imdb_id, tmdb_id, name, year=0):
         '''
@@ -444,6 +526,22 @@ class MetaData:
         return meta
         
 
+    def __get_tmdb_language(self):
+        tmdb_language = common.addon.get_setting('tmdb_language')
+        if tmdb_language:
+            return re.sub(".*\((\w+)\).*","\\1",tmdb_language)
+        else:
+            return 'en'
+
+            
+    def __get_tvdb_language(self) :
+        tvdb_language = common.addon.get_setting('tvdb_language')
+        if tvdb_language and tvdb_language!='':
+            return re.sub(".*\((\w+)\).*","\\1",tvdb_language)
+        else:
+            return 'en'
+
+            
     def _string_compare(self, s1, s2):
         """ Method that takes two strings and returns True or False, based
             on if they are equal, regardless of case.
@@ -588,6 +686,91 @@ class MetaData:
         else:
             return 0
 
+
+    def _get_config(self, setting):
+        '''
+        Query local Config table for values
+        '''
+        
+        #Query local table first for current values
+        sql_select = "SELECT * FROM config where setting = '%s'" % setting
+
+        common.addon.log('Looking up in local cache for config data: %s' % setting, 2)
+        common.addon.log('SQL Select: %s' % sql_select, 0)        
+
+        try:    
+            self.dbcur.execute(sql_select)
+            matchedrow = self.dbcur.fetchone()
+        except Exception, e:
+            common.addon.log('************* Error selecting from cache db: %s' % e, 4)
+            return None
+
+        if matchedrow:
+            common.addon.log('Found config data in cache table for setting: %s value: %s' % (setting, dict(matchedrow)), 0)
+            return dict(matchedrow)['value']
+        else:
+            common.addon.log('No match in local DB for config setting: %s' % setting, 0)
+            return None            
+            
+
+    def _set_config(self, setting, value):
+        '''
+        Set local Config table for values
+        '''
+        
+        try:
+            sql_insert = "REPLACE INTO config (setting, value) VALUES(%s,%s)"
+            if DB == 'sqlite':
+                sql_insert = 'INSERT OR ' + sql_insert.replace('%s', '?')
+
+            common.addon.log('Updating local cache for config data: %s value: %s' % (setting, value), 2)
+            common.addon.log('SQL Insert: %s' % sql_insert, 0)                 
+
+            self.dbcur.execute(sql_insert, (setting, value))
+            self.dbcon.commit()
+        except Exception, e:
+            common.addon.log('************* Error updating cache db: %s' % e, 4)
+            return None
+            
+
+    def _set_tmdb_config(self):
+        '''
+        Query config database for required TMDB config values, set constants as needed
+        Validate cache timestamp to ensure it is only refreshed once every 7 days
+        '''
+    
+        tmdb_image_url = self._get_config('tmdb_image_url')
+        tmdb_config_timestamp = self._get_config('tmdb_config_timestamp')
+        
+        #Grab current time in seconds            
+        now = time.time()
+        age = 0
+
+        #Cache limit is 7 days: 60 seconds * 60 minutes * 24 hours * 7 days
+        expire = 60 * 60 * 24 * 7
+              
+        #Check if image and timestamp values are valid
+        if tmdb_image_url and tmdb_config_timestamp:
+            created = float(tmdb_config_timestamp)
+            age = now - created
+            
+            #If cache hasn't expired, set constant values
+            if age < expire:
+                common.addon.log('Cache still valid, setting values', 0)
+                self.tmdb_image_url = tmdb_image_url
+        
+        #Either we don't have the values or the cache has expired, so lets request and set them - update cache in the end
+        elif not tmdb_image_url or not tmdb_config_timestamp or age > expire:
+            common.addon.log('No cached config data found or cache expired, requesting from TMDB', 0)
+
+            tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
+            config_data = tmdb.call_config()
+
+            if config_data:
+                self.tmdb_image_url = config_data['images']['base_url']
+                self._set_config('tmdb_image_url', config_data['images']['base_url'])
+                self._set_config('tmdb_config_timestamp', now)
+                
 
     def check_meta_installed(self, addon_id):
         '''
@@ -830,7 +1013,15 @@ class MetaData:
                         banner_path=os.path.join(root_banners, banner_name[0].lower())
                         if self.classmode == 'true':
                             self._downloadimages(meta['banner_url'], banner_path, banner_name)
-                        meta['banner_url'] = os.path.join(banner_path, banner_name)        
+                        meta['banner_url'] = os.path.join(banner_path, banner_name)
+
+        #Else - they are online so piece together the full URL from TMDB 
+        else:
+            if media_type == self.type_movie:
+                if meta['cover_url'].startswith('/'):
+                    meta['cover_url'] = self.tmdb_image_url  + common.addon.get_setting('tmdb_poster_size') + meta['cover_url']
+                if meta['backdrop_url'].startswith('/'):                    
+                    meta['backdrop_url'] = self.tmdb_image_url  + common.addon.get_setting('tmdb_backdrop_size') + meta['backdrop_url']
 
         common.addon.log('Returned Meta: %s' % meta, 0)
         return meta  
@@ -1129,7 +1320,7 @@ class MetaData:
             these "None found" entries otherwise we hit tmdb alot.
         '''        
         
-        tmdb = TMDB()        
+        tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
         meta = tmdb.tmdb_lookup(name,imdb_id,tmdb_id, year)
         
         if meta is None:
@@ -1270,7 +1461,7 @@ class MetaData:
             these "None found" entries otherwise we hit tvdb alot.
         '''      
         common.addon.log('Starting TVDB Lookup', 0)
-        tvdb = TheTVDB()
+        tvdb = TheTVDB(language=self.__get_tvdb_language())
         tvdb_id = ''
         
         try:
@@ -1615,7 +1806,7 @@ class MetaData:
         else:
             return None
 
-
+     
     def update_episode_meta(self, name, imdb_id, season, episode, tvdb_id='', new_imdb_id='', new_tvdb_id=''):
         '''
         Updates and returns meta data for given episode, 
@@ -1663,7 +1854,7 @@ class MetaData:
         elif not new_tvdb_id:
             new_tvdb_id = tvdb_id
             
-        return self.get_episode_meta(name, imdb_id, season, episode, overlay)
+        return self.get_episode_meta(name, imdb_id, season, episode, overlay=overlay)
 
 
     def _cache_lookup_episode(self, imdb_id, tvdb_id, season, episode, air_date=''):
@@ -1777,7 +1968,7 @@ class MetaData:
         '''      
         
         meta = {}
-        tvdb = TheTVDB()
+        tvdb = TheTVDB(language=self._get_tvdb_language())
         if air_date:
             try:
                 episode = tvdb.get_episode_by_airdate(tvdb_id, air_date)
@@ -2246,7 +2437,7 @@ class MetaData:
 
 
     def _get_season_posters(self, tvdb_id, season):
-        tvdb = TheTVDB()
+        tvdb = TheTVDB(language=self._get_tvdb_language())
         
         try:
             images = tvdb.get_show_image_choices(tvdb_id)
