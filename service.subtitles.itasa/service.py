@@ -33,6 +33,7 @@ __cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode('utf-8')
 __serieoriginalpath__ = os.path.join(__cwd__, 'resources', 'Serie.json')
 __profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8')
 __serieprofilepath__ = os.path.join(__profile__, 'Serie.json')
+__lastdownload__ = os.path.join(__profile__, 'last.json')
 __resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode('utf-8')
 __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode('utf-8')
 
@@ -84,7 +85,7 @@ def geturl(url):
 	except:
 		log( __name__ , "Failed to get url:%s" % (url))
 		content = None
-	return(content)
+	return content
 
 def saveSerie(contents):
 	try:
@@ -100,6 +101,7 @@ def openSerie():
 		try:
 			fh = open(__serieprofilepath__, 'r')
 			contents = simplejson.loads(unicode(fh.read(), errors='ignore'))
+			fh.close()
 		except:
 			log(__name__, "Unable to open file: %s" % __serieprofilepath__)
 			return contents
@@ -143,11 +145,13 @@ def prepare_search_string(s):
 def getItaSATheTVDBID(tvshowid):
 	log(__name__,'Obtaining TheTVDB ID of itasa tv show')
 	content = geturl('https://api.italiansubs.net/api/rest/shows/' + tvshowid + '?apikey=4ffc34b31af2bca207b7256483e24aac')
-	match = re.findall(r'<id_tvdb>([\s\S]*?)</id_tvdb>', content, re.IGNORECASE | re.DOTALL)
-	if match:
-		return match[0]
+	if content:
+		match = re.findall(r'<id_tvdb>([\s\S]*?)</id_tvdb>', content, re.IGNORECASE | re.DOTALL)
+		if match:
+			return match[0]
 	else:
-		return None
+		log(__name__,'Download of user page failed')
+	return None
 
 def getItaSATVShowList():
 	content = geturl('https://api.italiansubs.net/api/rest/shows?apikey=4ffc34b31af2bca207b7256483e24aac')
@@ -157,10 +161,9 @@ def getItaSATVShowList():
 			return result
 		else:
 			log(__name__,'Match of tv shows failed')
-			return None
 	else:
 		log(__name__,'Download of tv show list failed')
-		return None
+	return None
 
 def getItaSATVShowID(tvshow, onlineid):
 	seriesname = tvshow
@@ -228,17 +231,20 @@ def getAuthID():
 		authid = __addon__.getSetting( 'authid' )
 		if (authid =='' or oldusername != username):
 			content = geturl('https://api.italiansubs.net/api/rest/users/login?username=' + username + '&password=' + password + '&apikey=4ffc34b31af2bca207b7256483e24aac')
-			match = re.findall(r'<authcode>([\s\S]*?)</authcode>', content, re.IGNORECASE | re.DOTALL)
-			if match and match[0]!='':
-				authid=match[0]
-				__addon__.setSetting(id="ITLoggeduser", value=username)
-				__addon__.setSetting(id="authid", value=authid)
+			if content:
+				match = re.findall(r'<authcode>([\s\S]*?)</authcode>', content, re.IGNORECASE | re.DOTALL)
+				if match and match[0]!='':
+					authid=match[0]
+					__addon__.setSetting(id="ITLoggeduser", value=username)
+					__addon__.setSetting(id="authid", value=authid)
+				else:
+					xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
+					log( __name__ ,'Login to Itasa api failed. Check your username/password at the addon configuration')
+					return ''
 			else:
-				xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32005))).encode('utf-8'))
-				log( __name__ ,'Login to Itasa api failed. Check your username/password at the addon configuration')
 				return ''
 	content= geturl(main_url + 'index.php')
-	if content is not None:
+	if content:
 		match = re.search('logouticon.png', content, re.IGNORECASE | re.DOTALL)
 		if match:
 			return authid
@@ -443,27 +449,74 @@ def download (subid): #standard input
 				xbmc.sleep(500)
 				xbmc.executebuiltin(('XBMC.Extract(' + local_tmp_file + ',' + __temp__ +')').encode('utf-8'), True)
 				files = []
+				filesfirst = []
 				exts = ['.srt', '.sub', '.txt', '.smi', '.ssa', '.ass']
 				tag = True
+				first = '****'
+				found = False
 				log(__name__, 'Check if file contains tags in srt and if not returns it')
+				if xbmcvfs.exists(__lastdownload__):
+					try:
+						fh = open(__lastdownload__, 'r')
+						contents = simplejson.loads(unicode(fh.read(), errors='ignore'))
+						fh.close()
+						if  contents.has_key('subid') and  contents.has_key('subname') and contents['subid']==subid:
+							log(__name__, 'Change the order to get a different subtitle than the old one')
+							first = contents['subname']
+					except:
+						log(__name__, 'No last downloaded file, skip the check')
 				for file in os.listdir(__temp__):
 					if '.tag.' not in file.lower() and os.path.splitext(file)[1] in exts:
-						files.append(os.path.join(__temp__, file))
+						filepath = os.path.join(__temp__, file)
+						if found:
+							filesfirst.append(filepath)
+						else:
+							if first == filepath:
+								found = True
+							files.append(filepath)
 						if tag and '.notag.' in file.lower():
 							tag = False
 				if tag:
-					return files
+					writeLastDownload(subid,files,filesfirst)
+					return filesfirst+files
 				else:
 					files2 = []
+					filesfirst = []
+					found = False
 					for file in files:
 						if not ('.notag.' not in file.lower() and os.path.splitext(file)[1]=='.srt'):
-							files2.append(file)
-					return files2
+							filepath = os.path.join(__temp__, file)
+							if found:
+								filesfirst.append(filepath)
+							else:
+								if first == filepath:
+									found = True
+								files2.append(filepath)
+					writeLastDownload(subid,files2,filesfirst)
+					return filesfirst+files2
 			else:
 				return [local_tmp_file]
 		else:
 			log( __name__ ,'Failed to download the file')
 			return []
+
+def writeLastDownload(subid,files,filesfirst):
+	subname = ''
+	if len(filesfirst)>0:
+		subname = filesfirst[0] 
+	elif (files)>0:
+		subname =files[0] 
+	if subname != '':
+		content = {}
+		content['subid'] = subid
+		content['subname'] = subname
+		try:
+			fh = open(__lastdownload__, 'w')
+			fh.write(simplejson.dumps(content))
+			fh.close()
+		except:
+			log(__name__, "Unable to save file: %s" % __serieprofilepath__)
+
 
 log(__name__, "Application version: %s" % __version__)
 if not xbmcvfs.exists(__profile__):
