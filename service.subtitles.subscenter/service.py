@@ -17,15 +17,14 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
 __language__ = __addon__.getLocalizedString
 
-__cwd__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('path')),'utf-8')
-__profile__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('profile')),'utf-8')
-__resource__ = unicode(xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')),'utf-8')
-__temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp')),'utf-8')
+__cwd__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('path')), 'utf-8')
+__profile__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('profile')), 'utf-8')
+__resource__ = unicode(xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')), 'utf-8')
+__temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp')), 'utf-8')
 
 sys.path.append(__resource__)
 
 from SUBUtilities import SubscenterHelper, log, normalizeString, clear_cache, parse_rls_title, clean_title
-
 
 
 def search(item):
@@ -96,7 +95,7 @@ def get_params(string=""):
 params = get_params()
 
 if params['action'] in ['search', 'manualsearch']:
-    log(__scriptname__, "Version: '%s'" % (__version__))
+    log(__scriptname__, "Version: '%s'" % (__version__,))
     log(__scriptname__, "action '%s' called" % (params['action']))
 
     if params['action'] == 'manualsearch':
@@ -105,30 +104,29 @@ if params['action'] in ['search', 'manualsearch']:
     item = {}
     item['temp'] = False
     item['rar'] = False
-    item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")                           # Year
-    item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))                    # Season
-    item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                   # Episode
-    item['tvshow'] = params['searchstring'] if params['action'] == 'manualsearch' \
-        else normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))   # Show
+    item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")  # Year
+    item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))  # Season
+    item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))  # Episode
+    item['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
     item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
-        else normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")) # try to get original title
+        else normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))  # try to get original title
     item['file_original_path'] = urllib.unquote(
-        unicode(xbmc.Player().getPlayingFile(),'utf-8'))  # Full path of a playing file
+        unicode(xbmc.Player().getPlayingFile(), 'utf-8'))  # Full path of a playing file
     item['3let_language'] = []
 
-    for lang in unicode(urllib.unquote(params['languages']),'utf-8').split(","):
+    for lang in unicode(urllib.unquote(params['languages']), 'utf-8').split(","):
         item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
     if item['title'] == "":
         log(__scriptname__, "VideoPlayer.OriginalTitle not found")
         item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
-            else normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
+            else normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
 
     # clean title + tvshow params
     clean_title(item)
     parse_rls_title(item)
 
-    if item['episode'].lower().find("s") > -1:                                # Check if season is "Special"
+    if item['episode'].lower().find("s") > -1:  # Check if season is "Special"
         item['season'] = "0"
         item['episode'] = item['episode'][-1:]
 
@@ -157,4 +155,4 @@ elif params['action'] == 'download':
 elif params['action'] == 'clear_cache':
     clear_cache()
 
-xbmcplugin.endOfDirectory(int(sys.argv[1])) ## send end of directory to XBMC
+xbmcplugin.endOfDirectory(int(sys.argv[1]))  ## send end of directory to XBMC

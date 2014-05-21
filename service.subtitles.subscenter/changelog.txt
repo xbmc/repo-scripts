@@ -1,3 +1,6 @@
+3.2.2 - by CaTz 18/05/2014
+- Bug fix with manual search
+
 3.2.1 - by CaTz 16/05/2014
 - Improvement of RLS title parsing
 
