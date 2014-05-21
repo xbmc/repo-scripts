@@ -127,7 +127,6 @@ class SubtitleHelper:
 
         if not results:
             query = {"q": search_string.encode("utf-8").lower(), "cs": "series"}
-            log(__scriptname__, query)
             search_result = self.urlHandler.request(self.BASE_URL + "/browse.php?" + urllib.urlencode(query))
             if search_result is None:
                 return results  # return empty set

@@ -105,8 +105,7 @@ if params['action'] in ['search', 'manualsearch']:
     item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")  # Year
     item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))  # Season
     item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))  # Episode
-    item['tvshow'] = params['searchstring'] if params['action'] == 'manualsearch' \
-        else normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
+    item['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
     item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
         else normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))  # try to get original title
     item['file_original_path'] = urllib.unquote(
