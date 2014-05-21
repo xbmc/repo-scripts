@@ -38,6 +38,7 @@ from settings import list_dir
 from settings import normalize_string
 
 from fetcher import TvTunesFetcher
+from finder import ThemeFiles
 
 
 ###################################################################
@@ -240,6 +241,9 @@ class MenuNavigator():
 
     # Fetch a single theme
     def fetchTheme(self, title, path, originaltitle=None):
+        # If there is already a theme then start playing it
+        self._startPlayingExistingTheme(path)
+        
         if Settings.isThemeDirEnabled() and self._doesThemeExist(path, True):
             # Prompt user if we should move themes in the parent
             # directory into the theme directory
@@ -249,6 +253,8 @@ class MenuNavigator():
             if moveExistingThemes:
                 log("fetchAllMissingThemes: Moving theme for %s" % title)
                 self._moveToThemeFolder(path)
+                # Stop playing any theme that started
+                self._stopPlayingTheme()
                 # Now reload the screen to reflect the change
                 xbmc.executebuiltin("Container.Refresh")
                 return
@@ -262,8 +268,30 @@ class MenuNavigator():
         videoList.append([normtitle, path, originaltitle])
         TvTunesFetcher(videoList)
 
+        # Stop playing any theme that started
+        self._stopPlayingTheme()
+
         # Now reload the screen to reflect the change
         xbmc.executebuiltin("Container.Refresh")
+
+    def _startPlayingExistingTheme(self, path):
+        log("startPlayingExistingTheme: Playing existing theme for %s" % path)
+        # Search for the themes
+        themeFiles = ThemeFiles(path)
+        if themeFiles.hasThemes():
+            playlist = themeFiles.getThemePlaylist()
+            # Stop playing any existing theme
+            self._stopPlayingTheme()
+            xbmc.Player().play(playlist)
+        else:
+            log("No themes found for %s" % path)
+            
+    def _stopPlayingTheme(self):
+        # Check if a tune is already playing
+        if xbmc.Player().isPlayingAudio():
+            xbmc.Player().stop()
+        while xbmc.Player().isPlayingAudio():
+            xbmc.sleep(5)
 
     # Does a search for all the missing themes
     def fetchAllMissingThemes(self):

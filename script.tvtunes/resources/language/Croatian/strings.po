@@ -20,10 +20,6 @@ msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
 msgstr "Nabavite i reproducirajte temu vašeg omiljenog filma i TV serije"
 
-msgctxt "Addon Description"
-msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "Ova skripta će vam pomoći u nabavi glazbene teme za vašu zbirku filmova i TV serija sa www.televisiontunes.com spremiti će ih u theme[0-9].mp3 datoteku u svakoj mapi vaših filmova i TV serija. Zatim će se reproducirati tijekom pregleda zbirke vaše TV serije ili prikaza video informacija (vaša presvlaka mora biti kompatibilna sa ovom značajkom)"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -107,6 +103,10 @@ msgstr "Omogući zapisivanje otklanjanja grešaka"
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
 msgstr "Prikaži TvTunes tipku na Video zaslonu informacija"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Radnje"
 
 msgctxt "#32101"
 msgid "ERROR"

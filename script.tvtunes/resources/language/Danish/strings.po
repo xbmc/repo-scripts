@@ -20,10 +20,6 @@ msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
 msgstr "Hent og afspil dine Film og TV-show Temaer."
 
-msgctxt "Addon Description"
-msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "Scriptet vil hjælpe dig med at hente temaer til dit film og serie bibliotek fra www.televisiontunes.com. Den gemmer dem som theme[0-9].mp3 i hver af dine videomapper, så de vil blive spillet mens du gennemser dit videobibliotek når du går ind i seriemappen eller Video Information (Dit skin skal være kompatibel med denne feature)"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Skinnere, se venligst wikien for hvordan du integrere det i dit skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"

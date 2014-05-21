@@ -20,10 +20,6 @@ msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
 msgstr "Obté i reproduieix els temes de les seves pel·lícules i sèries de televisió"
 
-msgctxt "Addon Description"
-msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "Aquest script t'ajudarà a cercar la banda sonora de les teves pel·lícules i sèries de televisió en www.televisiontunes.com Les guardarà en un fitxer theme[0-9].mp3 a la carpeta dels vídeos i seran reproduïdes mentre navegues per la teva col·lecció de vídeos, quant entris a la carpeta d'una sèrie o a la pantalla d'informació de vídeo. (Necessites una pell compatible per a aquesta funcionalitat)"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -115,10 +111,6 @@ msgstr "Suavitzar la melodia desprès de reproduir durant (minuts)"
 msgctxt "#32022"
 msgid "Operations"
 msgstr "Operacions"
-
-msgctxt "#32023"
-msgid "Perform Complete Search Now"
-msgstr "Fer una cerca completa ara"
 
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"

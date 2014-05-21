@@ -20,10 +20,6 @@ msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
 msgstr "הורד ונגן שירי נושא של סרטים ותכניות טלוויזיה שלך"
 
-msgctxt "Addon Description"
-msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "סקריפט זה יעזור לך להשיג שירי נושא לספריות הסרטים והסדרות שלך מ-www.televisiontunes.com, ישמור אותם בקובץ בשם theme[0-9].mp3 בכל אחת מתיקיות הוידאו שלך והם ינוגנו בעת עיון בספריית הוידאו כאשר תיכנס לספריית סדרה או במסך מידע וידאו (נדרשת תאימות המעטפת עבור יכולת זו)"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "מפתחי מעטפות, אנא פנו לוויקי ע\"מ לדעת כיצד לשלב זאת במעטפת שלכם: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -115,10 +111,6 @@ msgstr "דעיכה הדרגתית לאחר (דקות)"
 msgctxt "#32022"
 msgid "Operations"
 msgstr "פעולות"
-
-msgctxt "#32023"
-msgid "Perform Complete Search Now"
-msgstr "בצע חיפוש מלא כעת"
 
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"

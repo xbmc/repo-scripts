@@ -28,6 +28,10 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "显示除错信息"
 
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "错误"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "获取信息..."

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="4.4.3" provider-name="Ppic,Frost,ronie,robwebset">
+<addon id="script.tvtunes" name="TvTunes" version="4.4.4" provider-name="Ppic,Frost,ronie,robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -25,6 +25,8 @@
 		<summary lang="el">Λήψη και αναπαραγωγή μουσικών Θεμάτων (TvTunes) των τηλεοπτικών σειρών σας</summary>
 	
 		<summary lang="en">Get and play your Movie and TV shows Themes</summary>
+	
+		<summary lang="en_NZ">Get and play your Movie and TV shows Themes</summary>
 	
 		<summary lang="es">Descarga y reproduce las bandas sonoras de las series de tu biblioteca</summary>
 	
@@ -64,6 +66,8 @@
 	
 		<description lang="en">This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)</description>
 	
+		<description lang="en_NZ">This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)</description>
+	
 		<description lang="es">Este script te ayudará a buscar las bandas sonoras de tus películas y series de www.televisiontunes.com y guardará un fichero theme.mp3 en el directorio de tu serie y será reproducido mientras navegas dentro de la carpeta de la serie. (Necesitas una skin compatible para esta funcionalidad)</description>
 	
 		<description lang="fr">Ce script vous aidera à télécharger vos génériques de série depuis www.televisiontunes.com Il les enregistrera dans un fichier theme.mp3 dans vos répertoires de série, ils seront ensuite joué lorsque vous entrerez dans la série correspondante (cette fonctionalité requiert une skin compatible)</description>
@@ -101,6 +105,8 @@
 		<disclaimer lang="el">Skinners, ελέγξτε το αρχείο καταγραφής changelog.txt για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας</disclaimer>
 	
 		<disclaimer lang="en">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="en_NZ">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="es">Skinners, por favor, revisad changelog.txt para saber cómo integrarlo en vuestras skins</disclaimer>
 	

@@ -20,10 +20,6 @@ msgctxt "Addon Summary"
 msgid "Get and play your Movie and TV shows Themes"
 msgstr "Сваля и възпроизвежда мелодиите от вашите филми и сериали"
 
-msgctxt "Addon Description"
-msgid "This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)"
-msgstr "Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Мелодиите се свалят от www.televisiontunes.com и се запаметява в папките на видео файловете като [0-9].mp3. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик."
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -116,10 +112,6 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Операции"
 
-msgctxt "#32023"
-msgid "Perform Complete Search Now"
-msgstr "Цялостно търсене"
-
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Стартиране със закъснение (сек)"
@@ -139,6 +131,10 @@ msgstr "Възпроизвеждай всяка от наличните мело
 msgctxt "#32028"
 msgid "Default Theme Search Source"
 msgstr "Стандартна търсачка"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Възпроизвеждай мелодии при преглеждане на списъка с музикални клипове"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -223,3 +219,7 @@ msgstr "Сваляне"
 msgctxt "#32993"
 msgid "File system"
 msgstr "Файлова система"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "Грешка: Свързването с www.goear.com се провали"

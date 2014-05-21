@@ -16,9 +16,189 @@ msgstr ""
 "Language: en_NZ\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Get and play your Movie and TV shows Themes"
+msgstr "Get and play your Movie and TV shows Themes"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgstr "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Play theme in loop"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Lower sound value"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Use Protected SMB share"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Username:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Password:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Store tunes in a custom path"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Path:"
+
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Fade tune out when exiting"
+
+msgctxt "#32009"
+msgid "Automatically download if an exact match is found"
+msgstr "Automatically download if an exact match is found"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Shuffle multiple tracks"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Random start time"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "File Types"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Fade in the tune when starting"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Always add additional themes (no overwrite)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Search for movie themes"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Play themes when browsing Movie list"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Play themes when browsing TV Show list"
+
 msgctxt "#32018"
 msgid "Debugging"
 msgstr "Debugging"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Show the TvTunes button on the Video Info screen"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Fade out after playing for (minutes)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Operations"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Delay Theme Start (Seconds)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Support themes in sub directories"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Directory Name"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Limit track duration when multiple themes (seconds)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Default Theme Search Source"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Play themes when browsing Music Video list"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "ERROR"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "TvTune downloader"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Replace existing theme?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TVTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Getting information..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Searching for"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "CANCELED"
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Downloading:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "to:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Choose for"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "ENTER MANUAL SEARCH"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Download this one?"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "You can help to get more theme on:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Manual Search..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Continue with next theme search?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Search Using %s..."
 
 msgctxt "#32991"
 msgid "Playback"
@@ -27,3 +207,11 @@ msgstr "Playback"
 msgctxt "#32992"
 msgid "Download"
 msgstr "Download"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "File system"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "Error: Failed to connect to goear.com"
