@@ -10,8 +10,8 @@ import simplejson as simplejson
 import urllib, re
 from datetime import datetime
 import time
-from t0mm0.common.net import Net  
-from t0mm0.common.addon import Addon       
+from addon.common.net import Net  
+from addon.common.addon import Addon       
 from threading import Thread
 try:
     import Queue as queue
@@ -28,25 +28,16 @@ class TMDB(object):
     or if there is data missing on TMDB, another call is made to IMDB to fill in the missing information.       
     '''  
     
-    def __init__(self, api_key='af95ef8a4fe1e697f86b8c194f2e5e11', view='json', lang='en'):
+    def __init__(self, api_key='', view='json', lang='en'):
         #view = yaml json xml
         self.view = view
-        self.lang = self.__get_language(lang)
+        self.lang = lang
         self.api_key = api_key
         self.url_prefix = 'http://api.themoviedb.org/3'
-        self.poster_prefix = 'http://d3gtl9l2a4fn1j.cloudfront.net/t/p/' + addon.get_setting('tmdb_poster_size')
-        self.backdrop_prefix = 'http://d3gtl9l2a4fn1j.cloudfront.net/t/p/' + addon.get_setting('tmdb_backdrop_size')
         self.imdb_api = 'http://www.imdbapi.com/?i=%s'
         self.imdb_name_api = 'http://www.imdbapi.com/?t=%s'
         self.imdb_nameyear_api = 'http://www.imdbapi.com/?t=%s&y=%s' 
-
-    def __get_language(self, lang):
-        tmdb_language = addon.get_setting('tmdb_language')
-        if tmdb_language:
-            return re.sub(".*\((\w+)\).*","\\1",tmdb_language)
-        else:
-            return lang
-
+      
     def __clean_name(self, mystring):
         newstring = ''
         for word in mystring.split(' '):
@@ -139,7 +130,15 @@ class TMDB(object):
             except:
                 return True
 
+                
+    def call_config(self):
+        '''
+        Query TMDB config api for current values
+        '''
+        r = self._do_request('configuration', '')
+        return r        
 
+        
     def search_imdb(self, name, imdb_id='', year=''):
         '''
         Search IMDB by either IMDB ID or Name/Year      
@@ -396,9 +395,9 @@ class TMDB(object):
                 trailers = meta['trailers']
                 
                 if meta.has_key('poster_path') and meta['poster_path']:
-                    meta['cover_url'] = self.poster_prefix + meta['poster_path']
+                    meta['cover_url'] = meta['poster_path']
                 if meta.has_key('backdrop_path') and meta['backdrop_path']:
-                    meta['backdrop_url'] = self.backdrop_prefix + meta['backdrop_path']
+                    meta['backdrop_url'] = meta['backdrop_path']
                 meta['released'] = meta['release_date']
                 #Set rating to 0 so that we can force it to be grabbed from IMDB
                 meta['tmdb_rating'] = meta['vote_average']

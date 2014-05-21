@@ -17,7 +17,7 @@
 """
 
 import os    
-from t0mm0.common.addon import Addon
+from addon.common.addon import Addon
 
 addon = Addon('script.module.metahandler')
 addon_path = addon.get_path()
