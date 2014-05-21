@@ -29,7 +29,7 @@ except NameError:  # pragma no cover
     _unicode = str
 
 __author__ = 'Martin Blech'
-__version__ = '0.8.6'
+__version__ = '0.9.0'
 __license__ = 'MIT'
 
 
@@ -227,9 +227,11 @@ def parse(xml_input, encoding=None, expat=expat, process_namespaces=False,
         if not encoding:
             encoding = 'utf-8'
         xml_input = xml_input.encode(encoding)
+    if not process_namespaces:
+        namespace_separator = None
     parser = expat.ParserCreate(
         encoding,
-        namespace_separator if process_namespaces else None
+        namespace_separator
     )
     try:
         parser.ordered_attributes = True
@@ -239,6 +241,7 @@ def parse(xml_input, encoding=None, expat=expat, process_namespaces=False,
     parser.StartElementHandler = handler.startElement
     parser.EndElementHandler = handler.endElement
     parser.CharacterDataHandler = handler.characters
+    parser.buffer_text = True
     try:
         parser.ParseFile(xml_input)
     except (TypeError, AttributeError):
@@ -299,7 +302,8 @@ def _emit(key, value, content_handler,
             content_handler.ignorableWhitespace(newl)
 
 
-def unparse(input_dict, output=None, encoding='utf-8', **kwargs):
+def unparse(input_dict, output=None, encoding='utf-8', full_document=True,
+            **kwargs):
     """Emit an XML document for the given `input_dict` (reverse of `parse`).
 
     The resulting XML document is returned as a string, but if `output` (a
@@ -320,9 +324,11 @@ def unparse(input_dict, output=None, encoding='utf-8', **kwargs):
         output = StringIO()
         must_return = True
     content_handler = XMLGenerator(output, encoding)
-    content_handler.startDocument()
+    if full_document:
+        content_handler.startDocument()
     _emit(key, value, content_handler, **kwargs)
-    content_handler.endDocument()
+    if full_document:
+        content_handler.endDocument()
     if must_return:
         value = output.getvalue()
         try:  # pragma no cover
