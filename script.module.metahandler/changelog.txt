@@ -1,3 +1,6 @@
+[B]Version 2.5.1[/B]
+- Fixed bug in call to TVDB class
+
 [B]Version 2.5.0[/B]
 - Rework TMDB api key so that it can be set when initializing metahandlers - soon will require individual keys
 - Added option in addon settings to delete metahandlers cache db to restart fresh

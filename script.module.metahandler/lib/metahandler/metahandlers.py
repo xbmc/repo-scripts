@@ -1968,7 +1968,7 @@ class MetaData:
         '''      
         
         meta = {}
-        tvdb = TheTVDB(language=self._get_tvdb_language())
+        tvdb = TheTVDB(language=self.__get_tvdb_language())
         if air_date:
             try:
                 episode = tvdb.get_episode_by_airdate(tvdb_id, air_date)
@@ -2437,7 +2437,7 @@ class MetaData:
 
 
     def _get_season_posters(self, tvdb_id, season):
-        tvdb = TheTVDB(language=self._get_tvdb_language())
+        tvdb = TheTVDB(language=self.__get_tvdb_language())
         
         try:
             images = tvdb.get_show_image_choices(tvdb_id)
