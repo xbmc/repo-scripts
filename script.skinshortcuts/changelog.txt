@@ -1,3 +1,8 @@
+v0.3.1 - RepoFixes Branch
+- Fix for script not correctly providing thumbnails for favourites
+- Fix for script error on empty grouping with skin-managed selection dialog
+- Remove visibility condition for EjectTray shortcut
+
 v0.3.0
 - Fix escaping of main menu items (includes method)
 - Fix for custom nodes when using profiles

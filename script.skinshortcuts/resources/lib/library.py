@@ -602,7 +602,7 @@ class LibraryFunctions():
                 listing = doc.documentElement.getElementsByTagName( 'favourite' )
             else:
                 self.arrayFavourites = listitems
-                return
+                return self.arrayFavourites
                 
             for count, favourite in enumerate(listing):
                 name = favourite.attributes[ 'name' ].nodeValue
@@ -610,12 +610,12 @@ class LibraryFunctions():
                 if ('RunScript' not in path) and ('StartAndroidActivity' not in path) and not (path.endswith(',return)') ):
                     path = path.rstrip(')')
                     path = path + ',return)'
-                else:
-                    try:
-                        thumb = favourite.attributes[ 'thumb' ].nodeValue
-                    except:
-                        thumb = "DefaultFolder.png"
-                        
+                
+                try:
+                    thumb = favourite.attributes[ 'thumb' ].nodeValue
+                except:
+                    thumb = "DefaultFolder.png"
+                    
                 listitem = xbmcgui.ListItem(label=name, label2=__language__(32006), iconImage="DefaultShortcut.png", thumbnailImage=thumb)
                 listitem.setProperty( "path", urllib.quote( path.encode( 'utf-8' ) ) )
                 listitem.setProperty( "thumbnail", thumb )
@@ -781,6 +781,13 @@ class LibraryFunctions():
         else: # No category selected
             log( "No shortcut category selected" )
             return
+            
+        # Check that something has been returned
+        if len( availableShortcuts ) == 0:
+            log( "No available shortcuts found" )
+            xbmcgui.Dialog().ok( "No Shortcuts", "There are no available shortcuts to choose from in the group you selected." )
+            return
+            
                         
         # Now build an array of items to show to the user
         displayShortcuts = []

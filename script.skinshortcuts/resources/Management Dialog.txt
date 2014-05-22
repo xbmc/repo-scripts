@@ -34,7 +34,7 @@ It is recommended you set the label for all of these controls, however if no lab
 Most of these controls are optional (though it is recommended to include them), but you MUST include control 211. Controls 101, 102, 103 and 111 all rely on the others being present.
 
 
-3. Using label2 on buttons to provide more information
+2. Using label2 on buttons to provide more information
 
 You can set the label2 value of buttons to provide details of current selected - for example, the current label or action of the user selected shortcut.
 
@@ -43,7 +43,7 @@ User-selected shortcuts have the same properties they will have when displayed i
 NOTE: You MUST provide a label (even one set to a script-provided string) for label2's to operate.
 
 
-2. Alternative method to set a shortcut
+3. Alternative method to set a shortcut
 
 Rather than using list 111 to let the user select a shortcut, you can include button 401. When clicked it will show the user, via the standard Select dialog, first a list of the available categories of shortcuts, then the shortcuts within that category.
 
@@ -56,10 +56,10 @@ You can also use the button to go straight to the list of shortcuts for a catego
 	favourites	(Users favourites)
 	addons		(Programs, video add-ons, music add-ons, picture add-ons)
 	
-Note, you must still include all controls in the 100 range in your xml file. However, they do not have to be visible to the user. After a click to 401 has been registered, the window property "category" will be cleared.
+After a click to 401 has been registered, the window property "category" will be cleared.
 
 
-3. Set a custom property
+4. Set a custom property
 
 If you want to attach a custom property to a menu item, you can include button 404.
 
@@ -73,7 +73,7 @@ Then send a click to control 404. The two properties will be cleared afterwards.
 You can set defaults for your custom property in your overrides.xml file. See resources/Advanced Usage.txt - "Overrides.xml".
 
 
-4. Launch management dialog for submenu / additional menus
+5. Launch management dialog for submenu / additional menus
 
 You can give the users a way to launch the management dialog for the submenu or an additional menu from the management dialog.
 
@@ -84,6 +84,6 @@ To launch the management dialog for an additional sub menu, first set the window
 You will likely only want to include this when editing the main menu. You can check the window property "groupname" for the value "mainmenu" to only display it when relevant.
 
 
-5. Limit controls to main menu only
+6. Limit controls to main menu only
 
 You may wish to only show some of these controls when the user is editing the main menu only, not a submenu. To do this, check the window property "groupname" for the value "mainmenu".

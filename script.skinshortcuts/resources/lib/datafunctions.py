@@ -416,7 +416,7 @@ class DataFunctions():
             return "Library.HasContent(MusicVideos)"
         if action.startswith( "ActivateWindow(MusicLibrary," ):
             return "Library.HasContent(Music)"
-        if action == "XBMC.PlayDVD()" or action == "EjectTray()":
+        if action == "XBMC.PlayDVD()":
             return "System.HasMediaDVD"
             
         return ""
