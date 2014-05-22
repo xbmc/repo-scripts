@@ -1,3 +1,6 @@
+0.0.5
+- Improved SYNC matching REGEX.
+- Fixed a missing string in all languages.
 0.0.4
 - Added Parent Folder search and sync matching. Choose in addon settings AUTO or OFF. AUTO checks if parent folder is a release and if true it will be used for search and sync.
 - Reviewed Release pattern for better Description display.
