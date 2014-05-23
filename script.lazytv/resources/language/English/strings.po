@@ -252,11 +252,11 @@ msgid "Default action"
 msgstr ""
 
 msgctxt "#32091"
-msgid "No, dont play next episode."
+msgid "Dont Play"
 msgstr ""
 
 msgctxt "#32092"
-msgid "Yes, play next episode."
+msgid "Play"
 msgstr ""
 
 msgctxt "#32093"

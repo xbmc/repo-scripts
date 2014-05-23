@@ -62,7 +62,7 @@ language         = xbmc.getInfoLabel('System.Language')
 primary_function = __setting__('primary_function')
 populate_by_d    = __setting__('populate_by_d')
 select_pl        = __setting__('select_pl')
-default_playlist = __setting__('file')
+default_playlist = __setting__('users_spl')
 
 sort_by          = int(__setting__('sort_by'))
 length           = int(__setting__('length'))
@@ -369,12 +369,14 @@ def get_TVshows():
 	nepl_retrieved = json.loads(nepl_retrieved)
 
 	log('get_TVshows_querycomplete')
-	for x in nepl_retrieved['result']['tvshows']:
-		log(str(x))
 
 	if 'result' in nepl_retrieved and 'tvshows' in nepl_retrieved["result"] and nepl_retrieved['result']['tvshows']:
 		nepl_retrieved = nepl_retrieved['result']['tvshows']
+		for x in nepl_retrieved:
+			log(str(x))
 	else:
+		log('no unwatched TV shows in library')
+		log(nepl_retrieved)
 		nepl_retrieved = {}
 
 	nepl_from_service = WINDOW.getProperty("LazyTV.nepl")
