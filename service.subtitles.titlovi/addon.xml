@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.subtitles.titlovi"
+       name="Titlovi.com"
+       version="1.0.7"
+       provider-name="mikimac, amet">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.lat2cyr" version="0.3.2"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Titlovi.com subtitle search and download</summary>
+    <language>bs hr en mk sr sl</language>
+    <description lang="en">Titlovi.com subtitle addon for gotham.Search and download subtitles from Titlovi.com, for movies and tv series. And if you wish, convert serbian latin to cyrillic. Supported languages: English, Bosnian, Macedonian, Croatian, Serbian and Slovenian</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <platform>all</platform>
+    <website>https://github.com/mikimac/service.subtitles.titlovi</website>
+    <source>https://github.com/mikimac/service.subtitles.titlovi</source>
+    <forum></forum>
+  </extension>
+</addon>

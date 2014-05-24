@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32002">
+      <setting id="autocyrillic" type="bool" label="32001" default="false" />
+    </category>
+</settings>
