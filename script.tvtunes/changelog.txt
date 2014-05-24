@@ -1,3 +1,6 @@
+v4.4.5
+- Fix OSX bug with python module name clash
+
 v4.4.4
 - Make sure there is only one username/password in smb shares
 - Play existing theme when using plugin theme browser to search for new theme

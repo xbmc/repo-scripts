@@ -28,7 +28,7 @@ from settings import os_path_split
 from settings import list_dir
 from settings import normalize_string
 
-from fetcher import TvTunesFetcher
+from themeFetcher import TvTunesFetcher
 
 
 ###############################################################
