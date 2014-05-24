@@ -45,7 +45,6 @@ __addon__        = xbmcaddon.Addon()
 __addonid__      = __addon__.getAddonInfo('id')
 __addonversion__ = tuple([int(x) for x in __addon__.getAddonInfo('version').split('.')])
 __setting__      = __addon__.getSetting
-lang             = __addon__.getLocalizedString
 dialog           = xbmcgui.Dialog()
 scriptPath       = __addon__.getAddonInfo('path')
 scriptName       = __addon__.getAddonInfo('Name')
@@ -98,7 +97,10 @@ try:
 except:
 	pass
 
-
+def lang(id):
+	san = __addon__.getLocalizedString(id).encode( 'utf-8', 'ignore' )
+	return san 
+	
 def log(message, label = '', reset = False):
 	if keep_logs:
 		global start_time

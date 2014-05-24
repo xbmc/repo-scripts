@@ -31,7 +31,6 @@ import sys
 _addon_ = xbmcaddon.Addon('script.lazytv')
 __addonid__          = _addon_.getAddonInfo('id')
 _setting_            = _addon_.getSetting
-lang                 = _addon_.getLocalizedString
 scriptPath           = _addon_.getAddonInfo('path')
 
 list_type            = len(sys.argv[1])
@@ -47,6 +46,10 @@ start_time             = time.time()
 base_time              = time.time()
 
 show_request         = {"jsonrpc": "2.0","method": "VideoLibrary.GetTVShows","params": {"properties": ["thumbnail"]},"id": "1"}
+
+def lang(id):
+    san = __addon__.getLocalizedString(id).encode( 'utf-8', 'ignore' )
+    return san 
 
 def json_query(query, ret):
     try:

@@ -51,7 +51,6 @@ __addonversion__       = tuple([int(x) for x in __addon__.getAddonInfo('version'
 __scriptPath__         = __addon__.getAddonInfo('path')
 __profile__            = xbmc.translatePath(__addon__.getAddonInfo('profile'))
 __setting__            = __addon__.getSetting
-lang                   = __addon__.getLocalizedString
 videoplaylistlocation  = xbmc.translatePath('special://profile/playlists/video/')
 start_time             = time.time()
 base_time              = time.time()
@@ -73,6 +72,10 @@ prevcheck              = True if __setting__('prevcheck') 			== 'true' else Fals
 moviemid               = True if __setting__('moviemid') 			== 'true' else False
 first_run              = True if __setting__('first_run') 			== 'true' else False
 maintainsmartplaylist  = True if __setting__('maintainsmartplaylist') 			== 'true' else False
+
+def lang(id):
+	san = __addon__.getLocalizedString(id).encode( 'utf-8', 'ignore' )
+	return san 
 
 def log(message, label = '', reset = False):
 	if keep_logs:

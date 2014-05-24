@@ -36,8 +36,6 @@ import json
 
 __addon__        = xbmcaddon.Addon('script.lazytv')
 __addonid__      = __addon__.getAddonInfo('id')
-__setting__      = __addon__.getSetting
-lang             = __addon__.getLocalizedString
 dialog           = xbmcgui.Dialog()
 scriptPath       = __addon__.getAddonInfo('path')
 addon_path       = xbmc.translatePath('special://home/addons')
@@ -56,6 +54,9 @@ try:
 except:
 	spec_shows = []
 
+def lang(id):
+	san = __addon__.getLocalizedString(id).encode( 'utf-8', 'ignore' )
+	return san 
 
 def log(message, label = '', reset = False):
 	if keep_logs:

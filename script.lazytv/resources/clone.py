@@ -37,7 +37,6 @@ import fileinput
 __addon__        = xbmcaddon.Addon('script.lazytv')
 __addonid__      = __addon__.getAddonInfo('id')
 __setting__      = __addon__.getSetting
-lang             = __addon__.getLocalizedString
 dialog           = xbmcgui.Dialog()
 scriptPath       = __addon__.getAddonInfo('path')
 addon_path       = xbmc.translatePath('special://home/addons')
@@ -46,6 +45,9 @@ keep_logs        = True if __setting__('logging') == 'true' else False
 start_time       = time.time()
 base_time        = time.time()
 
+def lang(id):
+	san = __addon__.getLocalizedString(id).encode( 'utf-8', 'ignore' )
+	return san 
 
 def sanitize_strings(dirtystring):
 

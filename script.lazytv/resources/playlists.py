@@ -5,7 +5,10 @@ import xbmcgui
 
 _addon_              = xbmcaddon.Addon('script.lazytv')
 __addonid__          = _addon_.getAddonInfo('id')
-lang             = _addon_.getLocalizedString
+
+def lang(id):
+    san = __addon__.getLocalizedString(id).encode( 'utf-8', 'ignore' )
+    return san 
 
 plf            = {"jsonrpc": "2.0","id": 1, "method": "Files.GetDirectory",         "params": {"directory": "special://profile/playlists/video/", "media": "video"}}
 
