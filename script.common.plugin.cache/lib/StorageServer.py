@@ -191,7 +191,7 @@ class StorageServer():
 
     def run(self):
         self.plugin = "StorageServer-" + self.version
-        print self.plugin + " Storage Server starting " + self.path
+        #print self.plugin + " Storage Server starting " + self.path
         self._sock_init(True)
 
         if not self._startDB():

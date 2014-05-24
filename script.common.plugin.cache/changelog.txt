@@ -1,3 +1,6 @@
+[B]Version 2.5.5[/B]
+- Fix ascii error with non UTF-8 characters on print statement
+
 [B]Version 1.5.2[/B]
 - Fixed: Dharma error with sqlite. [mswiege]
 - User selectable port on windows
