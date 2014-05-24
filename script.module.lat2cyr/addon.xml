@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.lat2cyr"
+	name="Lat2Cyr"
+	version="2.0.1"
+	provider-name="mikimac">
+	<requires>
+	<import addon="xbmc.python"
+			version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.module"
+			 library="lib" />
+	<extension point="xbmc.addon.metadata">
+	<summary lang="en">Lat2Cyr</summary>
+	<language></language>
+    <description lang="en">Lat2Cyr convert text files or subtitles from latin to cyrillic characters. Program will try to autodetect encoding type of file between UTF-8 and CP1250 (Windows-1250) and create utf8 cyrillic file</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <platform>all</platform>
+    <website>https://github.com/mikimac/script.module.lat2cyr</website>
+    <source>https://github.com/mikimac/script.module.lat2cyr</source>
+    <forum></forum>
+	</extension>
+</addon>

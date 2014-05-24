@@ -1,0 +1,15 @@
+Lat2Cyr convert text files or subtitles from latin to cyrillic characters.
+Program will try to autodetect encoding type of file
+between UTF-8 and CP1250 (Windows-1250) and create utf8 cyrillic file
+
+Supported languages for converting to cyrillic are: Serbian and Macedonian
+
+Version: 2.0.1
+
+Example usage:
+	from lat2cyr import Lat2Cyr
+	lat2cyr = Lat2Cyr()
+	lat2cyr = convert2cyrillic(fileIn, encoding=None)
+
+fileIn - is input file you want to convert to cyrillic
+encoding - if you now file encoding enter here if you don program will try to autodetect

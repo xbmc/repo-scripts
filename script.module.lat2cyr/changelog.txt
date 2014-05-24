@@ -1,0 +1,17 @@
+1.0.0
+Test version
+
+1.1.0
+Add fix for converting two letters to one letter
+
+1.5.0
+Fixed minor bugs
+
+1.6.0
+add fix for <b> <i> and other similar signs to stay in latin
+
+2.0.0
+Add automatic encoding detection between cp1250 and utf8
+
+2.0.1
+Better automatic encoding detection
