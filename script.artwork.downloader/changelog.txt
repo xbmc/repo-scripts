@@ -1,3 +1,6 @@
+v12.0.27
+- Fix wrong order of listing using votes for artwork from fanart.tv
+
 v12.0.26
 - Call TMDb config to get up-to-date image base URL
 
