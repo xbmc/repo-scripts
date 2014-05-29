@@ -1,3 +1,7 @@
+[B]v0.9.6[/B]
+- Added more actions new in Gotham
+- Fixed: permission error during save on android
+
 [B]v0.9.5[/B]
 - Added reapeat and shuffle actions
 - Added action for opening subtitle search

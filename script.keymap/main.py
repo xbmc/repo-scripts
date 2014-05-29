@@ -82,7 +82,7 @@ def main():
         elif idx == 2:
             # save
             if os.path.exists(gen_file):
-                shutil.copy(gen_file, gen_file + ".old")
+                shutil.copyfile(gen_file, gen_file + ".old")
             utils.write_keymap(userkeymap, gen_file)
             xbmc.executebuiltin("action(reloadkeymaps)")
             break
