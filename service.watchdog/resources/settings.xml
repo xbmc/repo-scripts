@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30001">
+        <setting label="30005" id="clean" type="bool" default="false"/>
+        <setting label="30011" id="notifications" type="bool" default="true"/>
+        <setting label="30016" id="pauseonplayback" type="bool" default="true"/>
+        <setting label="30018" type="lsep"/>
+        <setting label="30019" type="lsep"/>
+    </category>
+    <category label="30030">
+        <setting label="30031" id="watchvideo" type="bool" default="true"/>
+        <setting label="30032" id="videosource1" type="folder" value="" enable="eq(-1,false)"/>
+        <setting label="30033" id="videosource2" type="folder" value="" enable="eq(-2,false)"/>
+        <setting label="30034" id="videosource3" type="folder" value="" enable="eq(-3,false)"/>
+        <setting label="30035" id="videosource4" type="folder" value="" enable="eq(-4,false)"/>
+        <setting label="30036" id="videosource5" type="folder" value="" enable="eq(-5,false)"/>
+        <setting label="30037" id="watchmusic" type="bool" default="true"/>
+        <setting label="30038" id="musicsource1" type="folder" value="" enable="eq(-1,false)"/>
+        <setting label="30039" id="musicsource2" type="folder" value="" enable="eq(-2,false)"/>
+        <setting label="30040" id="musicsource3" type="folder" value="" enable="eq(-3,false)"/>
+        <setting label="30041" id="musicsource4" type="folder" value="" enable="eq(-4,false)"/>
+        <setting label="30042" id="musicsource5" type="folder" value="" enable="eq(-5,false)"/>
+        <setting label="30018" type="lsep"/>
+        <setting label="30019" type="lsep"/>
+    </category>
+    <category label="30002">
+        <setting label="30006" id="method" type="select" lvalues="30007|30008" default="0"/>
+        <setting label="30012" id="pollingmethod" type="select" lvalues="30013|30014|30015" default="2"/>
+        <setting label="30020" id="pollinginterval" type="number" default="4"/>
+        <setting label="30010" id="delay" type="number" default="1"/>
+        <setting label="30017" id="forceglobalscan" type="bool" default="false"/>
+        <setting label="30018" type="lsep"/>
+    </category>
+</settings>

@@ -1,0 +1,55 @@
+[B]0.8.0[/B]
+- added settings for manually selecting folders to watch
+- added setting for changing network polling interval
+- added dialog for add-on start up progress
+- many performance and stability improvements including faster startup and shutdown
+- fixed inotify never working on android
+- polling now auto-selected for mounted smb/nfs shares (linux)
+
+[B]0.7.7[/B]
+- fixed: add-on sometimes failing to start on android, causing xbmc to hang on exit
+
+[B]0.7.6[/B]
+- fixed multiple issues with the depth 2 poller
+
+[B]0.7.5[/B]
+- added option for forcing global scan on video sources. This is a workaround for a bug that cause XBMC to sometimes fail to recognize the newly added files
+
+[B]0.7.4[/B]
+- fixed encoding related regression affecting posix systems (OpenElec and other non-standard distributions)
+
+[B]0.7.3[/B]
+- added French translation
+- now tries to not scan when when non-media files are added
+- fixed: scanning sometimes failing due to reserved characters not being escaped
+- fixed: poller (depth 2) sometimes failing when files are added
+
+[B]0.7.2[/B]
+- added option for disabling pause on playback
+- other minor tweaks
+
+[B]0.7.1[/B]
+- fixed: library was cleaned even if it was disabled
+
+[B]0.7.0[/B]
+- support for network shares
+- now only scans the media source an event appeared in
+- now shows notifications when a media source is not being watched (optional)
+- settings now accessible through programs menu
+- various fixes
+
+[B]0.6.3[/B]
+- added setting for delaying updates
+- no longer scans/cleans during playback
+
+[B]0.6.2[/B]
+- added multipath support
+- added stricter triggering of library clean based on file type
+
+[B]0.6.1[/B]
+- fixed: not able to resume from sleep mode on linux
+- fixed: addon not able to start on windows xp when syscall is selected
+
+[B]0.6.0[/B]
+- fixed: xbmc deadlocks on windows when exiting
+

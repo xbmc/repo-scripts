@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30001">General</string>
+    <string id="30002">Advanced</string>
+    <string id="30003"></string>
+    <string id="30004"></string>
+    <string id="30005">Clean library when files are moved or deleted</string>
+    <string id="30006">Method for local folders</string>
+    <string id="30007">Auto</string>
+    <string id="30008">Polling</string>
+    <string id="30009"></string>
+    <string id="30010">Delay before updating</string>
+    <string id="30011">Show notifications</string>
+    <string id="30012">Polling method for network shares</string>
+    <string id="30013">Depth 1 (Look in top directory only)</string>
+    <string id="30014">Depth 2 (Look 2 directories deep)</string>
+    <string id="30015">Depth inf. (Look in every subdirectory)</string>
+    <string id="30016">Pause on playback</string>
+    <string id="30017">Force global scan (fixes xbmc sometimes not picking up new tv episodes)</string>
+    <string id="30018">Note: XBMC must restarted for changes to take effect.</string>
+    <string id="30020">Network Polling Interval</string>
+    <string id="30021">Display startup dialog</string>
+    <string id="30030">Sources</string>
+    <string id="30031">Watch video source added in XBMC</string>
+    <string id="30032">Video Source 1</string>
+    <string id="30033">Video Source 2</string>
+    <string id="30034">Video Source 3</string>
+    <string id="30035">Video Source 4</string>
+    <string id="30036">Video Source 5</string>
+    <string id="30037">Watch music source added in XBMC</string>
+    <string id="30038">Music Source 1</string>
+    <string id="30039">Music Source 2</string>
+    <string id="30040">Music Source 3</string>
+    <string id="30041">Music Source 4</string>
+    <string id="30042">Music Source 5</string>
+</strings>
+
