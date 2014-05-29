@@ -3,9 +3,18 @@
 	<category label="32010">
 		<setting label="32013" type="action" action="RunScript($CWD/discovery.py)"/>
 		<setting id="ipAddress" type="ipaddress" label="32002" default="0.0.0.0"/>
+    	<setting label="32012" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32009" default="false"/>
+		<setting id="useTestData" type="bool" label="32017" default="false"/>
 	</category>
 	<category label="32015">
 		<setting id="refreshInterval" label="32016" type="slider" default="2" range="0.5,0.5,5" option="float"/>
+		<setting id="displayArtistInfo" type="bool" label="32021" default="false"/>
+		<setting id="avoidDuplicateCommands" label="32022" type="slider" default="1.5" range="0.5,0.5,5" option="float"/>
+		<setting id="volumeChangeIncrements" label="32025" type="slider" default="3" range="1,1,10" option="int"/>
+
+		<setting id="linkAudioWithSonos" type="bool" label="32023" default="false"/>
+		<setting id="switchSonosToLineIn" enable="eq(-1,true)" type="bool" label="32024" default="false"/>
 	</category>
 	<category label="32011">
 		<setting id="notifEnabled" type="bool" label="32003" default="true"/>
@@ -16,9 +25,6 @@
 	</category>
 	<category label="32018">
 		<setting id="batchSize" label="32019" type="slider" default="100" range="10,10,1000" option="int"/>
-	</category>
-	<category label="32012">
-		<setting id="logEnabled" type="bool" label="32009" default="false"/>
-		<setting id="useTestData" type="bool" label="32017" default="false"/>
+		<setting id="maxListEntries" label="32020" type="slider" default="1000" range="0,100,3000" option="int"/>
 	</category>
 </settings>

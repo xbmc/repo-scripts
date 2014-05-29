@@ -5,6 +5,9 @@ import traceback
 import xbmc
 import xbmcaddon
 import xbmcgui
+import threading
+import xbmcvfs
+import time
 
 __addon__     = xbmcaddon.Addon(id='script.sonos')
 __addonid__   = __addon__.getAddonInfo('id')
@@ -23,16 +26,22 @@ sys.path.append(__lib__)
 from settings import Settings
 from settings import log
 
-# Import the Mock Sonos class for testing where there is no live Sonos system
-#from mocksonos import TestMockSonos
 
 log('script version %s started' % __version__)
+
+# The base type of the window depends on if we are just having the basic controls
+# (In which case it is a dialog, so you can see the rest of the screen)
+# If we want to use ArtistSlideshow then it needs to be a Window, as it does
+# not work with dialogs (And we want to full the whole screen anyway)
+BaseWindow = xbmcgui.WindowXMLDialog
+if Settings.displayArtistInfo():
+    BaseWindow = xbmcgui.WindowXML
 
 
 #####################################################
 # Main window for the Sonos controller
 #####################################################
-class SonosControllerWindow(xbmcgui.WindowXMLDialog):
+class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
     ALBUM_ART = 801
     ARTIST_LABEL = 802
     TITLE_LABEL = 803
@@ -63,6 +72,8 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
         self.currentTrack = None
         
         self.delayedRefresh = 0
+        # After startup we can always process the action
+        self.nextFilteredAction = 0
 
     # Static method to create the Window Dialog class
     @staticmethod
@@ -94,9 +105,16 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
         ACTION_VOLUME_DOWN    = 89
         ACTION_MUTE           = 91
 
+        # Values Used in the custom keymap
+        ACTION_FIRST_PAGE     = 159 # Next Track
+        ACTION_LAST_PAGE      = 160 # Previous Track
+        ACTION_PAGE_UP        = 5   # Increase Volume
+        ACTION_PAGE_DOWN      = 6   # Decrease Volume
+        ACTION_TOGGLE_WATCHED = 200 # Mute volume
+
 
         if (action == ACTION_PREVIOUS_MENU) or (action == ACTION_NAV_BACK):
-            log("SonosControllerWindow: Close Action received: %s" % str(action))
+            log("SonosControllerWindow: Close Action received: %s" % str(action.getId()))
             self.close()
         else:
             # Handle remote control commands
@@ -112,56 +130,54 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
                         self.onClick(SonosControllerWindow.BUTTON_PLAY)
             elif( action == ACTION_STOP ):
                 self.onClick(SonosControllerWindow.BUTTON_STOP)
-            elif( action == ACTION_NEXT_ITEM ):
+            elif (action == ACTION_NEXT_ITEM) or (action == ACTION_FIRST_PAGE):
                 self.onClick(SonosControllerWindow.BUTTON_NEXT)
-            elif( action == ACTION_PREV_ITEM ):
+            elif (action == ACTION_PREV_ITEM) or (action == ACTION_LAST_PAGE):
                 self.onClick(SonosControllerWindow.BUTTON_PREVIOUS)
-            elif( action == ACTION_MUTE ):
+            elif (action == ACTION_MUTE) or (action == ACTION_TOGGLE_WATCHED):
                 # Check if currently muted
-                if sonosDevice.mute() == 0:
-                    self.onClick(SonosControllerWindow.BUTTON_MUTED)
-                else:
+                if sonosDevice.mute == False:
                     self.onClick(SonosControllerWindow.BUTTON_NOT_MUTED)
-            elif( action == ACTION_VOLUME_UP ):
+                else:
+                    self.onClick(SonosControllerWindow.BUTTON_MUTED)
+            elif (action == ACTION_VOLUME_UP) or (action == ACTION_PAGE_UP):
                 # Get the current slider position
                 volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
                 currentSliderPosition = int(volumeSlider.getPercent())
                 if currentSliderPosition < 100:
-                    # Bump the volume by one
-                    volumeSlider.setPercent(currentSliderPosition + 1)
+                    # Bump the volume by double the wait time (otherwise we can't skip forward accurately)
+                    volumeSlider.setPercent(currentSliderPosition + Settings.getVolumeChangeIncrements())
                     self.onClick(SonosControllerWindow.SLIDER_VOLUME)
-            elif( action == ACTION_VOLUME_DOWN ):
+            elif (action == ACTION_VOLUME_DOWN) or (action == ACTION_PAGE_DOWN):
                 # Get the current slider position
                 volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
                 currentSliderPosition = int(volumeSlider.getPercent())
                 if currentSliderPosition > 0:
-                    # Bump the volume down by one
-                    volumeSlider.setPercent(currentSliderPosition - 1)
+                    # Bump the volume down by double the wait time (otherwise we can't skip forward accurately)
+                    volumeSlider.setPercent(currentSliderPosition - Settings.getVolumeChangeIncrements())
                     self.onClick(SonosControllerWindow.SLIDER_VOLUME)
             elif( (action == ACTION_FORWARD) or (action == ACTION_PLAYER_FORWARD) ):
                 # Get the current slider position
                 seekSlider = self.getControl(SonosControllerWindow.SLIDER_SEEK)
                 currentSliderPosition = int(seekSlider.getPercent())
                 if currentSliderPosition < 99:
-                    # Bump the slider by one
-                    seekSlider.setPercent(currentSliderPosition + 1)
+                    # Bump the slider by double the wait time (otherwise we can't skip forward accurately)
+                    seekSlider.setPercent(currentSliderPosition + (int(Settings.getAvoidDuplicateCommands()) * 2))
                     self.onClick(SonosControllerWindow.SLIDER_SEEK)
             elif( (action == ACTION_REWIND) or (action == ACTION_PLAYER_REWIND) ):
                 # Get the current slider position
                 seekSlider = self.getControl(SonosControllerWindow.SLIDER_SEEK)
                 currentSliderPosition = int(seekSlider.getPercent())
                 if currentSliderPosition > 0:
-                    # Bump the slider down by one
-                    seekSlider.setPercent(currentSliderPosition - 1)
+                    # Bump the slider down by double the wait time (otherwise we can't skip forward accurately)
+                    seekSlider.setPercent(currentSliderPosition - (int(Settings.getAvoidDuplicateCommands()) * 2))
                     self.onClick(SonosControllerWindow.SLIDER_SEEK)
-
-            
 
 
     # Handle the close event - make sure we set the flag so we know it's been closed
     def close(self):
         self.closeRequested = True
-        xbmcgui.WindowXMLDialog.close(self)
+        BaseWindow.close(self)
 
     def updateDisplay(self):
         # Get the current track information
@@ -240,7 +256,7 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
         
         # Check to see what the current state of the mute button is
         muteButton = self.getControl(SonosControllerWindow.BUTTON_NOT_MUTED)
-        if sonosDevice.mute() == 0:
+        if sonosDevice.mute == False:
             muteButton.setVisible(True)
         else:
             muteButton.setVisible(False)
@@ -252,7 +268,7 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
     
             # Get the current volume and set the slider
             # Will return a value between 0 and 100
-            currentVolume = sonosDevice.volume()
+            currentVolume = sonosDevice.volume
             # Get the slider control
             volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
             # Don't move slider is already in correct position
@@ -270,6 +286,23 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
     # Do the initial setup of the dialog
     def onInit(self):
         self.updateDisplay()
+
+    # work out if a given action is OK to run
+    def _canProcessFilteredAction(self):
+        currentTime = time.time()
+
+        # Make sure we are not in a blackout zone
+        if currentTime > self.nextFilteredAction:
+            # Reset the time, and make sure we do not process any others
+            # for another 2 seconds (This will prevent a large build up
+            # as we hope that the sonos system can process this within 
+            # 2 seconds, otherwise there will be a delay)
+            self.nextFilteredAction = currentTime + Settings.getAvoidDuplicateCommands()
+            return True
+        elif self.nextFilteredAction > 0:
+            log("SonosControllerWindow: Ignoring commands until %s" % time.strftime("%H:%M:%S", time.gmtime(self.nextFilteredAction)))
+        
+        return False
 
     # Handle the operations where the user clicks on a button
     def onClick(self, controlID):
@@ -302,43 +335,49 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
 
         elif controlID == SonosControllerWindow.BUTTON_NOT_MUTED:
             log("SonosControllerWindow: Mute Requested")
-            sonosDevice.mute(True)
+            sonosDevice.mute = True
             self.setFocusId(SonosControllerWindow.BUTTON_MUTED)
 
         elif controlID == SonosControllerWindow.BUTTON_MUTED:
             log("SonosControllerWindow: Mute Requested")
-            sonosDevice.mute(False)
+            sonosDevice.mute = False
             self.setFocusId(SonosControllerWindow.BUTTON_NOT_MUTED)
 
         elif controlID == SonosControllerWindow.SLIDER_VOLUME:
-            # Get the position of the slider
-            volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
-            currentSliderPosition = int(volumeSlider.getPercent())
-
-            log("SonosControllerWindow: Volume Request to value: %d" % currentSliderPosition)
-
-            # Before we send the volume change request we want to delay any refresh
-            # on the gui so we have time to perform the slide operation without
-            # the slider being reset
-            self._setDelayedRefresh()
-
-            # Now set the volume
-            sonosDevice.volume(currentSliderPosition)
+            # Only process the operation if we are allowed
+            # this is to prevent a buildup of actions
+            if self._canProcessFilteredAction():
+                # Get the position of the slider
+                volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
+                currentSliderPosition = int(volumeSlider.getPercent())
+    
+                log("SonosControllerWindow: Volume Request to value: %d" % currentSliderPosition)
+    
+                # Before we send the volume change request we want to delay any refresh
+                # on the gui so we have time to perform the slide operation without
+                # the slider being reset
+                self._setDelayedRefresh()
+    
+                # Now set the volume
+                sonosDevice.volume = currentSliderPosition
 
         elif controlID == SonosControllerWindow.SLIDER_SEEK:
-            # Get the position of the slider
-            seekSlider = self.getControl(SonosControllerWindow.SLIDER_SEEK)
-            currentSliderPosition = int(seekSlider.getPercent())
-
-            log("SonosControllerWindow: Seek Request to value: %d" % currentSliderPosition)
-
-            # Before we send the seek change request we want to delay any refresh
-            # on the gui so we have time to perform the slide operation without
-            # the slider being reset
-            self._setDelayedRefresh()
-
-            # Now set the seek location
-            self._setSeekPosition(currentSliderPosition)
+            # Only process the operation if we are allowed
+            # this is to prevent a buildup of actions
+            if self._canProcessFilteredAction():
+                # Get the position of the slider
+                seekSlider = self.getControl(SonosControllerWindow.SLIDER_SEEK)
+                currentSliderPosition = int(seekSlider.getPercent())
+    
+                log("SonosControllerWindow: Seek Request to value: %d" % currentSliderPosition)
+    
+                # Before we send the seek change request we want to delay any refresh
+                # on the gui so we have time to perform the slide operation without
+                # the slider being reset
+                self._setDelayedRefresh()
+    
+                # Now set the seek location
+                self._setSeekPosition(currentSliderPosition)
 
 #        else:
 #            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), "Control clicked is " + str(controlID))
@@ -445,38 +484,179 @@ class SonosControllerWindow(xbmcgui.WindowXMLDialog):
 
             # Now send the seek message to the sonos speaker
             sonosDevice.seek(newPosition)
+
+
+#####################################################
+# Main window for the Sonos Artist Slide show
+#####################################################
+class SonosArtistSlideshow(SonosControllerWindow):
+
+    # Static method to create the Window Dialog class
+    @staticmethod
+    def createSonosArtistSlideshow(sonosDevice):
+        # Check the ArtistSlideshow setting to see if the biography field is set
+        try:
+            artistslideshow = xbmcaddon.Addon(id='script.artistslideshow')
+            if artistslideshow.getSetting('artistinfo') != 'true':
+                # Biography is not set,prompt the use to see if we should set it
+                if xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001),
+                                          __addon__.getLocalizedString(32060),
+                                          "  \"%s\"" % artistslideshow.getLocalizedString(32005),
+                                          __addon__.getLocalizedString(32061)):
+                    artistslideshow.setSetting('artistinfo', 'true')
+        except:
+            log("SonosArtistSlideshow: Exception Details: %s" % traceback.format_exc())
         
+        return SonosArtistSlideshow("script-sonos-artist-slideshow.xml", __cwd__, sonosDevice=sonosDevice)
+
+    # Launch ArtistSlideshow
+    def runArtistSlideshow(self):
+        log("SonosArtistSlideshow: runArtistSlideshow")
+        #startup artistslideshow
+        xbmcgui.Window(xbmcgui.getCurrentWindowId()).setProperty("ArtistSlideshow.ExternalCall", "True")
+        #assumes addon is using suggested infolabel name of CURRENTARTIST and CURRENTTITLE
+        artistslideshow = "RunScript(script.artistslideshow,windowid=%s&artistfield=%s&titlefield=%s&albumfield=%s&mbidfield=%s)" % (xbmcgui.getCurrentWindowId(), "CURRENTARTIST", "CURRENTTITLE", "CURRENTALBUM", "CURRENTMBID")
+        xbmc.executebuiltin(artistslideshow)
+
+    # Display the window
+    def show(self):
+        log("SonosArtistSlideshow: About to show window")
+        # First show the window
+        SonosControllerWindow.show(self)
+
+        windowId = xbmcgui.getCurrentWindowId()
+
+        log("SonosArtistSlideshow: After show window %s" % windowId)
+
+        # Set the sonos icon
+        xbmcgui.Window(windowId).setProperty('SonosAddonIcon', __icon__)
+
+        # Now make sure that Artist Slideshow is running
+        self.athread = threading.Thread(target=self.runArtistSlideshow)
+        self.athread.setDaemon(True)
+        self.athread.start()
+        log("SonosArtistSlideshow: ArtistSlideShow thread started")
+
+
+    def close(self):
+        log("SonosArtistSlideshow: Closing windows - stop ArtistSlideShow")
+        xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+
+        windowId = xbmcgui.getCurrentWindowId()
+
+        # Tell ArtistSlideshow to exit
+        xbmcgui.Window(windowId).clearProperty("ArtistSlideshow.ExternalCall")
+        # Wait until ArtistSlideshow exits
+        # Do not loop forever
+        loops = 40
+        while (not xbmcgui.Window(windowId).getProperty("ArtistSlideshow.CleanupComplete") == "True") and (loops > 0):
+            xbmc.sleep(100)
+            loops = loops - 1
+
+        if loops > -1:
+            log("SonosArtistSlideshow: ArtistSlideShow Stopped")
+        else:
+            log("SonosArtistSlideshow: ArtistSlideShow did not stop")
+
+        # Make sure the thread is dead at this point
+        try:
+            self.athread.join(3)
+        except:
+            log("Thread join error: %s" % traceback.format_exc())
+
+        # Now close the window (needs to be last as ArtistSlideshow is reading from it)
+        SonosControllerWindow.close(self)
+        xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+
+    def updateDisplay(self):
+        SonosControllerWindow.updateDisplay(self)
+        
+        # Now we have updated the track currently playing read the details out and
+        # set the windows properties for ArtistSlideshow
+        # Only update if the track has changed
+        if self.currentTrack != None:
+            windowId = xbmcgui.getCurrentWindowId()
+            xbmcgui.Window(windowId).setProperty('CURRENTARTIST', self.currentTrack['artist'])
+            xbmcgui.Window(windowId).setProperty('CURRENTTITLE', self.currentTrack['title'])
+            xbmcgui.Window(windowId).setProperty('CURRENTALBUM', self.currentTrack['album'])
+
+
+# Load the Sonos keymap to make sure that volume/skip track keys do not get
+# passed to XBMC to handle. This is needed because XBMC addons can not swallow
+# events and so XBMC will perform the same operation
+# Each run we copy our keymap over, force XBMC to relaoad the keymaps, then at the end
+# we do the reverse - delete the custom one and reload the original setup
+class KeyMaps():
+    def __init__(self):
+        self.KEYMAP_PATH = xbmc.translatePath(os.path.join( __resource__, "keymaps" ))
+        self.KEYMAPSOURCEFILE = os.path.join(self.KEYMAP_PATH, "sonos_keymap.xml")
+        self.KEYMAPDESTFILE = os.path.join(xbmc.translatePath('special://userdata/keymaps'), "sonos_keymap.xml")
+        self.keymapCopied = False
+
+    # Copies the Sonos keymap to the correct location and loads it
+    def enable(self):
+        try:
+            xbmcvfs.copy(self.KEYMAPSOURCEFILE, self.KEYMAPDESTFILE)
+            self.keymapCopied = True
+            xbmc.executebuiltin('Action(reloadkeymaps)')
+            log("KeyMaps: Installed custom keymap")
+        except:
+            log("KeyMaps: Failed to copy & load custom keymap: %s" % traceback.format_exc())
+
+    # Removes the Sonos keymap
+    def cleanup(self):
+        if self.keymapCopied == True:
+            try:
+                xbmcvfs.delete(self.KEYMAPDESTFILE)
+                logNotice("KeyMaps: Removed custom keymap")
+            except:
+                log("KeyMaps: Failed to remove & load custom keymap: %s" % traceback.format_exc())
+
+            # Force a re-load
+            xbmc.executebuiltin('Action(reloadkeymaps)')
+
 
 
 if __name__ == '__main__':    
-    
+
     sonosDevice = Settings.getSonosDevice()
     
     # Make sure a Sonos speaker was found
     if sonosDevice != None:
-
-        sonosCtrl = SonosControllerWindow.createSonosControllerWindow(sonosDevice)
+        # Setup the keymap for the controller
+        keyMapCtrl = KeyMaps()
+        keyMapCtrl.enable()
         
-        # Record the fact that the Sonos controller window is displayed
-        xbmcgui.Window(10000).setProperty( "SonosControllerShowing", "true" )
-
         try:
-            sonosCtrl.show()
-
-            while (not sonosCtrl.isClose()) and (not xbmc.abortRequested):
-                sonosCtrl.updateDisplay()
-                # Wait a second or so before updating
-                xbmc.sleep(Settings.getRefreshInterval())
+            if Settings.displayArtistInfo():
+                sonosCtrl = SonosArtistSlideshow.createSonosArtistSlideshow(sonosDevice)
+            else:
+                sonosCtrl = SonosControllerWindow.createSonosControllerWindow(sonosDevice)
+            
+            # Record the fact that the Sonos controller window is displayed
+            xbmcgui.Window(10000).setProperty( "SonosControllerShowing", "true" )
+    
+            try:
+                sonosCtrl.show()
+    
+                while (not sonosCtrl.isClose()) and (not xbmc.abortRequested):
+                    sonosCtrl.updateDisplay()
+                    # Wait a second or so before updating
+                    xbmc.sleep(Settings.getRefreshInterval())
+            except:
+                # Failed to connect to the Sonos Speaker
+                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), ("Error from speaker %s" % Settings.getIPAddress()))
+                log("Sonos: Exception Details: %s" % traceback.format_exc())
+    
+            sonosCtrl.close()
+            # Record the fact that the Sonos controller is no longer displayed
+            xbmcgui.Window(10000).clearProperty("SonosControllerShowing")
+            del sonosCtrl
         except:
-            # Failed to connect to the Sonos Speaker
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), ("Error from speaker %s" % Settings.getIPAddress()))
-            log("Sonos: Exception Details: %s" % traceback.format_exc())
+            pass
 
-        sonosCtrl.close()
-        # Record the fact that the Sonos controller is no longer displayed
-        xbmcgui.Window(10000).clearProperty("SonosControllerShowing")
-        del sonosCtrl
-
+        # Make sure we always tidy up the keymap
+        keyMapCtrl.cleanup()
     else:
         xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), "IP Address Not Set")
-        
+    

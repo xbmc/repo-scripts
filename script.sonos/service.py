@@ -6,6 +6,13 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
+# Add JSON support for queries
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
+
+
 __addon__     = xbmcaddon.Addon(id='script.sonos')
 __addonid__   = __addon__.getAddonInfo('id')
 __cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
@@ -20,7 +27,6 @@ sys.path.append(__lib__)
 # Import the common settings
 from settings import Settings
 from settings import log
-
 
 ##########################################################
 # Class to display a popup of what is currently playing
@@ -73,43 +79,110 @@ class SonosPlayingPopup(xbmcgui.WindowXMLDialog):
         xbmc.sleep(Settings.getNotificationDisplayDuration())
         self.close()
 
+#########################################
+# Links the Sonos Volume to that of XBMC
+#########################################
+class SonosVolumeLink():
+    def __init__(self, sonosDevice):
+        self.sonosDevice = sonosDevice
+        self.sonosVolume = 0
+        self.sonosMuted = False
+        
+        # On Startup check to see if we need to switch the SOnos speaker to line-in
+        self.switchToLineIn()
 
+    def updateSonosVolume(self):
+        # Check to see if the Sonos Volume Link is Enabled
+        if not Settings.linkAudioWithSonos():
+            return
+
+        # Get the current XBMC Volume
+        xbmcVolume, xbmcMuted = self._getXbmcVolume()
+        log("*** ROB ***: xbmcVolume = %d, selfvol = %d" % (xbmcVolume, self.sonosVolume))
+        # Check to see if it has changed, and if we need to change the sonos value
+        if (xbmcVolume != -1) and (xbmcVolume != self.sonosVolume):
+            log("*** ROB ***: Setting volume to = %d" % xbmcVolume)
+            
+            sonosDevice.volume = xbmcVolume
+            self.sonosVolume = xbmcVolume
+
+        # Check to see if XBMC has been muted
+        if (xbmcMuted != -1) and (xbmcMuted != self.sonosMuted):
+            sonosDevice.mute = xbmcMuted
+            self.sonosMuted = xbmcMuted
+
+    # This will return the volume in a range of 0-100
+    def _getXbmcVolume(self):
+        result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": { "properties": [ "volume", "muted" ] }, "id": 1}')
+        json_query = simplejson.loads(result)
+
+        volume = -1
+        if "result" in json_query and json_query['result'].has_key('volume'):
+            # Get the volume value
+            volume = json_query['result']['volume']
+
+        muted = None
+        if "result" in json_query and json_query['result'].has_key('muted'):
+            # Get the volume value
+            muted = json_query['result']['muted']
+
+        log( "Player: current volume: %s%%" % str(volume) )
+        return volume, muted
+
+    def switchToLineIn(self):
+        # Check if we need to ensure the Sonos system is using the line-in
+        if Settings.switchSonosToLineIn():
+            try:
+                # Not all speakers support line-in - so catch exception
+                self.sonosDevice.switch_to_line_in()
+            except:
+                log("SonosService: Failed to switch to Line-In for speaker %s" % Settings.getIPAddress())
+                log("SonosService: %s" % traceback.format_exc())
+
+        
 
 ################################
 # Main of the Sonos Service
 ################################
 if __name__ == '__main__':
     log("SonosService: Starting service (version %s)" % __version__)
-    
-    if not Settings.isNotificationEnabled():
-        log("SonosService: Notifications are disabled, exiting service")
-    else:
-        timeUntilNextCheck = Settings.getNotificationCheckFrequency()
-        
-        log("SonosService: Notification Check Frequency = %d" % timeUntilNextCheck)
-        
-        lastDisplayedTrack = None
-        
-        # Need to only display the popup when the service starts if there is
-        # currently something playing
-        justStartedService = True
 
-        # Loop until XBMC exits
-        while (not xbmc.abortRequested):
-            if timeUntilNextCheck < 1:
-                if Settings.stopNotifIfVideoPlaying() and xbmc.Player().isPlayingVideo():
-                    log("SonosService: Video Playing, Skipping Notification Display")
-                elif xbmcgui.Window(10000).getProperty("SonosControllerShowing") == 'true':
-                    log("SonosService: Sonos Controller Showing, Skipping Notification Display")
-                    # Reset the "just started" flag to ensure that when we exit it does not
-                    # show the notification immediately
-                    justStartedService = True
-                else:
-                    log("SonosService: Notification wait time expired")        
-                    sonosDevice = Settings.getSonosDevice()
-                    
-                    # Make sure a Sonos speaker was found
-                    if sonosDevice != None:                      
+    if (not Settings.isNotificationEnabled()) and (not Settings.linkAudioWithSonos()):
+        log("SonosService: Notifications and Volume Link are disabled, exiting service")
+    else:
+        sonosDevice = Settings.getSonosDevice()
+
+        # Make sure a Sonos speaker was found
+        if sonosDevice != None:
+            timeUntilNextCheck = Settings.getNotificationCheckFrequency()
+            
+            log("SonosService: Notification Check Frequency = %d" % timeUntilNextCheck)
+            
+            lastDisplayedTrack = None
+            
+            # Need to only display the popup when the service starts if there is
+            # currently something playing
+            justStartedService = True
+
+            # Class to deal with sync of the volume
+            volumeLink = SonosVolumeLink(sonosDevice)
+
+            # Loop until XBMC exits
+            while (not xbmc.abortRequested):
+                # First make sure the volume matches
+                volumeLink.updateSonosVolume()
+                
+                if (timeUntilNextCheck < 1) and Settings.isNotificationEnabled():
+                    if Settings.stopNotifIfVideoPlaying() and xbmc.Player().isPlayingVideo():
+                        log("SonosService: Video Playing, Skipping Notification Display")
+                    elif xbmcgui.Window(10000).getProperty("SonosControllerShowing") == 'true':
+                        log("SonosService: Sonos Controller Showing, Skipping Notification Display")
+                        # Reset the "just started" flag to ensure that when we exit it does not
+                        # show the notification immediately
+                        justStartedService = True
+                    else:
+                        log("SonosService: Notification wait time expired")        
+                        
                         try:
                             # Get the current track that is being played at the moment
                             track = sonosDevice.get_current_track_info()
@@ -142,8 +215,12 @@ if __name__ == '__main__':
                                         albumArt = __icon__
                                         if track['album_art'] != "":
                                             albumArt = track['album_art']
-                            
-                                        xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (track['artist'], track['title'], Settings.getNotificationDisplayDuration(), albumArt))
+    
+                                        if Settings.getXbmcMajorVersion() < 13:
+                                            xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (track['artist'], track['title'], Settings.getNotificationDisplayDuration(), albumArt))
+                                        else:
+                                            # Gotham allows you to have a dialog without making a sound
+                                            xbmcgui.Dialog().notification(track['artist'], track['title'], albumArt, Settings.getNotificationDisplayDuration(), False)
                                     else:
                                         sonosPopup = SonosPlayingPopup.createSonosPlayingPopup(track)
                                         sonosPopup.showPopup()
@@ -152,15 +229,15 @@ if __name__ == '__main__':
                             # Connection failure - may just be a network glitch - so don't exit
                             log("SonosService: Error from speaker %s" % Settings.getIPAddress())
                             log("SonosService: %s" % traceback.format_exc())
-
+    
                         # No longer the first start
                         justStartedService = False
-    
-                # Reset the timer for the next check
-                timeUntilNextCheck = Settings.getNotificationCheckFrequency()
-    
-            # Increment the timer and sleep for a second before the next check
-            xbmc.sleep(1000)
-            timeUntilNextCheck = timeUntilNextCheck - 1
+
+                    # Reset the timer for the next check
+                    timeUntilNextCheck = Settings.getNotificationCheckFrequency()
+        
+                # Increment the timer and sleep for a second before the next check
+                xbmc.sleep(1000)
+                timeUntilNextCheck = timeUntilNextCheck - 1
 
     log("Sonos: Stopping service")

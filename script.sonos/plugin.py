@@ -24,6 +24,7 @@ sys.path.append(__lib__)
 from settings import Settings
 from settings import log
 
+import soco
 
 ###################################################################
 # Media files used by the plugin
@@ -164,7 +165,7 @@ class MenuNavigator():
 
             # Need to get all the tracks in batches
             # Only get the next batch if all the items requested were in the last batch
-            while numberReturned == Settings.getBatchSize():
+            while (numberReturned == Settings.getBatchSize()) and not self._listLimitReached(totalCollected):
                 # Get the items from the sonos system
                 list = None
                 try:
@@ -183,18 +184,18 @@ class MenuNavigator():
                 for item in list:
                     # Get a suitable display title
                     displayTitle = None
-                    if ('artist' in item.keys()) and (item['artist'] != None):
-                        displayTitle = "%s - %s" % (item['title'], item['artist'])
+                    if (item.creator != None) and (item.creator != ""):
+                        displayTitle = "%s - %s" % (item.title, item.creator)
                     else:
-                        displayTitle = item['title']
+                        displayTitle = item.title
                     
                     # Create the list item for the track
-                    if ('album_art_real' in item.keys()) and (item['album_art_real'] != None) and (item['album_art_real'] != ""):
-                        li = xbmcgui.ListItem(displayTitle, iconImage=item['album_art_real'], thumbnailImage=item['album_art_real'])
+                    if hasattr(item, 'album_art_uri') and (item.album_art_uri != None) and (item.album_art_uri != ""):
+                        li = xbmcgui.ListItem(displayTitle, iconImage=item.album_art_uri, thumbnailImage=item.album_art_uri)
                     else:
                         li = xbmcgui.ListItem(displayTitle, iconImage='DefaultMusicSongs.png')
                     # Set addition information about the track - will be seen in info view
-                    li.setInfo('music', {'title': item['title'], 'artist': item['artist'], 'album': item['album']})
+                    li.setInfo('music', {'title': item.title, 'artist': item.creator, 'album': item.album})
 
                     # Create the action to be performed when clicking a queue item
                     url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_QUEUE_PLAY_ITEM, 'itemId': itemNum})
@@ -227,7 +228,7 @@ class MenuNavigator():
             isFirstItem = True
 
             # Need to get all the tracks in batches            
-            while totalCollected < totalEntries:
+            while (totalCollected < totalEntries) and not self._listLimitReached(totalCollected):
                 # make the call to get the tracks in batches of 100
 
                 # Get the items from the sonos system
@@ -254,17 +255,16 @@ class MenuNavigator():
 
                 for item in list['item_list']:
                     # Check if this item is a track of a directory
-                    if self._isTrack(item):
+                    if isinstance(item, soco.data_structures.MLTrack):
                         self._addTrack(item, totalEntries, folderName)
                     else:
                         # Check for the special case where there is an "All" first in the list
                         # For this the id and parent values are the same.  The All item
                         # is a special case and does not handle like a normal directory
-                        if isFirstItem == True:
-                            if item['id'].rstrip('/') == item['parent_id'].rstrip('/'):
-                                log("SonosPlugin: Skipping \"All\" item for %s" % item['id'])
-                                isFirstItem = False
-                                continue
+                        if ('sameArtist' in item.item_class) or ('albumlist' in item.item_class):
+                            log("SonosPlugin: Skipping \"All\" item for %s" % item.title)
+                            isFirstItem = False
+                            continue
 
                         self._addDirectory(item, folderName, totalEntries, subCategory)
                     # No longer the first item
@@ -285,7 +285,7 @@ class MenuNavigator():
             totalEntries = 1
 
             # Need to get all the tracks in batches            
-            while totalCollected < totalEntries:
+            while (totalCollected < totalEntries) and not self._listLimitReached(totalCollected):
                 # Get the items from the sonos system
                 list = None
                 try:
@@ -334,7 +334,7 @@ class MenuNavigator():
             totalEntries = 1
 
             # Need to get all the tracks in batches            
-            while totalCollected < totalEntries:
+            while (totalCollected < totalEntries) and not self._listLimitReached(totalCollected):
                 # Get the items from the sonos system
                 list = None
                 try:
@@ -373,36 +373,43 @@ class MenuNavigator():
 
         xbmcplugin.endOfDirectory(self.addon_handle)
 
+    # Checks if the limit for the size of the list has been reached
+    def _listLimitReached(self, currentEntries):
+        queueLimit = Settings.getMaxListEntries()
+        # Zero is unlimited
+        if queueLimit == 0:
+            return False
+        return currentEntries >= queueLimit
 
     # Adds a sub-directory to the display
     def _addDirectory(self, item, folderName, totalEntries=None, subCategory=None):
         if (item != None) and (folderName != None):
             # Escape special characters from the title
             # Useful site: http://www.ascii.cl/htmlcodes.htm
-            title = item['title'].replace('/', "%2F").replace(':', "%3A")
+            title = item.title.replace('/', "%2F").replace(':', "%3A")
             # Update the category
             if subCategory != None:
                 log("SonosPlugin: Adding to existing category %s" % subCategory)
-                subCategory += '/' + title
+                subCategory += '/' + title.encode("utf-8")
             else:
-                subCategory = title
+                subCategory = title.encode("utf-8")
             url = self._build_url({'mode': 'folder', 'foldername': folderName, 'subCategory': subCategory})
 
             # Get a suitable display title
             displayTitle = None
-            if (folderName == MenuNavigator.ALBUMS) or (folderName == MenuNavigator.ALBUMARTISTS):
+            if (folderName == MenuNavigator.ALBUMS): # or (folderName == MenuNavigator.ALBUMARTISTS):
                 # Get the display title, adding the track number if available
-                if ('creator' in item.keys()) and (item['creator'] != None):
-                    displayTitle = "%s - %s" % (item['title'], item['creator'])
+                if (item.creator != None) and (item.creator != ""):
+                    displayTitle = "%s - %s" % (item.title, item.creator)
 
             # If the display title hasn't been set yet, default to the title
             if displayTitle == None:
                 # Default is to just display the title
-                displayTitle = item['title']
+                displayTitle = item.title
 
             # Create the list item for the directory
-            if ('album_art' in item.keys()) and (item['album_art'] != None) and (item['album_art'] != ""):
-                li = xbmcgui.ListItem(displayTitle,  iconImage=item['album_art'], thumbnailImage=item['album_art'])
+            if hasattr(item, 'album_art_uri') and (item.album_art_uri != None) and (item.album_art_uri != ""):
+                li = xbmcgui.ListItem(displayTitle,  iconImage=item.album_art_uri, thumbnailImage=item.album_art_uri)
             else:
                 # Use one of the default icons
                 defaultIcon = 'DefaultAudio.png'
@@ -414,11 +421,11 @@ class MenuNavigator():
                     defaultIcon = 'DefaultMusicGenres.png'
                 elif folderName == MenuNavigator.COMPOSERS:
                     defaultIcon = 'DefaultArtist.png'
-
+    
                 li = xbmcgui.ListItem(displayTitle, iconImage=defaultIcon)
 
             # Set the right click context menu for the directory
-            self._addContextMenu(li, item['res'])
+            self._addContextMenu(li, item.uri)
 
             if totalEntries != None:
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True, totalItems=totalEntries)
@@ -428,50 +435,39 @@ class MenuNavigator():
     # Adds a track to the listing
     def _addTrack(self, item, totalEntries=None, folderName=None):
         if item != None:
-            url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY, 'itemId': item['res']})
+            url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY, 'itemId': item.uri})
 
             # Get a suitable display title
             displayTitle = None
             if folderName == MenuNavigator.ALBUMS:
                 # Get the display title, adding the track number if available
-                if ('original_track_number' in item.keys()) and (item['original_track_number'] != None):
-                    displayTitle = "%02d. %s" % (item['original_track_number'], item['title'])
+                if (item.original_track_number != None) and (item.original_track_number != ""):
+                    displayTitle = "%02d. %s" % (item.original_track_number, item.title)
             elif folderName == MenuNavigator.TRACKS:
-                if ('creator' in item.keys()) and (item['creator'] != None):
-                    displayTitle = "%s - %s" % (item['title'], item['creator'])
+                if (item.creator != None) and (item.creator != ""):
+                    displayTitle = "%s - %s" % (item.title, item.creator)
 
             # If the display title hasn't been set yet, default to the title
             if displayTitle == None:
                 # Default is to just display the title
-                displayTitle = item['title']
-            
+                displayTitle = item.title
+
             # Create the list item for the track
-            if ('album_art' in item.keys()) and (item['album_art'] != None) and (item['album_art'] != ""):
-                li = xbmcgui.ListItem(displayTitle, iconImage=item['album_art'], thumbnailImage=item['album_art'], path=url)
+            if hasattr(item, 'album_art_uri') and (item.album_art_uri != None) and (item.album_art_uri != ""):
+                li = xbmcgui.ListItem(displayTitle,  iconImage=item.album_art_uri, thumbnailImage=item.album_art_uri, path=url)
             else:
                 li = xbmcgui.ListItem(displayTitle, path=url, iconImage='DefaultMusicSongs.png')
             # Set addition information about the track - will be seen in info view
-            li.setInfo('music', {'tracknumber': item['original_track_number'], 'title': item['title'], 'artist': item['creator'], 'album': item['album']})
+            li.setInfo('music', {'tracknumber': item.original_track_number, 'title': item.title, 'artist': item.creator, 'album': item.album})
             # li.setProperty("IsPlayable","true");
             
             # Set the right click context menu for the track
-            self._addContextMenu(li, item['res'])
+            self._addContextMenu(li, item.uri)
             
             if totalEntries != None:
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False, totalItems=totalEntries)
             else:
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
-
-    # Method to detect if one of the list items is a track
-    def _isTrack(self, item):
-        isATrack = False
-        
-        if item != None:
-            # Tracks have a file for the protocol
-            if ('protocol_info' in item.keys()) and (item['protocol_info'] != None) and item['protocol_info'].startswith("x-file"):
-                isATrack = True
-        
-        return isATrack
 
 
     def _addContextMenu(self, list_item, itemId):

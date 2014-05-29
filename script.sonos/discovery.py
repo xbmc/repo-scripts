@@ -19,7 +19,9 @@ sys.path.append(__lib__)
 # Import the common settings
 from settings import Settings
 from settings import log
+from settings import SocoLogging
 
+import soco
 
 log('script version %s started' % __version__)
 
@@ -30,27 +32,25 @@ log('script version %s started' % __version__)
 ###########################################################################
 
 if __name__ == '__main__':
-   
+
+    # Set up the logging before using the Sonos Device
+    SocoLogging.enable()
+
     # Display the busy icon while searching for files
     xbmc.executebuiltin( "ActivateWindow(busydialog)" )
-    
-    # Get all the devices and look at each one, logging it's IP address
-    sonos_devices = Settings.getSonosDiscovery()
-    
+
     try:
-        ipAddresses = sonos_devices.get_speaker_ips()
-        log("SonosDiscovery: IP Addresses = %s" % str(ipAddresses))
+        sonos_devices = soco.discover()
     except:
         log("SonosDiscovery: Exception when getting devices")
         log("SonosDiscovery: %s" % traceback.format_exc())
-        ipAddresses = []
+        sonos_devices = []
 
     speakers = {}
 
-    for ip in ipAddresses:
+    for device in sonos_devices:
+        ip = device.ip_address
         log("SonosDiscovery: Getting info for IP address %s" % ip)
-        # Pass in the IP address of the Sonos Speaker
-        device = Settings.getSonosDevice(ip)
 
         playerInfo = None
 

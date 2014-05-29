@@ -16,6 +16,10 @@ msgstr ""
 "Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+msgstr "Soporta Controis simples de Sonos e notificacións do XBMC. Para máis detalles ir á wiki."
+
 msgctxt "#32001"
 msgid "Sonos"
 msgstr "Sonos"
@@ -28,6 +32,22 @@ msgctxt "#32003"
 msgid "Enable Notifications (Restart Required)"
 msgstr "Activar Notificacións (Requírese Reiniciar)"
 
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Amosar Notificacións durante (Segundos)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Frecuencia de Verificación das Notificacións (Segundos)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Non Amosar Notificacións ó Reproducir Vídeos"
+
+msgctxt "#32007"
+msgid "Use Default XBMC Notification Dialog"
+msgstr "Usar o Diálogo de Notificacións Predefinido do XBMC"
+
 msgctxt "#32008"
 msgid "Debugging"
 msgstr "Depurado"
@@ -35,6 +55,10 @@ msgstr "Depurado"
 msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "Activar rexistro de depurado"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Altofalante"
 
 msgctxt "#32011"
 msgid "Notifications"
@@ -44,6 +68,14 @@ msgctxt "#32012"
 msgid "Advanced"
 msgstr "Avanzado"
 
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Buscar Altofalantes Sonos..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Non se atoparon altofalantes, por favor insira o enderezo IP manualmente"
+
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controlador"
@@ -51,6 +83,18 @@ msgstr "Controlador"
 msgctxt "#32016"
 msgid "Refresh Interval (Seconds)"
 msgstr "Intervalo de refresco (segundos)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Usar Datos de Proba"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Tamaño do Batch"
 
 msgctxt "#32100"
 msgid "Music Library"

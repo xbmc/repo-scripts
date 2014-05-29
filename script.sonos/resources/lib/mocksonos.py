@@ -8,7 +8,7 @@ class TestMockSonos():
     def __init__( self ):
         self.currentPlayState = 'PLAYING'
         self.trackNumber = 100
-        self.isMuted = 0 # 0 is unmuted, 1 is muted
+        self.isMuted = False
         self.currentVolume = 50
         self.duration = "00:05:47"
         self.position = "00:02:25"
@@ -19,9 +19,9 @@ class TestMockSonos():
             displayTrackNum = forcedTrackNum
  
         # Test code to test the dialog without a Sonos Speaker connected
-        track = {'title': "Title value %d" % displayTrackNum,
-                 'artist': "Artist Value %d" % displayTrackNum,
-                 'album': "AlbumValue %d" % displayTrackNum,
+        track = {'title': "Money Money Money %d" % displayTrackNum,
+                 'artist': "ABBA %d" % displayTrackNum,
+                 'album': "Gold %d" % displayTrackNum,
                  'album_art': '',
                  'position': self.position,
                  'duration': self.duration,
@@ -53,15 +53,17 @@ class TestMockSonos():
         self.trackNumber = self.trackNumber - 1
         self._displayOperation("Previous Track")
 
-    def mute(self, mute=None):
-        if mute == None:
-            return self.isMuted
+    @property
+    def mute(self):
+        return self.isMuted
 
+    @mute.setter
+    def mute(self, mute):
         if mute == True:
-            self.isMuted = 1
+            self.isMuted = True
             self._displayOperation("Volume Muted")
         else:
-            self.isMuted = 0
+            self.isMuted = False
             self._displayOperation("Volume Unmuted")
         return True
 
@@ -78,10 +80,15 @@ class TestMockSonos():
             out['item_list'].append(self.get_current_track_info(self.trackNumber + num + 1))
         return out
 
-    def volume(self, newVolume=None):
+    @property
+    def volume(self):
+        return self.currentVolume
+    
+    @volume.setter
+    def volume(self, newVolume):
         if newVolume != None:
             self.currentVolume = int(newVolume)
-            # self._displayOperation("Volume set to %d" % newVolume)
+            self._displayOperation("Volume set to %d" % newVolume)
         return self.currentVolume
 
     def seek(self, timestamp):
@@ -91,5 +98,7 @@ class TestMockSonos():
     def _displayOperation(self, textStr):
         xbmc.executebuiltin('Notification("Test Mock Sonos", %s, %d)' % (textStr, 3))
 
+    def switch_to_line_in(self):
+        xbmc.executebuiltin('Notification("Test Mock Sonos", "Switched to Line-In", %d)' % 3)
 
 

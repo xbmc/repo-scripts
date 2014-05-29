@@ -16,17 +16,85 @@ msgstr ""
 "Language: en_NZ\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+msgstr "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
 msgctxt "#32002"
 msgid "IP Address"
 msgstr "IP Address"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Enable Notifications (Restart Required)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Display Notification For (Seconds)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Notification Check Frequency (Seconds)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Do Not Display Notification If Video Is Playing"
+
+msgctxt "#32007"
+msgid "Use Default XBMC Notification Dialog"
+msgstr "Use Default XBMC Notification Dialogue"
 
 msgctxt "#32008"
 msgid "Debugging"
 msgstr "Debugging"
 
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Speaker"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Notifications"
+
 msgctxt "#32012"
 msgid "Advanced"
 msgstr "Advanced"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Search For Sonos Speakers..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "No speakers found, please enter your IP address manually"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Controller"
+
+msgctxt "#32016"
+msgid "Refresh Interval (Seconds)"
+msgstr "Refresh Interval (Seconds)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Use Test Data"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Batch Size"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -36,6 +104,10 @@ msgctxt "#32101"
 msgid "Queue"
 msgstr "Queue"
 
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Radio Stations"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artists"
@@ -44,6 +116,42 @@ msgctxt "#32111"
 msgid "Albums"
 msgstr "Albums"
 
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Composers"
+
 msgctxt "#32113"
 msgid "Genres"
 msgstr "Genres"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Tracks"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Open Sonos Player"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Play Track"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Remove Track"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Clear Queue"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Play Now"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Add To Queue"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Replace Queue"

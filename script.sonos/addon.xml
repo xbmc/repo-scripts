@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sonos" name="Sonos" version="1.0.5" provider-name="robwebset">
+<addon id="script.sonos" name="Sonos" version="1.0.7" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="1.1.0"/>
+		<import addon="script.artistslideshow" version="1.6.5"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
@@ -21,6 +22,8 @@
 		<summary lang="el">Χειριστήριο Sonos</summary>
 	
 		<summary lang="en">Sonos Controller</summary>
+	
+		<summary lang="en_NZ">Sonos Controller</summary>
 	
 		<summary lang="es">Controlador Sonos</summary>
 	
@@ -48,9 +51,13 @@
 	
 		<description lang="en">Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details.</description>
 	
+		<description lang="en_NZ">Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details.</description>
+	
 		<description lang="es">Soporta controles simples de Sonos y avisos de XBMC. Mirar Wiki para más detalles.</description>
 	
 		<description lang="fr_CA">Prend en charge des contrôles simples et des notifications Sonos depuis XBMC. Consultez le wiki pour plus de détails.</description>
+	
+		<description lang="gl">Soporta Controis simples de Sonos e notificacións do XBMC. Para máis detalles ir á wiki.</description>
 	
 		<description lang="hu">Támogatja az egyszerű Sonos Vezérléseket és értesítéseket az XBMC-ből. Tekintse meg a wikit a részletekért.</description>
 	

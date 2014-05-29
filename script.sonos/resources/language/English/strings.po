@@ -69,7 +69,7 @@ msgid "Notifications"
 msgstr ""
 
 msgctxt "#32012"
-msgid "Advanced"
+msgid "Debugging"
 msgstr ""
 
 msgctxt "#32013"
@@ -85,7 +85,7 @@ msgid "Controller"
 msgstr ""
 
 msgctxt "#32016"
-msgid "Refresh Interval (Seconds)"
+msgid "Controller Refresh Interval (Seconds)"
 msgstr ""
 
 msgctxt "#32017"
@@ -100,7 +100,40 @@ msgctxt "#32019"
 msgid "Batch Size"
 msgstr ""
 
-#empty strings from id 32020 to 32099
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On XBMC Startup"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr ""
+
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr ""
+
+#empty strings from id 32022 to 32099
 
 msgctxt "#32100"
 msgid "Music Library"
