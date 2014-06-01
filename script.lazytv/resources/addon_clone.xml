@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <addon id="script.lazytv.SANNAME"
        name="CLONENAME"
-       version="0.9.81"
+       version="0.9.83"
        provider-name="KodeKarnage">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -9,7 +9,7 @@
 
 <extension point="xbmc.python.script"
             library="default.py">
-            <provides>executable video</provides>
+            <provides>executable</provides>
     </extension>
 
     <extension point="xbmc.addon.metadata">

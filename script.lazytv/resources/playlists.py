@@ -3,8 +3,8 @@ import json
 import xbmcaddon
 import xbmcgui
 
-_addon_              = xbmcaddon.Addon('script.lazytv')
-__addonid__          = _addon_.getAddonInfo('id')
+__addon__              = xbmcaddon.Addon('script.lazytv')
+__addonid__          = __addon__.getAddonInfo('id')
 
 def lang(id):
     san = __addon__.getLocalizedString(id).encode( 'utf-8', 'ignore' )
@@ -49,6 +49,6 @@ def playlist_selection_window():
 
 pl = playlist_selection_window()
 
-_addon_.setSetting(id="users_spl",value=str(pl))
+__addon__.setSetting(id="users_spl",value=str(pl))
 
-_addon_.openSettings()
+__addon__.openSettings()

@@ -28,10 +28,10 @@ import time
 import json
 import sys
 
-_addon_ = xbmcaddon.Addon('script.lazytv')
-__addonid__          = _addon_.getAddonInfo('id')
-_setting_            = _addon_.getSetting
-scriptPath           = _addon_.getAddonInfo('path')
+__addon__ = xbmcaddon.Addon('script.lazytv')
+__addonid__          = __addon__.getAddonInfo('id')
+_setting_            = __addon__.getSetting
+scriptPath           = __addon__.getAddonInfo('path')
 
 list_type            = len(sys.argv[1])
 
@@ -211,9 +211,9 @@ def selection_func():
     del creation
 
     if list_type == 7:
-        _addon_.setSetting(id="randos",value=str(new_list))
+        __addon__.setSetting(id="randos",value=str(new_list))
     else:
-        _addon_.setSetting(id="selection",value=str(new_list))
+        __addon__.setSetting(id="selection",value=str(new_list))
 
 selection_func()
-_addon_.openSettings()
+__addon__.openSettings()
