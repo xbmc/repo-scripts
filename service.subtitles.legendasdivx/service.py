@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.0.5
+# Service LegendasDivx.com version 0.0.8
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -44,7 +44,7 @@ __descon__ = __addon__.getSetting( 'DESC' )
 
 main_url = "http://www.legendasdivx.com/"
 debug_pretext = "LegendasDivx"
-SEARCH_PAGE_URL = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
+#SEARCH_PAGE_URL = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
 
 INTERNAL_LINK_URL = "plugin://%(scriptid)s/?action=download&id=%(id)s&filename=%(filename)s"
 SUB_EXTS = ['srt', 'sub', 'txt', 'aas', 'ssa', 'smi']
@@ -93,6 +93,8 @@ Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
 
 subtitle_pattern = "<div\sclass=\"sub_box\">[\r\n\t]{2}<div\sclass=\"sub_header\">[\r\n\t]{2}<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?[\r\n\t ]+?[\r\n\t]</div>[\r\n\t]{2}<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">[\r\n\t]{2}<tr>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th>CDs:</th>[\r\n\t ]{2}<td>(.+?)</td>[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}.+?[\r\n\t]{2}<th\sclass=\"color2\">Hits:</th>[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t]{2}<td>(.+?)</td>[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?[\r\n\t ]{2}.+?.{2,5}[\r\n\t ]{2}.+?[\r\n\t ]{2}<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>"
 release_pattern = "([^\W]\w{1,}\.{1,1}[^\.|^\ ][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[\w{3,}\-|\.{1,1}]\w{2,})"
+release_pattern1 = "([^\W][\w\ ]{4,}[^\Ws][x264|xvid]{1,}-[\w]{1,})"
+#release_pattern = "([^\W][\w\ |\.|\-]{4,}[^\Ws][x264|xvid]{1,}-[\w]{1,})"
 # group(1) = Name, group(2) = Year, group(3) = Number Files, group(4) = ID, group(5) = Hits, group(6) = Requests, group(7) = Description
 #==========
 # Functions
@@ -149,16 +151,23 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             if (downloads > 5):
                 downloads=5
             filename = string.strip(matches.group(1))
-            desc = string.strip(matches.group(7))
+            desc_ori = string.strip(matches.group(7))
             #log(u"_desc_dirty '%s' ..." % desc)
             #Remove new lines on the commentaries
             filename = re.sub('\n',' ',filename)
             if __descon__ == "false":
-                desc = re.findall(release_pattern, desc, re.IGNORECASE | re.VERBOSE | re.DOTALL | re.UNICODE | re.MULTILINE)
+                desc = re.findall(release_pattern, desc_ori, re.IGNORECASE | re.VERBOSE | re.DOTALL | re.UNICODE | re.MULTILINE)
                 desc = " / ".join(desc)
                 if desc == "":
-                    desc = __language__(32009)
-            desc = desc.decode('latin1')
+                    desc = re.findall(release_pattern1, desc_ori, re.IGNORECASE | re.VERBOSE | re.DOTALL | re.UNICODE | re.MULTILINE)
+                    desc = " / ".join(desc)
+                    if desc == "":
+                        #desc = __language__(32009).encode('utf8').decode('utf8')
+                        desc = desc_ori.decode('utf8', 'ignore')
+                    else:
+                        desc = desc.decode('utf8', 'ignore')
+            else:
+                desc = desc_ori.decode('utf8', 'ignore')
             desc = re.sub('<br />',' ',desc)
             desc = re.sub('<br>',' ',desc)
             desc = re.sub('\n',' ',desc)
@@ -199,7 +208,7 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             if __parentfolder__ == '2':
                 if (searchstring_notclean != ""):
                     sync = False
-                    if string.lower(searchstring_notclean) in string.lower(desc):
+                    if string.lower(searchstring_notclean) in string.lower(desc.decode('utf8', 'ignore')):
                         sync = True
                 else:
                     if (string.lower(dirsearch_check[-1]) == "rar") or (string.lower(dirsearch_check[-1]) == "cd1") or (string.lower(dirsearch_check[-1]) == "cd2"):
@@ -317,7 +326,9 @@ def Search(item):
     else:
         if tvshow != '':
             searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-        if tvshow == '':
+        elif title != '' and tvshow != '':
+            searchstring = title
+        else:
             if 'rar' in israr and searchstring is not None:
                 log(u"RAR Searchstring string = %s" % (searchstring,))
                 if 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
@@ -348,7 +359,7 @@ def Search(item):
                     title = os.path.split(file_original_path)
                     searchstring = title[-1]
             else:
-                if title == "":
+                if title == '':
                     title = os.path.split(file_original_path)
                     searchstring = title[-1]
                     #log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
@@ -365,19 +376,19 @@ def Search(item):
         subtitles_list = getallsubs(searchstring, "pt", "Portuguese", file_original_path, searchstring_notclean)
         for sub in subtitles_list:
             append_subtitle(sub)
-    elif 'por' in item['languages'] and PTBR_ON == 'true':
+    if 'por' in item['languages'] and PTBR_ON == 'true':
         subtitles_list = getallsubs(searchstring, "pb", "Brazilian", file_original_path, searchstring_notclean)
         for sub in subtitles_list:
             append_subtitle(sub)
-    elif 'spa' in item['languages'] and ES_ON == 'true':
+    if 'spa' in item['languages'] and ES_ON == 'true':
         subtitles_list = getallsubs(searchstring, "es", "Spanish", file_original_path, searchstring_notclean)
         for sub in subtitles_list:
             append_subtitle(sub)
-    elif 'eng' in item['languages'] and EN_ON == 'true':
+    if 'eng' in item['languages'] and EN_ON == 'true':
         subtitles_list = getallsubs(searchstring, "en", "English", file_original_path, searchstring_notclean)
         for sub in subtitles_list:
             append_subtitle(sub)
-    else:
+    if 'eng' not in item['languages'] and 'spa' not in item['languages'] and 'por' not in item['languages'] and 'por' not in item['languages']:
         xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (__scriptname__ , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',15000)))
 
 def recursive_glob(treeroot, pattern):
@@ -455,7 +466,7 @@ def Download(id, filename):
                 # determine if there is a newer file created in __temp__ (marks that the extraction had completed)
                 for file in files:
                     if file.split('.')[-1] in SUB_EXTS:
-                        mtime = os.stat(pjoin(__temp__, file.decode("utf-8"))).st_mtime
+                        mtime = os.stat(pjoin(__temp__, file.encode("utf-8").decode("utf-8"))).st_mtime
                         if mtime > max_mtime:
                             max_mtime =  mtime
                 waittime  = waittime + 1
