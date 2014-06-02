@@ -36,14 +36,16 @@ if sys.version_info < (2, 7):
     import simplejson
 else:
     import json as simplejson
-
+    
 __addon__        = xbmcaddon.Addon()
 __addonversion__ = __addon__.getAddonInfo('version')
 __addonid__      = __addon__.getAddonInfo('id')
 __addonname__    = __addon__.getAddonInfo('name')
 __localize__     = __addon__.getLocalizedString
-__datapath__     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ )
 PLOT_ENABLE = True
+
+import library
+LIBRARY = library.LibraryFunctions()
 
 def log(txt):
     message = '%s: %s' % (__addonname__, txt.encode('ascii', 'ignore'))
@@ -53,10 +55,6 @@ class Main:
     def __init__(self):
         self._parse_argv()
         self.WINDOW = xbmcgui.Window(10000)
-        
-        # Create datapath if not exists
-        if not xbmcvfs.exists(__datapath__):
-            xbmcvfs.mkdir(__datapath__)
         
         if self.TYPE == "randommovies":
             self.parse_movies( 'randommovies', 32004 )
@@ -100,7 +98,7 @@ class Main:
         self.WINDOW = xbmcgui.Window(10000)
         
     def parse_movies(self, request, list_type):
-        json_query = self.load_file( request )
+        json_query = self._get_data( request )
         if json_query:
             json_query = simplejson.loads(json_query)
             if json_query.has_key('result') and json_query['result'].has_key('movies'):
@@ -156,7 +154,7 @@ class Main:
             del json_query
         
     def parse_tvshows_recommended(self, request, list_type):
-        json_query = self.load_file( request )
+        json_query = self._get_data( request )
         if json_query:
             # First unplayed episode of recent played tvshows
             json_query = simplejson.loads(json_query)
@@ -168,7 +166,8 @@ class Main:
                     if xbmc.abortRequested:
                         break
                     count += 1
-                    json_query2 = self.load_file( str( item['tvshowid'] ) )
+                    #json_query2 = self.load_file( str( item['tvshowid'] ) )
+                    json_query2 = self.WINDOW.getProperty( "recommendedepisodes-data-" + str( item['tvshowid'] ) )
                     if json_query:
                         json_query2 = simplejson.loads(json_query2)
                         if json_query2.has_key('result') and json_query2['result'] != None and json_query2['result'].has_key('episodes'):
@@ -218,7 +217,7 @@ class Main:
 
     def parse_tvshows(self, request, list_type):
         #json_query = unicode(self.WINDOW.getProperty( request + '-data' ) , 'utf-8', errors='ignore')
-        json_query = self.load_file( request )
+        json_query = self._get_data( request )
         if json_query:
             json_query = simplejson.loads(json_query)
             if json_query.has_key('result') and json_query['result'].has_key('episodes'):
@@ -263,7 +262,7 @@ class Main:
             del json_query
         
     def parse_song(self, request, list_type):
-        json_query = self.load_file( request )
+        json_query = self._get_data( request )
         if json_query:
             json_string = '{"jsonrpc": "2.0", "id": 1, "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "playcount", "genre", "artist", "album", "year", "file", "thumbnail", "fanart", "rating"], "filter": {"field": "playcount", "operator": "lessthan", "value": "1"}, "limits": {"end": %d},' %self.LIMIT
             json_query = simplejson.loads(json_query)
@@ -290,7 +289,7 @@ class Main:
             del json_query
         
     def parse_albums (self, request, list_type):
-        json_query = self.load_file( request )
+        json_query = self._get_data( request )
         if json_query:
             json_query = simplejson.loads(json_query)
             if json_query.has_key('result') and json_query['result'].has_key('albums'):
@@ -331,49 +330,41 @@ class Main:
         # Return ResolvedUrl as failed, as we've taken care of what to play
         xbmcplugin.setResolvedUrl( handle=int( sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem() )
         
-    def load_file(self, request):
-        path = os.path.join( __datapath__, request + ".json" )
-        if not xbmcvfs.exists( path ):
-            return None
+    def _get_data( self, request ):
+        if request == "randommovies":
+            return LIBRARY._fetch_random_movies( self.USECACHE )
+        elif request == "recentmovies":
+            return LIBRARY._fetch_recent_movies( self.USECACHE )
+        elif request == "recommendedmovies":
+            return LIBRARY._fetch_recommended_movies( self.USECACHE )
+
+        elif request == "randomepisodes":
+            return LIBRARY._fetch_random_episodes( self.USECACHE )
+        elif request == "recentepisodes":
+            return LIBRARY._fetch_recent_episodes( self.USECACHE )
+        elif request == "recommendedepisodes":
+            return LIBRARY._fetch_recommended_episodes( self.USECACHE )
+
+        elif request == "randomalbums":
+            return LIBRARY._fetch_random_albums( self.USECACHE )
+        elif request == "recentalbums":
+            return LIBRARY._fetch_recent_albums( self.USECACHE )
+        elif request == "recommendedalbums":
+            return LIBRARY._fetch_recommended_albums( self.USECACHE )
         
-        # If we can't load the file, it's currently being updated
-        try:
-            file = xbmcvfs.File( path, 'r' )
-            fileOpened = True
-            content = file.read().decode("utf-8")
-            file.close()
-            return( content )
-        except:
-            return None
-        
-    def open_file(self, request):
-        path = os.path.join( __datapath__, request + ".json" )
-        log( "Opening file - " + path )
-        
-        # Keep trying to open file until succeeded (avoids race condition)
-        fileOpened = False
-        tries = 0
-        
-        while fileOpened == False:
-            try:
-                file = xbmcvfs.File( path, 'w' )
-                fileOpened = True
-            except:
-                print_exc()
-                tries = tries + 1
-                wait = 1
-                
-        return( file )
+        elif request == "randomsongs":
+            return LIBRARY._fetch_random_songs( self.USECACHE )        
             
     def _parse_argv( self ):
         try:
             params = dict( arg.split( "=" ) for arg in sys.argv[ 2 ].split( "&" ) )
         except:
             params = {}
-        self.LIMIT = int(__addon__.getSetting("limit"))
         self.TYPE = params.get( "?type", "" )
         self.ALBUM = params.get( "album", "" )
-        self.RECENTITEMS_UNPLAYED = __addon__.getSetting("recentitems_unplayed")  == 'true'
+        self.USECACHE = params.get( "reload", False )
+        if self.USECACHE is not False:
+            self.USECACHE == True
         global PLOT_ENABLE 
         PLOT_ENABLE = __addon__.getSetting("plot_enable")  == 'true'
         self.RANDOMITEMS_UNPLAYED = __addon__.getSetting("randomitems_unplayed")  == 'true'
