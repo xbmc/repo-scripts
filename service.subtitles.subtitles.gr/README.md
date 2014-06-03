@@ -4,7 +4,7 @@ Subtitles.gr XBMC Addon
 
 About
 -----
-Search and download subtitles from subtitles.gr
+Search and download subtitles from subtitles.gr, xsubs.tv and subz.blog-spot.gr
 
 
 License
