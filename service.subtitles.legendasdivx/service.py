@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.0.8
+# Service LegendasDivx.com version 0.0.9
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -125,8 +125,8 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
     subtitles_list = []
 
     #For DEBUG only uncomment next line
-    log(u"_searchstring '%s' ..." % searchstring)
-    log(u"_searchstring_notclean '%s' ..." % searchstring_notclean)
+    #log(u"_searchstring '%s' ..." % searchstring)
+    #log(u"_searchstring_notclean '%s' ..." % searchstring_notclean)
     page = 1
     if languageshort == "pt":
         url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
@@ -181,18 +181,18 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             filesearch = os.path.abspath(file_original_path)
             #For DEBUG only uncomment next line
             #log( __name__ ,"%s abspath: '%s'" % (debug_pretext, filesearch))
-            log(u"filesearch1: '%s'" % filesearch)
+            #log(u"filesearch1: '%s'" % filesearch)
             filesearch = os.path.split(filesearch)
             #For DEBUG only uncomment next line
             #log( __name__ ,"%s path.split: '%s'" % (debug_pretext, filesearch))
             dirsearch = filesearch[0].split(os.sep)
             #For DEBUG only uncomment next line
             #log( __name__ ,"%s dirsearch: '%s'" % (debug_pretext, dirsearch))
-            log(u"dirsearch: '%s'" % dirsearch)
+            #log(u"dirsearch: '%s'" % dirsearch)
             dirsearch_check = string.split(dirsearch[-1], '.')
             #For DEBUG only uncomment next line
             #log( __name__ ,"%s dirsearch_check: '%s'" % (debug_pretext, dirsearch_check))
-            log(u"dirsearch_check: '%s'" % dirsearch_check)
+            #log(u"dirsearch_check: '%s'" % dirsearch_check)
             #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
             __parentfolder__ = __addon__.getSetting( 'PARENT' )
             if __parentfolder__ == '0':
@@ -282,13 +282,24 @@ def Search(item):
     #### use item["some_property"] that was set earlier
     #### once done, set xbmcgui.ListItem() below and pass it to xbmcplugin.addDirectoryItem()
     #
+    #### CHECKING FOR ANYTHING IN THE USERNAME AND PASSWORD, IF NULL IT STOPS THE SCRIPT WITH A WARNING
+    username = __addon__.getSetting( 'LDuser' )
+    password = __addon__.getSetting( 'LDpass' )
+    if username == '' or password == '':
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+        if username == '' and password != '':
+            xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32016).encode('utf-8'),5000)))
+        if username != '' and password == '':
+            xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32017).encode('utf-8'),5000)))
+        if username == '' and password == '':
+            xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32018).encode('utf-8'),5000)))
     #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
     file_original_path = item['file_original_path']
     __parentfolder__ = __addon__.getSetting( 'PARENT' )
     if __parentfolder__ == '0':
         filename = os.path.abspath(file_original_path)
         dirsearch = filename.split(os.sep)
-        log(u"dirsearch_search string = %s" % (dirsearch,))
+        #log(u"dirsearch_search string = %s" % (dirsearch,))
         if re.search(release_pattern, dirsearch[-2], re.IGNORECASE):
             __parentfolder__ = '1'
         else:
@@ -297,10 +308,10 @@ def Search(item):
         filename = os.path.abspath(file_original_path)
         dirsearch = filename.split(os.sep)
         filename = dirsearch[-2]
-        log(u"__parentfolder1__ = %s" % (filename,))
+        #log(u"__parentfolder1__ = %s" % (filename,))
     if __parentfolder__ == '2':   
         filename = os.path.splitext(os.path.basename(file_original_path))[0]
-        log(u"__parentfolder2__ = %s" % (filename,))
+        #log(u"__parentfolder2__ = %s" % (filename,))
  
     filename = xbmc.getCleanMovieTitle(filename)[0]
     searchstring_notclean = os.path.splitext(os.path.basename(file_original_path))[0]
@@ -316,8 +327,8 @@ def Search(item):
     tvshow = item['tvshow']
     season = item['season']
     episode = item['episode']
-    log(u"Tvshow string = %s" % (tvshow,))
-    log(u"Title string = %s" % (title,))
+    #log(u"Tvshow string = %s" % (tvshow,))
+    #log(u"Title string = %s" % (title,))
     subtitles_list = []
     
     if item['mansearch']:
@@ -389,7 +400,7 @@ def Search(item):
         for sub in subtitles_list:
             append_subtitle(sub)
     if 'eng' not in item['languages'] and 'spa' not in item['languages'] and 'por' not in item['languages'] and 'por' not in item['languages']:
-        xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (__scriptname__ , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',15000)))
+        xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (__scriptname__ , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',5000)))
 
 def recursive_glob(treeroot, pattern):
     results = []
@@ -421,6 +432,10 @@ def Download(id, filename):
 
     content = my_opener.open('http://www.legendasdivx.com/modules.php?name=Downloads&d_op=getit&lid=' + id + '&username=' + username)
     content = content.read()
+    #### If user is not registered or User\Pass is misspelled it will generate an error message and break the script execution!
+    if 'Apenas Disponvel para utilizadores registados.' in content.decode('utf8', 'ignore'):
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32019).encode('utf8'),5000)))
     if content is not None:
         header = content[:4]
         if header == 'Rar!':
@@ -445,7 +460,7 @@ def Download(id, filename):
         if packed:
             files = os.listdir(__temp__)
             init_filecount = len(files)
-            log(u"legendasdivx: número de init_filecount %s" % (init_filecount,)) #EGO
+            #log(u"legendasdivx: número de init_filecount %s" % (init_filecount,)) #EGO
             filecount = init_filecount
             max_mtime = 0
             # Determine the newest file from __temp__
@@ -457,7 +472,7 @@ def Download(id, filename):
             init_max_mtime = max_mtime
             # Wait 2 seconds so that the unpacked files are at least 1 second newer
             time.sleep(2)
-            xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file.encode("utf-8") + ", " + __temp__.encode("utf-8") +")")
+            xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file.encode("utf-8") + ", " + __temp__ +")")
             waittime  = 0
             while filecount == init_filecount and waittime < 20 and init_max_mtime == max_mtime: # nothing yet extracted
                 time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack

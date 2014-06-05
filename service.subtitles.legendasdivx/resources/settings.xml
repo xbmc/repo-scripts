@@ -3,10 +3,14 @@
     <category label="32003">
       <setting id="LDuser" type="text" label="32001" default=""/>
       <setting id="LDpass" type="text" option = "hidden" label="32002" default=""/>
+    </category>   
+    <category label="32014">
       <setting id="PT" type="bool" label="32004" default="true"/>
       <setting id="PTBR" type="bool" label="32005" default="true"/>
       <setting id="ES" type="bool" label="32006" default="true"/>
       <setting id="EN" type="bool" label="32007" default="true"/>
+    </category>   
+    <category label="32015">
       <setting id="DESC" type="bool" label="32008" default="false"/>
       <setting id="PARENT" type="enum" lvalues="32011|32013" label="32010" default="0"/>
     </category>   

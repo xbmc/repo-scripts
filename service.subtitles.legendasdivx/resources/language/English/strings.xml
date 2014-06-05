@@ -14,4 +14,10 @@
     <string id="32011">Auto</string>
     <string id="32012">Always on</string>
     <string id="32013">Off</string>
+    <string id="32014">Language Settings</string>
+    <string id="32015">Advanced Settings</string>
+    <string id="32016">Username is required! Check add-on setttings!</string>
+    <string id="32017">Password is required! Check add-on setttings!</string>
+    <string id="32018">Username and Password is required! Check add-on setttings!</string>
+    <string id="32019">Only for registered users! Wrong username and/or password? Check add-on settings. Thanks.</string>
 </strings>

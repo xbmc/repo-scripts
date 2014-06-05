@@ -14,4 +14,10 @@
     <string id="32011">Auto</string>
     <string id="32012">Sempre ligado</string>
     <string id="32013">Desligado</string>
+    <string id="32014">Idiomas (Site)</string>
+    <string id="32015">Avançadas</string>
+    <string id="32016">O usuario é obrigatório! Verifique as definições do serviço!</string>
+    <string id="32017">A senha é obrigatória! Verifique as definições do serviço!</string>
+    <string id="32018">O usuario e senha são obrigatórios! Verifique as definições do serviço!</string>
+    <string id="32019">Apenas para usuarios registados! Usuario e/ou Senha errados? Verifique as definições do serviço!. Obrigado.</string>
 </strings>

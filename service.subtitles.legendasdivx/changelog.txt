@@ -1,3 +1,5 @@
+0.0.9
+- Account verification added.
 0.0.8
 - Fixed more Unicode issues.
 0.0.7
