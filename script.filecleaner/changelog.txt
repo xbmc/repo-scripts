@@ -1,3 +1,11 @@
+Version 4.0.1
+==============
+- [NEW] Specify whether to clean up or view log on manual run
+
+- [FIX] A memory leak could occur when the user enabled deleting empty folders
+- [FIX] Disabling the addon froze XBMC completely
+- [FIX] Video library was not being cleaned up afterwards
+
 Version 4.0.0
 ==============
 - [NEW] Gotham compatibility

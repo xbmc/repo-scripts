@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.filecleaner" name="XBMC File Cleaner" version="4.0.0" provider-name="Anthirian, drewzh">
+<addon id="script.filecleaner" name="XBMC File Cleaner" version="4.0.1" provider-name="Anthirian, drewzh">
     <requires>
         <import addon="xbmc.python" version="2.14.0" />
         <import addon="xbmc.json" version="6.6.0" />

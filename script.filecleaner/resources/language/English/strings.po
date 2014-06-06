@@ -41,54 +41,66 @@ msgid "[B]Which videos do you want to clean?[/B]"
 msgstr ""
 
 msgctxt "#32102"
-msgid "Cleaning type"
+msgid "Default action"
 msgstr ""
 
 msgctxt "#32103"
-msgid "Move elsewhere"
+msgid "Clean up"
 msgstr ""
 
 msgctxt "#32104"
-msgid "Delete permanently"
+msgid "View log"
 msgstr ""
 
 msgctxt "#32105"
-msgid "[I]Please specify where to store watched videos [/I]"
+msgid "Cleaning type"
 msgstr ""
 
 msgctxt "#32106"
-msgid "Holding folder location"
+msgid "Move elsewhere"
 msgstr ""
 
 msgctxt "#32107"
-msgid "Create subdirectories (i.e. [B]../Artist[/B], [B]../Movie[/B] and [B]../Show[/B])"
+msgid "Delete permanently"
 msgstr ""
 
 msgctxt "#32108"
-msgid "Clean movies"
+msgid "[I]Please specify where to store watched videos [/I]"
 msgstr ""
 
 msgctxt "#32109"
-msgid "Clean TV shows"
+msgid "Holding folder location"
 msgstr ""
 
 msgctxt "#32110"
-msgid "Clean music videos"
+msgid "Create subdirectories (i.e. [B]../Artist[/B], [B]../Movie[/B] and [B]../Show[/B])"
 msgstr ""
 
 msgctxt "#32111"
-msgid "Clean XBMC video library afterwards"
+msgid "Clean movies"
 msgstr ""
 
 msgctxt "#32112"
-msgid "Also delete empty folders"
+msgid "Clean TV shows"
 msgstr ""
 
 msgctxt "#32113"
-msgid "Ignore files with the following extensions (separate with commas)"
+msgid "Clean music videos"
 msgstr ""
 
 msgctxt "#32114"
+msgid "Clean XBMC video library afterwards"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Also delete empty folders"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Ignore files with the following extensions (separate with commas)"
+msgstr ""
+
+msgctxt "#32117"
 msgid "Also clean related files with similar names (e.g. subtitles)"
 msgstr ""
 

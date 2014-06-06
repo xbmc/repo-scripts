@@ -34,6 +34,8 @@ class Cleaner(object):
     TVSHOWS = "episodes"
     CLEANING_TYPE_MOVE = "0"
     CLEANING_TYPE_DELETE = "1"
+    DEFAULT_ACTION_CLEAN = "0"
+    DEFAULT_ACTION_LOG = "1"
 
     movie_filter_fields = ["title", "plot", "plotoutline", "tagline", "votes", "rating", "time", "writers",
                            "playcount", "lastplayed", "inprogress", "genre", "country", "year", "director",
@@ -102,26 +104,30 @@ class Cleaner(object):
                                 xbmc.executebuiltin("Addon.OpenSettings(%s)" % __addonID__)
                             break
                         if get_setting(create_subdirs):
+                            if isinstance(title, unicode):
+                                title = title.encode("utf-8")
                             new_path = os.path.join(get_setting(holding_folder), str(title))
                         else:
                             new_path = get_setting(holding_folder)
                         if self.move_file(filename, new_path):
+                            debug("File(s) moved successfully.")
                             count += 1
                             if len(unstacked_path) > 1:
                                 cleaned_files.extend(unstacked_path)
                             else:
                                 cleaned_files.append(filename)
                             self.clean_related_files(filename, new_path)
-                            self.delete_empty_folders(filename)
+                            self.delete_empty_folders(os.path.dirname(filename))
                     elif get_setting(cleaning_type) == self.CLEANING_TYPE_DELETE:
                         if self.delete_file(filename):
+                            debug("File(s) deleted successfully.")
                             count += 1
                             if len(unstacked_path) > 1:
                                 cleaned_files.extend(unstacked_path)
                             else:
                                 cleaned_files.append(filename)
                             self.clean_related_files(filename)
-                            self.delete_empty_folders(filename)
+                            self.delete_empty_folders(os.path.dirname(filename))
                 else:
                     debug("%r was already deleted. Skipping." % filename, xbmc.LOGWARNING)
         else:
@@ -152,18 +158,19 @@ class Cleaner(object):
                     cleaning_results.extend(cleaned_files)
                     summary[video_type] = count
 
-        # Write cleaned file names to the log
+        # Check if we need to perform any post-cleaning operations
         if cleaning_results:
+            # Write cleaned file names to the log
             Log().prepend(cleaning_results)
 
-        # Finally clean the library to account for any deleted videos.
-        if get_setting(clean_xbmc_library) and cleaned_files:
-            xbmc.sleep(5000)  # Sleep 5 seconds to make sure file I/O is done.
+            # Finally clean the library to account for any deleted videos.
+            if get_setting(clean_xbmc_library):
+                xbmc.sleep(2000)  # Sleep 2 seconds to make sure file I/O is done.
 
-            if xbmc.getCondVisibility("Library.IsScanningVideo"):
-                debug("The video library is being updated. Skipping library cleanup.", xbmc.LOGWARNING)
-            else:
-                xbmc.executebuiltin("XBMC.CleanLibrary(video)")
+                if xbmc.getCondVisibility("Library.IsScanningVideo"):
+                    debug("The video library is being updated. Skipping library cleanup.", xbmc.LOGWARNING)
+                else:
+                    xbmc.executebuiltin("XBMC.CleanLibrary(video)")
 
         return self.summarize(summary)
 
@@ -413,7 +420,6 @@ class Cleaner(object):
                 debug("File %r no longer exists." % p, xbmc.LOGERROR)
                 success.append(False)
 
-        debug("Return statuses: %r" % success)
         return any(success)
 
     def delete_empty_folders(self, location):
@@ -431,10 +437,10 @@ class Cleaner(object):
         :return: True if the folder was deleted successfully, False otherwise.
         """
         if not get_setting(delete_folders):
-            debug("Deleting of folders is disabled.")
+            debug("Deleting of empty folders is disabled.")
             return False
 
-        folder = os.path.dirname(self.unstack(location)[0])  # Stacked paths should have the same parent, use any
+        folder = self.unstack(location)[0]  # Stacked paths should have the same parent, use any
         debug("Checking if %r is empty" % folder)
         ignored_file_types = [file_ext.strip() for file_ext in get_setting(ignore_extensions).split(",")]
         debug("Ignoring file types %r" % ignored_file_types)
@@ -446,7 +452,7 @@ class Cleaner(object):
         try:
             for f in files:
                 _, ext = os.path.splitext(f)
-                if ext not in ignored_file_types:
+                if ext and not ext in ignored_file_types:  # ensure f is not a folder and its extension is not ignored
                     debug("Found non-ignored file type %r" % ext)
                     empty = False
                     break
@@ -585,10 +591,14 @@ class Cleaner(object):
 
 if __name__ == "__main__":
     cleaner = Cleaner()
-    results = cleaner.clean_all()
-    if results:
-        # Videos were cleaned. Ask the user to view the log file.
-        if xbmcgui.Dialog().yesno(utils.translate(32514), results, utils.translate(32519)):
-            xbmc.executescript("special://home/addons/script.filecleaner/viewer.py")
+    if get_setting(default_action) == cleaner.DEFAULT_ACTION_LOG:
+        xbmc.executescript("special://home/addons/script.filecleaner/viewer.py")
     else:
-        notify(utils.translate(32520))
+        results = cleaner.clean_all()
+        if results:
+            # Videos were cleaned. Ask the user to view the log file.
+            # TODO: Listen to OnCleanFinished notifications and wait before asking to view the log
+            if xbmcgui.Dialog().yesno(utils.translate(32514), results, utils.translate(32519)):
+                xbmc.executescript("special://home/addons/script.filecleaner/viewer.py")
+        else:
+            notify(utils.translate(32520))

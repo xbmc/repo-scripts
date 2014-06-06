@@ -5,21 +5,21 @@
         <setting type="sep" />
         <setting label="32101" type="lsep" />
         <setting type="sep" />
+        <setting label="32102" id="default_action" type="enum" visible="true" lvalues="32103|32104" />
+        <setting label="32105" id="cleaning_type" type="enum" visible="true" lvalues="32106|32107" />
+        <setting label="32108" id="holding_info" type="lsep" subsetting="true" visible="eq(-1,0)" />
 
-        <setting label="32102" id="cleaning_type" type="enum" visible="true" lvalues="32103|32104" />
-        <setting label="32105" id="holding_info" type="lsep" subsetting="true" visible="eq(-1,0)" />
+        <setting label="32109" id="holding_folder" type="folder" default="" option="writeable" subsetting="true" visible="eq(-2,0)" />
+        <setting label="32110" id="create_subdirs" type="bool" default="false" subsetting="true" visible="eq(-3,0)" />
 
-        <setting label="32106" id="holding_folder" type="folder" default="" option="writeable" subsetting="true" visible="eq(-2,0)" />
-        <setting label="32107" id="create_subdirs" type="bool" default="false" subsetting="true" visible="eq(-3,0)" />
+        <setting label="32111" id="clean_movies" type="bool" default="false" visible="true" />
+        <setting label="32112" id="clean_tv_shows" type="bool" default="false" visible="true" />
+        <setting label="32113" id="clean_music_videos" type="bool" default="false" visible="true" />
 
-        <setting label="32108" id="clean_movies" type="bool" default="false" visible="true" />
-        <setting label="32109" id="clean_tv_shows" type="bool" default="false" visible="true" />
-        <setting label="32110" id="clean_music_videos" type="bool" default="false" visible="true" />
-
-        <setting label="32111" id="clean_xbmc_library" type="bool" default="true" visible="true" />
-        <setting label="32112" id="delete_folders" type="bool" default="false" visible="true" />
-        <setting label="32113" id="ignore_extensions" type="text" default=".nfo, .nfo-orig, .tbn, .srt, .ass, .srr, .sfv, .nzb, .jpg, .png, .txt" subsetting="true" visible="eq(-1,true)" />
-        <setting label="32114" id="clean_related" type="bool" default="false" visible="true" />
+        <setting label="32114" id="clean_xbmc_library" type="bool" default="true" visible="true" />
+        <setting label="32115" id="delete_folders" type="bool" default="false" visible="true" />
+        <setting label="32116" id="ignore_extensions" type="text" default=".nfo, .nfo-orig, .tbn, .srt, .ass, .srr, .sfv, .nzb, .jpg, .png, .txt" subsetting="true" visible="eq(-1,true)" />
+        <setting label="32117" id="clean_related" type="bool" default="false" visible="true" />
     </category>
 
     <!-- Frequency section -->
