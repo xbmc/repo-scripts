@@ -16,20 +16,23 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re, urllib, urllib2, os
+import re
 from addon.common.net import Net
+import urllib2, os
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
+import xbmcgui
 from lib import unwise
+import urllib
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
-class NovamovResolver(Plugin, UrlResolver, PluginSettings):
+class CloudyResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "novamov"
+    name = "cloudy.ec"
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -38,39 +41,41 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        #find key
+        dialog = xbmcgui.Dialog()
+        #grab stream details
         try:
             html = self.net.http_GET(web_url).content
             html = unwise.unwise_process(html)
             filekey = unwise.resolve_var(html, "flashvars.filekey")
-            
-            #get stream url from api
-            api = 'http://www.novamov.com/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
-            html = self.net.http_GET(api).content
-            r = re.search('url=(.+?)&title', html)
-            if r:
-                stream_url = urllib.unquote(r.group(1))
+
+            #use api to find stream address
+            api_call = ('http://www.cloudy.ec/api/player.api.php?user=undefined&codes=1&file=%s' +
+                        '&pass=undefined&key=%s') % (media_id, filekey)
+
+            api_html = self.net.http_GET(api_call).content
+            rapi = re.search('url=(.+?)&title=', api_html)
+            if rapi:
+                stream_url = urllib.unquote(rapi.group(1))
             else:
-                r = re.search('file no longer exists',html)
-                if r:
-                    raise Exception ('File Not Found or removed')
-                raise Exception ('Failed to parse url')
+                raise Exception ('File Not Found or removed')
             
             return stream_url
+
         except urllib2.URLError, e:
-            common.addon.log_error('Novamov: got http error %d fetching %s' %
-                                    (e.code, web_url))
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %
+                                   (e.code, web_url))
+            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
-            common.addon.log_error('**** Novamov Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]NOVAMOV[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            common.addon.log('**** Cloudy Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]CLOUDY[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
-        return 'http://www.novamov.com/video/%s' % media_id
+        return 'http://www.cloudy.ec/embed.php?id=%s' % media_id
 
     def get_host_and_id(self, url):
-        r = re.search('//(?:embed.)?(.+?)/(?:video/|embed.php\?v=)([0-9a-z]+)', url)
+        r = re.search('((?:http://|www.|embed.)cloudy.(?:ec|eu|sx|ch|com))/(?:video/|embed.php\?id=)([0-9a-z]+)', url)
         if r:
             return r.groups()
         else:
@@ -78,4 +83,5 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match('http://(www.|embed.)?no.+?/(video/|embed.php\?)', url) or 'novamov' in host
+        return re.match('http(s)://(www.|embed.)?cloudy.(?:ec|eu|sx|ch|com)/(video/|file/|embed.php\?)' +
+                        '(?:[0-9a-z]+|width)', url) or 'cloudy' in host

@@ -37,6 +37,7 @@ from plugnplay.interfaces import SiteAuth
 import xbmcgui
 
 #load all available plugins
+common.addon.log('Initializing URLResolver version: %s' % common.addon_version)
 plugnplay.set_plugin_dirs(common.plugins_path)
 plugnplay.load_plugins()
 

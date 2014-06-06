@@ -17,7 +17,7 @@
 """
 import random
 
-from t0mm0.common.net import Net
+from addon.common.net import Net
 import math
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings

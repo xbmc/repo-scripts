@@ -1,6 +1,6 @@
 import random
 import re
-from t0mm0.common.net import Net
+from addon.common.net import Net
 import urllib2
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver

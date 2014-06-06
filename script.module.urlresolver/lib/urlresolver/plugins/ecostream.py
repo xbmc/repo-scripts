@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
-from t0mm0.common.net import Net
+from addon.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
@@ -52,18 +52,18 @@ class EcostreamResolver(Plugin, UrlResolver, PluginSettings):
                 % msg, delay=5000, image=error_logo)
                 return self.unresolvable(code = 1, msg = msg)
             self.net.save_cookies(self.cookie_file)
-            r = re.search("analytics='([^']+)'", html)
+            r = re.search("anlytcs='([^']+)'", html)
             if not r:
                 raise Exception ('Formvalue not found')
             part1 = r.group(1)
-            r = re.search("adslotid='([^']+)';", html)
+            r = re.search("superslots='([^']+)';", html)
             if not r:
                 raise Exception ('Formvalue not found')
             part2 = r.group(1)
             tpm = part1+part2
             # emulate click on button "Start Stream"
             postHeader = ({'Referer':web_url, 'X-Requested-With':'XMLHttpRequest'})
-            web_url = 'http://www.ecostream.tv/xhr/video/getstream'
+            web_url = 'http://www.ecostream.tv/xhr/video/vidureis'
             self.net.set_cookies(self.cookie_file)
             html = self.net.http_POST(web_url,{'id':media_id, 'tpm':tpm}, headers = postHeader).content
             sPattern = '"url":"([^"]+)"'

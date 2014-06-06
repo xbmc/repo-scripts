@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 import urllib2, os, re, xbmcgui
-from t0mm0.common.net import Net
+from addon.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
@@ -35,7 +35,7 @@ ok_logo = os.path.join(common.addon_path, 'resources', 'images', 'greeninch.png'
     
 class VKResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "VK"
+    name = "VK.com"
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -83,7 +83,7 @@ class VKResolver(Plugin, UrlResolver, PluginSettings):
         return 'http://%s.com/video_ext.php?%s' % (host, media_id)
 
     def get_host_and_id(self, url):
-        r = re.search('http://(www.)?(.+?).com/video_ext.php\?(.+)', url)
+        r = re.search('http[s]*://(?:www.)?(.+?).com/video_ext.php\?(.+)', url)
         if r :
             ls = r.groups()
             if ls[0] == 'www.' or ls[0] == None :
@@ -95,7 +95,7 @@ class VKResolver(Plugin, UrlResolver, PluginSettings):
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': 
             return False
-        return re.match('http://(www.)?vk.com/video_ext.php\?.+',url) or 'vk' in host    
+        return re.match('http[s]*://(?:www.)?vk.com/video_ext.php\?.+',url) or 'vk' in host    
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)   

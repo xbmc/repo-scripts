@@ -24,7 +24,7 @@ In testing there seems to be a timing issue with files coming up as not playable
 This happens on both the addon and in a browser.
 """
 import urllib2,urllib,xbmcaddon,socket,re,xbmc,os,xbmcgui,time
-from t0mm0.common.net import Net
+from addon.common.net import Net
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
@@ -116,9 +116,9 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
             else:
                 raise Exception ('vidxden: stream url not found')
 
-            return "%s|User-Agent=%s"%(stream_url,'Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0')
-
-        except urllib2.URLError, e:
+            return "%s" % (stream_url)
+            
+        except urllib2.HTTPError, e:
             common.addon.log_error('Vidxden: got http error %d fetching %s' %
                                   (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
@@ -158,7 +158,7 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
         xml += '<setting id="vidxden_captchax" '
         xml += 'type="slider" label="Captcha Image X Position" range="0,500" default="335" option="int" />\n'
         xml += '<setting id="vidxden_captchay" '
-        xml += 'type="slider" label="Captcha Image Y Position" range="0,500" default="30" option="int" />\n'
+        xml += 'type="slider" label="Captcha Image Y Position" range="0,500" default="0" option="int" />\n'
         xml += '<setting id="vidxden_captchah" '
         xml += 'type="slider" label="Captcha Image Height" range="0,500" default="180" option="int" />\n'
         xml += '<setting id="vidxden_captchaw" '

@@ -31,7 +31,7 @@ from urlresolver.plugnplay import Plugin
 from urlresolver import common
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
 import cookielib
-from t0mm0.common.net import Net
+from addon.common.net import Net
 import json
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO

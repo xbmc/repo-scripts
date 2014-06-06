@@ -23,7 +23,7 @@ movshare hosts both avi and flv videos
 """
 
 import re, urllib2, os
-from t0mm0.common.net import Net
+from addon.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
@@ -57,11 +57,8 @@ class MovshareResolver(Plugin, UrlResolver, PluginSettings):
             """
             r = re.search('<param name="src" value="(.+?)"', html)
             if not r:
-                html = unwise.unwise_process(html)
-                html = re.compile(r'eval\(function\(p,a,c,k,e,(?:d|r)\).+?\.split\(\'\|\'\).*?\)\)').search(html).group()
-                html = jsunpack.unpack(html)
-                filekey = unwise.resolve_var(html, "flashvars.filekey")
-                
+                filekey = re.search('flashvars.filekey="(.+?)";', html).group(0)
+
                 #get stream url from api
                 api = 'http://www.movshare.net/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
                 html = self.net.http_GET(api).content
@@ -72,7 +69,7 @@ class MovshareResolver(Plugin, UrlResolver, PluginSettings):
                 raise Exception ('File Not Found or removed')
             
             return stream_url
-        except urllib2.URLError, e:
+        except urllib2.HTTPError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)

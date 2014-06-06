@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
-from t0mm0.common.net import Net
+from addon.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
@@ -67,7 +67,6 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
             return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
-        common.addon.log('http://www.divxstage.eu/video/%s' % media_id)
         return 'http://www.divxstage.eu/video/%s' % media_id
 
     def get_host_and_id(self, url):

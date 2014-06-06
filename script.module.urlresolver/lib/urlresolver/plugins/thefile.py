@@ -16,16 +16,14 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
-from t0mm0.common.net import Net
+from addon.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import urllib2, os
 from urlresolver import common
-from lib import jsunpack
-import xbmcgui
 import re
-import time
+from lib import jsunpack
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
@@ -42,21 +40,55 @@ class TheFileResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         try:
+            headers = {
+                'Referer': web_url
+            }
             html = self.net.http_GET(web_url).content
-            r = re.search('<script\stype=(?:"|\')text/javascript(?:"|\')>eval\(function\(p,a,c,k,e,[dr]\)(?!.+player_ads.+).+?</script>',html,re.DOTALL)
+            #print html.encode('ascii','ignore')
+            
+            # check if we have a p,ac,k,e,d source
+            r = re.search('<script\stype=(?:"|\')text/javascript(?:"|\')>(eval\(function\(p,a,c,k,e,[dr]\)(?!.+player_ads.+).+?)</script>',html,re.DOTALL)
             if r:
                 js = jsunpack.unpack(r.group(1))
-                r = re.search("'file','(.+?)'", js.replace('\\',''))
+                r = re.search("file:\'(.+?)\'",js.replace('\\',''))
                 if r:
                     return r.group(1)
-            raise Exception ('File Not Found or removed')
+            
+            data = {}
+            r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
+            for name, value in r: data[name] = value
+            data.update({'referer': web_url})
+            data.update({'method_free': 'Free Download'})
+            data.update({'op': 'download1'})
+            #print data
+            
+            html = self.net.http_POST(web_url, data, headers=headers).content
+            #print html.encode('ascii','ignore')
+            
+            data = {}
+            r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
+            for name, value in r: data[name] = value
+            data.update({'referer': web_url})
+            data.update({'btn_download': 'Create Download Link'})
+            data.update({'op': 'download2'})
+            #print data
+            
+            html = self.net.http_POST(web_url, data, headers=headers).content
+            #print html.encode('ascii','ignore')
+            
+            r = re.search(r'<span>\s*<a\s+href="(.+?)".*</a>\s*</span>',html)
+            if r:
+                return r.group(1)
+            else:
+                raise Exception("File Link Not Found")
+                       
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
-            common.addon.log('**** Thefile Error occured: %s' % e)
+            common.addon.log(self.name + ': general error occurred: %s' % e)
             common.addon.show_small_popup(title='[B][COLOR white]THEFILE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
@@ -64,7 +96,7 @@ class TheFileResolver(Plugin, UrlResolver, PluginSettings):
             return 'http://thefile.me/%s' % (media_id)
 
     def get_host_and_id(self, url):
-        r = re.match(r'http://(thefile).me/([0-9a-zA-Z]+)', url)
+        r = re.search(r'//(.+?)/(.+)', url)
         if r:
             return r.groups()
         else:
@@ -73,6 +105,6 @@ class TheFileResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match(r'http://(thefile).me/([0-9a-zA-Z]+)', url) or 'thefile' in host
+        return re.match(r'http://(www.)?thefile.me/.+', url) or 'thefile' in host
 
 

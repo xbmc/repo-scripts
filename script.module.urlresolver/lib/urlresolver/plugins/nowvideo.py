@@ -17,7 +17,7 @@
 """
 
 import re, urllib, urllib2, os
-from t0mm0.common.net import Net
+from addon.common.net import Net
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
