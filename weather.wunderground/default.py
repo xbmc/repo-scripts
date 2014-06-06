@@ -55,6 +55,10 @@ MAXDAYS          = 6
 
 socket.setdefaulttimeout(10)
 
+def mk_int(s):
+    s = s.strip()
+    return int(s) if s else 0
+
 def recode(alert): # workaround: wunderground provides a corrupt alerts message
     try:
         alert = alert.encode("latin-1").rstrip('&nbsp)').decode("utf-8")
@@ -279,7 +283,7 @@ def properties(data,loc,locid):
     else:
         set_property('Today.Sunrise'                   , data['moon_phase']['sunrise']['hour'] + ':' + data['moon_phase']['sunrise']['minute'])
         set_property('Today.Sunset'                    , data['moon_phase']['sunset']['hour'] + ':' + data['moon_phase']['sunset']['minute'])
-    set_property('Today.moonphase'                     , MOONPHASE(int(data['moon_phase']['ageOfMoon']), int(data['moon_phase']['percentIlluminated'])))
+    set_property('Today.moonphase'                 , MOONPHASE(mk_int(data['moon_phase']['ageOfMoon']), mk_int(data['moon_phase']['percentIlluminated'])))
     if 'F' in TEMPUNIT:
         set_property('Today.AvgHighTemperature'        , data['almanac']['temp_high']['normal']['F'] + TEMPUNIT)
         set_property('Today.AvgLowTemperature'         , data['almanac']['temp_low']['normal']['F'] + TEMPUNIT)
