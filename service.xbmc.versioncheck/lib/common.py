@@ -69,34 +69,11 @@ def upgrade_message(msg, oldversion, upgrade):
     while(i < 5 and not xbmc.abortRequested):
         xbmc.sleep(1000)
         i += 1
-    # Detect if it's first run and only show OK dialog + ask to disable on that
-    firstrun = __addon__.getSetting("versioncheck_firstrun") != 'false'
-    if firstrun and not xbmc.abortRequested:
+    if __addon__.getSetting("lastnotified_version") < __addonversion__:
         xbmcgui.Dialog().ok(__addonname__,
-                            localise(msg),
-                            localise(32001),
-                            localise(32002))
-        # sets check to false which is checked on startup
-        if oldversion == "stable" and dialog_yesno(32009, 32010):
-            __addon__.setSetting("versioncheck_enable", 'false')
-        # set first run to false to only show a popup next startup / every two days
-        __addon__.setSetting("versioncheck_firstrun", 'false')
-
-    # Show notification after firstrun
-    elif __addon__.getSetting("versioncheck_enable") == 'true':
-        if upgrade:
-            return dialog_yesno(msg)
-        else:
-            xbmc.executebuiltin("XBMC.Notification(%s, %s, %d, %s)" %(__addonname__,
-                                                                  localise(32001) + '' + localise(32002),
-                                                                  15000,
-                                                                  __icon__))
+                    localise(msg),
+                    localise(32001),
+                    localise(32002))
+        __addon__.setSetting("lastnotified_version", __addonversion__)
     else:
-        pass
-    # tells users to upgrade to nightlies as there are no more monthlies
-    if oldversion == "monthly":
-        upgrademessage = __addon__.getSetting("versioncheck_gotham_alpha_notice") != 'false'
-        if upgrademessage:
-            __addon__.setSetting("versioncheck_gotham_alpha_notice", 'false')
-            runcmd = os.path.join(__addonpath__, 'lib/viewer.py')
-            xbmc.executebuiltin('XBMC.RunScript (%s,%s) '%(runcmd, 'gotham-alpha_notice'))
+        log("Already notified one time for upgrading.")
