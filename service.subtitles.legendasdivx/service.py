@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.0.9
+# Service LegendasDivx.com version 0.1.0
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -36,7 +36,7 @@ __language__   = __addon__.getLocalizedString
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
 __profile__    = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
 __resource__   = xbmc.translatePath(pjoin(__cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__temp__       = xbmc.translatePath(pjoin(__profile__, 'temp')).decode("utf-8")
+__temp__       = xbmc.translatePath(pjoin(__profile__, 'temp'))
 
 sys.path.append (__resource__)
 
@@ -375,8 +375,13 @@ def Search(item):
                     searchstring = title[-1]
                     #log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
                 else:
-                    searchstring = filename
-                    #log(u"TITLE Searchstring string = %s" % (searchstring,))
+                    if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
+                        searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
+                        searchstring = searchstring.group(0)
+                        #log(u"FilenameTV Searchstring = %s" % (searchstring,))
+                    else:
+                        searchstring = filename
+                        #log(u"Filename Searchstring = %s" % (searchstring,))
 
     PT_ON = __addon__.getSetting( 'PT' )
     PTBR_ON = __addon__.getSetting( 'PTBR' )
@@ -481,7 +486,7 @@ def Download(id, filename):
                 # determine if there is a newer file created in __temp__ (marks that the extraction had completed)
                 for file in files:
                     if file.split('.')[-1] in SUB_EXTS:
-                        mtime = os.stat(pjoin(__temp__, file.encode("utf-8").decode("utf-8"))).st_mtime
+                        mtime = os.stat(pjoin(__temp__, file)).st_mtime
                         if mtime > max_mtime:
                             max_mtime =  mtime
                 waittime  = waittime + 1
@@ -497,8 +502,11 @@ def Download(id, filename):
                     #if file.split('.')[-1] in SUB_EXTS and os.stat(pjoin(__temp__, file)).st_mtime > init_max_mtime:
                     if searchsubscount == 1:
                         # unpacked file is a newly created subtitle file
-                        log(u"Unpacked subtitles file '%s'" % (file,))
-                        subs_file = pjoin(__temp__, file.decode("utf-8"))
+                        #log(u"Unpacked subtitles file '%s'" % (file.decode('utf-8'),))
+                        try:
+                            subs_file = pjoin(__temp__, file.decode("utf-8"))
+                        except:
+                            subs_file = pjoin(__temp__, file.decode("latin1"))
                         subtitles_list.append(subs_file)
                         break
                     else:

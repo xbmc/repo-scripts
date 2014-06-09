@@ -1,3 +1,6 @@
+0.1.0
+- Fix the decoding BUG in Raspberry Pi (Linux and Windows have different behaviours).
+- New pattern for the last resort search to check if it's a movie or tvshow.
 0.0.9
 - Account verification added.
 0.0.8
