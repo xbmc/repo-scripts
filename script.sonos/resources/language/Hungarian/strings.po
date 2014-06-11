@@ -64,10 +64,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Értesítések"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Haladó"
-
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Sonos Hanglejátszók keresése..."
@@ -79,10 +75,6 @@ msgstr "Hanglejátszók nem találhatóak, adja meg kézzel az IP címet."
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Vezérlő"
-
-msgctxt "#32016"
-msgid "Refresh Interval (Seconds)"
-msgstr "Frissítés gyakoriság (másodpercben)"
 
 msgctxt "#32017"
 msgid "Use Test Data"

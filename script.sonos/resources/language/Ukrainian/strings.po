@@ -28,10 +28,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Сповіщення"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Більше"
-
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Бібліотека музики"

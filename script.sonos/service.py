@@ -27,6 +27,9 @@ sys.path.append(__lib__)
 # Import the common settings
 from settings import Settings
 from settings import log
+from settings import SocoLogging
+
+import soco
 
 ##########################################################
 # Class to display a popup of what is currently playing
@@ -88,7 +91,7 @@ class SonosVolumeLink():
         self.sonosVolume = 0
         self.sonosMuted = False
         
-        # On Startup check to see if we need to switch the SOnos speaker to line-in
+        # On Startup check to see if we need to switch the Sonos speaker to line-in
         self.switchToLineIn()
 
     def updateSonosVolume(self):
@@ -98,10 +101,10 @@ class SonosVolumeLink():
 
         # Get the current XBMC Volume
         xbmcVolume, xbmcMuted = self._getXbmcVolume()
-        log("*** ROB ***: xbmcVolume = %d, selfvol = %d" % (xbmcVolume, self.sonosVolume))
+        log("SonosVolumeLink: xbmcVolume = %d, selfvol = %d" % (xbmcVolume, self.sonosVolume))
         # Check to see if it has changed, and if we need to change the sonos value
         if (xbmcVolume != -1) and (xbmcVolume != self.sonosVolume):
-            log("*** ROB ***: Setting volume to = %d" % xbmcVolume)
+            log("SonosVolumeLink: Setting volume to = %d" % xbmcVolume)
             
             sonosDevice.volume = xbmcVolume
             self.sonosVolume = xbmcVolume
@@ -139,7 +142,120 @@ class SonosVolumeLink():
                 log("SonosService: Failed to switch to Line-In for speaker %s" % Settings.getIPAddress())
                 log("SonosService: %s" % traceback.format_exc())
 
+##############################################################
+# Automatically Pauses Sonos if XBMC starts playing something
+##############################################################
+class SonosAutoPause():
+    def __init__(self, sonosDevice):
+        self.sonosDevice = sonosDevice
+        self.xbmcPlayState = False
+        self.autoStopped = False
+        self.resumeCountdown = Settings.autoResumeSonos()
+
+    # Check if the Sonos system should be paused or resumed
+    def check(self):
+        if Settings.autoPauseSonos() and not Settings.linkAudioWithSonos():
+            # Check to see if something has started playing
+            if xbmc.Player().isPlaying():
+                # If this is a change in play state since the last time we checked
+                if self.xbmcPlayState == False:
+                    log("SonosAutoPause: Automatically pausing Sonos")
+                    self.xbmcPlayState = True
+                    # Pause the sonos if it is playing
+                    if self._isSonosPlaying():
+                        self.sonosDevice.pause()
+                        self.autoStopped = True
+                        self.resumeCountdown = Settings.autoResumeSonos()
+            else:
+                self.xbmcPlayState = False
+                if Settings.autoResumeSonos() > 0 and self.autoStopped:
+                    if self.resumeCountdown > 0:
+                        self.resumeCountdown = self.resumeCountdown - 1
+                    else:
+                        log("SonosAutoPause: Automatically resuming Sonos")
+                        self.sonosDevice.play()
+                        self.autoStopped = False
+                        self.resumeCountdown = Settings.autoResumeSonos()
+
+    # Works out if the Sonos system is playing
+    def _isSonosPlaying(self):
+        playStatus = self.sonosDevice.get_current_transport_info()
+        sonosPlaying = False
+        if (playStatus != None) and (playStatus['current_transport_state'] == 'PLAYING'):
+            sonosPlaying = True
+        return sonosPlaying
+
+#################################################
+# Sets the IP Address based off of the Zone Name
+#################################################
+class AutoUpdateIPAddress():
+    def __init__(self):
+        # Check if the auto update IP is enabled
+        if not Settings.isAutoIpUpdateEnabled():
+            return
+
+        # Get the existing zone we are trying to set the IP Address for
+        existingZone = Settings.getZoneName()
         
+        # Nothing to do if there is no Zone name set
+        if (existingZone == None) or (existingZone == ""):
+            return
+
+        # Set up the logging before using the Sonos Device
+        if __addon__.getSetting( "logEnabled" ) == "true":
+            SocoLogging.enable()
+    
+        try:
+            sonos_devices = soco.discover()
+        except:
+            log("AutoUpdateIPAddress: Exception when getting devices")
+            log("AutoUpdateIPAddress: %s" % traceback.format_exc())
+            sonos_devices = []
+    
+        ipaddresses = []
+
+        # Check each of the devices found
+        for device in sonos_devices:
+            ip = device.ip_address
+            log("AutoUpdateIPAddress: Getting info for IP address %s" % ip)
+    
+            playerInfo = None
+    
+            # Try and get the player info, if it fails then it is not a valid
+            # player and we should continue to the next
+            try:
+                playerInfo = device.get_speaker_info()
+            except:
+                log("AutoUpdateIPAddress: IP address %s is not a valid player" % ip)
+                log("AutoUpdateIPAddress: %s" % traceback.format_exc())
+                continue
+    
+            # If player  info was found, then print it out
+            if playerInfo != None:
+                # What is the name of the zone that this speaker is in?
+                zone_name = playerInfo['zone_name']
+
+                # Check the zone against the ones we are looking for
+                if zone_name == existingZone:
+                    # There could be multiple IP addressing in the same group
+                    # so save them all
+                    log("AutoUpdateIPAddress: IP address %s in zone %s" % (ip, existingZone))
+                    ipaddresses.append(ip)
+
+        # Check if there is an IP Address to set
+        if len(ipaddresses) > 0:
+            oldIp = Settings.getIPAddress()
+            # Check if we already have a match to the existing IP Address
+            matchesExisting = False
+            for newIp in ipaddresses:
+                if newIp == oldIp:
+                    matchesExisting = True
+                    break
+            # If no match found - then set to the first IP Address
+            if not matchesExisting:
+                log("AutoUpdateIPAddress: Setting IP address to %s" % ipaddresses[0])
+                Settings.setIPAddress(ipaddresses[0])
+
 
 ################################
 # Main of the Sonos Service
@@ -147,8 +263,11 @@ class SonosVolumeLink():
 if __name__ == '__main__':
     log("SonosService: Starting service (version %s)" % __version__)
 
-    if (not Settings.isNotificationEnabled()) and (not Settings.linkAudioWithSonos()):
-        log("SonosService: Notifications and Volume Link are disabled, exiting service")
+    # Start by doing any auto-setting of the IP Address
+    AutoUpdateIPAddress()
+
+    if (not Settings.isNotificationEnabled()) and (not Settings.linkAudioWithSonos()) and (not Settings.autoPauseSonos()):
+        log("SonosService: Notifications, Volume Link and Auto Pause are disabled, exiting service")
     else:
         sonosDevice = Settings.getSonosDevice()
 
@@ -167,10 +286,15 @@ if __name__ == '__main__':
             # Class to deal with sync of the volume
             volumeLink = SonosVolumeLink(sonosDevice)
 
+            # Class that handles the automatic pausing of the Sonos system
+            autoPause = SonosAutoPause(sonosDevice)
+
             # Loop until XBMC exits
             while (not xbmc.abortRequested):
                 # First make sure the volume matches
                 volumeLink.updateSonosVolume()
+                # Now check to see if the Sonos system needs pausing
+                autoPause.check()
                 
                 if (timeUntilNextCheck < 1) and Settings.isNotificationEnabled():
                     if Settings.stopNotifIfVideoPlaying() and xbmc.Player().isPlayingVideo():

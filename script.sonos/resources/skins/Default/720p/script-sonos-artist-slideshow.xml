@@ -561,9 +561,105 @@
 				<texturefocus>control_buttons/tbTransportForward_sel.png</texturefocus>
 				<texturenofocus>control_buttons/tbTransportForward.png</texturenofocus>
 				<onleft>603</onleft>
-				<onright>102</onright>
+				<onright>104</onright>
 				<onup>900</onup>
 				<ondown>622</ondown>
+			</control>
+			<!-- Group the Repeat Buttons -->
+			<control type="group" id="104">
+				<control type="button" id="605">
+					<description>Repeat Button</description>
+					<posx>190</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbRepeatBtn_underline@2x.png</texturefocus>
+					<texturenofocus>control_buttons/tbRepeatBtn@2x.png</texturenofocus>
+					<onleft>604</onleft>
+					<onright>103</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<control type="button" id="606">
+					<description>Repeat Button Enabled</description>
+					<posx>190</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbRepeatBtn_sel_underline@2x.png</texturefocus>
+					<texturenofocus>control_buttons/tbRepeatBtn_sel@2x.png</texturenofocus>
+					<onleft>604</onleft>
+					<onright>103</onright>
+					<onup>900</onup>
+					<visible>!Control.IsVisible(605)</visible>
+					<ondown>622</ondown>
+				</control>
+			</control>
+			<!-- Group the Random Buttons -->
+			<control type="group" id="103">
+				<control type="button" id="607">
+					<description>Random Button</description>
+					<posx>220</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbShuffleBtn_underline@2x.png</texturefocus>
+					<texturenofocus>control_buttons/tbShuffleBtn@2x.png</texturenofocus>
+					<onleft>104</onleft>
+					<onright>105</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<control type="button" id="608">
+					<description>Random Button Enabled</description>
+					<posx>220</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbShuffleBtn_sel_underline@2x.png</texturefocus>
+					<texturenofocus>control_buttons/tbShuffleBtn_sel@2x.png</texturenofocus>
+					<onleft>104</onleft>
+					<onright>105</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+					<visible>!Control.IsVisible(607)</visible>
+				</control>
+			</control>
+			<!-- Group the Crossfade Buttons -->
+			<control type="group" id="105">
+				<control type="button" id="609">
+					<description>Crossfade Button</description>
+					<posx>250</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbCrossfadeBtn_underline@2x.png</texturefocus>
+					<texturenofocus>control_buttons/tbCrossfadeBtn@2x.png</texturenofocus>
+					<onleft>103</onleft>
+					<onright>102</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<control type="button" id="610">
+					<description>Crossfade Button Enabled</description>
+					<posx>250</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbCrossfadeBtn_sel_underline@2x.png</texturefocus>
+					<texturenofocus>control_buttons/tbCrossfadeBtn_sel@2x.png</texturenofocus>
+					<onleft>103</onleft>
+					<onright>102</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+					<visible>!Control.IsVisible(609)</visible>
+				</control>
 			</control>
 			<!-- Group for the Sound and mute Button to allow keyboard navigation -->
 			<control type="group" id="102">
@@ -576,7 +672,7 @@
 					<label>-</label>
 					<texturefocus>control_buttons/tbUnMute_sel.png</texturefocus>
 					<texturenofocus>control_buttons/tbMute.png</texturenofocus>
-					<onleft>604</onleft>
+					<onleft>105</onleft>
 					<onright>600</onright>
 					<onup>900</onup>
 					<ondown>622</ondown>
@@ -591,7 +687,7 @@
 					<label>-</label>
 					<texturefocus>control_buttons/tbMute_sel.png</texturefocus>
 					<texturenofocus>control_buttons/tbMute_on.png</texturenofocus>
-					<onleft>604</onleft>
+					<onleft>105</onleft>
 					<onright>600</onright>
 					<onup>900</onup>
 					<ondown>622</ondown>

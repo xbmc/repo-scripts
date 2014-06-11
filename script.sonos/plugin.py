@@ -11,6 +11,7 @@ import xbmcplugin
 import xbmcaddon
 
 __addon__    = xbmcaddon.Addon(id='script.sonos')
+__icon__     = __addon__.getAddonInfo('icon')
 __cwd__      = __addon__.getAddonInfo('path').decode("utf-8")
 __resource__ = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
 __lib__      = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
@@ -64,7 +65,13 @@ class MenuNavigator():
 
     # Display the default list of items in the root menu
     def setRootMenu(self):
-        #### TODO: customise the icons
+
+        # Sonos Controller Link
+        url = self._build_url({'mode': 'launchController'})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32103), iconImage=__icon__)
+        li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
+        self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
 #        url = self._build_url({'mode': 'folder', 'foldername': 'Sonos-Favourites'})
 #        li = xbmcgui.ListItem('Sonos Favourites (Not Supported Yet)', iconImage='DefaultFolder.png')
@@ -688,7 +695,10 @@ if __name__ == '__main__':
             actionMgr = ActionManager()
             actionMgr.performAction(actionType[0], itemId[0], title)
 
-
+    elif mode[0] == 'launchController':
+        log("SonosPlugin: Mode is launchController")
+        xbmc.executebuiltin("xbmc.ActivateWindow(home)", True)
+        xbmc.executebuiltin('XBMC.RunScript(script.sonos)')
 
 
 

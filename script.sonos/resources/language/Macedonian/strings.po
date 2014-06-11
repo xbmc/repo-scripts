@@ -28,10 +28,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Нотификации"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Напредно"
-
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Изведувачи"

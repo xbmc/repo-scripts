@@ -13,12 +13,12 @@ from sonos import Sonos
 from mocksonos import TestMockSonos
 
 # Common logging module
-def log(txt):
-    if __addon__.getSetting( "logEnabled" ) == "true":
+def log(txt, loglevel=xbmc.LOGDEBUG):
+    if (__addon__.getSetting( "logEnabled" ) == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance (txt,str):
             txt = txt.decode("utf-8")
         message = u'%s: %s' % (__addonid__, txt)
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+        xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 # Class used to supply XBMC logging to the soco scripts
 class SocoLogging(logging.Handler):
@@ -58,7 +58,8 @@ class Settings():
     @staticmethod
     def getSonosDevice(ipAddress=None):
         # Set up the logging before using the Sonos Device
-        SocoLogging.enable()
+        if __addon__.getSetting( "logEnabled" ) == "true":
+            SocoLogging.enable()
         sonosDevice = None
         if Settings.useTestData():
             sonosDevice = TestMockSonos()
@@ -78,6 +79,19 @@ class Settings():
     def setIPAddress(chosenIPAddress):
         # Set the selected item into the settings
         __addon__.setSetting("ipAddress", chosenIPAddress)
+
+    @staticmethod
+    def getZoneName():
+        return __addon__.getSetting("zoneName")
+
+    @staticmethod
+    def setZoneName(chosenZoneName):
+        # Set the selected item into the settings
+        __addon__.setSetting("zoneName", chosenZoneName)
+
+    @staticmethod
+    def isAutoIpUpdateEnabled():
+        return __addon__.getSetting("autoIPUpdate") == 'true'
 
     @staticmethod
     def isNotificationEnabled():
@@ -141,4 +155,12 @@ class Settings():
     def getVolumeChangeIncrements():
         # Maximum number of values to show in any plugin list
         return int(float(__addon__.getSetting("volumeChangeIncrements")))
+
+    @staticmethod
+    def autoPauseSonos():
+        return __addon__.getSetting("autoPauseSonos") == 'true'
+
+    @staticmethod
+    def autoResumeSonos():
+        return int(float(__addon__.getSetting("autoResumeSonos")))
 

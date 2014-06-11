@@ -3,6 +3,8 @@
 	<category label="32010">
 		<setting label="32013" type="action" action="RunScript($CWD/discovery.py)"/>
 		<setting id="ipAddress" type="ipaddress" label="32002" default="0.0.0.0"/>
+		<setting id="zoneName" type="text" label="32028" default=""/>
+		<setting id="autoIPUpdate" subsetting="true" enable="!eq(-1,)" type="bool" label="32029" default="false"/>
     	<setting label="32012" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32009" default="false"/>
 		<setting id="useTestData" type="bool" label="32017" default="false"/>
@@ -14,7 +16,10 @@
 		<setting id="volumeChangeIncrements" label="32025" type="slider" default="3" range="1,1,10" option="int"/>
 
 		<setting id="linkAudioWithSonos" type="bool" label="32023" default="false"/>
-		<setting id="switchSonosToLineIn" enable="eq(-1,true)" type="bool" label="32024" default="false"/>
+		<setting id="switchSonosToLineIn" subsetting="true" enable="eq(-1,true)" type="bool" label="32024" default="false"/>
+		
+		<setting id="autoPauseSonos" enable="eq(-2,false)" type="bool" label="32026" default="false"/>
+		<setting id="autoResumeSonos" subsetting="true" enable="eq(-1,true)" label="32027" type="slider" default="0" range="0,3,60" option="int"/>
 	</category>
 	<category label="32011">
 		<setting id="notifEnabled" type="bool" label="32003" default="true"/>

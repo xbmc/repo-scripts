@@ -64,10 +64,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notifications"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Advanced"
-
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Search For Sonos Speakers..."
@@ -79,10 +75,6 @@ msgstr "No speakers found, please enter your IP address manually"
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controller"
-
-msgctxt "#32016"
-msgid "Refresh Interval (Seconds)"
-msgstr "Refresh Interval (Seconds)"
 
 msgctxt "#32017"
 msgid "Use Test Data"

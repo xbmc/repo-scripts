@@ -16,10 +16,6 @@ msgstr ""
 "Language: lv\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Papildus"
-
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Mākslinieki"

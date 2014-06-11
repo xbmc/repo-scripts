@@ -16,10 +16,6 @@ msgstr ""
 "Language: my\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "အဆင့်မြင့်သော"
-
 msgctxt "#32111"
 msgid "Albums"
 msgstr "အယ်ဘမ် များ"

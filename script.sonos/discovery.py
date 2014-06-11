@@ -34,7 +34,8 @@ log('script version %s started' % __version__)
 if __name__ == '__main__':
 
     # Set up the logging before using the Sonos Device
-    SocoLogging.enable()
+    if __addon__.getSetting( "logEnabled" ) == "true":
+        SocoLogging.enable()
 
     # Display the busy icon while searching for files
     xbmc.executebuiltin( "ActivateWindow(busydialog)" )
@@ -73,7 +74,7 @@ if __name__ == '__main__':
                 displayName = "%s     [%s]" % (ip, zone_name)
             else:
                 log("SonosDiscovery: No zone for IP address %s" % ip)
-            speakers[displayName] = ip
+            speakers[displayName] = (ip, zone_name)
 
     # Remove the busy dialog
     xbmc.executebuiltin( "Dialog.Close(busydialog)" )
@@ -88,7 +89,9 @@ if __name__ == '__main__':
         if select != -1:
             selectedDisplayName = speakers.keys()[select]
             log("SonosDiscovery: Entry chosen = %s" % selectedDisplayName)
-            chosenIPAddress = speakers.get(selectedDisplayName)
+            chosenIPAddress = speakers.get(selectedDisplayName)[0]
+            chosenZoneName = speakers.get(selectedDisplayName)[1]
             # Set the selected item into the settings
             Settings.setIPAddress(chosenIPAddress)
+            Settings.setZoneName(chosenZoneName)
 

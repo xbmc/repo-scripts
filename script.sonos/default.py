@@ -9,6 +9,11 @@ import threading
 import xbmcvfs
 import time
 
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
+
 __addon__     = xbmcaddon.Addon(id='script.sonos')
 __addonid__   = __addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
@@ -63,6 +68,14 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
     BUTTON_MUTED = 621
     SLIDER_VOLUME = 622
     
+    BUTTON_REPEAT = 605
+    BUTTON_REPEAT_ENABLED = 606
+    
+    BUTTON_RANDOM = 607
+    BUTTON_RANDOM_ENABLED = 608
+
+    BUTTON_CROSSFADE = 609
+    BUTTON_CROSSFADE_ENABLED = 610
 
     def __init__( self, *args, **kwargs ):
         self.closeRequested = False
@@ -70,10 +83,15 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
         # The non keyword arguments will be the ones passed to the main WindowXML
         self.sonosDevice = kwargs.pop('sonosDevice')
         self.currentTrack = None
+        self.nextTrack = None
         
         self.delayedRefresh = 0
         # After startup we can always process the action
         self.nextFilteredAction = 0
+        
+        # Record if the playlist is random and the loop state
+        self.isRandom = False
+        self.isLoop = False
 
     # Static method to create the Window Dialog class
     @staticmethod
@@ -120,7 +138,7 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
             # Handle remote control commands
             if( (action == ACTION_PLAYER_PLAY) or (action == ACTION_PAUSE) ):
                 # Get the initial state of the device
-                playStatus = sonosDevice.get_current_transport_info()
+                playStatus = self.sonosDevice.get_current_transport_info()
                 
                 # Play/pause is a toggle, so pause if playing
                 if playStatus != None:
@@ -136,7 +154,7 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
                 self.onClick(SonosControllerWindow.BUTTON_PREVIOUS)
             elif (action == ACTION_MUTE) or (action == ACTION_TOGGLE_WATCHED):
                 # Check if currently muted
-                if sonosDevice.mute == False:
+                if self.sonosDevice.mute == False:
                     self.onClick(SonosControllerWindow.BUTTON_NOT_MUTED)
                 else:
                     self.onClick(SonosControllerWindow.BUTTON_MUTED)
@@ -179,9 +197,10 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
         self.closeRequested = True
         BaseWindow.close(self)
 
+    # Updates the controller display
     def updateDisplay(self):
         # Get the current track information
-        track = sonosDevice.get_current_track_info()
+        track = self.sonosDevice.get_current_track_info()
 
         # Only update if the track has changed
         if (track != None) and ((self.currentTrack == None) or (track['uri'] != self.currentTrack['uri'])):
@@ -206,10 +225,6 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
             albumLabel.reset()
             albumLabel.addLabel(track['album'])
 
-            nextTrackLabel = self.getControl(SonosControllerWindow.NEXT_LABEL)
-            # Clear the current text
-            nextTrackLabel.reset()                
-
             # Display the track duration
             durationLabel = self.getControl(SonosControllerWindow.DURATION_LABEL)
             durationLabel.setLabel(self._stripHoursFromTime(track['duration']))
@@ -221,22 +236,62 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
             else:
                 durationLabel.setVisible(True)
 
-            #################################################################
-            # Note: the code below gives the next track in the playlist
-            # not the next track to be played (which is the case if random)
-            # No way to do that at the moment
-            #################################################################
+        # Get the control that currently has focus
+        focusControl = -1
+        try:
+            focusControl = self.getFocusId();
+        except:
+            pass
 
-            # Check if there is a next track            
-#             if track['playlist_position'] != "" and int(track['playlist_position']) > -1:
-#                 # Also get the "Next Track" Information
-#                 # 0 would be the current track
-#                 nextTrackList = sonosDevice.get_queue(int(track['playlist_position']), 1)
-#      
-#                 if (nextTrackList != None) and (len(nextTrackList) > 0):
-#                     nextTrackItem = nextTrackList[0]
-#                     nextTrackText = "[COLOR=FF0084ff]%s:[/COLOR] %s - %s" % ("Next", nextTrackItem['title'], nextTrackItem['artist'])
-#                     nextTrackLabel.addLabel(nextTrackText)
+        # Get the playing mode, so see if random or repeat has changes
+        self.isRandom, self.isLoop = self.sonosDevice.getPlayMode()
+
+        randomButton = self.getControl(SonosControllerWindow.BUTTON_RANDOM)
+        # We can not calculate the next track if it is random
+        if self.isRandom:
+            log("SonosControllerWindow: Random enabled - clearing next track info")
+            randomButton.setVisible(False)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_RANDOM:
+                self.setFocusId(SonosControllerWindow.BUTTON_RANDOM_ENABLED)
+            # Clear the current text for the next track
+            self._updateNextTrackInfo()
+        else:
+            log("SonosControllerWindow: Random disabled - setting next track info")
+            randomButton.setVisible(True)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_RANDOM_ENABLED:
+                self.setFocusId(SonosControllerWindow.BUTTON_RANDOM)
+            # Set the next track info
+            self._updateNextTrackInfo(track)
+
+        # Set the repeat button status
+        repeatButton = self.getControl(SonosControllerWindow.BUTTON_REPEAT)
+        if self.isLoop:
+            repeatButton.setVisible(False)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_REPEAT:
+                self.setFocusId(SonosControllerWindow.BUTTON_REPEAT_ENABLED)
+        else:
+            repeatButton.setVisible(True)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_REPEAT_ENABLED:
+                self.setFocusId(SonosControllerWindow.BUTTON_REPEAT)
+
+        # Get the current Cross-Fade setting
+        crossFade = self.sonosDevice.cross_fade
+        crossFadeButton = self.getControl(SonosControllerWindow.BUTTON_CROSSFADE)
+        if crossFade:
+            crossFadeButton.setVisible(False)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_CROSSFADE:
+                self.setFocusId(SonosControllerWindow.BUTTON_CROSSFADE_ENABLED)
+        else:
+            crossFadeButton.setVisible(True)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_CROSSFADE_ENABLED:
+                self.setFocusId(SonosControllerWindow.BUTTON_CROSSFADE)
+
 
         self.currentTrack = track
 
@@ -245,21 +300,33 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
         trackPositionLabel.setLabel(self._stripHoursFromTime(track['position']))
 
         # Get the initial state of the device
-        playStatus = sonosDevice.get_current_transport_info()
-        
+        playStatus = self.sonosDevice.get_current_transport_info()
+
         # Set the play/pause button to the correct value
         playButton = self.getControl(SonosControllerWindow.BUTTON_PLAY)
         if (playStatus != None) and (playStatus['current_transport_state'] == 'PLAYING'):
             playButton.setVisible(False)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_PLAY:
+                self.setFocusId(SonosControllerWindow.BUTTON_PAUSE)
         else:
             playButton.setVisible(True)
-        
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_PAUSE:
+                self.setFocusId(SonosControllerWindow.BUTTON_PLAY)
+       
         # Check to see what the current state of the mute button is
         muteButton = self.getControl(SonosControllerWindow.BUTTON_NOT_MUTED)
-        if sonosDevice.mute == False:
+        if self.sonosDevice.mute == False:
             muteButton.setVisible(True)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_MUTED:
+                self.setFocusId(SonosControllerWindow.BUTTON_NOT_MUTED)
         else:
             muteButton.setVisible(False)
+            # Set the correct highlighted button
+            if focusControl == SonosControllerWindow.BUTTON_NOT_MUTED:
+                self.setFocusId(SonosControllerWindow.BUTTON_MUTED)
 
         # The following controls need a delayed refresh, this is because they
         # are controls like sliders, so we do not want to update them until
@@ -268,7 +335,7 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
     
             # Get the current volume and set the slider
             # Will return a value between 0 and 100
-            currentVolume = sonosDevice.volume
+            currentVolume = self.sonosDevice.volume
             # Get the slider control
             volumeSlider = self.getControl(SonosControllerWindow.SLIDER_VOLUME)
             # Don't move slider is already in correct position
@@ -309,39 +376,61 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
         # Play button has been clicked
         if controlID == SonosControllerWindow.BUTTON_PLAY:
             log("SonosControllerWindow: Play Requested")
-
             # Send the play message to Sonos
-            sonosDevice.play()
-            self.setFocusId(SonosControllerWindow.BUTTON_PAUSE)
+            self.sonosDevice.play()
 
         elif controlID == SonosControllerWindow.BUTTON_PAUSE:
             log("SonosControllerWindow: Pause Requested")
-
             # Send the pause message to Sonos
-            sonosDevice.pause()
-            self.setFocusId(SonosControllerWindow.BUTTON_PLAY)
+            self.sonosDevice.pause()
 
         elif controlID == SonosControllerWindow.BUTTON_NEXT:
             log("SonosControllerWindow: Next Track Requested")
-            sonosDevice.next()
+            self.sonosDevice.next()
 
         elif controlID == SonosControllerWindow.BUTTON_PREVIOUS:
             log("SonosControllerWindow: Previous Track Requested")
-            sonosDevice.previous()
+            self.sonosDevice.previous()
 
         elif controlID == SonosControllerWindow.BUTTON_STOP:
             log("SonosControllerWindow: Stop Requested")
-            sonosDevice.stop()
+            self.sonosDevice.stop()
+
+        elif controlID == SonosControllerWindow.BUTTON_REPEAT:
+            log("SonosControllerWindow: Repeat On Requested")
+            self.isLoop = True
+            self.sonosDevice.setPlayMode(self.isRandom, self.isLoop)
+
+        elif controlID == SonosControllerWindow.BUTTON_REPEAT_ENABLED:
+            log("SonosControllerWindow: Repeat Off Requested")
+            self.isLoop = False
+            self.sonosDevice.setPlayMode(self.isRandom, self.isLoop)
+
+        elif controlID == SonosControllerWindow.BUTTON_RANDOM:
+            log("SonosControllerWindow: Randon On Requested")
+            self.isRandom = True
+            self.sonosDevice.setPlayMode(self.isRandom, self.isLoop)
+
+        elif controlID == SonosControllerWindow.BUTTON_RANDOM_ENABLED:
+            log("SonosControllerWindow: Randon On Requested")
+            self.isRandom = False
+            self.sonosDevice.setPlayMode(self.isRandom, self.isLoop)
+
+        elif controlID == SonosControllerWindow.BUTTON_CROSSFADE:
+            log("SonosControllerWindow: Crossfade On Requested")
+            self.sonosDevice.cross_fade = True
+
+        elif controlID == SonosControllerWindow.BUTTON_CROSSFADE_ENABLED:
+            log("SonosControllerWindow: Crossfade Off Requested")
+            self.sonosDevice.cross_fade = False
 
         elif controlID == SonosControllerWindow.BUTTON_NOT_MUTED:
             log("SonosControllerWindow: Mute Requested")
-            sonosDevice.mute = True
-            self.setFocusId(SonosControllerWindow.BUTTON_MUTED)
+            self.sonosDevice.mute = True
 
         elif controlID == SonosControllerWindow.BUTTON_MUTED:
             log("SonosControllerWindow: Mute Requested")
-            sonosDevice.mute = False
-            self.setFocusId(SonosControllerWindow.BUTTON_NOT_MUTED)
+            self.sonosDevice.mute = False
 
         elif controlID == SonosControllerWindow.SLIDER_VOLUME:
             # Only process the operation if we are allowed
@@ -359,7 +448,7 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
                 self._setDelayedRefresh()
     
                 # Now set the volume
-                sonosDevice.volume = currentSliderPosition
+                self.sonosDevice.volume = currentSliderPosition
 
         elif controlID == SonosControllerWindow.SLIDER_SEEK:
             # Only process the operation if we are allowed
@@ -399,6 +488,10 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
 
     # Takes a time string (00:00:00) and removes the hour section if it is 0
     def _stripHoursFromTime(self, fullTimeString):
+        # Some services do not support duration
+        if fullTimeString == 'NOT_IMPLEMENTED':
+            return ""
+
         if (fullTimeString == None) or (fullTimeString == ""):
             return "00:00"
         if fullTimeString.count(':') == 2:
@@ -434,6 +527,10 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
 
     # Converts a time string 0:00:00 to the total number of seconds
     def _getSecondsInTimeString(self, fullTimeString):
+        # Some services do not support duration
+        if fullTimeString == 'NOT_IMPLEMENTED':
+            return -1
+        
         # Start by splitting the time into sections
         hours = 0
         minutes = 0
@@ -483,13 +580,52 @@ class SonosControllerWindow(BaseWindow): # xbmcgui.WindowXMLDialog
                 newPosition = "%d:%02d:%02d" % (hours, minutes, seconds)
 
             # Now send the seek message to the sonos speaker
-            sonosDevice.seek(newPosition)
+            self.sonosDevice.seek(newPosition)
 
+    # Populates the details of the next track that will be played
+    def _updateNextTrackInfo(self, track=None):
+        # Note: the code below gives the next track in the playlist
+        # not the next track to be played (which is the case if random)
+        # No way to do that at the moment
+        nextTrackLabel = self.getControl(SonosControllerWindow.NEXT_LABEL)
+       
+        # Check if there is a next track            
+        if (track != None) and (track['title'] != ''):
+            playlistPos = track['playlist_position']
+            log("SonosControllerWindow: Current track playlist position is %s" % str(playlistPos))
+            if track['playlist_position'] != "" and int(track['playlist_position']) > -1:
+                # Also get the "Next Track" Information
+                # 0 would be the current track
+                nextTrackList = self.sonosDevice.get_queue(int(track['playlist_position']), 1)
+      
+                if (nextTrackList != None) and (len(nextTrackList) > 0):
+                    nextTrackItem = nextTrackList[0]
+                    nextTrackText = "[COLOR=FF0084ff]%s:[/COLOR] %s - %s" % (__addon__.getLocalizedString(32062), nextTrackItem.title, nextTrackItem.creator)
+                    if self.nextTrack != nextTrackText:
+                        self.nextTrack = nextTrackText
+                        nextTrackLabel.reset()
+                        nextTrackLabel.addLabel(nextTrackText)
+                else:
+                    self.nextTrack = None
+            else:
+                self.nextTrack = None
+        else:
+            self.nextTrack = None
+            
+        if self.nextTrack == None:
+            log("SonosControllerWindow: Clearing next track label")
+            nextTrackLabel.reset()
+            nextTrackLabel.addLabel("")
 
 #####################################################
 # Main window for the Sonos Artist Slide show
 #####################################################
 class SonosArtistSlideshow(SonosControllerWindow):
+    def __init__(self, *args, **kwargs):
+        # Store the ID of this Window
+        self.windowId = -1
+        
+        SonosControllerWindow.__init__(self, *args, **kwargs)
 
     # Static method to create the Window Dialog class
     @staticmethod
@@ -513,7 +649,7 @@ class SonosArtistSlideshow(SonosControllerWindow):
     def runArtistSlideshow(self):
         log("SonosArtistSlideshow: runArtistSlideshow")
         #startup artistslideshow
-        xbmcgui.Window(xbmcgui.getCurrentWindowId()).setProperty("ArtistSlideshow.ExternalCall", "True")
+        xbmcgui.Window(self.windowId).setProperty("ArtistSlideshow.ExternalCall", "True")
         #assumes addon is using suggested infolabel name of CURRENTARTIST and CURRENTTITLE
         artistslideshow = "RunScript(script.artistslideshow,windowid=%s&artistfield=%s&titlefield=%s&albumfield=%s&mbidfield=%s)" % (xbmcgui.getCurrentWindowId(), "CURRENTARTIST", "CURRENTTITLE", "CURRENTALBUM", "CURRENTMBID")
         xbmc.executebuiltin(artistslideshow)
@@ -524,12 +660,12 @@ class SonosArtistSlideshow(SonosControllerWindow):
         # First show the window
         SonosControllerWindow.show(self)
 
-        windowId = xbmcgui.getCurrentWindowId()
+        self.windowId = xbmcgui.getCurrentWindowId()
 
-        log("SonosArtistSlideshow: After show window %s" % windowId)
+        log("SonosArtistSlideshow: After show window %s" % self.windowId)
 
         # Set the sonos icon
-        xbmcgui.Window(windowId).setProperty('SonosAddonIcon', __icon__)
+        xbmcgui.Window(self.windowId).setProperty('SonosAddonIcon', __icon__)
 
         # Now make sure that Artist Slideshow is running
         self.athread = threading.Thread(target=self.runArtistSlideshow)
@@ -537,19 +673,16 @@ class SonosArtistSlideshow(SonosControllerWindow):
         self.athread.start()
         log("SonosArtistSlideshow: ArtistSlideShow thread started")
 
-
     def close(self):
         log("SonosArtistSlideshow: Closing windows - stop ArtistSlideShow")
         xbmc.executebuiltin( "ActivateWindow(busydialog)" )
 
-        windowId = xbmcgui.getCurrentWindowId()
-
         # Tell ArtistSlideshow to exit
-        xbmcgui.Window(windowId).clearProperty("ArtistSlideshow.ExternalCall")
+        xbmcgui.Window(self.windowId).clearProperty("ArtistSlideshow.ExternalCall")
         # Wait until ArtistSlideshow exits
         # Do not loop forever
         loops = 40
-        while (not xbmcgui.Window(windowId).getProperty("ArtistSlideshow.CleanupComplete") == "True") and (loops > 0):
+        while (not xbmcgui.Window(self.windowId).getProperty("ArtistSlideshow.CleanupComplete") == "True") and (loops > 0):
             xbmc.sleep(100)
             loops = loops - 1
 
@@ -575,10 +708,39 @@ class SonosArtistSlideshow(SonosControllerWindow):
         # set the windows properties for ArtistSlideshow
         # Only update if the track has changed
         if self.currentTrack != None:
-            windowId = xbmcgui.getCurrentWindowId()
-            xbmcgui.Window(windowId).setProperty('CURRENTARTIST', self.currentTrack['artist'])
-            xbmcgui.Window(windowId).setProperty('CURRENTTITLE', self.currentTrack['title'])
-            xbmcgui.Window(windowId).setProperty('CURRENTALBUM', self.currentTrack['album'])
+            xbmcgui.Window(self.windowId).setProperty('CURRENTARTIST', self.currentTrack['artist'])
+            xbmcgui.Window(self.windowId).setProperty('CURRENTTITLE', self.currentTrack['title'])
+            xbmcgui.Window(self.windowId).setProperty('CURRENTALBUM', self.currentTrack['album'])
+
+    def isClose(self):
+        # Check if the base class has detected a need to close
+        needToClose = SonosControllerWindow.isClose(self)
+        
+        # There are cases where the user could have changed the screen being
+        # displayed, for example, if they have the following in their keymap:
+        #   <keymap>
+        #     <global>
+        #       <keyboard>
+        #         <f5>ActivateWindow(0)</f5>
+        #       </keyboard>
+        #     </global>
+        #   </keymap>
+        # This could cause a change in window, such as loading the home screen
+        # however we do not get a call to close - as the Sonos window will be
+        # still running in the back-ground - just not showing on the screen
+        # If the user then exits, the keymap file will be left, so we will 
+        # automatically close the window in this case
+        # Note: This is not an issue with the normal controller - as it is a
+        # dialog window, so will always remain in view
+        if (not needToClose) and (self.windowId != -1):
+            # Get the current window
+            showingWindowId = xbmcgui.getCurrentWindowId()
+            # Check if the window is no longer showing
+            if showingWindowId != self.windowId:
+                log("SonosArtistSlideshow: Detected change in window, sonos window = %d, new window = %d" % (self.windowId, showingWindowId))
+                return True
+            
+        return needToClose
 
 
 # Load the Sonos keymap to make sure that volume/skip track keys do not get
@@ -608,7 +770,7 @@ class KeyMaps():
         if self.keymapCopied == True:
             try:
                 xbmcvfs.delete(self.KEYMAPDESTFILE)
-                logNotice("KeyMaps: Removed custom keymap")
+                log("KeyMaps: Removed custom keymap")
             except:
                 log("KeyMaps: Failed to remove & load custom keymap: %s" % traceback.format_exc())
 
@@ -638,11 +800,25 @@ if __name__ == '__main__':
     
             try:
                 sonosCtrl.show()
+                
+                # Make sure that we stop the screensaver coming in, the minimum value
+                # for the screensaver is 1 minute - so set at 40 seconds to keep active
+                stopScreensaver = 40000
     
                 while (not sonosCtrl.isClose()) and (not xbmc.abortRequested):
                     sonosCtrl.updateDisplay()
                     # Wait a second or so before updating
                     xbmc.sleep(Settings.getRefreshInterval())
+
+                    stopScreensaver = stopScreensaver - Settings.getRefreshInterval()
+                    if stopScreensaver < 0:
+                        # A bit of a hack, but we need XBMC to think a user is "doing things" so
+                        # that it does not start the screensaver, so we just send the message
+                        # to open the Context menu - which in our case will do nothing
+                        # but it does make XBMC think the user has done something
+                        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
+                        stopScreensaver = 40000
+
             except:
                 # Failed to connect to the Sonos Speaker
                 xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), ("Error from speaker %s" % Settings.getIPAddress()))

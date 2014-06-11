@@ -16,6 +16,38 @@ msgstr ""
 "Language: en_US\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "IP Address"
+
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notifications"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Controller"
+
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Music Library"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Queue"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artists"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albums"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Tracks"

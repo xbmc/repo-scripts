@@ -64,10 +64,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notifieringar"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Avancerad"
-
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Sök efter Sonos-högtalare..."
@@ -79,10 +75,6 @@ msgstr "Inga högtalare funna, var vänlig ange IP-adressen manuellt"
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Kontroller"
-
-msgctxt "#32016"
-msgid "Refresh Interval (Seconds)"
-msgstr "Uppdateringsintervall (sekunder)"
 
 msgctxt "#32017"
 msgid "Use Test Data"

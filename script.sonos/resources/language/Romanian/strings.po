@@ -28,10 +28,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificări"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Avansat"
-
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artiști"

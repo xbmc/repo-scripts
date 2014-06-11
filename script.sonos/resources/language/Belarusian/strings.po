@@ -28,10 +28,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notifications"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Advanced"
-
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controller"

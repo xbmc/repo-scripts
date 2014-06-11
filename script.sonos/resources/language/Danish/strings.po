@@ -32,10 +32,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Påmindelser"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Udvidet"
-
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Musikbibliotek"

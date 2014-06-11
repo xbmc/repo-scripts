@@ -77,4 +77,35 @@ class Sonos(SoCo):
         qnumber = response['FirstTrackNumberEnqueued']
         return int(qnumber)
 
+    # Reads the current Random and repeat status
+    def getPlayMode(self):
+        isRandom = False
+        isLoop = False
+        # Check what the play mode is
+        playMode = self.play_mode
+        if playMode.upper() == "REPEAT_ALL":
+            isLoop = True
+        elif playMode.upper() == "SHUFFLE":
+            isLoop = True
+            isRandom = True
+        elif playMode.upper() == "SHUFFLE_NOREPEAT":
+            isRandom = True
+        
+        return isRandom, isLoop
+
+    # Sets the current Random and repeat status
+    def setPlayMode(self, isRandom, isLoop):
+        playMode = "NORMAL"
+        
+        # Convert the booleans into a playmode
+        if isRandom and isLoop:
+            playMode = "SHUFFLE"
+        elif isRandom and (not isLoop):
+            playMode = "SHUFFLE_NOREPEAT"
+        elif (not isRandom) and isLoop:
+            playMode = "REPEAT_ALL"
+
+        # Now set the playmode on the Sonos speaker
+        self.play_mode = playMode
+        
 

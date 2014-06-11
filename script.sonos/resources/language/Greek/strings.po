@@ -64,10 +64,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Ειδοποιήσεις"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Για προχωρημένους"
-
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Αναζήτηση Για Ηχεία Sonos..."
@@ -79,10 +75,6 @@ msgstr "Δε βρέθηκαν ηχεία, εισαγάγετε τη διεύθυ
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Χειριστήριο"
-
-msgctxt "#32016"
-msgid "Refresh Interval (Seconds)"
-msgstr "Χρονικό Διάστημα Ενημέρωσης (Δευτ.)"
 
 msgctxt "#32017"
 msgid "Use Test Data"

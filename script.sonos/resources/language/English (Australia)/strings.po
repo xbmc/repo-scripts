@@ -20,10 +20,6 @@ msgctxt "#32002"
 msgid "IP Address"
 msgstr "IP Address"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Advanced"
-
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Music Library"

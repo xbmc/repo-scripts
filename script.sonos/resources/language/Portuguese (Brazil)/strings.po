@@ -64,10 +64,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificações"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Avançado"
-
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Procurar por Alto-Falantes Sonos..."
@@ -79,10 +75,6 @@ msgstr "Nenhum alto-falante localizado, por favor entre com o endereço de IP ma
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controles"
-
-msgctxt "#32016"
-msgid "Refresh Interval (Seconds)"
-msgstr "Intervalo para Atualizações (Segundos)"
 
 msgctxt "#32017"
 msgid "Use Test Data"

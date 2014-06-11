@@ -36,10 +36,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Известия"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Допълнителни"
-
 msgctxt "#32018"
 msgid "Plugin"
 msgstr "Приставка"

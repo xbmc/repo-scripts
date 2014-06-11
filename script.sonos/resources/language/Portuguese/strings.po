@@ -64,10 +64,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificações"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Avançado"
-
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Procurar Colunas Sonos..."
@@ -79,10 +75,6 @@ msgstr "Não foram encontradas colunas, por favor introduza manualmente o seu en
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controlador"
-
-msgctxt "#32016"
-msgid "Refresh Interval (Seconds)"
-msgstr "Intervalo de Actualização (Segundos)"
 
 msgctxt "#32017"
 msgid "Use Test Data"

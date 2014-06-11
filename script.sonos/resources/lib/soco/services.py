@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=fixme, invalid-name
 
 """
 Classes representing Sonos UPnP services.
@@ -24,7 +25,7 @@ Classes representing Sonos UPnP services.
 """
 # UPnP Spec at http://upnp.org/specs/arch/UPnP-arch-DeviceArchitecture-v1.0.pdf
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, absolute_import
 
 # UNICODE NOTE
 # UPnP requires all XML to be transmitted/received with utf-8 encoding. All
@@ -40,15 +41,13 @@ from __future__ import unicode_literals
 
 from collections import namedtuple
 from xml.sax.saxutils import escape
-import sys
 import logging
-# Need to use ElementTree, not cElementTree as it is a bit flakey in XBMC
-# import xml.etree.cElementTree as XML
-import xml.etree.ElementTree as XML
 
 import requests
 from .exceptions import SoCoUPnPException, UnknownSoCoException
-from .utils import prettify
+from .utils import prettify, TimedCache
+from .events import Subscription
+from .xml import XML
 
 log = logging.getLogger(__name__)  # pylint: disable=C0103
 # logging.basicConfig()
@@ -57,7 +56,14 @@ log = logging.getLogger(__name__)  # pylint: disable=C0103
 Action = namedtuple('Action', 'name, in_args, out_args')
 Argument = namedtuple('Argument', 'name, vartype')
 
+# A shared cache for ZoneGroupState. Each zone has the same info, so when a
+# SoCo instance is asked for group info, we can cache it and return it when
+# another instance is asked. To do this we need a cache to be shared between
+# instances
+zone_group_state_shared_cache = TimedCache()
 
+
+# pylint: disable=too-many-instance-attributes
 class Service(object):
     """ An class representing a UPnP service. The base class for all Sonos
     Service classes
@@ -67,17 +73,18 @@ class Service(object):
     with the same name.
 
     """
-    soap_body_template = "".join([
-        '<?xml version="1.0"?>',
-        '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"',
-        ' s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">',
-            '<s:Body>',
-                '<u:{action} xmlns:u="urn:schemas-upnp-org:service:',
-                    '{service_type}:{version}">',
-                    '{arguments}',
-                '</u:{action}>',
-            '</s:Body>',
-        '</s:Envelope>'])  # noqa PEP8
+    # pylint: disable=bad-continuation
+    soap_body_template = (
+        '<?xml version="1.0"?>'
+        '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"'
+        ' s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">'
+            '<s:Body>'
+                '<u:{action} xmlns:u="urn:schemas-upnp-org:service:'
+                    '{service_type}:{version}">'
+                    '{arguments}'
+                '</u:{action}>'
+            '</s:Body>'
+        '</s:Envelope>')  # noqa PEP8
 
     def __init__(self, soco):
         self.soco = soco
@@ -92,7 +99,13 @@ class Service(object):
         self.base_url = 'http://{0}:1400'.format(self.soco.ip_address)
         self.control_url = '/{0}/Control'.format(self.service_type)
         # Service control protocol description
-        self.scpd_url = '/xml/{0}{1}.xml'.format(self.service_type, self.version)
+        self.scpd_url = '/xml/{0}{1}.xml'.format(
+            self.service_type, self.version)
+        # Eventing subscription
+        self.event_subscription_url = '/{0}/Event'.format(self.service_type)
+        #: A cache for storing the result of network calls. By default, this is
+        #: TimedCache(default_timeout=0). See :class:`TimedCache`
+        self.cache = TimedCache(default_timeout=0)
         log.debug(
             "Created service %s, ver %s, id %s, base_url %s, control_url %s",
             self.service_type, self.version, self.service_id, self.base_url,
@@ -106,6 +119,7 @@ class Service(object):
         # are generally SONOS specific. NB It may well be that SONOS does not
         # use some of these error codes.
 
+        # pylint: disable=invalid-name
         self.UPNP_ERRORS = {
             400: 'Bad Request',
             401: 'Invalid Action',
@@ -138,19 +152,10 @@ class Service(object):
         """
 
         # Define a function to be invoked as the method, which calls
-        # send_command. It should take 0 or one args
-        def _dispatcher(self, *args):
-            arg_number = len(args)
-            if arg_number > 1:
-                raise TypeError(
-                    "TypeError: {0} takes 0 or 1 argument(s) ({1} given)"
-                    .format(action, arg_number))
-            elif arg_number == 0:
-                args = None
-            else:
-                args = args[0]
-
-            return self.send_command(action, args)
+        # send_command.
+        def _dispatcher(self, *args, **kwargs):
+            """ Dispatch to send_command """
+            return self.send_command(action, *args, **kwargs)
 
         # rename the function so it appears to be the called method. We
         # probably don't need this, but it doesn't harm
@@ -159,6 +164,7 @@ class Service(object):
         # _dispatcher is now an unbound menthod, but we need a bound method.
         # This turns an unbound method into a bound method (i.e. one that
         # takes self - an instance of the class - as the first parameter)
+        # pylint: disable=no-member
         method = _dispatcher.__get__(self, self.__class__)
         # Now we have a bound method, we cache it on this instance, so that
         # next time we don't have to go through this again
@@ -168,7 +174,8 @@ class Service(object):
         # return our new bound method, which will be called by Python
         return method
 
-    def wrap_arguments(self, args=None):
+    @staticmethod
+    def wrap_arguments(args=None):
         """ Wrap a list of tuples in xml ready to pass into a SOAP request.
 
         args is a list of (name, value) tuples specifying the name of each
@@ -185,15 +192,20 @@ class Service(object):
         """
         if args is None:
             args = []
-        tag = ["<{name}>{value}</{name}>".format(
-            name=name, value=escape("%s" % value, {'"': "&quot;"}))
-            for name, value in args]  # % converts to unicode because we are
-        # using unicode literals. Avoids use of 'unicode' function which does
-        # not exist in python 3
-        xml = "".join(tag)
+
+        tags = []
+        for name, value in args:
+            tag = "<{name}>{value}</{name}>".format(
+                name=name, value=escape("%s" % value, {'"': "&quot;"}))
+            # % converts to unicode because we are using unicode literals.
+            # Avoids use of 'unicode' function which does not exist in python 3
+            tags.append(tag)
+
+        xml = "".join(tags)
         return xml
 
-    def unwrap_arguments(self, xml_response):
+    @staticmethod
+    def unwrap_arguments(xml_response):
         """ Extract arguments and their values from a SOAP response.
 
         Given an soap/xml response, return a dict of {argument_name, value)}
@@ -232,18 +244,9 @@ class Service(object):
         # <{actionNameResponse}> (depends on what actionName is). Turn the
         # children of this into a {tagname, content} dict. XML unescaping
         # is carried out for us by elementree.
-        
-        # Try the default method first (Not working in all cases for ElementTree and 2.6)
         action_response = tree.find(
-            ".//{http://schemas.xmlsoap.org/soap/envelope/}Body")
-        if action_response == None:
-            # No entry found, try a different approach
-            action_response = tree.find(
-                    "{http://schemas.xmlsoap.org/soap/envelope/}Body")
-        action_response = action_response[0]
-        # Support Python 2.6
+            "{http://schemas.xmlsoap.org/soap/envelope/}Body")[0]
         return dict((i.tag, i.text or "") for i in action_response)
-        # return {i.tag: i.text or "" for i in action_response}
 
     def build_command(self, action, args=None):
         """ Build a SOAP request.
@@ -290,18 +293,36 @@ class Service(object):
                    'SOAPACTION': soap_action}
         return (headers, body)
 
-    def send_command(self, action, args=None):
+    def send_command(self, action, args=None, cache=None, cache_timeout=None):
         """ Send a command to a Sonos device.
 
         Given the name of an action (a string as specified in the service
         description XML file) to be sent, and the relevant arguments as a list
         of (name, value) tuples, send the command to the Sonos device. args
-        can be emptyReturn
-        a dict of {argument_name, value)} items or True on success. Raise
-        an exception on failure.
+        can be empty.
+
+        A cache is operated so that the result will be stored for up to
+        `cache_timeout` seconds, and a subsequent call with the same arguments
+        within that period will be returned from the cache, saving a further
+        network call. The cache may be invalidated or even primed from another
+        thread (for example if a UPnP event is received to indicate that the
+        state of the Sonos device has changed). If `cache_timeout` is missing
+        or `None`, the cache will use a default value (which may be 0 - see
+        :attribute:`cache`). By default, the cache identified by the service's
+        :attribute:`cache` attribute will be used, but a different cache object
+        may be specified in the `cache` parameter.
+
+        Return a dict of {argument_name, value)} items or True on success.
+        Raise an exception on failure.
 
         """
-
+        if cache is None:
+            cache = self.cache
+        result = cache.get(action, args)
+        if result is not None:
+            log.debug("Cache hit")
+            return result
+        # Cache miss, so go ahead and make a network call
         headers, body = self.build_command(action, args)
         log.info("Sending %s %s to %s", action, args, self.soco.ip_address)
         log.debug("Sending %s, %s", headers, prettify(body))
@@ -314,6 +335,9 @@ class Service(object):
             # NB an empty dict is a valid result. It just means that no
             # params are returned.
             result = self.unwrap_arguments(response.text) or True
+            # Store in the cache. There is no need to do this if there was an
+            # error, since we would want to try a network call again.
+            cache.put(result, action, args, timeout=cache_timeout)
             log.info(
                 "Received status %s from %s", status, self.soco.ip_address)
             return result
@@ -324,12 +348,11 @@ class Service(object):
             try:
                 self.handle_upnp_error(response.text)
             except Exception as exc:
-                log.exception(exc.message)
+                log.exception(str(exc))
                 raise
         else:
             # Something else has gone wrong. Probably a network error. Let
             # Requests handle it
-            # raise Exception('OOPS')
             response.raise_for_status()
 
     def handle_upnp_error(self, xml_error):
@@ -390,6 +413,46 @@ class Service(object):
             log.error("Unknown error received from %s", self.soco.ip_address)
             raise UnknownSoCoException(xml_error)
 
+    def subscribe(self, requested_timeout=None, event_queue=None):
+        """Subscribe to the service's events.
+
+        If requested_timeout is provided, a subscription valid for that number
+        of seconds will be requested, but not guaranteed. Check
+        :attrib:`Subscription.timeout` on return to find out what period of
+        validity is actually allocated.
+
+        event_queue is a thread-safe queue object onto which events will be
+        put. If None, a Queue object will be created and used.
+
+        Returns a Subscription object, representing the new subscription
+
+        To unsubscribe, call the `unsubscribe` method on the returned object.
+
+        """
+        subscription = Subscription(
+            self, event_queue)
+        subscription.subscribe(requested_timeout=requested_timeout)
+        return subscription
+
+    def _update_cache_on_event(self, event):
+        """ Update the cache when an event is received.
+
+        This will be called before an event is put onto the event queue. Events
+        will often indicate that the Sonos device's state has changed, so this
+        opportunity is made availabe for the service to update its cache. The
+        event will be put onto the event queue once this method returns.
+
+        `event` is an Event namedtuple: ('sid', 'seq', 'service', 'variables')
+
+        ..  warning:: This method will not be called from the main thread but
+            by one or more threads, which handle the events as they come in.
+            You *must not* access any class, instance or global variables
+            without appropriate locks. Treat all parameters passed to this
+            method as read only.
+
+        """
+        pass
+
     def iter_actions(self):
         """ Yield the service's actions with their in_arguments (ie parameters
         to pass to the action) and out_arguments (ie returned values).
@@ -403,35 +466,64 @@ class Service(object):
                      Argument(name='DesiredDateFormat', vartype='string')],
             out_args=[]) """
 
+        # pylint: disable=too-many-locals
         # TODO: Provide for Allowed value list, Allowed value range,
         # default value
+        # pylint: disable=invalid-name
         ns = '{urn:schemas-upnp-org:service-1-0}'
         scpd_body = requests.get(self.base_url + self.scpd_url).text
         tree = XML.fromstring(scpd_body.encode('utf-8'))
         # parse the state variables to get the relevant variable types
-        statevars = tree.iterfind('.//{0}stateVariable'.format(ns))
         vartypes = {}
-        for state in statevars:
-            name = state.findtext('{0}name'.format(ns))
-            vartypes[name] = state.findtext('{0}dataType'.format(ns))
+        srvStateTables = tree.findall('{0}serviceStateTable'.format(ns))
+        for srvStateTable in srvStateTables:
+            statevars = srvStateTable.findall('{0}stateVariable'.format(ns))
+            for state in statevars:
+                name = state.findtext('{0}name'.format(ns))
+                vartypes[name] = state.findtext('{0}dataType'.format(ns))
         # find all the actions
-        actions = tree.iterfind('.//{0}action'.format(ns))
-        for i in actions:
-            action_name = i.findtext('{0}name'.format(ns))
-            args_iter = i.iterfind('.//{0}argument'.format(ns))
-            in_args = []
-            out_args = []
-            for arg in args_iter:
-                arg_name = arg.findtext('{0}name'.format(ns))
-                direction = arg.findtext('{0}direction'.format(ns))
-                related_variable = arg.findtext(
-                    '{0}relatedStateVariable'.format(ns))
-                vartype = vartypes[related_variable]
-                if direction == "in":
-                    in_args.append(Argument(arg_name, vartype))
-                else:
-                    out_args.append(Argument(arg_name, vartype))
-            yield Action(action_name, in_args, out_args)
+        actionLists = tree.findall('{0}actionList'.format(ns))
+        for actionList in actionLists:
+            actions = actionList.findall('{0}action'.format(ns))
+            for i in actions:
+                action_name = i.findtext('{0}name'.format(ns))
+                argLists = i.findall('{0}argumentList'.format(ns))
+                for argList in argLists:
+                    args_iter = argList.findall('{0}argument'.format(ns))
+                    in_args = []
+                    out_args = []
+                    for arg in args_iter:
+                        arg_name = arg.findtext('{0}name'.format(ns))
+                        direction = arg.findtext('{0}direction'.format(ns))
+                        related_variable = arg.findtext(
+                            '{0}relatedStateVariable'.format(ns))
+                        vartype = vartypes[related_variable]
+                        if direction == "in":
+                            in_args.append(Argument(arg_name, vartype))
+                        else:
+                            out_args.append(Argument(arg_name, vartype))
+                    yield Action(action_name, in_args, out_args)
+
+    def iter_event_vars(self):
+        """ Yield an iterator over the services eventable variables.
+
+        Yields a tuple of (variable name, data type)
+
+        """
+
+        # pylint: disable=invalid-name
+        ns = '{urn:schemas-upnp-org:service-1-0}'
+        scpd_body = requests.get(self.base_url + self.scpd_url).text
+        tree = XML.fromstring(scpd_body.encode('utf-8'))
+        # parse the state variables to get the relevant variable types
+        statevars = tree.findall('{0}stateVariable'.format(ns))
+        for state in statevars:
+            # We are only interested if 'sendEvents' is 'yes', i.e this
+            # is an eventable variable
+            if state.attrib['sendEvents'] == "yes":
+                name = state.findtext('{0}name'.format(ns))
+                vartype = state.findtext('{0}dataType'.format(ns))
+                yield (name, vartype)
 
 
 class AlarmClock(Service):
@@ -467,6 +559,12 @@ class ZoneGroupTopology(Service):
     def __init__(self, soco):
         super(ZoneGroupTopology, self).__init__(soco)
 
+    def GetZoneGroupState(self, *args, **kwargs):
+        """ Overrides default handling to use the global shared zone group
+        state cache, unless another cache is speciified """
+        kwargs['cache'] = kwargs.get('cache', zone_group_state_shared_cache)
+        return self.send_command('GetZoneGroupState', *args, **kwargs)
+
 
 class GroupManagement(Service):
     """ Sonos group management service, for services relating to groups. """
@@ -486,6 +584,7 @@ class ContentDirectory(Service):
     def __init__(self, soco):
         super(ContentDirectory, self).__init__(soco)
         self.control_url = "/MediaServer/ContentDirectory/Control"
+        self.event_subscription_url = "/MediaServer/ContentDirectory/Event"
         # For error codes, see table 2.7.16 in
         # http://upnp.org/specs/av/UPnP-av-ContentDirectory-v1-Service.pdf
         self.UPNP_ERRORS.update({
@@ -511,12 +610,13 @@ class ContentDirectory(Service):
         })
 
 
-class MS_ConnectionManager(Service):
+class MS_ConnectionManager(Service):  # pylint: disable=invalid-name
     """ UPnP standard connection manager service for the media server."""
     def __init__(self, soco):
         super(MS_ConnectionManager, self).__init__(soco)
         self.service_type = "ConnectionManager"
         self.control_url = "/MediaServer/ConnectionManager/Control"
+        self.event_subscription_url = "/MediaServer/ConnectionManager/Event"
 
 
 class RenderingControl(Service):
@@ -525,14 +625,16 @@ class RenderingControl(Service):
     def __init__(self, soco):
         super(RenderingControl, self).__init__(soco)
         self.control_url = "/MediaRenderer/RenderingControl/Control"
+        self.event_subscription_url = "/MediaRenderer/RenderingControl/Event"
 
 
-class MR_ConnectionManager(Service):
+class MR_ConnectionManager(Service):  # pylint: disable=invalid-name
     """ UPnP standard connection manager service for the media renderer."""
     def __init__(self, soco):
         super(MR_ConnectionManager, self).__init__(soco)
         self.service_type = "ConnectionManager"
         self.control_url = "/MediaRenderer/ConnectionManager/Control"
+        self.event_subscription_url = "/MediaRenderer/ConnectionManager/Event"
 
 
 class AVTransport(Service):
@@ -541,6 +643,7 @@ class AVTransport(Service):
     def __init__(self, soco):
         super(AVTransport, self).__init__(soco)
         self.control_url = "/MediaRenderer/AVTransport/Control"
+        self.event_subscription_url = "/MediaRenderer/AVTransport/Event"
         # For error codes, see
         # http://upnp.org/specs/av/UPnP-av-AVTransport-v1-Service.pdf
         self.UPNP_ERRORS.update({
@@ -574,6 +677,7 @@ class Queue(Service):
     def __init__(self, soco):
         super(Queue, self).__init__(soco)
         self.control_url = "/MediaRenderer/Queue/Control"
+        self.event_subscription_url = "/MediaRenderer/Queue/Event"
 
 
 class GroupRenderingControl(Service):
@@ -582,3 +686,5 @@ class GroupRenderingControl(Service):
     def __init__(self, soco):
         super(GroupRenderingControl, self).__init__(soco)
         self.control_url = "/MediaRenderer/GroupRenderingControl/Control"
+        self.event_subscription_url = \
+            "/MediaRenderer/GroupRenderingControl/Event"

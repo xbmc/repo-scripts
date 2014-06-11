@@ -32,10 +32,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Ilmoitukset"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Lisäasetukset"
-
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Musiikkikirjasto"

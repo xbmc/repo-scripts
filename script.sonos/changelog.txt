@@ -1,3 +1,12 @@
+v1.0.8
+- Make sure the Play/Pause button has focus after Play/Pause selected
+- Stop screensaver starting when using controller
+- Display the next track if not in random play order
+- Support auto-pause of Sonos when XBMC media starts
+- Add support for Random, Repeat and Crossfade commands
+- Add option to automatically reset the IP Address based on the Zone
+- Add shortcut to controller from the plugin
+
 v1.0.7
 - Add advanced controller with Artist Slideshow information
 - Full support for using a remote control

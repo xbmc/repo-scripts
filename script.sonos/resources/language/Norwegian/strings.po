@@ -32,10 +32,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Varslinger"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Avansert"
-
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Musikkbibliotek"

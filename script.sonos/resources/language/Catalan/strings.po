@@ -32,10 +32,6 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificacions"
 
-msgctxt "#32012"
-msgid "Advanced"
-msgstr "Avançat"
-
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controlador"

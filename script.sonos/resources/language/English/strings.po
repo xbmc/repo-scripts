@@ -124,6 +124,24 @@ msgctxt "#32025"
 msgid "Volume Change Increments"
 msgstr ""
 
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When XBMC Plays Media (Restart Required)"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr ""
+
+
+#empty strings from id 32030 to 32059
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
@@ -133,7 +151,11 @@ msgctxt "#32061"
 msgid "Would you like this automatically enabled?"
 msgstr ""
 
-#empty strings from id 32022 to 32099
+msgctxt "#32062"
+msgid "Next"
+msgstr ""
+
+#empty strings from id 32063 to 32099
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -145,6 +167,10 @@ msgstr ""
 
 msgctxt "#32102"
 msgid "Radio Stations"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
 msgstr ""
 
 #empty strings from id 32103 to 32109
