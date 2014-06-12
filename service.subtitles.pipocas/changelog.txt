@@ -1,3 +1,18 @@
+0.1.0
+- Fix the decoding BUG in Raspberry Pi (Linux and Windows have different behaviours).
+- New pattern for the last resort search to check if it's a movie or tvshow.
+- Account verification added.
+- Fixed more Unicode issues.
+- Fixed a bug that prevents searching all chosen subtitle languages.
+- Improved search algorithm for library TVSHOWS and MOVIES.
+- Added Portuguese (Brazil) missing strings.xml.
+- If there's no match with the patterns when searching for releases it will put the full description.
+- Fix unicode issue when searching and the interface was set to Portuguese.
+- Last resort search will always be by title if filename and parent folder fails.
+- Fixed a missing string in all languages.
+- Added Parent Folder search and sync matching. Choose in addon settings AUTO or OFF. AUTO checks if parent folder is a release and if true it will be used for search and sync.
+- Improved SYNC matching.
+- Some fixes and changes on the code.
 0.0.2
 - Changed description display and fixed rating score.
 0.0.1
