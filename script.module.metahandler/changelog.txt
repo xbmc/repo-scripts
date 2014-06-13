@@ -1,3 +1,8 @@
+[B]Version 2.7.0[/B]
+- Corrected bug to ensure if we don't have a movie filename then send back an emtpy string instead of a partial TMDB url
+- Suppress myconnpy bug which throws errors on sql warnings
+- Bug fix on local cache image file checks
+
 [B]Version 2.6.0[/B]
 - Fixed small bug in tmdb config cache refresh logic
 - Changed location of logging addon version on init
