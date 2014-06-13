@@ -10,7 +10,7 @@ import simplejson as simplejson
 import urllib, re
 from datetime import datetime
 import time
-from t0mm0.common.net import Net  
+from t0mm0.common.net import Net
 from t0mm0.common.addon import Addon       
 from threading import Thread
 try:

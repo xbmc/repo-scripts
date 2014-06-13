@@ -40,8 +40,6 @@ net = Net()
 
 sys.path.append((os.path.split(common.addon_path))[0])
 
-common.addon.log('Initializing MetaHandlers version: %s' % common.addon.get_version())
-
 '''
    Use SQLIte3 wherever possible, needed for newer versions of XBMC
    Keep pysqlite2 for legacy support
@@ -172,8 +170,8 @@ class MetaData:
             if DB == 'mysql':
                 sql_select = "SELECT imdb_id, tmdb_id, cover_url, backdrop_url "\
                                 "FROM movie_meta "\
-                                "where substring(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
-                                "or substring(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net'"
+                                "WHERE (substring(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
+                                "OR substring(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net')"
                 self.dbcur.execute(sql_select)
                 matchedrows = self.dbcur.fetchall()[0]
                 
@@ -192,33 +190,35 @@ class MetaData:
                 
             else:
           
-                sql_select = "SELECT imdb_id, tmdb_id, cover_url, backdrop_url "\
+                sql_select = "SELECT imdb_id, tmdb_id, cover_url, thumb_url, backdrop_url "\
                                 "FROM movie_meta "\
-                                "where substr(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
-                                "or substr(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net'"
+                                "WHERE substr(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
+                                "OR substr(thumb_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
+                                "OR substr(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
+                                "OR substr(cover_url, 1, 1 ) in ('w', 'o') "\
+                                "OR substr(thumb_url, 1, 1 ) in ('w', 'o') "\
+                                "OR substr(backdrop_url, 1, 1 ) in ('w', 'o') "
                 self.dbcur.execute(sql_select)
-                matchedrows = self.dbcur.fetchone()
+                matchedrows = self.dbcur.fetchall()
 
                 if matchedrows:
-                    sql_update = "update movie_meta "\
-                                    "set cover_url = "\
-                                        "case when substr(cover_url, length(cover_url) - 31, 1) = '/' "\
-                                        "   then substr(cover_url, length(cover_url) - 31, 32) "\
-                                        "else substr(cover_url, length(cover_url) - 30, 31) "\
-                                        "end, "\
-                                        "backdrop_url = "\
-                                        "case when substr(backdrop_url, length(backdrop_url) - 31, 1) = '/' "\
-                                        "   then substr(backdrop_url, length(backdrop_url) - 31, 32) "\
-                                        "else substr(backdrop_url, length(backdrop_url) - 30, 31) "\
-                                        "end "\
-                                        "where substr(cover_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net' "\
-                                        "or substr(backdrop_url, 1, 36 ) = 'http://d3gtl9l2a4fn1j.cloudfront.net'"
-                    self.dbcur.execute(sql_update)
+                    dictrows = [dict(row) for row in matchedrows]
+                    for row in dictrows:
+                        if row["cover_url"]:
+                            row["cover_url"] = '/' + row["cover_url"].split('/')[-1]
+                        if row["thumb_url"]:
+                            row["thumb_url"] = '/' + row["thumb_url"].split('/')[-1]
+                        if row["backdrop_url"]:
+                            row["backdrop_url"] = '/' + row["backdrop_url"].split('/')[-1]
+
+                    sql_update = "UPDATE movie_meta SET cover_url = :cover_url, thumb_url = :thumb_url, backdrop_url = :backdrop_url  WHERE imdb_id = :imdb_id and tmdb_id = :tmdb_id"
+                    
+                    self.dbcur.executemany(sql_update, dictrows)
                     self.dbcon.commit()
                     common.addon.log('SQLite rows successfully updated')
                 else:
                     common.addon.log('No SQLite rows requiring update')                    
-               
+           
         except Exception, e:
             common.addon.log('************* Error updating cover and backdrop columns: %s' % e, 4)
             pass
@@ -265,6 +265,15 @@ class MetaData:
             sql_create = sql_create.replace("imdb_id TEXT","imdb_id VARCHAR(10)")
             sql_create = sql_create.replace("tmdb_id TEXT","tmdb_id VARCHAR(10)")
             sql_create = sql_create.replace("title TEXT"  ,"title VARCHAR(255)")
+
+            # hack to bypass bug in myconnpy
+            # create table if not exists fails bc a warning about the table
+            # already existing bubbles up as an exception. This suppresses the
+            # warning which would just be logged anyway.
+            # http://stackoverflow.com/questions/1650946/mysql-create-table-if-not-exists-error-1050
+            sql_hack = "SET sql_notes = 0;"
+            self.dbcur.execute(sql_hack)
+            
             self.dbcur.execute(sql_create)
             try: self.dbcur.execute('CREATE INDEX nameindex on movie_meta (title);')
             except: pass
@@ -695,7 +704,7 @@ class MetaData:
         #Query local table first for current values
         sql_select = "SELECT * FROM config where setting = '%s'" % setting
 
-        common.addon.log('Looking up in local cache for config data: %s' % setting, 2)
+        common.addon.log('Looking up in local cache for config data: %s' % setting, 0)
         common.addon.log('SQL Select: %s' % sql_select, 0)        
 
         try:    
@@ -738,7 +747,8 @@ class MetaData:
         Query config database for required TMDB config values, set constants as needed
         Validate cache timestamp to ensure it is only refreshed once every 7 days
         '''
-    
+
+        common.addon.log('Looking up TMDB config cache values', 2)        
         tmdb_image_url = self._get_config('tmdb_image_url')
         tmdb_config_timestamp = self._get_config('tmdb_config_timestamp')
         
@@ -746,22 +756,26 @@ class MetaData:
         now = time.time()
         age = 0
 
-        #Cache limit is 7 days: 60 seconds * 60 minutes * 24 hours * 7 days
+        #Cache limit is 7 days, value needs to be in seconds: 60 seconds * 60 minutes * 24 hours * 7 days
         expire = 60 * 60 * 24 * 7
               
         #Check if image and timestamp values are valid
         if tmdb_image_url and tmdb_config_timestamp:
             created = float(tmdb_config_timestamp)
             age = now - created
+            common.addon.log('Cache age: %s , Expire: %s' % (age, expire), 0)
             
             #If cache hasn't expired, set constant values
-            if age < expire:
-                common.addon.log('Cache still valid, setting values', 0)
+            if age <= float(expire):
+                common.addon.log('Cache still valid, setting values', 2)
+                common.addon.log('Setting tmdb_image_url: %s' % tmdb_image_url, 0)
                 self.tmdb_image_url = tmdb_image_url
+            else:
+                common.addon.log('Cache is too old, need to request new values', 2)
         
         #Either we don't have the values or the cache has expired, so lets request and set them - update cache in the end
-        elif not tmdb_image_url or not tmdb_config_timestamp or age > expire:
-            common.addon.log('No cached config data found or cache expired, requesting from TMDB', 0)
+        if (not tmdb_image_url or not tmdb_config_timestamp) or age > expire:
+            common.addon.log('No cached config data found or cache expired, requesting from TMDB', 2)
 
             tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
             config_data = tmdb.call_config()
@@ -770,6 +784,8 @@ class MetaData:
                 self.tmdb_image_url = config_data['images']['base_url']
                 self._set_config('tmdb_image_url', config_data['images']['base_url'])
                 self._set_config('tmdb_config_timestamp', now)
+            else:
+                self.tmdb_image_url = tmdb_image_url
                 
 
     def check_meta_installed(self, addon_id):
@@ -944,87 +960,98 @@ class MetaData:
             DICT. Data formatted and corrected for proper return to xbmc addon
         '''      
 
-        #We want to send back the name that was passed in   
-        meta['title'] = name
-        
-        #Change cast back into a tuple
-        if meta['cast']:
-            meta['cast'] = eval(str(meta['cast']))
-            
-        #Return a trailer link that will play via youtube addon
         try:
-            meta['trailer'] = ''
-            trailer_id = ''
-            if meta['trailer_url']:
-                r = re.match('^[^v]+v=(.{3,11}).*', meta['trailer_url'])
-                if r:
-                    trailer_id = r.group(1)
-                else:
-                    trailer_id = meta['trailer_url']
-             
-            if trailer_id:
-                meta['trailer'] = 'plugin://plugin.video.youtube/?action=play_video&videoid=%s' % trailer_id
+            #We want to send back the name that was passed in   
+            meta['title'] = name
+            
+            #Change cast back into a tuple
+            if meta['cast']:
+                meta['cast'] = eval(str(meta['cast']))
                 
-        except Exception, e:
-            meta['trailer'] = ''
-            common.addon.log('Failed to set trailer: %s' % e, 3)
-            pass
-
-        #Ensure we are not sending back any None values, XBMC doesn't like them
-        meta = self._remove_none_values(meta)
-        
-        #Add TVShowTitle infolabel
-        if media_type==self.type_tvshow:
-            meta['TVShowTitle'] = meta['title']
-        
-        #Set Watched flag for movies
-        if media_type==self.type_movie:
-            meta['playcount'] = self.__set_playcount(meta['overlay'])
-        
-        #if cache row says there are pre-packed images then either use them or create them
-        if meta['imgs_prepacked'] == 'true':
-
-                #define the image paths               
+            #Return a trailer link that will play via youtube addon
+            try:
+                meta['trailer'] = ''
+                trailer_id = ''
+                if meta['trailer_url']:
+                    r = re.match('^[^v]+v=(.{3,11}).*', meta['trailer_url'])
+                    if r:
+                        trailer_id = r.group(1)
+                    else:
+                        trailer_id = meta['trailer_url']
+                 
+                if trailer_id:
+                    meta['trailer'] = 'plugin://plugin.video.youtube/?action=play_video&videoid=%s' % trailer_id
+                    
+            except Exception, e:
+                meta['trailer'] = ''
+                common.addon.log('Failed to set trailer: %s' % e, 3)
+                pass
+    
+            #Ensure we are not sending back any None values, XBMC doesn't like them
+            meta = self._remove_none_values(meta)
+            
+            #Add TVShowTitle infolabel
+            if media_type==self.type_tvshow:
+                meta['TVShowTitle'] = meta['title']
+            
+            #Set Watched flag for movies
+            if media_type==self.type_movie:
+                meta['playcount'] = self.__set_playcount(meta['overlay'])
+            
+            #if cache row says there are pre-packed images then either use them or create them
+            if meta['imgs_prepacked'] == 'true':
+    
+                    #define the image paths               
+                    if media_type == self.type_movie:
+                        root_covers = self.mvcovers
+                        root_backdrops = self.mvbackdrops
+                    elif media_type == self.type_tvshow:
+                        root_covers = self.tvcovers
+                        root_backdrops = self.tvbackdrops
+                        root_banners = self.tvbanners
+                    
+                    if meta['cover_url']:
+                        cover_name = self._picname(meta['cover_url'])
+                        if cover_name:
+                            cover_path = os.path.join(root_covers, cover_name[0].lower())
+                            if self.classmode == 'true':
+                                self._downloadimages(meta['cover_url'], cover_path, cover_name)
+                            meta['cover_url'] = os.path.join(cover_path, cover_name)
+                    
+                    if meta['backdrop_url']:
+                        backdrop_name = self._picname(meta['backdrop_url'])
+                        if backdrop_name:
+                            backdrop_path=os.path.join(root_backdrops, backdrop_name[0].lower())
+                            if self.classmode == 'true':
+                                self._downloadimages(meta['backdrop_url'], backdrop_path, backdrop_name)
+                            meta['backdrop_url'] = os.path.join(backdrop_path, backdrop_name)
+    
+                    if meta.has_key('banner_url'):
+                        if meta['banner_url']:
+                            banner_name = self._picname(meta['banner_url'])
+                            if banner_name:
+                                banner_path=os.path.join(root_banners, banner_name[0].lower())
+                                if self.classmode == 'true':
+                                    self._downloadimages(meta['banner_url'], banner_path, banner_name)
+                                meta['banner_url'] = os.path.join(banner_path, banner_name)
+    
+            #Else - they are online so piece together the full URL from TMDB 
+            else:
                 if media_type == self.type_movie:
-                    root_covers = self.mvcovers
-                    root_backdrops = self.mvbackdrops
-                elif media_type == self.type_tvshow:
-                    root_covers = self.tvcovers
-                    root_backdrops = self.tvbackdrops
-                    root_banners = self.tvbanners
-                
-                if meta['cover_url']:
-                    cover_name = self._picname(meta['cover_url'])
-                    cover_path = os.path.join(root_covers, cover_name[0].lower())
-                    if self.classmode == 'true':
-                        self._downloadimages(meta['cover_url'], cover_path, cover_name)
-                    meta['cover_url'] = os.path.join(cover_path, cover_name)
-                
-                if meta['backdrop_url']:
-                    backdrop_name = self._picname(meta['backdrop_url'])
-                    backdrop_path=os.path.join(root_backdrops, backdrop_name[0].lower())
-                    if self.classmode == 'true':
-                        self._downloadimages(meta['backdrop_url'], backdrop_path, backdrop_name)
-                    meta['backdrop_url'] = os.path.join(backdrop_path, backdrop_name)
-
-                if meta.has_key('banner_url'):
-                    if meta['banner_url']:
-                        banner_name = self._picname(meta['banner_url'])
-                        banner_path=os.path.join(root_banners, banner_name[0].lower())
-                        if self.classmode == 'true':
-                            self._downloadimages(meta['banner_url'], banner_path, banner_name)
-                        meta['banner_url'] = os.path.join(banner_path, banner_name)
-
-        #Else - they are online so piece together the full URL from TMDB 
-        else:
-            if media_type == self.type_movie:
-                if meta['cover_url'].startswith('/'):
-                    meta['cover_url'] = self.tmdb_image_url  + common.addon.get_setting('tmdb_poster_size') + meta['cover_url']
-                if meta['backdrop_url'].startswith('/'):                    
-                    meta['backdrop_url'] = self.tmdb_image_url  + common.addon.get_setting('tmdb_backdrop_size') + meta['backdrop_url']
-
-        common.addon.log('Returned Meta: %s' % meta, 0)
-        return meta  
+                    if meta['cover_url'] and len(meta['cover_url']) > 1 and not meta['cover_url'].startswith('http'):
+                        meta['cover_url'] = self.tmdb_image_url  + common.addon.get_setting('tmdb_poster_size') + meta['cover_url']
+                    else:
+                        meta['cover_url'] = ''
+                    if meta['backdrop_url'] and len(meta['backdrop_url']) > 1 and not meta['backdrop_url'].startswith('http'):
+                        meta['backdrop_url'] = self.tmdb_image_url  + common.addon.get_setting('tmdb_backdrop_size') + meta['backdrop_url']
+                    else:
+                        meta['backdrop_url'] = ''
+    
+            common.addon.log('Returned Meta: %s' % meta, 0)
+            return meta  
+        except Exception, e:
+            common.addon.log('************* Error formatting meta: %s' % e, 4)
+            return meta  
 
 
     def update_meta(self, media_type, name, imdb_id, tmdb_id='', new_imdb_id='', new_tmdb_id='', year=''):
@@ -1548,7 +1575,7 @@ class MetaData:
 
                 if meta['plot'] == 'None' or meta['plot'] == '' or meta['plot'] == 'TBD' or meta['plot'] == 'No overview found.' or meta['rating'] == 0 or meta['duration'] == 0 or meta['cover_url'] == '':
                     common.addon.log(' Some info missing in TVdb for TVshow *** '+ name + ' ***. Will search imdb for more', 0)
-                    tmdb = TMDB()
+                    tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
                     imdb_meta = tmdb.search_imdb(name, imdb_id)
                     if imdb_meta:
                         imdb_meta = tmdb.update_imdb_meta(meta, imdb_meta)
@@ -1565,7 +1592,7 @@ class MetaData:
 
                 return meta
             else:
-                tmdb = TMDB()
+                tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
                 imdb_meta = tmdb.search_imdb(name, imdb_id)
                 if imdb_meta:
                     meta = tmdb.update_imdb_meta(meta, imdb_meta)
@@ -1590,7 +1617,7 @@ class MetaData:
         ''' 
         common.addon.log('---------------------------------------------------------------------------------------', 2)
         common.addon.log('Meta data refresh - searching for movie: %s' % name, 2)
-        tmdb = TMDB()
+        tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
         movie_list = []
         meta = tmdb.tmdb_search(name)
         if meta:
@@ -1624,7 +1651,7 @@ class MetaData:
         ''' 
         common.addon.log('---------------------------------------------------------------------------------------', 2)
         common.addon.log('TMDB - requesting similar movies: %s' % tmdb_id, 2)
-        tmdb = TMDB()
+        tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
         movie_list = []
         meta = tmdb.tmdb_similar_movies(tmdb_id, page)
         if meta:

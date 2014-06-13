@@ -1,3 +1,15 @@
+[B]Version 1.7.0[/B]
+- Corrected bug to ensure if we don't have a movie filename then send back an emtpy string instead of a partial TMDB url
+- Suppress myconnpy bug which throws errors on sql warnings
+- Bug fix on local cache image file checks
+
+[B]Version 1.6.0[/B]
+- Fixed small bug in tmdb config cache refresh logic
+- Changed location of logging addon version on init
+- Switch to use addon.common instead of t0mm0.common
+- Changed logic to upgrade tmdb image url's for sqlite db's, should be more accurate now
+- New addon icon
+
 [B]Version 1.5.1[/B]
 - Fixed bug in call to TVDB class
 

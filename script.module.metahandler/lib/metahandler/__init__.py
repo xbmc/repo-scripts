@@ -26,6 +26,7 @@ eg.
 '''
 
 import common
+common.addon.log('Initializing MetaHandlers version: %s' % common.addon_version)
 
 def display_settings():
     '''
