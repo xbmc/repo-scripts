@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+    <category label="32004">
+        <setting label="32005" type="bool" id="plot_enable" default="true"/>
+        <setting label="32006" type="text" id="limit" default="20"/>
+    </category>
+</settings>
