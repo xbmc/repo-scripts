@@ -1,0 +1,271 @@
+# XBMC Media Center language file
+# Addon Name: AmbiBox
+# Addon id: script.ambibox
+# Addon Provider: AmbiBox
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#Add-on messages id=32001 to 32067
+
+msgctxt "#32001"
+msgid "General"
+msgstr "Основные"
+
+msgctxt "#32002"
+msgid "API host"
+msgstr "IP-адрес API"
+
+msgctxt "#32003"
+msgid "API port"
+msgstr "Порт API"
+
+msgctxt "#32004"
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgctxt "#32005"
+msgid "Refresh profiles from AmbiBox (requires exit to AddOns/Services)"
+msgstr "Обновить профили из AmbiBox (требуется выход на аддоны / Услуги)"
+
+msgctxt "#32006"
+msgid "No profiles configured in Ambibox"
+msgstr "Нет профили, настроенные в Ambibox"
+
+msgctxt "#32007"
+msgid "AmbiBox installation not found: exiting script"
+msgstr "Установка AmbiBox не найден: выход сценарий"
+
+msgctxt "#32008"
+msgid "Ambibox could not be started"
+msgstr "Ambibox не может быть запущен"
+
+msgctxt "#32009"
+msgid "Start Ambibox with XBMC if not running"
+msgstr "Начните Ambibox с XBMC, если не работает"
+
+msgctxt "#32010"
+msgid "Profiles"
+msgstr "Профили"
+
+msgctxt "#32011"
+msgid "Enable default profile"
+msgstr "Включать профиль по умолчанию"
+
+msgctxt "#32012"
+msgid "Default profile"
+msgstr "Профиль по умолчанию"
+
+msgctxt "#32013"
+msgid "Enable video profile"
+msgstr "Включать для видео"
+
+msgctxt "#32014"
+msgid "Default video profile"
+msgstr "Профиль для видео по умолчанию"
+
+msgctxt "#32015"
+msgid "Enable audio profile"
+msgstr "Включать для аудио"
+
+msgctxt "#32016"
+msgid "Audio profile"
+msgstr "Профиль для аудио"
+
+msgctxt "#32017"
+msgid "Enable XBMCDirect capture"
+msgstr "Использовать DirectXBMC захват"
+
+msgctxt "#32018"
+msgid "Use Auto Aspect Ratio switching"
+msgstr "Используйте автоматическое переключение формата изображения"
+
+msgctxt "#32019"
+msgid "On video playback:"
+msgstr "Воспроизведение видео:"
+
+msgctxt "#32020"
+msgid "Select profile"
+msgstr "Выберите профиль"
+
+msgctxt "#32021"
+msgid "Backlight off"
+msgstr "Выключить подсветку"
+
+msgctxt "#32022"
+msgid "Backlight on"
+msgstr "Включить подсветку"
+
+msgctxt "#32023"
+msgid "Show menu when playing"
+msgstr "Показать меню при воспроизведении"
+
+msgctxt "#32024"
+msgid "Do not show menu when playing"
+msgstr "Не показывать меню при воспроизведении"
+
+msgctxt "#32025"
+msgid "Choose -"
+msgstr "Выберите -&gt;"
+
+msgctxt "#32026"
+msgid "Use default video profile"
+msgstr "Используйте профиля видео по умолчанию"
+
+msgctxt "#32027"
+msgid "Auto switch based on AR"
+msgstr "Автоматический переключатель на основе AR"
+
+msgctxt "#32028"
+msgid "Show menu of profiles"
+msgstr "Показать меню профилей"
+
+msgctxt "#32029"
+msgid "Turn off LEDs"
+msgstr "выключать LEDs"
+
+msgctxt "#32030"
+msgid "Connected to AmbiBox"
+msgstr "Подключение к AmbiBox"
+
+msgctxt "#32031"
+msgid "Failed to connect to AmbiBox"
+msgstr "Ошибка подключения к AmbiBox"
+
+msgctxt "#32032"
+msgid "Ambibox turned off"
+msgstr "Ambibox выключен"
+
+msgctxt "#32033"
+msgid "Set profile %s"
+msgstr "Установлен профиль %s"
+
+msgctxt "#32034"
+msgid "XBMCDirect Success"
+msgstr "DirectXBMC успешно"
+
+msgctxt "#32035"
+msgid "XBMCDirect Fail"
+msgstr "DirectXBMC ошибка"
+
+msgctxt "#32036"
+msgid "Settings refreshed from Ambibox profiles"
+msgstr "Настройки обновляется из профилей Ambibox"
+
+#Empty strings 32037-39
+
+msgctxt "#32040"
+msgid "Download mediainfo.dll"
+msgstr "скачать mediainfo.dll"
+
+msgctxt "#32041"
+msgid "Screen X resolution (pixels)"
+msgstr "Разрешение экрана по X (пикселей)"
+
+msgctxt "#32042"
+msgid "Screen Y resolution (pixels)"
+msgstr "Разрешение экрана по Y (пикселей)"
+
+msgctxt "#32043"
+msgid "XBMCDirect capture quality"
+msgstr "DirectXBMC захват качество"
+
+msgctxt "#32044"
+msgid "Low"
+msgstr "низкий"
+
+msgctxt "#32045"
+msgid "Medium"
+msgstr "среда"
+
+msgctxt "#32046"
+msgid "High"
+msgstr "большой"
+
+msgctxt "#32047"
+msgid "Highest"
+msgstr "наивысший"
+
+#Empty strings 32048-49
+
+msgctxt "#32050"
+msgid "Disable on screensaver"
+msgstr "Отключить заставку"
+
+msgctxt "#32051"
+msgid "Last profile"
+msgstr "Последний профиль"
+
+msgctxt "#32052"
+msgid "Enable 3D profiles"
+msgstr "Включить 3D профили"
+
+msgctxt "#32053"
+msgid "2D Aspect ratio profiles"
+msgstr "2D профилей Соотношение сторон"
+
+msgctxt "#32054"
+msgid "4:3 (SD)"
+msgstr "4:3 (SD)"
+
+msgctxt "#32055"
+msgid "3:2"
+msgstr "3:2"
+
+msgctxt "#32056"
+msgid "16:9 (HD)"
+msgstr "16:9 (HD)"
+
+msgctxt "#32057"
+msgid "1.85:1"
+msgstr "1.85:1"
+
+msgctxt "#32058"
+msgid "2.2:1"
+msgstr "2.2:1"
+
+msgctxt "#32059"
+msgid "2.4:1"
+msgstr "2.4:1"
+
+msgctxt "#32060"
+msgid "3D Aspect Ratio Profiles for hSBS"
+msgstr "3D Соотношение сторон Профили для hSBS"
+
+msgctxt "#32061"
+msgid "3D Aspect Ratio Profiles for hTAB(hOU)"
+msgstr "3D Соотношение сторон Профили для hTAB(hOU)"
+
+msgctxt "#32062"
+msgid "mediainfo.dll already installed on system"
+msgstr "mediainfo.dll уже установлена ​​на системе"
+
+msgctxt "#32063"
+msgid "This add-on will use MediaInfo library\nCopyright (c) 2002-2014 MediaArea.net SARL.\nDownload?"
+msgstr "Это дополнение будет использовать библиотеку MediaInfo\nCopyright (c) 2002-2014 MediaArea.net SARL.\nСкачать?"
+
+msgctxt "#32064"
+msgid "Downloading %s bytes %s"
+msgstr "загрузка %s байт %s"
+
+msgctxt "#32065"
+msgid "Download failed"
+msgstr "Ошибка загрузки"
+
+msgctxt "#32066"
+msgid "Download canceled"
+msgstr "Загрузка отменена"
+
+msgctxt "#32067"
+msgid "Download succeeded"
+msgstr "Скачать удалось"
+
+
+

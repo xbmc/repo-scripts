@@ -1,0 +1,59 @@
+1.0.1
+Removed checking settings on menu launch
+Increased logging for profile identification
+fixed strings.po
+
+1.0.0
+Removed dardata.xml usage and created settings pages for common aspect ratios
+Added method to refresh the profiles on the settings pages from Ambibox
+Also refreshes profiles in settings on startup
+Added increased ability to sense 4:3 and 16:9 for LiveTV
+Switched from strings.xml to strings.po
+Added check for AmbiBox being installed
+Added check for AmbiBox running and start it if it is not, close it at XBMC shutdown
+Added check that profiles in settings are in Ambibox and if not set them to None
+Removed mediainfo.dll from distro. Provide ability to download from Settings page.
+Added quality settings for size of XBMCDirect capture.
+
+0.0.12
+Added disable on screensaver - @Joshua
+
+0.0.11
+Bug Fix
+
+0.0.10
+Changed xbmc capture to a separate thread and implemented checking for successful capture
+
+0.0.9
+Removed 3D settings from settings screen and implemented them in dardata.xml
+
+0.0.8
+Added profiles for 3D TAB and SBS
+
+0.0.7
+Added screen resolution settings and default to these for XBMCdirect if file dimensions not discoverable
+
+0.0.6
+Added translation of smb paths to UNC paths in media.py for mediainfo.dll compatibility
+
+0.0.5
+Added automatic display aspect ratio switching
+Added switch to turn off screen capture mode within XBMC
+
+0.0.1
+- alpha
+
+
+
+
+
+
+
+
+
+
+
+
+
+Added disable on screensaver - @Joshua
+

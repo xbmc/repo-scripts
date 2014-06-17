@@ -1,0 +1,268 @@
+# XBMC Media Center language file
+# Addon Name: AmbiBox
+# Addon id: script.ambibox
+# Addon Provider: AmbiBox
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Add-on messages id=32001 to 32067
+
+msgctxt "#32001"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32002"
+msgid "API host"
+msgstr "API Presentador"
+
+msgctxt "#32003"
+msgid "API port"
+msgstr "API Puerto"
+
+msgctxt "#32004"
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgctxt "#32005"
+msgid "Refresh profiles from AmbiBox (requires exit to AddOns/Services)"
+msgstr "Refrescar los perfiles de AmbiBox (Requiere salir de Complementos/Servicios)"
+
+msgctxt "#32006"
+msgid "No profiles configured in Ambibox"
+msgstr "No perfiles configurados en AmbiBox"
+
+msgctxt "#32007"
+msgid "AmbiBox installation not found: exiting script"
+msgstr "AmbiBox instalacion no encontrado: salir de guion"
+
+msgctxt "#32008"
+msgid "Ambibox could not be started"
+msgstr "AmbiBox no puede empezar"
+
+msgctxt "#32009"
+msgid "Start Ambibox with XBMC if not running"
+msgstr "Empieze AmbiBox con XBMC si no esta corriendo"
+
+msgctxt "#32010"
+msgid "Profiles"
+msgstr "Perfiles"
+
+msgctxt "#32011"
+msgid "Enable default profile"
+msgstr "Activar perfil estandar"
+
+msgctxt "#32012"
+msgid "Default profile"
+msgstr "Perfil estandar"
+
+msgctxt "#32013"
+msgid "Enable video profile"
+msgstr "Activar el  perfil de video"
+
+msgctxt "#32014"
+msgid "Default video profile"
+msgstr "Estandar el perfil de video"
+
+msgctxt "#32015"
+msgid "Enable audio profile"
+msgstr "Estandar el perfil de audio"
+
+msgctxt "#32016"
+msgid "Audio profile"
+msgstr "Perfil de audio"
+
+msgctxt "#32017"
+msgid "Enable XBMCDirect capture"
+msgstr "Estandar XBMCDirecto captura"
+
+msgctxt "#32018"
+msgid "Use Auto Aspect Ratio switching"
+msgstr "Usar el indice de auto aspecto cambiando"
+
+msgctxt "#32019"
+msgid "On video playback:"
+msgstr "En repeticion de video"
+
+msgctxt "#32020"
+msgid "Select profile"
+msgstr "Selecionar perfil"
+
+msgctxt "#32021"
+msgid "Backlight off"
+msgstr "Luz de atras apagada"
+
+msgctxt "#32022"
+msgid "Backlight on"
+msgstr "Luz de atras prendida"
+
+msgctxt "#32023"
+msgid "Show menu when playing"
+msgstr "Enseñar el menu mientras juega"
+
+msgctxt "#32024"
+msgid "Do not show menu when playing"
+msgstr "No enseñe el menu mientras juega"
+
+msgctxt "#32025"
+msgid "Choose -"
+msgstr "Escojer"
+
+msgctxt "#32026"
+msgid "Use default video profile"
+msgstr "Usar el video de perfil estandar"
+
+msgctxt "#32027"
+msgid "Auto switch based on AR"
+msgstr "Auto cambio basado en AR"
+
+msgctxt "#32028"
+msgid "Show menu of profiles"
+msgstr "Enseñar el menu de perfiles"
+
+msgctxt "#32029"
+msgid "Turn off LEDs"
+msgstr "Apagar LEDs"
+
+msgctxt "#32030"
+msgid "Connected to AmbiBox"
+msgstr "Conectar AmbiBox"
+
+msgctxt "#32031"
+msgid "Failed to connect to AmbiBox"
+msgstr "Fallido conectar AmbiBox"
+
+msgctxt "#32032"
+msgid "Ambibox turned off"
+msgstr "AmbiBox apagado"
+
+msgctxt "#32033"
+msgid "Set profile %s"
+msgstr "Hacer un perfil %s"
+
+msgctxt "#32034"
+msgid "XBMCDirect Success"
+msgstr "XBMCDirecto exito"
+
+msgctxt "#32035"
+msgid "XBMCDirect Fail"
+msgstr "XBMCDirecto fallo"
+
+msgctxt "#32036"
+msgid "Settings refreshed from Ambibox profiles"
+msgstr "Ajustes refrescados de los perfiles AmbiBox"
+
+#Empty strings 32037-39
+
+msgctxt "#32040"
+msgid "Download mediainfo.dll"
+msgstr "Descargar mediainfo.dll"
+
+msgctxt "#32041"
+msgid "Screen X resolution (pixels)"
+msgstr "Pantalla X resolucion (pixeles)"
+
+msgctxt "#32042"
+msgid "Screen Y resolution (pixels)"
+msgstr "Pantalla Y resolucion (pixeles)"
+
+msgctxt "#32043"
+msgid "XBMCDirect capture quality"
+msgstr "XBMCDirecto capturar qualidad"
+
+msgctxt "#32044"
+msgid "Low"
+msgstr "Bajo"
+
+msgctxt "#32045"
+msgid "Medium"
+msgstr "Mediano"
+
+msgctxt "#32046"
+msgid "High"
+msgstr "Alto"
+
+msgctxt "#32047"
+msgid "Highest"
+msgstr "Altisimo"
+
+#Empty strings 32048-49
+
+msgctxt "#32050"
+msgid "Disable on screensaver"
+msgstr "Iutilizar en screensaver"
+
+msgctxt "#32051"
+msgid "Last profile"
+msgstr "Ultimo perfil"
+
+msgctxt "#32052"
+msgid "Enable 3D profiles"
+msgstr "Activar los perfiles 3D"
+
+msgctxt "#32053"
+msgid "2D Aspect ratio profiles"
+msgstr "Perfiles de Aspecto indice 2D"
+
+msgctxt "#32054"
+msgid "4:3 (SD)"
+msgstr "4:3 (SD)"
+
+msgctxt "#32055"
+msgid "3:2"
+msgstr "3:2"
+
+msgctxt "#32056"
+msgid "16:9 (HD)"
+msgstr "16:9 (HD)"
+
+msgctxt "#32057"
+msgid "1.85:1"
+msgstr "1,85:1"
+
+msgctxt "#32058"
+msgid "2.2:1"
+msgstr "2,2:1"
+
+msgctxt "#32059"
+msgid "2.4:1"
+msgstr "2,4:1"
+
+msgctxt "#32060"
+msgid "3D Aspect Ratio Profiles for hSBS"
+msgstr "Perfiles de aspecto indice 3D  para hSBS"
+
+msgctxt "#32061"
+msgid "3D Aspect Ratio Profiles for hTAB(hOU)"
+msgstr "Perfiles de aspecto indice 3D para hTAB(hOU)"
+
+msgctxt "#32062"
+msgid "mediainfo.dll already installed on system"
+msgstr "mediainfo.dll esta instalado en el sistema"
+
+msgctxt "#32063"
+msgid "This add-on will use MediaInfo library\nCopyright (c) 2002-2014 MediaArea.net SARL.\nDownload?"
+msgstr "Este complemento utilizará MediaInfo librería \nDerechos de Autor © 2002-2014 MediaArea.net SARL.\nDescarga ahora?"
+
+msgctxt "#32064"
+msgid "Downloading %s bytes %s"
+msgstr "Descargando %s bytes %s"
+
+msgctxt "#32065"
+msgid "Download failed"
+msgstr "El descargo fallo"
+
+msgctxt "#32066"
+msgid "Download canceled"
+msgstr "El descargo se cancelo"
+
+msgctxt "#32067"
+msgid "Download succeeded"
+msgstr "El descargo fue un exito"
