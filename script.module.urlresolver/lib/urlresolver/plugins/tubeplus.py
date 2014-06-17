@@ -17,7 +17,7 @@
 """
 
 import re
-from addon.common.net import Net
+from t0mm0.common.net import Net
 import urllib2
 import urlresolver
 from urlresolver import common

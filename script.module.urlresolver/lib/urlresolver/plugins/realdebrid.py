@@ -26,7 +26,7 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
-from addon.common.net import Net
+from t0mm0.common.net import Net
 import simplejson as json
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO

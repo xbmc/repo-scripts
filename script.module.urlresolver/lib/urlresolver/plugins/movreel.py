@@ -20,7 +20,7 @@ mash2k3, Mikey1234,voinage and of course Eldorado. Cheers guys :)
 """
 
 import re, os, xbmcgui, xbmcaddon, cookielib
-from addon.common.net import Net
+from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay.interfaces import SiteAuth

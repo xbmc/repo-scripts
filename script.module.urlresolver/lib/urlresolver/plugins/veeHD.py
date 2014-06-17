@@ -22,7 +22,7 @@ from urlresolver.plugnplay.interfaces import SiteAuth
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
-from addon.common.net import Net
+from t0mm0.common.net import Net
 
 net = Net()
 

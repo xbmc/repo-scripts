@@ -29,7 +29,7 @@ from urlresolver import common
 import simplejson as json
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
 import cookielib
-from addon.common.net import Net
+from t0mm0.common.net import Net
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')

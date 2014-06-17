@@ -1,3 +1,6 @@
+[B]Version 2.4.0[/B]
+- Reverted back to using t0mm0.common as addon.common is creating naming issues
+
 [B]Version 2.3.0[/B]
 - Added Cloudy
 - Fixed Divxstage
@@ -7,7 +10,7 @@
 - Fixed TheFile
 - Fixed Vidxden
 - Updated Putlocker/Firedrive to check for more variations
-- Converted URLResolver completely to use addon.common instead of addon.common
+- Converted URLResolver completely to use addon.common instead of t0mm0.common
 
 [B]Version 2.2.0[/B]
 - Added CheeseStreams

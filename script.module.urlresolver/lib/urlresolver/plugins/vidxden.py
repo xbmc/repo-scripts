@@ -24,7 +24,7 @@ In testing there seems to be a timing issue with files coming up as not playable
 This happens on both the addon and in a browser.
 """
 import urllib2,urllib,xbmcaddon,socket,re,xbmc,os,xbmcgui,time
-from addon.common.net import Net
+from t0mm0.common.net import Net
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings

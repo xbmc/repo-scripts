@@ -20,7 +20,7 @@ import re
 import os
 import xbmcgui
 import xbmc
-from addon.common.net import Net
+from t0mm0.common.net import Net
 import urllib2
 import urllib
 from urlresolver import common
