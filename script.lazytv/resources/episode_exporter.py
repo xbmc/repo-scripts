@@ -36,6 +36,7 @@ import json
 
 __addon__        = xbmcaddon.Addon('script.lazytv')
 __addonid__      = __addon__.getAddonInfo('id')
+__setting__      = __addon__.getSetting
 dialog           = xbmcgui.Dialog()
 scriptPath       = __addon__.getAddonInfo('path')
 addon_path       = xbmc.translatePath('special://home/addons')
@@ -90,29 +91,34 @@ def get_files():
 	''' entry point for the file retrieval process_stored
 		follows the same logic as creating a listview.
 		'''
-	if filterYN:
+	try:
+		provided_shows = sys.argv[1].split(':-exporter-:')
+		return provided_shows
+	
+	except:
 
-		if populate_by_d == '1':
+		if filterYN:
 
-			if select_pl == '0':
-				selected_pl = playlist_selection_window()
-				population = {'playlist': selected_pl}
+			if populate_by_d == '1':
 
-			else:
-				#get setting for default_playlist
-				if not default_playlist:
-					population = {'none':''}
+				if select_pl == '0':
+					selected_pl = playlist_selection_window()
+					population = {'playlist': selected_pl}
+
 				else:
-					population = {'playlist': default_playlist}
+					#get setting for default_playlist
+					if not default_playlist:
+						population = {'none':''}
+					else:
+						population = {'playlist': default_playlist}
+			else:
+				population = {'usersel':spec_shows}
 		else:
-			population = {'usersel':spec_shows}
-	else:
-		population = {'none':''}
+			population = {'none':''}
 
+		stored_file_data_filtered = process_stored(population)
 
-	stored_file_data_filtered = process_stored(population)
-
-	return stored_file_data_filtered
+		return stored_file_data_filtered
 
 
 def process_stored(population):
@@ -224,6 +230,7 @@ def Main():
 
 	sizes = []
 	running_size = 0
+	log(file_list)
 	for f in file_list:
 		try:
 			sizes.append(os.path.getsize(f))

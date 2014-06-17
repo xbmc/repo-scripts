@@ -204,6 +204,23 @@ msgctxt "#32071"
 msgid "Reverse Order"
 msgstr ""
 
+msgctxt "#32072"
+msgid "LazyTV User Interface"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Standard"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Posters"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Big Screen"
+msgstr ""
+
+
 
 # -- 4th page --
 
@@ -499,9 +516,78 @@ msgid "File export completed successfully"
 msgstr ""
 
 
+# ---- context menu ----
+
+msgctxt "#32200"
+msgid "Multi-Select (on)"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Multi-Select (off)"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Play Selection"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Export Selection"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Play Episode"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Export Episode"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Play From Here"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Mark as Watched"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Refresh List"
+msgstr ""
 
 
+# ---- main menu ----
 
+msgctxt "#32220"
+msgid "Season"
+msgstr ""
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr ""
+
+msgctxt "#32222"
+msgid "Progress"
+msgstr ""
+
+msgctxt "#32223"
+msgid "Available"
+msgstr ""
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr ""
+
+msgctxt "#32225"
+msgid "Skipped"
+msgstr ""
+
+msgctxt "#32226"
+msgid "In this episode"
+msgstr ""
 
 
 >>>>>>> origin/master-working
