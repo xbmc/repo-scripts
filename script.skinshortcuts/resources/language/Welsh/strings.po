@@ -19,3 +19,7 @@ msgstr ""
 msgctxt "#32014"
 msgid "Videos"
 msgstr "Fideo"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Dim"

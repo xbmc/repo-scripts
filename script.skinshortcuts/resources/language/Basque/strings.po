@@ -55,3 +55,11 @@ msgstr "Lehenetsia"
 msgctxt "#32053"
 msgid "None"
 msgstr "Bat ere ez"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Erakutsi"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Play"

@@ -55,3 +55,11 @@ msgstr "Standar"
 msgctxt "#32053"
 msgid "None"
 msgstr "Tidak Ada"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Layar"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Mainkan"

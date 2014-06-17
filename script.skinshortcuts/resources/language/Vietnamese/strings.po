@@ -55,3 +55,11 @@ msgstr "Mặc định"
 msgctxt "#32053"
 msgid "None"
 msgstr "Không"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Hiển thị"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Phát"

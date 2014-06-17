@@ -84,6 +84,10 @@ msgctxt "#32040"
 msgid "Playlist"
 msgstr "Toistolista"
 
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Valitse widgetti"
+
 msgctxt "#32050"
 msgid "Default"
 msgstr "Oletus"
@@ -95,3 +99,11 @@ msgstr "Yksittäinen kuva"
 msgctxt "#32053"
 msgid "None"
 msgstr "Pois"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Näyttö"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Toista"

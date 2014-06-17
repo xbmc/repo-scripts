@@ -255,3 +255,19 @@ msgstr "Utwórz skrót do aktualnej pozycji"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Lista odtwarzania skóry"
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Chcesz odtworzyć tę listę odtwarzania czy tylko wyświetlić? "
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Ekran"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Odtwarzaj"
+
+msgctxt "#32063"
+msgid "Getting plugin directory listing..."
+msgstr "Pobieranie listy katalogów..."

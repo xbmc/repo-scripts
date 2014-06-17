@@ -119,3 +119,11 @@ msgstr "Image unique"
 msgctxt "#32053"
 msgid "None"
 msgstr "Aucun"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Affichage"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Lire"

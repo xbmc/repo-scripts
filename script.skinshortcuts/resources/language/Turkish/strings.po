@@ -87,3 +87,11 @@ msgstr "Varsayılan"
 msgctxt "#32053"
 msgid "None"
 msgstr "Yok"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Görüntü"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Oynat"

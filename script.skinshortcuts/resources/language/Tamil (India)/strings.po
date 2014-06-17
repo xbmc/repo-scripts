@@ -55,3 +55,7 @@ msgstr "இயல்புநிலை"
 msgctxt "#32053"
 msgid "None"
 msgstr "எதுவுமில்லை"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "வாசி"

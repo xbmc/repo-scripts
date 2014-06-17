@@ -251,3 +251,11 @@ msgstr "Create shortcut to here"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Skin Playlist"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Display"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Play"

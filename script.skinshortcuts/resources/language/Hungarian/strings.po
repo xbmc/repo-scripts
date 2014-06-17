@@ -255,3 +255,11 @@ msgstr "Parancsikon létrehozása itt"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Felszín Lejátszási lista"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Képernyő"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Lejátszás"

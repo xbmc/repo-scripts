@@ -55,3 +55,11 @@ msgstr "Prëzgjedhur"
 msgctxt "#32053"
 msgid "None"
 msgstr "Asgjë"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Ekrani"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Riprodho"

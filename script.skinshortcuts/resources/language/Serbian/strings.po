@@ -55,3 +55,11 @@ msgstr "Podrazumevano"
 msgctxt "#32053"
 msgid "None"
 msgstr "Ništa"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Prikaz"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Пусти"

@@ -87,3 +87,11 @@ msgstr "ค่าเริ่มต้น"
 msgctxt "#32053"
 msgid "None"
 msgstr "ไม่มี"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "การแสดงผล"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "เล่น"

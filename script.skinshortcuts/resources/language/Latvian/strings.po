@@ -47,3 +47,11 @@ msgstr "Attēli"
 msgctxt "#32021"
 msgid "Programs"
 msgstr "Programmas"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Attēls"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Atskaņot"

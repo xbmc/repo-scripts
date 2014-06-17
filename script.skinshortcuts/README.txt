@@ -1,15 +1,32 @@
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
-REPO-FIXES BRANCH (version 0.3.1)
------------------
+What's New for Skinners (version 0.3.3)
+-----------------------
 
-This branch contains fixes for issues discovered in the current XBMC repository version (version 0.3.0).
-
- - Fix for no favourites showing up in management dialog. (Caused by script failing to assign thumbnial)
- - Fix for script crash in new skin-managed shortcuts on empty grouping. (Caused by failing to check for empty grouping)
- - Fix for disappearing Eject Tray shortcut. (Caused by visibility check)
+ - LabelID changes - in some very rare cases, the labelID for an item may have changed. This has the potential for users to loose one or more groups of their submenu shortcuts if they have 2 or more main menu items with the same label.
+ - Advice change - When overriding an action, user choice must be given and respected - see "resources/Management Dialog.txt", section "Overrides.xml", part 1
+ - Clarification - The maximum number of additional sub-menu's is 5
+ - Changes to automatic setting of controls in management dialog, including new option and window title label - see "resources/Management Dialog.txt" for details.
+ - Changes to skin methods when using alternative listing method (undocumented)
+ - Ability to override shortcut action only on selected XBMC major version - see "resources/Advanced Usage.txt", section "Overrides.xml", part 1
+ - More control over the placement of skin-provided shortcuts within the groupings of available shortcuts in the management dialog - see "resources/Advanced Usage.txt", section "Overrides.xml", part 5
+ - Ability to override label of available shortcuts in management dialog - see "resources/Advanced Usage.txt", section "Overrides.xml", part 7
+ - Ability to customize the groupings of available shortcuts within the management dialog - see "resources/Management Dialog.txt" for details
+ - Ability to include required shortcuts, which the user can't delete or replace - see "resources/Advanced Usage.txt", section "Overrides.xml", part 6
+ - Ability to warn the user before they delete/replace a shortcut - see "Advanced Usage", section "Overrides.xml" part 10
+ - Skinners can now only override icons not thumbnails - please update your image overrides - see "resources/Advanced Usage.txt", section "Overriding icons" for details
  
+ 
+With Thanks - Because their names don't deserve to be at the bottom :)
+-----------
+
+Huge thanks to Ronie, whose code for listing plugins is used in this script
+Equally huge thanks to Ronie and `Black, for their favourites code used in this script
+More huge thanks to BigNoid, for the ability to edit shortcuts, and Jeroen, for so many suggestions each of which just made the script better.
+The thanks remain absolutely huge to the translaters on Transifex for localising the script
+And the biggest thanks of all to Annie and my family, for feature suggestions, testing and shouting at me when I broke things
+
  
 Where To Get Help
 -----------------
@@ -157,7 +174,7 @@ First the file must be imported - in your includes.xml add the line:
 	
 In home.xml, add the line:
 
-	<onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=[groupname],[groupname],[groupname])</onload>
+	<onload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=[groupname]|[groupname]|[groupname])</onload>
 
 And in skinsettings.xml, the line:
 
@@ -177,7 +194,7 @@ In your skinsettings.xml file, you need to create a button for each [groupname] 
  
 In the list where you want the submenu to appear, put the following in the <content> tag:
  
-	<include>skinshortcuts-[groupname]</include>
+	<include>skinshortcuts-group-[groupname]</include>
 	
 	
 4. Display user shortcuts based on another list
@@ -337,6 +354,8 @@ One of the side effects of using skinshortcuts to provide the whole main menu is
 
 Therefore, it is recommended to have an alternative link to settings. One possible location is in your shutdown menu.
 
+If you don't provide any alternative access, it's possible to warn the user before they remove a link to shortcuts - see "Advanced Usage", section "Overrides.xml" part 10
+
 
 Skinning the management dialog
 ------------------------------
@@ -355,12 +374,3 @@ The script includes a number of options and features to try to make a skinners l
 * Localisation
 
 For details, see "resources/Advanced Usage.txt".
-
-
-With Thanks
------------
-
-Huge thanks to Ronie, whose code for listing plugins is used in this script
-Equally huge thanks to Ronie and `Black, for their favourites code used in this script
-More huge thanks to BigNoid, for the ability to edit shortcuts
-And the biggest thanks of all to Annie and my family, for feature suggestions, testing and shouting at me when I broke things

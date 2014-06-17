@@ -67,3 +67,11 @@ msgstr "デフォルト"
 msgctxt "#32053"
 msgid "None"
 msgstr "なし"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "画面"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "再生"

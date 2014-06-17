@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32000"
 msgid "Add"
-msgstr "Добавяне"
+msgstr "Добави"
 
 msgctxt "#32001"
 msgid "Delete"
@@ -70,7 +70,7 @@ msgstr "Фото добавка"
 
 msgctxt "#32014"
 msgid "Videos"
-msgstr "Видеа"
+msgstr "Видео"
 
 msgctxt "#32015"
 msgid "Movies"
@@ -82,7 +82,7 @@ msgstr "ТВ Сериали"
 
 msgctxt "#32017"
 msgid "PVR"
-msgstr "PVR"
+msgstr "ПВР"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -102,7 +102,7 @@ msgstr "Програми"
 
 msgctxt "#32022"
 msgid "PVR"
-msgstr "PVR"
+msgstr "ПВР"
 
 msgctxt "#32023"
 msgid "Timers"
@@ -131,6 +131,14 @@ msgstr "Видео библиотека"
 msgctxt "#32031"
 msgid "Music Library"
 msgstr "Музикална библиотека"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Отваряне на дисковото устройство"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Кои елементи да са видими в главното меню"
 
 msgctxt "#32037"
 msgid "Reset all shortcuts"
@@ -172,6 +180,10 @@ msgctxt "#32048"
 msgid "Choose shortcut"
 msgstr "Изберете пряк път"
 
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Изграждане на менюто..."
+
 msgctxt "#32050"
 msgid "Default"
 msgstr "Стандартна"
@@ -183,3 +195,27 @@ msgstr "Една картина"
 msgctxt "#32053"
 msgid "None"
 msgstr "Без"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "XBMC команда"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Почистване на видео библиотеката"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Почистване на музикалната библиотека"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "XBMC команди"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Екран"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Възпроизведи"

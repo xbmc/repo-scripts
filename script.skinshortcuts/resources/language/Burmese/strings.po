@@ -20,6 +20,10 @@ msgctxt "#32014"
 msgid "Videos"
 msgstr "ရုပ်ရှင်များ"
 
+msgctxt "#32015"
+msgid "Movies"
+msgstr "ရုပ်ရှင်များ"
+
 msgctxt "#32019"
 msgid "Music"
 msgstr "ဂီတ"
@@ -27,3 +31,11 @@ msgstr "ဂီတ"
 msgctxt "#32021"
 msgid "Programs"
 msgstr "ပရိုဂရမ်များ"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "ဘာမှမဟုတ်"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "ဖွင့်မည်"

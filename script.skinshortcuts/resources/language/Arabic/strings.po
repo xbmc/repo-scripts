@@ -55,3 +55,11 @@ msgstr "الافتراضية"
 msgctxt "#32053"
 msgid "None"
 msgstr "بلا"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "عرض"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "تشغيل"

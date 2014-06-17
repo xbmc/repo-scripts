@@ -19,3 +19,7 @@ msgstr ""
 msgctxt "#32014"
 msgid "Videos"
 msgstr "Video"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Onki"

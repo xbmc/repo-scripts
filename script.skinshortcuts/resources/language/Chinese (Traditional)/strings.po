@@ -75,3 +75,11 @@ msgstr "預設"
 msgctxt "#32053"
 msgid "None"
 msgstr "關閉"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "顯示器"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "播放"

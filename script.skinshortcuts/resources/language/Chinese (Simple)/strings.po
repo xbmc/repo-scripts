@@ -255,3 +255,11 @@ msgstr "在这里创建快捷方式"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "皮肤播放列表"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "显示"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "播放"

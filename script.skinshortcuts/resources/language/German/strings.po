@@ -255,3 +255,11 @@ msgstr "Shortcut hierhin anlegen"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Skin Wiedergabeliste"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Anzeige"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Abspielen"

@@ -255,3 +255,11 @@ msgstr "Сделать ярлык сюда"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Обложка плейлиста"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Экран"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Включить воспроизведение"

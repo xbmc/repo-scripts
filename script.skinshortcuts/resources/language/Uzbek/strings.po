@@ -55,3 +55,7 @@ msgstr "Andoza"
 msgctxt "#32053"
 msgid "None"
 msgstr "Yo'q"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Ijro ettirish"

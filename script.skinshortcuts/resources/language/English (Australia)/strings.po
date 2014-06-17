@@ -71,3 +71,7 @@ msgstr "Default"
 msgctxt "#32051"
 msgid "Single image"
 msgstr "Single image"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Play"

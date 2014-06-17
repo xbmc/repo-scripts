@@ -1,7 +1,28 @@
-v0.3.1 - RepoFixes Branch
-- Fix for script not correctly providing thumbnails for favourites
-- Fix for script error on empty grouping with skin-managed selection dialog
-- Remove visibility condition for EjectTray shortcut
+v0.3.3
+- Available shortcuts in management dialog improvements:
+ > Improved and customisable groupings
+ > Control over location and visibility of skin-provided shortcuts
+ > UPnP and video sources explorer, including linking to library limited-by-source
+ > More PVR options including playing individual channels
+ > When using select dialog, now displays label2's and thumbnails
+ > Correct thumbnail/icon usage
+ > Addition of skin-required shortcuts which can't be deleted
+ > Ability to warn user before deleting shortcuts to select actions
+- Improved labelID generation
+- Add option to tell management dialog not to fill label's on management dialog controls, additional label 500 for window title
+- Ability to override shortcut actions based on XBMC version
+- Skinners can now only override icons, not thumbnails
+- Fix for crash when no profiles.xml file
+- Fix for single-list xml method to return to main menu item when hiding submenu
+- Fix for action sometimes not showing in label2 in management dialog
+- Updated language files from Transifex
+
+v0.3.2 - Unreleased development build
+
+v0.3.1
+- Fixes: No favourites showing in management dialog
+         Script crash on choosing empty group in skin-managed selection dialog
+		 Remove visibility condition for Eject Tray shortcut
 
 v0.3.0
 - Fix escaping of main menu items (includes method)

@@ -67,11 +67,12 @@ class Main:
             XML.buildMenu( self.MENUID, self.GROUP, self.LEVELS, self.MODE )
             
         if self.TYPE=="launch":
-            # Tell XBMC not to try playing any media
             xbmcplugin.setResolvedUrl( handle=int( sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem() )
             self._launch_shortcut( self.PATH )
+        if self.TYPE=="launchpvr":
+            xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Player.Open", "params": { "item": {"channelid": ' + self.CHANNEL + '} } }')
         if self.TYPE=="manage":
-            self._manage_shortcuts( self.GROUP )
+            self._manage_shortcuts( self.GROUP, self.NOLABELS )
         if self.TYPE=="list":
             self._check_Window_Properties()
             self._list_shortcuts( self.GROUP )
@@ -81,8 +82,37 @@ class Main:
         if self.TYPE=="settings":
             self._check_Window_Properties()
             self._manage_shortcut_links() 
+        if self.TYPE=="hidesubmenu":
+            self._hidesubmenu( self.MENUID )
+            
         if self.TYPE=="shortcuts":
-            LIBRARY._displayShortcuts( self.LABEL, self.ACTION, self.SHORTCUTTYPE, self.THUMBNAIL, self.GROUPING, self.CUSTOM )
+            # We're just going to choose a shortcut, and save its details to the given
+            # skin labels
+            xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-script" )
+            xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-script-data" )
+            xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-skin" )
+            xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-skin-data" )
+            xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-user" )
+            xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-user-data" )
+            xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsAdditionalProperties" )
+            
+            selectedShortcut = LIBRARY.selectShortcut( "", custom = self.CUSTOM )
+            
+            # Now set the skin strings
+            if selectedShortcut is not None:
+                path = urllib.unquote( selectedShortcut.getProperty( "Path" ) )
+                if path.startswith( "pvr-channel://" ):
+                    path = "RunScript(script.skinshortcuts,type=launchpvr&channel=" + path.replace( "pvr-channel://", "" ) + ")"
+                if self.LABEL is not None and selectedShortcut.getLabel() != "":
+                    xbmc.executebuiltin( "Skin.SetString(" + self.LABEL + "," + selectedShortcut.getLabel() + ")" )
+                if self.ACTION is not None:
+                    xbmc.executebuiltin( "Skin.SetString(" + self.ACTION + "," + path + " )" )
+                if self.SHORTCUTTYPE is not None:
+                    xbmc.executebuiltin( "Skin.SetString(" + self.SHORTCUTTYPE + "," + selectedShortcut.getLabel2() + ")" )
+                if self.THUMBNAIL is not None and selectedShortcut.getProperty( "thumbnail" ):
+                    # REWRITE, to better return thumb or icon
+                    xbmc.executebuiltin( "Skin.SetString(" + self.THUMBNAIL + "," + selectedShortcut.getProperty( "thumbnail" ) + ")" )
+                
         if self.TYPE=="resetall":
             # Tell XBMC not to try playing any media
             try:
@@ -111,6 +141,7 @@ class Main:
         self.LEVELS = params.get( "levels", "0" )
         self.CUSTOMID = params.get( "customid", "" )
         self.MODE = params.get( "mode", None )
+        self.CHANNEL = params.get( "channel", None )
         
         # Properties when using LIBRARY._displayShortcuts
         self.LABEL = params.get( "skinLabel", None )
@@ -119,6 +150,8 @@ class Main:
         self.THUMBNAIL = params.get( "skinThumnbail", None )
         self.GROUPING = params.get( "grouping", None )
         self.CUSTOM = params.get( "custom", "False" )
+        
+        self.NOLABELS = params.get( "nolabels", "false" ).lower()
         
         
     def _check_Window_Properties( self ):
@@ -153,9 +186,9 @@ class Main:
                     xbmc.executebuiltin( singleAction )
         
     
-    def _manage_shortcuts( self, group ):
+    def _manage_shortcuts( self, group, nolabels ):
         import gui
-        ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=group )
+        ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=group, nolabels=nolabels )
         ui.doModal()
         del ui
         
@@ -183,16 +216,25 @@ class Main:
         
         i = 0
         
+        DATA._clear_labelID()
+        
         for item in listitems:
             i += 1
             # Generate a listitem
-            log( " - " + item[0] )
-            path = sys.argv[0].decode( 'utf-8' ) + "?type=launch&path=" + item[4] + "&group=" + self.GROUP
+            action = item[4].encode( "utf-8" )
+            if urllib.unquote( action ).startswith( "pvr-channel://" ):
+                log( " Changed action" )
+                action = urllib.quote( "RunScript(script.skinshortcuts,type=launchpvr&channel=" + urllib.unquote( action ).replace( "pvr-channel://", "" ) + ")" )
+            
+            log( " - " + item[0] + " (" + action + ")" )
+            
+            path = sys.argv[0].decode( 'utf-8' ) + "?type=launch&path=" + action + "&group=" + self.GROUP
             
             listitem = xbmcgui.ListItem(label=item[0], label2=item[1], iconImage=item[2], thumbnailImage=item[3])
             listitem.setProperty( 'IsPlayable', 'True')
-            listitem.setProperty( "labelID", item[5].encode('utf-8') )
-            listitem.setProperty( "action", urllib.unquote( item[4] ) )
+            if group == "mainmenu":
+                listitem.setProperty( "labelID", DATA._get_labelID( item[5] ).encode('utf-8') )
+            listitem.setProperty( "action", urllib.unquote( action ) )
             listitem.setProperty( "group", group )
             listitem.setProperty( "path", path )
             
@@ -253,14 +295,20 @@ class Main:
             else:
                 listitems = DATA._get_shortcuts( mainmenuLabelID + "." + levelInt )
             for item in listitems:
-                log( " - " + item[0] )
-                path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + item[4].encode('utf-8') + "&group=" + mainmenuLabelID.decode('utf-8')
+                action = item[4].encode( "utf-8" )
+                if urllib.unquote( action ).startswith( "pvr-channel://" ):
+                    log( " Changed action" )
+                    action = urllib.quote( "RunScript(script.skinshortcuts,type=launchpvr&channel=" + urllib.unquote( action ).replace( "pvr-channel://", "" ) + ")" )
+                
+                log( " - " + item[0] + " (" + action + ")" )
+                
+                path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + action + "&group=" + mainmenuLabelID.decode('utf-8')
                 
                 listitem = xbmcgui.ListItem(label=item[0], label2=item[1], iconImage=item[2], thumbnailImage=item[3])
                 
                 listitem.setProperty('IsPlayable', 'True')
                 listitem.setProperty( "labelID", item[5].encode('utf-8') )
-                listitem.setProperty( "action", urllib.unquote( item[4] ) )
+                listitem.setProperty( "action", urllib.unquote( action ) )
                 listitem.setProperty( "group", mainmenuLabelID.decode('utf-8') )
                 listitem.setProperty( "path", path )
                 
@@ -324,7 +372,7 @@ class Main:
         
         # Create link to manage main menu
         if self.LEVEL == "":
-            path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + urllib.quote( "RunScript(script.skinshortcuts,type=manage&group=mainmenu)" )
+            path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + urllib.quote( "RunScript(script.skinshortcuts,type=manage&group=mainmenu&nolabels=" + self.NOLABELS + ")" )
             displayLabel = self._get_customised_settings_string("main")
             listitem = xbmcgui.ListItem(label=displayLabel, label2="", iconImage="DefaultShortcut.png", thumbnailImage="DefaultShortcut.png")
             listitem.setProperty('isPlayable', 'False')
@@ -357,15 +405,15 @@ class Main:
                 
                 for item in loaditems:
                     itemEncoded = item[0].encode( 'utf-8' )
-                    path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + urllib.quote( "RunScript(script.skinshortcuts,type=manage&group=" + itemEncoded + pathAddition + ")" )
+                    path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + urllib.quote( "RunScript(script.skinshortcuts,type=manage&group=" + itemEncoded + pathAddition + "&nolabels=" + self.NOLABELS + ")" )
                     
                     # Get localised label
                     if not item[0].find( "::SCRIPT::" ) == -1:
                         localLabel = __language__(int( item[0][10:] ) )
-                        path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + urllib.quote( "RunScript(script.skinshortcuts,type=manage&group=" + self.createNiceName( item[0][10:] ).encode("ascii", "xmlcharrefreplace") + pathAddition + ")" )
+                        path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + urllib.quote( "RunScript(script.skinshortcuts,type=manage&group=" + self.createNiceName( item[0][10:] ).encode("ascii", "xmlcharrefreplace") + pathAddition + "&nolabels=" + self.NOLABELS + ")" )
                     elif not item[0].find( "::LOCAL::" ) == -1:
                         localLabel = xbmc.getLocalizedString(int( item[0][9:] ) )
-                        path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + urllib.quote( "RunScript(script.skinshortcuts,type=manage&group=" + self.createNiceName( item[0][9:] ).encode("ascii", "xmlcharrefreplace") + pathAddition + ")" )
+                        path = sys.argv[0].decode('utf-8') + "?type=launch&path=" + urllib.quote( "RunScript(script.skinshortcuts,type=manage&group=" + self.createNiceName( item[0][9:] ).encode("ascii", "xmlcharrefreplace") + pathAddition + "&nolabels=" + self.NOLABELS + ")" )
                     else:
                         localLabel = item[0]
                         
@@ -453,7 +501,16 @@ class Main:
                     xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-" + groupName + "." + str( i ) )
                 else:
                     finished = True
-
+                    
+    def _hidesubmenu( self, menuid ):
+        count = 0
+        while xbmc.getCondVisibility( "!IsEmpty(Container(" + menuid + ").ListItem(" + str( count ) + ").Property(isSubmenu))" ):
+            count -= 1
+            
+        if count != 0:
+            xbmc.executebuiltin( "Control.Move(" + menuid + "," + str( count ) + " )" )
+        
+        xbmc.executebuiltin( "ClearProperty(submenuVisibility, 10000)" )
                     
 if ( __name__ == "__main__" ):
     log('script version %s started' % __addonversion__)

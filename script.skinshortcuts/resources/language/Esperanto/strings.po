@@ -51,3 +51,11 @@ msgstr "Default"
 msgctxt "#32053"
 msgid "None"
 msgstr "None"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Ekrano"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Ludi"

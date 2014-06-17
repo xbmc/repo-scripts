@@ -87,3 +87,11 @@ msgstr "Predvolené"
 msgctxt "#32053"
 msgid "None"
 msgstr "Žiadne"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Obrazovka"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Prehrať"

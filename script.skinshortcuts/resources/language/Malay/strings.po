@@ -96,6 +96,10 @@ msgctxt "#32041"
 msgid "Action"
 msgstr "Aksi"
 
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Pilih widjet"
+
 msgctxt "#32050"
 msgid "Default"
 msgstr "Lalai"
@@ -111,3 +115,11 @@ msgstr "Tiada"
 msgctxt "#32054"
 msgid "XBMC Command"
 msgstr "Perintah XBMC"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Paparkan"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Main"

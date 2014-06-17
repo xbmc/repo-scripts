@@ -255,3 +255,19 @@ msgstr "Crear atallo desto"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Listaxe de Reprodución"
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Quere reproducir esta listaxe ou amosala?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Display"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Reproducir"
+
+msgctxt "#32063"
+msgid "Getting plugin directory listing..."
+msgstr "Obter a listaxe do cartafol de engadidos..."

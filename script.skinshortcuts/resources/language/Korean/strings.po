@@ -243,3 +243,11 @@ msgstr "여기에 바로가기 만들기"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "스킨 재생목록"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "화면"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "재생"

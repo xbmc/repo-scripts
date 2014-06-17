@@ -83,3 +83,11 @@ msgstr "Üksikpilt"
 msgctxt "#32053"
 msgid "None"
 msgstr "Puudub"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Ekraan"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Esita"

@@ -63,3 +63,11 @@ msgstr "За промовчанням"
 msgctxt "#32053"
 msgid "None"
 msgstr "Ні"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Екран"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Відтворити"

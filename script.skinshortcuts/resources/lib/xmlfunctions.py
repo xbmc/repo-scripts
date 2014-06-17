@@ -9,6 +9,7 @@ from traceback import print_exc
 __addon__        = xbmcaddon.Addon()
 __addonid__      = sys.modules[ "__main__" ].__addonid__
 __addonversion__ = __addon__.getAddonInfo('version')
+__xbmcversion__  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 __datapath__     = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode('utf-8'), __addonid__ ).encode('utf-8')
 __masterpath__     = os.path.join( xbmc.translatePath( "special://masterprofile/addon_data/" ).decode('utf-8'), __addonid__ ).encode('utf-8')
 __language__     = __addon__.getLocalizedString
@@ -36,6 +37,7 @@ class XMLFunctions():
  
         # Get a list of profiles
         fav_file = xbmc.translatePath( 'special://userdata/profiles.xml' ).decode("utf-8")
+        tree = None
         if xbmcvfs.exists( fav_file ):
             tree = xmltree.parse( fav_file )
         
@@ -55,7 +57,7 @@ class XMLFunctions():
                 profilelist.append( [dir, "StringCompare(System.ProfileName," + name.decode( "utf-8" ) + ")"] )
                 
         else:
-            profileList = [["special://masterprofile", None]]
+            profilelist = [["special://masterprofile", None]]
  
         if self.shouldwerun( profilelist ) == False:
             log( "Menu is up to date" )
@@ -79,6 +81,8 @@ class XMLFunctions():
             
         
         # Clear window properties for overrides, widgets, backgrounds, properties
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-script" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-script-data" )
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-skin" )
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-skin-data" )
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-user" )
@@ -145,13 +149,21 @@ class XMLFunctions():
             return True
         
         log( "Checking hashes..." )
+        checkedXBMCVer = False
         checkedSkinVer = False
         checkedScriptVer = False
         checkedProfileList = False
+        checkedLanguage = False
             
         for hash in hashes:
             if hash[1] is not None:
-                if hash[0] == "::SKINVER::":
+                if hash[0] == "::XBMCVER::":
+                    # Check the skin version is still the same as hash[1]
+                    checkedXBMCVer = True
+                    if __xbmcversion__ != hash[1]:
+                        log( "  - XBMC version does not match" )
+                        return True
+                elif hash[0] == "::SKINVER::":
                     # Check the skin version is still the same as hash[1]
                     checkedSkinVer = True
                     if skinVersion != hash[1]:
@@ -169,6 +181,12 @@ class XMLFunctions():
                     if profilelist != hash[1]:
                         log( "  - Profile list does not match" )
                         return True
+                elif hash[0] == "::LANGUAGE::":
+                    # Check that the XBMC language is still the same as hash[1]
+                    checkedLanguage = True
+                    if xbmc.getLanguage() != hash[1]:
+                        log( "  - Language does not match" )
+                        return True
                 else:
                     hasher = hashlib.md5()
                     hasher.update( xbmcvfs.File( hash[0] ).read() )
@@ -182,7 +200,7 @@ class XMLFunctions():
                 
         # If the skin or script version, or profile list, haven't been checked, we need to rebuild the menu 
         # (most likely we're running an old version of the script)
-        if checkedSkinVer == False or checkedScriptVer == False or checkedProfileList == False:
+        if checkedXBMCVer == False or checkedSkinVer == False or checkedScriptVer == False or checkedProfileList == False or checkedLanguage == False:
             return True
         
             
@@ -195,6 +213,8 @@ class XMLFunctions():
         hashlist.list = []
         hashlist.list.append( ["::PROFILELIST::", profilelist] )
         hashlist.list.append( ["::SCRIPTVER::", __addonversion__] )
+        hashlist.list.append( ["::XBMCVER::", __xbmcversion__] )
+        hashlist.list.append( ["::LANGUAGE::", xbmc.getLanguage()] )
         
         # Create a new tree and includes for the various groups
         tree = xmltree.ElementTree( xmltree.Element( "includes" ) )
@@ -227,6 +247,9 @@ class XMLFunctions():
             profileVis = profile[1]
             profileCount += 1
             
+            # Clear any previous labelID's
+            DATA._clear_labelID()
+            
             # Get groups OR main menu shortcuts
             if not groups == "":
                 menuitems = groups.split( "|" )
@@ -244,16 +267,15 @@ class XMLFunctions():
             for item in menuitems:
                 i += 1
                 progress.update( ( profilePercent * profileCount) + percent * i )
-                log( str( ( profilePercent * profileCount) + percent * i ) + "%" )
                 
                 # Build the main menu item
                 if groups == "":
-                    mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1] )
+                    submenu = DATA._get_labelID( item[5] )
+                    mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1], submenu )
                     if buildMode == "single":
-                        mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1] )
-                    submenu = item[5]
+                        mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1], submenu )
                 else:
-                    submenu = item
+                    submenu = DATA._get_labelID( item )
                 
                 # Build the sub-menu items
                 count = 0
@@ -281,12 +303,10 @@ class XMLFunctions():
                                     hasSubMenu.text = "True"
                                 
                     else:
-                        justmenuTreeA.set( "name", "skinshortcuts-group-" + DATA.slugify( submenu ) ) + "-" + str( count )
-                        justmenuTreeB.set( "name", "skinshortcuts-group-alt-" + DATA.slugify( submenu ) ) + "-" + str( count )
+                        # This is an additional sub-menu, not the primary one
+                        justmenuTreeA.set( "name", "skinshortcuts-group-" + DATA.slugify( submenu ) + "-" + str( count ) )
+                        justmenuTreeB.set( "name", "skinshortcuts-group-alt-" + DATA.slugify( submenu ) + "-" + str( count ) )
                         submenuitems = DATA._get_shortcuts( submenu + "." + str( count ), True, profile[0] )
-                        
-                    log( "Number of submenu items: " + str( len( submenuitems ) ) )
-                    log( repr( submenuitems ) )
                     
                     # If there is a submenu, and we're building a single menu list, replace the onclick of mainmenuItemB AND recreate it as the first
                     # submenu item
@@ -328,24 +348,29 @@ class XMLFunctions():
         
         # Save the tree
         for path in paths:
-            tree.write( path, encoding="UTF-8" )
+            tree.write( path, encoding="utf-8" )
         
         # Save the hashes
         file = xbmcvfs.File( os.path.join( __masterpath__ , xbmc.getSkinDir() + ".hash" ), "w" )
         file.write( repr( hashlist.list ) )
         file.close
         
-    def buildElement( self, item, Tree, groupName, visibilityCondition, profileVisibility ):
+    def buildElement( self, item, Tree, groupName, visibilityCondition, profileVisibility, submenuVisibility = None ):
         # This function will build an element for the passed Item in
         # the passed Tree
         newelement = xmltree.SubElement( Tree, "item" )
         
         # Onclick
-        action = urllib.unquote( item[4] )
+        action = urllib.unquote( item[4] ).decode( "utf-8" )
         if action.find("::MULTIPLE::") == -1:
-            # Single action, run it
             onclick = xmltree.SubElement( newelement, "onclick" )
-            onclick.text = action
+            if action.startswith( "pvr-channel://" ):
+                # PVR action
+                onclick.text = "RunScript(script.skinshortcuts,type=launchpvr&channel=" + action.replace( "pvr-channel://", "" ) + ")"
+                log( "PVR: " + "RunScript(script.skinshortcuts,type=launchpvr&channel=" + action.replace( "pvr-channel://", "" )  + ")" )
+            else:
+                # Single action, place in as-is
+                onclick.text = action
         else:
             # Multiple actions, separated by |
             actions = action.split( "|" )
@@ -356,39 +381,60 @@ class XMLFunctions():
         
         # Label
         label = xmltree.SubElement( newelement, "label" )
-        label.text = item[0]
+        if item[0].isdigit():
+            label.text="$NUMBER[" + item[0].decode( "utf-8" ) + "]"
+        else:
+            try:
+                label.text = item[0].decode( "utf-8" )
+            except:
+                label.text = item[0]
         
         # Label 2
         label2 = xmltree.SubElement( newelement, "label2" )
         if not item[1].find( "::SCRIPT::" ) == -1:
             label2.text = __language__( int( item[1][10:] ) )
         else:
-            label2.text = item[1]
+            try:
+                label2.text = item[1].decode( "utf-8" )
+            except:
+                label2.text = item[1]
 
 
         # Icon
         icon = xmltree.SubElement( newelement, "icon" )
-        icon.text = item[2]
+        try:
+            icon.text = item[2].decode( "utf-8" )
+        except:
+            icon.text = item[2]
         
         # Thumb
         thumb = xmltree.SubElement( newelement, "thumb" )
-        thumb.text = item[3]
+        try:
+            thumb.text = item[3].decode( "utf-8" )
+        except:
+            thumb.text = item[3]
         
         # LabelID
         labelID = xmltree.SubElement( newelement, "property" )
         labelID.set( "name", "labelID" )
-        labelID.text = item[5]
+        try:
+            labelID.text = item[5].decode( "utf-8" )
+        except:
+            labelID.text = item[5]
         
         # Group name
         group = xmltree.SubElement( newelement, "property" )
         group.set( "name", "group" )
-        group.text = groupName
+        try:
+            group.text = groupName.decode( "utf-8" )
+        except:
+            group.text = groupName
         
         # Submenu visibility
-        if groupName == "mainmenu":
-            submenuVisibility = xmltree.SubElement( newelement, "property" )
-            submenuVisibility.set( "name", "submenuVisibility" )
-            submenuVisibility.text = DATA.slugify( item[5] )
+        if submenuVisibility is not None:
+            submenuVisibilityElement = xmltree.SubElement( newelement, "property" )
+            submenuVisibilityElement.set( "name", "submenuVisibility" )
+            submenuVisibilityElement.text = DATA.slugify( submenuVisibility )
             
         # Visibility
         if visibilityCondition is not None:
@@ -410,11 +456,17 @@ class XMLFunctions():
             for property in item[6]:
                 if property[0] == "node.visible":
                     visibleProperty = xmltree.SubElement( newelement, "visible" )
-                    visibleProperty.text = property[1]
+                    try:
+                        visibleProperty.text = property[1].decode( "utf-8" )
+                    except:
+                        visibleProperty.text = property[1]
                 else:
                     additionalproperty = xmltree.SubElement( newelement, "property" )
-                    additionalproperty.set( "name", property[0] )
-                    additionalproperty.text = property[1]
+                    additionalproperty.set( "name", property[0].decode( "utf-8" ) )
+                    try:
+                        additionalproperty.text = property[1].decode( "utf-8" )
+                    except:
+                        additionalproperty.text = property[1]
                     
         return newelement
         

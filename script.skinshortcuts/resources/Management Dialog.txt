@@ -29,10 +29,15 @@ ID	Type	Label	Description
 404 Button			Set a custom property
 405 Button			Launch management dialog for submenu / additional menus
 
-It is recommended you set the label for all of these controls, however if no label is provided the script will fill the label (except 404/405). A button's label2 will NOT work if the script fills the label.
+500 Label   32071 / 32072	Window Title
+
+It is recommended you set the label for all of these controls with the exception of 500, however if no label is provided the script will fill the label (except 404/405). A button's label2 will NOT work if the script fills the label.
+
+If you do not want the script to fill the labels for these controls, you can specify &nolabels=true when invoking the management dialog.
+
+In the case of label 500, if this control is present the script will always fill its label with either "Customize Main Menu" or "Customize Submenu" (or localised equivalents).
 
 Most of these controls are optional (though it is recommended to include them), but you MUST include control 211. Controls 101, 102, 103 and 111 all rely on the others being present.
-
 
 2. Using label2 on buttons to provide more information
 
@@ -46,17 +51,6 @@ NOTE: You MUST provide a label (even one set to a script-provided string) for la
 3. Alternative method to set a shortcut
 
 Rather than using list 111 to let the user select a shortcut, you can include button 401. When clicked it will show the user, via the standard Select dialog, first a list of the available categories of shortcuts, then the shortcuts within that category.
-
-You can also use the button to go straight to the list of shortcuts for a category by first setting the window property "category", then sending a click to the button. The available categories are:
-
-	common		(Items commonly found on a main menu)
-	video		(Video library)
-	music		(Music library)
-	playlists	(Users playlists)
-	favourites	(Users favourites)
-	addons		(Programs, video add-ons, music add-ons, picture add-ons)
-	
-After a click to 401 has been registered, the window property "category" will be cleared.
 
 
 4. Set a custom property
@@ -87,3 +81,8 @@ You will likely only want to include this when editing the main menu. You can ch
 6. Limit controls to main menu only
 
 You may wish to only show some of these controls when the user is editing the main menu only, not a submenu. To do this, check the window property "groupname" for the value "mainmenu".
+
+
+7. Shortcut Categories
+
+The available shortcuts are grouped into several categories within the management dialog. If you wish to customise these categories, copy the format in %script.skinshortcuts%/resources/overrides.xml

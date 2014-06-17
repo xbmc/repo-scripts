@@ -103,3 +103,11 @@ msgstr "תמונה בודדת"
 msgctxt "#32053"
 msgid "None"
 msgstr "ללא"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "תצוגה"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "שחק"

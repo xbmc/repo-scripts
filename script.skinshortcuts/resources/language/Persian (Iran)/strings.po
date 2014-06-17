@@ -71,3 +71,11 @@ msgstr "پیش فرض"
 msgctxt "#32053"
 msgid "None"
 msgstr "هیچ"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "نمایش"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "پخش"

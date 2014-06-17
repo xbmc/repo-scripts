@@ -55,3 +55,11 @@ msgstr "ነባር "
 msgctxt "#32053"
 msgid "None"
 msgstr "ምንም "
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "ማሳያ"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "ማጫወቻ "

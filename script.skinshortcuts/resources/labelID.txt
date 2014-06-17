@@ -1,8 +1,6 @@
-* THIS FILE IS OUT OF DATE*
+The following is a list of all labelID's, their default icon image and their corresponding English translation.
 
-The following is a list of all labelID's, their default thumbnail image and their corresponding English translation.
-
-labelID		Thumbnail					English translation	
+labelID		Icon						English translation	
 ----------- ----------------------- 	-------------------------
 videos		DefaultVideos.png			Videos
 movies		DefaultMovies.png			Movies
@@ -68,14 +66,15 @@ Playlists
 ---------
 
 labelID - Name of playlist (lowercase, without spaces)
-thumbnail - DefaultPlaylist.png
+icon - DefaultPlaylist.png
 
 Favourites
 ----------
 
 labelID - Name of the the favourite (lowercase, without spaces)
-thumbnail - If a shortcut to a playlist - DefaultPlaylist.png
-			otherwise, the favourites thumbnail
+icon	- DefaultPlaylist.png
+		  DefaultShortcut.png
+thumbnail - the favourites thumbnail
 			
 Add-Ons
 -------

@@ -24,9 +24,17 @@ msgctxt "#32001"
 msgid "Delete"
 msgstr "Panaikinti"
 
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Perkelti aukštyn"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Perkelti žemyn"
+
 msgctxt "#32004"
 msgid "Video Playlist"
-msgstr "Video grojaraštis"
+msgstr "Vaizdo grojaraštis"
 
 msgctxt "#32005"
 msgid "Music Playlist"
@@ -36,9 +44,37 @@ msgctxt "#32006"
 msgid "Favourite"
 msgstr "Mėgstami"
 
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Priedas"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Mišrus grojaraštis"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Programa"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Vaizdo priedas"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Muzikos priedas"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Paveikslėlių priedas"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<Joks>"
+
 msgctxt "#32014"
 msgid "Videos"
-msgstr "Video"
+msgstr "Vaizdo įrašai"
 
 msgctxt "#32015"
 msgid "Movies"
@@ -46,7 +82,15 @@ msgstr "Filmai"
 
 msgctxt "#32016"
 msgid "TV Shows"
-msgstr "TV šou"
+msgstr "TV laidos"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Muzikiniai vaizdo klipai"
 
 msgctxt "#32019"
 msgid "Music"
@@ -60,13 +104,41 @@ msgctxt "#32021"
 msgid "Programs"
 msgstr "Programos"
 
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Laikmačiai"
+
+msgctxt "#32024"
+msgid "Custom shortcut"
+msgstr "Individuali nuoroda"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Nustatyti etiketę"
+
+msgctxt "#32026"
+msgid "Set thumbail"
+msgstr "Nustatyti miniatiūrą"
+
+msgctxt "#32027"
+msgid "Custom action"
+msgstr "Individualus veiksmas"
+
+msgctxt "#32028"
+msgid "Reset shortcuts"
+msgstr "Atstatyti nuorodas"
+
 msgctxt "#32029"
 msgid "Common"
 msgstr "Bendras"
 
 msgctxt "#32030"
 msgid "Video Library"
-msgstr "Video biblioteka"
+msgstr "Vaizdo biblioteka"
 
 msgctxt "#32031"
 msgid "Music Library"
@@ -74,7 +146,35 @@ msgstr "Muzikos biblioteka"
 
 msgctxt "#32032"
 msgid "Play DVD"
-msgstr "Atkūrti DVD"
+msgstr "Atkurti DVD"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Išstumti dėklą"
+
+msgctxt "#32034"
+msgid "Common Shortcut"
+msgstr "Bendra nuoroda"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Pasirinkite kuriuos elementus rodyti pagrindiniame meniu"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for ::MENUNAME::"
+msgstr "Pasirinkite nuorodas ::MENUNAME::"
+
+msgctxt "#32037"
+msgid "Reset all shortcuts"
+msgstr "Atstatyti visas nuorodas"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all shortcuts back to default?"
+msgstr "Ar tikrai norite atstatyti visas nuorodas į numatytąsias?"
+
+msgctxt "#32039"
+msgid "Pick widget for ::MENUNAME::"
+msgstr "Pasirinkite valdiklį ::MENUNAME::"
 
 msgctxt "#32040"
 msgid "Playlist"
@@ -84,13 +184,49 @@ msgctxt "#32041"
 msgid "Action"
 msgstr "Veiksmas"
 
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Nežinomas vaizdo mazgas"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Pasirinkite nuorodos kategoriją"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Pasirinkite valdiklį"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Pasirinkite foną"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Atnaujinti vaizdo biblioteką"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Atnaujinti garso biblioteką"
+
+msgctxt "#32048"
+msgid "Choose shortcut"
+msgstr "Pasirinkite nuorodą"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Kuriamas meniu..."
+
 msgctxt "#32050"
 msgid "Default"
 msgstr "Numatytas"
 
 msgctxt "#32051"
 msgid "Single image"
-msgstr "Vienas paveikslėlis"
+msgstr "Vienas atvaizdas"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Keli atvaizdai"
 
 msgctxt "#32053"
 msgid "None"
@@ -99,3 +235,39 @@ msgstr "Nieko"
 msgctxt "#32054"
 msgid "XBMC Command"
 msgstr "XBMC komanda"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Išvalyti vaizdo biblioteką"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Išvalyti garso biblioteką"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "XBMC komandos"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Sukurta nuorodą į šią vietą"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Teminės išvaizdos grojaraštis"
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Norite atkurti ar atvaizduoti šį grojaraštį?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Atvaizduoti"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Atkurti"
+
+msgctxt "#32063"
+msgid "Getting plugin directory listing..."
+msgstr "Gaunamas papildinio katalogo sąrašas..."

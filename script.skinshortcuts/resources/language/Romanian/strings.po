@@ -55,3 +55,11 @@ msgstr "Standard"
 msgctxt "#32053"
 msgid "None"
 msgstr "Niciuna"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Afişare"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Redă"

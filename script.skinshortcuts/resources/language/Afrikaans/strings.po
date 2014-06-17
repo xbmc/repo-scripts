@@ -36,6 +36,10 @@ msgctxt "#32016"
 msgid "TV Shows"
 msgstr "TV Programme"
 
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
+
 msgctxt "#32019"
 msgid "Music"
 msgstr "Musiek"
@@ -48,6 +52,10 @@ msgctxt "#32021"
 msgid "Programs"
 msgstr "Programme"
 
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Speellys"
@@ -56,6 +64,18 @@ msgctxt "#32050"
 msgid "Default"
 msgstr "Verstek"
 
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Enkele beeld"
+
 msgctxt "#32053"
 msgid "None"
 msgstr "Geen"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Vertoon"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Speel"

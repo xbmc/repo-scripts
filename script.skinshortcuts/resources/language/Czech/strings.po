@@ -91,3 +91,11 @@ msgstr "Jeden obrázek"
 msgctxt "#32053"
 msgid "None"
 msgstr "Žádné"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Zobrazení"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Přehrát"

@@ -108,6 +108,10 @@ msgctxt "#32022"
 msgid "PVR"
 msgstr "PVR"
 
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Zakazana snimanja"
+
 msgctxt "#32024"
 msgid "Custom shortcut"
 msgstr "Prilagođeni prečac"
@@ -184,10 +188,86 @@ msgctxt "#32042"
 msgid "Unknown video node"
 msgstr "Nepoznato video čvorište"
 
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Odaberi kategoriju prečaca"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Odaberi widget"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Odaberi pozadinu"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Ažuriraj videoteku"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Ažuriraj fonoteku"
+
+msgctxt "#32048"
+msgid "Choose shortcut"
+msgstr "Odaberi prečac"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Izgrađivanje izbornika..."
+
 msgctxt "#32050"
 msgid "Default"
 msgstr "Zadano"
 
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Jedna slika"
+
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Više slika"
+
 msgctxt "#32053"
 msgid "None"
 msgstr "Nijedan"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "XBMC naredba"
+
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Očisti videoteku"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Očisti fonoteku"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "XBMC naredbe"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Stvori prečac ovdje"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Popis izvođenja presvlake"
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Želite li reproducirati popis izvođenja ili ga prikazati?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Zaslon"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Reproduciraj"
+
+msgctxt "#32063"
+msgid "Getting plugin directory listing..."
+msgstr "Izlistavanje direktorija dodataka..."

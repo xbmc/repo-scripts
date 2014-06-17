@@ -51,3 +51,11 @@ msgstr "डिफ़ॉल्ट"
 msgctxt "#32053"
 msgid "None"
 msgstr "कोई नहीं"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "दिखावा"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "खेलना"

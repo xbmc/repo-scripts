@@ -35,3 +35,11 @@ msgstr "ചിത്രങ്ങള്‍"
 msgctxt "#32021"
 msgid "Programs"
 msgstr "പരിപാടികള്‍"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "കാണിക്കുന്ന ചാലകം"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "കാണുക"

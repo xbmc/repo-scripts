@@ -255,3 +255,19 @@ msgstr "Skapa genväg hit"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Skalspellista"
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Vill du spela den här spellistan, eller visa den?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Visa"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Spela"
+
+msgctxt "#32063"
+msgid "Getting plugin directory listing..."
+msgstr "Hämtar lista av pluginkataloger"

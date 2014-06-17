@@ -255,3 +255,19 @@ msgstr "Crea collegamento a qui"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Skin della playlist"
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Vuoi eseguire questa playlist, o visualizzarla?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Schermo"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Guarda"
+
+msgctxt "#32063"
+msgid "Getting plugin directory listing..."
+msgstr "Ottendendo lista dei plugin"

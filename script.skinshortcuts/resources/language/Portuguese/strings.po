@@ -255,3 +255,19 @@ msgstr "Criar Atalho para Aqui"
 msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Lista Reprodução"
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Quer iniciar esta lista de reprodução, ou exibi-la?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Ecrã"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Reproduzir"
+
+msgctxt "#32063"
+msgid "Getting plugin directory listing..."
+msgstr "Obtendo lista das pastas do plugin..."

@@ -91,3 +91,11 @@ msgstr "Standard"
 msgctxt "#32053"
 msgid "None"
 msgstr "Ingen"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Skjerm"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Spill av"

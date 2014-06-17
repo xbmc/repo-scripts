@@ -103,3 +103,11 @@ msgstr "Стандартны"
 msgctxt "#32053"
 msgid "None"
 msgstr "None"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Дысплэй"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Граць"

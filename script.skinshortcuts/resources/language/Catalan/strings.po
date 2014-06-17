@@ -99,3 +99,11 @@ msgstr "Per defecte"
 msgctxt "#32053"
 msgid "None"
 msgstr "Cap"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Pantalla"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Reprodueix"

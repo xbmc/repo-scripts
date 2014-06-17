@@ -35,3 +35,7 @@ msgstr "foto"
 msgctxt "#32021"
 msgid "Programs"
 msgstr "Pwogram"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Jwe"

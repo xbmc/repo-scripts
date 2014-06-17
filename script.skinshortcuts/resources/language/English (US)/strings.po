@@ -19,3 +19,103 @@ msgstr ""
 msgctxt "#32001"
 msgid "Delete"
 msgstr "Delete"
+
+msgctxt "#32004"
+msgid "Video Playlist"
+msgstr "Video Playlist"
+
+msgctxt "#32005"
+msgid "Music Playlist"
+msgstr "Music Playlist"
+
+msgctxt "#32006"
+msgid "Favourite"
+msgstr "Favorite"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
+
+msgctxt "#32014"
+msgid "Videos"
+msgstr "Videos"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Movies"
+
+msgctxt "#32016"
+msgid "TV Shows"
+msgstr "TV Shows"
+
+msgctxt "#32017"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32018"
+msgid "Music Videos"
+msgstr "Music Videos"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Music"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Pictures"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Programs"
+
+msgctxt "#32022"
+msgid "PVR"
+msgstr "PVR"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Timers"
+
+msgctxt "#32030"
+msgid "Video Library"
+msgstr "Video Library"
+
+msgctxt "#32031"
+msgid "Music Library"
+msgstr "Music Library"
+
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "Play DVD"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Playlist"
+
+msgctxt "#32041"
+msgid "Action"
+msgstr "Action"
+
+msgctxt "#32044"
+msgid "Select widget"
+msgstr "Select widget"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Default"
+
+msgctxt "#32051"
+msgid "Single image"
+msgstr "Single image"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "None"
+
+msgctxt "#32054"
+msgid "XBMC Command"
+msgstr "XBMC Command"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Play"
