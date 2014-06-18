@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# Service Legendas-Zone.org version 0.1.0
+# Service Legendas-Zone.org version 0.1.1
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
-# Help by VaRaTRoN
+# Help by VaRaTRoN and Mafarricos
 # Bugs & Features to highlander@teknorage.com
 # http://www.teknorage.com
 # License: GPL v2
@@ -39,6 +39,7 @@ __resource__   = xbmc.translatePath(pjoin(__cwd__, 'resources', 'lib' ) ).decode
 __temp__       = xbmc.translatePath(pjoin(__profile__, 'temp'))
 
 sys.path.append (__resource__)
+__search__ = __addon__.getSetting( 'SEARCH' )
 
 main_url = "http://www.legendas-zone.org/"
 debug_pretext = "LegendasZone"
@@ -521,13 +522,22 @@ def Search(item):
                     searchstring = title[-1]
                     #log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
                 else:
-                    if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
-                        searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
-                        searchstring = searchstring.group(0)
-                        #log(u"FilenameTV Searchstring = %s" % (searchstring,))
+                    if __search__ == '0':
+						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
+							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
+							searchstring = searchstring.group(0)
+							#log(u"FilenameTV Searchstring = %s" % (searchstring,))
+						else:
+							searchstring = filename
+							#log(u"Filename Searchstring = %s" % (searchstring,))
                     else:
-                        searchstring = filename
-                        #log(u"Filename Searchstring = %s" % (searchstring,))
+						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
+							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
+							searchstring = searchstring.group(0)
+							#log(u"TitleTV Searchstring = %s" % (searchstring,))
+						else:
+							searchstring = title
+							#log(u"Title Searchstring = %s" % (searchstring,))
 
     PT_ON = __addon__.getSetting( 'PT' )
     PTBR_ON = __addon__.getSetting( 'PTBR' )
@@ -655,8 +665,11 @@ def Download(id, filename):
                     #if file.split('.')[-1] in SUB_EXTS and os.stat(pjoin(__temp__, file)).st_mtime > init_max_mtime:
                     if searchsubscount == 1:
                         # unpacked file is a newly created subtitle file
-                        log(u"Unpacked subtitles file '%s'" % (file,))
-                        subs_file = pjoin(__temp__, file.decode("utf-8"))
+                        #log(u"Unpacked subtitles file '%s'" % (file.decode('utf-8'),))
+                        try:
+                            subs_file = pjoin(__temp__, file.decode("utf-8"))
+                        except:
+                            subs_file = pjoin(__temp__, file.decode("latin1"))
                         subtitles_list.append(subs_file)
                         break
                     else:
