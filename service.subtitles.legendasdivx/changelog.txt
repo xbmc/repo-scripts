@@ -1,3 +1,5 @@
+0.1.1
+- Added a last resort option to search for filename or title, configure in advanced options of the add-on.
 0.1.0
 - Fix the decoding BUG in Raspberry Pi (Linux and Windows have different behaviours).
 - New pattern for the last resort search to check if it's a movie or tvshow.

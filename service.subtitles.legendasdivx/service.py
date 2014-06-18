@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.1.0
+# Service LegendasDivx.com version 0.1.1
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -41,6 +41,7 @@ __temp__       = xbmc.translatePath(pjoin(__profile__, 'temp'))
 sys.path.append (__resource__)
 
 __descon__ = __addon__.getSetting( 'DESC' )
+__search__ = __addon__.getSetting( 'SEARCH' )
 
 main_url = "http://www.legendasdivx.com/"
 debug_pretext = "LegendasDivx"
@@ -375,13 +376,22 @@ def Search(item):
                     searchstring = title[-1]
                     #log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
                 else:
-                    if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
-                        searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
-                        searchstring = searchstring.group(0)
-                        #log(u"FilenameTV Searchstring = %s" % (searchstring,))
+                    if __search__ == '0':
+						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
+							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
+							searchstring = searchstring.group(0)
+							#log(u"FilenameTV Searchstring = %s" % (searchstring,))
+						else:
+							searchstring = filename
+							#log(u"Filename Searchstring = %s" % (searchstring,))
                     else:
-                        searchstring = filename
-                        #log(u"Filename Searchstring = %s" % (searchstring,))
+						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
+							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
+							searchstring = searchstring.group(0)
+							#log(u"TitleTV Searchstring = %s" % (searchstring,))
+						else:
+							searchstring = title
+							#log(u"Title Searchstring = %s" % (searchstring,))
 
     PT_ON = __addon__.getSetting( 'PT' )
     PTBR_ON = __addon__.getSetting( 'PTBR' )
