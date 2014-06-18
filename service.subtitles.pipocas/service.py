@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service Pipocas.tv version 0.1.0
+# Service Pipocas.tv version 0.1.1
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -39,6 +39,8 @@ __resource__   = xbmc.translatePath(pjoin(__cwd__, 'resources', 'lib' ) ).decode
 __temp__       = xbmc.translatePath(pjoin(__profile__, 'temp'))
 
 sys.path.append (__resource__)
+
+__search__ = __addon__.getSetting( 'SEARCH' )
 
 main_url = "http://pipocas.tv/"
 debug_pretext = "Pipocas"
@@ -111,12 +113,14 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
     page = 0
     if languageshort == "pt":
         url = main_url + "subtitles.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    if languageshort == "pb":
+    elif languageshort == "pb":
         url = main_url + "subtitles.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    if languageshort == "en":
-        url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    if languageshort == "es":
+    elif languageshort == "es":
         url = main_url + "subtitles.php?grupo=rel&linguagem=espanhol&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+    elif languageshort == "en":
+        url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+    else:
+        url = main_url + "index.php"
 
     content = opener.open(url)
     content = content.read()
@@ -218,17 +222,18 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
         page = page + 1
         if languageshort == "pt":
             url = main_url + "subtitles.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        if languageshort == "pb":
+        elif languageshort == "pb":
             url = main_url + "subtitles.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        if languageshort == "en":
-            url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        if languageshort == "es":
+        elif languageshort == "es":
             url = main_url + "subtitles.php?grupo=rel&linguagem=espanhol&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+        elif languageshort == "en":
+            url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+        else:
+            url = main_url + "index.php"
         content = opener.open(url)
         content = content.read()
         content = content.decode('latin1')
 
-    
 #   Bubble sort, to put syncs on top
     for n in range(0,len(subtitles_list)):
         for i in range(1, len(subtitles_list)):
@@ -356,13 +361,22 @@ def Search(item):
                     searchstring = title[-1]
                     #log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
                 else:
-                    if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
-                        searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
-                        searchstring = searchstring.group(0)
-                        #log(u"FilenameTV Searchstring = %s" % (searchstring,))
+                    if __search__ == '0':
+						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
+							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
+							searchstring = searchstring.group(0)
+							#log(u"FilenameTV Searchstring = %s" % (searchstring,))
+						else:
+							searchstring = filename
+							#log(u"Filename Searchstring = %s" % (searchstring,))
                     else:
-                        searchstring = filename
-                        #log(u"Filename Searchstring = %s" % (searchstring,))
+						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
+							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
+							searchstring = searchstring.group(0)
+							#log(u"TitleTV Searchstring = %s" % (searchstring,))
+						else:
+							searchstring = title
+							#log(u"Title Searchstring = %s" % (searchstring,))
 
     PT_ON = __addon__.getSetting( 'PT' )
     PTBR_ON = __addon__.getSetting( 'PTBR' )
