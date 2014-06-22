@@ -21,6 +21,8 @@ except ImportError:
 __addon__      = sys.modules[ "__main__" ].__addon__
 __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__    = sys.modules[ "__main__" ].__version__
+__cwd__        = sys.modules[ "__main__" ].__cwd__
+__language__   = sys.modules[ "__main__" ].__language__
 
 USER_AGENT = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
 
@@ -137,47 +139,33 @@ def hashFile(file_path, rar=False):
 
 class OSDBServer:
   def create(self):
-    self.subtitles_hash_list = []
     self.subtitles_list = []
-    self.subtitles_name_list = []
  
   def mergesubtitles( self, stack ):
-    if( len ( self.subtitles_hash_list ) > 0 ):
-      for item in self.subtitles_hash_list:
-        if item["format"].find( "srt" ) == 0 or item["format"].find( "sub" ) == 0:
-          self.subtitles_list.append( item )
-
-    if( len ( self.subtitles_name_list ) > 0 ):
-      for item in self.subtitles_name_list:
-        if item["format"].find( "srt" ) == 0 or item["format"].find( "sub" ) == 0:
-          self.subtitles_list.append( item )                
-
     if( len ( self.subtitles_list ) > 0 ):
       self.subtitles_list = sorted(self.subtitles_list, compare_columns)
 
   def searchsubtitles_pod( self, movie_hash, lang , stack):
-#    movie_hash = "e1b45885346cfa0b" # Matrix Hash, Debug only
+    # movie_hash = "e1b45885346cfa0b" # Matrix Hash, Debug only
     podserver = xmlrpclib.Server('http://ssp.podnapisi.net:8000')      
-    pod_session = ""
-    hash_pod =[str(movie_hash)]
     try:
       init = podserver.initiate(USER_AGENT)
       hash = md5()
       hash.update(__addon__.getSetting( "PNpass" ))
       password256 = sha256(str(hash.hexdigest()) + str(init['nonce'])).hexdigest()
-      if str(init['status']) == "200":
+      if init['status'] == 200:
         pod_session = init['session']
         podserver.authenticate(pod_session, __addon__.getSetting( "PNuser" ), password256)
         podserver.setFilters(pod_session, True, lang , False)
-        search = podserver.search(pod_session , hash_pod)
-        if str(search['status']) == "200" and len(search['results']) > 0 :
+        search = podserver.search(pod_session , [str(movie_hash)])
+
+        if search['status'] == 200 and len(search['results']) > 0 :
           search_item = search["results"][movie_hash]
           for item in search_item["subtitles"]:
             if item["lang"]:
               flag_image = item["lang"]
             else:                                                           
               flag_image = "-"
-            link = str(item["id"])
             if item['release'] == "":
               episode = search_item["tvEpisode"]
               if str(episode) == "0":
@@ -186,26 +174,20 @@ class OSDBServer:
                 name = "%s S(%s)E(%s)" % (str(search_item["movieTitle"]),str(search_item["tvSeason"]), str(episode), )
             else:
               name = item['release']
-            if item["inexact"]:
-              sync1 = False
-            else:
-              sync1 = True
-            
-            self.subtitles_hash_list.append({'filename'      : name,
-                                             'link'          : link,
-                                             "language_name" : languageTranslate((item["lang"]),2,0),
-                                             "language_flag" : flag_image,
-                                             "language_id"   : item["lang"],
-                                             "ID"            : item["id"],
-                                             "sync"          : sync1,
-                                             "format"        : "srt",
-                                             "rating"        : str(int(item['rating'])*2),
-                                             "hearing_imp"   : "n" in item['flags']
-                                             })
+
+            self.subtitles_list.append({'filename'      : name,
+                                        'link'          : str(item["id"]),
+                                        'language_name' : languageTranslate((item["lang"]),2,0),
+                                        'language_flag' : flag_image,
+                                        'rating'        : str(int(item['rating'])*2),
+                                        'sync'          : not item["inexact"],
+                                        'hearing_imp'   : "n" in item['flags']
+                                        })
+
         self.mergesubtitles(stack)
-      return self.subtitles_list,pod_session
+      return self.subtitles_list
     except :
-      return self.subtitles_list,pod_session
+      return self.subtitles_list
 
   def searchsubtitlesbyname_pod( self, name, tvshow, season, episode, lang, year, stack ):
     if len(tvshow) > 1:
@@ -226,48 +208,20 @@ class OSDBServer:
           subtitles = temp_subs        
     try:
       if subtitles:
-        url_base = "http://www.podnapisi.net/ppodnapisi/download/i/"
         for subtitle in subtitles:
-          subtitle_id = 0
-          rating      = 0
-          filename    = ""
-          movie       = ""
-          lang_name   = ""
-          lang_id     = ""
-          flag_image  = ""
-          link        = ""
-          format      = "srt"
-          hearing_imp = False
-          if subtitle.getElementsByTagName("title")[0].firstChild:
-            movie = subtitle.getElementsByTagName("title")[0].firstChild.data
-          if subtitle.getElementsByTagName("release")[0].firstChild:
-            filename = subtitle.getElementsByTagName("release")[0].firstChild.data
-            if len(filename) < 2 :
-              filename = "%s (%s).srt" % (movie,year,)
-          else:
-            filename = "%s (%s).srt" % (movie,year,) 
-          if subtitle.getElementsByTagName("rating")[0].firstChild:
-            rating = int(subtitle.getElementsByTagName("rating")[0].firstChild.data)*2
-          if subtitle.getElementsByTagName("languageId")[0].firstChild:
-            lang_name = languageTranslate(subtitle.getElementsByTagName("languageId")[0].firstChild.data, 1,2)
-          if subtitle.getElementsByTagName("id")[0].firstChild:
-            subtitle_id = subtitle.getElementsByTagName("id")[0].firstChild.data
-          if subtitle.getElementsByTagName("flags")[0].firstChild:
-              hearing_imp = "n" in subtitle.getElementsByTagName("flags")[0].firstChild.data
-          flag_image = lang_name
-          link = str(subtitle_id)
-          self.subtitles_name_list.append({'filename':filename,
-                                           'link':link,
-                                           'language_name' : languageTranslate((lang_name),2,0),
-                                           'language_id'   : lang_id,
-                                           'language_flag' : flag_image,
-                                           'movie'         : movie,
-                                           "ID"            : subtitle_id,
-                                           "rating"        : str(rating),
-                                           "format"        : format,
-                                           "sync"          : False,
-                                           "hearing_imp"   : hearing_imp
-                                           })
+          filename    = self.get_element(subtitle, "release")
+
+          if filename == "":
+            filename = self.get_element(subtitle, "title")
+
+          self.subtitles_list.append({'filename'      : filename,
+                                      'link'          : self.get_element(subtitle, "id"),
+                                      'language_name' : languageTranslate(self.get_element(subtitle, "languageId"),1,0),
+                                      'language_flag' : languageTranslate(self.get_element(subtitle, "languageId"),1,2),
+                                      'rating'        : str(int(self.get_element(subtitle, "rating"))*2),
+                                      'sync'          : False,
+                                      'hearing_imp'   : "n" in self.get_element(subtitle, "flags")
+                                      })
         self.mergesubtitles(stack)
       return self.subtitles_list
     except :
@@ -281,11 +235,17 @@ class OSDBServer:
     id_pod =[]
     id_pod.append(str(id))
     password256 = sha256(str(hash.hexdigest()) + str(init['nonce'])).hexdigest()
-    if str(init['status']) == "200":
+    if init['status'] == 200:
       pod_session = init['session']
       auth = podserver.authenticate(pod_session, __addon__.getSetting( "PNuser" ), password256)
       if auth['status'] == 300: 
-        log( __name__ ,"Authenticate [%s]" % "InvalidCredentials")
+        log( __name__ ,__language__(32005))
+        xbmc.executebuiltin(u'Notification(%s,%s,5000,%s)' %(__scriptname__,
+                                                             __language__(32005),
+                                                             os.path.join(__cwd__,"icon.png")
+                                                            )
+                            )
+        return None 
       download = podserver.download(pod_session , id_pod)
       if str(download['status']) == "200" and len(download['names']) > 0 :
         download_item = download["names"][0]
@@ -293,7 +253,13 @@ class OSDBServer:
           return "http://www.podnapisi.net/static/podnapisi/%s" % download["names"][0]['filename']
           
     return None  
-  
+ 
+  def get_element(self, element, tag):
+    if element.getElementsByTagName(tag)[0].firstChild:
+      return element.getElementsByTagName(tag)[0].firstChild.data
+    else:
+      return ""  
+
   def fetch(self,url):
     socket = urllib.urlopen( url )
     result = socket.read()

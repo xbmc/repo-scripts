@@ -29,3 +29,7 @@ msgstr ""
 msgctxt "#32004"
 msgid "Manual search not supported"
 msgstr ""
+
+msgctxt "#32005"
+msgid "Authenticate [InvalidCredentials]"
+msgstr ""

@@ -23,8 +23,6 @@ __profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode(
 __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
 __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp') ).decode("utf-8")
 
-
-
 sys.path.append (__resource__)
 
 from pn_utilities import OSDBServer, log, hashFile, normalizeString, languageTranslate
@@ -53,7 +51,7 @@ def Search( item ):
     log( __name__ ,"File Hash [%s]" % SubHash)
   if hash_search :
     log( __name__ ,"Search for [%s] by hash" % (os.path.basename( item['file_original_path'] ),))
-    subtitles_list, session_id = osdb_server.searchsubtitles_pod( SubHash ,item['3let_language'], False)
+    subtitles_list = osdb_server.searchsubtitles_pod( SubHash ,item['3let_language'], False)
   if not subtitles_list:
     log( __name__ ,"Search for [%s] by name" % (os.path.basename( item['file_original_path'] ),))
     subtitles_list = osdb_server.searchsubtitlesbyname_pod(item['title'],
@@ -73,13 +71,12 @@ def Search( item ):
                                   )
 
       listitem.setProperty( "sync", ("false", "true")[it["sync"]] )
-      listitem.setProperty( "hearing_imp", ("false", "true")[it.get("hearing_imp", False)] )
+      listitem.setProperty( "hearing_imp", ("false", "true")[it["hearing_imp"]] )
       
-      url = "plugin://%s/?action=download&link=%s&ID=%s&filename=%s" % (__scriptid__,
-                                                                        it["link"],
-                                                                        it["ID"],
-                                                                        it["filename"]
-                                                                        )
+      url = "plugin://%s/?action=download&link=%s&filename=%s" % (__scriptid__,
+                                                                  it["link"],
+                                                                  it["filename"]
+                                                                  )
       
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
@@ -91,7 +88,7 @@ def Download(url,filename):
   subtitle_list = []
 
   try:
-    log( __name__ ,"Download using 'ZipFile' method")
+    log( __name__ ,"Extract using 'ZipFile' method")
     response = urllib2.urlopen(url)
     raw = response.read()      
     archive = ZipFile(StringIO(raw), 'r')
@@ -112,10 +109,9 @@ def Download(url,filename):
       f.write(contents)
       f.close()
       subtitle_list.append(dest)
-      
       index += 1
   except:
-    log( __name__ ,"Download using 'old' method")
+    log( __name__ ,"Extract using 'XBMC.Extract' method")
     exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
     zip = os.path.join( __temp__, "PN.zip")
     f = urllib.urlopen(url)
@@ -196,18 +192,17 @@ elif params['action'] == 'download':
 
   osdb_server = OSDBServer()
   url = osdb_server.download("", params["link"])
-  subs = Download(url,params["filename"])
-  for sub in subs:
-    listitem = xbmcgui.ListItem(label=sub)
-    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
+  if url:
+    subs = Download(url,params["filename"])
+    for sub in subs:
+      listitem = xbmcgui.ListItem(label=sub)
+      xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
   
-
 elif params['action'] == 'manualsearch':
-  xbmc.executebuiltin(u'Notification(%s,%s,2000,%s)' % 
-                                      (__scriptname__,
-                                       __language__(32004),
-                                       os.path.join(__cwd__,"icon.png")
-                                     )
+  xbmc.executebuiltin(u'Notification(%s,%s,2000,%s)' %(__scriptname__,
+                                                       __language__(32004),
+                                                       os.path.join(__cwd__,"icon.png")
+                                                      )
                       )
   
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
