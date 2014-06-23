@@ -13,6 +13,7 @@
     <category label="32015">
       <setting id="DESC" type="bool" label="32008" default="false"/>
       <setting id="PARENT" type="enum" lvalues="32011|32013" label="32010" default="0"/>
-      <setting id="SEARCH" type="enum" lvalues="32021|32022" label="32020" default="0"/>	  
+      <setting id="SEARCH" type="enum" lvalues="32021|32022" label="32020" default="0"/>
+      <setting id="DEBUG" type="bool" label="32023" default="false"/>	  
     </category>   
 </settings>
