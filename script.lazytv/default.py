@@ -70,7 +70,7 @@ window_length    = int(__setting__('window_length'))
 if __setting__('skinorno') == 'true':
 	skin = 1
 	__addon__.setSetting('skinorno','1')
-elif __setting__('skinorno') == 'false':
+elif __setting__('skinorno') == 'false' or __setting__('skinorno') == '32073':
 	skin = 0
 	__addon__.setSetting('skinorno','1')
 else:
@@ -88,11 +88,12 @@ moviesw          = True if __setting__('moviesw') == 'true' else False
 noshow           = True if __setting__('noshow') == 'true' else False
 excl_randos      = True if __setting__('excl_randos') == 'true' else False
 sort_reverse     = True if __setting__('sort_reverse') == 'true' else False
+start_partials   = True if __setting__('start_partials') == 'true' else False
 stay_puft        = True
 play_now         = False
 refresh_now      = True
 
-
+start_partials
 
 try:
 	spec_shows = ast.literal_eval(__setting__('selection'))
@@ -282,6 +283,7 @@ def next_show_engine(showid, epid=[],eps = [], Season = 'null', Episode = 'null'
 		return 'null', ['null','null', 'null','null']
 
 	log('nextep_engine_End', showid)
+
 
 def get_TVshows():
 	log('get_TVshows_started', reset = True)
@@ -490,11 +492,61 @@ def random_playlist(population):
 	candidate_list = ['t' + str(x[1]) for x in stored_data_filtered] + ['m' + str(x) for x in movie_list]
 	random.shuffle(candidate_list)
 
+	watch_partial_now = False
+
+	if start_partials:
+
+		if candidate_list:
+			red_candy = [int(x[1:]) for x in candidate_list if x[0] == 't']
+		else:
+			red_candy = []
+
+		lst = []
+
+		for showid in red_candy:
+
+			if WINDOW.getProperty("%s.%s.Resume" % ('LazyTV',showid)) == 'true':
+				temp_ep = WINDOW.getProperty("%s.%s.EpisodeID" % ('LazyTV',showid))
+				if temp_ep:
+					lst.append({"jsonrpc": "2.0","method": "VideoLibrary.GetEpisodeDetails","params": {"properties": ["lastplayed","tvshowid"],"episodeid": int(temp_ep)},"id": "1"})
+
+		lwlist = []
+
+		if lst:
+
+			xbmc_request = json.dumps(lst)
+			result = xbmc.executeJSONRPC(xbmc_request)
+
+			if result:
+				reslist = ast.literal_eval(result)
+				for res in reslist:
+					if 'result' in res:
+						if 'episodedetails' in res['result']:
+							lwlist.append((res['result']['episodedetails']['lastplayed'],res['result']['episodedetails']['tvshowid']))
+
+			lwlist.sort(reverse=True)
+
+		if lwlist:
+
+			log(lwlist, label="lwlist = ")
+
+			R = candidate_list.index('t' + str(lwlist[0][1]))
+
+			watch_partial_now = True
+
+			log(R,label="R = ")
+
+
+
+
 	while count < length and candidate_list: 		#while the list isnt filled, and all shows arent abandoned or movies added
 		log('candidate list = ' + str(candidate_list))
 		multi = False
 
-		R = random.randint(0, len(candidate_list) -1 )	#get random number
+		if start_partials and watch_partial_now:
+			watch_partial_now = False
+		else:
+			R = random.randint(0, len(candidate_list) -1 )	#get random number
 
 		log('R = ' + str(R))
 
@@ -655,15 +707,12 @@ def create_next_episode_list(population):
 
 			WINDOW.setProperty("LazyTV.rando_shuffle", 'true')
 
-
 		xbmc.sleep(500)
 
 	del list_window
 	del window_returner
 
 	WINDOW.setProperty("LazyTV.rando_shuffle", 'true')                      # notifies the service to re-randomise the randos
-
-
 
 
 class myPlayer(xbmc.Player):
@@ -683,8 +732,6 @@ class myPlayer(xbmc.Player):
 	def onPlayBackEnded(self):
 		log('Playbackended', reset =True)
 		self.dawindow.doModal()
-
-		
 
 
 class yGUI(xbmcgui.WindowXMLDialog):
@@ -1026,18 +1073,6 @@ class contextwindow(xbmcgui.WindowXMLDialog):
 		self.close()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 def main_entry():
 	log('Main_entry')
 
@@ -1134,10 +1169,9 @@ def convert_previous_settings(ignore):
 	# reset IGNORE to be null
 	__addon__.setSetting('IGNORE','')
 
-
-
 # this check is to ensure that the Ignore list from the previous addon is respected and replaced in the new version
 ignore = __setting__('IGNORE')
+
 if ignore:
 	convert_previous_settings(ignore)
 
@@ -1209,3 +1243,4 @@ if __name__ == "__main__":
 
 
 
+  

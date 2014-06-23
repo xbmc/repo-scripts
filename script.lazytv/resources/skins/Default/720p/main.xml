@@ -237,6 +237,7 @@
                             <height>190</height>
                             <align>left</align>
                             <font>Font12</font>
+                            <visible>StringCompare(ListItem.Plot,$LOCALIZE[32250])</visible>
                             <label>[COLOR FF50e0c7]$ADDON[script.lazytv 32226]... [/COLOR]$INFO[Container(655).ListItem.Plot]</label>
                         </control>
                     </control>

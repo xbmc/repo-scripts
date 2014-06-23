@@ -21,6 +21,7 @@
  <setting id="multipleshows" type="bool" label="32032" default="false"/>
  <setting id="premieres" type="bool" label="32033" default="false"/>
  <setting id="resume_partials" type="bool" label="32034" default="false"/>
+ <setting id="start_partials" type="bool" label="32044" default="false"/>
  <setting id="notify" type="bool" label="32035" default="true"/>
  <setting id="movies" type="bool" label="32036" default="false"/>
  <setting id="moviesw" type="bool" label="32037" default="false"/>
@@ -33,7 +34,7 @@
  <!-- gap -->
  </category>
  <category label="32060">
- <setting id="skinorno" type="enum" label="32072" lvalues="32073|32074|32075" default="32073"/>
+ <setting id="skinorno" type="enum" label="32072" lvalues="32073|32074|32075" default="0"/>
  <!--setting id="skinorno" type="bool" label="32072" default="true"/-->
  <setting id="limitshows" type="bool" label="32061" default="false"/>
  <setting id="window_length" label="32062" enable="eq(-1,true)" type="slider" default="10" range="1,1,30" option="int" />
