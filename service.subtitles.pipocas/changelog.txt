@@ -1,3 +1,6 @@
+0.1.2
+- Added Debug Mode in configurations for better help to failures (Mafarricos)
+- Code cleanup (Mafarricos)
 0.1.1
 - Added a last resort option to search for filename or title, configure in advanced options of the add-on
 0.1.0

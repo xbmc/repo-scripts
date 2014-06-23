@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# Service Pipocas.tv version 0.1.1
+# Service Pipocas.tv version 0.1.2
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
-# Help by VaRaTRoN
+# Help by VaRaTRoN and Mafarricos
 # Bugs & Features to highlander@teknorage.com
 # http://www.teknorage.com
 # License: GPL v2
@@ -41,6 +41,7 @@ __temp__       = xbmc.translatePath(pjoin(__profile__, 'temp'))
 sys.path.append (__resource__)
 
 __search__ = __addon__.getSetting( 'SEARCH' )
+debug = __addon__.getSetting( 'DEBUG' )
 
 main_url = "http://pipocas.tv/"
 debug_pretext = "Pipocas"
@@ -77,20 +78,20 @@ def _log(module, msg):
     s = u"### [%s] - %s" % (module, msg)
     xbmc.log(s.encode('utf-8'), level=xbmc.LOGDEBUG)
 
-def log(msg):
-    _log(__name__, msg)
+def log(msg=None):
+    if debug == 'true': _log(__name__, msg)
 
 def geturl(url):
     class MyOpener(urllib.FancyURLopener):
         #version = HTTP_USER_AGENT
         version = ''
     my_urlopener = MyOpener()
-    log(u"Getting url: %s" % (url,))
+    log(u"Getting url: %s" % url)
     try:
         response = my_urlopener.open(url)
         content = response.read()
     except:
-        log(u"Failed to get url:%s" % (url,))
+        log(u"Failed to get url:%s" % url)
         content = None
     return content
 
@@ -111,36 +112,18 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
     response = opener.open(request,login_data)
 
     page = 0
-    if languageshort == "pt":
-        url = main_url + "subtitles.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    elif languageshort == "pb":
-        url = main_url + "subtitles.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    elif languageshort == "es":
-        url = main_url + "subtitles.php?grupo=rel&linguagem=espanhol&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    elif languageshort == "en":
-        url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-    else:
-        url = main_url + "index.php"
+    if languageshort == "pt": url = main_url + "subtitles.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+    elif languageshort == "pb": url = main_url + "subtitles.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+    elif languageshort == "es": url = main_url + "subtitles.php?grupo=rel&linguagem=espanhol&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+    elif languageshort == "en": url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+    else: url = main_url + "index.php"
 
     content = opener.open(url)
     content = content.read()
     content = content.decode('latin1')
     while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL) and page < 2:
-        #log( __name__ ,"%s Getting '%s' inside while ..." % (debug_pretext, subtitle_pattern))
+        log("Getting '%s' inside while ..." % subtitle_pattern)
         for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
-            #log( __name__ ,"%s FILENAME: '%s' ..." % (debug_pretext, matches.group(1)))
-            #hits = matches.group(4)
-            #id = matches.group(2)
-            #movieyear = matches.group(2)
-            #no_files = matches.group(3)
-            #uploader = string.strip(matches.group(2))
-            #downloads = int(matches.group(2)) / 2
-            #if (downloads > 10):
-            #   downloads=10
-            #filename = string.strip(matches.group(1))
-            #desc = string.strip(matches.group(1))
-            #desc = string.strip(matches.group(13))
-            #Remove new lines on the commentaries
             details = matches.group(1)
             content_details = opener.open(main_url + "info.php" + details)
             content_details = content_details.read()
@@ -148,21 +131,16 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             for namematch in re.finditer(name_pattern, content_details, re.IGNORECASE | re.DOTALL):
                 filename = string.strip(namematch.group(1))
                 desc = filename
-                #log( __name__ ,"%s FILENAME match: '%s' ..." % (debug_pretext, namematch.group(1)))         
+                log("FILENAME match: '%s' ..." % namematch.group(1))         
             for idmatch in re.finditer(id_pattern, content_details, re.IGNORECASE | re.DOTALL):
                 id = idmatch.group(1)
-                #log( __name__ ,"%s ID match: '%s' ..." % (debug_pretext, idmatch.group(1)))         
+                log("ID match: '%s' ..." % idmatch.group(1))         
             for upmatch in re.finditer(uploader_pattern, content_details, re.IGNORECASE | re.DOTALL):
                 uploader = upmatch.group(1)
             for hitsmatch in re.finditer(hits_pattern, content_details, re.IGNORECASE | re.DOTALL):
                 hits = hitsmatch.group(1)
-            #log( __name__ ,"%s UP match: '%s' ..." % (debug_pretext, upmatch.group(1)))         
-            #for descmatch in re.finditer(desc_pattern, content_details, re.IGNORECASE | re.DOTALL):
-            #   desc = string.strip(descmatch.group(1))
-            #   log( __name__ ,"%s DESC match: '%s' ..." % (debug_pretext, decmatch.group(1)))
             downloads = int(hits) / 150
-            if (downloads > 5):
-                downloads=5
+            if (downloads > 5): downloads=5
             filename = re.sub('\n',' ',filename)
             desc = re.sub('\n',' ',desc)
             #Remove HTML tags on the commentaries
@@ -171,65 +149,42 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
             #Find filename on the comentaries to show sync label using filename or dirname (making it global for further usage)
             global filesearch
             filesearch = os.path.abspath(file_original_path)
-            #For DEBUG only uncomment next line
-            #log( __name__ ,"%s abspath: '%s'" % (debug_pretext, filesearch))
             filesearch = os.path.split(filesearch)
-            #For DEBUG only uncomment next line
-            #log( __name__ ,"%s path.split: '%s'" % (debug_pretext, filesearch))
             dirsearch = filesearch[0].split(os.sep)
-            #For DEBUG only uncomment next line
-            #log( __name__ ,"%s dirsearch: '%s'" % (debug_pretext, dirsearch))
             dirsearch_check = string.split(dirsearch[-1], '.')
-            #For DEBUG only uncomment next line
-            #log( __name__ ,"%s dirsearch_check: '%s'" % (debug_pretext, dirsearch_check))
             #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
             __parentfolder__ = __addon__.getSetting( 'PARENT' )
             if __parentfolder__ == '0':
-                if re.search(release_pattern, dirsearch[-1], re.IGNORECASE):
-                    __parentfolder__ = '1'
-                else:
-                    __parentfolder__ = '2'
+                if re.search(release_pattern, dirsearch[-1], re.IGNORECASE): __parentfolder__ = '1'
+                else: __parentfolder__ = '2'
             if __parentfolder__ == '1':
-                if re.search(dirsearch[-1], desc, re.IGNORECASE):
-                    sync = True
-                else:
-                    sync = False
+                if re.search(dirsearch[-1], desc, re.IGNORECASE): sync = True
+                else: sync = False
             if __parentfolder__ == '2':
                 if (searchstring_notclean != ""):
                     sync = False
-                    if string.lower(searchstring_notclean) in string.lower(desc.decode('utf8', 'ignore')):
-                        sync = True
+                    if string.lower(searchstring_notclean) in string.lower(desc): sync = True
                 else:
                     if (string.lower(dirsearch_check[-1]) == "rar") or (string.lower(dirsearch_check[-1]) == "cd1") or (string.lower(dirsearch_check[-1]) == "cd2"):
                         sync = False
                         if len(dirsearch) > 1 and dirsearch[1] != '':
-                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE) or re.search(dirsearch[-2], desc, re.IGNORECASE):
-                                sync = True
+                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE) or re.search(dirsearch[-2], desc, re.IGNORECASE): sync = True
                         else:
-                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE):
-                                sync = True
+                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE): sync = True
                     else:
                         sync = False
                         if len(dirsearch) > 1 and dirsearch[1] != '':
-                            if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-1], desc, re.IGNORECASE):
-                                sync = True
+                            if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-1], desc, re.IGNORECASE): sync = True
                         else:
-                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE):
-                                sync = True
+                            if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE): sync = True
             filename = filename + "  " + "hits: " + hits + " uploader: " + uploader
-            #subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_flag': 'flags/' + languageshort + '.gif', 'language_name': languagelong})
             subtitles_list.append({'rating': str(downloads), 'filename': filename, 'hits': hits, 'desc': desc, 'sync': sync, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
         page = page + 1
-        if languageshort == "pt":
-            url = main_url + "subtitles.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        elif languageshort == "pb":
-            url = main_url + "subtitles.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        elif languageshort == "es":
-            url = main_url + "subtitles.php?grupo=rel&linguagem=espanhol&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        elif languageshort == "en":
-            url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
-        else:
-            url = main_url + "index.php"
+        if languageshort == "pt": url = main_url + "subtitles.php?grupo=rel&linguagem=portugues&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+        elif languageshort == "pb": url = main_url + "subtitles.php?grupo=rel&linguagem=brasileiro&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+        elif languageshort == "es": url = main_url + "subtitles.php?grupo=rel&linguagem=espanhol&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+        elif languageshort == "en": url = main_url + "subtitles.php?grupo=rel&linguagem=ingles&page=" + str(page) + "&release=" + urllib.quote_plus(searchstring)
+        else: url = main_url + "index.php"
         content = opener.open(url)
         content = content.read()
         content = content.decode('latin1')
@@ -267,37 +222,31 @@ def Search(item):
     #### Do what's needed to get the list of subtitles from service site
     #### use item["some_property"] that was set earlier
     #### once done, set xbmcgui.ListItem() below and pass it to xbmcplugin.addDirectoryItem()
-    #
     #### CHECKING FOR ANYTHING IN THE USERNAME AND PASSWORD, IF NULL IT STOPS THE SCRIPT WITH A WARNING
     username = __addon__.getSetting( 'PPuser' )
     password = __addon__.getSetting( 'PPpass' )
     if username == '' or password == '':
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
-        if username == '' and password != '':
-            xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32016).encode('utf-8'),5000)))
-        if username != '' and password == '':
-            xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32017).encode('utf-8'),5000)))
-        if username == '' and password == '':
-            xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32018).encode('utf-8'),5000)))
+        if username == '' and password != '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32016).encode('utf-8'),5000)))
+        if username != '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32017).encode('utf-8'),5000)))
+        if username == '' and password == '': xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32018).encode('utf-8'),5000)))
     #### PARENT FOLDER TWEAK DEFINED IN THE ADD-ON SETTINGS (AUTO | ALWAYS ON (DEACTIVATED) | OFF)
     file_original_path = item['file_original_path']
     __parentfolder__ = __addon__.getSetting( 'PARENT' )
     if __parentfolder__ == '0':
         filename = os.path.abspath(file_original_path)
         dirsearch = filename.split(os.sep)
-        #log(u"dirsearch_search string = %s" % (dirsearch,))
-        if re.search(release_pattern, dirsearch[-2], re.IGNORECASE):
-            __parentfolder__ = '1'
-        else:
-            __parentfolder__ = '2'
+        log(u"dirsearch_search string = %s" % dirsearch)
+        if re.search(release_pattern, dirsearch[-2], re.IGNORECASE): __parentfolder__ = '1'
+        else: __parentfolder__ = '2'
     if __parentfolder__ == '1':
         filename = os.path.abspath(file_original_path)
         dirsearch = filename.split(os.sep)
         filename = dirsearch[-2]
-        #log(u"__parentfolder1__ = %s" % (filename,))
+        log(u"__parentfolder1__ = %s" % filename)
     if __parentfolder__ == '2':   
         filename = os.path.splitext(os.path.basename(file_original_path))[0]
-        #log(u"__parentfolder2__ = %s" % (filename,))
+        log(u"__parentfolder2__ = %s" % filename)
 
     filename = xbmc.getCleanMovieTitle(filename)[0]
     searchstring_notclean = os.path.splitext(os.path.basename(file_original_path))[0]
@@ -313,21 +262,19 @@ def Search(item):
     tvshow = item['tvshow']
     season = item['season']
     episode = item['episode']
-    #log(u"Tvshow string = %s" % (tvshow,))
-    #log(u"Title string = %s" % (title,))
+    log(u"Tvshow string = %s" % tvshow)
+    log(u"Title string = %s" % title)
     subtitles_list = []
     
     if item['mansearch']:
         searchstring = item['mansearchstr']
-        #log(u"Manual Searchstring string = %s" % (searchstring,))
+        log(u"Manual Searchstring string = %s" % searchstring)
     else:
-        if tvshow != '':
-            searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
-        elif title != '' and tvshow != '':
-            searchstring = title
+        if tvshow != '': searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
+        elif title != '' and tvshow != '': searchstring = title
         else:
             if 'rar' in israr and searchstring is not None:
-                log(u"RAR Searchstring string = %s" % (searchstring,))
+                log(u"RAR Searchstring string = %s" % searchstring)
                 if 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
                     dirsearch = os.path.abspath(file_original_path)
                     dirsearch = os.path.split(dirsearch)
@@ -336,12 +283,11 @@ def Search(item):
                         searchstring_notclean = dirsearch[-3]
                         searchstring = xbmc.getCleanMovieTitle(dirsearch[-3])
                         searchstring = searchstring[0]
-                        #log(u"RAR MULTI1 CD Searchstring string = %s" % (searchstring,))
-                    else:
-                        searchstring = title
+                        log(u"RAR MULTI1 CD Searchstring string = %s" % searchstring)
+                    else: searchstring = title
                 else:
                     searchstring = title
-                    #log(u"RAR NO CD Searchstring string = %s" % (searchstring,))
+                    log(u"RAR NO CD Searchstring string = %s" % searchstring)
             elif 'cd1' in string.lower(title) or 'cd2' in string.lower(title) or 'cd3' in string.lower(title):
                 dirsearch = os.path.abspath(file_original_path)
                 dirsearch = os.path.split(dirsearch)
@@ -350,7 +296,7 @@ def Search(item):
                     searchstring_notclean = dirsearch[-2]
                     searchstring = xbmc.getCleanMovieTitle(dirsearch[-2])
                     searchstring = searchstring[0]
-                    #log(u"MULTI1 CD Searchstring string = %s" % (searchstring,))
+                    log(u"MULTI1 CD Searchstring string = %s" % searchstring)
                 else:
                     #We are at the root of the drive!!! so there's no dir to lookup only file#
                     title = os.path.split(file_original_path)
@@ -359,24 +305,24 @@ def Search(item):
                 if title == '':
                     title = os.path.split(file_original_path)
                     searchstring = title[-1]
-                    #log(u"TITLE NULL Searchstring string = %s" % (searchstring,))
+                    log(u"TITLE NULL Searchstring string = %s" % searchstring)
                 else:
                     if __search__ == '0':
 						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
 							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
 							searchstring = searchstring.group(0)
-							#log(u"FilenameTV Searchstring = %s" % (searchstring,))
+							log(u"FilenameTV Searchstring = %s" % searchstring)
 						else:
 							searchstring = filename
-							#log(u"Filename Searchstring = %s" % (searchstring,))
+							log(u"Filename Searchstring = %s" % searchstring)
                     else:
 						if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
 							searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
 							searchstring = searchstring.group(0)
-							#log(u"TitleTV Searchstring = %s" % (searchstring,))
+							log(u"TitleTV Searchstring = %s" % searchstring)
 						else:
 							searchstring = title
-							#log(u"Title Searchstring = %s" % (searchstring,))
+							log(u"Title Searchstring = %s" % searchstring)
 
     PT_ON = __addon__.getSetting( 'PT' )
     PTBR_ON = __addon__.getSetting( 'PTBR' )
@@ -385,20 +331,16 @@ def Search(item):
     
     if 'por' in item['languages'] and PT_ON == 'true':
         subtitles_list = getallsubs(searchstring, "pt", "Portuguese", file_original_path, searchstring_notclean)
-        for sub in subtitles_list:
-            append_subtitle(sub)
+        for sub in subtitles_list: append_subtitle(sub)
     if 'por' in item['languages'] and PTBR_ON == 'true':
         subtitles_list = getallsubs(searchstring, "pb", "Brazilian", file_original_path, searchstring_notclean)
-        for sub in subtitles_list:
-            append_subtitle(sub)
+        for sub in subtitles_list: append_subtitle(sub)
     if 'spa' in item['languages'] and ES_ON == 'true':
         subtitles_list = getallsubs(searchstring, "es", "Spanish", file_original_path, searchstring_notclean)
-        for sub in subtitles_list:
-            append_subtitle(sub)
+        for sub in subtitles_list: append_subtitle(sub)
     if 'eng' in item['languages'] and EN_ON == 'true':
         subtitles_list = getallsubs(searchstring, "en", "English", file_original_path, searchstring_notclean)
-        for sub in subtitles_list:
-            append_subtitle(sub)
+        for sub in subtitles_list: append_subtitle(sub)
     if 'eng' not in item['languages'] and 'spa' not in item['languages'] and 'por' not in item['languages'] and 'por' not in item['languages']:
         xbmc.executebuiltin((u'Notification(%s,%s,%d)' % (__scriptname__ , 'Only Portuguese | Portuguese Brazilian | English | Spanish.',5000)))
 
@@ -406,8 +348,7 @@ def recursive_glob(treeroot, pattern):
     results = []
     for base, dirs, files in os.walk(treeroot):
         for extension in pattern:
-            for filename in fnmatch.filter(files, '*.' + extension):
-                results.append(os.path.join(base, filename))
+            for filename in fnmatch.filter(files, '*.' + extension): results.append(os.path.join(base, filename))
     return results
 
 def get_download(url, download, id):
@@ -430,8 +371,7 @@ def Download(id, filename):
     """Called when subtitle download request from XBMC."""
     # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     # pass that to XBMC to copy and activate
-    if xbmcvfs.exists(__temp__):
-        shutil.rmtree(__temp__)
+    if xbmcvfs.exists(__temp__): shutil.rmtree(__temp__)
     xbmcvfs.mkdirs(__temp__)
 
     subtitles_list = []
@@ -478,20 +418,18 @@ def Download(id, filename):
             local_file_handle = open(local_tmp_file, "wb")
             local_file_handle.write(content)
             local_file_handle.close()
-        except:
-            log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
+        except: log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
         if packed:
             files = os.listdir(__temp__)
             init_filecount = len(files)
-            #log(u"pipocas: número de init_filecount %s" % (init_filecount,)) #EGO
+            log(u"pipocas: número de init_filecount %s" % (init_filecount,)) #EGO
             filecount = init_filecount
             max_mtime = 0
             # Determine the newest file from __temp__
             for file in files:
                 if file.split('.')[-1] in SUB_EXTS:
                     mtime = os.stat(pjoin(__temp__, file)).st_mtime
-                    if mtime > max_mtime:
-                        max_mtime =  mtime
+                    if mtime > max_mtime: max_mtime =  mtime
             init_max_mtime = max_mtime
             # Wait 2 seconds so that the unpacked files are at least 1 second newer
             time.sleep(2)
@@ -505,11 +443,9 @@ def Download(id, filename):
                 for file in files:
                     if file.split('.')[-1] in SUB_EXTS:
                         mtime = os.stat(pjoin(__temp__, file)).st_mtime
-                        if mtime > max_mtime:
-                            max_mtime =  mtime
+                        if mtime > max_mtime: max_mtime =  mtime
                 waittime  = waittime + 1
-            if waittime == 20:
-                log(u"Failed to unpack subtitles in '%s'" % (__temp__,))
+            if waittime == 20: log(u"Failed to unpack subtitles in '%s'" % (__temp__,))
             else:
                 log(u"Unpacked files in '%s'" % (__temp__,))
                 searchsubs = recursive_glob(__temp__, SUB_EXTS)
@@ -520,11 +456,9 @@ def Download(id, filename):
                     #if file.split('.')[-1] in SUB_EXTS and os.stat(pjoin(__temp__, file)).st_mtime > init_max_mtime:
                     if searchsubscount == 1:
                         # unpacked file is a newly created subtitle file
-                        #log(u"Unpacked subtitles file '%s'" % (file.decode('utf-8'),))
-                        try:
-                            subs_file = pjoin(__temp__, file.decode("utf-8"))
-                        except:
-                            subs_file = pjoin(__temp__, file.decode("latin1"))
+                        log(u"Unpacked subtitles file '%s'" % (file.decode('utf-8'),))
+                        try:  subs_file = pjoin(__temp__, file.decode("utf-8"))
+                        except: subs_file = pjoin(__temp__, file.decode("latin1"))
                         subtitles_list.append(subs_file)
                         break
                     else:
@@ -535,8 +469,7 @@ def Download(id, filename):
                             subs_file = dialog.browse(1, 'XBMC', 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, __temp__+'/')
                             subtitles_list.append(subs_file)
                             break
-        else:
-            subtitles_list.append(subs_file)
+        else: subtitles_list.append(subs_file)
     return subtitles_list
 
 def normalizeString(str):
@@ -548,15 +481,13 @@ def get_params():
     if len(paramstring) >= 2:
         params = paramstring
         cleanedparams = params.replace('?', '')
-        if params.endswith('/'):
-            params = params[:-2] # XXX: Should be [:-1] ?
+        if params.endswith('/'): params = params[:-2] # XXX: Should be [:-1] ?
         pairsofparams = cleanedparams.split('&')
         param = {}
         for pair in pairsofparams:
             splitparams = {}
             splitparams = pair.split('=')
-            if len(splitparams) == 2:
-                param[splitparams[0]] = splitparams[1]
+            if len(splitparams) == 2: param[splitparams[0]] = splitparams[1]
 
     return param
 
@@ -579,22 +510,17 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
     if 'searchstring' in params:
         item['mansearch'] = True
         item['mansearchstr'] = urllib.unquote(params['searchstring']).decode('utf-8')
-        #print params['searchstring']
 
-    for lang in urllib.unquote(params['languages']).decode('utf-8').split(','):
-        item['languages'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
+    for lang in urllib.unquote(params['languages']).decode('utf-8').split(','): item['languages'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
-    if not item['title']:
-        # no original title, get just Title
-        item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))
+    if not item['title']: item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))
 
     if "s" in item['episode'].lower():
         # Check if season is "Special"
         item['season'] = "0"
         item['episode'] = item['episode'][-1:]
 
-    if "http" in item['file_original_path']:
-        item['temp'] = True
+    if "http" in item['file_original_path']: item['temp'] = True
 
     elif "rar://" in item['file_original_path']:
         item['rar'] = True
