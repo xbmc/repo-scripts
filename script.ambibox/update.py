@@ -31,7 +31,7 @@ __scriptname__ = __addon__.getAddonInfo('name')
 
 sys.path.append(__resource__)
 __settingsdir__ = xbmc.translatePath(os.path.join(__cwd__, 'resources'))
-ambibox = ambibox.AmbiBox(__settings__.getSetting("host"), int(__settings__.getSetting("port")))
+mambibox = ambibox.AmbiBox(__settings__.getSetting("host"), int(__settings__.getSetting("port")))
 
 
 def info(msg):
@@ -48,10 +48,10 @@ def notification(text):
 
 
 def updateprofilesettings():
-    global ambibox
+    global mambibox
     pstrl = []
-    if ambibox.connect() == 0:
-        pfls = ambibox.getProfiles()
+    if mambibox.connect() == 0:
+        pfls = mambibox.getProfiles()
         defpfl = "None"
         pstrl.append('None')
         pstrl.append('|')
@@ -76,10 +76,10 @@ def updateprofilesettings():
 
 
 def chkProfileSettings():
-    global ambibox
-    if ambibox.connect() == 0:
+    global mambibox
+    if mambibox.connect() == 0:
         __settings = xbmcaddon.Addon("script.ambibox")
-        pfls = ambibox.getProfiles()
+        pfls = mambibox.getProfiles()
         sets2chk = ['default_profile', 'audio_profile', 'video_profile']
         vidfmts = ['2D', '3DS', '3DT']
         ars = ['43', '32', '169', '185', '22', '24']

@@ -67,16 +67,16 @@ else:
         pass
 
 if __usingMediaInfo__ is True:
-    dialog = xbmcgui.Dialog()
-    dialog.ok(__language__(32040), __language__(32062))
-    del dialog
+    mdialog = xbmcgui.Dialog()
+    mdialog.ok(__language__(32040), __language__(32062))
+    del mdialog
     sys.exit()
 
 
 def main():
-    dialog = xbmcgui.Dialog()
-    if dialog.yesno(__language__(32040), __language__(32063)):
-        del dialog
+    ddialog = xbmcgui.Dialog()
+    if ddialog.yesno(__language__(32040), __language__(32063)):
+        del ddialog
         downloadfile("https://github.com/AmbiBox/AmbiBox-XBMC/releases/download/pre-mediainfo/mediainfo.dll")
 
 
@@ -103,21 +103,21 @@ def downloadfile(url):
             state = int(file_size_dl * 100. / file_size)
             mprogress.update(state)
         if mprogress.iscanceled():
-            dialog = xbmcgui.Dialog()
-            dialog.ok('', __language__(32066))
+            ddialog = xbmcgui.Dialog()
+            ddialog.ok('', __language__(32066))
             sys.exit()
         mprogress.close()
         f.close()
         del u
-    except Exception, e:
+    except:
         try:
             mprogress.close()
             f.close()
             del u
         except:
             pass
-        dialog = xbmcgui.Dialog()
-        dialog.ok('', __language__(32065))
+        ddialog = xbmcgui.Dialog()
+        ddialog.ok('', __language__(32065))
         if xbmcvfs.exists(fullfn):
             try:
                 xbmcvfs.delete(fullfn)
@@ -126,11 +126,11 @@ def downloadfile(url):
         sys.exit()
     success = checkhash(fullfn)
     if success:
-        dialog = xbmcgui.Dialog()
-        dialog.ok('', __language__(32067))
+        ddialog = xbmcgui.Dialog()
+        ddialog.ok('', __language__(32067))
     else:
-        dialog = xbmcgui.Dialog()
-        dialog.ok('', __language__(32065))
+        ddialog = xbmcgui.Dialog()
+        ddialog.ok('', __language__(32065))
         if xbmcvfs.exists(fullfn):
             try:
                 xbmcvfs.delete(fullfn)

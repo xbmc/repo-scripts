@@ -15,14 +15,11 @@
 # *  http://www.gnu.org/copyleft/gpl.html
 # *#Modules General
 from ambibox import AmbiBox
-import os
-import sys
-from sys import argv
 
 # Modules XBMC
-import xbmc, xbmcgui, xbmcaddon
+import xbmcgui, xbmcaddon
 
-__settings__ = xbmcaddon.Addon( "script.ambibox" )
+__settings__ = xbmcaddon.Addon("script.ambibox")
 __language__ = __settings__.getLocalizedString
 #########################################################################################################
 ## BEGIN

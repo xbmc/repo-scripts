@@ -1,3 +1,11 @@
+1.0.3
+Fixed bug where lights would not turn back on after using a default profile which is off
+Increased speed for profiles not using XBMCDirect or AR switching
+
+1.0.2
+Fixed bug where profiles were not loaded in some circumstances
+Improved sensing manual turning off lights
+
 1.0.1
 Removed checking settings on menu launch
 Increased logging for profile identification

@@ -26,6 +26,7 @@ class AmbiBox:
     def __init__(self, _host, _port):
         self.host = _host
         self.port = _port
+        self.connection = None
 
     def __readResult(self):  # Return last-command API answer  (call in every local method)
         total_data = []

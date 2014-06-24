@@ -13,7 +13,7 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#Add-on messages id=32001 to 32067
+#Add-on messages id=#32001 to #32067
 
 msgctxt "#32001"
 msgid "General"

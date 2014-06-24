@@ -34,8 +34,8 @@ class Media:
     def __init__(self):
         self.mi = MediaInfo()
 
-    def getInfos(self, file):
-        nfile = self.smbToUNC(file)
+    def getInfos(self, mfile):
+        nfile = self.smbToUNC(mfile)
         self.mi.Open(nfile)
         width = self.mi.Get(Stream.Video, 0, "Width")
         height = self.mi.Get(Stream.Video, 0, "Height")
@@ -59,7 +59,7 @@ class Media:
         testFile = smbFile[0:3]
         newFile = ""
         if testFile == "smb":
-            for i in xrange(0,len(smbFile)):
+            for i in xrange(0, len(smbFile)):
                 if smbFile[i] == "/":
                     newFile += "\\"
                 else:
