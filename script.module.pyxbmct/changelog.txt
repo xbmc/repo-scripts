@@ -1,0 +1,2 @@
+[B]Version 1.1.2[/B]
+- Initial release in the XBMC repo.
