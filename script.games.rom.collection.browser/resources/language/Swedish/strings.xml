@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Swedish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sv/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Rom-samlingsbläddrare</string>
+
+    <!-- Error messages -->
+    <string id="35000">Fel: Kan inte komma åt databasen.</string>
+    <string id="35001">Fel under uppdatering av config.xml.</string>
+    <string id="35002">Fel under läsning av config.xml.</string>
+    <string id="35003">Fel: Filen config.xml existerar inte.</string>
+    <string id="35004">Fel: Kunde inte läsa config.xml.</string>
+    <string id="35005">Konfigurationsfel. Se xbmc.log för detaljer.</string>
+    <string id="35006">Rom-samlingarnas id är inte unika.</string>
+    <string id="35007">Fel: Kan inte säkerhetskopiera config.xml.</string>
+    <string id="35008">Fel: Kan inte skriva config.xml.</string>
+    <string id="35009">%s %s hittades inte i config.xml.</string>
+    <string id="35010">Fel: Kunde inte skapa omslagsmappen.</string>
+    <string id="35011">Kontrollera xbmc.log för detaljer</string>
+    <string id="35012">Fel: Kunde inte skapa omslagsfilen.</string>
+    <string id="35013">Fel vid omskrapning av spel</string>
+    <string id="35014">Kan ej ladda valt spel</string>
+    <string id="35015">Fel vid ändring av spelkommando</string>
+    <string id="35016">Går ej att lägga till i Favoriter</string>
+    <string id="35017">Går ej att radera valt spel</string>
+    <string id="35018">Kan ej radera valt spel</string>
+    <string id="35019">Fel</string>
+    <string id="35020">Gick ej att radera ROMsamling</string>
+    <string id="35021">Konfigurationsfel</string>
+    <string id="35022">Sajt %s existerar inte i config.xml</string>
+    <string id="35023">Kan inte hitta en rom-samling med id: %s</string>
+    <string id="35024">Valt spel kunde inte läsas från databasen.</string>
+    <string id="35025">Kontroll med id: %s kunde inte hittas. Kontrollera WindowXML filen.</string>
+
+    <!-- <string id="35026">Site %s does not exist in config.xml</string> -->
+    <string id="35027">Kan inte skrapa %s spel med %s skrapan.[CR]Ogiltig kombination av skrapinställningar.</string>
+
+    <!-- <string id="35028"></string> -->
+    <!-- <string id="35029">can't be used together with offline scrapers.)</string> -->
+    <string id="35030">Fel: Kunde inte ta backup på MyGames.db: Backupfilen existerar.</string>
+    <string id="35031">Fel: Kunde inte ta backup på MyGames.db</string>
+    <string id="35032">Fel: Ingen uppdatering från version %s till %s</string>
+
+    <!-- <string id="35033">Control with id: %s could not be found. Check WindowXML file.</string> -->
+    <string id="35034">Fel vid start av spel!</string>
+    <string id="35035">Fel vid start av emulator</string>
+    <string id="35036">Fel under radering av filer efter emulatorstart</string>
+    <string id="35037">Fel under start av emulator: Filen %s existerar inte!</string>
+    <string id="35038">Fel vid skapande av .cut fil. Kontrollera xbmc.log för detaljer.</string>
+    <string id="35039">Fel vid start av .7z fil.</string>
+    <string id="35040">Error: Filen config_template.xml existerar inte</string>
+    <string id="35041">RCB kan inte nå din ROM-sökväg.[CR]Se till att den inte innehåller några icke-ASCII tecken.</string>
+    <string id="35042">RCB kan inte nå din bildsökväg.[CR]Se till att den inte innehåller några icke-ASCII tecken.</string>
+
+    <!-- Hints / questions -->
+    <string id="40000">Konfigurationsfil hittades inte.</string>
+    <string id="40001">Vill du skapa en?</string>
+    <string id="40002">Databas och config.xml uppdaterates till ny version.</string>
+    <string id="40003">Vänligen läs wiki och ändringsloggen om du stöter på problem.</string>
+    <string id="40004">Tar bort rom</string>
+    <string id="40005">Tar bort roms...</string>
+    <string id="40006">Borttagning av roms klart</string>
+    <string id="40007">Kontrollerar fil</string>
+    <string id="40008">Rensar databas...</string>
+    <string id="40009">Komprimerar databas...</string>
+    <string id="40010">Databasrensning klar</string>
+    <string id="40011">Importerar spel...</string>
+    <string id="40012">Import pågår</string>
+    <string id="40013">Vill du avbryta den nuvarande importen?</string>
+    <string id="40014">Avbryter</string>
+    <string id="40015">Importen avbryts fortfarande. Var god försök senare.</string>
+    <string id="40016">Ange sökord</string>
+    <string id="40017">Sök</string>
+    <string id="40018">Vill du importera spel nu?</string>
+    <string id="40019">laddar lista...</string>
+    <string id="40020">Alla</string>
+    <string id="40021">laddar spel...</string>
+    <string id="40022">Importerar rom-samling</string>
+    <string id="40023">Importerar spel</string>
+    <string id="40024">Fortsätt</string>
+    <string id="40025">Fortsätt och ignorera fel</string>
+    <string id="40026">Avbryt</string>
+    <string id="40027">De första 10 spelen kunde inte importeras.</string>
+    <string id="40028">Import avbruten</string>
+    <string id="40029">Kontrollera xbmc.log för detaljer.</string>
+    <string id="40030">Skapar fillista...</string>
+    <string id="40031">laddar ner info</string>
+    <string id="40032">Ange %s</string>
+    <string id="40033">Radera spelet från favoriter</string>
+    <string id="40034">Radera val från Favoriter</string>
+    <string id="40035">Ange spelkommando</string>
+    <string id="40036">Är du säker att du vill ta bort detta spel?</string>
+    <string id="40037">Radera spel och inställningar</string>
+    <string id="40038">Radera enbart spel</string>
+    <string id="40039">Emulator</string>
+    <string id="40040">Ange ROM-filsmask</string>
+    <string id="40041">Sökväg</string>
+    <string id="40042">Ange en sökväg att lägga till</string>
+    <string id="40043">Ange en sökväg att radera</string>
+    <string id="40044">Det finns redan skrapor for alla ROM-samlingar</string>
+    <string id="40045">Redigera eller ta bort en existerande skrapa</string>
+    <string id="40046">Välj skrapenamn</string>
+    <string id="40047">Välj en skrapa att radera</string>
+    <string id="40048">Skrapa %s används redan och kan inte raderas.</string>
+
+    <!-- <string id="40049">Please choose another one.</string> -->
+    <!-- <string id="40050">Automatic: Accurate</string> -->
+    <!-- <string id="40051">Automatic: Guess Matches</string> -->
+    <!-- <string id="40052">Interactive: Select Matches</string> -->
+    <string id="40053">lokala bilder</string>
+    <string id="40054">lokal nfo</string>
+    <string id="40055">Välj bildtyp</string>
+    <string id="40056">Välj egenskap</string>
+    <string id="40057">ignorera</string>
+    <string id="40058">Ignorera filter</string>
+    <string id="40059">visa</string>
+    <string id="40060">Visa endast spel som saknar objekt</string>
+    <string id="40061">dölj</string>
+    <string id="40062">Göm spel som saknar objekt</string>
+    <string id="40063">Starta spel</string>
+    <string id="40064">Välj disk</string>
+    <string id="40065">Starta spel från början</string>
+    <string id="40066">Starta sparade lägen för detta spel?</string>
+    <string id="40067">Välj plats för sparat spel</string>
+    <string id="40068">Ange kommando-text</string>
+    <string id="40069">Exportera databas...</string>
+    <string id="40070">Exporterar rom-samling</string>
+    <string id="40071">Exportera spel</string>
+    <string id="40072">Åtgärd avbruten. Config.xml kommer inte att sparas.</string>
+    <string id="40073">Välj ett scenario</string>
+    <string id="40074">Skrapa spelinformation och bilder online</string>
+    <string id="40075">Spelinfo och bilder finns tillgängliga lokalt</string>
+    <string id="40076">Välj en plattform</string>
+    <string id="40077">Ange plattformens namn</string>
+    <string id="40078">Sökväg till %s emulator</string>
+    <string id="40079">Emulatorparametrar ("%ROM%" används för dina ROM-filer)</string>
+    <string id="40080">Sökväg till %s ROMS</string>
+    <string id="40081">Filmask (kommaseparerade): t.ex *.zip, *.smc</string>
+    <string id="40082">%s bilder (%s)</string>
+    <string id="40083">Välj bildtyp</string>
+    <string id="40084">Vill du lägga till ytterligare bildsökväg?</string>
+    <string id="40085">Struktur för dina spelbeskrivningar</string>
+    <string id="40086">En beskrivningsfil per spel</string>
+    <string id="40087">En beskrivningsfil för alla spel</string>
+    <string id="40088">Skrapa spelinfo online (eller använd lokal nfo)</string>
+    <string id="40089">%s spelbeskrivning</string>
+    <string id="40090">Ange filmask för spelbeskrivning</string>
+    <string id="40091">%s analysera instruktion</string>
+    <string id="40092">Vill du lägga till ytterligare en ROM-samling?</string>
+    <string id="40093">%s bild</string>
+    <string id="40094">Pre-Launch fördröjning (ms)</string>
+    <string id="40095">Post-Launch fördröjning (ms)</string>
+    <string id="40096">Startfördröjning sololäge (ms)</string>
+    <string id="40097">Använd VB skript i sololäge (endast Windows)</string>
+    <string id="40098">Använd RetroPlayer för att starta spel?</string>
+    <string id="40099">Stäng av ljud</string>
+    <string id="40100">Minimera XBMC</string>
+    <string id="40101">Sökväg till emu_autoconfig.xml</string>
+    <string id="40102">%s (Installerade)</string>
+    <string id="40103">Tillgängliga autoconfig emulatorer</string>
+
+    <!-- Settings -->
+    <string id="45000">Menyer</string>
+    <string id="45001">RCB skinn</string>
+    <string id="45002">Loggnivå</string>
+    <string id="45003">Buffertval</string>
+    <string id="45004">Spara vyläge vid avslut</string>
+    <string id="45005">Spara vyläge vid emulatorstart</string>
+    <string id="45006">Importera spel</string>
+    <string id="45007">Importera spel vid start av XBMC</string>
+    <string id="45008">Visa dialog för importalternativ</string>
+    <string id="45009">Skrapläge</string>
+    <string id="45010">Fuzzy factor för spelmatchning</string>
+    <string id="45011">Skapa lokal nfo vid skrapning</string>
+    <string id="45012">Importera inte spel som inte har någon beskrivning</string>
+    <string id="45013">Importera inte spel som inte har bilder</string>
+    <string id="45014">Omskrapa redan importerade spel</string>
+    <string id="45015">Tillåt överskrivning med nullvärden</string>
+    <string id="45016">Använd extra nfomapp</string>
+    <string id="45017">sökväg till nfomapp</string>
+    <string id="45018">Bläddra spel</string>
+    <string id="45019">Visa betyg för favoriter</string>
+    <string id="45020">Använd filter Alla konsoler</string>
+    <string id="45021">Använd filter Alla genrer</string>
+    <string id="45022">Använd filter Alla år</string>
+    <string id="45023">Använd filter Alla utgivare</string>
+    <string id="45024">Visa filter alla tecken</string>
+    <string id="45025">Motverka ofiltrerad sökning</string>
+    <string id="45026">Starta spel</string>
+    <string id="45027">Escape emulatorkommando</string>
+
+    <!-- GUI controls -->
+    <!-- main window -->
+    <string id="50000">Årtal</string>
+    <string id="50001">Genre</string>
+    <string id="50002">Utgivare</string>
+    <string id="50003">Utvecklare</string>
+    <string id="50004">FAVORITER</string>
+    <string id="50005">Sök</string>
+    <string id="50006">Konsol</string>
+    <string id="50007">A-Z</string>
+    <string id="50008">Vy</string>
+    <string id="50009">Filtrera information saknas</string>
+    <string id="50010">Objekt</string>
+    <string id="50011">Sida</string>
+
+    <!-- context menu -->
+    <string id="51000">Importera spel</string>
+    <string id="51001">Omskrapa valt spel</string>
+    <string id="51002">Omskrapa val</string>
+    <string id="51003">Lägg till rom-samling</string>
+    <string id="51004">Redigera rom-samling</string>
+    <string id="51005">Ändra offline skrapor</string>
+    <string id="51006">Ändra spelkommando</string>
+    <string id="51007">Lägg till spel i Favoriter</string>
+    <string id="51008">Lägg till val till Favoriter</string>
+    <string id="51009">Exportera speldatabas (nfo filer)</string>
+    <string id="51010">Ta bort spel</string>
+    <string id="51011">Ta bort rom-samling</string>
+    <string id="51012">Rensa databas</string>
+    <string id="51013">Öppna tilläggsinställningar</string>
+    <string id="51014">Välj spelklient (per spel)</string>
+
+    <!-- editromcollection -->
+    <string id="52000">Konfiguration</string>
+    <string id="52001">Rom-samling</string>
+    <string id="52002">Importera spel</string>
+    <string id="52003">Importera speldata</string>
+    <string id="52004">Bläddra spel</string>
+    <string id="52005">Starta spel</string>
+    <string id="52006">Rom-sökväg</string>
+    <string id="52007">Rom-filmask</string>
+    <string id="52008">Ignorera vid skanning</string>
+    <string id="52009">Tillåt uppdatering</string>
+    <string id="52010">Max mappdjup</string>
+    <string id="52011">Diskindikator</string>
+    <string id="52012">Använd mappnamn som namn på spelet</string>
+    <string id="52013">Skrapa 1</string>
+    <string id="52014">Skrapa 2</string>
+    <string id="52015">Skrapa 3</string>
+    <string id="52016">Mediatyp</string>
+    <string id="52017">Mediasökväg</string>
+    <string id="52018">Mediafilmask</string>
+    <string id="52019">Radera mediasökväg</string>
+    <string id="52020">Lägg till mediasökväg</string>
+    <string id="52021">Bilder (huvud-fönster)</string>
+    <string id="52022">Bilder (Info-fönster)</string>
+    <string id="52023">Autospela video (huvud-fönster)</string>
+    <string id="52024">Emulator-kommando</string>
+    <string id="52025">Emulator-parametrar</string>
+    <string id="52026">Använd emulator i sololäge</string>
+    <string id="52027">Använd Popen för att starta emulator</string>
+    <string id="52028">Packa inte upp zip-filer</string>
+    <string id="52029">Sökväg till savestates</string>
+    <string id="52030">Filmask för savestates</string>
+    <string id="52031">Savestate parametrar</string>
+    <string id="52032">Pre-Launch kommando</string>
+    <string id="52033">Post-Launch kommando</string>
+    <string id="52034">Spara konfiguration</string>
+    <string id="52035">Avbryt</string>
+    <string id="52036">Autospela film (informationsfönster)</string>
+    <string id="52037">Använd RetroPlayer</string>
+    <string id="52038">Spelklient</string>
+
+    <!-- editscraper -->
+    <string id="53000">Offlineskrapor</string>
+    <string id="53001">Skrapa</string>
+    <string id="53002">Använd beskrivning per spel</string>
+    <string id="53003">Sökväg till spelbeskr</string>
+    <string id="53004">Filmask för spelbeskr.</string>
+    <string id="53005">Analysera instruktion</string>
+    <string id="53006">Sök spel efter crc</string>
+    <string id="53007">Använd mappnamn som crc</string>
+    <string id="53008">Använd filnamn som crc</string>
+    <string id="53009">Radera skrapa</string>
+    <string id="53010">Lägg till skrapa</string>
+
+    <!-- info -->
+    <string id="54000">Region</string>
+    <string id="54001">Media</string>
+    <string id="54002">Kontroller</string>
+    <string id="54003">Betyg</string>
+    <string id="54004">Max antal spelare</string>
+    <string id="54005">Starträknare</string>
+    <string id="54006">Spela spel</string>
+
+    <!-- importdialog -->
+    <string id="55000">Importera spel</string>
+    <string id="55001">Skrapläge</string>
+    <string id="55002">Byt skrapor för denna körning</string>
+
+    <!-- Missing info filter -->
+    <string id="56000">RCB - Saknar infofilter</string>
+    <string id="56001">Filterläge</string>
+    <string id="56002">Filtrera spel som saknar bilder</string>
+    <string id="56003">ETT av dessa objekt saknas</string>
+    <string id="56004">Ingen</string>
+    <string id="56005">Lägg till objekt</string>
+    <string id="56006">Radera objekt</string>
+    <string id="56007">ALLA dessa objekt saknas</string>
+    <string id="56008">Filtrera spel som saknar info</string>
+
+    <!-- Delete Rom Collection -->
+    <string id="57000">RCB - Radera ROM-samling</string>
+    <string id="57001">Borttagningsval</string>
+    <string id="57002">Ta bort</string>
+</strings>

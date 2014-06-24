@@ -72,7 +72,7 @@ class UIGameDB(xbmcgui.WindowXML):
 	selectedGenreId = 0
 	selectedYearId = 0
 	selectedPublisherId = 0
-	selectedCharacter = util.localize(40020)
+	selectedCharacter = util.localize(32120)
 	
 	selectedConsoleIndex = 0
 	selectedGenreIndex = 0
@@ -195,7 +195,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		if(not os.path.isfile(configFile)):
 			Logutil.log("No config file available. Create new one.", util.LOG_LEVEL_INFO)
 			dialog = xbmcgui.Dialog()
-			createNewConfig = dialog.yesno(util.SCRIPTNAME, util.localize(40000), util.localize(40001))
+			createNewConfig = dialog.yesno(util.SCRIPTNAME, util.localize(32100), util.localize(32101))
 			if(not createNewConfig):
 				return config, False
 		else:
@@ -203,25 +203,25 @@ class UIGameDB(xbmcgui.WindowXML):
 			if(not rcAvailable):
 				Logutil.log("No Rom Collections found in config.xml.", util.LOG_LEVEL_INFO)
 				dialog = xbmcgui.Dialog()
-				createNewConfig = dialog.yesno(util.SCRIPTNAME, util.localize(40000), util.localize(40001))
+				createNewConfig = dialog.yesno(util.SCRIPTNAME, util.localize(32100), util.localize(32101))
 				if(not createNewConfig):
 					return config, False
 		
 		if (createNewConfig):
 			statusOk, errorMsg = wizardconfigxml.ConfigXmlWizard().createConfigXml(configFile)
 			if(statusOk == False):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35001), errorMsg)
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32001), errorMsg)
 				return config, False
 		else:
 			#check if config.xml is up to date
 			returnCode, message = ConfigxmlUpdater().updateConfig(self)
 			if(returnCode == False):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35001), message)
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32001), message)
 		
 		#read config.xml		
 		statusOk, errorMsg = config.readXml()
 		if(statusOk == False):
-			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35002), errorMsg)
+			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32002), errorMsg)
 			
 		return config, statusOk
 		
@@ -231,7 +231,7 @@ class UIGameDB(xbmcgui.WindowXML):
 			self.gdb = GameDataBase(util.getAddonDataPath())
 			self.gdb.connect()
 		except Exception, (exc):
-			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35000), str(exc))
+			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32000), str(exc))
 			Logutil.log('Error accessing database: ' +str(exc), util.LOG_LEVEL_ERROR)
 			return False
 	   
@@ -244,7 +244,7 @@ class UIGameDB(xbmcgui.WindowXML):
 			return False
 				
 		if(doImport == 2):
-			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(40002), util.localize(40003))
+			xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32102), util.localize(32103))
 		
 		self.checkImport(doImport, None, False)
 		return True
@@ -425,14 +425,14 @@ class UIGameDB(xbmcgui.WindowXML):
 				return
 			
 			keyboard = xbmc.Keyboard()
-			keyboard.setHeading(util.localize(40016))			
+			keyboard.setHeading(util.localize(32116))			
 			keyboard.doModal()
 			if (keyboard.isConfirmed()):
 				self.searchTerm = keyboard.getText()
-				searchButton.setLabel(util.localize(40017) +': ' +self.searchTerm)				
+				searchButton.setLabel(util.localize(32117) +': ' +self.searchTerm)				
 			else:
 				self.searchTerm = ''
-				searchButton.setLabel(util.localize(40017))
+				searchButton.setLabel(util.localize(32117))
 			
 			self.showGames()
 			
@@ -553,7 +553,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 		items = []
 		if(showEntryAllItems):
-			items.append(xbmcgui.ListItem(util.localize(40020), "0", "", ""))
+			items.append(xbmcgui.ListItem(util.localize(32120), "0", "", ""))
 		
 		for row in rows:
 			items.append(xbmcgui.ListItem(row[util.ROW_NAME], str(row[util.ROW_ID]), "", ""))
@@ -575,7 +575,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 		items = []		
 		if(showEntryAllItems):
-			items.append(xbmcgui.ListItem(util.localize(40020), util.localize(40020), "", ""))
+			items.append(xbmcgui.ListItem(util.localize(32120), util.localize(32120), "", ""))
 		items.append(xbmcgui.ListItem("0-9", "0-9", "", ""))
 		
 		for i in range(0, 26):
@@ -603,7 +603,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		preventUnfilteredSearch = self.Settings.getSetting(util.SETTING_RCB_PREVENTUNFILTEREDSEARCH).upper() == 'TRUE'			
 		
 		if(preventUnfilteredSearch):			
-			if(self.selectedCharacter == util.localize(40020) and self.selectedConsoleId == 0 and self.selectedGenreId == 0 and self.selectedYearId == 0 and self.selectedPublisherId == 0):
+			if(self.selectedCharacter == util.localize(32120) and self.selectedConsoleId == 0 and self.selectedGenreId == 0 and self.selectedYearId == 0 and self.selectedPublisherId == 0):
 				Logutil.log("preventing unfiltered search", util.LOG_LEVEL_WARNING)
 				return				
 		
@@ -635,7 +635,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		diff = (timestamp2 - timestamp1) * 1000
 		print "showGames: load games from db in %d ms" % (diff)
 	
-		self.writeMsg(util.localize(40021))
+		self.writeMsg(util.localize(32121))
 		
 		if(not self.xbmcVersionEden):
 			xbmcgui.lock()
@@ -859,17 +859,17 @@ class UIGameDB(xbmcgui.WindowXML):
 		progressDialog.itemCount = len(rcList)
 		
 		if(rcList != None):
-			progDialogRCDelStat	= util.localize(40004) +" (%i / %i)" %(count, progressDialog.itemCount)	
-			progressDialog.writeMsg(util.localize(40005), progDialogRCDelStat, "", count)
+			progDialogRCDelStat	= util.localize(32104) +" (%i / %i)" %(count, progressDialog.itemCount)	
+			progressDialog.writeMsg(util.localize(32105), progDialogRCDelStat, "", count)
 			for items in rcList:
 				count = count + 1
-				progDialogRCDelStat	= util.localize(40004) +" (%i / %i)" %(count, progressDialog.itemCount)	
+				progDialogRCDelStat	= util.localize(32104) +" (%i / %i)" %(count, progressDialog.itemCount)	
 				progressDialog.writeMsg("", progDialogRCDelStat, "",count)	
 				self.deleteGame(items[util.ROW_ID])
 			if(len(rcList)>0):
-				progressDialog.writeMsg("", util.localize(40006), "",count)
+				progressDialog.writeMsg("", util.localize(32106), "",count)
 			else:
-				progressDialog.writeMsg(util.localize(40006), "", "",count)
+				progressDialog.writeMsg(util.localize(32106), "", "",count)
 			time.sleep(1)
 			self.gdb.commit()
 			self.config = Config(None)
@@ -895,12 +895,12 @@ class UIGameDB(xbmcgui.WindowXML):
 		list = File(self.gdb).getFilesList()
 		progressDialog2 = dialogprogress.ProgressDialogGUI()
 		progressDialog2.itemCount = len(list)
-		progDialogCleanStat	= util.localize(40007) +" (%i / %i)" %(count, progressDialog2.itemCount)	
-		progressDialog2.writeMsg(util.localize(40008), progDialogCleanStat, "")
+		progDialogCleanStat	= util.localize(32107) +" (%i / %i)" %(count, progressDialog2.itemCount)	
+		progressDialog2.writeMsg(util.localize(32108), progDialogCleanStat, "")
 		if(list != None):
 			for items in list:
 				count = count + 1
-				progDialogCleanStat	= util.localize(40007) +" (%i / %i)" %(count, progressDialog2.itemCount)	
+				progDialogCleanStat	= util.localize(32107) +" (%i / %i)" %(count, progressDialog2.itemCount)	
 				progressDialog2.writeMsg("", progDialogCleanStat, "",count)	
 				if (os.path.exists(items[util.ROW_NAME]) != True):
 					if(items[util.FILE_fileTypeId] == 0):
@@ -908,10 +908,10 @@ class UIGameDB(xbmcgui.WindowXML):
 					else:
 						File(self.gdb).deleteByFileId(items[util.ROW_ID])
 					removeCount = removeCount + 1
-			progressDialog2.writeMsg("", util.localize(40009), "",count)
+			progressDialog2.writeMsg("", util.localize(32109), "",count)
 			self.gdb.compact()
 			time.sleep(.5)
-			progressDialog2.writeMsg("", util.localize(40010), "",count)
+			progressDialog2.writeMsg("", util.localize(32110), "",count)
 			time.sleep(1)
 			self.showGames()
 		list = None
@@ -1262,10 +1262,10 @@ class UIGameDB(xbmcgui.WindowXML):
 			iod = dialogimportoptions.ImportOptionsDialog("script-RCB-importoptions.xml", util.getAddonInstallPath(), "Default", constructorParam, gui=self, romCollections=romCollections, isRescrape=isRescrape)
 			del iod
 		else:
-			message = util.localize(40018)
+			message = util.localize(32118)
 		
 			dialog = xbmcgui.Dialog()
-			retGames = dialog.yesno(util.localize(30000), util.localize(51000), message)
+			retGames = dialog.yesno(util.localize(32999), util.localize(32500), message)
 			if(retGames == True):
 				
 				scrapingMode = util.getScrapingMode(self.Settings)
@@ -1278,7 +1278,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 	def doImport(self, scrapingmode, romCollections, isRescrape):
 		progressDialog = dialogprogress.ProgressDialogGUI()
-		progressDialog.writeMsg(util.localize(40011), "", "")
+		progressDialog.writeMsg(util.localize(32111), "", "")
 		
 		updater = dbupdate.DBUpdate()
 		updater.updateDB(self.gdb, progressDialog, scrapingmode, romCollections, self.Settings, isRescrape)
@@ -1295,13 +1295,13 @@ class UIGameDB(xbmcgui.WindowXML):
 		Logutil.log("scrapeOnStartupAction = " +str(scrapeOnStartupAction) , util.LOG_LEVEL_INFO)
 		
 		if (scrapeOnStartupAction == 'update'):
-			retCancel = xbmcgui.Dialog().yesno(util.localize(30000), util.localize(40012), util.localize(40013))
+			retCancel = xbmcgui.Dialog().yesno(util.localize(32999), util.localize(32112), util.localize(32113))
 			if(retCancel == True):
 				self.Settings.setSetting(util.SETTING_RCB_SCRAPEONSTARTUPACTION, 'cancel')
 			return True
 		
 		elif (scrapeOnStartupAction == 'cancel'):
-			xbmcgui.Dialog().ok(util.localize(30000), util.localize(40014), util.localize(40015))
+			xbmcgui.Dialog().ok(util.localize(32999), util.localize(32114), util.localize(32115))
 			
 			#HACK: Assume that there is a problem with canceling the action
 			#self.Settings.setSetting(util.SETTING_RCB_SCRAPEONSTARTUPACTION, 'nothing')
@@ -1523,7 +1523,7 @@ class UIGameDB(xbmcgui.WindowXML):
 			self.selectedCharacterIndex = rcbSetting[util.RCBSETTING_lastSelectedCharacterIndex]
 
 		#HACK: Dummy item because loading an empty list crashes XBMC
-		item = xbmcgui.ListItem(util.localize(40019), '', '', '')
+		item = xbmcgui.ListItem(util.localize(32119), '', '', '')
 		#self.addItem(item, False)
 		self.addItem(item)
 
@@ -1536,7 +1536,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		self.searchTerm = self.Settings.getSetting(util.SETTING_RCB_SEARCHTEXT)
 		searchButton = self.getControlById(CONTROL_BUTTON_SEARCH)		
 		if(self.searchTerm != '' and searchButton != None):
-			searchButton.setLabel(util.localize(40017)+ ': ' +self.searchTerm)
+			searchButton.setLabel(util.localize(32117)+ ': ' +self.searchTerm)
 
 		#favorites		
 		isFavoriteButton = self.getControlById(CONTROL_BUTTON_FAVORITE)
@@ -1652,7 +1652,7 @@ class UIGameDB(xbmcgui.WindowXML):
 			#HACK there seems to be a problem with recognizing the scrollbar controls
 			if(controlId not in (CONTROL_SCROLLBARS)):
 				Logutil.log("Control with id: %s could not be found. Check WindowXML file. Error: %s" % (str(controlId), str(exc)), util.LOG_LEVEL_ERROR)
-				self.writeMsg(util.localize(35025) % str(controlId))
+				self.writeMsg(util.localize(32025) % str(controlId))
 			return None
 		
 		return control

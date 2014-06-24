@@ -4,7 +4,7 @@ import util
 import urllib
 import helper
 from util import *
-from elementtree.ElementTree import *
+from xml.etree.ElementTree import *
 
 
 
@@ -118,9 +118,9 @@ consoleDict = {
 			'Zodiac' : ['68', '', 'zod'],
 			'ZX Spectr' : ['41', 'Sinclair ZX Spectrum', '']}
 
-missingFilterOptions = {util.localize(40057) : util.localize(40058),
-					util.localize(40059) : util.localize(40060),
-					util.localize(40061) : util.localize(40062)}
+missingFilterOptions = {util.localize(32157) : util.localize(32158),
+					util.localize(32159) : util.localize(32160),
+					util.localize(32161) : util.localize(32162)}
 
 
 
@@ -266,14 +266,14 @@ class Config:
 		if(not self.configFile):
 			self.configFile = util.getConfigXmlPath()
 		
-		if(not os.path.isfile(self.configFile)):			
+		if(not os.path.isfile(self.configFile)):
 			Logutil.log('File config.xml does not exist. Place a valid config file here: %s' %self.configFile, util.LOG_LEVEL_ERROR)
-			return None, False, util.localize(35003)
+			return None, False, util.localize(32003)
 		
 		tree = ElementTree().parse(self.configFile)
 		if(tree == None):
 			Logutil.log('Could not read config.xml', util.LOG_LEVEL_ERROR)
-			return None, False, util.localize(35004)
+			return None, False, util.localize(32004)
 		
 		self.tree = tree
 		
@@ -348,18 +348,18 @@ class Config:
 			romCollection.name = romCollectionRow.attrib.get('name')
 			if(romCollection.name == None):
 				Logutil.log('Configuration error. RomCollection must have an attribute name', util.LOG_LEVEL_ERROR)
-				return None, util.localize(35005)
+				return None, util.localize(32005)
 			
 			Logutil.log('current Rom Collection: ' +str(romCollection.name), util.LOG_LEVEL_INFO)
 			
 			id = romCollectionRow.attrib.get('id')
 			if(id == ''):
 				Logutil.log('Configuration error. RomCollection %s must have an id' %romCollection.name, util.LOG_LEVEL_ERROR)
-				return None, util.localize(35005)
+				return None, util.localize(32005)
 			try:
 				rc = romCollections[id]
 				Logutil.log('Error while adding RomCollection. Make sure that the id is unique.', util.LOG_LEVEL_ERROR)
-				return None, util.localize(35006)
+				return None, util.localize(32006)
 			except:
 				pass
 			
@@ -396,7 +396,7 @@ class Config:
 				Logutil.log('Scraper site: ' +str(siteName), util.LOG_LEVEL_INFO)
 				if(siteName == None or siteName == ''):
 					Logutil.log('Configuration error. RomCollection/scraper must have an attribute name', util.LOG_LEVEL_ERROR)
-					return None, util.localize(35005)
+					return None, util.localize(32005)
 				
 				#read additional scraper properties
 				replaceKeyString = scraperRow.attrib.get('replaceKeyString')
@@ -416,7 +416,7 @@ class Config:
 				
 				if(siteRow == None):
 					Logutil.log('Configuration error. Site %s does not exist in config.xml' %siteName, util.LOG_LEVEL_ERROR)
-					return None, util.localize(35005)
+					return None, util.localize(32005)
 								
 				scraper, errorMsg = self.readScraper(siteRow, romCollection.name, replaceKeyString, replaceValueString, True, tree)
 				if(scraper == None):
@@ -570,7 +570,7 @@ class Config:
 				
 				if(not os.path.isfile(parseInstruction)):
 					Logutil.log('Configuration error. parseInstruction file %s does not exist.' %parseInstruction, util.LOG_LEVEL_ERROR)
-					return None, util.localize(35005)
+					return None, util.localize(32005)
 				
 				scraper.parseInstruction = parseInstruction
 				
@@ -615,7 +615,7 @@ class Config:
 			
 		if(fileTypeRow == None):
 			Logutil.log('Configuration error. FileType %s does not exist in config.xml' %name, util.LOG_LEVEL_ERROR)
-			return None, util.localize(35005)
+			return None, util.localize(32005)
 			
 		fileType = FileType()
 		fileType.name = name
@@ -623,7 +623,7 @@ class Config:
 		id = fileTypeRow.attrib.get('id')
 		if(id == ''):
 			Logutil.log('Configuration error. FileType %s must have an id' %name, util.LOG_LEVEL_ERROR)
-			return None, util.localize(35005)
+			return None, util.localize(32005)
 			
 		fileType.id = id
 		
@@ -649,7 +649,7 @@ class Config:
 		
 		if(fileTypeForRow == None):
 			Logutil.log('Configuration error. ImagePlacing/fileTypeFor %s does not exist in config.xml' %str(imagePlacingName), util.LOG_LEVEL_ERROR)
-			return None, util.localize(35005)
+			return None, util.localize(32005)
 		
 		imagePlacing = ImagePlacing()
 		

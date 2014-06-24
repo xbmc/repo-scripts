@@ -4,7 +4,7 @@ import util
 from util import *
 import config
 from config import *
-from elementtree.ElementTree import *
+from xml.etree.ElementTree import *
 
 
 class ConfigXmlWriter:
@@ -22,7 +22,7 @@ class ConfigXmlWriter:
 		
 		if(not os.path.isfile(configFile)):
 			Logutil.log('File config.xml does not exist. Place a valid config file here: ' +str(configFile), util.LOG_LEVEL_ERROR)
-			return False, util.localize(35003)
+			return False, util.localize(32003)
 		
 		self.tree = ElementTree().parse(configFile)
 	
@@ -169,7 +169,7 @@ class ConfigXmlWriter:
 			Logutil.log('write scraper site: ' +str(scraperSite.name), util.LOG_LEVEL_INFO)
 			
 			#Don't write None-Scraper
-			if(scraperSite.name == util.localize(56004)):
+			if(scraperSite.name == util.localize(32854)):
 				Logutil.log('None scraper will be skipped', util.LOG_LEVEL_INFO)
 				continue
 			
@@ -245,7 +245,7 @@ class ConfigXmlWriter:
 				break
 		
 		if(not objectFound):
-			return False,  util.localize(35009) %(objectType, nameToCompare)
+			return False,  util.localize(32009) %(objectType, nameToCompare)
 		
 		return True, ''
 	
@@ -369,5 +369,5 @@ class ConfigXmlWriter:
 			
 		except Exception, (exc):
 			print("Error: Cannot write config.xml: " +str(exc))
-			return False, util.localize(35008) +": " +str(exc)
+			return False, util.localize(32008) +": " +str(exc)
 		

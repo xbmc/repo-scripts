@@ -91,7 +91,7 @@ class Main():
 		# Start the main gui
 		print 'RCB: launchRCB = ' +str(launchRCB)
 		if launchRCB:
-			 import gui
+			import gui
 				
 				
 	def gatherWidgetData(self, param):
@@ -229,4 +229,13 @@ class Main():
 
 if ( __name__ == "__main__" ):
 	print 'RCB started'
-	Main()
+	try:
+		Main()
+	except Exception, (exc):
+		message = 'Unhandled exception occured during execution of RCB:'
+		message2 = str(exc)
+		message3 = 'See xbmc.log for details'
+		print message
+		print message2
+		import xbmcgui
+		xbmcgui.Dialog().ok("Rom Collection Browser", message, message2, message3)

@@ -74,7 +74,7 @@ class DBUpdate:
 				break
 							
 			#prepare Header for ProgressDialog
-			progDialogRCHeader = util.localize(40022) +" (%i / %i): %s" %(rccount, len(romCollections), romCollection.name)
+			progDialogRCHeader = util.localize(32122) +" (%i / %i): %s" %(rccount, len(romCollections), romCollection.name)
 			rccount = rccount + 1
 			
 			Logutil.log("current Rom Collection: " +romCollection.name, util.LOG_LEVEL_INFO)
@@ -98,7 +98,7 @@ class DBUpdate:
 			firstScraper = romCollection.scraperSites[0]
 			
 			#check if we are in local artwork mode
-			if(len(romCollection.scraperSites) == 1 and firstScraper.name == util.localize(40053)):
+			if(len(romCollection.scraperSites) == 1 and firstScraper.name == util.localize(32153)):
 				Logutil.log("Forcing enableFullReimport because we are in local artwork mode", util.LOG_LEVEL_INFO)
 				enableFullReimport = True
 			
@@ -149,7 +149,7 @@ class DBUpdate:
 								
 								fileCount = fileCount +1
 								
-								continueUpdate = gui.writeMsg(progDialogRCHeader, util.localize(40023) +": " +str(gamenameFromDesc), "", fileCount)
+								continueUpdate = gui.writeMsg(progDialogRCHeader, util.localize(32123) +": " +str(gamenameFromDesc), "", fileCount)
 								if(not continueUpdate):				
 									Logutil.log('Game import canceled by user', util.LOG_LEVEL_INFO)
 									break
@@ -235,13 +235,13 @@ class DBUpdate:
 						Logutil.log('Start scraping info for game: ' + gamenameFromFile, LOG_LEVEL_INFO)						
 						
 						fileCount = fileCount +1
-						continueUpdate = gui.writeMsg(progDialogRCHeader, util.localize(40023) +": " +gamenameFromFile, "", fileCount)
+						continueUpdate = gui.writeMsg(progDialogRCHeader, util.localize(32123) +": " +gamenameFromFile, "", fileCount)
 						if(not continueUpdate):				
 							Logutil.log('Game import canceled by user', util.LOG_LEVEL_INFO)
 							break
 						
 						#check if we are in local artwork mode
-						isLocalArtwork = (firstScraper.name == util.localize(40053))
+						isLocalArtwork = (firstScraper.name == util.localize(32153))
 						
 						#check if this file already exists in DB
 						continueUpdate, isUpdate, gameId = self.checkRomfileAlreadyExists(filename, enableFullReimport, isLocalArtwork)
@@ -280,14 +280,14 @@ class DBUpdate:
 						#check if all first 10 games have errors - Modified to allow user to continue on errors
 						if (fileCount >= 10 and successfulFiles == 0 and ignoreErrors == False):
 							options = []
-							options.append(util.localize(40024))
-							options.append(util.localize(40025))
-							options.append(util.localize(40026))
-							answer = xbmcgui.Dialog().select(util.localize(40027),options)
+							options.append(util.localize(32124))
+							options.append(util.localize(32125))
+							options.append(util.localize(32126))
+							answer = xbmcgui.Dialog().select(util.localize(32127),options)
 							if(answer == 1):
 								ignoreErrors = True
 							elif(answer == 2):
-								xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(40028), util.localize(40029))
+								xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32128), util.localize(32129))
 								continueUpdate = False
 								break
 						
@@ -319,7 +319,7 @@ class DBUpdate:
 		
 		for filename in files:
 			try:
-				gui.writeMsg(progDialogRCHeader, util.localize(40030), "", fileCount)
+				gui.writeMsg(progDialogRCHeader, util.localize(32130), "", fileCount)
 				fileCount = fileCount +1
 				
 				gamename = helper.getGamenameFromFilename(filename, romCollection)
@@ -601,7 +601,7 @@ class DBUpdate:
 		for i in range(startIndex, len(romCollection.scraperSites)):
 			scraperSite = romCollection.scraperSites[i]			
 			
-			gui.writeMsg(progDialogRCHeader, util.localize(40023) +": " +gamenameFromFile, scraperSite.name + " - " +util.localize(40031), fileCount)
+			gui.writeMsg(progDialogRCHeader, util.localize(32123) +": " +gamenameFromFile, scraperSite.name + " - " +util.localize(32131), fileCount)
 			Logutil.log('using scraper: ' +scraperSite.name, util.LOG_LEVEL_INFO)
 			
 			if(scraperSite.searchGameByCRC and filecrc == ''):
@@ -1157,7 +1157,7 @@ class DBUpdate:
 				try:
 					xbmcvfs.mkdir(parent)
 				except Exception, (exc):
-					xbmcgui.Dialog().ok(util.localize(35010), util.localize(35011))
+					xbmcgui.Dialog().ok(util.localize(32010), util.localize(32011))
 					Logutil.log("Could not create directory: '%s'. Error message: '%s'" %(parent, str(exc)), util.LOG_LEVEL_ERROR)
 					return False, artworkurls
 				
@@ -1166,7 +1166,7 @@ class DBUpdate:
 				try:
 					xbmcvfs.mkdir(dirname)
 				except Exception, (exc):
-					xbmcgui.Dialog().ok(util.localize(35010), util.localize(35011))
+					xbmcgui.Dialog().ok(util.localize(32010), util.localize(32011))
 					Logutil.log("Could not create directory: '%s'. Error message: '%s'" %(dirname, str(exc)), util.LOG_LEVEL_ERROR)
 					return False, artworkurls
 				
@@ -1182,7 +1182,7 @@ class DBUpdate:
 						gamenameFromFile = dialogDict["gameNameKey"]
 						scraperSiteName = dialogDict["scraperSiteKey"]
 						fileCount = dialogDict["fileCountKey"]
-						gui.writeMsg(progDialogRCHeader, util.localize(40023) +": " +gamenameFromFile, str(scraperSiteName[thumbKey]) + " - downloading art", fileCount)
+						gui.writeMsg(progDialogRCHeader, util.localize(32123) +": " +gamenameFromFile, str(scraperSiteName[thumbKey]) + " - downloading art", fileCount)
 				except:
 					pass
 
@@ -1204,7 +1204,7 @@ class DBUpdate:
 						xbmcvfs.delete(target)
 						
 				except Exception, (exc):
-					xbmcgui.Dialog().ok(util.localize(35012), util.localize(35011))
+					xbmcgui.Dialog().ok(util.localize(32012), util.localize(32011))
 					Logutil.log("Could not create file: '%s'. Error message: '%s'" %(str(fileName), str(exc)), util.LOG_LEVEL_ERROR)
 					return False, artworkurls
 				

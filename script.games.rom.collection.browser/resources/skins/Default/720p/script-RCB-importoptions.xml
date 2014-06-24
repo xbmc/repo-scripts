@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window id="5200">
 	<defaultcontrol>5211</defaultcontrol>
 	<include>dialogeffect</include>
@@ -27,7 +28,7 @@
 				<textcolor>white</textcolor>
 				<align>center</align>
 				<aligny>center</aligny>
-				<label>$ADDON[script.games.rom.collection.browser 30000] - $ADDON[script.games.rom.collection.browser 55000]</label>
+				<label>$ADDON[script.games.rom.collection.browser 32999] - $ADDON[script.games.rom.collection.browser 32800]</label>
 			</control>
 			<control type="button" id="5101">
 				<description>Close Window button</description>
@@ -109,7 +110,7 @@
 						<textcolor>88FFFFFF</textcolor>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>$ADDON[script.games.rom.collection.browser 52001]</label>
+						<label>$ADDON[script.games.rom.collection.browser 32601]</label>
 						<visible>![Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
 						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
 					</control>
@@ -122,7 +123,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>$ADDON[script.games.rom.collection.browser 52001]</label>
+						<label>$ADDON[script.games.rom.collection.browser 32601]</label>
 						<visible>[Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
 						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
 					</control>
@@ -230,7 +231,7 @@
 						<textcolor>88FFFFFF</textcolor>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>$ADDON[script.games.rom.collection.browser 55001]</label>
+						<label>$ADDON[script.games.rom.collection.browser 32801]</label>
 						<visible>![Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
 					</control>
 					<control type="label">
@@ -242,7 +243,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>center</aligny>
-						<label>$ADDON[script.games.rom.collection.browser 55001]</label>
+						<label>$ADDON[script.games.rom.collection.browser 32801]</label>
 						<visible>[Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
 					</control>
 					<control type="label">
@@ -310,7 +311,7 @@
 				<width>640</width>
 				<height>30</height>
 				<font>font13</font>
-				<label>$ADDON[script.games.rom.collection.browser 55002]</label>
+				<label>$ADDON[script.games.rom.collection.browser 32802]</label>
 				<textcolor>88FFFFFF</textcolor>
 				<focusedcolor>FFFFFFFF</focusedcolor>
 				<texturefocus>rcb-MenuItemFO.png</texturefocus>
@@ -368,7 +369,7 @@
 							<textcolor>88FFFFFF</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>$ADDON[script.games.rom.collection.browser 52013]</label>
+							<label>$ADDON[script.games.rom.collection.browser 32613]</label>
 							<visible>![Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -381,7 +382,7 @@
 							<textcolor>white</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>$ADDON[script.games.rom.collection.browser 52013]</label>
+							<label>$ADDON[script.games.rom.collection.browser 32613]</label>
 							<visible>[Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -488,7 +489,7 @@
 							<textcolor>88FFFFFF</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>$ADDON[script.games.rom.collection.browser 52014]</label>
+							<label>$ADDON[script.games.rom.collection.browser 32614]</label>
 							<visible>![Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -501,7 +502,7 @@
 							<textcolor>white</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>$ADDON[script.games.rom.collection.browser 52014]</label>
+							<label>$ADDON[script.games.rom.collection.browser 32614]</label>
 							<visible>[Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -608,7 +609,7 @@
 							<textcolor>88FFFFFF</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>$ADDON[script.games.rom.collection.browser 52015]</label>
+							<label>$ADDON[script.games.rom.collection.browser 32615]</label>
 							<visible>![Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -621,7 +622,7 @@
 							<textcolor>white</textcolor>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>$ADDON[script.games.rom.collection.browser 52015]</label>
+							<label>$ADDON[script.games.rom.collection.browser 32615]</label>
 							<visible>[Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
 							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
 						</control>
@@ -701,7 +702,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>$ADDON[script.games.rom.collection.browser 55000]</label>
+				<label>$ADDON[script.games.rom.collection.browser 32800]</label>
 				<textcolor>DDFFFFFF</textcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
 				<align>center</align>
@@ -725,7 +726,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>$ADDON[script.games.rom.collection.browser 52035]</label>
+				<label>$ADDON[script.games.rom.collection.browser 32635]</label>
 				<textcolor>DDFFFFFF</textcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
 				<align>center</align>

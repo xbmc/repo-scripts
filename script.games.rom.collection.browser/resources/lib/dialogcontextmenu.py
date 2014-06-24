@@ -1,9 +1,8 @@
 
 import xbmc, xbmcgui, xbmcaddon
-import json
-import util
+
+import util, nfowriter, wizardconfigxml, helper
 import dialogeditromcollection, dialogeditscraper, dialogdeleteromcollection, config
-import nfowriter, wizardconfigxml
 from nfowriter import *
 from gamedatabase import *
 from util import *
@@ -38,10 +37,16 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			if(self.gameRow[util.GAME_isFavorite] == 1):
 				buttonMarkFavorite = self.getControlById(CONTROL_BUTTON_SETFAVORITE_GAME)
 				if(buttonMarkFavorite != None):
-					buttonMarkFavorite.setLabel(util.localize(40033))
+					buttonMarkFavorite.setLabel(util.localize(32133))
 				buttonMarkFavorite = self.getControlById(CONTROL_BUTTON_SETFAVORITE_SELECTION)
 				if(buttonMarkFavorite != None):
-					buttonMarkFavorite.setLabel(util.localize(40034))
+					buttonMarkFavorite.setLabel(util.localize(32134))
+		
+		#Hide Set Gameclient option
+		if(not helper.retroPlayerSupportsPythonIntegration()):
+			control = self.getControlById(5224)
+			control.setVisible(False)
+			control.setEnabled(False)
 			
 	
 	def onAction(self, action):
@@ -58,7 +63,7 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			self.close()
 			
 			if(self.selectedGame == None or self.gameRow == None):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35013), util.localize(35014))
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32013), util.localize(32014))
 				return
 			
 			romCollectionId = self.gameRow[util.GAME_romCollectionId]
@@ -101,14 +106,14 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			self.close()
 			statusOk, errorMsg = wizardconfigxml.ConfigXmlWizard().addRomCollection(self.gui.config)
 			if(statusOk == False):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35001), errorMsg)
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32001), errorMsg)
 				Logutil.log('Error updating config.xml: ' +errorMsg, util.LOG_LEVEL_INFO)
 				return
 			
 			#update self.config
 			statusOk, errorMsg = self.gui.config.readXml()
 			if(statusOk == False):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35002), errorMsg)
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32002), errorMsg)
 				Logutil.log('Error reading config.xml: ' +errorMsg, util.LOG_LEVEL_INFO)
 				return
 			
@@ -137,29 +142,19 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			self.close()
 			
 			if(self.selectedGame == None or self.gameRow == None):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35015), util.localize(35014))
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32015), util.localize(32014))
 				return
 
 			origCommand = self.gameRow[util.GAME_gameCmd]
 			command = ''
-			
-			romCollectionId = self.gameRow[util.GAME_romCollectionId]
-			romCollection = self.gui.config.romCollections[str(romCollectionId)]
-			if(romCollection.useBuiltinEmulator):
-				success, selectedcore = self.selectlibretrocore(romCollection.name)
-				if success:
-					command = selectedcore
-				else:
-					Logutil.log("No libretro core was chosen. Won't update game command.", util.LOG_LEVEL_INFO)
-					return
-			else:
-				keyboard = xbmc.Keyboard()
-				keyboard.setHeading(util.localize(40035))
-				if(origCommand != None):
-					keyboard.setDefault(origCommand)
-				keyboard.doModal()
-				if (keyboard.isConfirmed()):
-					command = keyboard.getText()
+									
+			keyboard = xbmc.Keyboard()
+			keyboard.setHeading(util.localize(32135))
+			if(origCommand != None):
+				keyboard.setDefault(origCommand)
+			keyboard.doModal()
+			if (keyboard.isConfirmed()):
+				command = keyboard.getText()
 					
 			if(command != origCommand):
 				Logutil.log("Updating game '%s' with command '%s'" %(str(self.gameRow[util.ROW_NAME]), command), util.LOG_LEVEL_INFO)
@@ -170,7 +165,7 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			self.close()
 						
 			if(self.selectedGame == None or self.gameRow == None):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35016), util.localize(35014))
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32016), util.localize(32014))
 				return
 						
 			isFavorite = 1
@@ -189,7 +184,7 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			self.close()
 						
 			if(self.selectedGame == None or self.gameRow == None):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35016), util.localize(35014))
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32016), util.localize(32014))
 				return
 						
 			isFavorite = 1
@@ -215,10 +210,10 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 			
 			pos = self.gui.getCurrentListPosition()
 			if(pos == -1):
-				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35017), util.localize(35018))
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32017), util.localize(32018))
 				return					
 			dialog = xbmcgui.Dialog()
-			if dialog.yesno(util.localize(51010), util.localize(40036)):
+			if dialog.yesno(util.localize(32510), util.localize(32136)):
 				gameID = self.gui.getGameId(self.gui.gdb,pos)
 				self.gui.deleteGame(gameID)
 				self.gui.showGames()
@@ -247,6 +242,36 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 		elif (controlID == 5223): #Open Settings
 			self.close()			
 			self.gui.Settings.openSettings()
+		
+		elif (controlID == 5224): #Set gameclient
+			self.close()
+			
+			if(not helper.retroPlayerSupportsPythonIntegration()):
+				Logutil.log("This RetroPlayer branch does not support selecting gameclients.", util.LOG_LEVEL_INFO)
+				return
+			
+			if(self.selectedGame == None or self.gameRow == None):
+				xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32015), util.localize(32014))
+				return
+
+			#HACK: use alternateGameCmd to store gameclient information
+			origGameClient = self.gameRow[util.GAME_alternateGameCmd]
+			gameclient = ''
+			
+			romCollectionId = self.gameRow[util.GAME_romCollectionId]
+			romCollection = self.gui.config.romCollections[str(romCollectionId)]
+						
+			success, selectedcore = helper.selectlibretrocore(romCollection.name)
+			if success:
+				gameclient = selectedcore
+			else:
+				Logutil.log("No libretro core was chosen. Won't update game command.", util.LOG_LEVEL_INFO)
+				return
+				
+			if(gameclient != origGameClient):
+				Logutil.log("Updating game '%s' with gameclient '%s'" %(str(self.gameRow[util.ROW_NAME]), gameclient), util.LOG_LEVEL_INFO)
+				Game(self.gui.gdb).update(('alternateGameCmd',), (gameclient,), self.gameRow[util.ROW_ID], True)
+				self.gui.gdb.commit()
 	
 	def onFocus(self, controlID):
 		pass
@@ -260,49 +285,4 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 		
 		return control
 
-	
-	def selectlibretrocore(self, platform):
-		
-		selectedCore = ''
-		
-		addons = ['None']
-		
-		success, installedAddons = self.readLibretroCores("all", True, platform)
-		if(not success):
-			return False, ""
-		addons.extend(installedAddons)
-		
-		success, uninstalledAddons = self.readLibretroCores("uninstalled", False, platform)
-		if(not success):
-			return False, ""
-		addons.extend(uninstalledAddons)
-		
-		dialog = xbmcgui.Dialog()
-		index = dialog.select('Select libretro core', addons)
-		if(index == -1):
-			return False, ""
-		elif(index == 0):
-			return True, ""
-		else:
-			selectedCore = addons[index]
-			return True, selectedCore
-		
-	
-	def readLibretroCores(self, enabledParam, installedOnlyParam, platform):
-		
-		addons = []
-		addonsJson = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddons", "params": { "type": "xbmc.gameclient", "enabled": "%s" } }' %enabledParam)
-		jsonResult = json.loads(addonsJson)
-		if (str(jsonResult.keys()).find('error') >= 0):
-			Logutil.log("Error while reading addons via json.", util.LOG_LEVEL_WARNING)
-			return False, None
-				
-		for addonObj in jsonResult[u'result'][u'addons']:
-			id = addonObj[u'addonid']
-			addon = xbmcaddon.Addon(id, installed=installedOnlyParam)
-			# extensions and platforms are "|" separated, extensions may or may not have a leading "."
-			if(addon.getAddonInfo('platforms') == platform):
-				addons.append(id)
-		Logutil.log("addons: %s" %str(addons), util.LOG_LEVEL_INFO)
-		return True, addons
 		

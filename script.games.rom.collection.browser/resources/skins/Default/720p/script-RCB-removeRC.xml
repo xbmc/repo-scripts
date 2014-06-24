@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window id="5400">
 	<defaultcontrol>5411</defaultcontrol>
 	<include>dialogeffect</include>
@@ -26,7 +27,7 @@
 			<textcolor>white</textcolor>
 			<align>center</align>
 			<aligny>center</aligny>
-			<label>$ADDON[script.games.rom.collection.browser 57000]</label>
+			<label>$ADDON[script.games.rom.collection.browser 32900]</label>
 		</control>
 		<control type="button" id="5101">
 			<description>Close Window button</description>
@@ -109,7 +110,7 @@
 					<textcolor>88FFFFFF</textcolor>
 					<align>left</align>
 					<aligny>center</aligny>
-					<label>$ADDON[script.games.rom.collection.browser 52001]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32601]</label>
 					<visible>![Control.HasFocus(5411) | Control.HasFocus(5412)]</visible>
 				</control>
 				<control type="label">
@@ -121,7 +122,7 @@
 					<textcolor>white</textcolor>
 					<align>left</align>
 					<aligny>center</aligny>
-					<label>$ADDON[script.games.rom.collection.browser 52001]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32601]</label>
 					<visible>[Control.HasFocus(5411) | Control.HasFocus(5412)]</visible>
 				</control>
 				<control type="label">
@@ -224,7 +225,7 @@
 					<textcolor>88FFFFFF</textcolor>
 					<align>left</align>
 					<aligny>center</aligny>
-					<label>$ADDON[script.games.rom.collection.browser 57001]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32901]</label>
 					<visible>![Control.HasFocus(5491) | Control.HasFocus(5492)]</visible>
 				</control>
 				<control type="label">
@@ -236,7 +237,7 @@
 					<textcolor>white</textcolor>
 					<align>left</align>
 					<aligny>center</aligny>
-					<label>$ADDON[script.games.rom.collection.browser 57001]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32901]</label>
 					<visible>[Control.HasFocus(5491) | Control.HasFocus(5492)]</visible>
 				</control>
 				<control type="label">
@@ -311,7 +312,7 @@
 			<colordiffuse>DDFFFFFF</colordiffuse>
 			<texturefocus>rcb-button-focus.png</texturefocus>
 			<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-			<label>$ADDON[script.games.rom.collection.browser 57002]</label>
+			<label>$ADDON[script.games.rom.collection.browser 32902]</label>
 			<textcolor>88FFFFFF</textcolor>
 			<disabledcolor>80FFFFFF</disabledcolor>
 			<align>center</align>
@@ -335,7 +336,7 @@
 			<colordiffuse>DDFFFFFF</colordiffuse>
 			<texturefocus>rcb-button-focus.png</texturefocus>
 			<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-			<label>$ADDON[script.games.rom.collection.browser 52035]</label>
+			<label>$ADDON[script.games.rom.collection.browser 32635]</label>
 			<textcolor>88FFFFFF</textcolor>
 			<disabledcolor>80FFFFFF</disabledcolor>
 			<align>center</align>

@@ -110,7 +110,7 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		#likeStatement = helper.buildLikeStatement(self.selectedCharacter)
 		#games = Game(self.gdb).getFilteredGames(self.selectedConsoleId, self.selectedGenreId, self.selectedYearId, self.selectedPublisherId, likeStatement)				
 				
-		self.writeMsg(util.localize(40021))
+		self.writeMsg(util.localize(32121))
 		
 		self.clearList()
 		
@@ -122,7 +122,7 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		try:
 			romCollection = self.config.romCollections[str(gameRow[util.GAME_romCollectionId])]
 		except:
-			Logutil.log(util.localize(35023) %str(gameRow[util.GAME_romCollectionId]), util.LOG_LEVEL_ERROR)
+			Logutil.log(util.localize(32023) %str(gameRow[util.GAME_romCollectionId]), util.LOG_LEVEL_ERROR)
 		
 		imageGameList = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForGameList, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
 		imageGameListSelected = self.getFileForControl(romCollection.imagePlacingInfo.fileTypesForGameListSelected, gameRow[util.ROW_ID], gameRow[util.GAME_publisherId], gameRow[util.GAME_developerId], gameRow[util.GAME_romCollectionId], fileDict)
@@ -177,7 +177,7 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 		
 		gameRow = Game(self.gdb).getObjectById(self.selectedGameId)
 		if(gameRow == None):
-			self.writeMsg(util.localize(35024))
+			self.writeMsg(util.localize(32024))
 			return
 		
 		genreString = ""
@@ -394,7 +394,7 @@ class UIGameInfoView(xbmcgui.WindowXMLDialog):
 			control = self.getControl(controlId)
 		except: 
 			Logutil.log("Control with id: %s could not be found. Check WindowXML file." %str(controlId), util.LOG_LEVEL_ERROR)
-			self.writeMsg(util.localize(35025) %str(controlId))
+			self.writeMsg(util.localize(32025) %str(controlId))
 			return None
 		
 		return control

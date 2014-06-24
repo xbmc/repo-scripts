@@ -5,7 +5,7 @@ import os, sys, shutil
 from util import *
 import util
 from gamedatabase import *
-from elementtree.ElementTree import *
+from xml.etree.ElementTree import *
 from config import ImagePlacing
 
 
@@ -17,13 +17,13 @@ class ConfigxmlUpdater:
 	def updateConfig(self, gui):
 		
 		if(not os.path.isfile(self.configFile)):
-			return False, util.localize(35003)
+			return False, util.localize(32003)
 		
 		
 		tree = ElementTree().parse(self.configFile)
 		if(tree == None):
 			Logutil.log('Could not read config.xml', util.LOG_LEVEL_ERROR)
-			return False, util.localize(35004)
+			return False, util.localize(32004)
 		
 		self.tree = tree
 	
@@ -46,7 +46,7 @@ class ConfigxmlUpdater:
 			try:
 				shutil.copy(str(self.configFile), str(newFileName))
 			except Exception, (exc):
-				return False, util.localize(35007) +": " +str(exc)
+				return False, util.localize(32007) +": " +str(exc)
 		
 		#write current version to config
 		self.tree.attrib['version'] = util.CURRENT_CONFIG_VERSION
@@ -101,7 +101,7 @@ class ConfigxmlUpdater:
 			siteName = scraperSiteXml.attrib.get('name')
 			
 			#handle online scrapers
-			if(siteName == util.localize(40054)):
+			if(siteName == util.localize(32154)):
 				scraperSiteXml.attrib['descFilePerGame'] = 'True'
 				scraperSiteXml.attrib['searchGameByCRC'] = 'False'
 			elif(siteName == 'thegamesdb.net'):
@@ -339,5 +339,5 @@ class ConfigxmlUpdater:
 			
 		except Exception, (exc):
 			print("Error: Cannot write config.xml: " +str(exc))
-			return False, util.localize(35008) +": " +str(exc)
+			return False, util.localize(32008) +": " +str(exc)
 		

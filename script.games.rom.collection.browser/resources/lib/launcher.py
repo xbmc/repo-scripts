@@ -19,10 +19,10 @@ def launchEmu(gdb, gui, gameId, config, settings, listitem):
 		romCollection = config.romCollections[str(gameRow[util.GAME_romCollectionId])]
 	except:
 		Logutil.log('Cannot get rom collection with id: ' +str(gameRow[util.GAME_romCollectionId]), util.LOG_LEVEL_ERROR)
-		gui.writeMsg(util.localize(35034))
+		gui.writeMsg(util.localize(32034))
 		return
 			
-	gui.writeMsg(util.localize(40063)+ " " +gameRow[util.ROW_NAME])
+	gui.writeMsg(util.localize(32163)+ " " +gameRow[util.ROW_NAME])
 	
 	# Remember viewstate
 	gui.saveViewState(False)
@@ -99,7 +99,7 @@ def launchEmu(gdb, gui, gameId, config, settings, listitem):
 					
 	except Exception, (exc):
 		Logutil.log("Error while launching emu: " +str(exc), util.LOG_LEVEL_ERROR)
-		gui.writeMsg(util.localize(35035) +": " +str(exc))
+		gui.writeMsg(util.localize(32035) +": " +str(exc))
 	
 	Logutil.log("End launcher.launchEmu", util.LOG_LEVEL_INFO)
 		
@@ -155,7 +155,7 @@ def buildCmd(filenameRows, romCollection, gameRow, escapeCmd, calledFromSkin):
 				disk = gamename[match.start():match.end()]
 				options.append(disk)
 		if(len(options) > 1 and not calledFromSkin):
-			diskNum = xbmcgui.Dialog().select(util.localize(40064) +': ', options)
+			diskNum = xbmcgui.Dialog().select(util.localize(32164) +': ', options)
 			if(diskNum < 0):
 				#don't launch game
 				Logutil.log("No disc was chosen. Won't launch game", util.LOG_LEVEL_INFO)
@@ -259,10 +259,10 @@ def checkGameHasSaveStates(romCollection, gameRow, filenameRows, escapeCmd):
 		if(re.search('(?i)%ASKNUM%', romCollection.saveStateParams)):
 			return saveStateFiles[0]
 				
-		options = [util.localize(40065)]
+		options = [util.localize(32165)]
 		for file in saveStateFiles:
 			options.append(os.path.basename(file))
-		selectedFile = xbmcgui.Dialog().select(util.localize(40066), options)
+		selectedFile = xbmcgui.Dialog().select(util.localize(32166), options)
 		#If selections is canceled or "Don't launch statefile" option
 		if(selectedFile < 1):
 			return ''
@@ -296,7 +296,7 @@ def handleCompressedFile(filext, rom, romCollection, emuParams):
 			os.remove(os.path.join(tempDir, file))
 	except Exception, (exc):
 		Logutil.log("Error deleting files after launch emu: " +str(exc), util.LOG_LEVEL_ERROR)
-		gui.writeMsg(util.localize(35036) +": " +str(exc))
+		gui.writeMsg(util.localize(32036) +": " +str(exc))
 		
 	
 	roms = []
@@ -406,7 +406,7 @@ def replacePlaceholdersInParams(emuParams, rom, romCollection, gameRow, escapeCm
 	#ask num
 	if(re.search('(?i)%ASKNUM%', emuParams)):
 		options = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-		number = str(xbmcgui.Dialog().select(util.localize(40067), options))
+		number = str(xbmcgui.Dialog().select(util.localize(32167), options))
 		emuParams = emuParams.replace('%asknum%', number)
 		emuParams = emuParams.replace('%ASKNUM%', number)
 		emuParams = emuParams.replace('%Asknum%', number)
@@ -415,7 +415,7 @@ def replacePlaceholdersInParams(emuParams, rom, romCollection, gameRow, escapeCm
 	if(re.search('(?i)%ASKTEXT%', emuParams)):
 		
 		keyboard = xbmc.Keyboard()
-		keyboard.setHeading(util.localize(40068))
+		keyboard.setHeading(util.localize(32168))
 		keyboard.doModal()
 		command = ''
 		if (keyboard.isConfirmed()):
@@ -443,40 +443,21 @@ def copyLauncherScriptsToUserdata(settings):
 		oldPath = os.path.join(oldBasePath, 'applaunch.sh')
 		newPath = os.path.join(newBasePath, 'applaunch.sh')
 		
-	copyFile(oldPath, newPath)
+	util.copyFile(oldPath, newPath)
 	
 	#copy VBS files
 	if(util.getEnvironment() == 'win32' and settings.getSetting(util.SETTING_RCB_USEVBINSOLOMODE).lower() == 'true'):
 		oldPath = os.path.join(oldBasePath, 'applaunch-vbs.bat')
 		newPath = os.path.join(newBasePath, 'applaunch-vbs.bat')
-		copyFile(oldPath, newPath)
+		util.copyFile(oldPath, newPath)
 		
 		oldPath = os.path.join(oldBasePath, 'LaunchXBMC.vbs')
 		newPath = os.path.join(newBasePath, 'LaunchXBMC.vbs')
-		copyFile(oldPath, newPath)
+		util.copyFile(oldPath, newPath)
 		
 		oldPath = os.path.join(oldBasePath, 'Sleep.vbs')
 		newPath = os.path.join(newBasePath, 'Sleep.vbs')
-		copyFile(oldPath, newPath)
-		
-		
-def copyFile(oldPath, newPath):
-	Logutil.log('new path = %s' %newPath, util.LOG_LEVEL_INFO)
-	newDir = os.path.dirname(newPath)
-	if not os.path.isdir(newDir):
-		Logutil.log('create directory: %s' %newDir, util.LOG_LEVEL_INFO)
-		try:
-			os.mkdir(newDir)
-		except Exception, (exc):
-			Logutil.log('Error creating directory: %s' %newDir, util.LOG_LEVEL_ERROR)
-			return
-	
-	if not os.path.isfile(newPath):
-		Logutil.log('copy launch scripts from %s to %s' %(oldPath, newPath), util.LOG_LEVEL_INFO)
-		try:
-			shutil.copy2(oldPath, newPath)
-		except:
-			Logutil.log('Error copying launch scripts from %s to %s' %(oldPath, newPath), util.LOG_LEVEL_ERROR)
+		util.copyFile(oldPath, newPath)
 
 
 def writeAutoexec(gdb):
@@ -534,7 +515,7 @@ def launchXbox(gui, gdb, cmd, romCollection, filenameRows):
 	#on xbox emucmd must be the path to an executable or cut file
 	if (not os.path.isfile(cmd)):
 		Logutil.log("Error while launching emu: File %s does not exist!" %cmd, util.LOG_LEVEL_ERROR)
-		gui.writeMsg(util.localize(35037) %cmd)
+		gui.writeMsg(util.localize(32037) %cmd)
 		return
 					
 	if (romCollection.xboxCreateShortcut):
@@ -543,7 +524,7 @@ def launchXbox(gui, gdb, cmd, romCollection, filenameRows):
 		cutFile = createXboxCutFile(cmd, filenameRows, romCollection)
 		if(cutFile == ""):
 			Logutil.log("Error while creating .cut file. Check xbmc.log for details.", util.LOG_LEVEL_ERROR)
-			gui.writeMsg(util.localize(35038))
+			gui.writeMsg(util.localize(32038))
 			return
 			
 		cmd = cutFile
@@ -616,22 +597,34 @@ def getRomfilenameForXboxCutfile(filenameRows, romCollection):
 def launchNonXbox(cmd, romCollection, gameRow, settings, precmd, postcmd, roms, gui, listitem):
 	Logutil.log("launchEmu on non-xbox", util.LOG_LEVEL_INFO)							
 				
-	toggledScreenMode = False
+	screenModeToggled = False
+		
+	encoding = 'utf-8'
+	#HACK: sys.getfilesystemencoding() is not supported on all systems (e.g. Android)
+	try:
+		encoding = sys.getfilesystemencoding()
+	except:
+		pass
+		 
 	
 	#use libretro core to play game
 	if(romCollection.useBuiltinEmulator):
 		Logutil.log("launching game with internal emulator", util.LOG_LEVEL_INFO)
 		rom = roms[0]
-		gameclient = romCollection.gameclient		
-		#HACK: assume that every gameclient starts with "gameclient"
-		if(gameRow[util.GAME_gameCmd] != None and str(gameRow[util.GAME_gameCmd]).startswith('gameclient')):
-			gameclient = str(gameRow[util.GAME_gameCmd])
+		gameclient = romCollection.gameclient
+		#HACK: use alternateGameCmd as gameclient
+		if(gameRow[util.GAME_alternateGameCmd] != None and gameRow[util.GAME_alternateGameCmd] != ""):
+			gameclient = str(gameRow[util.GAME_alternateGameCmd])
 		Logutil.log("Preferred gameclient: " +gameclient, util.LOG_LEVEL_INFO)
 		Logutil.log("Setting platform: " +romCollection.name, util.LOG_LEVEL_INFO)
 		
 		if(listitem == None):
 			listitem = xbmcgui.ListItem(rom, "0", "", "")
-		listitem.setInfo( type="game", infoLabels={ "platform": romCollection.name, "gameclient" : gameclient})
+		
+		parameters = { "platform": romCollection.name }
+		if(gameclient != ""):
+			parameters["gameclient"] = gameclient
+		listitem.setInfo( type="game", infoLabels=parameters)
 		Logutil.log("launching rom: " +rom, util.LOG_LEVEL_INFO)		
 		gui.player.play(rom, listitem)
 		#xbmc.executebuiltin('PlayMedia(\"%s\", platform=%s, gameclient=%s)' %(rom, romCollection.name, romCollection.gameclient))
@@ -643,7 +636,9 @@ def launchNonXbox(cmd, romCollection, gameRow, settings, precmd, postcmd, roms, 
 		Logutil.log("screenMode: " +screenMode, util.LOG_LEVEL_INFO)
 		isFullScreen = screenMode.endswith("Full Screen")
 		
-		if(isFullScreen):
+		toggleScreenMode = settings.getSetting(util.SETTING_RCB_TOGGLESCREENMODE).upper() == 'TRUE'
+		
+		if(isFullScreen and toggleScreenMode):
 			Logutil.log("Toggle to Windowed mode", util.LOG_LEVEL_INFO)
 			#this minimizes xbmc some apps seems to need it
 			try:
@@ -651,14 +646,14 @@ def launchNonXbox(cmd, romCollection, gameRow, settings, precmd, postcmd, roms, 
 			except:
 				xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Input.ExecuteAction","params":{"action":"togglefullscreen"},"id":"1"}')
 			
-			toggledScreenMode = True
+			screenModeToggled = True
 		
 	Logutil.log("launch emu", util.LOG_LEVEL_INFO)
 	
 	#pre launch command
 	if(precmd.strip() != '' and precmd.strip() != 'call'):
 		Logutil.log("Got to PRE", util.LOG_LEVEL_INFO)
-		os.system(precmd.encode(sys.getfilesystemencoding()))
+		os.system(precmd.encode(encoding))
 	
 	preDelay = settings.getSetting(SETTING_RCB_PRELAUNCHDELAY)
 	if(preDelay != ''):
@@ -673,11 +668,23 @@ def launchNonXbox(cmd, romCollection, gameRow, settings, precmd, postcmd, roms, 
 		except:
 			pass
 	
+		
+	#pause audio
+	suspendAudio = settings.getSetting(util.SETTING_RCB_SUSPENDAUDIO).upper() == 'TRUE'
+	if(suspendAudio):
+		xbmc.executebuiltin("PlayerControl(Stop)")
+		xbmc.enableNavSounds(False)
+		xbmc.audioSuspend()
+	
 	if(romCollection.usePopen):
 		import subprocess
-		subprocess.Popen(cmd.encode(sys.getfilesystemencoding()), shell=True)
+		process = subprocess.Popen(cmd.encode(encoding), shell=True)
+		process.wait()
 	else:
-		os.system(cmd.encode(sys.getfilesystemencoding()))
+		try:
+			os.system(cmd.encode(encoding))
+		except:
+			os.system(cmd.encode('utf-8'))
 	
 	Logutil.log("launch emu done", util.LOG_LEVEL_INFO)		
 	
@@ -686,12 +693,17 @@ def launchNonXbox(cmd, romCollection, gameRow, settings, precmd, postcmd, roms, 
 		postDelay = int(float(postDelay))
 		xbmc.sleep(postDelay)
 	
+	#resume audio
+	if(suspendAudio):
+		xbmc.audioResume()
+		xbmc.enableNavSounds(True)
+	
 	#post launch command
 	if(postcmd.strip() != '' and postcmd.strip() != 'call'):
 		Logutil.log("Got to POST: " + postcmd.strip(), util.LOG_LEVEL_INFO)
-		os.system(postcmd.encode(sys.getfilesystemencoding()))
+		os.system(postcmd.encode(encoding))
 	
-	if(toggledScreenMode):
+	if(screenModeToggled):
 		Logutil.log("Toggle to Full Screen mode", util.LOG_LEVEL_INFO)
 		#this brings xbmc back
 		try:
@@ -712,7 +724,7 @@ def getNames7z(filepath):
 	try:
 		import py7zlib
 	except Exception, (exc):
-		xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35039), util.localize(40029))
+		xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32039), util.localize(32129))
 		Logutil.log("You have tried to launch a .7z file but you are missing required libraries to extract the file. You can download the latest RCB version from RCBs project page. It contains all required libraries.", util.LOG_LEVEL_ERROR)
 		Logutil.log("Error: " +str(exc), util.LOG_LEVEL_ERROR)
 		return None
@@ -742,7 +754,7 @@ def getArchives7z(filepath, archiveList):
 	try:
 		import py7zlib
 	except:
-		xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(35039), util.localize(40029))
+		xbmcgui.Dialog().ok(util.SCRIPTNAME, util.localize(32039), util.localize(32129))
 		Logutil.log("You have tried to launch a .7z file but you are missing required libraries to extract the file. You can download the latest RCB version from RCBs project page. It contains all required libraries.", util.LOG_LEVEL_ERROR)
 		return None
 	

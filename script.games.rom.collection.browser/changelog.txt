@@ -1,3 +1,51 @@
+2.0.17 (06/2014)
+~~~~~~~~~~~~~
+Import Games:
+  * bugfix: flatfile scrapers were broken
+
+2.0.16 (06/2014)
+~~~~~~~~~~~~~
+General:
+  * bugfix: Delete Rom Collection dialog did not work language independent
+
+Import Games:
+  * bugfix: nfo import was broken with new version of elementtree
+
+2.0.15 (05/2014)
+~~~~~~~~~~~~~
+General:
+  * add autoconfig support to Edit Rom Collection dialog
+  * add and update languages
+  * replace elementtree module with xml.etree
+  * add new string ids with ids from 32000 to 32999
+
+2.0.14 (04/2014)
+~~~~~~~~~~~~~
+Launch Games:
+  * add autoconfig support on Android
+
+2.0.13 (03/2014)
+~~~~~~~~~~~~~
+Launch Games:
+  * fixed issues with launching games on Android
+
+2.0.12 (03/2014)
+~~~~~~~~~~~~~
+General:
+  * workaround to update button labels with empty strings in Edit Rom Collection dialog
+
+Import Games:
+  * update moby scraper: reflect changes on page
+
+Launch Games:
+  * add option to suspend audio before launching games
+  * add option to toggle screen mode before launching games
+
+2.0.11 (10/2013)
+~~~~~~~~~~~~~
+General:
+  * configure RetroPlayer support per config wizard and UI
+
 2.0.10 (09/2013)
 ~~~~~~~~~~~~~
 General:

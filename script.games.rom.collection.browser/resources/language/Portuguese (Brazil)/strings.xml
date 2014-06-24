@@ -154,6 +154,12 @@
     <string id="40095">Atraso depois de lançar (ms)</string>
     <string id="40096">Atraso (ms) para iniciar modo solo</string>
     <string id="40097">Usar VB Script no modo solo (somente no Windows)</string>
+    <string id="40098">Usar RetroPlayer para iniciar jogos?</string>
+    <string id="40099">Suspender Áudio</string>
+    <string id="40100">Minimize XBMC</string>
+    <string id="40101">Caminho para emu_autoconfig.xml</string>
+    <string id="40102">%s (Instalado)</string>
+    <string id="40103">Disponíveis emuladores com autoconfig</string>
 
     <!-- Settings -->
     <string id="45000">Geral</string>
@@ -215,6 +221,7 @@
     <string id="51011">Deletar Coleção de Rom</string>
     <string id="51012">Limpar Banco de Dados</string>
     <string id="51013">Abrir Configurações do Addon</string>
+    <string id="51014">Setar Gamecliente (por Jogo)</string>
 
     <!-- editromcollection -->
     <string id="52000">Configurações</string>
@@ -253,6 +260,9 @@
     <string id="52033">Depois de Lançar CMD</string>
     <string id="52034">Configuração de Salvamento</string>
     <string id="52035">Cancelar</string>
+    <string id="52036">Autoplay Vídeo (Janela Info)</string>
+    <string id="52037">Usar RetroPlayer</string>
+    <string id="52038">Gameclient</string>
 
     <!-- editscraper -->
     <string id="53000">Raspadores Desativados</string>

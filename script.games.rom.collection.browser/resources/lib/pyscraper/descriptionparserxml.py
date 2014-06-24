@@ -1,5 +1,5 @@
 
-from elementtree.ElementTree import *
+from xml.etree.ElementTree import *
 import urllib2
 import time
 
@@ -26,10 +26,6 @@ class DescriptionParserXml:
 		else:
 			fh = open(str(descFile), 'r')
 			descFile = fh.read()
-			
-		#descFile = descFile.decode(encoding).encode('utf-8')
-		
-		#Logutil.log('parseDescription: %s' % descFile, util.LOG_LEVEL_INFO)	
 				
 		#load xmlDoc as elementtree to check with xpaths
 		tree = fromstring(descFile)
@@ -37,6 +33,8 @@ class DescriptionParserXml:
 			return None				
 						
 		rootElementXPath = self.grammarNode.attrib.get('root')
+		if(not rootElementXPath):
+			rootElementXPath = "."
 		rootElements = tree.findall(rootElementXPath)
 		if(rootElements == None):
 			return None
@@ -50,7 +48,7 @@ class DescriptionParserXml:
 				results = self.replaceResultTokens(results)
 				resultList.append(results)		
 				
-		#Logutil.log('parseDescription: %s' % resultList, util.LOG_LEVEL_INFO)	
+		#Logutil.log('parseDescription: %s' % resultList, util.LOG_LEVEL_INFO)
 		
 		return resultList
 	

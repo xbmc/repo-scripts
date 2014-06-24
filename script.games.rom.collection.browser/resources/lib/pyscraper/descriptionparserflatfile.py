@@ -1,6 +1,6 @@
 
 from pyparsing import *
-from elementtree.ElementTree import *
+from xml.etree.ElementTree import *
 import urllib2
 import time
 import util

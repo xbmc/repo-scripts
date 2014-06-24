@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window>		
 	<allowoverlay>no</allowoverlay>
 	<defaultcontrol always="false">500</defaultcontrol>
@@ -694,7 +695,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF15efd9</textcolor>
-						<label>[B]$ADDON[script.games.rom.collection.browser 50001][/B]</label>						
+						<label>[B]$ADDON[script.games.rom.collection.browser 32401][/B]</label>						
 					</control>
 					<control type="label"><!--Director-->
 						<posx>0</posx>
@@ -721,7 +722,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF67ffff</textcolor>
-						<label>[B]$ADDON[script.games.rom.collection.browser 50002][/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32402][/B]</label>
 					</control>
 					<control type="label"><!--Writer-->
 						<posx>0</posx>
@@ -748,7 +749,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF15efd9</textcolor>
-						<label>[B]$ADDON[script.games.rom.collection.browser 50003][/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32403][/B]</label>
 					</control>
 					<control type="label"><!--Genre-->
 						<posx>0</posx>
@@ -775,7 +776,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF15efd9</textcolor>
-						<label>[B]$ADDON[script.games.rom.collection.browser 54003][/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32753][/B]</label>
 					</control>
 					<control type="label"><!--Rating-->
 						<posx>0</posx>
@@ -802,7 +803,7 @@
 						<height>24</height>
 						<font>LiberationSans_Regular_22</font>
 						<textcolor>FF15efd9</textcolor>
-						<label>[B]$ADDON[script.games.rom.collection.browser 54004][/B]</label>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32754][/B]</label>
 					</control>
 					<control type="label"><!--Rating-->
 						<posx>0</posx>
@@ -1278,7 +1279,7 @@
 				<width>200</width>
 				<height>30</height>
 				<font>font13</font>
-				<label>$ADDON[script.games.rom.collection.browser 50004]</label>
+				<label>$ADDON[script.games.rom.collection.browser 32404]</label>
 				<textcolor>FF000000</textcolor>
 				<focusedcolor>FFFFFFFF</focusedcolor>
 				<texturefocus>rcb-button-focus.png</texturefocus>
@@ -1298,7 +1299,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>$ADDON[script.games.rom.collection.browser 50005]</label>
+				<label>$ADDON[script.games.rom.collection.browser 32405]</label>
 				<textcolor>FF000000</textcolor>
 				<focusedcolor>FFFFFFFF</focusedcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>
@@ -1331,7 +1332,7 @@
 					<width>200</width>
 					<align>center</align>
 					<textcolor>FF000000</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50006]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32406]</label>
 				</control>		
 				<control type="wraplist" id="500">
 					<posx>0</posx>
@@ -1412,7 +1413,7 @@
 					<posy>20</posy>
 					<width>200</width>
 					<textcolor>FF000000</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50001]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32401]</label>
 					<align>center</align>
 				</control>
 				<control type="wraplist" id="600">
@@ -1495,7 +1496,7 @@
 					<width>200</width>
 					<align>center</align>
 					<textcolor>FF000000</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50000]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32400]</label>
 				</control>		
 				<control type="wraplist" id="700">
 					<posx>420</posx>
@@ -1577,7 +1578,7 @@
 					<width>200</width>
 					<align>center</align>
 					<textcolor>FF000000</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50002]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32402]</label>
 				</control>		
 				<control type="wraplist" id="800">
 					<posx>630</posx>
@@ -1659,7 +1660,7 @@
 					<width>60</width>
 					<align>center</align>
 					<textcolor>FF000000</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50007]</label>
+					<label>$ADDON[script.games.rom.collection.browser 32407]</label>
 				</control>		
 				<control type="wraplist" id="900">
 					<posx>840</posx>
@@ -1749,7 +1750,7 @@
 				<visible>true</visible>
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
-				<label>$ADDON[script.games.rom.collection.browser 50008]</label>
+				<label>$ADDON[script.games.rom.collection.browser 32408]</label>
 				<textcolor>FF000000</textcolor>
 				<focusedcolor>FFFFFFFF</focusedcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>

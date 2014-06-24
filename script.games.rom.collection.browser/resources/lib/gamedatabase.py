@@ -115,19 +115,19 @@ class GameDataBase:
 				newFileName = self.dataBasePath +'.backup ' +dbVersion 
 				
 				if os.path.isfile(newFileName):					
-					return -1, util.localize(35030)				
+					return -1, util.localize(32030)				
 				try:
 					self.close()
 					shutil.copy(str(self.dataBasePath), str(newFileName))
 					self.connect()
 				except Exception, (exc):					
-					return -1, util.localize(35031) +": " +str(exc)
+					return -1, util.localize(32031) +": " +str(exc)
 								
 				self.executeSQLScript(alterTableScript)
 				self.commit()
 				return returnCode, message
 			else:
-				return -1, util.localize(35032) %(dbVersion, util.CURRENT_DB_VERSION)
+				return -1, util.localize(32032) %(dbVersion, util.CURRENT_DB_VERSION)
 					
 		count = Game(self).getCount()
 		if(count == 0):

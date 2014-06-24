@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!-- 
 
 	Copy the content of this file to the Font.xml file of your default skin.
@@ -158,4 +159,4 @@
 			<name>Simplicity_40</name>
 			<filename>CartoGothicStd-Book.ttf</filename>
 			<size>40</size>
-		</font>	
+		</font>

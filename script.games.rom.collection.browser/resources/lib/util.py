@@ -1,7 +1,7 @@
 
-import xbmc, xbmcaddon
+import xbmc, xbmcaddon, xbmcvfs
 
-import os, sys, re
+import os, sys, re, shutil
 #import xbmc, time
 import time
 
@@ -83,6 +83,9 @@ SETTING_RCB_NFOFOLDER = 'rcb_nfoFolder'
 SETTING_RCB_PRELAUNCHDELAY = 'rcb_prelaunchDelay'
 SETTING_RCB_POSTLAUNCHDELAY = 'rcb_postlaunchDelay'
 SETTING_RCB_USEVBINSOLOMODE = 'rcb_useVBInSoloMode'
+SETTING_RCB_SUSPENDAUDIO = 'rcb_suspendAudio'
+SETTING_RCB_TOGGLESCREENMODE = 'rcb_toggleScreenMode'
+SETTING_RCB_EMUAUTOCONFIGPATH = 'rcb_pathToEmuAutoConfig'
 
 
 SCRAPING_OPTION_AUTO_ACCURATE = 0
@@ -112,6 +115,7 @@ RCBSETTING_lastSelectedCharacterIndex = 11
 
 GAME_description = 2
 GAME_gameCmd = 3
+GAME_alternateGameCmd = 4
 GAME_romCollectionId = 5
 GAME_publisherId = 6
 GAME_developerId = 7
@@ -240,8 +244,8 @@ def localize(id):
 		return "Sorry. No translation available for string with id: " +str(id)
 
 def getAddonDataPath():
+	
 	path = ''
-			
 	path = xbmc.translatePath('special://profile/addon_data/%s' %(SCRIPTID))
 		
 	if not os.path.exists(path):
@@ -262,6 +266,20 @@ def getAddonInstallPath():
 
 def getAutoexecPath():	
 	return xbmc.translatePath('special://profile/autoexec.py')
+
+
+def getEmuAutoConfigPath():	
+	
+	settings = getSettings()
+	path = settings.getSetting(SETTING_RCB_EMUAUTOCONFIGPATH)
+	if(path == ''):
+		path = os.path.join(getAddonDataPath(), 'emu_autoconfig.xml')
+		
+	if(not xbmcvfs.exists(path)):
+		oldPath = os.path.join(getAddonInstallPath(), 'resources', 'emu_autoconfig.xml')
+		copyFile(oldPath, path)
+		
+	return path
 
 
 def getTempDir():
@@ -286,11 +304,47 @@ def getConfigXmlPath():
 	
 	Logutil.log('Path to configuration file: ' +str(configFile), LOG_LEVEL_INFO)
 	return configFile
+
+
+def copyFile(oldPath, newPath):
+	Logutil.log('new path = %s' %newPath, LOG_LEVEL_INFO)
+	newDir = os.path.dirname(newPath)
+	if not os.path.isdir(newDir):
+		Logutil.log('create directory: %s' %newDir, LOG_LEVEL_INFO)
+		try:
+			os.mkdir(newDir)
+		except Exception, (exc):
+			Logutil.log('Error creating directory: %s\%s' %(newDir, str(exc)), LOG_LEVEL_ERROR)
+			return
+	
+	if not os.path.isfile(newPath):
+		Logutil.log('copy file from %s to %s' %(oldPath, newPath), LOG_LEVEL_INFO)
+		try:
+			shutil.copy2(oldPath, newPath)
+		except Exception, (exc):
+			Logutil.log('Error copying file from %s to %s\%s' %(oldPath, newPath, str(exc)), LOG_LEVEL_ERROR)
 	
 	
 def getSettings():
 	settings = xbmcaddon.Addon(id='%s' %SCRIPTID)
 	return settings
+
+
+#HACK: XBMC does not update labels with empty strings
+def setLabel(label, control):
+	if(label == ''):
+		label = ' '
+		
+	control.setLabel(str(label))
+
+
+#HACK: XBMC does not update labels with empty strings
+def getLabel(control):
+	label = control.getLabel()
+	if(label == ' '):
+		label = ''
+		
+	return label
 
 
 def getScrapingMode(settings):

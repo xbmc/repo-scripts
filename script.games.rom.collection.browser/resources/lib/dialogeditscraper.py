@@ -102,14 +102,14 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			#check value of descfilepergame
 			control = self.getControlById(CONTROL_BUTTON_DESCPERGAME)
 			if(control.isSelected()):
-				gamedescPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_GAMEDESCPATH, '%s ' %self.selectedOfflineScraper.name +util.localize(53003), CONTROL_BUTTON_GAMEDESCMASK)
+				gamedescPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_GAMEDESCPATH, '%s ' %self.selectedOfflineScraper.name +util.localize(32703), CONTROL_BUTTON_GAMEDESCMASK)
 				if(gamedescPathComplete != ''):
 					#HACK: only use source and parser from 1st scraper
 					if(len(self.selectedOfflineScraper.scrapers) >= 1):			
 						self.selectedOfflineScraper.scrapers[0].source = gamedescPathComplete
 			else:
 				dialog = xbmcgui.Dialog()
-				gamedescPath = dialog.browse(1, '%s ' %self.selectedOfflineScraper.name +util.localize(53003), 'files', '', False, False, self.selectedOfflineScraper.scrapers[0].source)
+				gamedescPath = dialog.browse(1, '%s ' %self.selectedOfflineScraper.name +util.localize(32703), 'files', '', False, False, self.selectedOfflineScraper.scrapers[0].source)
 				if(gamedescPath == ''):
 					return
 				
@@ -122,7 +122,7 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 		elif (controlID == CONTROL_BUTTON_GAMEDESCMASK):
 			
 			if(len(self.selectedOfflineScraper.scrapers) >= 1):
-				self.selectedOfflineScraper.scrapers[0].source = self.editFilemask(CONTROL_BUTTON_GAMEDESCMASK, util.localize(53004), self.selectedOfflineScraper.scrapers[0].source)
+				self.selectedOfflineScraper.scrapers[0].source = self.editFilemask(CONTROL_BUTTON_GAMEDESCMASK, util.localize(32704), self.selectedOfflineScraper.scrapers[0].source)
 			
 		elif (controlID == CONTROL_BUTTON_DESCPERGAME):
 			#set value of gamedesc path and mask
@@ -132,7 +132,7 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			
 			dialog = xbmcgui.Dialog()
 			
-			parseInstruction = dialog.browse(1, '%s ' %self.selectedOfflineScraper.name +util.localize(53005), 'files')
+			parseInstruction = dialog.browse(1, '%s ' %self.selectedOfflineScraper.name +util.localize(32705), 'files')
 			if(parseInstruction == ''):
 				return
 			
@@ -159,11 +159,11 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			dialog = xbmcgui.Dialog()
 			
 			if(len(names) == 0):
-				dialog.ok(util.SCRIPTNAME, util.localize(40044), util.localize(40045))
+				dialog.ok(util.SCRIPTNAME, util.localize(32144), util.localize(32145))
 				return
 						
 			#select name
-			scraperIndex = dialog.select(util.localize(40046), names)
+			scraperIndex = dialog.select(util.localize(32146), names)
 			if(scraperIndex == -1):
 				return						
 			
@@ -178,14 +178,14 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			scraper.encoding = 'iso-8859-1'			
 						
 			#select game desc
-			gamedescPath = dialog.browse(1, '%s ' %name +util.localize(53003), 'files')
+			gamedescPath = dialog.browse(1, '%s ' %name +util.localize(32703), 'files')
 			if(gamedescPath == ''):
 				return
 			
 			scraper.source = gamedescPath
 			
 			#select parse instruction
-			parseInstruction = dialog.browse(1, '%s ' %self.selectedOfflineScraper.name +util.localize(53005), 'files')
+			parseInstruction = dialog.browse(1, '%s ' %self.selectedOfflineScraper.name +util.localize(32705), 'files')
 			if(parseInstruction == ''):
 				return
 			
@@ -217,7 +217,7 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			
 			scraperSites = self.getAvailableScrapers(True)
 			
-			scraperIndex = xbmcgui.Dialog().select(util.localize(40047), scraperSites)
+			scraperIndex = xbmcgui.Dialog().select(util.localize(32147), scraperSites)
 			if(scraperIndex == -1):
 				return
 			
@@ -227,7 +227,7 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			for romCollection in self.gui.config.romCollections.values():				
 				for scraper in romCollection.scraperSites:
 					if(scraper.name == scraperSite):
-						xbmcgui.Dialog().ok(util.localize(35019), util.localize(40048) %scraper.name)
+						xbmcgui.Dialog().ok(util.localize(32019), util.localize(32148) %scraper.name)
 						return
 
 																	
@@ -235,11 +235,11 @@ class EditOfflineScraper(dialogbase.DialogBaseEdit):
 			del self.scraperSites[scraperSite]
 			
 			if(len(scraperSites) == 0):
-				scraperSites.append(util.localize(56004))
+				scraperSites.append(util.localize(32854))
 				site = Site()
-				site.name = util.localize(56004)
+				site.name = util.localize(32854)
 				site.scrapers = []
-				self.scraperSites[util.localize(56004)] = site
+				self.scraperSites[util.localize(32854)] = site
 				
 			control = self.getControlById(CONTROL_LIST_SCRAPERS)
 			control.reset()

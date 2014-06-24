@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window>
 	<allowoverlay>no</allowoverlay>
 	<coordinates>
@@ -72,7 +73,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50001]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32401]:</label>
 				</control>
 				<control type="label" id="6100">
 					<description>Genre value</description>
@@ -92,7 +93,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50000]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32400]:</label>
 				</control>
 				<control type="label" id="6200">
 					<description>Year value</description>
@@ -112,7 +113,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50002]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32402]:</label>
 				</control>
 				<control type="label" id="6300">
 					<description>Publisher value</description>
@@ -132,7 +133,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 50003]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32403]:</label>
 				</control>
 				<control type="label" id="6400">
 					<description>Developer value</description>
@@ -152,7 +153,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 54000]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32750]:</label>
 				</control>
 				<control type="label" id="6500">
 					<description>Region value</description>
@@ -172,7 +173,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 54001]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32751]:</label>
 				</control>
 				<control type="label" id="6600">
 					<description>Media value</description>
@@ -192,7 +193,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 54002]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32752]:</label>
 				</control>
 				<control type="label" id="6700">
 					<description>Controller value</description>
@@ -212,7 +213,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 54003]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32753]:</label>
 				</control>
 				<control type="label" id="6800">
 					<description>Rating value</description>
@@ -232,7 +233,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 54004]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32754]:</label>
 				</control>
 				<control type="label" id="7000">
 					<description>Players value</description>
@@ -252,7 +253,7 @@
 					<aligny>center</aligny>
 					<font>font13_title</font>
 					<textcolor>FF0084ff</textcolor>
-					<label>$ADDON[script.games.rom.collection.browser 54005]:</label>
+					<label>$ADDON[script.games.rom.collection.browser 32755]:</label>
 				</control>
 				<control type="label" id="7400">
 					<description>Launch count value</description>
@@ -475,7 +476,7 @@
 				<colordiffuse>DDFFFFFF</colordiffuse>
 				<texturefocus>rcb-button-focus.png</texturefocus>
 				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
-				<label>$ADDON[script.games.rom.collection.browser 54006]</label>
+				<label>$ADDON[script.games.rom.collection.browser 32756]</label>
 				<!--font12-->
 				<textcolor>DDFFFFFF</textcolor>
 				<disabledcolor>80FFFFFF</disabledcolor>

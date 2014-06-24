@@ -41,7 +41,7 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 		#Scrapers
 		sitesInList = []		
 		if(not localOnly):
-			sitesInList.append(util.localize(56004))
+			sitesInList.append(util.localize(32854))
 		#get all scrapers
 		
 		for siteName in self.scraperSites:
@@ -51,7 +51,7 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 			#only add scrapers without http
 			if(localOnly):
 				#don't use local nfo scraper
-				if(site.name == util.localize(40054)):
+				if(site.name == util.localize(32154)):
 					 continue
 				skipScraper = False
 				
@@ -68,24 +68,24 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 			sitesInList.append(site.name)
 				
 		if(len(sitesInList) == 0):
-			 sitesInList.append(util.localize(56004))
+			 sitesInList.append(util.localize(32854))
 				
 		return sitesInList
 	
 	
 	def editTextProperty(self, controlId, name):
 		control = self.getControlById(controlId)
-		textValue = control.getLabel()
+		textValue = util.getLabel(control)
 		
 		keyboard = xbmc.Keyboard()
-		keyboard.setHeading(util.localize(40032) %name)			
+		keyboard.setHeading(util.localize(32132) %name)			
 		keyboard.setDefault(textValue)
 		keyboard.doModal()
 		if (keyboard.isConfirmed()):
 			textValue = keyboard.getText()
-							
-		control.setLabel(textValue)
 		
+		util.setLabel(textValue, control)
+				
 		return textValue
 	
 	
@@ -95,15 +95,13 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 		
 		#get new value
 		pathValue = dialog.browse(0, enterString, 'files')
-		if(pathValue == ''):
-			return ''
 		
 		control = self.getControlById(controlId)
-		control.setLabel(pathValue)
 		
+		util.setLabel(pathValue, control)
 		
 		control = self.getControlById(controlIdFilemask)
-		filemask = control.getLabel()
+		filemask = util.getLabel(control)
 		pathComplete = os.path.join(pathValue, filemask.strip())
 		
 		return pathComplete
@@ -111,16 +109,16 @@ class DialogBaseEdit(xbmcgui.WindowXMLDialog):
 		
 	def editFilemask(self, controlId, enterString, pathComplete):
 		control = self.getControlById(controlId)
-		filemask = control.getLabel()
+		filemask = util.getLabel(control)
 		
 		keyboard = xbmc.Keyboard()
-		keyboard.setHeading(util.localize(40032) %enterString)
+		keyboard.setHeading(util.localize(32132) %enterString)
 		keyboard.setDefault(filemask)
 		keyboard.doModal()
 		if (keyboard.isConfirmed()):
 			filemask = keyboard.getText()
 		
-		control.setLabel(filemask)
+		util.setLabel(filemask, control)
 												
 		pathParts = os.path.split(pathComplete)
 		path = pathParts[0]

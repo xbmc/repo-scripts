@@ -49,7 +49,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		Logutil.log('onInit ImportOptions', util.LOG_LEVEL_INFO)
 		
 		#Rom Collections
-		romCollectionList = [util.localize(40020)]
+		romCollectionList = [util.localize(32120)]
 		for rcId in self.gui.config.romCollections.keys():
 			romCollection = self.gui.config.romCollections[rcId]
 			romCollectionList.append(romCollection.name)
@@ -120,7 +120,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 			#get selected Rom Collection
 			for rcId in self.gui.config.romCollections.keys():
 				romCollection = self.gui.config.romCollections[rcId]
-				if((selectedRomCollection == util.localize(40020) and romCollection.name != 'MAME')  or len(self.gui.config.romCollections) == 1 or romCollection.name == selectedRomCollection):
+				if((selectedRomCollection == util.localize(32120) and romCollection.name != 'MAME')  or len(self.gui.config.romCollections) == 1 or romCollection.name == selectedRomCollection):
 					sitesInRomCollection = romCollection.scraperSites
 					break
 				
@@ -161,7 +161,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 	
 	def getAvailableScrapers(self):
 		#Scrapers
-		sitesInList = [util.localize(56004), util.localize(40053)]
+		sitesInList = [util.localize(32854), util.localize(32153)]
 		#get all scrapers
 		scrapers = self.gui.config.tree.findall('Scrapers/Site')
 		for scraper in scrapers:
@@ -177,15 +177,15 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		if(len(sitesInRomCollection) >= 1):
 			self.selectScraperInList(sitesInList, sitesInRomCollection[0].name, CONTROL_LIST_SCRAPER1)			
 		else:
-			self.selectScraperInList(sitesInList, util.localize(56004), CONTROL_LIST_SCRAPER1)
+			self.selectScraperInList(sitesInList, util.localize(32854), CONTROL_LIST_SCRAPER1)
 		if(len(sitesInRomCollection) >= 2):
 			self.selectScraperInList(sitesInList, sitesInRomCollection[1].name, CONTROL_LIST_SCRAPER2)
 		else:
-			self.selectScraperInList(sitesInList, util.localize(56004), CONTROL_LIST_SCRAPER2)
+			self.selectScraperInList(sitesInList, util.localize(32854), CONTROL_LIST_SCRAPER2)
 		if(len(sitesInRomCollection) >= 3):
 			self.selectScraperInList(sitesInList, sitesInRomCollection[2].name, CONTROL_LIST_SCRAPER3)
 		else:
-			self.selectScraperInList(sitesInList, util.localize(56004), CONTROL_LIST_SCRAPER3)
+			self.selectScraperInList(sitesInList, util.localize(32854), CONTROL_LIST_SCRAPER3)
 			
 	
 	
@@ -225,7 +225,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 			romCollections = self.romCollections
 		else:
 			#TODO add id to list and select rc by id
-			if(selectedRC == util.localize(40020)):
+			if(selectedRC == util.localize(32120)):
 				romCollections = self.gui.config.romCollections
 			else:
 				romCollections = {}
@@ -267,13 +267,13 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 		scraperItem = control.getSelectedItem()
 		scraper = scraperItem.getLabel()
 		
-		if(scraper == util.localize(56004)):
+		if(scraper == util.localize(32854)):
 			return sites, True
 		
 		#HACK: don't use other scrapers than MAME and local nfo for MAME collections
 		#HACK2: check if scraper name contains mame
 		if(romCollection.name == 'MAME'):
-			if(scraper != util.localize(40054) and scraper != util.localize(40053) and not bool(re.search('(?i)mame', scraper))):
+			if(scraper != util.localize(32154) and scraper != util.localize(32153) and not bool(re.search('(?i)mame', scraper))):
 				scraper = 'maws.mameworld.info'
 				
 		siteRow = None
@@ -283,9 +283,9 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 				siteRow = element
 				break
 				
-		if(scraper != util.localize(40053)):
+		if(scraper != util.localize(32153)):
 			if(siteRow == None):
-				xbmcgui.Dialog().ok(util.localize(35021), util.localize(35022) %scraper)
+				xbmcgui.Dialog().ok(util.localize(32021), util.localize(32022) %scraper)
 				return None, False
 			site, errorMsg = self.gui.config.readScraper(siteRow, romCollection.name, '', '', True, self.gui.config.tree)
 		else:
@@ -298,7 +298,7 @@ class ImportOptionsDialog(xbmcgui.WindowXMLDialog):
 			if(site.scrapers != None):
 				firstScraper = site.scrapers[0]
 				if(firstScraper.source != 'nfo' and not firstScraper.source.startswith('http') and site.name != romCollection.name):			
-					xbmcgui.Dialog().ok(util.localize(35021), util.localize(35027) %(site.name, romCollection.name))
+					xbmcgui.Dialog().ok(util.localize(32021), util.localize(32027) %(site.name, romCollection.name))
 					return None, False
 			
 			sites.append(site)

@@ -2,9 +2,10 @@ import xbmc, xbmcgui
 
 import os
 
-import util, config, dialogbase
+import util, helper, config, dialogbase
 from util import *
 from configxmlwriter import *
+from emulatorautoconfig.autoconfig import EmulatorAutoconfig
 
 ACTION_CANCEL_DIALOG = (9,10,51,92,110)
 
@@ -46,6 +47,9 @@ CONTROL_BUTTON_AUTOPLAYVIDEO_INFO = 5360
 
 
 #Launch Games
+CONTROL_BUTTON_USERETROPLAYER = 5540
+CONTROL_BUTTON_GAMECLIENT = 5550
+
 CONTROL_BUTTON_EMUCMD = 5220
 CONTROL_BUTTON_PARAMS = 5230
 CONTROL_BUTTON_USEEMUSOLO = 5440
@@ -109,6 +113,21 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		self.addItemsToList(CONTROL_LIST_IMAGEPLACING_MAIN, self.imagePlacingList)
 		self.addItemsToList(CONTROL_LIST_IMAGEPLACING_INFO, self.imagePlacingList)
 		
+		if(not helper.isRetroPlayerSupported()):
+			control = self.getControlById(CONTROL_BUTTON_USERETROPLAYER)
+			if(control):
+				control.setEnabled(False)
+				control.setVisible(False)
+			control = self.getControlById(CONTROL_BUTTON_GAMECLIENT)
+			if(control):
+				control.setEnabled(False)
+				control.setVisible(False)
+		elif(not helper.retroPlayerSupportsPythonIntegration()):
+			control = self.getControlById(CONTROL_BUTTON_GAMECLIENT)
+			if(control):
+				control.setEnabled(False)
+				control.setVisible(False)
+		
 		self.updateRomCollectionControls()
 		
 		
@@ -136,7 +155,7 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 			success, message = configWriter.writeRomCollections(self.romCollections, True)
 			
 			if not success:
-				xbmcgui.Dialog().ok(util.localize(35021), message)
+				xbmcgui.Dialog().ok(util.localize(32021), message)
 			self.close()
 			
 		#Cancel
@@ -160,23 +179,66 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 			xbmc.sleep(util.WAITTIME_UPDATECONTROLS)
 			self.updateMediaPathControls()
 			
+			
+		elif (controlID == CONTROL_BUTTON_GAMECLIENT):
+			success, gameclient = helper.selectlibretrocore(self.selectedRomCollection.name)
+			if success:
+				self.selectedRomCollection.gameclient = gameclient
+						
+			control = self.getControlById(CONTROL_BUTTON_GAMECLIENT)
+			if(gameclient == ""):			
+				control.setLabel("None")
+			else:
+				control.setLabel(gameclient)
+			
 		elif (controlID == CONTROL_BUTTON_EMUCMD):
+			
+			#maybe there is autoconfig support
+			preconfiguredEmulator = None
+			emulatorPath = ''
+			dialog = xbmcgui.Dialog()
+			
 			if (self.selectedRomCollection.name == 'Linux' or self.selectedRomCollection.name == 'Macintosh' or self.selectedRomCollection.name == 'Windows'):
-				emulatorPath = self.editTextProperty(CONTROL_BUTTON_EMUCMD, util.localize(52024))
-			else:	
-				dialog = xbmcgui.Dialog()
-				
-				emulatorPath = dialog.browse(1, '%s ' %self.selectedRomCollection.name +util.localize(40039), 'files')
-				if(emulatorPath == ''):
-					return
+				emulatorPath = self.editTextProperty(CONTROL_BUTTON_EMUCMD, util.localize(32624))
+			else:
+				if(xbmc.getCondVisibility('System.Platform.Android')):
+					
+					autoconfig = EmulatorAutoconfig(util.getEmuAutoConfigPath())
+					
+					Logutil.log('Running on Android. Trying to find emulator per autoconfig.', util.LOG_LEVEL_INFO)
+					emulators = autoconfig.findEmulators('Android', self.selectedRomCollection.name, True)
+					emulist = []
+					if(emulators):
+						for emulator in emulators:
+							if(emulator.isInstalled):
+								emulist.append(util.localize(32202) %emulator.name)
+							else:
+								emulist.append(emulator.name)
+					if(len(emulist) > 0):
+						emuIndex = dialog.select(util.localize(32203), emulist)
+						Logutil.log('emuIndex: ' +str(emuIndex), util.LOG_LEVEL_INFO)
+						if(emuIndex == -1):
+							Logutil.log('No Emulator selected.', util.LOG_LEVEL_INFO)
+						else:
+							preconfiguredEmulator = emulators[emuIndex]
+						
+				if(preconfiguredEmulator):
+					emulatorPath = preconfiguredEmulator.emuCmd					
+					self.selectedRomCollection.emulatorParams = preconfiguredEmulator.emuParams
+					control = self.getControlById(CONTROL_BUTTON_PARAMS)
+					control.setLabel(self.selectedRomCollection.emulatorParams)
+				else:										
+					emulatorPath = dialog.browse(1, '%s ' %self.selectedRomCollection.name +util.localize(32139), 'files')
+					if(emulatorPath == ''):
+						return
 							
 			self.selectedRomCollection.emulatorCmd = emulatorPath
 			control = self.getControlById(CONTROL_BUTTON_EMUCMD)
 			control.setLabel(emulatorPath)
 			
 		elif (controlID == CONTROL_BUTTON_PARAMS):
-			emulatorParams = self.editTextProperty(CONTROL_BUTTON_PARAMS, util.localize(52025))
-			self.selectedRomCollection.emulatorParams = emulatorParams 		
+			emulatorParams = self.editTextProperty(CONTROL_BUTTON_PARAMS, util.localize(32625))
+			self.selectedRomCollection.emulatorParams = emulatorParams
 			
 		elif (controlID == CONTROL_BUTTON_ROMPATH):
 			self.editRomPath()
@@ -197,31 +259,33 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 			self.removeMediaPath()
 			
 		elif (controlID == CONTROL_BUTTON_MAXFOLDERDEPTH):
-			maxFolderDepth = self.editTextProperty(CONTROL_BUTTON_MAXFOLDERDEPTH, util.localize(52010))
+			maxFolderDepth = self.editTextProperty(CONTROL_BUTTON_MAXFOLDERDEPTH, util.localize(32610))
 			self.selectedRomCollection.maxFolderDepth = maxFolderDepth
 			
 		elif (controlID == CONTROL_BUTTON_DISKINDICATOR):
-			diskIndicator = self.editTextProperty(CONTROL_BUTTON_DISKINDICATOR, util.localize(52011))
+			diskIndicator = self.editTextProperty(CONTROL_BUTTON_DISKINDICATOR, util.localize(32611))
 			self.selectedRomCollection.diskPrefix = diskIndicator
 						
 		elif (controlID == CONTROL_BUTTON_SAVESTATEPATH):
-			saveStatePathComplete = self.editPathWithFileMask(CONTROL_BUTTON_SAVESTATEPATH, '%s ' %self.selectedRomCollection.name +util.localize(52029), CONTROL_BUTTON_SAVESTATEMASK)
+			saveStatePathComplete = self.editPathWithFileMask(CONTROL_BUTTON_SAVESTATEPATH, '%s ' %self.selectedRomCollection.name +util.localize(32629), CONTROL_BUTTON_SAVESTATEMASK)
 			if(saveStatePathComplete != ''):
 				self.selectedRomCollection.saveStatePath = saveStatePathComplete
 				
 		elif (controlID == CONTROL_BUTTON_SAVESTATEMASK):
-			self.selectedRomCollection.saveStatePath = self.editFilemask(CONTROL_BUTTON_SAVESTATEMASK, util.localize(52030), self.selectedRomCollection.saveStatePath)
+			self.selectedRomCollection.saveStatePath = self.editFilemask(CONTROL_BUTTON_SAVESTATEMASK, util.localize(32630), self.selectedRomCollection.saveStatePath)
 			
 		elif (controlID == CONTROL_BUTTON_SAVESTATEPARAMS):
-			saveStateParams = self.editTextProperty(CONTROL_BUTTON_SAVESTATEPARAMS, util.localize(52031))
+			saveStateParams = self.editTextProperty(CONTROL_BUTTON_SAVESTATEPARAMS, util.localize(32631))
 			self.selectedRomCollection.saveStateParams = saveStateParams
 		
 		elif (controlID == CONTROL_BUTTON_PRECMD):
-			preCmd = self.editTextProperty(CONTROL_BUTTON_PRECMD, util.localize(52032))
+			preCmd = self.editTextProperty(CONTROL_BUTTON_PRECMD, util.localize(32632))
 			self.selectedRomCollection.preCmd = preCmd
+			Logutil.log('OnClick: precmd = ' +self.selectedRomCollection.preCmd, util.LOG_LEVEL_INFO)
+			
 			
 		elif (controlID == CONTROL_BUTTON_POSTCMD):
-			postCmd = self.editTextProperty(CONTROL_BUTTON_POSTCMD, util.localize(52033))
+			postCmd = self.editTextProperty(CONTROL_BUTTON_POSTCMD, util.localize(32633))
 			self.selectedRomCollection.postCmd = postCmd
 				
 	
@@ -263,10 +327,10 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 				fileMask = fileMask +',' +pathParts[1]
 								
 		control = self.getControlById(CONTROL_BUTTON_ROMPATH)
-		control.setLabel(firstRomPath)
+		util.setLabel(firstRomPath, control)
 		
 		control = self.getControlById(CONTROL_BUTTON_FILEMASK)
-		control.setLabel(fileMask)
+		util.setLabel(fileMask, control)		
 		
 		control = self.getControlById(CONTROL_BUTTON_IGNOREONSCAN)		
 		control.setSelected(self.selectedRomCollection.ignoreOnScan)
@@ -275,10 +339,10 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		control.setSelected(self.selectedRomCollection.allowUpdate)
 		
 		control = self.getControlById(CONTROL_BUTTON_DISKINDICATOR)
-		control.setLabel(self.selectedRomCollection.diskPrefix)
+		util.setLabel(self.selectedRomCollection.diskPrefix, control)
 		
 		control = self.getControlById(CONTROL_BUTTON_MAXFOLDERDEPTH)
-		control.setLabel(str(self.selectedRomCollection.maxFolderDepth))
+		util.setLabel(self.selectedRomCollection.maxFolderDepth, control)
 		
 		control = self.getControlById(CONTROL_BUTTON_USEFOLDERASGAMENAME)
 		control.setSelected(self.selectedRomCollection.useFoldernameAsGamename)
@@ -298,10 +362,10 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		self.addItemsToList(CONTROL_LIST_MEDIATYPES, mediaTypeList)
 		
 		control = self.getControlById(CONTROL_BUTTON_MEDIAPATH)
-		control.setLabel(firstMediaPath)
+		util.setLabel(firstMediaPath, control)
 		
 		control = self.getControlById(CONTROL_BUTTON_MEDIAFILEMASK)
-		control.setLabel(firstMediaFileMask)
+		util.setLabel(firstMediaFileMask, control)		
 						
 		self.selectScrapersInList(self.selectedRomCollection.scraperSites, self.availableScrapers)
 		
@@ -329,11 +393,19 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 			control.setSelected(self.selectedRomCollection.autoplayVideoInfo)
 		
 		#Launch Games
-		control = self.getControlById(CONTROL_BUTTON_EMUCMD)		
-		control.setLabel(self.selectedRomCollection.emulatorCmd)
+		control = self.getControlById(CONTROL_BUTTON_USERETROPLAYER)
+		if(control):
+			control.setSelected(self.selectedRomCollection.useBuiltinEmulator)
+		
+		control = self.getControlById(CONTROL_BUTTON_GAMECLIENT)
+		if(control):
+			util.setLabel(self.selectedRomCollection.gameclient, control)		
+			
+		control = self.getControlById(CONTROL_BUTTON_EMUCMD)
+		util.setLabel(self.selectedRomCollection.emulatorCmd, control)		
 		
 		control = self.getControlById(CONTROL_BUTTON_PARAMS)
-		control.setLabel(self.selectedRomCollection.emulatorParams)
+		util.setLabel(self.selectedRomCollection.emulatorParams, control)		
 		
 		control = self.getControlById(CONTROL_BUTTON_USEEMUSOLO)
 		control.setSelected(self.selectedRomCollection.useEmuSolo)
@@ -346,22 +418,22 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		saveStateFileMask = pathParts[1]
 		
 		control = self.getControlById(CONTROL_BUTTON_SAVESTATEPATH)
-		control.setLabel(saveStatePath)
+		util.setLabel(saveStatePath, control)
 		
 		control = self.getControlById(CONTROL_BUTTON_SAVESTATEMASK)
-		control.setLabel(saveStateFileMask)
+		util.setLabel(saveStateFileMask, control)
 		
-		control = self.getControlById(CONTROL_BUTTON_SAVESTATEPARAMS)
-		control.setLabel(self.selectedRomCollection.saveStateParams)
+		control = self.getControlById(CONTROL_BUTTON_SAVESTATEPARAMS)		
+		util.setLabel(self.selectedRomCollection.saveStateParams, control)
 		
 		control = self.getControlById(CONTROL_BUTTON_DONTEXTRACTZIP)
 		control.setSelected(self.selectedRomCollection.doNotExtractZipFiles)
 		
 		control = self.getControlById(CONTROL_BUTTON_PRECMD)
-		control.setLabel(self.selectedRomCollection.preCmd)
+		util.setLabel(self.selectedRomCollection.preCmd, control)		
 		
 		control = self.getControlById(CONTROL_BUTTON_POSTCMD)
-		control.setLabel(self.selectedRomCollection.postCmd)
+		util.setLabel(self.selectedRomCollection.postCmd, control)
 	
 	
 	def updateMediaPathControls(self):
@@ -428,12 +500,18 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		if(control != None):
 			self.selectedRomCollection.autoplayVideoInfo = bool(control.isSelected())
 		
+		control = self.getControlById(CONTROL_BUTTON_USERETROPLAYER)
+		if(control):
+			self.selectedRomCollection.useBuiltinEmulator = bool(control.isSelected())
+			
 		control = self.getControlById(CONTROL_BUTTON_USEEMUSOLO)
 		self.selectedRomCollection.useEmuSolo = bool(control.isSelected())
 		control = self.getControlById(CONTROL_BUTTON_USEPOPEN)
 		self.selectedRomCollection.usePopen = bool(control.isSelected())
 		control = self.getControlById(CONTROL_BUTTON_DONTEXTRACTZIP)
 		self.selectedRomCollection.doNotExtractZipFiles = bool(control.isSelected())
+		
+		Logutil.log('updateSelectedRomCollection: precmd = ' +self.selectedRomCollection.preCmd, util.LOG_LEVEL_INFO)
 	
 	
 	def editRomPath(self):
@@ -463,11 +541,13 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		romFileMask = control.getLabel()
 		
 		keyboard = xbmc.Keyboard()
-		keyboard.setHeading(util.localize(40040))
+		keyboard.setHeading(util.localize(32140))
 		keyboard.setDefault(romFileMask)			
 		keyboard.doModal()
 		if (keyboard.isConfirmed()):
 			romFileMask = keyboard.getText()
+			if(romFileMask == ''):
+				romFileMask = ' '
 								
 		#HACK: this only handles 1 base rom path
 		romPath = self.selectedRomCollection.romPaths[0]
@@ -499,7 +579,7 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 				currentMediaPathIndex = i
 				break
 		
-		mediaPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_MEDIAPATH, '%s ' %currentMediaPath.fileType.name +util.localize(40041), CONTROL_BUTTON_MEDIAFILEMASK)
+		mediaPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_MEDIAPATH, '%s ' %currentMediaPath.fileType.name +util.localize(32141), CONTROL_BUTTON_MEDIAFILEMASK)
 		
 		if(mediaPathComplete != ''):
 			currentMediaPath.path = mediaPathComplete
@@ -522,7 +602,7 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 				currentMediaPathIndex = i
 				break							
 			
-		mediaPathComplete = self.editFilemask(CONTROL_BUTTON_MEDIAFILEMASK, util.localize(52018), currentMediaPath.path)
+		mediaPathComplete = self.editFilemask(CONTROL_BUTTON_MEDIAFILEMASK, util.localize(32618), currentMediaPath.path)
 					
 		currentMediaPath.path = mediaPathComplete
 		self.selectedRomCollection.mediaPaths[currentMediaPathIndex] = currentMediaPath
@@ -550,18 +630,18 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 				if(not isMediaTypeInUse):
 					mediaTypeList.append(name)
 		
-		mediaTypeIndex = xbmcgui.Dialog().select(util.localize(40042), mediaTypeList)
+		mediaTypeIndex = xbmcgui.Dialog().select(util.localize(32142), mediaTypeList)
 		if(mediaTypeIndex == -1):
 			return
 		
 		mediaType = mediaTypeList[mediaTypeIndex]
 		mediaType = mediaType.replace(' (video)', '')
 				
-		mediaPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_MEDIAPATH, '%s ' %mediaType +util.localize(40041), CONTROL_BUTTON_MEDIAFILEMASK)
+		mediaPathComplete = self.editPathWithFileMask(CONTROL_BUTTON_MEDIAPATH, '%s ' %mediaType +util.localize(32141), CONTROL_BUTTON_MEDIAFILEMASK)
 		#TODO: use default value in editFilemask
 		control = self.getControlById(CONTROL_BUTTON_MEDIAFILEMASK)
 		control.setLabel('%GAME%.*')
-		mediaPathComplete = self.editFilemask(CONTROL_BUTTON_MEDIAFILEMASK, util.localize(52018), mediaPathComplete)
+		mediaPathComplete = self.editFilemask(CONTROL_BUTTON_MEDIAFILEMASK, util.localize(32618), mediaPathComplete)
 		
 		mediaPath = MediaPath()
 		fileType = FileType()
@@ -586,7 +666,7 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		for mediaPath in self.selectedRomCollection.mediaPaths:
 			mediaTypeList.append(mediaPath.fileType.name)
 		
-		mediaTypeIndex = xbmcgui.Dialog().select(util.localize(40043), mediaTypeList)
+		mediaTypeIndex = xbmcgui.Dialog().select(util.localize(32143), mediaTypeList)
 		if(mediaTypeIndex == -1):
 			return
 					
@@ -612,15 +692,15 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		if(len(sitesInRomCollection) >= 1):
 			self.selectItemInList(sitesInRomCollection[0].name, CONTROL_LIST_SCRAPER1)			
 		else:
-			self.selectItemInList(util.localize(56004), CONTROL_LIST_SCRAPER1)
+			self.selectItemInList(util.localize(32854), CONTROL_LIST_SCRAPER1)
 		if(len(sitesInRomCollection) >= 2):
 			self.selectItemInList(sitesInRomCollection[1].name, CONTROL_LIST_SCRAPER2)
 		else:
-			self.selectItemInList(util.localize(56004), CONTROL_LIST_SCRAPER2)
+			self.selectItemInList(util.localize(32854), CONTROL_LIST_SCRAPER2)
 		if(len(sitesInRomCollection) >= 3):
 			self.selectItemInList(sitesInRomCollection[2].name, CONTROL_LIST_SCRAPER3)
 		else:
-			self.selectItemInList(util.localize(56004), CONTROL_LIST_SCRAPER3)
+			self.selectItemInList(util.localize(32854), CONTROL_LIST_SCRAPER3)
 			
 			
 	def addScraperToSiteList(self, controlId, sites, romCollection):				
@@ -631,7 +711,7 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		scraperItem = control.getSelectedItem()
 		scraper = scraperItem.getLabel()
 		
-		if(scraper == util.localize(56004)):
+		if(scraper == util.localize(32854)):
 			return sites
 		
 		#check if this site is already available for current RC
@@ -648,7 +728,7 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 				break
 		
 		if(siteRow == None):
-			xbmcgui.Dialog().ok(util.localize(35021), util.localize(35022) %scraper)
+			xbmcgui.Dialog().ok(util.localize(32021), util.localize(32022) %scraper)
 			return None
 		
 		site, errorMsg = self.gui.config.readScraper(siteRow, romCollection.name, '', '', True, self.gui.config.tree)
