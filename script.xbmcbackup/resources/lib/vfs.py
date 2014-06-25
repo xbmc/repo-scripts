@@ -147,7 +147,7 @@ class DropboxFileSystem(Vfs):
         else:
             return False
 
-    def put(self,source,dest):
+    def put(self,source,dest,retry=True):
         dest = self._fix_slashes(dest)
         
         if(self.client != None):
@@ -157,8 +157,11 @@ class DropboxFileSystem(Vfs):
                 return True
             except:
                 #if we have an exception retry
-                retry = True
-                return self.put(source,dest)
+                if(retry):
+                    return self.put(source,dest,False)
+                else:
+                    #tried once already, just quit
+                    return False
         else:
             return False
 

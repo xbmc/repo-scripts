@@ -76,4 +76,6 @@
 	<string id="30082">Progress Bar</string>
 	<string id="30083">Background Progress Bar</string>
 	<string id="30084">None (Silent)</string>
+	<string id="30085">Version Warning</string>
+	<string id="30086">This version of XBMC is different than the one used to create the archive</string>
 </strings>

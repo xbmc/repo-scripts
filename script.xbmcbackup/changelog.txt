@@ -1,3 +1,15 @@
+Version 0.5.5
+
+fix for dropbox errors during repeated file upload attempts
+
+Version 0.5.4
+
+check xbmc version when doing a restore
+
+Version 0.5.3
+
+updated python version
+
 Version 0.5.2
 
 added additional script and window parameters, thanks Samu-rai

@@ -4,6 +4,7 @@ import xbmcvfs
 import utils as utils
 import os.path
 import time
+import json
 from vfs import XBMCFileSystem,DropboxFileSystem
 
 def folderSort(aKey):
@@ -218,6 +219,10 @@ class XbmcBackup:
                 xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30045),self.remote_vfs.root_path)
                 return
 
+            if(not self._checkValidationFile(self.remote_vfs.root_path)):
+                #don't continue
+                return
+
             utils.log(utils.getString(30051))
             allFiles = []
             fileManager = FileManager(self.remote_vfs)
@@ -382,10 +387,35 @@ class XbmcBackup:
 
     def _createValidationFile(self):
         vFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "xbmcbackup.val"),'w')
-        vFile.write("XBMC Backup Validation File")
+        vFile.write(json.dumps({"name":"XBMC Backup Validation File","xbmc_version":xbmc.getInfoLabel('System.BuildVersion')}))
+        vFile.write("")
         vFile.close()
 
         self.remote_vfs.put(xbmc.translatePath(utils.data_dir() + "xbmcbackup.val"),self.remote_vfs.root_path + "xbmcbackup.val")
+
+    def _checkValidationFile(self,path):
+        result = False
+        
+        #copy the file and open it
+        self.xbmc_vfs.put(path + "xbmcbackup.val",xbmc.translatePath(utils.data_dir() + "xbmcbackup.val"))
+
+        vFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "xbmcbackup.val"),'r')
+        jsonString = vFile.read()
+        vFile.close()
+
+        try:
+            json_dict = json.loads(jsonString)
+
+            if(xbmc.getInfoLabel('System.BuildVersion') == json_dict['xbmc_version']):
+                result = True
+            else:
+                result = xbmcgui.Dialog().yesno(utils.getString(30085),utils.getString(30086),utils.getString(30044))
+                
+        except ValueError:
+            #may fail on older archives
+            result = True
+
+        return result
 
     def _createResumeBackupFile(self):
         rFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "resume.txt"),'w')
