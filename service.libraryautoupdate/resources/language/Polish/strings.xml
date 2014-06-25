@@ -16,6 +16,8 @@
     <string id="30009">Używany zaawansowany Timer</string>
     <string id="30010">Odstęp czasu między aktualizacjami (godziny)</string>
     <string id="30011">Formuła cron</string>
+    <string id="30012">Aktualizacja biblioteki wideo</string>
+    <string id="30013">Aktualizacja biblioteki audio</string>
 
     <!-- specific paths -->
     <string id="30020">Aktualizuj specyficzną ścieżkę 1</string>

@@ -1,3 +1,11 @@
+Version 0.9.4
+
+new setting - run when idle. thanks zer04c
+
+Version 0.9.3
+
+updated xbmc python version
+
 Version 0.9.2
 
 version bump for merge of master changes

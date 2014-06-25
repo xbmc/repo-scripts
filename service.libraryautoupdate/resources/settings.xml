@@ -4,6 +4,7 @@
 		<setting id="startup_delay" type="enum" values="0|1|2|3|4|5" label="30008" default="0"  />
 		<setting id="notify_next_run" type="bool" label="30006" default="true" />
 		<setting id="run_during_playback" type="bool" label="30007" default="false" />
+		<setting id="run_on_idle" type="bool" label="Only run when idle" default="false" />
 		<setting id="last_run" type="text" label="last_run" default="0" visible="false" />
 	</category>
 	<category id="video_timer" label="30002">

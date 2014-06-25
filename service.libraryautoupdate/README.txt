@@ -7,6 +7,7 @@ General Settings:
 Startup Delay - if an update should run on startup (dependant on the time the last update has ran) this will delay it from running for a few minutes to allow other XBMC process to function. 
 Show Notifications - shows notifications when the updater will run again
 Run During Playback - should the addon run when you are playing media
+Only run when idle - restricts the scanning process to when the screensaver is active
 
 Update video - updates video library
 update music - updates music library

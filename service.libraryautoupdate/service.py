@@ -69,33 +69,39 @@ class AutoUpdater:
             
                 if(cronJob.next_run <= now):
                     if(xbmc.Player().isPlaying() == False or utils.getSetting("run_during_playback") == "true"):
-                        #check for valid network connection
-                        if(self._networkUp()):
-                            #check if this scan was delayed due to playback
-                            if(cronJob.on_delay == True):
-                                #add another minute to the delay
-                                self.schedules[count].next_run = now + 60
-                                self.schedules[count].on_delay = False
-                                utils.log(cronJob.name + " paused due to playback")
+
+                        if(utils.getSetting('run_on_idle') == 'false' or (utils.getSetting('run_on_idle') == 'true' and self.monitor.screensaver_running)):
+                            
+                            #check for valid network connection
+                            if(self._networkUp()):
+                            
+                                #check if this scan was delayed due to playback
+                                if(cronJob.on_delay == True):
+                                    #add another minute to the delay
+                                    self.schedules[count].next_run = now + 60
+                                    self.schedules[count].on_delay = False
+                                    utils.log(cronJob.name + " paused due to playback")
                         
-                            elif(self.scanRunning() == False):
-                                #run the command for this job
-                                utils.log(cronJob.name)
+                                elif(self.scanRunning() == False):
+                                    #run the command for this job
+                                    utils.log(cronJob.name)
 
-                                if(cronJob.timer_type == 'xbmc'):
-                                    xbmc.executebuiltin(cronJob.command)
-                                else:
-                                    self.cleanLibrary(cronJob.command)
+                                    if(cronJob.timer_type == 'xbmc'):
+                                        xbmc.executebuiltin(cronJob.command)
+                                    else:
+                                        self.cleanLibrary(cronJob.command)
 
-                                #find the next run time
-                                cronJob.next_run = self.calcNextRun(cronJob.expression,now)
-                                self.schedules[count] = cronJob
+                                    #find the next run time
+                                    cronJob.next_run = self.calcNextRun(cronJob.expression,now)
+                                    self.schedules[count] = cronJob
                                 
-                            elif(self.scanRunning() == True):
-                                self.schedules[count].on_delay = True
-                                utils.log("Waiting for other scan to finish")
+                                elif(self.scanRunning() == True):
+                                    self.schedules[count].on_delay = True
+                                    utils.log("Waiting for other scan to finish")
+                            else:
+                                utils.log("Network down, not running")
                         else:
-                            utils.log("Network down, not running")
+                            utils.log("Skipping scan, only run when idle")
                     else:
                         self.schedules[count].on_delay = True
                         utils.log("Player is running, wait until finished")
@@ -344,6 +350,7 @@ class CronSchedule:
 class UpdateMonitor(xbmc.Monitor):
     update_settings = None
     after_scan = None
+    screensaver_running = False
     
     def __init__(self,*args,**kwargs):
         xbmc.Monitor.__init__(self)
@@ -356,3 +363,12 @@ class UpdateMonitor(xbmc.Monitor):
 
     def onDatabaseUpdated(self,database):
         self.after_scan(database)
+
+    def onScreensaverActivated(self):
+        utils.log("screen saver on",xbmc.LOGDEBUG)
+        self.screensaver_running = True
+
+    def onScreensaverDeactivated(self):
+        utils.log("screen saver off",xbmc.LOGDEBUG)
+        self.screensaver_running = False
+        
