@@ -339,3 +339,9 @@ msgstr ""
 msgctxt "#32079"
 msgid "Content not in library"
 msgstr ""
+
+#. ::MENUNAME:: is used internally and should NOT be translated :)
+
+msgctxt "#32080"
+msgid "Edit ::MENUNAME:: Submenu"
+msgstr ""

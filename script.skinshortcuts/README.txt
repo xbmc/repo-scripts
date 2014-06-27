@@ -1,21 +1,24 @@
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
-
-What's New for Skinners (version 0.3.3)
+What's New for Skinners (version 0.3.4)
 -----------------------
 
- - LabelID changes - in some very rare cases, the labelID for an item may have changed. This has the potential for users to loose one or more groups of their submenu shortcuts if they have 2 or more main menu items with the same label.
- - Advice change - When overriding an action, user choice must be given and respected - see "resources/Management Dialog.txt", section "Overrides.xml", part 1
- - Clarification - The maximum number of additional sub-menu's is 5
- - Changes to automatic setting of controls in management dialog, including new option and window title label - see "resources/Management Dialog.txt" for details.
- - Changes to skin methods when using alternative listing method (undocumented)
- - Ability to override shortcut action only on selected XBMC major version - see "resources/Advanced Usage.txt", section "Overrides.xml", part 1
- - More control over the placement of skin-provided shortcuts within the groupings of available shortcuts in the management dialog - see "resources/Advanced Usage.txt", section "Overrides.xml", part 5
- - Ability to override label of available shortcuts in management dialog - see "resources/Advanced Usage.txt", section "Overrides.xml", part 7
- - Ability to customize the groupings of available shortcuts within the management dialog - see "resources/Management Dialog.txt" for details
- - Ability to include required shortcuts, which the user can't delete or replace - see "resources/Advanced Usage.txt", section "Overrides.xml", part 6
- - Ability to warn the user before they delete/replace a shortcut - see "Advanced Usage", section "Overrides.xml" part 10
- - Skinners can now only override icons not thumbnails - please update your image overrides - see "resources/Advanced Usage.txt", section "Overriding icons" for details
+ - Ability to override available shortcuts type - see "Advanced Usage.txt", section "Overrides.xml", part 7
+ - Ability to set widgetType property - see "Advanced Usage.txt", section "Overrides.xml", part 4
+ - Ability to build main menu and standalone menus - see "Using Includes - sub-menu only" below
+
+
+What's (hopefully) Coming
+-------------------------
+
+Features intended for next stable release (0.3.5):
+- Improved localisation support equivalent to XBMC's native ($LOCALIZE, $ADDON, etc) in addition to ::SCRIPT:: ::LOCAL::
+- Replace .shortcuts files with .xml, including auto-upgrade of files
+- Improved behaviour of skin-required shortcuts
+- Easy skin option to force Settings in menu
+- Relegate Gotham list-filling method in favour of XML method (possible removal?)
+- Large code cleanup - fix cases of multiple uses of same code, clearer separation of different groupings of functions
+- PVR option changes for Helix (dependant on XBMC PR 7453)
  
  
 With Thanks - Because their names don't deserve to be at the bottom :)
@@ -181,6 +184,8 @@ And in skinsettings.xml, the line:
 	<onunload>RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;group=[groupname]|[groupname]|[groupname])</onunload>
 	
 Replace 9000 with the ID of the list you are using for the mainmenu. You should include all [groupname]'s that your skin supports, separated by a pipe. The script will then load all of the submenus, and set visibility conditions on each one.
+
+If you are not using a main menu to choose which display group to show, you must still include a mainmenuID value, but can set this to any random value. If you want to build the mainmenu and additional standalone groups, include the group parameter with "mainmenu" as the first option.
 
 
 2. Let the user manage their shortcuts

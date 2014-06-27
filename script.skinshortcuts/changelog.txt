@@ -1,3 +1,11 @@
+v0.3.4
+- XML files are formatted (includes.xml, auto-generated playlists), includes now have an id property
+- New 'Settings' available shortcut grouping
+- Ability to override available shortcuts type, widget type
+- Ability to build main menu and standalone menus
+- A couple of small fixes and improvements
+- Fix: Work around XBMC translating numering labelID's to their localised string, causing sub-menus not to show
+
 v0.3.3
 - Available shortcuts in management dialog improvements:
  > Improved and customisable groupings
@@ -16,8 +24,6 @@ v0.3.3
 - Fix for single-list xml method to return to main menu item when hiding submenu
 - Fix for action sometimes not showing in label2 in management dialog
 - Updated language files from Transifex
-
-v0.3.2 - Unreleased development build
 
 v0.3.1
 - Fixes: No favourites showing in management dialog

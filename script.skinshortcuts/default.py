@@ -72,7 +72,7 @@ class Main:
         if self.TYPE=="launchpvr":
             xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Player.Open", "params": { "item": {"channelid": ' + self.CHANNEL + '} } }')
         if self.TYPE=="manage":
-            self._manage_shortcuts( self.GROUP, self.NOLABELS )
+            self._manage_shortcuts( self.GROUP, self.NOLABELS, self.GROUPNAME )
         if self.TYPE=="list":
             self._check_Window_Properties()
             self._list_shortcuts( self.GROUP )
@@ -82,6 +82,7 @@ class Main:
         if self.TYPE=="settings":
             self._check_Window_Properties()
             self._manage_shortcut_links() 
+            
         if self.TYPE=="hidesubmenu":
             self._hidesubmenu( self.MENUID )
             
@@ -101,6 +102,9 @@ class Main:
             # Now set the skin strings
             if selectedShortcut is not None:
                 path = urllib.unquote( selectedShortcut.getProperty( "Path" ) )
+                if selectedShortcut.getProperty( "chosenPath" ):
+                    path = urllib.unquote( selectedShortcut.getProperty( "chosenPath" ) )
+
                 if path.startswith( "pvr-channel://" ):
                     path = "RunScript(script.skinshortcuts,type=launchpvr&channel=" + path.replace( "pvr-channel://", "" ) + ")"
                 if self.LABEL is not None and selectedShortcut.getLabel() != "":
@@ -135,6 +139,7 @@ class Main:
                 params = {}
         
         self.GROUP = params.get( "group", "" )
+        self.GROUPNAME = params.get( "groupname", None )
         self.PATH = params.get( "path", "" )
         self.MENUID = params.get( "mainmenuID", "0" )
         self.LEVEL = params.get( "level", "" )
@@ -142,6 +147,7 @@ class Main:
         self.CUSTOMID = params.get( "customid", "" )
         self.MODE = params.get( "mode", None )
         self.CHANNEL = params.get( "channel", None )
+        self.LABELID = params.get( "labelid", None )
         
         # Properties when using LIBRARY._displayShortcuts
         self.LABEL = params.get( "skinLabel", None )
@@ -186,9 +192,9 @@ class Main:
                     xbmc.executebuiltin( singleAction )
         
     
-    def _manage_shortcuts( self, group, nolabels ):
+    def _manage_shortcuts( self, group, nolabels, groupname ):
         import gui
-        ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=group, nolabels=nolabels )
+        ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=group, nolabels=nolabels, groupname=groupname )
         ui.doModal()
         del ui
         

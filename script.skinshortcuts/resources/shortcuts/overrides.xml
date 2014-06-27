@@ -113,6 +113,9 @@
 		<node label="::SCRIPT::32006">
 			<content>favourite</content>
 		</node>
+		<node label="::LOCAL::10004">
+			<content>settings</content>
+		</node>
 		<node label="::SCRIPT::32054">
 			<content>commands</content>
 		</node>

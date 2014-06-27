@@ -253,27 +253,33 @@ class XMLFunctions():
             # Get groups OR main menu shortcuts
             if not groups == "":
                 menuitems = groups.split( "|" )
+                if menuitems[0] == "mainmenu":
+                    menuitems = DATA._get_shortcuts( "mainmenu", True, profile[0] ) + groups.split( "|" )
             else:
                 menuitems = DATA._get_shortcuts( "mainmenu", True, profile[0] )
                 
             if len( menuitems ) == 0:
                 break
             
+            itemidmainmenu = 0
         
             # Work out percentages for dialog
             percent = profilePercent / len( menuitems )
                 
             i = 0
             for item in menuitems:
+                log( repr( type( item ) ) )
                 i += 1
+                itemidmainmenu += 1
                 progress.update( ( profilePercent * profileCount) + percent * i )
                 
                 # Build the main menu item
-                if groups == "":
+                #if groups == "":
+                if type( item ) == list:
                     submenu = DATA._get_labelID( item[5] )
-                    mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1], submenu )
+                    mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1], submenu, itemid = itemidmainmenu )
                     if buildMode == "single":
-                        mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1], submenu )
+                        mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1], submenu, itemid = itemidmainmenu )
                 else:
                     submenu = DATA._get_labelID( item )
                 
@@ -284,6 +290,7 @@ class XMLFunctions():
                     # Create trees for individual submenu's
                     justmenuTreeA = xmltree.SubElement( root, "include" )
                     justmenuTreeB = xmltree.SubElement( root, "include" )
+                    itemidsubmenu = 0
                     
                     # Get the submenu items
                     if count == 0:
@@ -319,11 +326,12 @@ class XMLFunctions():
                         onClickElement.set( "condition", "!StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")" )
                         
                     for subitem in submenuitems:
-                        self.buildElement( subitem, submenuTree, submenu, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + escapeXML( DATA.slugify( submenu ) ) + ")", profile[1] )
-                        self.buildElement( subitem, justmenuTreeA, submenu, None, profile[1] )
-                        self.buildElement( subitem, justmenuTreeB, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")", profile[1] )
+                        itemidsubmenu += 1
+                        self.buildElement( subitem, submenuTree, submenu, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + escapeXML( DATA.slugify( submenu ) ) + ")", profile[1], itemid = itemidsubmenu )
+                        self.buildElement( subitem, justmenuTreeA, submenu, None, profile[1], itemid = itemidsubmenu )
+                        self.buildElement( subitem, justmenuTreeB, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")", profile[1], itemid = itemidsubmenu )
                         if buildMode == "single":
-                            self.buildElement( subitem, allmenuTree, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")", profile[1] )
+                            self.buildElement( subitem, allmenuTree, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")", profile[1], itemid = itemidsubmenu )
                 
                     # Increase the counter
                     count += 1
@@ -348,17 +356,20 @@ class XMLFunctions():
         
         # Save the tree
         for path in paths:
-            tree.write( path, encoding="utf-8" )
+            DATA.indent( tree.getroot() )
+            tree.write( path, encoding="UTF-8" )
         
         # Save the hashes
         file = xbmcvfs.File( os.path.join( __masterpath__ , xbmc.getSkinDir() + ".hash" ), "w" )
         file.write( repr( hashlist.list ) )
         file.close
         
-    def buildElement( self, item, Tree, groupName, visibilityCondition, profileVisibility, submenuVisibility = None ):
+    def buildElement( self, item, Tree, groupName, visibilityCondition, profileVisibility, submenuVisibility = None, itemid=-1 ):
         # This function will build an element for the passed Item in
         # the passed Tree
         newelement = xmltree.SubElement( Tree, "item" )
+        if itemid is not -1:
+            newelement.set( "id", str( itemid ) )
         
         # Onclick
         action = urllib.unquote( item[4] ).decode( "utf-8" )
@@ -434,7 +445,10 @@ class XMLFunctions():
         if submenuVisibility is not None:
             submenuVisibilityElement = xmltree.SubElement( newelement, "property" )
             submenuVisibilityElement.set( "name", "submenuVisibility" )
-            submenuVisibilityElement.text = DATA.slugify( submenuVisibility )
+            if submenuVisibility.isdigit():
+                submenuVisibilityElement.text = "$NUMBER[" + submenuVisibility + "]"
+            else:
+                submenuVisibilityElement.text = DATA.slugify( submenuVisibility )
             
         # Visibility
         if visibilityCondition is not None:

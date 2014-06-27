@@ -48,11 +48,12 @@ class LibraryFunctions():
         self.loadedAddOns = False
         self.loadedFavourites = False
         self.loadedUPNP = False
+        self.loadedSettings = False
         
         self.widgetPlaylistsList = []
         
         # Empty dictionary for different shortcut types
-        self.dictionaryGroupings = {"common":None, "commands":None, "menudefault":None, "video":None, "movie":None, "movie-flat":None, "tvshow":None, "tvshow-flat":None, "musicvideo":None, "musicvideo-flat":None, "customvideonode":None, "customvideonode-flat":None, "videosources":None, "pvr":None, "pvr-tv":None, "pvr-radio":None, "music":None, "musicsources":None, "playlist-video":None, "playlist-audio":None, "addon-program":None, "addon-video":None, "addon-audio":None, "addon-image":None, "favourite":None }
+        self.dictionaryGroupings = {"common":None, "commands":None, "menudefault":None, "video":None, "movie":None, "movie-flat":None, "tvshow":None, "tvshow-flat":None, "musicvideo":None, "musicvideo-flat":None, "customvideonode":None, "customvideonode-flat":None, "videosources":None, "pvr":None, "pvr-tv":None, "pvr-radio":None, "music":None, "musicsources":None, "playlist-video":None, "playlist-audio":None, "addon-program":None, "addon-video":None, "addon-audio":None, "addon-image":None, "favourite":None, "settings":None }
         self.folders = {}
         self.foldersCount = 0
         
@@ -70,6 +71,7 @@ class LibraryFunctions():
         self.playlists()
         self.addons()                
         self.favourites()
+        self.settings()
         
         # Do a JSON query for upnp sources (so that they'll show first time the user asks to see them)
         if self.loadedUPNP == False:
@@ -359,6 +361,8 @@ class LibraryFunctions():
             self.addons()
         if content == "favourite":
             self.favourites()
+        if content == "settings":
+            self.settings()
             
         # The data has now been loaded, return it
         return self.dictionaryGroupings[ content ]
@@ -420,6 +424,11 @@ class LibraryFunctions():
                 return self.selectShortcut( group = group )
             elif path.startswith( "||BROWSE||" ):
                 selectedShortcut = self.explorer( ["plugin://" + path.replace( "||BROWSE||", "" )], "plugin://" + path.replace( "||BROWSE||", "" ), [selectedShortcut.getLabel()], [selectedShortcut.getProperty("thumbnail")], selectedShortcut.getProperty("shortcutType") )
+                # Convert backslashes to double-backslashes (windows fix)
+                newAction = urllib.unquote( selectedShortcut.getProperty( "Path" ) )
+                newAction = newAction.replace( "\\", "\\\\" )
+                selectedShortcut.setProperty( "Path", urllib.quote( newAction ) )
+                selectedShortcut.setProperty( "displayPath", newAction )
             elif path == "||FOLDER||":
                 # The next set of shortcuts are within the listitem property folder-contents
                 shortcuts = self.folders[ selectedShortcut.getProperty( "folder" ) ]
@@ -440,9 +449,9 @@ class LibraryFunctions():
                 # False: Display
                 # True: Play
                 if userchoice == False:
-                    selectedShortcut.setProperty( "path", urllib.unquote( selectedShortcut.getProperty( "action-show" ) ) )
+                    selectedShortcut.setProperty( "chosenPath", selectedShortcut.getProperty( "action-show" ) )
                 else:
-                    selectedShortcut.setProperty( "path", urllib.unquote( selectedShortcut.getProperty( "action-play" ) ) )
+                    selectedShortcut.setProperty( "chosenPath", selectedShortcut.getProperty( "action-play" ) )
                    
             elif path == "||CUSTOM||":
                 # Let the user type a comand
@@ -563,6 +572,47 @@ class LibraryFunctions():
             
         self.loadedMoreCommands = True
         return self.loadedMoreCommands
+        
+    def settings( self ):
+        if self.loadedSettings == True:
+            # The List has already been populated, return it
+            return True
+        elif self.loadedSettings == "Loading":
+            # The list is currently being populated, wait and then return it
+            count = 0
+            while count < 20:
+                xbmc.sleep( 100 )
+                count += 1
+                if self.loadedSettings == True:
+                    return True
+        else:
+            # We're going to populate the list
+            self.loadedSettings = "Loading"
+
+        try:
+            listitems = []
+            log( 'Listing more XBMC commands...' )
+            
+            listitems.append( self._create(["ActivateWindow(Settings)", "::LOCAL::10004", "::LOCAL::10004", {} ]) )
+            
+            listitems.append( self._create(["ActivateWindow(AppearanceSettings)", "::LOCAL::480", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(VideosSettings)", "::LOCAL::3", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(PVRSettings)", "::LOCAL::19020", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(MusicSettings)", "::LOCAL::2", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(PicturesSettings)", "::LOCAL::1", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(WeatherSettings)", "::LOCAL::8", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(AddonBrowser)", "::LOCAL::24001", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(ServiceSettings)", "::LOCAL::14036", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(SystemSettings)", "::LOCAL::13000", "::LOCAL::10004", {} ]) )
+            listitems.append( self._create(["ActivateWindow(SkinSettings)", "::LOCAL::20077", "::LOCAL::10004", {} ]) )
+            
+            self.addToDictionary( "settings", listitems )
+        except:
+            log( "Failed to load more XBMC settings" )
+            print_exc()
+            
+        self.loadedSettings = True
+        return self.loadedSettings
         
     def menudefault( self ):
         # This is loaded slightly differently - by the main gui.py file as part of loading the window
@@ -729,7 +779,7 @@ class LibraryFunctions():
                             if thumb is None:
                                 thumb = ""
 
-                            listitem = self._create( [action, label, type, {"thumb": thumb}] )
+                            listitem = self._create( [action, label, type, { "icon": icon, "thumb": thumb}] )
                             
                             shouldAdd = False
                             if "condition" in elem.attrib:
@@ -1131,15 +1181,25 @@ class LibraryFunctions():
         # Retrieve label
         localLabel = item[1]
         
+        # Create localised label2
+        displayLabel2 = item[2]
+        shortcutType = item[2]
+        
         if allowOverrideLabel:
             # Check for a replaced label
             replacementLabel = DATA.checkShortcutLabelOverride( item[0] )
             if replacementLabel is not None:
                 # Check if it's an integer
-                if replacementLabel.isdigit():
-                    localLabel = "::LOCAL::" + replacementLabel
+                if replacementLabel[0].isdigit():
+                    localLabel = "::LOCAL::" + replacementLabel[0]
                 else:
-                    localLabel = replacementLabel
+                    localLabel = replacementLabel[0]
+                    
+                if len( replacementLabel ) == 2:
+                    # We're also overriding the type
+                    displayLabel2 = replacementLabel[1]
+                    shortcutType = replacementLabel[1]
+                    
         
         # Try localising it
         try:
@@ -1158,13 +1218,13 @@ class LibraryFunctions():
             print_exc()
         
         # Create localised label2
-        displayLabel2 = item[2]
-        shortcutType = item[2]
         try:
-            if not item[2].find( "::SCRIPT::" ) == -1:
-                displayLabel2 = __language__(int( item[2][10:] ) )
-            elif not item[2].find( "::LOCAL::" ) == -1:
-                displayLabel2 = xbmc.getLocalizedString(int( item[2][9:] ) )
+            if not displayLabel2.find( "::SCRIPT::" ) == -1:
+                displayLabel2 = __language__(int( displayLabel2[10:] ) )
+            elif not displayLabel2.find( "::LOCAL::" ) == -1:
+                displayLabel2 = xbmc.getLocalizedString(int( displayLabel2[9:] ) )
+            elif displayLabel2.isdigit():
+                displayLabel2 = xbmc.getLocalizedString( int( displayLabel2 ) )
                 
             if shortcutType.isdigit():
                 if int( shortcutTYpe ) > 32000:
@@ -1324,7 +1384,7 @@ class LibraryFunctions():
                                     else:
                                         audiolist.append( listitem )
                                     # Save it for the widgets list
-                                    self.widgetPlaylistsList.append( [playlist.decode( 'utf-8' ), "(" + __language__( int( path[1] ) ) + ") " + name] )
+                                    self.widgetPlaylistsList.append( [playlist.decode( 'utf-8' ), "(" + __language__( int( path[1] ) ) + ") " + name, name] )
                                     
                                     count += 1
                                     break
@@ -1563,6 +1623,8 @@ class LibraryFunctions():
                     listitem.setProperty( "windowID", "10502" )
                 elif itemType == "::SCRIPT::32012":
                     action = 'ActivateWindow(10002,"' + location + '",return)'
+                elif itemType == "::SCRIPT::32009":
+                    action = 'ActivateWindow(10001,"' + location + '",return)'
                 else:
                     action = "RunAddon(" + location + ")"
 
@@ -1570,7 +1632,10 @@ class LibraryFunctions():
                 listitem.setProperty( "displayPath", action )
                 listitem.setProperty( "shortcutType", itemType )
                 listitem.setProperty( "icon", "DefaultShortcut.png" )
-                listitem.setProperty( "thumbnail", thumbnail[ len( thumbnail ) - 1 ] )
+                if thumbnail[ len( thumbnail ) -1 ] == "":
+                    listitem.setProperty( "thumbnail", thumbnail[ 0 ] )
+                else:
+                    listitem.setProperty( "thumbnail", thumbnail[ len( thumbnail ) - 1 ] )
                 listitem.setProperty( "location", location )
                 
                 return listitem
@@ -1673,6 +1738,7 @@ class LibraryFunctions():
         while xbmcvfs.exists( os.path.join( __datapath__, str( id ) + ".xsp" ) ) :
             id += 1
                 
+        DATA.indent( tree.getroot() )
         tree.write( os.path.join( __datapath__, str( id ) + ".xsp" ), encoding="utf-8" )
         return str( id ) + ".xsp"
         
@@ -1709,9 +1775,8 @@ class LibraryFunctions():
         name = tree.getroot().find( "name" )
         name.text = newLabel
         
-        log( name.text )
-        
         # Write the tree
+        DATA.indent( tree.getroot() )
         tree.write( filename, encoding="utf-8" )
 
 class ShowDialog( xbmcgui.WindowXMLDialog ):

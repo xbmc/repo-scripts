@@ -495,14 +495,40 @@ class DataFunctions():
                         # Widget or background
                         if "group" not in elem.attrib:
                             defaultProperties.append( [ "mainmenu", elem.attrib.get( 'labelID' ), elemSearch[0], elem.text ] )
+                            if elemSearch[0] == "widget":
+                                # Get and set widget type and name
+                                widgetDetails = self._getWidgetNameAndType( elem.text )
+                                if widgetDetails is not None:
+                                    defaultProperties.append( [ "mainmenu", elem.attrib.get( "labelID" ), "widgetName", widgetDetails[0] ] )
+                                    if widgetDetails[1] is not None:
+                                        defaultProperties.append( [ "mainmenu", elem.attrib.get( "labelID" ), "widgetType", widgetDetails[1] ] )
                         else:
                             defaultProperties.append( [ elem.attrib.get( "group" ), elem.attrib.get( 'labelID' ), elemSearch[0], elem.text ] )
-                
+                            if elemSearch[0] == "widget":
+                                # Get and set widget type and name
+                                widgetDetails = self._getWidgetNameAndType( elem.text )
+                                if widgetDetails is not None:
+                                    defaultProperties.append( [ elem.attrib.get( "group" ), elem.attrib.get( "labelID" ), "widgetName", widgetDetails[0] ] )
+                                    if widgetDetails[1] is not None:
+                                        defaultProperties.append( [ elem.attrib.get( "group" ), elem.attrib.get( "labelID" ), "widgetType", widgetDetails[1] ] )                
+                                        
         returnVal = [currentProperties, defaultProperties]
         xbmcgui.Window( 10000 ).setProperty( "skinshortcutsAdditionalProperties", pickle.dumps( returnVal ) )
         return returnVal
-
         
+    def _getWidgetNameAndType( self, widgetID ):
+        tree = self._get_overrides_skin()
+        if tree is not None:
+            for elem in tree.findall( "widget" ):
+                if elem.text == widgetID:
+                    if "type" in elem.attrib:
+                        return [elem.attrib.get( "label" ), elem.attrib.get( "type" )]
+                    else:
+                        return [ elem.attrib.get( "label" ), None ]
+                        
+        return None
+    
+    
     def createNiceName ( self, item ):
         # Translate certain localized strings into non-localized form for labelID
         if item == "10006":
@@ -534,7 +560,7 @@ class DataFunctions():
         # Return whether mainmenu items should be displayed
         if action == "ActivateWindow(Weather)":
             return "!IsEmpty(Weather.Plugin)"
-        if action.startswith( "ActivateWindowAndFocus(MyPVR" ):
+        if action.startswith( "ActivateWindowAndFocus(MyPVR" ) or action.startswith( "PlayPvr" ):
             return "System.GetBool(pvrmanager.enabled)"
         if action.startswith( "ActivateWindow(Video,Movie" ):
             return "Library.HasContent(Movies)"
@@ -587,7 +613,11 @@ class DataFunctions():
             elemSearch = tree.findall( "availableshortcutlabel" )
             for elem in elemSearch:
                 if elem.attrib.get( "action" ).lower() == action.lower():
-                    return elem.text         
+                    # This matches :) Check if we're also overriding the type
+                    if "type" in elem.attrib:
+                        return [ elem.text, elem.attrib.get( "type" ) ]
+                    else:
+                        return [ elem.text ]
 
         return None
         
@@ -600,6 +630,24 @@ class DataFunctions():
             hashlist.list.append( [filename, hasher.hexdigest()] )
         else:
             hashlist.list.append( [filename, None] )
+            
+            
+    # in-place prettyprint formatter
+    def indent( self, elem, level=0 ):
+        i = "\n" + level*"\t"
+        if len(elem):
+            if not elem.text or not elem.text.strip():
+                elem.text = i + "\t"
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+            for elem in elem:
+                self.indent(elem, level+1)
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+        else:
+            if level and (not elem.tail or not elem.tail.strip()):
+                elem.tail = i
+            
 
     def smart_truncate(string, max_length=0, word_boundaries=False, separator=' '):
         string = string.strip(separator)
