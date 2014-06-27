@@ -136,6 +136,14 @@ msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr "Consenti caching degli extra all'avio"
 
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Sfoglia gli Extra"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Sottocartella personalizzata musica e video"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Riproduci Tutti"
@@ -171,3 +179,15 @@ msgstr "Modifica titolo"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Aggiornamento titolo fallito"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Film"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Serie TV"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Video Musicali"

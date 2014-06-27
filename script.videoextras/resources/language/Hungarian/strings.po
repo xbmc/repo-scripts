@@ -136,6 +136,14 @@ msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr "Extrák gyorsítótárazásának engedélyezése indításkor"
 
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Extrák böngészése"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Egyedi Klip Alkönyvtár"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Összes lejátszása"
@@ -171,3 +179,15 @@ msgstr "Cím szerkesztése"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Cím frissítése sikertelen"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Videóklipek"

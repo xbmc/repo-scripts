@@ -49,16 +49,21 @@ from settings import os_path_join
 # Load the core Video Extras classes
 from core import VideoExtrasBase
 
+# Load the cache cleaner
+from CacheCleanup import CacheCleanup
 
 #####################################
 # Main class for the Extras Service
 #####################################
 class VideoExtrasService():
+    LIST_TAG = "_list"
+    
     def __init__(self):
         # special://skin - This path points to the currently active skin's root directory. 
-        self.skinExtrasOverlay = xbmc.translatePath( "special://skin" ).decode("utf-8")
-        self.skinExtrasOverlay = os_path_join(self.skinExtrasOverlay, "media")
-        self.skinExtrasOverlay = os_path_join(self.skinExtrasOverlay, "videoextras_overlay.png")
+        skinExtrasOverlayBase = xbmc.translatePath( "special://skin" ).decode("utf-8")
+        skinExtrasOverlayBase = os_path_join(skinExtrasOverlayBase, "media")
+        self.skinExtrasOverlay = os_path_join(skinExtrasOverlayBase, "videoextras_overlay.png")
+        self.skinExtrasOverlayList = os_path_join(skinExtrasOverlayBase, "videoextras_overlay" + VideoExtrasService.LIST_TAG + ".png")
 
         log("VideoExtrasService: Looking for image overlay file: %s" % self.skinExtrasOverlay)
 
@@ -69,6 +74,16 @@ class VideoExtrasService():
             self.skinExtrasOverlay = os_path_join(self.skinExtrasOverlay, "Default")
             self.skinExtrasOverlay = os_path_join(self.skinExtrasOverlay, "media")
             self.skinExtrasOverlay = os_path_join(self.skinExtrasOverlay, "overlay.png")
+
+        log("VideoExtrasService: Looking for list image overlay file: %s" % self.skinExtrasOverlayList)
+
+        if not xbmcvfs.exists(self.skinExtrasOverlayList):
+            log("VideoExtrasService: No custom wide image, using default")
+            # Add default image setting to skinExtrasOverlay
+            self.skinExtrasOverlayList = os_path_join(__resource__, "skins")
+            self.skinExtrasOverlayList = os_path_join(self.skinExtrasOverlayList, "Default")
+            self.skinExtrasOverlayList = os_path_join(self.skinExtrasOverlayList, "media")
+            self.skinExtrasOverlayList = os_path_join(self.skinExtrasOverlayList, "overlay" + VideoExtrasService.LIST_TAG + ".png")
 
         self.forceOverlayOverwrite = False
         
@@ -130,14 +145,16 @@ class VideoExtrasService():
                     log("VideoExtrasService: Extras found for (%d) %s" % (item[dbid], item['title']))
                     extrasCacheString = ("%s[%d]%s" % (extrasCacheString, item[dbid], os.linesep))
                     # Add the overlay image for this item
-                    self._createOverlayFile(target, item[dbid])
+                    self._createOverlayFile(target, item[dbid], self.skinExtrasOverlay)
+                    self._createOverlayFile(target, item[dbid], self.skinExtrasOverlayList, VideoExtrasService.LIST_TAG)
                 else:
                     # No extras so remove the file if it exists
                     self._removeOverlayFile(target, item[dbid])
+                    self._removeOverlayFile(target, item[dbid], VideoExtrasService.LIST_TAG)
 
 
     # Calculates where a given overlay file should be
-    def _createTargetPath(self, target, dbid):
+    def _createTargetPath(self, target, dbid, postfix=''):
         # Get the path where the file exists
         rootPath = os_path_join(__profile__, target)
         if not xbmcvfs.exists(rootPath):
@@ -145,13 +162,13 @@ class VideoExtrasService():
             xbmcvfs.mkdirs(rootPath)
         
         # Generate the name of the file that the overlay will be copied to
-        targetFile = os_path_join(rootPath, ("%d.png" % dbid))
+        targetFile = os_path_join(rootPath, ("%d%s.png" % (dbid, postfix)))
         return targetFile
 
     # Creates the overlay file in the expected location
-    def _createOverlayFile(self, target, dbid):
+    def _createOverlayFile(self, target, dbid, srcfile, postfix=''):
         # Generate the name of the file that the overlay will be copied to
-        targetFile = self._createTargetPath(target, dbid)
+        targetFile = self._createTargetPath(target, dbid, postfix)
 
         # Check if the file exists
         if xbmcvfs.exists(targetFile) and not self.forceOverlayOverwrite:
@@ -159,15 +176,15 @@ class VideoExtrasService():
 
         try:
             # Now the path exists, need to copy the file over to it, giving it the name of the DBID
-            xbmcvfs.copy(self.skinExtrasOverlay, targetFile)
+            xbmcvfs.copy(srcfile, targetFile)
         except:
             log("VideoExtrasService: Failed to create file: %s" % targetFile)
             log("VideoExtrasService: %s" % traceback.format_exc())
 
     # Removes an overlay
-    def _removeOverlayFile(self, target, dbid):
+    def _removeOverlayFile(self, target, dbid, postfix=''):
         # Generate the name of the file that the overlay will be removed from
-        targetFile = self._createTargetPath(target, dbid)
+        targetFile = self._createTargetPath(target, dbid, postfix)
 
         if xbmcvfs.exists(targetFile):
             try:
@@ -176,21 +193,6 @@ class VideoExtrasService():
             except:
                 log("VideoExtrasService: Failed to delete file: %s" % targetFile)
                 log("VideoExtrasService: %s" % traceback.format_exc())
-
-
-#########################################
-# Change needed to skin
-#########################################
-# ViewsFileMode.xml - Line 554
-#<control type="image">
-#    <posx>950</posx>
-#    <posy>14</posy>
-#    <width>16</width>
-#    <height>16</height>
-#    <texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/movies/,.png]</texture>
-#    <visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(Movies)</visible>
-#</control>
-            
 
 
 ###################################
@@ -215,6 +217,8 @@ if __name__ == '__main__':
     else:
         # Service not enabled
         log("VideoExtrasService: Service disabled in settings")
+        # Clean any cached extras
+        CacheCleanup.removeAllCachedFiles()
     
     # Now just let the service exit - it has done it's job
 

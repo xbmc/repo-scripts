@@ -47,3 +47,7 @@ msgstr "Thông Tin"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Bắt đầu lại từ đầu"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Phim"

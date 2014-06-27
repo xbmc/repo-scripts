@@ -59,3 +59,11 @@ msgstr "Info"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Alusta algusest"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmid"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Seriaalid"

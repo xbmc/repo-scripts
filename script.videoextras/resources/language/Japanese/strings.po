@@ -55,3 +55,7 @@ msgstr "情報"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "最初から再生"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "ムービー"

@@ -55,3 +55,11 @@ msgstr "資訊"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "從頭開始播放"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "影片"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "電視劇"

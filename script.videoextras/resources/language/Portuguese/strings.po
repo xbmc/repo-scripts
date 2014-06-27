@@ -136,6 +136,14 @@ msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr "Permitir cache de extras ao iniciar"
 
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Navegar Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Sub-Pasta de Videoclipes Personalizada"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Reproduzir Todos"
@@ -171,3 +179,15 @@ msgstr "Editar títul"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Falha na actualização do título"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmes"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Séries TV"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Videoclipes"

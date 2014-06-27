@@ -132,6 +132,18 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "Xanela a amosar despois de saír da listaxe detallada"
 
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Permitir a caché de extras ao iniciar"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Buscar Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Subcartafol Personalizado de Vídeos Musicais"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Reproducir todo"
@@ -167,3 +179,15 @@ msgstr "Editar o título"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Produciuse un erro actualizando o título"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmes"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Series de TV"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Vídeos Musicais"

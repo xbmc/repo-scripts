@@ -132,6 +132,14 @@ msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "Fenster, das beim Verlassen der Detailliste angezeigt werden soll"
 
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Zwischenspeichern der Extras beim Start"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Extras durchsuchen"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Alle wiedergeben"
@@ -167,3 +175,15 @@ msgstr "Titel bearbeiten"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Aktualisierung des Titels fehlgeschlagen"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filme"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Serien"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Musik Videos"

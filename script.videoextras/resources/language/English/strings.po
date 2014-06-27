@@ -121,7 +121,7 @@ msgid "Operations"
 msgstr ""
 
 msgctxt "#32024"
-msgid "Clean Database"
+msgid "Clean Database And Cache"
 msgstr ""
 
 msgctxt "#32025"

@@ -16,6 +16,10 @@ msgstr ""
 "Language: af\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Ekstras"
+
 msgctxt "#32008"
 msgid "Information"
 msgstr "Inligting"
@@ -55,3 +59,11 @@ msgstr "Info"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Begin van begin af"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Flieks"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV Programme"

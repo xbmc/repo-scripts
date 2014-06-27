@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Add Video Extras to your Movies and TV shows."
-msgstr "Wideo Dodatki do Filmów i Seriali Telewizyjnych."
+msgstr "Dodatki wideo do Twoich filmów i seriali telewizyjnych."
 
 msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
@@ -34,11 +34,11 @@ msgstr "Dodatki"
 
 msgctxt "#32002"
 msgid "Extras Directory Name"
-msgstr "Nazwa Katalogu Dodatków"
+msgstr "Nazwa folderu dodatków"
 
 msgctxt "#32003"
 msgid "Search Nested Directories"
-msgstr "Szukaj zagnieżdżonych katalogów"
+msgstr "Uwzględniaj podfoldery"
 
 msgctxt "#32004"
 msgid "Enable Extras with File Tag"
@@ -58,7 +58,7 @@ msgstr "Wybór Filmów"
 
 msgctxt "#32008"
 msgid "Information"
-msgstr "Informacja"
+msgstr "Informacje"
 
 msgctxt "#32009"
 msgid "Home"
@@ -74,7 +74,7 @@ msgstr "Zdalna Lokalizacja Dodatków"
 
 msgctxt "#32012"
 msgid "Use Custom Extras Location"
-msgstr " Korzystaj z Własnej Lokalizacji Dodatków "
+msgstr "Używaj zdefiniowanej lokalizacji dodatków"
 
 msgctxt "#32013"
 msgid "Path"
@@ -82,11 +82,11 @@ msgstr "Ścieżka"
 
 msgctxt "#32014"
 msgid "Custom Movies Sub-Folder"
-msgstr "Własny Podkatalog Filmów "
+msgstr "Zdefiniowany podfolder filmów"
 
 msgctxt "#32015"
 msgid "Custom TV Shows Sub-Folder"
-msgstr "Własny Podkatalog Seriali TV "
+msgstr "Zdefiniowany podfolder seriali"
 
 msgctxt "#32016"
 msgid "Advanced"
@@ -94,11 +94,11 @@ msgstr "Zaawansowane"
 
 msgctxt "#32017"
 msgid "Force Extras Button Display"
-msgstr "Wymuś Wyświetlanie Przycisku Dodatków "
+msgstr "Wymuszaj wyświetlanie przycisku dodatków"
 
 msgctxt "#32018"
 msgid "Exclude Files Regular Expression"
-msgstr "Wykluczanie Plików z Wyrażeń Regularnych"
+msgstr "Wyrażenie regularne wykluczające pliki"
 
 msgctxt "#32019"
 msgid "Debugging"
@@ -106,7 +106,7 @@ msgstr "Diagnozowanie błędów"
 
 msgctxt "#32020"
 msgid "Enable debug logging"
-msgstr "Włącz dziennik diagnozowania błędów"
+msgstr "Rejestruj informacje diagnostyczne w dzienniku"
 
 msgctxt "#32021"
 msgid "Database"
@@ -122,7 +122,7 @@ msgstr "Działania"
 
 msgctxt "#32024"
 msgid "Clean Database"
-msgstr "Wyczyść Bazę Danych"
+msgstr "Wyczyść bazę danych"
 
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
@@ -131,6 +131,18 @@ msgstr "Wyświetl Szczegółowy Ekran Listy "
 msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "Wyświetl Okno po wyjściu z Szczegółowej Listy "
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Buforuj dodatki na starcie"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Przeglądaj dodatki"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Własny podfolder teledysków"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -151,3 +163,31 @@ msgstr "Wznowione od"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Zacznij od początku"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Oznacz jako oglądane"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Oznacz jako nieobejrzane"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Edytuj tytuł"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Nie udało się zaktualizować tytułu"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Seriale"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Teledyski"

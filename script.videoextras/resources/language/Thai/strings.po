@@ -55,3 +55,11 @@ msgstr "ข้อมูล"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "เริ่มจากจุดเริ่มต้น"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "ภาพยนตร์"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "รายการทีวี"

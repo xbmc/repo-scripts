@@ -55,3 +55,7 @@ msgstr "Informacije"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Predvajaj od začetka"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmi"

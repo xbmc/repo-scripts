@@ -39,3 +39,7 @@ msgstr "پایگاه داده"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "شروع از ابتدا"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "فیلم ها"

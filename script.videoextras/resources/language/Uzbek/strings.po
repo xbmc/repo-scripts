@@ -31,3 +31,7 @@ msgstr "Hammasini ijro ettirish"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Ma'lumot"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmlar"

@@ -55,3 +55,7 @@ msgstr "தகவல்"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "ஆரம்பத்தில் இருந்து தொடங்கு"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "திரைப்படங்கள்"

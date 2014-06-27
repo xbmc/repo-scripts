@@ -63,3 +63,15 @@ msgstr "Възобнови от"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Започни отначало"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Филми"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "ТВ Сериали"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Музикални клипове"

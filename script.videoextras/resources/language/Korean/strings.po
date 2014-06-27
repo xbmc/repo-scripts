@@ -136,6 +136,14 @@ msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr "시작할 때 부가영상 캐시 허용"
 
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "부가영상 탐색"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "사용자 지정 뮤직비디오 하위 폴더"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "모두 재생"
@@ -171,3 +179,15 @@ msgstr "제목 수정"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "제목 업데이트 실패"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "영화"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV 쇼"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "뮤직비디오"

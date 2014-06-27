@@ -27,3 +27,7 @@ msgstr "Datinbanko"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Start from beginning"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmoj"

@@ -60,6 +60,34 @@ msgctxt "#32102"
 msgid "Info"
 msgstr "Информация"
 
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Продолжить с "
+
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Начать с начала"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Пометить, как просмотренный"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Пометить, как не просмотренный"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Редактировать название"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Фильмы"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Сериалы"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Муз. видео"

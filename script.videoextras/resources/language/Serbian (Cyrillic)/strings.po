@@ -43,3 +43,7 @@ msgstr "Информације"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Почни испочетка"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Филмови"

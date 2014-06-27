@@ -63,3 +63,15 @@ msgstr "Зьвесткі"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Пачаць спачатку"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Фільмы"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "ТЫ шоў"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Music Videos"

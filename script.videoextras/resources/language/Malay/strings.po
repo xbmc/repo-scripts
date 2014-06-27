@@ -47,3 +47,15 @@ msgstr "Main Semua"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Maklumat"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Cereka"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Rancangan TV"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Video Muzik"

@@ -134,7 +134,15 @@ msgstr "Παράθυρο που θα εμφανίζεται μετά την έξ
 
 msgctxt "#32027"
 msgid "Allow caching of extras on startup"
-msgstr "Προσωρινή αποθήκευση πρόσθετων κατά την εκκίνηση"
+msgstr "Προσωρινή αποθήκευση Extras κατά την εκκίνηση"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Περιήγηση στα Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Υποφάκελος Προσαρμοσμένων Μουσικών Βίντεο"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -171,3 +179,15 @@ msgstr "Επεξεργασία τίτλου"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Αποτυχία ενημέρωσης τίτλου"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Ταινίες"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Τηλ. Σειρές"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Μουσικά Βίντεο"

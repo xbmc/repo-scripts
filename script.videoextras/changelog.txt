@@ -1,3 +1,7 @@
+v1.1.3
+- Copy additional icons for confluence overlay support
+- Add files to patch confluence with VideoExtras
+
 v1.1.2
 - Display album art when Play All is selected
 - Use VideoExtras icon for OSD thumb-nail (if no thumbnail set)

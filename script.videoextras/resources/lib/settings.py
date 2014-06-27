@@ -9,7 +9,7 @@ __addonid__   = __addon__.getAddonInfo('id')
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if __addon__.getSetting( "logEnabled" ) == "true":
+    if (__addon__.getSetting( "logEnabled" ) == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance (txt,str):
             txt = txt.decode("utf-8")
         message = u'%s: %s' % (__addonid__, txt)

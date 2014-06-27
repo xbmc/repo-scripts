@@ -27,3 +27,7 @@ msgstr "Database"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Ibda mill-bidu"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmati"

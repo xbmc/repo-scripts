@@ -151,3 +151,11 @@ msgstr "Reprèn des de"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Comença des del principi"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Pel·lícules"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Sèries de TV"

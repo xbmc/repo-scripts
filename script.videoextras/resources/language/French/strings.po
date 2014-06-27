@@ -63,3 +63,15 @@ msgstr "Info"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Reprendre depuis le début"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Séries TV"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Music Vidéos"

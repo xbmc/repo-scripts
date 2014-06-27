@@ -16,9 +16,45 @@ msgstr ""
 "Language: lt\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Pridėkite video priedus filmams ir TV laidoms."
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Suteikia būdą pridėti video priedus į vaizdo biblioteką. Nustatymo instrukcijas galite rasti vikio puslapyje."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgstr "Teminių išvaizdų kūrėjai, instrukcijas kaip integruoti šį priedą į jūsų teminę išvaizdą rasite vikio puslapyje: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+
 msgctxt "#32001"
 msgid "Extras"
-msgstr "Ypatumai"
+msgstr "Priedai"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Priedų katalogo vardas"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Ieškoti įdėtiniuose katalaguose"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Įjungti priedus su failo žyma"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Priedų failo vardo žyma"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Meniu, kurį rodyti po priedo atkurimo"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Vaizdo pasirinkimas"
 
 msgctxt "#32008"
 msgid "Information"
@@ -28,34 +64,130 @@ msgctxt "#32009"
 msgid "Home"
 msgstr "Pagrindinis"
 
+msgctxt "#32010"
+msgid "File System"
+msgstr "Failų sistema"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Nuotolinė priedų vieta"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Naudoti individualią priedų vietą"
+
 msgctxt "#32013"
 msgid "Path"
 msgstr "Kelias"
 
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Individualus filmų poaplankis"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Individualus TV laidų poaplankis"
+
 msgctxt "#32016"
 msgid "Advanced"
-msgstr "Išplėstinė(-is)"
+msgstr "Papildomai"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Priverstinis priedų mygtuko rodymas"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Reguliarusis reiškinys failų išskyrimui"
 
 msgctxt "#32019"
 msgid "Debugging"
-msgstr "Derinimo"
+msgstr "Derinimas"
 
 msgctxt "#32020"
 msgid "Enable debug logging"
-msgstr "Įjungti žurnalo derinimą"
+msgstr "Įjungti derinimo žurnalą"
 
 msgctxt "#32021"
 msgid "Database"
 msgstr "Duomenų bazė"
 
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Įjungti duomenų bazės palaikymą"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Operacijos"
+
+msgctxt "#32024"
+msgid "Clean Database"
+msgstr "Išvalyti duomenų bazę"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Naudoti išsamaus sąrašo ekraną"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Langas, kurį rodyti išėjus iš išsamaus sąrašo"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Leisti priedų padėjimą į talpyklą paleidžint"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Naršyti priedus"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Individualus muzikinių vaizdo klipų poaplankis"
+
 msgctxt "#32101"
 msgid "Play All"
-msgstr "Groti visus(-ką)"
+msgstr "Atkurti visus"
 
 msgctxt "#32102"
 msgid "Info"
 msgstr "Informacija"
 
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Priedų nerasta"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Atnaujinti nuo"
+
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Pradėti nuo pradžios"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Žymėti kaip peržiūrėtą"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Žymėti kaip neperžiūrėtą"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Keisti pavadinimą"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Nepavyko atnaujinti pavadinimo"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmai"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV laidos"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Muzikiniai vaizdo klipai"

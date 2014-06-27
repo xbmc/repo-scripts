@@ -136,6 +136,14 @@ msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr "Toestaan het bufferen van extra`s bij opstarten"
 
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Zoek extra`s"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Aangepaste muziekvideo Sub-folder"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Speel alles af"
@@ -171,3 +179,15 @@ msgstr "Wijzig titel"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Niet gelukt titel te updaten"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV Series"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Musiek Videos"

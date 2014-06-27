@@ -47,3 +47,7 @@ msgstr "መረጃ"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "ከመጀመሪያው ማስጀመሪያ "
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "ሙቪዎች"

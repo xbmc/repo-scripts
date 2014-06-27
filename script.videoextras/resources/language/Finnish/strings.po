@@ -59,3 +59,11 @@ msgstr "Tiedot"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Aloita alusta"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Elokuvat"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV-Sarjat"

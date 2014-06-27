@@ -27,3 +27,15 @@ msgstr "Atskaņot visu"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Info"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmas"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV Šovi"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Mūzikas Video"

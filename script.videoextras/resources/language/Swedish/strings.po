@@ -136,6 +136,10 @@ msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr "Tillåt buffring av Extras vid uppstart"
 
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Bläddra bland Extras"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Spela alla"
@@ -171,3 +175,15 @@ msgstr "Ändra titel"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Misslyckades uppdatera titel"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV-program"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Musikvideor"

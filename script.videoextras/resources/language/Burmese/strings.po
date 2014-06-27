@@ -16,6 +16,14 @@ msgstr ""
 "Language: my\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32009"
+msgid "Home"
+msgstr "ပင်မ"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "လမ်းကြောင်း"
+
 msgctxt "#32016"
 msgid "Advanced"
 msgstr "အဆင့်မြင့်သော"
@@ -23,3 +31,11 @@ msgstr "အဆင့်မြင့်သော"
 msgctxt "#32101"
 msgid "Play All"
 msgstr "အားလုံးဖွင့်မည်"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "အချက်အလက်များ"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "ရုပ်ရှင်များ"

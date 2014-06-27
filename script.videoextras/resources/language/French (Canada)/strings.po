@@ -82,11 +82,11 @@ msgstr "Chemin"
 
 msgctxt "#32014"
 msgid "Custom Movies Sub-Folder"
-msgstr "Sous-dossier personnalisé de films"
+msgstr "Sous-dossier personnalisé des films"
 
 msgctxt "#32015"
 msgid "Custom TV Shows Sub-Folder"
-msgstr "Sous-dossier personnalisé pour les séries télé"
+msgstr "Sous-dossier personnalisé des séries télé"
 
 msgctxt "#32016"
 msgid "Advanced"
@@ -136,6 +136,14 @@ msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr "Permettre la mise en cache des suppléments au démarrage"
 
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Parcourir les bonus"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Sous-dossier personnalisé des vidéos musicales"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Tout lire"
@@ -171,3 +179,15 @@ msgstr "Modifier le titre"
 msgctxt "#32109"
 msgid "Failed to update title"
 msgstr "Échec de mise à jour du titre"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Séries télé"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Vidéos musicales"

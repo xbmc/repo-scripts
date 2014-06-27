@@ -20,6 +20,10 @@ msgctxt "#32001"
 msgid "Extras"
 msgstr "其他"
 
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "视频选择"
+
 msgctxt "#32008"
 msgid "Information"
 msgstr "信息"
@@ -75,3 +79,15 @@ msgstr "从头开始播放"
 msgctxt "#32108"
 msgid "Edit title"
 msgstr "编辑标题"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "电影"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "剧集"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "音乐电视"

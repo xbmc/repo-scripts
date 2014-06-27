@@ -59,3 +59,11 @@ msgstr "Informácie"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Začať od začiatku"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Seriály"

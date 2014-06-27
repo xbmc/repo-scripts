@@ -31,3 +31,7 @@ msgstr "डिबगिंग"
 msgctxt "#32020"
 msgid "Enable debug logging"
 msgstr "लॉगिंग डिबग सक्षम"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "सिनेमा"
