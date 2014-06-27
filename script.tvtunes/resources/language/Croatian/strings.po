@@ -16,10 +16,6 @@ msgstr ""
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Nabavite i reproducirajte temu vašeg omiljenog filma i TV serije"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -104,17 +100,45 @@ msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
 msgstr "Prikaži TvTunes tipku na Video zaslonu informacija"
 
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Iščezavanje nakon reprodukcije za (minute)"
+
 msgctxt "#32022"
 msgid "Operations"
 msgstr "Radnje"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Pregledaj teme"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Odgoda pokretanja teme (sekunde)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Podrži teme u poddirektorijima"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Naziv direktorija"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Ograniči trajanje zapisa kod višestrukih tema (dekunde)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Zadani izvor pretraživača tema "
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Reproduciraj temu pri pregledavanju popisa glazbenih spotova"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "GREŠKA"
-
-msgctxt "#32102"
-msgid "site unreacheable"
-msgstr "Stranica nedostupna"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
@@ -164,9 +188,49 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Preuzmite  ovo?"
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Rezulatati pretrage biti će nepotpuni"
+
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Možete pomoći u nabavi više tema na:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Ručna pretraga..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Nastavi sa sljedećim pretraživanjem teme?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Pretraživanje pomoću %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Pretraži pomoću svih stranica (može bit sporo)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmovi"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV serije"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Glazbeni spotovi"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filter]: Prikaži samo teme koje nedostaju"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Radnja]: Preuzmi teme koje nedostaju"
 
 msgctxt "#32991"
 msgid "Playback"
@@ -179,3 +243,7 @@ msgstr "Preuzmi"
 msgctxt "#32993"
 msgid "File system"
 msgstr "Datotečni sustav"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "Greška: nemoguće povezivanje s goear.com"

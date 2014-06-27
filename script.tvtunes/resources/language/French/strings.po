@@ -16,10 +16,6 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Récupérez et écoutez les génériques des séries TV"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Skinneurs, lisez le changelog.txt pour obtenir les infos pour l'intégrer à votre skin"
@@ -108,10 +104,6 @@ msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERREUR"
 
-msgctxt "#32102"
-msgid "site unreacheable"
-msgstr "Site inaccessible"
-
 msgctxt "#32103"
 msgid "TvTune downloader"
 msgstr "TvTune téléchargeurs"
@@ -171,6 +163,18 @@ msgstr "Recherche manuelle..."
 msgctxt "#32119"
 msgid "Continue with next theme search?"
 msgstr "Poursuivre avec la recherche du générique suivant ?"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Séries TV"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Music Vidéos"
 
 msgctxt "#32991"
 msgid "Playback"

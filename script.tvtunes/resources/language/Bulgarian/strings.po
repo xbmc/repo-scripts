@@ -16,10 +16,6 @@ msgstr ""
 "Language: bg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Сваля и възпроизвежда мелодиите от вашите филми и сериали"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -112,6 +108,10 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Операции"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Преглед на мелодиите"
+
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Стартиране със закъснение (сек)"
@@ -141,8 +141,8 @@ msgid "ERROR"
 msgstr "ГРЕШКА"
 
 msgctxt "#32102"
-msgid "site unreacheable"
-msgstr "сайтът е недостъпен"
+msgid "site unreachable"
+msgstr "сайтът не е достъпен"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
@@ -192,6 +192,10 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Да бъде ли свалена?"
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Не са намерени всички съвпадащи мелодии."
+
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Можете да помогнете в обогатяването на библиотеката с мелодии на адрес:"
@@ -206,7 +210,31 @@ msgstr "Да продължи ли търсенето за още мелодии
 
 msgctxt "#32120"
 msgid "Search Using %s..."
-msgstr "Търсене с %s..."
+msgstr "Търсене в %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Търсене във всички сайтове (бавно търсене)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Филми"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "ТВ Сериали"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Музикални клипове"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Филтър]: Показвай само липсващите мелодии"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Действие]: Извличай липсващите мелодии"
 
 msgctxt "#32991"
 msgid "Playback"

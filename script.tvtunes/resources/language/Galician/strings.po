@@ -16,10 +16,6 @@ msgstr ""
 "Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Obter e reproducir a música das súas Series de TV"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Autores de temas, por favor vexan o changelog.txt para saber como integrar tvtunes no seu tema"
@@ -112,6 +108,10 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Operacións"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Buscar Temas"
+
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Retraso no Inicio do Tema (Segundos)"
@@ -141,8 +141,8 @@ msgid "ERROR"
 msgstr "Error"
 
 msgctxt "#32102"
-msgid "site unreacheable"
-msgstr "Sitio non accesíbel"
+msgid "site unreachable"
+msgstr "sitio non accesíbel"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
@@ -207,6 +207,38 @@ msgstr "Continuar coa busca da próxima canción?"
 msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr "Buscar Usando %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Buscar empregando Todos os Sitios (Lento)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmes"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Series de TV"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Vídeos Musicais"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filtro]: Amosar só os Temas que Faltan"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Acción]: Obter os Temas que Faltan"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Ten temas que non están no cartafol de temas."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Mover os temas ao cartafol de temas?"
 
 msgctxt "#32991"
 msgid "Playback"

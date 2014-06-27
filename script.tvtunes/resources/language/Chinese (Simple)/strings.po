@@ -36,6 +36,18 @@ msgctxt "#32106"
 msgid "Getting information..."
 msgstr "获取信息..."
 
+msgctxt "#32201"
+msgid "Movies"
+msgstr "电影"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "剧集"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "音乐电视"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "播放"

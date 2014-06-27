@@ -16,10 +16,6 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Verkrijg en speel je TV shows themes"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Ontwerpers, bekijk de wiki om te zien hoe dit script in je ontwerp dient te integreren:http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -112,6 +108,10 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Besturingen"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Zoek thema`s"
+
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Vertraag thema start (seconden)"
@@ -141,7 +141,7 @@ msgid "ERROR"
 msgstr "ERROR"
 
 msgctxt "#32102"
-msgid "site unreacheable"
+msgid "site unreachable"
 msgstr "Site onbereikbaar"
 
 msgctxt "#32103"
@@ -192,6 +192,10 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Deze downloaden?"
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Zoekresultaten zullen incompleet zijn"
+
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Je kunt helpen om meer theme's te verkrijgen op:"
@@ -207,6 +211,38 @@ msgstr "Doorgaan met volgend thema zoeken?"
 msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr "Zoeken gebruikt %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Zoeken Gebruik alle Sites (Kan traag zijn)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV Series"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Musiek Videos"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filter]: Toon alleen missende thema`s"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Actie]: Verkrijg missende thema`s"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Je hebt thema`s die niet in themafolders staan."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Verplaats deze thema`s naar de themafolder?"
 
 msgctxt "#32991"
 msgid "Playback"

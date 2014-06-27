@@ -116,20 +116,22 @@ class TvTunesFetcher:
         # show[1] = Path where the theme is to be stored
         # show[2] = Original Title (If set)
         theme_list = self.searchThemeList( show[0], show[2], manual=False, showProgressDialog=showProgressDialog )
+        selectedTheme = None
         if (len(theme_list) == 1) and Settings.isExactMatchEnabled(): 
-            theme_url = theme_list[0].getMediaURL()
+            selectedTheme = theme_list[0]
         else:
-            theme_url = self.getUserChoice( theme_list , show[0], show[2] )
+            selectedTheme = self.getUserChoice( theme_list, show[0], show[2] )
 
         retVal = False
-        if theme_url:
+        if selectedTheme:
             retVal = True
-            self.download(theme_url , show[1])
+            self.download(selectedTheme, show[1])
 
         return retVal
 
     # Download the theme
-    def download(self , theme_url , path):
+    def download(self , themeDetails , path):
+        theme_url = themeDetails.getMediaURL()
         log("download: %s" % theme_url )
 
         # Check for custom theme directory
@@ -189,7 +191,8 @@ class TvTunesFetcher:
     def getUserChoice(self , theme_list, showname, alternativeTitle=None):
         theme_url = False
         searchname = showname
-        while theme_url == False:
+        selectedTheme = None
+        while selectedTheme is None:
             # Get the selection list to display to the user
             displayList = []
             # start with the custom option to manual search
@@ -203,7 +206,7 @@ class TvTunesFetcher:
             select = xbmcgui.Dialog().select(("%s %s" % (__language__(32112), searchname.decode("utf-8"))), displayList)
             if select == -1: 
                 log("getUserChoice: Cancelled by user")
-                return False
+                return None
             else:
                 if select == 0:
                     # Search using the alternative engine 
@@ -220,7 +223,7 @@ class TvTunesFetcher:
                         result = kb.getText()
                         if (result == None) or (result == ""):
                             log("getUserChoice: No text entered by user")
-                            return False
+                            return None
                         # Set what was searched for
                         theme_list = self.searchThemeList(result, manual=True)
                         searchname = result
@@ -230,28 +233,11 @@ class TvTunesFetcher:
                     # Not the first entry selected, so change the select option
                     # so the index value matches the theme list
                     select = select - 1
-                    theme_url = theme_list[select].getMediaURL()
-                    log( "getUserChoice: Theme URL = %s" % theme_url )
-                    
-                    # Play the theme for the user
-                    listitem = xbmcgui.ListItem(theme_list[select].getName())
-                    listitem.setInfo('music', {'Title': theme_list[select].getName()})
-                    # Check if a tune is already playing
-                    if xbmc.Player().isPlayingAudio():
-                        xbmc.Player().stop()
-                    while xbmc.Player().isPlayingAudio():
-                        xbmc.sleep(5)
-                     
-                    xbmcgui.Window( 10025 ).setProperty( "TvTunesIsAlive", "true" )
-                    xbmc.Player().play(theme_url, listitem)
-                    # Prompt the user to see if this is the theme to download
-                    ok = xbmcgui.Dialog().yesno(__language__(32103),__language__(32114))
-                    if not ok:
-                        theme_url = False
-                    xbmc.executebuiltin('PlayerControl(Stop)')
-                    xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
+                    # Returns true if the preview was confirmed as the target
+                    if theme_list[select].playPreview():
+                        selectedTheme = theme_list[select]
 
-        return theme_url
+        return selectedTheme
 
     # Perform the actual search on the configured web site
     def searchThemeList(self, showname, alternativeTitle=None, manual=False, showProgressDialog=True):
@@ -419,6 +405,32 @@ class ThemeItemDetails():
 
     def setPriority(self, rating):
         self.priority = rating
+
+    # Plays a preview of the given file
+    def playPreview(self, theme_url=None):
+        if theme_url is None:
+            theme_url = self.getMediaURL()
+        log( "playPreview: Theme URL = %s" % theme_url )
+        
+        # Play the theme for the user
+        listitem = xbmcgui.ListItem(self.getName())
+        listitem.setInfo('music', {'Title': self.getName()})
+        # Check if a tune is already playing
+        if xbmc.Player().isPlayingAudio():
+            xbmc.Player().stop()
+        while xbmc.Player().isPlayingAudio():
+            xbmc.sleep(5)
+
+        xbmcgui.Window( 10025 ).setProperty( "TvTunesIsAlive", "true" )
+        xbmc.Player().play(theme_url, listitem)
+        # Prompt the user to see if this is the theme to download
+        isSelected = xbmcgui.Dialog().yesno(__language__(32103),__language__(32114))
+        
+        # Now stop playing the preview theme
+        if xbmc.Player().isPlayingAudio():
+            xbmc.Player().stop()
+        xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
+        return isSelected
 
 
 ###########################################################
@@ -843,6 +855,9 @@ class TelevisionTunesListing(DefaultListing):
 
             # Get the HTMl at the given URL
             data = self._getHtmlSource( url + urlpage )
+            # Check for an error occuring in the fetch from the web
+            if data == None:
+                break
             log("TelevisionTunesListing: Search url = %s" % ( url + urlpage ) )
             # Search the HTML for the links to the themes
             match = re.search(r"1\.&nbsp;(.*)<br>", data)
@@ -901,7 +916,7 @@ class TelevisionTunesListing(DefaultListing):
             log("getHtmlSource: ERROR opening page %s" % url )
             log("getHtmlSource: %s" % traceback.format_exc())
             xbmcgui.Dialog().ok(__language__(32101) , __language__(32102))
-            return False
+            return None
 
     # Gets the URL to stream and download from
     def _getMediaURL(self, themeURL):
@@ -1333,6 +1348,33 @@ class GroovesharkThemeItemDetails(ThemeItemDetails):
             log("GroovesharkThemeItemDetails: %s" % traceback.format_exc())
         
         return self.trackUrl
+
+    # Plays a preview of the given file
+    def playPreview(self):
+        # For Grooveshark we need to download and then play the downloaded theme
+        # passing the URL to the player no longer works
+        isSelected = False
+        theme_file = 'grooveshark_tmptheme.mp3'
+        tmpdestination = xbmc.translatePath( 'special://profile/addon_data/%s/temp/%s' % ( __addonid__ , theme_file ) ).decode("utf-8")
+
+        try:
+            fp , h = urllib.urlretrieve( self.getMediaURL(), tmpdestination )
+            log( h )
+            
+            # Now play the preview
+            isSelected = ThemeItemDetails.playPreview(self, tmpdestination)
+
+            # Make sure there is no longer a theme playing as 
+            # we want to delete the temp file
+            while xbmc.Player().isPlayingAudio():
+                xbmc.sleep(5)
+
+            xbmcvfs.delete(tmpdestination)
+        except:
+            log("download: Theme download Failed!!!")
+            log("download: %s" % traceback.format_exc())
+        return isSelected
+
 
     # this method converts the time in milliseconds to human readable format.
     def _convertTime(self, totalSeconds):

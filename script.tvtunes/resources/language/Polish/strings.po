@@ -16,17 +16,13 @@ msgstr ""
 "Language: pl\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Pobieraj i odtwarzaj motywy muzyczne filmów i seriali"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Twórcy skór, zapoznajcie się z wiki, by wiedzieć w jaki sposób zintegrować TvTunes ze swoją skórą: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
-msgstr "Zapętlaj odtwarzanie motywu"
+msgstr "Zapętlaj odtwarzanie motywów"
 
 msgctxt "#32002"
 msgid "Lower sound value"
@@ -94,11 +90,11 @@ msgstr "Odtwarzaj motywy podczas przeglądania listy seriali"
 
 msgctxt "#32018"
 msgid "Debugging"
-msgstr "Wykrywanie błędów"
+msgstr "Diagnozowanie błędów"
 
 msgctxt "#32019"
 msgid "Enable debug logging"
-msgstr "Włącz rejestrowanie błędów"
+msgstr "Rejestruj informacje diagnostyczne w dzienniku"
 
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
@@ -112,9 +108,13 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Działania"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Przeglądaj motywy"
+
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
-msgstr "Opóźniaj start motywu o (sekundy)"
+msgstr "Opóźniaj start motywu o (sekund)"
 
 msgctxt "#32025"
 msgid "Support themes in sub directories"
@@ -126,7 +126,7 @@ msgstr "Nazwa folderu"
 
 msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
-msgstr "Ograniczaj czas odtwarzania, przy wielu motywach (w sek.)"
+msgstr "Ograniczaj czas odtwarzania, przy wielu motywach (sekund)"
 
 msgctxt "#32028"
 msgid "Default Theme Search Source"
@@ -141,7 +141,7 @@ msgid "ERROR"
 msgstr "BŁĄD"
 
 msgctxt "#32102"
-msgid "site unreacheable"
+msgid "site unreachable"
 msgstr "serwis niedostępny"
 
 msgctxt "#32103"
@@ -192,6 +192,10 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Pobrać wybrany? "
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Wyniki wyszukiwania będą niekompletne"
+
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Możesz wspomóc projekt na: "
@@ -207,6 +211,38 @@ msgstr "Kontynuować wyszukiwanie następnego motywu?"
 msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr "Wyszukaj za pomocą %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Wyszukaj we wszystkich źródłach (wolne)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Seriale"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Teledyski"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filtr]: Pokazuj tylko brakujące motywy"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Akcja]: Wyszukaj brakujących motywów"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Posiadasz motywy poza folderami motywów"
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Przenieść motywy do folderu motywów?"
 
 msgctxt "#32991"
 msgid "Playback"

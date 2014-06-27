@@ -9,12 +9,12 @@ __addonid__   = __addon__.getAddonInfo('id')
 
 
 # Common logging module
-def log(txt, debug_logging_enabled=True):
-    if (__addon__.getSetting( "logEnabled" ) == "true") and debug_logging_enabled:
+def log(txt, debug_logging_enabled=True, loglevel=xbmc.LOGDEBUG):
+    if ((__addon__.getSetting( "logEnabled" ) == "true") and debug_logging_enabled) or (loglevel != xbmc.LOGDEBUG):
         if isinstance (txt,str):
             txt = txt.decode("utf-8")
         message = u'%s: %s' % (__addonid__, txt)
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+        xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 def normalize_string( text ):
     try:
@@ -30,6 +30,11 @@ def normalize_string( text ):
 # There has been problems with calling join with non ascii characters,
 # so we have this method to try and do the conversion for us
 def os_path_join( dir, file ):
+    # Check if it ends in a slash
+    if dir.endswith("/") or dir.endswith("\\"):
+        # Remove the slash character
+        dir = dir[:-1]
+
     # Convert each argument - if an error, then it will use the default value
     # that was passed in
     try:

@@ -20,6 +20,10 @@ msgctxt "#32007"
 msgid "Path:"
 msgstr "መንገድ:"
 
+msgctxt "#32201"
+msgid "Movies"
+msgstr "ሙቪዎች"
+
 msgctxt "#32992"
 msgid "Download"
 msgstr "የ ወረደ"

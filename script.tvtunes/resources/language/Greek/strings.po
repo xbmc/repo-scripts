@@ -16,10 +16,6 @@ msgstr ""
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Λήψη και αναπαραγωγή μουσικών Θεμάτων (TvTunes) των τηλεοπτικών σειρών σας"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Skinners, ελέγξτε το αρχείο καταγραφής changelog.txt για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας"
@@ -112,6 +108,10 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Λειτουργίες"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Περιήγηση στα Θέματα"
+
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Καθυστέρηση Έναρξης Θέματος (Δευτερόλεπτα)"
@@ -141,7 +141,7 @@ msgid "ERROR"
 msgstr "ΣΦΑΛΜΑ"
 
 msgctxt "#32102"
-msgid "site unreacheable"
+msgid "site unreachable"
 msgstr "αδυναμία σύνδεσης με την ιστοσελίδα"
 
 msgctxt "#32103"
@@ -192,6 +192,10 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Να γίνει λήψη αυτού;"
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Το αποτέλεσμα της αναζήτησης θα είναι ατελές"
+
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Βοηθήστε στην επαύξηση των μουσικών θεμάτων στο:"
@@ -207,6 +211,30 @@ msgstr "Συνέχιση με την επόμενη αναζήτηση θέμα�
 msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr "Αναζήτηση Χρησιμοποιώντας %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Αναζήτηση Σε Όλους Τους Ιστότοπους (Αργό)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Ταινίες"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Τηλ. Σειρές"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Μουσικά Βίντεο"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Φίλτρο]: Εμφάνιση Μόνο Θεμάτων Που Λείπουν"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Ενέργεια]: Ανάκτηση Θεμάτων Που Λείπουν"
 
 msgctxt "#32991"
 msgid "Playback"

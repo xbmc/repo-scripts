@@ -16,10 +16,6 @@ msgstr ""
 "Language: en_NZ\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Get and play your Movie and TV shows Themes"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -199,6 +195,18 @@ msgstr "Continue with next theme search?"
 msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr "Search Using %s..."
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Movies"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV Shows"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Music Videos"
 
 msgctxt "#32991"
 msgid "Playback"

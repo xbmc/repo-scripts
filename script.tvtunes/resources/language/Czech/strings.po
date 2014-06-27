@@ -28,6 +28,18 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Povolit zaznamenávání ladících informací"
 
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Seriály"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Hudební videa"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Přehrávání"

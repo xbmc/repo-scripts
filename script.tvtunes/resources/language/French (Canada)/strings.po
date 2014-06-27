@@ -16,10 +16,6 @@ msgstr ""
 "Language: fr_CA\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Télécharger et jouer les thèmes de vos films et séries télé"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -112,6 +108,10 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Opérations"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Parcourir les thèmes"
+
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Retarder le lancement du thème (secondes)"
@@ -141,7 +141,7 @@ msgid "ERROR"
 msgstr "ERREUR"
 
 msgctxt "#32102"
-msgid "site unreacheable"
+msgid "site unreachable"
 msgstr "site inaccessible"
 
 msgctxt "#32103"
@@ -192,6 +192,10 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Télécharger celui-ci?"
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Les résultats de recherche seront incomplets"
+
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Vous pouvez aider à obtenir plus de thème sur :"
@@ -207,6 +211,38 @@ msgstr "Continuer avec la recherche du thème suivant?"
 msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr "Rechercher en utilisant %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Chercher en utilisant tous les sites (peut être lent)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Séries télé"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Vidéos musicales"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filtre] : Afficher seulement les thèmes manquants"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Action] : Récupérer les thèmes manquants"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Vous avez des thèmes qui ne sont pas dans les dossiers des thèmes. "
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Déplacer les thèmes dans le dossier des thèmes?"
 
 msgctxt "#32991"
 msgid "Playback"

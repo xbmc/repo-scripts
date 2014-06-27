@@ -16,10 +16,6 @@ msgstr ""
 "Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Hämtar och spelar dina TV-serier-teman"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Skalförfattare, var vänlig läs changelog.txt för instruktioner hur du integrerar detta i ditt skal"
@@ -112,6 +108,10 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Åtgärder"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Bläddra teman"
+
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Dröj titelmusikstart (sekunder)"
@@ -139,10 +139,6 @@ msgstr "Spela teman vid bläddring i musikvideolistan"
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "FEL"
-
-msgctxt "#32102"
-msgid "site unreacheable"
-msgstr "sajten kunde inte nås"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
@@ -192,6 +188,10 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Ladda ner denna?"
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Sökresultat kommer bli ofullständiga"
+
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Du kan hjälpa till att få fler teman på:"
@@ -207,6 +207,30 @@ msgstr "Fortsätt med nästa titelmusiksökning?"
 msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr "Sök genom %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Sök genom alla sidor (Kan ta tid)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV-program"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Musikvideor"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filter]: Visa endast saknade teman"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Action]: Hämta saknade teman"
 
 msgctxt "#32991"
 msgid "Playback"

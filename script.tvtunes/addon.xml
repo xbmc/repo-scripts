@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="4.4.5" provider-name="Ppic,Frost,ronie,robwebset">
+<addon id="script.tvtunes" name="TvTunes" version="4.4.6" provider-name="Ppic,Frost,ronie,robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -24,7 +24,7 @@
 	
 		<summary lang="el">Λήψη και αναπαραγωγή μουσικών Θεμάτων (TvTunes) των τηλεοπτικών σειρών σας</summary>
 	
-		<summary lang="en">Get and play your Movie and TV shows Themes</summary>
+		<summary lang="en">Retrieve and play your soundtrack themes whilst browsing your library</summary>
 	
 		<summary lang="en_NZ">Get and play your Movie and TV shows Themes</summary>
 	
@@ -43,6 +43,8 @@
 		<summary lang="it">Ottieni ed esegui i temi musicali delle tue Serie tV</summary>
 	
 		<summary lang="ko">영화와 TV 쇼의 테마 음악을 가져와서 재생합니다</summary>
+	
+		<summary lang="lt">gauti ir atkurti jūsų filmų ir tv laidų temas</summary>
 	
 		<summary lang="nl">Verkrijg en speel je TV shows themes</summary>
 	
@@ -64,7 +66,7 @@
 	
 		<description lang="el">Αυτό το script θα σας βοηθήσει να κατεβάσετε μουσικά θέματα των τηλεοπτικών σας σειρών από το www.televisiontunes.com, θα τα αποθηκεύει σε αρχεία μορφής theme.mp3 στο φάκελο της εκάστοτε σειράς, και θα τα αναπαράγει κατά την περιήγησή σας στη συλλογή τηλ. σειρών σας (απαιτείται να υποστηρίζεται από το κέλυφός σας)</description>
 	
-		<description lang="en">This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)</description>
+		<description lang="en">TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your XBMC library, when used in conjunction with a compatible skin.</description>
 	
 		<description lang="en_NZ">This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)</description>
 	
@@ -83,6 +85,8 @@
 		<description lang="it">Questo script ti aiuterà ad ottenere il tema delle serie tv presenti nella tua libreria da www.televisiontunes.com, li salverà nel file theme.mp3 in ogni cartella delle tue serie così quando sfoglierai la serie tv il tema sarà eseguito (il tuo skin deve essere compatibile)</description>
 	
 		<description lang="ko">라이브러리의 영화와 TV 쇼 테마 음악을 www.televisiontunes.com 에서 가져와서 theme[0-9].mp3 형식으로 비디오 폴더에 저장합니다. TV 쇼 폴더나 비디오 정보 화면으로 들어가면 비디오 라이브러리를 탐색하는 동안 주제음악이 재생됩니다. (이 기능 사용하려면 스킨에서 지원하여야 합니다.)</description>
+	
+		<description lang="lt">Šis skriptas jums padės temas jūsų filmų ir tv laidų temas iš www.televisiontunes.com. Jos bus išsaugotos theme[0-9].mp3 faile, kiekviename jūsų vaizdo aplanke ir bus atkurtos, naršant vaizdo bibliotekoje, pasirinkus TV laidos aplanką arba vaizdo informacijos langą (teminė išvaizda turi būti suderinama su šia funkcija)</description>
 	
 		<description lang="nl">Dit script zoekt thema`s van TV series in jouw TV seriebibliotheek op www.televisiontunes.com en slaat ze op in thema[0-9].mp3 bestand in elke TV serie map. Ze worden afgespeeld wanneer je de  TV serie in bibliotheek modus bekijkt of Video-informatiescherm (Het gebruikte ontwerp moet wel compatibel zijn met dit script)</description>
 	
@@ -108,6 +112,8 @@
 	
 		<disclaimer lang="en_NZ">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	
+		<disclaimer lang="en_US">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+	
 		<disclaimer lang="es">Skinners, por favor, revisad changelog.txt para saber cómo integrarlo en vuestras skins</disclaimer>
 	
 		<disclaimer lang="fr">Skinneurs, lisez le changelog.txt pour obtenir les infos pour l'intégrer à votre skin</disclaimer>
@@ -123,6 +129,8 @@
 		<disclaimer lang="it">Skinners, guardate il file changelog.txt per sapere come integrare lo script nello skin</disclaimer>
 	
 		<disclaimer lang="ko">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="lt">Teminių išvaizdų kūrėjai, prašau aplankykite wiki puslapį, norėdami sužinoti kaip integruoti tai į jūsų teminę išvaizdą: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="nl">Ontwerpers, bekijk de wiki om te zien hoe dit script in je ontwerp dient te integreren:http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
 	

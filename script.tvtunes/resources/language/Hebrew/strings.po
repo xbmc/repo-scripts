@@ -16,10 +16,6 @@ msgstr ""
 "Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "הורד ונגן שירי נושא של סרטים ותכניות טלוויזיה שלך"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "מפתחי מעטפות, אנא פנו לוויקי ע\"מ לדעת כיצד לשלב זאת במעטפת שלכם: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -132,10 +128,6 @@ msgctxt "#32101"
 msgid "ERROR"
 msgstr "שגיאה"
 
-msgctxt "#32102"
-msgid "site unreacheable"
-msgstr "אתר לא נגיש"
-
 msgctxt "#32103"
 msgid "TvTune downloader"
 msgstr "מנהל הורדה TvTune"
@@ -195,6 +187,18 @@ msgstr "חיפוש ידני..."
 msgctxt "#32119"
 msgid "Continue with next theme search?"
 msgstr "להמשיך בחיפוש שיר הנושא הבא?"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "סדרות"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "קליפים"
 
 msgctxt "#32991"
 msgid "Playback"

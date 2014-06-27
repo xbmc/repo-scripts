@@ -16,10 +16,6 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Obté i reproduieix els temes de les seves pel·lícules i sèries de televisió"
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -132,10 +128,6 @@ msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERROR"
 
-msgctxt "#32102"
-msgid "site unreacheable"
-msgstr "lloc inaccessible"
-
 msgctxt "#32103"
 msgid "TvTune downloader"
 msgstr "Descarregador TvTune"
@@ -195,6 +187,14 @@ msgstr "Cerca manual..."
 msgctxt "#32119"
 msgid "Continue with next theme search?"
 msgstr "Continuar amb la cerca del següent tema?"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Pel·lícules"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Sèries de TV"
 
 msgctxt "#32991"
 msgid "Playback"

@@ -23,3 +23,7 @@ msgstr "வழுநீக்கு"
 msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "பிழைநீக்கு பதிவை செயல்படுத்தவும்"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "திரைப்படங்கள்"

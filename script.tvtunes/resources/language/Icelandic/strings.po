@@ -36,6 +36,10 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Virkja kembi úttak"
 
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Aðgerðir"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "VILLA"
@@ -51,6 +55,18 @@ msgstr "HÆTT VIÐ"
 msgctxt "#32111"
 msgid "to:"
 msgstr "til:"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "KVIKMYNDIR"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "SJÓNVARPSÞÆTTIR"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Tónlistarmyndbönd"
 
 msgctxt "#32991"
 msgid "Playback"

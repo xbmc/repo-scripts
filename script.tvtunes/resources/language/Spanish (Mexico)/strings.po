@@ -32,6 +32,14 @@ msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Obteniendo información..."
 
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Películas"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Series de TV"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Reproducir"

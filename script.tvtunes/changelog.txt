@@ -1,3 +1,7 @@
+v4.4.6
+- Fix script error when televisiontunes.com is not responding
+- Update Grooveshark so that it works with the latest website api changes
+
 v4.4.5
 - Fix OSX bug with python module name clash
 

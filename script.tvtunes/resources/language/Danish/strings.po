@@ -16,10 +16,6 @@ msgstr ""
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Get and play your Movie and TV shows Themes"
-msgstr "Hent og afspil dine Film og TV-show Temaer."
-
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
 msgstr "Skinnere, se venligst wikien for hvordan du integrere det i dit skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -108,10 +104,6 @@ msgctxt "#32101"
 msgid "ERROR"
 msgstr "FEJL"
 
-msgctxt "#32102"
-msgid "site unreacheable"
-msgstr "siden er utilgængelig"
-
 msgctxt "#32103"
 msgid "TvTune downloader"
 msgstr "TVTune downloader"
@@ -163,6 +155,18 @@ msgstr "Hente denne?"
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "Du kan hjælpe til at hente flere temaer på:"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Film"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV-serier"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Musikvideoer"
 
 msgctxt "#32991"
 msgid "Playback"

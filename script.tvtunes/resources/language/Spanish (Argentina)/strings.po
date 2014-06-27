@@ -28,6 +28,14 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Habilitar trazas de depuración"
 
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Películas"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Series de TV"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Reproducción"
