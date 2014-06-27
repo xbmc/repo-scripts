@@ -16,22 +16,162 @@ msgstr ""
 "Language: is\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Uppsetning á staðsetningu"
+
+msgctxt "#32102"
+msgid "Advanced options"
+msgstr "Ítarlegri valkostir"
+
 msgctxt "#32110"
 msgid "Enabled"
 msgstr "Virkt"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Staðsetning 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Staðsetning 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Staðsetning 3"
+
+msgctxt "#32114"
+msgid "Location 1 display name"
+msgstr "Sýnt nafn fyrir staðsetningu 1"
+
+msgctxt "#32115"
+msgid "Location 2 display name"
+msgstr "Sýnt nafn fyrir staðsetningu 2"
+
+msgctxt "#32116"
+msgid "Location 3 display name"
+msgstr "Sýnt nafn fyrir staðsetningu 3"
+
+msgctxt "#32117"
+msgid "Location 1 id"
+msgstr "Auðkenni staðsetningar 1"
+
+msgctxt "#32118"
+msgid "Location 2 id"
+msgstr "Auðkenni staðsetningar 2"
+
+msgctxt "#32119"
+msgid "Location 3 id"
+msgstr "Auðkenni staðsetningar 3"
+
+msgctxt "#32120"
+msgid "Enable logging"
+msgstr "Virkja atburðaskráningu"
 
 msgctxt "#32121"
 msgid "Weekend"
 msgstr "Helgi"
 
+msgctxt "#32122"
+msgid "Saturday/Sunday"
+msgstr "Laugardag/Sunnudag"
+
+msgctxt "#32123"
+msgid "Friday/Saturday"
+msgstr "Föstudag/Laugardag"
+
+msgctxt "#32124"
+msgid "Thursday/Friday"
+msgstr "Fimmtudag/Föstudag"
+
+msgctxt "#32125"
+msgid "Map zoom level"
+msgstr "Þysjun korts"
+
+msgctxt "#32126"
+msgid "Animated map"
+msgstr "Hreyfi- kort"
+
+msgctxt "#32127"
+msgid "Location 4"
+msgstr "Staðsetning 4"
+
+msgctxt "#32128"
+msgid "Location 5"
+msgstr "Staðsetning 5"
+
+msgctxt "#32129"
+msgid "Location 4 display name"
+msgstr "Sýnt nafn fyrir staðsetningu 4"
+
+msgctxt "#32130"
+msgid "Location 5 display name"
+msgstr "Sýnt nafn fyrir staðsetningu 5"
+
+msgctxt "#32131"
+msgid "Location 4 id"
+msgstr "Auðkenni staðsetningar 4"
+
+msgctxt "#32132"
+msgid "Location 5 id"
+msgstr "Auðkenni staðsetningar 5"
+
+msgctxt "#32501"
+msgid "New Moon"
+msgstr "Nýtt tungl"
+
+msgctxt "#32502"
+msgid "Waxing Crescent"
+msgstr "Vaxandi mánasigð"
+
+msgctxt "#32503"
+msgid "First Quarter"
+msgstr "Fyrsti fjórðungur"
+
+msgctxt "#32504"
+msgid "Waxing Gibbous"
+msgstr "Vaxandi gleiðmáni"
+
+msgctxt "#32505"
+msgid "Full Moon"
+msgstr "Fullt tungl"
+
+msgctxt "#32506"
+msgid "Waning Gibbous"
+msgstr "Minnkandi gleiðmáni"
+
+msgctxt "#32507"
+msgid "Last Quarter"
+msgstr "Síðasti fjórðungur"
+
+msgctxt "#32508"
+msgid "Waning Crescent"
+msgstr "Minnkandi sigðmáni"
+
 msgctxt "#32510"
 msgid "Warning"
 msgstr "Athugið"
 
+msgctxt "#32511"
+msgid "Watch"
+msgstr "Fylgist með"
+
+msgctxt "#32512"
+msgid "Advisory"
+msgstr "Ráðlagt"
+
+msgctxt "#32513"
+msgid "Statement"
+msgstr "Yfirlýsing"
+
 msgctxt "#32514"
 msgid "Outlook"
-msgstr "Veðurspá"
+msgstr "Útlit fyrir"
 
 msgctxt "#32515"
 msgid "Forecast"
 msgstr "Veðurspá"
+
+msgctxt "#32516"
+msgid "Synopsis"
+msgstr "Ágrip"

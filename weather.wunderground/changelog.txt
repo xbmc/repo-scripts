@@ -1,3 +1,9 @@
+v3.0.8
+- new artwork
+
+v3.0.7
+- fix double degree on 36hour view
+
 v3.0.6
 - fix crash due to api change
 

@@ -19,3 +19,11 @@ msgstr ""
 msgctxt "#32110"
 msgid "Enabled"
 msgstr "सक्रिय"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "स्थान १ "
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "स्थान २ "

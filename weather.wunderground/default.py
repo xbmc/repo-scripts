@@ -445,7 +445,7 @@ def properties(data,loc,locid):
                 for line in fcast:
                     if line.endswith('F'):
                         set_property('36Hour.%i.TemperatureHeading' % (count+1), line.rsplit(' ',1)[0])
-                        set_property('36Hour.%i.Temperature'        % (count+1), line.rsplit(' ',1)[1].rstrip('F').strip() + TEMPUNIT)
+                        set_property('36Hour.%i.Temperature'        % (count+1), line.rsplit(' ',1)[1])
                         break
             except:
                 set_property('36Hour.%i.TemperatureHeading'         % (count+1), '')
@@ -457,7 +457,7 @@ def properties(data,loc,locid):
                 for line in fcast:
                     if line.endswith('C'):
                         set_property('36Hour.%i.TemperatureHeading' % (count+1), line.rsplit(' ',1)[0])
-                        set_property('36Hour.%i.Temperature'        % (count+1), line.rsplit(' ',1)[1].rstrip('C').strip() + TEMPUNIT)
+                        set_property('36Hour.%i.Temperature'        % (count+1), line.rsplit(' ',1)[1])
                         break
             except:
                 set_property('36Hour.%i.TemperatureHeading' % (count+1), '')

@@ -18,11 +18,11 @@ msgstr ""
 
 msgctxt "#32101"
 msgid "Location setup"
-msgstr "Настройка местоположения"
+msgstr "Места"
 
 msgctxt "#32102"
 msgid "Advanced options"
-msgstr "Раширенные опции"
+msgstr "Дополнительно"
 
 msgctxt "#32110"
 msgid "Enabled"
@@ -30,39 +30,39 @@ msgstr "Вкл."
 
 msgctxt "#32111"
 msgid "Location 1"
-msgstr "Местоположение 1"
+msgstr "Место 1"
 
 msgctxt "#32112"
 msgid "Location 2"
-msgstr "Местоположение 2"
+msgstr "Место 2"
 
 msgctxt "#32113"
 msgid "Location 3"
-msgstr "Местоположение 3"
+msgstr "Место 3"
 
 msgctxt "#32114"
 msgid "Location 1 display name"
-msgstr "Название местоположения 1"
+msgstr "Название места 1"
 
 msgctxt "#32115"
 msgid "Location 2 display name"
-msgstr "Название местоположения 2"
+msgstr "Название места 2"
 
 msgctxt "#32116"
 msgid "Location 3 display name"
-msgstr "Название местоположения 3"
+msgstr "Название места 3"
 
 msgctxt "#32117"
 msgid "Location 1 id"
-msgstr "ID местоположения 1"
+msgstr "ID места 1"
 
 msgctxt "#32118"
 msgid "Location 2 id"
-msgstr "ID местоположения 2"
+msgstr "ID места 2"
 
 msgctxt "#32119"
 msgid "Location 3 id"
-msgstr "ID местоположения 3"
+msgstr "ID места 3"
 
 msgctxt "#32120"
 msgid "Enable logging"
@@ -94,27 +94,27 @@ msgstr "Анимированая карта"
 
 msgctxt "#32127"
 msgid "Location 4"
-msgstr "Положение 4"
+msgstr "Место 4"
 
 msgctxt "#32128"
 msgid "Location 5"
-msgstr "Положение5"
+msgstr "Место 5"
 
 msgctxt "#32129"
 msgid "Location 4 display name"
-msgstr "Название местоположения 4"
+msgstr "Название места 4"
 
 msgctxt "#32130"
 msgid "Location 5 display name"
-msgstr "Название местоположения 5"
+msgstr "Название места 5"
 
 msgctxt "#32131"
 msgid "Location 4 id"
-msgstr "Положение 4 id"
+msgstr "ID места 4"
 
 msgctxt "#32132"
 msgid "Location 5 id"
-msgstr "ID местоположения 5"
+msgstr "ID места 5"
 
 msgctxt "#32501"
 msgid "New Moon"
@@ -166,7 +166,7 @@ msgstr "Заявление"
 
 msgctxt "#32514"
 msgid "Outlook"
-msgstr "Прогноз"
+msgstr "Осадки"
 
 msgctxt "#32515"
 msgid "Forecast"

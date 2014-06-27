@@ -92,6 +92,30 @@ msgctxt "#32126"
 msgid "Animated map"
 msgstr "Geanimeerde kaart"
 
+msgctxt "#32127"
+msgid "Location 4"
+msgstr "Ligging 4"
+
+msgctxt "#32128"
+msgid "Location 5"
+msgstr "Ligging 5"
+
+msgctxt "#32129"
+msgid "Location 4 display name"
+msgstr "Ligging 4 vertoon naam"
+
+msgctxt "#32130"
+msgid "Location 5 display name"
+msgstr "Ligging 5 vertoon naam"
+
+msgctxt "#32131"
+msgid "Location 4 id"
+msgstr "Ligging 4 id"
+
+msgctxt "#32132"
+msgid "Location 5 id"
+msgstr "Ligging 5 id"
+
 msgctxt "#32501"
 msgid "New Moon"
 msgstr "Nuwe Maan"

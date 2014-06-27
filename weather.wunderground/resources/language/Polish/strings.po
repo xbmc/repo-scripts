@@ -90,7 +90,7 @@ msgstr "Poziom zoom mapy"
 
 msgctxt "#32126"
 msgid "Animated map"
-msgstr "Mapa animowana "
+msgstr "Animowana mapa "
 
 msgctxt "#32127"
 msgid "Location 4"
@@ -150,7 +150,7 @@ msgstr "Zmniejszający się sierp księżyca"
 
 msgctxt "#32510"
 msgid "Warning"
-msgstr "Uwaga"
+msgstr "Ostrzeżenia "
 
 msgctxt "#32511"
 msgid "Watch"
