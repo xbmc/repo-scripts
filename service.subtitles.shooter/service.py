@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -8,7 +8,6 @@ import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
-import shutil
 import unicodedata
 import chardet
 
@@ -19,6 +18,7 @@ from cStringIO import StringIO
 import zlib
 import random
 from urlparse import urlparse
+from bs4 import BeautifulSoup
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -206,7 +206,7 @@ class SubFile(object):
             d = zlib.decompressobj(16+zlib.MAX_WBITS)
             self.FileData = d.decompress(self.FileData)
 
-def getSub(fpath, languagesearch, languageshort, languagelong):
+def getSubByHash(fpath, languagesearch, languageshort, languagelong):
     subdata = downloadSubs(fpath, languagesearch)
     if (subdata):
         package = Package(StringIO(subdata))
@@ -244,25 +244,176 @@ def getSub(fpath, languagesearch, languageshort, languagelong):
                     url = "plugin://%s/?action=download&filename=%s" % (__scriptid__, local_tmp_file)
                     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
+def CalcFileHash(a):
+    def b(j):
+        g = ""
+        for i in range(len(j)):
+            h=ord(j[i])
+            if (h+47>=126):
+                g += chr(ord(" ") + (h+47) % 126)
+            else:
+                g += chr(h+47)
+        return g
+    def d(g):
+        h=""
+        for i in range(len(g)):
+            h+=g[len(g)-i-1]
+        return h
+    def c(j,h,g,f):
+        p = len(j)
+        return j[p-f+g-h:p-f+g] +j[p-f:p-f+g-h]+j[p-f+g:p]+j[0:p-f]
+    if len(a) >32:
+        charString =a[1:len(a)]
+        result = {
+            'o': lambda : b(c(charString, 8, 17, 27)),
+            'n': lambda : b(d(c(charString, 6, 15, 17))),
+            'm': lambda : d(c(charString, 6, 11, 17)),
+            'l': lambda : d(b(c(charString, 6, 12, 17))),
+            'k': lambda : c(charString, 14, 17, 24),
+            'j': lambda : c(b(d(charString)), 11, 17, 27),
+            'i': lambda : c(d(b(charString)), 5, 7, 24),
+            'h': lambda : c(b(charString), 12, 22, 30),
+            'g': lambda : c(d(charString), 11, 15, 21),
+            'f': lambda : c(charString, 14, 17, 24),
+            'e': lambda : c(charString, 4, 7, 22),
+            'd': lambda : d(b(charString)),
+            'c': lambda : b(d(charString)),
+            'b': lambda : d(charString),
+            'a': lambda : b(charString)
+        }[a[0]]()
+        return result
+    return a
+
+def getSubByTitle(title, langs):
+    subtitles_list = []
+    url = 'http://www.shooter.cn/search/%s/' % title
+    print url
+    socket = urllib.urlopen( url )
+    data = socket.read()
+    socket.close()
+    soup = BeautifulSoup(data)
+    results = soup.find_all("div", attrs={"class":"subitem"})
+    for it in results:
+            name = it.find("div", attrs={"class":"sublist_box_title"}).text.encode('utf-8').strip()
+            id = re.search('local_downfile\(this,(\d+)\);',
+                                  it.find("div", attrs={"class":"sublist_box_title"}).find(onclick=True)['onclick'].encode('utf-8')
+                                  ).group(1)
+            match = it.find(text=re.compile("调校：*".decode('utf-8')))
+            if match:
+                version = match[3:].encode('utf-8').strip().replace('\n','')
+                if version: name = version
+            rating = str(int(it.ul.img['src'].split('/')[-1].split('.')[0])/20)
+            match = it.find(text=re.compile("语言：*".decode('utf-8')))
+            if match:
+                match = match.encode('utf-8')
+                if 'chi' in langs and ('简' in match or '繁' in match):
+                    subtitles_list.append({"language_name":"Chinese", "filename":name, "id":id, "language_flag":'zh', "rating":rating})
+                elif 'eng' in langs and '英' in match:
+                    subtitles_list.append({"language_name":"English", "filename":name, "id":id, "language_flag":'en', "rating":rating})
+    if subtitles_list:
+        for it in subtitles_list:
+            listitem = xbmcgui.ListItem(label=it["language_name"],
+                                  label2=it["filename"],
+                                  iconImage=it["rating"],
+                                  thumbnailImage=it["language_flag"]
+                                  )
+            listitem.setProperty( "sync", "false" )
+            listitem.setProperty( "hearing_imp", "false" )
+            url = "plugin://%s/?action=download&id=%s" % (__scriptid__, it["id"])
+            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
+
+def rmtree(path):
+    if isinstance(path, unicode):
+        path = path.encode('utf-8')
+    dirs, files = xbmcvfs.listdir(path)
+    for dir in dirs:
+        rmtree(os.path.join(path, dir))
+    for file in files:
+        xbmcvfs.delete(os.path.join(path, file))
+    xbmcvfs.rmdir(path)
+
 def Search(item):
     if xbmcvfs.exists(__temp__):
-        shutil.rmtree(__temp__)
+        rmtree(__temp__)
     xbmcvfs.mkdirs(__temp__)
 
-    if 'chi' in item['3let_language']:
-        getSub(item['file_original_path'], "chn", "zh", "Chinese")
-    if 'eng' in item['3let_language']:
-        getSub(item['file_original_path'], "eng", "en", "English")
+    if item['mansearch']:
+        title = item['mansearchstr']
+    else:
+        title = '%s %s' % (item['title'], item['year'])
+        if 'chi' in item['3let_language']:
+            getSubByHash(item['file_original_path'], "chn", "zh", "Chinese")
+        if 'eng' in item['3let_language']:
+            getSubByHash(item['file_original_path'], "eng", "en", "English")
+    getSubByTitle(title, item['3let_language'])
 
 def Download(filename):
     subtitle_list = []
     subtitle_list.append(filename)
     return subtitle_list
 
-def normalizeString(str):
-    return unicodedata.normalize(
-         'NFKD', unicode(unicode(str, 'utf-8'))
-         ).encode('ascii','ignore')
+def DownloadID(id):
+    if xbmcvfs.exists(__temp__):
+        rmtree(__temp__)
+    xbmcvfs.mkdirs(__temp__)
+
+    subtitle_list = []
+    url = 'http://shooter.cn/files/file3.php?hash=duei7chy7gj59fjew73hdwh213f&fileid=%s' % (id)
+    socket = urllib.urlopen( url )
+    data = socket.read()
+    url = 'http://file0.shooter.cn%s' % (CalcFileHash(data))
+    socket = urllib.urlopen( url )
+    data = socket.read()
+    socket.close()
+    header = data[:4]
+    if header == 'Rar!':
+        zipext = ".rar"
+    else: # header == 'PK':
+        zipext = ".zip"
+    zipname = 'SUBPACK%s' % (zipext)
+    zip = os.path.join( __temp__, zipname)
+    with open(zip, "wb") as subFile:
+        subFile.write(data)
+    subFile.close()
+    xbmc.sleep(500)
+    dirs, files = xbmcvfs.listdir(__temp__) # refresh xbmc folder cache
+    xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
+    path = __temp__
+    dirs, files = xbmcvfs.listdir(path)
+    if len(dirs) > 0:
+        path = os.path.join(__temp__, dirs[0].decode('utf-8'))
+        dirs, files = xbmcvfs.listdir(path)
+    list = []
+    for subfile in files:
+        if os.path.splitext(subfile)[1] in [".srt", ".txt", ".ssa", ".ass", ".smi", ".sub"]:
+            list.append(subfile)
+    filename = list[0].decode('utf-8')
+    if len(list) > 1:
+        dialog = xbmcgui.Dialog()
+        sel = dialog.select(__language__(32006), list)
+        if sel != -1:
+            filename = list[sel].decode('utf-8')
+    if filename:
+        filepath = os.path.join(path, filename)
+        subtitle_list.append(filepath)
+        if __addon__.getSetting("transUTF8") == "true" and not(os.path.splitext(filename)[1] == '.sub'):
+            data = open(filepath, 'rb').read()
+            enc = chardet.detect(data)['encoding']
+            if enc:
+                data = data.decode(enc, 'ignore')
+                if __addon__.getSetting("transJianFan") == "1":   # translate to Simplified
+                    data = Converter('zh-hans').convert(data)
+                elif __addon__.getSetting("transJianFan") == "2": # translate to Traditional
+                    data = Converter('zh-hant').convert(data)
+                data = data.encode('utf-8', 'ignore')
+            try:
+                local_file_handle = open(filepath, "wb")
+                local_file_handle.write(data)
+                local_file_handle.close()
+            except:
+                log(sys._getframe().f_code.co_name, "Failed to save subtitles to '%s'" % (filename))
+
+    return subtitle_list
 
 def get_params():
     param=[]
@@ -283,23 +434,32 @@ def get_params():
     return param
 
 params = get_params()
-if params['action'] == 'search':
+if params['action'] == 'search' or params['action'] == 'manualsearch':
     item = {}
     item['temp']               = False
     item['rar']                = False
+    item['mansearch']          = False
     item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                           # Year
     item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                    # Season
     item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                   # Episode
-    item['tvshow']             = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))   # Show
-    item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")) # try to get original title
+    item['tvshow']             = xbmc.getInfoLabel("VideoPlayer.TVshowtitle")   # Show
+    item['title']              = xbmc.getInfoLabel("VideoPlayer.OriginalTitle") # try to get original title
     item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path of a playing file
     item['3let_language']      = []
+
+    if 'searchstring' in params:
+        item['mansearch'] = True
+        item['mansearchstr'] = params['searchstring']
 
     for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
         item['3let_language'].append(xbmc.convertLanguage(lang,xbmc.ISO_639_2))
 
     if item['title'] == "":
-        item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
+        item['title'] = xbmc.getInfoLabel("VideoPlayer.Title")                       # no original title, get just Title
+        if item['title'] == os.path.basename(xbmc.Player().getPlayingFile()):         # get movie title and year if is filename
+            title, year = xbmc.getCleanMovieTitle(item['title'])
+            item['title'] = title.replace('[','').replace(']','')
+            item['year'] = year
 
     if item['episode'].lower().find("s") > -1:                                        # Check if season is "Special"
         item['season'] = "0"                                                          #
@@ -319,7 +479,10 @@ if params['action'] == 'search':
     Search(item)
 
 elif params['action'] == 'download':
-    subs = Download(params["filename"])
+    if 'id' in params:
+        subs = DownloadID(params["id"])
+    else:
+        subs = Download(params["filename"])
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
