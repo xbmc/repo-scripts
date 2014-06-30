@@ -1,3 +1,6 @@
+1.0.4 - by struart 10/05/2014
+- Translation of the addons text to Polish
+
 1.0.3 - by CaTz 09/05/2014
 - Fix dependency import
 
