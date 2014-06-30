@@ -1,3 +1,7 @@
+0.0.4
+- fixed downloaded filename encoding
+- fixed subtitle description text encoding
+
 0.0.3
 - added tags required for XBMC addon database
 - removed dummy translations

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -132,7 +132,6 @@ def Search(item):
                   lan = link.parent.parent.findAll("img", title=re.compile("^.*. (subtitle|altyazi)"))
                   if tse and tep and lan and lantext:
                       language = lan[0]["title"]
-                      filename = info[1].getText()
                       if language[0] == "e":
                           language = "English"
                           lan_short = "en"
@@ -140,7 +139,7 @@ def Search(item):
                           language = "Turkish"
                           lan_short = "tr"
                       filename = "%s S%02dE%02d %s.%s" % (tvshow, season, episode, title, lan_short)
-                      description = info[1].getText()
+                      description = info[1].getText().encode('ascii', 'ignore')
                       listitem = xbmcgui.ListItem(label=language,                                   # language name for the found subtitle
                                 label2=description,               # file name for the found subtitle
                                 iconImage="0",                                     # rating for the subtitle, string 0-5
@@ -151,7 +150,7 @@ def Search(item):
                       url = "plugin://%s/?action=download&link=%s&lang=%s&description=%s" % (__scriptid__,
                                                                       addr,
                                                                       lan_short,
-                                                                      description)
+                                                                      filename)
                       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
           br.close()
           log("Divxplanet: found %d subtitles" % (len(subtitles_list)))
@@ -200,12 +199,13 @@ def Search(item):
                     else:
                         language = "Turkish"
                         lan_short = "tr"
-                    filename = "no-description"
+                    description = "no-description"
                     if info[0].getText() != "":
-                        filename = info[0].getText()
-                    log("Divxplanet: found a subtitle with description: %s" % (filename))
+                      description = info[0].getText().encode('ascii', 'ignore')
+                    filename = "%s.%s" % (title, lan_short)
+                    log("Divxplanet: found a subtitle with description: %s" % (description))
                     listitem = xbmcgui.ListItem(label=language,                                   # language name for the found subtitle
-                              label2=filename,               # file name for the found subtitle
+                              label2=description,               # file name for the found subtitle
                               iconImage="0",                                     # rating for the subtitle, string 0-5
                               thumbnailImage=xbmc.convertLanguage(language, xbmc.ISO_639_1)
                               )
@@ -224,7 +224,7 @@ def normalizeString(str):
          'NFKD', unicode(unicode(str, 'utf-8'))
          ).encode('ascii','ignore')
 
-def Download(link, lang, description): #standard input
+def Download(link, lang, filename): #standard input
     subtitle_list = []
     ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     ## pass that to XBMC to copy and activate
@@ -260,7 +260,7 @@ def Download(link, lang, description): #standard input
     br.submit()
 
     log("Divxplanet: Fetching subtitles using url %s" % (dlurl))
-    local_tmp_file = os.path.join(__temp__, normalizeString(description) + ".rar")
+    local_tmp_file = os.path.join(__temp__, normalizeString(filename) + ".rar")
     try:
         log("Divxplanet: Saving subtitles to '%s'" % (local_tmp_file))
         if not os.path.exists(__temp__):
@@ -303,7 +303,7 @@ def Download(link, lang, description): #standard input
             for file in files:
                 # there could be more subtitle files in __temp__, so make sure we get the newly created subtitle file
                 if (string.split(file, '.')[-1] in ['srt', 'sub']) and (os.stat(os.path.join(__temp__, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
-                    log("Divxplanet: Unpacked subtitles file '%s'" % (file))
+                    log("Divxplanet: Unpacked subtitles file '%s'" % (file.encode("utf-8")))
                     subs_file = os.path.join(__temp__, file)
                     subtitle_list.append(subs_file)
     log("Divxplanet: Subtitles saved to '%s'" % ( local_tmp_file))
