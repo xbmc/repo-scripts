@@ -1,0 +1,77 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow Helper
+# Addon id: script.artistslideshow-helper
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30300"
+msgid "Starting"
+msgstr "开始"
+
+msgctxt "#30301"
+msgid "beginning work"
+msgstr "正在开始工作"
+
+msgctxt "#30310"
+msgid "Result"
+msgstr "结果"
+
+msgctxt "#30311"
+msgid "successfully wrote hash list file"
+msgstr "成功创建哈希列表文件"
+
+msgctxt "#30312"
+msgid "unable to create hash list file"
+msgstr "未能创建哈希列表文件"
+
+msgctxt "#30320"
+msgid "Error"
+msgstr "错误"
+
+msgctxt "#30330"
+msgid "Result"
+msgstr "结果"
+
+msgctxt "#30340"
+msgid "Error"
+msgstr "错误"
+
+msgctxt "#30350"
+msgid "Error"
+msgstr "错误"
+
+msgctxt "#32002"
+msgid "   Output directory"
+msgstr "输出目录"
+
+msgctxt "#32004"
+msgid "   Output directory"
+msgstr "输出目录"
+
+msgctxt "#32006"
+msgid "test"
+msgstr "测试"
+
+msgctxt "#32007"
+msgid "move"
+msgstr "移动"
+
+msgctxt "#32008"
+msgid "copy"
+msgstr "拷贝"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "显示除错信息"

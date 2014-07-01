@@ -1,0 +1,105 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow Helper
+# Addon id: script.artistslideshow-helper
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Starting"
+msgstr "Startar"
+
+msgctxt "#30301"
+msgid "beginning work"
+msgstr "påbörjar aktivitet"
+
+msgctxt "#30310"
+msgid "Result"
+msgstr "Resultat"
+
+msgctxt "#30311"
+msgid "successfully wrote hash list file"
+msgstr "lyckades skriva hashlistsfil"
+
+msgctxt "#30312"
+msgid "unable to create hash list file"
+msgstr "kunde inte skapa hashlistsfil"
+
+msgctxt "#30320"
+msgid "Error"
+msgstr "Fel"
+
+msgctxt "#30321"
+msgid "no migration folder defined"
+msgstr "ingen migreringsmapp bestämd"
+
+msgctxt "#30330"
+msgid "Result"
+msgstr "Resultat"
+
+msgctxt "#30331"
+msgid "migration of files complete"
+msgstr "filmigrering klar"
+
+msgctxt "#30340"
+msgid "Error"
+msgstr "Fel"
+
+msgctxt "#30341"
+msgid "no hash list folder defined"
+msgstr "ingen hashlistsmapp bestämd"
+
+msgctxt "#30350"
+msgid "Error"
+msgstr "Fel"
+
+msgctxt "#30351"
+msgid "no action specified in settings"
+msgstr "ingen åtgärd specifierad i inställningar"
+
+msgctxt "#32001"
+msgid "Create artist hash mapping file"
+msgstr "Skapa hashkartfil för artist"
+
+msgctxt "#32002"
+msgid "   Output directory"
+msgstr "Destinationsmapp"
+
+msgctxt "#32003"
+msgid "Migrate images"
+msgstr "Migrera bilder"
+
+msgctxt "#32004"
+msgid "   Output directory"
+msgstr "Destinationsmapp"
+
+msgctxt "#32005"
+msgid "    Migration type"
+msgstr "Migreringstyp"
+
+msgctxt "#32006"
+msgid "test"
+msgstr "prova"
+
+msgctxt "#32007"
+msgid "move"
+msgstr "flytta"
+
+msgctxt "#32008"
+msgid "copy"
+msgstr "kopiera"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Aktivera debugloggning"

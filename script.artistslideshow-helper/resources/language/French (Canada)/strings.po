@@ -1,0 +1,105 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow Helper
+# Addon id: script.artistslideshow-helper
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#30300"
+msgid "Starting"
+msgstr "Démarrage"
+
+msgctxt "#30301"
+msgid "beginning work"
+msgstr "début du travail"
+
+msgctxt "#30310"
+msgid "Result"
+msgstr "Résultat"
+
+msgctxt "#30311"
+msgid "successfully wrote hash list file"
+msgstr "Le fichier de la liste de hachage a été écrit avec succès"
+
+msgctxt "#30312"
+msgid "unable to create hash list file"
+msgstr "Impossible de créer le fichier de la liste de hachage"
+
+msgctxt "#30320"
+msgid "Error"
+msgstr "Erreur"
+
+msgctxt "#30321"
+msgid "no migration folder defined"
+msgstr "aucun dossier de migration n'est défini"
+
+msgctxt "#30330"
+msgid "Result"
+msgstr "Résultat"
+
+msgctxt "#30331"
+msgid "migration of files complete"
+msgstr "la migration des fichiers est terminée"
+
+msgctxt "#30340"
+msgid "Error"
+msgstr "Erreur"
+
+msgctxt "#30341"
+msgid "no hash list folder defined"
+msgstr "Le dossier pour la liste de hachage n'est pas défini"
+
+msgctxt "#30350"
+msgid "Error"
+msgstr "Erreur"
+
+msgctxt "#30351"
+msgid "no action specified in settings"
+msgstr "Aucune action n'est spécifiée dans les paramètres"
+
+msgctxt "#32001"
+msgid "Create artist hash mapping file"
+msgstr "Créer le fichier de hachage de correspondance de l'artiste"
+
+msgctxt "#32002"
+msgid "   Output directory"
+msgstr "Dossier de sortie"
+
+msgctxt "#32003"
+msgid "Migrate images"
+msgstr "Migrer les images"
+
+msgctxt "#32004"
+msgid "   Output directory"
+msgstr "Répertoire de sortie"
+
+msgctxt "#32005"
+msgid "    Migration type"
+msgstr "Type de migration"
+
+msgctxt "#32006"
+msgid "test"
+msgstr "test"
+
+msgctxt "#32007"
+msgid "move"
+msgstr "déplacer"
+
+msgctxt "#32008"
+msgid "copy"
+msgstr "copier"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Activer la journalisation de débogage"
