@@ -1,0 +1,48 @@
+1.0.15
++ Exclude pvr; http; https streaming.
++ Update BeautifulSoup to last version
++ Update Python to last version
++ Add missing license tag
+1.0.14
++ Fix dummy mistake, sorry for the inconvenience
+1.0.13
++ Update Regex expression to support more schemes.
++ Fixes bug when authentication failed
+1.0.12
++ Improve show name detection again. Show like Archer or Revolution
+should now work.
+1.0.11
++ Improve the match between a title and MyEpisode's ID.
+This should solve the issue where a show is not found and misfound when
+its title contains a year, or country reference.
+1.0.10
++ Fix a bug where Auto Add settings was not honored.
+1.0.9
++ Fix a swapped assignment, episode was season and vice-versa.
+1.0.8
++ Add an Auto Add shows settings.
++ Fix a memory leak
++ Fix some potential bug
+1.0.7
++ Improve the way to find a TVShow title, thanks to trogdorsmith and
+greek on the MyEpisodes forum for reporting the issue and testing "beta"
+version.
++ Add a fallback to find a TVShow ID on MyEpisodes
+1.0.6
++ Fix International issue. The plugin will now work when XBMC is set to
+other lanuages than English.
++ Fix memory issue when exiting plugin.
+1.0.5
++ Fix various bugs
++ Reload the plugin when the settings are modified
+1.0.4
++ Fix impossibility to login
+1.0.3
++ Update to new language system
+1.0.2
++ Add Spanish (Thanks to stravieso)
+1.0.1
++ Add Italian and Portuguese (Brazil) language, thanks
+to Julia Vidile <julia.vidile@gmail.com>
+1.0.0
+* initial Frodo commit

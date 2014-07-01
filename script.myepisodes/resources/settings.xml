@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting type="lsep" label="32901" />
+	<setting id="Username" type="text" label="32902" default="" />
+	<setting id="Password" type="text" option="hidden" label="32903" default="" />
+	<setting id="watched-percent" type="labelenum" label="32904" default="2" values="70|80|90|100" />
+	<setting id="auto-add" type="bool" label="32905" default="true" />
+</settings>
