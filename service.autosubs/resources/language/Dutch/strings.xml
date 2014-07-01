@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <!-- General -->
+    <string id="32010">Algemeen</string>
+    <string id="32100">Activeer debug mode</string>
+    <string id="32101">Zoek naar specifieke taal</string>
+    <string id="32102">Ondertitel taal</string>
+
+    <!-- Exclusions -->    
+    <string id="32020">Uitzonderingen</string>
+    <string id="32200">Uitgezonderd voor videos korter dan X minuten</string>
+    <string id="32201">Uitzonderingenlijst, komma gescheiden</string>
+    <string id="32202">Uitgezonderd voor Live TV</string>
+    <string id="32203">Uitgezonderd voor HTTP bronnen</string>  
+    <string id="32204">Uitgezonderd voor pad</string>
+    <string id="32205">Pad naar folder (en subfolders)</string>
+</strings>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+    <!-- General -->
+    <category id="general" label="32010">
+        <setting id="debug" type="bool" label="32100" default="false"/>
+        <setting id="check_for_specific" type="bool" default="false" label="32101"/>
+        <setting id="selected_language" type="select" enable="eq(-1,true)" visible="eq(-1,true)" label="32102" default="English" values="Albanian|Arabic|Belarusian|Bosnian (Latin)|Bulgarian|Catalan|Chinese|Croatian|Czech|Danish|Dutch|English|Estonian|Finnish|French|German|Greek|Hebrew|Hindi|Hungarian|Icelandic|Indonesian|Italian|Japanese|Korean|Latvian|Lithuanian|Macedonian|Norwegian|Polish|Portuguese|Romanian|Russian|SerbianLatin|Slovak|Slovenian|Spanish|Swedish|Thai|Turkish|Ukrainian|Vietnamese|Farsi|Malay" />
+    </category>
+    
+    <!-- Exclusions -->
+    <category id="exclusions" label="32020">	
+        <setting id="ExcludeTime" type="number" label="32200" default="15"/>   	
+        <setting id="ignore_words" type="text" default="theme" label="32201"/>
+        <setting id="ExcludeLiveTV" type="bool" label="32202" default="false"/>
+        <setting id="ExcludeHTTP" type="bool" label="32203" default="false"/>    
+        <setting id="ExcludePathOption" type="bool" label="32204" default="false" />
+        <setting id="ExcludePath" type="folder" source="video" label="32205" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+        <setting id="ExcludePathOption2" type="bool" label="32204" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+        <setting id="ExcludePath2" type="folder" source="video" label="32205" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+        <setting id="ExcludePathOption3" type="bool" label="32204" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+        <setting id="ExcludePath3" type="folder" source="video" label="32205" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+        <setting id="ExcludePathOption4" type="bool" label="32204" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+        <setting id="ExcludePath4" type="folder" source="video" label="32205" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+        <setting id="ExcludePathOption5" type="bool" label="32204" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+        <setting id="ExcludePath5" type="folder" source="video" label="32205" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+    </category>
+</settings>

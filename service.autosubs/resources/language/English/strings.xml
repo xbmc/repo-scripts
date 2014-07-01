@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <!-- General -->
+    <string id="32010">General</string>
+    <string id="32100">Enable debug mode</string>
+    <string id="32101">Look for a specific language</string>
+    <string id="32102">Subtitle language</string>
+
+    <!-- Exclusions -->
+    <string id="32020">Exclusions</string>
+    <string id="32200">Exclude for videos with less than X minutes</string>
+    <string id="32201">Ignore words, comma separated</string>
+    <string id="32202">Exclude Live TV</string>
+    <string id="32203">Exclude HTTP sources</string>  
+    <string id="32204">Exclude path</string>
+    <string id="32205">Folder's path (and subfolders)</string>
+</strings>

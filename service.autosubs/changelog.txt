@@ -1,0 +1,31 @@
+1.0.0 - schumi2004,CaTz, Mafarricos
+- Several fixes
+- Clean up
+- Added translations: Dutch, Portuguese
+- Exclude setting based on video duration
+- Check for specific language
+
+0.0.9 - schumi2004
+- added debug function
+- added exclude paths
+
+0.0.8 - by sagiben
+- popup subtitles window only for Movie files, otherwise it pops also for audio
+
+0.0.7 - by CaTz
+- Added feature, popup subtitles window if there is no subtitles for specific language
+
+0.0.6 - by CaTz
+- Change the dependency to support Gotham
+
+0.0.5
+- Renamed script to service.autosubs
+
+0.0.4
+- Added configuration options
+
+0.0.3
+- Disabled LiveTV by default
+
+0.0.2
+- initial release
