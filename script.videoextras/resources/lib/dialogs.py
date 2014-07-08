@@ -16,17 +16,16 @@
 # *
 import sys
 import os
-#Modules XBMC
 import xbmc
 import xbmcgui
 import xbmcaddon
 
 
-__addon__     = xbmcaddon.Addon(id='script.videoextras')
-__addonid__   = __addon__.getAddonInfo('id')
-__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
-__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__addon__ = xbmcaddon.Addon(id='script.videoextras')
+__addonid__ = __addon__.getAddonInfo('id')
+__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
+__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
 
 sys.path.append(__resource__)
 sys.path.append(__lib__)
@@ -41,7 +40,7 @@ class VideoExtrasResumeWindow(xbmcgui.WindowXMLDialog):
     RESUME = 2
     RESTART = 40
 
-    def __init__( self, *args, **kwargs ):
+    def __init__(self, *args, **kwargs):
         # Copy off the key-word arguments
         # The non keyword arguments will be the ones passed to the main WindowXML
         self.resumetime = kwargs.pop('resumetime')
@@ -75,10 +74,9 @@ class VideoExtrasResumeWindow(xbmcgui.WindowXMLDialog):
 
     def isResume(self):
         return self.selectionMade == VideoExtrasResumeWindow.RESUME
-    
+
     def isRestart(self):
         return self.selectionMade == VideoExtrasResumeWindow.RESTART
-    
+
     def isExit(self):
         return self.selectionMade == VideoExtrasResumeWindow.EXIT
-       

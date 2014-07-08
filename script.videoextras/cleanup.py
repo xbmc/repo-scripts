@@ -17,16 +17,15 @@
 import sys
 import os
 import traceback
-#Modules XBMC
 import xbmc
 import xbmcaddon
 
 
-__addon__     = xbmcaddon.Addon(id='script.videoextras')
-__version__   = __addon__.getAddonInfo('version')
-__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
-__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__addon__ = xbmcaddon.Addon(id='script.videoextras')
+__version__ = __addon__.getAddonInfo('version')
+__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
+__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
 
 sys.path.append(__resource__)
 sys.path.append(__lib__)
@@ -57,4 +56,3 @@ if __name__ == '__main__':
 
     except:
         log("VideoExtrasCleanup: %s" % traceback.format_exc(), xbmc.LOGERROR)
-

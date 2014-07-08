@@ -120,10 +120,6 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Műveletek"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "Adatbázis tisztítása"
-
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Részletes Listaképernyő használata"

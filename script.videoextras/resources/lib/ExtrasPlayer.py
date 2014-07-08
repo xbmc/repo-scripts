@@ -6,20 +6,17 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
-__addon__     = xbmcaddon.Addon(id='script.videoextras')
-__addonid__   = __addon__.getAddonInfo('id')
-__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
-__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__addon__ = xbmcaddon.Addon(id='script.videoextras')
+__addonid__ = __addon__.getAddonInfo('id')
+__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
+__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
 
 sys.path.append(__resource__)
 sys.path.append(__lib__)
 
 # Import the common settings
 from settings import log
-
-# Load the core Video Extras classes
-from ExtrasItem import ExtrasItem
 
 
 ###################################
@@ -28,7 +25,7 @@ from ExtrasItem import ExtrasItem
 class ExtrasPlayer(xbmc.Player):
     def __init__(self, *args, **kwargs):
         self.isPlayAll = True
-        self.currentlyPlaying=None
+        self.currentlyPlaying = None
         # Extract the title of the parent video that owns the extras
         self.parentTitle = kwargs.pop('parentTitle', "")
         xbmc.Player.__init__(self, *args)
@@ -67,7 +64,7 @@ class ExtrasPlayer(xbmc.Player):
                 # Check if the same file as last time has started playing
                 if currentlyPlayingFile != extrasPlayer.getPlayingFile():
                     # If there was previously a playing file, need to save it's state
-                    if (currentlyPlayingFile != "") and (currentExtrasItem != None):
+                    if (currentlyPlayingFile != "") and (currentExtrasItem is not None):
                         # Record the time that the player actually stopped
                         log("ExtrasPlayer: Played %s to time = %d" % (currentlyPlayingFile, currentTime))
                         if currentTime > 5:
@@ -98,14 +95,14 @@ class ExtrasPlayer(xbmc.Player):
                 log("ExtrasPlayer: %s" % traceback.format_exc())
 
             xbmc.sleep(100)
-            
+
             # If the user selected the "Play All" option, then we do not want to
             # stop between the two videos, so do an extra wait
             if not extrasPlayer.isPlayingVideo():
                 xbmc.sleep(3000)
 
         # Need to save the final file state
-        if (currentlyPlayingFile != None) and (currentExtrasItem != None):
+        if (currentlyPlayingFile is not None) and (currentExtrasItem is not None):
             # Record the time that the player actually stopped
             log("ExtrasPlayer: Played final %s to time = %d" % (currentlyPlayingFile, currentTime))
             if currentTime > 5:
@@ -114,15 +111,14 @@ class ExtrasPlayer(xbmc.Player):
                 currentExtrasItem.saveState()
             else:
                 log("ExtrasPlayer: Only played to time = %d (Not saving state)" % currentTime)
-        
 
     # Calls the media player to play the selected item
     @staticmethod
     def performPlayAction(extraItem, parentTitle=""):
         log("ExtrasPlayer: Playing extra video = %s" % extraItem.getFilename())
         extrasPlayer = ExtrasPlayer(parentTitle=parentTitle)
-        extrasPlayer.playExtraItem( extraItem )
-        
+        extrasPlayer.playExtraItem(extraItem)
+
         # Don't allow this to loop forever
         loopCount = 1000
         while (not extrasPlayer.isPlayingVideo()) and (loopCount > 0):
@@ -132,7 +128,7 @@ class ExtrasPlayer(xbmc.Player):
         # Looks like the video never started for some reason, do not go any further
         if loopCount == 0:
             return
-        
+
         # Get the total duration and round it down to the nearest second
         videoDuration = int(extrasPlayer.getTotalTime())
         log("ExtrasPlayer: TotalTime of video = %d" % videoDuration)
@@ -148,10 +144,9 @@ class ExtrasPlayer(xbmc.Player):
         # Record the time that the player actually stopped
         log("ExtrasPlayer: Played to time = %d" % currentTime)
         extraItem.setResumePoint(currentTime)
-        
+
         # Now update the database with the fact this has now been watched
         extraItem.saveState()
-
 
     # Create a list item from an extras item
     def _getListItem(self, extrasItem, ignoreResume=False):
@@ -159,7 +154,7 @@ class ExtrasPlayer(xbmc.Player):
         # Set the display title on the video play overlay
         listitem.setInfo('video', {'studio': __addon__.getLocalizedString(32001) + " - " + self.parentTitle})
         listitem.setInfo('video', {'Title': extrasItem.getDisplayName()})
-        
+
         # If both the Icon and Thumbnail is set, the list screen will choose to show
         # the thumbnail
         if extrasItem.getIconImage() != "":
@@ -175,4 +170,3 @@ class ExtrasPlayer(xbmc.Player):
             if extrasItem.getResumePoint() > 1:
                 listitem.setProperty('StartOffset', str(extrasItem.getResumePoint()))
         return listitem
-

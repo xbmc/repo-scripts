@@ -36,10 +36,6 @@ msgctxt "#32016"
 msgid "Advanced"
 msgstr "Lanjutan"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "Kosongkan Pangkalan Data"
-
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Main Semua"

@@ -120,10 +120,6 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Besturingen"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "opschonen Database"
-
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Gebruik gedetailleerd lijst scherm "

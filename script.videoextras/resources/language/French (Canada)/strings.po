@@ -120,10 +120,6 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Opérations"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "Nettoyer la base de données"
-
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Utiliser la liste détaillée"

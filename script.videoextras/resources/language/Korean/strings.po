@@ -120,10 +120,6 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "작업"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "데이터베이스 정리"
-
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "상세목록 화면 사용"

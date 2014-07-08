@@ -48,10 +48,6 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "Database"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "Clean Database"
-
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Play All"

@@ -5,10 +5,9 @@ import xbmcvfs
 import sqlite3
 import xbmcgui
 
-__addon__     = xbmcaddon.Addon(id='script.videoextras')
+__addon__ = xbmcaddon.Addon(id='script.videoextras')
 
 # Import the common settings
-from settings import Settings
 from settings import log
 from settings import os_path_join
 
@@ -17,7 +16,7 @@ from settings import os_path_join
 # Class to handle database access
 #################################
 class ExtrasDB():
-    def __init__( self ):
+    def __init__(self):
         # Start by getting the database location
         self.configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
         self.databasefile = os_path_join(self.configPath, "extras_database.db")
@@ -34,7 +33,7 @@ class ExtrasDB():
                 log("ExtrasDB: Removed database: %s" % self.databasefile)
             else:
                 log("ExtrasDB: No database exists: %s" % self.databasefile)
-    
+
     def createDatabase(self):
         # Make sure the database does not already exist
         if not xbmcvfs.exists(self.databasefile):
@@ -42,12 +41,12 @@ class ExtrasDB():
             conn = sqlite3.connect(self.databasefile)
             conn.text_factory = str
             c = conn.cursor()
-            
+
             # Create the version number table, this is a simple table
             # that just holds the version details of what created it
             # It should make upgrade later easier
             c.execute('''CREATE TABLE version (version text primary key)''')
-            
+
             # Insert a row for the version
             versionNum = "1"
 
@@ -85,14 +84,14 @@ class ExtrasDB():
         # Get a connection to the DB
         conn = self.getConnection()
         c = conn.cursor()
-        
+
         insertData = (filename, resumePoint, totalDuration, watched)
         c.execute('''INSERT OR REPLACE INTO ExtrasFile(filename, resumePoint, duration, watched) VALUES (?,?,?,?)''', insertData)
 
         rowId = c.lastrowid
         conn.commit()
         conn.close()
-        
+
         return rowId
 
     def select(self, filename):
@@ -105,7 +104,7 @@ class ExtrasDB():
         c.execute('SELECT * FROM ExtrasFile where filename = ?', (filename,))
         row = c.fetchone()
 
-        if row == None:
+        if row is None:
             log("ExtrasDB: No entry found in the database for %s" % filename)
             return None
 
@@ -115,7 +114,7 @@ class ExtrasDB():
         # row[0] - Unique Index in the DB
         # row[1] - Name of the file
         # row[2] - Current point played to (or -1 is not saved)
-        # row[3] - Total Duration of the video 
+        # row[3] - Total Duration of the video
         # row[4] - 0 if not watched 1 if watched
         returnData = {}
         returnData['resumePoint'] = row[2]

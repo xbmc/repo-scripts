@@ -120,10 +120,6 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "פעולות"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "נקה מסד נתונים"
-
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "השתמש במסך רשימה מפורטת"

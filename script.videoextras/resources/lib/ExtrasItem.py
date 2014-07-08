@@ -14,16 +14,12 @@
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
 # *
-import sys
 import os
 import re
 import traceback
 import xml.etree.ElementTree as ET
-#Modules XBMC
-import xbmc
 import xbmcgui
 import xbmcvfs
-
 
 # Import the common settings
 from settings import Settings
@@ -31,18 +27,14 @@ from settings import log
 from settings import os_path_join
 from settings import os_path_split
 
-# Load the database interface
-from database import ExtrasDB
-
 from VideoParser import VideoParser
-
 
 
 ########################################################
 # Class to store all the details for a given extras file
 ########################################################
 class BaseExtrasItem():
-    def __init__( self, directory, filename, isFileMatchExtra=False, defaultFanArt="" ):
+    def __init__(self, directory, filename, isFileMatchExtra=False, defaultFanArt=""):
         self.directory = directory
         self.filename = filename
         self.plot = None
@@ -64,21 +56,21 @@ class BaseExtrasItem():
 
     # eq and lt defined for sorting order only
     def __eq__(self, other):
-        if other == None:
+        if other is None:
             return False
         # Check key, display then filename - all need to be the same for equals
         return ((self.orderKey, self.displayName, self.directory, self.filename, self.isFileMatchingExtra) ==
                 (other.orderKey, other.displayName, other.directory, other.filename, other.isFileMatchingExtra))
 
     def __lt__(self, other):
-        # Order in key, display then filename 
+        # Order in key, display then filename
         return ((self.orderKey, self.displayName, self.directory, self.filename, self.isFileMatchingExtra) <
                 (other.orderKey, other.displayName, other.directory, other.filename, other.isFileMatchingExtra))
 
     # Returns the name to display to the user for the file
     def getDisplayName(self):
         # Update the display name to allow for : in the name
-        return self.displayName.replace(".sample","").replace("&#58;", ":")
+        return self.displayName.replace(".sample", "").replace("&#58;", ":")
 
     # Return the filename for the extra
     def getFilename(self):
@@ -90,9 +82,9 @@ class BaseExtrasItem():
         # If that is the case, we will only support it being a DVD Directory Image
         # So check to see if the expected file is set
         vobFile = self.getVOBFile()
-        if vobFile != None:
+        if vobFile is not None:
             return vobFile
-        
+
         return self.filename
 
     # Gets the path to the VOB playable file, or None if not a VOB
@@ -100,16 +92,16 @@ class BaseExtrasItem():
         # Check to see if the filename actually holds a directory
         # If that is the case, we will only support it being a DVD Directory Image
         # So check to see if the expected file is set
-        videoTSDir = os_path_join( self.filename, 'VIDEO_TS' )
+        videoTSDir = os_path_join(self.filename, 'VIDEO_TS')
         if xbmcvfs.exists(videoTSDir):
-            ifoFile = os_path_join( videoTSDir, 'VIDEO_TS.IFO' )
-            if xbmcvfs.exists( ifoFile ):
+            ifoFile = os_path_join(videoTSDir, 'VIDEO_TS.IFO')
+            if xbmcvfs.exists(ifoFile):
                 return ifoFile
         # Also check for BluRay
-        videoBluRayDir = os_path_join( self.filename, 'BDMV' )
+        videoBluRayDir = os_path_join(self.filename, 'BDMV')
         if xbmcvfs.exists(videoBluRayDir):
-            dbmvFile = os_path_join( videoBluRayDir, 'index.bdmv' )
-            if xbmcvfs.exists( dbmvFile ):
+            dbmvFile = os_path_join(videoBluRayDir, 'index.bdmv')
+            if xbmcvfs.exists(dbmvFile):
                 return dbmvFile
         return None
 
@@ -134,7 +126,7 @@ class BaseExtrasItem():
 
     def isFileMatchExtra(self):
         return self.isFileMatchingExtra
-    
+
     def getOrderKey(self):
         return self.orderKey
 
@@ -152,7 +144,7 @@ class BaseExtrasItem():
 
     # Returns the duration in seconds
     def getDuration(self):
-        if self.duration == None:
+        if self.duration is None:
             try:
                 # Parse the video file for the duration
                 self.duration = VideoParser().getVideoLength(self.filename)
@@ -161,7 +153,7 @@ class BaseExtrasItem():
                 log("BaseExtrasItem: Failed to get duration from %s" % self.filename)
                 log("BaseExtrasItem: %s" % traceback.format_exc())
                 self.duration = 0
-        
+
         return self.duration
 
     def getDisplayDuration(self, forcedDuration=0):
@@ -177,21 +169,20 @@ class BaseExtrasItem():
         # Convert the duration into a viewable format
         if durationInt > 0:
             seconds = durationInt % 60
- 
+
             if durationInt > 60:
-                minutes = ((durationInt - seconds) % 3600)/60
+                minutes = ((durationInt - seconds) % 3600) / 60
 
             # Default the display to MM:SS
             displayDuration = "%02d:%02d" % (minutes, seconds)
 
             # Only add the hours is really needed
             if durationInt > 3600:
-                hours = (durationInt - (minutes*60) - seconds)/3600
+                hours = (durationInt - (minutes * 60) - seconds) / 3600
                 displayDuration = "%02d:%s" % (hours, displayDuration)
 
         # Set the display duration to be the time in minutes
         return displayDuration
-        
 
     # Load the Correct set of images for icons and thumbnails
     # Image options are
@@ -208,38 +199,38 @@ class BaseExtrasItem():
     def _loadImages(self, filename):
         imageList = []
         # Find out the name of the image files
-        fileNoExt = os.path.splitext( filename )[0]
+        fileNoExt = os.path.splitext(filename)[0]
 
         # Start by searching for the filename match
-        fileNoExtImage = self._loadImageFile( fileNoExt )
+        fileNoExtImage = self._loadImageFile(fileNoExt)
         if fileNoExtImage != "":
             imageList.append(fileNoExtImage)
 
         # Check for -poster added to the end
-        fileNoExtImage = self._loadImageFile( fileNoExt + "-poster" )
+        fileNoExtImage = self._loadImageFile(fileNoExt + "-poster")
         if fileNoExtImage != "":
             imageList.append(fileNoExtImage)
 
         if len(imageList) < 2:
             # Check for -thumb added to the end
-            fileNoExtImage = self._loadImageFile( fileNoExt + "-thumb" )
+            fileNoExtImage = self._loadImageFile(fileNoExt + "-thumb")
             if fileNoExtImage != "":
                 imageList.append(fileNoExtImage)
 
         if len(imageList) < 2:
             # Check for poster.jpg
             fileDir = os_path_join(self.directory, "poster")
-            fileNoExtImage = self._loadImageFile( fileDir )
+            fileNoExtImage = self._loadImageFile(fileDir)
             if fileNoExtImage != "":
                 imageList.append(fileNoExtImage)
 
         if len(imageList) < 2:
             # Check for folder.jpg
             fileDir = os_path_join(self.directory, "folder")
-            fileNoExtImage = self._loadImageFile( fileDir )
+            fileNoExtImage = self._loadImageFile(fileDir)
             if fileNoExtImage != "":
                 imageList.append(fileNoExtImage)
-                
+
         # Set the first one to the thumbnail, and the second the the icon
         if len(imageList) > 0:
             self.thumbnailImage = imageList[0]
@@ -248,24 +239,23 @@ class BaseExtrasItem():
 
         # Now check for the fanart
         # Check for -fanart added to the end
-        fileNoExtImage = self._loadImageFile( fileNoExt + "-fanart" )
+        fileNoExtImage = self._loadImageFile(fileNoExt + "-fanart")
         if fileNoExtImage != "":
             self.fanart = fileNoExtImage
         else:
             # Check for fanart.jpg
             fileDir = os_path_join(self.directory, "fanart")
-            fileNoExtImage = self._loadImageFile( fileDir )
+            fileNoExtImage = self._loadImageFile(fileDir)
             if fileNoExtImage != "":
                 self.fanart = fileNoExtImage
 
-
     # Searched for a given image name under different extensions
     def _loadImageFile(self, fileNoExt):
-        if xbmcvfs.exists( fileNoExt + ".tbn" ):
+        if xbmcvfs.exists(fileNoExt + ".tbn"):
             return fileNoExt + ".tbn"
-        if xbmcvfs.exists( fileNoExt + ".png" ):
+        if xbmcvfs.exists(fileNoExt + ".png"):
             return fileNoExt + ".png"
-        if xbmcvfs.exists( fileNoExt + ".jpg" ):
+        if xbmcvfs.exists(fileNoExt + ".jpg"):
             return fileNoExt + ".jpg"
         return ""
 
@@ -275,34 +265,34 @@ class BaseExtrasItem():
         # Get just the filename, don't need the full path
         displayName = os_path_split(filename)[1]
         # Remove the file extension (e.g .avi)
-        displayName = os.path.splitext( displayName )[0]
+        displayName = os.path.splitext(displayName)[0]
         # Remove anything before the -extras- tag (if it exists)
         extrasTag = Settings.getExtrasFileTag()
         if (extrasTag != "") and (extrasTag in displayName):
-            justDescription = displayName.split(extrasTag,1)[1]
+            justDescription = displayName.split(extrasTag, 1)[1]
             if len(justDescription) > 0:
                 displayName = justDescription
-        
-        result = ( displayName, displayName )
+
+        result = (displayName, displayName)
         # Search for the order which will be written as [n]
         # Followed by the display name
         match = re.search("^\[(?P<order>.+)\](?P<Display>.*)", displayName)
         if match:
             orderKey = match.group('order')
             if orderKey != "":
-                result = ( orderKey, match.group('Display') )
+                result = (orderKey, match.group('Display'))
         return result
 
     # Check for an NFO file for this video and reads details out of it
     # if it exists
     def _loadNfoInfo(self, filename):
         # Find out the name of the NFO file
-        nfoFileName = os.path.splitext( filename )[0] + ".nfo"
-        
+        nfoFileName = os.path.splitext(filename)[0] + ".nfo"
+
         log("BaseExtrasItem: Searching for NFO file: %s" % nfoFileName)
-        
+
         # Return False if file does not exist
-        if not xbmcvfs.exists( nfoFileName ):
+        if not xbmcvfs.exists(nfoFileName):
             log("BaseExtrasItem: No NFO file found: %s" % nfoFileName)
             return False
 
@@ -324,9 +314,9 @@ class BaseExtrasItem():
                 nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr.decode("UTF-8", 'ignore')))
 
             rootElement = nfoXml.getroot()
-            
+
             log("BaseExtrasItem: Root element is = %s" % rootElement.tag)
-            
+
             # Check which format if being used
             if rootElement.tag == "movie":
                 log("BaseExtrasItem: Movie format NFO detected")
@@ -334,21 +324,21 @@ class BaseExtrasItem():
                 #        <title>Who knows</title>
                 #        <sorttitle>Who knows 1</sorttitle>
                 #    </movie>
-                
+
                 # Get the title
                 self.displayName = nfoXml.findtext('title')
                 # Get the sort key
                 self.orderKey = nfoXml.findtext('sorttitle')
                 # Get the plot
                 self.plot = nfoXml.findtext('plot')
-    
+
             elif rootElement.tag == "tvshow":
                 log("BaseExtrasItem: TvShow format NFO detected")
                 #    <tvshow>
                 #        <title>Who knows</title>
                 #        <sorttitle>Who knows 1</sorttitle>
                 #    </tvshow>
-    
+
                 # Get the title
                 self.displayName = nfoXml.findtext('title')
                 # Get the sort key
@@ -363,7 +353,7 @@ class BaseExtrasItem():
                 #        <season>2</season>
                 #        <episode>1</episode>
                 #    </episodedetails>
-    
+
                 # Get the title
                 self.displayName = nfoXml.findtext('title')
                 # Get the plot
@@ -371,11 +361,11 @@ class BaseExtrasItem():
                 # Get the sort key
                 season = nfoXml.findtext('season')
                 episode = nfoXml.findtext('episode')
-                
+
                 # Need to use the season and episode to order the list
-                if (season == None) or (season == ""):
+                if (season is None) or (season == ""):
                     season = "0"
-                if (episode == None) or (episode == ""):
+                if (episode is None) or (episode == ""):
                     episode = "0"
                 self.orderKey = "%02d_%02d" % (int(season), int(episode))
 
@@ -383,25 +373,25 @@ class BaseExtrasItem():
                 self.displayName = None
                 self.orderKey = None
                 log("BaseExtrasItem: Unknown NFO format")
-    
+
             # Now get the thumbnail - always called the same regardless of
             # movie of TV
             thumbnail = self._getNfoThumb(nfoXml)
-            if thumbnail != None:
+            if thumbnail is not None:
                 self.thumbnailImage = thumbnail
 
             # Now get the fanart - always called the same regardless of
             # movie of TV
             fanart = self._getNfoFanart(nfoXml)
-            if (fanart != None) and (fanart != ""):
+            if (fanart is not None) and (fanart != ""):
                 self.fanart = fanart
-    
+
             del nfoXml
 
-            if (self.displayName != None) and (self.displayName != ""):
+            if (self.displayName is not None) and (self.displayName != ""):
                 returnValue = True
                 # If there is no order specified, use the display name
-                if (self.orderKey == None) or (self.orderKey == ""):
+                if (self.orderKey is None) or (self.orderKey == ""):
                     self.orderKey = self.displayName
                 log("BaseExtrasItem: Using sort key %s for %s" % (self.orderKey, self.displayName))
         except:
@@ -417,24 +407,24 @@ class BaseExtrasItem():
         self.displayName = newTitle
 
         # Find out the name of the NFO file
-        nfoFileName = os.path.splitext( self.filename )[0] + ".nfo"
-        
+        nfoFileName = os.path.splitext(self.filename)[0] + ".nfo"
+
         log("BaseExtrasItem: Searching for NFO file: %s" % nfoFileName)
-                
+
         try:
             nfoFileStr = None
             newNfoRequired = False
-            
-            if xbmcvfs.exists( nfoFileName ):
+
+            if xbmcvfs.exists(nfoFileName):
                 # Need to first load the contents of the NFO file into
                 # a string, this is because the XML File Parse option will
                 # not handle formats like smb://
                 nfoFile = xbmcvfs.File(nfoFileName, 'r')
                 nfoFileStr = nfoFile.read()
                 nfoFile.close()
-    
+
             # Check to ensure we have some NFO data
-            if (nfoFileStr == None) or (nfoFileStr == ""):
+            if (nfoFileStr is None) or (nfoFileStr == ""):
                 # Create a default NFO File
                 # Need to create a new file if one does not exist
                 log("BaseExtrasItem: No NFO file found, creating new one: %s" % nfoFileName)
@@ -444,8 +434,7 @@ class BaseExtrasItem():
 
                 nfoFileStr = ("<%s>\n    <title> </title>\n</%s>\n" % (tagType, tagType))
                 newNfoRequired = True
-                
-                
+
             # Create an XML parser
             try:
                 nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr))
@@ -456,8 +445,8 @@ class BaseExtrasItem():
             # Get the title element
             titleElement = nfoXml.find('title')
 
-            # Make sure the title exists in the file            
-            if titleElement == None:
+            # Make sure the title exists in the file
+            if titleElement is None:
                 log("BaseExtrasItem: title element not found")
                 return False
 
@@ -466,13 +455,13 @@ class BaseExtrasItem():
 
             # Only set the sort title if already set
             sorttitleElement = nfoXml.find('sorttitle')
-            if sorttitleElement != None:
+            if sorttitleElement is not None:
                 sorttitleElement.text = newTitle
-            
+
             # Save the file back to the filesystem
             newNfoContent = ET.tostring(nfoXml.getroot(), encoding="UTF-8")
             del nfoXml
-            
+
             nfoFile = xbmcvfs.File(nfoFileName, 'w')
             try:
                 nfoFile.write(newNfoContent)
@@ -491,20 +480,18 @@ class BaseExtrasItem():
             log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
             log("BaseExtrasItem: %s" % traceback.format_exc())
             return False
-        
-        return True
 
-        
+        return True
 
     # Reads the thumbnail information from an NFO file
     def _getNfoThumb(self, nfoXml):
         # Get the thumbnail
         thumbnail = nfoXml.findtext('thumb')
-        if (thumbnail != None) and (thumbnail != ""):
+        if (thumbnail is not None) and (thumbnail != ""):
             # Found the thumb entry, check if this is a local path
             # which just has a filename, this is the case if there are
             # no forward slashes and no back slashes
-            if thumbnail.startswith('..') or ((not "/" in thumbnail) and (not "\\" in thumbnail)):
+            if thumbnail.startswith('..') or (("/" not in thumbnail) and ("\\" not in thumbnail)):
                 thumbnail = os_path_join(self.directory, thumbnail)
         else:
             thumbnail = None
@@ -514,11 +501,11 @@ class BaseExtrasItem():
     def _getNfoFanart(self, nfoXml):
         # Get the fanart
         fanart = nfoXml.findtext('fanart')
-        if (fanart != None) and (fanart != ""):
+        if (fanart is not None) and (fanart != ""):
             # Found the fanart entry, check if this is a local path
             # which just has a filename, this is the case if there are
             # no forward slashes and no back slashes
-            if fanart.startswith('..') or ((not "/" in fanart) and (not "\\" in fanart)):
+            if fanart.startswith('..') or (("/" not in fanart) and ("\\" not in fanart)):
                 fanart = os_path_join(self.directory, fanart)
         else:
             fanart = None
@@ -530,7 +517,7 @@ class BaseExtrasItem():
 # that can be read or set via a database
 ####################################################################
 class ExtrasItem(BaseExtrasItem):
-    def __init__( self, directory, filename, isFileMatchExtra=False, extrasDb=None, defaultFanArt="" ):
+    def __init__(self, directory, filename, isFileMatchExtra=False, extrasDb=None, defaultFanArt=""):
         self.extrasDb = extrasDb
         self.watched = 0
         self.totalDuration = -1
@@ -557,22 +544,20 @@ class ExtrasItem(BaseExtrasItem):
     # ISO's and VOBs do not handle this well as the incorrect values are
     # returned from the player
     def shouldStoreProgress(self):
-        if self.getVOBFile() != None:
+        if self.getVOBFile() is not None:
             return False
         # Get the extension of the file
-        fileExt = os.path.splitext( self.getFilename() )[1]
-        if (fileExt == None) or (fileExt == "") or (fileExt.lower() == '.iso') :
+        fileExt = os.path.splitext(self.getFilename())[1]
+        if (fileExt is None) or (fileExt == "") or (fileExt.lower() == '.iso'):
             return False
         # Default is true
         return True
-
 
     def setTotalDuration(self, totalDuration):
         # Do not set the total duration on DVD Images as
         # this will be incorrect
         if not self.shouldStoreProgress():
             return
-
         self.totalDuration = totalDuration
 
     def getTotalDuration(self):
@@ -611,15 +596,14 @@ class ExtrasItem(BaseExtrasItem):
         # Split the time up ready for display
         minutes, seconds = divmod(self.resumePoint, 60)
 
-        hoursString = ""        
+        hoursString = ""
         if minutes > 60:
             # Need to collect hours if needed
             hours, minutes = divmod(minutes, 60)
             hoursString = "%02d:" % hours
-        
+
         newLabel = "%s%02d:%02d" % (hoursString, minutes, seconds)
         return newLabel
-
 
     def isResumable(self):
         if self.watched == 1 or self.resumePoint < 1:
@@ -632,10 +616,10 @@ class ExtrasItem(BaseExtrasItem):
         if not self.shouldStoreProgress():
             return
 
-        if self.extrasDb == None:
+        if self.extrasDb is None:
             log("ExtrasItem: Database not enabled")
             return
-        
+
         log("ExtrasItem: Saving state for %s" % self.getFilename())
 
         rowId = -1
@@ -648,7 +632,7 @@ class ExtrasItem(BaseExtrasItem):
         return rowId
 
     def _loadState(self):
-        if self.extrasDb == None:
+        if self.extrasDb is None:
             log("ExtrasItem: Database not enabled")
             return
 
@@ -656,7 +640,7 @@ class ExtrasItem(BaseExtrasItem):
 
         returnData = self.extrasDb.select(self.getFilename())
 
-        if returnData != None:
+        if returnData is not None:
             self.resumePoint = returnData['resumePoint']
             self.totalDuration = returnData['totalDuration']
             self.watched = returnData['watched']
@@ -665,25 +649,25 @@ class ExtrasItem(BaseExtrasItem):
         # Label2 is used to store the duration in HH:MM:SS format
         anItem = xbmcgui.ListItem(self.getDisplayName(), self.getDisplayDuration(), path=path)
         anItem.setProperty("FileName", self.getFilename())
-        anItem.setInfo('video', { 'PlayCount': self.getWatched() })
-        anItem.setInfo('video', { 'Title': parentTitle })
+        anItem.setInfo('video', {'PlayCount': self.getWatched()})
+        anItem.setInfo('video', {'Title': parentTitle})
         # We store the duration here, but it is only in minutes and does not
         # look very good if displayed, so we also set Label2 to a viewable value
         intDuration = self.getDuration()
         # Only add the duration if there is one
         if intDuration > 0:
-            anItem.setInfo('video', { 'Duration': int(self.getDuration()/60) })
+            anItem.setInfo('video', {'Duration': int(self.getDuration() / 60)})
         if tvShowTitle != "":
-            anItem.setInfo('video', { 'TvShowTitle': tvShowTitle })
+            anItem.setInfo('video', {'TvShowTitle': tvShowTitle})
 
         # If the plot is supplied, then set it
         plot = self.getPlot()
-        if (plot != None) and (plot != ""):
-             anItem.setInfo('video', { 'Plot': plot })
+        if (plot is not None) and (plot != ""):
+            anItem.setInfo('video', {'Plot': plot})
         # If the order sort title is supplied, then set it
         orderKey = self.getOrderKey()
-        if (orderKey != None) and (orderKey != ""):
-             anItem.setInfo('video', { 'sorttitle': orderKey })
+        if (orderKey is not None) and (orderKey != ""):
+            anItem.setInfo('video', {'sorttitle': orderKey})
 
         # If both the Icon and Thumbnail is set, the list screen will choose to show
         # the thumbnail
@@ -697,6 +681,6 @@ class ExtrasItem(BaseExtrasItem):
         anItem.setProperty("ResumeTime", str(self.getResumePoint()))
 
         # Set the background image
-        anItem.setProperty( "Fanart_Image", self.getFanArt() )
+        anItem.setProperty("Fanart_Image", self.getFanArt())
 
         return anItem

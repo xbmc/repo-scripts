@@ -17,9 +17,7 @@
 import sys
 import os
 import traceback
-#Modules XBMC
 import xbmc
-import xbmcgui
 import xbmcvfs
 import xbmcaddon
 
@@ -30,13 +28,13 @@ else:
     import json as simplejson
 
 
-__addon__     = xbmcaddon.Addon(id='script.videoextras')
-__addonid__   = __addon__.getAddonInfo('id')
-__version__   = __addon__.getAddonInfo('version')
-__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
-__profile__   = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
-__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
-__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__addon__ = xbmcaddon.Addon(id='script.videoextras')
+__addonid__ = __addon__.getAddonInfo('id')
+__version__ = __addon__.getAddonInfo('version')
+__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
+__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
+__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
+__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
 
 sys.path.append(__resource__)
 sys.path.append(__lib__)
@@ -52,15 +50,16 @@ from core import VideoExtrasBase
 # Load the cache cleaner
 from CacheCleanup import CacheCleanup
 
+
 #####################################
 # Main class for the Extras Service
 #####################################
 class VideoExtrasService():
     LIST_TAG = "_list"
-    
+
     def __init__(self):
-        # special://skin - This path points to the currently active skin's root directory. 
-        skinExtrasOverlayBase = xbmc.translatePath( "special://skin" ).decode("utf-8")
+        # special://skin - This path points to the currently active skin's root directory.
+        skinExtrasOverlayBase = xbmc.translatePath("special://skin").decode("utf-8")
         skinExtrasOverlayBase = os_path_join(skinExtrasOverlayBase, "media")
         self.skinExtrasOverlay = os_path_join(skinExtrasOverlayBase, "videoextras_overlay.png")
         self.skinExtrasOverlayList = os_path_join(skinExtrasOverlayBase, "videoextras_overlay" + VideoExtrasService.LIST_TAG + ".png")
@@ -86,7 +85,7 @@ class VideoExtrasService():
             self.skinExtrasOverlayList = os_path_join(self.skinExtrasOverlayList, "overlay" + VideoExtrasService.LIST_TAG + ".png")
 
         self.forceOverlayOverwrite = False
-        
+
         # We now know the file that we are going to use for the overlay
         # Check to see if this is different from the last overlay file used
         filename = os_path_join(__profile__, "overlay_image_used.txt")
@@ -96,7 +95,7 @@ class VideoExtrasService():
                 fileHandle = xbmcvfs.File(filename, 'r')
                 previousOverlay = fileHandle.read()
                 fileHandle.close()
-                
+
             # Check if the overlay has changed
             if self.skinExtrasOverlay != previousOverlay:
                 self.forceOverlayOverwrite = True
@@ -109,7 +108,6 @@ class VideoExtrasService():
         except:
             log("VideoExtrasService: Failed to write: %s" % filename)
             log("VideoExtrasService: %s" % traceback.format_exc())
-
 
     # Regenerates all of the cached extras
     def cacheAllExtras(self):
@@ -125,17 +123,17 @@ class VideoExtrasService():
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": { "properties": ["title", "file"] },  "id": 1}' % jsonGet)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_query = simplejson.loads(json_query)
-    
+
         extrasCacheString = ""
-    
-        if "result" in json_query and json_query['result'].has_key(target):
+
+        if ("result" in json_query) and (target in json_query['result']):
             # Get the list of movies paths from the movie list returned
             items = json_query['result'][target]
             for item in items:
                 # Check to see if exit has been called, if so stop
                 if xbmc.getCondVisibility("Window.IsVisible(shutdownmenu)") or xbmc.abortRequested:
                     sys.exit()
-                
+
                 log("VideoExtrasService: %s detected: %s = %s" % (target, item['title'], item['file']))
                 videoExtras = VideoExtrasBase(item['file'], target)
                 # Only checking for the existence of extras - no need for DB or default Fanart
@@ -152,7 +150,6 @@ class VideoExtrasService():
                     self._removeOverlayFile(target, item[dbid])
                     self._removeOverlayFile(target, item[dbid], VideoExtrasService.LIST_TAG)
 
-
     # Calculates where a given overlay file should be
     def _createTargetPath(self, target, dbid, postfix=''):
         # Get the path where the file exists
@@ -160,7 +157,7 @@ class VideoExtrasService():
         if not xbmcvfs.exists(rootPath):
             # Directory does not exist yet, create one
             xbmcvfs.mkdirs(rootPath)
-        
+
         # Generate the name of the file that the overlay will be copied to
         targetFile = os_path_join(rootPath, ("%d%s.png" % (dbid, postfix)))
         return targetFile
@@ -200,15 +197,14 @@ class VideoExtrasService():
 ###################################
 if __name__ == '__main__':
     log("VideoExtrasService: Starting service (version %s)" % __version__)
-
     log("VideoExtrasService: Directory for overlay images is %s" % __profile__)
 
-    # Make sure that the service option is enabled    
+    # Make sure that the service option is enabled
     if Settings.isServiceEnabled():
         try:
             # Construct the service class
             service = VideoExtrasService()
-            
+
             # Refresh the caches
             service.cacheAllExtras()
 
@@ -219,6 +215,5 @@ if __name__ == '__main__':
         log("VideoExtrasService: Service disabled in settings")
         # Clean any cached extras
         CacheCleanup.removeAllCachedFiles()
-    
-    # Now just let the service exit - it has done it's job
 
+    # Now just let the service exit - it has done it's job

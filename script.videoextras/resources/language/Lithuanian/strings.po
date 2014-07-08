@@ -120,10 +120,6 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Operacijos"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "Išvalyti duomenų bazę"
-
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Naudoti išsamaus sąrašo ekraną"

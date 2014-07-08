@@ -120,10 +120,6 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Radnje"
 
-msgctxt "#32024"
-msgid "Clean Database"
-msgstr "Obriši bazu podataka"
-
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Koristi zaslon opširnijeg popisa"
