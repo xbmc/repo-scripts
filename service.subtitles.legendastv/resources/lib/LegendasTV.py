@@ -2,7 +2,7 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 2.1.2
+# Rev. 2.1.3
 
 def module_exists(module_name):
     try:
@@ -32,7 +32,6 @@ else:
 sub_ext = 'srt aas ssa sub smi'
 global regex_1, regex_2, regex_3
 regex_1 = "<div class=\"f_left\"><p><a href=\"([^\"]*)\">([^<]*)</a></p><p class=\"data\">.*?downloads, nota (\d*?),.*?<img .*? title=\"([^\"]*)\" /></div>"
-regex_2 = "<button class=\"ajax\" data-href=\"/util/carrega_legendas_busca/id_filme:\d*/page:\d*\">(\d*)</button>"
 regex_2 = "class=\"load_more\""
 regex_3 = "<button class=\"icon_arrow\" onclick=\"window.open\(\'([^\']*?)\', \'_self\'\)\">DOWNLOAD</button>"
 
@@ -98,15 +97,16 @@ LANGUAGES      = (
     ("Chinese (Simplified)"       , "17",       "zh",            "chi",                 "100",                   30207  ) )
 
 def languageTranslate(lang, lang_from, lang_to):
-  for x in LANGUAGES:
-    if lang == x[lang_from] :
-      return x[lang_to]
+    for x in LANGUAGES:
+        if lang == x[lang_from] :
+            return x[lang_to]
 
-def normalizeString(str):
-  return unicodedata.normalize(
-         'NFKD', unicode(unicode(str, 'utf-8'))
-         ).encode('ascii','ignore')
-
+def normalizeString(obj):
+    try:
+        return unicodedata.normalize('NFKD', unicode(unicode(obj, 'utf-8'))).encode('ascii','ignore')
+    except:
+        return unicode(str(obj).encode('string_escape'))
+    
 class LTVThread(Thread):
     def __init__ (self, obj, count, main_id, page):
         Thread.__init__(self)
@@ -126,8 +126,7 @@ class LegendasTV:
         self.cookie = ""
     
     def Log(self, message):
-#        print "####  %s" % message.encode("utf-8")
-        log(__name__, message)
+        print "####  %s" % message.encode("utf-8")
         
     def _urlopen(self, request):
         try:
@@ -291,7 +290,7 @@ class LegendasTV:
         self.Log("Message: Retrieving page [%s] for Movie[%s], Id[%s]." % (Page, MainID["title"], MainID["id"]))
         
 #        Response = self._urlopen("http://minister.legendas.tv/util/carrega_legendas_busca/page:%s/id_filme:%s" % (Page, MainID["id"]))
-        Response = self._urlopen("http://legendas.tv/util/carrega_legendas_busca_filme/%s/%s" % (MainID["id"], Page))
+        Response = self._urlopen("http://legendas.tv/util/carrega_legendas_busca_filme/%s/-/-/%s" % (MainID["id"], Page))
         if not re.findall(regex_1, Response, re.IGNORECASE | re.DOTALL):
             self.Log("Error: Failed retrieving page [%s] for Movie[%s], Id[%s]." % (Page, MainID["title"], MainID["id"]))
         else:
@@ -302,11 +301,11 @@ class LegendasTV:
                 release = normalizeString(content[1])
                 rating =  content[2]
                 lang = normalizeString(content[3])
-                if re.search("Portugu.s-BR", lang):   LanguageId = "pb" 
-                elif re.search("Portugu.s-PT", lang): LanguageId = "pt"
-                elif re.search("Ingl.s", lang):       LanguageId = "en" 
+                if re.search("Portugues-BR", lang):   LanguageId = "pb" 
+                elif re.search("Portugues-PT", lang): LanguageId = "pt"
+                elif re.search("Ingles", lang):       LanguageId = "en" 
                 elif re.search("Espanhol", lang):     LanguageId = "es"
-                elif re.search("Franc.s", lang):      LanguageId = "fr"
+                elif re.search("Frances", lang):      LanguageId = "fr"
                 else: continue
                 for Preference, LangName in self.Languages:
                     if LangName == languageTranslate(LanguageId, 2, 0):

@@ -27,10 +27,10 @@ __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' )
 __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp') ).decode("utf-8")
 
 sys.path.append (__resource__)
+__search__ = __addon__.getSetting( 'SEARCH' )
 
 from LTVutilities import log, xbmcOriginalTitle, cleanDirectory, isStacked
 from LegendasTV import *
-
 
 def Search(item):  # standard input
 
@@ -57,18 +57,11 @@ def Search(item):  # standard input
                                         iconImage=it["rating"],
                                         thumbnailImage=it["language_flag"]
                                         )
-            if it["sync"]:
-                listitem.setProperty( "sync", "true" )
-            else:
-                listitem.setProperty( "sync", "false" )
-            
-            if it.get("hearing_imp", False):
-                listitem.setProperty( "hearing_imp", "true" )
-            else:
-                listitem.setProperty( "hearing_imp", "false" )
-            
+            if it["sync"]: listitem.setProperty( "sync", "true" )
+            else: listitem.setProperty( "sync", "false" )
+            if it.get("hearing_imp", False): listitem.setProperty( "hearing_imp", "true" )
+            else: listitem.setProperty( "hearing_imp", "false" )
             url = "plugin://%s/?action=download&download_url=%s&filename=%s" % (__scriptid__, it["url"],os.path.basename(item["file_original_path"]))
-            
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
     
 def Download(url, filename, stack=False): #standard input
@@ -76,29 +69,27 @@ def Download(url, filename, stack=False): #standard input
     subtitles = []
     extractPath = os.path.join(__temp__, "Extracted")
     cleanDirectory(__temp__)
-    if not xbmcvfs.exists(extractPath):
-        os.makedirs(extractPath)
+    if not xbmcvfs.exists(extractPath): os.makedirs(extractPath)
     
     # Download the subtitle using its ID.
     Response = urllib2.urlopen(url).read()
 
     downloadID = re.findall(regex_3, Response)[0] if re.search(regex_3, Response) else 0
 
-    if not downloadID:
-        return ""
+    if not downloadID: return ""
     Response = urllib2.urlopen(urllib2.Request("http://minister.legendas.tv%s" % downloadID))
     ltv_sub = Response.read()
     
     # Set the path of file concatenating the temp dir, the subtitle ID and a zip or rar extension.
     # Write the subtitle in binary mode.
     fname = os.path.join(__temp__,"subtitle")
-    fname += '.rar' if re.search("\x52\x61\x72\x21\x1a\x07\x00", ltv_sub) else '.zip'
-    with open(fname,'wb') as f:
-        f.write(ltv_sub)
+#     fname += '.rar' if re.search("\x52\x61\x72\x21\x1a\x07\x00", ltv_sub) else '.zip'
+    fname += '.rar' if Response.url.__contains__('.rar') else '.zip'
+    with open(fname,'wb') as f: f.write(ltv_sub)
 
     # brunoga fixed solution for non unicode caracters
     # Ps. Windows allready parses Unicode filenames.
-    fs_encoding = sys.getfilesystemencoding()
+    fs_encoding = sys.getfilesystemencoding() if sys.getfilesystemencoding() else "utf-8"
     extractPath = extractPath.encode(fs_encoding)
 
     # Use XBMC.Extract to extract the downloaded file, extract it to the temp dir, 
@@ -118,8 +109,7 @@ def Download(url, filename, stack=False): #standard input
                 dirname = re.sub(r"[/\\]{1,10}","-", dirname)
                 dirfile_with_path_name = "(%s)%s" % (dirname, basename) if len(dirname) else basename
                 new_dirfile = os.path.join(extractPath, dirfile_with_path_name)
-                with open(new_dirfile, "w") as f:
-                    f.write(temp)
+                with open(new_dirfile, "w") as f: f.write(temp)
                 
                 # Get the file extension
                 ext = os.path.splitext(new_dirfile)[1][1:].lower()
@@ -132,8 +122,7 @@ def Download(url, filename, stack=False): #standard input
                     xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (new_dirfile, extractPath))
                     xbmc.sleep(1000)
                     extract_and_copy(1)
-                elif ext not in "idx": 
-                    xbmcvfs.delete(new_dirfile)
+                elif ext not in "idx": xbmcvfs.delete(new_dirfile)
             for dir in dirs:
                 dirfolder = os.path.join(root, dir)
                 xbmcvfs.rmdir(dirfolder)
@@ -161,35 +150,31 @@ def Download(url, filename, stack=False): #standard input
             for x, sub in subtitles:
                 if isStacked(subSelected, sub):
                     outputSub.append(sub)
-    elif len(subtitles) == 1:
-        outputSub.append(subtitles[0][1])
+    elif len(subtitles) == 1: outputSub.append(subtitles[0][1])
     return outputSub
 
 def get_params(string=""):
     param=[]
-    if string == "":
-        paramstring=sys.argv[2]
+    if string == "": paramstring=sys.argv[2]
     else:
         paramstring=string 
     if len(paramstring)>=2:
         params=paramstring
         cleanedparams=params.replace('?','')
-        if (params[len(params)-1]=='/'):
-            params=params[0:len(params)-2]
+        if (params[len(params)-1]=='/'): params=params[0:len(params)-2]
         pairsofparams=cleanedparams.split('&')
         param={}
         for i in range(len(pairsofparams)):
             splitparams={}
             splitparams=pairsofparams[i].split('=')
-            if (len(splitparams))==2:
-                param[splitparams[0]]=splitparams[1]
-                                                                
+            if (len(splitparams))==2: param[splitparams[0]]=splitparams[1]
     return param
 
 params = get_params()
+log( "Version: %s" % __version__)
+log( "Action '%s' called" % params['action'])
 
-if params['action'] == 'search':
-    log( "action 'search' called")
+if params['action'] == 'search' or params['action'] == 'manualsearch':
     item = {}
     item['temp']                = False
     item['rar']                 = False
@@ -201,21 +186,44 @@ if params['action'] == 'search':
     item['file_original_path']  = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))# Full path of a playing file
     item['languages']           = [] #['scc','eng']
     item["languages"].extend(urllib.unquote(params['languages']).decode('utf-8').split(","))
- 
-    if len(item["languages"]) > 1:   
-        for x, lang in enumerate(item["languages"]):
-            if lang == u"Portuguese (Brazil)":
-                item["languages"][0], item["languages"][x] = item["languages"][x], item["languages"][0]
-            elif lang == u"Portuguese":
-                item["languages"][1], item["languages"][x] = item["languages"][x], item["languages"][1]
-            elif lang == u"English":
-                item["languages"][2], item["languages"][x] = item["languages"][x], item["languages"][2]
-    if item['title'] == "":
-        log( "VideoPlayer.OriginalTitle not found")
-        item['title']    = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))            # no original title, get just Title
-        
-    if item['episode'].lower().find("s") > -1:                                                                            # Check if season is "Special"
-        item['season'] = "0"                                                                                                                    #
+    
+    if not item['title']:
+        # no original title, get just Title
+        log( "VideoPlayer.OriginalTitle not found")        
+        item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))
+
+    if 'searchstring' in params:
+        if item['title']: item['title'] = urllib.unquote(params['searchstring'])
+        elif item['tvshow']: item['tvshow'] = urllib.unquote(params['searchstring'])
+
+    langtemp = []
+    for lang in item["languages"]:
+        if __search__ == '0':
+            if lang == u"Portuguese (Brazil)": langtemp.append((0, lang))
+            elif lang == u"Portuguese": langtemp.append((1, lang))
+            elif lang == u"English": langtemp.append((2, lang))
+            else: langtemp.append((3, lang))
+        elif __search__ == '1':
+            if lang == u"Portuguese (Brazil)": langtemp.append((1, lang))
+            elif lang == u"Portuguese": langtemp.append((0, lang))
+            elif lang == u"English": langtemp.append((2, lang))
+            else: langtemp.append((3, lang))
+        elif __search__ == '2':            
+            if lang == u"Portuguese (Brazil)": langtemp.append((1, lang))
+            elif lang == u"Portuguese": langtemp.append((2, lang))
+            elif lang == u"English": langtemp.append((0, lang))
+            else: langtemp.append((3, lang))
+        elif __search__ == '3':        
+            if lang == u"Portuguese (Brazil)": langtemp.append((1, lang))
+            elif lang == u"Portuguese": langtemp.append((2, lang))
+            elif lang == u"English": langtemp.append((3, lang))
+            else: langtemp.append((0, lang))
+    langtemp = sorted(langtemp)
+    item["languages"] = []
+    for a, b in langtemp: item["languages"].append(b)
+
+    if item['episode'].lower().find("s") > -1:                                                # Check if season is "Special"
+        item['season'] = "0"                                    
         item['episode'] = item['episode'][-1:]
     
     if ( item['file_original_path'].find("http") > -1 ):
@@ -232,11 +240,11 @@ if params['action'] == 'search':
     Search(item)    
 
 elif params['action'] == 'download':
-    subs = Download(params["download_url"],params["filename"])
+    try: subs = Download(params["download_url"],params["filename"])
+    except: subs = Download(params["download_url"],'filename')
     for sub in subs:
         listitem = xbmcgui.ListItem(label2=os.path.basename(sub))
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
-    
-    
+
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
     

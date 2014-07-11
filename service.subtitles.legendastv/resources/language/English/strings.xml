@@ -5,4 +5,10 @@
 
 <strings>
     <string id="32001">Choose subtitle for:</string>
+    <string id="32002">Advanced</string>	
+    <string id="32003">Portuguese</string>
+    <string id="32004">Portuguese (Brazilian)</string>
+    <string id="32005">English</string>	
+    <string id="32006">Others</string>	
+    <string id="32007">Subtitles priority on search</string>	
 </strings>

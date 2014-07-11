@@ -4,5 +4,11 @@
 <!-- Report language file syntax bugs at: http://trac.xbmc.org/ -->
 
 <strings>
-    <string id="32001">Escolha a leganda para:</string>
+    <string id="32001">Escolha a legenda para:</string>
+    <string id="32002">Avançadas</string>	
+    <string id="32003">Português</string>
+    <string id="32004">Português (Brasileiro)</string>
+    <string id="32005">Inglês</string>	
+    <string id="32006">Outras</string>	
+    <string id="32007">Prioridade de Legendas na pesquisa</string>	
 </strings>

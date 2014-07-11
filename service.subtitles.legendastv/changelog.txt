@@ -1,5 +1,16 @@
+2.2.2
+- Fix a bug with stream sites not parsing a valid filename (thanks to Mafarricos)
+
+2.2.1
+- Fix: Portuguese subtitles not displayed (tnx to Carlos Correia)
+- Implemented: Changing the language predilection at addon preferences (tnx to Carlos Correia)
+- Fix: small string fix (tnx to Carlos Correia)
+- Fix: Language sorting
+- Implement manual search 
+- Workaround: Android not parsing filesystem encoding
+
 2.2.0
-- Fix decompressing the downloaded subtitle
+- Fix: decompressing the downloaded subtitle
 
 2.1.2
-- move the service out of XBMC Subtitles
+- Move the service out of XBMC Subtitles
