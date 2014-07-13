@@ -1,3 +1,6 @@
+1.0.4
+- reduce unneeded coding convertion to download faster
+
 1.0.3
 - added search subtitles by title
 

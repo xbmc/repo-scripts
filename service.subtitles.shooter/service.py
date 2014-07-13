@@ -216,15 +216,6 @@ def getSubByHash(fpath, languagesearch, languageshort, languagelong):
         for sub in package.SubPackages:
             id += 1
             for file in sub.Files:
-                if __addon__.getSetting("transUTF8") == "true" and (file.ExtName in ["srt", "txt", "ssa", "ass", "smi"]):
-                    enc = chardet.detect(file.FileData)['encoding']
-                    if enc:
-                        data = file.FileData.decode(enc, 'ignore')
-                        if __addon__.getSetting("transJianFan") == "1":   # translate to Simplified
-                            data = Converter('zh-hans').convert(data)
-                        elif __addon__.getSetting("transJianFan") == "2": # translate to Traditional
-                            data = Converter('zh-hant').convert(data)
-                        file.FileData = data.encode('utf-8', 'ignore')
                 local_tmp_file = os.path.join(__temp__, ".".join([barename, languageshort, str(id), file.ExtName]))
                 try:
                     local_file_handle = open(local_tmp_file, "wb")
@@ -232,7 +223,7 @@ def getSubByHash(fpath, languagesearch, languageshort, languagelong):
                     local_file_handle.close()
                 except:
                     log(sys._getframe().f_code.co_name, "Failed to save subtitles to '%s'" % (local_tmp_file))
-                if (file.ExtName in ["srt", "txt", "ssa", "ass", "smi", "sub"]):
+                if (file.ExtName in ["srt", "ssa", "ass", "smi", "sub"]):
                     showname = ".".join([barename, file.ExtName])
                     listitem = xbmcgui.ListItem(label=languagelong,
                                                 label2=showname,
@@ -287,7 +278,6 @@ def CalcFileHash(a):
 def getSubByTitle(title, langs):
     subtitles_list = []
     url = 'http://www.shooter.cn/search/%s/' % title
-    print url
     socket = urllib.urlopen( url )
     data = socket.read()
     socket.close()
@@ -335,6 +325,7 @@ def rmtree(path):
 def Search(item):
     if xbmcvfs.exists(__temp__):
         rmtree(__temp__)
+    xbmc.sleep(50)
     xbmcvfs.mkdirs(__temp__)
 
     if item['mansearch']:
@@ -347,14 +338,41 @@ def Search(item):
             getSubByHash(item['file_original_path'], "eng", "en", "English")
     getSubByTitle(title, item['3let_language'])
 
+def ChangeFileEndcoding(filepath):
+    if __addon__.getSetting("transUTF8") == "true" and os.path.splitext(filepath)[1] in [".srt", ".ssa", ".ass", ".smi"]:
+        data = open(filepath, 'rb').read()
+        enc = chardet.detect(data)['encoding']
+        if enc:
+            data = data.decode(enc, 'ignore')
+            if __addon__.getSetting("transJianFan") == "1":   # translate to Simplified
+                data = Converter('zh-hans').convert(data)
+            elif __addon__.getSetting("transJianFan") == "2": # translate to Traditional
+                data = Converter('zh-hant').convert(data)
+            data = data.encode('utf-8', 'ignore')
+        try:
+            local_file_handle = open(filepath, "wb")
+            local_file_handle.write(data)
+            local_file_handle.close()
+        except:
+            log(sys._getframe().f_code.co_name, "Failed to save subtitles to '%s'" % (filename))
+
 def Download(filename):
     subtitle_list = []
+    ChangeFileEndcoding(filename.decode('utf-8'))
     subtitle_list.append(filename)
     return subtitle_list
+
+def CheckSubList(files):
+    list = []
+    for subfile in files:
+        if os.path.splitext(subfile)[1] in [".srt", ".ssa", ".ass", ".smi", ".sub"]:
+            list.append(subfile)
+    return list
 
 def DownloadID(id):
     if xbmcvfs.exists(__temp__):
         rmtree(__temp__)
+    xbmc.sleep(50)
     xbmcvfs.mkdirs(__temp__)
 
     subtitle_list = []
@@ -380,14 +398,15 @@ def DownloadID(id):
     xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
     path = __temp__
     dirs, files = xbmcvfs.listdir(path)
-    if len(dirs) > 0:
+    list = CheckSubList(files)
+    if not list and len(dirs) > 0:
         path = os.path.join(__temp__, dirs[0].decode('utf-8'))
         dirs, files = xbmcvfs.listdir(path)
-    list = []
-    for subfile in files:
-        if os.path.splitext(subfile)[1] in [".srt", ".txt", ".ssa", ".ass", ".smi", ".sub"]:
-            list.append(subfile)
-    filename = list[0].decode('utf-8')
+        list = CheckSubList(files)
+    if list:
+        filename = list[0].decode('utf-8')
+    else:
+        filename = ''
     if len(list) > 1:
         dialog = xbmcgui.Dialog()
         sel = dialog.select(__language__(32006), list)
@@ -395,23 +414,8 @@ def DownloadID(id):
             filename = list[sel].decode('utf-8')
     if filename:
         filepath = os.path.join(path, filename)
+        ChangeFileEndcoding(filepath)
         subtitle_list.append(filepath)
-        if __addon__.getSetting("transUTF8") == "true" and not(os.path.splitext(filename)[1] == '.sub'):
-            data = open(filepath, 'rb').read()
-            enc = chardet.detect(data)['encoding']
-            if enc:
-                data = data.decode(enc, 'ignore')
-                if __addon__.getSetting("transJianFan") == "1":   # translate to Simplified
-                    data = Converter('zh-hans').convert(data)
-                elif __addon__.getSetting("transJianFan") == "2": # translate to Traditional
-                    data = Converter('zh-hant').convert(data)
-                data = data.encode('utf-8', 'ignore')
-            try:
-                local_file_handle = open(filepath, "wb")
-                local_file_handle.write(data)
-                local_file_handle.close()
-            except:
-                log(sys._getframe().f_code.co_name, "Failed to save subtitles to '%s'" % (filename))
 
     return subtitle_list
 
