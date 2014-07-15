@@ -14,6 +14,6 @@ msgstr ""
 
 #English
 
-msgctxt "#24000"
+msgctxt "#30001"
 msgid "Some Error Msg"
 msgstr ""
