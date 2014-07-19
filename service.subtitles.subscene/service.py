@@ -114,10 +114,9 @@ def append_subtitle(item):
 
 def getallsubs(content, allowed_languages, filename="", search_string=""):
     subtitle_pattern = ("<a href=\"(?P<link>/subtitles/[^\"]+)\">\s+"
-                        "<div class=\"visited\">\s+"
                         "<span class=\"[^\"]+ (?P<quality>\w+-icon)\">\s+(?P<language>[^\r\n\t]+)\s+</span>\s+"
                         "<span>\s+(?P<filename>[^\r\n\t]+)\s+</span>\s+"
-                        "</div>\s+</a>\s+</td>\s+"
+                        "</a>\s+</td>\s+"
                         "<td class=\"[^\"]+\">\s+(?P<numfiles>[^\r\n\t]+)\s+</td>\s+"
                         "<td class=\"(?P<hiclass>[^\"]+)\">")
 

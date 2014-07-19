@@ -1,3 +1,6 @@
+1.0.1
+- fix for "No subtitles found" after a change in the sites HTML
+
 1.0.0
 New release for XBMC 13.0 Gotham.
 
