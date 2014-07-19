@@ -32,25 +32,29 @@ from operator import itemgetter
 __localize__    = ( sys.modules[ '__main__' ].__localize__ )
 
 API_KEY = '586118be1ac673f74963cc284d46bd8e'
-API_URL_TV = 'http://api.fanart.tv/webservice/series/%s/%s/json/all/1/2'
-API_URL_MOVIE = 'http://api.fanart.tv/webservice/movie/%s/%s/json/all/1/2/'
+API_URL_TV = 'http://webservice.fanart.tv/v3/tv/%s?api_key=%s'
+API_URL_MOVIE = 'http://webservice.fanart.tv/v3/movies/%s?api_key=%s'
 
-IMAGE_TYPES = ['clearlogo',
-               'hdtvlogo',
-               'clearart',
-               'hdclearart',
-               'tvthumb',
-               'seasonthumb',
-               'characterart',
-               'tvbanner',
-               'seasonbanner',
-               'movielogo',
-               'hdmovielogo',
-               'movieart',
-               'moviedisc',
-               'hdmovieclearart',
-               'moviethumb',
-               'moviebanner']
+IMAGE_TYPES_MOVIES = ['clearlogo',
+                      'clearart',
+                      'hdclearart',
+                      'movielogo',
+                      'hdmovielogo',
+                      'movieart',
+                      'moviedisc',
+                      'hdmovieclearart',
+                      'moviethumb',
+                      'moviebanner']
+
+IMAGE_TYPES_SERIES = ['clearlogo',
+                      'hdtvlogo',
+                      'clearart',
+                      'hdclearart',
+                      'tvthumb',
+                      'seasonthumb',
+                      'characterart',
+                      'tvbanner',
+                      'seasonbanner']
 
 class FTV_TVProvider():
 
@@ -58,16 +62,16 @@ class FTV_TVProvider():
         self.name = 'fanart.tv - TV API'
 
     def get_image_list(self, media_id):
-        data = get_data(API_URL_TV%(API_KEY,media_id), 'json')
+        data = get_data(API_URL_TV%(media_id, API_KEY), 'json')
         image_list = []
         if data == 'Empty' or not data:
             return image_list
         else:
             # split 'name' and 'data'
-            for title, value in data.iteritems():
-                for art in IMAGE_TYPES:
-                    if value.has_key(art):
-                        for item in value[art]:
+            for value in data.iteritems():
+                for art in IMAGE_TYPES_SERIES:
+                    if art == value[0]:
+                        for item in value[1]:
                             # Check on what type and use the general tag
                             arttypes = {'clearlogo': 'clearlogo',
                                         'hdtvlogo': 'clearlogo',
@@ -117,16 +121,15 @@ class FTV_MovieProvider():
         self.name = 'fanart.tv - Movie API'
 
     def get_image_list(self, media_id):
-        data = get_data(API_URL_MOVIE%(API_KEY, media_id), 'json')
+        data = get_data(API_URL_MOVIE%(media_id, API_KEY), 'json')
         image_list = []
         if data == 'Empty' or not data:
             return image_list
         else:
-            # split 'name' and 'data'
-            for title, value in data.iteritems():
-                for art in IMAGE_TYPES:
-                    if value.has_key(art):
-                        for item in value[art]:
+            for value in data.iteritems():
+                for art in IMAGE_TYPES_MOVIES:
+                    if art == value[0]:
+                        for item in value[1]:
                             # Check on what type and use the general tag
                             arttypes = {'movielogo': 'clearlogo',
                                         'moviedisc': 'discart',

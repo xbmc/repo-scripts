@@ -1,3 +1,6 @@
+v12.0.29
+- Update to fanart.tv API v3
+
 v12.0.28
 - Don't set simplejson module to optional
 
