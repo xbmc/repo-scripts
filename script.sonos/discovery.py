@@ -6,11 +6,11 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
-__addon__     = xbmcaddon.Addon(id='script.sonos')
-__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
-__version__   = __addon__.getAddonInfo('version')
-__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
-__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__addon__ = xbmcaddon.Addon(id='script.sonos')
+__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
+__version__ = __addon__.getAddonInfo('version')
+__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
+__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
 
 sys.path.append(__resource__)
 sys.path.append(__lib__)
@@ -30,15 +30,14 @@ log('script version %s started' % __version__)
 # This file will perform the lookup of a Sonos speaker and set it in
 # the settings
 ###########################################################################
-
 if __name__ == '__main__':
 
     # Set up the logging before using the Sonos Device
-    if __addon__.getSetting( "logEnabled" ) == "true":
+    if __addon__.getSetting("logEnabled") == "true":
         SocoLogging.enable()
 
     # Display the busy icon while searching for files
-    xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
 
     try:
         sonos_devices = soco.discover()
@@ -65,11 +64,11 @@ if __name__ == '__main__':
             continue
 
         # If player  info was found, then print it out
-        if playerInfo != None:
+        if playerInfo is not None:
             # What is the name of the zone that this speaker is in?
             zone_name = playerInfo['zone_name']
             displayName = ip
-            if (zone_name != None) and (zone_name != ""):
+            if (zone_name is not None) and (zone_name != ""):
                 log("SonosDiscovery: Zone of %s is \"%s\"" % (ip, zone_name))
                 displayName = "%s     [%s]" % (ip, zone_name)
             else:
@@ -77,13 +76,13 @@ if __name__ == '__main__':
             speakers[displayName] = (ip, zone_name)
 
     # Remove the busy dialog
-    xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     # Check to see if there are any speakers
     if len(speakers) < 1:
         xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32014))
     else:
-        # Now prompt the user to pick one of the 
+        # Now prompt the user to pick one of the speakers
         select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32001), speakers.keys())
 
         if select != -1:
@@ -94,4 +93,3 @@ if __name__ == '__main__':
             # Set the selected item into the settings
             Settings.setIPAddress(chosenIPAddress)
             Settings.setZoneName(chosenZoneName)
-

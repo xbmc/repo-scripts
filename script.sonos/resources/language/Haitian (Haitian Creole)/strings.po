@@ -16,6 +16,10 @@ msgstr ""
 "Language: ht\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32062"
+msgid "Next"
+msgstr "Pwochen"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Atis"

@@ -32,6 +32,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Teated"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Silumine"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Järgmine"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Esitajad"

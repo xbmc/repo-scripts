@@ -64,6 +64,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notifieringar"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Debuggning"
+
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Sök efter Sonos-högtalare..."
@@ -87,6 +91,10 @@ msgstr "Insticksprogram"
 msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Storlek"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Nästa"
 
 msgctxt "#32100"
 msgid "Music Library"

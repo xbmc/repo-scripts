@@ -24,6 +24,10 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Pengawal"
 
+msgctxt "#32062"
+msgid "Next"
+msgstr "Seterusnya"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Pustaka Muzik"

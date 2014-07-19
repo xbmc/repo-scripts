@@ -20,6 +20,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "ማስታወቂያዎች"
 
+msgctxt "#32062"
+msgid "Next"
+msgstr "ይቀጥሉ "
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "ከያኒዎች "

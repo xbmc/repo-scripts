@@ -64,6 +64,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Meldingen"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Fout registratie"
+
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Zoek voor Sonos luidsprekers..."
@@ -75,6 +79,10 @@ msgstr "Geen luidsprekers gevonden, voer je IP adres manueel in"
 msgctxt "#32015"
 msgid "Controller"
 msgstr "controller"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Controller verversingsinterval (seconden)"
 
 msgctxt "#32017"
 msgid "Use Test Data"
@@ -88,6 +96,58 @@ msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Batch Grootte"
 
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "maximum inzendingen in getoonde lijsten (0 = Oneinding)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Toon Artiesteninformatie"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Voorkom dubbele toetsdrukken (Seconden)"
+
+msgctxt "#32023"
+msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
+msgstr "Verbind XBMC volume met Sonos Speaker (Vereist een herstart)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On XBMC Startup"
+msgstr "Wijzig Sonos naar line-in bij XBMC opstart"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Volume verandering stappen"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When XBMC Plays Media (Restart Required)"
+msgstr "Automatisch Sonos pauzeren wanneer XBMC media afspeelt (vereist een herstart)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Automatisch Sonos Hervatten (seconden) [0 = Uit]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Zone naam (optioneel)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Automatisch IP-adres updaten bij opstarten"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "De volgende instelling in Artiestendiashow moet zijn geactiveerd"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Wil je dit automatisch activeren?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Volgende"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Muziekbibliotheek"
@@ -99,6 +159,10 @@ msgstr "Wachtrij"
 msgctxt "#32102"
 msgid "Radio Stations"
 msgstr "Radiostations"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Start Sonos Controller"
 
 msgctxt "#32110"
 msgid "Artists"

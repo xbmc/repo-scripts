@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sonos" name="Sonos" version="1.0.8" provider-name="robwebset">
+<addon id="script.sonos" name="Sonos" version="1.0.9" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="1.1.0"/>
@@ -26,6 +26,8 @@
 	
 		<summary lang="en_NZ">Sonos Controller</summary>
 	
+		<summary lang="en_US">Sonos Controller</summary>
+	
 		<summary lang="es">Controlador Sonos</summary>
 	
 		<summary lang="fr_CA">Contrôleur Sonos</summary>
@@ -35,6 +37,8 @@
 		<summary lang="hu">Sonos Vezérlő</summary>
 	
 		<summary lang="it">Controller Sonos</summary>
+	
+		<summary lang="lt">Sonos vadiklis</summary>
 	
 		<summary lang="nl">Sonos controller</summary>
 	
@@ -54,6 +58,8 @@
 	
 		<description lang="en_NZ">Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details.</description>
 	
+		<description lang="en_US">Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details.</description>
+	
 		<description lang="es">Soporta controles simples de Sonos y avisos de XBMC. Mirar Wiki para más detalles.</description>
 	
 		<description lang="fr_CA">Prend en charge des contrôles simples et des notifications Sonos depuis XBMC. Consultez le wiki pour plus de détails.</description>
@@ -63,6 +69,8 @@
 		<description lang="hu">Támogatja az egyszerű Sonos Vezérléseket és értesítéseket az XBMC-ből. Tekintse meg a wikit a részletekért.</description>
 	
 		<description lang="it">Supporta semplici Controller Sonos e le notifiche da XBMC. Consulta la wiki per maggiori dettagli.</description>
+	
+		<description lang="lt">Palaiko paprastą Sonos valdymą ir pranešimus iš XBMC. Peržiūrėkite wiki puslapį norėdami gauti daugiau informacijos.</description>
 	
 		<description lang="nl">Ondersteund simpele sonos controles en notificaties van XBMC. Kijk bij de wiki voor meer details.</description>
 	

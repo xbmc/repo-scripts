@@ -28,6 +28,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "الإشعارات"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "التصحيح"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "التالي"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "الفنانين"

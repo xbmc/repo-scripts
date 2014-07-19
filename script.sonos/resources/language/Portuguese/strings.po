@@ -64,6 +64,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificações"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Depuração"
+
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Procurar Colunas Sonos..."
@@ -76,6 +80,10 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Controlador"
 
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Intervalo de Actualização do Controlador (Segundos)"
+
 msgctxt "#32017"
 msgid "Use Test Data"
 msgstr "Usar Dados de Teste"
@@ -87,6 +95,50 @@ msgstr "Plugin"
 msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Tamanho Batch"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Máximo Nº de Entradas nas Listas Exibidas (0 = Ilimitado)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Exibir Informação de Artista"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Evitar Premir Teclas em Duplicado (Segundos)"
+
+msgctxt "#32023"
+msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
+msgstr "Associar o Volume do XBMC às Colunas Sonos (É Necessário Reiniciar)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On XBMC Startup"
+msgstr "Mudar Sonos para Line-In ao Iniciar o XBMC"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When XBMC Plays Media (Restart Required)"
+msgstr "Pausar Automaticamente o Sonos Quando o XBMC Reproduz Média (É Necessário Reiniciar)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Retomar Sonos Automaticamente (Segundos) [0 = Desligado]"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Actualizar Automaticamente o Endereço IP ao Iniciar"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "A seguinte definição tem de estar activa em ArtistSlideshow"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Quer activar automaticamente?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Seguinte"
 
 msgctxt "#32100"
 msgid "Music Library"

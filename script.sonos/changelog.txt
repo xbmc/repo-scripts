@@ -1,3 +1,9 @@
+v1.0.9
+- Add option to Switch Sonos To Line-In On Media Start
+- Add check that Artist Slideshow has transparent image enabled
+- Populate information when using streaming service
+- Add next track details when random is set
+
 v1.0.8
 - Make sure the Play/Pause button has focus after Play/Pause selected
 - Stop screensaver starting when using controller

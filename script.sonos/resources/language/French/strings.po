@@ -32,9 +32,17 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Rappels"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Debogage"
+
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Manette"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Suivant"
 
 msgctxt "#32100"
 msgid "Music Library"

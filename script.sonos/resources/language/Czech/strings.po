@@ -32,6 +32,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Oznamování"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Ladění"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Další"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Hudební knihovna"

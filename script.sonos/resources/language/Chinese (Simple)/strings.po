@@ -36,9 +36,17 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "通知"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "调试"
+
 msgctxt "#32015"
 msgid "Controller"
 msgstr "控制器"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "下一项"
 
 msgctxt "#32100"
 msgid "Music Library"

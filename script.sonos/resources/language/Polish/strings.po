@@ -46,7 +46,7 @@ msgstr "Nie wyświetlaj powiadomienia, jeśli wideo jest odtwarzane "
 
 msgctxt "#32007"
 msgid "Use Default XBMC Notification Dialog"
-msgstr "Użyj domyślnego okna powiadomień XBMC"
+msgstr "Używaj domyślnego okna powiadomień XBMC"
 
 msgctxt "#32008"
 msgid "Debugging"
@@ -54,7 +54,7 @@ msgstr "Diagnozowanie błędów"
 
 msgctxt "#32009"
 msgid "Enable debug logging"
-msgstr "Włącz dziennik diagnozowania błędów"
+msgstr "Rejestruj informacje diagnostyczne w dzienniku"
 
 msgctxt "#32010"
 msgid "Speaker"
@@ -63,6 +63,10 @@ msgstr "Głośnik"
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "Powiadomienia"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Diagnozowanie błędów"
 
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
@@ -76,9 +80,13 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Controller"
 
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Interwał odświeżania (w sekundach)"
+
 msgctxt "#32017"
 msgid "Use Test Data"
-msgstr "Użyj danych testowych"
+msgstr "Używaj danych testowych"
 
 msgctxt "#32018"
 msgid "Plugin"
@@ -87,6 +95,58 @@ msgstr "Wtyczka"
 msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Wielkość partii"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Długość informacji w wyświetlanych listach (0 = bez ograniczeń)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Pokazuj informacje o wykonawcy"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Unikaj dwukliku (w sekundach)"
+
+msgctxt "#32023"
+msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
+msgstr "Połącz głośność XBMC z Sonos Speaker (wymaga ponownego uruchomienia)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On XBMC Startup"
+msgstr "Przełączaj Sonos w analogowe wejście audio na stracie XBMC"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Zmiana skoku głośności"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When XBMC Plays Media (Restart Required)"
+msgstr "Wstrzymuj Sonos gdy XBMC odtwarza multimedia (wymagane ponowne uruchomienie)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Automatyczne wznawianie Sonos (sekundy) [0 = wyłączone]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Nazwa strefy (opcjonalnie)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Aktualizuj adres IP przy uruchomieniu"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr " Muszą być włączone następujące ustawienia w ArtistSlideshow"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Chcesz włączać automatycznie?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Dalej "
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -99,6 +159,10 @@ msgstr "Kolejka"
 msgctxt "#32102"
 msgid "Radio Stations"
 msgstr "Stacje radiowe"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Uruchamiaj Sonos Control"
 
 msgctxt "#32110"
 msgid "Artists"

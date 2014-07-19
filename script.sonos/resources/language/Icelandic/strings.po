@@ -28,9 +28,21 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Tilkynningar"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Aflúsa"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Næst"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Tónlistarsafn"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Biðröð"
 
 msgctxt "#32110"
 msgid "Artists"

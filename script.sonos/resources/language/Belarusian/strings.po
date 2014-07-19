@@ -28,9 +28,17 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notifications"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Debugging"
+
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controller"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Next"
 
 msgctxt "#32100"
 msgid "Music Library"

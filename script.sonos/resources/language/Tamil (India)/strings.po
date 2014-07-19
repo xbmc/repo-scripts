@@ -28,6 +28,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "அறிவிப்புkal"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "வழுநீக்கு"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "கலைஞர்"

@@ -64,6 +64,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Értesítések"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Hibakeresés"
+
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Sonos Hanglejátszók keresése..."
@@ -87,6 +91,10 @@ msgstr "Bővítmény"
 msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Köteg Méret"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Következő"
 
 msgctxt "#32100"
 msgid "Music Library"

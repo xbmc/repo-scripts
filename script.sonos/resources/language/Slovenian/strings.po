@@ -28,6 +28,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Obvestila"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Razhroščevanje"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Naslednji"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Izvajalci"

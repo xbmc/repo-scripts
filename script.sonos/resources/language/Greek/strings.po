@@ -64,6 +64,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Ειδοποιήσεις"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Καταγραφή σφαλμάτων"
+
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Αναζήτηση Για Ηχεία Sonos..."
@@ -87,6 +91,10 @@ msgstr "Plugin"
 msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Μέγεθος Δέσμης"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Επόμενο"
 
 msgctxt "#32100"
 msgid "Music Library"

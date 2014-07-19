@@ -140,8 +140,11 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr ""
 
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start"
+msgstr ""
 
-#empty strings from id 32030 to 32059
+#empty strings from id 32031 to 32059
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
@@ -173,7 +176,7 @@ msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr ""
 
-#empty strings from id 32103 to 32109
+#empty strings from id 32104 to 32109
 
 msgctxt "#32110"
 msgid "Artists"

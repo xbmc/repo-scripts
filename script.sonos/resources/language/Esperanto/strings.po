@@ -16,6 +16,10 @@ msgstr ""
 "Language: eo\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32062"
+msgid "Next"
+msgstr "Sekva"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artisto"

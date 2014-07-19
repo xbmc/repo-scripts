@@ -24,6 +24,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Các thông báo"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Tìm sửa lỗi"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Kế"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Nghệ sĩ"

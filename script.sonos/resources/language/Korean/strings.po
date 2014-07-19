@@ -32,6 +32,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "알림"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "디버깅"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "다음"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "음악 라이브러리"

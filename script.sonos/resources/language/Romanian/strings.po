@@ -28,6 +28,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificări"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Depanare"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Următorul"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artiști"

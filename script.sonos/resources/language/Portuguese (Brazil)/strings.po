@@ -64,6 +64,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificações"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Depurando"
+
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Procurar por Alto-Falantes Sonos..."
@@ -75,6 +79,10 @@ msgstr "Nenhum alto-falante localizado, por favor entre com o endereço de IP ma
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controles"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Controlar Intervalos de Atualizações (Segundos)"
 
 msgctxt "#32017"
 msgid "Use Test Data"
@@ -88,6 +96,58 @@ msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Tamanho do Lote"
 
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Entradas máximas em listas exibidas (0 = ilimitado)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Apresentar Informação do Artista"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Evitar duplicidades ao Pressionar (Segundos)"
+
+msgctxt "#32023"
+msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
+msgstr "Lincar o volume do XBMC com os falantes do Sonos (Reiniciar é Requerido)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On XBMC Startup"
+msgstr "Alterar Sonos para Line-In na inicialização do XBMC"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Incrementar alterações no volume"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When XBMC Plays Media (Restart Required)"
+msgstr "Automaticamente Pausar Sonos quando XBMC reproduzir mídias (Reiniciar Requerido)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Retomar automaticamente Sonos (segundos) [0 = Desligado]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Nome da Zone (Opcional)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Atualizar automaticamente o endereço de IP ao inicializar"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "O ajuste seguinte deve estar ativo no ArtistSlideshow"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Gostaria disto ativado automaticamente?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Seguinte"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Coleção de Músicas"
@@ -99,6 +159,10 @@ msgstr "Listagem"
 msgctxt "#32102"
 msgid "Radio Stations"
 msgstr "Estações de Rádio"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Lançar Controlador Sonos"
 
 msgctxt "#32110"
 msgid "Artists"

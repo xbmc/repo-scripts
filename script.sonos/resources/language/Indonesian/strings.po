@@ -28,6 +28,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notifikasi"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Berikut"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artis"

@@ -32,9 +32,17 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Уведомления"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Отладка"
+
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Контроллер"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Следующ."
 
 msgctxt "#32100"
 msgid "Music Library"

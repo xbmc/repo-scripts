@@ -64,6 +64,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Debugging"
+
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Suche nach Sonos-Lautsprechern..."
@@ -87,6 +91,26 @@ msgstr "Plugin"
 msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Batch-Größe"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Maximale Einträge in den angezeigten Listen (0 = Unbegrenzt)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Interpreteninformationen anzeigen"
+
+msgctxt "#32023"
+msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
+msgstr "XBMC-Lautstärke mit Sonos-Lautsprecher koppeln (Neustart erforderlich)"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Möchten Sie dieses automatisch aktiviert haben?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Weiter"
 
 msgctxt "#32100"
 msgid "Music Library"

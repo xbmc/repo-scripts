@@ -28,6 +28,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "การแจ้งเตือน"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "แก้จุดบกพร่อง"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "ต่อไป"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "คลังข้อมูล วิดีโอ"

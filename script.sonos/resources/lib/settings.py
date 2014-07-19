@@ -3,8 +3,8 @@ import xbmc
 import xbmcaddon
 import logging
 
-__addon__     = xbmcaddon.Addon(id='script.sonos')
-__addonid__   = __addon__.getAddonInfo('id')
+__addon__ = xbmcaddon.Addon(id='script.sonos')
+__addonid__ = __addon__.getAddonInfo('id')
 
 # Load the Sonos controller component
 from sonos import Sonos
@@ -12,19 +12,21 @@ from sonos import Sonos
 # Import the Mock Sonos class for testing where there is no live Sonos system
 from mocksonos import TestMockSonos
 
+
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting( "logEnabled" ) == "true") or (loglevel != xbmc.LOGDEBUG):
-        if isinstance (txt,str):
+    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+        if isinstance(txt, str):
             txt = txt.decode("utf-8")
         message = u'%s: %s' % (__addonid__, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
+
 
 # Class used to supply XBMC logging to the soco scripts
 class SocoLogging(logging.Handler):
     def emit(self, message):
         log(message.getMessage())
-        
+
     @staticmethod
     def enable():
         xbmcLogHandler = SocoLogging()
@@ -58,13 +60,13 @@ class Settings():
     @staticmethod
     def getSonosDevice(ipAddress=None):
         # Set up the logging before using the Sonos Device
-        if __addon__.getSetting( "logEnabled" ) == "true":
+        if __addon__.getSetting("logEnabled") == "true":
             SocoLogging.enable()
         sonosDevice = None
         if Settings.useTestData():
             sonosDevice = TestMockSonos()
         else:
-            if ipAddress == None:
+            if ipAddress is None:
                 ipAddress = Settings.getIPAddress()
             if ipAddress != "0.0.0.0":
                 sonosDevice = Sonos(ipAddress)
@@ -152,6 +154,10 @@ class Settings():
         return __addon__.getSetting("switchSonosToLineIn") == 'true'
 
     @staticmethod
+    def switchSonosToLineInOnMediaStart():
+        return __addon__.getSetting("switchSonosToLineInOnMediaStart") == 'true'
+
+    @staticmethod
     def getVolumeChangeIncrements():
         # Maximum number of values to show in any plugin list
         return int(float(__addon__.getSetting("volumeChangeIncrements")))
@@ -163,4 +169,3 @@ class Settings():
     @staticmethod
     def autoResumeSonos():
         return int(float(__addon__.getSetting("autoResumeSonos")))
-

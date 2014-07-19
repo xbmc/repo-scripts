@@ -28,6 +28,14 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificaciones"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Siguiente"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Biblioteca Música"

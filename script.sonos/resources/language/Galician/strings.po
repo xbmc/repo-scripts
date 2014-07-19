@@ -64,6 +64,10 @@ msgctxt "#32011"
 msgid "Notifications"
 msgstr "Notificacións"
 
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Depurado"
+
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
 msgstr "Buscar Altofalantes Sonos..."
@@ -75,6 +79,10 @@ msgstr "Non se atoparon altofalantes, por favor insira o enderezo IP manualmente
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Controlador"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Intervalo de Refresco do Controlador (Segundos)"
 
 msgctxt "#32017"
 msgid "Use Test Data"
@@ -88,6 +96,54 @@ msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Tamaño do Batch"
 
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Máximo de Entradas na Parte Visíbel das Listaxes (0 = Sen Limite)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Amosar Información do Artista"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Evitar a pulsación de Teclas Duplicadas (Segundos)"
+
+msgctxt "#32023"
+msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
+msgstr "Ligar o Volume do XMBC co Altofalante Sonos (Requírese Reiniciar)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On XBMC Startup"
+msgstr "Mudar Sonos ao Line-In ao Iniciar o XBMC"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Incrementar Cambios no Volume"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When XBMC Plays Media (Restart Required)"
+msgstr "Pausar Sonos automaticamente Cando o XBMC Reproduce Musica (Requírese Reiniciar)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Reanudar Sonos automaticamente (Segundos) [0 = Apagado]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Nome da Zona (Opcional)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Actualizar Automaticamente o Enderezo IP no Inicio"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Quere activalo automaticamente?"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "Seguinte"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Biblioteca de Música"
@@ -99,6 +155,10 @@ msgstr "Cola"
 msgctxt "#32102"
 msgid "Radio Stations"
 msgstr "Emisoras de Radio"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Iniciar o Controlador de Sonos"
 
 msgctxt "#32110"
 msgid "Artists"

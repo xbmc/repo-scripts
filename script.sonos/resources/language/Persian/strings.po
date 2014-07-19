@@ -16,6 +16,10 @@ msgstr ""
 "Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32062"
+msgid "Next"
+msgstr "بعدی"
+
 msgctxt "#32111"
 msgid "Albums"
 msgstr "آلبوم"
