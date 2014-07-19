@@ -311,7 +311,7 @@ def get_params():
 
 params = get_params()
 
-if params['action'] == 'search':
+if params['action'] in ['search', 'manualsearch']:
     item = {}
     item['temp'] = False
     item['rar'] = False
@@ -344,6 +344,13 @@ if params['action'] == 'search':
     elif ( item['file_original_path'].find("stack://") > -1 ):
         stackPath = item['file_original_path'].split(" , ")
         item['file_original_path'] = stackPath[0][8:]
+
+    if item['tvshow'] and params['action'] == "manualsearch":
+        item['tvshow'] = params['searchstring']
+    elif params['action'] == "manualsearch":
+        item['title'] = params['searchstring']
+
+    log(__name__, "item: %s" %(item))
 
     Search(item)
 
