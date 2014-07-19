@@ -28,18 +28,18 @@ ambibox = AmbiBox(__settings__.getSetting("host"), int(__settings__.getSetting("
 ambibox.connect()    
 showmenu = __settings__.getSetting("show_menu")
 menu = ambibox.getProfiles()
-menu.append(__language__(32021))  
-menu.append(__language__(32022))
+menu.append(__language__(32021))  # @[Backlight off] 
+menu.append(__language__(32022))  # @[Backlight on] 
 if (showmenu == "false"): 
-    menu.append(__language__(32023))
+    menu.append(__language__(32023))  # @[Show menu when playing] 
 else:
-    menu.append(__language__(32024))
+    menu.append(__language__(32024))  # @[Do not show menu when playing] 
 
 off = len(menu)-3 
 on = len(menu)-2
 show = len(menu)-1
 quit = False
-selected = xbmcgui.Dialog().select(__language__(32020), menu) 
+selected = xbmcgui.Dialog().select(__language__(32020), menu)  # @[Select profile] 
 if selected != -1: 
     if (show == int(selected)):        
         if (showmenu == "false"):

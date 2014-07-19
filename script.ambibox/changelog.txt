@@ -1,3 +1,9 @@
+1.0.4
+XBMCDirect Multiprocessed instead of multithreaded
+Added performance evaluation for XBMCDirect
+Added switch.py for use with keyboard.xml and settings to set hotkeys
+Added ability to read capture modes from registry and only use XBMCDirect when necessary
+
 1.0.3
 Fixed bug where lights would not turn back on after using a default profile which is off
 Increased speed for profiles not using XBMCDirect or AR switching
@@ -50,18 +56,4 @@ Added switch to turn off screen capture mode within XBMC
 
 0.0.1
 - alpha
-
-
-
-
-
-
-
-
-
-
-
-
-
-Added disable on screensaver - @Joshua
 

@@ -70,9 +70,9 @@ def updateprofilesettings():
             fixe.set('default', defpfl)
         doc.write(__settingsdir__ + "\\settings.xml")
         info('Settings refreshed from Ambibox Profiles')
-        notification(__language__(32036))
+        notification(__language__(32036))  # @[Settings refreshed from Ambibox profiles] 
     else:
-        notification(__language__(32031))
+        notification(__language__(32031))  # @[Failed to connect to AmbiBox] 
 
 
 def chkProfileSettings():

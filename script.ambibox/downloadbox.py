@@ -68,14 +68,14 @@ else:
 
 if __usingMediaInfo__ is True:
     mdialog = xbmcgui.Dialog()
-    mdialog.ok(__language__(32040), __language__(32062))
+    mdialog.ok(__language__(32040), __language__(32062))  # @[Download mediainfo.dll] [mediainfo.dll already installed on system] 
     del mdialog
     sys.exit()
 
 
 def main():
     ddialog = xbmcgui.Dialog()
-    if ddialog.yesno(__language__(32040), __language__(32063)):
+    if ddialog.yesno(__language__(32040), __language__(32063)):  # @[Download mediainfo.dll] [This add-on will use MediaInfo library\nCopyright (c) 2002-2014 MediaArea.net SARL.\nDownload?] 
         del ddialog
         downloadfile("https://github.com/AmbiBox/AmbiBox-XBMC/releases/download/pre-mediainfo/mediainfo.dll")
 
@@ -89,7 +89,7 @@ def downloadfile(url):
         meta = u.info()
         file_size = int(meta.getheaders("Content-Length")[0])
         mprogress = xbmcgui.DialogProgress()
-        mprogress.create(__language__(32064) % (file_name, file_size))
+        mprogress.create(__language__(32064) % (file_name, file_size))  # @[Downloading %s bytes %s] 
 
         file_size_dl = 0
         block_sz = 8192
@@ -104,7 +104,7 @@ def downloadfile(url):
             mprogress.update(state)
         if mprogress.iscanceled():
             ddialog = xbmcgui.Dialog()
-            ddialog.ok('', __language__(32066))
+            ddialog.ok('', __language__(32066))  # @[Download canceled] 
             sys.exit()
         mprogress.close()
         f.close()
@@ -117,7 +117,7 @@ def downloadfile(url):
         except:
             pass
         ddialog = xbmcgui.Dialog()
-        ddialog.ok('', __language__(32065))
+        ddialog.ok('', __language__(32065))  # @[Download failed] 
         if xbmcvfs.exists(fullfn):
             try:
                 xbmcvfs.delete(fullfn)
@@ -127,10 +127,10 @@ def downloadfile(url):
     success = checkhash(fullfn)
     if success:
         ddialog = xbmcgui.Dialog()
-        ddialog.ok('', __language__(32067))
+        ddialog.ok('', __language__(32067))  # @[Download succeeded] 
     else:
         ddialog = xbmcgui.Dialog()
-        ddialog.ok('', __language__(32065))
+        ddialog.ok('', __language__(32065))  # @[Download failed] 
         if xbmcvfs.exists(fullfn):
             try:
                 xbmcvfs.delete(fullfn)

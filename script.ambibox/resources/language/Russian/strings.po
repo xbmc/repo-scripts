@@ -267,5 +267,43 @@ msgctxt "#32067"
 msgid "Download succeeded"
 msgstr "Скачать удалось"
 
+msgctxt "#32068"
+msgid "Throttle (100=full framerate, 1=1fps)"
+msgstr "Дроссельной (100 = с полной частотой кадров, 1 = 1 кадр в секунду)"
 
+msgctxt "#32069"
+msgid "LEDs On"
+msgstr "огни на"
+
+msgctxt "#32070"
+msgid "LEDs Off"
+msgstr "выключенным светом "
+
+msgctxt "#32071"
+msgid "Keyboard"
+msgstr "клавиатура"
+
+msgctxt "#32072"
+msgid "Requires XBMC restart to effect changes!"
+msgstr "Требуется XBMC перезапуск для осуществления изменений!"
+
+msgctxt "#32073"
+msgid "Use Hotkeys Below?"
+msgstr "Использовать горячие клавиши внизу?"
+
+msgctxt "#32074"
+msgid "Shift"
+msgstr "сдвиг"
+
+msgctxt "#32075"
+msgid "Control"
+msgstr "контроль"
+
+msgctxt "#32076"
+msgid "Alt/Option"
+msgstr "Alt / Вариант"
+
+msgctxt "#32077"
+msgid "Key to Use"
+msgstr "Ключ к Используйте"
 
