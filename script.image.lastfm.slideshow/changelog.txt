@@ -1,8 +1,0 @@
-Version 0.0.3
-new icon. thanks djtoll
-
-Version 0.0.2
-removed settings, no longer required
-
-Version 0.0.1
-initial

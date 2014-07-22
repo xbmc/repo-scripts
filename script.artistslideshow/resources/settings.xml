@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-    <category label="30100">
-       <setting id="minwidth" type="text" label="32001" default="0"/>
-       <setting id="minheight" type="text" label="32002" default="0"/>
-    </category>
-</settings>
