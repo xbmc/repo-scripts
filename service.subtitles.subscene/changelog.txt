@@ -1,3 +1,6 @@
+1.0.2
+- now correctly identifies Persian language
+
 1.0.1
 - fix for "No subtitles found" after a change in the sites HTML
 

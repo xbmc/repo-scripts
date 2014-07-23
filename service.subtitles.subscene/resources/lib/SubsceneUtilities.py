@@ -71,7 +71,8 @@ subscene_languages = {
     'Chinese BG code': 'Chinese',
     'Brazillian Portuguese': 'Portuguese (Brazil)',
     'Serbian': 'SerbianLatin',
-    'Ukranian': 'Ukrainian'
+    'Ukranian': 'Ukrainian',
+    'Farsi/Persian': 'Persian'
 }
 
 
