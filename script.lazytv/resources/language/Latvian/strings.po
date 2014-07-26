@@ -16,6 +16,14 @@ msgstr ""
 "Language: lv\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Noklusējuma darbība"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Atskaņot"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "Aizvērt"

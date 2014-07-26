@@ -16,9 +16,37 @@ msgstr ""
 "Language: no\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "General Settings"
+msgstr "Generelle innstillinger"
+
+msgctxt "#32001"
+msgid "Primary Function"
+msgstr "Hoved Funksjo"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Lag en liste av 'neste episoder' for hver TV serie."
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Lag og kjør randomisert spilleliste"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "La meg velge ved oppstart"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "La meg velge ved oppstart"
+
 msgctxt "#32068"
 msgid "Season"
 msgstr "Sesong"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Spill av"
 
 msgctxt "#32105"
 msgid "Close"
@@ -27,3 +55,15 @@ msgstr "Lukk"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Lagre"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Sesong"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episode"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Sette"

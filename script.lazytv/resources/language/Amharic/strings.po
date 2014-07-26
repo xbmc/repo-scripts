@@ -16,6 +16,10 @@ msgstr ""
 "Language: am\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "ማጫወቻ "
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "መዝጊያ"
@@ -23,3 +27,7 @@ msgstr "መዝጊያ"
 msgctxt "#32170"
 msgid "Save"
 msgstr "ማስቀመጫ"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "የታዩ "

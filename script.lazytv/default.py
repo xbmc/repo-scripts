@@ -63,9 +63,9 @@ populate_by_d    = __setting__('populate_by_d')
 select_pl        = __setting__('select_pl')
 default_playlist = __setting__('users_spl')
 
-sort_by          = int(__setting__('sort_by'))
-length           = int(__setting__('length'))
-window_length    = int(__setting__('window_length'))
+sort_by          = int(float(__setting__('sort_by')))
+length           = int(float(__setting__('length')))
+window_length    = int(float(__setting__('window_length')))
 
 if __setting__('skinorno') == 'true':
 	skin = 1
@@ -74,7 +74,7 @@ elif __setting__('skinorno') == 'false' or __setting__('skinorno') == '32073':
 	skin = 0
 	__addon__.setSetting('skinorno','1')
 else:
-	skin = int(__setting__('skinorno'))
+	skin = int(float(__setting__('skinorno')))
 
 movieweight      = float(__setting__('movieweight'))
 
@@ -89,6 +89,7 @@ noshow           = True if __setting__('noshow') == 'true' else False
 excl_randos      = True if __setting__('excl_randos') == 'true' else False
 sort_reverse     = True if __setting__('sort_reverse') == 'true' else False
 start_partials   = True if __setting__('start_partials') == 'true' else False
+skin_return      = True if __setting__('skin_return') == 'true' else False
 stay_puft        = True
 play_now         = False
 refresh_now      = True
@@ -706,6 +707,9 @@ def create_next_episode_list(population):
 			da_show = 'null'
 
 			WINDOW.setProperty("LazyTV.rando_shuffle", 'true')
+
+		if not skin_return:
+			stay_puft = False
 
 		xbmc.sleep(500)
 

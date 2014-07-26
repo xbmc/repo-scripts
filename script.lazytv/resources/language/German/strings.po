@@ -26,7 +26,7 @@ msgstr "Primäre Funktion"
 
 msgctxt "#32002"
 msgid "Produce a list of 'next episodes' for each TV series"
-msgstr "Liste mit nächster Episode für alle Serien erstellen"
+msgstr "Liste mit den nächsten Folgen für alle Fernsehserien erstellen"
 
 msgctxt "#32003"
 msgid "Create and launch randomised playlist"
@@ -78,31 +78,115 @@ msgstr "Anzahl Serien in Wiedergabeliste"
 
 msgctxt "#32032"
 msgid "Allow multiple episodes of same TV Show"
-msgstr "mehrere Episoden einer Serie erlauben"
+msgstr "Mehrere Folgen einer Fernsehshow erlauben"
 
 msgctxt "#32033"
 msgid "Include episodes from unwatched TV series"
-msgstr "Episoden von nicht begonnenen Serien berücksichtigen"
+msgstr "Folgen von nicht begonnenen Fernsehserien berücksichtigen"
+
+msgctxt "#32035"
+msgid "Display episode details when played"
+msgstr "Folgendetails während der Wiedergabe anzeigen"
+
+msgctxt "#32036"
+msgid "Include unwatched movies"
+msgstr "Nicht angeschaute Filme mit einbeziehen"
+
+msgctxt "#32037"
+msgid "Include watched movies"
+msgstr "Angeschaute Filme mit einbeziehen"
+
+msgctxt "#32040"
+msgid "Movie weight"
+msgstr "Filmbedeutung"
+
+msgctxt "#32041"
+msgid "Weight: 1.0 = 1 show, 1 movie, 0.5 = 2 shows, 1 movie"
+msgstr "Bedeutung: 1.0 = 1 Show, 1 Film, 0.5 = 2 Shows, 1 Film"
+
+msgctxt "#32042"
+msgid "Weight: 0.0 = unlimited movies"
+msgstr "Bedeutung: 0.0 = unbegrenzte Filme"
+
+msgctxt "#32043"
+msgid "Ignore TV shows (movies only)"
+msgstr "Fernsehshows ignorieren (nur Filme)"
 
 msgctxt "#32060"
 msgid "List Options"
 msgstr "Optionen auflisten"
 
+msgctxt "#32061"
+msgid "Limit the number of shows"
+msgstr "Die Anzahl der Shows begrenzen"
+
+msgctxt "#32062"
+msgid "Number of Shows to display"
+msgstr "Anzahl der anzuzeigenden Shows"
+
 msgctxt "#32064"
 msgid "Show Name"
 msgstr "Namen anzeigen"
+
+msgctxt "#32065"
+msgid "Last Watched"
+msgstr "Zuletzt gesehen"
+
+msgctxt "#32066"
+msgid "# Unwatched Episodes"
+msgstr "# Ungesehene Folgen"
+
+msgctxt "#32067"
+msgid "# Watched Episodes"
+msgstr "# Gesehene Folgen"
 
 msgctxt "#32068"
 msgid "Season"
 msgstr "Staffel"
 
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Sortieren nach ..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Umgekehrte Reihenfolge"
+
 msgctxt "#32080"
 msgid "Other Settings"
 msgstr "Zusätzliche Einstellungen"
 
+msgctxt "#32082"
+msgid "Prompt duration (max = do not close)"
+msgstr "Eingabeaufforderungsdauer (max = nicht schließen)"
+
+msgctxt "#32085"
+msgid "Enable logging for Testing"
+msgstr "Protokollierung zum Testen aktivieren"
+
 msgctxt "#32087"
 msgid "Clone LazyTV Now"
 msgstr "LazyTV jetzt klonen"
+
+msgctxt "#32089"
+msgid "Email +1 to the author (no data is sent)"
+msgstr "E-Mail +1 an den Autor senden (keine Daten gesendet)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Standardaktion"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "Nicht abspielen"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Abspielen"
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "LazyTV-Folgen in angegebenen Ordner kopieren. (Skript)"
 
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
@@ -128,6 +212,14 @@ msgctxt "#32105"
 msgid "Close"
 msgstr "Schließen"
 
+msgctxt "#32106"
+msgid "LazyTV Service is not running."
+msgstr "LazyTV-Dienst wird nicht ausgeführt."
+
+msgctxt "#32109"
+msgid "Would you like to restart it now?"
+msgstr "Möchten Sie es jetzt neu starten?"
+
 msgctxt "#32112"
 msgid "Never"
 msgstr "Nie"
@@ -151,6 +243,10 @@ msgstr "Vorgang abgebrochen."
 msgctxt "#32144"
 msgid "Do you wish to continue?"
 msgstr "Wollen Sie fortfahren?"
+
+msgctxt "#32145"
+msgid "That name is in use. Please try another."
+msgstr "Dieser Name ist in Gebrauch. Bitte versuchen Sie einen anderen."
 
 msgctxt "#32146"
 msgid "Cloning successful."
@@ -203,3 +299,39 @@ msgstr "Auswahl aufheben"
 msgctxt "#32173"
 msgid "Database analysis complete"
 msgstr "Datenbankanalyse komplett"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Exportadresse auswählen"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Einige Dateien konnten nicht übertragen werden"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Möchten Sie diese sehen?"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Dateigröße wird abgerufen..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Dateitransfer wird durchgeführt..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Dateiexport erfolgreich abgeschlossen"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Staffel"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Folge"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Gesehen"

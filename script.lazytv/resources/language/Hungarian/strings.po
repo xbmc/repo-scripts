@@ -52,6 +52,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Évad"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Lejátszás"
+
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
 msgstr "Ez a kiegészítő megtalálja a sorozatok következő epizódját."
@@ -75,3 +79,15 @@ msgstr "Kilépés"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Mentés"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Évad"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Epizód"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Megnézett"

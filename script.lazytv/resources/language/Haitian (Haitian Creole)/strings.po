@@ -16,6 +16,10 @@ msgstr ""
 "Language: ht\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Jwe"
+
 msgctxt "#32170"
 msgid "Save"
 msgstr "Enregistre"

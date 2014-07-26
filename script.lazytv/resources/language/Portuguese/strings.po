@@ -30,7 +30,7 @@ msgstr "Criar uma lista de \"próximos episódios\" para cada série TV"
 
 msgctxt "#32003"
 msgid "Create and launch randomised playlist"
-msgstr "Criar e iniciar uma lista de reprodução aleatorizada"
+msgstr "Criar e iniciar uma lista de reprodução aleatória"
 
 msgctxt "#32004"
 msgid "Let me choose on launch"
@@ -180,6 +180,14 @@ msgctxt "#32069"
 msgid "Exclude random play shows"
 msgstr "Excluir séries de reprodução aleatória"
 
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Ordenar por ..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Ordem Inversa"
+
 msgctxt "#32080"
 msgid "Other Settings"
 msgstr "Outras Opções"
@@ -215,6 +223,26 @@ msgstr "Seria bom saber se as pessoas estão a usar este addon."
 msgctxt "#32089"
 msgid "Email +1 to the author (no data is sent)"
 msgstr "Enviar +1 por email para o autor (sem envio de dados)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Acção padrão"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "Não Reproduzir"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Reproduzir"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Criar e manter lista de reprodução inteligente"
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Copiar episódios LazyTV para pasta específica (script)"
 
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
@@ -383,3 +411,39 @@ msgstr "Desseleccionar Todos"
 msgctxt "#32173"
 msgid "Database analysis complete"
 msgstr "A análise da base de dados foi concluída"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Escolher localização para exportar"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Não foi possível transferir alguns ficheiros"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Quer vê-los?"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Obtendo tamanho do ficheiro ..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Transferência de ficheiro em progresso..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "O ficheiro foi exportado com sucesso"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Temporada"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episódio"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Vistos"

@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "ฤดู"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "เล่น"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "ปิด"
@@ -27,3 +31,15 @@ msgstr "ปิด"
 msgctxt "#32170"
 msgid "Save"
 msgstr "บันทึก"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "ฤดู"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "ตอน"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "ดูแล้ว"

@@ -16,6 +16,10 @@ msgstr ""
 "Language: ml\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "കാണുക"
+
 msgctxt "#32170"
 msgid "Save"
 msgstr "സൂക്ഷിക്കുക"

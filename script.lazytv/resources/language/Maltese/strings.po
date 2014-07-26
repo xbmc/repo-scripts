@@ -20,6 +20,22 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Staġun"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Ara"
+
 msgctxt "#32170"
 msgid "Save"
 msgstr "Żomm"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Staġun"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episodju"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Rajt"

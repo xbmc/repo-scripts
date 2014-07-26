@@ -180,6 +180,18 @@ msgctxt "#32069"
 msgid "Exclude random play shows"
 msgstr "Exclure les émissions à lecture aléatoire"
 
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Trier par..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Inverser l'ordre"
+
+msgctxt "#32072"
+msgid "LazyTV User Interface"
+msgstr "Interface utilisateur de LazyTV"
+
 msgctxt "#32080"
 msgid "Other Settings"
 msgstr "Autres paramètres"
@@ -219,6 +231,26 @@ msgstr "Il serait plaisant de savoir si les gens utilisent cet addiciel."
 msgctxt "#32089"
 msgid "Email +1 to the author (no data is sent)"
 msgstr "Envoyer un courriel +1 à l'auteur (aucune donnée n'est envoyée)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Action par défaut"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "Ne pas lire"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Lecture"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Créer et garder à jour une liste de lecture intelligente."
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Copier les épisodes de LazyTV dans un dossier spécifique (script)."
 
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
@@ -387,3 +419,95 @@ msgstr "Tout désélectionner"
 msgctxt "#32173"
 msgid "Database analysis complete"
 msgstr "L'analyse de la base de données est terminée."
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Choisir la destination d'exportation"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Certains fichiers n'ont pas été transférés avec succès"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Voudriez-vous les voir?"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Récupération de la taille du fichier..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Transfert du fichier en cours..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Exportation du fichier complétée avec succès"
+
+msgctxt "#32200"
+msgid "Multi-Select (on)"
+msgstr "Sélection multiple (activée)"
+
+msgctxt "#32201"
+msgid "Multi-Select (off)"
+msgstr "Sélection multiple (désactivée)"
+
+msgctxt "#32202"
+msgid "Play Selection"
+msgstr "Lire la sélection"
+
+msgctxt "#32203"
+msgid "Export Selection"
+msgstr "Exporter la sélection"
+
+msgctxt "#32204"
+msgid "Play Episode"
+msgstr "Lire l'épisode"
+
+msgctxt "#32205"
+msgid "Export Episode"
+msgstr "Exporter l'épisode"
+
+msgctxt "#32206"
+msgid "Play From Here"
+msgstr "Lire à partir d'ici"
+
+msgctxt "#32207"
+msgid "Mark as Watched"
+msgstr "Marquer comme Regardé"
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr "Mettre à jour la médiathèque"
+
+msgctxt "#32209"
+msgid "Refresh List"
+msgstr "Rafraîchir la liste"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Saison"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Épisode"
+
+msgctxt "#32222"
+msgid "Progress"
+msgstr "Progrès"
+
+msgctxt "#32223"
+msgid "Available"
+msgstr "Disponible"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Regardé"
+
+msgctxt "#32225"
+msgid "Skipped"
+msgstr "Ignoré"
+
+msgctxt "#32226"
+msgid "In this episode"
+msgstr "Dans cet épisode"

@@ -16,6 +16,10 @@ msgstr ""
 "Language: uz\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Ijro ettirish"
+
 msgctxt "#32170"
 msgid "Save"
 msgstr "Saqlash"

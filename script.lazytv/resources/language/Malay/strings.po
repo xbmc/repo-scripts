@@ -24,6 +24,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Musim"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Main"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "Tutup"
@@ -31,3 +35,15 @@ msgstr "Tutup"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Simpan"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Musim"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episod"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Ditonton"

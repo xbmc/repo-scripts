@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "الفصل"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "تشغيل"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "اغلاق"
@@ -27,3 +31,15 @@ msgstr "اغلاق"
 msgctxt "#32170"
 msgid "Save"
 msgstr "حفظ"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "الفصل"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "الحلقة"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "شوهدت"

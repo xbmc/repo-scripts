@@ -180,6 +180,14 @@ msgctxt "#32069"
 msgid "Exclude random play shows"
 msgstr "Escludi riproduzione casuale degli show"
 
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Ordina per..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Ordine inverso"
+
 msgctxt "#32080"
 msgid "Other Settings"
 msgstr "Altre impostazioni"
@@ -219,6 +227,26 @@ msgstr "Sarebbe carino sapere se le persone stanno usando questo addon"
 msgctxt "#32089"
 msgid "Email +1 to the author (no data is sent)"
 msgstr "Invia via mail un +1 all'autore (non vengono inviati altri dati)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Azione predefinita"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "Non eseguire"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Guarda"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Crea e mantieni la playlist inteligente."
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Copia gli episodi di LazyTV in una cartella specifica (Script)"
 
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
@@ -387,3 +415,39 @@ msgstr "Deseleziona tutto"
 msgctxt "#32173"
 msgid "Database analysis complete"
 msgstr "Analisi database completata"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Scegli la cartella per l'esportazione"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Alcuni file non sono stati trasferiti"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Vorresti vederli?"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Recupero dimensione file..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Trasferimento file in corso"
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Esportazione completata con successo"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Stagione"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episodio"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Già visti"

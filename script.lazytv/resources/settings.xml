@@ -35,6 +35,7 @@
  </category>
  <category label="32060">
  <setting id="skinorno" type="enum" label="32072" lvalues="32073|32074|32075" default="0"/>
+ <setting id="skinreturn" type="bool" label="32076" default="true"/>
  <!--setting id="skinorno" type="bool" label="32072" default="true"/-->
  <setting id="limitshows" type="bool" label="32061" default="false"/>
  <setting id="window_length" label="32062" enable="eq(-1,true)" type="slider" default="10" range="1,1,30" option="int" />
@@ -46,7 +47,7 @@
  </category>
  <category label="32080">
  <setting id="nextprompt" type="bool" label="32081" default="true"/>
- <setting id="promptduration" label="32082" type="slider" enable="eq(-1,true)" subsetting="true" default="20" range="5,5,60" option="int" />
+ <setting id="promptduration" label="32082" type="slider" enable="eq(-1,true)" subsetting="true" default="20" range="0,5,60" option="int" />
  <setting id="promptdefaultaction" type="enum" label="32090" enable="eq(-2,true)" lvalues="32091|32092" default="32091"/>
  <setting id="prevcheck" type="bool" label="32083" default="false"/>
  <setting type="lsep" label="32084" enable="false"/>

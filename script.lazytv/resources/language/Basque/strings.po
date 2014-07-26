@@ -20,6 +20,22 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Denboraldia"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Play"
+
 msgctxt "#32170"
 msgid "Save"
 msgstr "Gorde"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Denboraldia"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Pasartea"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Ikusita"

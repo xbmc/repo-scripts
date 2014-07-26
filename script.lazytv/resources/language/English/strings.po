@@ -16,10 +16,6 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# ---- Settings ----
-
-# -- 1st page --
-
 msgctxt "#32000"
 msgid "General Settings"
 msgstr ""
@@ -88,14 +84,7 @@ msgctxt "#32016"
 msgid "Click here to select TV Shows"
 msgstr ""
 
-
-
-
-
-
-
-
-# -- 2nd page --
+#empty strings from id 32017 to 32029
 
 msgctxt "#32030"
 msgid "Player Options"
@@ -157,9 +146,7 @@ msgctxt "#32044"
 msgid "Begin with latest in progress episode"
 msgstr ""
 
-
-
-# -- 3rd page --
+#empty strings from id 32045 to 32059
 
 msgctxt "#32060"
 msgid "List Options"
@@ -225,9 +212,11 @@ msgctxt "#32075"
 msgid "Big Screen"
 msgstr ""
 
+msgctxt "#32076"
+msgid "Return to LazyTV after playback\""
+msgstr ""
 
-
-# -- 4th page --
+#empty strings from id 32077 to 32079
 
 msgctxt "#32080"
 msgid "Other Settings"
@@ -289,13 +278,8 @@ msgctxt "#32094"
 msgid "Copy LazyTV episodes to specified folder. (Script)"
 msgstr ""
 
-
-#empty strings from id 32095 to 32100
+#empty strings from id 32095 to 32099
 #dialog
-
-
-# ---- Default ----
-
 
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
@@ -340,7 +324,6 @@ msgctxt "#32109"
 msgid "Would you like to restart it now?"
 msgstr ""
 
-
 # -- clone needs updating --
 msgctxt "#32110"
 msgid "LazyTV has updated and this clone is now out of date."
@@ -370,19 +353,11 @@ msgctxt "#32116"
 msgid "Please wait and try again."
 msgstr ""
 
-
-
-
-
-
-
-# ---- Clonename (keyboard default) ----
+#empty strings from id 32117 to 32138
 
 msgctxt "#32139"
 msgid "name your clone"
 msgstr ""
-
-# ---- Clone ----
 
 msgctxt "#32140"
 msgid "An error occurred while creating the clone."
@@ -416,8 +391,6 @@ msgctxt "#32147"
 msgid "Clone is now ready for use."
 msgstr ""
 
-# ---- Clone (Update) ----
-
 msgctxt "#32148"
 msgid "An error occurred while updating the clone."
 msgstr ""
@@ -426,10 +399,7 @@ msgctxt "#32149"
 msgid "Update successful."
 msgstr ""
 
-
-
-
-# ---- Service ----
+#empty strings from id 32150 to 32159
 
 msgctxt "#32160"
 msgid "LazyTV - there are previous unwatched episodes"
@@ -444,7 +414,7 @@ msgid "Would you like to watch it now?"
 msgstr ""
 
 msgctxt "#32163"
-msgid ""Now Playing""
+msgid "\"Now Playing\""
 msgstr ""
 
 msgctxt "#32164"
@@ -471,9 +441,6 @@ msgctxt "#32169"
 msgid "Would you like to watch it now?"
 msgstr ""
 
-
-# ---- xGUI ----
-
 msgctxt "#32170"
 msgid "Save"
 msgstr ""
@@ -486,15 +453,11 @@ msgctxt "#32172"
 msgid "Unselect All"
 msgstr ""
 
-
 msgctxt "#32173"
 msgid "Database analysis complete"
 msgstr ""
 
-
-
-
-# ---- episode_exporter ----
+#empty strings from id 32174 to 32179
 
 msgctxt "#32180"
 msgid "Choose export location"
@@ -520,8 +483,7 @@ msgctxt "#32185"
 msgid "File export completed successfully"
 msgstr ""
 
-
-# ---- context menu ----
+#empty strings from id 32186 to 32199
 
 msgctxt "#32200"
 msgid "Multi-Select (on)"
@@ -563,8 +525,7 @@ msgctxt "#32209"
 msgid "Refresh List"
 msgstr ""
 
-
-# ---- main menu ----
+#empty strings from id 32210 to 32219
 
 msgctxt "#32220"
 msgid "Season"
@@ -594,11 +555,8 @@ msgctxt "#32226"
 msgid "In this episode"
 msgstr ""
 
-
-
+#empty strings from id 32227 to 32249
 
 msgctxt "#32250"
 msgid "* Hidden to prevent spoilers *"
 msgstr ""
-
->>>>>>> origin/master-working

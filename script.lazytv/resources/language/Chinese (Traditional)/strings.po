@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "季"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "播放"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "關閉"
@@ -27,3 +31,15 @@ msgstr "關閉"
 msgctxt "#32170"
 msgid "Save"
 msgstr "儲存"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "季"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "集"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "已看過的"

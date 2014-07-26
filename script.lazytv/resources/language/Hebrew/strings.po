@@ -48,6 +48,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "עונה"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "שחק"
+
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
 msgstr "הרחבה זו מוצאת את הפרק הבא לכל סדרה."
@@ -71,3 +75,15 @@ msgstr "סגור"
 msgctxt "#32170"
 msgid "Save"
 msgstr "שמירה"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "עונה"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "פרק"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "נצפו"

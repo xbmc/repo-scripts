@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Řada"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Přehrát"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "Zavřít"
@@ -27,3 +31,15 @@ msgstr "Zavřít"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Uložit"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Řada"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Epizoda"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Zhlédnuté"

@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Sezona"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Reproduciraj"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "Zatvori"
@@ -27,3 +31,15 @@ msgstr "Zatvori"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Spremi"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Sezona"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Epizoda"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Pogledano"

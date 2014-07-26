@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Season"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Граць"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "Зачыніць"
@@ -27,3 +31,15 @@ msgstr "Зачыніць"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Save"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Season"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episode"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Watched"

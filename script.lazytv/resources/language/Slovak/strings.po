@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Sezóna"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Prehrať"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "Zavrieť"
@@ -27,3 +31,15 @@ msgstr "Zavrieť"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Uložiť"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Sezóna"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Epizóda"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Videné"

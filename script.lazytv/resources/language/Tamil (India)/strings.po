@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "பருவம்"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "வாசி"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "மூடுக"
@@ -27,3 +31,15 @@ msgstr "மூடுக"
 msgctxt "#32170"
 msgid "Save"
 msgstr "பதிவுசெய்"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "பருவம்"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "அத்தியாயம்"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "பார்த்தது"

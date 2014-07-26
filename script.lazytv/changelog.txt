@@ -1,3 +1,6 @@
+0.9.92
+Updated language files from Transifex
+
 0.9.82
 Fixed bugs
 

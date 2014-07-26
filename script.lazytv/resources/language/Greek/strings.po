@@ -180,6 +180,14 @@ msgctxt "#32069"
 msgid "Exclude random play shows"
 msgstr "Να εξαιρεθούν εκπομπές με τυχαία σειρά επεισοδίων"
 
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Ταξινόμηση ανά ..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Ανάποδη Σειρά"
+
 msgctxt "#32080"
 msgid "Other Settings"
 msgstr "Άλλες Ρυθμίσεις"
@@ -219,6 +227,22 @@ msgstr "Θα ήταν καλό να ξέραμε αν ο κόσμος χρησι
 msgctxt "#32089"
 msgid "Email +1 to the author (no data is sent)"
 msgstr "Αποστολή email +1 στο δημιουργό (δεν αποστέλλονται δεδομένα)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Προεπιλεγμένη ενέργεια"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Εκκίνηση"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Δημιουργία και συντήρηση έξυπνης λίστας αναπ/γής."
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Αντιγραφή επεισοδίων LazyTV σε καθορισμένο φάκελο. (Script)"
 
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
@@ -387,3 +411,39 @@ msgstr "Απο-επιλογή Όλων"
 msgctxt "#32173"
 msgid "Database analysis complete"
 msgstr "Ολοκλήρωση ανάλυσης της βάσης δεδομένων"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Τοποθεσία εξαγωγής"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Αποτυχία μεταφορά κάποιων αρχείων"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Θέλετε να τα δείτε;"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Ανάκτηση μεγέθους αρχείου..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Μεταφορά αρχείων σε εξέλιξη..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Ολοκληρώθηκε η εξαγωγή αρχείων"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Κύκλος"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Επεισόδιο"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Προβληθέντα"

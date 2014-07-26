@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "シーズン"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "再生"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "閉じる"
@@ -27,3 +31,15 @@ msgstr "閉じる"
 msgctxt "#32170"
 msgid "Save"
 msgstr "保存"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "シーズン"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "エピソード"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "視聴済み"

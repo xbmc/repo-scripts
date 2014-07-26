@@ -20,6 +20,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "시즌"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "재생"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "닫기"
@@ -27,3 +31,19 @@ msgstr "닫기"
 msgctxt "#32170"
 msgid "Save"
 msgstr "저장"
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr "라이브러리 업데이트"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "시즌"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "에피소드"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "시청"

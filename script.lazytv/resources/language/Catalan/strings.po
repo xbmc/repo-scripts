@@ -48,6 +48,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Temporada"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Reprodueix"
+
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
 msgstr "Aquest complement troba el pròxim episodi de cada sèrie de TV"
@@ -71,3 +75,15 @@ msgstr "Tanca"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Desa"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Temporada"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episodi"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Visualitzats"

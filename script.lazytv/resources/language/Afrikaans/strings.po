@@ -48,6 +48,10 @@ msgctxt "#32068"
 msgid "Season"
 msgstr "Seisoen"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Speel"
+
 msgctxt "#32100"
 msgid "This addon finds the next episode in each TV show."
 msgstr "Hierdie addon vind die volgende episode in elke TV reeks."
@@ -71,3 +75,15 @@ msgstr "Maak toe"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Stoor"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Seisoen"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Episode"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Gekyk"

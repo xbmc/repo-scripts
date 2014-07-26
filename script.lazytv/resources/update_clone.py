@@ -57,7 +57,7 @@ def log(message, label = '', reset = False):
 		gap_time     = "%5f" % (new_time - start_time)
 		start_time   = new_time
 		total_gap    = "%5f" % (new_time - base_time)
-		logmsg       = '%s : %s :: %s ::: %s - %s ' % (__addonid__, total_gap, gap_time, label, message)
+		logmsg       = '%s : %s :: %s ::: %s - %s ' % ('lazyTV addon updater', total_gap, gap_time, label, message)
 		xbmc.log(msg = logmsg)
 		base_time    = start_time if reset else base_time
 
@@ -120,10 +120,12 @@ def Main():
 
 	# stop and start the addon to have it show in the Video Addons window
 	try:
+		log('trying to disable then enable addon')
 		xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s","enabled":false}}' % san_name)
 		xbmc.sleep(1000)
 		xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.SetAddonEnabled","id":1,"params":{"addonid":"%s", "enabled":true}}' % san_name)
 	except:
+		log('restart failed')
 		pass
 
 	dialog.ok('LazyTV', lang(32149),lang(32147))

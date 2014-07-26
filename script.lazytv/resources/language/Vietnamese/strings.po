@@ -16,6 +16,10 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32092"
+msgid "Play"
+msgstr "Phát"
+
 msgctxt "#32105"
 msgid "Close"
 msgstr "Đóng"
@@ -23,3 +27,7 @@ msgstr "Đóng"
 msgctxt "#32170"
 msgid "Save"
 msgstr "Lưu"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Đã xem"
