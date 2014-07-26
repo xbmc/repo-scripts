@@ -93,7 +93,7 @@ class Metadata(dictStorage):
 	def __init__(self):
 		# Check if UserData Exists
 		from xbmcutil import plugin
-		systemMetaData = os.path.join(plugin.getPath(), u"resources", u"metadata.json")
+		systemMetaData = os.path.join(plugin.getLocalPath(), u"resources", u"metadata.json")
 		userMetaData = os.path.join(plugin.getProfile(), u"metadata.json")
 		if os.path.isfile(systemMetaData) and not os.path.isfile(userMetaData):
 			import shutil
@@ -118,7 +118,7 @@ class SavedSearches(listitem.VirtualFS):
 				
 		# Call Search Dialog if Required
 		if "remove" in plugin and plugin["remove"] in self.searches:
-			self.searches.remove(plugin.popitem("remove"))
+			self.searches.remove(plugin.pop("remove"))
 			self.searches.sync()
 		elif "search" in plugin:
 			self.search_dialog(plugin["url"])
@@ -131,7 +131,7 @@ class SavedSearches(listitem.VirtualFS):
 		params["search"] = "true"
 		params["updatelisting"] = "true"
 		params["cachetodisc"] = "true"
-		self.add_item(label=u"-Search", url=params, isPlayable=False)
+		self.add_item(label=u"-%s" % plugin.getuni(137), url=params, isPlayable=False) # 137 = Search
 		
 		# Set Content Properties
 		self.set_sort_methods(self.sort_method_video_title)
@@ -145,11 +145,8 @@ class SavedSearches(listitem.VirtualFS):
 			self.searches.close()
 	
 	def search_dialog(self, urlString):
-		# Call Search Dialog
-		searchTerm = plugin.dialogSearch()
-		
 		# Add searchTerm to database
-		self.searches.add(searchTerm)
+		self.searches.add(plugin.dialogSearch())
 		self.searches.sync()
 	
 	def list_searches(self):
@@ -163,7 +160,7 @@ class SavedSearches(listitem.VirtualFS):
 		baseAction = plugin["forwarding"]
 		
 		# Create Context Menu item Params
-		strRemove = plugin.getuni(1210)
+		strRemove = plugin.getuni(1210) # 1210 = Remove
 		params = plugin._Params.copy()
 		params["updatelisting"] = "true"
 		

@@ -28,10 +28,10 @@ from fastjson import load
 
 class YTChannelUploads(listitem.VirtualFS):
 	@plugin.error_handler
-	def scraper(self, contentID=None):
+	def scraper(self):
 		# Create Url Source
 		urlString = u"http://gdata.youtube.com/feeds/api/users/%s/uploads"
-		contentID = plugin.get("url", contentID)
+		contentID = plugin["url"]
 		url = urlString % contentID
 		
 		# Initialize Gdata API
@@ -42,10 +42,10 @@ class YTChannelUploads(listitem.VirtualFS):
 		videoItems = Gdata.VideoGenerator()
 		
 		# Add Next Page and/or Playlist
-		if plugin.get("hasPlaylists",u"false") == u"true": self.add_youtube_playlists(contentID, label=u"Playlists")
+		if plugin.get("hasplaylists",u"false") == u"true": self.add_youtube_playlists(contentID, label=plugin.getuni(136), hasHD=plugin.get("hashd","none"))
 		
 		# Add Next Page
-		if Gdata.processed: self.add_next_page({"action":plugin["action"], "url":contentID, "processed":Gdata.processed})
+		if Gdata.processed: self.add_next_page({"action":plugin["action"], "url":contentID, "processed":Gdata.processed, "hashd":plugin.get("hashd","none")})
 		
 		# Set SortMethods and Content
 		self.set_sort_methods(self.sort_method_date, self.sort_method_video_runtime, self.sort_method_program_count, self.sort_method_video_rating, self.sort_method_genre, self.sort_method_studio, self.sort_method_video_title)
@@ -56,10 +56,10 @@ class YTChannelUploads(listitem.VirtualFS):
 
 class YTChannelPlaylists(listitem.VirtualFS):
 	@plugin.error_handler
-	def scraper(self, contentID=None):
+	def scraper(self):
 		# Create Url Source
 		urlString = u"http://gdata.youtube.com/feeds/api/users/%s/playlists"
-		contentID = plugin.get("url", contentID)
+		contentID = plugin["url"]
 		url = urlString % contentID
 		
 		# Initialize Gdata API
@@ -70,7 +70,7 @@ class YTChannelPlaylists(listitem.VirtualFS):
 		videoItems = Gdata.PlaylistGenerator(loop=True)
 		
 		# Add Next Page
-		if Gdata.processed: self.add_next_page({"action":plugin["action"], "url":contentID, "processed":Gdata.processed})
+		if Gdata.processed: self.add_next_page({"action":plugin["action"], "url":contentID, "processed":Gdata.processed, "hashd":plugin.get("hashd","none")})
 		
 		# Set SortMethods and Content
 		self.set_sort_methods(self.sort_method_video_title, self.sort_method_date)
@@ -81,10 +81,10 @@ class YTChannelPlaylists(listitem.VirtualFS):
 
 class YTPlaylistVideos(listitem.VirtualFS):
 	@plugin.error_handler
-	def scraper(self, contentID=None):
+	def scraper(self):
 		# Create Url Source
 		urlString = u"http://gdata.youtube.com/feeds/api/playlists/%s"
-		contentID = plugin.get("url", contentID)
+		contentID = plugin["url"]
 		url = urlString % contentID
 		
 		# Initialize Gdata API
@@ -95,8 +95,8 @@ class YTPlaylistVideos(listitem.VirtualFS):
 		videoItems = Gdata.VideoGenerator()
 		
 		# Add Next Page
-		if Gdata.processed: self.add_next_page({"action":plugin["action"], "url":contentID, "processed":Gdata.processed})
-
+		if Gdata.processed: self.add_next_page({"action":plugin["action"], "url":contentID, "processed":Gdata.processed, "hashd":plugin.get("hashd","none")})
+		
 		# Set Content Properties
 		self.set_sort_methods(self.sort_method_date, self.sort_method_video_runtime, self.sort_method_program_count, self.sort_method_video_rating, self.sort_method_genre, self.sort_method_studio, self.sort_method_video_title)
 		self.set_content("episodes")
@@ -106,10 +106,10 @@ class YTPlaylistVideos(listitem.VirtualFS):
 
 class YTRelatedVideos(listitem.VirtualFS):
 	@plugin.error_handler
-	def scraper(self, contentID=None):
+	def scraper(self):
 		# Create Url Source
 		urlString = u"http://gdata.youtube.com/feeds/api/videos/%s/related"
-		contentID = plugin.get("url", contentID)
+		contentID = plugin["url"]
 		url = urlString % contentID
 		
 		# Initialize Gdata API
@@ -133,11 +133,21 @@ class YoutubeAPI:
 		# Fetch Filter String Based of Filter Mode
 		if filterMode == "video": self.filterString = u"openSearch:totalResults,entry(yt:statistics,gd:rating,media:group(yt:videoid,media:title,yt:aspectRatio,yt:duration,media:credit,media:category,media:description,yt:uploaded))"
 		elif filterMode == "playlists": self.filterString = u"openSearch:totalResults,entry(yt:playlistId,yt:countHint,title,summary,published,media:group(media:thumbnail))"
+		
+		# Fetch Youtube Video Quality Setting
+		try: setting = int(plugin.getAddonSetting("plugin.video.youtube", "hd_videos"))
+		except: self.isHD = None
+		else:
+			# Set HD Flag based of Youtube Setting
+			hashd = plugin.get("hashd", "none")
+			if setting == 1 or hashd == "false": self.isHD = False
+			elif (setting == 0 or setting >= 2) and hashd == u"true": self.isHD = True
+			else: self.isHD = None
 	
 	def ProcessUrl(self):
 		# Fetch SourceCode
 		url = u"%s?v=2&max-results=%i&start-index=%i&alt=json&fields=%s" % (self.baseUrl, self.maxResults, self.processed+1, self.filterString)
-		sourceObj = urlhandler.urlopen(url, 28800)
+		sourceObj = urlhandler.urlopen(url, 14400) # TTL = 4 Hours
 		
 		# Fetch List of Entries
 		feed = load(sourceObj)[u"feed"]
@@ -155,10 +165,12 @@ class YoutubeAPI:
 		# Setup Converter and Optimizations
 		results = []
 		localInt = int
+		isHD = self.isHD
 		localFloat = float
 		imagePath = u"http://img.youtube.com/vi/%s/0.jpg"
 		localListItem = listitem.ListItem
 		addItem = results.append
+		hashd = plugin.get("hashd","none")
 		
 		while 1:
 			# Loop Entries
@@ -200,10 +212,14 @@ class YoutubeAPI:
 				if u"yt$aspectRatio" in mediaGroup and mediaGroup[u"yt$aspectRatio"][u"$t"] == u"widescreen": item.setStreamDict("aspect", 1.78)
 				
 				# Add Context item to link to related videos
-				item.addRelatedContext(action="system.videohosts.YTRelatedVideos", url=videoID)
+				item.addRelatedContext(action="system.videohosts.YTRelatedVideos", url=videoID, hashd=hashd)
+				
+				# Set Quality and Audio Overlays
+				item.setQualityIcon(isHD)
+				item.setAudioInfo()
 				
 				# Add InfoLabels and Data to Processed List
-				addItem(item.getListitemTuple(isPlayable=True))
+				addItem(item.getListitemTuple(True))
 			
 			# Fetch Next Set of Pages if Available
 			if (loop == True) and (self.processed): self.ProcessUrl()
@@ -215,6 +231,7 @@ class YoutubeAPI:
 	def PlaylistGenerator(self, loop=False):
 		results = []
 		addItem = results.append
+		hashd = plugin.get("hashd", "none")
 		while True:
 			# Loop Entries
 			for node in self.entries:
@@ -224,6 +241,7 @@ class YoutubeAPI:
 				
 				# Fetch Video ID
 				item.setParamDict("url", node[u"yt$playlistId"][u"$t"])
+				item.setParamDict("hashd", hashd)
 				
 				# Fetch Title and Video Cound for combining Title
 				item.setLabel(u"%s (%s)" % (node[u"title"][u"$t"], node[u"yt$countHint"][u"$t"]))
@@ -238,119 +256,10 @@ class YoutubeAPI:
 				if u"published" in node: item.setDateInfo(node[u"published"][u"$t"].split(u"T")[0], "%Y-%m-%d")
 				
 				# Add InfoLabels and Data to Processed List
-				addItem(item.getListitemTuple())
+				addItem(item.getListitemTuple(False))
 			
 			# Fetch Next Set of Pages if Available
 			if (loop == True) and (self.processed): self.ProcessUrl()
-			else: break
-		
-		# Return List of Listitems
-		return results
-
-############################## VimeoAPI ##############################
-
-class VUserVideos(listitem.VirtualFS):
-	@plugin.error_handler
-	def scraper(self, contentID=None):
-		# Create Url Source
-		urlString = u"http://vimeo.com/api/v2/%s/videos.json"
-		contentID = plugin.get("url", contentID)
-		url = urlString % contentID
-		
-		# Fetch User Info
-		pagelimit = int(plugin.get("pagelimit", 0))
-		if pagelimit == 0:
-			info = VimeoAPI.user_info(contentID)
-			pagelimit = (info[u"total_videos_uploaded"] -1) / 20 + 1
-		
-		# Initialize Vimeo API
-		Vimeo = VimeoAPI(url, int(plugin.get("currentpage",1)), pagelimit)
-		Vimeo.ProcessUrl()
-		
-		# Fetch Video Results
-		videoItems = Vimeo.VideoGenerator()
-		
-		# Add Next Page
-		#if Vimeo.currentPage: self.add_next_page({"url":contentID, "pagelimit":Vimeo.pageLimit, "currentpage":Vimeo.currentPage})
-		
-		# Set Content Properties
-		self.set_sort_methods(self.sort_method_date, self.sort_method_video_runtime, self.sort_method_genre, self.sort_method_video_title)
-		self.set_content("episodes")
-		
-		# Return List of Video Listitems
-		return videoItems
-
-class VimeoAPI:
-	@classmethod
-	def user_info(self, userID):
-		# Create Url String
-		url = u"http://vimeo.com/api/v2/%s/info.json" % userID
-		sourceObj = urlhandler.urlopen(url, 604800)
-		
-		# Fetch User Info
-		info = load(sourceObj)
-		sourceObj.close()
-		return info
-	
-	def __init__(self, baseUrl, currentPage=1, pageLimit=3):
-		# Set Global Vars
-		self.baseUrl = baseUrl
-		self.currentPage = currentPage
-		
-		# Restrict Page Limit to 3, Only 3 Pages allowed for Simple API
-		if pageLimit > 3: self.pageLimit = 3
-		else: self.pageLimit = pageLimit
-	
-	def ProcessUrl(self):
-		# Fetch SourceCode
-		sourceObj = urlhandler.urlopen(u"%s?page=%i" % (self.baseUrl, self.currentPage), 28800)
-		
-		# Fetch List of Entries
-		self.entries = load(sourceObj)
-		sourceObj.close()
-		
-		# Increment Page Counter
-		if self.currentPage >= self.pageLimit: self.currentPage = 0
-		else: self.currentPage += 1
-	
-	def VideoGenerator(self, loop=False):
-		# Setup Converter and Optimizations
-		results = []
-		localListItem = listitem.ListItem
-		addItem = results.append
-		
-		while 1:
-			# Loop Entries
-			for node in self.entries:
-				# Create listitem object
-				item = localListItem()
-				
-				# Fetch Title
-				item.setLabel(node[u"title"])
-				
-				# Fetch Video ID and Set Actions
-				item.setParamDict(action="system.source", sourcetype="vimeo_com", url=node[u"id"])
-				
-				# Fetch Plot Description
-				item.setInfoDict(plot=node[u"description"], genre=node[u"tags"].replace(u'"',u'').split(u",")[0])
-				
-				# Fetch Duration and Convert to String
-				item.setDurationInfo(node[u"duration"])
-				
-				# Fetch Date of Video
-				item.setDateInfo(node[u"upload_date"].split(u" ")[0], "%Y-%m-%d")
-				
-				# Add Thumbnail Image
-				item.setThumbnailImage(node[u"thumbnail_large"])
-				
-				# Add Quality Overlay
-				item.setStreamDict(codec="h264", width=node[u"width"], height=node[u"height"])
-				
-				# Add InfoLabels and Data to Processed List
-				addItem(item.getListitemTuple(isPlayable=True))
-			
-			# Fetch Next Set of Pages if Available
-			if (loop == True) and (self.currentPage): self.ProcessUrl()
 			else: break
 		
 		# Return List of Listitems

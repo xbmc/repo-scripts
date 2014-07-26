@@ -29,17 +29,17 @@ from hashlib import md5
 
 #################################################################
 
-def urlopen(url, maxAge=None, data=None, headers={}, userAgent=1):
+def urlopen(url, maxAge=None, data=None, headers={}, userAgent=1, stripEntity=False):
 	''' Makes Request and Return Response Object '''
 	handle = HttpHandler()
-	handle.add_response_handler(userAgent)
+	handle.add_response_handler(userAgent, stripEntity=stripEntity)
 	if maxAge is not None: handle.add_cache_handler(maxAge)
 	return handle.open(url, data, headers)
 
-def urlread(url, maxAge=None, data=None, headers={}, userAgent=1):
+def urlread(url, maxAge=None, data=None, headers={}, userAgent=1, stripEntity=True):
 	''' Makes Request and Return Response Data '''
 	handle = HttpHandler()
-	handle.add_response_handler(userAgent, stripEntity=True)
+	handle.add_response_handler(userAgent, stripEntity=stripEntity)
 	if maxAge is not None: handle.add_cache_handler(maxAge)
 	resp = handle.open(url, data, headers)
 	data = resp.read()
@@ -62,12 +62,6 @@ def urlretrieve(url, filename):
 
 #################################################################
 
-def parse_qs(url):
-	# Strip url down to Query String
-	if u"#" in url: url = url[:url.find(u"#")]
-	if u"?" in url: url = url[url.find(u"?")+1:]
-	return dict(part.split(u"=",1) for part in url.split(u"&"))
-
 def strip_tags(html):
 	# Strips out html code and return plan text
 	sub_start = html.find(u"<")
@@ -78,28 +72,19 @@ def strip_tags(html):
 		sub_end = html.find(u">")
 	return html
 
-def search(urlString=u""):
-	# Open KeyBoard Dialog
-	ret = plugin.keyBoard("", plugin.getstr(16017), False)
-	
-	# Check if User Entered Any Data
-	if ret and urlString: return urlString % ret
-	elif ret: return ret
-	else: raise plugin.URLError(0, "User Cannceled The Search KeyBoard Dialog")
-
 def redirect(url, data=None, headers={}):
 	# Convert url to ascii if needed
 	if isinstance(url, unicode): url = url.encode("ascii")
 	
 	# Log for Debuging
-	plugin.log(url + " - Redirected To:", 0)
+	plugin.debug(url + " - Redirected To:")
 	
 	# Split url into Components
 	splitUrl = urlparse.urlsplit(url)
 	
 	# Create Connection Object, HTTP or HTTPS
-	if splitUrl[0] == "http": conn = httplib.HTTPConnection(splitUrl[1])
-	elif splitUrl[0] == "https": conn = httplib.HTTPSConnection(splitUrl[1])
+	if splitUrl[0] == "http": conn = httplib.HTTPConnection(splitUrl[1], timeout=10)
+	elif splitUrl[0] == "https": conn = httplib.HTTPSConnection(splitUrl[1], timeout=10)
 	
 	# Set Request Mothods
 	if data is not None:
@@ -111,22 +96,27 @@ def redirect(url, data=None, headers={}):
 	
 	# Make Request to Server
 	try: conn.request(method, urlparse.urlunsplit(splitUrl), data, headers)
-	except: raise plugin.URLError(32910, "Failed to Make Request for Redirected Url")
+	except httplib.HTTPException as e: raise plugin.URLError(str(e), "Failed to Make Request for Redirected Url")
 	
 	# Fetch Headers from Server
 	try:
 		resp = conn.getresponse()
-		plugin.log("%s - %s" % (resp.status, resp.reason), 0)
+		plugin.debug("%s - %s" % (resp.status, resp.reason))
 		headers = dict(resp.getheaders())
 		conn.close()
-	except: raise plugin.URLError(32910, "Failed to Read Server Response")
+	except httplib.HTTPException as e: raise plugin.URLError(str(e), "Failed to Read Redirected Server Response")
 	
 	# Fetch Redirect Location
 	if "location" in headers: url = headers["location"]
 	elif "uri" in headers: url = headers["uri"]
 	else: url = ""
-	plugin.log(url, 0)
+	plugin.debug(url)
 	return url.decode("ascii")
+
+class withaddinfourl(urllib2.addinfourl):
+	# Methods to add support for with statement
+	def __enter__(self): return self
+	def __exit__(self, *exc_info): self.close()
 
 #################################################################
 
@@ -142,9 +132,9 @@ class HttpHandler:
 		''' Adds Response Handler to Urllib to Handle Compression and unescaping '''
 		self.handleList.append(ResponseHandler(userAgent, compressed, stripEntity))
 	
-	def add_cache_handler(self, maxAge=0, cacheLocal=u"urlcache", asUrl=None):
+	def add_cache_handler(self, maxAge=0, asUrl=None):
 		''' Adds Cache Handler to Urllib to Handle Caching of Source '''
-		self.handleList.append(CacheHandler(maxAge, cacheLocal, asUrl))
+		self.handleList.append(CacheHandler(maxAge, asUrl))
 	
 	def add_authorization(self, username, password):
 		''' Adds Basic Authentication to Requst '''
@@ -162,13 +152,13 @@ class HttpHandler:
 		# Make Url Connection, Save Cookie If Set and Return Response
 		opener = urllib2.build_opener(*self.handleList)
 		try: return opener.open(request, timeout=timeout)
-		except socket.timeout: raise plugin.URLError(32904, "Server Request Timed Out")
-		except urllib2.URLError: raise plugin.URLError(32909, "An Unexpected UrlError Occurred")
+		except socket.timeout as e: raise plugin.URLError(str(e))
+		except urllib2.URLError as e: raise plugin.URLError(str(e))
 
 class ErrorHandler(urllib2.HTTPDefaultErrorHandler):
 	''' Default Error Handler for Reporting The Error Code to XBMC '''
 	def http_error_default(self, req, fp, code, msg, hdrs):
-		raise plugin.URLError(msg, "HTTPError %s:%s" % (code, msg))
+		raise plugin.URLError("HTTPError %s:%s" % (code, msg))
 
 class Authorization(urllib2.BaseHandler):
 	def __init__(self, username, password):
@@ -222,11 +212,11 @@ class HTTPCookieProcessor(urllib2.BaseHandler):
 		loginPage = self.loginPage
 		if loginPage and (headers.get("location") == loginPage or headers.get("uri") == loginPage):
 			# Check if Logon has already happend within current session
-			if self.logonAtempted is True: raise plugin.URLError(32914, "Logon Already Atempted, Stopping infinite loop")
+			if self.logonAtempted is True: raise plugin.URLError(plugin.getstr(32806), "Logon Already Atempted, Stopping infinite loop")
 			else: self.logonAtempted = True
 			
 			# Login to site and create session cookie
-			plugin.log("Sending Login Data")
+			plugin.debug("Sending Login Data")
 			urllogin(**self.loginData)
 			
 			# Resend Request for Data with new session cookie
@@ -270,7 +260,7 @@ class ResponseHandler(urllib2.BaseHandler):
 		if self.userAgent and not request.has_header("User-Agent"): request.add_header("User-Agent", self.userAgent)
 		if self.compressed: request.add_header("Accept-Encoding", "gzip, deflate")
 		request.add_header("Accept-Language", "en-gb,en-us,en")
-		plugin.log(request.get_full_url())
+		plugin.notice(request.get_full_url())
 		return request
 	
 	def handle_response(self, response):
@@ -286,8 +276,8 @@ class ResponseHandler(urllib2.BaseHandler):
 			elif contentEncoding and "deflate" in contentEncoding: data = zlib.decompress(response.read())
 			else: data = response.read()
 		
-		except zlib.error:
-			raise plugin.URLError(32912, "Failed to Decompress Response Body")
+		except zlib.error as e:
+			raise plugin.URLError(plugin.getstr(32804), str(e))
 		
 		else:
 			# Convert content to unicode and back to utf-8 to fix any issues
@@ -298,13 +288,13 @@ class ResponseHandler(urllib2.BaseHandler):
 					if charset: contentCharset = charset[0]
 			
 				# Attempt to decode Response to unicode
-				if not contentCharset: contentCharset = "utf-8"; plugin.log("Response encoding not specified, defaulting to UTF-8", 0)
+				if not contentCharset: contentCharset = "utf-8"; plugin.debug("Response encoding not specified, defaulting to UTF-8")
 				try: data = unicode(data, contentCharset.lower())
 				except:
 					# Attempt to decode using iso-8859-1 (latin-1)
-					plugin.log("Specified encoding failed, reverting to iso-8859-1 (latin-1)", 0)
+					plugin.debug("Specified encoding failed, reverting to iso-8859-1 (latin-1)")
 					try: data = unicode(data, "iso-8859-1")
-					except: raise plugin.URLError(32913, "Unable to Decode response to unicode")
+					except UnicodeDecodeError as e: raise plugin.URLError(plugin.getstr(32805), str(e))
 				
 				# Unescape the content if requested
 				if self.stripEntity: data = self.unescape(data).encode("utf-8")
@@ -315,7 +305,7 @@ class ResponseHandler(urllib2.BaseHandler):
 			response.close()
 		
 		# Return Data Wraped in an addinfourl Object
-		addInfo = urllib2.addinfourl(StringIO.StringIO(data), headers, response.url, response.code)
+		addInfo = withaddinfourl(StringIO.StringIO(data), headers, response.url, response.code)
 		addInfo.msg = response.msg
 		return addInfo
 	
@@ -337,12 +327,11 @@ class ResponseHandler(urllib2.BaseHandler):
 				except KeyError: return text
 		
 		# Return Clean string using accepted encoding
-		try: return re.sub("&#?\w+;", fixup, text)
-		except: raise plugin.URLError(32913, "HTML Entity Decoding Failed")
+		return re.sub("&#?\w+;", fixup, text)
 	
 	def http_response(self, request, response):
 		''' Returns a Decompress Version of the response '''
-		plugin.log("%s - %s" % (response.code, response.msg), 0)
+		plugin.debug("%s - %s" % (response.code, response.msg))
 		if response.code is not 200 or response.info().get("X-Cache") == "HIT": return response
 		else: return self.handle_response(response)
 	
@@ -352,10 +341,9 @@ class ResponseHandler(urllib2.BaseHandler):
 
 class CacheHandler(urllib2.BaseHandler):
 	'''Stores responses in a persistant on-disk cache'''
-	def __init__(self, maxAge=0, cacheLocal=u"urlcache", asUrl=None):
+	def __init__(self, maxAge=0, asUrl=None):
 		global time
 		import time
-		self.cacheLocal = cacheLocal
 		self.maxAge = maxAge
 		self.redirect = False
 		self.url = asUrl
@@ -378,37 +366,50 @@ class CacheHandler(urllib2.BaseHandler):
 			
 			# Create Cache Path
 			urlHash = md5(url).hexdigest()
-			plugin.log("UrlHash = " + urlHash, 0)
-			self.CachePath = os.path.join(plugin.getProfile(), self.cacheLocal, urlHash + u".%s")
-		
-		# Check Status of Cache
-		if CachedResponse.exists(self.CachePath):
-			# If Refresh Param Exists Then Reset 
-			if "refresh" in plugin: CachedResponse.reset(self.CachePath, (0,0))
+			plugin.debug("UrlHash = %s" % urlHash)
+			self.CachePath = CachePath = os.path.join(plugin.getProfile(), "urlcache", urlHash + u".%s")
 			
-			# Check if Cache is Valid
-			if self.maxAge == -1 or CachedResponse.isValid(self.CachePath, self.maxAge):
-				plugin.log("Cached")
-				# Return Cached Response
-				return CachedResponse(self.CachePath)
-			else:
-				plugin.log("Cache Not Valid")
+			# Check Status of Cache
+			if CachedResponse.exists(CachePath):
+				# If Refresh Param Exists Then Reset 
+				if "refresh" in plugin: CachedResponse.reset(CachePath, (0,0))
+				maxAge = self.maxAge
+				
+				# Check if Cache is Valid and return Cached Response if valid
+				if not maxAge == 0:
+					if maxAge == -1 or CachedResponse.isValid(CachePath, maxAge):
+						plugin.notice("Cached")
+						try: return CachedResponse(CachePath)
+						except plugin.CacheError as e:
+							CachedResponse.remove(self.CachePath)
+							plugin.error(e.debugMsg)
+							return None
+					else:
+						plugin.notice("Cache Not Valid")
+				
 				# Set If-Modified-Since & If-None-Match Headers
-				cacheHeaders = CachedResponse.loadHeaders(self.CachePath)
+				cacheHeaders = CachedResponse.loadHeaders(CachePath)
 				if "Last-Modified" in cacheHeaders:
 					# Add If-Modified-Since Date to Request Headers
 					request.add_header("If-Modified-Since", cacheHeaders["Last-Modified"])
 				if "ETag" in cacheHeaders:
 					# Add If-None-Match Etag to Request Headers
 					request.add_header("If-None-Match", cacheHeaders["ETag"])
+			else:
+				plugin.debug("Cache Not Found")
 	
 	def http_response(self, request, response):
 		''' Store Server Response into Cache '''
 		# Save response to cache and return it if status is 200 else return response untouched
 		self.redirect = False
 		if response.code is 200 and not response.info().get("X-Cache") == "HIT":
-			CachedResponse.store_in_cache(self.CachePath, response)
-			return CachedResponse(self.CachePath)
+			try:
+				CachedResponse.store_in_cache(self.CachePath, response)
+				return CachedResponse(self.CachePath)
+			except plugin.CacheError as e:
+				CachedResponse.remove(self.CachePath)
+				plugin.error(e.debugMsg)
+				return response
 		elif response.code in (301,302,303,307):
 			self.redirect = True
 			return response
@@ -436,6 +437,18 @@ class CachedResponse(StringIO.StringIO):
 	To determine wheter a response is cached or coming directly from
 	the network, check the x-cache header rather than the object type.
 	'''
+	@staticmethod
+	def cleanup(maxAge):
+		# Loop each file within urlcache folder
+		cachePath = os.path.join(plugin.getProfile(), "urlcache")
+		for urlFile in os.listdir(cachePath):
+			# Check if file is a Body file then proceed
+			if urlFile.endswith(".body"):
+				# Fetch urlHash and check if Cache is Stale, then remove
+				fullPath = os.path.join(cachePath, urlFile.replace(".body", ".%s"))
+				if not CachedResponse.isValid(fullPath, maxAge):
+					# If file is not valid then Remove
+					CachedResponse.remove(fullPath)
 	
 	@staticmethod
 	def exists(cachePath):
@@ -445,19 +458,20 @@ class CachedResponse(StringIO.StringIO):
 	@staticmethod
 	def isValid(cachePath, maxAge):
 		''' Returns True if Cache is Valid, Else Return False '''
-		return maxAge and time.time() - os.stat(cachePath % u"body").st_mtime < maxAge and time.time() - os.stat(cachePath % u"headers").st_mtime < maxAge
+		return time.time() - os.stat(cachePath % u"body").st_mtime < maxAge and time.time() - os.stat(cachePath % u"headers").st_mtime < maxAge
 	
 	@staticmethod
 	def loadHeaders(cachePath):
 		''' Returns Only the headers to chack If-Modified-Since & If-None-Match '''
-		try: return httplib.HTTPMessage(StringIO.StringIO(CachedResponse.readFile(cachePath % u"headers")))
-		except: raise plugin.CacheError(32911, "Loading of Cache Headers Failed")
+		return httplib.HTTPMessage(StringIO.StringIO(CachedResponse.readFile(cachePath % u"headers")))
 	
 	@staticmethod
 	def readFile(filename):
 		''' Return content of file and auto close file '''
-		with open(filename, "rb") as fileObject:
-			return fileObject.read()
+		try:
+			with open(filename, "rb") as fileObject: return fileObject.read()
+		except (IOError, OSError) as e:
+			raise plugin.CacheError(plugin.getstr(32803), str(e))
 	
 	@staticmethod
 	def reset(cachePath, times=None):
@@ -468,6 +482,7 @@ class CachedResponse(StringIO.StringIO):
 	@staticmethod
 	def remove(cachePath):
 		''' Remove Cache Items '''
+		plugin.debug("Removing Cache item: %s" % cachePath[:-3])
 		# Remove Headers
 		try: os.remove(cachePath % u"headers")
 		except: pass
@@ -488,13 +503,13 @@ class CachedResponse(StringIO.StringIO):
 		headers["X-Cache"] = "HIT"
 		headers["X-Location"] = response.url
 		try: outputFile.write(str(headers))
-		except: raise plugin.CacheError(32911, "Failed to Save Headers to Cache")
+		except (IOError, OSError) as e: raise plugin.CacheError(plugin.getstr(32803), str(e))
 		finally: outputFile.close()
 		
 		# Save Response to Cache
 		outputFile = open(cachePath % u"body", "wb")
 		try: outputFile.write(response.read())
-		except: raise plugin.CacheError(32911, "Failed to Save Body to Cache")
+		except (IOError, OSError) as e: raise plugin.CacheError(plugin.getstr(32803), str(e))
 		finally: outputFile.close()
 		
 		# Close Response Connection
@@ -502,8 +517,7 @@ class CachedResponse(StringIO.StringIO):
 	
 	def __init__(self, cachePath):
 		# Read in Both Body and Header Responses
-		try: StringIO.StringIO.__init__(self, self.readFile(cachePath % u"body"))
-		except: raise plugin.CacheError(32911, "Loading of Cache Body Failed")
+		StringIO.StringIO.__init__(self, self.readFile(cachePath % u"body"))
 		self.headers = self.loadHeaders(cachePath)
 		
 		# Set Response Codes
@@ -518,3 +532,7 @@ class CachedResponse(StringIO.StringIO):
 	def geturl(self):
 		''' Returns original Url '''
 		return self.url
+	
+	# Methods to add support for with statement
+	def __enter__(self): return self
+	def __exit__(self, *exc_info): self.close()

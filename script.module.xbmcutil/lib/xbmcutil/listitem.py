@@ -22,58 +22,10 @@
 # Import Python System Modules
 import os
 import time
-import urllib
 import functools
 
 # Import Custom Modules
-from xbmcutil import plugin
-
-class Playlist(plugin.xbmc.PlayList):
-	""" Wrapper for XBMC Playlist """
-	def __init__(self, playlistType):
-		""" Retrieve a reference from a valid xbmc playlist
-		
-			0 : xbmc.PLAYLIST_MUSIC
-			1 : xbmc.PLAYLIST_VIDEO
-		"""
-		
-		# Initiate Overriding, in obj Classs Method
-		super(Playlist, self).__init__()
-		self.clear()
-	
-	def add_iter(self, listitems):
-		""" Accepts a iterable of (url, listitem, isfolder) """
-		for url, listitem, isfolder in listitems:
-			if isfolder is False: self.add(url, listitem)
-
-class DialogProgress(plugin.xbmcgui.DialogProgress):
-	def __init__(self, heading, line1, line2="", line3=""):
-		# Initiate Overriding, in obj Classs Method
-		self.subClass = super(DialogProgress, self)
-		self.subClass.__init__()
-		
-		# Create Progress Dialog
-		self.lines = [line1,line2,line3]
-		self.create(heading, line1, line2, line3)
-		self.update(0)
-	
-	def updateLine1(self, line):
-		self.lines[0] = line
-	
-	def updateLine2(self, line):
-		self.lines[1] = line
-	
-	def updateLine3(self, line):
-		self.lines[2] = line
-	
-	def update(self, percent, line1=None, line2=None, line3=None):
-		# Add updated line if available
-		if line1 != None: self.lines[0] = line1
-		if line2 != None: self.lines[1] = line2
-		if line3 != None: self.lines[2] = line3
-		
-		# Initeate Overriding, in obj Classs Method
-		self.subClass.update(int(percent), *self.lines)
+from xbmcutil import plugin, cleanup
 
 class ListItem(plugin.xbmcgui.ListItem):
 	"""
@@ -84,20 +36,19 @@ class ListItem(plugin.xbmcgui.ListItem):
 	_strptime = time.strptime
 	_strftime = time.strftime
 	_handleZero = _plugin.handleZero
-	_handelThree = _plugin.handleThree
 	_selfObject = _plugin.xbmcgui.ListItem
 	_urlencode = _plugin.urlencode
-	_addonName = _plugin.getName()
-	_fanartImage = _plugin.getFanartImage()
-	_imageGlobal = _plugin.getImageLocation(local=False)
-	_imageLocal = _plugin.getImageLocation(local=True)
-	_stringDownload = _plugin.getuni(33003)
-	_strRelated = _plugin.getuni(32966)
-	_staticMenu = ([(_plugin.getuni(20159), "XBMC.Action(Info)"),
-					(_plugin.getuni(13347), "XBMC.Action(Queue)"),
-					(_plugin.getuni(184), "XBMC.Container.Update(%srefresh=true)" % _handelThree)],
-				   [(_plugin.getuni(1045), "XBMC.RunPlugin(%s?action=system.opensettings)" % _handleZero),
-					(_plugin.getuni(184), "XBMC.Container.Update(%srefresh=true)" % _handelThree)])
+	_addonName = _plugin.getAddonInfo("name")
+	_fanartImage = _plugin.translatePath(_plugin.getAddonInfo("fanart"))
+	_imageGlobal = os.path.join(_plugin.getGlobalPath(), "resources", "media", "%s")
+	_imageLocal = os.path.join(_plugin.getLocalPath(), "resources", "media", "%s")
+	_strRelated = _plugin.getuni(32904) # 32904 = Related Videos
+	_folderMenu = [("$LOCALIZE[1045]", "XBMC.RunPlugin(%s?action=system.opensettings)" % _handleZero), # 1045 = Add-on Settings
+				   ("$LOCALIZE[184]", "XBMC.Container.Update(%srefresh=true)" % _plugin.handleThree)] # 184 = Refresh
+	_videoMenu =  [("$LOCALIZE[20159]", "XBMC.Action(Info)"), # 20159 = Video Information
+				   ("$LOCALIZE[13347]", "XBMC.Action(Queue)"), # 13347 = Queue Item
+				   ("$LOCALIZE[13350]", "XBMC.ActivateWindow(videoplaylist)"), # 13350 = Now Playing...
+				   ("$LOCALIZE[184]", "XBMC.Container.Update(%srefresh=true)" % _plugin.handleThree)] # 184 = Refresh
 	
 	def __init__(self):
 		""" Initialize XBMC ListItem Object """
@@ -107,20 +58,16 @@ class ListItem(plugin.xbmcgui.ListItem):
 		
 		# Set class wide variables
 		self.infoLabels = {"studio":self._addonName}
-		self.contextMenu = []
 		self.urlParams = {}
 		self.streamInfo = {}
-		self.isFolder = True
-		self.isIconSet = False
-		self.isFanartSet = False
-		self.isPlayableSet = False
+		self.contextMenu = []
+		
+		# Pre Define Vars
+		self.icon = None
+		self.fanartImg = None
 	
 	def setLabel(self, label):
-		""" Sets the listitem's label
-			
-			label: string or unicode - text string
-		"""
-		self.urlParams["title"] = label.encode("ascii", "ignore")
+		""" Sets the listitem's label """
 		self.infoLabels["title"] = label
 		self._selfObject.setLabel(self, label)
 	
@@ -128,20 +75,19 @@ class ListItem(plugin.xbmcgui.ListItem):
 		""" Returns the listitem label as a unicode string"""
 		return self._selfObject.getLabel(self).decode("utf8")
 	
-	def setIconImage(self, icon=None):
-		""" Sets ListItem's Icon Image
-			
-			icon: string - (DefaultFolder.png/DefaultVideo.png/DefaultVideoPlaylists.png)
-		"""
-		if icon is None: icon = ("DefaultVideo.png","DefaultFolder.png")[self.isFolder]
-		self._selfObject.setIconImage(self, icon)
-		self.isIconSet = True
+	def setIconImage(self, icon):
+		""" Sets ListItem's Icon Image """
+		self.icon = icon
+	
+	def setFanartImage(self, fanart):
+		""" Sets ListItem's Fanart Image """
+		self.fanartImg = fanart
 	
 	def setThumbnailImage(self, image, local=0):
 		""" Sets ListItem's Thumbnail Image
 			
 			image: string - Path to thumbnail image, (local or remote)
-			local: integer - (0/1/2) - Changes image path to point to (Remote/Local/Global) Filesystem
+			local: integer - (0/1/2) - Changes image path to point to (Remote/Local/Global)
 		"""
 		if   local is 0: self._selfObject.setThumbnailImage(self, image)
 		elif local is 1: self._selfObject.setThumbnailImage(self, self._imageLocal % image)
@@ -162,20 +108,17 @@ class ListItem(plugin.xbmcgui.ListItem):
 		if key and value: self.streamInfo[key] = value
 		if kwargs: self.streamInfo.update(kwargs)
 	
-	def getInfoItem(self, key, fbObject=None):
-		""" Return specifiyed Key form infolabels """
-		if key in self.infoLabels: return self.infoLabels[key]
-		else: return fbObject
-	
-	def getParamItem(self, key, fbObject=None):
-		""" Return specifiyed key from urlparams """
-		if key in self.urlParams: return self.urlParams[key]
-		else: return fbObject
-	
-	def getStreamItem(self, key, fbObject=None):
-		""" Return specifiyed key from streamInfo """
-		if key in self.streamInfo: return self.streamInfo[key]
-		else: return fbObject
+	def setDateInfo(self, date, dateFormat):
+		""" Sets Date Info Label
+			
+			date: string - Date of list item
+			dateFormat: string - Format of date string for strptime conversion
+		"""
+		convertedDate = self._strptime(date, dateFormat)
+		self.infoLabels["date"] = self._strftime("%d.%m.%Y", convertedDate)
+		self.infoLabels["aired"] = self._strftime("%Y-%m-%d", convertedDate)
+		self.infoLabels["year"] = self._strftime("%Y", convertedDate)
+		self.infoLabels["dateadded"] = self._strftime("%Y-%m-%d %H-%M-%S", convertedDate)
 	
 	def setDurationInfo(self, duration):
 		""" Sets Date duration Label """
@@ -198,30 +141,9 @@ class ListItem(plugin.xbmcgui.ListItem):
 		# Set Duration
 		self.streamInfo["duration"] = duration
 	
-	def setResumePoint(self, startPoint, totalTime=None):
-		""" Set Resume Pont for xbmc to start playing video """
-		self.setProperty("TotalTime", totalTime or str(self.streamInfo.get("duration","1")))
-		self.setProperty("ResumeTime", startPoint)
-	
-	def setDateInfo(self, date, dateFormat):
-		""" Sets Date Info Label
-			
-			date: string - Date of list item
-			dateFormat: string - Format of date string for strptime conversion
-		"""
-		convertedDate = self._strptime(date, dateFormat)
-		self.infoLabels["date"] = self._strftime("%d.%m.%Y", convertedDate)
-		self.infoLabels["aired"] = self._strftime("%Y-%m-%d", convertedDate)
-		self.infoLabels["year"] = self._strftime("%Y", convertedDate)
-	
-	def setFanartImage(self, fanart=None):
-		""" Sets ListItem's Fanart Image
-			
-			fanart: string - Path to fanart image, if not set defaults to fanart of addon
-		"""
-		if fanart is None: fanart = self._fanartImage
-		self.setProperty("Fanart_Image", fanart)
-		self.isFanartSet = True
+	def setAudioInfo(self, codec="aac", language="en", channels=2):
+		""" Set Default Audio Info """
+		self.addStreamInfo("audio", {"codec":codec, "language":language, "channels":channels})
 	
 	def setQualityIcon(self, HD=False):
 		""" Enable Listitem's HD|SD Overlay Iron """
@@ -234,9 +156,10 @@ class ListItem(plugin.xbmcgui.ListItem):
 			self.streamInfo["width"] = 768
 			self.streamInfo["height"] = 576
 	
-	def setAudioInfo(self, codec="aac", language="en", channels=2):
-		""" Set Default Audio Info """
-		self.addStreamInfo("audio", {"codec":codec, "language":language, "channels":channels})
+	def setResumePoint(self, startPoint, totalTime=None):
+		""" Set Resume Pont for xbmc to start playing video """
+		self.setProperty("totaltime", totalTime or str(self.streamInfo.get("duration","1")))
+		self.setProperty("resumetime", startPoint)
 	
 	def addRelatedContext(self, **params):
 		""" Adds a context menu item to link to related videos """
@@ -254,140 +177,155 @@ class ListItem(plugin.xbmcgui.ListItem):
 		if params: command += "(%s?%s)" % (self._handleZero, self._urlencode(params))
 		self.contextMenu.append((label, command))
 	
-	def setIsPlayable(self, isPlayable=False):
-		""" Sets the listitem's playable flag """
-		self.isPlayableSet = True
-		self.isFolder = not isPlayable
-		self.setProperty("IsPlayable", str(isPlayable).lower())
-		self.setProperty(("Folder","Video")[isPlayable], "true")
-	
 	def setIdentifier(self, identifier):
 		""" Sets Unique Identifier for Watched Flags """
 		self.urlParams["identifier"] = identifier
 	
-	def getPath(self):
-		""" Returns urlParams as a string """
-		return self._handleZero + "?" + self._urlencode(self.urlParams)
-	
-	def finalize(function):
-		""" Wrapper for get Listitem to finalize creation of listitem for XBMC
+	def getListitemTuple(self, isPlayable=False):
+		""" Returns a tuple of listitem properties, (path, listitem, isFolder) """
+		infoLabels = self.infoLabels
+		urlParams = self.urlParams
+		
+		# Set XBMC InfoLabels and StreamInfo
+		self.setInfo("video", infoLabels)
+		if self.streamInfo: self.addStreamInfo("video", self.streamInfo)
+		
+		# Set Listitem Fanart Image
+		if self.fanartImg: self.setProperty("fanart_image", self.fanartImg)
+		else: self.setProperty("fanart_image", self._fanartImage)
+		
+		if isPlayable is True:
+			# Change XBMC Propertys to mark as Playable
+			self.setProperty("isplayable","true")
+			self.setProperty("video","true")
 			
-			isPlayable: boolean - (True/False) - Lets XBMC know if listitem is a playable source - Default=False
-			infoType: string - (video/music/pictures) - Lets XBMC know the type of content been listed - Default="video"
-		"""
-		def wrapped(self, isPlayable=False, infoType="video"):
-			# If markers are not set, set sections
-			if not self.isPlayableSet: self.setIsPlayable(isPlayable)
-			if not self.isFanartSet: self.setFanartImage()
-			if not self.isIconSet: self.setIconImage()
-			# Set info, steam into and path where available
-			if self.infoLabels: self.setInfo(infoType, self.infoLabels)
-			if self.streamInfo: self.addStreamInfo(infoType, self.streamInfo)
-			self.path = self.getPath()
+			# Add title to urlParams for the Download title
+			urlParams["title"] = infoLabels["title"].encode("ascii","ignore")
+			
+			# If not a live video then add Download option in context menu
+			path = "%s?%s" % (self._handleZero, self._urlencode(urlParams))
+			if not "live" in urlParams: self.contextMenu.append(("$LOCALIZE[33003]", "XBMC.RunPlugin(%s&download=true)" % path))
+			
+			# Set XBMC icon image
+			if self.icon: self._selfObject.setIconImage(self, self.icon)
+			else: self._selfObject.setIconImage(self, "DefaultVideo.png")
+			
 			# Add context menu items
-			if not self.isFolder and not "live" in self.urlParams: self.addContextMenuItem(self._stringDownload, "XBMC.RunPlugin(%s&download=true)" % (self.path))
-			self.addContextMenuItems(self.contextMenu + self._staticMenu[self.isFolder], replaceItems=not isPlayable)
-			# Call Decorated Function ad return it response
-			return function(self)
-		return wrapped
-	
-	@finalize
-	def getListitemTuple(self):
-		""" Returns a tuple of listitem properties, (path, _listitem, isFolder) """
-		return self.path, self, self.isFolder
-	
-	@finalize
-	def getListitem(self):
-		""" Returns the wrapped xbmcgui.ListItem """
-		return self
+			self.addContextMenuItems(self.contextMenu + self._videoMenu, replaceItems=False)
+			
+			# Return Tuple of url, listitem, isFolder
+			return (path, self, False)
+		
+		else:
+			# Change XBMC Propertys to mark as Folder
+			self.setProperty("isplayable","false")
+			self.setProperty("video","true")
+			
+			# Set XBMC icon image
+			if self.icon: self._selfObject.setIconImage(self, self.icon)
+			else: self._selfObject.setIconImage(self, "DefaultFolder.png")
+			
+			# Add context menu items
+			self.addContextMenuItems(self.contextMenu + self._folderMenu, replaceItems=True)
+			
+			# Return Tuple of url, listitem, isFolder
+			return ("%s?%s" % (self._handleZero, self._urlencode(urlParams)), self, True)
 	
 	@classmethod
-	def add_item(cls, label=None, label2=None, icon=None, thumbnail=None, url={}, info={}, isPlayable=False, infoType="video"):
+	def add_item(cls, label=None, icon=None, thumbnail=None, url={}, info={}, isPlayable=False):
 		""" A Listitem constructor for creating a XBMC listitem object
 			
 			label: string - Title of listitem
-			label2: string - Secondary lable of listitem
 			icon: string - Image for listitem icon
 			thumbnail: list/tuple - (image/0) Thumbnail Image for listitem / Image location identifier
 			url: dict - Dictionary containing url params to control addon
 			info: dict - Dictionary containing information about video 
 			isPlayable: boolean - (True/False) - Lets XBMC know if listitem is a playable source - Default=False
-			infoType: string - (video/music/pictures) - Lets XBMC know the type of content been listed - Default="video"
 		"""
 		listitem = cls()
 		if label: listitem.setLabel(label)
-		if label2: listitem.setLabel2(label2)
-		if icon: listitem.setIconImage(icon)
+		if icon: listitem.icon = icon
 		if thumbnail: listitem.setThumbnailImage(*thumbnail)
 		if url: listitem.urlParams.update(url)
 		if info: listitem.infoLabels.update(info)
-		return listitem.getListitemTuple(isPlayable, infoType)
+		return listitem.getListitemTuple(isPlayable)
 	
 	@classmethod
-	def add_next_page(cls, url={}, infoType="video"):
+	def add_next_page(cls, url={}):
 		""" A Listitem constructor for Next Page Item
 			
 			url: dict - Dictionary containing url params to control addon
-			infoType: string - (video/music/pictures) - Lets XBMC know the type of content been listed - Default="video"
 		"""
-		nextCount = int(cls._plugin.get("NextPageCount",1)) + 1
+		nextCount = int(cls._plugin.get("nextpagecount",1)) + 1
 		if not "action" in url and "action" in cls._plugin: url["action"] = cls._plugin["action"]
-		url["NextPageCount"] = nextCount
+		url["nextpagecount"] = nextCount
 		url["updatelisting"] = "true"
-		label = u"%s %i" % (cls._plugin.getuni(33078), nextCount)
-		return cls.add_item(label, thumbnail=(u"next.png", 2), url=url, infoType=infoType)
+		label = u"%s %i" % (cls._plugin.getuni(33078), nextCount) # 33078 = Next Page
+		listitem = cls()
+		listitem.setLabel(label)
+		listitem.setThumbnailImage(u"next.png", 2)
+		listitem.urlParams.update(url)
+		return listitem.getListitemTuple(False)
 	
 	@classmethod
-	def add_search(cls, forwarding, url, label=u"-Search"):
+	def add_search(cls, forwarding, url, label=None):
 		""" A Listitem constructor to add Saved Search Support to addon
 			
 			forwarding: string - Addon Action to farward on to
 			url: string - Base url to combine with search term
 			label: string - Lable of Listitem
 		"""
-		return cls.add_item(label, thumbnail=(u"search.png", 2), url={"action":"system.search", "forwarding":forwarding, "url":url})
+		listitem = cls()
+		if label: listitem.setLabel(label)
+		else: listitem.setLabel(u"-%s" % cls._plugin.getuni(137)) # 137 = Search
+		listitem.setThumbnailImage(u"search.png", 2)
+		listitem.urlParams.update({"action":"system.search", "forwarding":forwarding, "url":url})
+		return listitem.getListitemTuple(False)
 	
 	@classmethod
-	def add_youtube_channel(cls, channelID, label=None, hasPlaylist=False):
+	def add_youtube_channel(cls, channelID, label=None, hasPlaylist=False, hasHD=None):
 		""" A Listitem constructor to add a youtube channel to addon
 			
 			channelID: string - Youtube channel ID to add
 			label: string - Title of listitem - default (-Youtube Channel)
 			hasPlaylist: boolean - True/False if channel ID contains any playlists - default (False) - (soon to be obsolete)
 		"""
-		if label is None: label = u"-" + cls._plugin.getuni(32963)
-		return cls.add_item(label, thumbnail=(u"youtube.png", 2), url={"action":"system.videohosts.YTChannelUploads", "url":channelID, "hasPlaylists":unicode(hasPlaylist).lower()})
+		listitem = cls()
+		if label: listitem.setLabel(label)
+		else: listitem.setLabel(u"-" + cls._plugin.getuni(32901)) # 32901 = Youtube Channel
+		listitem.setThumbnailImage(u"youtube.png", 2)
+		listitem.urlParams.update({"action":"system.videohosts.YTChannelUploads", "url":channelID, "hasplaylists":str(hasPlaylist).lower(), "hashd":str(hasHD).lower()})
+		return listitem.getListitemTuple(False)
 	
 	@classmethod
-	def add_youtube_playlist(cls, playlistID, label=None):
+	def add_youtube_playlist(cls, playlistID, label=None, hasHD=None):
 		""" A Listitem constructor to add a youtube playlist to addon 
 			
 			playlistID: string - Youtube playlist ID to add
 			label: string - Title of listitem - default (-Youtube Playlist)
 		"""
-		if label is None: label = u"-" + cls._plugin.getuni(32964)
-		return cls.add_item(label, icon="DefaultVideoPlaylists.png", thumbnail=(u"youtubeplaylist.png", 2), url={"action":"system.videohosts.YTPlaylistVideos", "url":playlistID})
+		listitem = cls()
+		if label: listitem.setLabel(label)
+		else: listitem.setLabel(u"-" + cls._plugin.getuni(32902)) # 32902 = Youtube Playlist
+		listitem.icon = "DefaultVideoPlaylists.png"
+		listitem.setThumbnailImage(u"youtubeplaylist.png", 2)
+		listitem.urlParams.update({"action":"system.videohosts.YTPlaylistVideos", "url":playlistID, "hashd":str(hasHD).lower()})
+		return listitem.getListitemTuple(False)
 	
 	@classmethod
-	def add_youtube_playlists(cls, channelID, label=None):
+	def add_youtube_playlists(cls, channelID, label=None, hasHD=None):
 		""" A Listitem constructor to add a youtube playlist to addon 
 			
 			channelID: string - Youtube channel ID to list playlists from
 			label: string - Title of listitem - default (-Youtube Playlist)
 		"""
-		if label is None: label = u"-" + cls._plugin.getuni(32965)
-		return cls.add_item(label, icon="DefaultVideoPlaylists.png", thumbnail=(u"youtubeplaylist.png", 2), url={"action":"system.videohosts.YTChannelPlaylists", "url":channelID})
-	
-	@classmethod
-	def add_vimeo_user(cls, channelID, label=None):
-		""" A Listitem constructor to add a youtube channel to addon
-			
-			channelID: string - Youtube channel ID to add
-			label: string - Title of listitem - default (-Youtube Channel)
-			hasPlaylist: boolean - True/False if channel ID contains any playlists - default (False) - (soon to be obsolete)
-		"""
-		if label is None: label = u"-" + cls._plugin.getuni(32967)
-		return cls.add_item(label, thumbnail=(u"vimeo.png", 2), url={"action":"system.videohosts.VUserVideos", "url":channelID})
+		listitem = cls()
+		if label: listitem.setLabel(label)
+		else: listitem.setLabel(u"-" + cls._plugin.getuni(32903)) # 32903 = Youtube Playlists
+		listitem.icon = "DefaultVideoPlaylists.png"
+		listitem.setThumbnailImage(u"youtubeplaylist.png", 2)
+		listitem.urlParams.update({"action":"system.videohosts.YTChannelPlaylists", "url":channelID, "hashd":str(hasHD).lower()})
+		return listitem.getListitemTuple(False)
 
 class VirtualFS(object):
 	""" Wrapper for XBMC Virtual Directory Listings """
@@ -413,30 +351,33 @@ class VirtualFS(object):
 			self.cacheToDisc = True
 		
 		# Start Scraper Script
+		self.extraItems = []
 		self.add_item = self.item_add(self._listitem.add_item)
 		self.add_next_page = self.item_add(self._listitem.add_next_page)
 		self.add_search = self.item_add(self._listitem.add_search)
 		self.add_youtube_channel = self.item_add(self._listitem.add_youtube_channel)
 		self.add_youtube_playlist = self.item_add(self._listitem.add_youtube_playlist)
 		self.add_youtube_playlists = self.item_add(self._listitem.add_youtube_playlists)
-		self.add_vimeo_user = self.item_add(self._listitem.add_vimeo_user)
 		
-		# If a directory listings exists then add to XBMC and Finalize
-		#start = time.time()
+		# Add Listitems to xbmc
 		listitems = self.scraper()
-		#self._plugin.log("Elapsed Time: %s" % (time.time() - start))
-		if listitems and listitems is not True: self.add_dir_items(listitems)
+		extraItems = self.extraItems
+		if isinstance(listitems, list): extraItems.extend(listitems)
+		if extraItems: self.add_dir_items(extraItems)
+		
+		# Finalize the script
 		self.finalize(bool(listitems), self.updateListing, self.cacheToDisc)
+		self.cleanup()
 	
 	def item_add(self, function):
 		# Wrap Listitem classmethods to redirect the output to add_dir_item
 		@functools.wraps(function)
-		def wrapped(*args, **kwargs): self.add_dir_item(function(*args, **kwargs))
+		def wrapped(*args, **kwargs): self.extraItems.append(function(*args, **kwargs))
 		return wrapped
 	
 	def add_dir_item(self, listitem):
 		""" Add Directory List Item to XBMC """
-		self._plugin.xbmcplugin.addDirectoryItem(self._handleOne, *listitem)
+		self.extraItems.append(listitem)
 	
 	def add_dir_items(self, listitems):
 		""" Add Directory List Items to XBMC """
@@ -454,19 +395,36 @@ class VirtualFS(object):
 	
 	def finalize(self, succeeded=True, updateListing=False, cacheToDisc=False):
 		""" Make the end of directory listings """
-		if succeeded and self.viewID: self._plugin.setviewMode(self.viewID)
+		if succeeded and self.viewID: self._plugin.executebuiltin("Container.SetViewMode(%d)" % self.viewID)
 		self._plugin.xbmcplugin.setPluginFanart(self._handleOne, self._listitem._fanartImage)
 		self._plugin.xbmcplugin.endOfDirectory(self._handleOne, succeeded, updateListing, cacheToDisc)
+	
+	def scraper_speed_check(self):
+		try:
+			start = time.time()
+			return self.scraper()
+		finally:
+			self._plugin.info("Elapsed Time: %s" % (time.time() - start))
+	
+	def cleanup(self):
+		currentTime = time.time()
+		try: lastTime = float(plugin.getSetting("lastcleanup")) + 2419200
+		except ValueError: lastTime = 0
+		if lastTime < currentTime:
+			plugin.debug("Initiating Cache Cleanup")
+			import urlhandler
+			try: urlhandler.CachedResponse.cleanup(604800)
+			except: plugin.error("Cache Cleanup Failed")
+			else: plugin.setSetting("lastcleanup", str(currentTime))
 
 class PlayMedia(object):
 	""" Class to handle the resolving and playing of video url """
 	_plugin = plugin
-	_videoData = _plugin._Params
-	_quotePlus = urllib.quote_plus
+	_quotePlus = _plugin.urllib.quote_plus
 	def __init__(self):
 		# Fetch Common Vars
-		downloadRequested = self._videoData.get("download") == u"true"
-		vaildFilename = self.validate_filename(self._videoData["title"])
+		downloadRequested = self._plugin.get("download") == u"true"
+		vaildFilename = self.validate_filename(self._plugin["title"])
 		downloadPath = self._plugin.getSetting("downloadpath")
 		
 		# Check if Video has already been downlaoded
@@ -474,7 +432,7 @@ class PlayMedia(object):
 		else: downloads = None
 		
 		# Select witch Video Resolver to use
-		if downloads: self._videoData["url"] = downloads
+		if downloads: self._plugin["url"] = downloads
 		elif self.video_resolver() is not True: return None
 		self.process_video(downloadRequested, downloadPath, vaildFilename)
 		
@@ -509,10 +467,10 @@ class PlayMedia(object):
 			# Resolve Video Url using Plugin Resolver
 			resolvedData = self.resolve()
 			if resolvedData and isinstance(resolvedData, dict):
-				self._videoData.update(resolvedData)
+				self._plugin.update(resolvedData)
 				return True
 			elif resolvedData:
-				self._videoData["url"] = resolvedData
+				self._plugin["url"] = resolvedData
 				return True
 		else:
 			# Resolve Video Url using Video Hosts sources
@@ -521,22 +479,27 @@ class PlayMedia(object):
 			elif subaction == u"source":
 				resolvedData = self._plugin.error_handler(self.sources)()
 				if resolvedData and isinstance(resolvedData, dict):
-					self._videoData.update(resolvedData)
+					self._plugin.update(resolvedData)
 					return True
 				elif resolvedData:
-					self._videoData["url"] = resolvedData
+					self._plugin["url"] = resolvedData
 					return True
 	
-	def sources(self, url=None, urls=None):
+	def sources(self, url=None, urls=None, sourcetype=None):
 		# Import Video Resolver
 		import videoResolver
-		if url is None: url = self._videoData["url"]
+		if url is None: url = self._plugin["url"]
 		
 		# Call Specified Source Decoder if Set
-		if "sourcetype" in self._videoData:
+		sourcetype = self._plugin.get("sourcetype", sourcetype)
+		if sourcetype and hasattr(videoResolver, sourcetype.lower()):
 			# Fetch Specified Class
-			classObject = getattr(videoResolver, self._videoData["sourcetype"].lower())()
+			classObject = getattr(videoResolver, sourcetype.lower())()
 			return classObject.decode(url)
+		elif sourcetype:
+			# Use urlresolver to fetch video url 
+			import urlresolver
+			return {"url": urlresolver.HostedMediaFile(url, sourcetype.replace(u"_",u".").lower()).resolve()}
 		else:
 			# Parse WebPage and Find Video Sources
 			sources = videoResolver.VideoParser()
@@ -550,15 +513,25 @@ class PlayMedia(object):
 				except self._plugin.videoResolver: pass
 				except self._plugin.URLError: pass
 			
+			# Failed to find a playable video using my own parser, Not trying urlResolver
+			try: import urlresolver
+			except ImportError: pass
+			else:
+				for url in sources.sourceUrls:
+					urlObj = urlresolver.HostedMediaFile(url)
+					if urlObj:
+						mediaUrl = urlObj.resolve()
+						if mediaUrl: return {"url":mediaUrl}
+			
 			# Unable to Resolve Video Source
-			raise self._plugin.videoResolver(33077, "Was unable to Find Video Url for: %s" % repr(sources.get()))
+			raise self._plugin.videoResolver(self._plugin.getstr(33077), "Was unable to Find Video Url for: %s" % repr(sources.get()))
 	
 	def process_video(self, downloadRequested, downloadPath, vaildFilename):
 		# Fetch Video Url / List and Create Listitem
 		listitemObj = self._plugin.xbmcgui.ListItem
-		videoTitle = self._videoData["title"].encode("utf8")
+		videoTitle = self._plugin["title"].encode("utf8")
 		vaildFilename = vaildFilename.encode("utf8")
-		videoUrl = self._videoData["url"]
+		videoUrl = self._plugin["url"]
 		
 		# Add Each url to a Playlist
 		isIterable = hasattr(videoUrl, "__iter__")
@@ -583,8 +556,8 @@ class PlayMedia(object):
 						listitem.setLabel(videoTitle % count)
 					
 					# Add Content Type and urlpath to listitem
-					if "type" in self._videoData: listitem.setMimeType(self._videoData["type"])
-					url = self.add_header_pips(url, self._videoData.get("useragent"), self._videoData.get("referer"))
+					if "type" in self._plugin: listitem.setMimeType(self._plugin["type"])
+					url = self.add_header_pips(url, self._plugin.get("useragent"), self._plugin.get("referer"))
 					listitem.setPath(url)
 					prepappend((url, listitem, False))
 			
@@ -593,8 +566,10 @@ class PlayMedia(object):
 				downloader.add_batch_job(prepList)
 			else:
 				# Create Playlist and add items
-				playlist = Playlist(1)
-				playlist.add_iter(prepList)
+				playlist = self._plugin.xbmc.PlayList(1)
+				playlist.clear()
+				for url, listitem, isfolder in prepList:
+					if isfolder is False: playlist.add(url, listitem)
 				
 				# Resolve to first element of playlist
 				self.set_resolved_url(prepList[0][1])
@@ -611,11 +586,11 @@ class PlayMedia(object):
 				downloader.add_job(videoUrl, vaildFilename, videoTitle)
 			else:
 				# Add Content Type and Header Pips if any
-				if "item" in self._videoData: listitem = self._videoData["item"]
+				if "item" in self._plugin: listitem = self._plugin["item"]
 				else: listitem = listitemObj()
 				
-				if "type" in self._videoData: listitem.setMimeType(self._videoData["type"])
-				listitem.setPath(self.add_header_pips(videoUrl, self._videoData.get("useragent"), self._videoData.get("referer")))
+				if "type" in self._plugin: listitem.setMimeType(self._plugin["type"])
+				listitem.setPath(self.add_header_pips(videoUrl, self._plugin.get("useragent"), self._plugin.get("referer")))
 				self.set_resolved_url(listitem)
 	
 	def add_header_pips(self, url, useragent, referer):
@@ -663,7 +638,7 @@ class DownloadMGR(object):
 	
 	def get_download_path(self):
 		""" Asks for Download Path """
-		downloadPath = self._plugin.browseSingle(3, self._plugin.getuni(32933), u"video", u"", False, False, "")
+		downloadPath = self._plugin.browseSingle(3, self._plugin.getuni(33010), u"video", u"", False, False, "") # 33010 = Set Download Directory
 		if downloadPath: self._plugin.setSetting("downloadpath", downloadPath)
 		return downloadPath
 	
@@ -676,7 +651,7 @@ class DownloadMGR(object):
 	
 	def add_job(self, url, filename, title=None):
 		# Check if url is a Plugin instead of a video Url
-		if url.startswith("plugin:"): return self._plugin.executePlugin(url)
+		if url.startswith("plugin:"): return self._plugin.executebuiltin("XBMC.RunPlugin(%s)" % url)
 		elif not self.params["download_path"]: return None
 		else:
 			# Guess Full Filename
