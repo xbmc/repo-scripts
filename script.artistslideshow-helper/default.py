@@ -3,7 +3,9 @@
 # *  original Artist Slideshow Helper code by pkscuot
 # *
 
+from __future__ import division
 import xbmc, xbmcaddon, xbmcvfs
+from xbmcgui import DialogProgressBG
 import os, sys
 if sys.version_info >= (2, 7):
     import json as _json
@@ -31,8 +33,6 @@ lw = Logger( preamble=__preamble__, logdebug=__logdebug__ )
 
 class Main:
     def __init__( self ):
-        command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30300)), smartUTF8(__language__(30301)), 5000, smartUTF8(__addonicon__))
-        xbmc.executebuiltin(command)
         self._init_vars()
         self._get_settings()
         self._make_dirs()
@@ -59,17 +59,17 @@ class Main:
            hashmap_str = hashmap_str + value + '\t' + key + '\n'
         success, log_line = writeFile( hashmap_str, self.HASHLISTFILE )
         if success:
-            message = __language__(30311)
             lw.log( log_line )
+            message = smartUTF8( __language__(30311) )
         else:
-            message = __language__(30312)
             lw.log( ['unable to write has list file out to disk'] )
-        command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30310)), smartUTF8(message), 5000, smartUTF8(__addonicon__))
-        xbmc.executebuiltin(command)
+            message = smartUTF8( __language__(30312) )
 
 
     def _get_artists_hashmap( self ):
         #gets a list of all the artists from XBMC
+        pDialog = DialogProgressBG()
+        pDialog.create( smartUTF8(__language__(32001)), smartUTF8(__language__(30301)) )
         hashmap = _ordereddict()
         response = xbmc.executeJSONRPC ( '{"jsonrpc":"2.0", "method":"AudioLibrary.GetArtists", "params":{"albumartistsonly":false, "sort":{"order":"ascending", "ignorearticle":true, "method":"artist"}},"id": 1}}' )
         try:
@@ -80,10 +80,15 @@ class Main:
             lw.log( ['unexpected error getting JSON back from XBMC', e] )
             artists_info = []
         if artists_info:
+            total = len( artists_info )
+            count = 1
             for artist_info in artists_info:
             	artist_hash = itemHash( artist_info['artist'] )
                 hashmap[artist_hash] = artist_info['artist']
+                pDialog.update(int(100*(count/total)), smartUTF8( __language__(32001) ), smartUTF8( artist_info['artist'] ) )
+                count += 1
             hashmap[itemHash( "Various Artists" )] = "Various Artists" 
+        pDialog.close()
         return hashmap
 
 
@@ -137,14 +142,17 @@ class Main:
         test_str = ''
         hashmap = self._get_artists_hashmap()
         try:
-            os.chdir( self.ASCACHEFOLDER )
-            folders = os.listdir( self.ASCACHEFOLDER )
+            folders, throwaway = xbmcvfs.listdir( self.ASCACHEFOLDER )
         except OSError:
             lw.log( ['no directory found: ' + self.ASCACHEFOLDER] )
             return
         except Exception, e:
             lw.log( ['unexpected error while getting directory list', e] )
             return
+        pDialog = DialogProgressBG()
+        pDialog.create( smartUTF8(__language__(32003)), smartUTF8(__language__(30301)) )
+        total = len( folders )
+        count = 1
         for folder in folders:
             try:
                 artist_name = hashmap[folder]
@@ -155,14 +163,14 @@ class Main:
                 lw.log( ['unexpected error while finding matching artist for ' + folder, e] )
                 artist_name = ''
             if artist_name and not (artist_name.find('/') != -1):
+                pDialog.update(int(100*(count/total)), smartUTF8( __language__(32003) ), smartUTF8( artist_name ) )
                 old_folder = os.path.join( self.ASCACHEFOLDER, folder )
                 new_folder = os.path.join( self.MIGRATEFOLDER, artist_name, 'extrafanart' )
                 if self.MIGRATETYPE == 'copy' or self.MIGRATETYPE == 'move':
                     exists, loglines = checkPath( new_folder )
                     lw.log( loglines )
                 try:
-                    os.chdir( old_folder )
-                    files = os.listdir( old_folder )
+                    throwaway, files = xbmcvfs.listdir( old_folder )
                 except OSError:
                     lw.log( ['no directory found: ' + old_folder] )
                     return
@@ -174,22 +182,25 @@ class Main:
                     old_file = os.path.join(old_folder, file)
                     new_file = os.path.join(new_folder, file)
                     if self.MIGRATETYPE == 'move':
-                        xbmcvfs.rename( old_file, new_file  )
+                        xbmcvfs.copy( old_file, new_file  )
+                        xbmcvfs.delete( old_file )
                     elif self.MIGRATETYPE == 'copy':                
                         xbmcvfs.copy( old_file, new_file )
                     else:
                         test_str = test_str + old_file + ' to ' + new_file + '\n'
                 if self.MIGRATETYPE == 'move':
                     xbmcvfs.rmdir ( old_folder )
+                count += 1
         if self.MIGRATETYPE == 'test':
             success, loglines = writeFile( test_str, os.path.join( self.MIGRATEFOLDER, '_migrationtest.txt' ) )
             lw.log( loglines )
-        command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30330)), smartUTF8(__language__(30331)), 5000, smartUTF8(__addonicon__))
-        xbmc.executebuiltin( command )
+        pDialog.close()
 
 
 if ( __name__ == "__main__" ):
     lw.log( ['script version %s started' % __addonversion__], xbmc.LOGNOTICE )
     lw.log( ['debug logging set to %s' % __logdebug__], xbmc.LOGNOTICE )
     Main()
+    command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30330)), smartUTF8(__language__(30331)), 3000, smartUTF8(__addonicon__))
+    xbmc.executebuiltin( command )
 lw.log( ['script stopped'], xbmc.LOGNOTICE )
