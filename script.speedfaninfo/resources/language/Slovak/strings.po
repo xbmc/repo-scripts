@@ -1,0 +1,57 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Slovak (http://www.transifex.com/projects/p/xbmc-addons/language/sk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Všeobecné"
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr "Povoliť podrobné informácie"
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr "Ukladať teplotnú škálu"
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr "Aktualizačný interval okna (v sekundách)"
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr "Použiť kompaktné zobrazenie"
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr "Priehľadnosť pozadia"
+
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr "Informácie o teplote"
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr "Informácie o rýchlosti ventilátora"
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr "Informácie o napätí"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Začať ukladať informácie / debug log"
