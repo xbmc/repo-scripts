@@ -1,0 +1,44 @@
+Version 0.7.6
+        * Updated transmissionrpc library to 0.11, including a patch for gzipped http responses
+        * Fixed an issue listing torrents
+        * Fixed an issue with the addon not terminating properly
+        * Addressed a usability issue with the torrent detail screen
+        * Added German language support (submitted by Alexander Dormann <alexdo@alexdo.de>)
+Version 0.7.5
+        * Updated to support XBMC Gotham
+        * Added proxy failover support to Pirate Bay search
+        * Removed broken TorrentReactor search
+        * Added KickassTorrents search
+        * Fixed localization of strings in the main window
+Version 0.7.1
+	* Added Apple TV remote MENU key support to close dialogs
+		(submitted by Filipe Pina <fopina@skmobi.com>)
+	* Removed btjunkie.org search
+	* Updated The Pirate Bay search to use the new hostname and magnet links
+Version 0.7.0
+	* Updated to support XBMC Eden
+	* Added progress bars to the torrent list screen
+	* Added status icons to the torrent list screen
+Version 0.6.2
+	* Updated transmissionrpc library to 0.8 (Now supports Transmission 2.40+)
+Version 0.6.1
+	* Add torrent button now supports various search sites as well as adding
+	  locally downloaded .torrent files
+Version 0.6.0
+	* Added icons to buttons (submitted by aivs@yandex.ru)
+	* Added Russian language support (submitted by aivs@yandex.ru)
+	* Added Catalan language support (submitted by Carles F. Julià <chaos.ct@gmail.com>)
+	* Fixed adding torrents when the client is not on the same machine as the server
+	* Disabled the torrent list when empty to avoid confusion
+	* Improved connection error handling
+	* Updated transmissionrpc library to 0.7
+Version 0.5.2
+	* Added error handling on connection failure
+	* Added a torrent detail view for viewing the progress of individual files
+	* Added Hungarian language support (submitted by alanwww1@gmail.com)
+	* New icon (submitted by freezy@xboxmediacenter.com)
+Version 0.5.1
+    * Cleaned up for inclusion in the XBMC addon repository
+    * Added Korean language support (submitted by kmp93 on the XBMC forum)
+Version 0.5.0
+    * Initial release
