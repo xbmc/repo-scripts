@@ -2,7 +2,6 @@
 # Copyright, 2010, Guilherme Jardim.
 # This program is distributed under the terms of the GNU General Public License, version 3.
 # http://www.gnu.org/licenses/gpl.txt
-# Rev. 2.1.3
 
 def module_exists(module_name):
     try:
@@ -31,7 +30,7 @@ else:
 # Service variables
 sub_ext = 'srt aas ssa sub smi'
 global regex_1, regex_2, regex_3
-regex_1 = "<div class=\"f_left\"><p><a href=\"([^\"]*)\">([^<]*)</a></p><p class=\"data\">.*?downloads, nota (\d*?),.*?<img .*? title=\"([^\"]*)\" /></div>"
+regex_1 = "<div class=\"([^\"]*?)\">\s*?<span class=\"number .*?<div class=\"f_left\"><p><a href=\"([^\"]*)\">([^<]*)</a></p><p class=\"data\">.*?downloads, nota (\d*?),.*?<img .*? title=\"([^\"]*)\" /></div>"
 regex_2 = "class=\"load_more\""
 regex_3 = "<button class=\"icon_arrow\" onclick=\"window.open\(\'([^\']*?)\', \'_self\'\)\">DOWNLOAD</button>"
 
@@ -296,11 +295,12 @@ class LegendasTV:
         else:
             for x, content in enumerate(re.findall(regex_1, Response, re.IGNORECASE | re.DOTALL), start=1):
                 LanguageName, LanguageFlag, LanguagePreference = "", "", 0
-                download_id = "%s%s" % ("http://minister.legendas.tv", content[0])
-                title = normalizeString(content[1])
-                release = normalizeString(content[1])
-                rating =  content[2]
-                lang = normalizeString(content[3])
+                download_id = "%s%s" % ("http://minister.legendas.tv", content[1])
+                release_type = content[0] if not content[0] == "" else "normal"
+                title = normalizeString(content[2])
+                release = normalizeString(content[2])
+                rating =  content[3]
+                lang = normalizeString(content[4])
                 if re.search("Portugues-BR", lang):   LanguageId = "pb" 
                 elif re.search("Portugues-PT", lang): LanguageId = "pt"
                 elif re.search("Ingles", lang):       LanguageId = "en" 
@@ -328,7 +328,8 @@ class LegendasTV:
                                               "sync": False,
                                               "rating":rating,
                                               "language_flag": LanguageFlag,
-                                              "language_preference": int(LanguagePreference) })
+                                              "language_preference": int(LanguagePreference),
+                                              "type" : release_type})
 
             self.Log("Message: Retrieved [%s] results for page [%s], Movie[%s], Id[%s]." % (x, Page, MainID["title"], MainID["id"]))
                 
@@ -397,9 +398,11 @@ class LegendasTV:
         if TVShow:
             Episodes, Packs = [], [] 
             for DownloadsResult in self.DownloadsResults:
-                if re.search("\(PACK", DownloadsResult["filename"]):
-                    DownloadsResult["filename"] = re.sub("\(PACK[^\)]*?\)", "", DownloadsResult["filename"])
-                if re.search("(^|\s|[.])[Ss]%.2d(\.|\s|$)" % int(Season), DownloadsResult["filename"]):
+                if DownloadsResult["type"] == "pack":
+                    if re.search("\(PACK", DownloadsResult["filename"]):
+                        DownloadsResult["filename"] = re.sub("\(PACK[^\)]*?\)", "", DownloadsResult["filename"])
+                    if re.search("\([Pp]\)", DownloadsResult["filename"]):
+                        DownloadsResult["filename"] = re.sub("\([Pp]\)", "", DownloadsResult["filename"])
                     DownloadsResult["filename"] = "(PACK) " + DownloadsResult["filename"]
                     Packs.append(DownloadsResult) 
                 elif re.search("[Ss]%.2d[Ee]%.2d" % (int(Season), int(Episode)), DownloadsResult["filename"]):
@@ -417,9 +420,9 @@ class LegendasTV:
         # # Log final results
         self.Log(" ")
         self.Log("Included results:")
-        self._log_List_dict(IncludedResults, "filename language_name language_preference ID")
+        self._log_List_dict(IncludedResults, "filename language_name language_preference type")
         self.Log("Excluded results:") 
-        self._log_List_dict(ExcludedResult, "filename language_name language_preference ID")
-        self.Log("Message: The service took %s seconds to complete." % (time.time() - startTime))
+        self._log_List_dict(ExcludedResult, "filename language_name language_preference type")
+        self.Log("Message: The service took %0.2f seconds to complete." % (time.time() - startTime))
         # Return results
         return IncludedResults

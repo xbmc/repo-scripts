@@ -1,3 +1,6 @@
+2.2.3
+- Change the way pack's are detected
+
 2.2.2
 - Fix a bug with stream sites not parsing a valid filename (thanks to Mafarricos)
 
