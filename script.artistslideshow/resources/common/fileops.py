@@ -1,12 +1,18 @@
-# v.0.3.2
+# v.0.3.3
 
-import os
 try:
-    import xbmcvfs.mkdirs as _mkdirs
-    import xbmcvfs.exists as _exists
-    import xbmcvfs.delete as _delete
-    import xbmcvfs.File as _file
+    import xbmcvfs
+    isXBMC = True
 except:
+    import os
+    isXBMC= False
+
+if isXBMC:
+    _mkdirs = xbmcvfs.mkdirs
+    _exists = xbmcvfs.exists
+    _delete = xbmcvfs.delete
+    _file = xbmcvfs.File
+else:
     _mkdirs = os.makedirs
     _exists = os.path.exists
     _delete = os.remove

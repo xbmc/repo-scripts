@@ -1,3 +1,8 @@
+v.1.6.8
+- fix for crash when using smb path
+- cleaned up startup process to better deal with script being started twice
+- added new window property Artistslideshow.ArtworkReady (true if artwork available)
+
 v.1.6.7
 - fix for required xbmc python version
 
