@@ -124,6 +124,10 @@ msgctxt "#32105"
 msgid "ABORTED due to fetch failures"
 msgstr "ABORTADO por fallos en la descarga"
 
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "La actualización ha fallado (se intentará más tarde)"
+
 msgctxt "#32201"
 msgid "Returning Series"
 msgstr "Series que vuelven"

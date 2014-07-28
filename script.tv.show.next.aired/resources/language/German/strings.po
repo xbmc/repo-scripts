@@ -92,6 +92,10 @@ msgctxt "#32016"
 msgid "Start the TV Guide week based on Today instead of Monday"
 msgstr "Beginne die TV Guide Woche heute anstatt Montag"
 
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "\"Gestern\" im \"Heute\"-TV-Guide anzeigen."
+
 msgctxt "#32018"
 msgid "Yesterday"
 msgstr "Gestern"
@@ -115,6 +119,14 @@ msgstr "ABGEBROCHEN"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Operation vom Benutzer abgebrochen."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "ABGEBROCHEN wegen Abruffehlern"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Das Update ist fehlgeschlagen (wir probieren es später noch einmal)."
 
 msgctxt "#32201"
 msgid "Returning Series"

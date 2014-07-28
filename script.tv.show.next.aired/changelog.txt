@@ -1,3 +1,9 @@
+-6.0.11 (2014-07-27)
+- When fixing up missing artwork, we now also make use of thetvdb paths in the show data.
+- Added advanced options ExtraShows and OmitShows to the settings.
+- Some more tweaks to the adjunct data-viewing script, cal-server.
+- Updated language files from Transifex.
+
 -6.0.10 (2014-05-02)
 - Tweak service handling to avoid running the service on anything prior to 12.3.
 
@@ -15,6 +21,7 @@
 - Fix a crash issue with the "nice dates" when the long-date string contains unicode characters.
 - Due to a potential conflict in property names, the *-TVGuide2.xml day-name properties (NextAired.Today, NextAired.Yesterday, NextAired.Tomorrow) are now deprecated.  Use NextAired.TodayText, NextAired.YesterdayText, NextAired.TomorrowText instead.
 - To avoid any backend conflict with the property "NextAired.Today", there is now a property of "NextAired.AirsToday" that a skin should query going forward (the older value will still be supported for quite some time, but the newer value is safer).
+- Added an adjunct python script that can be used to view the next-aired data more fully: it starts up a web server on port 9999 and can output a variety of day lengths, profile combos, etc.
 - Updated language files from Transifex.
 
 -6.0.7 (2014-03-25)

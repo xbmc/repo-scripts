@@ -18,11 +18,11 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Get info for TV Shows Next Aired."
-msgstr "Otrzymaj informacje Następnie Granych Programach Telewizyjnych"
+msgstr "Informacje o Premierach Programów Telewizyjnych."
 
 msgctxt "Addon Description"
 msgid "Get info for TV Shows Next Aired. You'll never miss one again."
-msgstr "Otrzymaj informacje Następnie Granych Programach Telewizyjnych. Nigdy już żadnego nie przegapisz."
+msgstr "Informacje o Premierach Programów Telewizyjnych. Nigdy już żadnego nie przegapisz."
 
 msgctxt "#32000"
 msgid "Display"
@@ -30,27 +30,27 @@ msgstr "Ekran"
 
 msgctxt "#32001"
 msgid "Thumbnail type"
-msgstr "Rodzaj miniatur"
+msgstr "Rodzaj miniatury"
 
 msgctxt "#32002"
 msgid "Download banners (Artwork Downloader required)"
-msgstr "Ściągnij banery (wymaga Artwork Downloader)"
+msgstr "Pobieraj banery (wymaga wtyczki Artwork Downloader)"
 
 msgctxt "#32003"
 msgid "Download logos (Artwork Downloader required)"
-msgstr "Ściągnij loga (wymaga Artwork Downloader)"
+msgstr "Pobieraj loga (wymaga wtyczki Artwork Downloader)"
 
 msgctxt "#32004"
 msgid "Enable background fanart"
-msgstr "Włącz fanart tła"
+msgstr "Uzywaj tapetę w roli tła"
 
 msgctxt "#32005"
 msgid "Enable 16:9 preview thumbs"
-msgstr "Włącz podgląd miniatur 16:9"
+msgstr "Uzywaj miniatur 16:9"
 
 msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
-msgstr "Włącz podgląd miniatur 16:9 (wymaga Artwork Downloader)"
+msgstr "Pobieraj miniatur 16:9 (wymaga wtyczki Artwork Downloader)"
 
 msgctxt "#32007"
 msgid "Update the TV information now"
@@ -70,7 +70,7 @@ msgstr "Po wejściu do programu, jeśli dane są starsze niż [N] godzin "
 
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
-msgstr "Ściągnij plakaty (wymaga Artwork Downloader)"
+msgstr "Pobieraj plakaty (wymaga wtyczki Artwork Downloader)"
 
 msgctxt "#32012"
 msgid "**Reset all data** and update the TV information now"
@@ -78,7 +78,7 @@ msgstr "**Wyczyść wszystkie dane** i zaktualizuj informacje TV"
 
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
-msgstr "Pokaż wszystkie programy telewizyjne dla małego ekranu (wymaga wsparcia dla skór)"
+msgstr "Pokaż wszystkie programy telewizyjne dla małego ekranu (wymaga wsparcia skór)"
 
 msgctxt "#32014"
 msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
@@ -120,9 +120,17 @@ msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Operacja przerwana przez użytkownika."
 
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "PRZERWANE z powodu awarii pobierania"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Aktualizacja nie powiodła się (nastąpi ponownie)."
+
 msgctxt "#32201"
 msgid "Returning Series"
-msgstr "Powtórki Serii"
+msgstr "Porót Serii"
 
 msgctxt "#32202"
 msgid "Cancelled/Ended"
@@ -130,7 +138,7 @@ msgstr "Anulowane/Zakończone"
 
 msgctxt "#32203"
 msgid "TBD/On The Bubble"
-msgstr "Nieokreślony"
+msgstr "Zagrożony"
 
 msgctxt "#32204"
 msgid "In Development"

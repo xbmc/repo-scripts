@@ -64,6 +64,10 @@ msgctxt "#32009"
 msgid "In the background every [N] hours"
 msgstr "En segundo plano cada [N] horas"
 
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Ao entrar na guía, se os datos teñen máis de [N] horas"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Descargar pósters (Requírese un Descargador de Ilustracións)"
@@ -75,6 +79,18 @@ msgstr "**Restabelecer datos** e actualizar a información de TV agora"
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Amosar todas Series de TV na pantalla de inicio (precisa de tema compatíbel)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Usar o nome do día da semana e mes nas datas, no canto dos números (se o tema o precisa)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Número de días das próximas emisións a incluír na Guía de TV"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Iniciar a Guía de TV semanal Hoxe no canto do Luns"
 
 msgctxt "#32017"
 msgid "Include Yesterday in the Today-style TV Guide"
@@ -103,6 +119,14 @@ msgstr "CANCELADO"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Operación cancelada polo usuario."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "CANCELADO debido aos fallos na descarga"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Fallou a actualización (volveremos tentalo máis tarde)."
 
 msgctxt "#32201"
 msgid "Returning Series"

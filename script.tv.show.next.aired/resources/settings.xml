@@ -19,4 +19,7 @@
 	<setting type="lsep" label="32008"/>
 	<setting id="update_every" type="labelenum" label="32009" subsetting="true" values="off|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24" default="8"/>
 	<setting id="update_after" type="labelenum" label="32010" subsetting="true" values="off|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24" default="8"/>
+	<setting type="lsep" label="32020"/>
+	<setting id="ExtraShows" type="text" label="32021" default=""/>
+	<setting id="OmitShows" type="text" label="32022" default=""/>
 </settings>

@@ -104,7 +104,19 @@ msgctxt "#32019"
 msgid "TV Guide"
 msgstr ""
 
-#empty strings from id 32020 to 32100
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr ""
+
+#empty strings from id 32023 to 32100
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"

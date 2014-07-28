@@ -116,6 +116,10 @@ msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Действието е прекъснато от потребитля."
 
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Обновяването се провали (по-късно предстои втори опит)."
+
 msgctxt "#32201"
 msgid "Returning Series"
 msgstr "Завръщащ се сериал"

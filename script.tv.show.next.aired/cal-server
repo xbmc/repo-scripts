@@ -10,7 +10,8 @@
 #                   the NAMEs together.  Use '*" for the default profile (aka "").
 # /notprofile/NAME  Exclude all NAME profile(s) (repeatable).  Gives intersection.
 # /yesterday        Include yesterday's show's in the output.
-# /days/NUM         Output NUM days (counting today forward).  Defaults to 15.
+# /days=NUM         Output NUM days (counting today forward).  Defaults to 15.
+# /noempty          Skip the days without shows (e.g. /days=365/noempty).
 #
 # The script creates the cal-server.conf file on first run.  The user can feel
 # free to edit the colors therein, omit shows by adding the line: "omit": true,
@@ -46,6 +47,10 @@ COLORS = """
     white/Orchid PaleGoldenRod white/RoyalBlue ForestGreen white/SaddleBrown
     white/DarkSalmon Turquoise Yellow Thistle white/Violet Wheat Plum
     white/Pink white/DarkRed LawnGreen white/DarkGreen white/Red
+    white/MidnightBlue Aqua Aquamarine CadetBlue white/Brown DarkGray
+    white/DarkOliveGreen HotPink LightBlue LightCoral LightGreen
+    LightPink MediumOrchid MediumSpringGreen MediumSeaGreen Tan
+    white/Tomato
     """
 
 def main(argv):
@@ -94,17 +99,25 @@ class MyHandler(BaseHTTPRequestHandler):
                 want_profiles.append(profile)
 
         day_cnt = 15
-        days_regex = re.compile(r"/days/(\d+)")
+        days_regex = re.compile(r"/days[/=](\d+)")
         m = days_regex.search(req)
         if m:
             req = days_regex.sub('', req, 1)
             day_cnt = int(m.group(1))
 
-        if req == '/yesterday/':
+        want_yesterday = False
+        yest_regex = re.compile(r"/yesterday/")
+        if yest_regex.search(req):
+            req = yest_regex.sub('/', req)
             want_yesterday = True
-        elif req == '/':
-            want_yesterday = False
-        else:
+
+        want_empty_days = True
+        empty_regex = re.compile(r"/noempty/")
+        if empty_regex.search(req):
+            req = empty_regex.sub('/', req)
+            want_empty_days = False
+
+        if req != '/':
             s.send_response(404)
             s.send_header("Content-type", "text/plain")
             s.end_headers()
@@ -113,7 +126,9 @@ class MyHandler(BaseHTTPRequestHandler):
         data = read_repr(DATA_FILE)[0]
         opts = read_json(CONF_FILE)
         if opts is None:
-            opts = { 'colors': COLORS.split(), 'shows': {}, 'default_profile': '' }
+            colors = COLORS.split()
+            colors += [ c + ',DarkOrange' for c in colors ]
+            opts = { 'colors': colors, 'shows': {}, 'default_profile': '' }
             opts_changed = True
         else:
             opts_changed = False
@@ -145,6 +160,7 @@ class MyHandler(BaseHTTPRequestHandler):
                     want = False
                     break
             if want:
+                show['url'] = 'http://thetvdb.com/?tab=series&id=%s' % tid
                 for ep in show['episodes']:
                     if 'bump_mins' in show_opts:
                         ep['aired'] = re.sub(
@@ -164,6 +180,13 @@ class MyHandler(BaseHTTPRequestHandler):
 <title>cal-server</title>
 
 <style>
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
 table, td {
     border: 2px solid black;
     border-collapse: collapse;
@@ -206,9 +229,10 @@ setTimeout(function(){window.location.reload(true)}, 60000);
 <table><tr>
         """)
 
-        if not day_hash[day_list[0]]:
-            day_list.pop(0)
         for d in day_list:
+            if not want_empty_days and not day_hash[d]:
+                day_hash[d] = None
+                continue
             s.wfile.write('<th>')
             if d < today_str:
                 s.wfile.write('Yesterday')
@@ -224,6 +248,8 @@ setTimeout(function(){window.location.reload(true)}, 60000);
             empty = True
             row = "</tr><tr>\n"
             for d in day_list:
+                if day_hash[d] is None:
+                    continue
                 if len(day_hash[d]):
                     ep, show = day_hash[d].pop(0)
                     show_name = show['Show Name']
@@ -235,20 +261,40 @@ setTimeout(function(){window.location.reload(true)}, 60000);
                     if 'colors' in show_opts:
                         colors = show_opts['colors'].split('/')
                     else:
-                        colors = (opts['colors'].pop(0) if len(opts['colors']) else 'white').split('/')
+                        # Give a few shows complex sample colors, just to show what's possible.
+                        if re.match(r"doctor who", lc_show_name):
+                            colors = [ 'white', 'MidnightBlue,#666666,MidnightBlue,MidnightBlue,MidnightBlue' ]
+                        elif re.match(r"duck dynasty", lc_show_name):
+                            colors = [ 'white', 'DarkGoldenRod,DarkGreen,DarkGoldenRod,DarkGreen,DarkGoldenRod' ]
+                        elif re.match(r"beware the batman", lc_show_name):
+                            colors = [ 'white', 'to top right,#333355,Black,#333355,#333355,#333355,Black,#333355' ]
+                        elif re.match(r"masterchef", lc_show_name):
+                            colors = [ 'white', '45deg,#606dbc,#606dbc 10px,#465298 10px,#465298 20px' ]
+                        elif re.match(r"the colbert report", lc_show_name):
+                            colors = [ 'white', '135deg,ForestGreen,ForestGreen 3px,CornflowerBlue 3px,CornflowerBlue 6px' ]
+                        elif re.match(r"the daily show", lc_show_name):
+                            colors = [ 'Yellow', '45deg,CornflowerBlue,CornflowerBlue 3px,ForestGreen 3px, ForestGreen 6px' ]
+                        else:
+                            colors = (opts['colors'].pop(0) if len(opts['colors']) else 'white').split('/')
                         if len(colors) < 2:
                             colors.insert(0, 'black')
                         show_opts['colors'] = '/'.join(colors)
                         opts_changed = True
                     fgcolor, bgcolor = colors
-                    name_html = show_opts.get('alt', show_name)
+                    if bgcolor.find(',') < 0:
+                        bgstyle = 'background-color: %s' % bgcolor
+                    else:
+                        bgstyle = 'background: repeating-linear-gradient(%s)' % bgcolor
+                    name_html = '<a href="%s">%s</a>' % (show['url'], show_opts.get('alt', show_name))
                     name_html = re.sub(r"\s+\(([A-Z][A-Z]|\d\d\d\d)\)", r" <small><small>(\1)</small></small>", name_html)
                     runtime = ep.get('Runtime', show['Runtime'])
-                    row += "<td style='color: %s; background-color: %s'>" % (fgcolor, bgcolor)
-                    row += div('show', name_html);
+                    show_title = '%s (%s)' % (show['Network'], show['Country'])
+                    time_title = show['Airtime']
+                    row += "<td style='color: %s; %s'>" % (fgcolor, bgstyle)
+                    row += div('show', name_html, show_title)
                     row += div('nums', '%02dx%02d' % (ep['sn'], ep['en']))
                     row += div('title', ep['name'])
-                    row += div('runtime', "(<a title='%s'>%s&nbsp;mins</a>)" % (bgcolor, runtime))
+                    row += div('runtime', "(%s&nbsp;mins)" % runtime, time_title)
                     empty = False
                 else:
                     row += '<td>'
@@ -293,8 +339,13 @@ def write_json(data, filename):
     with open(filename, 'w') as fh:
         fh.write(data)
 
-def div(class_name, txt):
-    return "<div class='%s'>%s</div>\n" % (class_name, txt)
+def div(class_name, txt, title=None):
+    attr_str = ''
+    if class_name is not None:
+        attr_str += ' class="%s"' % class_name
+    if title is not None:
+        attr_str += ' title="%s"' % title
+    return "<div%s>%s</div>\n" % (attr_str, txt)
 
 if __name__ == '__main__':
     main(sys.argv)

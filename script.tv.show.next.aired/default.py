@@ -192,6 +192,7 @@ class NextAired:
         self.FORCEUPDATE = self.params.get("force", False)
         self.RESET = self.params.get("reset", False)
         self.STOP = self.params.get("stop", False)
+        self.ONCE = self.params.get("once", False)
 
     def _footprints(self):
         def_level = 2 if self.TVSHOWTITLE else 1
@@ -298,6 +299,8 @@ class NextAired:
                     self.failure_cnt += 1
                     next_chk = self.now + FAILURE_PAUSE * min(self.failure_cnt, 24)
                 self.nextlist = [] # Discard the in-memory data until the next update
+                if self.ONCE:
+                    break
             else:
                 xbmc.sleep(1000)
         self.close("abort requested -- stopping background processing")
@@ -497,6 +500,23 @@ class NextAired:
                 show['eps_changed'] = (1, 0)
 
         TVlist = self.listing()
+
+        for tid in re.split(r"\D+", __addon__.getSetting("ExtraShows")):
+            if tid != '':
+                prior_data = show_dict.get(int(tid), None)
+                if prior_data:
+                    name = prior_data['localname']
+                else:
+                    name = '/%s/' % tid
+                # This fake data in the art hash ensures that we trust the tid value.
+                fake_art = {'ExtraShow': 'http://thetvdb.com/fake/%s-fake.jpg' % tid}
+                TVlist.append((name, name, fake_art, '', '', tid, ''))
+
+        omitShow = {}
+        for tid in re.split(r"\D+", __addon__.getSetting("OmitShows")):
+            if tid != '':
+                omitShow[int(tid)] = 1;
+
         total_show = len(TVlist)
         if total_show == 0:
             if locked_for_update:
@@ -570,6 +590,20 @@ class NextAired:
                 current_show['profiles'] = prior_data['profiles']
                 self.age_episodes(prior_data)
 
+            if self.max_fetch_failures > 0:
+                tid = self.check_show_info(tvdb, tid, current_show, prior_data)
+            else:
+                tid = -tid
+            if tid < 0:
+                if not prior_data:
+                    continue
+                for item in prior_data:
+                    if item not in current_show:
+                        current_show[item] = prior_data[item]
+                tid = -tid
+            elif prior_data and 'tvrage' in prior_data:
+                current_show['tvrage'] = prior_data['tvrage']
+
             for art_type in USEFUL_ART:
                 xart = art.get(art_type, None)
                 fudged_flag = 'fudged.' + art_type
@@ -578,6 +612,8 @@ class NextAired:
                         xart = prior_data['art'][art_type]
                     elif art_rescan_type != art_type:
                         continue
+                    elif 'x_art' in current_show and art_type in current_show['x_art']:
+                        xart = current_show['x_art'][art_type]
                     else:
                         scan_ndx = 'last_%s_scan' % art_type
                         last_scan = prior_data['art'].get(scan_ndx, 0) if prior_data else 0
@@ -603,20 +639,9 @@ class NextAired:
                         pass
                     current_show['art'][fudged_flag] = True
                 current_show['art'][art_type] = xart
+            if 'x_art' in current_show:
+                del current_show['x_art']
 
-            if self.max_fetch_failures > 0:
-                tid = self.check_show_info(tvdb, tid, current_show, prior_data)
-            else:
-                tid = -tid
-            if tid < 0:
-                if not prior_data:
-                    continue
-                for item in prior_data:
-                    if item not in current_show:
-                        current_show[item] = prior_data[item]
-                tid = -tid
-            elif prior_data and 'tvrage' in prior_data:
-                current_show['tvrage'] = prior_data['tvrage']
             current_show['profiles'][self.profile_name] = 1
             log("### %s" % current_show)
             show_dict[tid] = current_show
@@ -634,6 +659,8 @@ class NextAired:
                 if self.profile_name not in show['profiles']:
                     if not show['profiles']:
                         remove_list.append(tid)
+                    continue
+                if omitShow.get(tid, False):
                     continue
                 if show['ep_ndx'] or (WantYesterday and len(show['episodes']) > 1):
                     self.nextlist.append(show)
@@ -855,13 +882,6 @@ class NextAired:
             if result:
                 show = result[0]
                 episodes = result[1]
-                if id_cache_dir is not None:
-                    cache_file = os.path.join(id_cache_dir, '%s.json' % tid)
-                    try:
-                        with open(cache_file, 'w') as fh:
-                            fh.write(json.dumps(result, sort_keys=True, indent=2, separators=(', ', ': ')))
-                    except:
-                        pass
             else:
                 show = None
         else: # earliest_id == 0 when only the series-info changed
@@ -882,6 +902,17 @@ class NextAired:
             else:
                 log("### no result and no prior data", level=1)
             return -tid
+
+        if id_cache_dir is not None:
+            for name, var in (('show', show), ('eps', episodes)):
+                if var is None:
+                    continue
+                cache_file = os.path.join(id_cache_dir, '%s-%s.json' % (tid, name))
+                try:
+                    with open(cache_file, 'w') as fh:
+                        fh.write(json.dumps(var, sort_keys=True, indent=2, separators=(', ', ': ')))
+                except:
+                    pass
 
         network = normalize(show, 'Network', 'Unknown')
         country = self.country_dict.get(network, 'Unknown')
@@ -910,6 +941,8 @@ class NextAired:
             early_aired = '1900-01-01T00:00:00+0000'
 
         current_show['Show Name'] = normalize(show, 'SeriesName')
+        if current_show['localname'][:1] == '/':
+            name = current_show['localname'] = current_show['Show Name']
         first_aired = show.get('FirstAired', None)
         if first_aired:
             first_aired = TheTVDB.convert_date(first_aired)
@@ -924,6 +957,10 @@ class NextAired:
         current_show['Network'] = network
         current_show['Airtime'] = hh_mm
         current_show['Runtime'] = maybe_int(show, 'Runtime', '')
+        current_show['x_art'] = {}
+        for art_type in ('banner', 'fanart', 'poster'):
+            if art_type in show and show[art_type] != '':
+                current_show['x_art'][art_type] = 'http://thetvdb.com/banners/%s' % show[art_type]
 
         can_re = re.compile(r"canceled|ended", re.IGNORECASE)
         if can_re.search(current_show['Status']):
@@ -1472,7 +1509,7 @@ class tvdb_updater:
             return # Ignore shows we don't care about
         when = int(attrs['time'])
         if episode_id == 0:
-            if when <= show['last_updated']:
+            if when <= show['last_updated'] or when <= show.get('show_changed', 0):
                 return
             log("### Found series change (series: %d, time: %d) for %s" % (series_id, when, show['localname']), level=2)
             show['show_changed'] = when
@@ -1480,10 +1517,10 @@ class tvdb_updater:
                 if 'eps_changed' not in show:
                     show['eps_changed'] = (1, 0)
         else:
-            if when <= show['eps_last_updated']:
+            earliest_id, latest_time = show.get('eps_changed', (episode_id, 0))
+            if when <= show['eps_last_updated'] or when <= latest_time:
                 return
             log("### Found episode change (series: %d, ep: %d, time=%d) for %s" % (series_id, episode_id, when, show['localname']), level=2)
-            earliest_id, latest_time = show.get('eps_changed', (episode_id, when))
             if episode_id < earliest_id:
                 earliest_id = episode_id
             if when > latest_time:

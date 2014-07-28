@@ -52,13 +52,53 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "Télécharger les vignettes d'aperçus 16:9 (Artwork Downloader requis)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Mettre à jour les dates de sortie maintenant"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Mettre à jour les dates de sorties"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "Exécuter en fond toutes les [N] heures"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "En entrant dans le guide si celui-ci n'a pas été mis à jour depuis [N] heures"
+
 msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "Télécharger les posters (Artwork Downloader requis)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Réinitialiser toutes les données** et mettre à jour les dates de sorties"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "Montrer toutes les séries TV sur l'écran d'acceuil (thème compatible requis)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Utiliser les jours de la semaine et le nom des mois au lieu de chiffres (si le skin le supporte)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Nombre de jours à afficher dans le guide"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Commencer le guide à \"aujourd'hui\" au lieu de \"Lundi\""
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Inclure \"Hier\" dans le guide TV"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Hier"
 
 msgctxt "#32019"
 msgid "TV Guide"
@@ -79,6 +119,18 @@ msgstr "ANNULÉ"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "Opération annulée par l'utilisateur."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "ANNULÉ suite à un échec de récupération des données"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "La mise à jour a échoué (nouvel essai plus tard)."
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "En diffusion"
 
 msgctxt "#32202"
 msgid "Cancelled/Ended"
@@ -103,6 +155,10 @@ msgstr "Jamais diffusée"
 msgctxt "#32207"
 msgid "Final Season"
 msgstr "Dernière saison"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "En pause"
 
 msgctxt "#32209"
 msgid "Pilot Ordered"
