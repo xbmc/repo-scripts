@@ -55,55 +55,80 @@ class Main:
     def __init__(self):
         self._parse_argv()
         self.WINDOW = xbmcgui.Window(10000)
+        self.SETTINGSLIMIT = int(__addon__.getSetting("limit"))
+        
+        full_liz = list()
         
         if self.TYPE == "randommovies":
-            self.parse_movies( 'randommovies', 32004 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+            self.parse_movies( 'randommovies', 32004, full_liz )
         elif self.TYPE == "recentmovies":
-            self.parse_movies( 'recentmovies', 32005 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+            self.parse_movies( 'recentmovies', 32005, full_liz )
         elif self.TYPE == "recommendedmovies":
-            self.parse_movies( 'recommendedmovies', 32006 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+            self.parse_movies( 'recommendedmovies', 32006, full_liz )
         elif self.TYPE == "recommendedepisodes":
-            self.parse_tvshows_recommended( 'recommendedepisodes', 32010 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+            self.parse_tvshows_recommended( 'recommendedepisodes', 32010, full_liz )
         elif self.TYPE == "recentepisodes":
-            self.parse_tvshows( 'recentepisodes', 32008 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+            self.parse_tvshows( 'recentepisodes', 32008, full_liz )
         elif self.TYPE == "randomepisodes":
-            self.parse_tvshows( 'randomepisodes', 32007 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+            self.parse_tvshows( 'randomepisodes', 32007, full_liz )
+        elif self.TYPE == "recentvideos" :
+            listA = []
+            listB = []
+            dateListA = []
+            dateListB = []
+            self.parse_movies( 'recentmovies', 32005, listA, dateListA, "dateadded" )
+            self.parse_tvshows( 'recentepisodes', 32008, listB, dateListB, "dateadded" )
+            full_liz = self._combine_by_date( listA, dateListA, listB, dateListB )
         elif self.TYPE == "randomalbums":
-            self.parse_albums( 'randomalbums', 32016 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'albums')
+            self.parse_albums( 'randomalbums', 32016, full_liz )
         elif self.TYPE == "recentalbums":
-            self.parse_albums( 'recentalbums', 32017 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'albums')
+            self.parse_albums( 'recentalbums', 32017, full_liz )
         elif self.TYPE == "recommendedalbums":
-            self.parse_albums( 'recommendedalbums', 32018 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'albums')
+            self.parse_albums( 'recommendedalbums', 32018, full_liz )
         elif self.TYPE == "randomsongs":
-            self.parse_song( 'randomsongs', 32015 )
+            xbmcplugin.setContent(int(sys.argv[1]), 'songs')
+            self.parse_song( 'randomsongs', 32015, full_liz )
             
         # Play an albums
         elif self.TYPE == "play_album":
             self.play_album( self.ALBUM )
+            return
             
         if not self.TYPE:
             # Show a root menu
             full_liz = list()
-            items = [[32004, "randommovies"], [32005, "recentmovies"], [32006, "recommendedmovies"], [32007, "randomepisodes"], [32008, "recentepisodes"], [32010, "recommendedepisodes"], [32016, "randomalbums"], [32017, "recentalbums"], [32018, "recommendedalbums"], [32015, "randomsongs"]]
+            items = [[32004, "randommovies"], [32005, "recentmovies"], [32006, "recommendedmovies"], [32007, "randomepisodes"], [32008, "recentepisodes"], [32010, "recommendedepisodes"], [32019, "recentvideos"], [32016, "randomalbums"], [32017, "recentalbums"], [32018, "recommendedalbums"], [32015, "randomsongs"]]
             for item in items:
                 liz = xbmcgui.ListItem( __localize__( item[0] ) )
                 liz.setIconImage( "DefaultFolder.png" )
                 full_liz.append( ( "plugin://service.library.data.provider?type=" + item[1], liz, True ) )
 
-            xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
-            xbmcplugin.endOfDirectory(handle= int(sys.argv[1]))
+        xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+        xbmcplugin.endOfDirectory(handle= int(sys.argv[1]))
                 
             
     def _init_vars(self):
         self.WINDOW = xbmcgui.Window(10000)
         
-    def parse_movies(self, request, list_type):
+    def parse_movies(self, request, list_type, full_liz, date_liz = None, date_type = None):
         json_query = self._get_data( request )
+        while json_query == "LOADING":
+            xbmc.sleep( 100 )
+            json_query = self._get_data( request )
+
+        count = 0
         if json_query:
             json_query = simplejson.loads(json_query)
             if json_query.has_key('result') and json_query['result'].has_key('movies'):
-                xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-                full_liz = list()
                 for item in json_query['result']['movies']:
                     watched = False
                     if item['playcount'] >= 1:
@@ -120,6 +145,9 @@ class Main:
                         country = item['country'][0]
                     else:
                         country = ""
+                    if "cast" in item:
+                        cast = self._get_cast( item['cast'] )
+                    
                     # create a list item
                     liz = xbmcgui.ListItem(item['title'])
                     liz.setInfo( type="Video", infoLabels={ "Title": item['title'] })
@@ -135,6 +163,11 @@ class Main:
                     liz.setInfo( type="Video", infoLabels={ "Votes": item['votes'] })
                     liz.setInfo( type="Video", infoLabels={ "MPAA": item['mpaa'] })
                     liz.setInfo( type="Video", infoLabels={ "Director": " / ".join(item['director']) })
+                    if "writer" in item:
+                        liz.setInfo( type="Video", infoLabels={ "Writer": " / ".join(item['writer']) })
+                    if "cast" in item:
+                        liz.setInfo( type="Video", infoLabels={ "Cast": cast[0] })
+                        liz.setInfo( type="Video", infoLabels={ "CastAndRole": cast[1] })
                     liz.setInfo( type="Video", infoLabels={ "Trailer": item['trailer'] })
                     liz.setInfo( type="Video", infoLabels={ "Playcount": item['playcount'] })
                     liz.setProperty("resumetime", str(item['resume']['position']))
@@ -149,24 +182,29 @@ class Main:
                         for stream in value:
                             liz.addStreamInfo( key, stream ) 
                     full_liz.append((item['file'], liz, False))
-                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
-                xbmcplugin.endOfDirectory(handle= int(sys.argv[1]))
+                    
+                    if date_type is not None:
+                        date_liz.append( item[date_type] )
+                    
+                    count += 1
+                    if count == self.LIMIT:
+                        break
+            
             del json_query
         
-    def parse_tvshows_recommended(self, request, list_type):
+    def parse_tvshows_recommended(self, request, list_type, full_liz, date_liz = None, date_type = None):
         json_query = self._get_data( request )
+        while json_query == "LOADING":
+            xbmc.sleep( 100 )
+            json_query = self._get_data( request )
         if json_query:
             # First unplayed episode of recent played tvshows
             json_query = simplejson.loads(json_query)
             if json_query.has_key('result') and json_query['result'].has_key('tvshows'):
-                xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-                full_liz = list()
                 count = 0
                 for item in json_query['result']['tvshows']:
                     if xbmc.abortRequested:
                         break
-                    count += 1
-                    #json_query2 = self.load_file( str( item['tvshowid'] ) )
                     json_query2 = self.WINDOW.getProperty( "recommendedepisodes-data-" + str( item['tvshowid'] ) )
                     if json_query:
                         json_query2 = simplejson.loads(json_query2)
@@ -187,6 +225,9 @@ class Main:
                             studio = item['studio'][0]
                         else:
                             studio = ""
+                        if "cast" in item2:
+                            cast = self._get_cast( item2['cast'] )
+                        
                         liz = xbmcgui.ListItem(item2['title'])
                         liz.setInfo( type="Video", infoLabels={ "Title": item2['title'] })
                         liz.setInfo( type="Video", infoLabels={ "Episode": item2['episode'] })
@@ -198,6 +239,11 @@ class Main:
                         liz.setInfo( type="Video", infoLabels={ "Rating": str(round(float(item2['rating']),1)) })
                         liz.setInfo( type="Video", infoLabels={ "MPAA": item['mpaa'] })
                         liz.setInfo( type="Video", infoLabels={ "Playcount": item2['playcount'] })
+                        if "writer" in item2:
+                            liz.setInfo( type="Video", infoLabels={ "Writer": " / ".join(item2['writer']) })
+                        if "cast" in item2:
+                            liz.setInfo( type="Video", infoLabels={ "Cast": cast[0] })
+                            liz.setInfo( type="Video", infoLabels={ "CastAndRole": cast[1] })
                         liz.setProperty("episodeno", episodeno)
                         liz.setProperty("resumetime", str(item2['resume']['position']))
                         liz.setProperty("totaltime", str(item2['resume']['total']))
@@ -211,18 +257,26 @@ class Main:
                                 liz.addStreamInfo( key, stream ) 
                         
                         full_liz.append((item2['file'], liz, False))
-                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
-                xbmcplugin.endOfDirectory(handle= int(sys.argv[1]))
+                        
+                        if date_type is not None:
+                            date_liz.append( item[date_type] )
+                        
+                        count += 1
+                        if count == self.LIMIT:
+                            break
+                    if count == self.LIMIT:
+                        break
             del json_query
 
-    def parse_tvshows(self, request, list_type):
-        #json_query = unicode(self.WINDOW.getProperty( request + '-data' ) , 'utf-8', errors='ignore')
+    def parse_tvshows(self, request, list_type, full_liz, date_liz = None, date_type = None):
         json_query = self._get_data( request )
+        while json_query == "LOADING":
+            xbmc.sleep( 100 )
+            json_query = self._get_data( request )
         if json_query:
             json_query = simplejson.loads(json_query)
             if json_query.has_key('result') and json_query['result'].has_key('episodes'):
-                xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-                full_liz = list()
+                count = 0
                 for item in json_query['result']['episodes']:
                     episode = "%.2d" % float(item['episode'])
                     season = "%.2d" % float(item['season'])
@@ -234,6 +288,9 @@ class Main:
                         plot = __localize__(32014)
                     else:
                         plot = item['plot']
+                    if "cast" in item:
+                        cast = self._get_cast( item['cast'] )
+                    
                     liz = xbmcgui.ListItem(item['title'])
                     liz.setInfo( type="Video", infoLabels={ "Title": item['title'] })
                     liz.setInfo( type="Video", infoLabels={ "Episode": item['episode'] })
@@ -245,6 +302,11 @@ class Main:
                     liz.setInfo( type="Video", infoLabels={ "Rating": str(round(float(item['rating']),1)) })
                     #liz.setInfo( type="Video", infoLabels={ "MPAA": item['mpaa'] })
                     liz.setInfo( type="Video", infoLabels={ "Playcount": item['playcount'] })
+                    if "writer" in item:
+                        liz.setInfo( type="Video", infoLabels={ "Writer": " / ".join(item['writer']) })
+                    if "cast" in item:
+                        liz.setInfo( type="Video", infoLabels={ "Cast": cast[0] })
+                        liz.setInfo( type="Video", infoLabels={ "CastAndRole": cast[1] })
                     liz.setProperty("episodeno", episodeno)
                     liz.setProperty("resumetime", str(item['resume']['position']))
                     liz.setProperty("totaltime", str(item['resume']['total']))
@@ -257,18 +319,25 @@ class Main:
                         for stream in value:
                             liz.addStreamInfo( key, stream ) 
                     full_liz.append((item['file'], liz, False))
-                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
-                xbmcplugin.endOfDirectory(handle= int(sys.argv[1]))
+                    
+                    if date_type is not None:
+                        date_liz.append( item[date_type] )
+                    
+                    count += 1
+                    if count == self.LIMIT:
+                        break
             del json_query
-        
-    def parse_song(self, request, list_type):
+
+    def parse_song(self, request, list_type, full_liz, date_liz = None, date_type = None):
         json_query = self._get_data( request )
+        while json_query == "LOADING":
+            xbmc.sleep( 100 )
+            json_query = self._get_data( request )
+        
         if json_query:
-            json_string = '{"jsonrpc": "2.0", "id": 1, "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "playcount", "genre", "artist", "album", "year", "file", "thumbnail", "fanart", "rating"], "filter": {"field": "playcount", "operator": "lessthan", "value": "1"}, "limits": {"end": %d},' %self.LIMIT
             json_query = simplejson.loads(json_query)
+            count = 0
             if json_query.has_key('result') and json_query['result'].has_key('songs'):
-                xbmcplugin.setContent(int(sys.argv[1]), 'songs')
-                full_liz = list()
                 for item in json_query['result']['songs']:
                     liz = xbmcgui.ListItem(item['title'])
                     liz.setInfo( type="Music", infoLabels={ "Title": item['title'] })
@@ -284,17 +353,25 @@ class Main:
                     liz.setProperty("fanart_image", item['fanart'])
 
                     full_liz.append((item['file'], liz, False))
-                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
-                xbmcplugin.endOfDirectory(handle= int(sys.argv[1]))
+                    
+                    if date_type is not None:
+                        date_liz.append( item[date_type] )
+                    
+                    count += 1
+                    if count == self.LIMIT:
+                        break
             del json_query
         
-    def parse_albums (self, request, list_type):
+    def parse_albums (self, request, list_type, full_liz, date_liz = None, date_type = None):
         json_query = self._get_data( request )
+        while json_query == "LOADING":
+            xbmc.sleep( 100 )
+            json_query = self._get_data( request )
+
         if json_query:
             json_query = simplejson.loads(json_query)
             if json_query.has_key('result') and json_query['result'].has_key('albums'):
-                xbmcplugin.setContent(int(sys.argv[1]), 'albums')
-                full_liz = list()
+                count = 0
                 for item in json_query['result']['albums']:
                     rating = str(item['rating'])
                     if rating == '48':
@@ -320,15 +397,53 @@ class Main:
                     # Path will call plugin again, with the album id
                     path = sys.argv[0] + "?type=play_album&album=" + str(item['albumid'])
                     
+                    if date_type is not None:
+                        date_liz.append( item[date_type] )
+                                        
                     full_liz.append((path, liz, False))
-                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
-                xbmcplugin.endOfDirectory(handle= int(sys.argv[1]))
+                    count += 1
+                    if count == self.LIMIT:
+                        break
             del json_query
         
     def play_album( self, album ):
         xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "albumid": %d } }, "id": 1 }' % int(album) )
         # Return ResolvedUrl as failed, as we've taken care of what to play
         xbmcplugin.setResolvedUrl( handle=int( sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem() )
+        
+    def _get_cast( self, castData ):
+        listCast = []
+        listCastAndRole = []
+        for castmember in castData:
+            listCast.append( castmember["name"] )
+            listCastAndRole.append( (castmember["name"], castmember["role"]) ) 
+        return [listCast, listCastAndRole]
+        
+    def _combine_by_date( self, liz_a, date_a, liz_b, date_b ):
+        count = 0
+        full_liz = liz_a[:]
+
+        for itemIndex, itemDate in enumerate( date_b ):
+            added = False
+            for compareIndex, compareDate in enumerate( date_a ):
+                if compareIndex < count or count > self.SETTINGSLIMIT:
+                    continue
+                if itemDate > compareDate:
+                    full_liz.insert( count, liz_b[itemIndex] )
+                    date_a.insert( count, itemDate )
+                    added = True
+                    break
+                count += 1
+            if added == False and count < self.SETTINGSLIMIT:
+                full_liz.append( liz_b[-1] )
+                date_a.append( date_b[-1] )
+                    
+        # Limit the results
+        if self.LIMIT is not -1:
+            full_liz = full_liz[:self.LIMIT]
+        full_liz = full_liz[:self.SETTINGSLIMIT]
+            
+        return full_liz
         
     def _get_data( self, request ):
         if request == "randommovies":
@@ -364,7 +479,8 @@ class Main:
         self.ALBUM = params.get( "album", "" )
         self.USECACHE = params.get( "reload", False )
         if self.USECACHE is not False:
-            self.USECACHE == True
+            self.USECACHE = True
+        self.LIMIT = int( params.get( "limit", "-1" ) )
         global PLOT_ENABLE 
         PLOT_ENABLE = __addon__.getSetting("plot_enable")  == 'true'
         self.RANDOMITEMS_UNPLAYED = __addon__.getSetting("randomitems_unplayed")  == 'true'

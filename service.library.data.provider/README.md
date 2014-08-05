@@ -15,7 +15,7 @@ Load a list with this content tag to have the list use cached data automatically
 <content target="video">plugin://service.library.data.provider?type=randommovies&amp;reload=$INFO[Window.Property(randommovies)]</content>
 
 To view within the library, create a link omitting the reload parameter:
-<onclick>ActivateWindow(Videos,plugin://service.library.data.provider?type=randommovies,return</onclick>
+<onclick>ActivateWindow(Videos,plugin://service.library.data.provider?type=randommovies,return)</onclick>
 
 Available tags:
 -   randommovies
@@ -24,6 +24,7 @@ Available tags:
 -   recommendedepisodes
 -   recentepisodes
 -   randomepisodes
+-   recentvideos (movies and episodes)
 -   randomsongs
 -   randomalbums
 -   recentalbums
@@ -32,6 +33,9 @@ Available tags:
 Available infolabels:
 Most of the usual video library infolabels. 
 ListItem.Property(type) shows with what option the script was run.
+
+Limiting results:
+To only return partial results, add the parameter "limit", for example limit=5.
 
 TODO:
 Artist/Musicvideo/Addons support.

@@ -87,3 +87,7 @@ msgstr ""
 msgctxt "#32018"
 msgid "Recommended Albums"
 msgstr ""
+
+msgctxt "#32019"
+msgid "Recent Videos"
+msgstr ""

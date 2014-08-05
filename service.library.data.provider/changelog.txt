@@ -1,0 +1,4 @@
+[B]0.0.5[/B]
+- Add recent videos option.
+- Add writer and cast to video list items.
+- Add limit parameter to plugin element.
