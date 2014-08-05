@@ -1,0 +1,18 @@
+1.0.0
+- Several fixes, clean up
+- Added translations: Dutch, Portuguese
+- Exclude setting based on video duration
+- added debug function
+- added exclude paths
+
+0.0.5
+- Renamed script to service.autosubs
+
+0.0.4
+- Added configuration options
+
+0.0.3
+- Disabled LiveTV by default
+
+0.0.2
+- initial release

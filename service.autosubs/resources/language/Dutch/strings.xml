@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <!-- General -->
+    <string id="30010">Algemeen</string>
+    <string id="30100">Activeer debug mode</string>
+
+    <!-- Exclusions -->    
+    <string id="30020">Uitzonderingen</string>
+    <string id="30200">Uitgezonderd voor videos korter dan X minuten</string>
+    <string id="30201">Uitzonderingenlijst, komma gescheiden</string>
+    <string id="30202">Uitgezonderd voor Live TV</string>
+    <string id="30203">Uitgezonderd voor HTTP bronnen</string>  
+    <string id="30204">Uitgezonderd voor pad</string>
+    <string id="30205">Pad naar folder (en subfolders)</string>
+</strings>
