@@ -117,12 +117,15 @@ def getallsubs(content, allowed_languages, filename="", search_string=""):
                         "<span class=\"[^\"]+ (?P<quality>\w+-icon)\">\s+(?P<language>[^\r\n\t]+)\s+</span>\s+"
                         "<span>\s+(?P<filename>[^\r\n\t]+)\s+</span>\s+"
                         "</a>\s+</td>\s+"
-                        "<td class=\"[^\"]+\">\s+(?P<numfiles>[^\r\n\t]+)\s+</td>\s+"
+                        "<td class=\"[^\"]+\">\s+(?P<numfiles>[^\r\n\t]*)\s+</td>\s+"
                         "<td class=\"(?P<hiclass>[^\"]+)\">")
 
     subtitles = []
 
     for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
+        numfiles = 1
+        if matches.group('numfiles') != "":
+            numfiles = int(matches.group('numfiles'))
         languagefound = matches.group('language')
         language_info = get_language_info(languagefound)
 
@@ -144,7 +147,7 @@ def getallsubs(content, allowed_languages, filename="", search_string=""):
                 if string.find(string.lower(subtitle_name), string.lower(search_string)) > -1:
                     subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
                                      'lang': language_info, 'hearing_imp': hearing_imp})
-                elif int(matches.group('numfiles')) > 2:
+                elif numfiles > 2:
                     subtitle_name = subtitle_name + ' ' + (__language__(32001) % int(matches.group('numfiles')))
                     subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
                                      'lang': language_info, 'hearing_imp': hearing_imp, 'find': search_string})
