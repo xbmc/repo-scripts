@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: Libre.fm Scrobbler
+# Addon id: service.scrobbler.librefm
+# Addon Provider: Team-XBMC
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hindi (Devanagiri) (http://www.transifex.com/projects/p/xbmc-addons/language/hi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "सामान्य"
+
+msgctxt "#30004"
+msgid "Submit songs to Libre.fm"
+msgstr "Libre.fm के लिए गाने सबमिट"
+
+msgctxt "#30005"
+msgid "Submit streaming radio to Libre.fm"
+msgstr "स्ट्रीमिंग रेडियो को लिब्रे.एफ म मे जमा करे"
+
+msgctxt "#30006"
+msgid "Libre.fm username"
+msgstr "Libre.fm उपयोगकर्ता नाम"
+
+msgctxt "#30007"
+msgid "Libre.fm password"
+msgstr "Libre.fm पासवर्ड"
+
+msgctxt "#32001"
+msgid "Authentication error"
+msgstr "प्रमाणीकरण त्रुटि"
+
+msgctxt "#32002"
+msgid "Invalid time, please adjust your system clock and restart XBMC"
+msgstr "अशक्त समय,कृपया प्रणाली की घारी को ठीक करे और एक्सबीएमसी को पुनर्प्रारंभ करे"
+
+msgctxt "#32003"
+msgid "Please update the add-on"
+msgstr "आड-ओं का आधुनिकीकरण करे"

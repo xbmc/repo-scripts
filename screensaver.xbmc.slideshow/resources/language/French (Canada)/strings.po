@@ -1,0 +1,77 @@
+# XBMC Media Center language file
+# Addon Name: Slideshow
+# Addon id: screensaver.xbmc.slideshow
+# Addon Provider: Team XBMC
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Source des images pour le diaporama"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Dossier"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Fanart de la vidéo"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Fanart de la musique"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Dossier des images"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Désactivé"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Utiliser le nom du fichier"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Utiliser le nom du dossier"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Afficher les images dans un ordre aléatoire"
+
+msgctxt "#30017"
+msgid "Enable image cache"
+msgstr "Activer le cache des images"
+
+msgctxt "#30019"
+msgid "Creating cache"
+msgstr "Création du cache"
+
+msgctxt "#30020"
+msgid "Cache created"
+msgstr "Le cache a été créé"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Afficher la date de la photo"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Avancé"
+
+msgctxt "#30027"
+msgid "Update cache"
+msgstr "Mettre à jour le cache"

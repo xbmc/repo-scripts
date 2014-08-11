@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.favourites" name="Favourites script" version="6.0.0" provider-name="ronie|`Black">
+	<requires>
+		<import addon="xbmc.python" version="2.12.0"/>
+	</requires>
+	<extension point="xbmc.python.library" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="be">Favourites script</summary>
+		<summary lang="bg">Скрипт "Любими"</summary>
+		<summary lang="ca">Script Preferit</summary>
+		<summary lang="da">Favoritscript</summary>
+		<summary lang="de">Favoriten-Skript</summary>
+		<summary lang="el">Script Αγαπημένων</summary>
+		<summary lang="en">Favourites script</summary>
+		<summary lang="es">Script de Favoritos</summary>
+		<summary lang="es_AR">Favoritos</summary>
+		<summary lang="fr_CA">Le script des favoris</summary>
+		<summary lang="gl">Script de Favoritos</summary>
+		<summary lang="he">סקריפט מועדפים</summary>
+		<summary lang="hr">Omiljene skripte</summary>
+		<summary lang="hu">Kedvencek script</summary>
+		<summary lang="id">Script favorit</summary>
+		<summary lang="it">Script preferiti</summary>
+		<summary lang="ko">즐겨찾기 스크립트</summary>
+		<summary lang="nl">Favourietenscript</summary>
+		<summary lang="no">Favorittskript</summary>
+		<summary lang="pl">Skrypt ulubionych</summary>
+		<summary lang="pt">Script de Favoritos</summary>
+		<summary lang="pt_BR">Script Favoritos</summary>
+		<summary lang="ru">Скрипт "Избранное"</summary>
+		<summary lang="sv">Favoritskript</summary>
+		<summary lang="zh">收藏夹脚本</summary>
+		<description lang="be">Fetches item from your xbmc favourites to populate Home menu/submenu with custom buttons.</description>
+		<description lang="bg">Извлича информация от вашето меню "Любими" и показва допълнителни бутони в главното меню и подменюто.</description>
+		<description lang="ca">Obtenir els temes Preferits dels seus XBMC per omplir el menú Inici / submenú amb botons personalitzats.</description>
+		<description lang="da">Henter elementer fra din XBMC-favoritter til at fylde Hjemmemenu/undermenu med brugerbestemte knapper.</description>
+		<description lang="de">Greift Eintrag von deinen XBMC Favoriten, um Home-Menu / -Untermenü mit Spezial-Buttons zu füllen.</description>
+		<description lang="el">Χρησιμοποιεί αντικείμενα από τα αγαπημένα σας του XBMC για να συμπληρώσει τα προσαρμοσμένα πλήκτρα μενού/υπομενού της Αρχικής Οθόνης</description>
+		<description lang="en">Fetches item from your Kodi favourites to populate Home menu/submenu with custom buttons.</description>
+		<description lang="es">Usar ítems de tus favoritos de XBMC para crear menús y submenús personalizados</description>
+		<description lang="es_AR">Obtiene medios de sus favoritos en XBMC para enriquecer su menu inicio y sub carpetas con botones personalizados</description>
+		<description lang="fr">Récupère l'élément depuis les favoris xbmc pour remplir le menu/sous-menu de l'accueil avec des boutons personnalisés.</description>
+		<description lang="fr_CA">Récupère l'élément de vos favoris XBMC pour remplir le menu d'accueil/le sous-menu avec des boutons personnalisés.</description>
+		<description lang="gl">Obtén o elemento dos favoritos para estabelecer botóns personalizados no Menú Principal/Submenú</description>
+		<description lang="he">מייבא פריט מהמועדפים שלך לאכלוס תפריט/תת תפריט עם לחצנים מותאמים אישית במסך הבית.</description>
+		<description lang="hr">Dohvaća stavke iz vašeg XBMC 'Omiljeno' izbornika i popunjava Početni izbornik/podizbornik s prilagođenim tipkama.</description>
+		<description lang="hu">Összegyűjti az elemeket az xbmc kedvencek közül és a központi menü almenüjébe helyezi egyedi gombokkal.</description>
+		<description lang="id">Ambil item dari favorit xbmc Anda untuk mengisi menu/submenu Beranda dengan tombol suka-suka.</description>
+		<description lang="it">Preleva elementi dai tuoi preferiti per popolare il menù principale ed i sottomenù con bottoni personalizzato.</description>
+		<description lang="ko">XBMC 즐겨찾기에서 항목을 가져와 사용자 설정 버튼으로 홈 메뉴/서브메뉴에 표시합니다.</description>
+		<description lang="nl">Haalt item van je XBMC favorieten op om in het Home menu/submenu te plaatsen via losse buttons.</description>
+		<description lang="no">Henter oppføringer fra favorittene dine i XBMC for å befolke hovedmenyen og undermenyen med egendefinerte knapper.</description>
+		<description lang="pl">Pobiera pozycje z twoich ulubionych do zapełnienia menu/podmenu z niestandardowymi przyciskami.</description>
+		<description lang="pt">Obtém itens dos seus favoritos do XBMC para povoar o Menu Principal/submenu com botões personalizados.</description>
+		<description lang="pt_BR">Compila itens dos seus favoritos do XBMC para ocupar menus e submenus da tela inicial com botões personalizados.</description>
+		<description lang="ru">Извлекает информацию из Вашего меню "Избранное" и отображает дополнительные кнопки в главном меню и подменю.</description>
+		<description lang="sv">Hämtar objekt från dina xbmc-favoriter för att fylla ut hem-menyn med egna knappar.</description>
+		<description lang="zh">将XBMC收藏夹项目用于主界面菜单/子菜单的自定义按钮。</description>
+		<disclaimer lang="be">Needs skin support for it to be used properly</disclaimer>
+		<disclaimer lang="bg">Необходима е поддръжка на скинове за коректно показване</disclaimer>
+		<disclaimer lang="ca">Necessita Suport de la pell perquè sigui utilitzat correctament</disclaimer>
+		<disclaimer lang="da">Behøver skinsupport for at blive brugt ordentligt</disclaimer>
+		<disclaimer lang="de">Benötigt Skin-Support um korrekt genutzt zu werden</disclaimer>
+		<disclaimer lang="el">Απαιτείται υποστήριξη από το κέλυφος για να χρησιμοποιηθεί σωστά</disclaimer>
+		<disclaimer lang="en">Needs skin support for it to be used properly</disclaimer>
+		<disclaimer lang="es">Necesita ser soportado por el skin para poder funcionar correctamente</disclaimer>
+		<disclaimer lang="es_AR">Necesita soporte de mascara para ser usada correctamente</disclaimer>
+		<disclaimer lang="fr">Nécessite le support du thème pour qu'il soit utilisé correctement</disclaimer>
+		<disclaimer lang="fr_CA">Le prise en charge de l'habillage est nécessaire pour qu'il soit utilisé correctement</disclaimer>
+		<disclaimer lang="gl">Precisa da axuda da pel para que sexa utilizado correctamente</disclaimer>
+		<disclaimer lang="he">להפעלה כראוי נדרשת תמיכה במעטפת</disclaimer>
+		<disclaimer lang="hr">Zahtijeva podršku presvlake za ispravno korištenje</disclaimer>
+		<disclaimer lang="hu">Felszín támogatás szükséges a helyes működéshez</disclaimer>
+		<disclaimer lang="id">Memerlukan dukungan kulit untuk dapat digunakan dengan baik</disclaimer>
+		<disclaimer lang="it">E' necessario che lo skin supporti lo script per funzionare correttamente</disclaimer>
+		<disclaimer lang="ko">스킨에서 지원해야 합니다</disclaimer>
+		<disclaimer lang="nl">Heeft skinondersteuning nodig om correct te werken</disclaimer>
+		<disclaimer lang="no">Krever skallstøtte for å fungere riktig</disclaimer>
+		<disclaimer lang="pl">Wymagane wsparcie skórki w celu poprawnego działania</disclaimer>
+		<disclaimer lang="pt">Necessita de um tema compatível para funcionar correctamente.</disclaimer>
+		<disclaimer lang="pt_BR">Necessita de suporte da skin para ser usado adequadamente</disclaimer>
+		<disclaimer lang="ru">Необходима поддержка скинов для корректного отображения</disclaimer>
+		<disclaimer lang="sv">Behöver skalsupport för att kunna användas riktigt</disclaimer>
+		<disclaimer lang="zh">正常使用需要皮肤支持</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<forum>http://forum.xbmc.org/showthread.php?tid=114671</forum>
+		<source>https://github.com/ronie/script.favourites</source>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<website></website>
+		<email></email>
+	</extension>
+</addon>

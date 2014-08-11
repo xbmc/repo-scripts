@@ -1,0 +1,26 @@
+v3.0.0
+- kodi name change
+
+v2.0.4
+- language update
+
+v2.0.3
+- no reason
+
+v2.0.2
+- language update
+
+v2.0.1
+- language update
+
+v2.0.0
+- gotham release
+
+v1.0.3
+- add provider logo
+
+v1.0.2
+- fix bug in clear infolabels
+
+v1.0.1
+- initial release

@@ -1,0 +1,93 @@
+# XBMC Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/xbmc-addons/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#0"
+msgid "XBMC Lyrics"
+msgstr "XBMC Sangtekster"
+
+msgctxt "#30000"
+msgid "File"
+msgstr "Fil"
+
+msgctxt "#30001"
+msgid "No lyrics found!"
+msgstr "Ingen sangtekster fundet!"
+
+msgctxt "#30002"
+msgid "Embedded"
+msgstr "Inkodet"
+
+msgctxt "#30101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Gem sangtekster"
+
+msgctxt "#30102"
+msgid "- Lyrics folder"
+msgstr "Mappe til gemte"
+
+msgctxt "#30106"
+msgid "Use only filename for search"
+msgstr "Brug kun filnavn til søgning"
+
+msgctxt "#30107"
+msgid "Filename format"
+msgstr "Format af filnavn"
+
+msgctxt "#30108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#30109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#30110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#30111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "Indlæs sangtekster med samme navn fra undermappe"
+
+msgctxt "#30112"
+msgid "- Sub folder name"
+msgstr "- Navn på undermappe"
+
+msgctxt "#30150"
+msgid "Scrapers"
+msgstr "Scrapere"
+
+msgctxt "#30151"
+msgid "Options"
+msgstr "Indstillinger"
+
+msgctxt "#30152"
+msgid "Search for embedded lyrics"
+msgstr "Søg efter inkodede sangtekster"
+
+msgctxt "#30153"
+msgid "Search for local lyrics files"
+msgstr "Søg efter lokale sangtekstfiler"
+
+msgctxt "#30154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Scrapere til synkroniserede sangtekster"
+
+msgctxt "#30155"
+msgid "Regular lyrics scrapers"
+msgstr "Scrapere til almindelige sangtekster"

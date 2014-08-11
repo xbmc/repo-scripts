@@ -1,0 +1,109 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Organizer
+# Addon id: script.artworkorganizer
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#32001"
+msgid "Copy Movie Fanart"
+msgstr "Copie Films Fanart"
+
+msgctxt "#32002"
+msgid "Copy TV Show Fanart"
+msgstr "Copie Séries TV Fanart"
+
+msgctxt "#32003"
+msgid "Copy Music Video Fanart"
+msgstr "Copie Clips vidéo Fanart"
+
+msgctxt "#32004"
+msgid "Copy Artist Fanart"
+msgstr "Copie Artiste Fanart"
+
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Copie Film Vignettes"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Copie Saison Vignettes"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Copie Épisode Vignettes"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Copie Clip vidéo Vignettes"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Copie Artiste Vignettes"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Copie Album Vignettes"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Répertoire de destination"
+
+msgctxt "#32013"
+msgid "Copy TV Show Banners"
+msgstr "Copie Série TV Bannières"
+
+msgctxt "#32014"
+msgid "Copy TV Show Posters"
+msgstr "Copie Série TV Affiches"
+
+msgctxt "#32015"
+msgid "Custom source"
+msgstr "Source personnalisée"
+
+msgctxt "#32016"
+msgid "Path"
+msgstr "Chemin"
+
+msgctxt "#32101"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Avancés"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Expert"
+
+msgctxt "#32104"
+msgid "DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING"
+msgstr "NE PAS TOUCHER À MOINS DE SAVOIR CE QUE VOUS FAITES"
+
+msgctxt "#32105"
+msgid "THIS CAN POTENTIALLY WIPE YOUR ENTIRE HARDDRIVE"
+msgstr "CECI PEUT POTENTIELLEMENT EFFACER VOTRE DISQUE DUR"
+
+msgctxt "#32106"
+msgid "select which artwork should be copied"
+msgstr "sélectionner quelle illustration doit être copiée"
+
+msgctxt "#32107"
+msgid "search a custom folder for artwork"
+msgstr "chercher un répertoire personnalisé pour l'illustration"
+
+msgctxt "#32108"
+msgid "select a custom folder where the addon should store the artwork"
+msgstr "sélectionner un répertoire personnalisé pour sauver les illustrations"

@@ -1,0 +1,8 @@
+v1.0.0
+- kodi name change
+
+v0.0.2
+- add missing file
+
+v0.0.1
+- initial release

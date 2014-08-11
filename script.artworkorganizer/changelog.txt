@@ -1,0 +1,109 @@
+v3.0.0
+- kodi name change
+
+v2.0.5
+- language update
+
+v2.0.4
+- check if json returns a result
+
+v2.0.3
+- language update
+
+v2.0.2
+- language update
+
+v2.0.1
+- language update
+
+v2.0.0
+- gotham release
+
+v1.2.4
+- fix invalid addon.xml
+
+v1.2.3
+- settings descriptions
+
+v1.2.2
+- reorganize settings
+
+v1.2.1
+- auto update cache if a different image folder is used
+
+v1.2.0
+- added option to specify custom source
+
+v1.1.2
+- fixed copy banner/poster label no showing
+
+v1.1.1
+- python version bump
+
+v1.1.0
+- added support for tv show banners and posters
+
+v1.0.2
+- fix encoding issues
+
+v1.0.1
+- check if json returns artwork
+
+v1.0.1
+- update code for frodo
+
+v1.0.0
+- fix code for frodo
+
+v0.1.11
+- added Portuguese (Brazil) language file
+
+v0.1.10
+- check for empty json response
+
+v0.1.9
+- use label for seasons
+- fix progressbars
+
+v0.1.8
+- use title instead of label
+
+v0.1.7
+- use json if python 2.7 is available
+
+v0.1.6
+- use simplejson
+
+v0.1.5
+- ignore possible encoding errors
+
+v0.1.4
+- show correct labels in dialog
+
+v0.1.3
+- fixed replace illegal characters in filenames
+
+v0.1.2
+- adjusted to latest json-rpc changes
+- added option for episode and season thumbs
+
+v0.1.1
+- fix utf-8 error
+
+v0.1.0
+- initial release
+
+v0.0.5
+- fixed json query when compactoutput was set to false
+
+v0.0.4
+- use item name for filename
+
+v0.0.3
+- use xbmcvfs.mkdir
+
+v0.0.2
+- added support for musicvideos
+
+v0.0.1
+- initial release
