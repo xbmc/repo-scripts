@@ -46,6 +46,10 @@ def clean_title(item):
     item["title"] = unicode(os.path.splitext(item["title"])[0], "utf-8")
     item["tvshow"] = unicode(os.path.splitext(item["tvshow"])[0], "utf-8")
 
+    # Removes country identifier at the end
+    item["title"] = re.sub(r'\([^\)]+\)\W*$', '', item["title"])
+    item["tvshow"] = re.sub(r'\([^\)]+\)\W*$', '', item["tvshow"])
+
 
 def parse_rls_title(item):
     item["title"] = regexHelper.sub(' ', item["title"])
