@@ -1,0 +1,76 @@
+# script.audio.profiles language file
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+
+#: Settings
+msgctxt "#32000"
+msgid "Profiles"
+msgstr "Profile"
+
+#: Settings
+msgctxt "#32001"
+msgid "Name of profile 1"
+msgstr "Nazwa profilu 1"
+
+#: Settings
+msgctxt "#32002"
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: Settings
+msgctxt "#32003"
+msgid "Name of profile 2"
+msgstr "Nazwa profilu 2"
+
+#: Settings
+msgctxt "#32004"
+msgid "Include the volume level"
+msgstr "Uwzględnij poziom głośności"
+
+#: Settings
+msgctxt "#32005"
+msgid "Name of profile 3"
+msgstr "Nazwa profilu 3"
+
+#: Settings
+msgctxt "#32006"
+msgid "Name of profile 4"
+msgstr "Nazwa profilu 4"
+
+#: Settings
+msgctxt "#32007"
+msgid "Profile 1"
+msgstr "Profil 1"
+
+#: Settings
+msgctxt "#32008"
+msgid "Profile 2"
+msgstr "Profil 2"
+
+#: Settings
+msgctxt "#32009"
+msgid "Profile 3"
+msgstr "Profil 3"
+
+#: Settings
+msgctxt "#32010"
+msgid "Profile 4"
+msgstr "Profil 4"
+
+#: Script
+msgctxt "#32100"
+msgid "Choose profile to save settings"
+msgstr "Wybierz profil aby zapisać ustawienia"
+
+#: Script
+msgctxt "#32101"
+msgid "Configure profile"
+msgstr "Zkonfiguruj profil"
+
+#: Script
+msgctxt "#32102"
+msgid "Saved as profile"
+msgstr "Zapisano jako profil"

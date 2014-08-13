@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+    <category label="32000">
+        <setting label="32007" type="bool" id="profile1" default="true" />
+        <setting label="32001" type="text" id="name1" default="Digital" />
+        <setting type="sep" />
+        <setting label="32008" type="bool" id="profile2" default="true" />
+        <setting label="32003" type="text" id="name2" default="Analog" />
+        <setting type="sep" />
+        <setting label="32009" type="bool" id="profile3" default="false" />
+        <setting label="32005" type="text" id="name3" default="Headphones" />
+        <setting type="sep" />
+        <setting label="32010" type="bool" id="profile4" default="false" />
+        <setting label="32006" type="text" id="name4" default="HDMI" />
+    </category>
+    <category label="32002">
+        <setting label="32004" type="bool" id="volume" default="false" />
+    </category>
+</settings>

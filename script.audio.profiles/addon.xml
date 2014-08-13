@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.audio.profiles"
+    name="Audio Profiles"
+    version="1.0.2"
+    provider-name="Regss">
+    <requires>
+        <import addon="xbmc.python" version="2.14.0" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Save audio profile and easily switch between them</summary>
+        <summary lang="pl">Zapisuje profile ustawień audio i łatwo przełącza między nimi</summary>
+        <description lang="en">To map a key for switch audio profile edit keymap xml file and add:[CR]RunScript(script.audio.profiles,0) - for switch profile in loop[CR]RunScript(script.audio.profiles,x) - where x is number of profile</description>
+        <description lang="pl">Aby przypisać przycisk to zmiany profili edytuj plik keymap xml i dodaj:[CR]RunScript(script.audio.profiles,0) - aby przełączać między profilami w pętli[CR]RunScript(script.audio.profiles,x) - gdzie x to numer profilu</description>
+        <platform>all</platform>
+    </extension>
+</addon>
