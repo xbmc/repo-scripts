@@ -1,3 +1,9 @@
+V0.7.3 
+- add new script.module.pil to dependencies
+
+V0.7.2 
+- addon.xml per Gotham requirements
+
 V0.7.1
 - Fixed ABC weather video link again - apparently they use multiple servers
 
