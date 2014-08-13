@@ -28,6 +28,10 @@ msgctxt "#32019"
 msgid "Music"
 msgstr "ဂီတ"
 
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "ပုံများ"
+
 msgctxt "#32021"
 msgid "Programs"
 msgstr "ပရိုဂရမ်များ"

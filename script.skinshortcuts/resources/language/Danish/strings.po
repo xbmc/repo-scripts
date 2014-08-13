@@ -107,3 +107,7 @@ msgstr "Skærm"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Spil"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Kilder"

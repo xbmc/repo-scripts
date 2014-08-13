@@ -1,3 +1,27 @@
+v0.4.0
+- New localisation code
+- New XML data store
+- Removal of Gotham list-filling methods
+- [bambi73] - Ability to replace label with widgetName
+- Ability to create shortcuts to library sources not showing content from source selected
+- Ability to choose random version of auto-generated source playlists as widget or background
+- Ability to clone widget and background properties from main menu to submenu items
+- Ability to force Settings link in menu
+- Ability to return thumbnail as icon for available shortcuts
+- New management dialog controls to show management dialog for additional sub-menus
+- New available shortcut grouping - picture sources
+- Improved labelID's for add-ons
+- Indicator for default background and widget
+- Menu rebuilt on changes to script-skinshortcuts-includes.xml file
+- Auto-enable debug logging and offer to upload debug log on menu build failure (requires XBMC Log Uploader on system)
+- Code cleanup
+- Fixes
+ > Fix for setting skin thumbnail property when using Just Select method
+ > Fix for menus failing to build when the action for a shortcut contains a unicode character
+ > Dirty fix for situations where a playlist in a menu will cause that menu to appear empty
+ > Return skin playlists via special:// protocol (current skin only)
+ - Updated language files from Transifex (from 11th June 2014)
+
 v0.3.4
 - XML files are formatted (includes.xml, auto-generated playlists), includes now have an id property
 - New 'Settings' available shortcut grouping

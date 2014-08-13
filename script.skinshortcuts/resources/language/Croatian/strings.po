@@ -267,7 +267,3 @@ msgstr "Zaslon"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Reproduciraj"
-
-msgctxt "#32063"
-msgid "Getting plugin directory listing..."
-msgstr "Izlistavanje direktorija dodataka..."

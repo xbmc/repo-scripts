@@ -263,3 +263,7 @@ msgstr "显示"
 msgctxt "#32062"
 msgid "Play"
 msgstr "播放"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "来源"

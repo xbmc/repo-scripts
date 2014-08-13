@@ -16,9 +16,21 @@ msgstr ""
 "Language: en_US\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "Add"
+msgstr "Add"
+
 msgctxt "#32001"
 msgid "Delete"
 msgstr "Delete"
+
+msgctxt "#32002"
+msgid "Move Up"
+msgstr "Move Up"
+
+msgctxt "#32003"
+msgid "Move Down"
+msgstr "Move Down"
 
 msgctxt "#32004"
 msgid "Video Playlist"
@@ -32,9 +44,33 @@ msgctxt "#32006"
 msgid "Favourite"
 msgstr "Favorite"
 
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "Add-On"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "Mixed Playlist"
+
 msgctxt "#32009"
 msgid "Program"
 msgstr "Program"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "Video Add-On"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "Music Add-On"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "Picture Add-On"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<None>"
 
 msgctxt "#32014"
 msgid "Videos"
@@ -76,6 +112,30 @@ msgctxt "#32023"
 msgid "Timers"
 msgstr "Timers"
 
+msgctxt "#32024"
+msgid "Custom shortcut"
+msgstr "Custom shortcut"
+
+msgctxt "#32025"
+msgid "Set label"
+msgstr "Set label"
+
+msgctxt "#32026"
+msgid "Set thumbail"
+msgstr "Set thumbail"
+
+msgctxt "#32027"
+msgid "Custom action"
+msgstr "Custom action"
+
+msgctxt "#32028"
+msgid "Reset shortcuts"
+msgstr "Reset shortcuts"
+
+msgctxt "#32029"
+msgid "Common"
+msgstr "Common"
+
 msgctxt "#32030"
 msgid "Video Library"
 msgstr "Video Library"
@@ -88,6 +148,34 @@ msgctxt "#32032"
 msgid "Play DVD"
 msgstr "Play DVD"
 
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "Eject tray"
+
+msgctxt "#32034"
+msgid "Common Shortcut"
+msgstr "Common Shortcut"
+
+msgctxt "#32035"
+msgid "Choose which items to display on the Main Menu"
+msgstr "Choose which items to display on the Main Menu"
+
+msgctxt "#32036"
+msgid "Choose shortcuts for ::MENUNAME::"
+msgstr "Choose shortcuts for ::MENUNAME::"
+
+msgctxt "#32037"
+msgid "Reset all shortcuts"
+msgstr "Reset all shortcuts"
+
+msgctxt "#32038"
+msgid "Are you sure you want to reset all shortcuts back to default?"
+msgstr "Are you sure you want to reset all shortcuts back to default?"
+
+msgctxt "#32039"
+msgid "Pick widget for ::MENUNAME::"
+msgstr "Pick widget for ::MENUNAME::"
+
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Playlist"
@@ -96,9 +184,37 @@ msgctxt "#32041"
 msgid "Action"
 msgstr "Action"
 
+msgctxt "#32042"
+msgid "Unknown video node"
+msgstr "Unknown video node"
+
+msgctxt "#32043"
+msgid "Choose shortcut category"
+msgstr "Choose shortcut category"
+
 msgctxt "#32044"
 msgid "Select widget"
 msgstr "Select widget"
+
+msgctxt "#32045"
+msgid "Select background"
+msgstr "Select background"
+
+msgctxt "#32046"
+msgid "Update video library"
+msgstr "Update video library"
+
+msgctxt "#32047"
+msgid "Update audio library"
+msgstr "Update audio library"
+
+msgctxt "#32048"
+msgid "Choose shortcut"
+msgstr "Choose shortcut"
+
+msgctxt "#32049"
+msgid "Building menu..."
+msgstr "Building menu..."
 
 msgctxt "#32050"
 msgid "Default"
@@ -108,6 +224,10 @@ msgctxt "#32051"
 msgid "Single image"
 msgstr "Single image"
 
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "Multi-image"
+
 msgctxt "#32053"
 msgid "None"
 msgstr "None"
@@ -116,6 +236,102 @@ msgctxt "#32054"
 msgid "XBMC Command"
 msgstr "XBMC Command"
 
+msgctxt "#32055"
+msgid "Clean video library"
+msgstr "Clean video library"
+
+msgctxt "#32056"
+msgid "Clean audio library"
+msgstr "Clean audio library"
+
+msgctxt "#32057"
+msgid "XBMC Commands"
+msgstr "XBMC Commands"
+
+msgctxt "#32058"
+msgid "Create shortcut to here"
+msgstr "Create shortcut to here"
+
+msgctxt "#32059"
+msgid "Skin Playlist"
+msgstr "Skin Playlist"
+
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Do you want to play this playlist, or display it?"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Display"
+
 msgctxt "#32062"
 msgid "Play"
 msgstr "Play"
+
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "Getting directory listing..."
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "No Shortcuts"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "There are no shortcuts available for the category that you choose."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Last TV channel"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Last radio channel"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Last channel"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Video Source"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Customize Main Menu"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Customize Submenu"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Music Source"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Library Sources"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Sources"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "TV Channel"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Radio Channel"
+
+msgctxt "#32078"
+msgid "This source contains..."
+msgstr "This source contains..."
+
+msgctxt "#32079"
+msgid "Content not in library"
+msgstr "Content not in library"

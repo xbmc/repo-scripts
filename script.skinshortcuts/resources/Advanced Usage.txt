@@ -25,6 +25,8 @@ Remembering to replace 9000 with the id of the list containing your menu.
 
 You can also let the user choose to use a playlist for background images for use with, for example, script.grab.fanart, in which case the item will also have the property 'backgroundPlaylist', which will contain the path of the playlist.
 
+It may be advantageous for your submenu items to have the same background property as your main menu items. In which case, include &amp;options=clonebackgrounds in your buildxml command (multiple options can be separated with a pipe - | - symbol.
+
 Custom backgrounds are saved on a skin-by-skin basis.
 
 
@@ -50,6 +52,8 @@ And then set the content of the list as so:
 	<content>$INFO[Container(9000).ListItem.Property(widgetPlaylist)]</content>
 
 In all cases, remember to replace 9000 with the ID of the list containing the menu. Widgets are saved on a skin-by-skin basis.
+
+It may be advantageous for your submenu items to have the same background property as your main menu items. In which case, include &amp;options=clonewidgets in your buildxml command (multiple options can be separated with a pipe - | - symbol.
 
 
 Multiple Sub-Menus
@@ -163,6 +167,13 @@ Note, any thumbnail image provided by the shortcut or set by the user has set wi
 
 A full list of labelID's and default icon images can be found in the Resources folder. A full list of groupings can be found below, in section 5 (Skin Recommended Shortcuts).
 
+By default, when an available shortcut has a thumbnail (add-ons, favourites, etc) these cannot be overriden. It is possible to return these as the icon (which can be overriden) by including the following in your overrides.xml:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+	<useDefaultThumbAsIcon>True</useDefaultThumbAsIcon>
+</overrides>
+
 IMPORTANT: In previous versions this element was called <thumbnail> - please update any old elements.
 
 
@@ -229,6 +240,8 @@ So, for example:
 
 You can then choose which widget to display based on the 'widget' property of the selected listitem.
 
+You can optionally use choose to set the shortcut name to the widget name when selecting a widget. To do so, set the window property "useWidgetNameAsLabel" to "true". This property will be reset after the widget is set.
+
 
 5. Skin-Recommended Shortcuts
 
@@ -260,7 +273,10 @@ Shortcut groupings within the management dialog are made up of several smaller g
  - music
  - musicsources
  
+ - picturesources
+ 
  - pvr
+ - radio 			(Helix)
  - pvr-tv
  - pvr-radio
  
@@ -281,14 +297,11 @@ If you do not specify a grouping, it will be added to the end of the common grou
 
 When using the script to provide the whole menu, you can specify shortcuts that are required for the skin to appear in the main menu. If there is no main menu item with the specified action, an additional shortcut will be created. Users will be unable to delete these shortcuts whilst using your skin.
 
-These shortcuts should only be used to ensure access to specific functionality of your skin. If the action is generic or not required, you should provide a skin-recommended shortcut instead.
-
 <requiredshortcut label="[label]" thumbnail="[thumbnail]" icon="[icon]">[action]</requiredshortcut>
 
 [label] - The display name of the shortcut (can be a localised string)
 [thumbnail] - [Optional] The thumbnail associated with the shortcut
 [icon] - [Optional] The icon associated with the shortcut
-[Boolean condition] - [Optional] Replace with a string that must evaluate to True for the shortcut to appear
 [action] - The action associated with this shortcut
 
 Note, the type will be set to the id of your skin (skin.name) to indicate that it is specific to the skin.
@@ -327,9 +340,18 @@ If you are using Skin Shortcuts to set custom properties for shortcuts, you can 
 [Property] - The string used to identify the property
 [Property Value] - The default value of the property
 
+If you are using Skin Shortcuts to set these properties, then you must also set the available options:
+
+	<property property="[Property]">[Property Value]</property>
+
+[Property] - The string used to identify the property
+[Property Value] - The default value of the property
+
 <?xml version="1.0" encoding="UTF-8"?>
 <overrides>
 	<propertydefault labelID="movies" property="description">Browse your movies</propertydefault>
+	<property property="description">Browse you movies</property>
+	<property property="description">31234</property>	
 </overrides>
 
 
@@ -361,12 +383,26 @@ You can use the overrides.xml to warn the user before they delete any particular
 [action] - The action of the existing shortcut that will trigger this message when the user tries to delete/replace it, or edit its action
 
 
+11. Force Settings Link
+
+When using Skin Shortcuts to provide the whole main menu, it is possible for the user to delete the link to settings. This would leave them in a position where they are unable to further edit the menu to put it back.
+
+It is recommended that you provide an alternative access to settings somewhere in your skin, such as the power menu. However, if you do not, then it is possible to force the script to add a Settings option to the end of the main menu, if there is no other link to settings in the menu structure.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<overrides>
+	<forcesettings>True</forcesettings>
+</overrides>
+
+Please note, this will cause the script to create a shortcut with the action ActivateWindow(Settings) if none exists. It doesn't look for any other settings area links. It also doesn't take into account any overrides or visibility conditions that may be attached to a shortcut.
+
+
 Localisation
 ------------
 
 If you are providing default shortcuts and want to localize your label, you can do it using the format
 
-  ::LOCAL::[id]
+  [id]
   
 Where [id] is any string id provided by XBMC or your skin.
 
@@ -381,6 +417,7 @@ For common main menu items, it will contain one of the following strings
 	movies
 	tvshows
 	livetv
+	radio 			(Helix)
 	music
 	musicvideos
 	pictures

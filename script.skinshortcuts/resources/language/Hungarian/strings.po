@@ -256,6 +256,10 @@ msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Felszín Lejátszási lista"
 
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Lejátszási sor elindítása vagy megjelenítése?"
+
 msgctxt "#32061"
 msgid "Display"
 msgstr "Képernyő"
@@ -263,3 +267,15 @@ msgstr "Képernyő"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Lejátszás"
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "Nincsenek parancsikonok"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "Nincsenek elérhető parancsikonok a kiválasztott kategóriához"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Források"

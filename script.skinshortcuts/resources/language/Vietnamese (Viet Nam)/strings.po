@@ -28,6 +28,14 @@ msgctxt "#32018"
 msgid "Music Videos"
 msgstr "Video clip"
 
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Hình ảnh"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Chương trình"
+
 msgctxt "#32053"
 msgid "None"
 msgstr "Không"

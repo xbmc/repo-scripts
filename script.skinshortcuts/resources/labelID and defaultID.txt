@@ -1,4 +1,6 @@
-The following is a list of all labelID's, their default icon image and their corresponding English translation.
+The following is a list of all labelID/defaultID's, their default icon image and their corresponding English translation.
+
+Note: The labelID will change if the label of the shortcut is changed and is always unique within a single menu. The defaultID is always the same, but is not guaranteed unique.
 
 labelID		Icon						English translation	
 ----------- ----------------------- 	-------------------------
@@ -6,6 +8,7 @@ videos		DefaultVideos.png			Videos
 movies		DefaultMovies.png			Movies
 tvshows		DefaultTVShows.png			TV Shows
 livetv		DefaultTVShows.png			Live TV
+radio		DefaultAudio.png			Radio (Helix)
 music		DefaultMusicAlbums.png		Music
 musicvideos	DefaultMusicVideos.png		Music Videos
 pictures	DefaultPicture.png			Pictures
@@ -79,6 +82,7 @@ thumbnail - the favourites thumbnail
 Add-Ons
 -------
 
-labelID - Name of the add-on (lowercase, without spaces)
+labelID - For the root directory of plugins and programs with no arguments, plugin.addon.name or script.addon.name
+        - For other plugin directories the name as returned by the add-on or based on the label defined in the defaults
 thumbnail - Thumbnail of the add-on
 icon - DefaultAddon.png

@@ -107,3 +107,7 @@ msgstr "Pantalla"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Reprodueix"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Fonts"

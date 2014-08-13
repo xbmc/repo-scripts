@@ -269,5 +269,69 @@ msgid "Play"
 msgstr "Odtwarzaj"
 
 msgctxt "#32063"
-msgid "Getting plugin directory listing..."
-msgstr "Pobieranie listy katalogów..."
+msgid "Getting directory listing..."
+msgstr "Pobieranie listy ..."
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "Brak skrótów"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "Brak skrótów dla wybranej kategorii"
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Ostatni kanał telewizyjny "
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Ostatni kanał radiowy"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Ostatni kanał"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Źródło wideo"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Dostosuj menu główne"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Dostosuj podmenu"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Źródło muzyki"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Źródła bibliotek"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Źródła"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "Kanał telewizyjny"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Kanał radiowy"
+
+msgctxt "#32078"
+msgid "This source contains..."
+msgstr "To źródło zawiera ..."
+
+msgctxt "#32079"
+msgid "Content not in library"
+msgstr "Zawartość nie jest dostępna w bibliotece"

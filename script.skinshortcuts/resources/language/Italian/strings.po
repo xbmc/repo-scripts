@@ -269,5 +269,69 @@ msgid "Play"
 msgstr "Guarda"
 
 msgctxt "#32063"
-msgid "Getting plugin directory listing..."
-msgstr "Ottendendo lista dei plugin"
+msgid "Getting directory listing..."
+msgstr "Ottenimento lista dierectory......"
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "Nessuna scorciatoia"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "Non ci sono scorciatoie disponibili per la categoria che hai scelto."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Ultimo Canale TV"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Ultimo canale radio"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Ultimo canale"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Fonte Video"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Personalizza Menù Principale"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Personalizza Sottomenù"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Fonte Musica"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Fonti Libreria"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Sorgente"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "Canale TV"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Canale Radio"
+
+msgctxt "#32078"
+msgid "This source contains..."
+msgstr "Questa fonte contiene"
+
+msgctxt "#32079"
+msgid "Content not in library"
+msgstr "Contenuto non inserito nella libreria"

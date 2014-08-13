@@ -46,7 +46,7 @@ msgstr "Favorito"
 
 msgctxt "#32007"
 msgid "Add-On"
-msgstr "Engadidos"
+msgstr "Complementos"
 
 msgctxt "#32008"
 msgid "Mixed Playlist"
@@ -269,5 +269,69 @@ msgid "Play"
 msgstr "Reproducir"
 
 msgctxt "#32063"
-msgid "Getting plugin directory listing..."
-msgstr "Obter a listaxe do cartafol de engadidos..."
+msgid "Getting directory listing..."
+msgstr "Obtendo a listaxe do cartafol..."
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "Sen Atallos"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "Non hai atallos dispoñíbeis da categoría escollida"
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Última canle de TV"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Última canle de Radio"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Ultima canle"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Fonte do Vídeo"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Personalizar Menú Principal"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Personalizar Submenú"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Fonte da Música"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Fontes da Biblioteca"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Fontes"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "Canle de TV"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Canle de Radio"
+
+msgctxt "#32078"
+msgid "This source contains..."
+msgstr "A fonte contén..."
+
+msgctxt "#32079"
+msgid "Content not in library"
+msgstr "O contido non está na biblioteca"

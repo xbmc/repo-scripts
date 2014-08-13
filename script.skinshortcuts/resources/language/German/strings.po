@@ -256,6 +256,10 @@ msgctxt "#32059"
 msgid "Skin Playlist"
 msgstr "Skin Wiedergabeliste"
 
+msgctxt "#32060"
+msgid "Do you want to play this playlist, or display it?"
+msgstr "Möchten Sie diese Wiedergabeliste abspielen oder anzeigen lassen?"
+
 msgctxt "#32061"
 msgid "Display"
 msgstr "Anzeige"
@@ -263,3 +267,7 @@ msgstr "Anzeige"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Abspielen"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Quellen"

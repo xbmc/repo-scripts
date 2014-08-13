@@ -42,7 +42,7 @@ msgstr "Muzikos grojaraštis"
 
 msgctxt "#32006"
 msgid "Favourite"
-msgstr "Mėgstami"
+msgstr "Mėgstamas"
 
 msgctxt "#32007"
 msgid "Add-On"
@@ -158,7 +158,7 @@ msgstr "Bendra nuoroda"
 
 msgctxt "#32035"
 msgid "Choose which items to display on the Main Menu"
-msgstr "Pasirinkite kuriuos elementus rodyti pagrindiniame meniu"
+msgstr "Pasirinkite, kuriuos elementus rodyti pagrindiniame meniu"
 
 msgctxt "#32036"
 msgid "Choose shortcuts for ::MENUNAME::"
@@ -218,7 +218,7 @@ msgstr "Kuriamas meniu..."
 
 msgctxt "#32050"
 msgid "Default"
-msgstr "Numatytas"
+msgstr "Numatytasis"
 
 msgctxt "#32051"
 msgid "Single image"
@@ -230,7 +230,7 @@ msgstr "Keli atvaizdai"
 
 msgctxt "#32053"
 msgid "None"
-msgstr "Nieko"
+msgstr "Joks"
 
 msgctxt "#32054"
 msgid "XBMC Command"
@@ -250,7 +250,7 @@ msgstr "XBMC komandos"
 
 msgctxt "#32058"
 msgid "Create shortcut to here"
-msgstr "Sukurta nuorodą į šią vietą"
+msgstr "Sukurti nuorodą į šią vietą"
 
 msgctxt "#32059"
 msgid "Skin Playlist"
@@ -269,5 +269,69 @@ msgid "Play"
 msgstr "Atkurti"
 
 msgctxt "#32063"
-msgid "Getting plugin directory listing..."
-msgstr "Gaunamas papildinio katalogo sąrašas..."
+msgid "Getting directory listing..."
+msgstr "Gaunamas katalogų sąrašas..."
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "Nėra nuorodų"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "Nėra prieinamų nuorodų kategorijai, kurią pasirinkote."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Paskutinis TV kanalas"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Paskutinis radijo kanalas"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Paskutinis kanalas"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Vaizdo šaltinis"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Tinkinti pagrindinį meniu"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Tinkinti submeniu"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Muzikos šaltinis"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Bibliotekos šaltiniai"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Šaltiniai"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "TV kanalas"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Radijo kanalas"
+
+msgctxt "#32078"
+msgid "This source contains..."
+msgstr "Šiame šaltinyje yra..."
+
+msgctxt "#32079"
+msgid "Content not in library"
+msgstr "Turinys ne bibliotekoje"

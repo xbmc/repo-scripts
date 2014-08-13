@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortcuts>
+	<shortcut>
+		<label>20387</label>
+		<label2>32014</label2>
+		<icon>DefaultRecentlyAddedEpisodes.png</icon>
+		<thumb />
+		<action>ActivateWindow(Videos,RecentlyAddedEpisodes,return)</action>
+	</shortcut>
+	<shortcut>
+		<label>369</label>
+		<label2>20343</label2>
+		<icon>DefaultTVShowTitle.png</icon>
+		<thumb />
+		<action>ActivateWindow(Videos,TvShowTitles,return)</action>
+	</shortcut>
+	<shortcut>
+		<label>135</label>
+		<label2>20343</label2>
+		<icon>DefaultGenre.png</icon>
+		<thumb />
+		<action>ActivateWindow(Videos,TvShowGenres,return)</action>
+	</shortcut>
+	<shortcut>
+		<label>562</label>
+		<label2>20343</label2>
+		<icon>DefaultYear.png</icon>
+		<thumb />
+		<action>ActivateWindow(Videos,TvShowYears,return)</action>
+	</shortcut>
+	<shortcut>
+		<label>344</label>
+		<label2>20343</label2>
+		<icon>DefaultActor.png</icon>
+		<thumb />
+		<action>ActivateWindow(Videos,TvShowActors,return)</action>
+	</shortcut>
+</shortcuts>

@@ -28,6 +28,12 @@ ID	Type	Label	Description
 401 Button	32048	Alternative method to set a shortcut
 404 Button			Set a custom property
 405 Button			Launch management dialog for submenu / additional menus
+406 Button			Launch management dialog for additional menu 1
+407 Button			Launch management dialog for additional menu 2
+408 Button			Launch management dialog for additional menu 3
+409 Button			Launch management dialog for additional menu 4
+410 Button			Launch management dialog for additional menu 5
+
 
 500 Label   32071 / 32072	Window Title
 
@@ -39,25 +45,36 @@ In the case of label 500, if this control is present the script will always fill
 
 Most of these controls are optional (though it is recommended to include them), but you MUST include control 211. Controls 101, 102, 103 and 111 all rely on the others being present.
 
-2. Using label2 on buttons to provide more information
+
+2. List of window properties
+
+Property name			Description
+customProperty			Custom property name - detailed description in section 5
+customValue				Custom property value - detailed description in section 5
+level					Level of submenu - detailed description in section 6
+overrideName			Override for window title when editing submenu
+useWidgetNameAsLabel	Define if widget name is used for shortcut label too - detailed description in section 9
+
+
+3. Using label2 on buttons to provide more information
 
 You can set the label2 value of buttons to provide details of current selected - for example, the current label or action of the user selected shortcut.
 
-User-selected shortcuts have the same properties they will have when displayed in a menu, with the addition of displaypath which shows the current selected action in a displayable format.
+User-selected shortcuts have the same properties they will have when displayed in a menu, with the addition of "path" which shows the current selected action in a displayable format.
 
 NOTE: You MUST provide a label (even one set to a script-provided string) for label2's to operate.
 
 
-3. Alternative method to set a shortcut
+4. Alternative method to set a shortcut
 
 Rather than using list 111 to let the user select a shortcut, you can include button 401. When clicked it will show the user, via the standard Select dialog, first a list of the available categories of shortcuts, then the shortcuts within that category.
 
 
-4. Set a custom property
+5. Set a custom property
 
 If you want to attach a custom property to a menu item, you can include button 404.
 
-To set a property, first set the following window properties
+To manually set a property, first set the following window properties
 
 	customProperty	The name you are giving to the custom property
 	customValue		The value of the custom property (to clear a property, don't set this property)
@@ -66,23 +83,36 @@ Then send a click to control 404. The two properties will be cleared afterwards.
 
 You can set defaults for your custom property in your overrides.xml file. See resources/Advanced Usage.txt - "Overrides.xml".
 
+To let Skin Shortcuts show a dialog to let the user select from options you have defined in your Overrides.xml, set the following window property
 
-5. Launch management dialog for submenu / additional menus
+	chooseProperty	The property that you want the user to set
+	
+Then send a click to control 404. The property will be cleared afterwards.
+
+
+6. Launch management dialog for submenu / additional menus
 
 You can give the users a way to launch the management dialog for the submenu or an additional menu from the management dialog.
 
 To do this include the control 405. Clicking it will launch the management dialog for the submenu of the selected item.
 
 To launch the management dialog for an additional sub menu, first set the window property "level", then send a click to 405. The property will be cleared afterwards.
+Or include controls 406, 407, 408, 409 or 410. These will launch the management dialog for levels 1 through 5 respectively.
 
 You will likely only want to include this when editing the main menu. You can check the window property "groupname" for the value "mainmenu" to only display it when relevant.
 
 
-6. Limit controls to main menu only
+7. Limit controls to main menu only
 
 You may wish to only show some of these controls when the user is editing the main menu only, not a submenu. To do this, check the window property "groupname" for the value "mainmenu".
 
 
-7. Shortcut Categories
+8. Shortcut Categories
 
 The available shortcuts are grouped into several categories within the management dialog. If you wish to customise these categories, copy the format in %script.skinshortcuts%/resources/overrides.xml
+
+
+9. Filling shortcut label with widget name
+
+In some use-cases it can be useful to fill shortcut label with widget name when widget is selected (button 309). It can be edited by user (unlike of widget name) and then later shown in skin.
+To do this set window property "useWidgetNameAsLabel" to "true" before button 309 action is done.

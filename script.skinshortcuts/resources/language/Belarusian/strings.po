@@ -111,3 +111,7 @@ msgstr "Дысплэй"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Граць"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Sources"

@@ -85,7 +85,7 @@ msgid "TV Shows"
 msgstr ""
 
 msgctxt "#32017"
-msgid "PVR"
+msgid "Live TV"
 msgstr ""
 
 msgctxt "#32018"
@@ -105,7 +105,7 @@ msgid "Programs"
 msgstr ""
 
 msgctxt "#32022"
-msgid "PVR"
+msgid "Live TV"
 msgstr ""
 
 msgctxt "#32023"
@@ -333,15 +333,51 @@ msgid "Radio Channel"
 msgstr ""
 
 msgctxt "#32078"
-msgid "This source contains..."
+msgid "Display..."
 msgstr ""
 
 msgctxt "#32079"
-msgid "Content not in library"
+msgid "Files view"
 msgstr ""
 
 #. ::MENUNAME:: is used internally and should NOT be translated :)
 
 msgctxt "#32080"
 msgid "Edit ::MENUNAME:: Submenu"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr ""
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Picture Source"
 msgstr ""

@@ -111,3 +111,7 @@ msgstr "תצוגה"
 msgctxt "#32062"
 msgid "Play"
 msgstr "שחק"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "מקורות"

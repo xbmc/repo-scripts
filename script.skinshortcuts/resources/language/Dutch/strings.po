@@ -269,5 +269,69 @@ msgid "Play"
 msgstr "Afspelen"
 
 msgctxt "#32063"
-msgid "Getting plugin directory listing..."
-msgstr "Verkrijgen plug-in locatie lijsting..."
+msgid "Getting directory listing..."
+msgstr "verkrijgen locatielijst..."
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "Geen snelkoppelingen"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "Er zijn geen snelkoppelingen beschikbaar voor de categorie die je kiest."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Laatste TV kanaal"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Laatste Radiokanaal"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Laatste kanaal"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Videobron"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Aanpassen startmenu"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Aanpassen submenu"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Muziek bron"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Bibliotheek bronnen"
+
+msgctxt "#32075"
+msgid "Sources"
+msgstr "Bronnen"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "TV Kanaal"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Radio Kanaal"
+
+msgctxt "#32078"
+msgid "This source contains..."
+msgstr "Deze bron bevat..."
+
+msgctxt "#32079"
+msgid "Content not in library"
+msgstr "Content niet in bibliotheek"

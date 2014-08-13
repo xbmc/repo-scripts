@@ -48,6 +48,10 @@ msgctxt "#32021"
 msgid "Programs"
 msgstr "Programmas"
 
+msgctxt "#32050"
+msgid "Default"
+msgstr "Noklusējums"
+
 msgctxt "#32061"
 msgid "Display"
 msgstr "Attēls"
