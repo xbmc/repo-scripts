@@ -1,0 +1,24 @@
+1.2.1
+	- Decode parsed result & improved subtitle sorting
+	- Added basic exception handling
+
+1.2.0
+	- Rewrote parts of the add-on & tweaked subtitle sorting: Synced subtitles will now appear on top of the list
+
+1.1.1
+	- Tweaking searching for TV-shows
+	- Added basic sync check
+	- Decode HTML entities in search results
+
+1.1.0
+	- Code cleanup & added support for English subtitles
+
+1.0.1
+	- Fixed addon.xml
+	- Changed folder structure
+	- Added proper debug logging
+	- Some minor fixes
+	- Fixed indentation: Now using spaces instead of tabs
+
+1.0.0
+	- Initial release
