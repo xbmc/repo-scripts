@@ -46,6 +46,10 @@ def clean_title(item):
     item["title"] = unicode(os.path.splitext(item["title"])[0], "utf-8")
     item["tvshow"] = unicode(os.path.splitext(item["tvshow"])[0], "utf-8")
 
+    # Removes country identifier at the end
+    item["title"] = re.sub(r'\([^\)]+\)\W*$', '', item["title"])
+    item["tvshow"] = re.sub(r'\([^\)]+\)\W*$', '', item["tvshow"])
+
 
 def parse_rls_title(item):
     item["title"] = regexHelper.sub(' ', item["title"])
@@ -117,7 +121,7 @@ class SubscenterHelper:
             if search_result is None:
                 return results  # return empty set
 
-            urls = re.findall(u'<a href=".*/he/subtitle/(movie|series)/([^/]+)/">([^/]+) / ([^<]+)</a>', search_result)
+            urls = re.findall(u'<a href=".*/he/subtitle/(movie|series)/([^/]+)/">(.*) / ([^<]+)</a>', search_result)
             years = re.findall(u'<span class="special">[^:]+: </span>(\d{4}).<br />', search_result)
             for i, url in enumerate(urls):
                 year = years[i] if len(years) > i else ''

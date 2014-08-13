@@ -1,3 +1,7 @@
+3.2.3 - by CaTz 12/08/2014
+- Bug fix with the site searching
+- Removes country identifier at the end of the title
+
 3.2.2 - by CaTz 18/05/2014
 - Bug fix with manual search
 
