@@ -1,5 +1,8 @@
+v2.0.2
+- change name to screensaver.picture.slideshow
+
 v2.0.1
-- broken in favour of screensaver.picture.slideshow
+- deprecate previous version
 
 v2.0.0
 - kodi name change

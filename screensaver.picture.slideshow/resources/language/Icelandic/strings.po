@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: Slideshow
+# Addon id: screensaver.xbmc.slideshow
+# Addon Provider: Team XBMC
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Icelandic (http://www.transifex.com/projects/p/xbmc-addons/language/is/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: is\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Uppspretta mynda"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Mappa"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Myndefnis Fanart"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Tónlistar Fanart"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Mynda mappa"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Birtustilling"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Óvirkt"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Einfalt"
