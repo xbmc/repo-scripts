@@ -14,6 +14,6 @@ msgstr ""
 
 #Swedish
 
-msgctxt "#24000"
+msgctxt "#32000"
 msgid "Subtitle search failed for language: %s"
 msgstr "Undertextssökning misslyckades för språk: %s"

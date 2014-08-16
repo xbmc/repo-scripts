@@ -1,3 +1,9 @@
+1.2.2
+	- Code cleanup & dirty hack for extraction errors: Dirty hack for extraction errors until I figure out what causes it
+	- Updated string ID's in strings.po files
+	- Added support for preferred language
+	- Updated icon.png and logo.png
+
 1.2.1
 	- Decode parsed result & improved subtitle sorting
 	- Added basic exception handling

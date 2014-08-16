@@ -33,7 +33,7 @@ def basic_search(search_string, languages):
   for language in languages:
     try:
       results.extend(undertexter.search(search_string, language))
-    except:
+    except IOError, e:
       utils.log('Search failed: %s (%s)' % (search_string, language))
 
   return results
@@ -47,7 +47,7 @@ def episode_search(tv_show, languages):
   for language in languages:
     try:
       results.extend(undertexter.search(search_string, language))
-    except:
+    except IOError, e:
       utils.log('Search failed: %s (%s)' % (search_string, language))
 
   return results
@@ -57,7 +57,7 @@ def download(url):
 
   try:
     subtitles = undertexter.download(url)
-  except:
+  except IOError, e:
     utils.log('Download failed: %s' % url)
 
   return subtitles
@@ -67,10 +67,11 @@ parameters = utils.get_parameters()
 
 if parameters['action'] in ['search', 'manualsearch']:
   # Set some variables
-  search_string = parameters['searchstring'] if 'searchstring' in parameters else None
-  tv_show       = utils.normalize_string(xbmc.getInfoLabel('VideoPlayer.TVshowtitle')) or None
-  file_path     = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))
-  languages     = parameters['languages'].decode('utf-8').split(',')
+  search_string      = parameters['searchstring'] if 'searchstring' in parameters else None
+  tv_show            = utils.normalize_string(xbmc.getInfoLabel('VideoPlayer.TVshowtitle')) or None
+  file_path          = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))
+  languages          = parameters['languages'].decode('utf-8').split(',')
+  preferred_language = parameters['preferredlanguage'] if 'preferredlanguage' in parameters else None
 
   # If not manual search or a TV-show, use title as search string
   if not search_string and not tv_show:
@@ -121,7 +122,7 @@ if parameters['action'] in ['search', 'manualsearch']:
           result['sync'] = False
 
     # Sort results by priority and sync
-    results.sort(key=lambda x: (not x['sync'], not x['priority'], not x['name'][:1].isalpha(), x['name']))
+    results.sort(key=lambda x: (not x['sync'], not x['language'] == preferred_language, not x['priority'], not x['name'][:1].isalpha(), x['name']))
 
     # Loop through all results and add to list
     for result in results:

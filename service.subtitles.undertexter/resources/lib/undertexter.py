@@ -42,6 +42,11 @@ SUBTITLE_EXTENSIONS = [
   '.srt', '.sub', '.txt', '.smi', '.ssa', '.ass'
 ]
 
+ARCHIVE_EXTENSIONS = {
+  '.rar' : 'Rar!',
+  '.zip' : 'PK'
+}
+
 def search(search_string, language):
   results     = []
   html_parser = HTMLParser.HTMLParser()
@@ -86,7 +91,18 @@ def download(url):
   content = utils.get_url(url)
 
   if content:
-    path = os.path.join(__temp__, 'subtitle.tmp')
+    # Check if downloaded file is an archive
+    for extension, header in ARCHIVE_EXTENSIONS.items():
+      if content.startswith(header):
+        utils.log('Got archive (%s)' % extension)
+
+        path = os.path.join(__temp__, 'subtitle%s' % extension)
+
+    # Else assume it's a .srt file
+    if not path:
+      utils.log('Got unknown type (Assuming .srt)')
+
+      path = os.path.join(__temp__, 'subtitle.srt')
 
     # Write content to local file
     utils.log('Writing to local file: %s' % path)
@@ -94,42 +110,19 @@ def download(url):
     with open(path, 'wb') as file_handle:
       file_handle.write(content)
 
-    # Determine type of downloaded file
-    utils.log('Opening temporary file for reading: %s' % path)
-
-    with open(path, 'rb') as file_handle:
-      file_handle.seek(0)
-
-      # Get file header
-      header = file_handle.read(4)
-
-      # Archive or not?
-      if header == 'Rar!':
-        utils.log('Got archive (.rar)')
-
-        path = os.path.join(__temp__, 'subtitle.rar')
-      elif header[:2] == 'PK':
-        utils.log('Got archive (.zip)')
-
-        path = os.path.join(__temp__, 'subtitle.zip')
-      else:
-        utils.log('Unknown type (Assuming .srt)')
-
-        path = os.path.join(__temp__, 'subtitle.srt')
-
-    file_handle.close()
-
-    # Rename file
-    utils.log('Renaming file')
-
-    os.rename(os.path.join(__temp__, 'subtitle.tmp'), path)
-
     # Extract if archive
-    if os.path.splitext(path)[1] in ['.rar', '.zip']:
+    if os.path.splitext(path)[1] in ARCHIVE_EXTENSIONS:
       utils.log('Extracting archive: %s' % path)
 
-      #xbmc.sleep(500)
-      xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (path, __temp__)).encode('utf-8'), True)
+      # Dirty hack for archive extraction errors until I figure out what causes it
+      for attempt in range(0, 3):
+        #xbmc.sleep(500)
+        xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (path, __temp__)).encode('utf-8'), True)
+
+        if len(xbmcvfs.listdir(__temp__)[1]) > 1:
+          break
+
+        utils.log('Archive extraction failed (Trying again): %s' % path)
 
     # Get files with correct extension
     for subtitle in xbmcvfs.listdir(__temp__)[1]:
