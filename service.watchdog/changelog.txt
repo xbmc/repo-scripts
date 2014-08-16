@@ -1,3 +1,6 @@
+[B]0.8.1[/B]
+- added startup delay setting
+
 [B]0.8.0[/B]
 - added settings for manually selecting folders to watch
 - added setting for changing network polling interval

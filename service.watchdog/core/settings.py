@@ -23,6 +23,7 @@ POLLING_METHOD = int(ADDON.getSetting('pollingmethod'))
 POLLING_INTERVAL = int("0"+ADDON.getSetting('pollinginterval')) or 4
 RECURSIVE = not (ADDON.getSetting('nonrecursive') == 'true') or not POLLING
 SCAN_DELAY = int("0"+ADDON.getSetting('delay')) or 1
+STARTUP_DELAY = int("0"+ADDON.getSetting('startupdelay'))
 PAUSE_ON_PLAYBACK = ADDON.getSetting('pauseonplayback') == 'true'
 FORCE_GLOBAL_SCAN = ADDON.getSetting('forceglobalscan') == 'true'
 SHOW_NOTIFICATIONS = ADDON.getSetting('notifications') == 'true'

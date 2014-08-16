@@ -146,8 +146,16 @@ class EventHandler(threading.Thread, FileSystemEventHandler):
 def main():
     progress = xbmcgui.DialogProgressBG()
     progress.create("Watchdog starting. Please wait...")
-    sources = []
 
+    if settings.STARTUP_DELAY > 0:
+        log("waiting for user delay of %d seconds" % settings.STARTUP_DELAY)
+        msg = "Delaying startup by %d seconds."
+        progress.update(0, message=msg % settings.STARTUP_DELAY)
+        xbmc.sleep(settings.STARTUP_DELAY * 1000)
+        if xbmc.abortRequested:
+            return
+
+    sources = []
     video_sources = settings.VIDEO_SOURCES
     sources.extend(zip(repeat('video'), video_sources))
     log("video sources %s" % video_sources)

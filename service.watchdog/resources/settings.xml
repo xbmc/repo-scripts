@@ -28,6 +28,7 @@
         <setting label="30012" id="pollingmethod" type="select" lvalues="30013|30014|30015" default="2"/>
         <setting label="30020" id="pollinginterval" type="number" default="4"/>
         <setting label="30010" id="delay" type="number" default="1"/>
+        <setting label="30009" id="startupdelay" type="number" default="0"/>
         <setting label="30017" id="forceglobalscan" type="bool" default="false"/>
         <setting label="30018" type="lsep"/>
     </category>
