@@ -1,0 +1,43 @@
+
+** 14.810.0 ***
+
+Update youtube-dl core to 2014.08.10
+Initial submission to official repository
+
+*** 14.624.0 ***
+
+Update youtube-dl core to 2014.06.24.1
+
+*** 14.519.1 ***
+
+Added argument resolve_redirects=False to getVideoInfo() and mightHaveVideo()
+
+*** 14.519.0 ***
+
+Update youtube-dl core
+
+*** 14.304.1 ***
+
+Use default User-Agent from youtube_dl module when creating xbmc url for rtmp streams - fix by: hojel (Hoje Lee)
+
+*** 14.304.0 ***
+
+Now uses VideoInfo object for item selection and for format selection when downloading
+
+*** 14.227.1 ***
+
+Separate out utility functions
+Fix for some sites with only one format causing errors
+
+*** 14.227.0 ***
+
+DownloadResult now includes filepath
+Added ability to select video and format
+
+*** 14.225.1 ***
+
+Added the ability to download videos
+
+*** 14.225.0 ***
+
+Initial beta release
