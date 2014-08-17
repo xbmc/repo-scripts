@@ -4,7 +4,14 @@ various contributors:
 Development Lead
 ````````````````
 
-- Kenneth Reitz <me@kennethreitz.com>
+- Kenneth Reitz <me@kennethreitz.org> `@kennethreitz <https://github.com/kennethreitz>`_
+
+Core Contributors
+`````````````````
+
+- Cory Benfield <cory@lukasa.co.uk> `@lukasa <https://github.com/lukasa>`_
+- Ian Cordasco <graffatcolmingov@gmail.com> `@sigmavirus24 <https://github.com/sigmavirus24>`_
+
 
 
 Urllib3
@@ -80,7 +87,6 @@ Patches and Suggestions
 - David Kemp
 - Brendon Crawford
 - Denis (Telofy)
-- Cory Benfield (Lukasa)
 - Matt Giuca
 - Adam Tauber
 - Honza Javorek
@@ -111,7 +117,6 @@ Patches and Suggestions
 - Leila Muhtasib
 - Matthias Rahlf <matthias@webding.de>
 - Jakub Roztocil <jakub@roztocil.name>
-- Ian Cordasco <graffatcolmingov@gmail.com> @sigmavirus24
 - Rhys Elsmore
 - André Graf (dergraf)
 - Stephen Zhuang (everbird)
@@ -119,3 +124,31 @@ Patches and Suggestions
 - Jonatan Heyman
 - David Bonner <dbonner@gmail.com> @rascalking
 - Vinod Chandru
+- Johnny Goodnow <j.goodnow29@gmail.com>
+- Denis Ryzhkov <denisr@denisr.com>
+- Wilfred Hughes <me@wilfred.me.uk> @dontYetKnow
+- Dmitry Medvinsky <me@dmedvinsky.name>
+- Bryce Boe <bbzbryce@gmail.com> @bboe
+- Colin Dunklau <colin.dunklau@gmail.com> @cdunklau
+- Bob Carroll <bob.carroll@alum.rit.edu> @rcarz
+- Hugo Osvaldo Barrera <hugo@osvaldobarrera.com.ar> @hobarrera
+- Łukasz Langa <lukasz@langa.pl> @llanga
+- Dave Shawley <daveshawley@gmail.com>
+- James Clarke (jam)
+- Kevin Burke <kev@inburke.com>
+- Flavio Curella
+- David Pursehouse <david.pursehouse@gmail.com> @dpursehouse
+- Jon Parise
+- Alexander Karpinsky @homm86
+- Marc Schlaich @schlamar
+- Park Ilsu <daftonshady@gmail.com> @daftshady
+- Matt Spitz @mattspitz
+- Vikram Oberoi @voberoi
+- Can Ibanoglu <can.ibanoglu@gmail.com> @canibanoglu
+- Thomas Weißschuh <thomas@t-8ch.de> @t-8ch
+- Jayson Vantuyl <jayson@aggressive.ly> @kagato
+- Pengfei.X <pengphy@gmail.com>
+- Kamil Madac <kamil.madac@gmail.com>
+- Michael Becker <mike@beckerfuffle.com> @beckerfuffle
+- Erik Wickstrom <erik@erikwickstrom.com> @erikwickstrom
+- Константин Подшумок @podshumok

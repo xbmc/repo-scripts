@@ -26,7 +26,7 @@ def request(method, url, **kwargs):
     :param cookies: (optional) Dict or CookieJar object to send with the :class:`Request`.
     :param files: (optional) Dictionary of 'name': file-like-objects (or {'name': ('filename', fileobj)}) for multipart encoding upload.
     :param auth: (optional) Auth tuple to enable Basic/Digest/Custom HTTP Auth.
-    :param timeout: (optional) Float describing the timeout of the request.
+    :param timeout: (optional) Float describing the timeout of the request in seconds.
     :param allow_redirects: (optional) Boolean. Set to True if POST/PUT/DELETE redirect following is allowed.
     :param proxies: (optional) Dictionary mapping protocol to the URL of the proxy.
     :param verify: (optional) if ``True``, the SSL cert will be verified. A CA_BUNDLE path can also be provided.
@@ -73,6 +73,7 @@ def head(url, **kwargs):
     :param \*\*kwargs: Optional arguments that ``request`` takes.
     """
 
+    kwargs.setdefault('allow_redirects', False)
     return request('head', url, **kwargs)
 
 

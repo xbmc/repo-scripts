@@ -1,7 +1,197 @@
 .. :changelog:
 
-History
--------
+Release History
+---------------
+
+2.3.0 (2014-05-16)
+++++++++++++++++++
+
+**API Changes**
+
+- New ``Response`` property ``is_redirect``, which is true when the
+  library could have processed this response as a redirection (whether
+  or not it actually did).
+- The ``timeout`` parameter now affects requests with both ``stream=True`` and
+  ``stream=False`` equally.
+- The change in v2.0.0 to mandate explicit proxy schemes has been reverted.
+  Proxy schemes now default to ``http://``.
+- The ``CaseInsensitiveDict`` used for HTTP headers now behaves like a normal
+  dictionary when references as string or viewd in the interpreter.
+
+**Bugfixes**
+
+- No longer expose Authorization or Proxy-Authorization headers on redirect.
+  Fix CVE-2014-1829 and CVE-2014-1830 respectively.
+- Authorization is re-evaluated each redirect.
+- On redirect, pass url as native strings.
+- Fall-back to autodetected encoding for JSON when Unicode detection fails.
+- Headers set to ``None`` on the ``Session`` are now correctly not sent.
+- Correctly honor ``decode_unicode`` even if it wasn't used earlier in the same
+  response.
+- Stop advertising ``compress`` as a supported Content-Encoding.
+- The ``Response.history`` parameter is now always a list.
+- Many, many ``urllib3`` bugfixes.
+
+2.2.1 (2014-01-23)
+++++++++++++++++++
+
+**Bugfixes**
+
+- Fixes incorrect parsing of proxy credentials that contain a literal or encoded '#' character.
+- Assorted urllib3 fixes.
+
+2.2.0 (2014-01-09)
+++++++++++++++++++
+
+**API Changes**
+
+- New exception: ``ContentDecodingError``. Raised instead of ``urllib3``
+  ``DecodeError`` exceptions.
+
+**Bugfixes**
+
+- Avoid many many exceptions from the buggy implementation of ``proxy_bypass`` on OS X in Python 2.6.
+- Avoid crashing when attempting to get authentication credentials from ~/.netrc when running as a user without a home directory.
+- Use the correct pool size for pools of connections to proxies.
+- Fix iteration of ``CookieJar`` objects.
+- Ensure that cookies are persisted over redirect.
+- Switch back to using chardet, since it has merged with charade.
+
+2.1.0 (2013-12-05)
+++++++++++++++++++
+
+- Updated CA Bundle, of course.
+- Cookies set on individual Requests through a ``Session`` (e.g. via ``Session.get()``) are no longer persisted to the ``Session``.
+- Clean up connections when we hit problems during chunked upload, rather than leaking them.
+- Return connections to the pool when a chunked upload is successful, rather than leaking it.
+- Match the HTTPbis recommendation for HTTP 301 redirects.
+- Prevent hanging when using streaming uploads and Digest Auth when a 401 is received.
+- Values of headers set by Requests are now always the native string type.
+- Fix previously broken SNI support.
+- Fix accessing HTTP proxies using proxy authentication.
+- Unencode HTTP Basic usernames and passwords extracted from URLs.
+- Support for IP address ranges for no_proxy environment variable
+- Parse headers correctly when users override the default ``Host:`` header.
+- Avoid munging the URL in case of case-sensitive servers.
+- Looser URL handling for non-HTTP/HTTPS urls.
+- Accept unicode methods in Python 2.6 and 2.7.
+- More resilient cookie handling.
+- Make ``Response`` objects pickleable.
+- Actually added MD5-sess to Digest Auth instead of pretending to like last time.
+- Updated internal urllib3.
+- Fixed @Lukasa's lack of taste.
+
+2.0.1 (2013-10-24)
+++++++++++++++++++
+
+- Updated included CA Bundle with new mistrusts and automated process for the future
+- Added MD5-sess to Digest Auth
+- Accept per-file headers in multipart file POST messages.
+- Fixed: Don't send the full URL on CONNECT messages.
+- Fixed: Correctly lowercase a redirect scheme.
+- Fixed: Cookies not persisted when set via functional API.
+- Fixed: Translate urllib3 ProxyError into a requests ProxyError derived from ConnectionError.
+- Updated internal urllib3 and chardet.
+
+2.0.0 (2013-09-24)
+++++++++++++++++++
+
+**API Changes:**
+
+- Keys in the Headers dictionary are now native strings on all Python versions,
+  i.e. bytestrings on Python 2, unicode on Python 3.
+- Proxy URLs now *must* have an explicit scheme. A ``MissingSchema`` exception
+  will be raised if they don't.
+- Timeouts now apply to read time if ``Stream=False``.
+- ``RequestException`` is now a subclass of ``IOError``, not ``RuntimeError``.
+- Added new method to ``PreparedRequest`` objects: ``PreparedRequest.copy()``.
+- Added new method to ``Session`` objects: ``Session.update_request()``. This
+  method updates a ``Request`` object with the data (e.g. cookies) stored on
+  the ``Session``.
+- Added new method to ``Session`` objects: ``Session.prepare_request()``. This
+  method updates and prepares a ``Request`` object, and returns the
+  corresponding ``PreparedRequest`` object.
+- Added new method to ``HTTPAdapter`` objects: ``HTTPAdapter.proxy_headers()``.
+  This should not be called directly, but improves the subclass interface.
+- ``httplib.IncompleteRead`` exceptions caused by incorrect chunked encoding
+  will now raise a Requests ``ChunkedEncodingError`` instead.
+- Invalid percent-escape sequences now cause a Requests ``InvalidURL``
+  exception to be raised.
+- HTTP 208 no longer uses reason phrase ``"im_used"``. Correctly uses
+  ``"already_reported"``.
+- HTTP 226 reason added (``"im_used"``).
+
+**Bugfixes:**
+
+- Vastly improved proxy support, including the CONNECT verb. Special thanks to
+  the many contributors who worked towards this improvement.
+- Cookies are now properly managed when 401 authentication responses are
+  received.
+- Chunked encoding fixes.
+- Support for mixed case schemes.
+- Better handling of streaming downloads.
+- Retrieve environment proxies from more locations.
+- Minor cookies fixes.
+- Improved redirect behaviour.
+- Improved streaming behaviour, particularly for compressed data.
+- Miscellaneous small Python 3 text encoding bugs.
+- ``.netrc`` no longer overrides explicit auth.
+- Cookies set by hooks are now correctly persisted on Sessions.
+- Fix problem with cookies that specify port numbers in their host field.
+- ``BytesIO`` can be used to perform streaming uploads.
+- More generous parsing of the ``no_proxy`` environment variable.
+- Non-string objects can be passed in data values alongside files.
+
+1.2.3 (2013-05-25)
+++++++++++++++++++
+
+- Simple packaging fix
+
+
+1.2.2 (2013-05-23)
+++++++++++++++++++
+
+- Simple packaging fix
+
+
+1.2.1 (2013-05-20)
+++++++++++++++++++
+
+- 301 and 302 redirects now change the verb to GET for all verbs, not just
+  POST, improving browser compatibility.
+- Python 3.3.2 compatibility
+- Always percent-encode location headers
+- Fix connection adapter matching to be most-specific first
+- new argument to the default connection adapter for passing a block argument
+- prevent a KeyError when there's no link headers
+
+1.2.0 (2013-03-31)
+++++++++++++++++++
+
+- Fixed cookies on sessions and on requests
+- Significantly change how hooks are dispatched - hooks now receive all the
+  arguments specified by the user when making a request so hooks can make a
+  secondary request with the same parameters. This is especially necessary for
+  authentication handler authors
+- certifi support was removed
+- Fixed bug where using OAuth 1 with body ``signature_type`` sent no data
+- Major proxy work thanks to @Lukasa including parsing of proxy authentication
+  from the proxy url
+- Fix DigestAuth handling too many 401s
+- Update vendored urllib3 to include SSL bug fixes
+- Allow keyword arguments to be passed to ``json.loads()`` via the
+  ``Response.json()`` method
+- Don't send ``Content-Length`` header by default on ``GET`` or ``HEAD``
+  requests
+- Add ``elapsed`` attribute to ``Response`` objects to time how long a request
+  took.
+- Fix ``RequestsCookieJar``
+- Sessions and Adapters are now picklable, i.e., can be used with the
+  multiprocessing library
+- Update charade to version 1.0.3
+
+The change in how hooks are dispatched will likely cause a great deal of
+issues.
 
 1.1.0 (2013-01-10)
 ++++++++++++++++++
@@ -40,7 +230,7 @@ History
 - /s/prefetch/stream
 - Removal of all configuration
 - Standard library logging
-- Make Reponse.json() callable, not property.
+- Make Response.json() callable, not property.
 - Usage of new charade project, which provides python 2 and 3 simultaneous chardet.
 - Removal of all hooks except 'response'
 - Removal of all authentication helpers (OAuth, Kerberos)
@@ -575,10 +765,10 @@ This is not a backwards compatible change.
 ++++++++++++++++++
 
 * New HTTPHandling Methods
-    - Reponse.__nonzero__ (false if bad HTTP Status)
+    - Response.__nonzero__ (false if bad HTTP Status)
     - Response.ok (True if expected HTTP Status)
     - Response.error (Logged HTTPError if bad HTTP Status)
-    - Reponse.raise_for_status() (Raises stored HTTPError)
+    - Response.raise_for_status() (Raises stored HTTPError)
 
 
 0.2.2 (2011-02-14)
