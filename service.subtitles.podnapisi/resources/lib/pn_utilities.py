@@ -23,6 +23,7 @@ __scriptname__ = sys.modules[ "__main__" ].__scriptname__
 __version__    = sys.modules[ "__main__" ].__version__
 __cwd__        = sys.modules[ "__main__" ].__cwd__
 __language__   = sys.modules[ "__main__" ].__language__
+__scriptid__   = sys.modules[ "__main__" ].__scriptid__
 
 USER_AGENT = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
 
@@ -113,7 +114,7 @@ def hashFile(file_path, rar=False):
     if rar:
       return OpensubtitlesHashRar(file_path)
       
-    log( __name__,"Hash Standard file")  
+    log( __scriptid__,"Hash Standard file")  
     longlongformat = 'q'  # long long
     bytesize = struct.calcsize(longlongformat)
     f = xbmcvfs.File(file_path)
@@ -192,20 +193,12 @@ class OSDBServer:
   def searchsubtitlesbyname_pod( self, name, tvshow, season, episode, lang, year, stack ):
     if len(tvshow) > 1:
       name = tvshow
-    search_url=[]              
-    search_url_base = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1&lang=0" % (name.replace(" ","+"), "%s", str(year), str(season), str(episode))
     
-    subtitles = None
+    url = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1&lang=0" % (name.replace(" ","+"), ','.join(lang), str(year), str(season), str(episode))
+    log( __scriptid__ ,"Search URL - %s" % (url))
     
-    for i in range(len(lang)):
-      url = search_url_base % str(lang[i])
-      log( __name__ ,"%s - Language %i" % (url,i))
-      temp_subs = self.fetch(url)
-      if temp_subs:
-        if subtitles:
-          subtitles = subtitles + temp_subs
-        else:
-          subtitles = temp_subs        
+    subtitles = self.fetch(url)
+         
     try:
       if subtitles:
         for subtitle in subtitles:
@@ -239,7 +232,7 @@ class OSDBServer:
       pod_session = init['session']
       auth = podserver.authenticate(pod_session, __addon__.getSetting( "PNuser" ), password256)
       if auth['status'] == 300: 
-        log( __name__ ,__language__(32005))
+        log( __scriptid__ ,__language__(32005))
         xbmc.executebuiltin(u'Notification(%s,%s,5000,%s)' %(__scriptname__,
                                                              __language__(32005),
                                                              os.path.join(__cwd__,"icon.png")

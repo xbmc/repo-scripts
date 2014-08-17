@@ -39,7 +39,7 @@ def Search( item ):
   else:
     try:
       file_size, SubHash = hashFile(item['file_original_path'], item['temp'])
-      log( __name__ ,"xbmc module hash and size")
+      log( __scriptid__ ,"xbmc module hash and size")
       hash_search = True
     except:  
       file_size   = ""
@@ -47,13 +47,13 @@ def Search( item ):
       hash_search = False
   
   if file_size != "" and SubHash != "":
-    log( __name__ ,"File Size [%s]" % file_size )
-    log( __name__ ,"File Hash [%s]" % SubHash)
+    log( __scriptid__ ,"File Size [%s]" % file_size )
+    log( __scriptid__ ,"File Hash [%s]" % SubHash)
   if hash_search :
-    log( __name__ ,"Search for [%s] by hash" % (os.path.basename( item['file_original_path'] ),))
+    log( __scriptid__ ,"Search for [%s] by hash" % (os.path.basename( item['file_original_path'] ),))
     subtitles_list = osdb_server.searchsubtitles_pod( SubHash ,item['3let_language'], False)
   if not subtitles_list:
-    log( __name__ ,"Search for [%s] by name" % (os.path.basename( item['file_original_path'] ),))
+    log( __scriptid__ ,"Search for [%s] by name" % (os.path.basename( item['file_original_path'] ),))
     subtitles_list = osdb_server.searchsubtitlesbyname_pod(item['title'],
                                                            item['tvshow'],
                                                            item['season'],
@@ -88,7 +88,7 @@ def Download(url,filename):
   subtitle_list = []
 
   try:
-    log( __name__ ,"Extract using 'ZipFile' method")
+    log( __scriptid__ ,"Extract using 'ZipFile' method")
     response = urllib2.urlopen(url)
     raw = response.read()      
     archive = ZipFile(StringIO(raw), 'r')
@@ -111,7 +111,7 @@ def Download(url,filename):
       subtitle_list.append(dest)
       index += 1
   except:
-    log( __name__ ,"Extract using 'XBMC.Extract' method")
+    log( __scriptid__ ,"Extract using 'XBMC.Extract' method")
     exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass" ]
     zip = os.path.join( __temp__, "PN.zip")
     f = urllib.urlopen(url)
@@ -152,7 +152,7 @@ def get_params(string=""):
 params = get_params()
 
 if params['action'] == 'search':
-  log( __name__, "action 'search' called")
+  log( __scriptid__, "action 'search' called")
   item = {}
   item['temp']               = False
   item['rar']                = False
@@ -168,7 +168,7 @@ if params['action'] == 'search':
     item['3let_language'].append(languageTranslate(lang,0,1))
   
   if item['title'] == "":
-    log( __name__, "VideoPlayer.OriginalTitle not found")
+    log( __scriptid__, "VideoPlayer.OriginalTitle not found")
     item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
     
   if item['episode'].lower().find("s") > -1:                                      # Check if season is "Special"

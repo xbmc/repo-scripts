@@ -1,3 +1,7 @@
+5.0.8
+- cleanup logging
+- simplify search for multiple languages, its possible to send all 3 languages in one search query
+
 5.0.7
 - cleanup, notify if login fails
 
