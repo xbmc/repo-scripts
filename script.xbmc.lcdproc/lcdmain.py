@@ -32,7 +32,7 @@ __icon__       = os.path.join(__cwd__,"icon.png")
 __scriptname__ = "XBMC LCDproc"
 
 BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) )
-sys.path.append (BASE_RESOURCE_PATH)
+sys.path.insert(0, BASE_RESOURCE_PATH)
 
 from settings import *
 from lcdproc import *

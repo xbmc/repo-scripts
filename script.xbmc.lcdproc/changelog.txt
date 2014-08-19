@@ -1,3 +1,7 @@
+2.5.1
+- Fix name conflict with the LCDproc PyEgg
+- Split setup command list loop to initialise hbars before icons, fixes progress bars not being shown if placed after any icons on RasbPi
+- Fix charset encoding exceptions on LCD.xml load if it contains UTF8 chars
 2.5.0 (Gotham)
 - Initial version for XBMC Gotham with updated dependencies
 - BBcode tags are stripped before sending content to the display (reported to happen on e.g. OpenELEC)

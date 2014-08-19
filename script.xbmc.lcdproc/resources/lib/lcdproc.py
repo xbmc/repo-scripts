@@ -161,7 +161,7 @@ class LCDProc(LcdBase):
     # Initialize command list var
     strInitCommandList = ""
 
-    # Setup widgets
+    # Setup widgets (scrollers and hbars first)
     for i in range(1,int(self.m_iRows)+1):
       # Text widgets
       strInitCommandList += "widget_add xbmc lineScroller" + str(i) + " scroller\n"
@@ -172,14 +172,17 @@ class LCDProc(LcdBase):
       # Reset bars to zero
       strInitCommandList += "widget_set xbmc lineProgress" + str(i) + " 0 0 0\n"
 
+      self.m_strLineText[i-1] = ""
+      self.m_strLineType[i-1] = ""
+
+    # Setup icons last
+    for i in range(1,int(self.m_iRows)+1):
       # Icons
       strInitCommandList += "widget_add xbmc lineIcon" + str(i) + " icon\n"
 
       # Default icon
       strInitCommandList += "widget_set xbmc lineIcon" + str(i) + " 0 0 BLOCK_FILLED\n"
 
-      self.m_strLineText[i-1] = ""
-      self.m_strLineType[i-1] = ""
       self.m_strLineIcon[i-1] = ""
 
     for i in range(1,int(self.m_iBigDigits + 1)):

@@ -389,7 +389,8 @@ class LcdBase():
       if line.text == None:
         linetext = ""
       else:
-        linetext = str(line.text).strip()
+        # prepare text line for XBMC's expected encoding
+        linetext = line.text.strip().encode(self.m_strInfoLabelEncoding, "ignore")
       
       # make sure linetext has something so re.match won't fail
       if linetext != "":
@@ -405,7 +406,7 @@ class LcdBase():
           return
 
       # progressbar line if InfoLabel exists
-      if str(linetext).lower().find("$info[lcd.progressbar]") >= 0:
+      if linetext.lower().find("$info[lcd.progressbar]") >= 0:
         linedescriptor['type'] = LCD_LINETYPE.LCD_LINETYPE_PROGRESS
         linedescriptor['endx'] = int(self.m_iCellWidth) * int(self.m_iColumns)
 
@@ -415,32 +416,32 @@ class LcdBase():
           linedescriptor['endx'] = int(self.m_iCellWidth) * (int(self.GetColumns()) - 2)
 
       # textline with icon in front
-      elif str(linetext).lower().find("$info[lcd.playicon]") >= 0:
+      elif linetext.lower().find("$info[lcd.playicon]") >= 0:
         linedescriptor['type'] = LCD_LINETYPE.LCD_LINETYPE_ICONTEXT
         linedescriptor['startx'] = int(1 + self.m_iIconTextOffset) # icon widgets take 2 chars, so shift text offset (default: 2)
         # support Python < 2.7 (e.g. Debian Squeeze)
         if self.m_vPythonVersion < (2, 7):
-          linedescriptor['text'] = str(re.sub(r'\s?' + re.escape("$INFO[LCD.PlayIcon]") + '\s?', ' ', str(linetext))).strip()
+          linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.PlayIcon]") + '\s?', ' ', linetext).strip()
         else:
-          linedescriptor['text'] = str(re.sub(r'\s?' + re.escape("$INFO[LCD.PlayIcon]") + '\s?', ' ', str(linetext), flags=re.IGNORECASE)).strip()
+          linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.PlayIcon]") + '\s?', ' ', linetext, flags=re.IGNORECASE).strip()
 
       # standard (scrolling) text line
       else:
         linedescriptor['type'] = LCD_LINETYPE.LCD_LINETYPE_TEXT
-        linedescriptor['text'] = str(linetext)
+        linedescriptor['text'] = linetext
 
       # check for alignment pseudo-labels
-      if str(linetext).lower().find("$info[lcd.aligncenter]") >= 0:
+      if linetext.lower().find("$info[lcd.aligncenter]") >= 0:
         linedescriptor['align'] = LCD_LINEALIGN.LCD_LINEALIGN_CENTER
-      if str(linetext).lower().find("$info[lcd.alignright]") >= 0:
+      if linetext.lower().find("$info[lcd.alignright]") >= 0:
         linedescriptor['align'] = LCD_LINEALIGN.LCD_LINEALIGN_RIGHT
 
       if self.m_vPythonVersion < (2, 7):
-        linedescriptor['text'] = str(re.sub(r'\s?' + re.escape("$INFO[LCD.AlignCenter]") + '\s?', ' ', linedescriptor['text'])).strip()
-        linedescriptor['text'] = str(re.sub(r'\s?' + re.escape("$INFO[LCD.AlignRight]") + '\s?', ' ', linedescriptor['text'])).strip()
+        linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.AlignCenter]") + '\s?', ' ', linedescriptor['text']).strip()
+        linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.AlignRight]") + '\s?', ' ', linedescriptor['text']).strip()
       else:
-        linedescriptor['text'] = str(re.sub(r'\s?' + re.escape("$INFO[LCD.AlignCenter]") + '\s?', ' ', linedescriptor['text'], flags=re.IGNORECASE)).strip()
-        linedescriptor['text'] = str(re.sub(r'\s?' + re.escape("$INFO[LCD.AlignRight]") + '\s?', ' ', linedescriptor['text'], flags=re.IGNORECASE)).strip()
+        linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.AlignCenter]") + '\s?', ' ', linedescriptor['text'], flags=re.IGNORECASE).strip()
+        linedescriptor['text'] = re.sub(r'\s?' + re.escape("$INFO[LCD.AlignRight]") + '\s?', ' ', linedescriptor['text'], flags=re.IGNORECASE).strip()
 
       self.m_lcdMode[mode].append(linedescriptor)
 
