@@ -645,7 +645,7 @@ class ExtrasItem(BaseExtrasItem):
             self.totalDuration = returnData['totalDuration']
             self.watched = returnData['watched']
 
-    def createListItem(self, path="", parentTitle="", tvShowTitle=""):
+    def createListItem(self, path="", parentTitle="", tvShowTitle="", defaultIconImage=""):
         # Label2 is used to store the duration in HH:MM:SS format
         anItem = xbmcgui.ListItem(self.getDisplayName(), self.getDisplayDuration(), path=path)
         anItem.setProperty("FileName", self.getFilename())
@@ -675,6 +675,11 @@ class ExtrasItem(BaseExtrasItem):
             anItem.setIconImage(self.getIconImage())
         if self.getThumbnailImage() != "":
             anItem.setThumbnailImage(self.getThumbnailImage())
+
+        # Set the default image if available
+        if defaultIconImage != "":
+            if (self.getIconImage() == "") and (self.getThumbnailImage() == ""):
+                anItem.setIconImage(defaultIconImage)
 
         # The following two will give us the resume flag
         anItem.setProperty("TotalTime", str(self.getTotalDuration()))

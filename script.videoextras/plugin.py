@@ -121,7 +121,7 @@ class MenuNavigator():
                 li.setProperty("Fanart_Image", videoItem['fanart'])
             else:
                 videoItem['fanart'] = ""
-            url = self._build_url({'mode': 'listextras', 'foldername': target, 'path': videoItem['file'].encode("utf-8"), 'parentTitle': parentTitle, 'defaultFanArt': videoItem['fanart']})
+            url = self._build_url({'mode': 'listextras', 'foldername': target, 'path': videoItem['file'].encode("utf-8"), 'parentTitle': parentTitle, 'defaultFanArt': videoItem['fanart'], 'defaultIconImage': videoItem['thumbnail']})
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
@@ -178,7 +178,7 @@ class MenuNavigator():
         return False
 
     # Shows all the extras for a given movie or TV Show
-    def showExtras(self, path, target, extrasParentTitle="", extrasDefaultFanArt=""):
+    def showExtras(self, path, target, extrasParentTitle="", extrasDefaultFanArt="", extrasDefaultIconImage=""):
         # Check if the use database setting is enabled
         extrasDb = None
         if Settings.isDatabaseEnabled():
@@ -203,6 +203,12 @@ class MenuNavigator():
             if tvShowTitle != "":
                 anItem.setInfo('video', {'TvShowTitle': tvShowTitle})
 
+            if extrasParentTitle != "":
+                anItem.setInfo('video', {'Title': extrasParentTitle})
+
+            if extrasDefaultIconImage != "":
+                anItem.setIconImage(extrasDefaultIconImage)
+
             anItem.addContextMenuItems([], replaceItems=True)
             url = self._build_url({'mode': 'playallextras', 'foldername': target, 'path': path, 'parentTitle': extrasParentTitle})
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=anItem, isFolder=False)
@@ -210,7 +216,7 @@ class MenuNavigator():
         # Add each of the extras to the list to display
         for anExtra in files:
             # Create the list item
-            li = anExtra.createListItem(parentTitle=extrasParentTitle, tvShowTitle=tvShowTitle)
+            li = anExtra.createListItem(parentTitle=extrasParentTitle, tvShowTitle=tvShowTitle, defaultIconImage=extrasDefaultIconImage)
             # Hack, if the "TotalTime" and "ResumeTime" are set on the list item
             # and it is partially watched, then XBMC will display the continue dialog
             # However we can not get what the user selects from this dialog, so it
@@ -415,6 +421,7 @@ if __name__ == '__main__':
         foldername = args.get('foldername', None)
         parentTitle = args.get('parentTitle', None)
         defaultFanArt = args.get('defaultFanArt', None)
+        defaultIconImage = args.get('defaultIconImage', None)
 
         if (path is not None) and (len(path) > 0) and (foldername is not None) and (len(foldername) > 0):
             log("VideoExtrasPlugin: Path to load extras for %s" % path[0])
@@ -424,9 +431,12 @@ if __name__ == '__main__':
             extrasDefaultFanArt = ""
             if (defaultFanArt is not None) and (len(defaultFanArt) > 0):
                 extrasDefaultFanArt = defaultFanArt[0]
+            extrasDefaultIconImage = ""
+            if (defaultIconImage is not None) and (len(defaultIconImage) > 0):
+                extrasDefaultIconImage = defaultIconImage[0]
 
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.showExtras(path[0], foldername[0], extrasParentTitle, extrasDefaultFanArt)
+            menuNav.showExtras(path[0], foldername[0], extrasParentTitle, extrasDefaultFanArt, extrasDefaultIconImage)
 
     elif mode[0] == 'playallextras':
         log("VideoExtrasPlugin: Mode is PLAY ALL EXTRAS")

@@ -193,3 +193,7 @@ msgstr ""
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr ""
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr ""

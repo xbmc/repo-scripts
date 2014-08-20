@@ -113,7 +113,7 @@
 				<posx>95</posx>
 				<posy>78</posy>
 				<width>1080</width>
-				<height>561</height>
+				<height>511</height>
 				<onleft>60</onleft>
 				<onright>60</onright>
 				<onup>51</onup>
@@ -228,7 +228,7 @@
 				<posx>1170</posx>
 				<posy>80</posy>
 				<width>25</width>
-				<height>550</height>
+				<height>520</height>
 				<texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
 				<texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar.png</texturesliderbarfocus>
 				<onleft>51</onleft>
@@ -236,6 +236,41 @@
 				<showonepage>false</showonepage>
 				<orientation>vertical</orientation>
 				<visible>Control.IsVisible(51)</visible>
+			</control>
+		</control>
+		<control type="group">
+			<description>Plot: ScrollingDetails</description>
+			<posx>120</posx>
+			<posy>610</posy>
+			<width>1000</width>
+			<height>40</height>
+			<orientation>horizontal</orientation>
+			<align>left</align>
+			<itemgap>5</itemgap>
+			<visible>!IsEmpty(ListItem.Plot)</visible>
+			<control type="label">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width min="70" max="70">auto</width>
+				<font>font14</font>
+				<textcolor>FF0084ff</textcolor>
+				<selectedcolor>FFEB9E17</selectedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<label>$ADDON[script.videoextras 32113]:</label>
+			</control>
+			<control type="label">
+				<posy>0</posy>
+				<posx>70</posx>
+				<font>font14</font>
+				<textcolor>FF999999</textcolor>
+				<selectedcolor>FFEB9E17</selectedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<scroll>true</scroll>
+				<scrollsuffix>    -    </scrollsuffix>
+				<scrollspeed>50</scrollspeed>
+				<label>$INFO[ListItem.Plot]</label>
 			</control>
 		</control>
 	</controls>

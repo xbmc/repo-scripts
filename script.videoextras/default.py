@@ -113,7 +113,10 @@ class SourceDetails():
     @staticmethod
     def getFilenameAndPath():
         if SourceDetails.filenameAndPath is None:
-            SourceDetails.filenameAndPath = xbmc.getInfoLabel("ListItem.FilenameAndPath") + "Extras"
+            extrasDirName = Settings.getExtrasDirName()
+            if (extrasDirName is None) or (extrasDirName == ""):
+                extrasDirName = "Extras"
+            SourceDetails.filenameAndPath = "%s%s" % (xbmc.getInfoLabel("ListItem.FilenameAndPath"), extrasDirName)
         return SourceDetails.filenameAndPath
 
     @staticmethod
@@ -311,9 +314,16 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
 
         # Start by adding an option to Play All
         if len(self.files) > 0:
-            anItem = xbmcgui.ListItem(__addon__.getLocalizedString(32101))
+            anItem = xbmcgui.ListItem(__addon__.getLocalizedString(32101), path=SourceDetails.getFilenameAndPath())
             # Get the first items fanart for the play all option
             anItem.setProperty("Fanart_Image", self.files[0].getFanArt())
+
+            if SourceDetails.getTvShowTitle() != "":
+                anItem.setInfo('video', {'TvShowTitle': SourceDetails.getTvShowTitle()})
+
+            if SourceDetails.getTitle() != "":
+                anItem.setInfo('video', {'Title': SourceDetails.getTitle()})
+
             self.addItem(anItem)
 
         for anExtra in self.files:
