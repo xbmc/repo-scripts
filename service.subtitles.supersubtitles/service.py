@@ -39,7 +39,7 @@ __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
 BASE_URL = 'http://www.feliratok.info/index.php'
 
 TAGS = [
-    'WEB\-DL',
+    'WEB-DL',
     'PROPER',
     'REPACK'
 ]
@@ -186,36 +186,42 @@ def notification(id):
     )
 
 
-def get_showid(item):
-    ret = None
-    qparams = {'action': 'autoname', 'nyelv': '0', 'term': item['tvshow']}
-    datas = query_data(qparams)
-    if datas:
-        if item['year']:
-            year = str(item['year'])
-            for data in datas:
-                if year in data['name']:
-                    ret = data['ID']
-                    break
-        else:
-            ret = datas[0]['ID']
+def get_showids(item):
+    ret = []
+    pattern = r'^(?P<term>[^\(]*)(\s+\((\w{2,3})\))?$'
+    match = re.search(pattern, item['tvshow'], re.I)
+    if match:
+        term = match.group('term')
+        qparams = {'action': 'autoname', 'nyelv': '0', 'term': term}
+        datas = query_data(qparams)
+        if datas:
+            if item['year']:
+                year = str(item['year'])
+                for data in datas:
+                    if year in data['name']:
+                        ret.append(data['ID'])
+                        break
+            else:
+                ret = map(lambda x: x['ID'], datas)
 
-    if ret and '-100' in ret:
-        ret = None
+        if '-100' in ret:
+            ret = []
+
+    ret.sort(reverse=True)
 
     return ret
 
 
 def convert(item):
-    ret = {'filename': item['fnev'], 'name': item['nev'], 'language_hun': item['language'], 'id': item['felirat'],
-           'uploader': item['feltolto'], 'hearing': False, 'language_eng': lang_hun2eng(item['language'])}
+    ret = {'filename': item['fnev'], 'name': item['nev'].strip(), 'language_hun': item['language'], 'id': item['felirat'],
+           'uploader': item['feltolto'].strip(), 'hearing': False, 'language_eng': lang_hun2eng(item['language'])}
 
     score = int(item['pontos_talalat'], 2)
     ret['score'] = score
     ret['rating'] = str(score * 5 / 7)
     ret['sync'] = score >= 6
     ret['flag'] = xbmc.convertLanguage(ret['language_eng'], xbmc.ISO_639_1)
-    ret['seasonpack'] = bool(item['evadpakk'])
+    ret['seasonpack'] = item['evadpakk'] == '1'
 
     return ret
 
@@ -239,21 +245,21 @@ def remove_duplications(items):
     return ret.values()
 
 
-def search_subtitles(item):
-    if not item['season'] and not item['episode']:
-        debuglog("No season or episode info found for %s" % item['tvshow'])
-        return None
+def convert_and_filter(items, episode):
+    data = filter(lambda x: int(x['ep']) == int(item['episode']) or x['evadpakk'] == '1', items)
+    data = map(convert, data)
+    data = filter(lambda x: x['language_eng'] in item['languages'], data)
+    data = remove_duplications(data)
+    return data
 
-    showid = get_showid(item)
-    if not showid:
-        debuglog("No id found for %s" % item['tvshow'])
-        return None
 
-    qparams = {'action': 'xbmc', 'sid': showid, 'ev': item['season'], 'rtol': item['episode']};
+def search_subtitles_for_show(item, showid):
+    #qparams = {'action': 'xbmc', 'sid': showid, 'ev': item['season'], 'rtol': item['episode']};
+    qparams = {'action': 'xbmc', 'sid': showid, 'ev': item['season']}
 
     set_param_if_filename_contains(item, qparams, 'relj', TAGS)
     set_param_if_filename_contains(item, qparams, 'relf', QUALITIES)
-    set_param_if_filename_contains(item, qparams, 'relr', RELEASERS)
+    releaser = set_param_if_filename_contains(item, qparams, 'relr', RELEASERS)
 
     data = query_data(qparams)
 
@@ -265,15 +271,31 @@ def search_subtitles(item):
     if type(data) is dict:
         data = data.values()
 
+    searchlist = convert_and_filter(data, item['episode'])
+
+    searchlist.sort(key=lambda x: (x['score'], x['language_eng'] == item['preferredlanguage'], x['language_eng'],
+                                   releaser.lower() in x['filename'].lower() if releaser else x['filename']),
+                    reverse=True)
+
+    return searchlist
+
+
+def search_subtitles(item):
+    if not item['season'] and not item['episode']:
+        debuglog("No season or episode info found for %s" % item['tvshow'])
+        return None
+
+    showids = get_showids(item)
+    if not showids:
+        debuglog("No ids found for %s" % item['tvshow'])
+        return None
+
     searchlist = []
-    for st in data:
-        converted = convert(st)
-        if converted['language_eng'] in item['languages']:
-            searchlist.append(converted)
+    for showid in showids:
+        subtitles = search_subtitles_for_show(item, showid)
+        if subtitles:
+            searchlist.extend(subtitles)
 
-    searchlist = remove_duplications(searchlist)
-
-    searchlist.sort(key=lambda k: (k['score'], k['language_eng']), reverse=True)
     return searchlist
 
 
@@ -287,6 +309,10 @@ def search(item):
             index += 1
             #label="%s | %s | %s"%(it['name'], it['filename'], it['uploader'])
             label = "%s [%s]" % (it['filename'], it['uploader'])
+
+            if it['seasonpack']:
+                label += (' (%s)' % (__language__(32503)))
+
             listitem = xbmcgui.ListItem(label=it['language_eng'],
                                         label2=label,
                                         iconImage=it['rating'],
@@ -314,11 +340,18 @@ def extract(archive):
     basename = os.path.basename(archive).replace('.', '_')
     extracted = os.path.join(__temp__, basename)
     xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (archive, extracted)).encode('utf-8'), True)
-    return extracted
+
+    if xbmcvfs.exists(extracted):
+        return extracted
+    else:
+        errorlog('Error while extracting %s' % archive)
+        return None
+
 
 
 def download_file(item):
-    localfile = os.path.join(__temp__, item['filename'].decode("utf-8"))
+    filename = urllib.unquote_plus(item['filename'].decode("utf-8")).replace(' ', '_')
+    localfile = os.path.join(__temp__, filename)
     qparams = {'action': 'letolt', 'felirat': item['id']}
 
     response = send_request(qparams)
@@ -346,19 +379,34 @@ def is_match(item, filename):
     return False
 
 
+def recursive_search(path):
+    (dirs, files) = xbmcvfs.listdir(path)
+
+    if files:
+        for file in files:
+            file = os.path.join(path, file.decode('utf-8'))
+            filename = os.path.basename(file)
+            if is_match(item, filename):
+                return file
+
+    if dirs:
+        for dir in dirs:
+            file = recursive_search(os.path.join(path, dir.decode('utf-8')))
+            if file:
+                return file
+
+    return None
+
 def download(item):
     debuglog(item)
     subtitle = None
     downloaded = download_file(item)
 
     if is_archive(downloaded):
+        debuglog('Downloaded file is an archive')
         extracted = extract(downloaded)
-        for file in xbmcvfs.listdir(extracted)[1]:
-            file = os.path.join(extracted, file.decode('utf-8'))
-            filename = os.path.basename(file)
-            if is_match(item, filename):
-                subtitle = file
-                break
+        if extracted:
+            subtitle = recursive_search(extracted)
     else:
         subtitle = downloaded
 
@@ -448,10 +496,9 @@ params = get_params()
 debuglog(params)
 
 if params['action'] == 'search':
-    debuglog("action 'search' called")
     item = {'temp': False, 'rar': False, 'stack': False, 'year': xbmc.getInfoLabel("VideoPlayer.Year"),
             'title': normalize_string(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")),
-            'languages': []}
+            'languages': [], 'preferredlanguage': params.get('preferredlanguage')}
 
     for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
         item['languages'].append(lang)

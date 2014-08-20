@@ -21,3 +21,7 @@ msgstr ""
 msgctxt "#32502"
 msgid "Manual search not supported"
 msgstr ""
+
+msgctxt "#32503"
+msgid "Season pack"
+msgstr ""

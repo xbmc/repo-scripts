@@ -1,3 +1,14 @@
+0.0.15
+- same titled tvshow support
+- small fixes
+
+0.0.14
+- use preferred language for sorting (helix only)
+
+0.0.13
+- season pack handling
+- search and download improvements
+
 0.0.12
 - filename character encoding fix in url
 - more sophisticated exception handling
