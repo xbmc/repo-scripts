@@ -4,6 +4,13 @@
         "stable": [
             {
                 "major": "13",
+                "minor": "2",
+                "tag": "stable",
+                "revision": "20140817-0f3db05",
+                "extrainfo": "final"
+            },
+            {
+                "major": "13",
                 "minor": "1",
                 "tag": "stable",
                 "revision": "20140604-84725b0",
@@ -69,6 +76,13 @@
         "releasecandidate": [
             {
                 "major": "13",
+                "minor": "2",
+                "tag": "releasecandidate",
+                "revision": "20140808-e4a47cc",
+                "extrainfo": "RC1"
+            },
+            {
+                "major": "13",
                 "minor": "1",
                 "tag": "releasecandidate",
                 "revision": "20140525-4410736",
@@ -118,6 +132,27 @@
             }
         ],
         "beta": [
+            {
+                "major": "13",
+                "minor": "2",
+                "tag": "beta",
+                "revision": "20140802-6066a54",
+                "extrainfo": "beta3"
+            },
+            {
+                "major": "13",
+                "minor": "2",
+                "tag": "beta",
+                "revision": "20140719-6d3bb09",
+                "extrainfo": "beta2"
+            },
+            {
+                "major": "13",
+                "minor": "2",
+                "tag": "beta",
+                "revision": "20140711-450924a",
+                "extrainfo": "beta1"
+            },
             {
                 "major": "13",
                 "minor": "1",
@@ -213,6 +248,13 @@
         "alpha": [
         ],
         "prealpha": [
+            {
+                "major": "14",
+                "minor": "0",
+                "tag": "prealpha",
+                "revision": "20140801-62d01f6",
+                "extrainfo": "alpha2"
+            },
             {
                 "major": "13",
                 "minor": "0",

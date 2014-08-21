@@ -1,3 +1,11 @@
+v0.1.23
+- Update with 13.2 Gotham
+- Update with 13.2 Gotham rc1
+- Update with 13.2 Gotham beta3
+- Update with 13.2 Gotham beta2
+- Update with 13.2 Gotham beta1
+- Update with 14.0 Helix alpha2
+
 v0.1.22
 - Updated language files from Transifex
 - Update with 13.1 Gotham rc1
