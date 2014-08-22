@@ -1,5 +1,13 @@
+2.0.0
+	- Fixed issue with subtitles in subfolders inside archives
+	- Fixed searching for English TV-show subtitles
+	- Moved all the code into a single file and restructured it
+	- Added background to logo.png
+	- Removed unused translation files (for now)
+	- And some other various changes...
+
 1.2.2
-	- Code cleanup & dirty hack for extraction errors: Dirty hack for extraction errors until I figure out what causes it
+	- Code cleanup
 	- Updated string ID's in strings.po files
 	- Added support for preferred language
 	- Updated icon.png and logo.png
