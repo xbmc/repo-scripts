@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.1.4
+# Service LegendasDivx.com version 0.1.6
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -94,9 +94,12 @@ HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv
 Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
 """
 
-subtitle_pattern = "<div\sclass=\"sub_box\">.+?<div\sclass=\"sub_header\">.+?<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?</div>.+?<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">.+?<tr>.+?<th>CDs:</th>.+?<td>(.+?)</td>.+?<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">.+?<img\sborder.+?<th\sclass=\"color2\">Hits:</th>.+?<td>(.+?)</td>.+?<td>(.+?)</td>.+?<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">((\n|.)*)</td>.+?Mais\sLegendas"
-release_pattern = "([^\W]\w{1,}[\.|\-]{1,1}[^\.|^\ ][^\Ws][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[^\Ws][\w{3,}\-|\.{1,1}]\w{2,})"
-release_pattern1 = "([^\W][\w\ ]{4,}[^\Ws][x264|xvid]{1,}-[\w]{1,})"
+subtitle_pattern = "<div\sclass=\"sub_box\">.+?<div\sclass=\"sub_header\">.+?<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?</div>.+?<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">.+?<tr>.+?<th>CDs:</th>.+?<td>(.+?)</td>.+?<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">.+?<th\sclass=\"color2\">Hits:</th>.+?<td>(.+?)</td>.+?<td>(.+?)</td>.+?<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">(.*?)</td>.+?<td\sclass"
+#release_pattern = "([^\W]\w{1,}[\.|\-]{1,1}[^\.|^\ ][^\Ws][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[^\Ws][\w{3,}\-|\.{1,1}]\w{2,})"
+release_pattern = "([^\W][\w\.]{1,}\w{1,}[\.]{1,1}[^\.|^\ |^\.org|^\.com|^\.net][^\Ws|^\.org|^\.com|^\.net][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[^\Ws|^\.org|^\.com|^\.net][\w{3,}\-|\.{1,1}]\w{2,})"
+#release_pattern1 = "([^\W][\w\ ]{4,}[^\Ws][x264|xvid]{1,}-[\w]{1,})"
+release_pattern1 = "([^\W][\w\ |\]|[]{4,}[^\Ws][x264|xvid|ac3]{1,}-[\w\[\]]{1,})"
+year_pattern = "(19|20)\d{2}$"
 #release_pattern = "([^\W][\w\ |\.|\-]{4,}[^\Ws][x264|xvid]{1,}-[\w]{1,})"
 # group(1) = Name, group(2) = Year, group(3) = Number Files, group(4) = ID, group(5) = Hits, group(6) = Requests, group(7) = Description
 #==========
@@ -110,6 +113,18 @@ def _log(module, msg):
 def log(msg):
     if debug == 'true': _log(__name__, msg)
 
+def urlpost(query, lang, page):
+    postdata = urllib.urlencode({'query' : query, 'form_cat' : lang})
+    cj = cookielib.CookieJar()
+    my_opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    my_opener.addheaders = [('Referer', 'http://www.legendasdivx.com/modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page))]
+    urllib2.install_opener(my_opener)
+    request = urllib2.Request('http://www.legendasdivx.com/modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page), postdata)
+    log(u"POST url page: %s" % page)
+    log(u"POST url data: %s" % postdata)
+    response = urllib2.urlopen(request).read()
+    return response
+    
 def geturl(url):
     class MyOpener(urllib.FancyURLopener):
         #version = HTTP_USER_AGENT
@@ -129,15 +144,13 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
     log(u"getallsubs: Search String = '%s'" % searchstring)
     log(u"getallsubs: Search String Not Clean = '%s'" % searchstring_notclean)
     page = 1
-    if languageshort == "pt": url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-    elif languageshort == "pb": url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=29&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-    elif languageshort == "es": url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=30&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-    elif languageshort == "en": url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=31&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-    else: url = main_url + "index.php"
-    content = geturl(url)
+    if languageshort == "pt": content = urlpost(searchstring, "28", page)
+    elif languageshort == "pb": content = urlpost(searchstring, "29", page)
+    elif languageshort == "es": content = urlpost(searchstring, "30", page)
+    elif languageshort == "en": content = urlpost(searchstring, "31", page)
     log(u"getallsubs: LanguageShort = '%s'" % languageshort)
-    while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE) and page < 6:
-        for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE | re.VERBOSE):
+    while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE) and page < 6:
+        for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.X):
             hits = matches.group(5)
             id = matches.group(4)
             id = string.split(id, '"')
@@ -208,15 +221,14 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                             if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE): sync = True
             if __filenameon__ == "false": filename = desc + "  " + "hits: " + hits
             else: filename = filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
-            subtitles_list.append({'rating': str(downloads), 'no_files': no_files, 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
+            subtitles_list.append({'rating': str(downloads), 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
+            log(u"getallsubs: SUBS LIST = '%s'" % subtitles_list)
         page = page + 1
         
-        if languageshort == "pt": url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-        elif languageshort == "pb": url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=29&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-        elif languageshort == "es": url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=30&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-        elif languageshort == "en": url = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=31&page=" + str(page) + "&query=" + urllib.quote_plus(searchstring)
-        else: url = main_url + "index.php"
-        content = geturl(url)
+        if languageshort == "pt": content = urlpost(searchstring, "28", page)
+        elif languageshort == "pb": content = urlpost(searchstring, "29", page)
+        elif languageshort == "es": content = urlpost(searchstring, "30", page)
+        elif languageshort == "en": content = urlpost(searchstring, "31", page)
 
 #   Bubble sort, to put syncs on top
     for n in range(0,len(subtitles_list)):
@@ -277,7 +289,8 @@ def Search(item):
         filename = os.path.splitext(os.path.basename(file_original_path))[0]
         log(u"getallsubs: filename string __parentfolder__ is 2 = %s" % (filename,))
  
-    filename = xbmc.getCleanMovieTitle(filename)[0]
+    filename = xbmc.getCleanMovieTitle(filename)[0] + " " + xbmc.getCleanMovieTitle(filename)[1]
+    log(u"Search: FILENAME = %s" % (filename,))
     searchstring_notclean = os.path.splitext(os.path.basename(file_original_path))[0]
     searchstring = ""
     global israr
@@ -288,6 +301,13 @@ def Search(item):
     israr = string.lower(israr[-1])
 
     title = xbmc.getCleanMovieTitle(item['title'])[0]
+#    if item['year'] == '':
+#        log(u"Search: year null? = %s" % (item['year'],))
+#        year = re.search(year_pattern, filename, re.IGNORECASE)
+#        log(u"Search: year pattern = %s" % (year,))
+#        year = year.group(0)
+#        log(u"Search: year group = %s" % (year.group(0),))
+#    else:
     year = item['year']
     tvshow = item['tvshow']
     season = item['season']
@@ -297,14 +317,14 @@ def Search(item):
     subtitles_list = []
     
     if item['mansearch']:
-        searchstring = item['mansearchstr']
+        searchstring = '"' + item['mansearchstr'] + '"'
         log(u"Search: Manual String = %s" % (searchstring,))
     else:
         if tvshow != '':
             searchstring = "%s S%#02dE%#02d" % (tvshow, int(season), int(episode))
             log(u"Search: Title TV LIBRARY String = %s" % (searchstring,))
         elif title != '' and tvshow == '':
-            searchstring = title + ' ' + year
+            searchstring = '"' + title + ' ' + year + '"'
             log(u"Search: Title MOVIE LIBRARY String = %s" % (searchstring,))
         else:
             if 'rar' in israr and searchstring is not None:
@@ -342,22 +362,22 @@ def Search(item):
                     # log(u"Search: TITLE is NULL using filename as String = %s" % (searchstring,))
                 # else:
                 ########## TODO: EXTRACT THE YEAR FROM THE FILENAME AND ADD IT TO THE SEARCH (WILL BE DONE IN THE NEXT DAYS) ###########
-				if __search__ == '0':
-					if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
-						searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
-						searchstring = searchstring.group(0)
-						log(u"Search: Filename is TV String (search is 0) = %s" % (searchstring,))
-					else:
-						searchstring = filename
-						log(u"Search: Filename is Not TV String (search is 0) = %s" % (searchstring,))
-				else:
-					if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
-						searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
-						searchstring = searchstring.group(0)
-						log(u"Search: Title is TV String (search is 1) = %s" % (searchstring,))
-					else:
-						searchstring = title
-						log(u"Search: Title is Not TV String (search is 1) = %s" % (searchstring,))
+                if __search__ == '0':
+                    if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
+                        searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
+                        searchstring = searchstring.group(0)
+                        log(u"Search: Filename is TV String (search is 0) = %s" % (searchstring,))
+                    else:
+                        searchstring = '"' + filename + '"'
+                        log(u"Search: Filename is Not TV String (search is 0) = %s" % (searchstring,))
+                else:
+                    if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE):
+                        searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", title, re.IGNORECASE)
+                        searchstring = searchstring.group(0)
+                        log(u"Search: Title is TV String (search is 1) = %s" % (searchstring,))
+                    else:
+                        searchstring = title
+                        log(u"Search: Title is Not TV String (search is 1) = %s" % (searchstring,))
 
     PT_ON = __addon__.getSetting( 'PT' )
     PTBR_ON = __addon__.getSetting( 'PTBR' )
