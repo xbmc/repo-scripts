@@ -1,3 +1,6 @@
+v1.0.10
+- Highlight which speakers are group coordinators
+
 v1.0.9
 - Add option to Switch Sonos To Line-In On Media Start
 - Add check that Artist Slideshow has transparent image enabled

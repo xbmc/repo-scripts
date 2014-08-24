@@ -73,7 +73,17 @@ if __name__ == '__main__':
                 displayName = "%s     [%s]" % (ip, zone_name)
             else:
                 log("SonosDiscovery: No zone for IP address %s" % ip)
-            speakers[displayName] = (ip, zone_name)
+            # Record if this is the group coordinator, as when there are several
+            # speakers in the group, we need to send messages to the group
+            # coordinator for things to work correctly
+            isCoordinator = device.is_coordinator
+            if isCoordinator:
+                log("SonosDiscovery: %s is the group coordinator" % ip)
+                displayName = "%s - %s" % (displayName, __addon__.getLocalizedString(32031))
+            else:
+                log("SonosDiscovery: %s is not the group coordinator" % ip)
+
+            speakers[displayName] = (ip, zone_name, isCoordinator)
 
     # Remove the busy dialog
     xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -90,6 +100,14 @@ if __name__ == '__main__':
             log("SonosDiscovery: Entry chosen = %s" % selectedDisplayName)
             chosenIPAddress = speakers.get(selectedDisplayName)[0]
             chosenZoneName = speakers.get(selectedDisplayName)[1]
+            chosenIsCoordinator = speakers.get(selectedDisplayName)[2]
+
+            # Warn the user if they have selected something that is not the zone coordinator
+            if not chosenIsCoordinator:
+                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001),
+                                    "%s %s:" % (chosenIPAddress, __addon__.getLocalizedString(32032)),
+                                    "          \"%s\"" % chosenZoneName,
+                                    __addon__.getLocalizedString(32033))
             # Set the selected item into the settings
             Settings.setIPAddress(chosenIPAddress)
             Settings.setZoneName(chosenZoneName)

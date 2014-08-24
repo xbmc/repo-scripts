@@ -144,7 +144,19 @@ msgctxt "#32030"
 msgid "Switch Sonos To Line-In On Media Start"
 msgstr ""
 
-#empty strings from id 32031 to 32059
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr ""
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr ""
+
+#empty strings from id 32034 to 32059
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

@@ -175,27 +175,34 @@ class SonosAutoPause():
     # Check if the Sonos system should be paused or resumed
     def check(self):
         if Settings.autoPauseSonos() and not Settings.linkAudioWithSonos():
-            # Check to see if something has started playing
-            if xbmc.Player().isPlaying():
-                # If this is a change in play state since the last time we checked
-                if self.xbmcPlayState is False:
-                    log("SonosAutoPause: Automatically pausing Sonos")
-                    self.xbmcPlayState = True
-                    # Pause the sonos if it is playing
-                    if self._isSonosPlaying():
-                        self.sonosDevice.pause()
-                        self.autoStopped = True
-                        self.resumeCountdown = Settings.autoResumeSonos()
-            else:
-                self.xbmcPlayState = False
-                if Settings.autoResumeSonos() > 0 and self.autoStopped:
-                    if self.resumeCountdown > 0:
-                        self.resumeCountdown = self.resumeCountdown - 1
-                    else:
-                        log("SonosAutoPause: Automatically resuming Sonos")
-                        self.sonosDevice.play()
-                        self.autoStopped = False
-                        self.resumeCountdown = Settings.autoResumeSonos()
+            try:
+                # Check to see if something has started playing
+                if xbmc.Player().isPlaying():
+                    # If this is a change in play state since the last time we checked
+                    if self.xbmcPlayState is False:
+                        log("SonosAutoPause: Automatically pausing Sonos")
+                        self.xbmcPlayState = True
+                        # Pause the sonos if it is playing
+                        if self._isSonosPlaying():
+                            self.sonosDevice.pause()
+                            self.autoStopped = True
+                            self.resumeCountdown = Settings.autoResumeSonos()
+                else:
+                    self.xbmcPlayState = False
+                    if Settings.autoResumeSonos() > 0 and self.autoStopped:
+                        if self.resumeCountdown > 0:
+                            self.resumeCountdown = self.resumeCountdown - 1
+                        else:
+                            log("SonosAutoPause: Automatically resuming Sonos")
+                            self.sonosDevice.play()
+                            self.autoStopped = False
+                            self.resumeCountdown = Settings.autoResumeSonos()
+            except:
+                # If we fail to stop the speaker playing, it may be because
+                # there is a network problem or the speaker is powered down
+                # So we just continue after logging the error
+                log("SonosAutoPause: Error from speaker %s" % Settings.getIPAddress())
+                log("SonosAutoPause: %s" % traceback.format_exc())
 
     # Works out if the Sonos system is playing
     def _isSonosPlaying(self):
