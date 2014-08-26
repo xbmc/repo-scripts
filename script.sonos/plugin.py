@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# Reference:
-# http://wiki.xbmc.org/index.php?title=Audio/Video_plugin_tutorial
 import sys
 import os
 import traceback
@@ -33,9 +31,17 @@ import soco
 # Media files used by the plugin
 ###################################################################
 class MediaFiles():
-    RadioIcon = os.path.join(__media__, 'Radio@2x.png')
-    MusicLibraryIcon = os.path.join(__media__, 'shMusicLibrary@2x.png')
-    QueueIcon = os.path.join(__media__, 'Playlist@2x.png')
+    RadioIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(__media__, 'radio.png')
+    MusicLibraryIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(__media__, 'library.png')
+    QueueIcon = 'DefaultMusicPlaylists.png' if Settings.useSkinIcons() else os.path.join(__media__, 'playlist.png')
+
+    AlbumsIcon = 'DefaultMusicAlbums.png' if Settings.useSkinIcons() else os.path.join(__media__, 'albums.png')
+    ArtistsIcon = 'DefaultMusicArtists.png' if Settings.useSkinIcons() else os.path.join(__media__, 'artists.png')
+    ComposersIcon = 'DefaultArtist.png' if Settings.useSkinIcons() else os.path.join(__media__, 'composers.png')
+    GenresIcon = 'DefaultMusicGenres.png' if Settings.useSkinIcons() else os.path.join(__media__, 'genres.png')
+    TracksIcon = 'DefaultMusicSongs.png' if Settings.useSkinIcons() else os.path.join(__media__, 'tracks.png')
+    RadioStationIcon = 'DefaultAudio.png' if Settings.useSkinIcons() else os.path.join(__media__, 'radiostation.png')
+    SonosPlaylistIcon = 'DefaultMusicPlaylists.png' if Settings.useSkinIcons() else os.path.join(__media__, 'sonosplaylist.png')
 
 
 ###################################################################
@@ -50,12 +56,15 @@ class MenuNavigator():
     COMPOSERS = 'composers'
     TRACKS = 'tracks'
     FOLDERS = 'folders'
+    SONOS_PLAYLISTS = 'sonos_playlists'
 
     # Menu items manually set at the root
     ROOT_MENU_MUSIC_LIBRARY = 'Music-Library'
     ROOT_MENU_QUEUE = 'QueueIcon'
     ROOT_MENU_RADIO_STATIONS = 'Radio-Stations'
     ROOT_MENU_RADIO_SHOWS = 'Radio-Shows'
+    ROOT_MENU_RADIO_SHOWS = 'Radio-Shows'
+    ROOT_MENU_SONOS_PLAYLISTS = 'Sonos-Playlists'
 
     def __init__(self, base_url, addon_handle):
         self.base_url = base_url
@@ -101,19 +110,12 @@ class MenuNavigator():
 #        self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
 #        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
-#        url = self._build_url({'mode': 'folder', 'foldername': 'Sonos-Playlists'})
-#        li = xbmcgui.ListItem('Sonos Playlists (Not Supported Yet)', iconImage='DefaultFolder.png')
-#        li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
-#        self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
-#        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+        url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.SONOS_PLAYLISTS})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32104), iconImage=MediaFiles.QueueIcon)
+        li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
+        self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
-#        url = self._build_url({'mode': 'folder', 'foldername': 'Line-In'})
-#        li = xbmcgui.ListItem('Line-In (Not Supported Yet)', iconImage='DefaultFolder.png')
-#        li.addContextMenuItems([], replaceItems=True) # Clear the Context Menu
-#        self._addPlayerToContextMenu(li) # Add the Sonos player to the menu
-#        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
-
-        # QueueIcon
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_QUEUE})
         li = xbmcgui.ListItem(__addon__.getLocalizedString(32101), iconImage=MediaFiles.QueueIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
@@ -127,35 +129,35 @@ class MenuNavigator():
         # Artists
         # Note: For artists, the sonos system actually calls "Album Artists"
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ALBUMARTISTS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32110), iconImage='DefaultMusicArtists.png')
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32110), iconImage=MediaFiles.ArtistsIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Albums
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ALBUMS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32111), iconImage='DefaultMusicAlbums.png')
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32111), iconImage=MediaFiles.AlbumsIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Composers
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.COMPOSERS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32112), iconImage='DefaultArtist.png')
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32112), iconImage=MediaFiles.ComposersIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Genres
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.GENRES})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32113), iconImage='DefaultMusicGenres.png')
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32113), iconImage=MediaFiles.GenresIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Tracks
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.TRACKS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32114), iconImage='DefaultMusicSongs.png')
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32114), iconImage=MediaFiles.TracksIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
@@ -201,7 +203,7 @@ class MenuNavigator():
                     if hasattr(item, 'album_art_uri') and (item.album_art_uri is not None) and (item.album_art_uri != ""):
                         li = xbmcgui.ListItem(displayTitle, iconImage=item.album_art_uri, thumbnailImage=item.album_art_uri)
                     else:
-                        li = xbmcgui.ListItem(displayTitle, iconImage='DefaultMusicSongs.png')
+                        li = xbmcgui.ListItem(displayTitle, iconImage=MediaFiles.TracksIcon)
                     # Set addition information about the track - will be seen in info view
                     li.setInfo('music', {'title': item.title, 'artist': item.creator, 'album': item.album})
 
@@ -272,7 +274,13 @@ class MenuNavigator():
                             isFirstItem = False
                             continue
 
-                        self._addDirectory(item, folderName, totalEntries, subCategory)
+                        # Check to see if we are dealing with a sonos playlist
+                        if isinstance(item, soco.data_structures.MLSonosPlaylist):
+                            # Will need to do the search by ID for playlists as the text method
+                            # does not work
+                            self._addDirectory(item, folderName, totalEntries, subCategory, item.item_id)
+                        else:
+                            self._addDirectory(item, folderName, totalEntries, subCategory)
                     # No longer the first item
                     isFirstItem = False  # noqa PEP8
 
@@ -318,7 +326,7 @@ class MenuNavigator():
                     # Add the radio station to the list
                     url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_RADIO_PLAY, 'itemId': item['uri'], 'title': item['title']})
 
-                    li = xbmcgui.ListItem(item['title'], path=url, iconImage='DefaultMusicSongs.png')
+                    li = xbmcgui.ListItem(item['title'], path=url, iconImage=MediaFiles.RadioStationIcon)
                     # Set the right click context menu for the ratio station
                     li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
                     self._addPlayerToContextMenu(li)
@@ -367,7 +375,7 @@ class MenuNavigator():
                     # Add the radio station to the list
                     url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_RADIO_PLAY, 'itemId': item['uri'], 'title': item['title']})
 
-                    li = xbmcgui.ListItem(item['title'], path=url, iconImage='DefaultMusicSongs.png')
+                    li = xbmcgui.ListItem(item['title'], path=url, iconImage=MediaFiles.RadioStationIcon)
                     # Set the right click context menu for the ratio station
                     li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
                     self._addPlayerToContextMenu(li)
@@ -388,13 +396,16 @@ class MenuNavigator():
         return currentEntries >= queueLimit
 
     # Adds a sub-directory to the display
-    def _addDirectory(self, item, folderName, totalEntries=None, subCategory=None):
+    def _addDirectory(self, item, folderName, totalEntries=None, subCategory=None, item_id=None):
         if (item is not None) and (folderName is not None):
             # Escape special characters from the title
             # Useful site: http://www.ascii.cl/htmlcodes.htm
             title = item.title.replace('/', "%2F").replace(':', "%3A")
+            # If the item ID is set we use that instead of the subcatagory name
+            if item_id is not None:
+                subCategory = str(item_id)
             # Update the category
-            if subCategory is not None:
+            elif subCategory is not None:
                 log("SonosPlugin: Adding to existing category %s" % subCategory)
                 subCategory += '/' + title.encode("utf-8")
             else:
@@ -418,15 +429,17 @@ class MenuNavigator():
                 li = xbmcgui.ListItem(displayTitle, iconImage=item.album_art_uri, thumbnailImage=item.album_art_uri)
             else:
                 # Use one of the default icons
-                defaultIcon = 'DefaultAudio.png'
-                if folderName == MenuNavigator.ARTISTS:
-                    defaultIcon = 'DefaultMusicArtists.png'
-                elif (folderName == MenuNavigator.ALBUMS) or (folderName == MenuNavigator.ALBUMARTISTS):
-                    defaultIcon = 'DefaultMusicAlbums.png'
+                defaultIcon = MediaFiles.TracksIcon
+                if (folderName == MenuNavigator.ARTISTS) or (folderName == MenuNavigator.ALBUMARTISTS):
+                    defaultIcon = MediaFiles.ArtistsIcon
+                elif folderName == MenuNavigator.ALBUMS:
+                    defaultIcon = MediaFiles.AlbumsIcon
                 elif folderName == MenuNavigator.GENRES:
-                    defaultIcon = 'DefaultMusicGenres.png'
+                    defaultIcon = MediaFiles.GenresIcon
                 elif folderName == MenuNavigator.COMPOSERS:
-                    defaultIcon = 'DefaultArtist.png'
+                    defaultIcon = MediaFiles.ComposersIcon
+                elif folderName == MenuNavigator.SONOS_PLAYLISTS:
+                    defaultIcon = MediaFiles.SonosPlaylistIcon
 
                 li = xbmcgui.ListItem(displayTitle, iconImage=defaultIcon)
 
@@ -449,7 +462,7 @@ class MenuNavigator():
                 # Get the display title, adding the track number if available
                 if (item.original_track_number is not None) and (item.original_track_number != ""):
                     displayTitle = "%02d. %s" % (item.original_track_number, item.title)
-            elif folderName == MenuNavigator.TRACKS:
+            elif (folderName == MenuNavigator.TRACKS) or (folderName == MenuNavigator.SONOS_PLAYLISTS):
                 if (item.creator is not None) and (item.creator != ""):
                     displayTitle = "%s - %s" % (item.title, item.creator)
 
@@ -462,7 +475,7 @@ class MenuNavigator():
             if hasattr(item, 'album_art_uri') and (item.album_art_uri is not None) and (item.album_art_uri != ""):
                 li = xbmcgui.ListItem(displayTitle, iconImage=item.album_art_uri, thumbnailImage=item.album_art_uri, path=url)
             else:
-                li = xbmcgui.ListItem(displayTitle, path=url, iconImage='DefaultMusicSongs.png')
+                li = xbmcgui.ListItem(displayTitle, path=url, iconImage=MediaFiles.TracksIcon)
             # Set addition information about the track - will be seen in info view
             li.setInfo('music', {'tracknumber': item.original_track_number, 'title': item.title, 'artist': item.creator, 'album': item.album})
             # li.setProperty("IsPlayable","true");

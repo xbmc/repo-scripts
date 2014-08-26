@@ -1,3 +1,10 @@
+v1.1.0
+- Prevent script error if Sonos detect fails
+- Add additional Artist Slideshow with controller screen (No Bio or Albums)
+- Add additional Artist Slideshow Only screen (no controller, bio or Albums)
+- Update images to look more like the latest ipad controls
+- Add support for viewing and playing Sonos Playlists
+
 v1.0.10
 - Highlight which speakers are group coordinators
 

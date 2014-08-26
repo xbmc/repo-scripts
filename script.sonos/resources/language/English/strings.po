@@ -156,7 +156,35 @@ msgctxt "#32033"
 msgid "Some functions may not work correctly if the speaker is not a coordinator"
 msgstr ""
 
-#empty strings from id 32034 to 32059
+msgctxt "#32034"
+msgid "Automation"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr ""
+
+#empty strings from id 32041 to 32059
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
@@ -188,7 +216,11 @@ msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr ""
 
-#empty strings from id 32104 to 32109
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr ""
+
+#empty strings from id 32105 to 32109
 
 msgctxt "#32110"
 msgid "Artists"

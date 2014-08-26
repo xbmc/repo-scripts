@@ -48,42 +48,43 @@ if __name__ == '__main__':
 
     speakers = {}
 
-    for device in sonos_devices:
-        ip = device.ip_address
-        log("SonosDiscovery: Getting info for IP address %s" % ip)
+    if sonos_devices is not None:
+        for device in sonos_devices:
+            ip = device.ip_address
+            log("SonosDiscovery: Getting info for IP address %s" % ip)
 
-        playerInfo = None
+            playerInfo = None
 
-        # Try and get the player info, if it fails then it is not a valid
-        # player and we should continue to the next
-        try:
-            playerInfo = device.get_speaker_info()
-        except:
-            log("SonosDiscovery: IP address %s is not a valid player" % ip)
-            log("SonosDiscovery: %s" % traceback.format_exc())
-            continue
+            # Try and get the player info, if it fails then it is not a valid
+            # player and we should continue to the next
+            try:
+                playerInfo = device.get_speaker_info()
+            except:
+                log("SonosDiscovery: IP address %s is not a valid player" % ip)
+                log("SonosDiscovery: %s" % traceback.format_exc())
+                continue
 
-        # If player  info was found, then print it out
-        if playerInfo is not None:
-            # What is the name of the zone that this speaker is in?
-            zone_name = playerInfo['zone_name']
-            displayName = ip
-            if (zone_name is not None) and (zone_name != ""):
-                log("SonosDiscovery: Zone of %s is \"%s\"" % (ip, zone_name))
-                displayName = "%s     [%s]" % (ip, zone_name)
-            else:
-                log("SonosDiscovery: No zone for IP address %s" % ip)
-            # Record if this is the group coordinator, as when there are several
-            # speakers in the group, we need to send messages to the group
-            # coordinator for things to work correctly
-            isCoordinator = device.is_coordinator
-            if isCoordinator:
-                log("SonosDiscovery: %s is the group coordinator" % ip)
-                displayName = "%s - %s" % (displayName, __addon__.getLocalizedString(32031))
-            else:
-                log("SonosDiscovery: %s is not the group coordinator" % ip)
+            # If player  info was found, then print it out
+            if playerInfo is not None:
+                # What is the name of the zone that this speaker is in?
+                zone_name = playerInfo['zone_name']
+                displayName = ip
+                if (zone_name is not None) and (zone_name != ""):
+                    log("SonosDiscovery: Zone of %s is \"%s\"" % (ip, zone_name))
+                    displayName = "%s     [%s]" % (ip, zone_name)
+                else:
+                    log("SonosDiscovery: No zone for IP address %s" % ip)
+                # Record if this is the group coordinator, as when there are several
+                # speakers in the group, we need to send messages to the group
+                # coordinator for things to work correctly
+                isCoordinator = device.is_coordinator
+                if isCoordinator:
+                    log("SonosDiscovery: %s is the group coordinator" % ip)
+                    displayName = "%s - %s" % (displayName, __addon__.getLocalizedString(32031))
+                else:
+                    log("SonosDiscovery: %s is not the group coordinator" % ip)
 
-            speakers[displayName] = (ip, zone_name, isCoordinator)
+                speakers[displayName] = (ip, zone_name, isCoordinator)
 
     # Remove the busy dialog
     xbmc.executebuiltin("Dialog.Close(busydialog)")

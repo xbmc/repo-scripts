@@ -16,11 +16,14 @@ import requests
 
 from .services import DeviceProperties, ContentDirectory
 from .services import RenderingControl, AVTransport, ZoneGroupTopology
+from .services import AlarmClock
 from .groups import ZoneGroup
 from .exceptions import CannotCreateDIDLMetadata
-from .data_structures import get_ml_item, QueueItem, URI
+from .data_structures import get_ml_item, QueueItem, URI, MLSonosPlaylist,\
+    MLShare
 from .utils import really_utf8, camel_to_underscore
 from .xml import XML
+from soco import config
 
 LOGGER = logging.getLogger(__name__)
 
@@ -65,7 +68,7 @@ def discover(timeout=1, include_invisible=False):
         # for the topology to find the other players. It is much more efficient
         # to rely upon the Zone Player's ability to find the others, than to
         # wait for query responses from them ourselves.
-        zone = SoCo(addr[0])
+        zone = config.SOCO_CLASS(addr[0])
         if include_invisible:
             return zone.all_zones
         else:
@@ -97,10 +100,12 @@ class SonosDiscovery(object):  # pylint: disable=R0903
 
 class _ArgsSingleton(type):
     """ A metaclass which permits only a single instance of each derived class
-    to exist for any given set of positional arguments.
+    sharing the same `_class_group` class attribute to exist for any given set
+    of positional arguments.
 
-    Attempts to instantiate a second instance of a derived class will return
-    the existing instance.
+    Attempts to instantiate a second instance of a derived class, or another
+    class with the same `_class_group`, with the same args will return the
+    existing instance.
 
     For example:
 
@@ -108,23 +113,30 @@ class _ArgsSingleton(type):
     ...     __metaclass__ = _ArgsSingleton
     ...
     >>> class First(ArgsSingletonBase):
+    ...     _class_group = "greeting"
     ...     def __init__(self, param):
     ...         pass
     ...
+    >>> class Second(ArgsSingletonBase):
+    ...     _class_group = "greeting"
+    ...     def __init__(self, param):
+    ...         pass
     >>> assert First('hi') is First('hi')
     >>> assert First('hi') is First('bye')
     AssertionError
+    >>> assert First('hi') is Second('hi')
 
      """
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = {}
-        if args not in cls._instances[cls]:
-            cls._instances[cls][args] = super(_ArgsSingleton, cls).__call__(
+        key = cls._class_group if hasattr(cls, '_class_group') else cls
+        if key not in cls._instances:
+            cls._instances[key] = {}
+        if args not in cls._instances[key]:
+            cls._instances[key][args] = super(_ArgsSingleton, cls).__call__(
                 *args, **kwargs)
-        return cls._instances[cls][args]
+        return cls._instances[key][args]
 
 
 class _SocoSingletonBase(  # pylint: disable=too-few-public-methods
@@ -206,6 +218,8 @@ class SoCo(_SocoSingletonBase):
 
     """
 
+    _class_group = 'SoCo'
+
     def __init__(self, ip_address):
         # Note: Creation of a SoCo instance should be as cheap and quick as
         # possible. Do not make any network calls here
@@ -227,6 +241,7 @@ class SoCo(_SocoSingletonBase):
         self.deviceProperties = DeviceProperties(self)
         self.renderingControl = RenderingControl(self)
         self.zoneGroupTopology = ZoneGroupTopology(self)
+        self.alarmClock = AlarmClock(self)
 
         # Some private attributes
         self._all_zones = set()
@@ -239,7 +254,8 @@ class SoCo(_SocoSingletonBase):
         self._zgs_cache = None
 
     def __str__(self):
-        return "<SoCo object at ip {0}>".format(self.ip_address)
+        return "<{0} object at ip {1}>".format(
+            self.__class__.__name__, self.ip_address)
 
     def __repr__(self):
         return '{0}("{1}")'.format(self.__class__.__name__, self.ip_address)
@@ -258,7 +274,7 @@ class SoCo(_SocoSingletonBase):
     @player_name.setter
     def player_name(self, playername):
         """ Set the speaker's name """
-        self.deviceProperties.SetZoneAtrributes([
+        self.deviceProperties.SetZoneAttributes([
             ('DesiredZoneName', playername),
             ('DesiredIcon', ''),
             ('DesiredConfiguration', '')
@@ -347,10 +363,9 @@ class SoCo(_SocoSingletonBase):
     @play_mode.setter
     def play_mode(self, playmode):
         """ Set the speaker's mode """
-        modes = ('NORMAL', 'SHUFFLE_NOREPEAT', 'SHUFFLE', 'REPEAT_ALL')
         playmode = playmode.upper()
-        if playmode not in modes:
-            raise KeyError('invalid play mode')
+        if playmode not in PLAY_MODES:
+            raise KeyError("'%s' is not a valid play mode" % playmode)
 
         self.avTransport.SetPlayMode([
             ('InstanceID', 0),
@@ -730,17 +745,14 @@ class SoCo(_SocoSingletonBase):
                 member_attribs = member_element.attrib
                 ip_addr = member_attribs['Location'].\
                     split('//')[1].split(':')[0]
-                zone = SoCo(ip_addr)
+                zone = config.SOCO_CLASS(ip_addr)
                 zone._uid = member_attribs['UUID']
                 # If this element has the same UUID as the coordinator, it is
                 # the coordinator
+                group_coordinator = None
                 if zone._uid == coordinator_uid:
                     group_coordinator = zone
                     zone._is_coordinator = True
-                    # If this is the coordinator, and the same IP address
-                    # then set it as the default UID
-                    if ip_addr == self.ip_address:
-                        self._uid = zone._uid
                 else:
                     zone._is_coordinator = False
                 zone._player_name = member_attribs['ZoneName']
@@ -1193,7 +1205,7 @@ class SoCo(_SocoSingletonBase):
         return out
 
     def get_music_library_information(self, search_type, start=0,
-                                      max_items=100, sub_category=''):
+                                      max_items=100):
         """ Retrieve information about the music library
 
         :param search_type: The kind of information to retrieve. Can be one of:
@@ -1206,9 +1218,6 @@ class SoCo(_SocoSingletonBase):
             may be restricted by the unit, presumably due to transfer
             size consideration, so check the returned number against the
             requested.
-        :param sub_category: Sub category to allow you to refine your search
-            under the given search type, allowing you to look for things like
-            all the artists under a given genre (e.g. A:GENRE/Pop)
         :returns: A dictionary with metadata for the search, with the
             keys 'number_returned', 'update_id', 'total_matches' and an
             'item_list' list with the search results. The search results
@@ -1237,18 +1246,97 @@ class SoCo(_SocoSingletonBase):
         """
         search_translation = {'artists': 'A:ARTIST',
                               'album_artists': 'A:ALBUMARTIST',
-                              'albums': 'A:ALBUM', 'genres': 'A:GENRE',
-                              'composers': 'A:COMPOSER', 'tracks': 'A:TRACKS',
-                              'playlists': 'A:PLAYLISTS', 'share': 'S:',
-                              'sonos_playlists': 'SQ:'}
+                              'albums': 'A:ALBUM',
+                              'genres': 'A:GENRE',
+                              'composers': 'A:COMPOSER',
+                              'tracks': 'A:TRACKS',
+                              'playlists': 'A:PLAYLISTS',
+                              'share': 'S:',
+                              'sonos_playlists': 'SQ:',
+                              'categories': 'A:'}
         search = search_translation[search_type]
+        response, out = self._music_lib_search(search, start, max_items)
+        out['search_type'] = search_type
+        out['item_list'] = []
 
-        # Added sub-category suport, extend the search into a subcategory
-        if sub_category != '':
-            if not sub_category.startswith('/'):
-                sub_category = '/' + sub_category
-            search = search + sub_category
+        # Parse the results
+        dom = XML.fromstring(really_utf8(response['Result']))
+        for container in dom:
+            if search_type == 'sonos_playlists':
+                item = MLSonosPlaylist.from_xml(container)
+            elif search_type == 'share':
+                item = MLShare.from_xml(container)
+            else:
+                item = get_ml_item(container)
+            # Append the item to the list
+            out['item_list'].append(item)
 
+        return out
+
+    def browse(self, ml_item=None, start=0, max_items=100):
+        """Browse (get sub-elements) a music library item
+
+        Keyword arguments:
+            ml_item (MusicLibraryItem): The MusicLibraryItem to browse, if left
+                out or passed None, the items at the base level will be
+                returned
+            start (int): The starting index of the results
+            max_items (int): The maximum number of items to return
+
+        Returns:
+            dict: A dictionary with metadata for the search, with the
+                keys 'number_returned', 'update_id', 'total_matches' and an
+                'item_list' list with the search results.
+
+        Raises:
+            AttributeError: If ``ml_item`` has no ``item_id`` attribute
+            SoCoUPnPException: With ``error_code='701'`` if the item cannot be
+                browsed
+        """
+        if ml_item is None:
+            search = 'A:'
+        else:
+            search = ml_item.item_id
+
+        response, out = self._music_lib_search(search, start, max_items)
+        out['search_type'] = 'browse'
+        out['item_list'] = []
+
+        # Parse the results
+        dom = XML.fromstring(really_utf8(response['Result']))
+        for container in dom:
+            item = get_ml_item(container)
+            out['item_list'].append(item)
+
+        return out
+
+    def _music_lib_search(self, search, start, max_items):
+        """Perform a music library search and extract search numbers
+
+        You can get an overview of all the relevant search prefixes (like
+        'A:') and their meaning with the request:
+
+        .. code ::
+
+         response = device.contentDirectory.Browse([
+             ('ObjectID', '0'),
+             ('BrowseFlag', 'BrowseDirectChildren'),
+             ('Filter', '*'),
+             ('StartingIndex', 0),
+             ('RequestedCount', 100),
+             ('SortCriteria', '')
+         ])
+
+        Args:
+            search (str): The ID to search
+            start: The index of the forst item to return
+            max_items: The maximum number of items to return
+
+        Returns:
+            tuple: (response, metadata) where response is the returned metadata
+                and metadata is a dict with the 'number_returned',
+                'total_matches' and 'update_id' integers
+        """
         response = self.contentDirectory.Browse([
             ('ObjectID', search),
             ('BrowseFlag', 'BrowseDirectChildren'),
@@ -1258,20 +1346,11 @@ class SoCo(_SocoSingletonBase):
             ('SortCriteria', '')
             ])
 
-        dom = XML.fromstring(really_utf8(response['Result']))
-
         # Get result information
-        out = {'item_list': [], 'search_type': search_type}
+        metadata = {}
         for tag in ['NumberReturned', 'TotalMatches', 'UpdateID']:
-            out[camel_to_underscore(tag)] = int(response[tag])
-
-        # Parse the results
-        for container in dom:
-            item = get_ml_item(container)
-            # Append the item to the list
-            out['item_list'].append(item)
-
-        return out
+            metadata[camel_to_underscore(tag)] = int(response[tag])
+        return response, metadata
 
     def add_uri_to_queue(self, uri):
         """Adds the URI to the queue
@@ -1430,3 +1509,8 @@ RADIO_SHOWS = 1
 NS = {'dc': '{http://purl.org/dc/elements/1.1/}',
       'upnp': '{urn:schemas-upnp-org:metadata-1-0/upnp/}',
       '': '{urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/}'}
+# Valid play modes
+PLAY_MODES = ('NORMAL', 'SHUFFLE_NOREPEAT', 'SHUFFLE', 'REPEAT_ALL')
+
+if config.SOCO_CLASS is None:
+    config.SOCO_CLASS = SoCo

@@ -114,6 +114,10 @@ class Settings():
         return __addon__.getSetting("notifNotIfVideoPlaying") == 'true'
 
     @staticmethod
+    def stopNotifIfControllerShowing():
+        return __addon__.getSetting("notifNotIfControllerShowing") == 'true'
+
+    @staticmethod
     def useXbmcNotifDialog():
         return __addon__.getSetting("xbmcNotifDialog") == 'true'
 
@@ -142,8 +146,19 @@ class Settings():
         return int(float(__addon__.getSetting("maxListEntries")))
 
     @staticmethod
+    def useSkinIcons():
+        return __addon__.getSetting("useSkinIcons") == 'true'
+
+    @staticmethod
     def displayArtistInfo():
         return __addon__.getSetting("displayArtistInfo") == 'true'
+
+    @staticmethod
+    def getArtistInfoLayout():
+        layoutId = int(float(__addon__.getSetting("artistInfoLayout")))
+        # Settings are indexed at zero, so add one to match the Window XML
+        layoutId = layoutId + 1
+        return "script-sonos-artist-slideshow-%s.xml" % layoutId
 
     @staticmethod
     def linkAudioWithSonos():

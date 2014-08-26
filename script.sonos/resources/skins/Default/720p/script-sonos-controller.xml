@@ -156,9 +156,9 @@
 			<control type="button" id="600">
 				<description>Previous Button</description>
 				<posx>0</posx>
-				<posy>0</posy>
-				<width>40</width>
-				<height>40</height>
+				<posy>10</posy>
+				<width>20</width>
+				<height>20</height>
 				<label>-</label>
 				<texturefocus>control_buttons/tbTransportBack_sel.png</texturefocus>
 				<texturenofocus>control_buttons/tbTransportBack.png</texturenofocus>
@@ -172,9 +172,9 @@
 				<control type="button" id="601">
 					<description>Play Button</description>
 					<posx>40</posx>
-					<posy>0</posy>
-					<width>40</width>
-					<height>40</height>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
 					<label>-</label>
 					<texturefocus>control_buttons/tbPlay_sel.png</texturefocus>
 					<texturenofocus>control_buttons/tbPlay.png</texturenofocus>
@@ -187,9 +187,9 @@
 				<control type="button" id="602">
 					<description>Pause Button</description>
 					<posx>40</posx>
-					<posy>0</posy>
-					<width>40</width>
-					<height>40</height>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
 					<label>-</label>
 					<texturefocus>control_buttons/tbPause_sel.png</texturefocus>
 					<texturenofocus>control_buttons/tbPause.png</texturenofocus>
@@ -203,9 +203,9 @@
 			<control type="button" id="603">
 				<description>Stop Button</description>
 				<posx>80</posx>
-				<posy>0</posy>
-				<width>40</width>
-				<height>40</height>
+				<posy>10</posy>
+				<width>20</width>
+				<height>20</height>
 				<label>-</label>
 				<texturefocus>control_buttons/tbStop_sel.png</texturefocus>
 				<texturenofocus>control_buttons/tbStop.png</texturenofocus>
@@ -217,9 +217,9 @@
 			<control type="button" id="604">
 				<description>Next Button</description>
 				<posx>120</posx>
-				<posy>0</posy>
-				<width>40</width>
-				<height>40</height>
+				<posy>10</posy>
+				<width>20</width>
+				<height>20</height>
 				<label>-</label>
 				<texturefocus>control_buttons/tbTransportForward_sel.png</texturefocus>
 				<texturenofocus>control_buttons/tbTransportForward.png</texturenofocus>
@@ -234,11 +234,11 @@
 					<description>Repeat Button</description>
 					<posx>190</posx>
 					<posy>10</posy>
-					<width>20</width>
+					<width>25</width>
 					<height>20</height>
 					<label>-</label>
-					<texturefocus>control_buttons/tbRepeatBtn_underline@2x.png</texturefocus>
-					<texturenofocus>control_buttons/tbRepeatBtn@2x.png</texturenofocus>
+					<texturefocus>control_buttons/tbRepeat_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbRepeat.png</texturenofocus>
 					<onleft>604</onleft>
 					<onright>103</onright>
 					<onup>900</onup>
@@ -248,11 +248,11 @@
 					<description>Repeat Button Enabled</description>
 					<posx>190</posx>
 					<posy>10</posy>
-					<width>20</width>
+					<width>25</width>
 					<height>20</height>
 					<label>-</label>
-					<texturefocus>control_buttons/tbRepeatBtn_sel_underline@2x.png</texturefocus>
-					<texturenofocus>control_buttons/tbRepeatBtn_sel@2x.png</texturenofocus>
+					<texturefocus>control_buttons/tbRepeatActive_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbRepeatActive.png</texturenofocus>
 					<onleft>604</onleft>
 					<onright>103</onright>
 					<onup>900</onup>
@@ -266,11 +266,11 @@
 					<description>Random Button</description>
 					<posx>220</posx>
 					<posy>10</posy>
-					<width>20</width>
+					<width>25</width>
 					<height>20</height>
 					<label>-</label>
-					<texturefocus>control_buttons/tbShuffleBtn_underline@2x.png</texturefocus>
-					<texturenofocus>control_buttons/tbShuffleBtn@2x.png</texturenofocus>
+					<texturefocus>control_buttons/tbShuffle_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbShuffle.png</texturenofocus>
 					<onleft>104</onleft>
 					<onright>105</onright>
 					<onup>900</onup>
@@ -280,11 +280,11 @@
 					<description>Random Button Enabled</description>
 					<posx>220</posx>
 					<posy>10</posy>
-					<width>20</width>
+					<width>25</width>
 					<height>20</height>
 					<label>-</label>
-					<texturefocus>control_buttons/tbShuffleBtn_sel_underline@2x.png</texturefocus>
-					<texturenofocus>control_buttons/tbShuffleBtn_sel@2x.png</texturenofocus>
+					<texturefocus>control_buttons/tbShuffleActive_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbShuffleActive.png</texturenofocus>
 					<onleft>104</onleft>
 					<onright>105</onright>
 					<onup>900</onup>
@@ -298,11 +298,11 @@
 					<description>Crossfade Button</description>
 					<posx>250</posx>
 					<posy>10</posy>
-					<width>20</width>
+					<width>25</width>
 					<height>20</height>
 					<label>-</label>
-					<texturefocus>control_buttons/tbCrossfadeBtn_underline@2x.png</texturefocus>
-					<texturenofocus>control_buttons/tbCrossfadeBtn@2x.png</texturenofocus>
+					<texturefocus>control_buttons/tbCrossfade_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbCrossfade.png</texturenofocus>
 					<onleft>103</onleft>
 					<onright>102</onright>
 					<onup>900</onup>
@@ -312,11 +312,11 @@
 					<description>Crossfade Button Enabled</description>
 					<posx>250</posx>
 					<posy>10</posy>
-					<width>20</width>
+					<width>25</width>
 					<height>20</height>
 					<label>-</label>
-					<texturefocus>control_buttons/tbCrossfadeBtn_sel_underline@2x.png</texturefocus>
-					<texturenofocus>control_buttons/tbCrossfadeBtn_sel@2x.png</texturenofocus>
+					<texturefocus>control_buttons/tbCrossfadeActive_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbCrossfadeActive.png</texturenofocus>
 					<onleft>103</onleft>
 					<onright>102</onright>
 					<onup>900</onup>
@@ -328,13 +328,13 @@
 			<control type="group" id="102">
 				<control type="button" id="620">
 					<description>Sound Volume Button</description>
-					<posx>290</posx>
-					<posy>0</posy>
-					<width>40</width>
-					<height>40</height>
+					<posx>310</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
 					<label>-</label>
-					<texturefocus>control_buttons/tbUnMute_sel.png</texturefocus>
-					<texturenofocus>control_buttons/tbMute.png</texturenofocus>
+					<texturefocus>control_buttons/tbVolume_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbVolume.png</texturenofocus>
 					<onleft>105</onleft>
 					<onright>600</onright>
 					<onup>900</onup>
@@ -343,13 +343,13 @@
 				</control>
 				<control type="button" id="621">
 					<description>Sound Mute Button</description>
-					<posx>290</posx>
-					<posy>0</posy>
-					<width>40</width>
-					<height>40</height>
+					<posx>310</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
 					<label>-</label>
-					<texturefocus>control_buttons/tbMute_sel.png</texturefocus>
-					<texturenofocus>control_buttons/tbMute_on.png</texturenofocus>
+					<texturefocus>control_buttons/tbVolumeMute_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbVolumeMute.png</texturenofocus>
 					<onleft>105</onleft>
 					<onright>600</onright>
 					<onup>900</onup>
@@ -360,14 +360,14 @@
 			<control type="slider" id="622">
 				<description>Volume Slider</description>
 				<posx>330</posx>
-				<posy>10</posy>
+				<posy>12</posy>
 				<width>120</width>
-				<height>20</height>
+				<height>15</height>
 				<texturefocus>-</texturefocus>
 				<texturenofocus>-</texturenofocus>
-				<texturesliderbar>control_buttons/snAutoBtn.png</texturesliderbar>
-				<textureslidernib>control_buttons/tbVolumeScrubber_dis.png</textureslidernib>
-				<textureslidernibfocus>control_buttons/tbVolumeScrubber.png</textureslidernibfocus>
+				<texturesliderbar>control_buttons/volumeSliderbar.png</texturesliderbar>
+				<textureslidernib>control_buttons/tbVolumeScrubber.png</textureslidernib>
+				<textureslidernibfocus>control_buttons/tbVolumeScrubber_sel.png</textureslidernibfocus>
 				<onup>100</onup>
 				<ondown>900</ondown>
 			</control>

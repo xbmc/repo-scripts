@@ -44,8 +44,9 @@ from xml.sax.saxutils import escape
 import logging
 
 import requests
+from .cache import Cache
 from .exceptions import SoCoUPnPException, UnknownSoCoException
-from .utils import prettify, TimedCache
+from .utils import prettify
 from .events import Subscription
 from .xml import XML
 
@@ -60,7 +61,7 @@ Argument = namedtuple('Argument', 'name, vartype')
 # SoCo instance is asked for group info, we can cache it and return it when
 # another instance is asked. To do this we need a cache to be shared between
 # instances
-zone_group_state_shared_cache = TimedCache()
+zone_group_state_shared_cache = Cache()
 
 
 # pylint: disable=too-many-instance-attributes
@@ -105,7 +106,7 @@ class Service(object):
         self.event_subscription_url = '/{0}/Event'.format(self.service_type)
         #: A cache for storing the result of network calls. By default, this is
         #: TimedCache(default_timeout=0). See :class:`TimedCache`
-        self.cache = TimedCache(default_timeout=0)
+        self.cache = Cache(default_timeout=0)
         log.debug(
             "Created service %s, ver %s, id %s, base_url %s, control_url %s",
             self.service_type, self.version, self.service_id, self.base_url,
@@ -413,13 +414,15 @@ class Service(object):
             log.error("Unknown error received from %s", self.soco.ip_address)
             raise UnknownSoCoException(xml_error)
 
-    def subscribe(self, requested_timeout=None, event_queue=None):
+    def subscribe(
+            self, requested_timeout=None, auto_renew=False, event_queue=None):
         """Subscribe to the service's events.
 
         If requested_timeout is provided, a subscription valid for that number
         of seconds will be requested, but not guaranteed. Check
         :attrib:`Subscription.timeout` on return to find out what period of
-        validity is actually allocated.
+        validity is actually allocated. If auto_renew is True, the subscription
+        will be automatically renewed just before it expires, if possible
 
         event_queue is a thread-safe queue object onto which events will be
         put. If None, a Queue object will be created and used.
@@ -431,7 +434,8 @@ class Service(object):
         """
         subscription = Subscription(
             self, event_queue)
-        subscription.subscribe(requested_timeout=requested_timeout)
+        subscription.subscribe(
+            requested_timeout=requested_timeout, auto_renew=auto_renew)
         return subscription
 
     def _update_cache_on_event(self, event):
@@ -530,6 +534,10 @@ class AlarmClock(Service):
     """ Sonos alarm service, for setting and getting time and alarms. """
     def __init__(self, soco):
         super(AlarmClock, self).__init__(soco)
+        self.UPNP_ERRORS.update(
+            {
+                801: 'Already an alarm for this time',
+            })
 
 
 class MusicServices(Service):

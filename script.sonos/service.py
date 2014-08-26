@@ -332,7 +332,7 @@ if __name__ == '__main__':
                 if (timeUntilNextCheck < 1) and Settings.isNotificationEnabled():
                     if Settings.stopNotifIfVideoPlaying() and xbmc.Player().isPlayingVideo():
                         log("SonosService: Video Playing, Skipping Notification Display")
-                    elif xbmcgui.Window(10000).getProperty("SonosControllerShowing") == 'true':
+                    elif Settings.stopNotifIfControllerShowing() and (xbmcgui.Window(10000).getProperty("SonosControllerShowing") == 'true'):
                         log("SonosService: Sonos Controller Showing, Skipping Notification Display")
                         # Reset the "just started" flag to ensure that when we exit it does not
                         # show the notification immediately

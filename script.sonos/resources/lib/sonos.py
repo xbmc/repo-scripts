@@ -6,6 +6,7 @@ import logging
 # Load the Soco classes
 from soco import SoCo
 from soco.event_structures import LastChangeEvent
+from soco.data_structures import MusicLibraryItem
 
 # Use the SoCo logger
 LOGGER = logging.getLogger('soco')
@@ -29,11 +30,12 @@ class Sonos(SoCo):
 
     # Override method so that the album art http reference can be added
     def get_music_library_information(self, search_type, start=0, max_items=100, sub_category=''):
-        # Make sure the sub category is valid for the message, escape invalid characters
-        sub_category = cgi.escape(sub_category)
-
-        # Call the base version
-        musicInfo = SoCo.get_music_library_information(self, search_type, start, max_items, sub_category)
+        # Call the normal view if not browsing deeper
+        if (sub_category is None) or (sub_category == ''):
+            musicInfo = SoCo.get_music_library_information(self, search_type, start, max_items)
+        else:
+            # Call the browse version
+            musicInfo = self.browse(search_type, sub_category, start, max_items)
 
         if musicInfo is not None:
             for anItem in musicInfo['item_list']:
@@ -41,6 +43,28 @@ class Sonos(SoCo):
                 self._updateAlbumArtToFullUri(anItem)
 
         return musicInfo
+
+    def browse(self, search_type, sub_category, start=0, max_items=100):
+        # Make sure the sub category is valid for the message, escape invalid characters
+        sub_category = cgi.escape(sub_category)
+
+        search_translation = {'artists': 'A:ARTIST',
+                              'album_artists': 'A:ALBUMARTIST',
+                              'albums': 'A:ALBUM',
+                              'genres': 'A:GENRE',
+                              'composers': 'A:COMPOSER',
+                              'tracks': 'A:TRACKS',
+                              'playlists': 'A:PLAYLISTS',
+                              'share': 'S:',
+                              'sonos_playlists': 'SQ:',
+                              'categories': 'A:'}
+        search = search_translation[search_type]
+
+        search_uri = "#%s%s" % (search, sub_category)
+        search_item = MusicLibraryItem(uri=search_uri, title='', parent_id='')
+
+        # Call the base version
+        return SoCo.browse(self, search_item, start, max_items)
 
     # Override method so that the album art http reference can be added
     def get_queue(self, start=0, max_items=100):

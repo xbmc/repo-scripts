@@ -661,7 +661,7 @@ class SonosArtistSlideshow(SonosControllerWindow):
         except:
             log("SonosArtistSlideshow: Exception Details: %s" % traceback.format_exc())
 
-        return SonosArtistSlideshow("script-sonos-artist-slideshow.xml", __cwd__, sonosDevice=sonosDevice)
+        return SonosArtistSlideshow(Settings.getArtistInfoLayout(), __cwd__, sonosDevice=sonosDevice)
 
     # Launch ArtistSlideshow
     def runArtistSlideshow(self):
