@@ -1,3 +1,6 @@
+[B]v0.9.7[/B]
+- Added UpdateLibrary and CleanLibrary actions
+
 [B]v0.9.6[/B]
 - Added more actions new in Gotham
 - Fixed: permission error during save on android
