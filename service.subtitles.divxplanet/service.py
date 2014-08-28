@@ -28,6 +28,10 @@ __profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode(
 __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
 __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp') ).decode("utf-8")
 
+if xbmcvfs.exists(__temp__):
+  shutil.rmtree(__temp__)
+xbmcvfs.mkdirs(__temp__)
+
 sys.path.append (__resource__)
 
 
@@ -72,7 +76,7 @@ def getmediaUrl(mediaArgs):
         if sLink:
             linkurl = re.search(r"\/url\?q=(http:\/\/divxplanet.com\/sub\/m\/[0-9]{3,8}\/.*.\.html).*", sLink["href"])
             if linkurl:
-                linkdictionary.append({"text": sSpan.getText().encode('ascii', 'ignore'), "name": mediaArgs[0], "url": linkurl.group(1)})
+                linkdictionary.append({"text": sSpan.getText().encode('utf8'), "name": mediaArgs[0], "url": linkurl.group(1)})
                 log("Divxplanet: found media: %s" % (linkdictionary[0]["url"]))
     if len(linkdictionary) > 0:
       return linkdictionary[0]["url"]
@@ -139,7 +143,7 @@ def Search(item):
                           language = "Turkish"
                           lan_short = "tr"
                       filename = "%s S%02dE%02d %s.%s" % (tvshow, season, episode, title, lan_short)
-                      description = info[1].getText().encode('ascii', 'ignore')
+                      description = info[1].getText().encode('utf8')
                       listitem = xbmcgui.ListItem(label=language,                                   # language name for the found subtitle
                                 label2=description,               # file name for the found subtitle
                                 iconImage="0",                                     # rating for the subtitle, string 0-5
@@ -157,6 +161,12 @@ def Search(item):
     else:
         log("Divxplanet: searching subtitles for %s %s" % (title, year))
         tvurl = getmediaUrl(["film", title, year])
+        if tvurl == '':
+         tvurl = getmediaUrl(["film", title, int(year)+1])
+         log("Divxplanet: searching subtitles for %s %s" % (title, int(year)+1))
+        if tvurl == '':
+         tvurl = getmediaUrl(["film", title, int(year)-1])
+         log("Divxplanet: searching subtitles for %s %s" % (title, int(year)-1))
         log("Divxplanet: got media url %s" % (tvurl))
         divpname = re.search(r"http:\/\/divxplanet.com\/sub\/m\/[0-9]{3,8}\/(.*.)\.html", tvurl).group(1)
         # Browser
@@ -201,7 +211,7 @@ def Search(item):
                         lan_short = "tr"
                     description = "no-description"
                     if info[0].getText() != "":
-                      description = info[0].getText().encode('ascii', 'ignore')
+                      description = info[0].getText().encode('utf8')
                     filename = "%s.%s" % (title, lan_short)
                     log("Divxplanet: found a subtitle with description: %s" % (description))
                     listitem = xbmcgui.ListItem(label=language,                                   # language name for the found subtitle
@@ -225,12 +235,14 @@ def normalizeString(str):
          ).encode('ascii','ignore')
 
 def Download(link, lang, filename): #standard input
+	
+    log("Divxplanet: o yoldayiz %s" % (link))
     subtitle_list = []
     ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     ## pass that to XBMC to copy and activate
-    if xbmcvfs.exists(__temp__):
-      shutil.rmtree(__temp__)
-    xbmcvfs.mkdirs(__temp__)
+    #if xbmcvfs.exists(__temp__):
+     # shutil.rmtree(__temp__)
+    #xbmcvfs.mkdirs(__temp__)
 
     packed = True
     dlurl = "http://divxplanet.com%s" % link
@@ -254,13 +266,23 @@ def Download(link, lang, filename): #standard input
 
     # User-Agent (this is cheating, ok?)
     br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
-
     html = br.open(dlurl).read()
     br.select_form(name="dlform")
-    br.submit()
+    r=br.submit()
+    if r.info().has_key('Content-Disposition'):
+        # If the response has Content-Disposition, we take file name from it
+        localName = r.info()['Content-Disposition'].split('filename=')[1]
+        if localName[0] == '"' or localName[0] == "'":
+            localName = localName[1:-1]
+    elif r.url != dlurl: 
+        # if we were redirected, the real file name we take from the final URL
+        localName = url2name(r.url)
+    
+    
 
     log("Divxplanet: Fetching subtitles using url %s" % (dlurl))
-    local_tmp_file = os.path.join(__temp__, normalizeString(filename) + ".rar")
+    local_tmp_file = os.path.join(__temp__, localName )
+    
     try:
         log("Divxplanet: Saving subtitles to '%s'" % (local_tmp_file))
         if not os.path.exists(__temp__):

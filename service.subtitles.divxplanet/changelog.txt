@@ -1,3 +1,10 @@
+0.0.6
+- Downloaded file handling improved [emreuygur]
+- Movie year may differ from the original one [emreuygur]
+
+0.0.5
+- filename encoding handling changed
+
 0.0.4
 - fixed downloaded filename encoding
 - fixed subtitle description text encoding
