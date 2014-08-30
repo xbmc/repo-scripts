@@ -11,7 +11,7 @@
 	</category>
 	<category label="32015">
 		<setting id="displayArtistInfo" type="bool" label="32021" default="false"/>
-		<setting id="artistInfoLayout" subsetting="true" type="enum" label="32035" enable="eq(-1,true)" lvalues="32036|32037|32039"/>
+		<setting id="artistInfoLayout" subsetting="true" type="enum" label="32035" enable="eq(-1,true)" lvalues="32036|32037|32039" default="0"/>
 		<setting id="refreshInterval" label="32016" type="slider" default="2" range="0.5,0.5,5" option="float"/>
 		<setting id="avoidDuplicateCommands" label="32022" type="slider" default="1.5" range="0.5,0.5,5" option="float"/>
 		<setting id="volumeChangeIncrements" label="32025" type="slider" default="3" range="1,1,10" option="int"/>

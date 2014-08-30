@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sonos" name="Sonos" version="1.1.0" provider-name="robwebset">
+<addon id="script.sonos" name="Sonos" version="1.1.1" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="1.1.0"/>
@@ -41,6 +41,8 @@
 	
 		<summary lang="nl">Sonos controller</summary>
 	
+		<summary lang="no">Sonos Kontroller</summary>
+	
 		<summary lang="pl">Sonos Controller</summary>
 	
 		<summary lang="pt">Controlador Sonos</summary>
@@ -49,37 +51,39 @@
 	
 		<summary lang="sv">Sonos Kontroll</summary>
 	
-		<description lang="de">Unterstützt einfache Sonos-Befehle und Benachrichtigungen aus XBMC heraus. Mehr Details finden sich im Wiki.</description>
+		<description lang="de">Unterstützt einfache Sonos-Befehle und Benachrichtigungen aus Kodi heraus. Mehr Details finden sich im Wiki.</description>
 	
-		<description lang="el">Υποστηρίζεται απλός χειρισμός Sonos, και ειδοποιήσεις από το XBMC. Ελέγξτε την ιστοσελίδα του wiki για περισσότερες πληροφορίες.</description>
+		<description lang="el">Υποστηρίζεται απλός χειρισμός Sonos, και ειδοποιήσεις από το Kodi. Ελέγξτε την ιστοσελίδα του wiki για περισσότερες πληροφορίες.</description>
 	
-		<description lang="en">Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details.</description>
+		<description lang="en">Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details.</description>
 	
-		<description lang="en_NZ">Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details.</description>
+		<description lang="en_NZ">Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details.</description>
 	
-		<description lang="en_US">Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details.</description>
+		<description lang="en_US">Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details.</description>
 	
-		<description lang="es">Soporta controles simples de Sonos y avisos de XBMC. Mirar Wiki para más detalles.</description>
+		<description lang="es">Soporta controles simples de Sonos y avisos de Kodi. Mirar Wiki para más detalles.</description>
 	
-		<description lang="fr_CA">Prend en charge des contrôles simples et des notifications Sonos depuis XBMC. Consultez le wiki pour plus de détails.</description>
+		<description lang="fr_CA">Prend en charge des contrôles simples et des notifications Sonos depuis Kodi. Consulter le wiki pour plus de détails.</description>
 	
-		<description lang="gl">Soporta Controis simples de Sonos e notificacións do XBMC. Para máis detalles ir á wiki.</description>
+		<description lang="gl">Soporta Controis simples de Sonos e notificacións do Kodi. Para máis detalles ir á wiki.</description>
 	
-		<description lang="hu">Támogatja az egyszerű Sonos Vezérléseket és értesítéseket az XBMC-ből. Tekintse meg a wikit a részletekért.</description>
+		<description lang="hu">Támogatja az egyszerű Sonos Vezérléseket és értesítéseket az Kodi-ből. Tekintse meg a wikit a részletekért.</description>
 	
-		<description lang="it">Supporta semplici Controller Sonos e le notifiche da XBMC. Consulta la wiki per maggiori dettagli.</description>
+		<description lang="it">Supporta semplici Controller Sonos e le notifiche da Kodi. Consulta la wiki per maggiori dettagli.</description>
 	
-		<description lang="lt">Palaiko paprastą Sonos valdymą ir pranešimus iš XBMC. Peržiūrėkite wiki puslapį norėdami gauti daugiau informacijos.</description>
+		<description lang="lt">Palaiko paprastą Sonos valdymą ir pranešimus iš Kodi. Peržiūrėkite wiki puslapį norėdami gauti daugiau informacijos.</description>
 	
-		<description lang="nl">Ondersteund simpele sonos controles en notificaties van XBMC. Kijk bij de wiki voor meer details.</description>
+		<description lang="nl">Ondersteund simpele sonos controles en notificaties van Kodi. Kijk bij de wiki voor meer details.</description>
 	
-		<description lang="pl">Obsługuje proste sterowanie Sonos Controller i powiadomienia z XBMC.  Więcej szczegółów znajdziesz w wiki.</description>
+		<description lang="no">Støtter enkle Sonos Kontroll og notiser fra Kodi. Les wiki for fler detaljer.</description>
 	
-		<description lang="pt">Suporta Controlo Sonos simples e notificações através do XBMC. Verifique o wiki para mais detalhes.</description>
+		<description lang="pl">Obsługuje proste sterowanie Sonos Controller i powiadomienia z Kodi.  Więcej szczegółów znajdziesz w wiki.</description>
 	
-		<description lang="pt_BR">Suporta simples controles do Sonos e notificações via XBMC. Leia o wiki para maiores detalhes.</description>
+		<description lang="pt">Suporta Controlo Sonos simples e notificações através do Kodi. Verifique o wiki para mais detalhes.</description>
 	
-		<description lang="sv">Stöder enkla Sonos kontroller och notifieringar i XBMC. Se wiki för fler detaljer.</description>
+		<description lang="pt_BR">Suporta simples controles do Sonos e notificações via Kodi. Leia o wiki para maiores detalhes.</description>
+	
+		<description lang="sv">Stöder enkla Sonos kontroller och notifieringar i Kodi. Se wiki för fler detaljer.</description>
 	
 		<language></language>
 	

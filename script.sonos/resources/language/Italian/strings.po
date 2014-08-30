@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Sonos
 # Addon id: script.sonos
 # Addon Provider: robwebset
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/xbmc-addons/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "Addon Description"
-msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
-msgstr "Supporta semplici Controller Sonos e le notifiche da XBMC. Consulta la wiki per maggiori dettagli."
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Supporta semplici Controller Sonos e le notifiche da Kodi. Consulta la wiki per maggiori dettagli."
 
 msgctxt "#32001"
 msgid "Sonos"
@@ -45,8 +45,8 @@ msgid "Do Not Display Notification If Video Is Playing"
 msgstr "Non mostrare notifiche durante l'esecuzione di video"
 
 msgctxt "#32007"
-msgid "Use Default XBMC Notification Dialog"
-msgstr "Usa la finestra di notifica predefinita di XBMC"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Usa la finestra di notifica predefinita di Kodi"
 
 msgctxt "#32008"
 msgid "Debugging"
@@ -109,16 +109,20 @@ msgid "Avoid Duplicate Key Presses (Seconds)"
 msgstr "Evita doppio pressioni dei tasti (in secondi)"
 
 msgctxt "#32023"
-msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
-msgstr "Collega il volume di XMBC con gli speaker Sonor (richiede riavvio)"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Collega il volume di Kodi con gli speaker Sonor (richiede riavvio)"
 
 msgctxt "#32024"
-msgid "Switch Sonos To Line-In On XBMC Startup"
-msgstr "Passa da Sonos a Line-IN all'avvio si XBMC"
+msgid "Switch Sonos To Line-In On Kodi Startup"
+msgstr "Passa da Sonos a Line-IN all'avvio si Kodi"
 
 msgctxt "#32025"
 msgid "Volume Change Increments"
 msgstr "Incremento cambiamento volume"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Aggiorna Automaticamente l'indirizzo IP all'avvio"
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

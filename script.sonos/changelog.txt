@@ -1,3 +1,7 @@
+v1.1.1
+- Give the search for Sonos systems more time to run
+- Set default for Artist Slideshow selection
+
 v1.1.0
 - Prevent script error if Sonos detect fails
 - Add additional Artist Slideshow with controller screen (No Bio or Albums)

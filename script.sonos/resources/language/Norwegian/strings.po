@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Sonos
 # Addon id: script.sonos
 # Addon Provider: robwebset
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,9 +16,37 @@ msgstr ""
 "Language: no\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Description"
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Støtter enkle Sonos Kontroll og notiser fra Kodi. Les wiki for fler detaljer."
+
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
 msgctxt "#32002"
 msgid "IP Address"
 msgstr "IP-adresse"
+
+msgctxt "#32003"
+msgid "Enable Notifications (Restart Required)"
+msgstr "Aktiver varslinger (Omstart kreves)"
+
+msgctxt "#32004"
+msgid "Display Notification For (Seconds)"
+msgstr "Vis varsling i (sekunder)"
+
+msgctxt "#32005"
+msgid "Notification Check Frequency (Seconds)"
+msgstr "Frekvens for varslingssjekk (sekunder)"
+
+msgctxt "#32006"
+msgid "Do Not Display Notification If Video Is Playing"
+msgstr "Ikke vis varsling om video spilles"
+
+msgctxt "#32007"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Bruk Kodi standard varslingsdialog"
 
 msgctxt "#32008"
 msgid "Debugging"
@@ -28,6 +56,10 @@ msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "Aktiver feilsøkingslogg"
 
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "Høytaler"
+
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "Varslinger"
@@ -35,6 +67,82 @@ msgstr "Varslinger"
 msgctxt "#32012"
 msgid "Debugging"
 msgstr "Feilsøking"
+
+msgctxt "#32013"
+msgid "Search For Sonos Speakers..."
+msgstr "Søk etter Sonos høytalere..."
+
+msgctxt "#32014"
+msgid "No speakers found, please enter your IP address manually"
+msgstr "Ingen høytalere funnet, vennligst skriv inn din IP adresse manuellt."
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Kontroller"
+
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Oppdateringsinterval for kontroller (sekunder)"
+
+msgctxt "#32017"
+msgid "Use Test Data"
+msgstr "Bruk testdata"
+
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Tillegg"
+
+msgctxt "#32019"
+msgid "Batch Size"
+msgstr "Batch størrelse"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Maksimalt antall innlegg vist i listen (0 = ubegrenset)"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Vi artistinformasjon"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Unngå duplikerte tastetrykk (sekunder)"
+
+msgctxt "#32023"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Link Kodi volum med Sonos høytaler (Omstart påkrevd)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On Kodi Startup"
+msgstr "Bytt Sonos til Line-In ved Kodi oppstart"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Økning av volumnivå"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Sett Sonos automatisk på pause når Kodi spiller media (Omstart kreves)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Automatisk gjennoppta Sonos (sekunder) [0 = Av]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Sonenavn (Valgfritt)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Automatisk oppdater IP adresse ved oppstart"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "Følgende innstilling i ArtistSlideshow må være aktivert"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Vil du at dette skal være automatisk aktivert?"
 
 msgctxt "#32062"
 msgid "Next"
@@ -44,6 +152,18 @@ msgctxt "#32100"
 msgid "Music Library"
 msgstr "Musikkbibliotek"
 
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Kø"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "Radiostasjoner"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Åpne Sonos Kontroller"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artister"
@@ -52,6 +172,10 @@ msgctxt "#32111"
 msgid "Albums"
 msgstr "Album"
 
+msgctxt "#32112"
+msgid "Composers"
+msgstr "Komponister"
+
 msgctxt "#32113"
 msgid "Genres"
 msgstr "Sjanger"
@@ -59,3 +183,31 @@ msgstr "Sjanger"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Spor"
+
+msgctxt "#32150"
+msgid "Open Sonos Player"
+msgstr "Åpne Sonos spiller"
+
+msgctxt "#32151"
+msgid "Play Track"
+msgstr "Spill sang"
+
+msgctxt "#32152"
+msgid "Remove Track"
+msgstr "Fjern sang"
+
+msgctxt "#32153"
+msgid "Clear Queue"
+msgstr "Tøm kø"
+
+msgctxt "#32154"
+msgid "Play Now"
+msgstr "Spill nå"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "Legg til i kø"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "Erstatt kø"

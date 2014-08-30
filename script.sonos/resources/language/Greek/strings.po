@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Sonos
 # Addon id: script.sonos
 # Addon Provider: robwebset
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "Addon Description"
-msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
-msgstr "Υποστηρίζεται απλός χειρισμός Sonos, και ειδοποιήσεις από το XBMC. Ελέγξτε την ιστοσελίδα του wiki για περισσότερες πληροφορίες."
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Υποστηρίζεται απλός χειρισμός Sonos, και ειδοποιήσεις από το Kodi. Ελέγξτε την ιστοσελίδα του wiki για περισσότερες πληροφορίες."
 
 msgctxt "#32001"
 msgid "Sonos"
@@ -45,16 +45,16 @@ msgid "Do Not Display Notification If Video Is Playing"
 msgstr "Να Μην Εμφανίζονται Ειδοποιήσεις κατά την Αναπαραγωγή Βίντεο"
 
 msgctxt "#32007"
-msgid "Use Default XBMC Notification Dialog"
-msgstr "Χρήση Προεπιλεγμένων Ειδοποιήσεων του XBMC"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Χρήση Προεπιλεγμένων Ειδοποιήσεων του Kodi"
 
 msgctxt "#32008"
 msgid "Debugging"
-msgstr "Καταγραφή σφαλμάτων"
+msgstr "Εντοπισμός σφαλμάτων"
 
 msgctxt "#32009"
 msgid "Enable debug logging"
-msgstr "Ενεργοποίηση καταγραφής σφαλμάτων"
+msgstr "Καταγραφή σφαλμάτων"
 
 msgctxt "#32010"
 msgid "Speaker"
@@ -66,7 +66,7 @@ msgstr "Ειδοποιήσεις"
 
 msgctxt "#32012"
 msgid "Debugging"
-msgstr "Καταγραφή σφαλμάτων"
+msgstr "Εντοπισμός σφαλμάτων"
 
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."
@@ -80,6 +80,10 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Χειριστήριο"
 
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Χρονικό Διάστημα Ενημέρωσης Χειριστηρίου (Δευτ)"
+
 msgctxt "#32017"
 msgid "Use Test Data"
 msgstr "Χρήση ΔοκιμαστικώνΔεδομένων"
@@ -91,6 +95,54 @@ msgstr "Plugin"
 msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Μέγεθος Δέσμης"
+
+msgctxt "#32020"
+msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
+msgstr "Μέγιστος Αριθμός Καταχωρίσεων στις Λίστες [0 = Απεριόριστες]"
+
+msgctxt "#32021"
+msgid "Display Artist Information"
+msgstr "Εμφάνιση Πληροφοριών Καλλιτέχνη"
+
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Αποφυγή Διπλότυπων Πιέσεων Πλήκτρων (Δευτ)"
+
+msgctxt "#32023"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Σύνδεση της Έντασης Ήχου του Kodi με το Ηχείο Sonos (απαιτείται επανεκκίνηση)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On Kodi Startup"
+msgstr "Εναλλαγή του Sonos σε Είσοδο Ήχου κατά την Εκκίνηση του Kodi"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Βήματα Έντασης Ήχου"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Παύση του Sonos όταν το Kodi παίζει πολυμέσα (απαιτείται επανεκκίνηση)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Αυτόματη Συνέχιση του Sonos (Δευτ) [0 = Ανενεργό]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Όνομα Ζώνης (Προαιρετικό)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Αυτόματη Ενημέρωση Διεύθυνσης IP κατά την Εκκίνηση"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "Η ακόλουθη ρύθμιση στο ArtistSlideshow πρέπει να ενεργοποιηθεί"
+
+msgctxt "#32061"
+msgid "Would you like this automatically enabled?"
+msgstr "Επιθυμείτε να ενεργοποιείται αυτόματα;"
 
 msgctxt "#32062"
 msgid "Next"
@@ -107,6 +159,10 @@ msgstr "Σε Αναμονή"
 msgctxt "#32102"
 msgid "Radio Stations"
 msgstr "Ραδιοφωνικοί Σταθμοί"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Έναρξη του Χειριστηρίου Sonos"
 
 msgctxt "#32110"
 msgid "Artists"

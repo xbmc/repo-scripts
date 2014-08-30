@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Sonos
 # Addon id: script.sonos
 # Addon Provider: robwebset
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "Addon Description"
-msgid "Supports simple Sonos Controls and notifications from XBMC. Look at the wiki for more details."
-msgstr "Unterstützt einfache Sonos-Befehle und Benachrichtigungen aus XBMC heraus. Mehr Details finden sich im Wiki."
+msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
+msgstr "Unterstützt einfache Sonos-Befehle und Benachrichtigungen aus Kodi heraus. Mehr Details finden sich im Wiki."
 
 msgctxt "#32001"
 msgid "Sonos"
@@ -45,8 +45,8 @@ msgid "Do Not Display Notification If Video Is Playing"
 msgstr "Keine Benachrichtigungen bei der Videowiedergabe anzeigen"
 
 msgctxt "#32007"
-msgid "Use Default XBMC Notification Dialog"
-msgstr "Standard-XBMC-Benachrichtigungsfenster verwenden"
+msgid "Use Default Kodi Notification Dialog"
+msgstr "Standard-Kodi-Benachrichtigungsfenster verwenden"
 
 msgctxt "#32008"
 msgid "Debugging"
@@ -80,6 +80,10 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Controller"
 
+msgctxt "#32016"
+msgid "Controller Refresh Interval (Seconds)"
+msgstr "Controller-Aktualisierungsintervall (Sekunden)"
+
 msgctxt "#32017"
 msgid "Use Test Data"
 msgstr "Testdaten verwenden"
@@ -100,9 +104,41 @@ msgctxt "#32021"
 msgid "Display Artist Information"
 msgstr "Interpreteninformationen anzeigen"
 
+msgctxt "#32022"
+msgid "Avoid Duplicate Key Presses (Seconds)"
+msgstr "Vermeide doppelte Tastenbetätigung (Sekunden)"
+
 msgctxt "#32023"
-msgid "Link XBMC Volume With Sonos Speaker (Restart Required)"
-msgstr "XBMC-Lautstärke mit Sonos-Lautsprecher koppeln (Neustart erforderlich)"
+msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
+msgstr "Kodi-Lautstärke mit Sonos-Lautsprecher koppeln (Neustart erforderlich)"
+
+msgctxt "#32024"
+msgid "Switch Sonos To Line-In On Kodi Startup"
+msgstr "Wechsel Sonos zum 'Line-In' Eingang beim Kodi Start"
+
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Schrittgröße Lautstärken-Änderung"
+
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Pausiere automatisch Sonos, wenn Kodi Medien wiedergibt (Neustart notwendig)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Automatisch Sonos Fortsetzen (Sekunden) [0 = Aus]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Zonenname (optional)"
+
+msgctxt "#32029"
+msgid "Automatically Update IP Address On Startup"
+msgstr "Aktualisiere IP-Adresse beim Start automatisch"
+
+msgctxt "#32060"
+msgid "The following setting in ArtistSlideshow must be enabled"
+msgstr "Die folgende Einstellung in 'ArtistSlideshow' muss aktiviert sein"
 
 msgctxt "#32061"
 msgid "Would you like this automatically enabled?"
@@ -123,6 +159,10 @@ msgstr "Abspielliste"
 msgctxt "#32102"
 msgid "Radio Stations"
 msgstr "Radio Sender"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Starte Sonos-Controller"
 
 msgctxt "#32110"
 msgid "Artists"

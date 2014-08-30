@@ -31,6 +31,7 @@ log('script version %s started' % __version__)
 # the settings
 ###########################################################################
 if __name__ == '__main__':
+    log("SonosDiscovery: Searching for Sonos devices")
 
     # Set up the logging before using the Sonos Device
     if __addon__.getSetting("logEnabled") == "true":
@@ -40,7 +41,7 @@ if __name__ == '__main__':
     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
     try:
-        sonos_devices = soco.discover()
+        sonos_devices = soco.discover(timeout=5)
     except:
         log("SonosDiscovery: Exception when getting devices")
         log("SonosDiscovery: %s" % traceback.format_exc())
@@ -48,43 +49,47 @@ if __name__ == '__main__':
 
     speakers = {}
 
-    if sonos_devices is not None:
-        for device in sonos_devices:
-            ip = device.ip_address
-            log("SonosDiscovery: Getting info for IP address %s" % ip)
+    # Check for the case where discovery did not return anything
+    if sonos_devices is None:
+        log("SonosDiscovery: Search returned None")
+        sonos_devices = []
 
-            playerInfo = None
+    for device in sonos_devices:
+        ip = device.ip_address
+        log("SonosDiscovery: Getting info for IP address %s" % ip)
 
-            # Try and get the player info, if it fails then it is not a valid
-            # player and we should continue to the next
-            try:
-                playerInfo = device.get_speaker_info()
-            except:
-                log("SonosDiscovery: IP address %s is not a valid player" % ip)
-                log("SonosDiscovery: %s" % traceback.format_exc())
-                continue
+        playerInfo = None
 
-            # If player  info was found, then print it out
-            if playerInfo is not None:
-                # What is the name of the zone that this speaker is in?
-                zone_name = playerInfo['zone_name']
-                displayName = ip
-                if (zone_name is not None) and (zone_name != ""):
-                    log("SonosDiscovery: Zone of %s is \"%s\"" % (ip, zone_name))
-                    displayName = "%s     [%s]" % (ip, zone_name)
-                else:
-                    log("SonosDiscovery: No zone for IP address %s" % ip)
-                # Record if this is the group coordinator, as when there are several
-                # speakers in the group, we need to send messages to the group
-                # coordinator for things to work correctly
-                isCoordinator = device.is_coordinator
-                if isCoordinator:
-                    log("SonosDiscovery: %s is the group coordinator" % ip)
-                    displayName = "%s - %s" % (displayName, __addon__.getLocalizedString(32031))
-                else:
-                    log("SonosDiscovery: %s is not the group coordinator" % ip)
+        # Try and get the player info, if it fails then it is not a valid
+        # player and we should continue to the next
+        try:
+            playerInfo = device.get_speaker_info()
+        except:
+            log("SonosDiscovery: IP address %s is not a valid player" % ip)
+            log("SonosDiscovery: %s" % traceback.format_exc())
+            continue
 
-                speakers[displayName] = (ip, zone_name, isCoordinator)
+        # If player  info was found, then print it out
+        if playerInfo is not None:
+            # What is the name of the zone that this speaker is in?
+            zone_name = playerInfo['zone_name']
+            displayName = ip
+            if (zone_name is not None) and (zone_name != ""):
+                log("SonosDiscovery: Zone of %s is \"%s\"" % (ip, zone_name))
+                displayName = "%s     [%s]" % (ip, zone_name)
+            else:
+                log("SonosDiscovery: No zone for IP address %s" % ip)
+            # Record if this is the group coordinator, as when there are several
+            # speakers in the group, we need to send messages to the group
+            # coordinator for things to work correctly
+            isCoordinator = device.is_coordinator
+            if isCoordinator:
+                log("SonosDiscovery: %s is the group coordinator" % ip)
+                displayName = "%s - %s" % (displayName, __addon__.getLocalizedString(32031))
+            else:
+                log("SonosDiscovery: %s is not the group coordinator" % ip)
+
+            speakers[displayName] = (ip, zone_name, isCoordinator)
 
     # Remove the busy dialog
     xbmc.executebuiltin("Dialog.Close(busydialog)")
