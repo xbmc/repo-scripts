@@ -1,20 +1,24 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: TvTunes
 # Addon id: script.tvtunes
-# Addon Provider: Ppic,Frost,ronie,robwebset
+# Addon Provider: robwebset
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: bg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Retrieve and play your soundtrack themes whilst browsing your library"
+msgstr "Сваля и възпроизвежда мелодиите от вашите филми и сериали"
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
@@ -235,6 +239,14 @@ msgstr "[Филтър]: Показвай само липсващите мело�
 msgctxt "#32205"
 msgid "[Action]: Retrieve Missing Themes"
 msgstr "[Действие]: Извличай липсващите мелодии"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Някои от мелодиите не са в подпапка именувана \"themes\"."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Да бъдат ли преместени в съответните подпапки?"
 
 msgctxt "#32991"
 msgid "Playback"

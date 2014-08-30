@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-#Modules General
 import os
 import threading
 import time
 import traceback
-#Modules XBMC
 import xbmc
 import xbmcgui
 import sys
@@ -17,11 +15,11 @@ else:
     import json as simplejson
 
 
-__addon__     = xbmcaddon.Addon(id='script.tvtunes')
-__addonid__   = __addon__.getAddonInfo('id')
-__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
-__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__addon__ = xbmcaddon.Addon(id='script.tvtunes')
+__addonid__ = __addon__.getAddonInfo('id')
+__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
+__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
 
 sys.path.append(__resource__)
 sys.path.append(__lib__)
@@ -30,8 +28,6 @@ sys.path.append(__lib__)
 from settings import Settings
 from settings import log
 from settings import os_path_join
-from settings import os_path_split
-from settings import list_dir
 from settings import normalize_string
 
 from themeFinder import ThemeFiles
@@ -44,21 +40,21 @@ class Player(xbmc.Player):
     def __init__(self, *args):
         # Save the volume from before any alterations
         self.original_volume = self._getVolume()
-        
+
         # Record the time that playing was started
         # 0 is not playing
         self.startTime = 0
 
         # Record the number of items in the playlist
         self.playlistSize = 1
-        
+
         # Time the track started playing
         self.trackEndTime = -1
-        
+
         # Record the number of tracks left to play in the playlist
         # (Only used if skipping through tracks)
         self.remainingTracks = -1
-        
+
         # Save off the current repeat state before we started playing anything
         if xbmc.getCondVisibility('Playlist.IsRepeat'):
             self.repeat = "all"
@@ -68,7 +64,7 @@ class Player(xbmc.Player):
             self.repeat = "off"
 
         xbmc.Player.__init__(self, *args)
-        
+
     def onPlayBackStopped(self):
         log("Player: Received onPlayBackStopped")
         self.restoreSettings()
@@ -80,7 +76,7 @@ class Player(xbmc.Player):
         xbmc.Player.onPlayBackEnded(self)
 
     def restoreSettings(self):
-        log("Player: Restoring player settings" )
+        log("Player: Restoring player settings")
         while self.isPlayingAudio():
             xbmc.sleep(1)
         # Force the volume to the starting volume
@@ -89,8 +85,7 @@ class Player(xbmc.Player):
         xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "%s" }, "id": 1 }' % self.repeat)
         # Record the time that playing was started (0 is stopped)
         self.startTime = 0
-        log("Player: Restored volume to %d" % self.original_volume )
-
+        log("Player: Restored volume to %d" % self.original_volume)
 
     def stop(self):
         log("Player: stop called")
@@ -115,7 +110,7 @@ class Player(xbmc.Player):
                 # the number of step to drop the volume in
                 numSteps = 10
                 if fastFade:
-                    numSteps = numSteps/2
+                    numSteps = numSteps / 2
 
                 vol_step = targetVol / numSteps
                 # Reduce the volume before starting
@@ -128,14 +123,14 @@ class Player(xbmc.Player):
                 while not self.isPlayingAudio():
                     xbmc.sleep(30)
 
-                for step in range (0,(numSteps-1)):
+                for step in range(0, (numSteps - 1)):
                     # If the system is going to be shut down then we need to reset
                     # everything as quickly as possible
                     if WindowShowing.isShutdownMenu() or xbmc.abortRequested:
                         log("Player: Shutdown menu detected, cancelling fade in")
                         break
                     vol = cur_vol_perc + vol_step
-                    log( "Player: fadeIn_vol: %s" % str(vol) )
+                    log("Player: fadeIn_vol: %s" % str(vol))
                     self._setVolume(vol)
                     cur_vol_perc = vol
                     xbmc.sleep(200)
@@ -156,31 +151,30 @@ class Player(xbmc.Player):
 
             # Record the time that playing was started
             self.startTime = int(time.time())
-            
+
             # Save off the number of items in the playlist
-            if item != None:
+            if item is not None:
                 self.playlistSize = item.size()
                 log("Player: Playlist size = %d" % self.playlistSize)
                 # Check if we are limiting each track in the list
                 if not Settings.isLoop():
                     # Already started laying the first, so the remaining number of
                     # tracks is one less than the total
-                    self.remainingTracks = self.playlistSize - 1;
+                    self.remainingTracks = self.playlistSize - 1
                 self._setNextSkipTrackTime(self.startTime)
             else:
                 self.playlistSize = 1
-
 
     # This will return the volume in a range of 0-100
     def _getVolume(self):
         result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": { "properties": [ "volume" ] }, "id": 1}')
 
         json_query = simplejson.loads(result)
-        if "result" in json_query and json_query['result'].has_key('volume'):
+        if ("result" in json_query) and ('volume' in json_query['result']):
             # Get the volume value
             volume = json_query['result']['volume']
 
-        log( "Player: current volume: %s%%" % str(volume) )
+        log("Player: current volume: %s%%" % str(volume))
         return volume
 
     # Sets the volume in the range 0-100
@@ -189,19 +183,18 @@ class Player(xbmc.Player):
         # '{"jsonrpc": "2.0", "method": "Application.SetVolume", "params": { "volume": %d }, "id": 1}'
         xbmc.executebuiltin('XBMC.SetVolume(%d)' % newvolume, True)
 
-
-    def _lowerVolume( self ):
+    def _lowerVolume(self):
         try:
             if Settings.getDownVolume() != 0:
                 current_volume = self._getVolume()
-                vol = current_volume- Settings.getDownVolume()
+                vol = current_volume - Settings.getDownVolume()
                 # Make sure the volume still has a value
-                if vol < 1 :
+                if vol < 1:
                     vol = 1
-                log( "Player: volume goal: %d%% " % vol )
+                log("Player: volume goal: %d%% " % vol)
                 self._setVolume(vol)
             else:
-                log( "Player: No reduced volume option set" )
+                log("Player: No reduced volume option set")
         except:
             log("Player: %s" % traceback.format_exc())
 
@@ -209,25 +202,25 @@ class Player(xbmc.Player):
     def endPlaying(self, fastFade=False, slowFade=False):
         if self.isPlayingAudio() and Settings.isFadeOut():
             cur_vol = self._getVolume()
-            
+
             # Calculate how fast to fade the theme, this determines
             # the number of step to drop the volume in
             numSteps = 10
             if fastFade:
-                numSteps = numSteps/2
+                numSteps = numSteps / 2
             elif slowFade:
                 numSteps = numSteps * 4
 
             vol_step = cur_vol / numSteps
             # do not mute completely else the mute icon shows up
-            for step in range (0,(numSteps-1)):
+            for step in range(0, (numSteps - 1)):
                 # If the system is going to be shut down then we need to reset
                 # everything as quickly as possible
                 if WindowShowing.isShutdownMenu() or xbmc.abortRequested:
                     log("Player: Shutdown menu detected, cancelling fade out")
                     break
                 vol = cur_vol - vol_step
-                log( "Player: fadeOut_vol: %s" % str(vol) )
+                log("Player: fadeOut_vol: %s" % str(vol))
                 self._setVolume(vol)
                 cur_vol = vol
                 xbmc.sleep(200)
@@ -236,17 +229,17 @@ class Player(xbmc.Player):
         # Need to always stop by the end of this
         self.stop()
 
-    # Checks if the play duration has been exceeded and then stops playing 
+    # Checks if the play duration has been exceeded and then stops playing
     def checkEnding(self):
         if self.isPlayingAudio() and (self.startTime > 0):
             # Get the current time
             currTime = int(time.time())
 
             # Time in minutes to play for
-            durationLimit = Settings.getPlayDurationLimit();
+            durationLimit = Settings.getPlayDurationLimit()
             if durationLimit > 0:
                 expectedEndTime = self.startTime + (60 * durationLimit)
-                
+
                 if currTime > expectedEndTime:
                     self.endPlaying(slowFade=True)
                     return
@@ -276,7 +269,7 @@ class Player(xbmc.Player):
         if trackLimit > trackLength and (Settings.isLoop() or self.remainingTracks > 0):
             self.remainingTracks = self.remainingTracks - 1
             self.trackEndTime = self.trackEndTime + trackLength
-        
+
 
 ###############################################################
 # Class to make it easier to see which screen is being checked
@@ -331,15 +324,15 @@ class WindowShowing():
     @staticmethod
     def isTvTunesOverrideContinuePlaying():
         # Check the home screen for the forced continue playing flag
-        if xbmcgui.Window( 12000 ).getProperty( "TvTunesContinuePlaying" ).lower() == "true":
+        if xbmcgui.Window(12000).getProperty("TvTunesContinuePlaying").lower() == "true":
             # Never allow continues playing on the Home Screen
             if WindowShowing.isHome():
                 # An addon may have forgotten to undet the flag, or crashed
                 # force the unsetting of the flag
                 log("WindowShowing: Removing TvTunesContinuePlaying property when on Home screen")
-                xbmcgui.Window( 12000 ).clearProperty( "TvTunesContinuePlaying" )
+                xbmcgui.Window(12000).clearProperty("TvTunesContinuePlaying")
                 return False
-            
+
             # Only pay attention to the forced playing if there is actually audio playing
             if xbmc.Player().isPlayingAudio():
                 return True
@@ -355,8 +348,10 @@ class WindowShowing():
 
         if WindowShowing.isTvTunesOverrideTvShows() or WindowShowing.isTvTunesOverrideMovie():
             # Check if this is a dialog, in which case we just continue playing
-            try: dialogid = xbmcgui.getCurrentWindowDialogId()
-            except: dialogid = 9999
+            try:
+                dialogid = xbmcgui.getCurrentWindowDialogId()
+            except:
+                dialogid = 9999
             if dialogid != 9999:
                 # Is a dialog so return True
                 return True
@@ -368,7 +363,7 @@ class WindowShowing():
         # The ID for the Recent Episodes changed in Gotham
         if Settings.getXbmcMajorVersion() > 12:
             folderPathId = "videodb://recentlyaddedepisodes/"
-        return xbmc.getInfoLabel( "container.folderpath" ) == folderPathId
+        return xbmc.getInfoLabel("container.folderpath") == folderPathId
 
     @staticmethod
     def isTvShowTitles(currentPath=None):
@@ -376,8 +371,8 @@ class WindowShowing():
         # The ID for the TV Show Title changed in Gotham
         if Settings.getXbmcMajorVersion() > 12:
             folderPathId = "videodb://tvshows/titles/"
-        if currentPath == None:
-            return xbmc.getInfoLabel( "container.folderpath" ) == folderPathId
+        if currentPath is None:
+            return xbmc.getInfoLabel("container.folderpath") == folderPathId
         else:
             return currentPath == folderPathId
 
@@ -387,14 +382,14 @@ class WindowShowing():
         # The ID for the TV Show Title changed in Gotham
         if Settings.getXbmcMajorVersion() > 12:
             folderPathId = "videodb://musicvideos/"
-        if currentPath == None:
-            return xbmc.getInfoLabel( "container.folderpath" ) == folderPathId
+        if currentPath is None:
+            return xbmc.getInfoLabel("container.folderpath") == folderPathId
         else:
             return currentPath == folderPathId
 
     @staticmethod
     def isPluginPath():
-        return "plugin://" in xbmc.getInfoLabel( "ListItem.Path" )
+        return "plugin://" in xbmc.getInfoLabel("ListItem.Path")
 
     @staticmethod
     def isMovieSet():
@@ -411,18 +406,18 @@ class WindowShowing():
 class TvTunesStatus():
     @staticmethod
     def isAlive():
-        return xbmcgui.Window( 10025 ).getProperty( "TvTunesIsAlive" ) == "true"
-    
+        return xbmcgui.Window(10025).getProperty("TvTunesIsAlive") == "true"
+
     @staticmethod
     def setAliveState(state):
         if state:
-            xbmcgui.Window( 10025 ).setProperty( "TvTunesIsAlive", "true" )
+            xbmcgui.Window(10025).setProperty("TvTunesIsAlive", "true")
         else:
-            xbmcgui.Window( 10025 ).clearProperty('TvTunesIsAlive')
+            xbmcgui.Window(10025).clearProperty('TvTunesIsAlive')
 
     @staticmethod
     def clearRunningState():
-        xbmcgui.Window( 10025 ).clearProperty('TvTunesIsRunning')
+        xbmcgui.Window(10025).clearProperty('TvTunesIsRunning')
 
     # Check if the is a different version running
     @staticmethod
@@ -432,10 +427,10 @@ class TvTunesStatus():
         log("TvTunesStatus: Thread ID = %d" % curThreadId)
 
         # Check if the "running state" is set
-        existingvalue = xbmcgui.Window( 10025 ).getProperty("TvTunesIsRunning")
+        existingvalue = xbmcgui.Window(10025).getProperty("TvTunesIsRunning")
         if existingvalue == "":
             log("TvTunesStatus: Current running state is empty, setting to %d" % curThreadId)
-            xbmcgui.Window( 10025 ).setProperty( "TvTunesIsRunning", str(curThreadId) )
+            xbmcgui.Window(10025).setProperty("TvTunesIsRunning", str(curThreadId))
         else:
             # If it is check if it is set to this thread value
             if existingvalue != str(curThreadId):
@@ -444,7 +439,10 @@ class TvTunesStatus():
         # Default return True unless we have a good reason not to run
         return True
 
-# Class to handle delaying the start of playing a theme 
+
+#########################################################
+# Class to handle delaying the start of playing a theme
+#########################################################
 class DelayedStartTheme():
     def __init__(self):
         self.themesToStart = None
@@ -466,7 +464,7 @@ class DelayedStartTheme():
             # Reset the current time as we need the delay from here
             self.anchorTime = currentTime
         else:
-            log("DelayedStartTheme: Target time = %s current time = %s" % (str(self.anchorTime + delaySeconds), str(currentTime)) )
+            log("DelayedStartTheme: Target time = %s current time = %s" % (str(self.anchorTime + delaySeconds), str(currentTime)))
             # Themes are the same, see if it is time to play the the theme yet
             if currentTime > (self.anchorTime + delaySeconds):
                 log("DelayedStartTheme: Start playing")
@@ -474,7 +472,7 @@ class DelayedStartTheme():
                 self.clear()
                 return True
         return False
-    
+
     def clear(self):
         self.themesToStart = None
         self.anchorTime = 0
@@ -488,7 +486,7 @@ class DelayedStartTheme():
                 # Theme selection has changed
                 self.themesToStart = themes
                 # Reset the current time as we need the delay from here
-                self.anchorTime = 2 # for movie list delay, it is just a counter
+                self.anchorTime = 2  # for movie list delay, it is just a counter
             else:
                 # reduce the anchor by one
                 self.anchorTime = self.anchorTime - 1
@@ -500,23 +498,24 @@ class DelayedStartTheme():
         # Default is to allow playing
         return True
 
-#
+
+###########################################
 # Thread to run the program back-end in
-#
-class TunesBackend( ):
-    def __init__( self ):
+###########################################
+class TunesBackend():
+    def __init__(self):
         self.themePlayer = Player()
         self._stop = False
-        log( "### starting TvTunes Backend ###" )
+        log("### starting TvTunes Backend ###")
         self.newThemeFiles = ThemeFiles("")
         self.oldThemeFiles = ThemeFiles("")
         self.prevThemeFiles = ThemeFiles("")
         self.delayedStart = DelayedStartTheme()
-        
+
         # Only used for logging filtering
         self.lastLoggedThemePath = ""
 
-    def run( self ):
+    def run(self):
         try:
             # Before we actually start playing something, make sure it is OK
             # to run, need to ensure there are not multiple copies running
@@ -529,7 +528,7 @@ class TunesBackend( ):
                 # where some checks are done and the value changes part was through a single
                 # loop iteration
                 isForcedTvTunesContinue = WindowShowing.isTvTunesOverrideContinuePlaying()
-                
+
                 # If shutdown is in progress, stop quickly (no fade out)
                 if WindowShowing.isShutdownMenu() or xbmc.abortRequested:
                     self.stop()
@@ -546,7 +545,7 @@ class TunesBackend( ):
                     if TvTunesStatus.isAlive():
                         self.themePlayer.endPlaying()
                     self.stop()
-                    
+
                     # It may be possible that we stopped for the screen-saver about to kick in
                     # If we are using Gotham or higher, it is possible for us to re-kick off the
                     # screen-saver, otherwise the action of us stopping the theme will reset the
@@ -558,13 +557,13 @@ class TunesBackend( ):
                 # There is a valid page selected and there is currently nothing playing
                 if self.isPlayingZone() and not WindowShowing.isTvTunesOverrideContinuePrevious():
                     newThemes = self.getThemes()
-                    if( self.newThemeFiles != newThemes):
+                    if self.newThemeFiles != newThemes:
                         self.newThemeFiles = newThemes
 
                 # Check if the file path has changed, if so there is a new file to play
                 if self.newThemeFiles != self.oldThemeFiles and self.newThemeFiles.hasThemes():
-                    log( "TunesBackend: old path: %s" % self.oldThemeFiles.getPath() )
-                    log( "TunesBackend: new path: %s" % self.newThemeFiles.getPath() )
+                    log("TunesBackend: old path: %s" % self.oldThemeFiles.getPath())
+                    log("TunesBackend: new path: %s" % self.newThemeFiles.getPath())
                     if self.start_playing():
                         self.oldThemeFiles = self.newThemeFiles
 
@@ -578,7 +577,7 @@ class TunesBackend( ):
 
                 # This will occur when a theme has stopped playing, maybe is is not set to loop
                 if TvTunesStatus.isAlive() and not self.themePlayer.isPlayingAudio():
-                    log( "TunesBackend: playing ends" )
+                    log("TunesBackend: playing ends")
                     self.themePlayer.restoreSettings()
                     TvTunesStatus.setAliveState(False)
 
@@ -592,7 +591,7 @@ class TunesBackend( ):
                     self.prevThemeFiles.clear()
                     self.delayedStart.clear()
                     if self.themePlayer.isPlaying() and TvTunesStatus.isAlive():
-                        log( "TunesBackend: end playing" )
+                        log("TunesBackend: end playing")
                         self.themePlayer.endPlaying()
                     TvTunesStatus.setAliveState(False)
 
@@ -600,7 +599,6 @@ class TunesBackend( ):
 
                 # Wait a little before starting the check again
                 xbmc.sleep(200)
-
         except:
             log("TunesBackend: %s" % traceback.format_exc())
             self.stop()
@@ -640,17 +638,17 @@ class TunesBackend( ):
         # Check if the files are stored in a custom path
         if Settings.isCustomPathEnabled():
             if not WindowShowing.isMovies():
-                videotitle = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
+                videotitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
             else:
-                videotitle = xbmc.getInfoLabel( "ListItem.Title" )
-            videotitle = normalize_string( videotitle )
+                videotitle = xbmc.getInfoLabel("ListItem.Title")
+            videotitle = normalize_string(videotitle)
             themePath = os_path_join(Settings.getCustomPath(), videotitle)
 
         # Looking at the TV Show information page
         elif WindowShowing.isMovieInformation() and (WindowShowing.isTvShowTitles() or WindowShowing.isTvShows()):
-            themePath = xbmc.getInfoLabel( "ListItem.FilenameAndPath" )
+            themePath = xbmc.getInfoLabel("ListItem.FilenameAndPath")
         else:
-            themePath = xbmc.getInfoLabel( "ListItem.Path" )
+            themePath = xbmc.getInfoLabel("ListItem.Path")
 
         # To try and reduce the amount of "noise" in the logging, where the
         # same check is logged again and again, we record if it has been
@@ -675,7 +673,7 @@ class TunesBackend( ):
                 for aKey in movieSetMap.keys():
                     videotitle = normalize_string(aKey)
                     movieSetMap[aKey] = os_path_join(Settings.getCustomPath(), videotitle)
- 
+
             if len(movieSetMap) < 1:
                 themefile = ThemeFiles("", debug_logging_enabled=debug_logging_enabled)
             else:
@@ -700,16 +698,16 @@ class TunesBackend( ):
     def _getMovieSetFileList(self):
         # Create a map for Program name to video file
         movieSetMap = dict()
-        
+
         # Check if the selection is a Movie Set
         if WindowShowing.isMovieSet():
             # Get Movie Set Data Base ID
-            dbid = xbmc.getInfoLabel( "ListItem.DBID" )
+            dbid = xbmc.getInfoLabel("ListItem.DBID")
             # Get movies from Movie Set
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieSetDetails", "params": {"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "file", "title"], "sort": { "order": "ascending",  "method": "title" }} },"id": 1 }' % dbid)
             json_query = unicode(json_query, 'utf-8', errors='ignore')
             json_query = simplejson.loads(json_query)
-            if "result" in json_query and json_query['result'].has_key('setdetails'):
+            if ("result" in json_query) and ('setdetails' in json_query['result']):
                 # Get the list of movies paths from the movie set
                 items = json_query['result']['setdetails']['movies']
                 for item in items:
@@ -718,15 +716,14 @@ class TunesBackend( ):
 
         return movieSetMap
 
-
     # Returns True is started playing, False is delayed
-    def start_playing( self ):
+    def start_playing(self):
         playlist = self.newThemeFiles.getThemePlaylist()
 
         if self.newThemeFiles.hasThemes():
-            if self.newThemeFiles == self.prevThemeFiles: 
-                log("TunesBackend: Not playing the same files twice %s" % self.newThemeFiles.getPath() )
-                return True # don't play the same tune twice (when moving from season to episodes etc)
+            if self.newThemeFiles == self.prevThemeFiles:
+                log("TunesBackend: Not playing the same files twice %s" % self.newThemeFiles.getPath())
+                return True  # don't play the same tune twice (when moving from season to episodes etc)
             # Value that will force a quicker than normal fade in and out
             # this is needed if switching from one theme to the next, we
             # do not want a long pause starting and stopping
@@ -734,11 +731,11 @@ class TunesBackend( ):
             # Check if a theme is already playing, if there is we will need
             # to stop it before playing the new theme
             # Stop any audio playing
-            if self.themePlayer.isPlayingAudio(): # and self.prevThemeFiles.hasThemes()
+            if self.themePlayer.isPlayingAudio():  # and self.prevThemeFiles.hasThemes()
                 fastFadeNeeded = True
                 log("TunesBackend: Stopping previous theme: %s" % self.prevThemeFiles.getPath())
                 self.themePlayer.endPlaying(fastFade=fastFadeNeeded)
-            
+
             # Check if this should be delayed
             if not self.delayedStart.shouldStartPlaying(self.newThemeFiles):
                 return False
@@ -746,16 +743,15 @@ class TunesBackend( ):
             # Store the new theme that is being played
             self.prevThemeFiles = self.newThemeFiles
             TvTunesStatus.setAliveState(True)
-            log("TunesBackend: start playing %s" % self.newThemeFiles.getPath() )
-            self.themePlayer.play( playlist, fastFade=fastFadeNeeded )
+            log("TunesBackend: start playing %s" % self.newThemeFiles.getPath())
+            self.themePlayer.play(playlist, fastFade=fastFadeNeeded)
         else:
-            log("TunesBackend: no themes found for %s" % self.newThemeFiles.getPath() )
+            log("TunesBackend: no themes found for %s" % self.newThemeFiles.getPath())
         return True
 
-
-    def stop( self ):
+    def stop(self):
         log("TunesBackend: ### Stopping TvTunes Backend ###")
-        if TvTunesStatus.isAlive() and not self.themePlayer.isPlayingVideo(): 
+        if TvTunesStatus.isAlive() and not self.themePlayer.isPlayingVideo():
             log("TunesBackend: stop playing")
             self.themePlayer.stop()
             while self.themePlayer.isPlayingAudio():
@@ -784,10 +780,10 @@ if TvTunesStatus.isOkToRun():
     # called when the video info screen is loaded, it can then be read by the skin
     # when it comes to draw the button
     if Settings.hideVideoInfoButton():
-        xbmcgui.Window( 12003 ).setProperty( "TvTunes_HideVideoInfoButton", "true" )
+        xbmcgui.Window(12003).setProperty("TvTunes_HideVideoInfoButton", "true")
     else:
-        xbmcgui.Window( 12003 ).clearProperty("TvTunes_HideVideoInfoButton")
-    
+        xbmcgui.Window(12003).clearProperty("TvTunes_HideVideoInfoButton")
+
     # Create the main class to control the theme playing
     main = TunesBackend()
 
@@ -795,5 +791,3 @@ if TvTunesStatus.isOkToRun():
     main.run()
 else:
     log("TvTunes Already Running")
-
-

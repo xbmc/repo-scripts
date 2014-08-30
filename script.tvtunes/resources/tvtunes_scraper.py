@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
 import os
-from traceback import print_exc
+import sys
 import re
-import unicodedata
-import xbmc  
+import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
 
 
-__addon__     = xbmcaddon.Addon(id='script.tvtunes')
-__addonid__   = __addon__.getAddonInfo('id')
-__language__  = __addon__.getLocalizedString
-__icon__      = __addon__.getAddonInfo('icon')
-__cwd__       = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__  = xbmc.translatePath( os.path.join( __cwd__, 'resources' ).encode("utf-8") ).decode("utf-8")
-__lib__  = xbmc.translatePath( os.path.join( __resource__, 'lib' ).encode("utf-8") ).decode("utf-8")
+__addon__ = xbmcaddon.Addon(id='script.tvtunes')
+__addonid__ = __addon__.getAddonInfo('id')
+__language__ = __addon__.getLocalizedString
+__icon__ = __addon__.getAddonInfo('icon')
+__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
+__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
+__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
 
 sys.path.append(__resource__)
 sys.path.append(__lib__)
@@ -53,9 +52,9 @@ class WindowShowing():
         # The ID for the TV Show Title changed in Gotham
         if Settings.getXbmcMajorVersion() > 12:
             folderPathId = "videodb://tvshows/titles/"
-        if xbmc.getInfoLabel( "container.folderpath" ) == folderPathId:
-            return True # TvShowTitles
-        
+        if xbmc.getInfoLabel("container.folderpath") == folderPathId:
+            return True  # TvShowTitles
+
         return False
 
 
@@ -72,50 +71,50 @@ class TvTunesScraper:
             # Check if a theme already exists
             if self._doesThemeExist(videoItem[1]):
                 # Prompt the user to see if we should overwrite the theme
-                if not xbmcgui.Dialog().yesno(__language__(32103),__language__(32104)):
+                if not xbmcgui.Dialog().yesno(__language__(32103), __language__(32104)):
                     # No not want to overwrite, so quit
-                    log("TvTunesScraper: %s already exists" % ( os_path_join(videoItem[1],"theme.*")) )
+                    log("TvTunesScraper: %s already exists" % (os_path_join(videoItem[1], "theme.*")))
                     return
-        
+
         # Perform the fetch
         videoList = []
         videoList.append(videoItem)
         TvTunesFetcher(videoList)
-        
+
     # Handles the case where there is just a single theme to look for
     # and it has been invoked from the given video location
     def getSoloVideo(self):
         log("getSoloVideo: solo mode")
-        
+
         # Used to pass the name and path via the command line
         # This caused problems with non ascii characters, so now
         # we just look at the screen details
         # The solo option is only available from the info screen
         # Looking at the TV Show information page
         if WindowShowing.isTv():
-            videoName = xbmc.getInfoLabel( "ListItem.TVShowTitle" )
+            videoName = xbmc.getInfoLabel("ListItem.TVShowTitle")
             log("getSoloVideo: TV Show detected %s" % videoName)
         else:
-            videoName = xbmc.getInfoLabel( "ListItem.Title" )
+            videoName = xbmc.getInfoLabel("ListItem.Title")
             log("getSoloVideo: Movie detected %s" % videoName)
 
         # Now get the video path
         videoPath = None
         if WindowShowing.isMovieInformation() and WindowShowing.isTv():
-            videoPath = xbmc.getInfoLabel( "ListItem.FilenameAndPath" )
-        if videoPath == None or videoPath == "":
-            videoPath = xbmc.getInfoLabel( "ListItem.Path" )
+            videoPath = xbmc.getInfoLabel("ListItem.FilenameAndPath")
+        if videoPath is None or videoPath == "":
+            videoPath = xbmc.getInfoLabel("ListItem.Path")
         log("getSoloVideo: Video Path %s" % videoPath)
 
         # Check if there is an "Original Title Defines
-        originalTitle = xbmc.getInfoLabel( "ListItem.OriginalTitle" )
-        if (originalTitle != None) and (originalTitle != ""):
-            originalTitle = normalize_string( originalTitle )
+        originalTitle = xbmc.getInfoLabel("ListItem.OriginalTitle")
+        if (originalTitle is not None) and (originalTitle != ""):
+            originalTitle = normalize_string(originalTitle)
         else:
             originalTitle = None
 
-        normVideoName = normalize_string( videoName )
-        log("getSoloVideo: videoName = %s" % normVideoName )
+        normVideoName = normalize_string(videoName)
+        log("getSoloVideo: videoName = %s" % normVideoName)
 
         # If the main title and the original title are the same
         # Then no need to use the original title
@@ -132,21 +131,20 @@ class TvTunesScraper:
                 videoPath = videoPath.replace("stack://", "").split(" , ", 1)[0]
             # Need to remove the filename from the end  as we just want the directory
             # if not os.path.isdir(videoPath):
-            fileExt = os.path.splitext( videoPath )[1]
+            fileExt = os.path.splitext(videoPath)[1]
             # If this is a file, then get it's parent directory
-            if fileExt != None and fileExt != "":
-                videoPath = os.path.dirname( videoPath )
+            if fileExt is not None and fileExt != "":
+                videoPath = os.path.dirname(videoPath)
 
-        log("getSoloVideo: videoPath = %s" % videoPath )
-        
+        log("getSoloVideo: videoPath = %s" % videoPath)
+
 #         try:
 #             decodedPath = videoPath.decode("utf-8")
 #             videoPath = decodedPath
 #         except:
 #             pass
-        
-        return [normVideoName,videoPath,originalTitle]
 
+        return [normVideoName, videoPath, originalTitle]
 
     # Checks if a theme exists in a directory
     def _doesThemeExist(self, directory):
@@ -173,7 +171,7 @@ class TvTunesScraper:
             # Generate the regex
             themeFileRegEx = Settings.getThemeFileRegEx()
 
-            dirs, files = list_dir( directory )
+            dirs, files = list_dir(directory)
             for aFile in files:
                 m = re.search(themeFileRegEx, aFile, re.IGNORECASE)
                 if m:
@@ -182,5 +180,5 @@ class TvTunesScraper:
         return False
 
 
-if ( __name__ == "__main__" ):
+if __name__ == "__main__":
     TvTunesScraper()

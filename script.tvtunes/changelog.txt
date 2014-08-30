@@ -1,3 +1,6 @@
+v4.4.7
+- update language files from Transifex
+
 v4.4.6
 - Fix script error when televisiontunes.com is not responding
 - Update Grooveshark so that it works with the latest website api changes

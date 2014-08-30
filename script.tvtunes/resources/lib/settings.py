@@ -1,27 +1,29 @@
 # -*- coding: utf-8 -*-
+import unicodedata
 import xbmc
 import xbmcaddon
 import os
 import xbmcvfs
 
-__addon__     = xbmcaddon.Addon(id='script.tvtunes')
-__addonid__   = __addon__.getAddonInfo('id')
+__addon__ = xbmcaddon.Addon(id='script.tvtunes')
+__addonid__ = __addon__.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, debug_logging_enabled=True, loglevel=xbmc.LOGDEBUG):
-    if ((__addon__.getSetting( "logEnabled" ) == "true") and debug_logging_enabled) or (loglevel != xbmc.LOGDEBUG):
-        if isinstance (txt,str):
+    if ((__addon__.getSetting("logEnabled") == "true") and debug_logging_enabled) or (loglevel != xbmc.LOGDEBUG):
+        if isinstance(txt, str):
             txt = txt.decode("utf-8")
         message = u'%s: %s' % (__addonid__, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
-def normalize_string( text ):
+
+def normalize_string(text):
     try:
-        text = text.replace(":","")
-        text = text.replace("/","-")
-        text = text.replace("\\","-")
-        text = unicodedata.normalize( 'NFKD', unicode( text, 'utf-8' ) ).encode( 'ascii', 'ignore' )
+        text = text.replace(":", "")
+        text = text.replace("/", "-")
+        text = text.replace("\\", "-")
+        text = unicodedata.normalize('NFKD', unicode(text, 'utf-8')).encode('ascii', 'ignore')
     except:
         pass
     return text
@@ -29,7 +31,7 @@ def normalize_string( text ):
 
 # There has been problems with calling join with non ascii characters,
 # so we have this method to try and do the conversion for us
-def os_path_join( dir, file ):
+def os_path_join(dir, file):
     # Check if it ends in a slash
     if dir.endswith("/") or dir.endswith("\\"):
         # Remove the slash character
@@ -47,9 +49,10 @@ def os_path_join( dir, file ):
         pass
     return os.path.join(dir, file)
 
+
 # Splits a path the same way as os.path.split but supports paths of a different
 # OS than that being run on
-def os_path_split( fullpath ):
+def os_path_split(fullpath):
     # Check if it ends in a slash
     if fullpath.endswith("/") or fullpath.endswith("\\"):
         # Remove the slash character
@@ -59,7 +62,7 @@ def os_path_split( fullpath ):
         slash1 = fullpath.rindex("/")
     except:
         slash1 = -1
-    
+
     try:
         slash2 = fullpath.rindex("\\")
     except:
@@ -68,7 +71,7 @@ def os_path_split( fullpath ):
     # Parse based on the last type of slash in the string
     if slash1 > slash2:
         return fullpath.rsplit("/", 1)
-    
+
     return fullpath.rsplit("\\", 1)
 
 
@@ -80,7 +83,7 @@ def list_dir(dirpath):
     #    http://forum.xbmc.org/showthread.php?tid=192255&pid=1681373#pid1681373
     if dirpath.startswith('afp://') and (not dirpath.endswith('/')):
         dirpath = os_path_join(dirpath, '/')
-    return xbmcvfs.listdir( dirpath )
+    return xbmcvfs.listdir(dirpath)
 
 
 ##############################
@@ -91,7 +94,6 @@ class Settings():
     xbmcMajorVersion = 0
     # The time the screensaver is set to (-1 for not set)
     screensaverTime = 0
-
 
     # Loads the Screensaver settings
     # In Frodo there is no way to get the time before the screensaver
@@ -112,38 +114,38 @@ class Settings():
         return -1
 
 #####################################################################
-## IMPORTANT NOTE
-## --------------
-## The method _loadScreensaverSettings has been commented out
-## because it breaks the rules for getting Add-ons accepted into
-## the official repository, the bug still exists but can be solved
-## in one of two ways:
-## 1) After installation of the addon, uncomment the following method
-## 2) Set the "Fade out after playing for (minutes)" to less than the
-##    screen saver value in TvTunes setting
-## Option 2 is recommended as will not need re-applying after updates
+# IMPORTANT NOTE
+# --------------
+# The method _loadScreensaverSettings has been commented out
+# because it breaks the rules for getting Add-ons accepted into
+# the official repository, the bug still exists but can be solved
+# in one of two ways:
+# 1) After installation of the addon, uncomment the following method
+# 2) Set the "Fade out after playing for (minutes)" to less than the
+#    screen saver value in TvTunes setting
+# Option 2 is recommended as will not need re-applying after updates
 #####################################################################
 
 #     def loadScreensaverSettings():
 #         if Settings.screensaverTime == 0:
 #             Settings.screenTimeOutSeconds = -1
 #             pguisettings = xbmc.translatePath('special://profile/guisettings.xml')
-#      
+#
 #             log("Settings: guisettings.xml location = %s" % pguisettings)
-#      
+#
 #             # Make sure we found the file and it exists
 #             if os.path.exists(pguisettings):
 #                 # Create an XML parser
 #                 elemTree = ET.ElementTree()
 #                 elemTree.parse(pguisettings)
-#                 
+#
 #                 # First check to see if any screensaver is set
 #                 isEnabled = elemTree.findtext('screensaver/mode')
 #                 if (isEnabled == None) or (isEnabled == ""):
 #                     log("Settings: No Screensaver enabled")
 #                 else:
 #                     log("Settings: Screensaver set to %s" % isEnabled)
-#     
+#
 #                     # Get the screensaver setting in minutes
 #                     result = elemTree.findtext('screensaver/time')
 #                     if result != None:
@@ -154,18 +156,18 @@ class Settings():
 #                         Settings.screenTimeOutSeconds = (int(result) * 60) - 10
 #                     else:
 #                         log("Settings: No Screensaver timeout found")
-#                  
+#
 #                 del elemTree
 #         return Settings.screenTimeOutSeconds
 
     @staticmethod
     def isCustomPathEnabled():
         return __addon__.getSetting("custom_path_enable") == 'true'
-    
+
     @staticmethod
     def getCustomPath():
         return __addon__.getSetting("custom_path").decode("utf-8")
-    
+
     @staticmethod
     def getDownVolume():
         return int(float(__addon__.getSetting("downvolume")))
@@ -173,7 +175,7 @@ class Settings():
     @staticmethod
     def isLoop():
         return __addon__.getSetting("loop") == 'true'
-    
+
     @staticmethod
     def isFadeOut():
         return __addon__.getSetting("fadeOut") == 'true'
@@ -181,13 +183,10 @@ class Settings():
     @staticmethod
     def isFadeIn():
         return __addon__.getSetting("fadeIn") == 'true'
-    
+
     @staticmethod
     def isSmbEnabled():
-        if __addon__.getSetting("smb_share"):
-            return True
-        else:
-            return False
+        return __addon__.getSetting("smb_share") == 'true'
 
     @staticmethod
     def getSmbUser():
@@ -195,18 +194,18 @@ class Settings():
             return __addon__.getSetting("smb_login")
         else:
             return "guest"
-    
+
     @staticmethod
     def getSmbPassword():
         if __addon__.getSetting("smb_psw"):
             return __addon__.getSetting("smb_psw")
         else:
             return "guest"
-    
+
     # Calculates the regular expression to use to search for theme files
     @staticmethod
     def getThemeFileRegEx(searchDir=None, extensionOnly=False):
-        fileTypes = "mp3" # mp3 is the default that is always supported
+        fileTypes = "mp3"  # mp3 is the default that is always supported
         if(__addon__.getSetting("wma") == 'true'):
             fileTypes = fileTypes + "|wma"
         if(__addon__.getSetting("flac") == 'true'):
@@ -217,7 +216,7 @@ class Settings():
             fileTypes = fileTypes + "|wav"
         themeRegEx = '(theme[ _A-Za-z0-9.-]*.(' + fileTypes + ')$)'
         # If using the directory method then remove the requirement to have "theme" in the name
-        if (searchDir != None) and Settings.isThemeDirEnabled():
+        if (searchDir is not None) and Settings.isThemeDirEnabled():
             # Make sure this is checking the theme directory, not it's parent
             if searchDir.endswith(Settings.getThemeDirectory()):
                 extensionOnly = True
@@ -225,7 +224,7 @@ class Settings():
         if extensionOnly:
             themeRegEx = '(.(' + fileTypes + ')$)'
         return themeRegEx
-    
+
     @staticmethod
     def isTimout():
         screensaverTime = Settings.loadScreensaverSettings()
@@ -242,11 +241,11 @@ class Settings():
     @staticmethod
     def isShuffleThemes():
         return __addon__.getSetting("shuffle") == 'true'
-    
+
     @staticmethod
     def isRandomStart():
         return __addon__.getSetting("random") == 'true'
-    
+
     @staticmethod
     def isPlayMovieList():
         return __addon__.getSetting("movielist") == 'true'
@@ -312,7 +311,7 @@ class Settings():
     @staticmethod
     def isMultiThemesSupported():
         return __addon__.getSetting("multiThemeDownload") == 'true'
-    
+
     @staticmethod
     def isMovieDownloadEnabled():
         return __addon__.getSetting("searchMovieDownload") == 'true'
@@ -320,5 +319,3 @@ class Settings():
     @staticmethod
     def getSearchEngine():
         return __addon__.getSetting("themeSearchSource")
-
-
