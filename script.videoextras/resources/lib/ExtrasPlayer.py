@@ -165,6 +165,11 @@ class ExtrasPlayer(xbmc.Player):
         else:
             listitem.setThumbnailImage(__addon__.getAddonInfo('icon'))
 
+        # Check if the plot is set, if so we want to set it on the player
+        plotDetails = extrasItem.getPlot()
+        if (plotDetails is not None) and (plotDetails != ""):
+            listitem.setInfo('video', {'plot': plotDetails})
+
         # Record if the video should start playing part-way through
         if extrasItem.isResumable() and not ignoreResume:
             if extrasItem.getResumePoint() > 1:

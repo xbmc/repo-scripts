@@ -1,3 +1,7 @@
+v1.1.6
+- Exit cleanly if quit wile updating overlays
+- Add plot to player details when an extra is played
+
 v1.1.5
 - Update Playall menu item with Path and TV Show Title
 - Update Confluence patch to include Extras icon on Video Info Screen

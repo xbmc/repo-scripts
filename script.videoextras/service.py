@@ -131,8 +131,8 @@ class VideoExtrasService():
             items = json_query['result'][target]
             for item in items:
                 # Check to see if exit has been called, if so stop
-                if xbmc.getCondVisibility("Window.IsVisible(shutdownmenu)") or xbmc.abortRequested:
-                    sys.exit()
+                if xbmc.abortRequested or xbmc.getCondVisibility("Window.IsVisible(shutdownmenu)"):
+                    return
 
                 log("VideoExtrasService: %s detected: %s = %s" % (target, item['title'], item['file']))
                 videoExtras = VideoExtrasBase(item['file'], target)
