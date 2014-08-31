@@ -1,3 +1,8 @@
+5.0.9
+- fix hash large rars, Beam
+- Support for preferred language sorting and fetch using IMDBID, Glenn Jennehed
+- fix: hack to work around issue where Brazilian is not found as language in XBMC
+
 5.0.8
 - fix: extension is needed for downloaded files
 

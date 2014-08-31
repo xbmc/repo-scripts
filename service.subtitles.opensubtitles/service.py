@@ -40,8 +40,14 @@ def Search( item ):
     return
 
   if search_data != None:
-    search_data.sort(key=lambda x: [not x['MatchedBy'] == 'moviehash',x['LanguageName']])
+    search_data.sort(key=lambda x: [not x['MatchedBy'] == 'moviehash',
+				     not os.path.splitext(x['SubFileName'])[0] == os.path.splitext(os.path.basename(urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))))[0],
+				     not normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")).lower() in x['SubFileName'].replace('.',' ').lower(),
+				     not x['LanguageName'] == PreferredSub])
     for item_data in search_data:
+      ## hack to work around issue where Brazilian is not found as language in XBMC
+      if item_data["LanguageName"] == "Brazilian":
+        item_data["LanguageName"] = "Portuguese (Brazil)"
       listitem = xbmcgui.ListItem(label          = item_data["LanguageName"],
                                   label2         = item_data["SubFileName"],
                                   iconImage      = str(int(round(float(item_data["SubRating"])/2))),
@@ -128,6 +134,7 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
   item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))# try to get original title
   item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))# Full path of a playing file
   item['3let_language']      = [] #['scc','eng']
+  PreferredSub		      = params.get('preferredlanguage')
 
   if 'searchstring' in params:
     item['mansearch'] = True

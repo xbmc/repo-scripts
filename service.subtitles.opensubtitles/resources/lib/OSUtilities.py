@@ -47,15 +47,31 @@ class OSDBServer:
                               'moviehash'    :hash,
                               'moviebytesize':str(size)
                             })
+          if not item['tvshow']:
+            searchlist.append({'sublanguageid' :",".join(item['3let_language']),
+          			'imdbid'	   :str(xbmc.Player().getVideoInfoTag().getIMDBNumber().replace('tt',''))
+          		       })
         except:
           pass    
 
-      searchlist.append({'sublanguageid':",".join(item['3let_language']),
-                          'query'       :OS_search_string
-                        })
-      search = self.server.SearchSubtitles( self.osdb_token, searchlist )
-      if search["data"]:
-        return search["data"] 
+      if item['mansearch']:
+      	searchlist = [{'sublanguageid':",".join(item['3let_language']),
+                       'query'        :OS_search_string
+                     }]
+      	search = self.server.SearchSubtitles( self.osdb_token, searchlist )
+      	if search["data"]:
+          return search["data"]
+      else:
+      	search = self.server.SearchSubtitles( self.osdb_token, searchlist )
+      	if search["data"]:
+          return search["data"] 
+	else: 
+	  searchlist = [{'sublanguageid':",".join(item['3let_language']),
+                	 'query'        :OS_search_string
+                       }]
+      	  search = self.server.SearchSubtitles( self.osdb_token, searchlist )
+      	  if search["data"]:
+            return search["data"]
 
 
   def download(self, ID, dest):
@@ -124,7 +140,7 @@ def OpensubtitlesHashRar(firsrarfile):
             s_partiizebodystart=seek+size
             s_partiizebody,s_unpacksize=struct.unpack( '<II', a[7:7+2*4])
             if (flag & 0x0100):
-                s_unpacksize=(unpack( '<I', a[36:36+4])[0] <<32 )+s_unpacksize
+                s_unpacksize=(struct.unpack( '<I', a[36:36+4])[0] <<32 )+s_unpacksize
                 log( __name__ , 'Hash untested for files biger that 2gb. May work or may generate bad hash.')
             lastrarfile=getlastsplit(firsrarfile,(s_unpacksize-1)/s_partiizebody)
             hash=addfilehash(firsrarfile,s_unpacksize,s_partiizebodystart)
