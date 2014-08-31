@@ -398,13 +398,20 @@ class Main:
                 if success:
                     if site == 'fanarttv':
                         try:
-                            json_data = dict(map(lambda (key, value): ('artistImages', value), json_data.items()))
-                        except AttributeError:
-                            return data
+                            images = json_data['artistbackground']
                         except Exception, e:
-                            lw.log( ['unexpected error fixing fanart.tv JSON data', e] )
-                            return data
-                    success, loglines = writeFile( dicttoxml( json_data ).encode('utf-8'), filename )
+                            lw.log( ['error getting artist backgrounds from fanart.tv', e] )
+                            images = []
+                        if self.FANARTTVALLIMAGES == 'true':
+                            try:
+                                thumbs = json_data['artistthumb']
+                            except Exception, e:
+                                lw.log( ['error getting artist thumbs from fanart.tv', e] )
+                                thumbs = []
+                            images = images + thumbs
+                    else:
+                        images = json_data
+                    success, loglines = writeFile( dicttoxml( images ).encode('utf-8'), filename )
                     lw.log( loglines )
                     json_data = ''
                 else:
@@ -526,7 +533,8 @@ class Main:
     def _get_images( self, site ):
         if site == 'fanarttv':
             if self.MBID:
-                self.url = self.fanarttvURL + self.MBID + self.fanarttvOPTIONS
+                self.url = self.fanarttvURL + self.MBID
+                self.params = self.fanarttvPARAMS
                 lw.log( ['asking for images from: %s' %self.url] )
             else:
                 return []
@@ -809,8 +817,11 @@ class Main:
 
     def _get_settings( self ):
         self.FANARTTV = __addon__.getSetting( "fanarttv" )
+        self.FANARTTVALLIMAGES = __addon__.getSetting( "fanarttv_all" )
+        self.FANARTTVCLIENTAPIKEY = __addon__.getSetting( "fanarttv_clientapikey" )
         self.THEAUDIODB = __addon__.getSetting( "theaudiodb" )
         self.HTBACKDROPS = __addon__.getSetting( "htbackdrops" )
+        self.HTBACKDROPSALLIMAGES = __addon__.getSetting( "htbackdrops_all" )
         self.ARTISTINFO = __addon__.getSetting( "artistinfo" )
         self.LANGUAGE = __addon__.getSetting( "language" )
         for language in LANGUAGES:
@@ -887,13 +898,19 @@ class Main:
         self.params = {}
         self.LastfmURL = 'http://ws.audioscrobbler.com/2.0/'
         self.LastfmPARAMS = {'autocorrect':'1', 'api_key':LastfmApiKey}
-        self.fanarttvURL = 'http://api.fanart.tv/webservice/artist/%s/' % fanarttvApiKey
-        self.fanarttvOPTIONS = '/json/artistbackground/'
+        self.fanarttvURL = 'https://webservice.fanart.tv/v3/music/'
+        self.fanarttvPARAMS = {'api_key': fanarttvApiKey}
+        if self.FANARTTVCLIENTAPIKEY:
+            self.fanarttvPARAMS.update( {'client_key': self.FANARTTVCLIENTAPIKEY} )
         theaudiodbURL = 'http://www.theaudiodb.com/api/v1/json/%s/' % theaudiodbApiKey
         self.theaudiodbARTISTURL = theaudiodbURL + 'artist-mb.php'
         self.theaudiodbALBUMURL = theaudiodbURL + 'album.php'
         self.HtbackdropsQueryURL = 'http://htbackdrops.org/api/%s/searchXML' % HtbackdropsApiKey
-        self.HtbackdropsPARAMS =  {'default_operator':'and', 'fields':'title', 'aid':'1'}
+        self.HtbackdropsPARAMS = {'default_operator':'and', 'fields':'title'}
+        if self.HTBACKDROPSALLIMAGES == 'true':
+            self.HtbackdropsPARAMS.update( {'cid':'5'} )
+        else:
+            self.HtbackdropsPARAMS.update( {'aid':'1'} )
         self.HtbackdropsDownloadURL = 'http://htbackdrops.org/api/' + HtbackdropsApiKey + '/download/'
 
 

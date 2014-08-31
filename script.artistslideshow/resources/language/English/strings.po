@@ -54,7 +54,7 @@ msgid "Download images from last.fm"
 msgstr ""
 
 msgctxt "#32002"
-msgid "Download images from htbackdrops.com"
+msgid "Download images from htbackdrops.org"
 msgstr ""
 
 msgctxt "#32003"
@@ -74,7 +74,7 @@ msgid "  Preferred language for artist information"
 msgstr ""
 
 msgctxt "#32007"
-msgid "  Download only 16:9 images"
+msgid "  Download all images regardless of resolution"
 msgstr ""
 
 msgctxt "#32008"
@@ -85,7 +85,11 @@ msgctxt "#32009"
 msgid "Download images from theaudiodb.com"
 msgstr ""
 
-#empty strings from id 32010 to 32099
+msgctxt "#32010"
+msgid "  Client API key"
+msgstr ""
+
+#empty strings from id 32011 to 32099
 
 msgctxt "#32100"
 msgid "Slideshow"
