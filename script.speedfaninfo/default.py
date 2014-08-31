@@ -191,7 +191,10 @@ class Main( xbmcgui.WindowXMLDialog ):
                         percent_match = True
                         percent_value = percents[j][1]
                 if percent_match:
-                    en_speeds.append( (speeds[i][0], speeds [i][1] + ' (' + percent_value + ')') )
+                    if speeds[i][1] == '0rpm':
+                        en_speeds.append( (speeds[i][0], percent_value) )
+                    else:
+                        en_speeds.append( (speeds[i][0], speeds [i][1] + ' (' + percent_value + ')') )
                 else:
                     en_speeds.append( (speeds[i][0], speeds [i][1]) )
             self._populate_list( __language__(30101), en_speeds, firstline_shown )
