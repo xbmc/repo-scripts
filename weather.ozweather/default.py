@@ -477,7 +477,7 @@ def propertiesPDOM(page, extendedFeatures):
     try:
         #pull data from the current observations table
         ret = common.parseDOM(page, "div", attrs = { "class": "details_lhs" })
-        observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
+        observations = common.parseDOM(ret, "td", attrs = { "class": "hilite" })
         #Observations now looks like - ['18.3&deg;C', '4.7&deg;C', '18.3&deg;C', '41%', 'SSW 38km/h', '48km/h', '1015.7hPa', '-', '0.0mm / -']
         log("Current Conditions Retrieved: " + str(observations))
         temperature = str(int(round(float(observations[0].strip( '&deg;C' )))))
@@ -502,7 +502,7 @@ def propertiesPDOM(page, extendedFeatures):
     try:
         #pull data from the atrological table
         ret = common.parseDOM(page, "div", attrs = { "class": "details_rhs" })
-        observations = common.parseDOM(ret, "td", attrs = { "class": "hilite bg_yellow" })
+        observations = common.parseDOM(ret, "td", attrs = { "class": "hilite" })
         log("Astrological Retrieved: " + str(observations))
         sunrise = str(observations[0])
         sunset = str(observations[1])
@@ -513,10 +513,13 @@ def propertiesPDOM(page, extendedFeatures):
     ####FORECAST DATA
     try:
         #pull the basic data from the forecast table
-        ret = common.parseDOM(page, "div", attrs = { "class": "boxed_blue_nopad" })
+        ret = common.parseDOM(page, "table", attrs = { "id": "forecast-table" })
+        trs = common.parseDOM(ret, "tr")
+        # log("TRS is: " + str(trs))
         #create lists of each of the maxes, mins, and descriptions
         #Get the days UV in text form like 'Extreme' and number '11'
-        UVchunk = common.parseDOM(ret, "td", attrs = { "style": "text-align: center;" })
+        UVchunk = common.parseDOM(trs[6], "td", attrs = { "style": "text-align: center;" })
+        # log("UVchunk is: " + str(UVchunk))        
         UVtext = common.parseDOM(UVchunk, "span")
         UVnumber = common.parseDOM(UVchunk, "span", ret = "title")
         UV = UVtext[0] + ' (' + UVnumber[0] + ')'
@@ -527,10 +530,10 @@ def propertiesPDOM(page, extendedFeatures):
         minList = stripList(maxMin[14:21],'&deg;C')
         rainChanceList = stripList(maxMin[21:28],'')
         rainAmountList = stripList(maxMin[28:35],'')
-        log (str(rainChanceList) + str(rainAmountList))
+        # log (str(rainChanceList) + str(rainAmountList))
         #and the short forecasts
-        shortDesc = common.parseDOM(ret, "td", attrs = { "class": "bg_yellow" })
-        shortDesc = common.parseDOM(ret, "span", attrs = { "style": "font-size: 0.9em;" })
+        shortDesc = common.parseDOM(trs[1], "td", attrs = { })
+        shortDesc = common.parseDOM(shortDesc, "span", attrs = { })
         shortDesc = shortDesc[0:7]
 
         log(" shortDesc is " + str(shortDesc))
@@ -593,14 +596,17 @@ def propertiesPDOM(page, extendedFeatures):
         #log(htmlSource)
         #yearmonth = str(date.today().year) + str(date.today().month).zfill(2)
         #daymonth = str(date.today().day).zfill(2) + str(date.today().month).zfill(2)
-        pattern_video = "http://mpegmedia.abc.net.au/news/news24/weather/video/(.+?)/WINs_Weather(.*?)_(.+?)_512k.mp4"
+
+        # http://mpegmedia.abc.net.au/news/news24/wins/201409/WINs_Weather2_0209_trw.mp4
+
+        pattern_video = "//mpegmedia.abc.net.au/news/news24/wins/(.+?)/WINs_Weather(.*?)_(.+?)_512k.mp4"
         video = re.findall( pattern_video, htmlSource )
         log("Video url parts: " + str(video))
         try:
             qual = ADDON.getSetting("ABCQuality")
             if qual=="Best":
                 qual="trw"
-            url = "http://mpegmedia.abc.net.au/news/news24/weather/video/"+ video[0][0] + "/WINs_Weather" + video[0][1] + "_" + video[0][2] + "_" + qual + ".mp4"
+            url = "http://mpegmedia.abc.net.au/news/news24/wins/"+ video[0][0] + "/WINs_Weather" + video[0][1] + "_" + video[0][2] + "_" + qual + ".mp4"
             log("Built url " + url)
             setProperty(WEATHER_WINDOW, 'Video.1',url)
         except Exception as inst:
@@ -693,7 +699,7 @@ if sys.argv[1].startswith('Location'):
         log("Response page url: " + responseurl)
         if not responseurl.endswith('weatherzone.com.au/search/'):
                 #we were redirected to an actual result page
-            locationName = common.parseDOM(resultPage, "h1", attrs = { "class": "unenclosed" })
+            locationName = common.parseDOM(resultPage, "h1", attrs = { "class": "local" })
             locationName = locationName[0].split('Weather')
             locations = [locationName[0] + ', ' + text]
             locationids = [responseurl]
@@ -703,8 +709,8 @@ if sys.argv[1].startswith('Location'):
             try:
                 locations=[]
                 locationids=[]
-                middle = common.parseDOM(resultPage, "div", attrs = { "id": "structure_middle" })
-                skimmed = common.parseDOM(middle, "ul", attrs = { "class": "typ2" })
+                #middle = common.parseDOM(resultPage, "div", attrs = { "id": "structure_middle" })
+                skimmed = common.parseDOM(resultPage, "ul", attrs = { "class": "typ2" })
                 #ok now get two lists - one of the friendly names
                 #and a matchin one of the URLs to store
                 locations = common.parseDOM(skimmed[0], "a")

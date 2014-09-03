@@ -1,3 +1,6 @@
+V0.7.4 
+- Updates to scraper due to Weatherzone changes
+
 V0.7.3 
 - add new script.module.pil to dependencies
 
