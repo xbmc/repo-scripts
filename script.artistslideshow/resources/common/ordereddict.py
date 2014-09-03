@@ -1,4 +1,4 @@
-#v.0.1.0
+#v.0.1.1
 
 try:
     from thread import get_ident as _get_ident

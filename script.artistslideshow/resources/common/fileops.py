@@ -1,30 +1,48 @@
-# v.0.3.0
+# v.0.3.3
 
-import ntpath, xbmcvfs
+try:
+    import xbmcvfs
+    isXBMC = True
+except:
+    import os
+    isXBMC= False
+
+if isXBMC:
+    _mkdirs = xbmcvfs.mkdirs
+    _exists = xbmcvfs.exists
+    _delete = xbmcvfs.delete
+    _file = xbmcvfs.File
+else:
+    _mkdirs = os.makedirs
+    _exists = os.path.exists
+    _delete = os.remove
 
 
-def checkDir( path ):
+def checkPath( path, create=True ):
     log_lines = []
-    log_lines.append( 'checking for directory ' + path )
-    if not xbmcvfs.exists( path ):
-        log_lines.append( 'directory does not exist, creating it' )
-        xbmcvfs.mkdirs( path )
+    log_lines.append( 'checking for %s' % path )
+    if not _exists( path ):
+        if create:
+            log_lines.append( '%s does not exist, creating it' % path )
+            _mkdirs( path )
+        else:
+            log_lines.append( '%s does not exist' % path )
         return False, log_lines
     else:
-        log_lines.append( 'directory exists' )
+        log_lines.append( '%s exists' % path )
         return True, log_lines
 
 def deleteFile( filename ):
     log_lines = []
-    if xbmcvfs.exists( filename ):
+    if _exists( filename ):
         try:
-            xbmcvfs.delete( filename )
-            log_lines.append( 'deleting file ' + filename )
+            _delete( filename )
+            log_lines.append( 'deleting file %s' % filename )
         except IOError:
-            log_lines.append( 'unable to delete ' + filename )
+            log_lines.append( 'unable to delete %s' % filename )
             return False, log_lines
         except Exception, e:
-            log_lines.append( 'unknown error while attempting to delete ' + filename )
+            log_lines.append( 'unknown error while attempting to delete %s' % filename )
             log_lines.append( e )
             return False, log_lines
         return True, log_lines
@@ -32,17 +50,17 @@ def deleteFile( filename ):
         log_lines.append( '%s does not exist' % filename )
         return False, log_lines
 
-def pathLeaf(path):
-    path, filename = ntpath.split(path)
-    return {"path":path, "filename":filename}
 
 def readFile( filename ):
     log_lines = []
-    if xbmcvfs.exists( filename ):
+    if _exists( filename ):
         try:
-            the_file = xbmcvfs.File( filename, 'r' )
-            data = the_file.read()
-            the_file.close()
+            thefile = xbmcvfs.File( filename, 'r' )
+        except:
+            thefile = open( filename, 'r' )
+        try:
+            data = thefile.read()
+            thefile.close()
         except IOError:
             log_lines.append( 'unable to read data from ' + filename )
             return log_lines, ''
@@ -61,6 +79,9 @@ def writeFile( data, filename ):
         data = data.encode('utf-8')
     try:
         thefile = xbmcvfs.File( filename, 'wb' )
+    except:
+        thefile = open( filename, 'wb' )
+    try:
         thefile.write( data )
         thefile.close()
     except IOError, e:

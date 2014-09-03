@@ -156,6 +156,10 @@ msgctxt "#32208"
 msgid "Custom images"
 msgstr "自定义图片"
 
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "显示除错信息"
+
 msgctxt "#32901"
 msgid "Albanian"
 msgstr "阿尔巴尼亚语"

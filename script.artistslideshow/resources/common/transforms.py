@@ -1,20 +1,30 @@
-#v.0.1.0
+#v.0.1.1
 
-import imghdr, os, xbmc
+import imghdr, os
+try:
+    import xbmc
+    isXBMC = True
+except:
+    import hashlib
+    isXBMC = False
 
 def itemHash(item):
-    return xbmc.getCacheThumbName(item).replace('.tbn', '')
+    if isXBMC:
+        return xbmc.getCacheThumbName(item).replace('.tbn', '')
+    else:
+        return hashlib.md5( item.encode() ).hexdigest()
     
 def itemHashwithPath(item, thepath):
-    thumb = xbmc.getCacheThumbName(item).replace('.tbn', '')
-    thumbpath = os.path.join(thepath, thumb.encode('utf-8'))
+    if isXBMC:
+        thumb = xbmc.getCacheThumbName(item).replace('.tbn', '')
+    else:
+        thumb = hashlib.md5( item.encode() ).hexdigest()
+    thumbpath = os.path.join( thepath, thumb.encode( 'utf-8' ) )
     return thumbpath
     
 def getImageType( filename ):
     try:
         new_ext = '.' + imghdr.what( filename ).replace( 'jpeg', 'jpg' )
     except Exception, e:
-        new_ext = '.'
-    if new_ext == '.':
         new_ext = '.tbn'
     return new_ext

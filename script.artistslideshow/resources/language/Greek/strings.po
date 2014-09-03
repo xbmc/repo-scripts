@@ -156,6 +156,10 @@ msgctxt "#32208"
 msgid "Custom images"
 msgstr "Προσωπικές εικόνες"
 
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Ενεργοποίηση καταγραφής σφαλμάτων"
+
 msgctxt "#32901"
 msgid "Albanian"
 msgstr "Αλβανικά"

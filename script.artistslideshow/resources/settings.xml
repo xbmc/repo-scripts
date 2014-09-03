@@ -2,24 +2,29 @@
 <settings>
     <category label="32000">
         <setting id="fanarttv" type="bool" label="32008" default="true" />
+        <setting id="fanarttv_clientapikey" type="text" label="32010" visible="eq(-1,true)" default="" />
+        <setting id="fanarttv_all" type="bool" label="32007" visible="eq(-2,true)" default="false" />
         <setting id="theaudiodb" type="bool" label="32009" default="false" />
         <setting id="htbackdrops" type="bool" label="32002" default="false" />
+        <setting id="htbackdrops_all" type="bool" label="32007" visible="eq(-1,true)" default="false" />
         <setting id="artistinfo" type="bool" label="32005" default="false" />
-        <setting id="language" type="enum" label="32006" enable="eq(-1,true)" default="11" lvalues="32901|32902|32903|32904|32905|32906|32907|32908|32909|32910|32911|32912|32913|32947|32914|32915|32916|32917|32918|32919|32920|32921|32922|32924|32925|32926|32927|32928|32929|32930|32932|32933|32934|32935|32936|32937|32938|32939|32940|32942|32943|32944|32945|32946" />
+        <setting id="language" type="enum" label="32006" visible="eq(-1,true)" default="11" lvalues="32901|32902|32903|32904|32905|32906|32907|32908|32909|32910|32911|32912|32913|32947|32914|32915|32916|32917|32918|32919|32920|32921|32922|32924|32925|32926|32927|32928|32929|32930|32932|32933|32934|32935|32936|32937|32938|32939|32940|32942|32943|32944|32945|32946" />
     </category>
     <category label="32100">
         <setting id="local_artist_path" type="folder" label="32101" default="" />
         <setting id="priority" type="enum" label="32102" lvalues="32110|32111|32112" default="0" />
         <setting id="fallback" type="bool" label="32105" default="false" />
-        <setting id="fallback_path" type="folder" label="32103" default="" enable="eq(-1,true)" />
+        <setting id="fallback_path" type="folder" label="32103" default="" visible="eq(-1,true)" />
         <setting id="slideshow" type="bool" label="32106" default="false" />
-        <setting id="slideshow_path" type="folder" label="32104" default="" enable="eq(-1,true)" />
+        <setting id="slideshow_path" type="folder" label="32104" default="" visible="eq(-1,true)" />
+        <setting id="transparent" type="bool" label="32107" default="false" />
     </category>
     <category label="32200">
         <setting id="restrict_cache" type="bool" label="32201" default="false" />
-        <setting id="max_cache_size" label="32202" type="labelenum" values="128|256|512|768|1024|2048|3072|4096" enable="eq(-1,true)" default="1024" />
+        <setting id="max_cache_size" label="32202" type="labelenum" values="128|256|512|768|1024|2048|3072|4096" visible="eq(-1,true)" default="1024" />
         <setting id="show_progress" type="enum" label="32203" lvalues="32206|32207|32208" default="0" />
         <setting id="progress_path" type="folder" label="32204" default="" enable="eq(-1,2)"/>
 		<setting id="fanart_folder" type="text" label="32205" default="" />
+        <setting id="logging" type="bool" label="32209" default="false" />
     </category>
 </settings>

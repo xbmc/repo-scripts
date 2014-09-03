@@ -156,6 +156,10 @@ msgctxt "#32208"
 msgid "Custom images"
 msgstr "Egyedi képek"
 
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Naplózás engedélyezése"
+
 msgctxt "#32901"
 msgid "Albanian"
 msgstr "Albán"

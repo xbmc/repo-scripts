@@ -54,7 +54,7 @@ msgid "Download images from last.fm"
 msgstr ""
 
 msgctxt "#32002"
-msgid "Download images from htbackdrops.com"
+msgid "Download images from htbackdrops.org"
 msgstr ""
 
 msgctxt "#32003"
@@ -74,7 +74,7 @@ msgid "  Preferred language for artist information"
 msgstr ""
 
 msgctxt "#32007"
-msgid "  Download only 16:9 images"
+msgid "  Download all images regardless of resolution"
 msgstr ""
 
 msgctxt "#32008"
@@ -85,7 +85,11 @@ msgctxt "#32009"
 msgid "Download images from theaudiodb.com"
 msgstr ""
 
-#empty strings from id 32010 to 32099
+msgctxt "#32010"
+msgid "  Client API key"
+msgstr ""
+
+#empty strings from id 32011 to 32099
 
 msgctxt "#32100"
 msgid "Slideshow"
@@ -115,7 +119,11 @@ msgctxt "#32106"
 msgid "Use override slideshow"
 msgstr ""
 
-#empty strings from id 32107 to 32109
+msgctxt "#32107"
+msgid "Use transparent background when no artist images found"
+msgstr ""
+
+#empty strings from id 32108 to 32109
 
 msgctxt "#32110"
 msgid "Use remote images first"
@@ -165,6 +173,10 @@ msgstr ""
 
 msgctxt "#32208"
 msgid "Custom images"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Enable debug logging"
 msgstr ""
 
 #empty strings from id 32209 to 32900

@@ -60,14 +60,6 @@ msgctxt "#32006"
 msgid "  Preferred language for artist information"
 msgstr "Langue préférée pour les informations de l'artiste"
 
-msgctxt "#32008"
-msgid "Download images from fanart.tv"
-msgstr "Télécharger les images depuis fanart.tv"
-
-msgctxt "#32009"
-msgid "Download images from theaudiodb.com"
-msgstr "Télécharger les images depuis theaudioddb.com"
-
 msgctxt "#32100"
 msgid "Slideshow"
 msgstr "Diaporama"
@@ -143,6 +135,10 @@ msgstr "Texte de notification"
 msgctxt "#32208"
 msgid "Custom images"
 msgstr "Images personnalisées"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Activer le mode debug"
 
 msgctxt "#32901"
 msgid "Albanian"

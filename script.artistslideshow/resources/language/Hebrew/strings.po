@@ -156,6 +156,10 @@ msgctxt "#32208"
 msgid "Custom images"
 msgstr "תמונות מותאמות"
 
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "הפעל רישום שגיאות"
+
 msgctxt "#32901"
 msgid "Albanian"
 msgstr "אלבנית"

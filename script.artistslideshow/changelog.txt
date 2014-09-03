@@ -1,3 +1,22 @@
+v.1.6.9
+- added option to download artist thumbnails from htbackdrops and fanart.tv
+- update to current requests module (requests2 depreciated)
+- updated to v3 of fanart.tv API (including option to use client API key)
+
+v.1.6.8
+- fix for crash when using smb path
+- cleaned up startup process to better deal with script being started twice
+- added new window property Artistslideshow.ArtworkReady (true if artwork available)
+
+v.1.6.7
+- fix for required xbmc python version
+
+v.1.6.6
+- suppress all logging by default with option to turn debug logging on
+- added option to use transparent image if no artwork found
+- added skin property so skins can tell if transparency option has been set
+- updated language files
+
 v.1.6.5
 - fixed crash during version migration process related to UTF8 characters
 - fixed crash when using cache manager to trim size of image cache

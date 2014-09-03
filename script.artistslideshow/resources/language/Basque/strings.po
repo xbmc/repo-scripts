@@ -1,0 +1,213 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Basque (http://www.transifex.com/projects/p/xbmc-addons/language/eu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Deskargatzen"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Deskargatu"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Aurkezpena"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Bat ere ez"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Gaitu debug saioa"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albaniera"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Arabiera"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Bielorrusiera"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Bosniera (Latin)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bulgariera"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Katalana"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Txinera"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Kroaziera"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Txekiera"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Daniera"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Nederlandera"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Ingelesa"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Estoniera"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Finlandiera"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Frantsesa"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Alemana"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Grekoa"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Hebreera"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindia"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Hungariera"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Islandiera"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indonesiera"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Italiera"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Japoniera"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Koreera"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Letoniera"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Lituaniera"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Mazedoniera"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norvegiera"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Poloniera"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugesa"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugesa (Brasil)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Errumaniera"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Errusiera"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Serbiera Latin"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Eslovakiera"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Esloveniera"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Gaztelania"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Suediera"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Thai"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Turkiera"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ukrainiera"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vietnamera"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Farsia"

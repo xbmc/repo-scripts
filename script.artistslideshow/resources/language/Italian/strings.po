@@ -156,6 +156,10 @@ msgctxt "#32208"
 msgid "Custom images"
 msgstr "Immagini personalizzate"
 
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Attiva il debug logging"
+
 msgctxt "#32901"
 msgid "Albanian"
 msgstr "Albanese"

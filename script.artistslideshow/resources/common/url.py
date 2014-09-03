@@ -1,7 +1,7 @@
-#v.0.1.6
+#v.0.1.9
 
-import requests2 as _requests
 import socket
+import requests as _requests
     
 
 class URL():

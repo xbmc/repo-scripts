@@ -36,6 +36,10 @@ msgctxt "#32206"
 msgid "None"
 msgstr "關閉"
 
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "啟用除錯記錄"
+
 msgctxt "#32901"
 msgid "Albanian"
 msgstr "阿爾巴尼亞語"

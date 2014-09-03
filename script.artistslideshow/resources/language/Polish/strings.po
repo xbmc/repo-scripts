@@ -22,15 +22,15 @@ msgstr "Pobieranie"
 
 msgctxt "#30301"
 msgid "Downloading artist images"
-msgstr "Pobieram zjdęcia artysty"
+msgstr "Pobieranie obrazów artysty"
 
 msgctxt "#30302"
 msgid "Nothing Downloaded"
-msgstr "Nic nie pobrano"
+msgstr "Nie pobrano niczego"
 
 msgctxt "#30303"
 msgid "No images found for artist"
-msgstr "Nie znaleziono zdjęć artysty"
+msgstr "Nie znaleziono obrazów wykonawcy"
 
 msgctxt "#30304"
 msgid "Download Complete"
@@ -38,7 +38,7 @@ msgstr "Pobieranie zakończone"
 
 msgctxt "#30305"
 msgid "All artist images downloaded"
-msgstr "Zdjęcia wszystkich artystów pobrane"
+msgstr "Pobrano obrazy wszystkich wykonawców"
 
 msgctxt "#32000"
 msgid "Download"
@@ -62,23 +62,23 @@ msgstr "Minimalna wysokość obrazu "
 
 msgctxt "#32005"
 msgid "Download additional artist information"
-msgstr "Pobierz dodatkowe informacje o wykonawcy"
+msgstr "Pobieraj dodatkowe informacje o wykonawcy"
 
 msgctxt "#32006"
 msgid "  Preferred language for artist information"
-msgstr "Preferowany język informacji o wykonwacy"
+msgstr "Preferowany język informacji o wykonawcy"
 
 msgctxt "#32007"
 msgid "  Download only 16:9 images"
-msgstr "Pobierz tylko obrazy 16:9 "
+msgstr "Pobieraj obrazy w proporcjach 16:9 "
 
 msgctxt "#32008"
 msgid "Download images from fanart.tv"
-msgstr "Pobierz obrazy z fanart.tv "
+msgstr "Pobieraj obrazy z fanart.tv "
 
 msgctxt "#32009"
 msgid "Download images from theaudiodb.com"
-msgstr "Pobierz obrazy z theaudiodb.com "
+msgstr "Pobieraj obrazy z theaudiodb.com "
 
 msgctxt "#32100"
 msgid "Slideshow"
@@ -86,39 +86,39 @@ msgstr "Pokaz slajdów"
 
 msgctxt "#32101"
 msgid "Local artist folder"
-msgstr "Lokalny folder artysty"
+msgstr "Folder wykonawcy"
 
 msgctxt "#32102"
 msgid "  Image Priority"
-msgstr "Priorytet zdjęcia"
+msgstr "Priorytet obrazu"
 
 msgctxt "#32103"
 msgid "Fallback folder"
-msgstr "Rezerwowy folder pokazu slajdów"
+msgstr "Folder zapasowy"
 
 msgctxt "#32104"
 msgid "Override folder"
-msgstr "Główny folder pokazu slajdów"
+msgstr "Folder globalny"
 
 msgctxt "#32105"
 msgid "Use fallback slideshow"
-msgstr "Użyj rezerwowego pokazu slajdów"
+msgstr "Używaj rezerwowego folderu pokazu slajdów"
 
 msgctxt "#32106"
 msgid "Use override slideshow"
-msgstr "Użyj głównego pokazu slajdów"
+msgstr "Używaj globalnego folderu pokazu slajdów"
 
 msgctxt "#32110"
 msgid "Use remote images first"
-msgstr "Użyj zdalnego zdjęcia na początku"
+msgstr "Używaj pobranych obrazów w pierwszej kolejności"
 
 msgctxt "#32111"
 msgid "Use local images first"
-msgstr "Użyj lokalnego zdjęcia na początku"
+msgstr "Używaj lokalnych obrazów w pierwszej kolejności"
 
 msgctxt "#32112"
 msgid "Use both local and remote images"
-msgstr "Użyj obydwu, lokalnego oraz zdalnego zdjęcia"
+msgstr "Używaj lokalnych i pobranych obrazów"
 
 msgctxt "#32200"
 msgid "Advanced"
@@ -130,23 +130,23 @@ msgstr "Limit buforu pobierania"
 
 msgctxt "#32202"
 msgid "  Maximum cache size (in megabytes)"
-msgstr "Maksymalny rozmiar pamięci podręcznej (w megabajtach)"
+msgstr "Maksymalny rozmiar bufora (w megabajtach)"
 
 msgctxt "#32203"
 msgid "Download notification type"
-msgstr "Pobierz typ powiadomienia"
+msgstr "Pobieraj typ powiadomienia"
 
 msgctxt "#32204"
 msgid "  Custom notification images folder"
-msgstr "Własny folder zdjęć powiadomień"
+msgstr "Zdefiniowany folder obrazów powiadomień"
 
 msgctxt "#32205"
 msgid "Alternate name for local fanart folder"
-msgstr "Alternatywna nazwa dla lokalnego folderu fanart"
+msgstr "Alternatywna nazwa folderu tapet"
 
 msgctxt "#32206"
 msgid "None"
-msgstr "Żaden"
+msgstr "brak"
 
 msgctxt "#32207"
 msgid "Text notifications"
@@ -154,7 +154,11 @@ msgstr "Powiadomienie"
 
 msgctxt "#32208"
 msgid "Custom images"
-msgstr "Obrazy niestandardowe"
+msgstr "Zdefiniowane obrazy"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Rejestruj informacje diagnostyczne w dzienniku"
 
 msgctxt "#32901"
 msgid "Albanian"
@@ -170,7 +174,7 @@ msgstr "białoruski"
 
 msgctxt "#32904"
 msgid "Bosnian (Latin)"
-msgstr "bośniacki"
+msgstr "bośniacki (łaciński)"
 
 msgctxt "#32905"
 msgid "Bulgarian"
@@ -294,7 +298,7 @@ msgstr "rosyjski"
 
 msgctxt "#32937"
 msgid "SerbianLatin"
-msgstr "SerbianLatin"
+msgstr "serbski (łaciński)"
 
 msgctxt "#32938"
 msgid "Slovak"

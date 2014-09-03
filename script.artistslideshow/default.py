@@ -1,7 +1,7 @@
 # *  Credits:
 # *
 # *  original Artist Slideshow code by ronie
-# *  updates and additions since v1.3.0 by pkscuot
+# *  updates and additions since v1.3.0 by pkscout
 # *
 # *  divingmule for script.image.lastfm.slideshow
 # *  grajen3 for script.ImageCacher
@@ -26,7 +26,7 @@ else:
     import simplejson as _json
 from resources.dicttoxml.dicttoxml import dicttoxml
 from resources.common.fix_utf8 import smartUTF8
-from resources.common.fileops import checkDir, pathLeaf, writeFile, readFile, deleteFile
+from resources.common.fileops import checkPath, writeFile, readFile, deleteFile
 from resources.common.url import URL
 from resources.common.transforms import getImageType, itemHash, itemHashwithPath
 from resources.common.xlogger import Logger
@@ -37,10 +37,11 @@ __addonversion__ = __addon__.getAddonInfo('version')
 __addonpath__    = __addon__.getAddonInfo('path').decode('utf-8')
 __addonicon__    = xbmc.translatePath('%s/icon.png' % __addonpath__ )
 __language__     = __addon__.getLocalizedString
+__preamble__     = '[Artist Slideshow]'
+__logdebug__     = __addon__.getSetting( "logging" ) 
 
-lw      = Logger( '[Artist Slideshow]' )
-mbURL   = URL( 'json',{"User-Agent": __addonname__  + '/' + __addonversion__  + '( https://github.com/pkscout/artistslideshow )', "content-type":
-"text/html; charset=UTF-8"} )
+lw      = Logger( preamble=__preamble__, logdebug=__logdebug__ )
+mbURL   = URL( 'json',{"User-Agent": __addonname__  + '/' + __addonversion__  + '( https://github.com/pkscout/artistslideshow )', "content-type":"text/html; charset=UTF-8"} )
 JSONURL = URL( 'json' )
 txtURL  = URL( 'text' )
 imgURL  = URL( 'binary' )
@@ -100,13 +101,14 @@ LANGUAGES = (
 class Main:
     def __init__( self ):
         self._parse_argv()
-        self._get_settings()
-        self._init_vars()
-        self._make_dirs()
-        self._upgrade()
+        self._init_window()
         if self._get_infolabel( self.ARTISTSLIDESHOWRUNNING ) == "True":
             lw.log( ['script already running'] )
         else:
+            self._get_settings()
+            self._init_vars()
+            self._make_dirs()
+            self._upgrade()
             self.LastCacheTrim = 0
             self._set_property("ArtistSlideshowRunning", "True")
             if( xbmc.Player().isPlayingAudio() == False and self._get_infolabel( self.EXTERNALCALL ) == '' ):
@@ -139,6 +141,10 @@ class Main:
                 else:
                     self._clear_properties()
                     break
+            try:
+                slideshow._set_property("ArtistSlideshow.CleanupComplete", "True")
+            except Exception, e:
+                lw.log( ['unexpected error while setting property.', e] )
 
 
     def _clean_dir( self, dir_path ):
@@ -213,13 +219,13 @@ class Main:
     
 
     def _excluded( self, item ):
-        item_split = pathLeaf(item)
-        exclusion_file = os.path.join(item_split['path'], '_exclusions.nfo')
+        path, filename = os.path.split( item )
+        exclusion_file = os.path.join( path, '_exclusions.nfo' )
         if xbmcvfs.exists( exclusion_file ):
             loglines, exclusions = readFile( exclusion_file )
-            loglines.append( 'checking %s against %s' % (item_split['filename'], exclusions) )
+            loglines.append( 'checking %s against %s' % (filename, exclusions) )
             lw.log( loglines )
-            if item_split['filename'] in exclusions:
+            if filename in exclusions:
                 lw.log( ['exclusion found'] )
                 return True
             else:
@@ -392,13 +398,20 @@ class Main:
                 if success:
                     if site == 'fanarttv':
                         try:
-                            json_data = dict(map(lambda (key, value): ('artistImages', value), json_data.items()))
-                        except AttributeError:
-                            return data
+                            images = json_data['artistbackground']
                         except Exception, e:
-                            lw.log( ['unexpected error fixing fanart.tv JSON data', e] )
-                            return data
-                    success, loglines = writeFile( dicttoxml( json_data ).encode('utf-8'), filename )
+                            lw.log( ['error getting artist backgrounds from fanart.tv', e] )
+                            images = []
+                        if self.FANARTTVALLIMAGES == 'true':
+                            try:
+                                thumbs = json_data['artistthumb']
+                            except Exception, e:
+                                lw.log( ['error getting artist thumbs from fanart.tv', e] )
+                                thumbs = []
+                            images = images + thumbs
+                    else:
+                        images = json_data
+                    success, loglines = writeFile( dicttoxml( images ).encode('utf-8'), filename )
                     lw.log( loglines )
                     json_data = ''
                 else:
@@ -520,7 +533,8 @@ class Main:
     def _get_images( self, site ):
         if site == 'fanarttv':
             if self.MBID:
-                self.url = self.fanarttvURL + self.MBID + self.fanarttvOPTIONS
+                self.url = self.fanarttvURL + self.MBID
+                self.params = self.fanarttvPARAMS
                 lw.log( ['asking for images from: %s' %self.url] )
             else:
                 return []
@@ -615,7 +629,7 @@ class Main:
         if self.LocalImagesFound:
             lw.log( ['local images found'] )
             if self.ARTISTNUM == 1:
-                self._set_property("ArtistSlideshow", self.CacheDir)
+            	self._set_artwork_skininfo( self.CacheDir )
                 if self.ARTISTINFO == "true":
                     self._get_artistinfo()
             if self.TOTALARTISTS > 1:
@@ -803,8 +817,11 @@ class Main:
 
     def _get_settings( self ):
         self.FANARTTV = __addon__.getSetting( "fanarttv" )
+        self.FANARTTVALLIMAGES = __addon__.getSetting( "fanarttv_all" )
+        self.FANARTTVCLIENTAPIKEY = __addon__.getSetting( "fanarttv_clientapikey" )
         self.THEAUDIODB = __addon__.getSetting( "theaudiodb" )
         self.HTBACKDROPS = __addon__.getSetting( "htbackdrops" )
+        self.HTBACKDROPSALLIMAGES = __addon__.getSetting( "htbackdrops_all" )
         self.ARTISTINFO = __addon__.getSetting( "artistinfo" )
         self.LANGUAGE = __addon__.getSetting( "language" )
         for language in LANGUAGES:
@@ -842,19 +859,23 @@ class Main:
     def _init_vars( self ):
         self.DATAROOT = xbmc.translatePath('special://profile/addon_data/%s' % __addonname__ ).decode('utf-8')
         self.CHECKFILE = os.path.join( self.DATAROOT, 'migrationcheck.nfo' )
-        self.WINDOW = xbmcgui.Window( int(self.WINDOWID) )
-        self.SKININFO = {}
         self._set_property( "ArtistSlideshow.CleanupComplete" )
+        self._set_property( "ArtistSlideshow.ArtworkReady" )
+        self.SKININFO = {}
         for item in self.FIELDLIST:
             if self.PASSEDFIELDS[item]:
                 self.SKININFO[item[0:-5]] = "Window(%s).Property(%s)" % ( self.WINDOWID, self.PASSEDFIELDS[item] )
             else:
                 self.SKININFO[item[0:-5]] = ''
-        self.ARTISTSLIDESHOW = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow" )
-        self.ARTISTSLIDESHOWRUNNING = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshowRunning" )
-        self.EXTERNALCALL = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow.ExternalCall" )
         self.EXTERNALCALLSTATUS = self._get_infolabel( self.EXTERNALCALL )
         lw.log( ['external call is set to ' + self._get_infolabel( self.EXTERNALCALL )] )
+        if __addon__.getSetting( "transparent" ) == 'true':
+            self._set_property("ArtistSlideshowTransparent", 'true')
+            self.InitDir = xbmc.translatePath('%s/resources/transparent' % __addonpath__ ).decode('utf-8')
+        else:
+            self._set_property("ArtistSlideshowTransparent", '')
+            self.InitDir = xbmc.translatePath('%s/resources/black' % __addonpath__ ).decode('utf-8')
+        self._set_property("ArtistSlideshow", self.InitDir)
         self.NAME = ''
         self.ALLARTISTS = []
         self.MBID = ''
@@ -870,7 +891,6 @@ class Main:
         self.MINREFRESH = 9.9
         self.TransitionDir = xbmc.translatePath('special://profile/addon_data/%s/transition' % __addonname__ ).decode('utf-8')
         self.MergeDir = xbmc.translatePath('special://profile/addon_data/%s/merge' % __addonname__ ).decode('utf-8')
-        self.InitDir = xbmc.translatePath('%s/resources/black' % __addonpath__ ).decode('utf-8')
         LastfmApiKey = 'afe7e856e4f4089fc90f841980ea1ada'
         fanarttvApiKey = '7a93c84fe1c9999e6f0fec206a66b0f5'
         theaudiodbApiKey = '193621276b2d731671156g'
@@ -878,22 +898,37 @@ class Main:
         self.params = {}
         self.LastfmURL = 'http://ws.audioscrobbler.com/2.0/'
         self.LastfmPARAMS = {'autocorrect':'1', 'api_key':LastfmApiKey}
-        self.fanarttvURL = 'http://api.fanart.tv/webservice/artist/%s/' % fanarttvApiKey
-        self.fanarttvOPTIONS = '/json/artistbackground/'
+        self.fanarttvURL = 'https://webservice.fanart.tv/v3/music/'
+        self.fanarttvPARAMS = {'api_key': fanarttvApiKey}
+        if self.FANARTTVCLIENTAPIKEY:
+            self.fanarttvPARAMS.update( {'client_key': self.FANARTTVCLIENTAPIKEY} )
         theaudiodbURL = 'http://www.theaudiodb.com/api/v1/json/%s/' % theaudiodbApiKey
         self.theaudiodbARTISTURL = theaudiodbURL + 'artist-mb.php'
         self.theaudiodbALBUMURL = theaudiodbURL + 'album.php'
         self.HtbackdropsQueryURL = 'http://htbackdrops.org/api/%s/searchXML' % HtbackdropsApiKey
-        self.HtbackdropsPARAMS =  {'default_operator':'and', 'fields':'title', 'aid':'1'}
+        self.HtbackdropsPARAMS = {'default_operator':'and', 'fields':'title'}
+        if self.HTBACKDROPSALLIMAGES == 'true':
+            self.HtbackdropsPARAMS.update( {'cid':'5'} )
+        else:
+            self.HtbackdropsPARAMS.update( {'aid':'1'} )
         self.HtbackdropsDownloadURL = 'http://htbackdrops.org/api/' + HtbackdropsApiKey + '/download/'
 
 
+    def _init_window( self ):
+        self.WINDOW = xbmcgui.Window( int(self.WINDOWID) )
+        self.ARTISTSLIDESHOW = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow" )
+        self.ARTISTSLIDESHOWRUNNING = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshowRunning" )
+        self.EXTERNALCALL = "Window(%s).Property(%s)" % ( self.WINDOWID, "ArtistSlideshow.ExternalCall" )
+
+
     def _make_dirs( self ):
-        exists, loglines = checkDir( self.DATAROOT )
+        exists, loglines = checkPath( self.InitDir )
+        lw.log( loglines )
+        exists, loglines = checkPath( self.DATAROOT )
         lw.log( loglines )
         thedirs = ['temp', 'ArtistSlideshow', 'ArtistInformation', 'transition', 'merge']
         for onedir in thedirs:
-            exists, loglines = checkDir( os.path.join( self.DATAROOT, onedir ) )
+            exists, loglines = checkPath( os.path.join( self.DATAROOT, onedir ) )
             lw.log( loglines )
 
 
@@ -912,7 +947,7 @@ class Main:
                 self._wait( self.MINREFRESH - (wait_elapsed + 2) )  #not sure why there needs to be a manual adjustment here
             if not self._playback_stopped_or_changed():
                 lw.log( ['switching slideshow to merge directory'] )
-                self._set_property("ArtistSlideshow", self.MergeDir)
+                self._set_artwork_skininfo( self.MergeDir )
 
 
     def _migrate_info_files( self ):
@@ -960,7 +995,7 @@ class Main:
                 lw.log( loglines )
             for old_file in old_files:
                 if old_file.endswith( '.nfo' ) and not old_file == '_exclusions.nfo':
-                    exists, loglines = checkDir( new_folder )
+                    exists, loglines = checkPath( new_folder )
                     lw.log( loglines )
                     new_file = old_file.strip('_')
                     if new_file == 'artistimagesfanarttv.nfo':
@@ -1028,10 +1063,10 @@ class Main:
 
     def _refresh_image_directory( self ):
         if( self._get_infolabel( self.ARTISTSLIDESHOW ).decode('utf-8') == self.TransitionDir):
-            self._set_property("ArtistSlideshow", self.CacheDir)
+            self._set_artwork_skininfo( self.CacheDir )
             lw.log( ['switching slideshow to ' + self.CacheDir] )
         else:
-            self._set_property("ArtistSlideshow", self.TransitionDir)
+            self._set_artwork_skininfo( self.TransitionDir )
             lw.log( ['switching slideshow to ' + self.TransitionDir] )
         self.LASTARTISTREFRESH = time.time()
         lw.log( ['Last slideshow refresh time is ' + str(self.LASTARTISTREFRESH)] )
@@ -1068,6 +1103,11 @@ class Main:
         lw.log( ['finished renaming .tbn files with correct extension'] )
     
 
+    def _set_artwork_skininfo( self, dir ):
+        self._set_property("ArtistSlideshow", dir)
+        self._set_property("ArtistSlideshow.ArtworkReady", "true")
+    
+
     def _set_cachedir( self, theartist ):
         self.CacheDir = self._set_thedir( theartist, "ArtistSlideshow" )
 
@@ -1091,6 +1131,7 @@ class Main:
         #does not crash if e.g. the window no longer exists.
         try:
           self.WINDOW.setProperty(property_name, value)
+          lw.log( ['%s set to %s' % (property_name, value)] )
         except Exception, e:
           lw.log( ["Exception: Couldn't set propery " + property_name + " value " + value , e])
 
@@ -1098,7 +1139,7 @@ class Main:
     def _set_thedir(self, theartist, dirtype):
         CacheName = itemHash(theartist)
         thedir = xbmc.translatePath('special://profile/addon_data/%s/%s/%s/' % ( __addonname__ , dirtype, CacheName, )).decode('utf-8')
-        exists, loglines = checkDir( thedir )
+        exists, loglines = checkPath( thedir )
         lw.log( loglines )
         return thedir
 
@@ -1134,7 +1175,7 @@ class Main:
             cached_image_info = True
             self.LASTARTISTREFRESH = time.time()
             if self.ARTISTNUM == 1:
-                self._set_property("ArtistSlideshow", self.CacheDir)
+                self._set_artwork_skininfo( self.CacheDir )
                 if self.ARTISTINFO == "true":
                     self._get_artistinfo()
         else:
@@ -1160,7 +1201,7 @@ class Main:
                     else:
                         self._set_property("ArtistSlideshow", self.InitDir)
                 else:
-                      self._set_property("ArtistSlideshow", self.InitDir)
+                    self._set_property("ArtistSlideshow", self.InitDir)
         sourcelist = []
         sourcelist.append( ['fanarttv', self.FANARTTV] )
         sourcelist.append( ['theaudiodb', self.THEAUDIODB] )
@@ -1178,17 +1219,18 @@ class Main:
                 return
             path = itemHashwithPath( url, self.CacheDir )
             path2 = itemHashwithPath( url, self.TransitionDir )
-            if not (pathLeaf( path )['filename'] in cachelist_str):
+            checkpath, checkfilename = os.path.split( path )
+            if not (checkfilename in cachelist_str):
                 if self._download(url, path, path2):
                     lw.log( ['downloaded %s to %s' % (url, path)]  )
                     self.ImageDownloaded = True
             elif self._excluded( path ):
-                indicies = [i for i, elem in enumerate(cachelist) if pathLeaf( path )['filename'] in elem]
-                success, loglines = deleteFile( os.path.join( pathLeaf( path )['path'], cachelist[indicies[0]] ) )
+                indicies = [i for i, elem in enumerate(cachelist) if checkfilename in elem]
+                success, loglines = deleteFile( os.path.join( checkpath, cachelist[indicies[0]] ) )
                 lw.log( loglines )
             if self.ImageDownloaded:
                 if( self._playback_stopped_or_changed() and self.ARTISTNUM == 1 ):
-                    self._set_property("ArtistSlideshow", self.CacheDir)
+                    self._set_artwork_skininfo( self.CacheDir )
                     self.LASTARTISTREFRESH = time.time()
                     self._clean_dir( self.TransitionDir )
                     return
@@ -1203,12 +1245,11 @@ class Main:
                     if( not self._playback_stopped_or_changed() and self.ARTISTNUM == 1 ):
                         self._refresh_image_directory()
                 self.FirstImage = False
-
         if self.ImageDownloaded:
             lw.log( ['finished downloading images'] )
             self.DownloadedAllImages = True
             if( self._playback_stopped_or_changed() ):
-                self._set_property("ArtistSlideshow", self.CacheDir)
+                self._set_artwork_skininfo( self.CacheDir )
                 self.LASTARTISTREFRESH = time.time()
                 self._clean_dir( self.TransitionDir )
                 return
@@ -1229,13 +1270,12 @@ class Main:
                 if( not self._playback_stopped_or_changed() ):
                     self._refresh_image_directory()
             self._clean_dir( self.TransitionDir )
-
         if not self.ImageDownloaded:
             lw.log( ['no images downloaded'] )
             self.DownloadedAllImages = True
             if not self.CachedImagesFound:
                 if self.ARTISTNUM == 1:
-                    lw.log( ['clearing ArtistSlideshow property'] )
+                    lw.log( ['setting slideshow directory to blank directory'] )
                     self._set_property("ArtistSlideshow", self.InitDir)
                     if self.NOTIFICATIONTYPE == "1" and not cached_image_info:
                         command = 'XBMC.Notification(%s, %s, %s, %s)' % (smartUTF8(__language__(30302)), smartUTF8(__language__(30303)), 10000, smartUTF8(__addonicon__))
@@ -1283,12 +1323,13 @@ class Main:
             if self.USEOVERRIDE == 'true':
                 lw.log( ['using override directory for images'] )
                 self._set_property("ArtistSlideshow", self.OVERRIDEPATH)
+                self._set_artwork_skininfo( self.OVERRIDEPATH )
                 if(self.ARTISTNUM == 1):
                     self._get_artistinfo()
             elif self.PRIORITY == '1' and self.LOCALARTISTPATH:
                 lw.log( ['looking for local artwork'] )
                 self._get_local_images()
-                if(not self.LocalImagesFound):
+                if not self.LocalImagesFound:
                     lw.log( ['no local artist artwork found, start download'] )
                     self._start_download()
             elif self.PRIORITY == '2' and self.LOCALARTISTPATH:
@@ -1308,6 +1349,7 @@ class Main:
                 lw.log( ['fallbackdir = ' + self.FALLBACKPATH] )
                 self.UsingFallback = True
                 self._set_property("ArtistSlideshow", self.FALLBACKPATH)
+                self._set_artwork_skininfo( self.FALLBACKPATH )
 
 
     def _update_check_file( self, version, message ):
@@ -1333,18 +1375,15 @@ class Main:
         while( waited < wait_time ):
             time.sleep(0.1)
             waited = waited + 0.1
-            if( self._playback_stopped_or_changed() ):
-                self._set_property("ArtistSlideshow", self.InitDir)
+            if self._playback_stopped_or_changed():
+                self._set_property( "ArtistSlideshow", self.InitDir )
+                self._set_property( "ArtistSlideshow.ArtworkReady" )
                 self.Abort = True
                 return
 
 
 if ( __name__ == "__main__" ):
-    lw.log( ['script version %s started' % __addonversion__] )
+    lw.log( ['script version %s started' % __addonversion__], xbmc.LOGNOTICE )
+    lw.log( ['debug logging set to %s' % __logdebug__], xbmc.LOGNOTICE )
     slideshow = Main()
-    try:
-        slideshow._set_property("ArtistSlideshow.CleanupComplete", "True")
-    except Exception, e:
-        lw.log( ['unexpected error while setting property.', e] )
-
-lw.log( ['script stopped'] )
+lw.log( ['script stopped'], xbmc.LOGNOTICE )
