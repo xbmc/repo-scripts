@@ -601,8 +601,6 @@ class NextAired:
                     if item not in current_show:
                         current_show[item] = prior_data[item]
                 tid = -tid
-            elif prior_data and 'tvrage' in prior_data:
-                current_show['tvrage'] = prior_data['tvrage']
 
             for art_type in USEFUL_ART:
                 xart = art.get(art_type, None)
@@ -973,7 +971,10 @@ class NextAired:
         # the only item in the list ('aired' is where localized Airtime comes from).
         episode_list = [ {'name': None, 'aired': early_aired, 'sn': 0, 'en': 0} ]
         if episodes is not None:
-            runtime_re = re.compile(r"\( *(\d+) +(?:minutes|mins) *\)", re.IGNORECASE)
+            minutes_re = re.compile(r"\((\d+) +(?:minutes|mins)\)", re.IGNORECASE)
+            hour_re = re.compile(r"(\d+)[- ]hour\b", re.IGNORECASE)
+            hr_re = re.compile(r"\((\d+(?:\.\d+)?)[- ]hr\)", re.IGNORECASE)
+            hr2_re = re.compile(r"\((\d+)/(\d+)[- ]hr\)", re.IGNORECASE)
             max_eps_utime = 0
             if episodes:
                 for ep in episodes:
@@ -995,9 +996,18 @@ class NextAired:
                             'wday': dt.weekday(),
                             }
                     overview = ep.get('Overview', "")
-                    m = runtime_re.search(overview)
+                    m = minutes_re.search(overview)
                     if m:
                         got_ep['Runtime'] = int(m.group(1))
+                    m = hour_re.search(got_ep['name'])
+                    if m:
+                        got_ep['Runtime'] = int(m.group(1)) * 42
+                    m = hr_re.search(overview)
+                    if m:
+                        got_ep['Runtime'] = int(float(m.group(1)) * 42)
+                    m = hr2_re.search(overview)
+                    if m:
+                        got_ep['Runtime'] = int(float(m.group(1)) / float(m.group(2)) * 42)
                     episode_list.append(got_ep)
                 episodes = None
                 episode_list.sort(key=itemgetter('aired', 'sn', 'en'))
@@ -1246,11 +1256,6 @@ class NextAired:
         self.WINDOW.setProperty("NextAired.TodayText", xbmc.getLocalizedString(33006))
         self.WINDOW.setProperty("NextAired.TomorrowText", xbmc.getLocalizedString(33007))
         self.WINDOW.setProperty("NextAired.YesterdayText", __addon__.getLocalizedString(32018))
-        # TODO Remove these soon: --v
-        self.WINDOW.setProperty("NextAired.Today", xbmc.getLocalizedString(33006))
-        self.WINDOW.setProperty("NextAired.Tomorrow", xbmc.getLocalizedString(33007))
-        self.WINDOW.setProperty("NextAired.Yesterday", __addon__.getLocalizedString(32018))
-        # TODO Remove these soon: --^
         self.WINDOW.setProperty("NextAired.TodayDate", self.str_date(self.date, 'DropYear'))
         self.WINDOW.setProperty("NextAired.TomorrowDate", self.str_date(self.tomorrow, 'DropThisYear'))
         self.WINDOW.setProperty("NextAired.YesterdayDate", self.str_date(self.yesterday, 'DropThisYear'))

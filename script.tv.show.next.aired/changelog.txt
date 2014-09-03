@@ -1,3 +1,7 @@
+-6.0.12 (2014-09-01)
+- Added additional runtime-override matching.
+- Removed the properties deprecated in 6.0.8.
+
 -6.0.11 (2014-07-27)
 - When fixing up missing artwork, we now also make use of thetvdb paths in the show data.
 - Added advanced options ExtraShows and OmitShows to the settings.
