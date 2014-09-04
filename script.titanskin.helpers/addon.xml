@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+	<addon id="script.titanskin.helpers" name="Titan skin helper service" version="1.0.1" provider-name="marcelveldt">
+	<requires>
+	<import addon="xbmc.python" version="2.13.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+	<provides></provides>
+	</extension>
+	<extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Titan skin helper service</summary>
+		<summary lang="nl">Titan skin helper service</summary>
+		<description lang="en">Backgroundservice and helpers for the Titan skin homescreen tiles</description>
+		<description lang="nl">Achtergrondservice voor de Titan skin</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GPL v2.0</license>
+		<forum>http://forum.xbmc.org/showthread.php?tid=201061</forum>
+		<website></website>
+		<source>https://www.assembla.com/code/xbmc-skin-titan/subversion/nodes/32/trunk/script.titanskin.helpers</source>
+	</extension>
+</addon>
