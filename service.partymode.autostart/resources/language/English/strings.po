@@ -1,0 +1,67 @@
+# XBMC Media Center language file
+# Addon Name: Partymode autostart
+# Addon id: service.partymode.autostart
+# Addon Provider: Muttley
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: muttley.bd@gmail.com\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: muttley\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# SETTINGS
+
+# Category
+msgctxt "#30000"
+msgid "Main"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Settings"
+msgstr ""
+
+# Separators
+msgctxt "#30010"
+msgid "Run PartyMode on Startup"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Run PartyMode on Screensaver"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Fullscreen/Visualisation"
+msgstr ""
+
+# setting items
+msgctxt "#30040"
+msgid "Enable"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Delay (seconds)"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Avoid whenever player is on pause"
+msgstr ""
+
+# ADDONS STRINGS
+
+msgctxt "#30100"
+msgid "Run PartyMode on Screensaver"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Countdown"
+msgstr ""
+
+msgctxt "#30102"
+msgid "PartyMode start in %s seconds:"
+msgstr ""

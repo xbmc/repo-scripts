@@ -1,0 +1,2 @@
+[B]0.6.0b[/B]
+- Hello PartyMode Autostart :)
