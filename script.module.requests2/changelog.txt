@@ -1,3 +1,0 @@
-[B]Version 2.2.1[/B]
-
-- Initial requests v2.x release for XBMC
