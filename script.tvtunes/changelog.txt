@@ -1,3 +1,6 @@
+v4.4.8
+- Fix Goear.com downloads after website change
+
 v4.4.7
 - update language files from Transifex
 

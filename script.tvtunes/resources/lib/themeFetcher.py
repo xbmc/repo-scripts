@@ -1028,31 +1028,11 @@ class GoearListing(DefaultListing):
         # Load the output of the search request into Soup
         return BeautifulSoup(''.join(doc))
 
-    # Results could be over multiple pages
-    def _getSearchPages(self, soup):
-        # Now check to see if there were any other pages
-        searchPages = soup.find('ol', {"id": "new_pagination"})
-
-        urlList = []
-        for page in searchPages.contents:
-            # Skip the blank lines, just want the <li> elements
-            if page == '\n':
-                continue
-
-            # Get the URL for the track
-            pageUrlTag = page.find('a')
-            if pageUrlTag is None:
-                continue
-            pageUrl = pageUrlTag['href']
-            # Add to the list of URLs
-            urlList.append(pageUrl)
-
-        return urlList
-
     # Reads the track entries from the page
     def _getEntries(self, soup):
+        log("GoearListing: Getting Entries")
         # Get all the items in the search results
-        searchResults = soup.find('ol', {"id": "search_results"})
+        searchResults = soup.find('ol', {"class": "board_list results_list"})
         themeList = []
 
         # Make sure the list is set to something
@@ -1070,7 +1050,10 @@ class GoearListing(DefaultListing):
                     continue
 
                 # Get the name of the track
-                trackNameTag = item.find('span', {"class": "song"})
+                trackNameTag = item.find('h4')
+                if trackNameTag is None:
+                    continue
+                trackNameTag = trackNameTag.find('a')
                 if trackNameTag is None:
                     continue
                 trackName = trackNameTag.string
@@ -1083,27 +1066,19 @@ class GoearListing(DefaultListing):
                     groupName = None
 
                 # Get the URL for the track
-                trackUrlTag = item.find('a')
-                if trackUrlTag is None:
-                    continue
-
-                # Make sure there is a valid link
-                if 'href' not in trackUrlTag:
-                    continue
-
-                trackUrl = trackUrlTag['href']
+                trackUrl = trackNameTag['href']
 
                 # Get the length of the track
                 # e.g. <li class="length radius_3">3:36</li>
                 trackLength = ""
-                trackLengthTag = item.find('li', {"class": "length radius_3"})
+                trackLengthTag = item.find('li', {"class": "length"})
                 if trackLengthTag is not None:
                     trackLength = " [" + trackLengthTag.string + "]"
 
                 # Get the quality of the track
                 # e.g. <li class="kbps radius_3">128<abbr title="Kilobit por segundo">kbps</abbr></li>
                 trackQuality = ""
-                trackQualityTag = item.find('li', {"class": "kbps radius_3"})
+                trackQualityTag = item.find('li', {"class": "kbps"})
                 if trackQualityTag is not None:
                     trackQuality = " (" + trackQualityTag.contents[0] + "kbps)"
 
