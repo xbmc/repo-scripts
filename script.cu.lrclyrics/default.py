@@ -46,5 +46,5 @@ if ( __name__ == "__main__" ):
             culrc_run('service')
         else:
             culrc_run('manual')
-
+xbmc.sleep(2000)
 log('script version %s ended' % __addonversion__)

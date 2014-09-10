@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: CU LRC Lyrics
 # Addon id: script.cu.lrclyrics
 # Addon Provider: Taxigps|ronie
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,78 +16,106 @@ msgstr ""
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#0"
-msgid "XBMC Lyrics"
-msgstr "XBMC Dalszöveg"
-
-msgctxt "#30000"
+msgctxt "#32000"
 msgid "File"
 msgstr "Helyi fájl"
 
-msgctxt "#30001"
+msgctxt "#32001"
 msgid "No lyrics found!"
 msgstr "Nem található dalszöveg!"
 
-msgctxt "#30002"
+msgctxt "#32002"
 msgid "Embedded"
 msgstr "Beágyazott"
 
-msgctxt "#30101"
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Dalszöveg keresése..."
+
+msgctxt "#32101"
 msgid "Save lyrics to lyrics folder"
 msgstr "Dalszöveg mentése"
 
-msgctxt "#30102"
+msgctxt "#32102"
 msgid "- Lyrics folder"
 msgstr "Mentési könyvtár"
 
-msgctxt "#30106"
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "- formátumban mentés"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
 msgid "Use only filename for search"
 msgstr "Csak a fájlnév használata a keresésnél"
 
-msgctxt "#30107"
+msgctxt "#32107"
 msgid "Filename format"
 msgstr "Fájlnév formátum"
 
-msgctxt "#30108"
+msgctxt "#32108"
 msgid "%A - %T"
 msgstr "%A - %T"
 
-msgctxt "#30109"
+msgctxt "#32109"
 msgid "%A\\%B\\%T"
 msgstr "%A\\%B\\%T"
 
-msgctxt "#30110"
+msgctxt "#32110"
 msgid "%A\\%B\\%N %T"
 msgstr "%A\\%B\\%N %T"
 
-msgctxt "#30111"
+msgctxt "#32111"
 msgid "Same name lyrics saved in sub folder"
 msgstr "Az azonos nevű dalszöveg betöltése az alkönyvtárból"
 
-msgctxt "#30112"
+msgctxt "#32112"
 msgid "- Sub folder name"
 msgstr "- Alkönyvtár neve"
 
-msgctxt "#30150"
+msgctxt "#32113"
+msgid "Save lyrics to song folder"
+msgstr "Dalszöveg mentése a zene mappájába"
+
+msgctxt "#32150"
 msgid "Scrapers"
 msgstr "Leolvasók"
 
-msgctxt "#30151"
+msgctxt "#32151"
 msgid "Options"
 msgstr "Lehetőségek"
 
-msgctxt "#30152"
+msgctxt "#32152"
 msgid "Search for embedded lyrics"
 msgstr "Beágyazott dalszöveg keresése"
 
-msgctxt "#30153"
+msgctxt "#32153"
 msgid "Search for local lyrics files"
 msgstr "Helyi dalszövegfájlok keresése"
 
-msgctxt "#30154"
+msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
 msgstr "Szinkronizált dalszöveg leolvasók"
 
-msgctxt "#30155"
+msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Hagyományos dalszöveg leolvasók"
+
+msgctxt "#32156"
+msgid "Run as a service"
+msgstr "Szolgáltatásként futtatás"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Dalcím tisztítása (zárójeles részek eltávolítása)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "A szkript már fut!"
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC Dalszöveg"

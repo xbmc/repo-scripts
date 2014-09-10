@@ -126,19 +126,6 @@ class Song:
     @staticmethod
     def current():
         song = Song.by_offset(0)
-
-        if not song.artist and not xbmc.getInfoLabel("MusicPlayer.TimeRemaining"):
-            # no artist and infinite playing time ? We probably listen to a radio
-            # which usually set the song title as "Artist - Title" (via ICY StreamTitle)
-            sep = song.title.find("-")
-            if sep > 1:
-                song.artist = song.title[:sep - 1].strip()
-                song.title = song.title[sep + 1:].strip()
-                # The title in the radio often contains some additional
-                # bracketed information at the end:
-                #  Radio version, short version, year of the song...
-                # It often disturbs the lyrics search so we remove it
-                song.title = re.sub(r'\([^\)]*\)$', '', song.title)
         return song
 
     @staticmethod
@@ -165,8 +152,23 @@ class Song:
             song.filepath = xbmc.getInfoLabel('Player.Filenameandpath')
         song.title = xbmc.getInfoLabel( "MusicPlayer%s.Title" % offset_str)
         song.artist = xbmc.getInfoLabel( "MusicPlayer%s.Artist" % offset_str)
+
+        if not song.artist and not xbmc.getInfoLabel("MusicPlayer.TimeRemaining"):
+            # no artist and infinite playing time ? We probably listen to a radio
+            # which usually set the song title as "Artist - Title" (via ICY StreamTitle)
+            sep = song.title.find("-")
+            if sep > 1:
+                song.artist = song.title[:sep - 1].strip()
+                song.title = song.title[sep + 1:].strip()
+                # The title in the radio often contains some additional
+                # bracketed information at the end:
+                #  Radio version, short version, year of the song...
+                # It often disturbs the lyrics search so we remove it
+                song.title = re.sub(r'\([^\)]*\)$', '', song.title)
+
         if ( song.filepath and ( (not song.title) or (not song.artist) or (__addon__.getSetting( "read_filename" ) == "true") ) ):
             song.artist, song.title = get_artist_from_filename( song.filepath )
+
         if __addon__.getSetting( "clean_title" ) == "true":
             song.title = re.sub(r'\([^\)]*\)$', '', song.title)
         

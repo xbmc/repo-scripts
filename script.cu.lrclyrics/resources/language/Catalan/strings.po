@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: CU LRC Lyrics
 # Addon id: script.cu.lrclyrics
 # Addon Provider: Taxigps|ronie
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,14 +16,90 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#30000"
+msgctxt "#32000"
 msgid "File"
 msgstr "Fitxer"
 
-msgctxt "#30150"
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "No s'han trobat lletres!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Incrustat"
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Desa lletres a la carpeta de les lletres"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "- Carpeta de les lletres"
+
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "- Format per desar"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Utilitza nom de fitxer per la cerca"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Format del fitxer"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "Desar lletres amb el mateix nom a la subcarpeta"
+
+msgctxt "#32112"
+msgid "- Sub folder name"
+msgstr "- Nom de la subcarpeta"
+
+msgctxt "#32113"
+msgid "Save lyrics to song folder"
+msgstr "Desar lletres a la carpeta de la canço"
+
+msgctxt "#32150"
 msgid "Scrapers"
 msgstr "Scrapers"
 
-msgctxt "#30151"
+msgctxt "#32151"
 msgid "Options"
 msgstr "Opcions"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Cerca lletres incrustades"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "Cerca lletres als fitxers locals"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Scrapers de lletres sincronitzats"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Scrapers de lletres normals"
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC Lyrics"
