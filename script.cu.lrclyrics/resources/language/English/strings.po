@@ -51,7 +51,9 @@ msgctxt "#32103"
 msgid "- Save format"
 msgstr ""
 
-#empty string with id 32104
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr ""
 
 msgctxt "#32105"
 msgid "%A\\%T"

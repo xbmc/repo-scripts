@@ -25,6 +25,7 @@ depending on which options you've enabled, the script searches for lyrics in thi
 - lyricwiki scraper
 - lyricsmode scraper
 - lyricstime scraper
+- darklyrics scraper
 
 
 when the scripts downloads lyrics through one of the scrapers,

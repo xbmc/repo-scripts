@@ -36,7 +36,7 @@ class MAIN():
             if os.path.isdir(os.path.join(LYRIC_SCRAPER_DIR, scraper)) and __addon__.getSetting( scraper ) == "true":
                 exec ( "from culrcscrapers.%s import lyricsScraper as lyricsScraper_%s" % (scraper, scraper))
                 exec ( "self.scrapers.append([lyricsScraper_%s.__priority__,lyricsScraper_%s.LyricsFetcher(),lyricsScraper_%s.__title__,lyricsScraper_%s.__lrc__])" % (scraper, scraper, scraper, scraper))
-                self.scrapers.sort()
+        self.scrapers.sort()
 
     def main_loop(self):
         self.triggered = False
@@ -136,14 +136,6 @@ class MAIN():
         lyrics.source = ''
         lyrics.lyrics = ''
         return lyrics
-
-    def get_lyrics_from_list(self, item):
-        lyric = eval(item.getProperty('lyric'))
-        for item in self.scrapers:
-            if item[2] == self.current_lyrics.source:
-                scraper = item[1]
-                break
-        self.current_lyrics.lyrics = scraper.get_lyrics_from_list( lyric )
 
     def get_lyrics_from_memory(self, song):
         for l in self.fetchedLyrics:
@@ -414,6 +406,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         for song in list:
             listitem = xbmcgui.ListItem(song[0])
             listitem.setProperty('lyric', str(song))
+            listitem.setProperty('source', lyrics.source)
             listitems.append(listitem)
         self.getControl( 120 ).addItems( listitems )
 
@@ -426,8 +419,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 xbmc.sleep(50)
             self.selected = False
             self.getControl( 110 ).reset()
-            self.show_lyrics( self.current_lyrics )
-            self.save_lyrics_to_file( self.current_lyrics )
+            self.show_lyrics( self.lyrics )
+#           self.save_lyrics_to_file( self.lyrics ) #FIXME
 
     def reset_controls(self):
         self.getControl( 110 ).reset()
@@ -447,7 +440,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def onClick(self, controlId):
         if ( controlId == 120 ):
-            self.get_lyrics_from_list( self.getControl( 120 ).getSelectedItem() )
+            item = self.getControl( 120 ).getSelectedItem()
+            source = item.getProperty('source').lower()
+            lyric = eval(item.getProperty('lyric'))
+            exec ( "from culrcscrapers.%s import lyricsScraper as lyricsScraper_%s" % (source, source))
+            scraper = eval('lyricsScraper_%s.LyricsFetcher()' % source)
+            self.lyrics.lyrics = scraper.get_lyrics_from_list( lyric )
             self.selected = True
 
     def onFocus(self, controlId):

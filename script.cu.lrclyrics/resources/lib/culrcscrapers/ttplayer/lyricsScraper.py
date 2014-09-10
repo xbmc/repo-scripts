@@ -164,11 +164,12 @@ class LyricsFetcher:
             return None
         elif len(links) > 1:
             lyrics.list = links
-        lyr = self.get_lyrics_from_list(links[0])
-        if not lyr:
-            return None
-        lyrics.lyrics = lyr
-        return lyrics
+        for link in links:
+            lyr = self.get_lyrics_from_list(link)
+            if lyr and lyr.startswith('['):
+                lyrics.lyrics = lyr
+                return lyrics
+        return None
 
     def get_lyrics_from_list(self, link):
         title,Id,artist,song = link
@@ -185,4 +186,6 @@ class LyricsFetcher:
                    sys.exc_info()[ 1 ]
                    ))
             return None
-        return Page
+        if Page.startswith('['):
+            return Page
+        return ''

@@ -1,3 +1,9 @@
+v2.0.11
+- fix wikilyric scraper
+
+v2.0.10
+- several fixes
+
 v2.0.9
 - additional addon tags
 
