@@ -1,3 +1,8 @@
+V0.7.5
+- Updates to scraper due to frickin' reverted Weatherzone changes
+- Should cope with both old and new website versions with some luck
+- Also updated ABC url scraping to be a bit more robust
+
 V0.7.4 
 - Updates to scraper due to Weatherzone changes
 
