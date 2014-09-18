@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import xbmc
 import xbmcaddon
 import logging
@@ -20,6 +21,22 @@ def log(txt, loglevel=xbmc.LOGDEBUG):
             txt = txt.decode("utf-8")
         message = u'%s: %s' % (__addonid__, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
+
+
+# There has been problems with calling join with non ascii characters,
+# so we have this method to try and do the conversion for us
+def os_path_join(dir, file):
+    # Convert each argument - if an error, then it will use the default value
+    # that was passed in
+    try:
+        dir = dir.decode("utf-8")
+    except:
+        pass
+    try:
+        file = file.decode("utf-8")
+    except:
+        pass
+    return os.path.join(dir, file)
 
 
 # Class used to supply XBMC logging to the soco scripts

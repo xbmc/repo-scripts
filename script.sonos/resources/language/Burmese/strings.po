@@ -16,6 +16,14 @@ msgstr ""
 "Language: my\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32110"
+msgid "Artists"
+msgstr "အဆိုတော်များ"
+
 msgctxt "#32111"
 msgid "Albums"
 msgstr "အယ်ဘမ် များ"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "အပုဒ်များ"

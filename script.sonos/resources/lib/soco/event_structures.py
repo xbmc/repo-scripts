@@ -161,6 +161,9 @@ class LastChangeEvent(object):
                 result['transportTitle'] = LastChangeEvent._get_element_data(
                     nsdc, item, 'title')
 
+        result['restartPending'] = LastChangeEvent._get_val_data(
+            rns, instanceid, 'RestartPending')
+
         return cls(result)
 
     @staticmethod
@@ -313,3 +316,8 @@ class LastChangeEvent(object):
     def transport_title(self):
         """Get the transport title"""
         return self.content.get('transportTitle', None)
+
+    @property
+    def restart_pending(self):
+        """Get the restart pending"""
+        return self.content.get('restartPending', None)

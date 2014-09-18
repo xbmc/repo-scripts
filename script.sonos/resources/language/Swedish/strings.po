@@ -136,6 +136,50 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Uppdatera IP-adress automatiskt vid uppstart"
 
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start"
+msgstr "Ändra Sonos till 'Line-In På' vid Media start"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Koordinator"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "är inte 'grupp-koordinator' för zon"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Vissa funktioner kan fungera sämre om högtalaren inte är en koordinator"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automatisering"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Layout"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Kontroller,Slideshow,Bio,Album"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Kontroller,Slideshow"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Använd Skal-ikoner inställer för Sonos-ikoner"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Endast Slideshow"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Visa inte avisering om kontroller visas"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "Följande inställningar måste vara aktiverade i ArtistSlideshow"
@@ -163,6 +207,10 @@ msgstr "Radiostationer"
 msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr "Starta Sonos Kontroller"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Sonos Spellistor"
 
 msgctxt "#32110"
 msgid "Artists"

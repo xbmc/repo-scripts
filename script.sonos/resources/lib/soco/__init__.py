@@ -9,7 +9,7 @@
 
 # Will be parsed by setup.py to determine package metadata
 __author__ = 'The SoCo-Team <python-soco@googlegroups.com>'
-__version__ = '0.8.1'
+__version__ = '0.8.3'
 __website__ = 'https://github.com/SoCo/SoCo'
 __license__ = 'MIT License'
 

@@ -20,6 +20,10 @@ msgctxt "#32002"
 msgid "IP Address"
 msgstr "IP Address"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Layout"
+
 msgctxt "#32062"
 msgid "Next"
 msgstr "Next"

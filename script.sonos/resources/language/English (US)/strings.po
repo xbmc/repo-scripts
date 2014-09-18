@@ -136,6 +136,50 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Automatically Update IP Address On Startup"
 
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start"
+msgstr "Switch Sonos To Line-In On Media Start"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Coordinator"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "is not the group coordinator for zone"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Some functions may not work correctly if the speaker is not a coordinator"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automation"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Layout"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Controller,Slideshow,Bio,Albums"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Controller,Slideshow"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Use Skin Icons Instead Of Sonos Icons"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Slideshow Only"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Do Not Display Notification If Controller Is Showing"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "The following setting in ArtistSlideshow must be enabled"
@@ -163,6 +207,10 @@ msgstr "Radio Stations"
 msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr "Launch Sonos Controller"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Sonos Playlists"
 
 msgctxt "#32110"
 msgid "Artists"

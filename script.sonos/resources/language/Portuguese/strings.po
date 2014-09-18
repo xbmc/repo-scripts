@@ -128,6 +128,10 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Actualizar Automaticamente o Endereço IP ao Iniciar"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Dispor"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "A seguinte definição tem de estar activa em ArtistSlideshow"

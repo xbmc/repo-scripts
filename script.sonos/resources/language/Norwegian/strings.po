@@ -136,6 +136,10 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Automatisk oppdater IP adresse ved oppstart"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Utforming"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "Følgende innstilling i ArtistSlideshow må være aktivert"

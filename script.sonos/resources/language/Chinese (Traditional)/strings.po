@@ -32,6 +32,10 @@ msgctxt "#32012"
 msgid "Debugging"
 msgstr "除錯"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "版面"
+
 msgctxt "#32062"
 msgid "Next"
 msgstr "向後"

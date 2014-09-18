@@ -34,7 +34,7 @@ msgstr "Benachrichtigungen aktivieren (benötigt Neustart)"
 
 msgctxt "#32004"
 msgid "Display Notification For (Seconds)"
-msgstr "zeige Benachrichtigungen für (Sekunden)"
+msgstr "Benachrichtigungen anzeigen für (Sekunden)"
 
 msgctxt "#32005"
 msgid "Notification Check Frequency (Seconds)"
@@ -136,6 +136,50 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Aktualisiere IP-Adresse beim Start automatisch"
 
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start"
+msgstr "Schalte Sonos um zum Line-In beim Medienstart"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Koordinator"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "ist nicht der Gruppenkoordinator für die Zone"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Einige Funktionen funktionieren möglicherweise nicht richtig, wenn der Sprecher kein Koordinator ist"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automatisierung"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Layout"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Controller, Diaschau, Bio, Alben"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Controller, Diaschau"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Benutze Oberflächen-Icons statt Sonos-Icons"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Nur Diaschau"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Keine Benachrichtigungen wenn der Controller angezeigt wird"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "Die folgende Einstellung in 'ArtistSlideshow' muss aktiviert sein"
@@ -163,6 +207,10 @@ msgstr "Radio Sender"
 msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr "Starte Sonos-Controller"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Sonos-Wiedergabelisten"
 
 msgctxt "#32110"
 msgid "Artists"

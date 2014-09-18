@@ -40,6 +40,10 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Manette"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Disposition"
+
 msgctxt "#32062"
 msgid "Next"
 msgstr "Suivant"

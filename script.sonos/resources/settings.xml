@@ -25,7 +25,7 @@
 		<setting id="autoResumeSonos" subsetting="true" enable="eq(-1,true)" label="32027" type="slider" default="0" range="0,3,60" option="int"/>
 	</category>
 	<category label="32018">
-		<setting id="batchSize" label="32019" type="slider" default="100" range="10,10,1000" option="int"/>
+		<setting id="batchSize" label="32019" type="slider" default="100" range="10,10,486" option="int"/>
 		<setting id="maxListEntries" label="32020" type="slider" default="1000" range="0,100,3000" option="int"/>
 		<setting id="useSkinIcons" type="bool" label="32038" default="false"/>		
 	</category>

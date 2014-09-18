@@ -92,6 +92,10 @@ msgctxt "#32019"
 msgid "Batch Size"
 msgstr "Batch Size"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Layout"
+
 msgctxt "#32062"
 msgid "Next"
 msgstr "Next"

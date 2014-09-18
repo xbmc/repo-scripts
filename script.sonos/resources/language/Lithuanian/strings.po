@@ -136,6 +136,50 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Automatiškai atnaujinti IP adresą paleidžiant"
 
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start"
+msgstr "Perjungti į Sonos į Line-In įėjimą paleidus media įrašą"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Koordinatorius"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "nėra koordinatorius zonoje"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Kai kurios funkcijos gali veikti netinkamai, jei garsiakalbis nėra koordinatorius"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automatizavimas"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Išdėstymas"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Valdiklis, skaidrių peržiūra, biografija, albumai"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Valdiklis, skaidrių peržiūra"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Naudoti teminės išvaizdos piktogramas vietoje Sonos piktogramų"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Tik skaidrių peržiūra"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Nerodyti pranešimų, jei rodomas valdiklis"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "ArtistSlideshow turi būti įjungti šie nustatymai"
@@ -163,6 +207,10 @@ msgstr "Radijo stotys"
 msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr "Paleisti Sonos valdiklį"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Sonos grojaraščiai"
 
 msgctxt "#32110"
 msgid "Artists"

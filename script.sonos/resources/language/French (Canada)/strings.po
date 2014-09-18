@@ -136,6 +136,50 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Mettre à jour l'adresse IP automatiquement lors du démarrage"
 
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start"
+msgstr "Basculer les Sonos sur Entrée de ligne au démarrage du média"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Coordinateur"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "n'est pas le coordinateur du groupe pour la zone"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Certaines fonctions pourraient ne pas fonctionner correctement si le haut-parleur n'est par un coordinateur"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automatisation"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Disposition"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Contrôleur,Diaporama,Bio,Albums"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Contrôleur,Diaporama"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Utiliser les icônes de l'habillage au lieu de celles de Sonos"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Diaporama uniquement"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Ne pas afficher les notifications si le contrôleur est affiché"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "Le paramètre suivant doit être activé dans le diaporama des artistes"
@@ -163,6 +207,10 @@ msgstr "Stations radio"
 msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr "Lancer le contrôleur Sonos"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Listes de lectures Sonos"
 
 msgctxt "#32110"
 msgid "Artists"

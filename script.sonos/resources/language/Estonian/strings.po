@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "Debugging"
 msgstr "Silumine"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Paigutus"
+
 msgctxt "#32062"
 msgid "Next"
 msgstr "Järgmine"

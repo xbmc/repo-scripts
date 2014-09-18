@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-import cgi
 import traceback
 import logging
 
 # Load the Soco classes
 from soco import SoCo
 from soco.event_structures import LastChangeEvent
-from soco.data_structures import MusicLibraryItem
 
 # Use the SoCo logger
 LOGGER = logging.getLogger('soco')
@@ -16,79 +14,6 @@ LOGGER = logging.getLogger('soco')
 # Sonos class to add extra support on top of SoCo
 #########################################################################
 class Sonos(SoCo):
-    # Format of the meta data (borrowed from sample code)
-    meta_template = '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"><item id="R:0/0/0" parentID="R:0/0" restricted="true"><dc:title>{title}</dc:title><upnp:class>object.item.audioItem.audioBroadcast</upnp:class><desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">{service}</desc></item></DIDL-Lite>'
-    tunein_service = 'SA_RINCON65031_'
-
-    # Converts non complete URIs to complete URIs with IP address
-    def _updateAlbumArtToFullUri(self, musicInfo):
-        if hasattr(musicInfo, 'album_art_uri'):
-            # Add on the full album art link, as the URI version does not include the ipaddress
-            if (musicInfo.album_art_uri is not None) and (musicInfo.album_art_uri != ""):
-                if not musicInfo.album_art_uri.startswith(('http:', 'https:')):
-                    musicInfo.album_art_uri = 'http://' + self.ip_address + ':1400' + musicInfo.album_art_uri
-
-    # Override method so that the album art http reference can be added
-    def get_music_library_information(self, search_type, start=0, max_items=100, sub_category=''):
-        # Call the normal view if not browsing deeper
-        if (sub_category is None) or (sub_category == ''):
-            musicInfo = SoCo.get_music_library_information(self, search_type, start, max_items)
-        else:
-            # Call the browse version
-            musicInfo = self.browse(search_type, sub_category, start, max_items)
-
-        if musicInfo is not None:
-            for anItem in musicInfo['item_list']:
-                # Make sure the album art URI is the full path
-                self._updateAlbumArtToFullUri(anItem)
-
-        return musicInfo
-
-    def browse(self, search_type, sub_category, start=0, max_items=100):
-        # Make sure the sub category is valid for the message, escape invalid characters
-        sub_category = cgi.escape(sub_category)
-
-        search_translation = {'artists': 'A:ARTIST',
-                              'album_artists': 'A:ALBUMARTIST',
-                              'albums': 'A:ALBUM',
-                              'genres': 'A:GENRE',
-                              'composers': 'A:COMPOSER',
-                              'tracks': 'A:TRACKS',
-                              'playlists': 'A:PLAYLISTS',
-                              'share': 'S:',
-                              'sonos_playlists': 'SQ:',
-                              'categories': 'A:'}
-        search = search_translation[search_type]
-
-        search_uri = "#%s%s" % (search, sub_category)
-        search_item = MusicLibraryItem(uri=search_uri, title='', parent_id='')
-
-        # Call the base version
-        return SoCo.browse(self, search_item, start, max_items)
-
-    # Override method so that the album art http reference can be added
-    def get_queue(self, start=0, max_items=100):
-        list = SoCo.get_queue(self, start=start, max_items=max_items)
-
-        if list is not None:
-            for anItem in list:
-                # Make sure the album art URI is the full path
-                self._updateAlbumArtToFullUri(anItem)
-
-        return list
-
-    # For radio playing a title is required
-    def play_uri(self, uri='', title=None, metadata=''):
-        # Radio stations need to have at least a title to play
-        if (metadata == '') and (title is not None):
-            title_esc = cgi.escape(title)
-            metadata = Sonos.meta_template.format(title=title_esc, service=Sonos.tunein_service)
-
-        # Need to replace any special characters in the URI
-        uri = cgi.escape(uri)
-        # Now play the track
-        SoCo.play_uri(self, uri, metadata)
-
     # Reads the current Random and repeat status
     def getPlayMode(self):
         isRandom = False

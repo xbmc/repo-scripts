@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+import cgi
 import traceback
 import urllib
 import urlparse
@@ -25,6 +26,7 @@ from settings import Settings
 from settings import log
 
 import soco
+from speech import Speech
 
 
 ###################################################################
@@ -65,6 +67,11 @@ class MenuNavigator():
     ROOT_MENU_RADIO_SHOWS = 'Radio-Shows'
     ROOT_MENU_RADIO_SHOWS = 'Radio-Shows'
     ROOT_MENU_SONOS_PLAYLISTS = 'Sonos-Playlists'
+    ROOT_MENU_SPEECH = 'Speech'
+
+    COMMAND_CONTROLLER = 'launchController'
+    COMMAND_SPEECH_INPUT = 'SpeechInput'
+    COMMAND_SPEECH_SAVE = 'SpeechSave'
 
     def __init__(self, base_url, addon_handle):
         self.base_url = base_url
@@ -77,7 +84,7 @@ class MenuNavigator():
     # Display the default list of items in the root menu
     def setRootMenu(self):
         # Sonos Controller Link
-        url = self._build_url({'mode': 'launchController'})
+        url = self._build_url({'mode': MenuNavigator.COMMAND_CONTROLLER})
         li = xbmcgui.ListItem(__addon__.getLocalizedString(32103), iconImage=__icon__)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
@@ -118,6 +125,13 @@ class MenuNavigator():
 
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_QUEUE})
         li = xbmcgui.ListItem(__addon__.getLocalizedString(32101), iconImage=MediaFiles.QueueIcon)
+        li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
+        self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+
+        # Custom Speech Options
+        url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_SPEECH})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32105), iconImage=__icon__)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
@@ -179,7 +193,7 @@ class MenuNavigator():
                 # Get the items from the sonos system
                 list = None
                 try:
-                    list = sonosDevice.get_queue(start=totalCollected, max_items=Settings.getBatchSize())
+                    list = sonosDevice.get_queue(totalCollected, Settings.getBatchSize(), True)
                 except:
                     log("SonosPlugin: %s" % traceback.format_exc())
                     xbmcgui.Dialog().ok("Error", "Failed to perform queue lookup")
@@ -242,7 +256,13 @@ class MenuNavigator():
                 # Get the items from the sonos system
                 list = None
                 try:
-                    list = sonosDevice.get_music_library_information(search_type=folderName, start=totalCollected, max_items=Settings.getBatchSize(), sub_category=subCategory)
+                    if (subCategory is None) or (subCategory == ''):
+                        list = sonosDevice.get_music_library_information(folderName, totalCollected, Settings.getBatchSize(), True)
+                    else:
+                        # Make sure the sub category is valid for the message, escape invalid characters
+                        subCategory = cgi.escape(subCategory)
+                        # Call the browse version
+                        list = sonosDevice.browse_by_idstring(folderName, subCategory, totalCollected, Settings.getBatchSize(), True)
                 except:
                     log("SonosPlugin: %s" % traceback.format_exc())
                     xbmcgui.Dialog().ok("Error", "Failed to perform lookup %s (%s)" % (folderName, subCategory))
@@ -384,6 +404,42 @@ class MenuNavigator():
 
                 # Add the number returned this time to the running total
                 totalCollected = totalCollected + numberReturned
+
+        xbmcplugin.endOfDirectory(self.addon_handle)
+
+    # Populate the Music menu
+    def populateSpeech(self):
+        url = self._build_url({'mode': MenuNavigator.COMMAND_SPEECH_INPUT})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32200), iconImage=__icon__)
+        li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
+        self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
+
+        url = self._build_url({'mode': MenuNavigator.COMMAND_SPEECH_SAVE})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32203), iconImage=__icon__)
+        li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
+        self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
+
+        # Add a blank line before the filters
+        li = xbmcgui.ListItem("", iconImage=__icon__)
+        li.addContextMenuItems([], replaceItems=True)
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url="", listitem=li, isFolder=False)
+
+        # Create the speech class (Not going to call the Sonos System do no need for the device)
+        speech = Speech()
+        phrases = speech.loadSavedPhrases()
+
+        # Loop through all the phrases and add them to the screen
+        for phrase in phrases:
+            url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_SPEECH_SAY_PHRASE, 'itemId': phrase})
+            li = xbmcgui.ListItem(phrase, iconImage=__icon__)
+            # Add the remove button to the context menu
+            cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_SPEECH_REMOVE_PHRASE, 'itemId': phrase})
+            ctxtMenu = []
+            ctxtMenu.append((__addon__.getLocalizedString(32204), 'XBMC.RunPlugin(%s)' % cmd))
+            li.addContextMenuItems(ctxtMenu, replaceItems=True)  # Clear the Context Menu
+            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
 
@@ -557,6 +613,9 @@ class ActionManager():
 
     ACTION_RADIO_PLAY = 'playRadio'
 
+    ACTION_SPEECH_SAY_PHRASE = 'speechSayPhrase'
+    ACTION_SPEECH_REMOVE_PHRASE = 'speechRemovePhrase'
+
     def __init__(self):
         self.sonosDevice = Settings.getSonosDevice()
 
@@ -578,8 +637,13 @@ class ActionManager():
             # Radio Operations
             elif actionType == ActionManager.ACTION_RADIO_PLAY:
                 self.performPlayURI(itemId, title)
+            # Speech Operations
+            elif actionType == ActionManager.ACTION_SPEECH_SAY_PHRASE:
+                self.sayPhrase(itemId)
+            elif actionType == ActionManager.ACTION_SPEECH_REMOVE_PHRASE:
+                self.removePhrase(itemId)
             else:
-                # Temp error message - should never be shown - will remove when all features complete
+                # This should never be shown, so no need to translate, enabled for debug
                 xbmcgui.Dialog().ok("Error", "Operation %s not currently supported" % actionType)
         except:
             log("SonosPlugin: %s" % traceback.format_exc())
@@ -598,7 +662,7 @@ class ActionManager():
     def performPlayURI(self, itemId, title):
         # Make sure a Sonos speaker was found
         if self.sonosDevice is not None:
-            self.sonosDevice.play_uri(itemId, title)
+            self.sonosDevice.play_uri(cgi.escape(itemId), title=cgi.escape(title))
 
     def performAddToQueue(self, itemId):
         positionInQueue = None
@@ -634,6 +698,20 @@ class ActionManager():
             # Refresh the screen now that we have removed all the items
             xbmc.executebuiltin('Container.Refresh')
 
+    # SPEECH OPERATIONS
+    def sayPhrase(self, phrase):
+        # Make sure a Sonos speaker was found
+        if self.sonosDevice is not None:
+            # Create the speech class and play the message
+            speech = Speech(self.sonosDevice)
+            # Now get the Sonos Sytem to say the message
+            speech.say(phrase)
+
+    def removePhrase(self, phrase):
+        speech = Speech(self.sonosDevice)
+        speech.removePhrase(phrase)
+        # Refresh the screen now that an item has been removed
+        xbmc.executebuiltin('Container.Refresh')
 
 ################################
 # Main of the Sonos Plugin
@@ -678,6 +756,9 @@ if __name__ == '__main__':
             elif foldername[0] == MenuNavigator.ROOT_MENU_RADIO_SHOWS:
                 menuNav = MenuNavigator(base_url, addon_handle)
                 menuNav.populateRadioShows()
+            elif foldername[0] == MenuNavigator.ROOT_MENU_SPEECH:
+                menuNav = MenuNavigator(base_url, addon_handle)
+                menuNav.populateSpeech()
             else:
                 subCategory = args.get('subCategory', '')
                 if subCategory != '':
@@ -705,7 +786,28 @@ if __name__ == '__main__':
             actionMgr = ActionManager()
             actionMgr.performAction(actionType[0], itemId[0], title)
 
-    elif mode[0] == 'launchController':
+    elif mode[0] == MenuNavigator.COMMAND_CONTROLLER:
         log("SonosPlugin: Mode is launchController")
         xbmc.executebuiltin("xbmc.ActivateWindow(home)", True)
         xbmc.executebuiltin('XBMC.RunScript(script.sonos)')
+
+    elif mode[0] == MenuNavigator.COMMAND_SPEECH_INPUT:
+        log("SonosPlugin: Mode is Speech Input")
+        sonosDevice = Settings.getSonosDevice()
+        # Make sure a Sonos speaker was found
+        if sonosDevice is not None:
+            # Create the speech class and prompt the user for the message
+            speech = Speech(sonosDevice)
+            msg = speech.promptForInput()
+            if msg is not None:
+                # Now get the Sonos Sytem to say the message
+                speech.say(msg)
+
+    elif mode[0] == MenuNavigator.COMMAND_SPEECH_SAVE:
+        log("SonosPlugin: Mode is Speech Save")
+        # Create the speech class and prompt the user for the message
+        # (No need for a device to save a message)
+        speech = Speech()
+        speech.addPhrase()
+        # Refresh the screen now that an item has been removed
+        xbmc.executebuiltin('Container.Refresh')

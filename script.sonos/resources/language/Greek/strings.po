@@ -136,6 +136,50 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Αυτόματη Ενημέρωση Διεύθυνσης IP κατά την Εκκίνηση"
 
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start"
+msgstr "Εναλλαγή του Sonos σε Είσοδο Ήχου κατά την Αναπαραγωγή"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Διαχειριστής"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "δεν είναι ο συντονιστής του γκρουπ για τη ζώνη"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Ενδέχεται να μη δουλέψουν όλα σωστά αν το ηχείο δεν είναι συντονιστής"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Αυτοματοποίηση"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Διάταξη"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Χειριστήριο,Παρ.Διαφανειών,Βιογραφία,Άλμπουμ"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Χειριστήριο,Παρ.Διαφανειών"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Χρήση Εικονιδίων Κελύφους Αντί Αυτών Του Sonos"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Μόνο Παρουσίαση Διαφανειών"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Να Μην Εμφανίζονται Ειδοποιήσεις Με Τα Χειριστήρια"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "Η ακόλουθη ρύθμιση στο ArtistSlideshow πρέπει να ενεργοποιηθεί"
@@ -163,6 +207,10 @@ msgstr "Ραδιοφωνικοί Σταθμοί"
 msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr "Έναρξη του Χειριστηρίου Sonos"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Λίστες Αναπ/γής Sonos"
 
 msgctxt "#32110"
 msgid "Artists"

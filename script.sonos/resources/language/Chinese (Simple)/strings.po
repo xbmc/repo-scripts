@@ -44,6 +44,10 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "控制器"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "布局"
+
 msgctxt "#32062"
 msgid "Next"
 msgstr "下一项"
