@@ -434,7 +434,7 @@ class DummyProgressDialog():
     def updateProgress(self, percentageProgress=50):
         pass
 
-    def isUserCancelled(self):
+    def isUserCancelled(self, displayNotice=True):
         return False
 
     def closeProgress(self):

@@ -326,7 +326,9 @@ class ThemeFiles():
         # Support special paths like smb:// means that we can not just call
         # os.path.isfile as it will return false even if it is a file
         # (A bit of a shame - but that's the way it is)
-        fileExt = os.path.splitext(workingPath)[1]
+        fileExt = None
+        if workingPath.startswith("smb://") or workingPath.startswith("afp://") or os.path.isfile(workingPath):
+            fileExt = os.path.splitext(workingPath)[1]
         # If this is a file, then get it's parent directory
         # Also limit file extensions to a maximum of 4 characters
         if fileExt is not None and fileExt != "" and len(fileExt) < 5:

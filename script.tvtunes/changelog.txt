@@ -1,3 +1,7 @@
+v4.4.9
+- Fix issue with searching for themes with no progress dialog
+- Fix issues with directories with a full stop near the end
+
 v4.4.8
 - Fix Goear.com downloads after website change
 
