@@ -33,7 +33,7 @@ tempData            = os.path.join(dataPath,'temp')
 
 class getUrl(object):
     def __init__(self, url, close=True, proxy=None, post=None, mobile=False, referer=None, cookie=None, output='', timeout='10'):
-        if not proxy is None:
+        if not proxy == None:
             proxy_handler = urllib2.ProxyHandler({'http':'%s' % (proxy)})
             opener = urllib2.build_opener(proxy_handler, urllib2.HTTPHandler)
             opener = urllib2.install_opener(opener)
@@ -42,17 +42,17 @@ class getUrl(object):
             cookie_handler = urllib2.HTTPCookieProcessor(cookielib.LWPCookieJar())
             opener = urllib2.build_opener(cookie_handler, urllib2.HTTPBasicAuthHandler(), urllib2.HTTPHandler())
             opener = urllib2.install_opener(opener)
-        if not post is None:
+        if not post == None:
             request = urllib2.Request(url, post)
         else:
             request = urllib2.Request(url,None)
         if mobile == True:
-            request.add_header('User-Agent', 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7')
+            request.add_header('User-Agent', 'Mozilla/5.0 (iPhone; CPU; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7')
         else:
-            request.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0')
-        if not referer is None:
+            request.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36')
+        if not referer == None:
             request.add_header('Referer', referer)
-        if not cookie is None:
+        if not cookie == None:
             request.add_header('cookie', cookie)
         response = urllib2.urlopen(request, timeout=int(timeout))
         if output == 'cookie':
@@ -116,7 +116,7 @@ class main:
         try:        query = urllib.unquote_plus(params["searchstring"])
         except:     query = None
 
-        if langs is None:
+        if langs == None:
             pass
         elif not 'Greek' in langs.split(","):
             xbmcgui.Dialog().notification(addonName.encode("utf-8"), language(32002).encode("utf-8"), xbmcgui.NOTIFICATION_WARNING, 3000, sound=False)
@@ -141,10 +141,10 @@ class actions:
             episode = xbmc.getInfoLabel("VideoPlayer.Episode")
             if 's' in episode.lower(): season, episode = '0', episode[-1:]
 
-            if not year == '': # movie
-                query = '%s (%s)' % (title, year)
-            elif not show == '': # episode
+            if not show == '': # episode
                 query = show + ' S' + '%02d' % int(season) + 'E' + '%02d' % int(episode)
+            elif not year == '': # movie
+                query = '%s (%s)' % (title, year)
             else: # file
                 query, year = xbmc.getCleanMovieTitle(title)
                 if not year == '': query = '%s (%s)' % (query, year)
