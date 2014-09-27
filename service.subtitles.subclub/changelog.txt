@@ -1,0 +1,27 @@
+0.0.8
+- Pythoni bugi tõttu ümber tehtud utf-8 dekodeerimine. Kui XBMC ebastabiilseks muutub, vahetage tagasi 0.0.7 versioonile.
+
+0.0.7
+- Parandatud viga, kui subtiitrit pole veel hinnatud
+- Parandatud ebaühilduvus Raspberry PIga
+
+0.0.6
+- Parandatud vead subtiitrite leidmisel seriaalidele
+
+0.0.5
+- Parandatud sünkroonis supaka leidmine. Enne kuvas sünkroonis supakat ka siis, kui
+see seda polnud.
+- Lisatud võimalus manuaalselt supakaid otsida
+
+0.0.4
+- Õiged logod SubClubist
+
+0.0.3
+- Lisatud supaka reitingu näitamine
+- Kuvatakse õige pealkiri SubClubist
+- Lisatud võimalus valida kõigi raris leidunud supakate seast
+- Muudetud salvestuse asukohta
+
+0.0.2
+- Parandatud vead subtiitrite sõelumises
+- Redigeeritud SubClub.eu logo
