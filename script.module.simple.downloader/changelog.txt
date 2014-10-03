@@ -4,6 +4,9 @@
 - Add "Trying rtmpdump", "Trying vlc", "Trying mplayer" messages to OSD
 - Fix skin xml issue. 
 
+[B]Version 1.9.5[/B]
+- Added possibility to send cookie in downloader params 
+
 [B]Version 1.0.0[/B]
 - Fixed: made plugin work on Frodo
 

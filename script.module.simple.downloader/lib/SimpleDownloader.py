@@ -543,7 +543,10 @@ class SimpleDownloader():
             url.add_header("User-Agent", item["useragent"])
         else:
             url.add_header("User-Agent", self.common.USERAGENT)
-
+        if "cookie" in item:
+            if item["cookie"]!=False  :
+                url.add_header("Cookie", item["cookie"])
+        
         file = self.common.openFile(item["path_incomplete"], "wb")
         con = urllib2.urlopen(url)
 

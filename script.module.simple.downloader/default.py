@@ -10,7 +10,7 @@ import urllib2
 
 settings = xbmcaddon.Addon(id='script.module.simple.downloader')
 language = settings.getLocalizedString
-version = "1.9.4"
+version = "1.9.5"
 plugin = "SimpleDownloader-" + version
 core = ""
 common = ""
