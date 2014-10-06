@@ -1,3 +1,6 @@
+v1.0.1
+- add missing dependency
+
 v1.0.0
 - kodi name change
 
