@@ -33,7 +33,7 @@ def getEmbedLyrics(song, getlrc):
     return lyrics
 
 """
-Get LRC lyrics embed with Lyrics3/Lyrics3V2 format
+Get lyrics embed with Lyrics3/Lyrics3V2 format
 See: http://id3.org/Lyrics3
      http://id3.org/Lyrics3v2
 """
@@ -50,7 +50,8 @@ def getLyrics3(filename):
         buf = f.read(5100+11)
         f.close();
         start = buf.find("LYRICSBEGIN")
-        return buf[start+11:]
+        if (getlrc and content.startswith('[')) or (not getlrc and not content.startswith('[')):
+            return buf[start+11:]
     elif (buf == "LYRICS200"):
         """ Find Lyrics3v2 """
         f.seek(-9-6, os.SEEK_CUR)
@@ -65,7 +66,8 @@ def getLyrics3(filename):
                 length = int(buf[3:8])
                 content = buf[8:8+length]
                 if (tag == 'LYR'):
-                    return content
+                    if (getlrc and content.startswith('[')) or (not getlrc and not content.startswith('[')):
+                        return content
                 buf = buf[8+length:]
     f.close();
     return None

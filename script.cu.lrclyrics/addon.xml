@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="2.0.11" provider-name="Taxigps|ronie">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="2.0.12" provider-name="Taxigps|ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.12.0"/>
 		<import addon="script.module.chardet" version="2.1.2"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
 	<extension point="xbmc.python.lyrics" library="default.py"/>
 	<extension point="xbmc.service" library="default.py" start="login"/>

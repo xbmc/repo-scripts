@@ -1,3 +1,8 @@
+v2.0.12
+- fix .xml name
+- fix detection of text based Lyrics3 tags
+- fix some lrc lyrics did not work (time tag not recognised)
+
 v2.0.11
 - fix wikilyric scraper
 

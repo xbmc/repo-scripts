@@ -385,7 +385,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def parser_lyrics(self, lyrics):
         self.pOverlay = []
-        tag = re.compile('\[(\d+):(\d\d)(\.\d+|)\]')
+        tag = re.compile('\[(\d+):(\d\d)([\.:]\d+|)\]')
         lyrics = lyrics.replace( "\r\n" , "\n" )
         sep = "\n"
         for x in lyrics.split( sep ):
