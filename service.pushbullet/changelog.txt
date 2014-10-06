@@ -1,0 +1,23 @@
+0.6.14b
+- Added internal Kodi modules (script.module.httplib2 and script.module.six)
+- Manage new playback types: "episode", "musicvideo", "channel"
+
+0.6.12b
+- Manage pictures view and slideshow as song and movie playback (for Sync/Mirroring in outbound mode)
+
+0.6.10b
+- 'View Channels' in add-on settings
+- Playback action (Stop, Pause or Next) when push is dismissed on device
+
+0.6.8b
+- Auto dismiss notification when playback end (for Sync/Mirroring in outbound mode)
+
+0.6.6b
+- Playback pushed link (youtube plugin supported)
+- Sync/Mirroring: Send notifications to others devices (outbound mode):
+- Media info playback (song and movie info with their thumbs!)
+- Added to settings "Send a test notification" button
+- Added support for Pushbullet Channels
+
+0.6.0b
+- Hello Pushbullet :)

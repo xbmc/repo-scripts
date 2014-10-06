@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30000">
+        <setting label="30010" type="lsep"/>
+        <setting id="pb_access_token" label="30030" type="text"/>
+        <setting label="30011" type="lsep"/>
+        <setting id="notification_time" label="30031" type="slider" default="6" range="1,1,60" option="int" />
+        <setting id="pb_channels" label="30032" type="bool" default="true"/>
+    </category>
+    <category label="30001">
+        <setting id="pb_mirroring" label="30040" type="bool" default="true"/>
+        <setting label="30012" type="lsep"/>
+        <setting id="pb_filter_deny" label="30041" type="text" enable="eq(-2,true)" default="yatse"/>
+        <setting id="pb_filter_allow" label="30042" type="text" enable="eq(-3,true)"/>
+    </category>
+    <category label="30002">
+        <setting id="pb_mirroring_out" label="30050" type="bool" default="true"/>
+        <setting id="pb_mirroring_out_media_nfo" label="30051" type="bool" subsetting="true" enable="eq(-1,true)" default="true"/>
+        <setting label="30052" type="action" action="RunScript(service.pushbullet,SEND_EPHEMERAL_TEST)" />
+        <setting label="30011" type="lsep"/>
+        <setting id="cmd_on_dismiss_push" label="30053" type="labelenum" values="Stop|Pause|Next|None" enable="eq(-3,true)"/>
+    </category>
+    <category label="30003">
+        <setting id="pb_client_iden" label="30060" type="text" enable="false"/>
+        <setting id="pb_client_nickname" label="30061" type="text" enable="false"/>
+        <setting id="pb_client_model" label="30062" type="text" enable="false"/>
+    </category>
+</settings>

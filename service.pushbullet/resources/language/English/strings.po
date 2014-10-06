@@ -1,0 +1,121 @@
+# XBMC Media Center language file
+# Addon Name: Pushbullet Client
+# Addon id: service.pushbullet
+# Addon Provider: Muttley
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: muttley.bd@gmail.com\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: muttley\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# SETTINGS
+
+# Category
+msgctxt "#30000"
+msgid "Main"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Sync in"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Sync out"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Device info"
+msgstr ""
+
+# Separators
+msgctxt "#30010"
+msgid "Account"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Filter by Appname (title of notification separated by space)"
+msgstr ""
+
+# Items
+msgctxt "#30030"
+msgid "Access Token"
+msgstr ""
+
+msgctxt "#30031"
+msgid "Hide notifications automatically after (seconds)"
+msgstr ""
+
+msgctxt "#30032"
+msgid "View Channels"
+msgstr ""
+
+
+msgctxt "#30040"
+msgid "View notifications of others devices"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Deny"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Allow"
+msgstr ""
+
+msgctxt "#30050"
+msgid "Send notifications to others devices"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Media info playback"
+msgstr ""
+
+msgctxt "#30052"
+msgid "Send a test notification"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Playback action when push is dismissed on device"
+msgstr ""
+
+
+msgctxt "#30060"
+msgid "Iden"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Nickname"
+msgstr ""
+
+msgctxt "#30062"
+msgid "Model"
+msgstr ""
+
+# ADDON STRINGS
+
+msgctxt "#30100"
+msgid "You have to set ACCESS TOKEN in add-on settings"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Error"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Kodi Pushbullet Add-on"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Remember to make a donation for this add-on :)"
+msgstr ""
