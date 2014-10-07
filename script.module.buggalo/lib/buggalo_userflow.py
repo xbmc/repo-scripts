@@ -1,5 +1,5 @@
 #
-#      Copyright (C) 2013 Tommy Winther
+#      Copyright (C) 2014 Tommy Winther
 #      http://tommy.winther.nu
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -26,9 +26,10 @@ import xbmc
 import xbmcaddon
 
 BUGGALO_ADDON = xbmcaddon.Addon('script.module.buggalo')
-ADDON = xbmcaddon.Addon()
-
-# TODO always send userflow, ie. daily upload for usage statistics
+try:
+    ADDON = xbmcaddon.Addon()
+except RuntimeError:
+    ADDON = None  # Catch and ignore 'No valid addon id could be obtained'
 
 
 def trackUserFlow(value):
@@ -47,6 +48,9 @@ def trackUserFlow(value):
 
 
 def loadUserFlow():
+    if not ADDON:
+        return
+
     path = xbmc.translatePath(BUGGALO_ADDON.getAddonInfo('profile'))
     file = os.path.join(path, '%s.json' % ADDON.getAddonInfo('id'))
 
@@ -61,6 +65,9 @@ def loadUserFlow():
 
 
 def saveUserFlow(userFlow):
+    if not ADDON:
+        return
+
     path = xbmc.translatePath(BUGGALO_ADDON.getAddonInfo('profile'))
     if not os.path.exists(path):
         try:

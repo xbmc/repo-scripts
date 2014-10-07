@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
-<!-- Portuguese language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pt/ -->
+<!-- English (US) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/en_US/ -->
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
@@ -16,14 +16,14 @@
     <string id="90009">[B]You talkin' to me?[/B] ~ Taxi Driver (1976)</string>
     <string id="90010">[B]Round up the usual suspects[/B] ~ Casablanca (1942)</string>
     <string id="90011">[B]You're gonna need a bigger boat[/B] ~ Jaws (1975)</string>
-    <string id="91000">Infelizmente, ocorreu um erro no add-on [B]%s[/B].</string>
-    <string id="91001">Pode ajudar-nos a resolver o problema submetendo um relatório do erro.</string>
-    <string id="91002">Clique em [I]Mostrar Relatório do Erro[/I] para detalhes. Não será enviada nenhuma informação pessoal.</string>
-    <string id="91003">Submeter Relatório do Erro</string>
-    <string id="91004">Não Submeter</string>
-    <string id="91005">Muito obrigado pela sua contribuição!</string>
-    <string id="91006">Mostrar Relatório do Erro</string>
-    <string id="91007">Ocultar Relatório do Erro</string>
-    <string id="91008">Infelizmente, ocorreu um problema ao mostrar os detalhes...</string>
-    <string id="91009">Não foi possível enviar o relatório do erro!</string>
+    <string id="91000">Unfortunately an error occurred in the [B]%s[/B] addon.</string>
+    <string id="91001">You can help with fixing the problem by submitting an error report. </string>
+    <string id="91002">Click [I]Show error report[/I] for details. No personal information is sent.</string>
+    <string id="91003">Submit error report</string>
+    <string id="91004">Don't submit</string>
+    <string id="91005">Thank you for contributing!</string>
+    <string id="91006">Show error report</string>
+    <string id="91007">Hide error report</string>
+    <string id="91008">Unfortunately a problem occurred while showing the details...</string>
+    <string id="91009">Unable to send error report!</string>
 </strings>
