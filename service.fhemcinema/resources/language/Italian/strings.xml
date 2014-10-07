@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="30001">Allgemein</string>
+	<string id="30002">Di Giorno</string>
+	<string id="30011">Host FHEM</string>
+	<string id="30012">Port FHEM</string>
+	<string id="30013">Azioni</string>
+	<string id="30021">Attivare variante diurna</string>
+	<string id="30022">Da</string>
+	<string id="30023">A</string>
+	<string id="30031">XBMC avviato</string>
+	<string id="30032">XBMC terminato</string>
+	<string id="30033">Video attivato</string>
+	<string id="30034">Video in pausa</string>
+	<string id="30035">Video terminato</string>
+	<string id="30036">Audio attivato</string>
+	<string id="30037">Audio in pausa</string>
+	<string id="30038">Audio terminato</string>
+</strings>
