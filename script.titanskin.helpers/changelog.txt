@@ -1,3 +1,10 @@
+1.0.8
+- fixed script error  for non mediabrowser users
+- optimized some code
+- added method for autofocus submenus
+- new methods for retrieving the artwork
+- support for custom collection widgets
+1.0.2 - fixed small issue with moving home items that are top most or down
 1.0.1 - Changes for official XBMC repository
 1.0.0
 - Initial version for official repository
