@@ -3,5 +3,6 @@
     <category label="32003">
       <setting id="PNuser" type="text" label="32001" default=""/>
       <setting id="PNpass" type="text" option = "hidden" label="32002" default=""/>
+      <setting id="PNmatch" type="bool" label="32006"   default="false"/>
     </category>   
 </settings>
