@@ -3,7 +3,7 @@
 import urllib2, gzip, base64
 from StringIO import StringIO
 
-WAIK             = 'NDEzNjBkMjFkZjFhMzczNg=='
+WAIK             = ''
 WUNDERGROUND_URL = 'http://api.wunderground.com/api/%s/%s/%s/q/%s.%s'
 
 def wundergroundapi(features, settings, query, fmt):
