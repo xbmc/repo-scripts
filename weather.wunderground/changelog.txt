@@ -1,3 +1,6 @@
+v2.0.5
+- broken
+
 v2.0.4
 - fix crash due to api change
 
