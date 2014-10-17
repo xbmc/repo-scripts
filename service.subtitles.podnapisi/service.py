@@ -35,7 +35,7 @@ def Search( item ):
   
   if item['temp'] : 
     hash_search = False
-    SubHash     = "000000000000"
+    OShash     = "000000000000"
   else:
     try:
       OShash = OpensubtitlesHash(item['file_original_path'], item['rar'])

@@ -204,7 +204,10 @@ class PNServer:
     if (self.connected):
       self.podserver.setFilters(self.pod_session, True, lang , False)
       search = self.podserver.search(self.pod_session , [str(movie_hash)])
-      if search['status'] == 200 and len(search['results']) > 0 :
+      if (search['status'] == 200 and 
+          movie_hash in search["results"] and 
+          len(search['results']) > 0):
+      
         search_item = search["results"][movie_hash]
         for item in search_item["subtitles"]:
           if item["lang"]:
@@ -267,7 +270,10 @@ class PNServer:
   
   def download(self,params):
     if (self.connected):
-      if (__addon__.getSetting("PNmatch") == 'true' and params["match"] != "False"):
+      if (__addon__.getSetting("PNmatch") == 'true' and
+          params["match"] != "False" and
+          params["hash"] != "000000000000"):
+
         log( __scriptid__ ,"Sending match to Podnapisi server")
         result = self.podserver.match(self.pod_session, params["hash"], int(params["movie_id"]), int(params["season"]), int(params["episode"]), "")
         if result['status'] == 200:
