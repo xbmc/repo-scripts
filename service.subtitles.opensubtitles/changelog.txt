@@ -1,3 +1,6 @@
+5.0.10
+- fix: Don't unquote(urldecode) file_original_path as it breaks http file hashing, thx arnova
+
 5.0.9
 - fix hash large rars, Beam
 - Support for preferred language sorting and fetch using IMDBID, Glenn Jennehed
