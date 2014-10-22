@@ -1,0 +1,5 @@
+Because this folder contained a precompiled distribution of ctypes (containing a DLL) it has been removed.
+
+If you need ctypes for PyDev remote debug then you'll need to drop the files back here.
+
+http://ctypes.sourceforge.net/‎
