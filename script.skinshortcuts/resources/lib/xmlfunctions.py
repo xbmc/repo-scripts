@@ -47,7 +47,8 @@ class XMLFunctions():
         fav_file = xbmc.translatePath( 'special://userdata/profiles.xml' ).decode("utf-8")
         tree = None
         if xbmcvfs.exists( fav_file ):
-            tree = xmltree.parse( fav_file )
+            f = xbmcvfs.File( fav_file )
+            tree = xmltree.fromstring( f.read() )
         
         profilelist = []
         if tree is not None:
@@ -131,7 +132,6 @@ class XMLFunctions():
                     if json_response.has_key('result') and json_response['result'].has_key('settings') and json_response['result']['settings'] is not None:
                         for item in json_response['result']['settings']:
                             if item["id"] == "debug.showloginfo":
-                                log( "### Found debug logging" )
                                 if item["value"] == False:
                                     json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":true} } ' )
                                     enabledSystemDebug = True
@@ -145,12 +145,12 @@ class XMLFunctions():
                         self.buildMenu( mainmenuID, groups, numLevels, buildMode, options, enabledSystemDebug, enabledScriptDebug )
                     else:
                         # Debug logging already enabled - offer to upload a debug log
-                        ret = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), "Unable to build menu", "Upload a debug log to xbmclogs.com?" )
+                        ret = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), __language__( 32092 ), __language__( 32093 ) )
                         if ret:
                             xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )                    
                             
             else:
-                xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), "Unable to build menu. Install XBMC Log Uploader to easily get a debug log." )
+                xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), __language__( 32092 ), __language__( 32094 ) )
         
     def shouldwerun( self, profilelist ):
         try:
@@ -262,6 +262,9 @@ class XMLFunctions():
         hashlist.list.append( ["::SCRIPTVER::", __addonversion__] )
         hashlist.list.append( ["::XBMCVER::", __xbmcversion__] )
         
+        # Clear any skin settings for backgrounds and widgets
+        DATA._reset_backgroundandwidgets()
+        
         # Create a new tree and includes for the various groups
         tree = xmltree.ElementTree( xmltree.Element( "includes" ) )
         root = tree.getroot()
@@ -304,8 +307,13 @@ class XMLFunctions():
             
             # If building the main menu, split the mainmenu shortcut nodes into the menuitems list
             if groups == "" or groups.split( "|" )[0] == "mainmenu":
-                for node in DATA._get_shortcuts( "mainmenu", True, profile[0] ).findall( "shortcut" ):
+                # Set a skinstring that marks that we're providing the whole menu
+                xbmc.executebuiltin( "Skin.SetBool(SkinShortcuts-FullMenu)" )
+                for node in DATA._get_shortcuts( "mainmenu", None, True, profile[0] ).findall( "shortcut" ):
                     menuitems.append( node )
+            else:
+                # Clear any skinstring marking that we're providing the whole menu
+                xbmc.executebuiltin( "Skin.Reset(SkinShortcuts-FullMenu)" )
                     
             # If building specific groups, split them into the menuitems list
             count = 0
@@ -327,11 +335,13 @@ class XMLFunctions():
                 itemidmainmenu += 1
                 progress.update( ( profilePercent * profileCount) + percent * i )
                 # If this is a main menu item...
+                submenuDefaultID = None
                 if not isinstance( item, basestring ):
                     submenu = item.find( "labelID" ).text
-                    mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1], submenu, itemid = itemidmainmenu, options = options )
+                    mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1], DATA.slugify( submenu, convertInteger=True ), itemid = itemidmainmenu, options = options )
                     if buildMode == "single":
-                        mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1], submenu, itemid = itemidmainmenu, options = options )
+                        mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1], DATA.slugify( submenu, convertInteger=True ), itemid = itemidmainmenu, options = options )
+                    submenuDefaultID = item.find( "defaultID" ).text
                 else:
                     submenu = DATA._get_labelID( item, None )
                     
@@ -356,7 +366,7 @@ class XMLFunctions():
                         
                     itemidsubmenu = 0
                         
-                    submenudata = DATA._get_shortcuts( submenu, True, profile[0] )
+                    submenudata = DATA._get_shortcuts( submenu, submenuDefaultID, True, profile[0] )
                     if type( submenudata ) == list:
                         submenuitems = submenudata
                     else:
@@ -380,23 +390,23 @@ class XMLFunctions():
                     if buildMode == "single" and not len( submenuitems ) == 0:
                         for onclickelement in mainmenuItemB.findall( "onclick" ):
                             if "condition" in onclickelement.attrib:
-                                onclickelement.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ") + [" + onclickelement.attrib.get( "condition" ) + "]" )
+                                onclickelement.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ") + [" + onclickelement.attrib.get( "condition" ) + "]" )
                                 newonclick = xmltree.SubElement( mainmenuItemB, "onclick" )
-                                newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenu ) + ",10000)"
+                                newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenu, convertInteger=True ) + ",10000)"
                                 newonclick.set( "condition", onclickelement.attrib.get( "condition" ) )
                             else:
-                                onclickelement.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")" )
+                                onclickelement.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ")" )
                                 newonclick = xmltree.SubElement( mainmenuItemB, "onclick" )
-                                newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenu ) + ",10000)"
+                                newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenu, convertInteger=True ) + ",10000)"
                     
                     # Build the submenu
                     for submenuItem in submenuitems:
                         itemidsubmenu += 1
-                        self.buildElement( submenuItem, submenuTree, submenu, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + escapeXML( DATA.slugify( submenu ) ) + ")", profile[1], itemid = itemidsubmenu, options = options )
+                        self.buildElement( submenuItem, submenuTree, submenu, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
                         self.buildElement( submenuItem, justmenuTreeA, submenu, None, profile[1], itemid = itemidsubmenu, options = options )
-                        self.buildElement( submenuItem, justmenuTreeB, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")", profile[1], itemid = itemidsubmenu, options = options )
+                        self.buildElement( submenuItem, justmenuTreeB, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
                         if buildMode == "single":
-                            self.buildElement( submenuItem, allmenuTree, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu ) + ")", profile[1], itemid = itemidsubmenu, options = options )
+                            self.buildElement( submenuItem, allmenuTree, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
                         
                     count += 1
 
@@ -580,6 +590,12 @@ class XMLFunctions():
                         additionalproperty.text = DATA.local( property[1].decode( "utf-8" ) )[1]
                     except:
                         additionalproperty.text = DATA.local( property[1] )[1]
+                        
+                    # If this is a widget or background, set a skin setting to say it's enabled
+                    if property[0] == "widget":
+                        xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-widget-" + property[1] + ")" )
+                    elif property[0] == "background":
+                        xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-background-" + property[1] + ")" )
                         
                     # If this is the main menu, and we're cloning widgets or backgrounds...
                     if groupName == "mainmenu":

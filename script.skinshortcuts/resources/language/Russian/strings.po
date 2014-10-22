@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Skin Shortcuts
 # Addon id: script.skinshortcuts
 # Addon Provider: Unfledged
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/xbmc-addons/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,8 +85,8 @@ msgid "TV Shows"
 msgstr "ТВ передачи"
 
 msgctxt "#32017"
-msgid "PVR"
-msgstr "Цифровой видеорекордер"
+msgid "Live TV"
+msgstr "ТВ"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -105,8 +105,8 @@ msgid "Programs"
 msgstr "Программы"
 
 msgctxt "#32022"
-msgid "PVR"
-msgstr "Цифровой видеорекордер"
+msgid "Live TV"
+msgstr "ТВ"
 
 msgctxt "#32023"
 msgid "Timers"
@@ -233,8 +233,8 @@ msgid "None"
 msgstr "Нет"
 
 msgctxt "#32054"
-msgid "XBMC Command"
-msgstr "Команда XBMC"
+msgid "Kodi Command"
+msgstr "Команда Kodi"
 
 msgctxt "#32055"
 msgid "Clean video library"
@@ -245,8 +245,8 @@ msgid "Clean audio library"
 msgstr "Очистить медиатеку"
 
 msgctxt "#32057"
-msgid "XBMC Commands"
-msgstr "Команды XBMC"
+msgid "Kodi Commands"
+msgstr "Команды Kodi"
 
 msgctxt "#32058"
 msgid "Create shortcut to here"
@@ -263,3 +263,11 @@ msgstr "Экран"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Включить воспроизведение"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Радио"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Каналы"

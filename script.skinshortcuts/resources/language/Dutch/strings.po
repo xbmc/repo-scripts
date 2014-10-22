@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Skin Shortcuts
 # Addon id: script.skinshortcuts
 # Addon Provider: Unfledged
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,11 +34,11 @@ msgstr "Omlaag"
 
 msgctxt "#32004"
 msgid "Video Playlist"
-msgstr "Video Afspeellijst"
+msgstr "Video afspeellijst"
 
 msgctxt "#32005"
 msgid "Music Playlist"
-msgstr "Muziek Afspeellijst"
+msgstr "Muziek afspeellijst"
 
 msgctxt "#32006"
 msgid "Favourite"
@@ -50,7 +50,7 @@ msgstr "Add-on"
 
 msgctxt "#32008"
 msgid "Mixed Playlist"
-msgstr "Gemixte afspeellijst"
+msgstr "Gemengde afspeellijst"
 
 msgctxt "#32009"
 msgid "Program"
@@ -82,15 +82,15 @@ msgstr "Films"
 
 msgctxt "#32016"
 msgid "TV Shows"
-msgstr "TV Series"
+msgstr "TV series"
 
 msgctxt "#32017"
-msgid "PVR"
-msgstr "PVR"
+msgid "Live TV"
+msgstr "Live TV"
 
 msgctxt "#32018"
 msgid "Music Videos"
-msgstr "Musiek Videos"
+msgstr "Muziekvideos"
 
 msgctxt "#32019"
 msgid "Music"
@@ -98,15 +98,15 @@ msgstr "Muziek"
 
 msgctxt "#32020"
 msgid "Pictures"
-msgstr "Foto's"
+msgstr "Afbeeldingen"
 
 msgctxt "#32021"
 msgid "Programs"
-msgstr "Programma"
+msgstr "Programma's"
 
 msgctxt "#32022"
-msgid "PVR"
-msgstr "PVR"
+msgid "Live TV"
+msgstr "Live TV"
 
 msgctxt "#32023"
 msgid "Timers"
@@ -118,11 +118,11 @@ msgstr "Aangepaste snelkoppeling"
 
 msgctxt "#32025"
 msgid "Set label"
-msgstr "Stel Label in"
+msgstr "Stel label in"
 
 msgctxt "#32026"
 msgid "Set thumbail"
-msgstr "Stel thumbnail in"
+msgstr "Stel miniatuur in"
 
 msgctxt "#32027"
 msgid "Custom action"
@@ -150,7 +150,7 @@ msgstr "Speel DVD"
 
 msgctxt "#32033"
 msgid "Eject tray"
-msgstr "Open Lade"
+msgstr "Open lade"
 
 msgctxt "#32034"
 msgid "Common Shortcut"
@@ -158,7 +158,7 @@ msgstr "Algemene snelkoppeling"
 
 msgctxt "#32035"
 msgid "Choose which items to display on the Main Menu"
-msgstr "Kies de items die worden weergeven op het startmenu"
+msgstr "Kies de items om te weergeven op het beginscherm"
 
 msgctxt "#32036"
 msgid "Choose shortcuts for ::MENUNAME::"
@@ -170,11 +170,11 @@ msgstr "Herstel alle snelkoppelingen"
 
 msgctxt "#32038"
 msgid "Are you sure you want to reset all shortcuts back to default?"
-msgstr "Weet je zeker dat je alle snelkoppelingen wilt herstellen naar standaard?"
+msgstr "Weet je zeker dat je alle oorspronkelijke snelkoppelingen wilt terugzetten?"
 
 msgctxt "#32039"
 msgid "Pick widget for ::MENUNAME::"
-msgstr "Kies Widget voor ::MENUNAME::"
+msgstr "Kies widget voor ::MENUNAME::"
 
 msgctxt "#32040"
 msgid "Playlist"
@@ -202,11 +202,11 @@ msgstr "Selecteer achtergrond"
 
 msgctxt "#32046"
 msgid "Update video library"
-msgstr "Video bibliotheek bijwerken"
+msgstr "Videobibliotheek bijwerken"
 
 msgctxt "#32047"
 msgid "Update audio library"
-msgstr "Buziekbibliotheek bijwerken"
+msgstr "Muziekbibliotheek bijwerken"
 
 msgctxt "#32048"
 msgid "Choose shortcut"
@@ -233,20 +233,20 @@ msgid "None"
 msgstr "Geen"
 
 msgctxt "#32054"
-msgid "XBMC Command"
-msgstr "XBMC opdracht"
+msgid "Kodi Command"
+msgstr "Kodi opdracht"
 
 msgctxt "#32055"
 msgid "Clean video library"
-msgstr "Leeg videobibliotheek"
+msgstr "Videobibliotheek opschonen"
 
 msgctxt "#32056"
 msgid "Clean audio library"
-msgstr "Leeg audiobibliotheek"
+msgstr "Audiobibliotheek opschonen"
 
 msgctxt "#32057"
-msgid "XBMC Commands"
-msgstr "XBMC opdrachten"
+msgid "Kodi Commands"
+msgstr "Kodi opdrachten"
 
 msgctxt "#32058"
 msgid "Create shortcut to here"
@@ -258,7 +258,7 @@ msgstr "Skin afspeellijst"
 
 msgctxt "#32060"
 msgid "Do you want to play this playlist, or display it?"
-msgstr "Wil je deze afspeellijst afspelen of tonen?"
+msgstr "Wil je deze afspeellijst beluisteren of weergeven?"
 
 msgctxt "#32061"
 msgid "Display"
@@ -278,7 +278,7 @@ msgstr "Geen snelkoppelingen"
 
 msgctxt "#32065"
 msgid "There are no shortcuts available for the category that you choose."
-msgstr "Er zijn geen snelkoppelingen beschikbaar voor de categorie die je kiest."
+msgstr "Er zijn geen snelkoppelingen beschikbaar voor de gekozen categorie."
 
 msgctxt "#32066"
 msgid "Last TV channel"
@@ -329,9 +329,49 @@ msgid "Radio Channel"
 msgstr "Radio Kanaal"
 
 msgctxt "#32078"
-msgid "This source contains..."
-msgstr "Deze bron bevat..."
+msgid "Display..."
+msgstr "Weergeven..."
 
 msgctxt "#32079"
-msgid "Content not in library"
-msgstr "Content niet in bibliotheek"
+msgid "Files view"
+msgstr "Bestanden tonen"
+
+msgctxt "#32080"
+msgid "Edit ::MENUNAME:: Submenu"
+msgstr "Aanpassen ::MENUNAME:: Submenu"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "Films niet in deze bron"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "TV-Seriesniet in deze bron"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "Muziekvideo`s niet in deze bron"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "Liedjes niet in deze bron"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "Albums niet in deze bron"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "Gemixte inhoud niet in deze bron"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Kanalen"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "Afbeelding bron"

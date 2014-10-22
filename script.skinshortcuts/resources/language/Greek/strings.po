@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Skin Shortcuts
 # Addon id: script.skinshortcuts
 # Addon Provider: Unfledged
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,8 +85,8 @@ msgid "TV Shows"
 msgstr "Τηλ. Σειρές"
 
 msgctxt "#32017"
-msgid "PVR"
-msgstr "PVR"
+msgid "Live TV"
+msgstr "Live TV"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -105,8 +105,8 @@ msgid "Programs"
 msgstr "Εφαρμογές"
 
 msgctxt "#32022"
-msgid "PVR"
-msgstr "PVR"
+msgid "Live TV"
+msgstr "Live TV"
 
 msgctxt "#32023"
 msgid "Timers"
@@ -233,8 +233,8 @@ msgid "None"
 msgstr "Κανένα"
 
 msgctxt "#32054"
-msgid "XBMC Command"
-msgstr "Εντολή XBMC"
+msgid "Kodi Command"
+msgstr "Εντολή Kodi"
 
 msgctxt "#32055"
 msgid "Clean video library"
@@ -245,8 +245,8 @@ msgid "Clean audio library"
 msgstr "Εκκαθάριση μουσικής συλλογής"
 
 msgctxt "#32057"
-msgid "XBMC Commands"
-msgstr "Εντολές XBMC"
+msgid "Kodi Commands"
+msgstr "Εντολές Kodi"
 
 msgctxt "#32058"
 msgid "Create shortcut to here"
@@ -268,6 +268,110 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Εκκίνηση"
 
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "Γίνεται λήψη καταχώρισης φακέλων..."
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "Καμία Συντόμευση"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "Δεν υπάρχουν διαθέσιμες συντομεύσεις για την κατηγορία που επιλέξατε."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Τελευταίο Τηλ. Κανάλι"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Τελευταίος σταθμός"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Τελευταίο κανάλι"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Πηγή Βίντεο"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Προσαρμογή Κεντρικού Μενού"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Προσαρμογή Υπομενο"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Πηγή Μουσικής"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Πηγές Συλλογής"
+
 msgctxt "#32075"
 msgid "Sources"
 msgstr "Πηγές"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "Τηλ. Κανάλι"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Ραδιοφωνικός Σταθμός"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr "Απεικόνιση..."
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "Λίστα αρχείων"
+
+msgctxt "#32080"
+msgid "Edit ::MENUNAME:: Submenu"
+msgstr "Επεξεργασία ::MENUNAME:: Υπομενού"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "Ταινίες που δεν είναι στην πηγή"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "Τηλ. Σειρές που δεν είναι στην πηγή"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "Μουσικά Βίντεο που δεν είναι στην πηγή"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "Τραγούδια που δεν είναι στην πηγή"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "Άλμπουμ που δεν είναι στην πηγή"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "Ανάμικτο περιεχόμενο που δεν είναι στην πηγή"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Ραδιόφωνο"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Κανάλια"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "Πηγή Εικόνων"

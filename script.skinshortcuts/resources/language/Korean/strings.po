@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Skin Shortcuts
 # Addon id: script.skinshortcuts
 # Addon Provider: Unfledged
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,8 +81,8 @@ msgid "TV Shows"
 msgstr "TV 쇼"
 
 msgctxt "#32017"
-msgid "PVR"
-msgstr "PVR"
+msgid "Live TV"
+msgstr "TV 시청"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -101,8 +101,8 @@ msgid "Programs"
 msgstr "프로그램"
 
 msgctxt "#32022"
-msgid "PVR"
-msgstr "PVR"
+msgid "Live TV"
+msgstr "TV 시청"
 
 msgctxt "#32023"
 msgid "Timers"
@@ -229,8 +229,8 @@ msgid "None"
 msgstr "없음"
 
 msgctxt "#32054"
-msgid "XBMC Command"
-msgstr "XBMC 명령"
+msgid "Kodi Command"
+msgstr "Kodi 명령"
 
 msgctxt "#32055"
 msgid "Clean video library"
@@ -241,8 +241,8 @@ msgid "Clean audio library"
 msgstr "음악 라이브러리 정리"
 
 msgctxt "#32057"
-msgid "XBMC Commands"
-msgstr "XBMC 명령"
+msgid "Kodi Commands"
+msgstr "Kodi 명령"
 
 msgctxt "#32058"
 msgid "Create shortcut to here"
@@ -307,3 +307,11 @@ msgstr "TV 채널"
 msgctxt "#32077"
 msgid "Radio Channel"
 msgstr "라디오 채널"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "라디오"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "채널"

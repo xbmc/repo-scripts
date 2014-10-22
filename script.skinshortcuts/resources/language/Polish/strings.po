@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Skin Shortcuts
 # Addon id: script.skinshortcuts
 # Addon Provider: Unfledged
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/xbmc-addons/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,7 +85,7 @@ msgid "TV Shows"
 msgstr "Seriale"
 
 msgctxt "#32017"
-msgid "PVR"
+msgid "Live TV"
 msgstr "Telewizja"
 
 msgctxt "#32018"
@@ -105,7 +105,7 @@ msgid "Programs"
 msgstr "Programy"
 
 msgctxt "#32022"
-msgid "PVR"
+msgid "Live TV"
 msgstr "Telewizja"
 
 msgctxt "#32023"
@@ -134,7 +134,7 @@ msgstr "Resetuj skróty"
 
 msgctxt "#32029"
 msgid "Common"
-msgstr "Ogólny"
+msgstr "Wspólny"
 
 msgctxt "#32030"
 msgid "Video Library"
@@ -170,7 +170,7 @@ msgstr "Resetuj wszystkie skróty"
 
 msgctxt "#32038"
 msgid "Are you sure you want to reset all shortcuts back to default?"
-msgstr "Czy na pewno chcesz przywrócić wszystkie skróty z powrotem do domyślnych ustawień?"
+msgstr "Czy na pewno chcesz przywrócić wszystkie skróty do ustawień domyślnych?"
 
 msgctxt "#32039"
 msgid "Pick widget for ::MENUNAME::"
@@ -233,8 +233,8 @@ msgid "None"
 msgstr "Brak"
 
 msgctxt "#32054"
-msgid "XBMC Command"
-msgstr "Polecenie XBMC"
+msgid "Kodi Command"
+msgstr "Polecenie Kodi"
 
 msgctxt "#32055"
 msgid "Clean video library"
@@ -245,8 +245,8 @@ msgid "Clean audio library"
 msgstr "Wyczyść bibliotekę muzyki"
 
 msgctxt "#32057"
-msgid "XBMC Commands"
-msgstr "Polecenia XBMC"
+msgid "Kodi Commands"
+msgstr "Polecenia Kodi"
 
 msgctxt "#32058"
 msgid "Create shortcut to here"
@@ -278,7 +278,7 @@ msgstr "Brak skrótów"
 
 msgctxt "#32065"
 msgid "There are no shortcuts available for the category that you choose."
-msgstr "Brak skrótów dla wybranej kategorii"
+msgstr "Brak skrótów dla wybranej kategorii."
 
 msgctxt "#32066"
 msgid "Last TV channel"
@@ -328,10 +328,14 @@ msgctxt "#32077"
 msgid "Radio Channel"
 msgstr "Kanał radiowy"
 
-msgctxt "#32078"
-msgid "This source contains..."
-msgstr "To źródło zawiera ..."
+msgctxt "#32080"
+msgid "Edit ::MENUNAME:: Submenu"
+msgstr "Edytuj podmenu ::MENUNAME::"
 
-msgctxt "#32079"
-msgid "Content not in library"
-msgstr "Zawartość nie jest dostępna w bibliotece"
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Kanały"

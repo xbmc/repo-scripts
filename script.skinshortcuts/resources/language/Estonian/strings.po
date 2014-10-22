@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Skin Shortcuts
 # Addon id: script.skinshortcuts
 # Addon Provider: Unfledged
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Estonian (http://www.transifex.com/projects/p/xbmc-addons/language/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,6 +52,10 @@ msgctxt "#32016"
 msgid "TV Shows"
 msgstr "Seriaalid"
 
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "Live TV"
+
 msgctxt "#32019"
 msgid "Music"
 msgstr "Muusika"
@@ -63,6 +67,10 @@ msgstr "Pildid"
 msgctxt "#32021"
 msgid "Programs"
 msgstr "Programmid"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "Live TV"
 
 msgctxt "#32032"
 msgid "Play DVD"
@@ -91,3 +99,11 @@ msgstr "Ekraan"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Esita"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Raadio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Kanalid"

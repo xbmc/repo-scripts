@@ -6,10 +6,6 @@
 		</node>
 		<node label="32030">
 			<content>video</content>
-			<content>movie-flat</content>
-			<content>tvshow-flat</content>
-			<content>musicvideo-flat</content>
-			<content>customvideonode-flat</content>
 		</node>
 		<node label="32031">
 			<content>music</content>
@@ -62,10 +58,6 @@
 		</node>
 		<node label="32030">
 			<content>video</content>
-			<content>customvideonode</content>
-			<content>movie</content>
-			<content>tvshow</content>
-			<content>musicvideo</content>
 			<node label="32040">
 				<content>playlist-video</content>
 			</node>

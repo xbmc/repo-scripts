@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Skin Shortcuts
 # Addon id: script.skinshortcuts
 # Addon Provider: Unfledged
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,11 +34,11 @@ msgstr "Nach unten"
 
 msgctxt "#32004"
 msgid "Video Playlist"
-msgstr "Video Playlist"
+msgstr "Videowiedergabeliste"
 
 msgctxt "#32005"
 msgid "Music Playlist"
-msgstr "Musik Playlist"
+msgstr "Musikwiedergabeliste"
 
 msgctxt "#32006"
 msgid "Favourite"
@@ -85,8 +85,8 @@ msgid "TV Shows"
 msgstr "Serien"
 
 msgctxt "#32017"
-msgid "PVR"
-msgstr "PVR"
+msgid "Live TV"
+msgstr "Live-TV"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -105,8 +105,8 @@ msgid "Programs"
 msgstr "Programme"
 
 msgctxt "#32022"
-msgid "PVR"
-msgstr "PVR"
+msgid "Live TV"
+msgstr "Live-TV"
 
 msgctxt "#32023"
 msgid "Timers"
@@ -178,7 +178,7 @@ msgstr "Wähle Widget für ::MENUNAME::"
 
 msgctxt "#32040"
 msgid "Playlist"
-msgstr "Playlisten"
+msgstr "Wiedergabeliste"
 
 msgctxt "#32041"
 msgid "Action"
@@ -233,8 +233,8 @@ msgid "None"
 msgstr "Keins"
 
 msgctxt "#32054"
-msgid "XBMC Command"
-msgstr "XBMC-Befehl"
+msgid "Kodi Command"
+msgstr "Kodi-Befehl"
 
 msgctxt "#32055"
 msgid "Clean video library"
@@ -245,8 +245,8 @@ msgid "Clean audio library"
 msgstr "Audiobibliothek aufräumen"
 
 msgctxt "#32057"
-msgid "XBMC Commands"
-msgstr "XBMC-Befehle"
+msgid "Kodi Commands"
+msgstr "Kodi-Befehle"
 
 msgctxt "#32058"
 msgid "Create shortcut to here"
@@ -268,6 +268,110 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Abspielen"
 
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "Hole Verzeichnisaufstellung"
+
+msgctxt "#32064"
+msgid "No Shortcuts"
+msgstr "Keine Shortcuts"
+
+msgctxt "#32065"
+msgid "There are no shortcuts available for the category that you choose."
+msgstr "Für die gewählte Kategorie sind keine Shortcuts verfügbar."
+
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "Letzter TV-Kanal"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "Letzter Radiosender"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "Letzter Kanal"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "Videoquelle"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32071"
+msgid "Customize Main Menu"
+msgstr "Anpassung Hauptmenü"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Anpassung Untermenü"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "Musikquelle"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "Bibliotheksquelle"
+
 msgctxt "#32075"
 msgid "Sources"
 msgstr "Quellen"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "Fernsehkanal"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "Radiosender"
+
+msgctxt "#32078"
+msgid "Display..."
+msgstr "Anzeige..."
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "Dateienansicht"
+
+msgctxt "#32080"
+msgid "Edit ::MENUNAME:: Submenu"
+msgstr "Bearbeite ::MENÜNAME:: Untermenü"
+
+msgctxt "#32081"
+msgid "Movies not in this source"
+msgstr "Filme sind nicht in dieser Quelle"
+
+msgctxt "#32082"
+msgid "TV Shows not in this source"
+msgstr "Fernsehshows sind nicht in dieser Quelle"
+
+msgctxt "#32083"
+msgid "Music Videos not in this source"
+msgstr "Musikvideos sind nicht in dieser Quelle"
+
+msgctxt "#32084"
+msgid "Songs not in this source"
+msgstr "Songs sind nicht in dieser Quelle"
+
+msgctxt "#32085"
+msgid "Albums not in this source"
+msgstr "Alben sind nicht in dieser Quelle"
+
+msgctxt "#32086"
+msgid "Mixed content not in this source"
+msgstr "Gemischte Inhalte sind nicht in dieser Quelle"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Sender"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "Bildquelle"

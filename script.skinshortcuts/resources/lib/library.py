@@ -8,8 +8,9 @@ from xml.sax.saxutils import escape as escapeXML
 from traceback import print_exc
 from unidecode import unidecode
 
-import datafunctions
+import datafunctions, nodefunctions
 DATA = datafunctions.DataFunctions()
+NODE = nodefunctions.NodeFunctions()
 
 if sys.version_info < (2, 7):
     import simplejson
@@ -233,8 +234,11 @@ class LibraryFunctions():
         if content == "common":
             self.common()
         if content  == "commands":
-            self.more()
-        if content == "video" or content == "movie" or content == "tvshow" or content == "musicvideo" or content == "customvideonode" or content == "movie-flat" or content == "tvshow-flat" or content == "musicvideo-flat" or content == "customvideonode-flat":
+            self.more()            
+        if content == "movie" or content == "tvshow" or content == "musicvideo" or content == "customvideonode" or content == "movie-flat" or content == "tvshow-flat" or content == "musicvideo-flat" or content == "customvideonode-flat":
+            # These have been deprecated
+            return []
+        if content == "video":
             self.videolibrary()
         if content == "videosources" or content == "musicsources" or content == "picturesources":
             self.librarysources()
@@ -389,9 +393,18 @@ class LibraryFunctions():
         displayLabel = DATA.local( localLabel )[2]
         labelID = DATA.createNiceName( DATA.local( localLabel )[0] )
         
+        if displayLabel.startswith( "$NUMBER[" ):
+            displayLabel = displayLabel[8:-1]
+        
         # Create localised label2
         displayLabel2 = DATA.local( displayLabel2 )[2]
         shortcutType = DATA.local( shortcutType )[0]
+        
+        # If either displayLabel starts with a $, ask Kodi to parse it for us
+        if displayLabel.startswith( "$" ):
+            displayLabel = xbmc.getInfoLabel( displayLabel )
+        if displayLabel2.startswith( "$" ):
+            displayLabel2 = xbmc.getInfoLabel( displayLabel2 )
             
         # If this launches our explorer, append a notation to the displayLabel
         if item[0].startswith( "||" ):
@@ -519,6 +532,7 @@ class LibraryFunctions():
         # Try loading custom nodes first
         try:
             if self._parse_videolibrary( "custom" ) == False:
+                log( "Failed to load custom video nodes" )
                 self._parse_videolibrary( "default" )
         except:
             log( "Failed to load custom video nodes" )
@@ -544,397 +558,27 @@ class LibraryFunctions():
         else:
             rootdir = os.path.join( xbmc.translatePath( "special://xbmc".decode('utf-8') ), "system", "library", "video" )
             log( "Listing default video nodes..." )
-
-        # Check the path exists
-        if not os.path.exists( rootdir ):
-            log( "No nodes found" )
-            return False
             
-        directories = []
-        # Process the root directory (VIDEOS)
-        for root, subdirs, files in os.walk( rootdir ):
-            type = "video"
-            returnVal = self._parse_videonode( rootdir, rootdir, None, True )
-            items[ 0 ] = returnVal
-            for subdir in subdirs:
-                directories.append( os.path.join( rootdir, subdir ) )
-            break
-                
-        for directory in directories:
-            returnVal = self._parse_videonode( directory, rootdir )
-            
-            if returnVal[1] not in items.keys():
-                items[ returnVal[1] ] = returnVal
-            else:
-                count = int( returnVal[1] )
-                while count in items.keys():
-                    count += 1
-                items[ count ] = returnVal
-            
-        customnodes = None
-        customnodesFlat = []
-        for item in self._order_dictionary( items ):
-            type = item[0]
-            
-            # item[0] = Type (video, movie, etc)
-            # item[1] = The order
-            # item[2] = List of items within
-            # item[3] = label2
-            # item[4] = icon
-            
-            result = self._create_videonode( self._order_dictionary( item[2] ), item[0], item[3], {"icon": item[4]} )
-            
-            # Save to the dictionary
-            if type == "video":
-                self.addToDictionary( "video", result[0] )
-            elif type == "movies":
-                self.addToDictionary( "movie", result[0] )
-                self.addToDictionary( "movie-flat", result[1] )
-            elif type == "tvshows":
-                self.addToDictionary( "tvshow", result[0] )
-                self.addToDictionary( "tvshow-flat", result[1] )
-            elif type == "musicvideos":
-                self.addToDictionary( "musicvideo", result[0] )
-                self.addToDictionary( "musicvideo-flat", result[1] )
-            else:
-                if customnodes == None:
-                    customnodes = result[0]
-                    customnodesFlat = result[1]
-                else:
-                    customnodes = customnodes + result[0]
-                    customnodesFlat = customnodesFlat + result[1]
-        if customnodes == None:
-            customnodes = []
-            customnodesFlat = []
-        self.addToDictionary( "customvideonode", customnodes )
-        self.addToDictionary( "customvideonode-flat", customnodesFlat )
-        
-    def _parse_videonode( self, directory, rootdir, returnType = None, noSubDirs = False, folderName = None, addShortcuts = False ):
-        # This function will iterate through a directory, returning a dictionary of all items, with their
-        # key being the order they should be displayed
-        returnDict = {}
-        unordered = 0
-        
-        type = returnType
-        
-        # Add any skin-provided shortcuts for this group (if movies, tv, musicvideo...)
-        if addShortcuts and (returnType == "movies" or returnType == "tvshows" or returnType == "musicvideos"):
-            if returnType == "movies":
-                group = "movie"
-            elif returnType == "tvshows":
-                group = "tvshow"
-            else:
-                group = "musicvideo"
-                
-            tree = DATA._get_overrides_skin()
-            if tree is not None:
-                for elem in tree.findall( "shortcut" ):
-                    if "grouping" in elem.attrib:
-                        if group == elem.attrib.get( "grouping" ):
-                            # We want to add this shortcut
-                            label = elem.attrib.get( "label" )
-                            type = elem.attrib.get( "type" )
-                            thumb = elem.attrib.get( "thumbnail" )
-                            icon = elem.attrib.get( "icon" )
-                            
-                            action = elem.text
-                            
-                            if label.isdigit():
-                                label = label
-                                
-                            if type is None:
-                                type = "32024"
-                            elif type.isdigit():
-                                type = type
-                                
-                            if icon is None:
-                                icon = ""
-                                
-                            if thumb is None:
-                                thumb = ""
-
-                            listitem = self._create( [action, label, type, { "icon": icon, "thumb": thumb}] )
-                            
-                            shouldAdd = False
-                            if "condition" in elem.attrib:
-                                if xbmc.getCondVisibility( elem.attrib.get( "condition" ) ):
-                                    shouldAdd = True
-                            else:
-                                shouldAdd = True
-                                
-                            if shouldAdd == True:
-                                # Add this listitem to the dictionary we're returning
-                                if unordered not in returnDict.keys():
-                                    returnDict[ unordered ] = listitem
-                                else:
-                                    while unordered in returnDict.keys():
-                                        unordered += 1
-                                    returnDict[ unordered ] = listitem        
-        unordered = 100
-        
-        type = returnType
-        
-        # Being walking the directory
-        for root, subdirs, files in os.walk( directory ):
-            if "index.xml" in files:
-                tree = xmltree.parse( os.path.join( root, "index.xml" ) )
-                label = tree.find( "label" ).text
-                
-                # If there is no returnType, get the type of links we're looking at
-                if returnType is None:
-                    if label == "342":
-                        # MOVIES
-                        type = "movies"
-                    elif label == "20343":
-                        # TV SHOWS
-                        type = "tvshows"
-                    elif label == "20389":
-                        # MUSIC VIDEOS
-                        type = "musicvideos"
-                    else:
-                        # CUSTOM NODE
-                        type = "Custom"
-                        
-                # Get the label2 (The type of shortcut for items in this directory)
-                label2 = label
-                #if label.isdigit():
-                #    label2 = "::LOCAL::" + label
-                #else:
-                #    label2 = label
-                        
-                # Get the order this should appear in
-                treeroot = tree.getroot()
-                if "order" in treeroot.attrib:
-                    order = int( treeroot.attrib.get( "order" ) )
-                else:
-                    order = unordered
-                    unordered += 1
-                
-                # Get the icon
-                icon = tree.find( "icon" ).text
-                
-                if returnType is None:
-                    # If we've not been asked to ignore sub-dirs, we're going to re-call this
-                    # directory, which will create links to the files within a directory itself :)
-                    returnVal = self._parse_videonode( directory, rootdir, type, addShortcuts = True )
-                    if returnVal[0] not in returnDict.keys():
-                        returnDict[ returnVal[0] ] = returnVal
-                    else:
-                        count = int( returnVal[0] )
-                        while count in returnDict.keys():
-                            count += 1
-                            returnDict[ count ] = returnVal
-                            
-                    return [type, order, returnDict, label2, icon]
-            elif noSubDirs == True:
-                type = "video"
-                label2 = "32014"
-                order = unordered
-                icon = None
-            else:
-                # Set some defaults here
-                type = "Custom"
-                label2 = "custom"
-                order = unordered
-                icon = None
-                        
-            for file in files:
-                # Parse all the xml files in the directory
-                if file.endswith( ".xml" ) and file != "index.xml":
-                    try:
-                        # Load the file
-                        tree = xmltree.parse( os.path.join( root, file ) )
-                        treeroot = tree.getroot()
-                        
-                        # Get the 'order' attribute, or create a new 'order' attribute
-                        if "order" in treeroot.attrib:
-                            nodeOrder = treeroot.attrib.get( "order" )
-                        else:
-                            nodeOrder = unordered
-                            unordered += 1
-                            
-                        # Get the label of the item
-                        label = tree.find( "label" ).text
-                        #if label.isdigit():
-                        #    label = "::LOCAL::" + label
-                        
-                        # Get the itcon
-                        nodeicon = tree.find( "icon" ).text
-                        
-                        # Check if we know a 'pretty' way of accessing this item
-                        prettyLink = self._pretty_videonode( file, type, tree )
-                        if prettyLink:
-                            path = "ActivateWindow(Videos," + prettyLink + ",return)"
-                        else:
-                            # We don't, create a long path to it
-                            path = "ActivateWindow(Videos,library://video/" + os.path.relpath( os.path.join( root, file), rootdir ) + ",return)"
-                            path.replace("\\", "/")
-                        
-                        # Create a listitem to hold this item
-                        listitem = self._create( [path, label, label2, { "icon": nodeicon } ] )
-                        
-                        # Add this listitem to the dictionary we're returning
-                        if nodeOrder not in returnDict.keys():
-                            returnDict[ nodeOrder ] = listitem
-                        else:
-                            count = int( nodeOrder )
-                            while count in returnDict.keys():
-                                count += 1
-                            returnDict[ count ] = listitem
-                    except:
-                        print_exc()
-                        pass
-                        
-            
-            if noSubDirs == False:
-                for subdir in subdirs:
-                    # Call this same function to parse the subdirectory
-                    returnVal = self._parse_videonode( os.path.join( directory, subdir ), rootdir, type, folderName = label2 )
-                   
-                    # Add the result to the dictionary we're returning
-                    if returnVal[0] not in returnDict.keys():
-                        returnDict[ returnVal[0] ] = returnVal
-                    else:
-                        count = int( returnVal[0] )
-                        while count in returnDict.keys():
-                            count += 1
-                        returnDict[ count ] = returnVal
-                    
-            # Break out of the directory walking
-            break
-            
-        # Return our results
-        if returnType is None:
-            # Include the type
-            return [type, order, returnDict, label2, icon]
-        else:
-            # Don't include the type
-            return [order, returnDict, label2, icon]
-    
-    def _create_videonode( self, inputlist, type, foldername, foldericon, returnList = None, returnListFlat = None ):
-        listitemsFlat = returnListFlat
-        listitems = []
-        if returnList == None:
-            # Set up the list we'll save
-            listitems = []
-            listitemsFlat = []
-            
-        for item in inputlist:
-            if isinstance( item, list ):
-                result = self._create_videonode( self._order_dictionary( item[1] ), type, item[2], item[3], listitems, listitemsFlat )
-                listitems.append( result[0] )
-            else:
-                listitems.append( item )
-                listitemsFlat.append( item )
-                
-        if returnList is not None:
-            returnList = self._create( ["||FOLDER||", foldername, "", {"icon": foldericon} ] )
-            returnList = [returnList, listitems]
-        else:
-            returnList = listitems
-                
-        return [returnList, listitemsFlat]
-        
-    def _pretty_videonode( self, filename, type, tree ):
-        # We're going to do lots of matching, to try to figure out the pretty library link
-        
-        if type == "Custom":
+        nodes = NODE.get_video_nodes( rootdir )
+        if nodes == False or len( nodes ) == 0:
             return False
         
-        # Root
-        if type == "video":
-            if filename == "addons.xml":
-                if self._check_videonode( tree, False ):
-                    return "Addons"
-            elif filename == "files.xml":
-                if self._check_videonode( tree, False ):
-                    return "Files"
-            # elif filename == "inprogressshows.xml": - Don't know a pretty library link for this...
-            elif filename == "playlists.xml":
-                if self._check_videonode( tree, False ):
-                    return "Playlists"
-            elif filename == "recentlyaddedepisodes.xml":
-                if self._check_videonode( tree, False ):
-                    return "RecentlyAddedEpisodes"
-            elif filename == "recentlyaddedmovies.xml":
-                if self._check_videonode( tree, False ):
-                    return "RecentlyAddedMovies"
-            elif filename == "recentlyaddedmusicvideos.xml":
-                if self._check_videonode( tree, False ):
-                    return "RecentlyAddedMusicVideos"
+        videos = []
+        
+        for key in nodes:
+            # 0 = Label
+            # 1 = Icon
+            # 2 = Path
+            # 3 = Type
+            # 4 = Order
+            if nodes[ key ][ 3 ] == "folder":
+                videos.append( self._create( [ "||FOLDER||%s" % ( nodes[ key ][ 2 ] ), nodes[ key ][ 0 ], nodes[ key ][ 3 ], { "icon": nodes[ key ][ 1 ] } ] ) )
+            elif nodes[ key ][ 3 ] == "grouped":
+                videos.append( self._create( [ "||FOLDER||%s" % ( nodes[ key ][ 2 ] ), nodes[ key ][ 0 ], nodes[ key ][ 3 ], { "icon": nodes[ key ][ 1 ] } ] ) )
             else:
-                return
-              
-        # For the rest, they should all specify a type, so get that first
-        if type == "movies":
-            shortcutType = "Movie"
-        elif type == "tvshows":
-            shortcutType = "TvShow"
-        elif type == "musicvideos":
-            shortcutType = "MusicVideo"
-        else:
-            # No shortcut type specified
-            return False
-
-        if filename == "actors.xml":    # Movies, TV Shows
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Actors"
-        elif filename == "country.xml":   # Movies
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Countries"
-        elif filename == "directors.xml": # Movies
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Directors"
-        elif filename == "genres.xml":    # Movies, Music Videos, TV Shows
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Genres"
-        elif filename == "sets.xml":      # Movies
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Sets"
-        elif filename == "studios.xml":   # Movies, Music Videos, TV Shows
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Studios"
-        elif filename == "tags.xml":      # Movies, Music Videos, TV Shows
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Tags"
-        elif filename == "titles.xml":    # Movies, Music Videos, TV Shows
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Titles"
-        elif filename == "years.xml":     # Movies, Music Videos, TV Shows
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Years"
-        elif filename == "albums.xml":    # Music Videos
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Albums"
-        elif filename == "artists.xml":   # Music Videos
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Artists"
-        elif filename == "directors.xml": # Music Videos
-            if self._check_videonode( tree, True ):
-                return shortcutType + "Directors"
-
-        # If we get here, we couldn't find a pretty link
-        return False    
-    
-    def _order_dictionary( self, dictionary ):
-        returnArray = []
-        for key in sorted(dictionary.iterkeys()):
-            returnArray.append( dictionary[ key ] )
+                videos.append( self._create( [ "ActivateWindow(10025,%s,Return)" %( nodes[ key ][ 2 ] ) , nodes[ key ][ 0 ], nodes[ key ][ 3 ], { "icon": nodes[ key ][ 1 ] } ] ) )
             
-        return returnArray
-
-    def _check_videonode( self, tree, checkPath ):
-        # Check a video node for custom entries
-        if checkPath == False:
-            if tree.find( 'match' ) is not None or tree.find( 'rule' ) is not None or tree.find( 'limit' ) is not None:
-                return False
-            else:
-                return True
-        else:
-            if tree.find( 'match' ) is not None or tree.find( 'rule' ) is not None or tree.find( 'limit' ) is not None or tree.find( 'path' ) is not None:
-                return False
-            else:
-                return True
+        self.addToDictionary( "video", videos )
     
 
     # ============================
@@ -964,8 +608,8 @@ class LibraryFunctions():
         # Settings, File Manager, Profiles, System Info
         try:
             listitems.append( self._create(["ActivateWindow(Videos)", "10006", "32034", {"icon": "DefaultVideo.png"} ]) )
-            listitems.append( self._create(["ActivateWindow(Videos,MovieTitles,return)", "342", "32034", {"icon": "DefaultMovies.png"} ]) )
-            listitems.append( self._create(["ActivateWindow(Videos,TVShowTitles,return)", "20343", "32034", {"icon": "DefaultTVShows.png"} ]) )
+            listitems.append( self._create(["ActivateWindow(Videos,videodb://movies/titles/,return)", "342", "32034", {"icon": "DefaultMovies.png"} ]) )
+            listitems.append( self._create(["ActivateWindow(Videos,videodb://tvshows/titles/,return)", "20343", "32034", {"icon": "DefaultTVShows.png"} ]) )
 
             if __xbmcversion__ == "13":
                 listitems.append( self._create(["ActivateWindowAndFocus(MyPVR,34,0 ,13,0)", "32022", "32034", {"icon": "DefaultTVShows.png"} ]) )
@@ -974,7 +618,7 @@ class LibraryFunctions():
                 listitems.append( self._create(["ActivateWindow(RadioGuide)", "32087", "32034", {"icon": "DefaultTVShows.png"} ]) )
                 
             listitems.append( self._create(["ActivateWindow(Music)", "10005", "32034", {"icon": "DefaultMusicAlbums.png"} ]) )
-            listitems.append( self._create(["ActivateWindow(Videos,MusicVideos,return)", "20389", "32034", {"icon": "DefaultMusicVideos.png"} ] ) )
+            listitems.append( self._create(["ActivateWindow(Videos,videodb://musicvideos/titles/,return)", "20389", "32034", {"icon": "DefaultMusicVideos.png"} ] ) )
             listitems.append( self._create(["ActivateWindow(Pictures)", "10002", "32034", {"icon": "DefaultPicture.png"} ] ) )
             listitems.append( self._create(["ActivateWindow(Weather)", "12600", "32034", {} ]) )
             listitems.append( self._create(["ActivateWindow(Programs,Addons,return)", "10001", "32034", {"icon": "DefaultProgram.png"} ] ) )
@@ -1366,7 +1010,7 @@ class LibraryFunctions():
                                     # Create a list item
                                     listitem = self._create(["::PLAYLIST::", name, path[1], {"icon": "DefaultPlaylist.png"} ])
                                     listitem.setProperty( "action-play", "PlayMedia(" + playlist.encode( 'utf-8' ) + ")" )
-                                    listitem.setProperty( "action-show", "ActivateWindow(" + mediaLibrary + "," + playlist.encode( 'utf-8' ) + ", return)".encode( 'utf-8' ) )
+                                    listitem.setProperty( "action-show", "ActivateWindow(" + mediaLibrary + "," + playlist.encode( 'utf-8' ) + ",return)".encode( 'utf-8' ) )
                                     
                                     if mediaLibrary == "VideoLibrary":
                                         videolist.append( listitem )
@@ -1381,7 +1025,7 @@ class LibraryFunctions():
                             name = file[:-4]
                             listitem = self._create( ["::PLAYLIST::", name, "32005", {"icon": "DefaultPlaylist.png"} ] )
                             listitem.setProperty( "action-play", "PlayMedia(" + playlist + ")" )
-                            listitem.setProperty( "action-show", "ActivateWindow(MusicLibrary," + playlist + ", return)".encode( 'utf-8' ) )
+                            listitem.setProperty( "action-show", "ActivateWindow(MusicLibrary," + playlist + ",return)".encode( 'utf-8' ) )
                             
                             audiolist.append( listitem )
                             
@@ -1614,12 +1258,31 @@ class LibraryFunctions():
         # Add all directories returned by the json query
         if json_response.has_key('result') and json_response['result'].has_key('files') and json_response['result']['files'] is not None:
             for item in json_response['result']['files']:
-                if item["filetype"] == "directory":
-                    thumb = None
-                    if item[ "thumbnail" ] is not "":
-                        thumb = item[ "thumbnail" ]
-                    listitem = self._create( [item[ "file" ], item[ "label" ] + "  >", "", {"icon": "DefaultFolder.png", "thumb": thumb} ] )
-                    listings.append( self._get_icon_overrides( tree, listitem, "" ) )
+                # Handle numeric labels
+                altLabel = item[ "label" ]
+                if item[ "label" ].isnumeric():
+                    altLabel = "$NUMBER[" + item[ "label" ] + "]"
+                if location.startswith( "library://" ):
+                    # Process this as a video node
+                    if item[ "filetype" ] == "directory":
+                        thumb = None
+                        if item[ "thumbnail" ] is not "":
+                            thumb = item[ "thumbnail" ]
+                            
+                        listitem = self._create( [ "ActivateWindow(10025,%s,Return)" %( item[ "file" ] ), altLabel, "", {"icon": "DefaultFolder.png", "thumb": thumb} ] )
+
+                        if item[ "file" ].endswith( ".xml/" ) and NODE.isGrouped( item[ "file" ] ):
+                            listitem = self._create( [ item[ "file" ], "%s  >" %( item[ "label" ] ), "", {"icon": "DefaultFolder.png", "thumb": thumb} ] )
+                        
+                        listings.append( self._get_icon_overrides( tree, listitem, "" ) )
+                else:
+                    # Process this as a plugin
+                    if item["filetype"] == "directory":
+                        thumb = None
+                        if item[ "thumbnail" ] is not "":
+                            thumb = item[ "thumbnail" ]
+                        listitem = self._create( [item[ "file" ], item[ "label" ] + "  >", "", {"icon": "DefaultFolder.png", "thumb": thumb} ] )
+                        listings.append( self._get_icon_overrides( tree, listitem, "" ) )
             
         # Show dialog
         w = ShowDialog( "DialogSelect.xml", __cwd__, listing=listings, windowtitle=dialogLabel )
@@ -1671,6 +1334,10 @@ class LibraryFunctions():
                 label.pop()
                 thumbnail.pop()
                 return self.explorer( history, history[ len( history ) -1 ], label, thumbnail, itemType )
+                
+            elif selectedAction.startswith( "ActivateWindow(" ):
+                # The user wants to create a shortcut to a specific shortcut listed
+                return listings[ selectedItem ]
                 
             else:
                 # User has chosen a sub-level to display, add details and re-call this function
@@ -1931,10 +1598,18 @@ class LibraryFunctions():
                     newAction = newAction.replace( "\\", "\\\\" )
                     selectedShortcut.setProperty( "Path", newAction )
                     selectedShortcut.setProperty( "displayPath", newAction )
-            elif path == "||FOLDER||":
+            elif path.startswith( "||FOLDER||" ):
+                selectedShortcut = self.explorer( [ path.replace( "||FOLDER||", "" )], path.replace( "||FOLDER||", "" ), [selectedShortcut.getLabel()], [selectedShortcut.getProperty("thumbnail")], "32014" )
+                # Convert backslashes to double-backslashes (windows fix)
+                if selectedShortcut is not None:
+                    newAction = selectedShortcut.getProperty( "Path" )
+                    newAction = newAction.replace( "\\", "\\\\" )
+                    selectedShortcut.setProperty( "Path", newAction )
+                    selectedShortcut.setProperty( "displayPath", newAction )
+
                 # The next set of shortcuts are within the listitem property folder-contents
-                shortcuts = self.folders[ selectedShortcut.getProperty( "folder" ) ]
-                return self.selectShortcut( group=group, availableShortcuts=shortcuts, windowTitle = selectedShortcut.getLabel() )
+                #shortcuts = self.folders[ selectedShortcut.getProperty( "folder" ) ]
+                #return self.selectShortcut( group=group, availableShortcuts=shortcuts, windowTitle = selectedShortcut.getLabel() )
             elif path == "||UPNP||":
                 selectedShortcut = self.explorer( ["upnp://"], "upnp://", [selectedShortcut.getLabel()], [selectedShortcut.getProperty("thumbnail")], selectedShortcut.getProperty("shortcutType")  )
                 path = selectedShortcut.getProperty( "Path" )

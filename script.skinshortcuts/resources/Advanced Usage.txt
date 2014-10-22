@@ -27,6 +27,10 @@ You can also let the user choose to use a playlist for background images for use
 
 It may be advantageous for your submenu items to have the same background property as your main menu items. In which case, include &amp;options=clonebackgrounds in your buildxml command (multiple options can be separated with a pipe - | - symbol.
 
+If you wish to run code based on whether a particular background is active, the script will set the skin property skinshortcuts-background-[backgroundID] for each background currently selected for a menu item. For a background with the ID complexBackground for example, you could use the following in a condition:
+
+	condition="Skin.HasSetting(skinshortcuts-background-complexBackground)"
+
 Custom backgrounds are saved on a skin-by-skin basis.
 
 
@@ -54,6 +58,12 @@ And then set the content of the list as so:
 In all cases, remember to replace 9000 with the ID of the list containing the menu. Widgets are saved on a skin-by-skin basis.
 
 It may be advantageous for your submenu items to have the same background property as your main menu items. In which case, include &amp;options=clonewidgets in your buildxml command (multiple options can be separated with a pipe - | - symbol.
+
+If you wish to run code based on whether a particular widget is attached to a menu item, the script will set the skin property skinshortcuts-widget-[widgetID] for each widget currently selected for a menu item. For a widget with the ID complexWidget for example, you could use the following in a condition:
+
+	condition="Skin.HasSetting(skinshortcuts-widget-complexWidget)"
+
+Widgets are saved on a skin-by-skin basis.
 
 
 Multiple Sub-Menus
@@ -136,6 +146,8 @@ Note, any override will replace the original menu item with one which is only vi
 	</override>
 </overrides>
 
+Please be aware that in the latest revisions of the script, library links - ActivateWindow(Videos,MovieTitles) - have been replaced by video nodes - ActivateWindow(Videos,videodb://movies/titles/). You should ensure any overrides work with both types of link.
+
 IMPORTANT: User choice MUST be respected when overriding actions. That is to say, unless the user specifically gives permission for a shortcut they have chosen to do something else, it should be left alone. If you are overriding the action, it is expected that in most cases you will use a visibility condition - possibly linked to a skin settings - to ensure the user has consented.
 
 Users can also provide an overrides.xml file to override actions in special://profile/
@@ -187,11 +199,13 @@ If you are using Skin Shortcuts to manage background images, provide a list of b
 [Label] - The display name of the background (can be a localised string)
 [GroupName] - [Optional] The group that the labelID must be in, for example "movies". If omitted, the default will apply to items in the main menu.
 [backgroundID] - A string you use to identify the background
-[labelID] - The labelID you are providing a default for.
+[labelID] - The labelID you are providing a default for. (Replace with defaultID="[defaultID]" to set default based on this property instead)
 
 If you want to let the user browse for either a single or multi-image background, also include:
 
-<backgroundBrowse>True</backgroundBrowse>
+<backgroundBrowse default="protocol://path/to/folder>True</backgroundBrowse>
+
+where default is an optional path to the folder that will be displayed by default in the select dialog.
 
 You can also let the user choose a playlist to use as a background. In that case, set the label to a localised string containing the string "::PLAYLIST::". Skin Shortcuts will create multiple copies of this entry, with ::PLAYLIST:: replaced by the name of each of the users defined playlists. List items will then have the additional property "backgroundPlaylist", containing the path of the playlist.
 
@@ -221,7 +235,7 @@ If you are using Skin Shortcuts to manage widgets, provide a list of the widgets
 [type] - [Optional] A string you use to identy the type of widget (returned as property widgetType)
 [GroupName] - [Optional] The group that the labelID must be in, for example "movies". If omitted, the property will apply to items in the main menu.
 [widgetID] - A string you use to identify this widget
-[labelID] - The labelID you are setting the default for
+[labelID] - The labelID you are setting the default for. (Replace with defaultID="[defaultID]" to set default based on this property instead)
 
 If you want the user to be able to select a playlist as a widget, also include:
 

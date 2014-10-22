@@ -32,11 +32,9 @@ __xbmcversion__  = xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0]
 
 sys.path.append(__resource__)
 
-import xmlfunctions
+import xmlfunctions, datafunctions, library, nodefunctions
 XML = xmlfunctions.XMLFunctions()
-import datafunctions
 DATA = datafunctions.DataFunctions()
-import library
 LIBRARY = library.LibraryFunctions()
 
 hashlist = []
@@ -88,7 +86,7 @@ class Main:
         if self.TYPE=="launchpvr":
             xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Player.Open", "params": { "item": {"channelid": ' + self.CHANNEL + '} } }')
         if self.TYPE=="manage":
-            self._manage_shortcuts( self.GROUP, self.NOLABELS, self.GROUPNAME )
+            self._manage_shortcuts( self.GROUP, self.DEFAULTGROUP, self.NOLABELS, self.GROUPNAME )
         #if self.TYPE=="list":
         #    self._check_Window_Properties()
         #    self._list_shortcuts( self.GROUP )
@@ -133,6 +131,20 @@ class Main:
                     xbmc.executebuiltin( "Skin.SetString(" + self.THUMBNAIL + "," + selectedShortcut.getProperty( "icon" ) + ")" )
                 if self.THUMBNAIL is not None and selectedShortcut.getProperty( "thumbnail" ):
                     xbmc.executebuiltin( "Skin.SetString(" + self.THUMBNAIL + "," + selectedShortcut.getProperty( "thumbnail" ) + ")" )
+                    
+        if self.TYPE=="addNode":
+            # We've been sent a node from plugin.program.video.node.editor
+            targetDir = "library://video" + self.OPTIONS[ 0 ]
+            
+            icon = "DefaultShortcut.png"
+            if self.OPTIONS[ 2 ] != "None":
+                icon = self.OPTIONS[ 2 ].decode( "utf-8" )
+            
+            result = nodefunctions.NodeFunctions().addNodeToMenu( targetDir, urllib.unquote( self.OPTIONS[ 1 ] ).decode( "utf-8" ), icon, DATA )
+            
+            if result == False:
+                # The item failed to add to the menu
+                xbmcgui.dialog().ok( __addon__.getAddonInfo( "name" ), __language__(32091) )
                 
         if self.TYPE=="resetall":
             # Tell XBMC not to try playing any media
@@ -176,6 +188,8 @@ class Main:
         
         self.NOLABELS = params.get( "nolabels", "false" ).lower()
         self.OPTIONS = params.get( "options", "" ).split( "|" )
+        self.WARNING = params.get( "warning", None )
+        self.DEFAULTGROUP = params.get( "defaultGroup", None )
         
     def _check_Window_Properties( self ):
         # Check if the user has changed skin or profile
@@ -207,9 +221,9 @@ class Main:
                     xbmc.executebuiltin( singleAction )
         
     
-    def _manage_shortcuts( self, group, nolabels, groupname ):
+    def _manage_shortcuts( self, group, defaultGroup, nolabels, groupname ):            
         import gui
-        ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=group, nolabels=nolabels, groupname=groupname )
+        ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=group, defaultGroup=defaultGroup, nolabels=nolabels, groupname=groupname )
         ui.doModal()
         del ui
         
@@ -360,10 +374,18 @@ class Main:
 
     def _reset_all_shortcuts( self ):
         log( "### Resetting all shortcuts" )
+        log( repr( self.WARNING) )
         dialog = xbmcgui.Dialog()
         
+        shouldRun = None
+        if self.WARNING is not None and self.WARNING.lower() == "false":
+            shouldRun = True
+        
         # Ask the user if they're sure they want to do this
-        if dialog.yesno(__language__(32037), __language__(32038)):
+        if shouldRun is None:
+            shouldRun = dialog.yesno( __language__( 32037 ), __language__( 32038 ) )
+        
+        if shouldRun:
             for files in xbmcvfs.listdir( __datapath__ ):
                 # Try deleting all shortcuts
                 if files:

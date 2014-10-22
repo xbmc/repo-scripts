@@ -1,3 +1,16 @@
+v0.4.2
+- [robweber] Fix for profiles shared via path substitution
+- Integration with plugin.program.video.node.editor
+- Change how submenuVisibility property is generated
+- Skin and script default shortcuts now loaded from defaultID property
+- Ability to set background and widget defaults based on defaultID
+- Ability to skip warning when resetting all shortcuts
+- Skin settings set to identify which backgrounds and widgets have been selected by user
+- Window property to identify when additional management dialog has been launched
+- Custom visibility properties are now honoured by management dialog
+- Shortcuts always use video nodes (where appropriate) rather than library links
+- Updated language files from Transifex (from 19th October 2014)
+
 v0.4.0
 - New localisation code
 - New XML data store

@@ -1,7 +1,20 @@
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
-What's New for Skinners (version 0.4.0)
+What's New for Skinners (version 0.4.2)
+-----------------------
+
+ - Ability to skip warning when resetting all shortcuts. See "Resetting all shortcuts", below
+ - Ability to set default backgrounds and widgets based on defaultID. See "Advanced Usage.txt", section "Overrides.xml", parts 3 and 4
+ - Ability to define a default path when browsing for backgrounds. See "Advanced Usage.txt", section "Overrides.xml", part 3
+ - Skin properties set for each background and widget that is active. See "Advanced Usage.txt", sections "Managing Custom Backgrounds" and "Managing Widgets".
+ - Window property set when management dialog for submenu/additional menu is launched. See "Management Dialog.txt", part 6
+ - Advice change - consider providing a defaultID in your default shortcuts. See "Providing default shortcuts", below.
+ - Advice change - use video node links, rather than library links, in your default shortcuts. See "Providing default shortcuts" below; and "Advanced Usage.txt", section "Overrides.xml", part 1.
+ - Shortcuts with a <visible/> element will not only show in management dialog if this property evaluates to true. Though they won't be visible in the management dialog, they will not be removed from the menu, but will move to the end of the menu.
+ 
+
+What's New for Skinners (version 0.4.0 - previous release)
 -----------------------
 
  - New XML file format for storing data - this required no changes on your part, but you can upgrade your default shortcuts to the new format, see "Providing default shortcuts" below
@@ -201,6 +214,16 @@ If your skin provides a main menu you want to display shortcuts for using the sc
 Then, in the list where you want the submenu to appear, put the following in the <content> tag:
 
 	<include>skinshortcuts-submenu</include>
+	
+	
+Resetting All Shortcuts
+-----------------------
+
+It is recommended you give users the option to reset all shortcuts to defaults within your skinsettings.xml, by including a button with the following onclick:
+
+	<onclick>RunScript(script.skinshortcuts,type=resetall)</onclick>
+	
+You can also include &amp;warning=false if your skin provides a warning to the user before this action is carried out.
 
 
 Recommended [groupname]'s
@@ -227,7 +250,7 @@ Providing default shortcuts
 
 If the user has not already selected any shortcuts or if the user resets shortcuts, the script will first attempt to load defaults from a file provided by the skin before trying to load its own.
 
-To provide this optional file, create a new sub-directory in your skin called 'shortcuts', and drop the relevant [groupname].DATA.xml file into it, or create the file manually. See "Recommended [groupname]'s" for ideas of some of the default files you may wish to provide, along with mainmenu.shortcuts if you are using the script to manage the main menu.
+To provide this optional file, create a new sub-directory in your skin called 'shortcuts', and drop the relevant [groupname].DATA.xml file into it, or create the file manually. See "Recommended [groupname]'s" for ideas of some of the default files you may wish to provide, along with mainmenu.DATA.xml if you are using the script to manage the main menu.
 
 The script provides defaults equivalent to Confluence's main menu and sub-menus.
 
@@ -242,10 +265,25 @@ The file format is simple enough:
 		<thumb>The default thumbnail to use for the shortcut (optional)</thumb>
 		<action>The default action of the shortcut</action>
 		<visible>Visibility condition for the shortcut (optional)</visible>
+		<defaultID>The defaultID of the menu item</defaultID>
 	</shortcut>
 </shortcuts
 
 If you want to provide a default which links to a playlist you include with your skin, then make sure the .shortcuts file uses the special protocol (e.g. special://skin/) as the URI to it. The script will replace this with a localised version, so that the playlist link will continue to work even if the user switches to another skin supporting skin shortcuts.
+
+Particularly when setting defaults for the main menu, you may wish to include the <defaultID> element. This will set the [groupname] of the submenu's .DATA.xml file. (e.g. defaultID of tvshows -> tvshows.DATA.xml). Please note, any defaultID must follow the standard rules - all lowercase, all english characters, no spaces.
+
+As Skin Shortcuts will integrate with a Video Node Editor script (for skins where the script manages the full menu), it is strongly suggested that default shortcuts use video nodes rather than library shortcuts where appropriate.
+
+For example, a link to movie titles should be:
+
+	<action>ActivateWindow(10025,videodb://movies/titles/,Return)</action>
+	
+rather than
+
+	<action>ActivateWindow(10025,MovieTitles,Return)</action>
+	
+This will ensure that any users modifying the default Movies node (for example) will access the content they expect rather than, as video library links provide, all content.
 	
 	
 Properties returned

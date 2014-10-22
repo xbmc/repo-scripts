@@ -101,6 +101,10 @@ Or include controls 406, 407, 408, 409 or 410. These will launch the management 
 
 You will likely only want to include this when editing the main menu. You can check the window property "groupname" for the value "mainmenu" to only display it when relevant.
 
+When an additional management dialog is launched, the window property "additionalDialog" will be set. This can be used, for example, to manage visibility of the original dialog.
+
+	<visible>!IsEmpty(Window.Property(additionalDialog))</visible>
+
 
 7. Limit controls to main menu only
 
