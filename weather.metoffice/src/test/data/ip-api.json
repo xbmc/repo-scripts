@@ -1,0 +1,16 @@
+{
+  "status": "success", 
+  "city": "London", 
+  "zip": "LW2", 
+  "countryCode": "GB", 
+  "country": "United Kingdom", 
+  "region": "D4", 
+  "isp": "MegaData", 
+  "lon": "0.1275", 
+  "as": "AS5067 MegaData Limited", 
+  "query": "81.5.108.105", 
+  "org": "Virgin Media", 
+  "lat": "51.5072", 
+  "timezone": "Europe/London", 
+  "regionName": "London"
+}
