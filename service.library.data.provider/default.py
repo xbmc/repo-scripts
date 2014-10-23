@@ -97,6 +97,50 @@ class Main:
         elif self.TYPE == "randomsongs":
             xbmcplugin.setContent(int(sys.argv[1]), 'songs')
             self.parse_song( 'randomsongs', 32015, full_liz )
+        elif self.TYPE == 'playliststats':
+            lo = self.id.lower()
+            if ("activatewindow" in lo) and ("://" in lo) and ("," in lo):
+                startindex = lo.find(",")
+                endindex = lo.find(",",startindex+1)
+                if (endindex > 0):
+                    playlistpath = self.id[startindex+1:endindex].strip()
+                    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["playcount", "resume", "episode", "watchedepisodes", "tvshowid"]}, "id": 1}' % (playlistpath))
+                    json_query = unicode(json_query, 'utf-8', errors='ignore')
+                    json_response = simplejson.loads(json_query)
+                    if (json_response.has_key("result")):
+                        played = 0
+                        numitems = 0
+                        inprogress = 0
+                        episodes = 0
+                        watchedepisodes = 0
+                        tvshows = []
+                        tvshowscount = 0
+                        for item in json_response["result"]["files"]:
+                            if item.has_key('type'):
+                                if item["type"] == "episode":
+                                    episodes += 1
+                                    if item["playcount"] > 0:
+                                        watchedepisodes += 1
+                                    if item["tvshowid"] not in tvshows:
+                                        tvshows.append(item["tvshowid"])
+                                        tvshowscount += 1
+                                elif item["type"] == "tvshow":
+                                    episodes += item["episode"]
+                                    watchedepisodes += item["watchedepisodes"]
+                                    tvshowscount += 1
+                                else:
+                                    numitems += 1
+                                    if item["playcount"] > 0:
+                                        played += 1
+                                    if item["resume"]["position"] > 0:
+                                        inprogress += 1
+                        self.WINDOW.setProperty('PlaylistWatched', str(played))
+                        self.WINDOW.setProperty('PlaylistCount', str(numitems))
+                        self.WINDOW.setProperty('PlaylistTVShowCount', str(tvshowscount))
+                        self.WINDOW.setProperty('PlaylistInProgress', str(inprogress))
+                        self.WINDOW.setProperty('PlaylistUnWatched', str(numitems - played))
+                        self.WINDOW.setProperty('PlaylistEpisodes', str(episodes))
+                        self.WINDOW.setProperty('PlaylistEpisodesUnWatched', str(episodes - watchedepisodes))
             
         # Play an albums
         elif self.TYPE == "play_album":
@@ -177,6 +221,7 @@ class Main:
                     liz.setArt(item['art'])
                     liz.setThumbnailImage(item['art'].get('poster', ''))
                     liz.setIconImage('DefaultVideoCover.png')
+                    liz.setProperty("dbid", str(item['movieid']))
                     liz.setProperty("fanart_image", item['art'].get('fanart', ''))
                     for key, value in item['streamdetails'].iteritems():
                         for stream in value:
@@ -252,6 +297,7 @@ class Main:
                         liz.setThumbnailImage(item2['art'].get('thumb',''))
                         liz.setIconImage('DefaultTVShows.png')
                         liz.setProperty("fanart_image", item2['art'].get('tvshow.fanart',''))
+                        liz.setProperty("dbid", str(item2['episodeid']))
                         for key, value in item2['streamdetails'].iteritems():
                             for stream in value:
                                 liz.addStreamInfo( key, stream ) 
@@ -314,6 +360,7 @@ class Main:
                     liz.setArt(item['art'])
                     liz.setThumbnailImage(item['art'].get('thumb',''))
                     liz.setIconImage('DefaultTVShows.png')
+                    liz.setProperty("dbid", str(item['episodeid']))
                     liz.setProperty("fanart_image", item['art'].get('tvshow.fanart',''))
                     for key, value in item['streamdetails'].iteritems():
                         for stream in value:
@@ -351,7 +398,7 @@ class Main:
                     liz.setThumbnailImage(item['thumbnail'])
                     liz.setIconImage('DefaultMusicSongs.png')
                     liz.setProperty("fanart_image", item['fanart'])
-
+                    liz.setProperty("dbid", str(item['songid']))
                     full_liz.append((item['file'], liz, False))
                     
                     if date_type is not None:
@@ -393,6 +440,7 @@ class Main:
                     liz.setThumbnailImage(item['thumbnail'])
                     liz.setIconImage('DefaultAlbumCover.png')
                     liz.setProperty("fanart_image", item['fanart'])
+                    liz.setProperty("dbid", str(item['albumid']))
                     
                     # Path will call plugin again, with the album id
                     path = sys.argv[0] + "?type=play_album&album=" + str(item['albumid'])
@@ -478,6 +526,7 @@ class Main:
         self.TYPE = params.get( "?type", "" )
         self.ALBUM = params.get( "album", "" )
         self.USECACHE = params.get( "reload", False )
+        self.id = params.get( "id", "" )
         if self.USECACHE is not False:
             self.USECACHE = True
         self.LIMIT = int( params.get( "limit", "-1" ) )

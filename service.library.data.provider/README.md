@@ -29,14 +29,36 @@ Available tags:
 -   randomalbums
 -   recentalbums
 -   recommendedalbums
+-	playliststats
 
 Available infolabels:
 Most of the usual video library infolabels. 
 ListItem.Property(type) shows with what option the script was run.
 
-Limiting results:
-To only return partial results, add the parameter "limit", for example limit=5.
+Playliststats is used when a playlist or videonode is set as the onclick action in the (Home) menu.
+Example:
+Put a list in your Home.xml:
+```xml
+<control type="list" id="43260">
+	<posx>0</posx>
+	<posy>0</posy>
+	<width>1</width>
+	<height>1</height>
+	<focusedlayout/>
+	<itemlayout/>
+	<content>plugin://service.library.data.provider?type=playliststats&amp;id=$INFO[Container(9000).ListItem.Property(Path)]</content>
+</control>
+```
+The Path property has the onclick action defined. 
+9000 is the ID of the Home main menu.
+The following properties are available when the menu item containing the playlist or video node is highlighted:
+-	Window(Home).Property(PlaylistWatched)
+-	Window(Home).Property(PlaylistCount)
+-	Window(Home).Property(PlaylistTVShowCount)
+-	Window(Home).Property(PlaylistInProgress)
+-	Window(Home).Property(PlaylistUnWatched)
+-	Window(Home).Property(PlaylistEpisodes)
+-	Window(Home).Property(PlaylistEpisodesUnWatched)
 
-TODO:
-Artist/Musicvideo/Addons support.
+
 
