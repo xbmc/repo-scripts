@@ -22,14 +22,13 @@ from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-from lib import unwise
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
-class NovamovResolver(Plugin, UrlResolver, PluginSettings):
+class VideomegaResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "novamov"
+    name = "videomega"
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -38,39 +37,39 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        #find key
         try:
             html = self.net.http_GET(web_url).content
-            html = unwise.unwise_process(html)
-            filekey = unwise.resolve_var(html, "flashvars.filekey")
-            
-            #get stream url from api
-            api = 'http://www.novamov.com/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
-            html = self.net.http_GET(api).content
-            r = re.search('url=(.+?)&title', html)
+            stream_url = None
+
+            # find the unescape string 
+            r = re.search('document\.write\(unescape\("([^"]+)',html)
+
             if r:
-                stream_url = urllib.unquote(r.group(1))
-            else:
-                r = re.search('file no longer exists',html)
+                unescaped_str = urllib.unquote(r.group(1))
+                r = re.search('file:\s+"([^"]+)',unescaped_str)
                 if r:
-                    raise Exception ('File Not Found or removed')
-                raise Exception ('Failed to parse url')
+                    stream_url = r.group(1)
+                    stream_url = stream_url.replace(" ","%20")
+                
+            if stream_url:
+                return stream_url
+            else:
+                return self.unresolvable(0, 'No playable video found.')
             
-            return stream_url
         except urllib2.URLError, e:
-            common.addon.log_error('Novamov: got http error %d fetching %s' %
+            common.addon.log_error('Videomega: got http error %d fetching %s' %
                                     (e.code, web_url))
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
-            common.addon.log_error('**** Novamov Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]NOVAMOV[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            common.addon.log_error('**** Videomega Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]Videomega[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
-        return 'http://www.novamov.com/video/%s' % media_id
+        return 'http://%s/iframe.php?ref=%s' % (host,media_id)
 
     def get_host_and_id(self, url):
-        r = re.search('//(?:embed.)?(.+?)/(?:video/|embed.php\?v=)([0-9a-z]+)', url)
+        r = re.search('//((?:www.)?(?:.+?))/(?:iframe.(?:php|js)\?ref=)([0-9a-zA-Z]+)', url)
         if r:
             return r.groups()
         else:
@@ -78,4 +77,4 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match('http://(www.|embed.)?novamov.com/(video/|embed.php\?)', url) or 'novamov' in host
+        return re.match('http://(?:www.)?videomega.tv/iframe.(?:php|js)\?', url) or 'videomega' in host

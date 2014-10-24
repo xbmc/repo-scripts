@@ -296,4 +296,4 @@ class billionuploads(Plugin, UrlResolver, PluginSettings):
         if self.get_setting('enabled') == 'false': return False
         return (re.match('http://(www.)?[bB]illion[uU]ploads.com/' +
                          '[0-9A-Za-z]+', url) or
-                         '[bB]illion[uU]ploads' in host)
+                         'billionuploads' in host.lower())

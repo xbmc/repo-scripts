@@ -23,8 +23,11 @@ from urlresolver.plugnplay import Plugin
 import re, xbmcgui, time, xbmc
 from urlresolver import common
 from lib import jsunpack
+from lib import captcha_lib
+import os
 
 net = Net()
+datapath = common.profile_path
 
 class ClicktoviewResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -39,12 +42,9 @@ class ClicktoviewResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         try:
+            puzzle_img = os.path.join(datapath, "ctv_puzzle.png")
             url = self.get_url(host, media_id)
             html = self.net.http_GET(url).content
-            dialog = xbmcgui.DialogProgress()
-            dialog.create('Resolving', 'Resolving Clicktoview Link...')       
-            dialog.update(0)
-
             data = {}
             r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
             for name, value in r:
@@ -55,38 +55,15 @@ class ClicktoviewResolver(Plugin, UrlResolver, PluginSettings):
             r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
             for name, value in r:
                 data[name] = value
-            captchaimg = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
-        
-            if captchaimg:
-                dialog.close()
-                html = self.net.http_GET(captchaimg.group(1)).content
-                part = re.search("challenge \: \\'(.+?)\\'", html)
-                captchaimg = 'http://www.google.com/recaptcha/api/image?c='+part.group(1)
-                img = xbmcgui.ControlImage(450,15,400,130,captchaimg)
-                wdlg = xbmcgui.WindowDialog()
-                wdlg.addControl(img)
-                wdlg.show()
-        
-                time.sleep(3)
-        
-                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-                kb.doModal()
-                capcode = kb.getText()
-        
-                if (kb.isConfirmed()):
-                    userInput = kb.getText()
-                    if userInput != '':
-                        solution = kb.getText()
-                    elif userInput == '':
-                        raise Exception ('You must enter text in the image to access video')
-                else:
-                    raise Exception ('Captcha Error')
-                wdlg.close()
-                dialog.close() 
-                dialog.create('Resolving', 'Resolving Clicktoview Link...') 
-                dialog.update(50)
-                data.update({'recaptcha_challenge_field':part.group(1),'recaptcha_response_field':solution})
-            
+
+            #Check for SolveMedia Captcha image
+            solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
+            recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
+
+            if solvemedia:
+                data.update(captcha_lib.do_solvemedia_captcha(solvemedia.group(1), puzzle_img))
+            elif recaptcha:
+                data.update(captcha_lib.do_recaptcha(recaptcha.group(1)))
             else:
                 captcha = re.compile("left:(\d+)px;padding-top:\d+px;'>&#(.+?);<").findall(html)
                 result = sorted(captcha, key=lambda ltr: int(ltr[0]))
@@ -102,16 +79,13 @@ class ClicktoviewResolver(Plugin, UrlResolver, PluginSettings):
             sPattern += '\s+?</script>'
             r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
             if r:
-    		sJavascript = r.group(1)
-		sUnpacked = jsunpack.unpack(sJavascript)
-		sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)'
-		sPattern += '"custommode='
-		r = re.search(sPattern, sUnpacked)
-		if r:
-                    dialog.update(100)
-                    dialog.close()
-		    return r.group(1)
-
+                sJavascript = r.group(1)
+                sUnpacked = jsunpack.unpack(sJavascript)
+                sPattern  = '<embed id="np_vid"type="video/divx"src="(.+?)'
+                sPattern += '"custommode='
+                r = re.search(sPattern, sUnpacked)
+                if r:
+                    return r.group(1)
             else:
                     prea = re.compile('wmff\|(.+?)\|flvplayer').findall(html)
                     for slave in prea:
@@ -119,8 +93,6 @@ class ClicktoviewResolver(Plugin, UrlResolver, PluginSettings):
                     preb = re.compile('image\|(.+?)(?:\|)\|video\|(.+?)\|').findall(html)
                     for ext, link in preb:
                         r = pre+link+'/video.'+ext
-                        dialog.update(100)
-                        dialog.close()
                         return r
                 
         except Exception, e:

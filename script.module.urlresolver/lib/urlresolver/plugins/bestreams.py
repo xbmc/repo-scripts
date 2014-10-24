@@ -20,7 +20,7 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
-import urllib2
+import urllib2, urllib
 from time import sleep
 import re
 import os
@@ -51,7 +51,14 @@ class BestreamsResolver(Plugin, UrlResolver, PluginSettings):
             for name, value in r: data[name] = value
             data.update({'referer': web_url})
             data.update({'imhuman': 'Proceed to video'})
-            #print data
+
+            # parse cookies from file as they are only useful for this interaction
+            cookies={}
+            for match in re.finditer("\$\.cookie\('([^']+)',\s*'([^']+)",html):
+                key,value = match.groups()
+                cookies[key]=value
+            headers['Cookie']=urllib.urlencode(cookies)
+            
             sleep(2) # POST seems to fail is submitted too soon after GET. Page Timeout?
 
             html = self.net.http_POST(web_url, data, headers=headers).content
@@ -87,5 +94,6 @@ class BestreamsResolver(Plugin, UrlResolver, PluginSettings):
             return False
 
     def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.)?bestreams.net/[A-Za-z0-9]+',url) or "bestreams.net" in host
 

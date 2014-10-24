@@ -54,9 +54,9 @@ class StreamcloudResolver(Plugin, UrlResolver, PluginSettings):
                 
             form_values = {}
             for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
-                form_values[i.group(1)] = i.group(2)
+                form_values[i.group(1)] = i.group(2).replace("download1","download2")
             #wait required
-            common.addon.show_countdown(11)
+            #common.addon.show_countdown(11)
             html = self.net.http_POST(post_url, form_data=form_values).content
 
             r = re.search('file: "(.+?)",', html)

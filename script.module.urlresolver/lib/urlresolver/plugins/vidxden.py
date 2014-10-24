@@ -23,15 +23,18 @@ vidxden hosts both avi and flv videos
 In testing there seems to be a timing issue with files coming up as not playable.
 This happens on both the addon and in a browser.
 """
-import urllib2,urllib,xbmcaddon,socket,re,xbmc,os,xbmcgui,time
+import urllib2,xbmcaddon,socket,re,os
 from t0mm0.common.net import Net
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
+from lib import captcha_lib
+from lib import jsunpack
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+datapath = common.profile_path
 
 #SET DEFAULT TIMEOUT FOR SLOW SERVERS:
 socket.setdefaulttimeout(30)
@@ -39,31 +42,6 @@ socket.setdefaulttimeout(30)
 #SET DIRECTORIES 
 addon=xbmcaddon.Addon(id='script.module.urlresolver')
 logo='http://googlechromesupportnow.com/wp-content/uploads/2012/06/Installation-103-error-in-Chrome.png'
-img="%s/resources/puzzle.png"%addon.getAddonInfo('path')
-
-class InputWindow(xbmcgui.WindowDialog):# Cheers to Bastardsmkr code already done in Putlocker PRO resolver.
-    
-    def __init__(self, *args, **kwargs):
-        self.cptloc = kwargs.get('captcha')
-        xposition = int(float(addon.getSetting('vidxden_captchax')))
-        yposition = int(float(addon.getSetting('vidxden_captchay')))
-        hposition = int(float(addon.getSetting('vidxden_captchah')))
-        wposition = int(float(addon.getSetting('vidxden_captchaw')))
-        self.img = xbmcgui.ControlImage(xposition,yposition,wposition,hposition,self.cptloc)
-        self.addControl(self.img)
-        self.kbd = xbmc.Keyboard()
-
-    def get(self):
-        self.show()
-        time.sleep(3)        
-        self.kbd.doModal()
-        if (self.kbd.isConfirmed()):
-            text = self.kbd.getText()
-            self.close()
-            return text
-        self.close()
-        return False
-
 
 class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -76,35 +54,33 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        """ Human Verification """
+        puzzle_img = os.path.join(datapath, "vidxden_puzzle.png")
 
         try:
             resp = self.net.http_GET(web_url)
             html = resp.content
             if "No such file or the file has been removed due to copyright infringement issues." in html:
                 raise Exception ('File Not Found or removed')
-            try: os.remove(img)
-            except: pass
+            
             filename=re.compile('<input name="fname" type="hidden" value="(.+?)">').findall(html)[0]
-            noscript=re.compile('<iframe src="(.+?)"').findall(html)[0]
-            check = self.net.http_GET(noscript).content
-            hugekey=re.compile('id="adcopy_challenge" value="(.+?)">').findall(check)[0]
-            headers= {'User-Agent':'Mozilla/6.0 (Macintosh; I; Intel Mac OS X 11_7_9; de-LI; rv:1.9b4) Gecko/2012010317 Firefox/10.0a4',
-                        'Host':'api.solvemedia.com','Referer':resp.get_url(),'Accept':'image/png,image/*;q=0.8,*/*;q=0.5'}
-            open(img, 'wb').write( self.net.http_GET("http://api.solvemedia.com%s"%re.compile('<img src="(.+?)"').findall(check)[0]).content)
-            solver = InputWindow(captcha=img)
-            puzzle = solver.get()
-            if puzzle:
-                data={'adcopy_response':urllib.quote_plus(puzzle),'adcopy_challenge':hugekey,'op':'download1','method_free':'1','usr_login':'','id':media_id,'fname':filename}
-                html = self.net.http_POST(resp.get_url(),data).content
+            data={'op':'download1','method_free':'1','usr_login':'','id':media_id,'fname':filename}
+
+            #Check for SolveMedia Captcha image
+            solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
+            if solvemedia:
+                data.update(captcha_lib.do_solvemedia_captcha(solvemedia.group(1), puzzle_img))
+
+            html = self.net.http_POST(resp.get_url(),data).content
 
             #find packed javascript embed code
-            r = re.search('return p}\(\'(.+?);\',\d+,\d+,\'(.+?)\'\.split',html)
+            r = re.search('(eval.*?)\s*</script>',html, re.DOTALL)
             if r:
-                p, k = r.groups()
+                packed_data = r.group(1)
             else:
                 common.addon.log_error('vidxden: packed javascript embed code not found')
-            try: decrypted_data = unpack_js(p, k)
+                raise Exception('packed javascript embed code not found')
+                
+            try: decrypted_data = jsunpack.unpack(packed_data)
             except: pass
         
             #First checks for a flv url, then the if statement is for the avi url
@@ -147,7 +123,7 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(?:www.)?(vidxden|divxden|vidbux).com/' +
+        return (re.match('http://(?:www.)?(vidxden|divxden|vidbux).(com|to)/' +
                          '(embed-)?[0-9a-z]+', url) or
                 'vidxden' in host or 'divxden' in host or
                 'vidbux' in host)

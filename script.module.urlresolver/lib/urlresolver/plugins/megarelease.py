@@ -24,6 +24,7 @@ import re, os, time, xbmcgui, xbmc
 import xbmcgui
 from urlresolver import common
 from lib import jsunpack
+from lib import captcha_lib
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
@@ -45,46 +46,21 @@ class MegareleaseResolver(Plugin, UrlResolver, PluginSettings):
         try:
             url = self.get_url(host, media_id)
             html = self.net.http_GET(url).content
-            dialog = xbmcgui.DialogProgress()
-            dialog.create('Resolving', 'Resolving Megarelease Link...')       
-            dialog.update(0)
     
             data = {}
             r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
             for name, value in r:
                 data[name] = value
                 data.update({'plugins_are_not_allowed_plus_ban':2})
-            captchaimg = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
-        
-            if captchaimg:
-                dialog.close()
-                html = self.net.http_GET(captchaimg.group(1)).content
-                part = re.search("challenge \: \\'(.+?)\\'", html)
-                captchaimg = 'http://www.google.com/recaptcha/api/image?c='+part.group(1)
-                img = xbmcgui.ControlImage(450,15,400,130,captchaimg)
-                wdlg = xbmcgui.WindowDialog()
-                wdlg.addControl(img)
-                wdlg.show()
-        
-                time.sleep(3)
-        
-                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-                kb.doModal()
-                capcode = kb.getText()
-        
-                if (kb.isConfirmed()):
-                    userInput = kb.getText()
-                    if userInput != '':
-                        solution = kb.getText()
-                    elif userInput == '':
-                        raise Exception ('You must enter text in the image to access video')
-                else:
-                    raise Exception ('Captcha Error')
-                wdlg.close()
-                dialog.close() 
-                dialog.create('Resolving', 'Resolving Megarelease Link...') 
-                dialog.update(50)
-                data.update({'recaptcha_challenge_field':part.group(1),'recaptcha_response_field':solution})
+
+            recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
+            if recaptcha:
+                data.update(captcha_lib.do_recaptcha(recaptcha.group(1)))
+            else:
+                captcha = re.compile("left:(\d+)px;padding-top:\d+px;'>&#(.+?);<").findall(html)
+                result = sorted(captcha, key=lambda ltr: int(ltr[0]))
+                solution = ''.join(str(int(num[1])-48) for num in result)
+                data.update({'code':solution})
                 
             html = net.http_POST(url, data).content
             if re.findall('err', html):
@@ -102,8 +78,6 @@ class MegareleaseResolver(Plugin, UrlResolver, PluginSettings):
                 sPattern += '"custommode='
                 r = re.search(sPattern, sUnpacked)
                 if r:
-                    dialog.update(100)
-                    dialog.close()
                     return r.group(1)
             else:
                 num = re.compile('false\|(.+?)\|(.+?)\|(.+?)\|(.+?)\|divx').findall(html)
@@ -114,8 +88,6 @@ class MegareleaseResolver(Plugin, UrlResolver, PluginSettings):
                 preb = re.compile('custommode\|(.+?)\|(.+?)\|182').findall(html)
                 for ext, link in preb:
                     r = pre+link+'/video.'+ext
-                    dialog.update(100)
-                    dialog.close()
                     return r            
                                 
         except Exception, e:

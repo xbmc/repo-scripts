@@ -30,9 +30,9 @@ import urllib
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
-class CloudyResolver(Plugin, UrlResolver, PluginSettings):
+class VideorajResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "cloudy.ec"
+    name = "videoraj.ch"
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -55,7 +55,7 @@ class CloudyResolver(Plugin, UrlResolver, PluginSettings):
             _error_params = ''
 
         #use api to find stream address
-        api_call = 'http://www.cloudy.ec/api/player.api.php?{0}&file={1}&key={2}{3}'.format(
+        api_call = 'http://www.videoraj.ch/api/player.api.php?{0}&file={1}&key={2}{3}'.format(
                         'user=undefined&pass=undefined',
                         media_id,
                         urllib.quote_plus(filekey).replace('.', '%2E'),
@@ -120,15 +120,15 @@ class CloudyResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
-            common.addon.log('**** Cloudy Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]CLOUDY[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            common.addon.log('**** videoraj Error occured: %s' % e)
+            common.addon.show_small_popup(title='[B][COLOR white]videoraj[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
-        return 'http://www.cloudy.ec/embed.php?id=%s' % media_id
+        return 'http://www.videoraj.ch/embed.php?id=%s' % media_id
 
     def get_host_and_id(self, url):
-        r = re.search('(https?://(?:www\.|embed\.)cloudy\.(?:ec|eu|sx|ch|com))/(?:video/|embed\.php\?id=)([0-9a-z]+)', url)        
+        r = re.search('(https?://(?:www\.|embed\.)videoraj\.(?:ec|eu|sx|ch|com))/(?:video/|embed\.php\?id=)([0-9a-z]+)', url)
         if r:
             return r.groups()
         else:
@@ -136,4 +136,4 @@ class CloudyResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match('https?://(?:www\.|embed\.)cloudy\.(?:ec|eu|sx|ch|com)/(?:video/|embed\.php\?id=)([0-9a-z]+)', url) or 'cloudy.' in host
+        return re.match('https?://(?:www\.|embed\.)videoraj\.(?:ec|eu|sx|ch|com)/(?:video/|embed\.php\?id=)([0-9a-z]+)', url) or 'videoraj' in host

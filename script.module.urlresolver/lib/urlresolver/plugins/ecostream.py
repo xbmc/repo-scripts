@@ -52,18 +52,28 @@ class EcostreamResolver(Plugin, UrlResolver, PluginSettings):
                 % msg, delay=5000, image=error_logo)
                 return self.unresolvable(code = 1, msg = msg)
             self.net.save_cookies(self.cookie_file)
-            r = re.search("anlytcs='([^']+)'", html)
+            
+            web_url = 'http://www.ecostream.tv/js/ecos.js'
+            js = self.net.http_GET(web_url).content
+            r = re.search("\$\.post\('([^']+)'[^;]+'#auth'\).html\(''\)", js)
             if not r:
-                raise Exception ('Formvalue not found')
-            part1 = r.group(1)
-            r = re.search("superslots='([^']+)';", html)
+                raise Exception ('Posturl not found')
+            post_url = r.group(1)
+            r = re.search('data\("tpm",([^\)]+)\);', js)
             if not r:
-                raise Exception ('Formvalue not found')
-            part2 = r.group(1)
-            tpm = part1+part2
+                raise Exception ('Postparameterparts not found')
+            post_param_parts = r.group(1).split('+')
+            found_parts = []
+            for part in post_param_parts:
+                pattern = "%s='([^']+)'" % part.strip()
+                r = re.search(pattern, html)
+                if not r:
+                    raise Exception ('Formvaluepart not found')            
+                found_parts.append(r.group(1))
+            tpm = ''.join(found_parts)            
             # emulate click on button "Start Stream"
             postHeader = ({'Referer':web_url, 'X-Requested-With':'XMLHttpRequest'})
-            web_url = 'http://www.ecostream.tv/xhr/video/vidureis'
+            web_url = 'http://www.ecostream.tv' + post_url
             self.net.set_cookies(self.cookie_file)
             html = self.net.http_POST(web_url,{'id':media_id, 'tpm':tpm}, headers = postHeader).content
             sPattern = '"url":"([^"]+)"'

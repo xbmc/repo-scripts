@@ -60,7 +60,6 @@ class PutlockerResolver(Plugin, UrlResolver, PluginSettings):
             #Shortcut for logged in users
             pattern = '<a href="(/.+?)" class="download_file_link" style="margin:0px 0px;">Download File</a>'
             link = re.search(pattern, html)
-            print 'host'; print host; print 'link'; print link
             if link:
                 common.addon.log('Direct link found: %s' % link.group(1))
                 if 'putlocker' in host:
@@ -212,7 +211,7 @@ class PutlockerResolver(Plugin, UrlResolver, PluginSettings):
     #SiteAuth methods
     def login(self):
         if self.login_stale():
-            print 'Need to login since session is invalid'
+            #print 'Need to login since session is invalid'
             url = 'http://www.putlocker.com/authenticate.php?login'
             source = self.net.http_GET(url).content
             self.net.save_cookies(self.cookie_file)
@@ -231,7 +230,6 @@ class PutlockerResolver(Plugin, UrlResolver, PluginSettings):
                 response = self.net.http_POST(url, form_data=data)
                 self.net.save_cookies(self.cookie_file)
                 self.net.set_cookies(self.cookie_file)
-                print response.get_url()
             else:
                 common.addon.log('Dialog was canceled')
                 return False

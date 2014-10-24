@@ -51,7 +51,7 @@ class vidto(Plugin, UrlResolver, PluginSettings):
                 return r
             else:
                 raise Exception('could not find video')
-        except:
+        except Exception, e:
             common.addon.log('**** Vidto Error occured: %s' % e)
             common.addon.show_small_popup('Error', str(e), 5000, '')
             return self.unresolvable(code=0, msg='Exception: %s' % e)

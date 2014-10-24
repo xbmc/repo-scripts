@@ -78,7 +78,11 @@ class HostedMediaFile:
             if self._resolvers[0].isUniversal():
                 if len(self._resolvers) > 1:
                     self._url = self._resolvers[1].get_url(host, media_id)
-                    self._host, self._media_id = self._resolvers[0].get_host_and_id(self._url)
+                    result = self._resolvers[0].get_host_and_id(self._url)
+                    if result:
+                        self._host, self._media_id = result
+                    else:
+                        self._resolvers = []
                 else:
                     self._resolvers = []
             else:    

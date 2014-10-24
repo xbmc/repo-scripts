@@ -39,6 +39,7 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+
         try:
             html = self.net.http_GET(web_url).content           
             form_values = {}
@@ -71,7 +72,7 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
             return self.unresolvable(code=0, msg='Exception: %s' % e)
 
     def get_url(self, host, media_id):
-            return 'http://www.mightyupload.com/%s' % (media_id)
+            return 'http://www.mightyupload.com/embed-%s.html' % (media_id)
 
     def get_host_and_id(self, url):
         r = re.search('http://(?:www.)(.+?)/embed-([\w]+)-', url)

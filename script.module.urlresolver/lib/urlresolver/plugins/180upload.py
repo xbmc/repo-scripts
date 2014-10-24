@@ -21,7 +21,9 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
+from lib import jsunpack
 import re, urllib2, os, xbmcgui, xbmc
+from lib import captcha_lib
 
 net = Net()
 
@@ -43,18 +45,11 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         common.addon.log('180upload: in get_media_url %s %s' % (host, media_id))
-        web_url = self.get_url(host, media_id)
+        web_url = 'http://180upload.com/embed-%s.html' % media_id
         try:
-            dialog = xbmcgui.DialogProgress()
-            dialog.create('Resolving', 'Resolving 180Upload Link...')
-            dialog.update(0)
-        
             puzzle_img = os.path.join(datapath, "180_puzzle.png")
-        
             common.addon.log('180Upload - Requesting GET URL: %s' % web_url)
             html = net.http_GET(web_url).content
-
-            dialog.update(50)
 
             # Check for file not found
             if re.search('File Not Found', html):
@@ -63,89 +58,47 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
                 return self.unresolvable(code=1, msg='File Not Found') 
                 
             data = {}
-            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
-
+            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)"', html)
             if r:
                 for name, value in r:
                     data[name] = value
+                data['referer'] = web_url 
+                print data
             else:
                 raise Exception('Cannot find data values')
-        
+            # 1st attempt, probably no captcha
+            common.addon.log('180Upload - Requesting POST URL: %s' % web_url)
+            html = net.http_POST(web_url, data).content
+ 
+            packed = re.search('id="player_code".*?(eval.*?\)\)\))', html,re.DOTALL)
+            if packed:
+                js = jsunpack.unpack(packed.group(1))
+                link = re.search('name="src"\s*value="([^"]+)', js.replace('\\',''))
+                if link:
+                    common.addon.log('180Upload Link Found: %s' % link.group(1))
+                    return link.group(1)
+                    
+            web_url = self.get_url(host, media_id)
+            html = net.http_GET(web_url).content
+            
             #Check for SolveMedia Captcha image
             solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
             recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
 
             if solvemedia:
-                common.addon.log_debug('SolveMedia Captcha')
-                dialog.close()
-                html = net.http_GET(solvemedia.group(1)).content
-                hugekey=re.search('id="adcopy_challenge" value="(.+?)">', html).group(1)
-                open(puzzle_img, 'wb').write(net.http_GET("http://api.solvemedia.com%s" % re.search('<img src="(.+?)"', html).group(1)).content)
-                img = xbmcgui.ControlImage(450,15,400,130, puzzle_img)
-                wdlg = xbmcgui.WindowDialog()
-                wdlg.addControl(img)
-                wdlg.show()
-        
-                xbmc.sleep(3000)
-
-                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-                kb.doModal()
-                capcode = kb.getText()
-   
-                if (kb.isConfirmed()):
-                    userInput = kb.getText()
-                    if userInput != '':
-                        solution = kb.getText()
-                    elif userInput == '':
-                        Notify('big', 'No text entered', 'You must enter text in the image to access video', '')
-                        return False
-                else:
-                    return False
-               
-                wdlg.close()
-                dialog.create('Resolving', 'Resolving 180Upload Link...') 
-                dialog.update(50)
-                if solution:
-                    data.update({'adcopy_challenge': hugekey,'adcopy_response': solution})
-
-            #Google Recaptcha
+                data.update(captcha_lib.do_solvemedia_captcha(solvemedia.group(1), puzzle_img))
             elif recaptcha:
-                common.addon.log_debug('Google ReCaptcha')
-                dialog.close()
-                html = net.http_GET(recaptcha.group(1)).content
-                part = re.search("challenge \: \\'(.+?)\\'", html)
-                captchaimg = 'http://www.google.com/recaptcha/api/image?c='+part.group(1)
-                img = xbmcgui.ControlImage(450,15,400,130,captchaimg)
-                wdlg = xbmcgui.WindowDialog()
-                wdlg.addControl(img)
-                wdlg.show()
-        
-                xbmc.sleep(3000)
-        
-                kb = xbmc.Keyboard('', 'Type the letters in the image', False)
-                kb.doModal()
-                capcode = kb.getText()
-        
-                if (kb.isConfirmed()):
-                    userInput = kb.getText()
-                    if userInput != '':
-                        solution = kb.getText()
-                    elif userInput == '':
-                        raise Exception ('You must enter text in the image to access video')
-                else:
-                    raise Exception ('Captcha Error')
-                wdlg.close()
-                data.update({'recaptcha_challenge_field':part.group(1),'recaptcha_response_field':solution})
+                data.update(captcha_lib.do_recaptcha(recaptcha.group(1)))
             
-            common.addon.log('180Upload - Requesting POST URL: %s' % web_url)
+            common.addon.log('180Upload - Requesting POST URL: %s with data: %s' % (web_url, data))
             html = net.http_POST(web_url, data).content
-            dialog.update(100)
         
             link = re.search('id="lnk_download" href="([^"]+)', html)
             if link:
                 common.addon.log('180Upload Link Found: %s' % link.group(1))
                 return link.group(1)
             else:
+                #print html
                 raise Exception('Unable to resolve 180Upload Link')
 
         except urllib2.URLError, e:

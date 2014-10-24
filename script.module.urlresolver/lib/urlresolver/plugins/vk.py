@@ -56,13 +56,20 @@ class VKResolver(Plugin, UrlResolver, PluginSettings):
                         purged_jsonvars[item] = jsonvars[item]               
                 lines  = []
                 ls_url = []
+                best='0'
                 for item in purged_jsonvars :
                     ls_url.append(item)
                     quality = item.lstrip('url')
                     lines.append(str(quality))
+                    if int(quality)>int(best): best=quality
+
                 if len(ls_url) == 1 :
                     return purged_jsonvars[ls_url[0]].encode('utf-8')
-                result = xbmcgui.Dialog().select('Choose the link', lines)
+                else:
+                    if self.get_setting('auto_pick')=='true':
+                        return purged_jsonvars['url%s' % (str(best))].encode('utf-8')
+                    else:
+                        result = xbmcgui.Dialog().select('Choose the link', lines)
                 if result != -1 :
                     return purged_jsonvars[ls_url[result]].encode('utf-8')
                 else :
@@ -98,5 +105,6 @@ class VKResolver(Plugin, UrlResolver, PluginSettings):
         return re.match('http[s]*://(?:www.)?vk.com/video_ext.php\?.+',url) or 'vk' in host    
 
     def get_settings_xml(self):
-        xml = PluginSettings.get_settings_xml(self)   
+        xml = PluginSettings.get_settings_xml(self)
+        xml += '<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (self.__class__.__name__)   
         return xml

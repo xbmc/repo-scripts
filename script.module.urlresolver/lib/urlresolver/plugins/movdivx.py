@@ -26,7 +26,9 @@ from lib import jsunpack
 
 # Custom imports
 import re
+import os
 
+error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class MovDivxResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -63,31 +65,20 @@ class MovDivxResolver(Plugin, UrlResolver, PluginSettings):
             html = self.net.http_POST(web_url, data).content
 
             # get url from packed javascript
-            sPattern =  '<div id="player_code"><script type=(?:"|\')text/javascript(?:"|\')>'
-            sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.+?DivXBrowserPlugin.+?)</script>'
+            sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>'
+            sPattern += '(eval\(function\(p,a,c,k,e,d\).*?)</script>'
             
-            r = re.search(sPattern, html, re.DOTALL + re.IGNORECASE)
+            matches = re.findall(sPattern, html, re.DOTALL + re.IGNORECASE)
             
-            if r:
-                sJavascript = r.group(1) + ")))"
+            if matches:
+                sJavascript=matches[-1]
                 sUnpacked = jsunpack.unpack(sJavascript)
-                sPattern = 'type="video/divx"src="(.+?)"custommode='
+                sUnpacked = sUnpacked.replace('\\','')
+                sPattern = "\('file','([^']+)"
                 r = re.search(sPattern, sUnpacked)
                 if r:
                     return r.group(1)
-            else:
-                sPattern =  '<script type=(?:"|\')text/javascript(?:"|\')>'
-                sPattern += '(eval\(function\(p,a,c,k,e,d\)\{while.*SWFObject.*)'
-                
-                r2 = re.search(sPattern, html, re.IGNORECASE)
-                
-                if r2:
-                    sJavascript = r2.group(1) + ")))"
-                    sUnpacked = jsunpack.unpack(sJavascript)
-                    sPattern = "'file','([^']*)'";
-                    r = re.search(sPattern, sUnpacked)
-                    if r:
-                        return r.group(1)
+
             raise Exception ('failed to parse link')
 
         except urllib2.URLError, e:

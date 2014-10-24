@@ -1,3 +1,17 @@
+[B]Version 2.5.0[/B]
+- Added Teramixer
+- Added Exashare
+- Fixed 180Upload
+- Fixed BillionUploads
+- Fixed HugeFiles
+- Fixed VidPlay
+- Fixed MovDivx
+- Fixed ShareSix
+- Fixed Vodlocker
+- Fixed AllMyVideos
+- Fixed Played.To
+- Small fixes  to Sockshare captcha
+
 [B]Version 2.4.0[/B]
 - Reverted back to using t0mm0.common as addon.common is creating naming issues
 
