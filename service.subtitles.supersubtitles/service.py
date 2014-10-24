@@ -119,8 +119,10 @@ LANGUAGES = {
 
 def recreate_dir(path):
     if xbmcvfs.exists(path):
-        shutil.rmtree(path)
-    xbmcvfs.mkdirs(path)
+        shutil.rmtree(path, ignore_errors=True)
+    
+    if not xbmcvfs.exists(path):
+        xbmcvfs.mkdirs(path)
 
 
 def normalize_string(str):
@@ -348,7 +350,6 @@ def extract(archive):
         return None
 
 
-
 def download_file(item):
     filename = urllib.unquote_plus(item['filename'].decode("utf-8")).replace(' ', '_')
     localfile = os.path.join(__temp__, filename)
@@ -366,7 +367,7 @@ def download_file(item):
 
 
 def is_match(item, filename):
-    pattern = r'^.*S?(?P<season>\d+)([x_-]|\.)+E?(?P<episode>\d+).*$'
+    pattern = r'^.*?S?(?P<season>\d+)([x_-]|\.)*E?(?P<episode>\d+).*$'
     match = re.search(pattern, filename, re.I)
     if match:
         season = int(item['season'])
@@ -397,6 +398,7 @@ def recursive_search(path):
 
     return None
 
+
 def download(item):
     debuglog(item)
     subtitle = None
@@ -413,7 +415,34 @@ def download(item):
     if subtitle:
         listitem = xbmcgui.ListItem(label=subtitle)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=subtitle, listitem=listitem, isFolder=False)
-        notification(32501)
+        #notification(32501)
+
+
+def clean_movie_title(item, use_dir):
+    debuglog("getCleanMovieTitle:  %s" % use_dir)
+    infos = xbmc.getCleanMovieTitle(item['file_original_path'], use_dir)
+
+    if not 'year' in item or not item['year']:
+        item['year'] = infos[1]
+
+    title_pattern = r'^(?P<title>.+)S(?P<season>\d+)E(?P<episode>\d+)$'
+    title_match = re.search(title_pattern, infos[0], re.IGNORECASE)
+
+    if title_match:
+        item['tvshow'] = title_match.group('title').strip()
+        item['season'] = title_match.group('season')
+        item['episode'] = title_match.group('episode')
+
+    return infos, (title_match is not None)
+
+
+def clean_title(item):
+    infos, title_match = clean_movie_title(item, True)
+
+    if not title_match:
+        infos, title_match = clean_movie_title(item, False)
+
+    return None if title_match else infos
 
 
 def setup_tvshow_data(item):
@@ -423,19 +452,9 @@ def setup_tvshow_data(item):
         item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))
         item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
     else:
-        infos = xbmc.getCleanMovieTitle(item['file_original_path'], True)
+        infos = clean_title(item)
 
-        if not 'year' in item or not item['year']:
-            item['year'] = infos[1]
-
-        title_pattern = r'^(?P<title>.+)S(?P<season>\d+)E(?P<episode>\d+)$'
-        title_match = re.search(title_pattern, infos[0], re.IGNORECASE)
-
-        if title_match:
-            item['tvshow'] = title_match.group('title').strip()
-            item['season'] = title_match.group('season')
-            item['episode'] = title_match.group('episode')
-        else:
+        if infos:
             item['tvshow'] = infos[0]
 
             filename_pattern = r'^(.*)S(?P<season>\d+)E(?P<episode>\d+)(.*)$'

@@ -1,3 +1,8 @@
+0.0.16
+- windows related problem fixes
+- improve tv show title, season and episode detection
+- remove notification after successfull download
+
 0.0.15
 - same titled tvshow support
 - small fixes
