@@ -1,3 +1,7 @@
+2.2.4
+- Added login support (thanks to Eduardo Franceschi)
+- Highlights are now displayed correctly
+
 2.2.3
 - Change the way pack's are detected
 
