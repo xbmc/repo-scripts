@@ -1,7 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-import datetime
 import json
 
 from .common import InfoExtractor
@@ -23,6 +22,7 @@ class MuenchenTVIE(InfoExtractor):
             'ext': 'mp4',
             'title': 're:^münchen.tv-Livestream [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$',
             'is_live': True,
+            'thumbnail': 're:^https?://.*\.jpg$'
         },
         'params': {
             'skip_download': True,
@@ -33,9 +33,7 @@ class MuenchenTVIE(InfoExtractor):
         display_id = 'live'
         webpage = self._download_webpage(url, display_id)
 
-        now = datetime.datetime.now()
-        now_str = now.strftime("%Y-%m-%d %H:%M")
-        title = self._og_search_title(webpage) + ' ' + now_str
+        title = self._live_title(self._og_search_title(webpage))
 
         data_js = self._search_regex(
             r'(?s)\nplaylist:\s*(\[.*?}\]),related:',
@@ -73,5 +71,6 @@ class MuenchenTVIE(InfoExtractor):
             'title': title,
             'formats': formats,
             'is_live': True,
+            'thumbnail': thumbnail,
         }
 

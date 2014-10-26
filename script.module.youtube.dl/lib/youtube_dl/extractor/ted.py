@@ -65,6 +65,22 @@ class TEDIE(SubtitlesInfoExtractor):
             'title': 'Who are the hackers?',
         },
         'playlist_mincount': 6,
+    }, {
+        # contains a youtube video
+        'url': 'https://www.ted.com/talks/douglas_adams_parrots_the_universe_and_everything',
+        'add_ie': ['Youtube'],
+        'info_dict': {
+            'id': '_ZG8HBuDjgc',
+            'ext': 'mp4',
+            'title': 'Douglas Adams: Parrots the Universe and Everything',
+            'description': 'md5:01ad1e199c49ac640cb1196c0e9016af',
+            'uploader': 'University of California Television (UCTV)',
+            'uploader_id': 'UCtelevision',
+            'upload_date': '20080522',
+        },
+        'params': {
+            'skip_download': True,
+        },
     }]
 
     _NATIVE_FORMATS = {
@@ -114,6 +130,13 @@ class TEDIE(SubtitlesInfoExtractor):
 
         talk_info = self._extract_info(webpage)['talks'][0]
 
+        if talk_info.get('external') is not None:
+            self.to_screen('Found video from %s' % talk_info['external']['service'])
+            return {
+                '_type': 'url',
+                'url': talk_info['external']['uri'],
+            }
+
         formats = [{
             'url': format_url,
             'format_id': format_id,
@@ -149,7 +172,7 @@ class TEDIE(SubtitlesInfoExtractor):
             thumbnail = 'http://' + thumbnail
         return {
             'id': video_id,
-            'title': talk_info['title'],
+            'title': talk_info['title'].strip(),
             'uploader': talk_info['speaker'],
             'thumbnail': thumbnail,
             'description': self._og_search_description(webpage),

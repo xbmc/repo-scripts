@@ -26,7 +26,7 @@ from ..utils import (
     get_element_by_attribute,
     ExtractorError,
     int_or_none,
-    PagedList,
+    OnDemandPagedList,
     unescapeHTML,
     unified_strdate,
     orderedSet,
@@ -191,8 +191,9 @@ class YoutubeBaseInfoExtractor(InfoExtractor):
     def _real_initialize(self):
         if self._downloader is None:
             return
-        if not self._set_language():
-            return
+        if self._get_login_info()[0] is not None:
+            if not self._set_language():
+                return
         if not self._login():
             return
         self._confirm_age()
@@ -286,6 +287,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor, SubtitlesInfoExtractor):
         '170': {'ext': 'webm', 'height': 1080, 'width': 1920, 'format_note': 'DASH video', 'acodec': 'none', 'container': 'webm', 'vcodec': 'VP8', 'preference': -40},
         '218': {'ext': 'webm', 'height': 480, 'width': 854, 'format_note': 'DASH video', 'acodec': 'none', 'container': 'webm', 'vcodec': 'VP8', 'preference': -40},
         '219': {'ext': 'webm', 'height': 480, 'width': 854, 'format_note': 'DASH video', 'acodec': 'none', 'container': 'webm', 'vcodec': 'VP8', 'preference': -40},
+        '278': {'ext': 'webm', 'height': 144, 'format_note': 'DASH video', 'acodec': 'none', 'preference': -40, 'container': 'webm', 'vcodec': 'VP9'},
         '242': {'ext': 'webm', 'height': 240, 'format_note': 'DASH video', 'acodec': 'none', 'preference': -40},
         '243': {'ext': 'webm', 'height': 360, 'format_note': 'DASH video', 'acodec': 'none', 'preference': -40},
         '244': {'ext': 'webm', 'height': 480, 'format_note': 'DASH video', 'acodec': 'none', 'preference': -40},
@@ -655,6 +657,16 @@ class YoutubeIE(YoutubeBaseInfoExtractor, SubtitlesInfoExtractor):
 
         # Get video webpage
         url = proto + '://www.youtube.com/watch?v=%s&gl=US&hl=en&has_verified=1' % video_id
+        pref_cookies = [
+            c for c in self._downloader.cookiejar
+            if c.domain == '.youtube.com' and c.name == 'PREF']
+        for pc in pref_cookies:
+            if 'hl=' in pc.value:
+                pc.value = re.sub(r'hl=[^&]+', 'hl=en', pc.value)
+            else:
+                if pc.value:
+                    pc.value += '&'
+                pc.value += 'hl=en'
         video_webpage = self._download_webpage(url, video_id)
 
         # Attempt to extract SWF player URL
@@ -928,7 +940,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor, SubtitlesInfoExtractor):
             raise ExtractorError('no conn, hlsvp or url_encoded_fmt_stream_map information found in video info')
 
         # Look for the DASH manifest
-        if (self._downloader.params.get('youtube_include_dash_manifest', False)):
+        if self._downloader.params.get('youtube_include_dash_manifest', True):
             try:
                 # The DASH manifest used needs to be the one from the original video_webpage.
                 # The one found in get_video_info seems to be using different signatures.
@@ -1341,7 +1353,7 @@ class YoutubeUserIE(InfoExtractor):
                     'id': video_id,
                     'title': title,
                 }
-        url_results = PagedList(download_page, self._GDATA_PAGE_SIZE)
+        url_results = OnDemandPagedList(download_page, self._GDATA_PAGE_SIZE)
 
         return self.playlist_result(url_results, playlist_title=username)
 

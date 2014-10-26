@@ -203,6 +203,82 @@ def compat_ord(c):
     if type(c) is int: return c
     else: return ord(c)
 
+
+if sys.version_info >= (3, 0):
+    compat_getenv = os.getenv
+    compat_expanduser = os.path.expanduser
+else:
+    # Environment variables should be decoded with filesystem encoding.
+    # Otherwise it will fail if any non-ASCII characters present (see #3854 #3217 #2918)
+
+    def compat_getenv(key, default=None):
+        env = os.getenv(key, default)
+        if env:
+            env = env.decode(get_filesystem_encoding())
+        return env
+
+    # HACK: The default implementations of os.path.expanduser from cpython do not decode
+    # environment variables with filesystem encoding. We will work around this by
+    # providing adjusted implementations.
+    # The following are os.path.expanduser implementations from cpython 2.7.8 stdlib
+    # for different platforms with correct environment variables decoding.
+
+    if os.name == 'posix':
+        def compat_expanduser(path):
+            """Expand ~ and ~user constructions.  If user or $HOME is unknown,
+            do nothing."""
+            if not path.startswith('~'):
+                return path
+            i = path.find('/', 1)
+            if i < 0:
+                i = len(path)
+            if i == 1:
+                if 'HOME' not in os.environ:
+                    import pwd
+                    userhome = pwd.getpwuid(os.getuid()).pw_dir
+                else:
+                    userhome = compat_getenv('HOME')
+            else:
+                import pwd
+                try:
+                    pwent = pwd.getpwnam(path[1:i])
+                except KeyError:
+                    return path
+                userhome = pwent.pw_dir
+            userhome = userhome.rstrip('/')
+            return (userhome + path[i:]) or '/'
+    elif os.name == 'nt' or os.name == 'ce':
+        def compat_expanduser(path):
+            """Expand ~ and ~user constructs.
+
+            If user or $HOME is unknown, do nothing."""
+            if path[:1] != '~':
+                return path
+            i, n = 1, len(path)
+            while i < n and path[i] not in '/\\':
+                i = i + 1
+
+            if 'HOME' in os.environ:
+                userhome = compat_getenv('HOME')
+            elif 'USERPROFILE' in os.environ:
+                userhome = compat_getenv('USERPROFILE')
+            elif not 'HOMEPATH' in os.environ:
+                return path
+            else:
+                try:
+                    drive = compat_getenv('HOMEDRIVE')
+                except KeyError:
+                    drive = ''
+                userhome = os.path.join(drive, compat_getenv('HOMEPATH'))
+
+            if i != 1: #~user
+                userhome = os.path.join(os.path.dirname(userhome), path[1:i])
+
+            return userhome + path[i:]
+    else:
+        compat_expanduser = os.path.expanduser
+
+
 # This is not clearly defined otherwise
 compiled_regex_type = type(re.compile(''))
 
@@ -673,6 +749,8 @@ class ExtractorError(Exception):
             expected = True
         if video_id is not None:
             msg = video_id + ': ' + msg
+        if cause:
+            msg += u' (caused by %r)' % cause
         if not expected:
             msg = msg + u'; please report this issue on https://yt-dl.org/bug . Be sure to call youtube-dl with the --verbose flag and include its complete output. Make sure you are using the latest version; type  youtube-dl -U  to update.'
         super(ExtractorError, self).__init__(msg)
@@ -799,6 +877,12 @@ class YoutubeDLHandler(compat_urllib_request.HTTPHandler):
                 del req.headers['User-agent']
             req.headers['User-agent'] = req.headers['Youtubedl-user-agent']
             del req.headers['Youtubedl-user-agent']
+
+        if sys.version_info < (2, 7) and '#' in req.get_full_url():
+            # Python 2.6 is brain-dead when it comes to fragments
+            req._Request__original = req._Request__original.partition('#')[0]
+            req._Request__r_type = req._Request__r_type.partition('#')[0]
+
         return req
 
     def http_response(self, req, resp):
@@ -884,7 +968,9 @@ def unified_strdate(date_str):
         '%d/%m/%Y',
         '%d/%m/%y',
         '%Y/%m/%d %H:%M:%S',
+        '%d/%m/%Y %H:%M:%S',
         '%Y-%m-%d %H:%M:%S',
+        '%Y-%m-%d %H:%M:%S.%f',
         '%d.%m.%Y %H:%M',
         '%d.%m.%Y %H.%M',
         '%Y-%m-%dT%H:%M:%SZ',
@@ -1197,11 +1283,14 @@ class locked_file(object):
         return self.f.read(*args)
 
 
+def get_filesystem_encoding():
+    encoding = sys.getfilesystemencoding()
+    return encoding if encoding is not None else 'utf-8'
+
+
 def shell_quote(args):
     quoted_args = []
-    encoding = sys.getfilesystemencoding()
-    if encoding is None:
-        encoding = 'utf-8'
+    encoding = get_filesystem_encoding()
     for a in args:
         if isinstance(a, bytes):
             # We may get a filename encoded with 'encodeFilename'
@@ -1251,7 +1340,7 @@ def format_bytes(bytes):
 
 
 def get_term_width():
-    columns = os.environ.get('COLUMNS', None)
+    columns = compat_getenv('COLUMNS', None)
     if columns:
         return int(columns)
 
@@ -1384,13 +1473,15 @@ def check_executable(exe, args=[]):
 
 
 class PagedList(object):
-    def __init__(self, pagefunc, pagesize):
-        self._pagefunc = pagefunc
-        self._pagesize = pagesize
-
     def __len__(self):
         # This is only useful for tests
         return len(self.getslice())
+
+
+class OnDemandPagedList(PagedList):
+    def __init__(self, pagefunc, pagesize):
+        self._pagefunc = pagefunc
+        self._pagesize = pagesize
 
     def getslice(self, start=0, end=None):
         res = []
@@ -1427,6 +1518,35 @@ class PagedList(object):
             # break out early as well
             if end == nextfirstid:
                 break
+        return res
+
+
+class InAdvancePagedList(PagedList):
+    def __init__(self, pagefunc, pagecount, pagesize):
+        self._pagefunc = pagefunc
+        self._pagecount = pagecount
+        self._pagesize = pagesize
+
+    def getslice(self, start=0, end=None):
+        res = []
+        start_page = start // self._pagesize
+        end_page = (
+            self._pagecount if end is None else (end // self._pagesize + 1))
+        skip_elems = start - start_page * self._pagesize
+        only_more = None if end is None else end - start
+        for pagenum in range(start_page, end_page):
+            page = list(self._pagefunc(pagenum))
+            if skip_elems:
+                page = page[skip_elems:]
+                skip_elems = None
+            if only_more is not None:
+                if len(page) < only_more:
+                    only_more -= len(page)
+                else:
+                    page = page[:only_more]
+                    res.extend(page)
+                    break
+            res.extend(page)
         return res
 
 
@@ -1534,33 +1654,37 @@ US_RATINGS = {
 }
 
 
+def parse_age_limit(s):
+    if s is None:
+        return None
+    m = re.match(r'^(?P<age>\d{1,2})\+?$', s)
+    return int(m.group('age')) if m else US_RATINGS.get(s, None)
+
+
 def strip_jsonp(code):
     return re.sub(r'(?s)^[a-zA-Z0-9_]+\s*\(\s*(.*)\);?\s*?\s*$', r'\1', code)
 
 
 def js_to_json(code):
     def fix_kv(m):
-        key = m.group(2)
-        if key.startswith("'"):
-            assert key.endswith("'")
-            assert '"' not in key
-            key = '"%s"' % key[1:-1]
-        elif not key.startswith('"'):
-            key = '"%s"' % key
-
-        value = m.group(4)
-        if value.startswith("'"):
-            assert value.endswith("'")
-            assert '"' not in value
-            value = '"%s"' % value[1:-1]
-
-        return m.group(1) + key + m.group(3) + value
+        v = m.group(0)
+        if v in ('true', 'false', 'null'):
+            return v
+        if v.startswith('"'):
+            return v
+        if v.startswith("'"):
+            v = v[1:-1]
+            v = re.sub(r"\\\\|\\'|\"", lambda m: {
+                '\\\\': '\\\\',
+                "\\'": "'",
+                '"': '\\"',
+            }[m.group(0)], v)
+        return '"%s"' % v
 
     res = re.sub(r'''(?x)
-            ([{,]\s*)
-            ("[^"]*"|\'[^\']*\'|[a-z0-9A-Z]+)
-            (:\s*)
-            ([0-9.]+|true|false|"[^"]*"|\'[^\']*\'|\[|\{)
+        "(?:[^"\\]*(?:\\\\|\\")?)*"|
+        '(?:[^'\\]*(?:\\\\|\\')?)*'|
+        [a-zA-Z_][a-zA-Z_0-9]*
         ''', fix_kv, code)
     res = re.sub(r',(\s*\])', lambda m: m.group(1), res)
     return res
@@ -1599,3 +1723,16 @@ def limit_length(s, length):
     if len(s) > length:
         return s[:length - len(ELLIPSES)] + ELLIPSES
     return s
+
+
+def version_tuple(v):
+    return [int(e) for e in v.split('.')]
+
+
+def is_outdated_version(version, limit, assume_new=True):
+    if not version:
+        return not assume_new
+    try:
+        return version_tuple(version) < version_tuple(limit)
+    except ValueError:
+        return not assume_new

@@ -1,3 +1,7 @@
+*** 14.1026.0 ***
+
+Update youtube-dl core to 2014.10.26
+
 *** 14.925.0 ***
 
 Update youtube-dl core to 2014.09.25

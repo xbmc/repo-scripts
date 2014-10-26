@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import base64
+import datetime
 import hashlib
 import json
 import netrc
@@ -21,6 +22,7 @@ from ..utils import (
     clean_html,
     compiled_regex_type,
     ExtractorError,
+    float_or_none,
     int_or_none,
     RegexNotFoundError,
     sanitize_filename,
@@ -87,6 +89,10 @@ class InfoExtractor(object):
                                  format, irrespective of the file format.
                                  -1 for default (order by other properties),
                                  -2 or smaller for less than default.
+                    * source_preference  Order number for this video source
+                                  (quality takes higher priority)
+                                 -1 for default (order by other properties),
+                                 -2 or smaller for less than default.
                     * http_referer  HTTP Referer header value to set.
                     * http_method  HTTP method to use for the download.
                     * http_headers  A dictionary of additional HTTP headers
@@ -136,6 +142,8 @@ class InfoExtractor(object):
 
     Unless mentioned otherwise, the fields should be Unicode strings.
 
+    Unless mentioned otherwise, None is equivalent to absence of information.
+
     Subclasses of this one should re-define the _real_initialize() and
     _real_extract() methods and define a _VALID_URL regexp.
     Probably, they should also be added to the list of extractors.
@@ -163,6 +171,14 @@ class InfoExtractor(object):
         if '_VALID_URL_RE' not in cls.__dict__:
             cls._VALID_URL_RE = re.compile(cls._VALID_URL)
         return cls._VALID_URL_RE.match(url) is not None
+
+    @classmethod
+    def _match_id(cls, url):
+        if '_VALID_URL_RE' not in cls.__dict__:
+            cls._VALID_URL_RE = re.compile(cls._VALID_URL)
+        m = cls._VALID_URL_RE.match(url)
+        assert m
+        return m.group('id')
 
     @classmethod
     def working(cls):
@@ -226,7 +242,6 @@ class InfoExtractor(object):
 
     def _download_webpage_handle(self, url_or_request, video_id, note=None, errnote=None, fatal=True):
         """ Returns a tuple (page content as string, URL handle) """
-
         # Strip hashes from the URL (#1038)
         if isinstance(url_or_request, (compat_str, str)):
             url_or_request = url_or_request.partition('#')[0]
@@ -235,6 +250,10 @@ class InfoExtractor(object):
         if urlh is False:
             assert not fatal
             return False
+        content = self._webpage_read_content(urlh, url_or_request, video_id, note, errnote, fatal)
+        return (content, urlh)
+
+    def _webpage_read_content(self, urlh, url_or_request, video_id, note=None, errnote=None, fatal=True):
         content_type = urlh.headers.get('Content-Type', '')
         webpage_bytes = urlh.read()
         m = re.match(r'[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+\s*;\s*charset=(.+)', content_type)
@@ -269,6 +288,12 @@ class InfoExtractor(object):
             raw_filename = basen + '.dump'
             filename = sanitize_filename(raw_filename, restricted=True)
             self.to_screen('Saving request to ' + filename)
+            # Working around MAX_PATH limitation on Windows (see
+            # http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx)
+            if os.name == 'nt':
+                absfilepath = os.path.abspath(filename)
+                if len(absfilepath) > 259:
+                    filename = '\\\\?\\' + absfilepath
             with open(filename, 'wb') as outf:
                 outf.write(webpage_bytes)
 
@@ -287,7 +312,7 @@ class InfoExtractor(object):
                 msg += ' Visit %s for more details' % blocked_iframe
             raise ExtractorError(msg, expected=True)
 
-        return (content, urlh)
+        return content
 
     def _download_webpage(self, url_or_request, video_id, note=None, errnote=None, fatal=True):
         """ Returns the data of the page as a string """
@@ -324,7 +349,11 @@ class InfoExtractor(object):
         try:
             return json.loads(json_string)
         except ValueError as ve:
-            raise ExtractorError('Failed to download JSON', cause=ve)
+            errmsg = '%s: Failed to parse JSON ' % video_id
+            if fatal:
+                raise ExtractorError(errmsg, cause=ve)
+            else:
+                self.report_warning(errmsg + str(ve))
 
     def report_warning(self, msg, video_id=None):
         idstr = '' if video_id is None else '%s: ' % video_id
@@ -591,12 +620,13 @@ class InfoExtractor(object):
                 audio_ext_preference,
                 f.get('filesize') if f.get('filesize') is not None else -1,
                 f.get('filesize_approx') if f.get('filesize_approx') is not None else -1,
+                f.get('source_preference') if f.get('source_preference') is not None else -1,
                 f.get('format_id'),
             )
         formats.sort(key=_formats_key)
 
     def http_scheme(self):
-        """ Either "https:" or "https:", depending on the user's preferences """
+        """ Either "http:" or "https:", depending on the user's preferences """
         return (
             'http:'
             if self._downloader.params.get('prefer_insecure', False)
@@ -704,6 +734,34 @@ class InfoExtractor(object):
                 last_info = {}
         self._sort_formats(formats)
         return formats
+
+    def _live_title(self, name):
+        """ Generate the title for a live video """
+        now = datetime.datetime.now()
+        now_str = now.strftime("%Y-%m-%d %H:%M")
+        return name + ' ' + now_str
+
+    def _int(self, v, name, fatal=False, **kwargs):
+        res = int_or_none(v, **kwargs)
+        if 'get_attr' in kwargs:
+            print(getattr(v, kwargs['get_attr']))
+        if res is None:
+            msg = 'Failed to extract %s: Could not parse value %r' % (name, v)
+            if fatal:
+                raise ExtractorError(msg)
+            else:
+                self._downloader.report_warning(msg)
+        return res
+
+    def _float(self, v, name, fatal=False, **kwargs):
+        res = float_or_none(v, **kwargs)
+        if res is None:
+            msg = 'Failed to extract %s: Could not parse value %r' % (name, v)
+            if fatal:
+                raise ExtractorError(msg)
+            else:
+                self._downloader.report_warning(msg)
+        return res
 
 
 class SearchInfoExtractor(InfoExtractor):

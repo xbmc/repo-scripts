@@ -28,6 +28,7 @@ from .brightcove import BrightcoveIE
 from .ooyala import OoyalaIE
 from .rutv import RUTVIE
 from .smotri import SmotriIE
+from .condenast import CondeNastIE
 
 
 class GenericIE(InfoExtractor):
@@ -155,7 +156,6 @@ class GenericIE(InfoExtractor):
         # funnyordie embed
         {
             'url': 'http://www.theguardian.com/world/2014/mar/11/obama-zach-galifianakis-between-two-ferns',
-            'md5': '7cf780be104d40fea7bae52eed4a470e',
             'info_dict': {
                 'id': '18e820ec3f',
                 'ext': 'mp4',
@@ -180,13 +180,13 @@ class GenericIE(InfoExtractor):
         # Embedded TED video
         {
             'url': 'http://en.support.wordpress.com/videos/ted-talks/',
-            'md5': 'deeeabcc1085eb2ba205474e7235a3d5',
+            'md5': '65fdff94098e4a607385a60c5177c638',
             'info_dict': {
-                'id': '981',
+                'id': '1969',
                 'ext': 'mp4',
-                'title': 'My web playroom',
-                'uploader': 'Ze Frank',
-                'description': 'md5:ddb2a40ecd6b6a147e400e535874947b',
+                'title': 'Hidden miracles of the natural world',
+                'uploader': 'Louie Schwartzberg',
+                'description': 'md5:8145d19d320ff3e52f28401f4c4283b9',
             }
         },
         # Embeded Ustream video
@@ -225,21 +225,6 @@ class GenericIE(InfoExtractor):
             'params': {
                 'skip_download': 'Requires rtmpdump'
             }
-        },
-        # smotri embed
-        {
-            'url': 'http://rbctv.rbc.ru/archive/news/562949990879132.shtml',
-            'md5': 'ec40048448e9284c9a1de77bb188108b',
-            'info_dict': {
-                'id': 'v27008541fad',
-                'ext': 'mp4',
-                'title': 'Крым и Севастополь вошли в состав России',
-                'description': 'md5:fae01b61f68984c7bd2fa741e11c3175',
-                'duration': 900,
-                'upload_date': '20140318',
-                'uploader': 'rbctv_2012_4',
-                'uploader_id': 'rbctv_2012_4',
-            },
         },
         # Condé Nast embed
         {
@@ -295,13 +280,13 @@ class GenericIE(InfoExtractor):
         {
             'url': 'https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftA8HM',
             'info_dict': {
-                'id': 'jpSGZsgga_I',
+                'id': '4vAffPZIT44',
                 'ext': 'mp4',
-                'title': 'Asphalt 8: Airborne - Launch Trailer',
+                'title': 'Asphalt 8: Airborne - Update - Welcome to Dubai!',
                 'uploader': 'Gameloft',
                 'uploader_id': 'gameloft',
-                'upload_date': '20130821',
-                'description': 'md5:87bd95f13d8be3e7da87a5f2c443106a',
+                'upload_date': '20140828',
+                'description': 'md5:c80da9ed3d83ae6d1876c834de03e1c4',
             },
             'params': {
                 'skip_download': True,
@@ -382,13 +367,31 @@ class GenericIE(InfoExtractor):
                 'thumbnail': 're:^https?://.*\.jpg$',
             },
         },
+        # Wistia embed
+        {
+            'url': 'http://education-portal.com/academy/lesson/north-american-exploration-failed-colonies-of-spain-france-england.html#lesson',
+            'md5': '8788b683c777a5cf25621eaf286d0c23',
+            'info_dict': {
+                'id': '1cfaf6b7ea',
+                'ext': 'mov',
+                'title': 'md5:51364a8d3d009997ba99656004b5e20d',
+                'duration': 643.0,
+                'filesize': 182808282,
+                'uploader': 'education-portal.com',
+            },
+        },
+        {
+            'url': 'http://thoughtworks.wistia.com/medias/uxjb0lwrcz',
+            'md5': 'baf49c2baa8a7de5f3fc145a8506dcd4',
+            'info_dict': {
+                'id': 'uxjb0lwrcz',
+                'ext': 'mp4',
+                'title': 'Conversation about Hexagonal Rails Part 1 - ThoughtWorks',
+                'duration': 1715.0,
+                'uploader': 'thoughtworks.wistia.com',
+            },   
+        },
     ]
-
-    def report_download_webpage(self, video_id):
-        """Report webpage download."""
-        if not self._downloader.params.get('test', False):
-            self._downloader.report_warning('Falling back on generic information extractor.')
-        super(GenericIE, self).report_download_webpage(video_id)
 
     def report_following_redirect(self, new_url):
         """Report information extraction."""
@@ -484,11 +487,13 @@ class GenericIE(InfoExtractor):
                      'Set --default-search "ytsearch" (or run  youtube-dl "ytsearch:%s" ) to search YouTube'
                     ) % (url, url), expected=True)
             else:
-                assert ':' in default_search
+                if ':' not in default_search:
+                    default_search += ':'
                 return self.url_result(default_search + url)
 
         url, smuggled_data = unsmuggle_url(url)
         force_videoid = None
+        is_intentional = smuggled_data and smuggled_data.get('to_generic')
         if smuggled_data and 'force_videoid' in smuggled_data:
             force_videoid = smuggled_data['force_videoid']
             video_id = force_videoid
@@ -498,14 +503,14 @@ class GenericIE(InfoExtractor):
         self.to_screen('%s: Requesting header' % video_id)
 
         head_req = HEADRequest(url)
-        response = self._request_webpage(
+        head_response = self._request_webpage(
             head_req, video_id,
             note=False, errnote='Could not send HEAD request to %s' % url,
             fatal=False)
 
-        if response is not False:
+        if head_response is not False:
             # Check for redirect
-            new_url = response.geturl()
+            new_url = head_response.geturl()
             if url != new_url:
                 self.report_following_redirect(new_url)
                 if force_videoid:
@@ -513,31 +518,35 @@ class GenericIE(InfoExtractor):
                         new_url, {'force_videoid': force_videoid})
                 return self.url_result(new_url)
 
-            # Check for direct link to a video
-            content_type = response.headers.get('Content-Type', '')
-            m = re.match(r'^(?P<type>audio|video|application(?=/ogg$))/(?P<format_id>.+)$', content_type)
-            if m:
-                upload_date = response.headers.get('Last-Modified')
-                if upload_date:
-                    upload_date = unified_strdate(upload_date)
-                return {
-                    'id': video_id,
-                    'title': os.path.splitext(url_basename(url))[0],
-                    'formats': [{
-                        'format_id': m.group('format_id'),
-                        'url': url,
-                        'vcodec': 'none' if m.group('type') == 'audio' else None
-                    }],
-                    'upload_date': upload_date,
-                }
+        full_response = None
+        if head_response is False:
+            full_response = self._request_webpage(url, video_id)
+            head_response = full_response
 
-        try:
+        # Check for direct link to a video
+        content_type = head_response.headers.get('Content-Type', '')
+        m = re.match(r'^(?P<type>audio|video|application(?=/ogg$))/(?P<format_id>.+)$', content_type)
+        if m:
+            upload_date = unified_strdate(
+                head_response.headers.get('Last-Modified'))
+            return {
+                'id': video_id,
+                'title': os.path.splitext(url_basename(url))[0],
+                'formats': [{
+                    'format_id': m.group('format_id'),
+                    'url': url,
+                    'vcodec': 'none' if m.group('type') == 'audio' else None
+                }],
+                'upload_date': upload_date,
+            }
+
+        if not self._downloader.params.get('test', False) and not is_intentional:
+            self._downloader.report_warning('Falling back on generic information extractor.')
+
+        if full_response:
+            webpage = _webpage_read_content(url, video_id)
+        else:
             webpage = self._download_webpage(url, video_id)
-        except ValueError:
-            # since this is the last-resort InfoExtractor, if
-            # this error is thrown, it'll be thrown here
-            raise ExtractorError('Failed to download URL: %s' % url)
-
         self.report_extraction(video_id)
 
         # Is it an RSS feed?
@@ -613,13 +622,13 @@ class GenericIE(InfoExtractor):
         if mobj:
             player_url = unescapeHTML(mobj.group('url'))
             surl = smuggle_url(player_url, {'Referer': url})
-            return self.url_result(surl, 'Vimeo')
+            return self.url_result(surl)
 
         # Look for embedded (swf embed) Vimeo player
         mobj = re.search(
-            r'<embed[^>]+?src="(https?://(?:www\.)?vimeo\.com/moogaloop\.swf.+?)"', webpage)
+            r'<embed[^>]+?src="((?:https?:)?//(?:www\.)?vimeo\.com/moogaloop\.swf.+?)"', webpage)
         if mobj:
-            return self.url_result(mobj.group(1), 'Vimeo')
+            return self.url_result(mobj.group(1))
 
         # Look for embedded YouTube player
         matches = re.findall(r'''(?x)
@@ -627,7 +636,8 @@ class GenericIE(InfoExtractor):
                 <iframe[^>]+?src=|
                 data-video-url=|
                 <embed[^>]+?src=|
-                embedSWF\(?:\s*
+                embedSWF\(?:\s*|
+                new\s+SWFObject\(
             )
             (["\'])
                 (?P<url>(?:https?:)?//(?:www\.)?youtube(?:-nocookie)?\.com/
@@ -644,17 +654,40 @@ class GenericIE(InfoExtractor):
             return _playlist_from_matches(
                 matches, lambda m: unescapeHTML(m[1]))
 
+        # Look for embedded Dailymotion playlist player (#3822)
+        m = re.search(
+            r'<iframe[^>]+?src=(["\'])(?P<url>(?:https?:)?//(?:www\.)?dailymotion\.[a-z]{2,3}/widget/jukebox\?.+?)\1', webpage)
+        if m:
+            playlists = re.findall(
+                r'list\[\]=/playlist/([^/]+)/', unescapeHTML(m.group('url')))
+            if playlists:
+                return _playlist_from_matches(
+                    playlists, lambda p: '//dailymotion.com/playlist/%s' % p)
+
         # Look for embedded Wistia player
         match = re.search(
-            r'<iframe[^>]+?src=(["\'])(?P<url>(?:https?:)?//(?:fast\.)?wistia\.net/embed/iframe/.+?)\1', webpage)
+            r'<(?:meta[^>]+?content|iframe[^>]+?src)=(["\'])(?P<url>(?:https?:)?//(?:fast\.)?wistia\.net/embed/iframe/.+?)\1', webpage)
         if match:
+            embed_url = self._proto_relative_url(
+                unescapeHTML(match.group('url')))
             return {
                 '_type': 'url_transparent',
-                'url': unescapeHTML(match.group('url')),
+                'url': embed_url,
                 'ie_key': 'Wistia',
                 'uploader': video_uploader,
                 'title': video_title,
                 'id': video_id,
+            }
+            
+        match = re.search(r'(?:id=["\']wistia_|data-wistia-?id=["\']|Wistia\.embed\(["\'])(?P<id>[^"\']+)', webpage)
+        if match:
+            return {
+                '_type': 'url_transparent',
+                'url': 'http://fast.wistia.net/embed/iframe/{0:}'.format(match.group('id')),
+                'ie_key': 'Wistia',
+                'uploader': video_uploader,
+                'title': video_title,
+                'id': match.group('id')
             }
 
         # Look for embedded blip.tv player
@@ -832,47 +865,57 @@ class GenericIE(InfoExtractor):
         if mobj is not None:
             return self.url_result(mobj.group('url'), 'MLB')
 
+        mobj = re.search(
+            r'<iframe[^>]+?src=(["\'])(?P<url>%s)\1' % CondeNastIE.EMBED_URL,
+            webpage)
+        if mobj is not None:
+            return self.url_result(self._proto_relative_url(mobj.group('url'), scheme='http:'), 'CondeNast')
+
+        def check_video(vurl):
+            vpath = compat_urlparse.urlparse(vurl).path
+            vext = determine_ext(vpath)
+            return '.' in vpath and vext not in ('swf', 'png', 'jpg', 'srt', 'sbv', 'sub', 'vtt', 'ttml')
+
+        def filter_video(urls):
+            return list(filter(check_video, urls))
+
         # Start with something easy: JW Player in SWFObject
-        found = re.findall(r'flashvars: [\'"](?:.*&)?file=(http[^\'"&]*)', webpage)
+        found = filter_video(re.findall(r'flashvars: [\'"](?:.*&)?file=(http[^\'"&]*)', webpage))
         if not found:
             # Look for gorilla-vid style embedding
-            found = re.findall(r'''(?sx)
+            found = filter_video(re.findall(r'''(?sx)
                 (?:
                     jw_plugins|
                     JWPlayerOptions|
                     jwplayer\s*\(\s*["'][^'"]+["']\s*\)\s*\.setup
                 )
-                .*?file\s*:\s*["\'](.*?)["\']''', webpage)
+                .*?file\s*:\s*["\'](.*?)["\']''', webpage))
         if not found:
             # Broaden the search a little bit
-            found = re.findall(r'[^A-Za-z0-9]?(?:file|source)=(http[^\'"&]*)', webpage)
+            found = filter_video(re.findall(r'[^A-Za-z0-9]?(?:file|source)=(http[^\'"&]*)', webpage))
         if not found:
             # Broaden the findall a little bit: JWPlayer JS loader
-            found = re.findall(r'[^A-Za-z0-9]?file["\']?:\s*["\'](http(?![^\'"]+\.[0-9]+[\'"])[^\'"]+)["\']', webpage)
+            found = filter_video(re.findall(
+                r'[^A-Za-z0-9]?file["\']?:\s*["\'](http(?![^\'"]+\.[0-9]+[\'"])[^\'"]+)["\']', webpage))
         if not found:
             # Flow player
-            found = re.findall(r'''(?xs)
+            found = filter_video(re.findall(r'''(?xs)
                 flowplayer\("[^"]+",\s*
                     \{[^}]+?\}\s*,
                     \s*{[^}]+? ["']?clip["']?\s*:\s*\{\s*
                         ["']?url["']?\s*:\s*["']([^"']+)["']
-            ''', webpage)
+            ''', webpage))
         if not found:
             # Try to find twitter cards info
-            found = re.findall(r'<meta (?:property|name)="twitter:player:stream" (?:content|value)="(.+?)"', webpage)
+            found = filter_video(re.findall(
+                r'<meta (?:property|name)="twitter:player:stream" (?:content|value)="(.+?)"', webpage))
         if not found:
             # We look for Open Graph info:
             # We have to match any number spaces between elements, some sites try to align them (eg.: statigr.am)
             m_video_type = re.findall(r'<meta.*?property="og:video:type".*?content="video/(.*?)"', webpage)
             # We only look in og:video if the MIME type is a video, don't try if it's a Flash player:
             if m_video_type is not None:
-                def check_video(vurl):
-                    vpath = compat_urlparse.urlparse(vurl).path
-                    vext = determine_ext(vpath)
-                    return '.' in vpath and vext not in ('swf', 'png', 'jpg')
-                found = list(filter(
-                    check_video,
-                    re.findall(r'<meta.*?property="og:video".*?content="(.*?)"', webpage)))
+                found = filter_video(re.findall(r'<meta.*?property="og:video".*?content="(.*?)"', webpage))
         if not found:
             # HTML5 video
             found = re.findall(r'(?s)<video[^<]*(?:>.*?<source[^>]+)? src="([^"]+)"', webpage)

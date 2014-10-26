@@ -78,6 +78,12 @@ __authors__  = (
     'Hari Padmanaban',
     'Carlos Ramos',
     '5moufl',
+    'lenaten',
+    'Dennis Scheiba',
+    'Damon Timm',
+    'winwon',
+    'Xavier Beynon',
+    'Gabriel Schubiner',
 )
 
 __license__ = 'Public Domain'
@@ -93,6 +99,7 @@ from .options import (
     parseOpts,
 )
 from .utils import (
+    compat_expanduser,
     compat_getpass,
     compat_print,
     DateRange,
@@ -254,8 +261,6 @@ def _real_main(argv=None):
         date = DateRange.day(opts.date)
     else:
         date = DateRange(opts.dateafter, opts.datebefore)
-    if opts.default_search not in ('auto', 'auto_warning', 'error', 'fixup_error', None) and ':' not in opts.default_search:
-        parser.error(u'--default-search invalid; did you forget a colon (:) at the end?')
 
     # Do not download videos when there are audio-only formats
     if opts.extractaudio and not opts.keepvideo and opts.format is None:
@@ -283,8 +288,8 @@ def _real_main(argv=None):
                      u' file! Use "{0}.%(ext)s" instead of "{0}" as the output'
                      u' template'.format(outtmpl))
 
-    any_printing = opts.geturl or opts.gettitle or opts.getid or opts.getthumbnail or opts.getdescription or opts.getfilename or opts.getformat or opts.getduration or opts.dumpjson
-    download_archive_fn = os.path.expanduser(opts.download_archive) if opts.download_archive is not None else opts.download_archive
+    any_printing = opts.geturl or opts.gettitle or opts.getid or opts.getthumbnail or opts.getdescription or opts.getfilename or opts.getformat or opts.getduration or opts.dumpjson or opts.dump_single_json
+    download_archive_fn = compat_expanduser(opts.download_archive) if opts.download_archive is not None else opts.download_archive
 
     ydl_opts = {
         'usenetrc': opts.usenetrc,
@@ -303,8 +308,9 @@ def _real_main(argv=None):
         'forcefilename': opts.getfilename,
         'forceformat': opts.getformat,
         'forcejson': opts.dumpjson,
-        'simulate': opts.simulate,
-        'skip_download': (opts.skip_download or opts.simulate or any_printing),
+        'dump_single_json': opts.dump_single_json,
+        'simulate': opts.simulate or any_printing,
+        'skip_download': opts.skip_download,
         'format': opts.format,
         'format_limit': opts.format_limit,
         'listformats': opts.listformats,
@@ -368,6 +374,7 @@ def _real_main(argv=None):
         'youtube_include_dash_manifest': opts.youtube_include_dash_manifest,
         'encoding': opts.encoding,
         'exec_cmd': opts.exec_cmd,
+        'extract_flat': opts.extract_flat,
     }
 
     with YoutubeDL(ydl_opts) as ydl:

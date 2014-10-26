@@ -24,6 +24,7 @@ if os.name == 'nt':
 
 from .utils import (
     compat_cookiejar,
+    compat_expanduser,
     compat_http_client,
     compat_str,
     compat_urllib_error,
@@ -61,7 +62,7 @@ from .utils import (
 from .cache import Cache
 from .extractor import get_info_extractor, gen_extractors
 from .downloader import get_suitable_downloader
-from .postprocessor import FFmpegMergerPP
+from .postprocessor import FFmpegMergerPP, FFmpegPostProcessor
 from .version import __version__
 
 
@@ -107,6 +108,8 @@ class YoutubeDL(object):
     forcefilename:     Force printing final filename.
     forceduration:     Force printing duration.
     forcejson:         Force printing info_dict as JSON.
+    dump_single_json:  Force printing the info_dict of the whole playlist
+                       (or video) as a single JSON line.
     simulate:          Do not download the video files.
     format:            Video format code.
     format_limit:      Highest quality format to try.
@@ -165,6 +168,8 @@ class YoutubeDL(object):
                        'auto' for elaborate guessing
     encoding:          Use this encoding instead of the system-specified.
     extract_flat:      Do not resolve URLs, return the immediate result.
+                       Pass in 'in_playlist' to only show this behavior for
+                       playlist items.
 
     The following parameters are not used by YoutubeDL itself, they are used by
     the FileDownloader:
@@ -228,11 +233,11 @@ class YoutubeDL(object):
 
         if (sys.version_info >= (3,) and sys.platform != 'win32' and
                 sys.getfilesystemencoding() in ['ascii', 'ANSI_X3.4-1968']
-                and not params['restrictfilenames']):
+                and not params.get('restrictfilenames', False)):
             # On Python 3, the Unicode filesystem API will throw errors (#1474)
             self.report_warning(
                 'Assuming --restrict-filenames since file system encoding '
-                'cannot encode all charactes. '
+                'cannot encode all characters. '
                 'Set the LC_ALL environment variable to fix this.')
             self.params['restrictfilenames'] = True
 
@@ -447,7 +452,7 @@ class YoutubeDL(object):
             template_dict = collections.defaultdict(lambda: 'NA', template_dict)
 
             outtmpl = self.params.get('outtmpl', DEFAULT_OUTTMPL)
-            tmpl = os.path.expanduser(outtmpl)
+            tmpl = compat_expanduser(outtmpl)
             filename = tmpl % template_dict
             return filename
         except ValueError as err:
@@ -568,8 +573,12 @@ class YoutubeDL(object):
 
         result_type = ie_result.get('_type', 'video')
 
-        if self.params.get('extract_flat', False):
-            if result_type in ('url', 'url_transparent'):
+        if result_type in ('url', 'url_transparent'):
+            extract_flat = self.params.get('extract_flat', False)
+            if ((extract_flat == 'in_playlist' and 'playlist' in extra_info) or
+                    extract_flat is True):
+                if self.params.get('forcejson', False):
+                    self.to_stdout(json.dumps(ie_result))
                 return ie_result
 
         if result_type == 'video':
@@ -897,6 +906,8 @@ class YoutubeDL(object):
         if self.params.get('forcejson', False):
             info_dict['_filename'] = filename
             self.to_stdout(json.dumps(info_dict))
+        if self.params.get('dump_single_json', False):
+            info_dict['_filename'] = filename
 
         # Do nothing else if in simulate mode
         if self.params.get('simulate', False):
@@ -1015,7 +1026,7 @@ class YoutubeDL(object):
                         downloaded = []
                         success = True
                         merger = FFmpegMergerPP(self, not self.params.get('keepvideo'))
-                        if not merger._get_executable():
+                        if not merger._executable:
                             postprocessors = []
                             self.report_warning('You have requested multiple '
                                 'formats but ffmpeg or avconv are not installed.'
@@ -1064,12 +1075,15 @@ class YoutubeDL(object):
         for url in url_list:
             try:
                 #It also downloads the videos
-                self.extract_info(url)
+                res = self.extract_info(url)
             except UnavailableVideoError:
                 self.report_error('unable to download video')
             except MaxDownloadsReached:
                 self.to_screen('[info] Maximum number of downloaded files reached.')
                 raise
+            else:
+                if self.params.get('dump_single_json', False):
+                    self.to_stdout(json.dumps(res))
 
         return self._download_retcode
 
@@ -1250,12 +1264,13 @@ class YoutubeDL(object):
         # urllib chokes on URLs with non-ASCII characters (see http://bugs.python.org/issue3991)
         # To work around aforementioned issue we will replace request's original URL with
         # percent-encoded one
-        url = req if isinstance(req, compat_str) else req.get_full_url()
+        req_is_string = isinstance(req, basestring if sys.version_info < (3, 0) else compat_str)
+        url = req if req_is_string else req.get_full_url()
         url_escaped = escape_url(url)
 
         # Substitute URL if any change after escaping
         if url != url_escaped:
-            if isinstance(req, compat_str):
+            if req_is_string:
                 req = url_escaped
             else:
                 req = compat_urllib_request.Request(
@@ -1296,8 +1311,18 @@ class YoutubeDL(object):
                 sys.exc_clear()
             except:
                 pass
-        self._write_string('[debug] Python version %s - %s' %
-                     (platform.python_version(), platform_name()) + '\n')
+        self._write_string('[debug] Python version %s - %s\n' % (
+            platform.python_version(), platform_name()))
+
+        exe_versions = FFmpegPostProcessor.get_versions()
+        exe_str = ', '.join(
+            '%s %s' % (exe, v)
+            for exe, v in sorted(exe_versions.items())
+            if v
+        )
+        if not exe_str:
+            exe_str = 'none'
+        self._write_string('[debug] exe versions: %s\n' % exe_str)
 
         proxy_map = {}
         for handler in self._opener.handlers:
