@@ -1,3 +1,10 @@
+1.1.6
+- speed optimizations
+- added caching for user collections
+- fixed views for MB3
+1.1.0
+- support for new menu system
+- fixes for collection backgrounds from MB3
 1.0.8
 - fixed script error  for non mediabrowser users
 - optimized some code

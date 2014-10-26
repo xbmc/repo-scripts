@@ -5,61 +5,45 @@ import xbmcaddon
 import os
 import time
 
-def setHomeItems(curPoslabel, idToChange, moveDirection):
-
+def sendClick(controlId):
     win = xbmcgui.Window( 10000 )
-    
-    curPosId = int(curPoslabel.split("-")[1]);
-    nextPosId = curPosId +1
-    prevPosId = curPosId -1    
-
-    curItemId = int(xbmc.getInfoLabel("Skin.String(HomeMenuPos-" + str(curPosId) + ")"))
-    nextItemId = int(xbmc.getInfoLabel("Skin.String(HomeMenuPos-" + str(nextPosId) + ")"))
-    prevItemId = int(xbmc.getInfoLabel("Skin.String(HomeMenuPos-" + str(prevPosId) + ")"))
-    
-    curWinPos = int(win.getProperty("CurrentPos"))
-    
-    if (moveDirection == "DOWN"):
-        if curPosId != 0:
-            xbmc.executebuiltin("Skin.SetString(HomeMenuPos-" + str(curPosId) + "," + str(prevItemId) + ")")
-            xbmc.executebuiltin("Skin.SetString(HomeMenuPos-" + str(prevPosId) + "," + str(curItemId) + ")")
-            curWinPos = curWinPos -1
-        
-    if (moveDirection == "UP"):
-        if curPosId != 45:
-            xbmc.executebuiltin("Skin.SetString(HomeMenuPos-" + str(curPosId) + "," + str(nextItemId) + ")")
-            xbmc.executebuiltin("Skin.SetString(HomeMenuPos-" + str(nextPosId) + "," + str(curItemId) + ")")
-            curWinPos = curWinPos +1
-    
-    xbmc.executebuiltin('xbmc.ReloadSkin')
-    xbmc.executebuiltin('Control.SetFocus(100,2)')
-    xbmc.executebuiltin('Control.SetFocus(300, ' + str(curWinPos) + ')')    
-
+    time.sleep(0.5)
+    xbmc.executebuiltin('SendClick('+ controlId +')')
 
 def setView(containerType,viewId):
     
     if viewId=="00":
+        win = xbmcgui.Window( 10000 )
+        
         curView = xbmc.getInfoLabel("Container.Viewmode")
-        if curView == "Showcase":
-            viewId="51"
-        if curView == "Panel details":
-            viewId="53"  
-        if curView == "Showcase Details":
-            viewId="54"
-        if curView == "Panel":
-            viewId="52"
-        if curView == "Titan Banner details":
-            viewId="505"
-        if curView == "Banner list":
-            viewId="55"
-        if curView == "Extended":
-            viewId="506"           
-        if curView == "Banner Plex":
-            viewId="56"
-        if curView == "Titan Banner":
-            viewId="501"
+        
         if curView == "list":
-            viewId="50"
+            viewId="50"        
+        elif curView == "Showcase":
+            viewId="51"
+        elif curView == "Panel details":
+            viewId="53"  
+        elif curView == "Showcase Details":
+            viewId="54"
+        elif curView == "Panel":
+            viewId="52"
+        elif curView == "Banner list":
+            viewId="55"
+        elif curView == "Banner Plex":
+            viewId="56"            
+        elif curView == "Big Panel":
+            viewId="57" 
+        elif curView == "Large Poster":
+            viewId="58"
+        elif curView == "Big Panel details":
+            viewId="59"
+        elif curView == "Landscape":
+            viewId="501"            
+        elif curView == "Landscape details":
+            viewId="505"            
+        elif curView == "Extended":
+            viewId="506"           
+
     else:
         viewId=viewId    
       
@@ -111,6 +95,7 @@ def showSubmenu(showOrHide,doFocus):
         win.setProperty("submenuloading", "loading")
         win.setProperty("submenu", "hide")
         if doFocus != None:
+            xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
             time.sleep(0.8)
             xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
 
@@ -146,12 +131,10 @@ except:
     pass  
 
 # select action
-if action == "SETHOMEITEMS":
-    setHomeItems(argument1, argument2, argument3)
+if action == "SENDCLICK":
+    sendClick(argument1)
 elif action == "SETVIEW":
     setView(argument1, argument2)
-elif action == "RESTORE":
-    restoreHomeItems()
 elif action == "SHOWSUBMENU":
     showSubmenu(argument1,argument2)
 else:

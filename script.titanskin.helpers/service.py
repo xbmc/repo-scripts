@@ -15,33 +15,26 @@ __cwd__ = __settings__.getAddonInfo('path')
 BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'lib' ) )
 sys.path.append(BASE_RESOURCE_PATH)
 
-
 class TitanThread ():
 
+    addonSettings = None
     favorites_art_links = []
+    favoriteshows_art_links = []
     channels_art_links = []
     global_art_links = []
     musicvideo_art_links = []
     photo_art_links = []
     current_fav_art = 0
+    current_favshow_art = 0
     current_channel_art = 0
     current_musicvideo_art = 0
     current_photo_art = 0
     current_global_art = 0
     fullcheckinterval = 900
     shortcheckinterval = 30
-    doDebugLog = False
+    _userId = ""
 
-    def updateArtLinks(self):
-        try:
-            result01 = self.updateCollectionArtLinks()
-            result02 = self.updateTypeArtLinks()
-            if (result01 == True and result02 == True):
-                return True
-            else:
-                return False            
-        except Exception, e:
-            return False        
+    doDebugLog = False
 
     def logMsg(self, msg, level = 1):
         if self.doDebugLog == True:
@@ -75,7 +68,7 @@ class TitanThread ():
 
 
     def updateCollectionArtLinks(self):
-        
+
         from DownloadUtils import DownloadUtils
         downloadUtils = DownloadUtils()        
 
@@ -83,58 +76,18 @@ class TitanThread ():
 
         mb3Host = addonSettings.getSetting('ipaddress')
         mb3Port = addonSettings.getSetting('port')    
-        userName = addonSettings.getSetting('username')    
-
-        # get the user ID
-        userUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users?format=json"
-
-        try:
-            requesthandle = urllib.urlopen(userUrl, proxies={})
-            jsonData = requesthandle.read()
-            requesthandle.close()   
-        except Exception, e:
-            self.logMsg("urlopen : " + str(e) + " (" + userUrl + ")", level=0)
-            return False  
-
-        result = []
-
-        try:
-            result = json.loads(jsonData)
-        except Exception, e:
-            self.logMsg("jsonload : " + str(e) + " (" + jsonData + ")", level=0)
-            return False
-
-        userid = ""
-        for user in result:
-            if(user.get("Name") == userName):
-                userid = user.get("Id")    
-                break        
-
+        userName = addonSettings.getSetting('username')
+        userid = self._userId
 
         userUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items/Root?format=json"
-        try:
-            requesthandle = urllib.urlopen(userUrl, proxies={})
-            jsonData = requesthandle.read()
-            requesthandle.close()   
-        except Exception, e:
-            self.logMsg("updateCollectionArtLinks urlopen : " + str(e) + " (" + userUrl + ")", level=0)
-            return False
+        jsonData = downloadUtils.downloadUrl(userUrl, suppress=False, popup=1 )
 
-        self.logMsg("updateCollectionArtLinks UserData : " + str(jsonData), 2)
         result = json.loads(jsonData)
 
         parentid = result.get("Id")
-        self.logMsg("updateCollectionArtLinks ParentID : " + str(parentid), 2)
 
         userRootPath = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/items?ParentId=&SortBy=SortName&Fields=CollectionType,Overview,RecursiveItemCount&format=json"
-        try:
-            requesthandle = urllib.urlopen(userRootPath, proxies={})
-            jsonData = requesthandle.read()
-            requesthandle.close()   
-        except Exception, e:
-            self.logMsg("updateCollectionArtLinks urlopen : " + str(e) + " (" + userRootPath + ")", level=0)
-            return False
-
+        jsonData = downloadUtils.downloadUrl(userRootPath, suppress=False, popup=1 )
 
         result = json.loads(jsonData)
         result = result.get("Items")
@@ -153,16 +106,10 @@ class TitanThread ():
                 continue
 
             # Process collection item backgrounds
-            collectionUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/items?ParentId=" + item.get("Id") + "&IncludeItemTypes=Movie,Series,MusicArtist,MusicAlbum,Trailer,MusicVideo,Photo,Video,Audio&Fields=ParentId,Overview&SortOrder=Descending&Recursive=true&CollapseBoxSetItems=false&format=json"
-            try:
-                requesthandle = urllib2.urlopen(collectionUrl, timeout=60)
-                jsonData = requesthandle.read()
-                requesthandle.close()   
-            except Exception, e:
-                self.logMsg("[Titanskin ERROR] updateCollectionArtLinks urlopen : " + str(e) + " (" + collectionUrl + ")", level=0)
-                return False    
+            collectionUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/items?&SortOrder=Descending&ParentId=" + item.get("Id") + "&IncludeItemTypes=Movie,Series,MusicArtist,MusicAlbum,Trailer,MusicVideo,Photo,Video,Audio&Fields=ParentId,Overview&SortOrder=Descending&Recursive=true&CollapseBoxSetItems=false&format=json"
+            jsonData = downloadUtils.downloadUrl(collectionUrl, suppress=False, popup=1 )  
             collectionResult = json.loads(jsonData)
-            
+
             self.logMsg("[Titanskin COLLECTION] -- " + item.get("Name") + " -- " + collectionUrl)
 
             collectionResult = collectionResult.get("Items")
@@ -176,7 +123,7 @@ class TitanThread ():
                 MB3type = col_item.get("Type")
                 images = col_item.get("BackdropImageTags")
                 images2 = col_item.get("ImageTags")
-                
+
                 stored_item = artLinks.get(id)
 
                 if(stored_item == None):
@@ -198,7 +145,7 @@ class TitanThread ():
                     if (images3 == None):
                         images3 = []                            
                     index = 0
-                  
+
                     if(col_item.get("Type") == "Photo") or images == []:
                         for imagetag in images2:
                             info = {}
@@ -210,10 +157,10 @@ class TitanThread ():
                             info["name"] = name
                             links.append(info)
                             index = index + 1
-                        
+
                             stored_item["links"] = links
                             artLinks[id] = stored_item 
-    
+
                     for backdrop in images:
                         info = {}
                         info["url"] = downloadUtils.getArtwork(col_item, "Backdrop", index=str(index))
@@ -226,7 +173,7 @@ class TitanThread ():
                         if(col_item.get("Type") == "Series"):
                             self.logMsg("[Titanskin IMAGE] -- " + name + " -- " + downloadUtils.getArtwork(col_item, "Backdrop", index=str(index)))
                         index = index + 1
-                    
+
                         stored_item["links"] = links
                         artLinks[id] = stored_item
                 else:
@@ -258,10 +205,15 @@ class TitanThread ():
         WINDOW = xbmcgui.Window( 10000 )
         backGroundUrl = ""
 
-        if (filterOnCollectionName == "favorites"):
+        if (filterOnCollectionName == "favoritemovies"):
             if(len(self.favorites_art_links) > 0):
                 next, nextItem = self.findNextLink(self.favorites_art_links, self.current_fav_art, "")
                 self.current_fav_art = next
+                backGroundUrl = nextItem["url"]
+        elif (filterOnCollectionName == "favoriteshows"):
+            if(len(self.favoriteshows_art_links) > 0):
+                next, nextItem = self.findNextLink(self.favoriteshows_art_links, self.current_favshow_art, "")
+                self.current_favshow_art = next
                 backGroundUrl = nextItem["url"]
         elif (filterOnCollectionName == "channels"):
             if(len(self.channels_art_links) > 0):
@@ -269,7 +221,7 @@ class TitanThread ():
                 self.current_channel_art = next
                 backGroundUrl = nextItem["url"]
         elif (filterOnCollectionName == "musicvideos"):
-            if(len(self.channels_art_links) > 0):
+            if(len(self.musicvideo_art_links) > 0):
                 next, nextItem = self.findNextLink(self.musicvideo_art_links, self.current_musicvideo_art, "")
                 self.current_musicvideo_art = next
                 backGroundUrl = nextItem["url"] 
@@ -288,53 +240,19 @@ class TitanThread ():
 
 
     def updateTypeArtLinks(self):
-        
+
         from DownloadUtils import DownloadUtils
         downloadUtils = DownloadUtils()        
         addonSettings = xbmcaddon.Addon(id='plugin.video.xbmb3c')
 
         mb3Host = addonSettings.getSetting('ipaddress')
         mb3Port = addonSettings.getSetting('port')    
-        userName = addonSettings.getSetting('username')     
-
-        # get the user ID
-        userUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users?format=json"
-
-        try:
-            requesthandle = urllib.urlopen(userUrl, proxies={})
-            jsonData = requesthandle.read()
-            requesthandle.close()   
-        except Exception, e:
-            self.logMsg("updateTypeArtLinks urlopen : " + str(e) + " (" + userUrl + ")", level=0)
-            return False
-
-        result = []
-
-        try:
-            result = json.loads(jsonData)
-        except Exception, e:
-            self.logMsg("jsonload : " + str(e) + " (" + jsonData + ")", level=0)
-            return False
-
-        userid = ""
-        for user in result:
-            if(user.get("Name") == userName):
-                userid = user.get("Id")    
-                break
-
-        self.logMsg("updateTypeArtLinks UserID : " + userid)
+        userName = addonSettings.getSetting('username')
+        userid = self._userId
 
         # load Favorite Movie BG's
-        favMoviesUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Fields=ParentId,Overview&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=Movie&Filters=IsFavorite&format=json"
-
-        try:
-            requesthandle = urllib2.urlopen(favMoviesUrl, timeout=60)
-            jsonData = requesthandle.read()
-            requesthandle.close()   
-        except Exception, e:
-            self.logMsg("updateTypeArtLinks urlopen : " + str(e) + " (" + favMoviesUrl + ")", level=0)
-            return False
-
+        favMoviesUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Limit=20&Fields=ParentId,Overview&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=Movie&Filters=IsFavorite&format=json"
+        jsonData = downloadUtils.downloadUrl(favMoviesUrl, suppress=False, popup=1 )
         result = json.loads(jsonData)
 
         result = result.get("Items")
@@ -363,21 +281,44 @@ class TitanThread ():
                     self.favorites_art_links.append(info)
                 index = index + 1
 
-        random.shuffle(self.favorites_art_links)
-        self.logMsg("Background Favorite Movie Art Links : " + str(len(self.favorites_art_links)))
-        
-        
+        random.shuffle(self.favorites_art_links)       
+
+        # load Favorite TV Show BG's
+        favShowsUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Limit=20&Fields=ParentId,Overview&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=Series&Filters=IsFavorite&format=json"
+        jsonData = downloadUtils.downloadUrl(favShowsUrl, suppress=False, popup=1 )
+        result = json.loads(jsonData)
+
+        result = result.get("Items")
+        if(result == None):
+            result = []   
+
+        for item in result:
+            images = item.get("BackdropImageTags")
+            id = item.get("Id")
+            parentID = item.get("ParentId")
+            name = item.get("Name")
+            if (images == None):
+                images = []
+            index = 0
+            for backdrop in images:
+
+                info = {}
+                info["url"] = downloadUtils.getArtwork(item, "Backdrop", index=str(index))
+                info["index"] = index
+                info["id"] = id
+                info["parent"] = parentID
+                info["name"] = name
+                self.logMsg("BG Favorite Shows Image Info : " + str(info), level=0)
+
+                if (info not in self.favoriteshows_art_links):
+                    self.favoriteshows_art_links.append(info)
+                index = index + 1
+
+        random.shuffle(self.favoriteshows_art_links)    
+
         # load Music Video BG's
-        musicMoviesUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Fields=ParentId,Overview&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=MusicVideo&format=json"
-
-        try:
-            requesthandle = urllib2.urlopen(musicMoviesUrl, timeout=60)
-            jsonData = requesthandle.read()
-            requesthandle.close()   
-        except Exception, e:
-            self.logMsg("updateTypeArtLinks urlopen : " + str(e) + " (" + musicMoviesUrl + ")", level=0)
-            return False
-
+        musicMoviesUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Limit=20&SortOrder=Descending&Fields=ParentId,Overview&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=MusicVideo&format=json"
+        jsonData = downloadUtils.downloadUrl(musicMoviesUrl, suppress=False, popup=1 )
         result = json.loads(jsonData)
 
         result = result.get("Items")
@@ -407,21 +348,10 @@ class TitanThread ():
                 index = index + 1
 
         random.shuffle(self.musicvideo_art_links)
-        self.logMsg("Background MusicVideo Art Links : " + str(len(self.musicvideo_art_links))) 
-        
-        
-        
+
         # load Photo BG's
-        photosUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Limit=30&Fields=ParentId,Overview&SortOrder=Descending&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=Photo&format=json"
-
-        try:
-            requesthandle = urllib2.urlopen(photosUrl, timeout=60)
-            jsonData = requesthandle.read()
-            requesthandle.close()   
-        except Exception, e:
-            self.logMsg("updateTypeArtLinks urlopen : " + str(e) + " (" + photosUrl + ")", level=0)
-            return False
-
+        photosUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Users/" + userid + "/Items?Limit=20&SortOrder=Descending&Fields=ParentId,Overview&CollapseBoxSetItems=false&Recursive=true&IncludeItemTypes=Photo&format=json"
+        jsonData = downloadUtils.downloadUrl(photosUrl, suppress=False, popup=1 )
         result = json.loads(jsonData)
 
         result = result.get("Items")
@@ -440,29 +370,16 @@ class TitanThread ():
             info["id"] = id
             info["parent"] = parentID
             info["name"] = name
-            self.logMsg("BG Photo Image Info : " + str(info), level=0)
 
             if (info not in self.photo_art_links):
                 self.photo_art_links.append(info)
             index = index + 1
 
-        random.shuffle(self.photo_art_links)
-        self.logMsg("Background Photo Art Links : " + str(len(self.photo_art_links)))         
-        
-        
-        
-
+        random.shuffle(self.photo_art_links)       
 
         # load Channels BG links
-        channelsUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Channels?format=json"
-        try:
-            requesthandle = urllib2.urlopen(channelsUrl, timeout=60)
-            jsonData = requesthandle.read()
-            requesthandle.close()   
-        except Exception, e:
-            self.logMsg("updateTypeArtLinks urlopen : " + str(e) + " (" + channelsUrl + ")", level=0)
-            return False
-
+        channelsUrl = "http://" + mb3Host + ":" + mb3Port + "/mediabrowser/Channels?&SortOrder=Descending&format=json"
+        jsonData = downloadUtils.downloadUrl(channelsUrl, suppress=False, popup=1 )
         result = json.loads(jsonData)        
 
         result = result.get("Items")
@@ -493,7 +410,6 @@ class TitanThread ():
             index = index + 1
 
         random.shuffle(self.channels_art_links)
-        self.logMsg("Background Channel Art Links : " + str(len(self.channels_art_links)))
 
         return True         
 
@@ -501,65 +417,116 @@ class TitanThread ():
         while (True):
             if timeout == 0:
                 return False
-        
+
             if (xbmc.abortRequested):
                 xbmc.log("[TitanSkin] XBMC Shutdown detected....exiting now")
                 return True
-                
+
             time.sleep(timeout)
             timeout -= 1
-        
+
+    def getContentFromCache(self):
+        linkCount = 0
+        WINDOW = xbmcgui.Window( 10000 )
+        self.logMsg("[TitanSkin] get properties from cache...")
+
+        while linkCount !=10:
+            mbstring = "titanmb3." + str(linkCount)
+            if xbmc.getInfoLabel("Skin.String(" + mbstring + '.title)') != "":
+                WINDOW.setProperty(mbstring + '.title', xbmc.getInfoLabel("Skin.String(" + mbstring + '.title)'))
+                WINDOW.setProperty(mbstring + '.image', xbmc.getInfoLabel("Skin.String(" + mbstring + '.image)'))
+                WINDOW.setProperty(mbstring + '.path', xbmc.getInfoLabel("Skin.String(" + mbstring + '.path)'))
+            linkCount += 1        
+
+    def setContentInCache(self):
+        linkCount = 0            
+        WINDOW = xbmcgui.Window( 10000 )
+        while linkCount !=10:
+            mbstring = "titanmb3." + str(linkCount)
+            if WINDOW.getProperty(mbstring + '.title') != "":
+                xbmc.executebuiltin('Skin.SetString(' + mbstring + '.title,' + WINDOW.getProperty(mbstring + '.title') + ")")
+                xbmc.executebuiltin('Skin.SetString(' + mbstring + '.image,' + WINDOW.getProperty(mbstring + '.image') + ")")
+                xbmc.executebuiltin('Skin.SetString(' + mbstring + '.path,' + WINDOW.getProperty(mbstring + '.path') + ")")
+            else:
+                xbmc.executebuiltin('Skin.Reset(' + mbstring + '.title)')
+                xbmc.executebuiltin('Skin.Reset(' + mbstring + '.image)')
+                xbmc.executebuiltin('Skin.Reset(' + mbstring + '.path)')
+                
+            linkCount += 1         
 
     def run(self):
         self.logMsg("Started")
-        
+
         fullcheckinterval_current = 0
         shortcheckinterval_current = 0
 
         doAbort = False
         while (not doAbort):
-            
+
+            # get the user ID
             WINDOW = xbmcgui.Window( 10000 )
-            
+            self._userId = WINDOW.getProperty("userid")
+
+            self.logMsg("[TitanSkin] userId: " + self._userId)
             self.logMsg("[TitanSkin] fullscan interval currently " + str(fullcheckinterval_current))
             self.logMsg("[TitanSkin] shortscan interval currently " + str(shortcheckinterval_current))
-            
+
             # actions only needed for XBMB3C add-on currently
             if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
-
+                               
                 # get images from server only if fullcheckinterval has reached
-                if fullcheckinterval_current == 0:
-                    self.logMsg("[TitanSkin] loading images from server...") 
-                    if (self.updateArtLinks() == True):
-                        fullcheckinterval_current = self.fullcheckinterval
-                        self.logMsg("[TitanSkin] ...load images complete")
-                        
-                        # set MB3 content links
-                        self.updateMB3links()                        
+                if fullcheckinterval_current <= 0:
+                    self.logMsg("[TitanSkin] loading images from server...")
+                    
+                    if self._userId == "":
+                        self.getContentFromCache()
                     else:
-                        self.logMsg("[TitanSkin] ...load images failed, will try again later")
-                        
-                
-                
+                        self.updateMB3links()
+    
+                        updateResult = False
+                        try:
+                            updateResult = self.updateTypeArtLinks()
+                            self.updateMB3links()
+                            updateResult = self.updateCollectionArtLinks()
+                        except Exception, e:
+                            self.logMsg(str(e))                            
+    
+                        if (updateResult == True):
+                            fullcheckinterval_current = self.fullcheckinterval                    
+                            self.logMsg("[TitanSkin] ...load images complete")                 
+                        else:
+                            self.logMsg("[TitanSkin] ...load images failed, will try again later")
+
                 # set pictures on properties only every X seconds    
-                if shortcheckinterval_current == 0:
+                if shortcheckinterval_current <= 0:
                     self.logMsg("[TitanSkin] setting tile images")
-                    self.setBackgroundLink("xbmb3c.std.movies.3.image", "favorites")
-                    self.setBackgroundLink("xbmb3c.std.channels.0.image", "channels")
-                    self.setBackgroundLink("xbmb3c.std.music.3.image", "musicvideos")
-                    self.setBackgroundLink("xbmb3c.std.photo.0.image", "photos")
                     
-                    linkCount = 0
-                    while linkCount !=20:
-                        mbstring = "titanmb3." + str(linkCount)
-                        self.logMsg("set backgroundlink for: " + mbstring)
-                        if not "virtual" in WINDOW.getProperty(mbstring + ".type"):
-                            self.setBackgroundLink(mbstring + ".image", WINDOW.getProperty(mbstring + ".title"))
-                        linkCount += 1
-                    
-                    self.logMsg("[TitanSkin] setting images complete")
-                    shortcheckinterval_current = self.shortcheckinterval
-            
+                    # try to get from cache first
+                    if self._userId == "":
+                        self.getContentFromCache()
+                    else:
+                        self.setBackgroundLink("xbmb3c.std.movies.3.image", "favoritemovies")
+                        self.setBackgroundLink("xbmb3c.std.tvshows.4.image", "favoriteshows")
+                        self.setBackgroundLink("xbmb3c.std.channels.0.image", "channels")
+                        self.setBackgroundLink("xbmb3c.std.music.3.image", "musicvideos")
+                        self.setBackgroundLink("xbmb3c.std.photo.0.image", "photos")
+    
+                        # set MB3 content links
+                        self.updateMB3links()                    
+                        linkCount = 0
+    
+                        while linkCount !=10:
+                            mbstring = "titanmb3." + str(linkCount)
+                            self.logMsg("set backgroundlink for: " + mbstring)
+                            if not "virtual" in WINDOW.getProperty(mbstring + ".type"):
+                                self.setBackgroundLink(mbstring + ".image", WINDOW.getProperty(mbstring + ".title"))
+                            linkCount += 1
+    
+                        self.setContentInCache()
+    
+                        self.logMsg("[TitanSkin] setting images complete")
+                        shortcheckinterval_current = self.shortcheckinterval
+
             fullcheckinterval_current -= 2
             shortcheckinterval_current -= 2
             doAbort = self.waitForAbort(2)
@@ -570,48 +537,53 @@ class TitanThread ():
 
     def stopped(self):
         return self._stop.isSet()
-    
+
     def updateMB3links(self):
         win = xbmcgui.Window( 10000 )
         linkCount = 0
-        while linkCount !=20:
+        while linkCount !=10:
             orgmbstring = "xbmb3c." + str(linkCount)
             mbstring = "titanmb3." + str(linkCount)
-            
+
             if "mediabrowser" in win.getProperty(orgmbstring + ".recent.path"):
                 win.setProperty(mbstring + ".title", win.getProperty(orgmbstring + ".title"))
                 win.setProperty(mbstring + ".type", win.getProperty(orgmbstring + ".type"))
                 win.setProperty(mbstring + ".fanart", win.getProperty(orgmbstring + ".fanart"))
+                win.setProperty(mbstring + ".recent.path", win.getProperty(orgmbstring + ".recent.path"))
+                win.setProperty(mbstring + ".unwatched.path", win.getProperty(orgmbstring + ".unwatched.path"))
+                if win.getProperty(orgmbstring + ".type") == "tvshows":
+                    win.setProperty(mbstring + ".inprogress.path", win.getProperty(orgmbstring + ".nextepisodes.path"))
+                else:
+                    win.setProperty(mbstring + ".inprogress.path", win.getProperty(orgmbstring + ".inprogress.path"))
+
+                win.setProperty(mbstring + ".genre.path", win.getProperty(orgmbstring + ".genre.path"))
                 win.setProperty(mbstring + ".path", win.getProperty(orgmbstring + ".path"))
-                
+
                 link = win.getProperty(orgmbstring + ".recent.path")
                 link = link.replace("ActivateWindow(VideoLibrary,", "")
                 link = link.replace(",return)", "")
                 win.setProperty(mbstring + ".recent.content", link)
-                
+
                 if "musicvideo" in win.getProperty(orgmbstring + ".type"):
                     win.setProperty("xbmb3c.std.music.3.content", link)                
-                
+
                 link = win.getProperty(orgmbstring + ".unwatched.path")
                 link = link.replace("ActivateWindow(VideoLibrary,", "")
                 link = link.replace(",return)", "")
                 win.setProperty(orgmbstring + ".unwatched.content", link)
-                
+
                 link = win.getProperty(orgmbstring + ".inprogress.path")
                 link = link.replace("ActivateWindow(VideoLibrary,", "")
                 link = link.replace(",return)", "")
                 win.setProperty(mbstring + ".inprogress.content", link)  
-                
+
                 link = win.getProperty(orgmbstring + ".nextepisodes.path")
                 link = link.replace("ActivateWindow(VideoLibrary,", "")
                 link = link.replace(",return)", "")
                 win.setProperty(mbstring + ".nextepisodes.content", link)
-       
+
 
             linkCount += 1
-
-
-
 
 xbmc.log("[TitanSkin] Started... fetching background images now")
 pollingthread = TitanThread()
