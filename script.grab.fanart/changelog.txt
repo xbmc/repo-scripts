@@ -1,3 +1,11 @@
+Version 0.13.2
+
+don't change window property until the first set of images have been loaded
+
+Version 0.13.1
+
+decode json string before parsing
+
 Version 0.13.0
 
 added logo to Global properties per Jeroen's request

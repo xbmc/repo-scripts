@@ -8,12 +8,12 @@ This script uses the XBMC Database to find the source of the fanart files and ex
 
 Using This Addon: 
 
-This addon is meant to be integrated as part of a skin. Currently it can be configured via addon settings in the Programs menu, or by calling the RunScript() function within a script. The parameters that can be set are: 
+This addon is meant to be integrated as part of a skin. Currently it can be configured by calling the RunScript() function within a script. The parameters that can be set are: 
 
 Refresh Time: How long between property updates. Default is 10 seconds
 Mode: Show fanart for recent items (10), or for random items
 
-An example of setting these parameters using the RunScript function would be RunScript(script.grab.fanart,mode=random,refresh=10). If you want to include these settings are part of the regular skin settings you can pass these as parameters to RunScript upon hitting the home screen. 
+An example of setting these parameters using the RunScript function would be RunScript(script.grab.fanart,mode=random,refresh=10). If you want to include these settings are part of the regular skin settings you can pass these as parameters to RunScript upon hitting the home screen or in the Startup.xml file. 
 
 Window Properties: 
 
