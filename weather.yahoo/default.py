@@ -25,7 +25,7 @@ __addon__      = xbmcaddon.Addon()
 __addonname__  = __addon__.getAddonInfo('name')
 __addonid__    = __addon__.getAddonInfo('id')
 __version__    = __addon__.getAddonInfo('version')
-__cwd__        = __addon__.getAddonInfo('path')
+__cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
 __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 
 sys.path.append(__resource__)
