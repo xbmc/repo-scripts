@@ -10,7 +10,7 @@ __addon__      = xbmcaddon.Addon()
 __addonname__  = __addon__.getAddonInfo('name')
 __addonid__    = __addon__.getAddonInfo('id')
 __version__    = __addon__.getAddonInfo('version')
-__cwd__        = __addon__.getAddonInfo('path')
+__cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
 __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 
 sys.path.append(__resource__)
@@ -151,7 +151,7 @@ def properties(data,loc):
     set_property('Current.Humidity'      , atmosphere[0].attributes['humidity'].value)
     set_property('Current.Visibility'    , atmosphere[0].attributes['visibility'].value)
     set_property('Current.Pressure'      , atmosphere[0].attributes['pressure'].value)
-    set_property('Current.FeelsLike'     , feelslike(int(condition[0].attributes['temp'].value), int(round(float(wind[0].attributes['speed'].value) + 0.5))))
+    set_property('Current.FeelsLike'     , feelslike(int(condition[0].attributes['temp'].value), int(round(float(wind[0].attributes['speed'].value)))))
     set_property('Current.DewPoint'      , dewpoint(int(condition[0].attributes['temp'].value), int(atmosphere[0].attributes['humidity'].value)))
     set_property('Current.UVIndex'       , '')
     set_property('Current.OutlookIcon'   , '%s.png' % condition[0].attributes['code'].value) # Kodi translates it to Current.ConditionIcon
@@ -185,6 +185,7 @@ if sys.argv[1].startswith('Location'):
                 __addon__.setSetting(sys.argv[1] + 'id', locids[selected])
                 log('selected location: %s' % locs[selected])
         else:
+            log('no locations found')
             dialog.ok(__addonname__, xbmc.getLocalizedString(284))
 else:
     location = __addon__.getSetting('Location%s' % sys.argv[1])
@@ -196,7 +197,7 @@ else:
     if not locationid == '':
         forecast(location, locationid)
     else:
-        log('no location found')
+        log('empty location id')
         clear()
     refresh_locations()
 
