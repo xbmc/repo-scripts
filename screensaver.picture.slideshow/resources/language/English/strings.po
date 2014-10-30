@@ -85,17 +85,17 @@ msgid "Display images in random order"
 msgstr ""
 
 msgctxt "#30017"
-msgid "Enable image cache"
+msgid "Create image index"
 msgstr ""
 
 #empty string with id 30018
 
 msgctxt "#30019"
-msgid "Creating cache"
+msgid "Creating index"
 msgstr ""
 
 msgctxt "#30020"
-msgid "Cache created"
+msgid "Index created"
 msgstr ""
 
 msgctxt "#30021"
@@ -123,9 +123,9 @@ msgid "Advanced"
 msgstr ""
 
 msgctxt "#30027"
-msgid "Update cache"
+msgid "Update index"
 msgstr ""
 
 msgctxt "#30028"
-msgid "Caching is not supported with fanart"
+msgid "Indexing is not supported with fanart"
 msgstr ""

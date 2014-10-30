@@ -100,7 +100,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.slideshow_effect = __addon__.getSetting('effect')
         self.slideshow_time   = int(__addon__.getSetting('time'))
         # convert float to hex value usable by the skin
-        self.slideshow_dim    = hex(int('%.0f' % (float(__addon__.getSetting('level')) * 2.55)))[2:] + 'ffffff'
+        self.slideshow_dim    = hex(int('%.0f' % (float(100 - int(__addon__.getSetting('level'))) * 2.55)))[2:] + 'ffffff'
         self.slideshow_random = __addon__.getSetting('random')
         self.slideshow_scale  = __addon__.getSetting('scale')
         self.slideshow_name   = __addon__.getSetting('label')
@@ -143,7 +143,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if self.slideshow_type == '2' and self.slideshow_cache == 'true' and not xbmcvfs.exists(img[0]):
                     continue
                 # add image to gui
-                cur_img.setImage(img[0])
+                cur_img.setImage(img[0],False)
                 # give xbmc some time to load the image
                 if not self.startup:
                     xbmc.sleep(1000)

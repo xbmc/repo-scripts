@@ -20,6 +20,6 @@
 	</category>
 	<category label="30026">
 		<setting label="30017" type="bool" id="cache" default="true"/>
-		<setting label="30027" type="action" id="create" enable="eq(-1,true)" action="RunScript(screensaver.xbmc.slideshow,cache=true)" subsetting="true"/>
+		<setting label="30027" type="action" id="create" enable="eq(-1,true)" action="RunScript(screensaver.picture.slideshow,cache=true)" subsetting="true"/>
 	</category>
 </settings>
