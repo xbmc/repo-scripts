@@ -27,3 +27,7 @@ Add support to search tvshow season and episode
 - Searching episodes works for automatic search and manual search
 - If searched episode don't exist and have whole season returns "S01 Pack" for example
 - Allowed search for manual search terms for season are: S01E01, 101, 1x01
+
+1.0.8
+- Fixed converting to cyrillic and selecting converted subtitle
+- Better tvshow search and filter

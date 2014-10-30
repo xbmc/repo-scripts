@@ -15,9 +15,13 @@ msgstr ""
 #English
 
 msgctxt "#32001"
-msgid "If language is serbian automatic create cyrillic version"
+msgid "Convert Serbian Latin to Serbian Cyrillic"
 msgstr ""
 
 msgctxt "#32002"
 msgid "Options"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Convert Croation Latin to Serbian Cyrillic"
 msgstr ""

@@ -143,10 +143,16 @@ def Download(url, filename, language_name=None):
             f = open(dest, 'wb')
             f.write(contents)
             f.close()
+
             if language_name == 'Serbian' and __addon__.getSetting("autocyrillic") == "true":
                 lat2cyr = Lat2Cyr()
                 subCyr = lat2cyr.convert2cyrillic(dest)
                 log(__name__, 'Cyrillic sub: %s' % subCyr)
+                subtitle_list.append(subCyr)
+            elif language_name == 'Croatian' and __addon__.getSetting("autocyrillicCroation") == "true":
+                lat2cyr = Lat2Cyr()
+                subCyr = lat2cyr.convert2cyrillic(dest)
+                log(__name__, 'Croatian cyrillic sub: %s' % subCyr)
                 subtitle_list.append(subCyr)
             subtitle_list.append(dest)
 
@@ -286,6 +292,8 @@ elif params['action'] == 'download':
     language_name = params["language_name"]
 
     if language_name == 'Serbian':
+        subs = Download(url, params["filename"], language_name)
+    elif language_name == 'Croatian':
         subs = Download(url, params["filename"], language_name)
     else:
         subs = Download(url, params["filename"])

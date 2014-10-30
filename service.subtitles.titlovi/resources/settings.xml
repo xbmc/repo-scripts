@@ -2,5 +2,6 @@
 <settings>
     <category label="32002">
       <setting id="autocyrillic" type="bool" label="32001" default="false" />
+      <setting id="autocyrillicCroation" type="bool" label="32003" default="false" />
     </category>
 </settings>
