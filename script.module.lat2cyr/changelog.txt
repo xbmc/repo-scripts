@@ -15,3 +15,6 @@ Add automatic encoding detection between cp1250 and utf8
 
 2.0.1
 Better automatic encoding detection
+
+2.0.2
+Fixed errors when converting two letter to one letter

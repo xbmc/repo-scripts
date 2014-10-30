@@ -46,8 +46,9 @@ class Lat2Cyr:
     }
 
     two_letters_fix = {
-        # big letters
-        u'Lj': u'Љ', u'Nj': u'Њ', u'Dž': u'Џ', u'Dz': u'Ѕ',
+        # Big letters
+        u'Lj': u'Љ', u'LJ': u'Љ', u'Nj': u'Њ', u'NJ': u'Њ', u'Dž': u'Џ',
+        u'DŽ': u'Џ', u'Dz': u'Ѕ', u'DZ': u'Ѕ',
         # small letters
         u'lj': u'љ', u'nj': u'њ', u'dž': u'џ', u'dz': u'ѕ'
     }
