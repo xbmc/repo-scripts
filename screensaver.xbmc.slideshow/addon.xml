@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.xbmc.slideshow" name="Slideshow" version="1.0.4" provider-name="Team XBMC">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.xbmc.slideshow" name="Slideshow" version="1.0.7" provider-name="Team-Kodi">
 	<requires>
 		<import addon="xbmc.python" version="2.12.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -106,7 +106,7 @@
 		<language></language>
 		<platform>all</platform>
 		<forum>http://forum.xbmc.org/showthread.php?tid=154032</forum>
-		<source>https://code.google.com/p/ronie/source/</source>
+		<source>https://github.com/XBMC-Addons/screensaver.xbmc.slideshow</source>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
 		<website></website>
 		<email></email>

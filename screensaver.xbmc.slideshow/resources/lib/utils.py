@@ -6,7 +6,7 @@ __addonid__  = sys.modules[ '__main__' ].__addonid__
 __language__ = sys.modules[ '__main__' ].__language__
 
 # supported image types by the screensaver
-IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico')
+IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef')
 CACHEFOLDER = xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode('utf-8')
 CACHEFILE   = os.path.join(CACHEFOLDER, '%s')
 
@@ -22,7 +22,7 @@ def checksum(path):
 def create_cache():
     slideshow_type = __addon__.getSetting('type')
     if slideshow_type == '2':
-        xbmc.executebuiltin('Notification(%s,%s,%i)' % (__addonid__, __language__(30019), 5000))
+        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonid__, __language__(30019), 5000)).encode('utf-8', 'ignore'))
         path = __addon__.getSetting('path')
         images = walk(path)
         if not xbmcvfs.exists(CACHEFOLDER):
@@ -34,9 +34,9 @@ def create_cache():
             cache.close()
         except:
             log('failed to save cachefile')
-        xbmc.executebuiltin('Notification(%s,%s,%i)' % (__addonid__, __language__(30020), 5000))
+        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonid__, __language__(30020), 5000)).encode('utf-8', 'ignore'))
     else:
-        xbmc.executebuiltin('Notification(%s,%s,%i)' % (__addonid__, __language__(30028), 5000))
+        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonid__, __language__(30028), 5000)).encode('utf-8', 'ignore'))
 
 def walk(path):
     images = []
@@ -63,5 +63,5 @@ def walk(path):
                     images.append([os.path.join(folder,item), ''])
             for item in dirs:
                 # recursively scan all subfolders
-                images += walk(os.path.join(folder,item))
+                images += walk(os.path.join(folder,item,'')) # make sure paths end with a slash
     return images

@@ -28,4 +28,3 @@ if __name__ == '__main__':
         screensaver_gui = gui.Screensaver('script-python-slideshow.xml', __cwd__, 'default')
         screensaver_gui.doModal()
         del screensaver_gui
-        sys.modules.clear()

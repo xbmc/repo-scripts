@@ -1,3 +1,16 @@
+v1.0.7
+- fix recursive scan (paths must end with a slash)
+- fix possible crash on exit
+- apply dim value to the whole screen
+- more screen space for image filename
+- disable caching of images
+
+v1.0.6
+- increase zorder
+
+v1.0.5
+- fixed unicode error
+
 v1.0.4
 - fixed: seekbar dialog would display on top of screensaver
 
