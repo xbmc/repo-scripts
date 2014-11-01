@@ -9,8 +9,10 @@
 ## @package addonwindow
 #  PyXBMCt framework module
 
-import sys, os
-import xbmc, xbmcgui, xbmcaddon
+import os
+import xbmc
+import xbmcgui
+import xbmcaddon
 
 _ADDON_NAME = 'script.module.pyxbmct'
 _addon = xbmcaddon.Addon(id=_ADDON_NAME)
@@ -49,6 +51,8 @@ ACTION_MOUSE_WHEEL_DOWN = 105
 ACTION_MOUSE_DRAG = 106
 ## Mouse move
 ACTION_MOUSE_MOVE = 107
+## Mouse click
+ACTION_MOUSE_LEFT_CLICK = 100
 
 
 def _set_textures(textures={}, kwargs={}):
