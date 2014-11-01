@@ -1,3 +1,8 @@
+0.0.4
+- More robust parsing of description, better logging.
+- Also match variation in CSS class name just in case.
+- Fix stripping of trailing '/' from param value.
+
 0.0.3
 - Handle arbitrary casing in subs file extension, e.g. .SRT, .sRt, etc.
 - More code cleanup (PEP8, comment/docstring typos, logic of a helper function).
