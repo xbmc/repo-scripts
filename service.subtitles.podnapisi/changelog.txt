@@ -1,3 +1,7 @@
+5.2.0
+- restructure search, use only web to search as SSP is way to slow.
+- [fix] xbmcvfs might return false if no slash is at the end of folder
+
 5.1.1
 - fix cp/monster
 - upload hash only for local content
