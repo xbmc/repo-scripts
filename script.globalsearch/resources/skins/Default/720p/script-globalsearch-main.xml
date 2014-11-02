@@ -285,6 +285,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -372,6 +373,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -514,6 +516,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -601,6 +604,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -743,6 +747,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -798,6 +803,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -908,6 +914,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -954,6 +961,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -1055,6 +1063,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -1110,6 +1119,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -1220,6 +1230,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -1286,6 +1297,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="image">
@@ -1407,6 +1419,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="label">
@@ -1454,6 +1467,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="label">
@@ -1556,6 +1570,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="label">
@@ -1603,6 +1618,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="label">
@@ -1705,6 +1721,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="label">
@@ -1763,6 +1780,7 @@
 								<posy>7</posy>
 								<width>100</width>
 								<height>100</height>
+								<aspectratio>keep</aspectratio>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 							</control>
 							<control type="label">

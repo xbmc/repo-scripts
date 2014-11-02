@@ -224,6 +224,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 110 ).setLabel( str(count) )
             self.getControl( 119 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 111 ) )
                 self.focusset = 'true'
 
@@ -277,6 +278,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 120 ).setLabel( str(count) )
             self.getControl( 129 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 121 ) )
                 self.focusset = 'true'
 
@@ -311,6 +313,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 130 ).setLabel( str(count) )
             self.getControl( 139 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 131 ) )
                 self.focusset = 'true'
 
@@ -411,6 +414,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 140 ).setLabel( str(count) )
             self.getControl( 149 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 141 ) )
                 self.focusset = 'true'
 
@@ -503,6 +507,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 150 ).setLabel( str(count) )
             self.getControl( 159 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 151 ) )
                 self.focusset = 'true'
 
@@ -550,6 +555,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 160 ).setLabel( str(count) )
             self.getControl( 169 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 161 ) )
                 self.focusset = 'true'
 
@@ -620,6 +626,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 170 ).setLabel( str(count) )
             self.getControl( 179 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 171 ) )
                 self.focusset = 'true'
 
@@ -679,6 +686,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 180 ).setLabel( str(count) )
             self.getControl( 189 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 181 ) )
                 self.focusset = 'true'
 
@@ -776,6 +784,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 210 ).setLabel( str(count) )
             self.getControl( 219 ).setVisible( True )
             if self.focusset == 'false':
+                xbmc.sleep(100)
                 self.setFocus( self.getControl( 211 ) )
                 self.focusset = 'true'
 

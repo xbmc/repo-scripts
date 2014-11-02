@@ -1,3 +1,12 @@
+v3.0.3
+- skin changes for helix
+
+v3.0.2
+- fix crash on exit
+
+v3.0.1
+- fix timing issue
+
 v3.0.0
 - kodi name change
 

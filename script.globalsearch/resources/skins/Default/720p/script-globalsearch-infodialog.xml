@@ -131,7 +131,7 @@
 					<scrolltime>200</scrolltime>
 					<itemlayout width="800" height="30">
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -165,7 +165,7 @@
 							<visible>Control.HasFocus(110)</visible>
 						</control>
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -277,7 +277,7 @@
 					<scrolltime>200</scrolltime>
 					<itemlayout width="800" height="30">
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -311,7 +311,7 @@
 							<visible>Control.HasFocus(120)</visible>
 						</control>
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -405,7 +405,7 @@
 					<scrolltime>200</scrolltime>
 					<itemlayout width="800" height="30">
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -439,7 +439,7 @@
 							<visible>Control.HasFocus(130)</visible>
 						</control>
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -503,7 +503,7 @@
 					<scrolltime>200</scrolltime>
 					<itemlayout width="800" height="30">
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -537,7 +537,7 @@
 							<visible>Control.HasFocus(140)</visible>
 						</control>
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -637,7 +637,7 @@
 					<scrolltime>200</scrolltime>
 					<itemlayout width="800" height="30">
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -671,7 +671,7 @@
 							<visible>Control.HasFocus(150)</visible>
 						</control>
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -765,7 +765,7 @@
 					<scrolltime>200</scrolltime>
 					<itemlayout width="800" height="30">
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -799,7 +799,7 @@
 							<visible>Control.HasFocus(160)</visible>
 						</control>
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -893,7 +893,7 @@
 					<scrolltime>200</scrolltime>
 					<itemlayout width="800" height="30">
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -927,7 +927,7 @@
 							<visible>Control.HasFocus(170)</visible>
 						</control>
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -1027,7 +1027,7 @@
 					<scrolltime>200</scrolltime>
 					<itemlayout width="800" height="30">
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>
@@ -1061,7 +1061,7 @@
 							<visible>Control.HasFocus(180)</visible>
 						</control>
 						<control type="label">
-							<posx>165</posx>
+							<posx>0</posx>
 							<posy>0</posy>
 							<width>165</width>
 							<height>30</height>

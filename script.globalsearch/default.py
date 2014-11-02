@@ -27,4 +27,3 @@ if ( __name__ == "__main__" ):
         ui = gui.GUI( "script-globalsearch-main.xml", __cwd__, "Default", searchstring=searchstring )
         ui.doModal()
         del ui
-        sys.modules.clear()
