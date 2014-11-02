@@ -21,47 +21,26 @@ __language__   = __addon__.getLocalizedString
 __cwd__        = xbmc.translatePath( __addon__.getAddonInfo('path') ).decode("utf-8")
 __profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
 __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp') ).decode("utf-8")
+__temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp', '') ).decode("utf-8")
 
 sys.path.append (__resource__)
 
 from pn_utilities import PNServer, log, OpensubtitlesHash, normalizeString, languageTranslate
 
 def Search( item ):
+
   pn_server = PNServer()
-  pod_session = pn_server.create()    
+  pn_server.Create()  
   subtitles_list = []
-  match          = False
   
   if item['temp'] : 
-    hash_search = False
-    OShash     = "000000000000"
+    item['hash'] = "000000000000"
   else:
-    try:
-      OShash = OpensubtitlesHash(item['file_original_path'], item['rar'])
-      log( __scriptid__ ,"xbmc module OShash")
-      hash_search = True
-    except:  
-      OShash     = ""
-      log( __scriptid__ ,"xbmc module OShash failed")
-      hash_search = False
-  
-  if OShash != "":
-    log( __scriptid__ ,"OS Hash [%s]" % OShash)
-  if hash_search :
-    log( __scriptid__ ,"Search for [%s] by hash" % (os.path.basename( item['file_original_path'] ),))
-    subtitles_list = pn_server.searchsubtitles_pod( OShash ,item['3let_language'], False)
-  if not subtitles_list:
-    match          = True
-    log( __scriptid__ ,"Search for [%s] by name" % (os.path.basename( item['file_original_path'] ),))
-    subtitles_list = pn_server.searchsubtitlesbyname_pod(item['title'],
-                                                           item['tvshow'],
-                                                           item['season'],
-                                                           item['episode'],
-                                                           item['3let_language'],
-                                                           item['year'],
-                                                           False )
+    item['hash'] = OpensubtitlesHash(item)
+    log( __scriptid__ ,"xbmc module OShash")
 
+  log( __scriptid__ ,"Search for [%s] by name" % (os.path.basename( item['file_original_path'] ),))
+  subtitles_list = pn_server.SearchSubtitlesWeb(item)
   if subtitles_list:
     for it in subtitles_list:
       listitem = xbmcgui.ListItem(label=it["language_name"],
@@ -73,16 +52,15 @@ def Search( item ):
       listitem.setProperty( "sync", ("false", "true")[it["sync"]] )
       listitem.setProperty( "hearing_imp", ("false", "true")[it["hearing_imp"]] )
       
-      url = "plugin://%s/?action=download&link=%s&filename=%s&movie_id=%s&season=%s&episode=%s&hash=%s&match=%s&login_session=%s" %(__scriptid__,
-                                                                                                                    it["link"],
-                                                                                                                    it["filename"],
-                                                                                                                    it["movie_id"],
-                                                                                                                    it["season"],
-                                                                                                                    it["episode"],
-                                                                                                                    OShash,
-                                                                                                                    str(match),
-                                                                                                                    pod_session
-                                                                                                                    )
+      url = "plugin://%s/?action=download&link=%s&filename=%s&movie_id=%s&season=%s&episode=%s&hash=%s&match=%s" %(__scriptid__,
+                                                                                                                  it["link"],
+                                                                                                                  it["filename"],
+                                                                                                                  it["movie_id"],
+                                                                                                                  it["season"],
+                                                                                                                  it["episode"],
+                                                                                                                  item['hash'],
+                                                                                                                  it["sync"]
+                                                                                                                  )
       
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
@@ -90,7 +68,11 @@ def Search( item ):
 def Download(url,filename):
   if xbmcvfs.exists(__temp__):
     shutil.rmtree(__temp__)
-  xbmcvfs.mkdirs(__temp__) 
+  xbmcvfs.mkdirs(__temp__)
+  
+  pn_server = PNServer()
+  pod_session = pn_server.Create()
+
   subtitle_list = []
 
   try:
@@ -196,8 +178,9 @@ if params['action'] == 'search':
 
 elif params['action'] == 'download':
   pn_server = PNServer()
-  pn_server.create(params["login_session"])
-  url = pn_server.download(params)
+  pn_server.Create()
+  pn_server.Login()
+  url = pn_server.Download(params)
   if url:
     subs = Download(url,params["filename"])
     for sub in subs:

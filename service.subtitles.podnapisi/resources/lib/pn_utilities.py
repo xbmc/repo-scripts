@@ -26,7 +26,7 @@ __language__   = sys.modules[ "__main__" ].__language__
 __scriptid__   = sys.modules[ "__main__" ].__scriptid__
 
 USER_AGENT   = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
-SEARCH_URL   = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1&lang=0"
+SEARCH_URL   = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sMH=%s&sXML=1&lang=0"
 DOWNLOAD_URL = "http://www.podnapisi.net/static/podnapisi/%s"
 
 LANGUAGES      = (
@@ -109,32 +109,36 @@ def normalizeString(str):
          'NFKD', unicode(unicode(str, 'utf-8'))
          ).encode('ascii','ignore')
 
-def OpensubtitlesHash(file_path, rar=False):
-    if rar:
-      return OpensubtitlesHashRar(file_path)
+def OpensubtitlesHash(item):
+    try:
+      if item["rar"]:
+        return OpensubtitlesHashRar(item['file_original_path'])
+        
+      log( __scriptid__,"Hash Standard file")  
+      longlongformat = 'q'  # long long
+      bytesize = struct.calcsize(longlongformat)
       
-    log( __scriptid__,"Hash Standard file")  
-    longlongformat = 'q'  # long long
-    bytesize = struct.calcsize(longlongformat)
-    
-    f = xbmcvfs.File(file_path)
-    filesize = f.size()
-    hash = filesize
-    
-    if filesize < 65536 * 2:
-        return "SizeError"
-    
-    buffer = f.read(65536)
-    f.seek(max(0,filesize-65536),0)
-    buffer += f.read(65536)
-    f.close()
-    for x in range((65536/bytesize)*2):
-        size = x*bytesize
-        (l_value,)= struct.unpack(longlongformat, buffer[size:size+bytesize])
-        hash += l_value
-        hash = hash & 0xFFFFFFFFFFFFFFFF
-    
-    returnHash = "%016x" % hash
+      f = xbmcvfs.File(item['file_original_path'])
+      filesize = f.size()
+      hash = filesize
+      
+      if filesize < 65536 * 2:
+          return "SizeError"
+      
+      buffer = f.read(65536)
+      f.seek(max(0,filesize-65536),0)
+      buffer += f.read(65536)
+      f.close()
+      for x in range((65536/bytesize)*2):
+          size = x*bytesize
+          (l_value,)= struct.unpack(longlongformat, buffer[size:size+bytesize])
+          hash += l_value
+          hash = hash & 0xFFFFFFFFFFFFFFFF
+      
+      returnHash = "%016x" % hash
+    except:
+      returnHash = "000000000000"
+
     return returnHash
 
 def OpensubtitlesHashRar(firstrarfile):
@@ -166,83 +170,45 @@ def OpensubtitlesHashRar(firstrarfile):
 
 
 class PNServer:
-  def create(self, pod_session = None):
+  def Create(self):
     self.subtitles_list = []
     self.connected = False
-    self.pod_session = pod_session
-    self.podserver   = xmlrpclib.Server('http://ssp.podnapisi.net:8000')
-    if (not self.pod_session):
-      init        = self.podserver.initiate(USER_AGENT)  
-      hash        = md5()
-      hash.update(__addon__.getSetting( "PNpass" ))
-      self.password = sha256(str(hash.hexdigest()) + str(init['nonce'])).hexdigest()
-      self.user     = __addon__.getSetting( "PNuser" )
-      if init['status'] == 200:
-        self.pod_session = init['session']
-        self.connected   = self.login()
-        if (self.connected):
-          log( __scriptid__ ,"Connected to Podnapisi server")
-    else:
-      self.connected = True
-
-    return self.pod_session     
-
-  def login(self):
-    auth = self.podserver.authenticate(self.pod_session, self.user, self.password)
-    if auth['status'] == 300: 
-      log( __scriptid__ ,__language__(32005))
-      xbmc.executebuiltin(u'Notification(%s,%s,5000,%s)' %(__scriptname__,
-                                                           __language__(32005),
-                                                           os.path.join(__cwd__,"icon.png")
-                                                          )
-                          )
-      return False  
-    return True
-
-  def searchsubtitles_pod( self, movie_hash, lang , stack):
-    # movie_hash = "e1b45885346cfa0b" # Matrix Hash, Debug only
-    if (self.connected):
-      self.podserver.setFilters(self.pod_session, True, lang , False)
-      search = self.podserver.search(self.pod_session , [str(movie_hash)])
-      if (search['status'] == 200 and 
-          movie_hash in search["results"] and 
-          len(search['results']) > 0):
-      
-        search_item = search["results"][movie_hash]
-        for item in search_item["subtitles"]:
-          if item["lang"]:
-            flag_image = item["lang"]
-          else:                                                           
-            flag_image = "-"
-          if item['release'] == "":
-            episode = search_item["tvEpisode"]
-            if str(episode) == "0":
-              name = "%s (%s)" % (str(search_item["movieTitle"]),str(search_item["movieYear"]),)
-            else:
-              name = "%s S(%s)E(%s)" % (str(search_item["movieTitle"]),str(search_item["tvSeason"]), str(episode), )
-          else:
-            name = item['release']
-          
-          self.subtitles_list.append({'filename'      : name,
-                                      'link'          : str(item["id"]),
-                                      'movie_id'      : str(search_item["movieId"]),
-                                      'season'        : str(search_item["tvSeason"]),
-                                      'episode'       : str(search_item["tvEpisode"]),     
-                                      'language_name' : languageTranslate((item["lang"]),2,0),
-                                      'language_flag' : flag_image,
-                                      'rating'        : str(int(item['rating'])*2),
-                                      'sync'          : not item["inexact"],
-                                      'hearing_imp'   : "n" in item['flags']
-                                      })
-
-        self.mergesubtitles(stack)
-    return self.subtitles_list
-
-  def searchsubtitlesbyname_pod( self, name, tvshow, season, episode, lang, year, stack ):
-    if len(tvshow) > 1:
-      name = tvshow
     
-    url =  SEARCH_URL % (name.replace(" ","+"), ','.join(lang), str(year), str(season), str(episode))
+  def Login(self):
+    self.podserver   = xmlrpclib.Server('http://ssp.podnapisi.net:8000')
+    init        = self.podserver.initiate(USER_AGENT)  
+    hash        = md5()
+    hash.update(__addon__.getSetting( "PNpass" ))
+    self.password = sha256(str(hash.hexdigest()) + str(init['nonce'])).hexdigest()
+    self.user     = __addon__.getSetting( "PNuser" )
+    if init['status'] == 200:
+      self.pod_session = init['session']
+      auth = self.podserver.authenticate(self.pod_session, self.user, self.password)
+      if auth['status'] == 300: 
+        log( __scriptid__ ,__language__(32005))
+        xbmc.executebuiltin(u'Notification(%s,%s,5000,%s)' %(__scriptname__,
+                                                             __language__(32005),
+                                                             os.path.join(__cwd__,"icon.png")
+                                                            )
+                            )
+        self.connected = False
+      else:
+        log( __scriptid__ ,"Connected to Podnapisi server")
+        self.connected = True
+    else:
+      self.connected = False 
+
+  def SearchSubtitlesWeb( self, item):
+    if len(item['tvshow']) > 1:
+      item['title'] = item['tvshow']
+    
+    url =  SEARCH_URL % (item['title'].replace(" ","+"),
+                         ','.join(item['3let_language']),
+                         str(item['year']),
+                         str(item['season']), 
+                         str(item['episode']),
+                         str(item['hash'])
+                         )
     log( __scriptid__ ,"Search URL - %s" % (url))
     
     subtitles = self.fetch(url)
@@ -265,13 +231,13 @@ class PNServer:
                                     'sync'          : False,
                                     'hearing_imp'   : "n" in self.get_element(subtitle, "flags")
                                     })
-      self.mergesubtitles(stack)
+      self.mergesubtitles()
     return self.subtitles_list
   
-  def download(self,params):
+  def Download(self,params):
     if (self.connected):
       if (__addon__.getSetting("PNmatch") == 'true' and
-          params["match"] != "False" and
+          params["match"] == "False" and
           params["hash"] != "000000000000"):
 
         log( __scriptid__ ,"Sending match to Podnapisi server")
@@ -303,7 +269,7 @@ class PNServer:
   def compare_columns(self, b, a):
     return cmp( b["language_name"], a["language_name"] )  or cmp( a["sync"], b["sync"] ) 
 
-  def mergesubtitles( self, stack ):
+  def mergesubtitles(self):
     if( len ( self.subtitles_list ) > 0 ):
       self.subtitles_list = sorted(self.subtitles_list, self.compare_columns)
        
