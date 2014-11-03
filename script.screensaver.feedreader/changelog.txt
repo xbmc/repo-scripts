@@ -1,0 +1,6 @@
+
+0.2.0 first version
+
+Fixed HTMLParser dependency in addon.xml
+
+0.1.0 first version

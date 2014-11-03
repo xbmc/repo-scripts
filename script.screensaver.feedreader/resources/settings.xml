@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting label="32001" type="slider" id="Time" default="24" range="2,2,100" option="int" />
+    <setting label="32002" type="labelenum" id="Sorting" values="None|Time|Interleave" default="Interleave"/>	
+	<setting label="32101" type="text" id="Feed1" default="http://www.newsweek.com/emea-rss"/>
+	<setting label="32102" type="text" id="Feed2" default="http://www.nasa.gov/rss/dyn/image_of_the_day.rss"/>
+	<setting label="32103" type="text" id="Feed3" default="http://feeds.feedburner.com/motherjones/main"/>
+	<setting label="32104" type="text" id="Feed4" default="http://www.huffingtonpost.com/feeds/index.xml"/>
+	<setting label="32105" type="text" id="Feed5" default="climate OR sea-level-rise"/>
+	<setting label="32106" type="text" id="Feed6" default="science"/>
+	<setting label="32107" type="text" id="Feed7" default="http://feeds2.feedburner.com/time/topstories"/>
+</settings>
