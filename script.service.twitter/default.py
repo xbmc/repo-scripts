@@ -148,7 +148,7 @@ while (not xbmc.abortRequested):
 				dispname=str(name[1])
 				dispname=word_resolver.name(dispname)
 				xbmc.log('Twitter URL = '+'http://www.twitter.com/search?q='+search_string+'&f=realtime'+'   Number of tweets to skip = '+str(test_tweet))
-				text=re.compile('<p class="js-tweet-text tweet-text">(.+?)</p>').findall(link)
+				text=re.compile('<p class="js-tweet-text tweet-text".+?>(.+?)</p>').findall(link)
 				text=text[test_tweet]
 				text = word_resolver.text(text)
 				if old_text != text:

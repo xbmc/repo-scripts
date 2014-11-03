@@ -14,4 +14,6 @@ Version 1.0.0
 -Fixed minor bugs.
 -Added a dialog that displays on first run.
 Version 1.0.1
--script.module.elementtree now imported properly
+-script.module.elementtree now imported properly.
+Version 1.0.2
+-Fixed search results error due to changes on twitter.
