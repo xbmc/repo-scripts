@@ -1,3 +1,9 @@
+v.1.7.0
+- added support for htbackdrops.org MusicBrainz ID search (falls back to old search method)
+- fixed crash when merging artist images where image has unicode character in name
+- fixed parsing error due to new JSON format from MusicBrainz
+- fixed error where window properties were not set properly at script exit
+
 v.1.6.9
 - added option to download artist thumbnails from htbackdrops and fanart.tv
 - update to current requests module (requests2 depreciated)
