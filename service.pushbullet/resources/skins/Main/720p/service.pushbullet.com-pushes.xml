@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+	<onload>SetProperty(pushbullet,1)</onload>
+	<onload>SetProperty(pushbulletmain,1)</onload>
+	<onload>SetProperty(loading,1)</onload>
+	<defaultcontrol>200</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture>service-pushbullet-com-white_square.png</texture>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+		</control>
+		<control type="group" id="200">
+			<defaultcontrol>101</defaultcontrol>
+			<control type="list" id="101">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<scrolltime>200</scrolltime>
+				<itemlayout height="150">
+					<control type="group">
+						<visible>!IsEmpty(ListItem.Property(background))</visible>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>1280</width>
+							<height>150</height>
+							<texture>$INFO[ListItem.Property(background)]</texture>
+							<aspectratio>scale</aspectratio>
+						</control>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>1280</width>
+							<height>150</height>
+							<texture>service-pushbullet-com-white_square.png</texture>
+							<colordiffuse>AAFFFFFF</colordiffuse>
+						</control>
+					</control>
+					<control type="image">
+						<posx>1028</posx>
+						<posy>10</posy>
+						<width>232</width>
+						<height>130</height>
+						<texture colordiffuse="CCFFFFFF" diffuse="service-pushbullet-com-thumb_diffuse.png">$INFO[ListItem.Property(background)]</texture>
+						<aspectratio align="right">keep</aspectratio>
+					</control>
+					<control type="group">
+						<control type="group">
+							<posx>30</posx>
+							<posy>16</posy>
+							<control type="image">
+								<width>118</width>
+								<height>118</height>
+								<aspectratio align="left'">keep</aspectratio>
+								<texture>$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>75</posx>
+								<posy>75</posy>
+								<width>32</width>
+								<height>32</height>
+								<texture>$INFO[ListItem.Property(media_icon)]</texture>
+							</control>
+						</control>
+						<control type="label">
+							<posx>158</posx>
+							<posy>0</posy>
+							<width>810</width>
+							<height>51</height>
+							<font>@font13T@</font>
+							<aligny>center</aligny>
+							<textcolor>FF000000</textcolor>
+							<shadowcolor>00FFFFFF</shadowcolor>
+							<align>left</align>
+							<label>[B]$INFO[ListItem.Label][/B]</label>
+						</control>
+						<control type="group">
+							<posx>158</posx>
+							<posy>43</posy>
+							<control type="textbox">
+								<visible>IsEmpty(ListItem.Property(background))</visible>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>1092</width>
+								<height>68</height>
+								<font>@font10T@</font>
+								<textcolor>FF000000</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Property(description)][/B]</label>
+							</control>
+							<control type="textbox">
+								<visible>!IsEmpty(ListItem.Property(background))</visible>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>860</width>
+								<height>68</height>
+								<font>@font10T@</font>
+								<textcolor>FF000000</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Property(description)][/B]</label>
+							</control>
+						</control>
+						<control type="group">
+							<posx>158</posx>
+							<posy>118</posy>
+							<control type="label">
+								<visible>IsEmpty(ListItem.Property(background))</visible>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>1092</width>
+								<height>20</height>
+								<font>@font10@</font>
+								<textcolor>FF202020</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>left</align>
+								<label>$INFO[ListItem.Property(sender)]$INFO[ListItem.Property(info), - ]</label>
+							</control>
+							<control type="label">
+								<visible>!IsEmpty(ListItem.Property(background))</visible>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>860</width>
+								<height>20</height>
+								<font>@font10@</font>
+								<textcolor>FF202020</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>left</align>
+								<label>$INFO[ListItem.Property(sender)]$INFO[ListItem.Property(info), - ]</label>
+							</control>
+						</control>
+						<control type="group">
+							<posx>1250</posx>
+							<posy>15</posy>
+							<control type="label">
+								<posx>-1</posx>
+								<posy>1</posy>
+								<width>500</width>
+								<height>20</height>
+								<font>@font10T@</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>right</align>
+								<label>[B]$INFO[ListItem.Property(date)][/B]</label>
+							</control>
+							<control type="label">
+								<posx>-1</posx>
+								<posy>-1</posy>
+								<width>500</width>
+								<height>20</height>
+								<font>@font10T@</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>right</align>
+								<label>[B]$INFO[ListItem.Property(date)][/B]</label>
+							</control>
+							<control type="label">
+								<posx>1</posx>
+								<posy>-1</posy>
+								<width>500</width>
+								<height>20</height>
+								<font>@font10T@</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>right</align>
+								<label>[B]$INFO[ListItem.Property(date)][/B]</label>
+							</control>
+							<control type="label">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>500</width>
+								<height>20</height>
+								<font>@font10T@</font>
+								<textcolor>FF000000</textcolor>
+								<shadowcolor>FFFFFFFF</shadowcolor>
+								<align>right</align>
+								<label>[B]$INFO[ListItem.Property(date)][/B]</label>
+							</control>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1280</width>
+						<height>2</height>
+						<texture>service-pushbullet-com-white_square.png</texture>
+						<colordiffuse>FF000000</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>150</posy>
+						<width>1280</width>
+						<height>2</height>
+						<texture>service-pushbullet-com-white_square.png</texture>
+						<colordiffuse>FF000000</colordiffuse>
+					</control>
+				</itemlayout>
+				<focusedlayout height="150">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1280</width>
+						<height>150</height>
+						<texture>service-pushbullet-com-white_square.png</texture>
+						<colordiffuse>FF666666</colordiffuse>
+					</control>
+					<control type="group">
+						<visible>!IsEmpty(ListItem.Property(background))</visible>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>1280</width>
+							<height>150</height>
+							<texture>$INFO[ListItem.Property(background)]</texture>
+							<aspectratio>scale</aspectratio>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1280</width>
+						<height>150</height>
+						<texture>service-pushbullet-com-white_square.png</texture>
+						<colordiffuse>CC006000</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>1028</posx>
+						<posy>10</posy>
+						<width>232</width>
+						<height>130</height>
+						<texture colordiffuse="CCFFFFFF" diffuse="service-pushbullet-com-thumb_diffuse.png">$INFO[ListItem.Property(background)]</texture>
+						<aspectratio align="right">keep</aspectratio>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1280</width>
+						<height>2</height>
+						<texture>service-pushbullet-com-white_square.png</texture>
+						<colordiffuse>FF000000</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>150</posy>
+						<width>1280</width>
+						<height>2</height>
+						<texture>service-pushbullet-com-white_square.png</texture>
+						<colordiffuse>FF000000</colordiffuse>
+					</control>
+					
+					<control type="group">
+						<control type="group">
+							<posx>30</posx>
+							<posy>16</posy>
+							<control type="image">
+								<width>118</width>
+								<height>118</height>
+								<aspectratio align="left'">keep</aspectratio>
+								<texture>$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>75</posx>
+								<posy>75</posy>
+								<width>32</width>
+								<height>32</height>
+								<texture>$INFO[ListItem.Property(media_icon)]</texture>
+							</control>
+						</control>
+						<control type="label">
+							<posx>158</posx>
+							<posy>0</posy>
+							<width>810</width>
+							<height>51</height>
+							<font>@font13T@</font>
+							<aligny>center</aligny>
+							<textcolor>FFFFFFFF</textcolor>
+							<shadowcolor>00FFFFFF</shadowcolor>
+							<align>left</align>
+							<label>[B]$INFO[ListItem.Label][/B]</label>
+						</control>
+						<control type="group">
+							<posx>158</posx>
+							<posy>43</posy>
+							<control type="textbox">
+								<visible>IsEmpty(ListItem.Property(background))</visible>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>1092</width>
+								<height>68</height>
+								<font>@font10T@</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Property(description)][/B]</label>
+							</control>
+							<control type="textbox">
+								<visible>!IsEmpty(ListItem.Property(background))</visible>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>860</width>
+								<height>68</height>
+								<font>@font10T@</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>left</align>
+								<label>[B]$INFO[ListItem.Property(description)][/B]</label>
+							</control>
+						</control>
+						<control type="group">
+							<posx>158</posx>
+							<posy>118</posy>
+							<control type="label">
+								<visible>IsEmpty(ListItem.Property(background))</visible>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>1092</width>
+								<height>20</height>
+								<font>@font10@</font>
+								<textcolor>FFD0D0D0</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>left</align>
+								<label>$INFO[ListItem.Property(sender)]$INFO[ListItem.Property(info), - ]</label>
+							</control>
+							<control type="label">
+								<visible>!IsEmpty(ListItem.Property(background))</visible>
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>860</width>
+								<height>20</height>
+								<font>@font10@</font>
+								<textcolor>FFD0D0D0</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>left</align>
+								<label>$INFO[ListItem.Property(sender)]$INFO[ListItem.Property(info), - ]</label>
+							</control>
+						</control>
+						<control type="group">
+							<posx>1250</posx>
+							<posy>15</posy>
+							<control type="label">
+								<posx>-1</posx>
+								<posy>1</posy>
+								<width>500</width>
+								<height>20</height>
+								<font>@font10T@</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>right</align>
+								<label>[B]$INFO[ListItem.Property(date)][/B]</label>
+							</control>
+							<control type="label">
+								<posx>-1</posx>
+								<posy>-1</posy>
+								<width>500</width>
+								<height>20</height>
+								<font>@font10T@</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>right</align>
+								<label>[B]$INFO[ListItem.Property(date)][/B]</label>
+							</control>
+							<control type="label">
+								<posx>1</posx>
+								<posy>-1</posy>
+								<width>500</width>
+								<height>20</height>
+								<font>@font10T@</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<shadowcolor>00FFFFFF</shadowcolor>
+								<align>right</align>
+								<label>[B]$INFO[ListItem.Property(date)][/B]</label>
+							</control>
+							<control type="label">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>500</width>
+								<height>20</height>
+								<font>@font10T@</font>
+								<textcolor>FF000000</textcolor>
+								<shadowcolor>FFFFFFFF</shadowcolor>
+								<align>right</align>
+								<label>[B]$INFO[ListItem.Property(date)][/B]</label>
+							</control>
+						</control>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+		<control type="group" id="149">
+			<visible>StringCompare(Window.Property(loading),1)</visible>
+			<posx>560</posx>
+			<posy>270</posy>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>160</width>
+				<height>160</height>
+				<texture>service-pushbullet-com-loading_bg.png</texture>
+			</control>
+			<control type="image">
+				<posx>16</posx>
+				<posy>16</posy>
+				<width>128</width>
+				<height>128</height>
+				<texture>service-pushbullet-com-loading.gif</texture>
+			</control>
+		</control>
+	</controls>
+</window>

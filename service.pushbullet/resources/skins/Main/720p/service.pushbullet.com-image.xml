@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+	<onload>SetProperty(pushbullet,1)</onload>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>$INFO[Window.Property(image_url)]</texture>
+			<aspectratio>keep</aspectratio>
+		</control>
+	</controls>
+</window>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+	<onload>SetProperty(pushbullet,1)</onload>
+	<defaultcontrol>200</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>service-pushbullet-com-white_square.png</texture>
+			<colordiffuse>FFFFFFFF</colordiffuse>
+		</control>
+		<control type="group" id="200">
+			<defaultcontrol>101</defaultcontrol>
+			<control type="textbox" id="100">
+				<posx>20</posx>
+				<posy>0</posy>
+				<width>1240</width>
+				<height>720</height>
+				<font>@font13@</font>
+				<textcolor>FF000000</textcolor>
+				<shadowcolor>00FFFFFF</shadowcolor>
+				<align>left</align>
+				<pagecontrol>101</pagecontrol>
+			</control>
+			<control type="scrollbar" id="101">
+				<posx>1270</posx>
+				<posy>0</posy>
+				<width>10</width>
+				<height>720</height>
+				<visible>true</visible>
+				<texturesliderbackground>-</texturesliderbackground>
+				<texturesliderbar>service-pushbullet-com-white_square.png</texturesliderbar>
+				<texturesliderbarfocus>service-pushbullet-com-white_square.png</texturesliderbarfocus>
+				<textureslidernib>-</textureslidernib>
+				<textureslidernibfocus>-</textureslidernibfocus>
+				<pulseonselect>false</pulseonselect>
+				<orientation>vertical</orientation>
+				<showonepage>false</showonepage>
+				<colordiffuse>60808080</colordiffuse>
+			</control>
+		</control>
+	</controls>
+</window>

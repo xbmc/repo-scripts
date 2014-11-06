@@ -10,13 +10,12 @@ For set the Pushbullet *access token* as well as in the addon settings, you can 
 *userdata/addon_data/service.pushbullet/settings.xml*
 
 ### Features (TODOS)
-- [ ] Send commands or JSONRPC to Kodi through Pushbullet notes
 - [ ] Answer messages directly on Kodi
 - [ ] Catch others Kodi notification to send to other device (for Sync/Mirroring in outbound mode)
 
 ### www
 * [Official Topic](http://forum.xbmc.org/showthread.php?tid=204567)
-* [Kodi Official Page (soon)](http://addons.xbmc.org/show/service.pushbullet/)
+* [Kodi Official Page](http://addons.xbmc.org/show/service.pushbullet/)
 
 ### Latest release
 Manual install service addon: [Download ZIP](https://github.com/elbowz/xbmc.service.pushbullet/archive/master.zip)

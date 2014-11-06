@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="30000">
+    <category label="32001">
+        <setting id="authorize_action" label="32005" type="action" action="RunScript(service.pushbullet,AUTHORIZE)" option="close" />
+        <setting id="pb_client_iden" label="32006" type="action" action="RunScript(service.pushbullet,LINK_DEVICE)" option="close" />
+        <setting id="pb_client_nickname" label="32007" type="action" action="RunScript(service.pushbullet,RENAME_DEVICE)" option="close" enable="!eq(-1,)" />
+        <setting id="pb_client_model" label="30062" type="text" enable="false"/>
         <setting label="30010" type="lsep"/>
         <setting id="pb_access_token" label="30030" type="text"/>
-        <setting label="30011" type="lsep"/>
-        <setting id="notification_time" label="30031" type="slider" default="6" range="1,1,60" option="int" />
-        <setting id="pb_channels" label="30032" type="bool" default="true"/>
+        <setting id="load_token_action" label="32015" type="action" action="RunScript(service.pushbullet,TOKEN_FROM_FILE)" />
+    </category>
+    <category label="30000">
+        <setting id="notification_time" label="30031" type="slider" default="6" range="1,1,60" option="int" enable="eq(1,false)"/>
+        <setting id="proportional_notification_time" label="30032" type="bool" default="true"/>
+        <setting id="pb_channels" label="30033" type="bool" default="true"/>
+    </category>
+    <category label="32107">
+        <setting label="32114" type="lsep"/>
+        <setting id="handling_video"   label="32108" type="enum" lvalues="32115|32117|32118" default="0"/>
+        <setting id="handling_audio"   label="32109" type="enum" lvalues="32115|32117|32118" default="0"/>
+        <setting id="handling_image"   label="32110" type="enum" lvalues="32116|32117|32118" default="0"/>
+        <setting id="handling_note"    label="32111" type="enum" lvalues="32116|32117|32118" default="1"/>
+        <setting id="handling_list"    label="32112" type="enum" lvalues="32116|32117|32118" default="1"/>
+        <setting id="handling_address" label="32113" type="enum" lvalues="32116|32117|32118" default="1"/>
+        <setting id="interrupt_media" label="32119" type="bool" default="false"/>
     </category>
     <category label="30001">
         <setting id="pb_mirroring" label="30040" type="bool" default="true"/>
@@ -16,13 +33,16 @@
     <category label="30002">
         <setting id="pb_mirroring_out" label="30050" type="bool" default="true"/>
         <setting id="pb_mirroring_out_media_nfo" label="30051" type="bool" subsetting="true" enable="eq(-1,true)" default="true"/>
-        <setting label="30052" type="action" action="RunScript(service.pushbullet,SEND_EPHEMERAL_TEST)" />
+        <setting id="ephmeral_test_action" label="30052" type="action" action="RunScript(service.pushbullet,SEND_EPHEMERAL_TEST)" />
         <setting label="30011" type="lsep"/>
-        <setting id="cmd_on_dismiss_push" label="30053" type="labelenum" values="Stop|Pause|Next|None" enable="eq(-3,true)"/>
+        <setting id="cmd_on_dismiss_push" label="30053" type="labelenum" values="Stop|Pause|Next|None" default="Stop" enable="eq(-3,true)"/>
     </category>
-    <category label="30003">
-        <setting id="pb_client_iden" label="30060" type="text" enable="false"/>
-        <setting id="pb_client_nickname" label="30061" type="text" enable="false"/>
-        <setting id="pb_client_model" label="30062" type="text" enable="false"/>
+    <category label="32003">
+        <setting id="load_video_thumbs" type="bool" default="false" label="32011" />
+        <setting id="selected_device" label="32012" type="action" action="RunScript(service.pushbullet,SELECT_DEVICE)" />
+        <setting id="default_view_mode" type="enum" label="32013" lvalues="32016|32017|32018" default="0" enable="eq(-1,)" />
+    </category>
+     <category label="32120">
+        <setting id="debug_logging" type="bool" default="false" label="32121" />
     </category>
 </settings>

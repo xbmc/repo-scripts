@@ -31,6 +31,7 @@ class Service:
         # xbmc icon (used as ephemerals icon)
         import os
         xbmcImgPath = os.path.join(__addonpath__, 'resources', 'media', 'xbmc.jpg')
+        kodiCmdsNotificationIcon = os.path.join(__addonpath__, 'resources', 'media', 'kcmd.png')
 
         import base64
         with open(xbmcImgPath, "rb") as imgFile:
@@ -44,7 +45,10 @@ class Service:
         self.pbPlaybackNotificationId = random.randint(-300000000, 300000000)
 
         from lib.push2Notification import Push2Notification
-        self.push2Notification = Push2Notification(notificationIcon=__addonicon__, tempPath=__addonprofile__, pbPlaybackNotificationId=self.pbPlaybackNotificationId)
+        self.push2Notification = Push2Notification(notificationIcon=__addonicon__, tempPath=__addonprofile__,
+                                                   pbPlaybackNotificationId=self.pbPlaybackNotificationId,
+                                                   kodiCmds=getKodiCmdsFromFiles(),
+                                                   kodiCmdsNotificationIcon=kodiCmdsNotificationIcon)
 
         self._getSettings()
         self.run()
@@ -68,17 +72,16 @@ class Service:
             self.pushbullet.close()
 
         try:
-            if not self.stg_pbAccessToken:
+            if not self.stg_pbAccessToken or not self.stg_pbClientIden:
                 raise Exception(localise(30100))
 
             from lib.pushbullet import Pushbullet
 
             # init pushbullet
-            self.pushbullet = Pushbullet(access_token=self.stg_pbAccessToken,ping_timeout=2)
-
-            # create device if it's the first run
-            if not self.stg_pbClientIden:
-                self._createDevice()
+            self.pushbullet = Pushbullet(   access_token=self.stg_pbAccessToken,
+                                            ping_timeout=6,
+                                            last_modified=getSetting('last_modified',0),
+                                            last_modified_callback=self.setLastModified)
 
             # get device info (also if edited by user on Pushbullet panel)
             self._getDevice()
@@ -101,6 +104,10 @@ class Service:
             log(message, xbmc.LOGERROR)
             showNotification(localise(30101), message, self.serviceNotifcationTime)
 
+    def setLastModified(self,modified):
+        setSetting('last_modified','{0:10f}'.format(modified))
+        log('Updating last_modified: {0}'.format(modified))
+
     def _setupService(self):
         log('Setup Service and Pushbullet Client')
 
@@ -113,6 +120,7 @@ class Service:
 
         # setup service
         self.push2Notification.setNotificationTime(self.stg_notificationTime*1000)
+        showNotification.proportionalTextLengthTimeout = self.stg_propotificationTime
         self.push2Notification.setCmdOnDismissPush(self.stg_cmdOnDismissPush.lower())
 
         # outbound mirroring
@@ -127,22 +135,34 @@ class Service:
         Run the correct "procedure" following which settings are changed
         """
 
-        # if access_token is changed => restart service
+        # if access_token is changed => (re)start service
         if self.stg_pbAccessToken != __addon__.getSetting('pb_access_token'):
             log('Access token is changed')
 
             self._getSettings()
             self.run()
+        
+        # if access token is set and...
+        elif self.stg_pbAccessToken:
+            
+            # ...client_iden has been set => (re)start service
+            if not self.stg_pbClientIden and __addon__.getSetting('pb_client_iden'):
+                log('Device has been set')
+                 
+                self._getSettings()
+                self.run()
 
-        # if one of the listed settings are changed and access token is set => read setting setup service
-        elif self.stg_pbAccessToken and self._isSettingChanged():
-            log('Setting is changed by user')
-
-            self._getSettings()
-            self._setupService()
+            # ...one of the listed settings are changed  => read setting setup service
+            elif self._isSettingChanged():
+                log('Setting is changed by user')
+    
+                self._getSettings()
+                self._setupService()
 
     def _isSettingChanged(self):
         if self.stg_notificationTime != int(__addon__.getSetting('notification_time')): return True
+        elif self.stg_propotificationTime != (__addon__.getSetting('proportional_notification_time') == 'true'): return True
+        elif self.stg_pbClientIden != __addon__.getSetting('pb_client_iden'): return True
         elif self.stg_pbChannels != (__addon__.getSetting('pb_channels') == 'true'): return True
         elif self.stg_pbMirroring != (__addon__.getSetting('pb_mirroring') == 'true'): return True
         elif self.stg_pbFilterDeny != __addon__.getSetting('pb_filter_deny'): return True
@@ -160,6 +180,7 @@ class Service:
 
         self.stg_pbAccessToken          = __addon__.getSetting('pb_access_token')
         self.stg_notificationTime       = int(__addon__.getSetting('notification_time'))
+        self.stg_propotificationTime    = __addon__.getSetting('proportional_notification_time') == 'true'
         self.stg_pbChannels             = __addon__.getSetting('pb_channels') == 'true'
 
         self.stg_pbMirroring            = __addon__.getSetting('pb_mirroring') == 'true'
@@ -175,31 +196,13 @@ class Service:
         self.stg_pbClientNickname       = __addon__.getSetting('pb_client_nickname')
         self.stg_pbClientModel          = __addon__.getSetting('pb_client_model')
 
-    def _createDevice(self):
-        log('No iden found. Maybe the first time %s start' % __addonname__)
-
-        from lib.common import getMainSetting
-        deviceName = getMainSetting('services.devicename')
-
-        import platform
-        manufacturer = platform.system()
-
-        response = self.pushbullet.createDevice({'nickname': deviceName, 'type': 'stream', 'model': 'Kodi', 'manufacturer': manufacturer})
-
-        log('New device (%s) created with iden: %s' % (response['nickname'], response['iden']))
-
-        __addon__.setSetting(id='pb_client_iden', value=response['iden'])
-
-        # update iden var setting (just created)
-        self.stg_pbClientIden = __addon__.getSetting('pb_client_iden')
-
     def _getDevice(self):
         device = self.pushbullet.getDevice(self.stg_pbClientIden)
 
         if device:
             # set setting
             __addon__.setSetting(id='pb_client_nickname', value=device['nickname'])
-            __addon__.setSetting(id='pb_client_model', value=device['model'])
+            __addon__.setSetting(id='pb_client_model', value=device.get('model','')) # use .get() as model may not be set
 
             # update vars setting
             self.stg_pbClientNickname = __addon__.getSetting('pb_client_nickname')
@@ -222,14 +225,16 @@ class Service:
 
                 title = body = icon = None
                 playerId = data['player']['playerid']
-
-                result = executeJSONRPC('{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title","year","tagline","album","artist","plot","episode","season","showtitle","channel","channeltype","channelnumber","thumbnail","file"], "playerid": ' + str(playerId) + ' }, "id": "1"}')
+                if playerId < 0:
+                    result = data
+                else:
+                    result = executeJSONRPC('{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "properties": ["title","year","tagline","album","artist","plot","episode","season","showtitle","channel","channeltype","channelnumber","thumbnail","file"], "playerid": ' + str(playerId) + ' }, "id": "1"}')
 
                 if 'item' in result:
                     if data['item']['type'] == 'movie':
                         if 'title' in result['item'] and result['item']['title'] != '':
-                            title = '%s (%s)' % (result['item']['title'], result['item']['year'])
-                            body = result['item']['tagline']
+                            title = '%s (%s)' % (result['item']['title'], result['item'].get('year',''))
+                            body = result['item'].get('tagline',xbmc.getInfoLabel('VideoPlayer.Tagline'))
 
                     elif data['item']['type'] == 'song' or data['item']['type'] == 'musicvideo':
                         if 'title' in result['item'] and result['item']['title'] != '':
@@ -252,10 +257,16 @@ class Service:
                         title = result['item']['label'] if 'label' in result['item'] else result['item']['file']
                         body = None
 
+                    thumbnailFilePath = None
                     if 'thumbnail' in result['item']:
                         thumbnailFilePath = result['item']['thumbnail']
+                    else:
+                        thumbnailFilePath = xbmc.getInfoLabel('Player.Art(thumb)')
+
+                    if thumbnailFilePath:
                         try:
                             icon = fileTobase64(thumbnailFilePath, imgFormat='JPEG', imgSize=(72, 72))
+                            if not icon: raise Exception('No Icon')
                         except:
                             icon = self.xbmcImgEncoded
 
@@ -267,9 +278,9 @@ class Service:
                 ephemeralMsg = {'title': title, 'body': body, 'notification_id': self.pbPlaybackNotificationId, 'icon': icon}
 
                 if len(self.pushbullet.sendEphemeral(ephemeralMsg)) == 0:
-                    log('Ephemeral push sended: %s - %s' % (ephemeralMsg['title'], ephemeralMsg['body']))
+                    log(u'Ephemeral push sended: {0} - {1}'.format(ephemeralMsg['title'], ephemeralMsg['body']))
                 else:
-                    log('Ephemeral push NOT send: %s - %s' % (ephemeralMsg['title'], ephemeralMsg['body']), xbmc.LOGERROR)
+                    log(u'Ephemeral push NOT send: {0} - {1}'.format(ephemeralMsg['title'], ephemeralMsg['body']), xbmc.LOGERROR)
 
             elif method == 'Player.OnStop' and self.stg_pbMirroringOutMediaNfo:
                 log('onKodiNotification: %s %s %s' % (sender, method, data))

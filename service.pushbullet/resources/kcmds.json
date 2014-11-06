@@ -1,0 +1,30 @@
+{
+    "jsonrpc": {
+        "JSONRPC": "<$params[0]>",
+        "notification": "<$result>"
+    },
+    "quit": {
+        "JSONRPC": "{\"jsonrpc\": \"2.0\", \"method\": \"Application.Quit\", \"id\": 1}",
+        "notification": "Response: <$result>"
+    },
+    "mute": {
+        "JSONRPC": "{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetMute\", \"params\": { \"mute\": \"toggle\" }, \"id\": 1}",
+        "notification": "State: <$result>"
+    },
+    "volume": {
+        "JSONRPC": "{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": <$params[0]> }, \"id\": 1}",
+        "notification": "Volume: <$result>"
+    },
+    "video.scan": {
+        "JSONRPC": "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.Scan\", \"id\": 1}",
+        "notification": "Response: <$result>"
+    },
+    "audio.scan": {
+        "JSONRPC": "{\"jsonrpc\": \"2.0\", \"method\": \"AudioLibrary.Scan\", \"id\": 1}",
+        "notification": "Response: <$result>"
+    },
+    "settings.get": {
+        "JSONRPC": "{\"jsonrpc\": \"2.0\", \"method\": \"Settings.GetSettingValue\", \"params\": {\"setting\": \"<$params[0]>\"}, \"id\": 1 }",
+        "notification": "Value: <$result[value]>"
+    }
+}

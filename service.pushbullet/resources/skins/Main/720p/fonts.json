@@ -1,0 +1,14 @@
+{
+	"aeonmq5": {
+		"@font10T@": "Font_18",
+		"@font13T@": "Font_23",
+		"@font10@": "Font_17",
+		"@font13@": "Font_21"
+	},
+	"amber": {
+		"@font10T@": "GridItems",
+		"@font13T@": "InfoTitle",
+		"@font10@": "FManager2",
+		"@font13@": "font13"
+	}
+}

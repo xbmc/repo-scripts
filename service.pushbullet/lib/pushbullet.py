@@ -2,6 +2,9 @@ import json
 
 import httplib2
 import websocket
+import threading
+
+from common import traceError
 
 class Pushbullet():
     """
@@ -9,8 +12,8 @@ class Pushbullet():
     """
 
     def __init__(self, access_token=None, user_iden=None, device_iden=None, filter_deny={}, filter_allow={},
-                 mirror_mode=True, view_channels = True, base_url='https://api.pushbullet.com/v2/', ping_timeout=2,
-                 json_format_response=True):
+                 mirror_mode=True, view_channels = True, base_url='https://api.pushbullet.com/v2/', ping_timeout=6,
+                 try_reconnect=10, json_format_response=True, last_modified=0, last_modified_callback=None):
         """
         access_token: access toke.
         user_iden; used for send and receive ephemerals (if not set receive all pushes)
@@ -35,6 +38,7 @@ class Pushbullet():
         self.view_channels = view_channels
         self.base_url = base_url
         self.ping_timeout = ping_timeout
+        self.try_reconnect = try_reconnect
         self.json_format_response = json_format_response
 
         self._h = httplib2.Http()
@@ -51,13 +55,28 @@ class Pushbullet():
 
         self._ws = None
         self._ws_thread = None
+        self._ws_thread_keep_alive = None
         self._response = None
-        self._last_modified = 0
+        self._abortRequested = False
+        
+        self._last_modified_callback = last_modified_callback
+        self.initLastModified(last_modified)
 
         self._user_on_open = None
         self._user_on_message = None
         self._user_on_close = None
         self._user_on_error = None
+
+    def initLastModified(self,last_modified):
+        self._last_modified = last_modified
+        # get a push list to find the most recent modified time
+        try:
+            pushes = self.getPushes()
+            if not pushes: return
+            self._last_modified = pushes[0].get('modified',0)
+            if self._last_modified_callback: self._last_modified_callback(self._last_modified)
+        except:
+            traceError()
 
     def getUserInfo(self, json_format_response=None):
         """
@@ -97,7 +116,7 @@ class Pushbullet():
         modified_after = self._last_modified if modified_after is 0 else modified_after
 
         self._response = self._h.request(
-            self.base_url + self._REST_URLS['pushes'] + '?modified_after=' + str(modified_after), method='GET')
+            self.base_url + self._REST_URLS['pushes'] + '?modified_after=' + (modified_after and '{0:10f}'.format(modified_after) or '0'), method='GET') # Modified after must be formated or it will be rounded to the nearest 1/100
 
         pushes = self._getResponse(json_format_response=True)['pushes']
 
@@ -118,10 +137,7 @@ class Pushbullet():
         if len(pushes):
             # save modified time for next query on pushes
             self._last_modified = pushes[0]['modified']
-
-            # pushes dismiss
-            for push in pushes:
-                self.dismissPush(push['iden'])
+            if self._last_modified_callback: self._last_modified_callback(self._last_modified)
 
         return pushes
 
@@ -198,26 +214,61 @@ class Pushbullet():
 
         self._user_on_open = on_open
         self._user_on_message = on_message
-        self._user_on_close = on_error
-        self._user_on_error = on_close
+        self._user_on_close = on_close
+        self._user_on_error = on_error
 
-        from threading import Thread
+        # Start thread and reconnect if disconnect
+        self._ws_thread_keep_alive = threading.Thread(target=self._webSocketThreadKeepAlive)
+        self._ws_thread_keep_alive.start()
 
-        self._ws_thread = Thread(target=self._websocketThread)
-        self._ws_thread.start()
+    def _webSocketThreadKeepAlive(self):
+        evtThreadEnded = None
 
-    def _websocketThread(self):
-        import websocket
+        while not self._abortRequested:
+            # wait websocket disconnection (only on windows)
+            # first start don't wait
+            if not evtThreadEnded or evtThreadEnded.wait():
+                # not first start
+                if evtThreadEnded:
 
-        websocket.enableTrace(False)
-        self._ws = websocket.WebSocketApp(self._REST_URLS['websocket'] + self.access_token,
-                                          on_open=self._on_open,
-                                          on_message=self._on_message,
-                                          on_close=self._on_close,
-                                          on_error=self._on_error)
+                    evtThreadEnded.clear()
 
-        # ping_timeout is for no blocking call
-        self._ws.run_forever(ping_timeout=self.ping_timeout)
+                    # wait try_reconnect seconds before try to reconnect
+                    for i in range(self.try_reconnect):
+
+                        # if add-on is closed
+                        if self._abortRequested: break
+
+                        import time
+                        time.sleep(1)
+
+                if self._abortRequested: break
+
+                evtThreadEnded = threading.Event()
+                # start real websocket thread
+                self._ws_thread = threading.Thread(target=self._websocketThread, kwargs={'evtThreadEnded': evtThreadEnded})
+                self._ws_thread.start()
+
+        self._ws_thread.join()
+
+    def _websocketThread(self, evtThreadEnded):
+        try:
+            websocket.enableTrace(False)
+            self._ws = websocket.WebSocketApp(self._REST_URLS['websocket'] + self.access_token,
+                                              on_open=self._on_open,
+                                              on_message=self._on_message,
+                                              on_close=self._on_close,
+                                              on_error=self._on_error)
+
+            # ping_timeout is for no blocking call
+            self._ws.run_forever(ping_interval=self.ping_timeout/2, ping_timeout=self.ping_timeout)
+
+        except AttributeError:
+            self._on_error(websocket, 'No internet connection!')
+        except Exception as ex:
+            self._on_error(websocket, ex)
+        finally:
+            evtThreadEnded.set()
 
     def _on_open(self, websocket):
         self._user_on_open()
@@ -248,7 +299,8 @@ class Pushbullet():
         # something has changed on the server /v2/pushes resources
         elif data['type'] == 'tickle' and data['subtype'] == 'push':
             for push in self.getPushes():
-                self._user_on_message(push)
+                if self._user_on_message(push):
+                    self.dismissPush(push['iden'])
 
     def _on_close(self, websocket):
         self._user_on_close()
@@ -370,9 +422,10 @@ class Pushbullet():
         """
         Stop Real Time Event Stream
         """
+        self._abortRequested = True
 
         if self._ws:
             self._ws.close()
+
         if self._ws_thread:
             self._ws_thread.join()
-

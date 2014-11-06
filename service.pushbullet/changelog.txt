@@ -1,4 +1,37 @@
+0.8.12b
+- Fix issue with mirror pushes failing due to missing PIL on some platforms
+- Push handling settings now default to play instantly for media and notification for all others
+
+0.8.10b
+- Fix issue causing the service not to connect to the push server after authorization
+- Push handling settings now default to notification for all push types
+
+0.8.8b
+- Fix for error causing service startup to fail
+
+0.8.6b
+- Fix for pushes sent when Kodi is off all being played when push is received
+- Added setting 'Interrupt Playing Media' (Default: False)
+- Will now reconnect on disconnection from push server
+
+0.8.4b
+- Fix for pushes playing last video unstead of pushed video
+
+0.8.2b
+- Fix for error preventing authorization
+
+0.8.0b
+- Added interface, OAuth and media handling code from service.pusbullet.com (ruuk)
+- Added choices for handling different push types - Play/Show|Notify|Ignore
+
+0.6.18b
+- Added Proportional notifications timeout in add-on settings
+
+0.6.16b
+- Added custom kodi commands (aka kcmd)
+
 0.6.14b
+- First release added to the Official Kodi repository
 - Added internal Kodi modules (script.module.httplib2 and script.module.six)
 - Manage new playback types: "episode", "musicvideo", "channel"
 
