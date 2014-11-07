@@ -6,7 +6,7 @@
 <strings>
     <string id="30010">XBMC Backup</string>
     <string id="30011">Geral</string>
-    <string id="30012">Selecção de ficheiros</string>
+    <string id="30012">Seleccionar ficheiros</string>
     <string id="30013">Agendamento</string>
     <string id="30016">Cópia Segurança</string>
     <string id="30017">Restaurar</string>
@@ -14,7 +14,7 @@
     <string id="30019">Introduzir Localização</string>
     <string id="30020">Procurar Localização Remota</string>
     <string id="30021">Nome da pasta de cópia</string>
-    <string id="30022">Iniciar Silenciosamente</string>
+    <string id="30022">Indicador de Progresso</string>
     <string id="30023">Modo</string>
     <string id="30024">Introduza a localização remota</string>
     <string id="30025">Tipo de localização remota</string>
@@ -25,7 +25,7 @@
     <string id="30030">Add-ons do utilizador</string>
     <string id="30031">Dados dos add-ons</string>
     <string id="30032">Base de Dados</string>
-    <string id="30033">Lista de reprodução</string>
+    <string id="30033">Listas de reprodução</string>
     <string id="30034">Miniaturas/Fanart</string>
     <string id="30035">Ficheiros de configuração</string>
     <string id="30036">Pasta Personalizada 1</string>
@@ -70,4 +70,12 @@
     <string id="30076">Desligar após cópia de segurança</string>
     <string id="30077">Reiniciar XBMC</string>
     <string id="30078">Tem de reiniciar o XBMC para continuar</string>
+    <string id="30079">Apenas Hoje</string>
+    <string id="30080">Perfis</string>
+    <string id="30081">O agendamento será reiniciado a</string>
+    <string id="30082">Barra de Progresso</string>
+    <string id="30083">Barra de Progresso em Fundo</string>
+    <string id="30084">Nenhum (silenciosamente)</string>
+    <string id="30085">Aviso de Versão</string>
+    <string id="30086">Esta versão do XBMC é diferente da que foi usada para criar o arquivo</string>
 </strings>

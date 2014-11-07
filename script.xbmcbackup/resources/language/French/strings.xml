@@ -70,4 +70,7 @@
     <string id="30076">Arrêter après la sauvegarde</string>
     <string id="30077">Redémarrer XBMC</string>
     <string id="30078">Vous devez redémarrer XBMC pour continuer</string>
+    <string id="30079">Seulement aujourd'hui</string>
+    <string id="30080">Profils</string>
+    <string id="30081">Le planificateur sera exécuté le</string>
 </strings>

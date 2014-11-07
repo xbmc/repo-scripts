@@ -6,6 +6,7 @@
 		<setting id="remote_path" type="folder" label="30020" visible="eq(-2,0)" />
 		<setting id="dropbox_key" type="text" label="30028" visible="eq(-3,2)" default="" />
 		<setting id="dropbox_secret" type="text" label="30029" visible="eq(-4,2)" default="" />
+		<setting id="compress_backups" type="bool" label="30087" default="false" />
 		<setting id="backup_rotation" type="number" label="30026" default="0" />
 		<setting id="progress_mode" type="enum" label="30022" lvalues="30082|30083|30084" default="0" />
 	</category>

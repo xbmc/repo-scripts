@@ -14,7 +14,7 @@
     <string id="30019">Skriv sökväg</string>
     <string id="30020">Bläddra efter fjärrsökväg</string>
     <string id="30021">Backuppmappsnamn</string>
-    <string id="30022">Kör tyst</string>
+    <string id="30022">Förlopp</string>
     <string id="30023">Läge</string>
     <string id="30024">Skriv fjärrsökväg</string>
     <string id="30025">Fjärrsökvägstyp</string>
@@ -70,4 +70,12 @@
     <string id="30076">Stäng av efter Backup</string>
     <string id="30077">Starta om XBMC</string>
     <string id="30078">Du borde starta om XBMC för att fortsätta</string>
+    <string id="30079">Bara idag</string>
+    <string id="30080">Profiles</string>
+    <string id="30081">Schemaläggaren kommer köras igen</string>
+    <string id="30082">Förloppsindikator</string>
+    <string id="30083">Bakgroundsförloppsindikator</string>
+    <string id="30084">Ingen (tyst)</string>
+    <string id="30085">Version varning</string>
+    <string id="30086">Den här versionen av XBMC är annorlunda än den som användes vid skapandet av arkivet</string>
 </strings>

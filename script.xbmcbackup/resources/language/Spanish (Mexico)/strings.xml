@@ -14,7 +14,6 @@
     <string id="30019">Ingresar Ruta</string>
     <string id="30020">Explorar Ruta Remota</string>
     <string id="30021">Nombre de Carpeta de Respaldo</string>
-    <string id="30022">Ejecutar en Modo Silencioso</string>
     <string id="30023">Modo</string>
     <string id="30024">Ingresar Ruta Remota</string>
     <string id="30025">Tipo de Ruta Remota</string>
@@ -56,4 +55,5 @@
     <string id="30075">Programación Perzonalizada</string>
     <string id="30076">Apagar luego de respaldar</string>
     <string id="30077">Reiniciar XBMC</string>
+    <string id="30080">Perfiles</string>
 </strings>

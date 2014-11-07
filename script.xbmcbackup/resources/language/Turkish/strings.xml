@@ -5,6 +5,7 @@
 
 <strings>
     <string id="30011">Genel</string>
+    <string id="30016">Yedekle</string>
     <string id="30023">Mod</string>
     <string id="30032">Veritabanı</string>
     <string id="30033">Çalma listesi</string>
@@ -15,4 +16,5 @@
     <string id="30069">Perşembe</string>
     <string id="30070">Cuma</string>
     <string id="30071">Cumartesi</string>
+    <string id="30080">Profiller</string>
 </strings>

@@ -14,7 +14,7 @@
     <string id="30019">Scrivi percorso</string>
     <string id="30020">Seleziona percorso remoto</string>
     <string id="30021">Nome cartella backup</string>
-    <string id="30022">Avvio silenzioso</string>
+    <string id="30022">Visualizzazione avanzamento</string>
     <string id="30023">Modalità</string>
     <string id="30024">Scrivi percorso remoto</string>
     <string id="30025">Tipo percorso remoto</string>
@@ -70,4 +70,12 @@
     <string id="30076">Spegni dopo avere effettuato il backup</string>
     <string id="30077">Riavvia XBMC</string>
     <string id="30078">Dovresti riavviare XBMC per continuare</string>
+    <string id="30079">Oggi</string>
+    <string id="30080">Profili</string>
+    <string id="30081">Gli eventi pianificati verrà rieseguita il</string>
+    <string id="30082">Barra di avanzamento</string>
+    <string id="30083">Barra di avanzamento sullo sfondo</string>
+    <string id="30084">Nessuno (silenzioso)</string>
+    <string id="30085">Allerta Versione</string>
+    <string id="30086">Questa versione di XBMC è diversa da quella che è stata usata per creare l'archivio</string>
 </strings>

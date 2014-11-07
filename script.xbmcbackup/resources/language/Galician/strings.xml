@@ -14,7 +14,7 @@
     <string id="30019">Escribir Camiño</string>
     <string id="30020">Buscar Camiño Remoto</string>
     <string id="30021">Nome do cartafol de copias de seguranza</string>
-    <string id="30022">Executar en segundo plano</string>
+    <string id="30022">Amosar Progreso</string>
     <string id="30023">Modo</string>
     <string id="30024">Escribir Camiño Remoto</string>
     <string id="30025">Tipo de Camiño Remoto</string>
@@ -51,7 +51,7 @@
     <string id="30057">Prema Aceptar cando teña autorización</string>
     <string id="30058">É necesario o códido de desenvolvedor de Dropbox</string>
     <string id="30059">Visite https://www.dropbox.com/developers</string>
-    <string id="30060">Habilitar programación</string>
+    <string id="30060">Activar Programador</string>
     <string id="30061">Programación</string>
     <string id="30062">Hora do día</string>
     <string id="30063">Día da semana</string>
@@ -70,4 +70,12 @@
     <string id="30076">Apagar despois de realizar a copia de seguranza</string>
     <string id="30077">Reiniciar XBMC</string>
     <string id="30078">Ten de restaurar o XBMC para continuar</string>
+    <string id="30079">Só Hoxe</string>
+    <string id="30080">Perfís</string>
+    <string id="30081">O Programador executarase de novo o</string>
+    <string id="30082">Barra de Progreso</string>
+    <string id="30083">Barra de Progreso no Fondo</string>
+    <string id="30084">Ningún (Silencioso)</string>
+    <string id="30085">Advertencia de Versión</string>
+    <string id="30086">Esta versión do XBMC é diferente da utilizada para xerar o ficheiro</string>
 </strings>

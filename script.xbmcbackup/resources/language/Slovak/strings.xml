@@ -14,7 +14,6 @@
     <string id="30019">Zadať cestu</string>
     <string id="30020">Prehliadať vzdialenú cestu</string>
     <string id="30021">Meno priečinku zálohy</string>
-    <string id="30022">Tichý režim</string>
     <string id="30023">Režim</string>
     <string id="30024">Zadať vzdialenú cestu</string>
     <string id="30025">Druh vzdialenej cesty</string>
@@ -59,4 +58,6 @@
     <string id="30074">Prvý deň mesiaca</string>
     <string id="30075">Vlastný plán</string>
     <string id="30076">Vypnúť po skončení zálohy</string>
+    <string id="30077">Reštartovať XBMC</string>
+    <string id="30080">Profily</string>
 </strings>

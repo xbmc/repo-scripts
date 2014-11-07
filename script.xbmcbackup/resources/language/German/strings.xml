@@ -70,4 +70,11 @@
     <string id="30076">Herunterfahren nach Backup</string>
     <string id="30077">XBMC neu starten</string>
     <string id="30078">Du solltest XBMC neu starten, um fortzufahren</string>
+    <string id="30079">Nur heute</string>
+    <string id="30080">Profile</string>
+    <string id="30081">Arbeitsplaner wird nochmal ausgeführt am:</string>
+    <string id="30082">Fortschrittsbalken</string>
+    <string id="30083">Hintergrund Fortsschrittsbalken</string>
+    <string id="30084">Keine (Still)</string>
+    <string id="30085">Versionswarnung</string>
 </strings>

@@ -70,12 +70,18 @@
     <string id="30076">Shutdown After Backup</string>
     <string id="30077">Restart XBMC</string>
     <string id="30078">You should restart XBMC to continue</string>
-	<string id="30079">Just Today</string>
-	<string id="30080">Profiles</string>
-	<string id="30081">Scheduler will run again on</string>
-	<string id="30082">Progress Bar</string>
-	<string id="30083">Background Progress Bar</string>
-	<string id="30084">None (Silent)</string>
-	<string id="30085">Version Warning</string>
-	<string id="30086">This version of XBMC is different than the one used to create the archive</string>
+    <string id="30079">Just Today</string>
+    <string id="30080">Profiles</string>
+    <string id="30081">Scheduler will run again on</string>
+    <string id="30082">Progress Bar</string>
+    <string id="30083">Background Progress Bar</string>
+    <string id="30084">None (Silent)</string>
+    <string id="30085">Version Warning</string>
+    <string id="30086">This version of XBMC is different than the one used to create the archive</string>
+    <string id="30087">Compress Archives</string>
+    <string id="30088">Copying Zip Archive</string>
+    <string id="30089">Write Error Detected</string>
+    <string id="30090">The destination may not be writeable</string>
+    <string id="30091">Zip archive could not be copied</string>
+    <string id="30092">Not all files were copied</string>
 </strings>

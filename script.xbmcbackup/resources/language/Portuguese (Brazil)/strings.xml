@@ -14,7 +14,7 @@
     <string id="30019">Digite o caminho</string>
     <string id="30020">Procurar caminho remoto</string>
     <string id="30021">Nome da pasta de backup</string>
-    <string id="30022">Rodar em silêncio</string>
+    <string id="30022">Mostrar Progresso</string>
     <string id="30023">Modo</string>
     <string id="30024">Digite o caminho remoto</string>
     <string id="30025">Tipo de caminho remoto</string>
@@ -70,4 +70,12 @@
     <string id="30076">Desligar após backup</string>
     <string id="30077">Reiniciar XBMC</string>
     <string id="30078">Você deve reiniciar o XBMC para continuar</string>
+    <string id="30079">Somente Hoje</string>
+    <string id="30080">Perfis</string>
+    <string id="30081">Agendado para rodar novamente em</string>
+    <string id="30082">Barra de Progresso</string>
+    <string id="30083">Barra de Progresso ao Fundo</string>
+    <string id="30084">Nenhum (Silencioso)</string>
+    <string id="30085">Alertas da Versão</string>
+    <string id="30086">Esta versão do XBMC é diferente da que foi usada para criar o arquivo</string>
 </strings>

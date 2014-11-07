@@ -8,9 +8,22 @@ Remote Destination/File Selection:
 
 In the addon settings you can define a remote path for the destination of your xbmc files. Each backup will create a folder named in a YYYYMMDDHHmm format so you can create multiple backups. You can keep a set number of backups by setting the integer value of the Backups to Keep setting greater than 0. 
 
+If you choose to compress your backups there are a few things you need to be aware of. Compressing takes place on the server you are trying to backup and then only the archive is copied to the remote backup location. This means you must have sufficient space available to allow for creating the archive. When restoring a zipped archive the process is the same. It is first copied to your local storage, extracted, and the contents put to their correct locations. The archive is then deleted. Zipped and non-zipped backups can be mixed in the same archive folder.  
+
 On the Backup Selection page you can select which items from your user profile folder will be sent to the backup location. By default all are turned on except the Addon Data directory. 
 
 You can also define non-XBMC directories on your device. See "Custom Directories" for more information on how these are handled. 
+
+Restores:
+
+During the restore process there are a few checks and post-run procedures to know about. 
+
+The first is a version check. If you are restoring to a different version of XBMC than the one used to create the backup archive you'll get a warning. In most cases it is OK to proceed, just know that some specific items like addons and database files may not work correctly.
+
+The next check is for an advancedsettings.xml file. If you've created this file and it exists in your restore archive you'll be asked to reboot XBMC. This is so that the file can be loaded and used for any special settings, mainly path substitutions, you may have had that would affect the rest of the restore. XBMC Backup will prompt you to continue the restore process when you reboot the program. 
+
+The last bit of post-processing is done after all the backup files have been restored. If you have restored your configuration files the addon will attempt to restore any system specific settings that it can from the guisettings.xml file. This is done by comparing the restored file with settings via the JSONPRC Settings.SetSettingValue method. Only system specific settings can be restored so you will get any custom views or skin specific settings back. See the FAQ for how to restore these.  
+
 
 Scheduling: 
 
@@ -77,14 +90,13 @@ If you've created restore points with an older version of the addon (pre 0.3.6) 
 
 Several settings aren't being restored, this includes views, weather, etc. How do I get these back? 
 
-GUISETTINGS.xml is a configuration file used heavily by XBMC for remembering GUI specific settings. Due to the fact that XBMC reads this file on startup, and writes from memory to this file on shutdown; it is not possible to restore this file while XBMC is running. You must manually move this file from your backup archives if you wish to restore it. User SouthMark has posted the following steps for restoring in the OpenELEC system where this is more difficult: 
+GUISETTINGS.xml is a configuration file used heavily by XBMC for remembering GUI specific settings. Due to the fact that XBMC reads this file on startup, and writes from memory to this file on shutdown; it is not possible to restore this file while XBMC is running. This addon attempts to restore what settings it can via the JSONRPC interface, however you will still most likely be missing your specific skin settings and view settings. To get these back you must manually move this file from your backup archives if you wish to restore it. User SouthMark has posted the following steps for restoring in the OpenELEC system where this is more difficult: 
 
 1. Run the restore of your backup
 2. SSH using putty to the IP Address of your media centre username: root Password openelec
-3. Type touch /var/lock/xbmc.disabled and then press enter
-4. Type kill all -9 xbmc.bin and then press enter - Your media center machine should now go blank
-5. Connect to your machine using WinSCP and copy the guisettings.xml file to the userdata folder (this is the guisettings.xml file from your backup)
-6. go back to your putty window and type rm /var/lock/xbmc.disabled
+3. Type "systemctl stop xbmc.service" - Your media center machine should now go blank
+5. Connect to your machine using WinSCP and copy the guisettings.xml file to the userdata folder (this is the guisettings.xml file from your backup), alternatively you can copy this file directly to an SMB share and use putty to move it to the right spot. 
+6. go back to your putty window and type "systemctl start xbmc.service"
 
 Why is the Addon prompting me to restart XBMC to continue? 
 

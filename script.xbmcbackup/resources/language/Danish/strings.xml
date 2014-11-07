@@ -14,7 +14,6 @@
     <string id="30019">Indtast Sti</string>
     <string id="30020">Gennemse netværksmapper</string>
     <string id="30021">Navngiv mappe til sikkerhedskopi</string>
-    <string id="30022">Kør i baggrunden</string>
     <string id="30023">Tilstand</string>
     <string id="30024">Indtast netværkssti</string>
     <string id="30025">Type af netværkssti</string>
@@ -28,6 +27,15 @@
     <string id="30033">Afspilningsliste</string>
     <string id="30034">Miniaturer/Fankunst</string>
     <string id="30035">Konfigurationsfil</string>
+    <string id="30036">Brugerdefineret mappe 1</string>
+    <string id="30037">Brugerdefineret mappe 2</string>
+    <string id="30038">Udvidet indstilling opdaget</string>
+    <string id="30039">Udvidede indstillings-fil bør gendannes først</string>
+    <string id="30040">Vælg Ja for at gendanne denne fil og genstarte XBMC</string>
+    <string id="30041">Vælg Nej for at fortsætte</string>
+    <string id="30042">Genoptag gendannelse</string>
+    <string id="30043">XBMC Backup har fundet en ufærdiggjort gendannelse</string>
+    <string id="30044">Vil du fortsætte?</string>
     <string id="30045">Fejl: Netværksstien findes ikke</string>
     <string id="30046">Starter</string>
     <string id="30047">Lokal mappe</string>
@@ -60,4 +68,7 @@
     <string id="30075">Brugerdefineret tidsplan</string>
     <string id="30076">Luk ned efter Sikkerhedskopiering</string>
     <string id="30077">Genstart XBMC</string>
+    <string id="30078">Du skal genstarte XBMC for at fortsætte</string>
+    <string id="30079">Kun Idag</string>
+    <string id="30080">Profiler</string>
 </strings>

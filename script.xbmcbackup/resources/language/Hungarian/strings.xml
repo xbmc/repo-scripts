@@ -14,7 +14,7 @@
     <string id="30019">Adja meg az útvonalat</string>
     <string id="30020">Távoli útvonal tallózása</string>
     <string id="30021">Biztonsási mentés mappa neve</string>
-    <string id="30022">Néma futtatás</string>
+    <string id="30022">Folyamatkijelzés</string>
     <string id="30023">Mód</string>
     <string id="30024">Adja meg a távoli útvonalat</string>
     <string id="30025">Távoli útvonal típusa</string>
@@ -30,6 +30,13 @@
     <string id="30035">Konfigurációs fájlok</string>
     <string id="30036">Saját könyvtár 1</string>
     <string id="30037">Saját könyvtár 2</string>
+    <string id="30038">Haladó Beállítások Megtalálva</string>
+    <string id="30039">Az advancedsettings fájl visszaállítása szükséges előbb</string>
+    <string id="30040">Válassza az Igen opciót a fájl visszaállításához és az XBMC újraindításához</string>
+    <string id="30041">Válassza a Nem opciót a folytatáshoz</string>
+    <string id="30042">Visszaállítás folyatatása</string>
+    <string id="30043">Az XBMC Backup befejezetlen visszaállítást érzékelt</string>
+    <string id="30044">Folytassuk?</string>
     <string id="30045">Hiba: A távoli útvonal nem létezik</string>
     <string id="30046">Kezdődik</string>
     <string id="30047">Helyi könyvtár</string>
@@ -62,4 +69,13 @@
     <string id="30075">Egyéni időzítő</string>
     <string id="30076">Leállítás a biztonsági mentés után</string>
     <string id="30077">XBMC újraindítása</string>
+    <string id="30078">Az XBMC újraindítása szükséges a folytatáshoz</string>
+    <string id="30079">Csak Ma</string>
+    <string id="30080">Profilok</string>
+    <string id="30081">Az ütemező következő futása:</string>
+    <string id="30082">Folyamatkijelző</string>
+    <string id="30083">Háttér Folyamatjelző</string>
+    <string id="30084">Nincs (Néma)</string>
+    <string id="30085">Verzió Figyelmeztetés</string>
+    <string id="30086">Az XBMC verziója különbözik attól mint amelyik létrehozta az archívumot</string>
 </strings>

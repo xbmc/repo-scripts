@@ -8,6 +8,7 @@
     <string id="30023">Hamur</string>
     <string id="30032">Gagnagrunnur</string>
     <string id="30033">Lagalista</string>
+    <string id="30046">Ræsi</string>
     <string id="30061">Dagskrá</string>
     <string id="30065">Sunnudagur</string>
     <string id="30066">Mánudagur</string>
@@ -17,4 +18,5 @@
     <string id="30070">Föstudagur</string>
     <string id="30071">Laugardagur</string>
     <string id="30077">Endurræsa XBMC</string>
+    <string id="30080">Notendur</string>
 </strings>

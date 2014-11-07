@@ -7,14 +7,14 @@
     <string id="30010">Kopia bezpieczeństwa XBMC</string>
     <string id="30011">Ogólne</string>
     <string id="30012">Wybór pliku</string>
-    <string id="30013">Planowanie</string>
+    <string id="30013">Harmonogram</string>
     <string id="30016">Kopia bezpieczeństwa</string>
     <string id="30017">Przywracanie</string>
     <string id="30018">Przeglądaj ścieżkę</string>
     <string id="30019">Wpisz ścieżkę</string>
     <string id="30020">Przeglądaj zdalną ścieżkę</string>
-    <string id="30021">Nazwa folderu Kopii bezpieczeństwa</string>
-    <string id="30022">Uruchom w trybie cichym</string>
+    <string id="30021">Nazwa folderu Kopii Bezpieczeństwa</string>
+    <string id="30022">Wyświetlaj postęp </string>
     <string id="30023">Tryb</string>
     <string id="30024">Wpisz ścieżkę zdalną</string>
     <string id="30025">Typ zdalnej ścieżki</string>
@@ -26,7 +26,7 @@
     <string id="30031">Dane dodatków</string>
     <string id="30032">Baza danych</string>
     <string id="30033">Playlista</string>
-    <string id="30034">Miniatury/Fanart</string>
+    <string id="30034">Miniatury/Tapety</string>
     <string id="30035">Pliki koniguracyjne</string>
     <string id="30036">Własny katalog 1</string>
     <string id="30037">Własny katalog 2</string>
@@ -42,7 +42,7 @@
     <string id="30047">Lokalny katalog</string>
     <string id="30048">Zdalny katalog</string>
     <string id="30049">Zbieram liste plików</string>
-    <string id="30050">Zdalna ścieżka istnieje - może zawierać stare dane!!</string>
+    <string id="30050">Zdalna ścieżka istnieje - może zawierać stare dane!</string>
     <string id="30051">Tworzę liste plików</string>
     <string id="30052">Zapisuję plik</string>
     <string id="30053">Uruchamiam zaplanowaną kopię bezpieczeństwa</string>
@@ -70,4 +70,12 @@
     <string id="30076">Wyłącz system po zrobieniu kopii zapasowej</string>
     <string id="30077">Restartuj XBMC</string>
     <string id="30078">Powinieneś zrestartować XBMC by kontynuować</string>
+    <string id="30079">Tylko Dzisiaj </string>
+    <string id="30080">Profile</string>
+    <string id="30081">Harmonogram zostanie uruchomiony ponownie </string>
+    <string id="30082">Pasek postępu</string>
+    <string id="30083">Pasek postępu w tle</string>
+    <string id="30084">Brak (w tle)</string>
+    <string id="30085"> Ostrzeżenie o wersji</string>
+    <string id="30086">Ta wersja XBMC jest inna niż użyta do utworzenia archiwum</string>
 </strings>

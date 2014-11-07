@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Haitian (Haitian Creole) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ht/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30065">dimanch</string>
+    <string id="30066">Lindi</string>
+    <string id="30067">Madi</string>
+    <string id="30068">Merkredi</string>
+    <string id="30069">Jedi</string>
+    <string id="30070">Vandredi</string>
+    <string id="30071">Samdi</string>
+</strings>

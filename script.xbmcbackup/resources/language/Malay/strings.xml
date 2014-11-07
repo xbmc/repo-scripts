@@ -5,6 +5,8 @@
 
 <strings>
     <string id="30011">Am</string>
+    <string id="30033">Senarai Main</string>
+    <string id="30061">Jadual</string>
     <string id="30065">Ahad</string>
     <string id="30066">Isnin</string>
     <string id="30067">Selasa</string>
@@ -12,4 +14,6 @@
     <string id="30069">Khamis</string>
     <string id="30070">Jumaat</string>
     <string id="30071">Sabtu</string>
+    <string id="30077">Mula Semula XBMC</string>
+    <string id="30080">Profil</string>
 </strings>

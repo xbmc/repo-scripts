@@ -14,7 +14,7 @@
     <string id="30019">Escribir ruta</string>
     <string id="30020">Examinar ruta remota</string>
     <string id="30021">Nombre de directorio de respaldo</string>
-    <string id="30022">Correr en segundo plano</string>
+    <string id="30022">Pantalla de progreso</string>
     <string id="30023">Modo</string>
     <string id="30024">Escribir directorio remoto</string>
     <string id="30025">Tipo de Ruta Remota</string>
@@ -70,4 +70,12 @@
     <string id="30076">Apagar tras realizar la copia de seguridad</string>
     <string id="30077">Reiniciar XBMC</string>
     <string id="30078">Debería reiniciar XBMC para continuar</string>
+    <string id="30079">Hoy mismo</string>
+    <string id="30080">Perfiles</string>
+    <string id="30081">Planificador se ejecutará de nuevo en</string>
+    <string id="30082">Barra de progreso</string>
+    <string id="30083">Fondo de la barra de progreso</string>
+    <string id="30084">Ninguno (Silencio)</string>
+    <string id="30085">Advertencia de versión </string>
+    <string id="30086">Esta versión de XBMC es diferente a la que se utilizó para crear el archivo</string>
 </strings>
