@@ -1,3 +1,10 @@
+1.0.2
+- updated thetvdb ids
+- added check to avoid running when there are no video playing
+- fixed some possible problem with url quotes
+- if the download and renaming fails now the service stops working and doesn't continue
+- add slash to folder path to prevent some fail
+
 1.0.1
 - added trick to rotate subtitles every download of the same subtitle (a workaround to a XBMC limit that doesn't support multiple subtitles)
 - added missing checks and fixed a typo

@@ -13,4 +13,5 @@
     <string id="32008">ItaSA has only italian subtitles. Add italian to the subtitle settings</string>
     <string id="32009">ItaSA only works with tv shows subtitles</string>
 	<string id="32010">Subtitle downloaded too many times</string>
+	<string id="32011">No video playing, exiting</string>
 </strings>
