@@ -10,6 +10,14 @@ def sendClick(controlId):
     time.sleep(0.5)
     xbmc.executebuiltin('SendClick('+ controlId +')')
 
+
+def addShortcutWorkAround():
+    win = xbmcgui.Window( 10000 )
+    xbmc.executebuiltin('SendClick(301)')
+    time.sleep(0.5)
+    xbmc.executebuiltin('SendClick(401)')
+
+
 def setView(containerType,viewId):
     
     if viewId=="00":
@@ -133,6 +141,8 @@ except:
 # select action
 if action == "SENDCLICK":
     sendClick(argument1)
+elif action =="ADDSHORTCUT":
+    addShortcutWorkAround()
 elif action == "SETVIEW":
     setView(argument1, argument2)
 elif action == "SHOWSUBMENU":
