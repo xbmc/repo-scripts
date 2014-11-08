@@ -113,6 +113,8 @@ if params['action'] in ['search', 'manualsearch']:
     item['file_original_path'] = urllib.unquote(
         unicode(xbmc.Player().getPlayingFile(), 'utf-8'))  # Full path of a playing file
     item['3let_language'] = []
+    item['preferredlanguage'] = unicode(urllib.unquote(params.get('preferredlanguage', '')), 'utf-8')
+    item['preferredlanguage'] = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ISO_639_2)
 
     for lang in unicode(urllib.unquote(params['languages']), 'utf-8').split(","):
         item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))

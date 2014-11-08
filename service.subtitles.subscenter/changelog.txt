@@ -1,3 +1,7 @@
+3.3.0 - by CaTz 08/11/2014
+- Bug fix, add slash or backslash at the end of path (fix xbmcvfs.exists in Helix)
+- Add support for preferred language in Helix
+
 3.2.3 - by CaTz 12/08/2014
 - Bug fix with the site searching
 - Removes country identifier at the end of the title
