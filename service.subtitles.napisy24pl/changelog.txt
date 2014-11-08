@@ -1,3 +1,6 @@
+1.0.6 - by CaTz 08/11/2014
+- Bug fix, add slash or backslash at the end of path (fix xbmcvfs.exists in Helix)
+
 1.0.5 - by CaTz 16/07/2014
 - Add manual search support for tv-shows and movies
 
