@@ -27,7 +27,7 @@ __language__ = __addon__.getLocalizedString
 __cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
 __profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
 __resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode("utf-8")
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
+__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp', '')).decode("utf-8")
 
 sys.path.append(__resource__)
 
@@ -197,6 +197,8 @@ if params['action'] == 'search':
     item['file_original_path'] = urllib.unquote(
         xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path of a playing file
     item['3let_language'] = []
+    item['preferredlanguage'] = unicode(urllib.unquote(params.get('preferredlanguage', '')), 'utf-8')
+    item['preferredlanguage'] = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ISO_639_2)
 
     for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
         item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
