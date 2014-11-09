@@ -32,6 +32,10 @@ msgctxt "#32012"
 msgid "Debugging"
 msgstr "வழுநீக்கு"
 
+msgctxt "#32062"
+msgid "Next"
+msgstr "அடுத்து"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "கலைஞர்"

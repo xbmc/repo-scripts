@@ -20,6 +20,22 @@ msgctxt "#32002"
 msgid "IP Address"
 msgstr "IP Address"
 
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32009"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Debugging"
+
 msgctxt "#32035"
 msgid "Layout"
 msgstr "Layout"
@@ -35,6 +51,18 @@ msgstr "Music Library"
 msgctxt "#32101"
 msgid "Queue"
 msgstr "Queue"
+
+msgctxt "#32110"
+msgid "Artists"
+msgstr "Artists"
+
+msgctxt "#32111"
+msgid "Albums"
+msgstr "Albums"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Genres"
 
 msgctxt "#32114"
 msgid "Tracks"

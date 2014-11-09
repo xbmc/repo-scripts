@@ -269,21 +269,21 @@ class MenuNavigator():
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
-                totalEntries = list['total_matches']
+                totalEntries = list.total_matches
                 log("SonosPlugin: Total %s Matches %d" % (folderName, totalEntries))
-                numberReturned = list['number_returned']
+                numberReturned = list.number_returned
                 log("SonosPlugin: Total %s in this batch %d" % (folderName, numberReturned))
 
                 # Makes sure some items are returned
                 if numberReturned < 1:
-                    numberReturned = len(list['item_list'])
+                    numberReturned = len(list)
                     if numberReturned < 1:
                         log("SonosPlugin: Zero items returned from request")
                         break
 
-                for item in list['item_list']:
+                for item in list:
                     # Check if this item is a track of a directory
-                    if isinstance(item, soco.data_structures.MLTrack):
+                    if isinstance(item, soco.data_structures.DidlMusicTrack):
                         self._addTrack(item, totalEntries, folderName)
                     else:
                         # Check for the special case where there is an "All" first in the list
@@ -295,7 +295,7 @@ class MenuNavigator():
                             continue
 
                         # Check to see if we are dealing with a sonos playlist
-                        if isinstance(item, soco.data_structures.MLSonosPlaylist):
+                        if isinstance(item, soco.data_structures.DidlPlaylistContainer):
                             # Will need to do the search by ID for playlists as the text method
                             # does not work
                             self._addDirectory(item, folderName, totalEntries, subCategory, item.item_id)

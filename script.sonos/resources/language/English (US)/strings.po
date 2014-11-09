@@ -212,6 +212,10 @@ msgctxt "#32104"
 msgid "Sonos Playlists"
 msgstr "Sonos Playlists"
 
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Speech"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artists"
@@ -259,3 +263,51 @@ msgstr "Add To Queue"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Replace Queue"
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Enter Speech Text To Play ..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Speech messages are limited to 100 characters"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "No message specified"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Enter Speech Text To Save ..."
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Remove Saved Text"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "The time is %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Today is %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Todays date is %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Good Morning"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Good Afternon"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Good Evening"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "The time is %time"

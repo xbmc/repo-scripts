@@ -212,6 +212,10 @@ msgctxt "#32104"
 msgid "Sonos Playlists"
 msgstr "Sonos grojaraščiai"
 
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Kalba"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Atlikėjai"
@@ -259,3 +263,51 @@ msgstr "Pridėti į eilę"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Pakeisti eilę"
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Įveskite kalbos tekstą atkūrimui..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Kalbos žinutės ribojamos iki 100 simbolių"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Nenurodyta žinutė"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Įveskite kalbos tekstą išsaugojimui..."
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Pašalinti išsaugotą tekstą"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Laikas yra %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Šiandien yra %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Šiandienos data yra %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Labas rytas"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Laba diena"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Labas vakaras"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Laikas yra %time"

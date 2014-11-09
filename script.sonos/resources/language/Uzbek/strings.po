@@ -16,6 +16,10 @@ msgstr ""
 "Language: uz\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32062"
+msgid "Next"
+msgstr "Keyingi"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artistlar"

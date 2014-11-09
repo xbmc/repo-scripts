@@ -609,9 +609,9 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
                 # Get the track and creator if they both exist, if only one
                 # exists, then it's most probably a radio station and Next track
                 # title just contains a URI
-                if (track['lastEventDetails'].next_creator is not None) and (track['lastEventDetails'].next_title is not None):
-                    nextTrackCreator = track['lastEventDetails'].next_creator
-                    nextTrackTitle = track['lastEventDetails'].next_title
+                if (track['next_artist'] is not None) and (track['next_title'] is not None):
+                    nextTrackCreator = track['next_artist']
+                    nextTrackTitle = track['next_title']
 
         # Check to see if both the title and creator of the next track is set
         if (nextTrackCreator is not None) and (nextTrackTitle is not None):
@@ -850,16 +850,20 @@ if __name__ == '__main__':
 
             except:
                 # Failed to connect to the Sonos Speaker
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), ("Error from speaker %s" % Settings.getIPAddress()))
                 log("Sonos: Exception Details: %s" % traceback.format_exc())
+                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), ("Error from speaker %s" % Settings.getIPAddress()))
 
             # Need to check to see if we can stop any subscriptsions
             if sub is not None:
                 try:
                     sub.unsubscribe()
-                    event_listener.stop()
                 except:
                     log("Sonos: Failed to unsubscribe: %s" % traceback.format_exc())
+                try:
+                    # Make sure the thread is stopped even if unsubscribe failed
+                    event_listener.stop()
+                except:
+                    log("Sonos: Failed to stop event listener: %s" % traceback.format_exc())
 
             sonosCtrl.close()
             # Record the fact that the Sonos controller is no longer displayed

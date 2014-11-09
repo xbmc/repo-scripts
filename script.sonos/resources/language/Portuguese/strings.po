@@ -116,6 +116,10 @@ msgctxt "#32024"
 msgid "Switch Sonos To Line-In On Kodi Startup"
 msgstr "Mudar Sonos para Line-In ao Iniciar o Kodi"
 
+msgctxt "#32025"
+msgid "Volume Change Increments"
+msgstr "Incrementar Alteração de Volume"
+
 msgctxt "#32026"
 msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
 msgstr "Pausar Automaticamente o Sonos Quando o Kodi Reproduz Média (É Necessário Reiniciar)"
@@ -124,6 +128,10 @@ msgctxt "#32027"
 msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
 msgstr "Retomar Sonos Automaticamente (Segundos) [0 = Desligado]"
 
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Nome da Zona (Opcional)"
+
 msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Actualizar Automaticamente o Endereço IP ao Iniciar"
@@ -131,6 +139,10 @@ msgstr "Actualizar Automaticamente o Endereço IP ao Iniciar"
 msgctxt "#32035"
 msgid "Layout"
 msgstr "Dispor"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Apresentar Slides"
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

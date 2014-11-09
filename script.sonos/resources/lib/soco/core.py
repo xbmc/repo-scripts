@@ -13,14 +13,15 @@ from textwrap import dedent
 import re
 import itertools
 import requests
+import time
 
 from .services import DeviceProperties, ContentDirectory
 from .services import RenderingControl, AVTransport, ZoneGroupTopology
 from .services import AlarmClock
 from .groups import ZoneGroup
 from .exceptions import CannotCreateDIDLMetadata
-from .data_structures import get_ml_item, QueueItem, URI, MLSonosPlaylist,\
-    MLShare, SearchResult, Queue, MusicLibraryItem
+from .data_structures import get_didl_object, DidlPlaylistContainer,\
+    DidlContainer, SearchResult, Queue, DidlObject, DidlMusicTrack
 from .utils import really_utf8, camel_to_underscore
 from .xml import XML
 from soco import config
@@ -58,23 +59,57 @@ def discover(timeout=1, include_invisible=False):
     _sock.sendto(really_utf8(PLAYER_SEARCH), (MCAST_GRP, MCAST_PORT))
     _sock.sendto(really_utf8(PLAYER_SEARCH), (MCAST_GRP, MCAST_PORT))
 
-    response, _, _ = select.select([_sock], [], [], timeout)
-    # Only Zone Players will respond, given the value of ST in the
-    # PLAYER_SEARCH message. It doesn't matter what response they make. All
-    # we care about is the IP address
-    if response:
-        _, addr = _sock.recvfrom(1024)
-        # Now we have an IP, we can build a SoCo instance and query that player
-        # for the topology to find the other players. It is much more efficient
-        # to rely upon the Zone Player's ability to find the others, than to
-        # wait for query responses from them ourselves.
-        zone = config.SOCO_CLASS(addr[0])
-        if include_invisible:
-            return zone.all_zones
-        else:
-            return zone.visible_zones
-    else:
-        return None
+    t0 = time.time()
+    while True:
+        # Check if the timeout is exceeded. We could do this check just
+        # before the currently only continue statement of this loop,
+        # but I feel it is safer to do it here, so that we do not forget
+        # to do it if/when another continue statement is added later.
+        # Note: this is sensitive to clock adjustments. AFAIK there
+        # is no monotonic timer available before Python 3.3.
+        t1 = time.time()
+        if t1-t0 > timeout:
+            return None
+
+        # The timeout of the select call is set to be no greater than
+        # 100ms, so as not to exceed (too much) the required timeout
+        # in case the loop is executed more than once.
+        response, _, _ = select.select([_sock], [], [], min(timeout, 0.1))
+
+        # Only Zone Players should respond, given the value of ST in the
+        # PLAYER_SEARCH message. However, to prevent misbehaved devices
+        # on the network to disrupt the discovery process, we check that
+        # the response contains the "Sonos" string; otherwise we keep
+        # waiting for a correct response.
+        #
+        # Here is a sample response from a real Sonos device (actual numbers
+        # have been redacted):
+        # HTTP/1.1 200 OK
+        # CACHE-CONTROL: max-age = 1800
+        # EXT:
+        # LOCATION: http://***.***.***.***:1400/xml/device_description.xml
+        # SERVER: Linux UPnP/1.0 Sonos/26.1-76230 (ZPS3)
+        # ST: urn:schemas-upnp-org:device:ZonePlayer:1
+        # USN: uuid:RINCON_B8*************00::urn:schemas-upnp-org:device:
+        #                                                     ZonePlayer:1
+        # X-RINCON-BOOTSEQ: 3
+        # X-RINCON-HOUSEHOLD: Sonos_7O********************R7eU
+
+        if response:
+            data, addr = _sock.recvfrom(1024)
+            if "Sonos" not in data:
+                continue
+
+            # Now we have an IP, we can build a SoCo instance and query that
+            # player for the topology to find the other players. It is much
+            # more efficient to rely upon the Zone Player's ability to find
+            # the others, than to wait for query responses from them
+            # ourselves.
+            zone = config.SOCO_CLASS(addr[0])
+            if include_invisible:
+                return zone.all_zones
+            else:
+                return zone.visible_zones
 
 
 class SonosDiscovery(object):  # pylint: disable=R0903
@@ -197,7 +232,9 @@ class SoCo(_SocoSingletonBase):
         get_favorite_radio_shows -- Get favorite radio shows from Sonos'
                                     Radio app.
         get_favorite_radio_stations -- Get favorite radio stations.
-        create_sonos_playlist -- Creates a new Sonos' playlist
+        create_sonos_playlist -- Create a new empty Sonos playlist
+        create_sonos_playlist_from_queue -- Create a new Sonos playlist
+                                            from the current queue.
         add_item_to_sonos_playlist -- Adds a queueable item to a Sonos'
                                        playlist
 
@@ -209,9 +246,11 @@ class SoCo(_SocoSingletonBase):
         bass -- The speaker's bass EQ.
         treble -- The speaker's treble EQ.
         loudness -- The status of the speaker's loudness compensation.
+        cross_fade -- The status of the speaker's crossfade.
         status_light -- The state of the Sonos status light.
         player_name  -- The speaker's name.
         play_mode -- The queue's repeat/shuffle settings.
+        queue_size -- Get size of queue.
 
     .. warning::
 
@@ -426,9 +465,12 @@ class SoCo(_SocoSingletonBase):
         required as an argument, where the first index is 0.
 
         index: the index of the track to play; first item in the queue is 0
+        start: If the item that has been set should start playing
 
         Returns:
         True if the Sonos speaker successfully started playing the track.
+        False if the track did not start (this may be because it was not
+        requested to start because "start=False")
 
         Raises SoCoException (or a subclass) upon errors.
 
@@ -453,7 +495,7 @@ class SoCo(_SocoSingletonBase):
             ('Target', index + 1)
             ])
 
-        # finally, just play what's set
+        # finally, just play what's set if needed
         if start:
             return self.play()
         return False
@@ -483,9 +525,12 @@ class SoCo(_SocoSingletonBase):
         uri -- URI of a stream to be played.
         meta -- The track metadata to show in the player, DIDL format.
         title -- The track title to show in the player
+        start -- If the URI that has been set should start playing
 
         Returns:
         True if the Sonos speaker successfully started playing the track.
+        False if the track did not start (this may be because it was not
+        requested to start because "start=False")
 
         Raises SoCoException (or a subclass) upon errors.
 
@@ -774,6 +819,7 @@ class SoCo(_SocoSingletonBase):
         for group_element in tree.findall('ZoneGroup'):
             coordinator_uid = group_element.attrib['Coordinator']
             group_uid = group_element.attrib['ID']
+            group_coordinator = None
             members = set()
             for member_element in group_element.findall('ZoneGroupMember'):
                 # Create a SoCo instance for each member. Because SoCo
@@ -787,7 +833,6 @@ class SoCo(_SocoSingletonBase):
                 zone._uid = member_attribs['UUID']
                 # If this element has the same UUID as the coordinator, it is
                 # the coordinator
-                group_coordinator = None
                 if zone._uid == coordinator_uid:
                     group_coordinator = zone
                     zone._is_coordinator = True
@@ -1171,7 +1216,7 @@ class SoCo(_SocoSingletonBase):
         result_dom = XML.fromstring(really_utf8(result))
         for element in result_dom.findall(
                 '{urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/}item'):
-            item = QueueItem.from_xml(element)
+            item = DidlMusicTrack.from_xml(element)
             # Check if the album art URI should be fully qualified
             if full_album_art_uri:
                 self._update_album_art_to_full_uri(item)
@@ -1179,6 +1224,29 @@ class SoCo(_SocoSingletonBase):
 
         # pylint: disable=star-args
         return Queue(queue, **metadata)
+
+    @property
+    def queue_size(self):
+        """ Get size of queue """
+        response = self.contentDirectory.Browse([
+            ('ObjectID', 'Q:0'),
+            ('BrowseFlag', 'BrowseMetadata'),
+            ('Filter', '*'),
+            ('StartingIndex', 0),
+            ('RequestedCount', 1),
+            ('SortCriteria', '')
+            ])
+        dom = XML.fromstring(really_utf8(response['Result']))
+
+        queue_size = None
+        container = dom.find(
+            '{urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/}container')
+        if container is not None:
+            child_count = container.get('childCount')
+            if child_count is not None:
+                queue_size = int(child_count)
+
+        return queue_size
 
     def get_sonos_playlists(self, start=0, max_items=100,
                             full_album_art_uri=False):
@@ -1307,11 +1375,11 @@ class SoCo(_SocoSingletonBase):
         item_list = []
         for container in dom:
             if search_type == 'sonos_playlists':
-                item = MLSonosPlaylist.from_xml(container)
+                item = DidlPlaylistContainer.from_xml(container)
             elif search_type == 'share':
-                item = MLShare.from_xml(container)
+                item = DidlContainer.from_xml(container)
             else:
-                item = get_ml_item(container)
+                item = get_didl_object(container)
             # Check if the album art URI should be fully qualified
             if full_album_art_uri:
                 self._update_album_art_to_full_uri(item)
@@ -1326,7 +1394,7 @@ class SoCo(_SocoSingletonBase):
         """Browse (get sub-elements) a music library item
 
         Keyword arguments:
-            ml_item (MusicLibraryItem): The MusicLibraryItem to browse, if left
+            ml_item (DidlObject): The DidlObject to browse, if left
                 out or passed None, the items at the base level will be
                 returned
             start (int): The starting index of the results
@@ -1354,7 +1422,7 @@ class SoCo(_SocoSingletonBase):
         dom = XML.fromstring(really_utf8(response['Result']))
         item_list = []
         for container in dom:
-            item = get_ml_item(container)
+            item = get_didl_object(container)
             # Check if the album art URI should be fully qualified
             if full_album_art_uri:
                 self._update_album_art_to_full_uri(item)
@@ -1392,9 +1460,12 @@ class SoCo(_SocoSingletonBase):
         if idstring.startswith(search):
             search = ""
 
-        search_uri = "#{0}{1}".format(search, idstring)
+        search_item_id = search + idstring
+        search_uri = "#" + search_item_id
 
-        search_item = MusicLibraryItem(uri=search_uri, title='', parent_id='')
+        search_item = DidlObject(
+            uri=search_uri, title='', parent_id='',
+            item_id=search_item_id)
 
         # Call the base version
         return self.browse(search_item, start, max_items, full_album_art_uri)
@@ -1447,7 +1518,7 @@ class SoCo(_SocoSingletonBase):
         :param uri: The URI to be added to the queue
         :type uri: str
         """
-        item = URI(uri)
+        item = DidlObject(uri=uri, title='', parent_id='', item_id='')
         return self.add_to_queue(item)
 
     def add_to_queue(self, queueable_item):
@@ -1604,12 +1675,12 @@ class SoCo(_SocoSingletonBase):
                 item.album_art_uri
 
     def create_sonos_playlist(self, title):
-        """ Create a new Sonos' playlist .
+        """ Create a new empty Sonos playlist.
 
         :params title: Name of the playlist
 
         :returns: An instance of
-            :py:class:`~.soco.data_structures.MLSonosPlaylist`
+            :py:class:`~.soco.data_structures.DidlPlaylistContainer`
 
         """
         response = self.avTransport.CreateSavedQueue([
@@ -1619,10 +1690,35 @@ class SoCo(_SocoSingletonBase):
             ('EnqueuedURIMetaData', ''),
             ])
 
-        obj_id = response['AssignedObjectID'].split(':', 2)[1]
+        item_id = response['AssignedObjectID']
+        obj_id = item_id.split(':', 2)[1]
         uri = "file:///jffs/settings/savedqueues.rsq#{0}".format(obj_id)
 
-        return MLSonosPlaylist(uri, title, 'SQ:')
+        return DidlPlaylistContainer(uri, title, 'SQ:', item_id)
+
+    # pylint: disable=invalid-name
+    def create_sonos_playlist_from_queue(self, title):
+        """ Create a new Sonos playlist from the current queue.
+
+            :params title: Name of the playlist
+
+            :returns: An instance of
+                :py:class:`~.soco.data_structures.DidlPlaylistContainer`
+
+        """
+        # Note: probably same as Queue service method SaveAsSonosPlaylist
+        # but this has not been tested.  This method is what the
+        # controller uses.
+        response = self.avTransport.SaveQueue([
+            ('InstanceID', 0),
+            ('Title', title),
+            ('ObjectID', '')
+        ])
+        item_id = response['AssignedObjectID']
+        obj_id = item_id.split(':', 2)[1]
+        uri = "file:///jffs/settings/savedqueues.rsq#{0}".format(obj_id)
+
+        return DidlPlaylistContainer(uri, title, 'SQ:', item_id)
 
     def add_item_to_sonos_playlist(self, queueable_item, sonos_playlist):
         """ Adds a queueable item to a Sonos' playlist

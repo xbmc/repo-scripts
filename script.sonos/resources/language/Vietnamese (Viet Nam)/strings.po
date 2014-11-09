@@ -16,6 +16,10 @@ msgstr ""
 "Language: vi_VN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32062"
+msgid "Next"
+msgstr "Tiếp theo"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Nghệ sĩ"
@@ -23,6 +27,10 @@ msgstr "Nghệ sĩ"
 msgctxt "#32111"
 msgid "Albums"
 msgstr "Bộ sưu tập"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "Thể loại"
 
 msgctxt "#32114"
 msgid "Tracks"

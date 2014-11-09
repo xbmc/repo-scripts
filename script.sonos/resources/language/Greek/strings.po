@@ -212,6 +212,10 @@ msgctxt "#32104"
 msgid "Sonos Playlists"
 msgstr "Λίστες Αναπ/γής Sonos"
 
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Ομιλία"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Καλλιτέχνες"
@@ -259,3 +263,51 @@ msgstr "Προσθήκη Στην Αναμονή"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Αντικατάσταση Αναμονής"
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Εισαγωγή Κειμένου για Ομιλία ..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Τα μηνύματα ομιλίας περιορίζονται στους 100 χαρακτήρες"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Δεν ορίστηκε μήνυμα"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Εισαγωγή Κειμένου για Αποθήκευση ..."
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Αφαίρεση Αποθηκευμένου Κειμένου"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Η ώρα είναι %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Σήμερα είναι %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Η ημερομηνία είναι %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Καλημέρα"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Καλό Απόγευμα"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Καλό Βράδυ"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Η ώρα είναι %time"

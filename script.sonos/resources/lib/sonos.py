@@ -4,7 +4,6 @@ import logging
 
 # Load the Soco classes
 from soco import SoCo
-from soco.event_structures import LastChangeEvent
 
 # Use the SoCo logger
 LOGGER = logging.getLogger('soco')
@@ -69,9 +68,8 @@ class Sonos(SoCo):
 
     # Gets the most recent event from the event queue
     def getLastEventDetails(self, sub):
-        lastChangeDetails = None
+        queueItem = None
         try:
-            queueItem = None
             # Get the most recent event received
             while not sub.events.empty():
                 try:
@@ -81,18 +79,13 @@ class Sonos(SoCo):
                 except:
                     LOGGER.debug("Sonos: Queue get failed: %s" % traceback.format_exc())
 
-            # Now get the details of an event if there is one there
-            lastChangeDetails = None
+            # Now log the details of an event if there is one there
             if queueItem is not None:
-                lastChangeXmlStr = queueItem.variables['LastChange']
-                if lastChangeXmlStr is not None:
-                    LOGGER.debug("Event details: %s" % lastChangeXmlStr)
-                    # Convert the XML into an object
-                    lastChangeDetails = LastChangeEvent.from_xml(lastChangeXmlStr)
+                LOGGER.debug("Event details: %s" % queueItem)
         except:
             LOGGER.debug("Sonos: Failed to get latest event details: %s" % traceback.format_exc())
 
-        return lastChangeDetails
+        return queueItem
 
     # When given a track info structure and an event, will merge the data
     # together so that it is complete and accurate
@@ -113,38 +106,77 @@ class Sonos(SoCo):
             LOGGER.debug("Sonos: Event details set for merge")
             track['lastEventDetails'] = eventDetails
 
-        # If the track has no album art, use the event one (if it exists)
-        if (track['album_art'] is None) or (track['album_art'] == ""):
-            if (eventDetails.album_art_uri is not None) and (eventDetails.album_art_uri != ""):
-                track['album_art'] = eventDetails.album_art_uri
-                # Make sure the Album art is fully qualified
-                if not track['album_art'].startswith(('http:', 'https:')):
-                    track['album_art'] = 'http://' + self.ip_address + ':1400' + track['album_art']
+        # Now process each part of the event message
+        if eventDetails.enqueued_transport_uri_meta_data is not None:
+            enqueued_transport = eventDetails.enqueued_transport_uri_meta_data
+            LOGGER.debug("enqueued_transport_uri_meta_data = %s" % enqueued_transport)
 
-        if (track['artist'] is None) or (track['artist'] == ""):
-            if (eventDetails.album_artist is not None) and (eventDetails.album_artist != ""):
-                track['artist'] = eventDetails.album_artist
+            # Check if this is radio stream, in which case use that as the title
+            # Station Name
+            if hasattr(enqueued_transport, 'title') and (enqueued_transport.title is not None) and (enqueued_transport.title != ""):
+                if not enqueued_transport.title.startswith('ZPSTR_'):
+                    if (track['title'] is None) or (track['title'] == ""):
+                        track['title'] = enqueued_transport.title
 
-        # Check if this is radio stream, in which case use that as the title
-        if (eventDetails.transport_title is not None) and (eventDetails.transport_title != ""):
-            if (track['title'] is None) or (track['title'] == ""):
-                track['title'] = eventDetails.transport_title
-        # Otherwise treat as a normal title
-        elif (track['title'] is None) or (track['title'] == ""):
-            if (eventDetails.title is not None) and (eventDetails.title != ""):
-                track['title'] = eventDetails.title
+        # Process the current track info
+        if eventDetails.current_track_meta_data is not None:
+            current_track = eventDetails.current_track_meta_data
+            LOGGER.debug("current_track_meta_data = %s" % current_track)
 
-        # Check if this is radio stream, in which case use that as the album title
-        if (eventDetails.radio_show_md is not None) and (eventDetails.radio_show_md != ""):
-            if (track['album'] is None) or (track['album'] == ""):
-                track['album'] = eventDetails.radio_show_md
-                # This may be something like: Drivetime,p239255 so need to remove the last section
-                trimmed = track['album'].rpartition(',p')[0]
-                if (trimmed is not None) and (trimmed != ""):
-                    track['album'] = trimmed
-        # Otherwise treat as a album title
-        elif (track['album'] is None) or (track['album'] == ""):
-            if (eventDetails.album is not None) and (eventDetails.album != ""):
-                track['album'] = eventDetails.album
+            # Check if this is radio stream, in which case use that as the album title
+            if hasattr(current_track, 'radio_show') and (current_track.radio_show is not None) and (current_track.radio_show != ""):
+                if not current_track.radio_show.startswith('ZPSTR_'):
+                    if (track['album'] is None) or (track['album'] == ""):
+                        track['album'] = current_track.radio_show
+                        # This may be something like: Drivetime,p239255 so need to remove the last section
+                        trimmed = track['album'].rpartition(',p')[0]
+                        if (trimmed is not None) and (trimmed != ""):
+                            track['album'] = trimmed
+            # If not a radio stream then use the album tag
+            elif hasattr(current_track, 'album') and (current_track.album is not None) and (current_track.album != ""):
+                if (track['album'] is None) or (track['album'] == ""):
+                    track['album'] = current_track.album
+
+            # Name of track. Can be ZPSTR_CONNECTING/_BUFFERING during transition,
+            # or None if not a radio station
+            if hasattr(current_track, 'stream_content') and (current_track.stream_content is not None) and (current_track.stream_content != ""):
+                if not current_track.stream_content.startswith('ZPSTR_'):
+                    if (track['artist'] is None) or (track['artist'] == ""):
+                        track['artist'] = current_track.stream_content
+            # otherwise we have the creator to use as the artist
+            elif hasattr(current_track, 'creator') and (current_track.creator is not None) and (current_track.creator != ""):
+                if (track['artist'] is None) or (track['artist'] == ""):
+                    track['artist'] = current_track.creator
+
+            # If it was a radio stream, the title will already have been set using the enqueued_transport
+            if hasattr(current_track, 'title') and (current_track.title is not None) and (current_track.title != ""):
+                if not current_track.title.startswith('ZPSTR_'):
+                    if (track['title'] is None) or (track['title'] == ""):
+                        track['title'] = current_track.title
+
+            # If the track has no album art, use the event one (if it exists)
+            if (track['album_art'] is None) or (track['album_art'] == ""):
+                if hasattr(current_track, 'album_art_uri') and (current_track.album_art_uri is not None) and (current_track.album_art_uri != ""):
+                    track['album_art'] = current_track.album_art_uri
+                    # Make sure the Album art is fully qualified
+                    if not track['album_art'].startswith(('http:', 'https:')):
+                        track['album_art'] = 'http://' + self.ip_address + ':1400' + track['album_art']
+
+        # Process Next Track Information
+        if eventDetails.next_track_meta_data is not None:
+            next_track = eventDetails.next_track_meta_data
+            LOGGER.debug("next_track_meta_data = %s" % next_track)
+            if hasattr(next_track, 'creator') and (next_track.creator is not None) and (next_track.creator != ""):
+                if not hasattr(track, 'next_artist') or (track['next_artist'] is None) or (track['next_artist'] == ""):
+                    track['next_artist'] = next_track.creator
+            if hasattr(next_track, 'album') and (next_track.album is not None) and (next_track.album != ""):
+                if not hasattr(track, 'next_album') or (track['next_album'] is None) or (track['next_album'] == ""):
+                        track['next_album'] = next_track.album
+            if hasattr(next_track, 'title') and (next_track.title is not None) and (next_track.title != ""):
+                if not hasattr(track, 'next_title') or (track['next_title'] is None) or (track['next_title'] == ""):
+                    track['next_title'] = next_track.title
+            if hasattr(next_track, 'album_art_uri') and (next_track.album_art_uri is not None) and (next_track.album_art_uri != ""):
+                if not hasattr(track, 'next_art_uri') or (track['next_art_uri'] is None) or (track['next_art_uri'] == ""):
+                    track['next_art_uri'] = next_track.album_art_uri
 
         return track

@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "Debugging"
 msgstr "Foretag fejlretning"
 
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "Plugin"
+
 msgctxt "#32035"
 msgid "Layout"
 msgstr "Layout"

@@ -212,6 +212,10 @@ msgctxt "#32104"
 msgid "Sonos Playlists"
 msgstr "Listas de reprodução Sonos"
 
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Voz"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artistas"
@@ -259,3 +263,51 @@ msgstr "Adicionar para Fila"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Substituir Fila"
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Digite a mensagem de voz para Reproduzir..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Mensagens de voz estão limitadas em 100 caracteres"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Nenhum mensagem especificada"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Digite o texto de voz para Salvar..."
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Remova Texto Salvo"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "A hora é  %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Hoje é %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Dia de hoje é %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Bom Dia"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Boa Tarde"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Boa Noite"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "A hora é %time"

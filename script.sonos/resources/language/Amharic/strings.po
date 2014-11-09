@@ -31,3 +31,7 @@ msgstr "ከያኒዎች "
 msgctxt "#32111"
 msgid "Albums"
 msgstr "አልበም "
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "ተረኛ"

@@ -12,7 +12,6 @@ from Queue import Empty
 
 # Load the Soco classes
 from soco.snapshot import Snapshot
-from soco.event_structures import LastChangeEvent
 from soco.events import event_listener
 
 from settings import log
@@ -109,7 +108,7 @@ class Speech():
             # when a given track has finished, and so we can stop it, if
             # we do not stop it, then it will repeat the text for a second time
             sub = self.device.avTransport.subscribe()
-    
+
             # Take a snapshot of the current sonos device state, we will want
             # to roll back to this when we are done
             log("Speech: Taking snapshot")
@@ -120,7 +119,7 @@ class Speech():
             trans_URI = self._get_uri(message)
             log("Speech: Playing URI %s" % trans_URI)
             self.device.play_uri(trans_URI, title=__addon__.getLocalizedString(32105))
-    
+
             # The maximum number of seconds that we will wait for the message to
             # complete playing
             duration = 200
@@ -129,43 +128,50 @@ class Speech():
                 if xbmc.abortRequested:
                     break
                 try:
-                    event = sub.events.get(timeout=0.1)
-                    lastChangeXmlStr = event.variables['LastChange']
-                    if lastChangeXmlStr is not None:
-                        # Convert the event message into something readable
-                        lastChange = LastChangeEvent.from_xml(lastChangeXmlStr)
+                    eventItem = sub.events.get(timeout=0.1)
+
+                    # Now get the details of an event if there is one there
+                    if eventItem is not None:
                         # Check to see if there is a message saying that it is waiting
                         # to restart the audio stream.  This happens because it is
                         # being treated like a radio stream, so Sonos things when the
                         # end of the mp3 file playing is reached that there has been
                         # a connection error and needs to reconnect. If left to itself
                         # it would play the mp3 file again
-                        if lastChange.restart_pending is not None:
+                        if hasattr(eventItem, 'restart_pending') and (eventItem.restart_pending is not None):
                             # About to try and restart, so stop looping and stop the
                             # track before it starts again
-                            if lastChange.restart_pending == '1':
+                            if eventItem.restart_pending == '1':
+                                log("Speech: Detected restart attempt")
                                 break
                 except Empty:
                     pass
                 # Wait another 10th of a second for the speech to stop playing
                 duration = duration - 1
                 xbmc.sleep(100)
-        
+
             log("Speech: Stopping speech")
             # Stop the stream playing
             self.device.stop()
 
             log("Speech: Restoring snapshot")
+            try:
+                # We no longer want to  receive messages
+                sub.unsubscribe()
+            except:
+                log("Sonos: Failed to unsubscribe: %s" % traceback.format_exc())
+            try:
+                # Make sure the thread is stopped even if unsubscribe failed
+                event_listener.stop()
+            except:
+                log("Sonos: Failed to stop event listener: %s" % traceback.format_exc())
+
             # Restore the sonos device back to it's previous state
             snap.restore()
-            # We no longer want to  receive messages
-            sub.unsubscribe()
-            event_listener.stop()
         except:
             log("Speech: %s" % traceback.format_exc())
             xbmc.executebuiltin("Dialog.Close(busydialog)")
             raise
-            
 
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 

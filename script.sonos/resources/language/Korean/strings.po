@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "Debugging"
 msgstr "디버깅"
 
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "플러그인"
+
 msgctxt "#32035"
 msgid "Layout"
 msgstr "화면 구성"

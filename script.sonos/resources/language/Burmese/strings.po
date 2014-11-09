@@ -16,6 +16,14 @@ msgstr ""
 "Language: my\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "အချက်ပေးခြင်း"
+
+msgctxt "#32062"
+msgid "Next"
+msgstr "နောက်"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "အဆိုတော်များ"
@@ -23,6 +31,10 @@ msgstr "အဆိုတော်များ"
 msgctxt "#32111"
 msgid "Albums"
 msgstr "အယ်ဘမ် များ"
+
+msgctxt "#32113"
+msgid "Genres"
+msgstr "အမျိုးအစား"
 
 msgctxt "#32114"
 msgid "Tracks"

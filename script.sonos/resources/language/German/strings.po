@@ -54,7 +54,7 @@ msgstr "Debugging"
 
 msgctxt "#32009"
 msgid "Enable debug logging"
-msgstr "Debug-Logging aktivieren"
+msgstr "Debug-Protokollierung aktivieren"
 
 msgctxt "#32010"
 msgid "Speaker"
@@ -212,6 +212,10 @@ msgctxt "#32104"
 msgid "Sonos Playlists"
 msgstr "Sonos-Wiedergabelisten"
 
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Rede"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Interpreten"
@@ -259,3 +263,51 @@ msgstr "Zur Wiedergabeliste hinzufügen"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Wiedergabeliste ersetzten "
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Geben Sie den abzuspielenden Redetext ein ..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Sprachnachrichten sind auf 100 Zeichen beschränkt"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Keine Nachricht angegeben"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Geben Sie den zu speichernden Redetext ein ..."
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Gespeicherten Text entfernen"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Die Zeit ist %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Heute ist %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Heutiges Datum ist %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Guten Morgen"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Guten Tag"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Guten Abend"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Die Zeit ist %time"
