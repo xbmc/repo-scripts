@@ -16,6 +16,7 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#empty strings from id 32001 to 32008
 msgctxt "#32001"
 msgid "We would like to recommend you to upgrade."
 msgstr ""
@@ -24,36 +25,14 @@ msgctxt "#32002"
 msgid "Visit XBMC.org for more information."
 msgstr ""
 
-msgctxt "#32003"
-msgid "You are still using an older version of XBMC."
-msgstr ""
-
-msgctxt "#32004"
-msgid "You are still using an older RC version of XBMC."
-msgstr ""
-
-msgctxt "#32005"
-msgid "You are still using an older beta version of XBMC."
-msgstr ""
-
-msgctxt "#32006"
-msgid "You are still using an older alpha version of XBMC."
-msgstr ""
-
-msgctxt "#32007"
-msgid "You are still using an older monthly version of XBMC."
-msgstr ""
-
-msgctxt "#32008"
-msgid "You are still using an older non stable version of XBMC."
-msgstr ""
+#empty strings from id 32003 to 32008
 
 msgctxt "#32009"
 msgid "Would you like to remove this reminder?"
 msgstr ""
 
 msgctxt "#32010"
-msgid "You can enable/disable it through addon settings."
+msgid "You can enable/disable it through add-on settings."
 msgstr ""
 
 msgctxt "#32011"
@@ -69,7 +48,7 @@ msgid "Upgrade successful"
 msgstr ""
 
 msgctxt "#32014"
-msgid "Do you want to restart Xbmc to finish the upgrade?"
+msgid "Do you want to restart XBMC to finish the upgrade?"
 msgstr ""
 
 msgctxt "#32015"
@@ -100,4 +79,36 @@ msgstr ""
 
 msgctxt "#32024"
 msgid "Linux: Upgrade using apt"
+msgstr ""
+
+#empty strings from id 32025 to 32029
+
+#. Used in OK dialog
+msgctxt "#32030"
+msgid "A new stable version of XBMC is available."
+msgstr ""
+
+#. Direct people to the website. Used in OK dialog
+msgctxt "#32031"
+msgid "Visit http://xbmc.org for more information."
+msgstr ""
+
+#. Used in OK dialog
+msgctxt "#32032"
+msgid "A new stable version of Kodi is available."
+msgstr ""
+
+#. Direct people to the website. Used in OK dialog
+msgctxt "#32033"
+msgid "Visit http://kodi.tv for more information."
+msgstr ""
+
+#. For example: "You are using 13.1 prealpha while 13.2 stable is available"
+msgctxt "#32034"
+msgid "Using %s while %s is available."
+msgstr ""
+
+#. Used in OK dialog
+msgctxt "#32035"
+msgid "It is recommended that you to upgrade to a newer version."
 msgstr ""

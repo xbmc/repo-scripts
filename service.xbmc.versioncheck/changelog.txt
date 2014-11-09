@@ -1,3 +1,7 @@
+v0.1.24
+- Reworked notification logic
+- Updated with recent builds
+
 v0.1.23
 - Update with 13.2 Gotham
 - Update with 13.2 Gotham rc1
