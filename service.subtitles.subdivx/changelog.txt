@@ -1,3 +1,14 @@
+0.0.5
+- Add first setting: Show uploader name in place of language
+  Being a spanish subtitles site, there is no point in showing the spanish
+  flag and literal in the first column so we put that spot of the screen to
+  better use: There are some renowned uploaders in the Subdivx.community and,
+  for lack of more structured information in Subdivx, it can be a very
+  important piece of information when it comes to choosing from several
+  subtitles. Show his/her nick there.
+  Initially the value of the setting is False. We'll see if it's worth
+  changing it to True in some future release.
+- Bullet-proof .rar uncompression as it's a popular file format on subdivx.com
 0.0.4
 - More robust parsing of description, better logging.
 - Also match variation in CSS class name just in case.

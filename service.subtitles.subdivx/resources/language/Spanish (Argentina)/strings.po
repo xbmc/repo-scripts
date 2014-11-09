@@ -1,0 +1,25 @@
+# XBMC Media Center language file
+# Addon Name: Skin Widgets
+# Addon id: service.skin.widgets
+# Addon Provider: Martijn|phil65
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2014-11-02 14:48-0300\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Spanish (Argentina) (http://www.transifex.com/projects/p/xbmc-addons/language/es_AR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_AR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30001"
+msgid "Show sub uploader nick instead of Language name"
+msgstr "Mostrar nick del autor del subtítulo en lugar del idioma"

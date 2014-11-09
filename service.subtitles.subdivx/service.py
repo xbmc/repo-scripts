@@ -55,6 +55,8 @@ INTERNAL_LINK_URL = "plugin://%(scriptid)s/?action=download&id=%(id)s&filename=%
 SUB_EXTS = ['srt', 'sub', 'txt']
 HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
 
+PAGE_ENCODING = 'latin1'
+
 
 def is_subs_file(fn):
     """Detect if the file has an extension we recognise as subtitle."""
@@ -77,7 +79,8 @@ SUBTITLE_RE = re.compile(r'''<a\s+class="titulo_menu_izq2?"\s+
                          href="http://www.subdivx.com/(?P<id>.+?)\.html">
                          .+?<div\s+id="buscador_detalle_sub">(?P<comment>.*?)</div>
                          .+?<b>Downloads:</b>(?P<downloads>.+?)
-                         <b>Cds:</b>.+?</div></div>''',
+                         <b>Cds:</b>
+                         .+?<b>Subido\ por:</b>\s*<a.+?>(?P<uploader>.+?)</a>.+?</div></div>''',
                          re.IGNORECASE | re.DOTALL | re.VERBOSE | re.UNICODE |
                          re.MULTILINE)
 # 'id' named group: ID to fetch the subs files
@@ -152,11 +155,11 @@ def get_all_subs(searchstring, languageshort, languagelong, file_original_path):
                     pass
                 item = {
                     'rating': str(rating),
-                    'filename': text.decode('latin1'),
+                    'filename': text.decode(PAGE_ENCODING),
                     'sync': sync,
-                    'id': id,
-                    # 'language_flag': 'flags/' + languageshort + '.gif',
+                    'id': id.decode(PAGE_ENCODING),
                     'language_name': languagelong,
+                    'uploader': match.groupdict()['uploader'],
                 }
                 subs_list.append(item)
             page += 1
@@ -169,8 +172,12 @@ def get_all_subs(searchstring, languageshort, languagelong, file_original_path):
 
 
 def append_subtitle(item):
+    if __addon__.getSetting('show_nick_in_place_of_lang') == 'true':
+        item_label = item['uploader']
+    else:
+        item_label = item['language_name']
     listitem = xbmcgui.ListItem(
-        label=item['language_name'],
+        label=item_label,
         label2=item['filename'],
         iconImage=item['rating'],
         thumbnailImage='es'
@@ -220,10 +227,131 @@ def Search(item):
         append_subtitle(sub)
 
 
+def _wait_for_extract(base_filecount, base_mtime, limit):
+    waittime = 0
+    filecount = base_filecount
+    newest_mtime = base_mtime
+    while (filecount == base_filecount and waittime < limit and
+           newest_mtime == base_mtime):
+        # wait 1 second to let the builtin function 'XBMC.Extract' unpack
+        time.sleep(1)
+        files = os.listdir(__temp__)
+        filecount = len(files)
+        # Determine if there is a newer file created (marks that the extraction
+        # has completed)
+        for fname in files:
+            if not is_subs_file(fname):
+                continue
+            fname = fname.decode('utf-8')
+            mtime = os.stat(pjoin(__temp__, fname)).st_mtime
+            if mtime > newest_mtime:
+                newest_mtime = mtime
+        waittime += 1
+    return waittime != limit
+
+
+def _empty_dir(dirname, compressed_file):
+    for fname in os.listdir(dirname):
+        fpath = pjoin(dirname, fname)
+        try:
+            if os.path.isfile(fpath) and fpath != compressed_file:
+                os.unlink(fpath)
+        except Exception as e:
+            log(u"Error removing file %s: %s" % (fname, e))
+
+
+def _handle_compressed_subs(compressed_file, type):
+    MAX_UNZIP_WAIT = 15
+    if type == '.rar':
+        _empty_dir(__temp__, compressed_file)
+    files = os.listdir(__temp__)
+    filecount = len(files)
+    max_mtime = 0
+    subs_before = []
+    # Determine the newest file
+    for fname in files:
+        if not is_subs_file(fname):
+            continue
+        subs_before.append(fname)
+        mtime = os.stat(pjoin(__temp__, fname)).st_mtime
+        if mtime > max_mtime:
+            max_mtime = mtime
+    subs_before = set(subs_before)
+    base_mtime = max_mtime
+    # Wait 2 seconds so that the unpacked files are at least 1 second newer
+    time.sleep(2)
+    xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (
+                        compressed_file.encode("utf-8"),
+                        __temp__.encode("utf-8")))
+    retval, fpath = False, None
+    x = _wait_for_extract(filecount, base_mtime, MAX_UNZIP_WAIT)
+    files = os.listdir(__temp__)
+    subs_after = []
+    for fname in files:
+        # There could be more subtitle files in __temp__, so make
+        # sure we get the newly created subtitle file
+        if not is_subs_file(fname):
+            continue
+        fpath = pjoin(__temp__, fname.decode("utf-8"))
+        subs_after.append(fname)
+        if os.stat(fpath).st_mtime > base_mtime and x:
+            # unpacked file is a newly created subtitle file
+            retval = True
+    subs_after = set(subs_after)
+    # rar unpacking can extract files preserving their mtime so the above
+    # detection fails, fallback to detect dir contents changes
+    if type == '.rar' and not retval:
+        log(u"Falling back to RAR file strategy")
+        new_files = subs_after - subs_before
+        if new_files:
+            fpath = pjoin(__temp__, new_files.pop().decode("utf-8"))
+            log(u"Choosing first new file detected: %s" % fpath)
+            retval = True
+        else:
+            log(u"No new file(s) detected")
+
+    if retval:
+        log(u"Unpacked subtitles file '%s'" % fpath)
+    else:
+        log(u"Failed to unpack subtitles")
+    return retval, fpath
+
+
+def _save_subtitles(content):
+    header = content[:4]
+    if header == 'Rar!':
+        type = '.rar'
+        is_compressed = True
+    elif header == 'PK\x03\x04':
+        type = '.zip'
+        is_compressed = True
+    else:
+        # Never found/downloaded an unpacked subtitles file, but just to be
+        # sure ...
+        # Assume unpacked sub file is a '.srt'
+        type = '.srt'
+        is_compressed = False
+    tmp_fname = pjoin(__temp__, "subdivx" + type)
+    log(u"Saving subtitles to '%s'" % tmp_fname)
+    try:
+        with open(tmp_fname, "wb") as fh:
+            fh.write(content)
+    except Exception:
+        log(u"Failed to save subtitles to '%s'" % tmp_fname)
+        return None
+    else:
+        if is_compressed:
+            rval, fname = _handle_compressed_subs(tmp_fname, type)
+            if rval:
+                return fname
+        else:
+            return tmp_fname
+
+
 def Download(id, filename):
-    """Called when subtitle download request from XBMC."""
-    # Cleanup temp dir, we recommend you download/unzip your subs in temp folder
-    # and pass that to XBMC to copy and activate
+    """Called when subtitle download is requested from XBMC."""
+    # Cleanup temp dir, we recommend you download/unzip your subs in temp
+    # folder and pass that to XBMC to copy and activate
     if xbmcvfs.exists(__temp__):
         shutil.rmtree(__temp__)
     xbmcvfs.mkdirs(__temp__)
@@ -232,82 +360,15 @@ def Download(id, filename):
     # Get the page with the subtitle link,
     # i.e. http://www.subdivx.com/X6XMjE2NDM1X-iron-man-2-2010
     subtitle_detail_url = MAIN_SUBDIVX_URL + str(id)
-    content = get_url(subtitle_detail_url)
-    match = DOWNLOAD_LINK_RE.findall(content)
+    html_content = get_url(subtitle_detail_url)
+    match = DOWNLOAD_LINK_RE.findall(html_content)
 
     actual_subtitle_file_url = MAIN_SUBDIVX_URL + "bajar.php?id=" + match[0][0] + "&u=" + match[0][1]
     content = get_url(actual_subtitle_file_url)
     if content is not None:
-        header = content[:4]
-        if header == 'Rar!':
-            local_tmp_file = pjoin(__temp__, "subdivx.rar")
-            packed = True
-        elif header == 'PK\x03\x04':
-            local_tmp_file = pjoin(__temp__, "subdivx.zip")
-            packed = True
-        else:
-            # Never found/downloaded an unpacked subtitles file, but just to be
-            # sure ...
-            # Assume unpacked sub file is a '.srt'
-            local_tmp_file = pjoin(__temp__, "subdivx.srt")
-            subs_file = local_tmp_file
-            packed = False
-        log(u"Saving subtitles to '%s'" % local_tmp_file)
-        try:
-            local_file_handle = open(local_tmp_file, "wb")
-            local_file_handle.write(content)
-            local_file_handle.close()
-        except Exception:
-            log(u"Failed to save subtitles to '%s'" % local_tmp_file)
-        if packed:
-            files = os.listdir(__temp__)
-            init_filecount = len(files)
-            log(u"init_filecount = %d" % init_filecount)
-            filecount = init_filecount
-            max_mtime = 0
-            # Determine the newest file from __temp__
-            for file in files:
-                if is_subs_file(file):
-                    mtime = os.stat(pjoin(__temp__, file)).st_mtime
-                    if mtime > max_mtime:
-                        max_mtime = mtime
-            init_max_mtime = max_mtime
-            # Wait 2 seconds so that the unpacked files are at least 1 second
-            # newer
-            time.sleep(2)
-            xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (
-                                local_tmp_file.encode("utf-8"),
-                                __temp__.encode("utf-8")))
-            waittime = 0
-            while filecount == init_filecount and waittime < 20 and init_max_mtime == max_mtime:
-                # Nothing yet extracted
-                time.sleep(1)  # wait 1 second to let the builtin function
-                               # 'XBMC.Extract' unpack
-                files = os.listdir(__temp__)
-                filecount = len(files)
-                # Determine if there is a newer file created in __temp__ (marks
-                # that the extraction had completed)
-                for file in files:
-                    if is_subs_file(file):
-                        mtime = os.stat(pjoin(__temp__, file.decode("utf-8"))).st_mtime
-                        if mtime > max_mtime:
-                            max_mtime = mtime
-                waittime = waittime + 1
-            if waittime == 20:
-                log(u"Failed to unpack subtitles in '%s'" % __temp__)
-            else:
-                log(u"Unpacked files in '%s'" % __temp__)
-                for file in files:
-                    # There could be more subtitle files in __temp__, so make
-                    # sure we get the newly created subtitle file
-                    if is_subs_file(file) and os.stat(pjoin(__temp__, file)).st_mtime > init_max_mtime:
-                        # unpacked file is a newly created subtitle file
-                        log(u"Unpacked subtitles file '%s'" % file)
-                        subs_file = pjoin(__temp__, file.decode("utf-8"))
-                        subtitles_list.append(subs_file)
-                        break
-        else:
-            subtitles_list.append(subs_file)
+        saved_fname = _save_subtitles(content)
+        if saved_fname:
+            subtitles_list.append(saved_fname)
     return subtitles_list
 
 
