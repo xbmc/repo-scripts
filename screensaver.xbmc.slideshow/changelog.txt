@@ -1,3 +1,6 @@
+v1.0.8
+- add missing images
+
 v1.0.7
 - fix recursive scan (paths must end with a slash)
 - fix possible crash on exit
