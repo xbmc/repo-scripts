@@ -1,3 +1,6 @@
+v2.0.9
+- deprecate xbmc.abortRequested
+
 v2.0.8
 - add missing images
 

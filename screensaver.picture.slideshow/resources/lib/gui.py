@@ -136,7 +136,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         cur_img = self.image1
         order = [1,2]
         # loop until onScreensaverDeactivated is called
-        while (not xbmc.abortRequested) and (not self.stop):
+        while (not self.Monitor.abortRequested()) and (not self.stop):
             # iterate through all the images
             for img in items:
                 # cache file may be outdated
@@ -261,11 +261,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 # slideshow time in secs (we already slept for 1 second)
                 count = self.slideshow_time - 1
                 # display the image for the specified amount of time
-                while (not xbmc.abortRequested) and (not self.stop) and count > 0:
+                while (not self.Monitor.abortRequested()) and (not self.stop) and count > 0:
                     count -= 1
                     xbmc.sleep(1000)
                 # break out of the for loop if onScreensaverDeactivated is called
-                if  self.stop or xbmc.abortRequested:
+                if  self.stop or self.Monitor.abortRequested():
                     break
 
     def _get_items(self):
