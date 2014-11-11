@@ -26,8 +26,16 @@ class OSDBServer:
     if ( self.osdb_token ) :
       searchlist  = []
       if item['mansearch']:
-        OS_search_string = urllib.unquote(item['mansearchstr'])
-      elif len(item['tvshow']) > 0:
+        searchlist = [{'sublanguageid':",".join(item['3let_language']),
+                       'query'        :urllib.unquote(item['mansearchstr'])
+                      }]
+        search = self.server.SearchSubtitles( self.osdb_token, searchlist )
+        if search["data"]:
+          return search["data"]
+        else:
+          return None
+
+      if len(item['tvshow']) > 0:
         OS_search_string = ("%s S%.2dE%.2d" % (item['tvshow'],
                                                 int(item['season']),
                                                 int(item['episode']),)
@@ -38,7 +46,8 @@ class OSDBServer:
     
         OS_search_string = item['title'].replace(" ","+")
     
-      log( __name__ , "Search String [ %s ]" % (OS_search_string,)) 
+      log( __name__ , "Search String [ %s ]" % (OS_search_string,))
+
       if not item['temp']:
         try:
           size, hash = hashFile(item['file_original_path'], item['rar'])
@@ -47,31 +56,28 @@ class OSDBServer:
                               'moviehash'    :hash,
                               'moviebytesize':str(size)
                             })
-          if not item['tvshow']:
-            searchlist.append({'sublanguageid' :",".join(item['3let_language']),
-          			'imdbid'	   :str(xbmc.Player().getVideoInfoTag().getIMDBNumber().replace('tt',''))
-          		       })
         except:
-          pass    
+          pass
+            
+        imdb = str(xbmc.Player().getVideoInfoTag().getIMDBNumber().replace('tt',''))
+        
+        if ((not item['tvshow']) and imdb != ""):
+          searchlist.append({'sublanguageid' :",".join(item['3let_language']),
+                             'imdbid'        :imdb
+                            })
 
-      if item['mansearch']:
-      	searchlist = [{'sublanguageid':",".join(item['3let_language']),
-                       'query'        :OS_search_string
-                     }]
-      	search = self.server.SearchSubtitles( self.osdb_token, searchlist )
-      	if search["data"]:
-          return search["data"]
+        searchlist.append({'sublanguageid':",".join(item['3let_language']),
+                          'query'        :OS_search_string
+                         }) 
+      
       else:
-      	search = self.server.SearchSubtitles( self.osdb_token, searchlist )
-      	if search["data"]:
-          return search["data"] 
-	else: 
-	  searchlist = [{'sublanguageid':",".join(item['3let_language']),
-                	 'query'        :OS_search_string
-                       }]
-      	  search = self.server.SearchSubtitles( self.osdb_token, searchlist )
-      	  if search["data"]:
-            return search["data"]
+        searchlist = [{'sublanguageid':",".join(item['3let_language']),
+                       'query'        :OS_search_string
+                      }]
+
+      search = self.server.SearchSubtitles( self.osdb_token, searchlist )
+      if search["data"]:
+        return search["data"] 
 
 
   def download(self, ID, dest):
