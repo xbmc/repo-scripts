@@ -35,5 +35,5 @@ msgid "Authenticate [InvalidCredentials]"
 msgstr ""
 
 msgctxt "#32006"
-msgid "Send movie hashes to Podnapisi.net, helps improve search results"
+msgid "Send and search movie hashes , helps improve search results."
 msgstr ""

@@ -1,3 +1,7 @@
+5.3.0
+- add more exact hash algorithms for more precise search. Hash search/match needs to be enabled in settings
+
+
 5.2.0
 - restructure search, use only web to search as SSP is way to slow.
 - [fix] xbmcvfs might return false if no slash is at the end of folder

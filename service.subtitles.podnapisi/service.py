@@ -25,18 +25,19 @@ __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp', '') ).de
 
 sys.path.append (__resource__)
 
-from pn_utilities import PNServer, log, OpensubtitlesHash, normalizeString, languageTranslate
+from pn_utilities import PNServer, log, OpensubtitlesHash, normalizeString, languageTranslate, calculateSublightHash
 
 def Search( item ):
 
   pn_server = PNServer()
   pn_server.Create()  
   subtitles_list = []
-  
   if item['temp'] : 
-    item['hash'] = "000000000000"
+    item['OShash'] = "000000000000"
+    item['SLhash'] = "000000000000"
   else:
-    item['hash'] = OpensubtitlesHash(item)
+    item['OShash'] = OpensubtitlesHash(item)
+    item['SLhash'] = calculateSublightHash(item['file_original_path'])
     log( __scriptid__ ,"xbmc module OShash")
 
   log( __scriptid__ ,"Search for [%s] by name" % (os.path.basename( item['file_original_path'] ),))
@@ -58,7 +59,7 @@ def Search( item ):
                                                                                                                   it["movie_id"],
                                                                                                                   it["season"],
                                                                                                                   it["episode"],
-                                                                                                                  item['hash'],
+                                                                                                                  item['OShash'],
                                                                                                                   it["sync"]
                                                                                                                   )
       
