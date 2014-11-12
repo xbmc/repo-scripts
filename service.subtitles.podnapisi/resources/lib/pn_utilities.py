@@ -6,7 +6,7 @@ import xmlrpclib
 import unicodedata
 import struct
 from xml.dom import minidom
-import urllib
+import urllib, zlib
 import xbmc, xbmcvfs
 
 try:
@@ -25,9 +25,11 @@ __cwd__        = sys.modules[ "__main__" ].__cwd__
 __language__   = sys.modules[ "__main__" ].__language__
 __scriptid__   = sys.modules[ "__main__" ].__scriptid__
 
-USER_AGENT   = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
-SEARCH_URL   = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sMH=%s&sXML=1&lang=0"
-DOWNLOAD_URL = "http://www.podnapisi.net/static/podnapisi/%s"
+USER_AGENT        = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
+SEARCH_URL        = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1&lang=0"
+SEARCH_URL_HASH   = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sMH=%s&sXML=1&lang=0"
+
+DOWNLOAD_URL      = "http://www.podnapisi.net/static/podnapisi/%s"
 
 LANGUAGES      = (
 
@@ -168,6 +170,65 @@ def OpensubtitlesHashRar(firstrarfile):
         seek+=size
     raise Exception('ERROR: Not Body part in rar file.')
 
+def dec2hex(n, l=0):
+  # return the hexadecimal string representation of integer n
+  s = "%X" % n
+  if (l > 0) :
+    while len(s) < l:
+      s = "0" + s 
+  return s
+
+def invert(basestring):
+  asal = [basestring[i:i+2]
+          for i in range(0, len(basestring), 2)]
+  asal.reverse()
+  return ''.join(asal)
+
+def calculateSublightHash(filename):
+
+  DATA_SIZE = 128 * 1024;
+
+  if not xbmcvfs.exists(filename) :
+    return "000000000000"
+  
+  fileToHash = xbmcvfs.File(filename)
+
+  if fileToHash.size(filename) < DATA_SIZE :
+    return "000000000000"
+
+  sum = 0
+  hash = ""
+  
+  number = 2
+  sum = sum + number
+  hash = hash + dec2hex(number, 2) 
+  
+  filesize = fileToHash.size(filename)
+  
+  sum = sum + (filesize & 0xff) + ((filesize & 0xff00) >> 8) + ((filesize & 0xff0000) >> 16) + ((filesize & 0xff000000) >> 24)
+  hash = hash + dec2hex(filesize, 12) 
+  
+  buffer = fileToHash.read( DATA_SIZE )
+  begining = zlib.adler32(buffer) & 0xffffffff
+  sum = sum + (begining & 0xff) + ((begining & 0xff00) >> 8) + ((begining & 0xff0000) >> 16) + ((begining & 0xff000000) >> 24)
+  hash = hash + invert(dec2hex(begining, 8))
+
+  fileToHash.seek(filesize/2,0)
+  buffer = fileToHash.read( DATA_SIZE )
+  middle = zlib.adler32(buffer) & 0xffffffff
+  sum = sum + (middle & 0xff) + ((middle & 0xff00) >> 8) + ((middle & 0xff0000) >> 16) + ((middle & 0xff000000) >> 24)
+  hash = hash + invert(dec2hex(middle, 8))
+
+  fileToHash.seek(filesize-DATA_SIZE,0)
+  buffer = fileToHash.read( DATA_SIZE )
+  end = zlib.adler32(buffer) & 0xffffffff
+  sum = sum + (end & 0xff) + ((end & 0xff00) >> 8) + ((end & 0xff0000) >> 16) + ((end & 0xff000000) >> 24)
+  hash = hash + invert(dec2hex(end, 8))
+  
+  fileToHash.close()
+  hash = hash + dec2hex(sum % 256, 2)
+  
+  return hash.lower()
 
 class PNServer:
   def Create(self):
@@ -202,13 +263,22 @@ class PNServer:
     if len(item['tvshow']) > 1:
       item['title'] = item['tvshow']
     
-    url =  SEARCH_URL % (item['title'].replace(" ","+"),
-                         ','.join(item['3let_language']),
-                         str(item['year']),
-                         str(item['season']), 
-                         str(item['episode']),
-                         str(item['hash'])
-                         )
+    if (__addon__.getSetting("PNmatch") == 'true'):
+      url =  SEARCH_URL_HASH % (item['title'].replace(" ","+"),
+                               ','.join(item['3let_language']),
+                               str(item['year']),
+                               str(item['season']), 
+                               str(item['episode']),
+                               '%s,sublight:%s,sublight:%s' % (item['OShash'],item['SLhash'],md5(item['SLhash']).hexdigest() )
+                               )
+    else:
+      url =  SEARCH_URL % (item['title'].replace(" ","+"),
+                           ','.join(item['3let_language']),
+                           str(item['year']),
+                           str(item['season']), 
+                           str(item['episode'])
+                          )
+
     log( __scriptid__ ,"Search URL - %s" % (url))
     
     subtitles = self.fetch(url)
@@ -219,6 +289,11 @@ class PNServer:
 
         if filename == "":
           filename = self.get_element(subtitle, "title")
+        
+        hashMatch = False
+        if (item['OShash'] in self.get_element(subtitle, "exactHashes") or 
+           item['SLhash'] in self.get_element(subtitle, "exactHashes")):
+          hashMatch = True
 
         self.subtitles_list.append({'filename'      : filename,
                                     'link'          : self.get_element(subtitle, "id"),
@@ -228,20 +303,23 @@ class PNServer:
                                     'language_name' : languageTranslate(self.get_element(subtitle, "languageId"),1,0),
                                     'language_flag' : languageTranslate(self.get_element(subtitle, "languageId"),1,2),
                                     'rating'        : str(int(self.get_element(subtitle, "rating"))*2),
-                                    'sync'          : False,
+                                    'sync'          : hashMatch,
                                     'hearing_imp'   : "n" in self.get_element(subtitle, "flags")
                                     })
       self.mergesubtitles()
     return self.subtitles_list
   
   def Download(self,params):
+    print params
+    subtitle_ids = []
     if (self.connected):
-      if (__addon__.getSetting("PNmatch") == 'true' and
-          params["match"] == "False" and
-          params["hash"] != "000000000000"):
+      if (__addon__.getSetting("PNmatch") == 'true' and params["hash"] != "000000000000"):
+        if params["match"] == "True":
+          subtitle_ids.append(str(params["link"]))
 
         log( __scriptid__ ,"Sending match to Podnapisi server")
-        result = self.podserver.match(self.pod_session, params["hash"], int(params["movie_id"]), int(params["season"]), int(params["episode"]), "")
+        result = self.podserver.match(self.pod_session, params["hash"], int(params["movie_id"]), int(params["season"]), int(params["episode"]), subtitle_ids)
+        print result
         if result['status'] == 200:
           log( __scriptid__ ,"Match successfuly sent")
 
