@@ -18,7 +18,6 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import os
-from time import time
 
 __addon__ = xbmcaddon.Addon()
 __cwd__ = __addon__.getAddonInfo('path')
@@ -46,10 +45,8 @@ global g_jumpBackSecsAfterRwdX16
 global g_jumpBackSecsAfterRwdX32
 global g_jumpBackSecsAfterResume
 global g_lastPlaybackSpeed
-global g_pausedTime
 global g_waitForJumpback
 g_jumpBackSecsAfterFwdPause = 0
-g_pausedTime = 0
 g_waitForJumpback = 0
 g_lastPlaybackSpeed = 1
 
@@ -136,9 +133,17 @@ class MyPlayer( xbmc.Player ):
     log('MyPlayer - init')
     
   def onPlayBackPaused( self ):
-    global g_pausedTime
-    g_pausedTime = time()
-    log('Paused. Time: %d' % g_pausedTime)
+    global g_jumpBackSecsAfterFwdPause
+    global g_waitForJumpback
+
+    if self.isPlayingVideo():
+      _filename = self.getPlayingFile()
+      if isExcluded(_filename):
+        log("Playback paused - ignoring because '%s' is in exclusion settings." % _filename)
+      elif g_jumpBackSecsAfterFwdPause > 0 and self.getTime() > g_jumpBackSecsAfterFwdPause:
+        percentage = (self.getTime() - g_jumpBackSecsAfterFwdPause) / self.getTotalTime() * 100
+        log('Playback paused, setting up alarm clock - getTime()=%f getTotalTime()=%f g_jumpBackSecsAfterFwdPause=%d percentage=%f' % (self.getTime(), self.getTotalTime(), g_jumpBackSecsAfterFwdPause, percentage))
+        xbmc.executebuiltin('AlarmClock(JumpbackPaused, PlayerControl(SeekPercentage(%f)), 0:%d, silent)' % (percentage, g_waitForJumpback))
 
   def onPlayBackSpeedChanged( self, speed ):
     global g_lastPlaybackSpeed
@@ -181,26 +186,12 @@ class MyPlayer( xbmc.Player ):
     g_lastPlaybackSpeed = speed
 
   def onPlayBackResumed( self ):
-    global g_jumpBackSecsAfterFwdPause
-    global g_pausedTime
-    global g_waitForJumpback
-    if g_pausedTime > 0:
-      log('Resuming. Was paused for %d seconds.' % (time() - g_pausedTime))
+    log('Cancelling alarm - playback either resumed or stopped by the user')
+    xbmc.executebuiltin('CancelAlarm(JumpbackPaused, true)')
 
-    # check for exclusion
-    _filename = self.getPlayingFile()
-    if isExcluded(_filename):
-      log("Ignored because '%s' is in exclusion settings." % _filename)
-      return
+  # We don't care if playback was resumed or stopped, we just want to know when we're no longer paused
+  onPlayBackStopped = onPlayBackResumed
 
-    else:
-      #handle humpback after pause
-      if g_jumpBackSecsAfterFwdPause != 0 and xbmc.Player().isPlayingVideo() and xbmc.Player().getTime() > g_jumpBackSecsAfterFwdPause and g_pausedTime > 0 and (time() - g_pausedTime) > g_waitForJumpback:
-        resumeTime = xbmc.Player().getTime() - g_jumpBackSecsAfterFwdPause
-        xbmc.Player().seekTime(resumeTime)
-        log( 'Resumed with %ds jumpback' % g_jumpBackSecsAfterFwdPause )
-      
-      g_pausedTime = 0
 try:
   class MyMonitor( xbmc.Monitor ):
     def __init__( self, *args, **kwargs ):

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.unpausejumpback" name="XBMC Unpause Jumpback" version="2.3.1" provider-name="Memphiz|Lucleonhart|schumi2004|bossanova808">
+<addon id="script.xbmc.unpausejumpback" name="XBMC Unpause Jumpback" version="2.3.2" provider-name="Memphiz|Lucleonhart|schumi2004|bossanova808">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
