@@ -1,6 +1,17 @@
+0.4.0
+
+* Added a better decription of what feedreader does
+
+
+0.3.0 Minor bug fix
+
+* minor bug fix (workaround for getSetting sometimes failing)
+* first kodi helix release
+
 
 0.2.0 first version
 
 Fixed HTMLParser dependency in addon.xml
+
 
 0.1.0 first version

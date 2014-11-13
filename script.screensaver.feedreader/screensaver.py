@@ -140,7 +140,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             else:
                 self.getControl(CONTROL_CLOCK).setText(time.strftime('%d %b %H %M'))
             if self.abort_requested: return
-            if abs(time.time()-self.lastDisplayTime) >= float(addon.getSetting('Time')):
+            if abs(time.time()-self.lastDisplayTime) >= self.delayTime:
                 self.displayNext()
         except:
             self.getControl(CONTROL_DEBUG).setText('pe Err: %s' % traceback.format_tb(sys.exc_info()[2]))
@@ -185,6 +185,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.curitem = -1
         self.feedcounter = -1.
         self.getControl(CONTROL_MAINSTORY).setText('')
+        self.delayTime=float(addon.getSetting('Time'));
         for x in range(1, 7):
             if not self.abort_requested:
                 self.addFeed(addon.getSetting('Feed%d' % x))

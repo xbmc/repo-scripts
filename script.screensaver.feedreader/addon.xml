@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.screensaver.feedreader" name="Feedreader" version="0.2.0" provider-name="grinsted">
+<addon id="script.screensaver.feedreader" name="Feedreader" version="0.4.0" provider-name="grinsted">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.feedparser" version="5.1.3"/>
@@ -11,9 +11,9 @@
         <language/>
         <website>https://github.com/grinsted/feedreader</website>
         <source></source>
-        <forum></forum>
+        <forum>http://forum.kodi.tv/showthread.php?tid=208160</forum>
         <email></email>
-        <summary lang="en">Feedreader Screensaver</summary>
-        <description lang="en">Feedreader Screensaver</description>
+        <summary lang="en">Feedreader: A screensaver with the news.</summary>
+        <description lang="en">Feedreader will shows you the news and images from multiple rss feeds of your choice.</description>
     </extension>
 </addon>
