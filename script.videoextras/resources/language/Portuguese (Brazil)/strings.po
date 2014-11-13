@@ -25,8 +25,8 @@ msgid "Provides a way to add Video Extras to your Video library. Look at the wik
 msgstr "Prove um caminho para vídeo extras via info de vídeo. Ver o wiki para instruções de configuração."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
-msgstr "Skinners, por favor veja o wiki para saber como integrar em sua skin:\nhttp://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skinners, por favor veja o wiki para saber como integrar em sua skin:\nhttp://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -191,3 +191,15 @@ msgstr "Seriados"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Videoclipes"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Enredo"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Editar enredo"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Falhou ao atualizar enredo"

@@ -26,6 +26,7 @@ from settings import Settings
 from settings import log
 from settings import os_path_join
 from settings import os_path_split
+from settings import dir_exists
 
 from ExtrasItem import ExtrasItem
 
@@ -98,7 +99,7 @@ class VideoExtrasFinder():
         log("VideoExtrasFinder: Checking existence of custom path %s" % custPath)
 
         # Check if this path exists
-        if not xbmcvfs.exists(custPath):
+        if not dir_exists(custPath):
             # If it doesn't exist, check the path before that, this covers the
             # case where there is a TV Show with each season in it's own directory
             path2ndLastDir = os_path_split((os_path_split(path)[0]))[1]
@@ -106,12 +107,12 @@ class VideoExtrasFinder():
             custPath = os_path_join(custPath, path2ndLastDir)
             custPath = os_path_join(custPath, pathLastDir)
             log("VideoExtrasFinder: Checking existence of custom path %s" % custPath)
-            if not xbmcvfs.exists(custPath):
+            if not dir_exists(custPath):
                 # If it still does not exist then check just the 2nd to last path
                 custPath = Settings.getCustomPath(self.videoType)
                 custPath = os_path_join(custPath, path2ndLastDir)
                 log("VideoExtrasFinder: Checking existence of custom path %s" % custPath)
-                if not xbmcvfs.exists(custPath):
+                if not dir_exists(custPath):
                     custPath = None
 
         return custPath
@@ -235,7 +236,7 @@ class VideoExtrasFinder():
         log("VideoExtrasFinder: Checking existence for %s" % extrasDir)
         extras = []
         # Check if the extras directory exists
-        if xbmcvfs.exists(extrasDir):
+        if dir_exists(extrasDir):
             # list everything in the extras directory
             dirs, files = xbmcvfs.listdir(extrasDir)
             for filename in files:
@@ -260,7 +261,7 @@ class VideoExtrasFinder():
                     videoTSDir = os_path_join(extrasSubDir, 'VIDEO_TS')
                     # Also check for Bluray
                     videoBluRayDir = os_path_join(extrasSubDir, 'BDMV')
-                    if xbmcvfs.exists(videoTSDir) or xbmcvfs.exists(videoBluRayDir):
+                    if dir_exists(videoTSDir) or dir_exists(videoBluRayDir):
                         extraItem = ExtrasItem(extrasDir, extrasSubDir, extrasDb=self.extrasDb, defaultFanArt=self.defaultFanArt)
                         extras.append(extraItem)
 
@@ -272,7 +273,7 @@ class VideoExtrasFinder():
 
     def _getNestedExtrasFiles(self, basepath, filename, exitOnFirst=False, noExtrasDirNeeded=False):
         extras = []
-        if xbmcvfs.exists(basepath):
+        if dir_exists(basepath):
             dirs, files = xbmcvfs.listdir(basepath)
             for dirname in dirs:
                 # Do not search inside Bluray or DVD images

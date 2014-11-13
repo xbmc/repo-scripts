@@ -20,6 +20,14 @@ msgctxt "#32001"
 msgid "Extras"
 msgstr "Дополнительно"
 
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Искать во вложенных папках"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Выбор видео"
+
 msgctxt "#32008"
 msgid "Information"
 msgstr "Информация"
@@ -27,6 +35,10 @@ msgstr "Информация"
 msgctxt "#32009"
 msgid "Home"
 msgstr "Главная"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Файловая система"
 
 msgctxt "#32013"
 msgid "Path"
@@ -48,9 +60,25 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "База данных"
 
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Включить поддержку базы данных"
+
 msgctxt "#32023"
 msgid "Operations"
 msgstr "Операции"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Очистить базу данных и кэш"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Использовать детализированный список на экране"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Окно для показа после выхода из детализированного списка"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -80,6 +108,10 @@ msgctxt "#32108"
 msgid "Edit title"
 msgstr "Редактировать название"
 
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Не удалось обновить заголовок"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Фильмы"
@@ -91,3 +123,15 @@ msgstr "Сериалы"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Муз. видео"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Сюжет"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Редактировать сюжет"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Не удалось обновить сюжет"

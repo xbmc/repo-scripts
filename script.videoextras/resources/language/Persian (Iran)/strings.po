@@ -40,6 +40,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "شروع از ابتدا"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "علامت گذاری به عنوان تماشا شده"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "علامت گذاری به عنوان تماشا نشده"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "ویرایش عنوان"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "فیلم ها"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "طرح"

@@ -22,11 +22,11 @@ msgstr "Video Extras zu deinen Filmen und TV-Sendungen hinzufügen"
 
 msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
-msgstr "Bietet einen Weg um Extras zu deiner Video Bibliothek hinzuzufügen. Schau ins wiki für eine Installationsanleitung."
+msgstr "Bietet eine Möglichkeit, um Videoextras zu Ihrer Videobibliothek hinzuzufügen. Schauen Sie ins Wiki für Installationsanweisungen."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
-msgstr "Skin-Ersteller, bitte schaut für Informationen über die Integration in euren Skin im Wiki:\nhttp://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skin-Ersteller, bitte schauen Sie ins Wiki für Informationen über die Integration in Ihren Skin:\nhttp://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -38,19 +38,19 @@ msgstr "Extras Verzeichnisname"
 
 msgctxt "#32003"
 msgid "Search Nested Directories"
-msgstr "Verschachtelte Ordner durchsuchen."
+msgstr "Verschachtelte Ordner durchsuchen"
 
 msgctxt "#32004"
 msgid "Enable Extras with File Tag"
-msgstr "Aktiviere Extras mit Datei-Tag"
+msgstr "Extras mit Dateischlagwort aktivieren"
 
 msgctxt "#32005"
 msgid "Extras File Name Tag"
-msgstr "Extras Datei-Tag"
+msgstr "Extras Dateinamensschlagwort"
 
 msgctxt "#32006"
 msgid "Menu to show after playing an extra"
-msgstr "Menü, das nach Abspielen eines Extras angezeigt werden soll"
+msgstr "Menü, das nach der Wiedergabe eines Extras angezeigt werden soll"
 
 msgctxt "#32007"
 msgid "Video Selection"
@@ -70,11 +70,11 @@ msgstr "Dateisystem"
 
 msgctxt "#32011"
 msgid "Remote Extras Location"
-msgstr "Extras Speicherort"
+msgstr "Entfernter Extras-Speicherort"
 
 msgctxt "#32012"
 msgid "Use Custom Extras Location"
-msgstr "Verwende eigenen Extras Speicherort"
+msgstr "Benutzerdefinierten Extras-Speicherort verwenden"
 
 msgctxt "#32013"
 msgid "Path"
@@ -82,11 +82,11 @@ msgstr "Pfad"
 
 msgctxt "#32014"
 msgid "Custom Movies Sub-Folder"
-msgstr "Eigener Unterordner für Filme"
+msgstr "Benutzerdefinierter Filme-Unterordner"
 
 msgctxt "#32015"
 msgid "Custom TV Shows Sub-Folder"
-msgstr "Eigener Unterordner für TV-Sendungen"
+msgstr "Benutzerdefinierter Fernsehsendungs-Unterordner"
 
 msgctxt "#32016"
 msgid "Advanced"
@@ -94,7 +94,7 @@ msgstr "Erweitert"
 
 msgctxt "#32017"
 msgid "Force Extras Button Display"
-msgstr "Anzeige des Extras-Butons erzwingen"
+msgstr "Anzeige der Extras-Schaltfläche erzwingen"
 
 msgctxt "#32018"
 msgid "Exclude Files Regular Expression"
@@ -106,7 +106,7 @@ msgstr "Debugging"
 
 msgctxt "#32020"
 msgid "Enable debug logging"
-msgstr "Debug-Logging aktivieren"
+msgstr "Debug-Protokollierung aktivieren"
 
 msgctxt "#32021"
 msgid "Database"
@@ -122,19 +122,19 @@ msgstr "Operationen"
 
 msgctxt "#32024"
 msgid "Clean Database And Cache"
-msgstr "Reinige Datenbank und Cache"
+msgstr "Datenbank und Cache bereinigen"
 
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
-msgstr "Verwende Detailliste"
+msgstr "Detaillierten Listenbildschirm verwenden"
 
 msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
-msgstr "Fenster, das beim Verlassen der Detailliste angezeigt werden soll"
+msgstr "Fenster, das nach dem Verlassen der Detailliste angezeigt werden soll"
 
 msgctxt "#32027"
 msgid "Allow caching of extras on startup"
-msgstr "Zwischenspeichern der Extras beim Start"
+msgstr "Zwischenspeichern der Extras beim Start erlauben"
 
 msgctxt "#32028"
 msgid "Browse Extras"
@@ -142,7 +142,7 @@ msgstr "Extras durchsuchen"
 
 msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
-msgstr "Persönlicher Musik-Video Unterordner"
+msgstr "Benutzerdefinierter Musikvideo-Unterordner"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -166,11 +166,11 @@ msgstr "Am Anfang starten"
 
 msgctxt "#32106"
 msgid "Mark as watched"
-msgstr "Markiere als gesehen"
+msgstr "Als gesehen markieren"
 
 msgctxt "#32107"
 msgid "Mark as unwatched"
-msgstr "Markiere als ungesehen"
+msgstr "Als ungesehen markieren"
 
 msgctxt "#32108"
 msgid "Edit title"
@@ -186,8 +186,20 @@ msgstr "Filme"
 
 msgctxt "#32111"
 msgid "TV Shows"
-msgstr "Serien"
+msgstr "Fernsehsendungen"
 
 msgctxt "#32112"
 msgid "Music Videos"
-msgstr "Musik Videos"
+msgstr "Musikvideos"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Handlung"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Handlung bearbeiten"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Aktualisierung der Handlung fehlgeschlagen"

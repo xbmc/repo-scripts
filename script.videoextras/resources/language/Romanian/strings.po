@@ -56,6 +56,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Pornește de la început"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marchează ca văzut"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marchează ca nevăzut"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Modifică numele"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filme"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Intrigă"

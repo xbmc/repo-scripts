@@ -60,6 +60,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Reprendre depuis le début"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marquer comme vu"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marquer comme non vu"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Éditer le titre"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Films"
@@ -71,3 +83,7 @@ msgstr "Séries TV"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Music Vidéos"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Résumé"

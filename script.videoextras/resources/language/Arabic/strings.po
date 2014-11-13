@@ -52,6 +52,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "ابدأ من البداية"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "أشر إليها على أنها شوهدت"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "أشر إليها على أنها لم تشاهد"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "تحرير عنوان"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "أفلام"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "الرواية"

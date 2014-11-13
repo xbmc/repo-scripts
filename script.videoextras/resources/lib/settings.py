@@ -2,6 +2,7 @@
 import xbmc
 import xbmcaddon
 import os
+import xbmcvfs
 
 __addon__ = xbmcaddon.Addon(id='script.videoextras')
 __addonid__ = __addon__.getAddonInfo('id')
@@ -55,6 +56,19 @@ def os_path_split(fullpath):
         return fullpath.rsplit("/", 1)
 
     return fullpath.rsplit("\\", 1)
+
+
+# Checks if a directory exists (Do not use for files)
+def dir_exists(dirpath):
+    directoryPath = dirpath
+    # The xbmcvfs exists interface require that directories end in a slash
+    # It used to be OK not to have the slash in Gotham, but it is now required
+    if (not directoryPath.endswith("/")) and (not directoryPath.endswith("\\")):
+        dirSep = "/"
+        if "\\" in directoryPath:
+            dirSep = "\\"
+        directoryPath = "%s%s" % (directoryPath, dirSep)
+    return xbmcvfs.exists(directoryPath)
 
 
 ##############################

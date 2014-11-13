@@ -25,8 +25,8 @@ msgid "Provides a way to add Video Extras to your Video library. Look at the wik
 msgstr "מספק אפשרות להוסיף ספיישלים (Video Extras) לספריית הוידאו שלך. פנה לוויקי להוראות התקנה."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
-msgstr "מפתחי מעטפות, אנא פנו לוויקי להבנה כיצד לשלב את הסקריפט במעטפת שלכם: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "מפתחי מעטפות, אנא פנו לוויקי להבנה כיצד לשלב את הסקריפט במעטפת שלכם: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -148,6 +148,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "הפעל מהתחלה"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "סמן כנצפה"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "סמן כלא כנצפה"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "ערוך כותרת"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "סרטים"
@@ -159,3 +171,7 @@ msgstr "סדרות"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "קליפים"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "עלילה"

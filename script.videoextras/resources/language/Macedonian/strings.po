@@ -16,6 +16,10 @@ msgstr ""
 "Language: mk\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
 
+msgctxt "#32008"
+msgid "Information"
+msgstr "Информација"
+
 msgctxt "#32009"
 msgid "Home"
 msgstr "Почетна страна"
@@ -52,6 +56,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Почни од почеток"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Обележи како одгледано"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Обележи као неодгледано"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Уреди наслов"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Филмови"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Заплет"

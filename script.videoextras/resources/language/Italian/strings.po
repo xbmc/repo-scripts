@@ -25,8 +25,8 @@ msgid "Provides a way to add Video Extras to your Video library. Look at the wik
 msgstr "Provvede un modo per aggiungere Video Extra alla tua biblioteca Video. Consulta il wiki per le istruzioni di configurazione.."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
-msgstr "Sviluppatori di Skin, per favore consultate il wiki per sapere come integrarlo nella tua skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Sviluppatori di Skin, per favore consultate il wiki per sapere come integrarlo nella tua skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -187,3 +187,7 @@ msgstr "Serie TV"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Video Musicali"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

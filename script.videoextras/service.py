@@ -43,6 +43,7 @@ sys.path.append(__lib__)
 from settings import Settings
 from settings import log
 from settings import os_path_join
+from settings import dir_exists
 
 # Load the core Video Extras classes
 from core import VideoExtrasBase
@@ -154,7 +155,7 @@ class VideoExtrasService():
     def _createTargetPath(self, target, dbid, postfix=''):
         # Get the path where the file exists
         rootPath = os_path_join(__profile__, target)
-        if not xbmcvfs.exists(rootPath):
+        if not dir_exists(rootPath):
             # Directory does not exist yet, create one
             xbmcvfs.mkdirs(rootPath)
 

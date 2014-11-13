@@ -16,9 +16,17 @@ msgstr ""
 "Language: mt\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==0 || ( n%100>1 && n%100<11) ? 1 : (n%100>10 && n%100<20 ) ? 2 : 3);\n"
 
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informazzjoni"
+
 msgctxt "#32009"
 msgid "Home"
 msgstr "Dħul"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Avvanzat"
 
 msgctxt "#32021"
 msgid "Database"
@@ -28,6 +36,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Ibda mill-bidu"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Immarka li rajt"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Immarka li ma rajtx"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Biddel it-Titlu"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmati"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

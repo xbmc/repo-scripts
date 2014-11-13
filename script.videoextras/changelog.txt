@@ -1,3 +1,10 @@
+v1.1.8
+- Update directory existence check for Helix
+
+v1.1.7
+- Check where VideoExtras is called with invalid argument
+- Add option to set the plot via the context menu
+
 v1.1.6
 - Exit cleanly if quit wile updating overlays
 - Add plot to player details when an extra is played

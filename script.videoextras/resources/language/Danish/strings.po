@@ -60,6 +60,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Start fra begyndelsen"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marker som set"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marker som ikke set"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Rediger titel"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Film"
@@ -71,3 +83,7 @@ msgstr "TV-serier"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Musikvideoer"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Handling"

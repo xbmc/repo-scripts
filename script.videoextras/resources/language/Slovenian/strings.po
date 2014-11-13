@@ -56,6 +56,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Predvajaj od začetka"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Označi kot ogledan"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Označi kot neogledan"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Uredi naslov"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmi"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Povzetek"

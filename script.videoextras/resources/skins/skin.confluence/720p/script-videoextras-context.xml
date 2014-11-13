@@ -135,6 +135,20 @@
 				<font>font13</font>
 				<label>$ADDON[script.videoextras 32108]</label>
 			</control>
+			<control type="button" id="44">
+				<description>Edit plot</description>
+				<width>340</width>
+				<height>40</height>
+				<textcolor>grey2</textcolor>
+				<focusedcolor>white</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<texturefocus border="25,5,25,5">ShutdownButtonFocus.png</texturefocus>
+				<texturenofocus border="25,5,25,5">ShutdownButtonNoFocus.png</texturenofocus>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32114]</label>
+			</control>
 			<control type="image" id="14">
 				<description>background bottom image</description>
 				<posx>0</posx>

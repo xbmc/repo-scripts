@@ -72,6 +72,14 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "从头开始播放"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "标记为已观看"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "标记为未观看"
+
 msgctxt "#32108"
 msgid "Edit title"
 msgstr "编辑标题"
@@ -87,3 +95,7 @@ msgstr "剧集"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "音乐电视"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "剧情简介"

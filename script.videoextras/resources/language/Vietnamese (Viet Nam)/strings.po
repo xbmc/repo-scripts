@@ -20,6 +20,10 @@ msgctxt "#32016"
 msgid "Advanced"
 msgstr "Nâng ca"
 
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Chơi tất"
+
 msgctxt "#32102"
 msgid "Info"
 msgstr "Thông tin"
@@ -27,3 +31,7 @@ msgstr "Thông tin"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Video clip"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Tình tiết"

@@ -31,7 +31,7 @@
 			<posx>470</posx>
 			<posy>240</posy>
 			<width>340</width>
-			<height>230</height>
+			<height>270</height>
 			<align>center</align>
 			<texture border="20,19,20,0">ContentPanel.png</texture>
 		</control>
@@ -40,7 +40,7 @@
 			<posx>490</posx>
 			<posy>240</posy>
 			<width>300</width>
-			<height>230</height>
+			<height>270</height>
 			<onleft>9000</onleft>
 			<onright>9000</onright>
 			<onup>9000</onup>
@@ -106,6 +106,18 @@
 				<pulseonselect>no</pulseonselect>
 				<font>font13</font>
 				<label>$ADDON[script.videoextras 32108]</label>
+			</control>
+			<control type="button" id="44">
+				<description>Edit plot</description>
+				<width>300</width>
+				<height>40</height>
+				<textcolor>FF999999</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32114]</label>
 			</control>
 		</control>
 	</controls>

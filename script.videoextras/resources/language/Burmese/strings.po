@@ -16,6 +16,10 @@ msgstr ""
 "Language: my\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32008"
+msgid "Information"
+msgstr "အချက်အလက်"
+
 msgctxt "#32009"
 msgid "Home"
 msgstr "ပင်မ"
@@ -28,6 +32,10 @@ msgctxt "#32016"
 msgid "Advanced"
 msgstr "အဆင့်မြင့်သော"
 
+msgctxt "#32021"
+msgid "Database"
+msgstr "Database"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "အားလုံးဖွင့်မည်"
@@ -36,6 +44,26 @@ msgctxt "#32102"
 msgid "Info"
 msgstr "အချက်အလက်များ"
 
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "အစကနေစမည်"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "ကြည့်ပြီးပြီဟု သတ်မှတ်မည်"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "မကြည့်ရသေးဟုသတ်မှတ်မည်"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "ခေါင်းစဉ်ကိုပြင်ဆင်မည်"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "ရုပ်ရှင်များ"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "ဇာတ်လမ်း"

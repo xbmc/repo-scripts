@@ -52,6 +52,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Hasi hasieratik"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Markatu ikusita"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Markatu ikusi gabe"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Aldatu titulua"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmak"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Argumentua"

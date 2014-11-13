@@ -20,6 +20,18 @@ msgctxt "#32001"
 msgid "Extras"
 msgstr "Extra"
 
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Názov priečinka Extra"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Hľadať v podpriečinkoch"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Výber videa"
+
 msgctxt "#32008"
 msgid "Information"
 msgstr "Informácie"
@@ -60,6 +72,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Začať od začiatku"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Označiť ako videné"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Označiť ako nevidené"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Upraviť titul"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmy"
@@ -67,3 +91,7 @@ msgstr "Filmy"
 msgctxt "#32111"
 msgid "TV Shows"
 msgstr "Seriály"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Obsah"

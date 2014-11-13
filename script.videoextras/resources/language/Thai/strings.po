@@ -32,6 +32,10 @@ msgctxt "#32013"
 msgid "Path"
 msgstr "เส้นทาง"
 
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "ขั้นสูง"
+
 msgctxt "#32019"
 msgid "Debugging"
 msgstr "แก้จุดบกพร่อง"
@@ -56,6 +60,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "เริ่มจากจุดเริ่มต้น"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "ทำว่าดูแล้ว"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "ทำว่ายังไม่ได้ดู"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "แก้ไขชื่อเรื่อง"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "ภาพยนตร์"
@@ -63,3 +79,7 @@ msgstr "ภาพยนตร์"
 msgctxt "#32111"
 msgid "TV Shows"
 msgstr "รายการทีวี"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "เรื่องย่อ"

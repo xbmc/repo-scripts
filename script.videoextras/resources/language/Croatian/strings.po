@@ -25,8 +25,8 @@ msgid "Provides a way to add Video Extras to your Video library. Look at the wik
 msgstr "Pruža vam način dodavanja video dodataka u vašu videoteku. Potražite na wiki stranicama informacije za podešavanje."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
-msgstr "Autori presvlaka, pogledajte wiki kako bi saznali kako dodatak integrirati u vašu presvlaku: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Autori presvlaka, pogledajte wiki kako bi saznali kako dodatak integrirati u vašu presvlaku: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -183,3 +183,7 @@ msgstr "TV serije"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Glazbeni spotovi"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Radnja"

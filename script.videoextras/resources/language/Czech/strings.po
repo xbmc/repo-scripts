@@ -60,6 +60,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Začít od začátku"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Označit jako zhlédnuté"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Označit jako nezhlédnuté"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Upravit název"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmy"
@@ -71,3 +83,7 @@ msgstr "Seriály"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Hudební videa"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Děj"

@@ -60,6 +60,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Пачаць спачатку"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Пазначыць як прагледжанае"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Пазначыць як непрагледжанае"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Рэдагаваць загаловак"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Фільмы"
@@ -71,3 +83,7 @@ msgstr "ТЫ шоў"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Music Videos"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

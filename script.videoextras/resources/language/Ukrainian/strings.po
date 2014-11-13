@@ -56,6 +56,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Почати з початку"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Відміт. як переглянуте"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Відміт. як непереглянуте"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Змінити назву"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Фільми"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Сюжет"

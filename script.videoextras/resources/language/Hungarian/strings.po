@@ -25,8 +25,8 @@ msgid "Provides a way to add Video Extras to your Video library. Look at the wik
 msgstr "Biztosítja a lehetőséget hogy Extrákat adjon hozzá a Videó Médiatárához. Nézze meg a wiki-t a telepítés beállításához."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
-msgstr "A felszínkészítők keressék fel a wikit a funkciók implementálásához: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "A felszínkészítők keressék fel a wikit a funkciók implementálásához: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -120,6 +120,10 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Műveletek"
 
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Adatbázis és gyorsítótár tisztítása"
+
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Részletes Listaképernyő használata"
@@ -187,3 +191,7 @@ msgstr "Sorozatok"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Videóklipek"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Ismertetö"

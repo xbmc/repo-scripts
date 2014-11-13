@@ -25,8 +25,8 @@ msgid "Provides a way to add Video Extras to your Video library. Look at the wik
 msgstr "Proporciona una manera d'afegir vídeo extres a la seva biblioteca de vídeo. Mira el wiki per instruccions d'instal·lació."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
-msgstr "Skinner, si us plau, consulteu el wiki per saber com integrar-lo en la vostra pell: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skinner, si us plau, consulteu el wiki per saber com integrar-lo en la vostra pell: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -148,6 +148,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Comença des del principi"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marca com a visualitzat"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marca com a no visualitzat"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Edita el títol"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Pel·lícules"
@@ -155,3 +167,7 @@ msgstr "Pel·lícules"
 msgctxt "#32111"
 msgid "TV Shows"
 msgstr "Sèries de TV"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Trama"

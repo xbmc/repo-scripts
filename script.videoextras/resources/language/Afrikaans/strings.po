@@ -60,6 +60,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Begin van begin af"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Merk as gekyk"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Merk as ongekyk"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Redigeer titel"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Flieks"
@@ -67,3 +79,7 @@ msgstr "Flieks"
 msgctxt "#32111"
 msgid "TV Shows"
 msgstr "TV Programme"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

@@ -36,9 +36,37 @@ msgctxt "#32016"
 msgid "Advanced"
 msgstr "Advanced"
 
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Database"
+
 msgctxt "#32102"
 msgid "Info"
 msgstr "Info"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Start from beginning"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Mark as watched"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Mark as unwatched"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Edit title"
 
 msgctxt "#32110"
 msgid "Movies"
@@ -47,3 +75,7 @@ msgstr "Movies"
 msgctxt "#32111"
 msgid "TV Shows"
 msgstr "TV Shows"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

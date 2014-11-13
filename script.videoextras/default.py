@@ -409,6 +409,26 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
                         else:
                             self.onInit()
 
+            if contextWindow.isEditPlot():
+                # Prompt the user for the new plot description
+                keyboard = xbmc.Keyboard()
+                keyboard.setDefault(extraItem.getPlot())
+                keyboard.doModal()
+
+                if keyboard.isConfirmed():
+                    try:
+                        newplot = keyboard.getText().decode("utf-8")
+                    except:
+                        newplot = keyboard.getText()
+
+                    # Only set the plot if it has changed
+                    if (newplot != extraItem.getPlot()) and ((len(newplot) > 0) or (extraItem.getPlot() is not None)):
+                        result = extraItem.setPlot(newplot, isTV=SourceDetails.isTv())
+                        if not result:
+                            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32115))
+                        else:
+                            self.onInit()
+
     def onClick(self, control):
         WINDOW_LIST_ID = 51
         # Check to make sure that this click was for the extras list
@@ -474,6 +494,7 @@ class VideoExtrasContextMenu(xbmcgui.WindowXMLDialog):
     MARK_WATCHED = 41
     MARK_UNWATCHED = 42
     EDIT_TITLE = 43
+    EDIT_PLOT = 44
 
     def __init__(self, *args, **kwargs):
         # Copy off the key-word arguments
@@ -502,7 +523,7 @@ class VideoExtrasContextMenu(xbmcgui.WindowXMLDialog):
         # Save the item that was clicked
         self.selectionMade = control
         # If not resume or restart - we just want to exit without playing
-        if not (self.isResume() or self.isRestart() or self.isMarkWatched() or self.isMarkUnwatched() or self.isEditTitle()):
+        if not (self.isResume() or self.isRestart() or self.isMarkWatched() or self.isMarkUnwatched() or self.isEditTitle() or self.isEditPlot()):
             self.selectionMade = VideoExtrasContextMenu.EXIT
         # Close the dialog after the selection
         self.close()
@@ -525,6 +546,9 @@ class VideoExtrasContextMenu(xbmcgui.WindowXMLDialog):
     def isEditTitle(self):
         return self.selectionMade == VideoExtrasContextMenu.EDIT_TITLE
 
+    def isEditPlot(self):
+        return self.selectionMade == VideoExtrasContextMenu.EDIT_PLOT
+
 
 #########################
 # Main
@@ -535,29 +559,34 @@ if __name__ == '__main__':
             # get the type of operation
             log("Operation = %s" % sys.argv[1])
 
-            # Load the details of the current source of the extras
-            SourceDetails.forceLoadDetails()
-
-            # Make sure we are not passed a plugin path
-            if "plugin://" in sys.argv[2]:
-                if sys.argv[1] == "check":
-                    xbmcgui.Window(12003).setProperty("HideVideoExtrasButton", "true")
+            # Check to make sure that there was actually some data in the second argument
+            # it's possible that a skin has sent us an empty string
+            if (sys.argv[2] is None) or (len(sys.argv[2]) < 1):
+                log("VideoExtras: Called with empty final argument", xbmc.LOGERROR)
             else:
-                # Create the extras class that deals with any extras request
-                videoExtras = VideoExtras(sys.argv[2])
+                # Load the details of the current source of the extras
+                SourceDetails.forceLoadDetails()
 
-                # We are either running the command or just checking for existence
-                if sys.argv[1] == "check":
-                    videoExtras.checkButtonEnabled()
+                # Make sure we are not passed a plugin path
+                if "plugin://" in sys.argv[2]:
+                    if sys.argv[1] == "check":
+                        xbmcgui.Window(12003).setProperty("HideVideoExtrasButton", "true")
                 else:
-                    # Check if the use database setting is enabled
-                    extrasDb = None
-                    if Settings.isDatabaseEnabled():
-                        extrasDb = ExtrasDB()
-                    # Perform the search command
-                    files = videoExtras.findExtras(extrasDb=extrasDb, defaultFanArt=SourceDetails.getFanArt())
-                    # need to display the extras
-                    videoExtras.run(files)
+                    # Create the extras class that deals with any extras request
+                    videoExtras = VideoExtras(sys.argv[2])
+
+                    # We are either running the command or just checking for existence
+                    if sys.argv[1] == "check":
+                        videoExtras.checkButtonEnabled()
+                    else:
+                        # Check if the use database setting is enabled
+                        extrasDb = None
+                        if Settings.isDatabaseEnabled():
+                            extrasDb = ExtrasDB()
+                        # Perform the search command
+                        files = videoExtras.findExtras(extrasDb=extrasDb, defaultFanArt=SourceDetails.getFanArt())
+                        # need to display the extras
+                        videoExtras.run(files)
         else:
             # Close any open dialogs
             xbmc.executebuiltin("Dialog.Close(all, true)", True)

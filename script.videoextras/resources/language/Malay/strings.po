@@ -55,3 +55,7 @@ msgstr "Rancangan TV"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Video Muzik"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

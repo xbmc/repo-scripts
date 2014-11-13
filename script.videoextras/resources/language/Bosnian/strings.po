@@ -16,6 +16,10 @@ msgstr ""
 "Language: bs\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informacija"
+
 msgctxt "#32009"
 msgid "Home"
 msgstr "Početna strana"
@@ -40,6 +44,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Počni ispočetka"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Obilježi kao odgledano"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Obilježi kao neodgledano"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Uredi naslov"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmovi"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Opis"

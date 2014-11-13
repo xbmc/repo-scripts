@@ -48,6 +48,14 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "ከመጀመሪያው ማስጀመሪያ "
 
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "አርእስት ማረሚያ"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "ሙቪዎች"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "መረጃ"

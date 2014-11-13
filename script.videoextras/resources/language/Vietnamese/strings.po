@@ -16,6 +16,10 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32008"
+msgid "Information"
+msgstr "Thông tin"
+
 msgctxt "#32009"
 msgid "Home"
 msgstr "Màn hình chính"
@@ -48,6 +52,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Bắt đầu lại từ đầu"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Đánh dấu đã xem"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Đánh dấu chưa xem"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Sửa tựa đề"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Phim"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Cốt truyện"

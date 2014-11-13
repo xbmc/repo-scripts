@@ -60,6 +60,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Alusta algusest"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Märgi vaadatuks"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Märgi mitte vaadatuks"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Muuda pealkirja"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmid"
@@ -67,3 +79,7 @@ msgstr "Filmid"
 msgctxt "#32111"
 msgid "TV Shows"
 msgstr "Seriaalid"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Sisu"

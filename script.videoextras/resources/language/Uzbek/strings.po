@@ -16,6 +16,10 @@ msgstr ""
 "Language: uz\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32009"
+msgid "Home"
+msgstr "Boshlash"
+
 msgctxt "#32013"
 msgid "Path"
 msgstr "Yo'l"
@@ -32,6 +36,18 @@ msgctxt "#32102"
 msgid "Info"
 msgstr "Ma'lumot"
 
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Boshidan boshlash"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Sarlavhani o'zgartirish"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmlar"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Fabula"

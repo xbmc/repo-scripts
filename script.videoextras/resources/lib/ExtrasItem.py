@@ -26,6 +26,7 @@ from settings import Settings
 from settings import log
 from settings import os_path_join
 from settings import os_path_split
+from settings import dir_exists
 
 from VideoParser import VideoParser
 
@@ -93,13 +94,13 @@ class BaseExtrasItem():
         # If that is the case, we will only support it being a DVD Directory Image
         # So check to see if the expected file is set
         videoTSDir = os_path_join(self.filename, 'VIDEO_TS')
-        if xbmcvfs.exists(videoTSDir):
+        if dir_exists(videoTSDir):
             ifoFile = os_path_join(videoTSDir, 'VIDEO_TS.IFO')
             if xbmcvfs.exists(ifoFile):
                 return ifoFile
         # Also check for BluRay
         videoBluRayDir = os_path_join(self.filename, 'BDMV')
-        if xbmcvfs.exists(videoBluRayDir):
+        if dir_exists(videoBluRayDir):
             dbmvFile = os_path_join(videoBluRayDir, 'index.bdmv')
             if xbmcvfs.exists(dbmvFile):
                 return dbmvFile
@@ -459,6 +460,83 @@ class BaseExtrasItem():
                 sorttitleElement.text = newTitle
 
             # Save the file back to the filesystem
+            newNfoContent = ET.tostring(nfoXml.getroot(), encoding="UTF-8")
+            del nfoXml
+
+            nfoFile = xbmcvfs.File(nfoFileName, 'w')
+            try:
+                nfoFile.write(newNfoContent)
+            except:
+                log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
+                log("BaseExtrasItem: %s" % traceback.format_exc())
+                # Make sure we close the file handle
+                nfoFile.close()
+                # If there was no file before, make sure we delete and partial file
+                if newNfoRequired:
+                    xbmcvfs.delete(nfoFileName)
+                return False
+            nfoFile.close()
+
+        except:
+            log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
+            log("BaseExtrasItem: %s" % traceback.format_exc())
+            return False
+
+        return True
+
+    # Sets the title for a given extras file
+    def setPlot(self, newPlot, isTV=False):
+        log("BaseExtrasItem: Setting plot to %s" % newPlot)
+        self.plot = newPlot
+
+        # Find out the name of the NFO file
+        nfoFileName = os.path.splitext(self.filename)[0] + ".nfo"
+
+        log("BaseExtrasItem: Searching for NFO file: %s" % nfoFileName)
+
+        try:
+            nfoFileStr = None
+            newNfoRequired = False
+
+            if xbmcvfs.exists(nfoFileName):
+                # Need to first load the contents of the NFO file into
+                # a string, this is because the XML File Parse option will
+                # not handle formats like smb://
+                nfoFile = xbmcvfs.File(nfoFileName, 'r')
+                nfoFileStr = nfoFile.read()
+                nfoFile.close()
+
+            # Check to ensure we have some NFO data
+            if (nfoFileStr is None) or (nfoFileStr == ""):
+                # Create a default NFO File
+                # Need to create a new file if one does not exist
+                log("BaseExtrasItem: No NFO file found, creating new one: %s" % nfoFileName)
+                tagType = 'movie'
+                if isTV:
+                    tagType = 'tvshow'
+
+                nfoFileStr = ("<%s>\n    <plot> </plot>\n</%s>\n" % (tagType, tagType))
+                newNfoRequired = True
+
+            # Create an XML parser
+            try:
+                nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr))
+            except:
+                log("BaseExtrasItem: Trying encoding to UTF-8 with ignore")
+                nfoXml = ET.ElementTree(ET.fromstring(nfoFileStr.decode("UTF-8", 'ignore')))
+
+            # Get the plot element
+            plotElement = nfoXml.find('plot')
+
+            # Make sure the title exists in the file
+            if plotElement is None:
+                log("BaseExtrasItem: plot element not found")
+                return False
+
+            # Set the plot to the new value
+            plotElement.text = newPlot
+
+            # Save the file back to the file-system
             newNfoContent = ET.tostring(nfoXml.getroot(), encoding="UTF-8")
             del nfoXml
 

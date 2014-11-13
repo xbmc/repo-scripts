@@ -56,6 +56,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "最初から再生"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "視聴済みにする"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "未視聴にする"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "タイトルを編集"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "ムービー"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "ストーリー"

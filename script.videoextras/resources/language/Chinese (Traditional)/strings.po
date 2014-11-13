@@ -56,6 +56,18 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "從頭開始播放"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "標記成已看過"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "標記成未看過"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "編輯標題"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "影片"
@@ -63,3 +75,7 @@ msgstr "影片"
 msgctxt "#32111"
 msgid "TV Shows"
 msgstr "電視劇"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "簡介"

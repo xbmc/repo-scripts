@@ -33,6 +33,7 @@ sys.path.append(__lib__)
 from settings import Settings
 from settings import log
 from settings import os_path_join
+from settings import dir_exists
 
 # Load the database interface
 from database import ExtrasDB
@@ -156,7 +157,7 @@ class MenuNavigator():
         if Settings.isServiceEnabled():
             # Get the path where the file exists
             rootPath = os_path_join(__profile__, target)
-            if not xbmcvfs.exists(rootPath):
+            if not dir_exists(rootPath):
                 # Directory does not exist yet, so can't have extras
                 return False
 
@@ -353,6 +354,38 @@ class MenuNavigator():
                             # Update the display
                             xbmc.executebuiltin("Container.Refresh")
 
+    def editPlot(self, target, path, filename):
+        # Create the extras class that will be used to process the extras
+        videoExtras = VideoExtrasBase(path, target)
+
+        # Perform the search command
+        # We are only updating the NFO for an entry already shown, no need for fanart
+        files = videoExtras.findExtras()
+        for anExtra in files:
+            if anExtra.isFilenameMatch(filename):
+                log("MenuNavigator: Found  = %s" % filename)
+
+                # Prompt the user for the new name
+                keyboard = xbmc.Keyboard()
+                keyboard.setDefault(anExtra.getPlot())
+                keyboard.doModal()
+
+                if keyboard.isConfirmed():
+                    try:
+                        newplot = keyboard.getText().decode("utf-8")
+                    except:
+                        newplot = keyboard.getText()
+
+                    # Only set the title if it has changed
+                    if (newplot != anExtra.getPlot()) and ((len(newplot) > 0) or (anExtra.getPlot() is not None)):
+                        isTv = (target == MenuNavigator.TVSHOWS)
+                        result = anExtra.setPlot(newplot, isTV=isTv)
+                        if not result:
+                            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32115))
+                        else:
+                            # Update the display
+                            xbmc.executebuiltin("Container.Refresh")
+
     def _getContextMenu(self, extraItem, target, path, extrasParentTitle):
         ctxtMenu = []
         # Resume
@@ -377,6 +410,10 @@ class MenuNavigator():
         # Edit Title
         cmd = self._build_url({'mode': 'edittitle', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
         ctxtMenu.append((__addon__.getLocalizedString(32108), 'XBMC.RunPlugin(%s)' % cmd))
+
+        # Edit Plot
+        cmd = self._build_url({'mode': 'editplot', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
+        ctxtMenu.append((__addon__.getLocalizedString(32114), 'XBMC.RunPlugin(%s)' % cmd))
 
         return ctxtMenu
 
@@ -556,3 +593,18 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.editTitle(foldername[0], path[0], filename[0])
+
+    elif mode[0] == 'editplot':
+        log("VideoExtrasPlugin: Mode is EDIT PLOT")
+
+        # Get the actual path that was navigated to
+        path = args.get('path', None)
+        filename = args.get('filename', None)
+        foldername = args.get('foldername', None)
+
+        if (path is not None) and (len(path) > 0) and (filename is not None) and (len(filename) > 0) and (foldername is not None) and (len(foldername) > 0):
+            log("VideoExtrasPlugin: Path to play extras for %s" % path[0])
+            log("VideoExtrasPlugin: Extras file to play %s" % filename[0])
+
+            menuNav = MenuNavigator(base_url, addon_handle)
+            menuNav.editPlot(foldername[0], path[0], filename[0])

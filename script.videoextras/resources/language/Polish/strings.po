@@ -25,8 +25,8 @@ msgid "Provides a way to add Video Extras to your Video library. Look at the wik
 msgstr "Pozwala dodać Wideo Dodatki do biblioteki wideo. Zapoznaj się z wiki w celu poprawnej konfiguracji. "
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
-msgstr "Twórcy skórek zapoznajcie się z wiki by wiedzieć w jaki sposób zintegrować swoje skóry: http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Twórcy skórek zapoznajcie się z wiki by wiedzieć w jaki sposób zintegrować swoje skóry: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -74,7 +74,7 @@ msgstr "Zdalna Lokalizacja Dodatków"
 
 msgctxt "#32012"
 msgid "Use Custom Extras Location"
-msgstr "Używaj zdefiniowanej lokalizacji dodatków"
+msgstr "Używaj niestandardowej lokalizacji dodatków"
 
 msgctxt "#32013"
 msgid "Path"
@@ -82,11 +82,11 @@ msgstr "Ścieżka"
 
 msgctxt "#32014"
 msgid "Custom Movies Sub-Folder"
-msgstr "Zdefiniowany podfolder filmów"
+msgstr "Niestandardowy podfolder filmów"
 
 msgctxt "#32015"
 msgid "Custom TV Shows Sub-Folder"
-msgstr "Zdefiniowany podfolder seriali"
+msgstr "Niestandardowy podfolder seriali"
 
 msgctxt "#32016"
 msgid "Advanced"
@@ -120,6 +120,10 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Działania"
 
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Wyczyść bazę danych i pamięć podręczną"
+
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Wyświetl Szczegółowy Ekran Listy "
@@ -138,7 +142,7 @@ msgstr "Przeglądaj dodatki"
 
 msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
-msgstr "Własny podfolder teledysków"
+msgstr "Niestandardowy fodfolder teledysków"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -187,3 +191,7 @@ msgstr "Seriale"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Teledyski"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Info"

@@ -52,6 +52,22 @@ msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Memulai dari awal"
 
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Tandai Telah Ditonton"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Tandai Belum Ditonton"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Edit Judul"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Film"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Alur"

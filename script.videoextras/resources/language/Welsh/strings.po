@@ -16,13 +16,33 @@ msgstr ""
 "Language: cy\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;\n"
 
+msgctxt "#32008"
+msgid "Information"
+msgstr "Gwybodaeth"
+
 msgctxt "#32009"
 msgid "Home"
 msgstr "Cartref"
 
+msgctxt "#32013"
+msgid "Path"
+msgstr "Llwybr"
+
 msgctxt "#32016"
 msgid "Advanced"
 msgstr "Uwch"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Dadfygio"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Galluogi cofnodi dadfygio"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Cronfa Ddata"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -31,3 +51,27 @@ msgstr "Chwarae Popeth"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Gwybodaeth"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Cychwyn o'r cychwyn"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Nodi wedi Gwylio"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Nodi heb eu Gwylio"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Golygu teitl"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Ffilmiau"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

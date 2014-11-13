@@ -111,3 +111,7 @@ msgstr "TV Serier"
 msgctxt "#32112"
 msgid "Music Videos"
 msgstr "Musikk videoer"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Handling"
