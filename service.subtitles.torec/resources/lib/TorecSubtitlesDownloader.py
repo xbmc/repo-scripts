@@ -51,7 +51,8 @@ class SubtitlePage(object):
     def _parseOptions(self, data):
         subtitleSoup = bs4.BeautifulSoup(data)
         subtitleOptions = subtitleSoup("div", {'class' : 'download_box' })[0].findAll("option")
-        return map(lambda x: SubtitleOption(x.string.strip(), x["value"]), subtitleOptions)
+        filteredSubtitleOptions = filter(lambda x: x.has_key("value"), subtitleOptions)
+        return map(lambda x: SubtitleOption(x.string.strip(), x["value"]), filteredSubtitleOptions)
         
 class Response(object):
     def __init__(self, response):
