@@ -1,3 +1,6 @@
+1.0.4
+- fixed an issue where files from prevoius downloads were used instead of the current download
+
 1.0.3
 - fixed an issue where no number of files were given on subscene results page
 
