@@ -25,8 +25,8 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Мелодиите се свалят от www.televisiontunes.com и се запаметява в папките на видео файловете като [0-9].mp3. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"

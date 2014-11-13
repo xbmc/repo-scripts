@@ -25,8 +25,8 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "TVTunes est équipé de fonctions puissantes qui permettent l'obtention, l'organisation et la lecture de thèmes tout en parcourant votre vidéothèque, lorsque utilisé en conjonction avec un habillage compatible."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"

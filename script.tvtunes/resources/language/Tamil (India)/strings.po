@@ -16,6 +16,10 @@ msgstr ""
 "Language: ta_IN\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32007"
+msgid "Path:"
+msgstr "பாதை:"
+
 msgctxt "#32018"
 msgid "Debugging"
 msgstr "வழுநீக்கு"
@@ -27,3 +31,11 @@ msgstr "பிழைநீக்கு பதிவை செயல்படு�
 msgctxt "#32201"
 msgid "Movies"
 msgstr "திரைப்படங்கள்"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "பின்னணி"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "பதிவிறக்கு"

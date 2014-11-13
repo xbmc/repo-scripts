@@ -25,8 +25,8 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Aquest script t'ajudarà a cercar la banda sonora de les teves pel·lícules i sèries de televisió en www.televisiontunes.com Les guardarà en un fitxer theme[0-9].mp3 a la carpeta dels vídeos i seran reproduïdes mentre navegues per la teva col·lecció de vídeos, quant entris a la carpeta d'una sèrie o a la pantalla d'informació de vídeo. (Necessites una pell compatible per a aquesta funcionalitat)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"

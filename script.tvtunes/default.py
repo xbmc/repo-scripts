@@ -22,6 +22,9 @@ sys.path.append(__lib__)
 from settings import Settings
 from settings import log
 
+from scraper import TvTunesScraper
+from backend import runBackend
+
 
 #########################
 # Main
@@ -42,10 +45,10 @@ if __name__ == '__main__':
     log("params %s" % params)
 
     if params.get("backend", False):
-        xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__resource__, "tvtunes_backend.py")))
+        runBackend()
 
     elif params.get("mode", False) == "solo":
-        xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__resource__, "tvtunes_scraper.py")))
+        TvTunesScraper()
 
     else:
         # Close any open dialogs

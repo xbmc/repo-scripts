@@ -25,8 +25,8 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Ova skripta će vam pomoći u nabavi glazbene teme za vašu zbirku filmova i TV serija sa www.televisiontunes.com spremiti će ih u theme[0-9].mp3 datoteku u svakoj mapi vaših filmova i TV serija. Zatim će se reproducirati tijekom pregleda zbirke vaše TV serije ili prikaza video informacija (vaša presvlaka mora biti kompatibilna sa ovom značajkom)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"

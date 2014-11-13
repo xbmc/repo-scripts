@@ -1,28 +1,16 @@
 # -*- coding: utf-8 -*-
-import os
 import threading
 import time
 import traceback
 import xbmc
 import xbmcgui
 import sys
-import xbmcaddon
 
 # Add JSON support for queries
 if sys.version_info < (2, 7):
     import simplejson
 else:
     import json as simplejson
-
-
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__addonid__ = __addon__.getAddonInfo('id')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
 
 # Import the common settings
 from settings import Settings
@@ -771,23 +759,22 @@ class TunesBackend():
 #########################
 # Main
 #########################
+def runBackend():
+    # Make sure that we are not already running on another thread
+    # we do not want two running at the same time
+    if TvTunesStatus.isOkToRun():
+        # Check if the video info button should be hidden, we do this here as this will be
+        # called when the video info screen is loaded, it can then be read by the skin
+        # when it comes to draw the button
+        if Settings.hideVideoInfoButton():
+            xbmcgui.Window(12003).setProperty("TvTunes_HideVideoInfoButton", "true")
+        else:
+            xbmcgui.Window(12003).clearProperty("TvTunes_HideVideoInfoButton")
 
+        # Create the main class to control the theme playing
+        main = TunesBackend()
 
-# Make sure that we are not already running on another thread
-# we do not want two running at the same time
-if TvTunesStatus.isOkToRun():
-    # Check if the video info button should be hidden, we do this here as this will be
-    # called when the video info screen is loaded, it can then be read by the skin
-    # when it comes to draw the button
-    if Settings.hideVideoInfoButton():
-        xbmcgui.Window(12003).setProperty("TvTunes_HideVideoInfoButton", "true")
+        # Start the themes running
+        main.run()
     else:
-        xbmcgui.Window(12003).clearProperty("TvTunes_HideVideoInfoButton")
-
-    # Create the main class to control the theme playing
-    main = TunesBackend()
-
-    # Start the themes running
-    main.run()
-else:
-    log("TvTunes Already Running")
+        log("TvTunes Already Running")

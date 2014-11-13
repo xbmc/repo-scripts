@@ -16,9 +16,21 @@ msgstr ""
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Nama Pengguna:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Kata Kunci:"
+
 msgctxt "#32007"
 msgid "Path:"
 msgstr "Path:"
+
+msgctxt "#32012"
+msgid "File Types"
+msgstr "Tipe Berkas"
 
 msgctxt "#32018"
 msgid "Debugging"
@@ -27,6 +39,18 @@ msgstr "Debugging"
 msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Mendeteksi  Nilai HDD"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Nama Direktori"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "KESALAHAN"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "BATAL"
 
 msgctxt "#32201"
 msgid "Movies"
@@ -39,3 +63,7 @@ msgstr "Playback"
 msgctxt "#32992"
 msgid "Download"
 msgstr "Mengunduh"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Sistem berkas"

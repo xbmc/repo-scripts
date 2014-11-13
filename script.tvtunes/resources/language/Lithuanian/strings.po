@@ -25,8 +25,8 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Šis skriptas jums padės temas jūsų filmų ir tv laidų temas iš www.televisiontunes.com. Jos bus išsaugotos theme[0-9].mp3 faile, kiekviename jūsų vaizdo aplanke ir bus atkurtos, naršant vaizdo bibliotekoje, pasirinkus TV laidos aplanką arba vaizdo informacijos langą (teminė išvaizda turi būti suderinama su šia funkcija)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Teminių išvaizdų kūrėjai, prašau aplankykite wiki puslapį, norėdami sužinoti kaip integruoti tai į jūsų teminę išvaizdą: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Teminių išvaizdų kūrėjai, prašau aplankykite wiki puslapį, norėdami sužinoti kaip integruoti tai į jūsų teminę išvaizdą: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"

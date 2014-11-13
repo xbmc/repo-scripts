@@ -1,3 +1,8 @@
+v4.5.0
+- Update to BeautifulSoup 4
+- Update directory existence check for Helix
+- Stop using RunScript when launching TV Tunes Backend and Scraper
+
 v4.4.9
 - Fix issue with searching for themes with no progress dialog
 - Fix issues with directories with a full stop near the end

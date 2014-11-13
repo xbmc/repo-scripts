@@ -25,7 +25,7 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Αυτό το script θα σας βοηθήσει να κατεβάσετε μουσικά θέματα των τηλεοπτικών σας σειρών από το www.televisiontunes.com, θα τα αποθηκεύει σε αρχεία μορφής theme.mp3 στο φάκελο της εκάστοτε σειράς, και θα τα αναπαράγει κατά την περιήγησή σας στη συλλογή τηλ. σειρών σας (απαιτείται να υποστηρίζεται από το κέλυφός σας)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 msgstr "Skinners, ελέγξτε το αρχείο καταγραφής changelog.txt για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας"
 
 msgctxt "#32001"

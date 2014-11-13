@@ -25,8 +25,8 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Dieses Skript wird dir helfen, die Titelsongs deiner Filme und TV-Sendungen von www.televisiontunes.com zu holen und diese in als theme[0-9].mp3 in deinen Video Ordnern zu speichern. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Skin-Ersteller, bitte schaut ins wiki um zu wissen, wie ihr es in euren Skin integriert: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Skin-Ersteller, bitte schaut ins wiki um zu wissen, wie ihr es in euren Skin integriert: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"

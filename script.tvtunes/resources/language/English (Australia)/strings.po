@@ -16,6 +16,18 @@ msgstr ""
 "Language: en_AU\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Path:"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Movies"
@@ -23,6 +35,10 @@ msgstr "Movies"
 msgctxt "#32202"
 msgid "TV Shows"
 msgstr "TV Shows"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Playback"
 
 msgctxt "#32992"
 msgid "Download"

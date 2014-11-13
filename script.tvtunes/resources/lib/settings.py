@@ -86,6 +86,19 @@ def list_dir(dirpath):
     return xbmcvfs.listdir(dirpath)
 
 
+# Checks if a directory exists (Do not use for files)
+def dir_exists(dirpath):
+    directoryPath = dirpath
+    # The xbmcvfs exists interface require that directories end in a slash
+    # It used to be OK not to have the slash in Gotham, but it is now required
+    if (not directoryPath.endswith("/")) and (not directoryPath.endswith("\\")):
+        dirSep = "/"
+        if "\\" in directoryPath:
+            dirSep = "\\"
+        directoryPath = "%s%s" % (directoryPath, dirSep)
+    return xbmcvfs.exists(directoryPath)
+
+
 ##############################
 # Stores Various Settings
 ##############################

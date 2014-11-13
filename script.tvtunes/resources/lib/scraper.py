@@ -1,23 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
 import re
 import xbmc
-import xbmcaddon
 import xbmcgui
-import xbmcvfs
-
-
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__addonid__ = __addon__.getAddonInfo('id')
-__language__ = __addon__.getLocalizedString
-__icon__ = __addon__.getAddonInfo('icon')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
+import xbmcaddon
 
 # Import the common settings
 from settings import Settings
@@ -26,8 +12,11 @@ from settings import os_path_join
 from settings import os_path_split
 from settings import list_dir
 from settings import normalize_string
+from settings import dir_exists
 
 from themeFetcher import TvTunesFetcher
+
+__addon__ = xbmcaddon.Addon(id='script.tvtunes')
 
 
 ###############################################################
@@ -71,7 +60,7 @@ class TvTunesScraper:
             # Check if a theme already exists
             if self._doesThemeExist(videoItem[1]):
                 # Prompt the user to see if we should overwrite the theme
-                if not xbmcgui.Dialog().yesno(__language__(32103), __language__(32104)):
+                if not xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32103), __addon__.getLocalizedString(32104)):
                     # No not want to overwrite, so quit
                     log("TvTunesScraper: %s already exists" % (os_path_join(videoItem[1], "theme.*")))
                     return
@@ -153,7 +142,7 @@ class TvTunesScraper:
         if Settings.isThemeDirEnabled():
             themeDir = os_path_join(directory, Settings.getThemeDirectory())
             # Check if this directory exists
-            if not xbmcvfs.exists(themeDir):
+            if not dir_exists(themeDir):
                 workingPath = directory
                 # If the path currently ends in the directory separator
                 # then we need to clear an extra one
@@ -167,7 +156,7 @@ class TvTunesScraper:
             directory = themeDir
 
         # check if the directory exists before searching
-        if xbmcvfs.exists(directory):
+        if dir_exists(directory):
             # Generate the regex
             themeFileRegEx = Settings.getThemeFileRegEx()
 
@@ -178,7 +167,3 @@ class TvTunesScraper:
                     log("doesThemeExist: Found match: " + aFile)
                     return True
         return False
-
-
-if __name__ == "__main__":
-    TvTunesScraper()

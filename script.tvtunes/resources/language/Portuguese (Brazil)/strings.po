@@ -25,7 +25,7 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Este script ajudará você a obter o tema da sua coleção de séries de TV de www.televisiontunes.com, que serão salvos em um arquivo theme.mp3 em cada uma das pastas de suas séries e serão reproduzidos sempre que você acessar uma série na sua coleção (a skin precisa ser compatível com este recurso)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 msgstr "Criadores de skins, por favor vejam o changelog.txt para aprender como integrá-lo à sua skin"
 
 msgctxt "#32001"

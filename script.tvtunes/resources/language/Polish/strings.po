@@ -25,8 +25,8 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Wtyczka TvTunes pozwala pobierać motywy muzyczne dla filmów i seriali z serwisu www.televisiontunes.com. Pobrane motywy zostaną zapisane do pliku o nazwie theme[0-9].mp3 w folderze pliku wideo. Motywy będą odtwarzane podczas przeglądania biblioteki, kiedy wejdziesz do katalogu serialu lub ekranu informacji wideo (niezbędna jest skóra wspierająca tę funkcję)."
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Twórcy skór, zapoznajcie się z wiki, by wiedzieć w jaki sposób zintegrować TvTunes ze swoją skórą: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Twórcy skór, zapoznajcie się z wiki, by wiedzieć w jaki sposób zintegrować TvTunes ze swoją skórą: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -50,7 +50,7 @@ msgstr "Hasło:"
 
 msgctxt "#32006"
 msgid "Store tunes in a custom path"
-msgstr "Przechowuj motywy w podanej lokacji"
+msgstr "Przechowuj motywy w podanej lokalizacji"
 
 msgctxt "#32007"
 msgid "Path:"

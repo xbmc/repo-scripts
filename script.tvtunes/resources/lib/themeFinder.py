@@ -8,7 +8,6 @@ import xbmc
 import xbmcgui
 import sys
 import xbmcvfs
-import xbmcaddon
 
 # Add JSON support for queries
 if sys.version_info < (2, 7):
@@ -16,21 +15,13 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
 from settings import Settings
 from settings import log
 from settings import os_path_join
 from settings import os_path_split
 from settings import list_dir
+from settings import dir_exists
 
 
 #############################################
@@ -419,7 +410,7 @@ class ThemeFiles():
         log("ThemeFiles: Searching %s for %s" % (directory, Settings.getThemeFileRegEx(directory, extensionOnly)), self.debug_logging_enabled)
 
         # check if the directory exists before searching
-        if xbmcvfs.exists(directory):
+        if dir_exists(directory):
             dirs, files = list_dir(directory)
             for aFile in files:
                 m = re.search(Settings.getThemeFileRegEx(directory, extensionOnly), aFile, re.IGNORECASE)

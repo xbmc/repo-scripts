@@ -25,7 +25,7 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Ce script vous aidera à télécharger vos génériques de série depuis www.televisiontunes.com Il les enregistrera dans un fichier theme.mp3 dans vos répertoires de série, ils seront ensuite joué lorsque vous entrerez dans la série correspondante (cette fonctionalité requiert une skin compatible)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 msgstr "Skinneurs, lisez le changelog.txt pour obtenir les infos pour l'intégrer à votre skin"
 
 msgctxt "#32001"

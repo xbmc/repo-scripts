@@ -36,6 +36,7 @@ from settings import os_path_join
 from settings import os_path_split
 from settings import list_dir
 from settings import normalize_string
+from settings import dir_exists
 
 from themeFetcher import TvTunesFetcher
 from themeFinder import ThemeFiles
@@ -199,7 +200,7 @@ class MenuNavigator():
         if Settings.isThemeDirEnabled():
             themeDir = os_path_join(directory, Settings.getThemeDirectory())
             # Check if this directory exists
-            if not xbmcvfs.exists(themeDir):
+            if not dir_exists(themeDir):
                 workingPath = directory
                 # If the path currently ends in the directory separator
                 # then we need to clear an extra one
@@ -217,7 +218,7 @@ class MenuNavigator():
             directory = os_path_split(directory)[0]
 
         # check if the directory exists before searching
-        if xbmcvfs.exists(directory):
+        if dir_exists(directory):
             # Generate the regex
             themeFileRegEx = Settings.getThemeFileRegEx()
 
@@ -343,7 +344,7 @@ class MenuNavigator():
                 log("fetchAllMissingThemes: Found match: %s" % srcpath)
                 targetpath = os_path_join(directory, Settings.getThemeDirectory())
                 # Make sure the theme directory exists
-                if not xbmcvfs.exists(targetpath):
+                if not dir_exists(targetpath):
                     try:
                         xbmcvfs.mkdir(targetpath)
                     except:

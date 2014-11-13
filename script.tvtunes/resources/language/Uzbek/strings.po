@@ -16,6 +16,14 @@ msgstr ""
 "Language: uz\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Yo'l:"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmlar"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Yuklab olish"

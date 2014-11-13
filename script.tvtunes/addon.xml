@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="4.4.9" provider-name="robwebset">
+<addon id="script.tvtunes" name="TvTunes" version="4.5.0" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
-		<import addon="script.module.simplejson" version="2.0.10"/>
-		<import addon="script.module.beautifulsoup" version="3.2.1"/> 
-		<import addon="script.module.requests" version="1.1.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/> 
+		<import addon="script.module.requests" version="2.3.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
 		<provides>executable</provides>
@@ -104,45 +104,45 @@
 	
 		<description lang="sv">Detta skript hjälper dig att hitta teman till ditt tv-seriebibliotek från www.televisiontunes.com som sparas i theme.mp3 filer i varje tv-seriemapp som sedan spelas när du öppnar tv-seriemappen (ditt skal måste vara kompatibelt för detta)</description>
 	
-		<disclaimer lang="bg">До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="bg">До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="ca">Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="ca">Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="da">Skinnere, se venligst wikien for hvordan du integrere det i dit skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="da">Skinnere, se venligst wikien for hvordan du integrere det i dit skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="de">Skin-Ersteller, bitte schaut ins wiki um zu wissen, wie ihr es in euren Skin integriert: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="de">Skin-Ersteller, bitte schaut ins wiki um zu wissen, wie ihr es in euren Skin integriert: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="el">Skinners, ελέγξτε το αρχείο καταγραφής changelog.txt για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας</disclaimer>
 	
-		<disclaimer lang="en">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="en">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="en_NZ">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="en_NZ">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="en_US">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="en_US">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="es">Skinners, por favor, revisad changelog.txt para saber cómo integrarlo en vuestras skins</disclaimer>
 	
 		<disclaimer lang="fr">Skinneurs, lisez le changelog.txt pour obtenir les infos pour l'intégrer à votre skin</disclaimer>
 	
-		<disclaimer lang="fr_CA">Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="fr_CA">Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="gl">Autores de temas, por favor vexan o changelog.txt para saber como integrar tvtunes no seu tema</disclaimer>
 	
-		<disclaimer lang="he">מפתחי מעטפות, אנא פנו לוויקי ע"מ לדעת כיצד לשלב זאת במעטפת שלכם: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="he">מפתחי מעטפות, אנא פנו לוויקי ע"מ לדעת כיצד לשלב זאת במעטפת שלכם: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="hr">Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="hr">Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="it">Skinners, guardate il file changelog.txt per sapere come integrare lo script nello skin</disclaimer>
 	
-		<disclaimer lang="ko">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="ko">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="lt">Teminių išvaizdų kūrėjai, prašau aplankykite wiki puslapį, norėdami sužinoti kaip integruoti tai į jūsų teminę išvaizdą: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="lt">Teminių išvaizdų kūrėjai, prašau aplankykite wiki puslapį, norėdami sužinoti kaip integruoti tai į jūsų teminę išvaizdą: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="nl">Ontwerpers, bekijk de wiki om te zien hoe dit script in je ontwerp dient te integreren:http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="nl">Ontwerpers, bekijk de wiki om te zien hoe dit script in je ontwerp dient te integreren:http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="no">Designere, vennlist se wikien for å se hvordan du integrerer dette i ditt tema: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="no">Designere, vennlist se wikien for å se hvordan du integrerer dette i ditt tema: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
-		<disclaimer lang="pl">Twórcy skór, zapoznajcie się z wiki, by wiedzieć w jaki sposób zintegrować TvTunes ze swoją skórą: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes</disclaimer>
+		<disclaimer lang="pl">Twórcy skór, zapoznajcie się z wiki, by wiedzieć w jaki sposób zintegrować TvTunes ze swoją skórą: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
 	
 		<disclaimer lang="pt">Autores dos temas, por favor vejam o changelog.txt para saber como integrar TVTunes nos vossos temas.</disclaimer>
 	

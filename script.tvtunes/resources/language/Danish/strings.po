@@ -25,8 +25,8 @@ msgid "TvTunes is equipped with powerful features that enable the fetching, orga
 msgstr "Scriptet vil hjælpe dig med at hente temaer til dit film og serie bibliotek fra www.televisiontunes.com. Den gemmer dem som theme[0-9].mp3 i hver af dine videomapper, så de vil blive spillet mens du gennemser dit videobibliotek når du går ind i seriemappen eller Video Information (Dit skin skal være kompatibel med denne feature)"
 
 msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
-msgstr "Skinnere, se venligst wikien for hvordan du integrere det i dit skin: http://wiki.xbmc.org/index.php?title=Add-on:TvTunes"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Skinnere, se venligst wikien for hvordan du integrere det i dit skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
