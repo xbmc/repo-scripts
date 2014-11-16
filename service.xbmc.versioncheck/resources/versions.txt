@@ -172,6 +172,14 @@
                 "major": "14",
                 "minor": "0",
                 "tag": "beta",
+                "tagversion":"3",
+                "revision": "20141116-88a9a44",
+                "addon_support": "yes"
+            },
+            {
+                "major": "14",
+                "minor": "0",
+                "tag": "beta",
                 "tagversion":"2",
                 "revision": "20141108-2d88a9a",
                 "addon_support": "yes"

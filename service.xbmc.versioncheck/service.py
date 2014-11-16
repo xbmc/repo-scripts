@@ -41,9 +41,9 @@ class Main:
               packages = ['xbmc']
               _versionchecklinux(packages)
           else:
-              oldversion, version_installed, version_available = _versioncheck()
+              oldversion, version_installed, version_available, version_stable = _versioncheck()
               if oldversion:
-                  _upgrademessage2( version_installed, version_available, oldversion, False)
+                  _upgrademessage2( version_installed, version_available, version_stable, oldversion, False)
                 
 def _versioncheck():
     # initial vars
@@ -54,8 +54,8 @@ def _versioncheck():
     # retrieve version installed
     version_installed = get_installedversion()
     # copmpare installed and available
-    oldversion, version_installed, version_available = compare_version(version_installed, versionlist)
-    return oldversion, version_installed, version_available
+    oldversion, version_installed, version_available, version_stable = compare_version(version_installed, versionlist)
+    return oldversion, version_installed, version_available, version_stable
 
 
 def _versionchecklinux(packages):

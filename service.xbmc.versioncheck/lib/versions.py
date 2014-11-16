@@ -117,5 +117,5 @@ def compare_version(version_installed, versionlist):
                 oldversion = True
                 log('Version available  %s' %versionlist_alpha[0])
                 log('You are running an older non alpah version')     
-
-    return oldversion, version_installed, version_available
+    version_stable = versionlist_stable[0]
+    return oldversion, version_installed, version_available, version_stable

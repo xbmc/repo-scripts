@@ -1,3 +1,7 @@
+v0.2.0
+- Only notify when the available version of Kodi changes, not when add-on is updated
+- Updated version list
+
 v0.1.24
 - Reworked notification logic
 - Updated with recent builds
