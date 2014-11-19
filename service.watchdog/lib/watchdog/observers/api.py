@@ -16,48 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-:module: watchdog.observers.api
-:synopsis: Classes useful to observer implementers.
-:author: yesudeep@google.com (Yesudeep Mangalapilly)
-
-Immutables
-----------
-.. autoclass:: ObservedWatch
-   :members:
-   :show-inheritance:
-
-
-Collections
------------
-.. autoclass:: EventQueue
-   :members:
-   :show-inheritance:
-
-Classes
--------
-.. autoclass:: EventEmitter
-   :members:
-   :show-inheritance:
-
-.. autoclass:: EventDispatcher
-   :members:
-   :show-inheritance:
-
-.. autoclass:: BaseObserver
-   :members:
-   :show-inheritance:
-"""
-
 from __future__ import with_statement
 import threading
-
-try:
-    import queue  # IGNORE:F0401
-except ImportError:
-    import Queue as queue  # IGNORE:F0401
-
-from watchdog.utils import DaemonThread
+from watchdog.utils import BaseThread
+from watchdog.utils.compat import queue
 from watchdog.utils.bricks import SkipRepeatsQueue
 
 DEFAULT_EMITTER_TIMEOUT = 1    # in seconds.
@@ -66,7 +28,6 @@ DEFAULT_OBSERVER_TIMEOUT = 1   # in seconds.
 
 # Collection classes
 class EventQueue(SkipRepeatsQueue):
-
     """Thread-safe event queue based on a special queue that skips adding
     the same event (:class:`FileSystemEvent`) multiple times consecutively.
     Thus avoiding dispatching multiple event handling
@@ -76,7 +37,6 @@ class EventQueue(SkipRepeatsQueue):
 
 
 class ObservedWatch(object):
-
     """An scheduled watch.
 
     :param path:
@@ -118,10 +78,9 @@ class ObservedWatch(object):
 
 
 # Observer classes
-class EventEmitter(DaemonThread):
-
+class EventEmitter(BaseThread):
     """
-    Producer daemon thread base class subclassed by event emitters
+    Producer thread base class subclassed by event emitters
     that generate events and populate a queue with them.
 
     :param event_queue:
@@ -139,7 +98,7 @@ class EventEmitter(DaemonThread):
     """
 
     def __init__(self, event_queue, watch, timeout=DEFAULT_EMITTER_TIMEOUT):
-        DaemonThread.__init__(self)
+        BaseThread.__init__(self)
         self._event_queue = event_queue
         self._watch = watch
         self._timeout = timeout
@@ -189,10 +148,9 @@ class EventEmitter(DaemonThread):
             pass
 
 
-class EventDispatcher(DaemonThread):
-
+class EventDispatcher(BaseThread):
     """
-    Consumer daemon thread base class subclassed by event observer threads
+    Consumer thread base class subclassed by event observer threads
     that dispatch events from an event queue to appropriate event handlers.
 
     :param timeout:
@@ -202,7 +160,7 @@ class EventDispatcher(DaemonThread):
     """
 
     def __init__(self, timeout=DEFAULT_OBSERVER_TIMEOUT):
-        DaemonThread.__init__(self)
+        BaseThread.__init__(self)
         self._event_queue = EventQueue()
         self._timeout = timeout
 
@@ -244,13 +202,12 @@ class EventDispatcher(DaemonThread):
 
 
 class BaseObserver(EventDispatcher):
-
     """Base observer."""
 
     def __init__(self, emitter_class, timeout=DEFAULT_OBSERVER_TIMEOUT):
         EventDispatcher.__init__(self, timeout)
         self._emitter_class = emitter_class
-        self._lock = threading.Lock()
+        self._lock = threading.RLock()
         self._watches = set()
         self._handlers = dict()
         self._emitters = set()
@@ -264,31 +221,39 @@ class BaseObserver(EventDispatcher):
         del self._emitter_for_watch[emitter.watch]
         self._emitters.remove(emitter)
         emitter.stop()
-
-    def _get_emitter_for_watch(self, watch):
-        return self._emitter_for_watch[watch]
+        try:
+            emitter.join()
+        except RuntimeError:
+            pass
 
     def _clear_emitters(self):
         for emitter in self._emitters:
             emitter.stop()
+        for emitter in self._emitters:
+            try:
+                emitter.join()
+            except RuntimeError:
+                pass
         self._emitters.clear()
         self._emitter_for_watch.clear()
 
     def _add_handler_for_watch(self, event_handler, watch):
-        try:
-            self._handlers[watch].add(event_handler)
-        except KeyError:
-            self._handlers[watch] = set([event_handler])
-
-    def _get_handlers_for_watch(self, watch):
-        return self._handlers[watch]
+        if watch not in self._handlers:
+            self._handlers[watch] = set()
+        self._handlers[watch].add(event_handler)
 
     def _remove_handlers_for_watch(self, watch):
         del self._handlers[watch]
 
-    def _remove_handler_for_watch(self, handler, watch):
-        handlers = self._get_handlers_for_watch(watch)
-        handlers.remove(handler)
+    @property
+    def emitters(self):
+        """Returns event emitter created by this observer."""
+        return self._emitters
+
+    def start(self):
+        for emitter in self._emitters:
+            emitter.start()
+        super(BaseObserver, self).start()
 
     def schedule(self, event_handler, path, recursive=False):
         """
@@ -317,18 +282,15 @@ class BaseObserver(EventDispatcher):
         with self._lock:
             watch = ObservedWatch(path, recursive)
             self._add_handler_for_watch(event_handler, watch)
-            try:
-                # If we have an emitter for this watch already, we don't create a
-                # new emitter. Instead we add the handler to the event
-                # object.
-                emitter = self._get_emitter_for_watch(watch)
-            except KeyError:
-                # Create a new emitter and start it.
+
+            # If we don't have an emitter for this watch already, create it.
+            if self._emitter_for_watch.get(watch) is None:
                 emitter = self._emitter_class(event_queue=self.event_queue,
                                               watch=watch,
                                               timeout=self.timeout)
                 self._add_emitter(emitter)
-                emitter.start()
+                if self.is_alive():
+                    emitter.start()
             self._watches.add(watch)
         return watch
 
@@ -366,7 +328,7 @@ class BaseObserver(EventDispatcher):
             :class:`ObservedWatch`
         """
         with self._lock:
-            self._remove_handler_for_watch(event_handler, watch)
+            self._handlers[watch].remove(event_handler)
 
     def unschedule(self, watch):
         """Unschedules a watch.
@@ -378,13 +340,10 @@ class BaseObserver(EventDispatcher):
             :class:`ObservedWatch`
         """
         with self._lock:
-            try:
-                emitter = self._get_emitter_for_watch(watch)
-                self._remove_handlers_for_watch(watch)
-                self._remove_emitter(emitter)
-                self._watches.remove(watch)
-            except KeyError:
-                raise
+            emitter = self._emitter_for_watch[watch]
+            del self._handlers[watch]
+            self._remove_emitter(emitter)
+            self._watches.remove(watch)
 
     def unschedule_all(self):
         """Unschedules all watches and detaches all associated event
@@ -397,18 +356,14 @@ class BaseObserver(EventDispatcher):
     def on_thread_stop(self):
         self.unschedule_all()
 
-    def _dispatch_event(self, event, watch):
-        with self._lock:
-            for handler in self._get_handlers_for_watch(watch):
-                handler.dispatch(event)
-
     def dispatch_events(self, event_queue, timeout):
         event, watch = event_queue.get(block=True, timeout=timeout)
-        try:
-            self._dispatch_event(event, watch)
-        except KeyError:
-            # All handlers for the watch have already been removed. We cannot
-            # lock properly here, because `event_queue.get` blocks whenever the
-            # queue is empty.
-            pass
+
+        with self._lock:
+            # To allow unschedule/stop and safe removal of event handlers
+            # within event handlers itself, check if the handler is still
+            # registered after every dispatch.
+            for handler in list(self._handlers.get(watch, [])):
+                if handler in self._handlers.get(watch, []):
+                    handler.dispatch(event)
         event_queue.task_done()

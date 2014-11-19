@@ -1,103 +1,112 @@
-'''
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2014 Thomas Amland
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+from __future__ import unicode_literals
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
 import xbmc
-from functools import partial
-from watchdog.observers.api import EventEmitter, BaseObserver
-from watchdog.events import DirDeletedEvent, DirCreatedEvent
-from utils import log
 import settings
+from watchdog.observers.api import EventEmitter
+from watchdog.events import FileCreatedEvent, FileDeletedEvent
+
 
 def _paused():
     return xbmc.Player().isPlaying() and settings.PAUSE_ON_PLAYBACK
 
+
 def hidden(path):
-    return path.startswith('.') or path.startswith('_UNPACK')
+    return path.startswith(b'.') or path.startswith(b'_UNPACK')
 
-class SnapshotRootOnly(object):
-    def __init__(self, root, get_mtime):
-        self._root = root
-        self._mtime = get_mtime(root)
 
-    def diff(self, other):
-        modified = [self._root] if self._mtime != other._mtime else []
-        return [], [], modified
+def file_diff(old, current):
+    created = current - old
+    deleted = old - current
+    return created, deleted
 
-class PathSnapshot(object):
-    def __init__(self, root, walker):
-        self._files = set()
-        for dirs, files in walker(root):
-            self._files.update(files)
 
-    def diff(self, other):
-        created = other._files - self._files
-        deleted = self._files - other._files
-        return created, deleted, []
+def file_list_from_walk(walker):
+    def f(path):
+        ret = []
+        for dirs, files in walker(path):
+            ret.extend(files)
+        return ret
+    return f
 
-class SnapshotWithStat(object):
-    def __init__(self, root, walker, get_mtime):
-        self._dirs = set()
-        self._files = set()
-        self._stat_info = {}
-        for dirs, files in walker(root):
-            self._dirs.update(dirs)
-            self._files.update(files)
-        for path in self._dirs:
-            self._stat_info[path] = get_mtime(path)
-
-    def diff(self, other):
-        created_files = other._files - self._files
-        deleted_files = self._files - other._files
-
-        created_dirs = other._dirs - self._dirs
-        deleted_dirs = self._dirs - other._dirs
-
-        modified_dirs = []
-        for path in set(self._stat_info) - deleted_dirs - created_dirs:
-            if self._stat_info[path] != other._stat_info[path]:
-                modified_dirs.append(path)
-        return created_files | created_dirs, deleted_files | deleted_dirs, modified_dirs
 
 class Poller(EventEmitter):
-    def __init__(self, event_queue, watch, make_snapshot, timeout):
+    polling_interval = -1
+    list_files = None
+
+    def __init__(self, event_queue, watch, timeout=1):
         EventEmitter.__init__(self, event_queue, watch, timeout)
-        self._make_snapshot = make_snapshot
         self._snapshot = None
 
-    def queue_events(self, timeout):
+    def take_snapshot(self):
+        """Take snapshot of this emitters root path and return changes."""
         if self._snapshot is None:
-            self._snapshot = self._make_snapshot(self.watch.path)
-        if self.stopped_event.wait(timeout):
+            self._snapshot = set(self.list_files(self.watch.path))
+            return [], []
+
+        new_snapshot = set(self.list_files(self.watch.path))
+        diff = file_diff(self._snapshot, new_snapshot)
+        self._snapshot = new_snapshot
+        return diff
+
+    def is_offline(self):
+        """Whether the file system this emitter is watching is offline."""
+        return False
+
+    def queue_events(self, timeout):
+        if self.stopped_event.wait(self.polling_interval):
             return
-        if not _paused():
-            new_snapshot = self._make_snapshot(self.watch.path)
-            created, deleted, modified = self._snapshot.diff(new_snapshot)
-            self._snapshot = new_snapshot
+        if _paused():
+            return
+        if self.is_offline():
+            return
 
-            if deleted:
-                log("poller: delete event appeared in %s" % deleted)
-            if created:
-                log("poller: create event appeared in %s" % created)
-            if modified and not(deleted or created):
-                log("poller: modify event appeared in %s" % modified)
+        files_created, files_deleted = self.take_snapshot()
 
-            if modified or deleted:
-                self.queue_event(DirDeletedEvent(self.watch.path + '*'))
-            if modified or created:
-                self.queue_event(DirCreatedEvent(self.watch.path + '*'))
+        for path in files_created:
+            self.queue_event(FileCreatedEvent(path))
+        for path in files_deleted:
+            self.queue_event(FileDeletedEvent(path))
 
-class PollingObserverBase(BaseObserver):
-    def __init__(self, make_snapshot, polling_interval=1):
-        constructor = partial(Poller, make_snapshot=make_snapshot)
-        BaseObserver.__init__(self, constructor, polling_interval)
+
+class PollerNonRecursive(Poller):
+    get_mtime = None
+    list_files = None
+
+    def __init__(self, *args, **kwargs):
+        super(PollerNonRecursive, self).__init__(*args, **kwargs)
+        self._files = None
+        self._mtime = None
+
+    def take_snapshot(self):
+        if self._files is None:
+            self._mtime = self.get_mtime(self.watch.path)
+            self._files = set(self.list_files(self.watch.path))
+            return [], []
+
+        # Do fast check of mtime before listing directory
+        current_mtime = self.get_mtime(self.watch.path)
+        if current_mtime == self._mtime:
+            return [], []
+
+        current_files = set(self.list_files(self.watch.path))
+        diff = file_diff(self._files, current_files)
+        self._mtime = current_mtime
+        self._files = current_files
+        return diff

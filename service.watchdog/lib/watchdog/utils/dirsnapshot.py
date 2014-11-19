@@ -44,6 +44,7 @@ Classes
 
 """
 
+import errno
 import os
 from stat import S_ISDIR
 from watchdog.utils import platform
@@ -180,7 +181,7 @@ class DirectorySnapshot(object):
     :type path:
         ``str``
     :param recursive:
-        ``True`` if the entired directory tree should be included in the
+        ``True`` if the entire directory tree should be included in the
         snapshot; ``False`` otherwise.
     :type recursive:
         ``bool``
@@ -203,12 +204,21 @@ class DirectorySnapshot(object):
         self._stat_info = {}
         self._inode_to_path = {}
         
-        stat_info = stat(path)
-        self._stat_info[path] = stat_info
-        self._inode_to_path[stat_info.st_ino] = self.path
+        st = stat(path)
+        self._stat_info[path] = st
+        self._inode_to_path[(st.st_ino, st.st_dev)] = path
 
         def walk(root):
-            paths = [os.path.join(root, name) for name in listdir(root)]
+            try:
+                paths = [os.path.join(root, name) for name in listdir(root)]
+            except OSError as e:
+                # Directory may have been deleted between finding it in the directory
+                # list of its parent and trying to delete its contents. If this
+                # happens we treat it as empty.
+                if e.errno == errno.ENOENT:
+                    return
+                else:
+                    raise
             entries = []
             for p in paths:
                 try:
@@ -236,11 +246,11 @@ class DirectorySnapshot(object):
         """
         return set(self._stat_info.keys())
     
-    def path(self, inode):
+    def path(self, id):
         """
-        Returns path for inode. None if inode is unknown to this snapshot.
+        Returns path for id. None if id is unknown to this snapshot.
         """
-        return self._inode_to_path.get(inode)
+        return self._inode_to_path.get(id)
     
     def inode(self, path):
         """ Returns an id for path. """
@@ -282,51 +292,3 @@ class DirectorySnapshot(object):
     
     def __repr__(self):
         return str(self._stat_info)
-    
-    
-    ### deprecated methods ###
-    
-    @property
-    def stat_snapshot(self):
-        """
-        .. deprecated:: 0.7.2
-           Use :func:`stat_info` or :func:`inode`/:func:`mtime`/:func:`isdir`
-
-        Returns a dictionary of stat information with file paths being keys.
-        """
-        return self._stat_info
-
-    def path_for_inode(self, inode):
-        """
-        .. deprecated:: 0.7.2
-           Use :func:`path` instead.
-        
-        Determines the path that an inode represents in a snapshot.
-
-        :param inode:
-            inode number.
-        """
-        return self._inode_to_path[inode]
-
-    def has_inode(self, inode):
-        """
-        .. deprecated:: 0.7.2
-           Use :func:`inode` instead.
-        
-        Determines if the inode exists.
-
-        :param inode:
-            inode number.
-        """
-        return inode in self._inode_to_path
-
-    def stat_info_for_inode(self, inode):
-        """
-        .. deprecated:: 0.7.2
-        
-        Determines stat information for a given inode.
-
-        :param inode:
-            inode number.
-        """
-        return self.stat_info(self.path_for_inode(inode))

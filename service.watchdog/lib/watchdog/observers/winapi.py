@@ -6,6 +6,7 @@
 # Copyright (C) 2010 Will McGugan <will@willmcgugan.com>
 # Copyright (C) 2010 Ryan Kelly <ryan@rfk.id.au>
 # Copyright (C) 2010 Yesudeep Mangalapilly <yesudeep@gmail.com>
+# Copyright (C) 2014 Thomas Amland
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -39,6 +40,7 @@ from __future__ import with_statement
 
 import ctypes.wintypes
 import struct
+from functools import reduce
 
 try:
     LPVOID = ctypes.wintypes.LPVOID
@@ -87,6 +89,9 @@ WAIT_IO_COMPLETION = 0x000000C0
 WAIT_OBJECT_0 = 0x00000000
 WAIT_TIMEOUT = 0x00000102
 
+# Error codes
+ERROR_OPERATION_ABORTED = 995
+
 
 class OVERLAPPED(ctypes.Structure):
     _fields_ = [('Internal', LPVOID),
@@ -117,11 +122,8 @@ def _errcheck_dword(value, func, args):
         raise ctypes.WinError()
     return args
 
-try:
-    ReadDirectoryChangesW = ctypes.windll.kernel32.ReadDirectoryChangesW
-except AttributeError:
-    raise ImportError("ReadDirectoryChangesW is not available")
 
+ReadDirectoryChangesW = ctypes.windll.kernel32.ReadDirectoryChangesW
 ReadDirectoryChangesW.restype = ctypes.wintypes.BOOL
 ReadDirectoryChangesW.errcheck = _errcheck_bool
 ReadDirectoryChangesW.argtypes = (
@@ -230,7 +232,31 @@ class FILE_NOTIFY_INFORMATION(ctypes.Structure):
 LPFNI = ctypes.POINTER(FILE_NOTIFY_INFORMATION)
 
 
-def get_FILE_NOTIFY_INFORMATION(readBuffer, nBytes):
+# We don't need to recalculate these flags every time a call is made to
+# the win32 API functions.
+WATCHDOG_FILE_FLAGS = FILE_FLAG_BACKUP_SEMANTICS
+WATCHDOG_FILE_SHARE_FLAGS = reduce(
+    lambda x, y: x | y, [
+        FILE_SHARE_READ,
+        FILE_SHARE_WRITE,
+        FILE_SHARE_DELETE,
+    ])
+WATCHDOG_FILE_NOTIFY_FLAGS = reduce(
+    lambda x, y: x | y, [
+        FILE_NOTIFY_CHANGE_FILE_NAME,
+        FILE_NOTIFY_CHANGE_DIR_NAME,
+        FILE_NOTIFY_CHANGE_ATTRIBUTES,
+        FILE_NOTIFY_CHANGE_SIZE,
+        FILE_NOTIFY_CHANGE_LAST_WRITE,
+        FILE_NOTIFY_CHANGE_SECURITY,
+        FILE_NOTIFY_CHANGE_LAST_ACCESS,
+        FILE_NOTIFY_CHANGE_CREATION,
+    ])
+
+BUFFER_SIZE = 2048
+
+    
+def _parse_event_buffer(readBuffer, nBytes):
     results = []
     while nBytes > 0:
         fni = ctypes.cast(readBuffer, LPFNI)[0]
@@ -246,16 +272,78 @@ def get_FILE_NOTIFY_INFORMATION(readBuffer, nBytes):
     return results
 
 
-def get_FILE_NOTIFY_INFORMATION_alt(event_buffer, nBytes):
-    """Extract the information out of a FILE_NOTIFY_INFORMATION structure."""
-    pos = 0
-    event_buffer = event_buffer[:nBytes]
-    while pos < len(event_buffer):
-        jump, action, namelen = struct.unpack("iii", event_buffer[pos:pos + 12])
-        # TODO: this may return a shortname or a longname, with no way
-        # to tell which.  Normalise them somehow?
-        name = event_buffer[pos + 12:pos + 12 + namelen].decode("utf-16")
-        yield (name, action)
-        if not jump:
-            break
-        pos += jump
+def get_directory_handle(path):
+    """Returns a Windows handle to the specified directory path."""
+    return CreateFileW(path, FILE_LIST_DIRECTORY, WATCHDOG_FILE_SHARE_FLAGS,
+                       None, OPEN_EXISTING, WATCHDOG_FILE_FLAGS, None)
+
+
+def close_directory_handle(handle):
+    try:
+        CancelIoEx(handle, None)  # force ReadDirectoryChangesW to return
+        CloseHandle(handle)       # close directory handle
+    except WindowsError:
+        try:
+            CloseHandle(handle)   # close directory handle
+        except:
+            return
+
+
+def read_directory_changes(handle, recursive):
+    """Read changes to the directory using the specified directory handle.
+
+    http://timgolden.me.uk/pywin32-docs/win32file__ReadDirectoryChangesW_meth.html
+    """
+    event_buffer = ctypes.create_string_buffer(BUFFER_SIZE)
+    nbytes = ctypes.wintypes.DWORD()
+    try:
+        ReadDirectoryChangesW(handle, ctypes.byref(event_buffer),
+                              len(event_buffer), recursive,
+                              WATCHDOG_FILE_NOTIFY_FLAGS,
+                              ctypes.byref(nbytes), None, None)
+    except WindowsError as e:
+        if e.winerror == ERROR_OPERATION_ABORTED:
+            return [], 0
+        raise e
+
+    # Python 2/3 compat
+    try:
+        int_class = long
+    except NameError:
+        int_class = int
+    return event_buffer.raw, int_class(nbytes.value)
+
+
+class WinAPINativeEvent(object):
+    def __init__(self, action, src_path):
+        self.action = action
+        self.src_path = src_path
+    
+    @property
+    def is_added(self):
+        return self.action == FILE_ACTION_CREATED
+    
+    @property
+    def is_removed(self):
+        return self.action == FILE_ACTION_REMOVED
+    
+    @property
+    def is_modified(self):
+        return self.action == FILE_ACTION_MODIFIED
+    
+    @property
+    def is_renamed_old(self):
+        return self.action == FILE_ACTION_RENAMED_OLD_NAME
+    
+    @property
+    def is_renamed_new(self):
+        return self.action == FILE_ACTION_RENAMED_NEW_NAME
+    
+    def __repr__(self):
+        return ("<WinAPINativeEvent: action=%d, src_path=%r>" % (self.action, self.src_path))
+
+
+def read_events(handle, recursive):
+    buf, nbytes = read_directory_changes(handle, recursive)
+    events = _parse_event_buffer(buf, nbytes)
+    return [WinAPINativeEvent(action, path) for action, path in events]

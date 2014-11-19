@@ -1,3 +1,12 @@
+[B]0.9.1[/B]
+- added option for removing videos directly without cleaning entire library
+- added option for cleaning/scanning library on startup
+- added option for showing status dialog on startup (for easy debugging)
+- improved skipping of non-media files, reducing number of library scans needed
+- replaced different depth methods with recursive/non-recursive option
+- detection of OS mounted network file systems now works on busybox systems such as OpenElec
+- other minor improvements and fixes
+
 [B]0.8.1[/B]
 - added startup delay setting
 

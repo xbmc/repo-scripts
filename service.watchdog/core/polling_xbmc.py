@@ -1,56 +1,60 @@
-'''
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2014 Thomas Amland
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+from __future__ import unicode_literals
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
-import os
 import xbmcvfs
 import settings
 from functools import partial
-from polling import *
+from polling import Poller, PollerNonRecursive, file_list_from_walk, hidden
 
-def _join_path(base, lst):
-    return [ os.path.join(base, _) for _ in lst if not hidden(_) ]
 
-def _walker_recursive(top):
-    dirs, files = xbmcvfs.listdir(top) #returns utf-8 encoded str
-    dirs = _join_path(top, dirs)
-    files = _join_path(top, files)
+def _walk(path):
+    dirs, files = xbmcvfs.listdir(path)
+    dirs = [path + _.decode('utf-8') for _ in dirs if not hidden(_)]
+    files = [path + _.decode('utf-8') for _ in files if not hidden(_)]
     yield dirs, files
     for d in dirs:
-        for dirs, files in _walker_recursive(d):
+        for dirs, files in _walk(d + '/'):
             yield dirs, files
 
-def _walker_depth_1(top):
-    dirs, files = xbmcvfs.listdir(top) #returns utf-8 encoded str
-    yield _join_path(top, dirs), _join_path(top, files)
+
+def _list_files(path):
+    dirs, files = xbmcvfs.listdir(path)
+    return [path + '/' + f.decode('utf-8') for f in files if not hidden(f)]
+
 
 def _get_mtime(path):
     return xbmcvfs.Stat(path).st_mtime()
 
-class PollerObserver_Depth1(PollingObserverBase):
-    def __init__(self):
-        make_snapshot = partial(SnapshotRootOnly, get_mtime=_get_mtime)
-        PollingObserverBase.__init__(self, make_snapshot,
-                                     polling_interval=settings.POLLING_INTERVAL)
 
-class PollerObserver_Depth2(PollingObserverBase):
-    def __init__(self):
-        make_snapshot = partial(SnapshotWithStat, walker=_walker_depth_1, get_mtime=_get_mtime)
-        PollingObserverBase.__init__(self, make_snapshot,
-                                     polling_interval=settings.POLLING_INTERVAL)
+class _Recursive(Poller):
+    polling_interval = settings.POLLING_INTERVAL
+    list_files = partial(file_list_from_walk(_walk))
 
-class PollerObserver_Full(PollingObserverBase):
-    def __init__(self):
-        make_snapshot = partial(PathSnapshot, walker=_walker_recursive)
-        PollingObserverBase.__init__(self, make_snapshot,
-                                     polling_interval=settings.POLLING_INTERVAL)
+    def is_offline(self):
+        # Since path is always a media source, it's unlikely the user would
+        # delete it. Assume it's offline if it doesn't exist.
+        return not xbmcvfs.exists(self.watch.path)
+
+
+class _NonRecursive(PollerNonRecursive):
+    polling_interval = 1
+    list_files = partial(_list_files)
+    get_mtime = partial(_get_mtime)
+
+VFSPoller = _Recursive if settings.RECURSIVE else _NonRecursive
