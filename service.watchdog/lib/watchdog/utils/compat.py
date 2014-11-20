@@ -1,8 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2011 Yesudeep Mangalapilly <yesudeep@gmail.com>
-# Copyright 2012 Google, Inc.
+# Copyright 2014 Thomas Amland <thomas.amland@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,14 +13,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import sys
+
+__all__ = ['queue', 'Event']
+
+try:
+    import queue
+except ImportError:
+    import Queue as queue
 
 
-# When updating this version number, please update the
-# ``docs/source/global.rst.inc`` file as well.
-VERSION_MAJOR = 0
-VERSION_MINOR = 8
-VERSION_BUILD = 2
-VERSION_INFO = (VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD)
-VERSION_STRING = "%d.%d.%d" % VERSION_INFO
-
-__version__ = VERSION_INFO
+if sys.version_info < (2, 7):
+    from watchdog.utils.event_backport import Event
+else:
+    from threading import Event
