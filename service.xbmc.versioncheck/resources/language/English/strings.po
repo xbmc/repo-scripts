@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: XBMC Version Check
+# Kodi Media Center language file
+# Addon Name: Version Check
 # Addon id: service.xbmc.versioncheck
-# Addon Provider: Team XBMC
+# Addon Provider: XBMC Foundation
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,13 +16,12 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#empty strings from id 32001 to 32008
 msgctxt "#32001"
 msgid "We would like to recommend you to upgrade."
 msgstr ""
 
 msgctxt "#32002"
-msgid "Visit XBMC.org for more information."
+msgid "Visit Kodi.tv for more information."
 msgstr ""
 
 #empty strings from id 32003 to 32008
@@ -48,7 +47,7 @@ msgid "Upgrade successful"
 msgstr ""
 
 msgctxt "#32014"
-msgid "Do you want to restart XBMC to finish the upgrade?"
+msgid "Do you want to restart Kodi to finish the upgrade?"
 msgstr ""
 
 msgctxt "#32015"
@@ -56,7 +55,7 @@ msgid "Do you want to check the repository for a new version?"
 msgstr ""
 
 msgctxt "#32016"
-msgid "There is a newer stable XBMC version available."
+msgid "There is a newer stable Kodi version available."
 msgstr ""
 
 #empty strings from id 32017 to 32019
@@ -66,7 +65,7 @@ msgid "General"
 msgstr ""
 
 msgctxt "#32021"
-msgid "Enable XBMC version check?"
+msgid "Enable Kodi version check?"
 msgstr ""
 
 msgctxt "#32022"

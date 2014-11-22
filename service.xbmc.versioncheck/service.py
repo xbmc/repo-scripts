@@ -35,15 +35,14 @@ class Main:
     def __init__(self):
         linux = False
         packages = []
-        if not xbmc.getCondVisibility('System.HasAddon(os.openelec.tv)'):
-          xbmc.sleep(5000)
-          if xbmc.getCondVisibility('System.Platform.Linux') and __addon__.getSetting("upgrade_apt") == 'true':
-              packages = ['xbmc']
-              _versionchecklinux(packages)
-          else:
-              oldversion, version_installed, version_available, version_stable = _versioncheck()
-              if oldversion:
-                  _upgrademessage2( version_installed, version_available, version_stable, oldversion, False)
+        xbmc.sleep(5000)
+        if xbmc.getCondVisibility('System.Platform.Linux') and __addon__.getSetting("upgrade_apt") == 'true':
+            packages = ['xbmc']
+            _versionchecklinux(packages)
+        else:
+            oldversion, version_installed, version_available, version_stable = _versioncheck()
+            if oldversion:
+                _upgrademessage2( version_installed, version_available, version_stable, oldversion, False)
                 
 def _versioncheck():
     # initial vars
