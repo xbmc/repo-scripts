@@ -1,3 +1,7 @@
+[B]0.9.2[/B]
+- Helix only: progress dialogs are now hidden by default. Can be changed in settings
+- fixed OS X regression
+
 [B]0.9.1[/B]
 - added option for removing videos directly without cleaning entire library
 - added option for cleaning/scanning library on startup
