@@ -65,6 +65,7 @@ class XMLParser:
             if self.feedsTree:
                 self.feedsList = self.getCurrentRssFeeds()
         else:
+            self.feedsTree = False
             self.feedsList = False
             log('[SCRIPT] RSS Editor --> Could not open ' + unicodedata.normalize( 'NFKD', self.RssFeedsPath ).encode( 'ascii', 'ignore' ) +'. Either the file does not exist, or its size is zero.')
 
