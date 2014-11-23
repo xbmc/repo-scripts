@@ -36,13 +36,6 @@ from grooveshark import Client
 # Core TvTunes Scraper class
 #################################
 class TvTunesFetcher:
-    TELEVISION_TUNES = 'televisiontunes.com'
-    SOUNDCLOUD = 'soundcloud.com'
-    GROOVESHARK = 'grooveshark.com'
-    GOEAR = 'goear.com'
-    PROMPT = 'Prompt User'
-    ALL_ENGINES = 'ALL'
-
     def __init__(self, videoList):
         # Set up the addon directories if they do not already exist
         if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")):
@@ -53,7 +46,7 @@ class TvTunesFetcher:
         # Get the currently selected search engine
         self.searchEngine = Settings.getSearchEngine()
 
-        if self.searchEngine == TvTunesFetcher.PROMPT:
+        if self.searchEngine == Settings.PROMPT_ENGINE:
             isManualSearch, engineSelected = self.promptForSearchEngine(False)
             # Exit if no engine was selected
             if engineSelected is None:
@@ -105,9 +98,23 @@ class TvTunesFetcher:
         # show[2] = Original Title (If set)
         theme_list = self.searchThemeList(show[0], show[2], manual=False, showProgressDialog=showProgressDialog)
         selectedTheme = None
-        if (len(theme_list) == 1) and Settings.isExactMatchEnabled():
+
+        # Check the case where we have an automatic download enabled
+        if (len(theme_list) == 1) and (Settings.getAutoDownloadSetting() == Settings.AUTO_DOWNLOAD_SINGLE_ITEM):
             selectedTheme = theme_list[0]
-        else:
+        elif len(theme_list) > 0:
+            if Settings.getAutoDownloadSetting() == Settings.AUTO_DOWNLOAD_PRIORITY_1:
+                # The themes are already in priority order, so see if the first theme is
+                # of the correct priority
+                if theme_list[0].getPriority() < 2:
+                    selectedTheme = theme_list[0]
+            elif Settings.getAutoDownloadSetting() == Settings.AUTO_DOWNLOAD_PRIORITY_1_OR_2:
+                if theme_list[0].getPriority() < 3:
+                    selectedTheme = theme_list[0]
+
+        # If there is still no theme selected, prompt the user
+        if (selectedTheme is None) and Settings.isAutoDownloadPromptUser():
+            # Prompt the user to select which theme they want
             selectedTheme = self.getUserChoice(theme_list, show[0], show[2])
 
         retVal = False
@@ -235,21 +242,21 @@ class TvTunesFetcher:
         searchListing = None
 
         # Check if the search engine being used is GoEar
-        if self.searchEngine == TvTunesFetcher.GOEAR:
+        if self.searchEngine == Settings.GOEAR:
             # Goeear is selected
             searchListing = GoearListing()
-        elif self.searchEngine == TvTunesFetcher.SOUNDCLOUD:
+        elif self.searchEngine == Settings.SOUNDCLOUD:
             # Soundcloud is selected
             searchListing = SoundcloudListing()
-        elif self.searchEngine == TvTunesFetcher.GROOVESHARK:
+        elif self.searchEngine == Settings.GROOVESHARK:
             # grooveshark is selected
             searchListing = GroovesharkListing()
-        elif self.searchEngine == TvTunesFetcher.TELEVISION_TUNES:
+        elif self.searchEngine == Settings.TELEVISION_TUNES:
             # Default to Television Tunes
             searchListing = TelevisionTunesListing()
 
         # Check the special case where we use all the engines
-        if self.searchEngine == TvTunesFetcher.ALL_ENGINES:
+        if self.searchEngine == Settings.ALL_ENGINES:
             # As part of this, we reset the search engine back to the default in settings
             # We do not want them doing this search all the time!
             self.searchEngine = Settings.getSearchEngine()
@@ -286,18 +293,18 @@ class TvTunesFetcher:
     # Prompt the user to select a different search option
     def promptForSearchEngine(self, showManualOptions=True):
         displayList = []
-        displayList.insert(0, TvTunesFetcher.TELEVISION_TUNES)
-        displayList.insert(1, TvTunesFetcher.SOUNDCLOUD)
-        displayList.insert(2, TvTunesFetcher.GROOVESHARK)
-        displayList.insert(3, TvTunesFetcher.GOEAR)
+        displayList.insert(0, Settings.TELEVISION_TUNES)
+        displayList.insert(1, Settings.SOUNDCLOUD)
+        displayList.insert(2, Settings.GROOVESHARK)
+        displayList.insert(3, Settings.GOEAR)
 
         displayList.insert(4, "** %s **" % __language__(32121))
 
         if showManualOptions:
-            displayList.insert(5, "%s %s" % (TvTunesFetcher.TELEVISION_TUNES, __language__(32118)))
-            displayList.insert(6, "%s %s" % (TvTunesFetcher.SOUNDCLOUD, __language__(32118)))
-            displayList.insert(7, "%s %s" % (TvTunesFetcher.GROOVESHARK, __language__(32118)))
-            displayList.insert(8, "%s %s" % (TvTunesFetcher.GOEAR, __language__(32118)))
+            displayList.insert(5, "%s %s" % (Settings.TELEVISION_TUNES, __language__(32118)))
+            displayList.insert(6, "%s %s" % (Settings.SOUNDCLOUD, __language__(32118)))
+            displayList.insert(7, "%s %s" % (Settings.GROOVESHARK, __language__(32118)))
+            displayList.insert(8, "%s %s" % (Settings.GOEAR, __language__(32118)))
 
         isManualSearch = False
 
@@ -308,15 +315,15 @@ class TvTunesFetcher:
             return False, None
         else:
             if (select == 0) or (select == 5):
-                self.searchEngine = TvTunesFetcher.TELEVISION_TUNES
+                self.searchEngine = Settings.TELEVISION_TUNES
             elif (select == 1) or (select == 6):
-                self.searchEngine = TvTunesFetcher.SOUNDCLOUD
+                self.searchEngine = Settings.SOUNDCLOUD
             elif (select == 2) or (select == 7):
-                self.searchEngine = TvTunesFetcher.GROOVESHARK
+                self.searchEngine = Settings.GROOVESHARK
             elif (select == 3) or (select == 8):
-                self.searchEngine = TvTunesFetcher.GOEAR
+                self.searchEngine = Settings.GOEAR
             elif (select == 4):
-                self.searchEngine = TvTunesFetcher.ALL_ENGINES
+                self.searchEngine = Settings.ALL_ENGINES
 
             # Record if this is a manual search
             if select > 4:
@@ -390,6 +397,9 @@ class ThemeItemDetails():
 
     def setPriority(self, rating):
         self.priority = rating
+
+    def getPriority(self):
+        return self.priority
 
     # Plays a preview of the given file
     def playPreview(self, theme_url=None):
@@ -855,13 +865,7 @@ class TelevisionTunesListing(DefaultListing):
                 log("TelevisionTunesListing: found %s (%s)" % (themeName, themeURL))
                 downloadUrl = self._getMediaURL(themeURL)
                 theme = ThemeItemDetails(themeName, downloadUrl)
-                # in case of an exact match (when enabled) only return this theme
-                if Settings.isExactMatchEnabled() and themeName == showname:
-                    theme_list = []
-                    theme_list.append(theme)
-                    return theme_list
-                else:
-                    theme_list.append(theme)
+                theme_list.append(theme)
             match = re.search(r'&search=Search(&page=\d)"><b>Next</b>', data)
             if match:
                 urlpage = match.group(1)

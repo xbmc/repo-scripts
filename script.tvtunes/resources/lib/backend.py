@@ -527,18 +527,22 @@ class TunesBackend():
                 # will be if:
                 # 1) A Video is selected to play
                 # 2) We exit to the main menu away from the video view
-                if (not WindowShowing.isVideoLibrary()) or WindowShowing.isScreensaver() or Settings.isTimout():
+                # NOTE: The screensaver kicking in will only be picked up if the option
+                # "Use Visualization if Playing Audio" is disabled
+                screensaverStarted = WindowShowing.isScreensaver()
+                if (not WindowShowing.isVideoLibrary()) or screensaverStarted:
                     log("TunesBackend: Video Library no longer visible")
                     # End playing cleanly (including any fade out) and then stop everything
                     if TvTunesStatus.isAlive():
-                        self.themePlayer.endPlaying()
+                        self.themePlayer.endPlaying(fastFade=screensaverStarted)
                     self.stop()
 
                     # It may be possible that we stopped for the screen-saver about to kick in
                     # If we are using Gotham or higher, it is possible for us to re-kick off the
                     # screen-saver, otherwise the action of us stopping the theme will reset the
                     # timeout and the user will have to wait longer
-                    if Settings.isTimout() and (Settings.getXbmcMajorVersion() > 12):
+                    if screensaverStarted and (Settings.getXbmcMajorVersion() > 12):
+                        log("TunesBackend: Restarting screensaver that TvTunes stopped")
                         xbmc.executebuiltin("xbmc.ActivateScreensaver", True)
                     break
 

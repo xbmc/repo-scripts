@@ -105,73 +105,18 @@ def dir_exists(dirpath):
 class Settings():
     # Value to calculate which version of XBMC we are using
     xbmcMajorVersion = 0
-    # The time the screensaver is set to (-1 for not set)
-    screensaverTime = 0
 
-    # Loads the Screensaver settings
-    # In Frodo there is no way to get the time before the screensaver
-    # is set to start, this means that the only way open to us is to
-    # load up the XML config file and read it from there.
-    # One of the many down sides of this is that the XML file will not
-    # be updated to reflect changes until the user exits XMBC
-    # This isn't a big problem as screensaver times are not changed
-    # too often
-    #
-    # Unfortunately the act of stopping the theme is seem as "activity"
-    # so it will reset the time, in Gotham, there will be a way to
-    # actually start the screensaver again, but until then there is
-    # not mush we can do
-    @staticmethod
-    def loadScreensaverSettings():
-        Settings.screensaverTime = -1
-        return -1
+    ALL_ENGINES = 'All'
+    TELEVISION_TUNES = 'televisiontunes.com'
+    SOUNDCLOUD = 'soundcloud.com'
+    GROOVESHARK = 'grooveshark.com'
+    GOEAR = 'goear.com'
+    PROMPT_ENGINE = 'Prompt User'
 
-#####################################################################
-# IMPORTANT NOTE
-# --------------
-# The method _loadScreensaverSettings has been commented out
-# because it breaks the rules for getting Add-ons accepted into
-# the official repository, the bug still exists but can be solved
-# in one of two ways:
-# 1) After installation of the addon, uncomment the following method
-# 2) Set the "Fade out after playing for (minutes)" to less than the
-#    screen saver value in TvTunes setting
-# Option 2 is recommended as will not need re-applying after updates
-#####################################################################
-
-#     def loadScreensaverSettings():
-#         if Settings.screensaverTime == 0:
-#             Settings.screenTimeOutSeconds = -1
-#             pguisettings = xbmc.translatePath('special://profile/guisettings.xml')
-#
-#             log("Settings: guisettings.xml location = %s" % pguisettings)
-#
-#             # Make sure we found the file and it exists
-#             if os.path.exists(pguisettings):
-#                 # Create an XML parser
-#                 elemTree = ET.ElementTree()
-#                 elemTree.parse(pguisettings)
-#
-#                 # First check to see if any screensaver is set
-#                 isEnabled = elemTree.findtext('screensaver/mode')
-#                 if (isEnabled == None) or (isEnabled == ""):
-#                     log("Settings: No Screensaver enabled")
-#                 else:
-#                     log("Settings: Screensaver set to %s" % isEnabled)
-#
-#                     # Get the screensaver setting in minutes
-#                     result = elemTree.findtext('screensaver/time')
-#                     if result != None:
-#                         log("Settings: Screensaver timeout set to %s" % result)
-#                         # Convert from minutes to seconds, also reduce by 30 seconds
-#                         # as we want to ensure we have time to stop before the
-#                         # screensaver kicks in
-#                         Settings.screenTimeOutSeconds = (int(result) * 60) - 10
-#                     else:
-#                         log("Settings: No Screensaver timeout found")
-#
-#                 del elemTree
-#         return Settings.screenTimeOutSeconds
+    # Settings for Automatically Downloading
+    AUTO_DOWNLOAD_SINGLE_ITEM = 1
+    AUTO_DOWNLOAD_PRIORITY_1 = 2
+    AUTO_DOWNLOAD_PRIORITY_1_OR_2 = 2
 
     @staticmethod
     def isCustomPathEnabled():
@@ -237,19 +182,6 @@ class Settings():
         if extensionOnly:
             themeRegEx = '(.(' + fileTypes + ')$)'
         return themeRegEx
-
-    @staticmethod
-    def isTimout():
-        screensaverTime = Settings.loadScreensaverSettings()
-        if screensaverTime == -1:
-            return False
-        # It is a timeout if the idle time is larger that the time stored
-        # for when the screensaver is due to kick in
-        if (xbmc.getGlobalIdleTime() > screensaverTime):
-            log("Settings: Stopping due to screensaver")
-            return True
-        else:
-            return False
 
     @staticmethod
     def isShuffleThemes():
@@ -318,8 +250,15 @@ class Settings():
         return __addon__.getSetting("subDirName")
 
     @staticmethod
-    def isExactMatchEnabled():
-        return __addon__.getSetting("exact_match") == 'true'
+    def getAutoDownloadSetting():
+        return int(__addon__.getSetting("auto_download"))
+
+    @staticmethod
+    def isAutoDownloadPromptUser():
+        # If no auto select is set, then always prompt the user
+        if Settings.getAutoDownloadSetting() == 0:
+            return True
+        return __addon__.getSetting("auto_prompt_user_if_required") == 'true'
 
     @staticmethod
     def isMultiThemesSupported():
@@ -331,4 +270,170 @@ class Settings():
 
     @staticmethod
     def getSearchEngine():
-        return __addon__.getSetting("themeSearchSource")
+        index = int(__addon__.getSetting("searchSource"))
+        if index == 0:
+            return Settings.ALL_ENGINES
+        elif index == 1:
+            return Settings.TELEVISION_TUNES
+        elif index == 2:
+            return Settings.SOUNDCLOUD
+        elif index == 3:
+            return Settings.GROOVESHARK
+        elif index == 4:
+            return Settings.GOEAR
+        # Default is to prompt the user
+        return Settings.PROMPT_ENGINE
+
+
+# Class to handle all the screen saver settings
+class ScreensaverSettings():
+    MODES = (
+        'TableDrop',
+        'StarWars',
+        'RandomZoomIn',
+        'AppleTVLike',
+        'GridSwitch',
+        'Random',
+        'Slider',
+        'Crossfade'
+    )
+    SOURCES = (
+        ['movies', 'tvshows'],
+        ['movies'],
+        ['tvshows'],
+        ['image_folder']
+    )
+    IMAGE_TYPES = (
+        ['fanart', 'thumbnail', 'cast'],
+        ['fanart', 'thumbnail'],
+        ['thumbnail', 'cast'],
+        ['fanart'],
+        ['thumbnail'],
+        ['cast']
+    )
+    DIM_LEVEL = (
+        'FFFFFFFF',
+        'FFEEEEEE',
+        'FFEEEEEE',
+        'FFDDDDDD',
+        'FFCCCCCC',
+        'FFBBBBBB',
+        'FFAAAAAA',
+        'FF999999',
+        'FF888888',
+        'FF777777',
+        'FF666666',
+        'FF555555',
+        'FF444444',
+        'FF333333',
+        'FF222222',
+        'FF111111'
+    )
+    SLIDE_FROM = (
+        'Left',
+        'Right',
+        'Top',
+        'Bottom'
+    )
+
+    @staticmethod
+    def getMode():
+        if __addon__.getSetting("screensaver_mode"):
+            return ScreensaverSettings.MODES[int(__addon__.getSetting("screensaver_mode"))]
+        else:
+            return 'Random'
+
+    @staticmethod
+    def getSource():
+        selectedSource = __addon__.getSetting("screensaver_source")
+        sourceId = 0
+        if selectedSource:
+            sourceId = int(selectedSource)
+        return ScreensaverSettings.SOURCES[sourceId]
+
+    @staticmethod
+    def getImageTypes():
+        imageTypes = __addon__.getSetting("screensaver_image_type")
+        # If dealing with a custom folder, then no image type defined
+        if ScreensaverSettings.getSource() == ['image_folder']:
+            return []
+        imageTypeId = 0
+        if imageTypes:
+            imageTypeId = int(imageTypes)
+        return ScreensaverSettings.IMAGE_TYPES[imageTypeId]
+
+    @staticmethod
+    def getImagePath():
+        return __addon__.getSetting("screensaver_image_path").decode("utf-8")
+
+    @staticmethod
+    def isRecursive():
+        return __addon__.getSetting("screensaver_recursive") == 'true'
+
+    @staticmethod
+    def getWaitTime():
+        return int(float(__addon__.getSetting('screensaver_wait_time')) * 1000)
+
+    @staticmethod
+    def getSpeed():
+        return float(__addon__.getSetting('screensaver_speed'))
+
+    @staticmethod
+    def getEffectTime():
+        return int(float(__addon__.getSetting('screensaver_effect_time')) * 1000)
+
+    @staticmethod
+    def getAppletvlikeConcurrency():
+        return float(__addon__.getSetting('screensaver_appletvlike_concurrency'))
+
+    @staticmethod
+    def getGridswitchRowsColumns():
+        return int(__addon__.getSetting('screensaver_gridswitch_columns'))
+
+    @staticmethod
+    def isGridswitchRandom():
+        return __addon__.getSetting("screensaver_gridswitch_random") == 'true'
+
+    @staticmethod
+    def isPlayThemes():
+        return __addon__.getSetting("screensaver_playthemes") == 'true'
+
+    @staticmethod
+    def isOnlyIfThemes():
+        return __addon__.getSetting("screensaver_onlyifthemes") == 'true'
+
+    @staticmethod
+    def isRepeatTheme():
+        return __addon__.getSetting("screensaver_themeControl") == '1'
+
+    @staticmethod
+    def isSkipAfterThemeOnce():
+        return __addon__.getSetting("screensaver_themeControl") == '2'
+
+    @staticmethod
+    def getDimValue():
+        # The actual dim level (Hex) is one of
+        # FF111111, FF222222 ... FFEEEEEE, FFFFFFFF
+        # Where FFFFFFFF is not changed
+        # So that is a total of 15 different options
+        if __addon__.getSetting("screensaver_dimlevel"):
+            return ScreensaverSettings.DIM_LEVEL[int(__addon__.getSetting("screensaver_dimlevel"))]
+        else:
+            return 'FFFFFFFF'
+
+    @staticmethod
+    def getSlideFromOrigin():
+        selectedOrigin = __addon__.getSetting("screensaver_slide_from")
+        originId = 0
+        if selectedOrigin:
+            originId = int(selectedOrigin)
+        return ScreensaverSettings.SLIDE_FROM[originId]
+
+    @staticmethod
+    def includeArtworkDownloader():
+        # Make sure that the fanart is actually selected to be used, otherwise there is no
+        # point in searching for it
+        if 'fanart' in ScreensaverSettings.getImageTypes():
+            return __addon__.getSetting("screensaver_artworkdownloader") == 'true'
+        else:
+            return False

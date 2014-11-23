@@ -1,3 +1,8 @@
+v4.6.0
+- Added TvTunes Screensaver
+- Improve automatic download of themes options
+- Allow default TvTunes Theme scraper to be all search engines
+
 v4.5.0
 - Update to BeautifulSoup 4
 - Update directory existence check for Helix

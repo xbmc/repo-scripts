@@ -40,6 +40,7 @@ from settings import dir_exists
 
 from themeFetcher import TvTunesFetcher
 from themeFinder import ThemeFiles
+from screensaver import launchScreensaver
 
 
 ###################################################################
@@ -111,6 +112,14 @@ class MenuNavigator():
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
+        # Action: Start Screensaver
+        url = self._build_url({'mode': 'screensaver', 'actiontype': 'StartScreensaver'})
+        filterTitle = "  %s" % __addon__.getLocalizedString(32208)
+        li = xbmcgui.ListItem(filterTitle, iconImage=__icon__)
+        li.setProperty("Fanart_Image", __fanart__)
+        li.addContextMenuItems([], replaceItems=True)
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
+
         xbmcplugin.endOfDirectory(self.addon_handle)
 
     # Show the list of videos in a given set
@@ -172,7 +181,7 @@ class MenuNavigator():
         json_response = simplejson.loads(json_query)
         log(json_response)
         Videolist = []
-        if ("result" in json_query) and (target in json_response['result']):
+        if ("result" in json_response) and (target in json_response['result']):
             for item in json_response['result'][target]:
                 videoItem = {}
                 videoItem['title'] = item['title']
@@ -442,3 +451,8 @@ if __name__ == '__main__':
         # Only one action at the moment
         menuNav = MenuNavigator(base_url, addon_handle)
         menuNav.fetchAllMissingThemes()
+
+    elif mode[0] == 'screensaver':
+        log("TvTunesPlugin: Mode is Screensaver")
+        # Launch the screensaver
+        launchScreensaver()
