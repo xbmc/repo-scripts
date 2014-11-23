@@ -1,0 +1,29 @@
+[B]v1.0.8[/B]
+- Added new Helix PVR Window IDs
+- Added ability to remove key mappings
+
+[B]v0.9.7[/B]
+- Added UpdateLibrary and CleanLibrary actions
+
+[B]v0.9.6[/B]
+- Added more actions new in Gotham
+- Fixed: permission error during save on android
+
+[B]v0.9.5[/B]
+- Added reapeat and shuffle actions
+- Added action for opening subtitle search
+- Fixed: script sometimes failing to remove old keymap files on Windows
+
+[B]v0.9.4[/B]
+- Fixed: script failing to start when no audio/video add-ons is installed
+
+[B]v0.9.3[/B]
+- Added actions for launching Add-ons
+- Added timeout to dialog that abort if no key is pressed
+- "Delete" option changed to load defaults instead of deleting keymap file
+
+[B]v0.9.2[/B]
+- Added System.LogOff action
+
+[B]v0.9.1[/B]
+- Fixed: script not working on os x due to missing python libraries
