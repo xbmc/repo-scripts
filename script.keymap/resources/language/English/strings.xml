@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30000">Keymap Editor</string>
+    <string id="30001"></string>
+    <string id="30002">Press the key you want to assign now</string>
+    <string id="30003">Edit</string>
+    <string id="30004">Reset to default</string>
+    <string id="30005">Save</string>
+    <string id="30006">Discard changes?</string>
+    <string id="30007">Select Window to manage shortcuts</string>
+    <string id="30008">Select action category</string>
+    <string id="30009">Select the action to assign a key</string>
+    <string id="30010">Timeout in %.0f seconds...</string>
+    <string id="30011">Edit key</string>
+    <string id="30012">Remove</string>
+</strings>
+
