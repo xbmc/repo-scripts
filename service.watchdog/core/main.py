@@ -49,21 +49,22 @@ class XBMCIF(threading.Thread):
         self._cmd_queue.put("stop")  # unblock wait
 
     def queue_scan(self, library, path=None):
-        if path:
-            cmd = "UpdateLibrary(%s,%s)" % (library, escape_param(path))
-        else:
-            cmd = "UpdateLibrary(%s)" % library
+        path = escape_param(path) if path else ""
+        cmd = "UpdateLibrary(%s,%s,%s)" % (library, path,
+                                           settings.SHOW_PROGRESS_DIALOG)
         self._cmd_queue.put(cmd)
 
     def queue_clean(self, library):
-        self._cmd_queue.put("CleanLibrary(%s)" % library)
+        self._cmd_queue.put("CleanLibrary(%s,%s)"
+                            % (library, settings.SHOW_PROGRESS_DIALOG))
 
     def queue_remove(self, library, path=None):
         if settings.REMOVAL_ENABLED:
             if settings.PER_FILE_REMOVE and path and library == 'video':
                 videolibrary.remove_video(path)
             else:
-                self._cmd_queue.put("CleanLibrary(%s)" % library)
+                self._cmd_queue.put("CleanLibrary(%s,%s)"
+                                    % (library, settings.SHOW_PROGRESS_DIALOG))
 
     def run(self):
         player = xbmc.Player()

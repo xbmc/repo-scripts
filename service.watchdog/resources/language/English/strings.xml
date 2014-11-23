@@ -47,5 +47,6 @@
     <string id="30054">Remove the deleted video only</string>
     <string id="30055">Clean entire library</string>
     <string id="30056">Remove from library when files are removed</string>
+    <string id="30057">Hide progress of library scan/clean (Helix only)</string>
 </strings>
 

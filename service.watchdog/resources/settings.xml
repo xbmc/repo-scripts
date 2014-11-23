@@ -5,6 +5,7 @@
         <setting label="30050" id="cleanonstart" type="bool" default="false"/>
         <setting label="30051" id="scanonstart" type="bool" default="false"/>
         <setting label="30048" id="pauseonplayback" type="bool" default="true"/>
+        <setting label="30057" id="hideprogress" type="bool" default="true"/>
         <setting label="30053" id="showstatusdialog" type="bool" default="false"/>
         <setting label="30018" type="lsep"/>
         <setting label="30019" type="lsep"/>
