@@ -351,10 +351,7 @@ def get_unicode_from_response(r):
     Tried:
 
     1. charset from content-type
-
-    2. every encodings from ``<meta ... charset=XXX>``
-
-    3. fall back and replace all unicode characters
+    2. fall back and replace all unicode characters
 
     """
 
@@ -554,7 +551,8 @@ def default_headers():
     return CaseInsensitiveDict({
         'User-Agent': default_user_agent(),
         'Accept-Encoding': ', '.join(('gzip', 'deflate')),
-        'Accept': '*/*'
+        'Accept': '*/*',
+        'Connection': 'keep-alive',
     })
 
 
@@ -671,3 +669,18 @@ def to_native_string(string, encoding='ascii'):
             out = string.decode(encoding)
 
     return out
+
+
+def urldefragauth(url):
+    """
+    Given a url remove the fragment and the authentication part
+    """
+    scheme, netloc, path, params, query, fragment = urlparse(url)
+
+    # see func:`prepend_scheme_if_needed`
+    if not netloc:
+        netloc, path = path, netloc
+
+    netloc = netloc.rsplit('@', 1)[-1]
+
+    return urlunparse((scheme, netloc, path, params, query, ''))

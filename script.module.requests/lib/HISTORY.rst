@@ -3,6 +3,62 @@
 Release History
 ---------------
 
+2.4.3 (2014-10-06)
+++++++++++++++++++
+
+**Bugfixes**
+
+- Unicode URL improvements for Python 2.
+- Re-order JSON param for backwards compat.
+- Automatically defrag authentication schemes from host/pass URIs. (`#2249 <https://github.com/kennethreitz/requests/issues/2249>`_)
+
+
+2.4.2 (2014-10-05)
+++++++++++++++++++
+
+**Improvements**
+
+- FINALLY! Add json parameter for uploads! (`#2258 <https://github.com/kennethreitz/requests/pull/2258>`_)
+- Support for bytestring URLs on Python 3.x (`#2238 <https://github.com/kennethreitz/requests/pull/2238>`_)
+
+**Bugfixes**
+
+- Avoid getting stuck in a loop (`#2244 <https://github.com/kennethreitz/requests/pull/2244>`_)
+- Multiple calls to iter* fail with unhelpful error. (`#2240 <https://github.com/kennethreitz/requests/issues/2240>`_, `#2241 <https://github.com/kennethreitz/requests/issues/2241>`_)
+
+**Documentation**
+
+- Correct redirection introduction (`#2245 <https://github.com/kennethreitz/requests/pull/2245/>`_)
+- Added example of how to send multiple files in one request. (`#2227 <https://github.com/kennethreitz/requests/pull/2227/>`_)
+- Clarify how to pass a custom set of CAs (`#2248 <https://github.com/kennethreitz/requests/pull/2248/>`_)
+
+
+
+2.4.1 (2014-09-09)
+++++++++++++++++++
+
+- Now has a "security" package extras set, ``$ pip install requests[security]``
+- Requests will now use Certifi if it is available.
+- Capture and re-raise urllib3 ProtocolError
+- Bugfix for responses that attempt to redirect to themselves forever (wtf?).
+
+
+2.4.0 (2014-08-29)
+++++++++++++++++++
+
+**Behavioral Changes**
+
+- ``Connection: keep-alive`` header is now sent automatically.
+
+**Improvements**
+
+- Support for connect timeouts! Timeout now accepts a tuple (connect, read) which is used to set individual connect and read timeouts.
+- Allow copying of PreparedRequests without headers/cookies.
+- Updated bundled urllib3 version.
+- Refactored settings loading from environment — new `Session.merge_environment_settings`.
+- Handle socket errors in iter_content.
+
+
 2.3.0 (2014-05-16)
 ++++++++++++++++++
 
@@ -16,7 +72,7 @@ Release History
 - The change in v2.0.0 to mandate explicit proxy schemes has been reverted.
   Proxy schemes now default to ``http://``.
 - The ``CaseInsensitiveDict`` used for HTTP headers now behaves like a normal
-  dictionary when references as string or viewd in the interpreter.
+  dictionary when references as string or viewed in the interpreter.
 
 **Bugfixes**
 
