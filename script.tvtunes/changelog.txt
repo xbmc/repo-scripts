@@ -1,3 +1,6 @@
+v4.6.1
+- Improve screensaver startup time, and respond better to exit requests
+
 v4.6.0
 - Added TvTunes Screensaver
 - Improve automatic download of themes options

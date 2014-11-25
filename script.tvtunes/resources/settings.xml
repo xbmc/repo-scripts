@@ -33,11 +33,11 @@
 		<setting id="searchSubDir" type="bool" enable="eq(-2,false)" label="32025" default="false"/>
 		<setting id="subDirName" enable="eq(-1,true) + eq(-3,false)" visible="eq(-1,true) + eq(-3,false)" subsetting="true" type="text" label="32026" default="Themes" />
 		<setting id="configure_filetypes" type="bool" label="32012" default="false"/>
-		<setting id="mp3" type="bool" label="MP3" visible="eq(-1,true)" enable="false" default="true"/>
-		<setting id="wma" type="bool" label="WMA" visible="eq(-2,true)" default="true"/>
-		<setting id="flac" type="bool" label="FLAC" visible="eq(-3,true)" default="true"/>
-		<setting id="m4a" type="bool" label="M4A" visible="eq(-4,true)" default="true"/>
-		<setting id="wav" type="bool" label="WAV" visible="eq(-5,true)" default="true"/>
+		<setting id="mp3" type="bool" label="MP3" visible="eq(-1,true)" subsetting="true" enable="false" default="true"/>
+		<setting id="wma" type="bool" label="WMA" visible="eq(-2,true)" subsetting="true" default="true"/>
+		<setting id="flac" type="bool" label="FLAC" visible="eq(-3,true)" subsetting="true" default="true"/>
+		<setting id="m4a" type="bool" label="M4A" visible="eq(-4,true)" subsetting="true" default="true"/>
+		<setting id="wav" type="bool" label="WAV" visible="eq(-5,true)" subsetting="true" default="true"/>
     	<setting label="32018" type="lsep"/>
     	<setting id="logEnabled" type="bool" label="32019" default="false"/>
 	</category>
