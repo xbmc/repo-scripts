@@ -2,6 +2,7 @@
 <settings>
 	<setting id="Update" type="action" label="32007" action="RunScript(script.tv.show.next.aired,force=True)"/>
 	<setting id="Reset" type="action" label="32012" action="RunScript(script.tv.show.next.aired,reset=True)"/>
+	<setting id="IgnoreSpecials" type="bool" label="32023" default="False"/>
 	<setting type="lsep" label="32000"/>
 	<setting id="ThumbType" type="enum" label="32001" default="0" values="Poster|Banner|Logo"/>
 	<setting id="DownloadPosters" type="action" subsetting="true" label="32011" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,poster)" visible="lt(-1,1)"/>

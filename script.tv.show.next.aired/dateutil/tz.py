@@ -25,12 +25,6 @@ tzwin, tzwinlocal = None, None
 ZERO = datetime.timedelta(0)
 EPOCHORDINAL = datetime.datetime.utcfromtimestamp(0).toordinal()
 
-try:
-    x = time.localtime(-86400).tm_isdst
-    AVOID_NEGATIVE_TIMESTAMP = False
-except ValueError:
-    AVOID_NEGATIVE_TIMESTAMP = True
-
 class tzutc(datetime.tzinfo):
 
     def utcoffset(self, dt):
@@ -130,12 +124,16 @@ class tzlocal(datetime.tzinfo):
         #'BRDT'
         #
         # Here is a more stable implementation:
-        #
+
+        # Since we don't really care about old DST accuracy, we can use the following
+        # simple heuristic to avoid throwing an error on some systems.
+        if dt.year < 1971:
+            return False
         timestamp = ((dt.toordinal() - EPOCHORDINAL) * 86400
                      + dt.hour * 3600
                      + dt.minute * 60
                      + dt.second) + time.timezone
-        if AVOID_NEGATIVE_TIMESTAMP and timestamp < 0:
+        if timestamp <= 0:
             return False
         return time.localtime(timestamp).tm_isdst
 

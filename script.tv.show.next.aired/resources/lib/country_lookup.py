@@ -236,6 +236,7 @@ COUNTRY_ZONES = {
     'tuvalu': 'Pacific/Funafuti',
     'u.s. virgin islands': 'America/St_Thomas',
     'uganda': 'Africa/Kampala',
+    'uk': 'Europe/London',
     'ukraine': 'Europe/Zaporozhye',
     'united arab emirates': 'Asia/Dubai',
     'united kingdom': 'Europe/London',
@@ -348,8 +349,9 @@ class CountryLookup(object):
         for country in zone_map:
             zone_map[country] = zone_map[country][1]
 
-        # Allow "USA" name as well as United States.
+        # Allow some country aliases.
         zone_map['usa'] = zone_map['united states']
+        zone_map['uk'] = zone_map['united kingdom']
 
         return zone_map
 

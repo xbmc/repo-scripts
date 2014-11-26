@@ -144,6 +144,7 @@ class NextAired:
             self.local_months.append(xbmc.getLocalizedString(j))
         self.ampm = xbmc.getCondVisibility('substring(System.Time,Am)') or xbmc.getCondVisibility('substring(System.Time,Pm)')
         self.improve_dates = __addon__.getSetting("ImproveDates") == 'true'
+        self.ignore_specials = __addon__.getSetting("IgnoreSpecials") == 'true'
         if __profilepath__ == __datapath__:
             self.profile_name = ''
         else:
@@ -915,6 +916,16 @@ class NextAired:
         network = normalize(show, 'Network', 'Unknown')
         country = self.country_dict.get(network, 'Unknown')
         tzone = CountryLookup.get_country_timezone(country)
+
+        m = re.search(r"\b" + network + r"\s\(([^\)]+)\)", show.get('Overview', ""))
+        if m:
+            for c in m.group(1).split(' and '):
+                t = CountryLookup.get_country_timezone(c)
+                if t is not None:
+                    country = c
+                    tzone = t
+                    break
+
         if tzone is None:
             tzone = 'UTC'
         try:
@@ -971,7 +982,7 @@ class NextAired:
         # the only item in the list ('aired' is where localized Airtime comes from).
         episode_list = [ {'name': None, 'aired': early_aired, 'sn': 0, 'en': 0} ]
         if episodes is not None:
-            minutes_re = re.compile(r"\((\d+) +(?:minutes|mins)\)", re.IGNORECASE)
+            minutes_re = re.compile(r"\((\d+)(?: +(?:minutes|mins)|m)\)", re.IGNORECASE)
             hour_re = re.compile(r"(\d+)[- ]hour\b", re.IGNORECASE)
             hr_re = re.compile(r"\((\d+(?:\.\d+)?)[- ]hr\)", re.IGNORECASE)
             hr2_re = re.compile(r"\((\d+)/(\d+)[- ]hr\)", re.IGNORECASE)
@@ -995,19 +1006,24 @@ class NextAired:
                             'aired': dt.isoformat(),
                             'wday': dt.weekday(),
                             }
+                    if self.ignore_specials and got_ep['sn'] == 0:
+                        continue
                     overview = ep.get('Overview', "")
                     m = minutes_re.search(overview)
                     if m:
                         got_ep['Runtime'] = int(m.group(1))
                     m = hour_re.search(got_ep['name'])
                     if m:
-                        got_ep['Runtime'] = int(m.group(1)) * 42
+                        got_ep['Runtime'] = int(m.group(1)) * 60
                     m = hr_re.search(overview)
                     if m:
-                        got_ep['Runtime'] = int(float(m.group(1)) * 42)
+                        got_ep['Runtime'] = int(float(m.group(1)) * 60)
                     m = hr2_re.search(overview)
                     if m:
-                        got_ep['Runtime'] = int(float(m.group(1)) / float(m.group(2)) * 42)
+                        got_ep['Runtime'] = int(float(m.group(1)) / float(m.group(2)) * 60)
+                    m = minutes_re.search(ep.get('ProductionCode', ""))
+                    if m:
+                        got_ep['Runtime'] = int(m.group(1))
                     episode_list.append(got_ep)
                 episodes = None
                 episode_list.sort(key=itemgetter('aired', 'sn', 'en'))
@@ -1405,7 +1421,7 @@ class NextAired:
             if next_ep:
                 status_id = '6' # Final Season
             else:
-                status_id = '1' # Cancelled/Ended
+                status_id = '11' # Ended
         elif status == '':
             status_id = '2' # TBD/On the bubble
         else:

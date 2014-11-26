@@ -1,3 +1,8 @@
+-6.0.13 (2014-11-26)
+- Another fix to avoid an error on really old years (e.g. 0193).
+- Use the "Ended" message instead of "Cancelled/Ended".
+- Updated language files from Transifex.
+
 -6.0.12 (2014-09-01)
 - Added additional runtime-override matching.
 - Removed the properties deprecated in 6.0.8.
