@@ -5,3 +5,4 @@ LegendasDivx.com subtitle service plugin for XBMC 13 Gotham or newer. Ported fro
 the Frodo version.
 
 HiGhLaNdeR
+highlander@teknorage.com for bugs

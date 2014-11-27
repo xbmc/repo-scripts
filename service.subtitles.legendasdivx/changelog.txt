@@ -1,3 +1,8 @@
+0.2.0
+- Reworked search pattern for TVSHOWS removing the year. Now you get results in some shows that were broken!
+- Added timeout message in the search URL and site down warning when you can't reach the website.
+- No more hangs when downloading, a extraction bug could happen and the script would hang. Now it will open a browse window and you explore the rar file choosing the subtitle you want.
+- That's all folks!
 0.1.6
 - Reworked subtitle search pattern, faster search results. Found the wierd BUG!!! Awesome... :)
 0.1.5

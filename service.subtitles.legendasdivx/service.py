@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.1.6
+# Service LegendasDivx.com version 0.2.0
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -26,6 +26,7 @@ import xbmcvfs
 import cookielib
 import urllib2
 import uuid
+import socket
 
 __addon__ = xbmcaddon.Addon()
 __author__     = __addon__.getAddonInfo('author')
@@ -122,7 +123,16 @@ def urlpost(query, lang, page):
     request = urllib2.Request('http://www.legendasdivx.com/modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page), postdata)
     log(u"POST url page: %s" % page)
     log(u"POST url data: %s" % postdata)
-    response = urllib2.urlopen(request).read()
+    try:
+        response = urllib2.urlopen(request, None, 6.5).read()
+    except urllib2.URLError, e:
+        response = ''
+        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32025).encode('utf8'),5000)))
+        log(u"Oops, site down?")
+    except socket.timeout:
+        response = ''
+        xbmc.executebuiltin(('Notification(%s,%s,%d)' % (__scriptname__ , __language__(32026).encode('utf8'),5000)))
+        log(u"Timed out!")
     return response
     
 def geturl(url):
@@ -309,7 +319,11 @@ def Search(item):
 #        log(u"Search: year group = %s" % (year.group(0),))
 #    else:
     year = item['year']
+    ## REMOVING THE YEAR FROM THE TV SHOW FOR BETTER MATCH ##
     tvshow = item['tvshow']
+    tvshow = tvshow.split('(')
+    tvshow = tvshow[0]
+    ##########################################################
     season = item['season']
     episode = item['episode']
     log(u"Search: Tvshow string = %s" % (tvshow,))
@@ -450,33 +464,48 @@ def Download(id, filename):
             local_file_handle.close()
         except: log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
         if packed:
-            files = os.listdir(__temp__)
-            init_filecount = len(files)
-            log(u"legendasdivx: número de init_filecount %s" % (init_filecount,)) #EGO
-            filecount = init_filecount
-            max_mtime = 0
+###################### OLD APPROACH ########################
+#            files = os.listdir(__temp__)
+#            init_filecount = len(files)
+#            log(u"legendasdivx: número de init_filecount %s" % (init_filecount,)) #EGO
+#            filecount = init_filecount
+#            max_mtime = 0
             # Determine the newest file from __temp__
-            for file in files:
-                if file.split('.')[-1] in SUB_EXTS:
-                    mtime = os.stat(pjoin(__temp__, file)).st_mtime
-                    if mtime > max_mtime: max_mtime =  mtime
-            init_max_mtime = max_mtime
+#            for file in files:
+#                if file.split('.')[-1] in SUB_EXTS:
+#                    mtime = os.stat(pjoin(__temp__, file)).st_mtime
+#                    if mtime > max_mtime: max_mtime =  mtime
+#            init_max_mtime = max_mtime
             # Wait 2 seconds so that the unpacked files are at least 1 second newer
-            time.sleep(2)
-            xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file.encode("utf-8") + ", " + __temp__ +")")
-            waittime  = 0
-            while filecount == init_filecount and waittime < 20 and init_max_mtime == max_mtime: # nothing yet extracted
-                time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-                files = os.listdir(__temp__)
-                filecount = len(files)
-                # determine if there is a newer file created in __temp__ (marks that the extraction had completed)
-                for file in files:
-                    if file.split('.')[-1] in SUB_EXTS:
-                        mtime = os.stat(pjoin(__temp__, file)).st_mtime
-                        if mtime > max_mtime: max_mtime =  mtime
-                waittime  = waittime + 1
-            if waittime == 20: log(u"Failed to unpack subtitles in '%s'" % (__temp__,))
+#            time.sleep(2)
+############################################################
+            xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (local_tmp_file.encode("utf-8"), __temp__))
+            xbmc.sleep(1000)
+
+            ## IF EXTRACTION FAILS, WHICH HAPPENS SOMETIMES ... BUG?? ... WE WILL BROWSE THE RAR FILE FOR MANUAL EXTRACTION ##
+            searchsubs = recursive_glob(__temp__, SUB_EXTS)
+            searchsubscount = len(searchsubs)
+            if searchsubscount == 0:
+                dialog = xbmcgui.Dialog()
+                subs_file = dialog.browse(1, __language__(32024).encode('utf8'), 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, True, __temp__+'/')
+                subtitles_list.append(subs_file)
+            ## ELSE WE WILL GO WITH THE NORMAL PROCEDURE ##
             else:
+###################### OLD APPROACH ########################
+#            waittime  = 0
+#            while filecount == init_filecount and waittime < 30 and init_max_mtime == max_mtime: # nothing yet extracted
+#                time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
+#                files = os.listdir(__temp__)
+#                filecount = len(files)
+            # determine if there is a newer file created in __temp__ (marks that the extraction had completed)
+#                for file in files:
+#                    if file.split('.')[-1] in SUB_EXTS:
+#                        mtime = os.stat(pjoin(__temp__, file)).st_mtime
+#                        if mtime > max_mtime: max_mtime =  mtime
+#                waittime  = waittime + 1
+#            if waittime == 30: log(u"Failed to unpack subtitles in '%s'" % (__temp__,))
+#            else:
+############################################################
                 log(u"Unpacked files in '%s'" % (__temp__,))
                 searchsubs = recursive_glob(__temp__, SUB_EXTS)
                 searchsubscount = len(searchsubs)
@@ -496,7 +525,7 @@ def Download(id, filename):
                     # so user can choose. If only one subtitle is found, parse it to the addon.
                         if len(__temp__) > 1:
                             dialog = xbmcgui.Dialog()
-                            subs_file = dialog.browse(1, 'XBMC', 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, __temp__+'/')
+                            subs_file = dialog.browse(1, __language__(32024).encode('utf8'), 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, __temp__+'/')
                             subtitles_list.append(subs_file)
                             break
         else: subtitles_list.append(subs_file)

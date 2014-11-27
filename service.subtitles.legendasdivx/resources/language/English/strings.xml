@@ -24,4 +24,7 @@
     <string id="32021">Filename</string>
     <string id="32022">Title</string>
     <string id="32023">Enable debug mode</string>
+    <string id="32024">Choose subtitle:</string>
+    <string id="32025">Can't connect! Website down?</string>
+    <string id="32026">Timeout! Please try again!</string>
 </strings>
