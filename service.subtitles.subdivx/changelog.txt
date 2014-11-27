@@ -1,3 +1,11 @@
+0.0.6
+- When the new option to show nicks was set, the subtitle file written ended
+  in '..srt' instead of '.es.srt'. Workaround this with a hack.
+- Remove flag column from search results table.
+- More code readability/maintainability work.
+- Copied workaround for xbmcvfs.exists() problem in Kodi 14 (Helix) from
+  opensubtitles add-on, thanks to its authors.
+
 0.0.5
 - Add first setting: Show uploader name in place of language
   Being a spanish subtitles site, there is no point in showing the spanish
@@ -9,6 +17,7 @@
   Initially the value of the setting is False. We'll see if it's worth
   changing it to True in some future release.
 - Bullet-proof .rar uncompression as it's a popular file format on subdivx.com
+
 0.0.4
 - More robust parsing of description, better logging.
 - Also match variation in CSS class name just in case.
