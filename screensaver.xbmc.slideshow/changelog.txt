@@ -1,3 +1,6 @@
+v1.0.9
+- fix potential loop on scanning exif data
+
 v1.0.8
 - add missing images
 
