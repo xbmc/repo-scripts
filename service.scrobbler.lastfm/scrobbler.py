@@ -283,8 +283,15 @@ class MyPlayer(xbmc.Player):
             user = '0'
         else:
             user = '1'
+        # streaming radio of provides both artistname and songtitle as one label
+        if title and not artist:
+            try:
+                artist = title.split(' - ')[0]
+                title = title.split(' - ')[1]
+            except:
+                pass
         # make sure we have artist and trackname, check user settings if we should submit this track
-        if artist and track and ((user == '0' and self.radio) or (user == '1' and self.songs)):
+        if artist and title and ((user == '0' and self.radio) or (user == '1' and self.songs)):
             tracktags = dict(artist=artist, album=album, title=title, duration=duration, track=track, mbid=mbid, path=path, timestamp=timestamp, streamid=streamid, user=user)
             log('tracktags: %s' % tracktags, SESSION)
             return tracktags
