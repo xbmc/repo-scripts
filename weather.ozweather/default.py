@@ -711,10 +711,10 @@ def propertiesPDOM(page, extendedFeatures):
             goodshortDate = time.strftime('%d %b %a', newdatetuple) #sets the format of the time tuple, taken from this table http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
             setProperty(WEATHER_WINDOW, 'Daily.%i.ShortDate'                % count, str(goodshortDate))
             setProperty(WEATHER_WINDOW, 'Day%i.Title'                       % count, day)
-            setProperty(WEATHER_WINDOW, 'Day%i.ChancePrecipitation'         % count, rainChanceList[count])
-            setProperty(WEATHER_WINDOW, 'Day%i.RainChance'                  % count, rainChanceList[count])
+            setProperty(WEATHER_WINDOW, 'Daily.%i.ChancePrecipitation'         % count, rainChanceList[count])
             setProperty(WEATHER_WINDOW, 'Daily.%i.Precipitation'             % count, common.replaceHTMLCodes(rainAmountList[count]))
-            setProperty(WEATHER_WINDOW, 'Daily.%i.RainChanceAmount'          % count, common.replaceHTMLCodes(rainAmountList[count]))
+            setProperty(WEATHER_WINDOW, 'Day%i.RainChance'                  % count, rainChanceList[count])
+            setProperty(WEATHER_WINDOW, 'Day%i.RainChanceAmount'          % count, common.replaceHTMLCodes(rainAmountList[count]))
             setProperty(WEATHER_WINDOW, 'Daily.%i.HighTemperature'           % count, maxList[count])
             setProperty(WEATHER_WINDOW, 'Day%i.HighTemp'                    % count, maxList[count])
             setProperty(WEATHER_WINDOW, 'Daily.%i.LowTemperature'            % count, minList[count])

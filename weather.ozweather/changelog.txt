@@ -1,3 +1,6 @@
+V0.7.8
+- Bugfix for below, Day is not the same as Daily!
+
 V0.7.7
 - Bugfix for below, Day is not the same as Daily!
 - add Longdescription new style for one day as that's all we've got
