@@ -1,3 +1,11 @@
+v0.0.6
+- wrong temperature in F for hourly forecast
+- properly round pressure
+- add space between value and unit
+
+v0.0.5
+- fix maps being cached
+
 v0.0.4
 - use substring location search
 

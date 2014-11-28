@@ -109,6 +109,7 @@ Daily.%i.Precipitation     (total amount of rain and snow)
 
 
 36HOUR [1-3]
+------------
 36Hour.IsFetched
 36Hour.%i.Heading          ('Today, 'Tonight' or 'Tomorrow')
 36Hour.%i.TemperatureHeading ('High' or 'Low')
