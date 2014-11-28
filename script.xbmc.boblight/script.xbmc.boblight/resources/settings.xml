@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32100">
+    <setting id="overwrite_cat" type="bool" label="32105" default="false" />
+    <setting id="overwrite_cat_val" type="enum" subsetting="true" enable="eq(-1,true)" label="32106" default="0" lvalues="32200|32300|32600|32700|32800" />
+    <setting id="sep1" type="sep" />
+    <setting id="networkaccess" type="bool" label="32101" default="false" />
+    <setting id="hostip" type="ipaddress" subsetting="true" enable="eq(-1,true)" label="32102" default="127.0.0.1" />
+    <setting id="hostport" type="number" subsetting="true" enable="eq(-2,true)" label="32103" default="19333" />
+    <setting id="sep2" type="sep" />
+    <setting id="bobdisableonscreensaver" type="bool" label="32405" default="false" />
+    <setting id="bobdisableon3d" type="bool" label="32107" default="false" />
+    <setting id="bobdisable" type="bool" label="32104" default="false" />
+  </category>
+  <category label="32200">
+    <setting id="movie_preset" type="enum" label="32201" default="1" lvalues="32220|32221|32222|32223" />
+    <setting id="movie_speed" type="slider" subsetting="true" visible="eq(-1,0)" label="32202" default="100" range="0,100" />
+    <setting id="movie_autospeed" type="slider" subsetting="true" visible="eq(-2,0)" label="32203" default="0" range="0,100" />
+    <setting id="movie_interpolation" type="bool" subsetting="true" visible="eq(-3,0)" label="32204" default="false" />
+    <setting id="movie_saturation" type="slider" subsetting="true" visible="eq(-4,0)" label="32205" option="float" default="0" range="0,0.1,20" />
+    <setting id="movie_value" type="slider" subsetting="true" visible="eq(-5,0)" label="32206" option="float" default="0" range="0,0.1,20" />
+    <setting id="movie_threshold" type="slider" subsetting="true" visible="eq(-6,0)" label="32207" default="0" range="0,255" />
+  </category>
+  <category label="32600">
+    <setting id="tvshow_preset" type="enum" label="32201" default="1" lvalues="32620|32621|32622|32623" />
+    <setting id="tvshow_speed" type="slider" subsetting="true" visible="eq(-1,0)" label="32202" default="100" range="0,100" />
+    <setting id="tvshow_autospeed" type="slider" subsetting="true" visible="eq(-2,0)" label="32203" default="0" range="0,100" />
+    <setting id="tvshow_interpolation" type="bool" subsetting="true" visible="eq(-3,0)" label="32204" default="false" />
+    <setting id="tvshow_saturation" type="slider" subsetting="true" visible="eq(-4,0)" label="32205" option="float" default="0" range="0,0.1,20" />
+    <setting id="tvshow_value" type="slider" subsetting="true" visible="eq(-5,0)" label="32206" option="float" default="0" range="0,0.1,20" />
+    <setting id="tvshow_threshold" type="slider" subsetting="true" visible="eq(-6,0)" label="32207" default="0" range="0,255" />
+  </category>
+  <category label="32700">
+    <setting id="livetv_preset" type="enum" label="32201" default="1" lvalues="32720|32721|32722|32723" />
+    <setting id="livetv_speed" type="slider" subsetting="true" visible="eq(-1,0)" label="32202" default="100" range="0,100" />
+    <setting id="livetv_autospeed" type="slider" subsetting="true" visible="eq(-2,0)" label="32203" default="0" range="0,100" />
+    <setting id="livetv_interpolation" type="bool" subsetting="true" visible="eq(-3,0)" label="32204" default="false" />
+    <setting id="livetv_saturation" type="slider" subsetting="true" visible="eq(-4,0)" label="32205" option="float" default="0" range="0,0.1,20" />
+    <setting id="livetv_value" type="slider" subsetting="true" visible="eq(-5,0)" label="32206" option="float" default="0" range="0,0.1,20" />
+    <setting id="livetv_threshold" type="slider" subsetting="true" visible="eq(-6,0)" label="32207" default="0" range="0,255" />
+  </category>
+  <category label="32300">
+    <setting id="musicvideo_preset" type="enum" label="32201" default="1" lvalues="32320|32321|32322|32323" />
+    <setting id="musicvideo_speed" type="slider" subsetting="true" visible="eq(-1,0)" label="32202" default="100" range="0,100" />
+    <setting id="musicvideo_autospeed" type="slider" subsetting="true" visible="eq(-2,0)" label="32203" default="0" range="0,100" />
+    <setting id="musicvideo_interpolation" type="bool" subsetting="true" visible="eq(-3,0)" label="32204" default="false" />
+    <setting id="musicvideo_saturation" type="slider" subsetting="true" visible="eq(-4,0)" label="32205" option="float" default="1" range="0,0.1,20" />
+    <setting id="musicvideo_value" type="slider" subsetting="true" visible="eq(-5,0)" label="32206" option="float" default="1" range="0,0.1,20" />
+    <setting id="musicvideo_threshold" type="slider" subsetting="true" visible="eq(-6,0)" label="32207" default="0" range="0,255" />
+  </category>
+  <category label="32800">
+    <setting id="files_preset" type="enum" label="32201" default="1" lvalues="32820|32821|32822|32823" />
+    <setting id="files_speed" type="slider" subsetting="true" visible="eq(-1,0)" label="32202" default="100" range="0,100" />
+    <setting id="files_autospeed" type="slider" subsetting="true" visible="eq(-2,0)" label="32203" default="0" range="0,100" />
+    <setting id="files_interpolation" type="bool" subsetting="true" visible="eq(-3,0)" label="32204" default="false" />
+    <setting id="files_saturation" type="slider" subsetting="true" visible="eq(-4,0)" label="32205" option="float" default="0" range="0,0.1,20" />
+    <setting id="files_value" type="slider" subsetting="true" visible="eq(-5,0)" label="32206" option="float" default="0" range="0,0.1,20" />
+    <setting id="files_threshold" type="slider" subsetting="true" visible="eq(-6,0)" label="32207" default="0" range="0,255" />
+  </category>
+  <category label="32400">
+<!-- uncomment these settings when boblight works on menu and non rendered stuff too
+    <setting id="other_speed" type="slider" label="32202" default="100" range="0,100" />
+    <setting id="other_autospeed" type="slider" label="32203" default="0" range="0,100" />
+    <setting id="other_interpolation" type="bool" label="32204" default="false" />
+    <setting id="other_saturation" type="slider" label="32205" default="1" option="float" range="0,0.1,20" />
+    <setting id="other_value" type="slider" label="32206" default="1" option="float" range="0,0.1,20" />
+    <setting id="other_threshold" type="slider" label="32207" default="0" range="0,255" />-->
+    <setting id="other_static_bg" type="bool" label="32401" default="false" />
+    <setting id="other_static_red" type="slider" subsetting="true" enable="eq(-1,true)" label="32402" option="int" default="128" range="0,255" />
+    <setting id="other_static_green" type="slider" subsetting="true" enable="eq(-2,true)" label="32403" option="int" default="128" range="0,255" />
+    <setting id="other_static_blue" type="slider" subsetting="true" enable="eq(-3,true)" label="32404" option="int" default="128" range="0,255" />
+    <setting id="sep3" type="sep" />
+    <setting id="other_misc_initialflash" type="bool" label="32406" default="true" />
+    <setting id="other_misc_notifications" type="bool" label="32407" default="true" />
+  </category>
+</settings>

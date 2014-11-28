@@ -1,0 +1,58 @@
+2.0.11
+- [feature] - enable android support
+
+2.0.10
+- [feature] - add setting for disableing boblight for 3d content
+
+2.0.9
+- [fix] custom category detection
+- [fix] custom category settings
+
+2.0.8
+- [fix] work around UTF8 encoding problems for dialogs
+
+2.0.7
+- [updated] language files from Transifex
+- [fix] for the newly added categories livetv, tvshow and files the category override didn't work
+- [fix] xbmc always returns the video player content "files" even if no video is playing - workaround 
+  this and fix static boblight during audio playback that way
+
+2.0.6
+- [changed] use correct string ID range
+- [language] added dutch translations - thx to georgehenze
+- [feature] added a new preset categories used for tvshows, livetv and files (everything outside of the movie database)
+- [feature] for all categories there is a new preset "disabled" which basically disables boblight. This allows to 
+  watch live-tv without boblight and movies with - without needing to change the addon settings - thx to georgehenze for
+  those 2 features
+
+2.0.5
+- [fix] recover if boblightd is disconnected while movie is playing - by amet
+
+2.0.4
+- [fix] - race condition which could lead to boblight turn on after movie stop if static light is not enabled
+
+2.0.3
+- [add] - option for disabling/enabling the initial color blink
+- [add] - option for disabling/enabling any user notifications (connection lost and so on)
+
+2.0.2
+- [fix] activate static light when playing audio
+
+2.0.1
+- [fix] close download dialog once we finished/failed 
+- [fix] - catch exceptions during libboblight download and add a toast for suggesting a check of the fs permissions
+
+2.0.0
+- compleate rewrite of the addon, it uses xbmc.Monitor class to monitor for changes in addon settings, player start/stop and others
+
+1.0.3
+- fixed the lib downloading code on win32
+
+1.0.2
+- changed icon to something we own the copyright for
+
+1.0.1
+- ping boblightd and reconnect if connection is lost
+
+1.0.0
+- initial addon release

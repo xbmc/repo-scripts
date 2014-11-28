@@ -1,0 +1,245 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Boblight
+# Addon id: script.xbmc.boblight
+# Addon Provider: bobo1on1, Memphiz
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32100"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32101"
+msgid "Use remote boblightd"
+msgstr "Utilitza boblightd remot"
+
+msgctxt "#32102"
+msgid "Boblightd IP"
+msgstr "Boblightd IP"
+
+msgctxt "#32103"
+msgid "Boblightd Port"
+msgstr "Boblightd Port"
+
+msgctxt "#32104"
+msgid "Disable boblight"
+msgstr "Inhabilita boblight"
+
+msgctxt "#32105"
+msgid "Override used category"
+msgstr "Anul·la la categoria utilitzada"
+
+msgctxt "#32106"
+msgid "Category"
+msgstr "Categoria"
+
+msgctxt "#32200"
+msgid "Movie"
+msgstr "Pel·lícula"
+
+msgctxt "#32201"
+msgid "Preset"
+msgstr "Predefinit"
+
+msgctxt "#32202"
+msgid "Speed"
+msgstr "Velocitat"
+
+msgctxt "#32203"
+msgid "Autospeed"
+msgstr "Velocitat Automàtica"
+
+msgctxt "#32204"
+msgid "Interpolation"
+msgstr "Interpolació"
+
+msgctxt "#32205"
+msgid "Saturation"
+msgstr "Saturació"
+
+msgctxt "#32206"
+msgid "Value"
+msgstr "Valor"
+
+msgctxt "#32207"
+msgid "Threshold"
+msgstr "Llindar"
+
+msgctxt "#32220"
+msgid "Custom"
+msgstr "Personalitzat"
+
+msgctxt "#32221"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32222"
+msgid "Fast"
+msgstr "Ràpid"
+
+msgctxt "#32223"
+msgid "Disabled"
+msgstr "Inhabilitat"
+
+msgctxt "#32300"
+msgid "Musicvideo"
+msgstr "Vídeo musical"
+
+msgctxt "#32320"
+msgid "Custom"
+msgstr "Personalitzat"
+
+msgctxt "#32321"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32322"
+msgid "Fast"
+msgstr "Ràpid"
+
+msgctxt "#32323"
+msgid "Disabled"
+msgstr "Inhabilitat"
+
+msgctxt "#32400"
+msgid "Other"
+msgstr "Altres"
+
+msgctxt "#32401"
+msgid "Static background light"
+msgstr "Llum del fons estàtica"
+
+msgctxt "#32402"
+msgid "Red"
+msgstr "Vermell"
+
+msgctxt "#32403"
+msgid "Green"
+msgstr "Verd"
+
+msgctxt "#32404"
+msgid "Blue"
+msgstr "Blau"
+
+msgctxt "#32405"
+msgid "Disable when Screen Saver is on"
+msgstr "Inhabilita quan l'estalvi de pantalla estigui activat"
+
+msgctxt "#32406"
+msgid "Enable initial light flash"
+msgstr "Habilita el flaix de llum inicial"
+
+msgctxt "#32407"
+msgid "Enable status notifications"
+msgstr "Habilita les notificacions d'estat"
+
+msgctxt "#32500"
+msgid "Failed to connect to boblightd!"
+msgstr "Error al connectar a boblightd!"
+
+msgctxt "#32501"
+msgid "Connected to boblightd!"
+msgstr "Connectat a boblightd!"
+
+msgctxt "#32502"
+msgid "Settings changed!"
+msgstr "Configuració canviada!"
+
+msgctxt "#32503"
+msgid "Boblight is disabled!"
+msgstr "Boblight està inhabilitat!"
+
+msgctxt "#32504"
+msgid "This addon needs a binary library."
+msgstr "Aquest complement necessita un binari extern."
+
+msgctxt "#32505"
+msgid "Please read the README file."
+msgstr "Si us plau, llegeuix el fitxer README"
+
+msgctxt "#32506"
+msgid "for getting some more instructions."
+msgstr "per obtenir més instruccions."
+
+msgctxt "#32507"
+msgid "This addon can't be run on that"
+msgstr "Aquest complement no pot funcionar en"
+
+msgctxt "#32508"
+msgid "operating system! (missing ctypes module)"
+msgstr "aquest sistema operatiu! (fa falta el mòdul ctypes)"
+
+msgctxt "#32509"
+msgid "Should the addon try to download it for you?"
+msgstr "Vols que el complement provi de descarregar-lo?"
+
+msgctxt "#32510"
+msgid "Error downloading. Check filesystem permissions."
+msgstr "Error descarregant. Comprova els permisos del sistema de fitxers."
+
+msgctxt "#32600"
+msgid "TV Shows"
+msgstr "Sèries de TV"
+
+msgctxt "#32620"
+msgid "Custom"
+msgstr "Personalitzat"
+
+msgctxt "#32621"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32622"
+msgid "Fast"
+msgstr "Ràpid"
+
+msgctxt "#32623"
+msgid "Disabled"
+msgstr "Inhabilitat"
+
+msgctxt "#32720"
+msgid "Custom"
+msgstr "Personalitzat"
+
+msgctxt "#32721"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32722"
+msgid "Fast"
+msgstr "Ràpid"
+
+msgctxt "#32723"
+msgid "Disabled"
+msgstr "Inhabilitat"
+
+msgctxt "#32800"
+msgid "Files"
+msgstr "Fitxers"
+
+msgctxt "#32820"
+msgid "Custom"
+msgstr "Personalitzat"
+
+msgctxt "#32821"
+msgid "Slow"
+msgstr "Lent"
+
+msgctxt "#32822"
+msgid "Fast"
+msgstr "Ràpid"
+
+msgctxt "#32823"
+msgid "Disabled"
+msgstr "Inhabilitat"
