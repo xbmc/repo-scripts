@@ -28,6 +28,10 @@ msgctxt "#32009"
 msgid "Would you like to remove this reminder?"
 msgstr "Vill du radera denna påminnelse?"
 
+msgctxt "#32010"
+msgid "You can enable/disable it through add-on settings."
+msgstr "Du kan aktivera/inaktivera detta i tilläggsinställningarna."
+
 msgctxt "#32011"
 msgid "Use your package manager(apt) to upgrade."
 msgstr "Använd din pakethanterare (apt) för att uppgradera."
@@ -71,3 +75,27 @@ msgstr "Linux: Uppdatera hela systemet"
 msgctxt "#32024"
 msgid "Linux: Upgrade using apt"
 msgstr "Linux: Uppgradera med apt"
+
+msgctxt "#32030"
+msgid "A new stable version of Kodi is available."
+msgstr "En ny stabil Kodi-version finns tillgänglig."
+
+msgctxt "#32031"
+msgid "Visit http://kodi.tv for more information."
+msgstr "Besök Kodi.tv för mer information."
+
+msgctxt "#32032"
+msgid "A new stable version of Kodi is available."
+msgstr "En ny stabil Kodi-version finns tillgänglig."
+
+msgctxt "#32033"
+msgid "Visit http://kodi.tv for more information."
+msgstr "Besök Kodi.tv för mer information."
+
+msgctxt "#32034"
+msgid "Using %s while %s is available."
+msgstr "Använder %s medan %s är tillgänglig."
+
+msgctxt "#32035"
+msgid "It is recommended that you to upgrade to a newer version."
+msgstr "Vi rekommenderar att du uppgraderar till en nyare version."

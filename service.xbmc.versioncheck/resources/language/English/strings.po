@@ -84,12 +84,12 @@ msgstr ""
 
 #. Used in OK dialog
 msgctxt "#32030"
-msgid "A new stable version of XBMC is available."
+msgid "A new stable version of Kodi is available."
 msgstr ""
 
 #. Direct people to the website. Used in OK dialog
 msgctxt "#32031"
-msgid "Visit http://xbmc.org for more information."
+msgid "Visit http://kodi.tv for more information."
 msgstr ""
 
 #. Used in OK dialog

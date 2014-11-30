@@ -71,3 +71,23 @@ msgstr "Linux: Actualizar o sistema completo"
 msgctxt "#32024"
 msgid "Linux: Upgrade using apt"
 msgstr "Linux: Actualizar empregando apt"
+
+msgctxt "#32030"
+msgid "A new stable version of Kodi is available."
+msgstr "Está dispoñible unha versión estable nova de Kodi. "
+
+msgctxt "#32031"
+msgid "Visit http://kodi.tv for more information."
+msgstr "Ir a http://kodi.tv para máis información."
+
+msgctxt "#32032"
+msgid "A new stable version of Kodi is available."
+msgstr "Está dispoñible unha versión estable nova de Kodi. "
+
+msgctxt "#32033"
+msgid "Visit http://kodi.tv for more information."
+msgstr "Ir a http://kodi.tv para máis información."
+
+msgctxt "#32035"
+msgid "It is recommended that you to upgrade to a newer version."
+msgstr "É recomendable actualizar á nova versión."
