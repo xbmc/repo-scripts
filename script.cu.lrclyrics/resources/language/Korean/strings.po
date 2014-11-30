@@ -86,7 +86,7 @@ msgstr "노래 폴더에 가사 저장"
 
 msgctxt "#32150"
 msgid "Scrapers"
-msgstr "자료수집기"
+msgstr "정보수집기"
 
 msgctxt "#32151"
 msgid "Options"
@@ -102,15 +102,15 @@ msgstr "로컬 가사 파일 찾기"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "동기화 가사 스크래퍼"
+msgstr "동기화 가사 수집기"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr "일반 가사 스크래퍼"
+msgstr "일반 가사 수집기"
 
 msgctxt "#32156"
-msgid "Run as a service"
-msgstr "서비스로 실행"
+msgid "Display lyrics automatically"
+msgstr "가사 자동 표시"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"

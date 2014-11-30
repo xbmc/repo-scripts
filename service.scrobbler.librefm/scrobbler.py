@@ -32,7 +32,7 @@ def log(txt):
 class Main:
     def __init__( self ):
         self._service_setup()
-        while (not xbmc.abortRequested) and (not self.Exit):
+        while (not self.Monitor.abortRequested()) and (not self.Exit):
             xbmc.sleep(1000)
 
     def _service_setup( self ):
@@ -304,6 +304,13 @@ class MyPlayer(xbmc.Player):
         path        = self.getPlayingFile()
         timestamp   = int(time.time())
         source      = 'P'
+        # streaming radio of provides both artistname and songtitle as one label
+        if title and not artist:
+            try:
+                artist = title.split(' - ')[0]
+                title = title.split(' - ')[1]
+            except:
+                pass
         tracktags   = [artist, album, title, duration, track, mbid, comment, path, timestamp, source]
         log('#DEBUG# tracktags: %s' % tracktags)
         return tracktags
@@ -320,3 +327,4 @@ class MyMonitor(xbmc.Monitor):
 if ( __name__ == "__main__" ):
     log('script version %s started' % __addonversion__)
     Main()
+log('script stopped')

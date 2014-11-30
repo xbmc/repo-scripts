@@ -104,10 +104,6 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Източници на инф. за обикновени лирики"
 
-msgctxt "#32156"
-msgid "Run as a service"
-msgstr "Изпълнявай добавката като услуга"
-
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
 msgstr "Почиствай имената на пестните (премахвай частта в скоби)"

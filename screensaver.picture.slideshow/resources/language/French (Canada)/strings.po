@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,6 +36,38 @@ msgctxt "#30004"
 msgid "Image Folder"
 msgstr "Dossier des images"
 
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Niveau d'atténuation"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Effet"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Glisser"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Fondu"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Panoramique et zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Durée d'affichage de chaque image en secondes"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Rendre les images en plein écran"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Afficher les noms d'images"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Désactivé"
@@ -53,25 +85,45 @@ msgid "Display images in random order"
 msgstr "Afficher les images dans un ordre aléatoire"
 
 msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "Activer le cache des images"
+msgid "Create image index"
+msgstr "Créer un index d'images"
 
 msgctxt "#30019"
-msgid "Creating cache"
-msgstr "Création du cache"
+msgid "Creating index"
+msgstr "Création de l'index"
 
 msgctxt "#30020"
-msgid "Cache created"
-msgstr "Le cache a été créé"
+msgid "Index created"
+msgstr "Index créé"
 
 msgctxt "#30021"
 msgid "Display picture date"
-msgstr "Afficher la date de la photo"
+msgstr "Afficher la date de l'images"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Afficher les balises supplémentaires de l'image"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Afficher les infos de la musique lors de la lecture audio"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "De base"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Supplémentaire"
 
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Avancé"
 
 msgctxt "#30027"
-msgid "Update cache"
-msgstr "Mettre à jour le cache"
+msgid "Update index"
+msgstr "Mettre l'index à jour"
+
+msgctxt "#30028"
+msgid "Indexing is not supported with fanart"
+msgstr "L'indexation n'est pas pris en charge pour le fanart"

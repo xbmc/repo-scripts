@@ -69,8 +69,12 @@ class LyricsFetcher:
         lyrics.source = __title__
         lyrics.lrc = __lrc__
 
+        key = None
         try:
-            key = alsongClient.GetKeyFromFile( song.filepath )
+            ext = os.path.splitext(song.filepath.decode("utf-8"))[1].lower()
+            sup_ext = ['.mp3', '.ogg', '.wma', '.flac', '.ape', '.wav']
+            if ext in sup_ext:
+                key = alsongClient.GetKeyFromFile( song.filepath )
             if not key:
                 return None
             headers = { 'Content-Type' : 'text/xml; charset=utf-8' }

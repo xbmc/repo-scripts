@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Hindi (Devanagiri) (http://www.transifex.com/projects/p/xbmc-addons/language/hi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,18 +84,6 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "चित्रो को यादृच्छिक तरीके से प्रदर्सन करे "
 
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "एनेबल इमेज कचे"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "कएचे बन रहे है"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "कएचे बन गए है"
-
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "चित्र के दिनांक का प्रदर्सन करे"
@@ -119,11 +107,3 @@ msgstr "अतिरिक्त"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "उन्नत"
-
-msgctxt "#30027"
-msgid "Update cache"
-msgstr "कएचे को अद्यतन करे"
-
-msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "फ़ानर्ट के साथ कचिंग समर्थित नही है"

@@ -15,6 +15,7 @@
 
 from loveban import LoveBan
 from utils import *
+from helpers import *
 
 SESSION = 'scrobbler'
 
@@ -41,8 +42,7 @@ class Main:
         if data:
             self.queue = data
         # start daemon
-        while (not xbmc.abortRequested):
-            xbmc.sleep(1000)
+        self.monitor.waitForAbort()
         # clear skin properties
         clear_prop('LastFM.CanLove')
         clear_prop('LastFM.CanBan')
@@ -278,18 +278,42 @@ class MyPlayer(xbmc.Player):
         streamid = '' # deprecated
         path      = self.getPlayingFile().decode("utf-8")
         timestamp = int(time.time())
-        # check if user is listening to online radio
-        if path.startswith('http://') or path.startswith('rtmp://'):
-            user = '0'
-        else:
+
+        if is_local(path):
             user = '1'
-        # make sure we have artist and trackname, check user settings if we should submit this track
-        if artist and track and ((user == '0' and self.radio) or (user == '1' and self.songs)):
+        else:
+            user = '0'
+
+        log('song scrobbling enabled: ' + str(self.songs), SESSION)
+        log('radio scrobbling enabled: ' + str(self.radio), SESSION)
+        log('user flag: ' + user, SESSION)
+        # streaming radio of provides both artistname and songtitle as one label
+        if title and not artist:
+            try:
+                artist = title.split(' - ')[0]
+                title = title.split(' - ')[1]
+            except:
+                pass
+        # make sure we have artist and trackname
+        if artist and title:
+            # check user settings to determine if we should submit this track
+            if user == '1' and not self.songs:
+                # user is listening to local source, but songs setting is disabled
+                log('user settings prohibit us from scrobbling local tracks', SESSION)
+                return None
+            elif user == '0' and not self.radio:
+                # user is listening to remote source, but the radio setting is disabled
+                log('user settings prohibit us from scrobbling online streaming radio', SESSION)
+                return None
+
+            # previous clauses did not return, so we have either a local play with the songs setting enabled, or a remote play with the radio setting enabled,
+            # and therefore can scrobble
             tracktags = dict(artist=artist, album=album, title=title, duration=duration, track=track, mbid=mbid, path=path, timestamp=timestamp, streamid=streamid, user=user)
             log('tracktags: %s' % tracktags, SESSION)
             return tracktags
+
         else:
-            log('user settings prohibits us from submission', SESSION)
+            log('cannot scrobble track with no artist or track information', SESSION)
             return None
 
 class MyMonitor(xbmc.Monitor):

@@ -1,3 +1,6 @@
+v3.0.4
+- update language files from Transifex
+
 v3.0.3
 - skin changes for helix
 

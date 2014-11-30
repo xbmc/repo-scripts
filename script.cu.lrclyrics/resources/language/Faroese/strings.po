@@ -16,6 +16,10 @@ msgstr ""
 "Language: fo\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "File"
+msgstr "Fíl"
+
 msgctxt "#32151"
 msgid "Options"
 msgstr "Stillingar"

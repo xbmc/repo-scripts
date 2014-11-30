@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Albanian (http://www.transifex.com/projects/p/xbmc-addons/language/sq/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,18 +83,6 @@ msgstr "Përdor emrin e dosjes"
 msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Trego imazhe në një rend të rastësishëm"
-
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "Aktivo memorinë specifike për imazhet"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "Duke krijuar memorie specifike"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "U krijua një memorie specifike"
 
 msgctxt "#30021"
 msgid "Display picture date"

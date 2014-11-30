@@ -109,8 +109,8 @@ msgid "Regular lyrics scrapers"
 msgstr "Extracteurs de paroles régulières"
 
 msgctxt "#32156"
-msgid "Run as a service"
-msgstr "Exécuter comme service"
+msgid "Display lyrics automatically"
+msgstr "Afficher les paroles automatiquement"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"

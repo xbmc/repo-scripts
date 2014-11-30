@@ -92,7 +92,7 @@ def parse_data(reply):
 def forecast(loc,locid):
     log('weather location: %s' % locid)
     retry = 0
-    while (retry < 6) and (not xbmc.abortRequested):
+    while (retry < 6) and (not MONITOR.abortRequested()):
         query = get_weather(locid)
         if query != '':
             retry = 6
@@ -151,7 +151,10 @@ def properties(data,loc):
     set_property('Current.Humidity'      , atmosphere[0].attributes['humidity'].value)
     set_property('Current.Visibility'    , atmosphere[0].attributes['visibility'].value)
     set_property('Current.Pressure'      , atmosphere[0].attributes['pressure'].value)
-    set_property('Current.FeelsLike'     , feelslike(int(condition[0].attributes['temp'].value), int(round(float(wind[0].attributes['speed'].value)))))
+    if (wind[0].attributes['speed'].value != ''):
+        set_property('Current.FeelsLike'     , feelslike(int(condition[0].attributes['temp'].value), int(round(float(wind[0].attributes['speed'].value) + 0.5))))
+    else:
+        set_property('Current.FeelsLike' , '')
     set_property('Current.DewPoint'      , dewpoint(int(condition[0].attributes['temp'].value), int(atmosphere[0].attributes['humidity'].value)))
     set_property('Current.UVIndex'       , '')
     set_property('Current.OutlookIcon'   , '%s.png' % condition[0].attributes['code'].value) # Kodi translates it to Current.ConditionIcon
@@ -166,8 +169,13 @@ def properties(data,loc):
         set_property('Day%i.OutlookIcon' % count, '%s.png' % item.attributes['code'].value)
         set_property('Day%i.FanartCode'  % count, item.attributes['code'].value)
 
+class MyMonitor(xbmc.Monitor):
+    def __init__(self, *args, **kwargs):
+        xbmc.Monitor.__init__(self)
+
 log('version %s started: %s' % (__version__, sys.argv))
 
+MONITOR = MyMonitor()
 set_property('WeatherProvider', __addonname__)
 set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(__cwd__, 'resources', 'banner.png')))
 

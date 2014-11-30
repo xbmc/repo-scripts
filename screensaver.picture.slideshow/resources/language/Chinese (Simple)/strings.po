@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,18 +84,6 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "以随机顺序显示图片"
 
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "启用图片缓存"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "缓存创建中"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "缓存已创建"
-
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "显示图片日期"
@@ -119,11 +107,3 @@ msgstr "附加的"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "高级"
-
-msgctxt "#30027"
-msgid "Update cache"
-msgstr "更新缓存"
-
-msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "不支持同人画缓存"

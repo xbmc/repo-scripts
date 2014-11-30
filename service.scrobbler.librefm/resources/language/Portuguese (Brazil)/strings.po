@@ -1,14 +1,14 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Libre.fm Scrobbler
 # Addon id: service.scrobbler.librefm
-# Addon Provider: Team-XBMC
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,8 +41,8 @@ msgid "Authentication error"
 msgstr "Erro na autenticação"
 
 msgctxt "#32002"
-msgid "Invalid time, please adjust your system clock and restart XBMC"
-msgstr "Horário inválido, por favor ajustes seu horário no sistema e reinicie o XBMC"
+msgid "Invalid time, please adjust your system clock and restart Kodi"
+msgstr "Horário inválido, por favor ajustes seu horário no sistema e reinicie o Kodi"
 
 msgctxt "#32003"
 msgid "Please update the add-on"

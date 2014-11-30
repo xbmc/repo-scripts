@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Welsh (http://www.transifex.com/projects/p/xbmc-addons/language/cy/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,18 +84,6 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Dangos delweddau ar hap"
 
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "Galluogi storfa delweddau"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "Wrthi'n creu storfa"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "Wedi creu storfa"
-
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Dangos dyddiad llun"
@@ -119,11 +107,3 @@ msgstr "Ychwanegol"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Uwch"
-
-msgctxt "#30027"
-msgid "Update cache"
-msgstr "Diweddaru'r storfa"
-
-msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "Nid yw storio'n cael ei gynnal gyda chelf"

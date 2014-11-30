@@ -104,10 +104,6 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Redovni sakupljači tekstova pjesama"
 
-msgctxt "#32156"
-msgid "Run as a service"
-msgstr "Pokreni kao uslugu"
-
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
 msgstr "Obriši naslove pjesama (ukloni dio u zagradama)"

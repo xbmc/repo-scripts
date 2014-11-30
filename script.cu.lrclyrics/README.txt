@@ -38,5 +38,11 @@ Window(Home).Property(culrc.source)  - source or scraper that was used to find t
 Window(Home).Property(culrc.haslist) - will be 'true' if multiple lyrics are available, empty if not.
 Window(Home).Property(culrc.running) - returns 'true' when the lyrics script is running, empty if not.
 
+If you wish to retrieve lyrics for a specific track (Which is not currently playing) then you can use the
+following properties:
+Window(Home).Property(culrc.manual) - set to 'true' if manual retrieval is required
+Window(Home).Property(culrc.artist) - set by the client to the required artist name
+Window(Home).Property(culrc.track) - set by the client to the required track name
+
 other addons may want to set the MusicPlayer.Property(do_not_analyze) to 'true'.
 this will tell cu lrc lyrics to skip searching for embedded lyrics.

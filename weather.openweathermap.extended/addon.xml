@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="weather.openweathermap.extended" name="OpenWeatherMap Extended" version="1.0.0" provider-name="ronie">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+		<import addon="script.module.pil" version="1.1.7"/>
+	</requires>
+	<extension point="xbmc.python.weather" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Weather forecast from openweathermap.org</summary>
+		<description lang="en">Weather forecast provided by OpenWeatherMap (http://openweathermap.org/)</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
+		<forum></forum>
+		<website>http://forum.kodi.tv/showthread.php?tid=207110</website>
+		<email></email>
+		<source>https://github.com/ronie/weather.openweathermap.extended/</source>
+	</extension>
+</addon>

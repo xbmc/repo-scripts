@@ -104,10 +104,6 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Scraper de letras normais"
 
-msgctxt "#32156"
-msgid "Run as a service"
-msgstr "Executar como un servizo"
-
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
 msgstr "Limpar o título da canción (eliminar a parte entre corchetes)"

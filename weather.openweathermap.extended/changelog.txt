@@ -1,0 +1,22 @@
+v1.0.0
+- bump for helix
+
+v0.0.6
+- wrong temperature in F for hourly forecast
+- properly round pressure
+- add space between value and unit
+
+v0.0.5
+- fix maps being cached
+
+v0.0.4
+- use substring location search
+
+v0.0.3
+- fix crash due to empty time value
+
+v0.0.2
+- fix crash due to undefined variable 
+
+v0.0.1
+- initial beta

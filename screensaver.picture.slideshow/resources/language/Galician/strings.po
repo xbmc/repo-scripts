@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Galician (http://www.transifex.com/projects/p/xbmc-addons/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,18 +84,6 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Amosar imaxes ó chou"
 
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "Habilitar caché de imaxe"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "Creando a caché"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "Caché creada"
-
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Amosar a data da imaxe"
@@ -119,11 +107,3 @@ msgstr "Adicional"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Avanzado"
-
-msgctxt "#30027"
-msgid "Update cache"
-msgstr "Actualizar a caché"
-
-msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "Non está soportado o uso da caché cos fanarts"

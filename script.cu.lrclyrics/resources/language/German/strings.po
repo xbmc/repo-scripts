@@ -22,23 +22,23 @@ msgstr "Datei"
 
 msgctxt "#32001"
 msgid "No lyrics found!"
-msgstr "Kein Liedtext gefunden!"
+msgstr "Kein Songtext gefunden!"
 
 msgctxt "#32002"
 msgid "Embedded"
-msgstr "Enthalten"
+msgstr "Eingebettet"
 
 msgctxt "#32004"
 msgid "Searching lyrics..."
-msgstr "Suche Songtext..."
+msgstr "Songtext wird gesucht..."
 
 msgctxt "#32101"
 msgid "Save lyrics to lyrics folder"
-msgstr "Liedtexte speichern"
+msgstr "Songtext im Songtextordner speichern"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
-msgstr "Verzeichnis speichern"
+msgstr "- Songtextordner"
 
 msgctxt "#32103"
 msgid "- Save format"
@@ -54,11 +54,11 @@ msgstr "%A\\%T"
 
 msgctxt "#32106"
 msgid "Use only filename for search"
-msgstr "Nur nach Dateinamen suchen"
+msgstr "Nur den Dateinamen für die Suche verwenden"
 
 msgctxt "#32107"
 msgid "Filename format"
-msgstr "Dateibenennung"
+msgstr "Dateinamensformat"
 
 msgctxt "#32108"
 msgid "%A - %T"
@@ -74,15 +74,15 @@ msgstr "%A\\%B\\%N %T"
 
 msgctxt "#32111"
 msgid "Same name lyrics saved in sub folder"
-msgstr "Lade gleichnamige Liedtexte aus einem Unterverzeichnis "
+msgstr "Gleichnamige Songtexte gespeichert im Unterordner"
 
 msgctxt "#32112"
 msgid "- Sub folder name"
-msgstr "- Untervezeichnis-Name"
+msgstr "- Unterordnername"
 
 msgctxt "#32113"
 msgid "Save lyrics to song folder"
-msgstr "Liedtexte im Lied-Verzeichnis speichern"
+msgstr "Songtexte im Songordner speichern"
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -94,32 +94,32 @@ msgstr "Optionen"
 
 msgctxt "#32152"
 msgid "Search for embedded lyrics"
-msgstr "Suche nach enthaltenen Lyrics"
+msgstr "Suche nach eingebetteten Songtexten"
 
 msgctxt "#32153"
 msgid "Search for local lyrics files"
-msgstr "Nutze eingebettete Liedtexte"
+msgstr "Nach lokalen Songtextdateien suchen"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "Synchronisiere die Lyrics Scrapper"
+msgstr "Synchronisierte Songtext-Scrapper"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
-msgstr "Standard Lyrics Scrapper"
+msgstr "Regulärer Songtext-Scrapper"
 
 msgctxt "#32156"
-msgid "Run as a service"
-msgstr "Führe als Dienst aus"
+msgid "Display lyrics automatically"
+msgstr "Songtext automatisch anzeigen"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
-msgstr "Bereinige Songtitel (entferne Teil in Klammern)"
+msgstr "Songtitel bereinigen (Teil in Klammern entfernen)"
 
 msgctxt "#32158"
 msgid "Script is already running!"
-msgstr "Das Skript läuft bereits!"
+msgstr "Skript läuft bereits!"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
-msgstr "CU LRC Lyrics"
+msgstr "CU LRC-Songtext"

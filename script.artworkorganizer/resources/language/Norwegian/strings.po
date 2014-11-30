@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Artwork Organizer
 # Addon id: script.artworkorganizer
 # Addon Provider: ronie
@@ -8,13 +8,69 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: no\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Copy Movie Fanart"
+msgstr "Kopier FilmFanArt"
+
+msgctxt "#32002"
+msgid "Copy TV Show Fanart"
+msgstr "Kopier TVFanArt"
+
+msgctxt "#32003"
+msgid "Copy Music Video Fanart"
+msgstr "Kopier MusikkFanArt"
+
+msgctxt "#32004"
+msgid "Copy Artist Fanart"
+msgstr "Kopier artistFanArt"
+
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Kopier film -miniatyrer"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Kopier sesong miniatyrer"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Kopier episode miniatyrer"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Kopier musikkvideo -miniatyrer"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Kopier artistminiatyrer"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Kopier album -miniatyrer"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Målmappe"
+
+msgctxt "#32013"
+msgid "Copy TV Show Banners"
+msgstr "Kopier TV-serie bannere"
+
+msgctxt "#32014"
+msgid "Copy TV Show Posters"
+msgstr "Kopier TV-serie plakater"
+
+msgctxt "#32015"
+msgid "Custom source"
+msgstr "Tilpasset kilde"
 
 msgctxt "#32016"
 msgid "Path"
@@ -27,3 +83,27 @@ msgstr "Generelt"
 msgctxt "#32102"
 msgid "Advanced"
 msgstr "Avansert"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Ekspert"
+
+msgctxt "#32104"
+msgid "DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING"
+msgstr "IKKE RØR OM DU IKKE VET HVA DU GJØR"
+
+msgctxt "#32105"
+msgid "THIS CAN POTENTIALLY WIPE YOUR ENTIRE HARDDRIVE"
+msgstr "DETTE KAN POTENSIELLT SLETTE HELE HARDDISKEN DIN"
+
+msgctxt "#32106"
+msgid "select which artwork should be copied"
+msgstr "velg hva slags grafikk som skal kopiere"
+
+msgctxt "#32107"
+msgid "search a custom folder for artwork"
+msgstr "søk etter en tilpasset mappe for grafikk"
+
+msgctxt "#32108"
+msgid "select a custom folder where the addon should store the artwork"
+msgstr "velg en tilpasset mappe hvor utvidelsen skal lagre grafikken"

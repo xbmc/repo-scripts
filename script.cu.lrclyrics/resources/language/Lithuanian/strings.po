@@ -98,7 +98,7 @@ msgstr "Ieškoti integruotų dainų žodžių"
 
 msgctxt "#32153"
 msgid "Search for local lyrics files"
-msgstr "Ieškoti lokalių dainų žodžių failų"
+msgstr "Ieškoti vietinių dainų žodžių failų"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
@@ -109,8 +109,8 @@ msgid "Regular lyrics scrapers"
 msgstr "Įprastų dainų žodžių skreperiai"
 
 msgctxt "#32156"
-msgid "Run as a service"
-msgstr "Paleisti kaip paslaugą"
+msgid "Display lyrics automatically"
+msgstr "Rodyti dainų žodžius automatiškai"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
@@ -118,7 +118,7 @@ msgstr "Išvalyti dainos pavadinimą (pašalinti dalį, esančią skliaustuose)"
 
 msgctxt "#32158"
 msgid "Script is already running!"
-msgstr "Skriptas jau paleistas!"
+msgstr "Scenarijus jau paleistas!"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

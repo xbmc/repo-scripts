@@ -1,14 +1,14 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Last.fm
-# Addon id: plugin.audio.lastfm
-# Addon Provider: Team-XBMC
+# Addon id: service.scrobbler.lastfm
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "General"
-msgstr "Menük"
+msgstr "Általános"
 
 msgctxt "#30001"
 msgid "Submit songs to Last.fm"
@@ -59,31 +59,3 @@ msgstr "Letiltva:  '%s'."
 msgctxt "#32017"
 msgid "Could not ban '%s'."
 msgstr "'%s' letiltása sikertelen."
-
-msgctxt "#32018"
-msgid "Do you want to remove this track from your loved tracks?"
-msgstr "Eltávolítás a kedvenc számok közül?"
-
-msgctxt "#32019"
-msgid "Do you want to un-ban this track?"
-msgstr "Zeneszám újraengedélyezése?"
-
-msgctxt "#32024"
-msgid "Remove from loved tracks"
-msgstr "Ki a kedvencekből"
-
-msgctxt "#32025"
-msgid "Un-ban"
-msgstr "Újraengedélyezés"
-
-msgctxt "#32078"
-msgid "Search"
-msgstr "Keresés"
-
-msgctxt "#32079"
-msgid "No results found"
-msgstr "Nincs találat"
-
-msgctxt "#32096"
-msgid "Overall top tags"
-msgstr "Legnépszerűbb címkék"

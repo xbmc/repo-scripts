@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,16 +85,16 @@ msgid "Display images in random order"
 msgstr "Εμφάνιση εικόνων σε τυχαία σειρά"
 
 msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "Λανθάνουσα μνήμη εικόνων"
+msgid "Create image index"
+msgstr "Δημιουργία δείκτη εικόνας"
 
 msgctxt "#30019"
-msgid "Creating cache"
-msgstr "Δημιουργείται η λανθ. μνήμη"
+msgid "Creating index"
+msgstr "Δημιουργείται ο δείκτης"
 
 msgctxt "#30020"
-msgid "Cache created"
-msgstr "Δημιουργήθηκε η λανθ. μνήμη"
+msgid "Index created"
+msgstr "Ο δείκτης δημιουργήθηκε"
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -121,9 +121,9 @@ msgid "Advanced"
 msgstr "Για προχωρημένους"
 
 msgctxt "#30027"
-msgid "Update cache"
-msgstr "Ενημέρωση λανθ. μνήμης"
+msgid "Update index"
+msgstr "Ενημέρωση δείκτη"
 
 msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "Η λανθ. μνήμης δεν υποστηρίζεται με τα fanart"
+msgid "Indexing is not supported with fanart"
+msgstr "Οι δείκτες δεν υποστηρίζονται για fanart"

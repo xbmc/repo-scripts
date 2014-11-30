@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Tamil (India) (http://www.transifex.com/projects/p/xbmc-addons/language/ta_IN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,18 +84,6 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "சீரற்ற வரிசையில் படங்களை காண்பிக்க"
 
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "படத்தேக்குதலை செயல்படுத்து"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "தேக்ககம் உருவாக்கப்படுகின்றது"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "தேக்ககம் உருவாக்கப்பட்டுள்ளது"
-
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "பட தேதியை காட்டு"
@@ -119,11 +107,3 @@ msgstr "கூடுதலான"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "மேம்பட்ட"
-
-msgctxt "#30027"
-msgid "Update cache"
-msgstr "தேக்கத்தை புதுப்பி"
-
-msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "விசிறிபட தேக்கம் ஆதரிக்கப்படவில்லை"

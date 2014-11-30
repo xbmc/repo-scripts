@@ -16,6 +16,14 @@ msgstr ""
 "Language: en_AU\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "File"
+msgstr "File"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Scrapers"
+
 msgctxt "#32151"
 msgid "Options"
 msgstr "Options"

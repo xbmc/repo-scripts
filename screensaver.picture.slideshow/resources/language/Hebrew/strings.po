@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,18 +84,6 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "הצגת התמונות בסדר אקראי"
 
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "הפעלת מטמון תמונות"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "המטמון נוצר כעת"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "יצירת המטמון הסתיימה"
-
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "הצג תאריך תמונה"
@@ -119,11 +107,3 @@ msgstr "נוסף"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "מתקדם"
-
-msgctxt "#30027"
-msgid "Update cache"
-msgstr "עדכן זיכרון מטמון"
-
-msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "שימוש בזיכרון מטמון ביחד עם פאנארט לא נתמך"

@@ -1,4 +1,4 @@
-﻿#-*- coding: UTF-8 -*-
+#-*- coding: UTF-8 -*-
 import sys
 import os
 import re
@@ -41,9 +41,13 @@ class MAIN():
     def main_loop(self):
         self.triggered = False
         # main loop
-        while (not xbmc.abortRequested) and (WIN.getProperty('culrc.quit') == ''):
+        while (not self.Monitor.abortRequested()) and (WIN.getProperty('culrc.quit') == ''):
+            # Check if there is a manual override request
+            if WIN.getProperty('culrc.manual') == 'true':
+                log('searching for manually defined lyrics')
+                self.get_manual_lyrics()
             # check if we are on the music visualization screen
-            if xbmc.getCondVisibility("Window.IsVisible(12006)"):
+            elif xbmc.getCondVisibility("Window.IsVisible(12006)"):
                 if not self.triggered:
                     self.triggered = True
                     # notify user the script is running
@@ -83,7 +87,9 @@ class MAIN():
 
     def find_lyrics(self, song):
         # search embedded lrc lyrics
-        if ( __addon__.getSetting( "search_embedded" ) == "true" and song.analyze_safe ):
+        ext = os.path.splitext(song.filepath.decode("utf-8"))[1].lower()
+        sup_ext = ['.mp3', '.flac']
+        if ( __addon__.getSetting( "search_embedded" ) == "true") and song.analyze_safe and (ext in sup_ext):
             log('searching for embedded lrc lyrics')
             try:
                 lyrics = getEmbedLyrics(song, True)
@@ -226,6 +232,24 @@ class MAIN():
             else:
                 log( "Missing Artist or Song name in ID3 tag for next track" )
 
+    def get_manual_lyrics(self):
+        # Read in the manually defined artist and track
+        if WIN.getProperty('culrc.manual') == 'true':
+            artist = WIN.getProperty('culrc.artist')
+            track = WIN.getProperty('culrc.track')
+            # Make sure we have both an artist and track name
+            if artist and track:
+                song = Song(artist, track)
+                if ( song and ( self.current_lyrics.song != song ) ):
+                    log("Current Song: %s - %s" % (song.artist, song.title))
+                    lyrics = self.get_lyrics( song )
+                    self.current_lyrics = lyrics
+                    if lyrics.lyrics:
+                        # Store the details of the lyrics
+                        WIN.setProperty('culrc.newlyrics', 'TRUE')
+                        WIN.setProperty('culrc.lyrics', lyrics.lyrics)
+                        WIN.setProperty('culrc.source', lyrics.source)
+
     def update_settings(self):
         self.get_scraper_list()
         service = __addon__.getSetting('service')
@@ -251,6 +275,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
         self.mode = kwargs[ "mode" ]
+        self.Monitor = MyMonitor(function = None)
        
     def onInit(self):
         self.setup_gui()
@@ -275,7 +300,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
 
     def gui_loop(self):
         # gui loop
-        while self.showgui and (not xbmc.abortRequested) and xbmc.getCondVisibility('Player.HasAudio'):
+        while self.showgui and (not self.Monitor.abortRequested()) and xbmc.getCondVisibility('Player.HasAudio'):
             # check if we have new lyrics
             if WIN.getProperty("culrc.newlyrics") == "TRUE":
                 WIN.clearProperty('culrc.newlyrics')
@@ -290,7 +315,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if (not xbmc.getCondVisibility('Player.HasAudio')):
             self.exit_gui('quit')
         # xbmc quits, close the gui 
-        elif xbmc.abortRequested:
+        elif self.Monitor.abortRequested():
             self.exit_gui('quit')
 
     def setup_gui(self):

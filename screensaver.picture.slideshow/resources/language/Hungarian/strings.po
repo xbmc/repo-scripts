@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,18 +84,6 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Képek véletlenszerű betöltése"
 
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "Kép gyorstároló engedélyezése"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "Gyorstároló készül"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "Gyorstároló kész"
-
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Képadatok megjelenítése"
@@ -119,11 +107,3 @@ msgstr "Hozzáadott"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Haladó"
-
-msgctxt "#30027"
-msgid "Update cache"
-msgstr "Gyorsítótár frissítése"
-
-msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "A fanart-ok gyosítótárazása nem támogatott"

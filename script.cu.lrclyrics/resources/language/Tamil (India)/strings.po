@@ -16,6 +16,14 @@ msgstr ""
 "Language: ta_IN\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "File"
+msgstr "கோப்பு"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "சீவுளிகள்"
+
 msgctxt "#32151"
 msgid "Options"
 msgstr "விருப்பங்கள்"

@@ -52,9 +52,12 @@ class LyricsFetcher:
         lyrics.source = __title__
         lyrics.lrc = __lrc__
 
-
+        key = None
         try:
-            key = gomClient.GetKeyFromFile( song.filepath )
+            ext = os.path.splitext(song.filepath.decode("utf-8"))[1].lower()
+            sup_ext = ['.mp3', '.ogg', '.wma', '.flac', '.ape', '.wav']
+            if ext in sup_ext:
+                key = gomClient.GetKeyFromFile( song.filepath )
             if not key:
                 return None
             url = GOM_URL %(key, urllib.quote(song.title.decode("utf-8").encode("euc-kr")), urllib.quote(song.artist.decode("utf-8").encode("euc-kr")))

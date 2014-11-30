@@ -104,10 +104,6 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "非同步歌词刮削器"
 
-msgctxt "#32156"
-msgid "Run as a service"
-msgstr "作为服务运行"
-
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
 msgstr "清理歌曲标题（移除括号内的部分）"

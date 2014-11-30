@@ -44,6 +44,10 @@ msgctxt "#32103"
 msgid "- Save format"
 msgstr "- Guardar no formato"
 
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
 msgctxt "#32105"
 msgid "%A\\%T"
 msgstr "%A\\%T"
@@ -103,10 +107,6 @@ msgstr "Colectores de letras sincronizadas"
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Colectores de letras normais"
-
-msgctxt "#32156"
-msgid "Run as a service"
-msgstr "Executar como um serviço"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"

@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,18 +75,6 @@ msgstr "Utilitza el nom de la carpeta"
 msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Mostrar les imatges en ordre aleatori"
-
-msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "Habilita memòria cache d'imatges"
-
-msgctxt "#30019"
-msgid "Creating cache"
-msgstr "Creant memoria cache"
-
-msgctxt "#30020"
-msgid "Cache created"
-msgstr "Memoria cache creada"
 
 msgctxt "#30021"
 msgid "Display picture date"

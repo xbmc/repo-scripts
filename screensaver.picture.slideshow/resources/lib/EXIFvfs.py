@@ -1730,7 +1730,7 @@ def process_file(f, stop_tag='UNDEF', details=True, strict=False, debug=False):
                     if debug: print "Increment base by",ord(data[base+2])*256+ord(data[base+3])+2
                 except: pass
                 try: base=base+ord(data[base+2])*256+ord(data[base+3])+2
-                except: pass
+                except: return {}
 
         f.seek(base+12,0)
         if data[2+base] == '\xFF' and data[6+base:10+base] == 'Exif':

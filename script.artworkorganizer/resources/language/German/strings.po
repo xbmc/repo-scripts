@@ -1,4 +1,4 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 # Addon Name: Artwork Organizer
 # Addon id: script.artworkorganizer
 # Addon Provider: ronie
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +30,7 @@ msgstr "Kopiere Musikvideo-FanArt"
 
 msgctxt "#32004"
 msgid "Copy Artist Fanart"
-msgstr "Kopiere Artist-FanArt"
+msgstr "Interpreten-FanArt kopieren"
 
 msgctxt "#32005"
 msgid "Copy Movie Thumbs"
@@ -42,7 +42,7 @@ msgstr "Kopiere Staffel-Vorschaubild"
 
 msgctxt "#32008"
 msgid "Copy Episode Thumbs"
-msgstr "Kopiere Episoden-Vorschaubild"
+msgstr "Folgen-Vorschaubild kopieren"
 
 msgctxt "#32009"
 msgid "Copy Music Video Thumbs"

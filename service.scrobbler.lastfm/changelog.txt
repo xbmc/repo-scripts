@@ -1,3 +1,10 @@
+v1.0.3
+- update language files from Transifex
+- add better support for streaming radio
+
+v1.0.2
+- use waitForAbort()
+
 v1.0.1
 - add missing dependency
 

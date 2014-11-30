@@ -1,14 +1,14 @@
-# XBMC Media Center language file
-# Addon Name: Slideshow
-# Addon id: screensaver.xbmc.slideshow
-# Addon Provider: Team XBMC
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: XBMC Translation Team\n"
+"Last-Translator: Kodi Translation Team\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,16 +85,16 @@ msgid "Display images in random order"
 msgstr "Afbeeldingen willekeurig weergeven"
 
 msgctxt "#30017"
-msgid "Enable image cache"
-msgstr "Cache voor afbeeldingen inschakelen"
+msgid "Create image index"
+msgstr "Creëer afbeelding index"
 
 msgctxt "#30019"
-msgid "Creating cache"
-msgstr "Genereren cache"
+msgid "Creating index"
+msgstr "Creëren index"
 
 msgctxt "#30020"
-msgid "Cache created"
-msgstr "Cache aangemaakt"
+msgid "Index created"
+msgstr "Index gecreëerd"
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -121,9 +121,9 @@ msgid "Advanced"
 msgstr "Geavanceerd"
 
 msgctxt "#30027"
-msgid "Update cache"
-msgstr "Update cache"
+msgid "Update index"
+msgstr "Update index"
 
 msgctxt "#30028"
-msgid "Caching is not supported with fanart"
-msgstr "Caching worden niet onderstund met fanart"
+msgid "Indexing is not supported with fanart"
+msgstr "Indexering wordt niet ondersteunt met fanart"

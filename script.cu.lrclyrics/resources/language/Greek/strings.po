@@ -109,8 +109,8 @@ msgid "Regular lyrics scrapers"
 msgstr "Scraper συνηθισμένων στίχων"
 
 msgctxt "#32156"
-msgid "Run as a service"
-msgstr "Εκτέλεση σαν υπηρεσία"
+msgid "Display lyrics automatically"
+msgstr "Αυτόματη εμφάνιση στίχων"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
