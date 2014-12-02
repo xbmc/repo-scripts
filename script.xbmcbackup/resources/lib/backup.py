@@ -84,7 +84,7 @@ class XbmcBackup:
 
         for aFile in files:
             file_ext = aFile.split('.')[-1]
-            folderName = aFile.split('.')[0]
+            folderName = utils.encode(aFile.split('.')[0])
             
             if(file_ext == 'zip' and (len(folderName) == 12 or len(folderName) == 8) and str.isdigit(folderName)):
                 

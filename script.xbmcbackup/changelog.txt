@@ -1,3 +1,12 @@
+Version 0.6.0
+
+fixed typo in Dropbox rmfile command
+
+Version 0.5.9
+
+fixed dropbox unicode error
+create restored version of guisettings for easy local restoration
+
 Version 0.5.8.7
 
 allow limited updating of guisettings file through json

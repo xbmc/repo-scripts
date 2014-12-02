@@ -6,6 +6,7 @@ import xbmc,xbmcvfs
 
 
 class GuiSettingsManager:
+    settingsFile = None
     doc = None
     settings_allowed = list()
     found_settings = list()
@@ -44,6 +45,9 @@ class GuiSettingsManager:
                 xbmc.executeJSONRPC('{"jsonrpc":"2.0", "id":1, "method":"Settings.SetSettingValue","params":{"setting":"' + aSetting.json_name() + '","value":' + aSetting.value + '}}')
             else:
                 xbmc.executeJSONRPC('{"jsonrpc":"2.0", "id":1, "method":"Settings.SetSettingValue","params":{"setting":"' + aSetting.json_name() + '","value":"' + aSetting.value + '"}}')
+                
+        #make a copy of the guisettings file to make user based restores easier
+        xbmcvfs.copy(self.settingsFile, xbmc.translatePath("special://home/userdata/guisettings.xml.restored"))
             
     def __parseNodes(self,nodeList):
         result = []
@@ -73,10 +77,9 @@ class GuiSettingsManager:
     def _readFile(self,fileLoc):
         
         if(xbmcvfs.exists(fileLoc)):
-            
             try:
-                
                 self.doc = minidom.parse(fileLoc)
+                self.settingsFile = fileLoc
             except ExpatError:
                 utils.log("Can't read " + fileLoc)
                 
