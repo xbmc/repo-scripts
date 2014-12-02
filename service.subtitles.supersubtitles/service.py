@@ -32,7 +32,7 @@ __language__ = __addon__.getLocalizedString
 __cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
 __profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
 #__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
+__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp', '')).decode("utf-8")
 
 #sys.path.append (__resource__)
 
@@ -339,8 +339,8 @@ def is_archive(filename):
 
 
 def extract(archive):
-    basename = os.path.basename(archive).replace('.', '_')
-    extracted = os.path.join(__temp__, basename)
+    basename = os.path.basename(archive).replace('.', '_').decode('utf-8')
+    extracted = os.path.join(__temp__, basename, '')
     xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (archive, extracted)).encode('utf-8'), True)
 
     if xbmcvfs.exists(extracted):
@@ -351,7 +351,7 @@ def extract(archive):
 
 
 def download_file(item):
-    filename = urllib.unquote_plus(item['filename'].decode("utf-8")).replace(' ', '_')
+    filename = urllib.unquote_plus(item['filename'].decode("utf-8")).replace(' ', '_').decode('utf-8')
     localfile = os.path.join(__temp__, filename)
     qparams = {'action': 'letolt', 'felirat': item['id']}
 

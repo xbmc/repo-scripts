@@ -1,3 +1,6 @@
+0.017
+- path encoding and helix related bug fixes
+
 0.0.16
 - windows related problem fixes
 - improve tv show title, season and episode detection
