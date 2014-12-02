@@ -29,8 +29,23 @@ __addonpath__    = __addon__.getAddonInfo('path').decode('utf-8')
 __addonprofile__ = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode('utf-8')
 __icon__         = __addon__.getAddonInfo('icon')
 
+# Fixes unicode problems
+def string_unicode(text, encoding='utf-8'):
+    try:
+        text = unicode( text, encoding )
+    except:
+        pass
+    return text
+
+def normalize_string(text):
+    try:
+        text = unicodedata.normalize('NFKD', string_unicode(text)).encode('ascii', 'ignore')
+    except:
+        pass
+    return text
+
 def localise(id):
-    string = __addon__.getLocalizedString(id).encode( 'utf-8', 'ignore' )
+    string = normalize_string(__addon__.getLocalizedString(id))
     return string
 
 def log(txt):
