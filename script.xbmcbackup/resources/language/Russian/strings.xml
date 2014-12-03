@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Russian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ru/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">Резервная копия XBMC</string>
+    <string id="30011">Основные</string>
+    <string id="30012">Типы файлов</string>
+    <string id="30013">Расписание</string>
+    <string id="30016">Резервная копия</string>
+    <string id="30017">Всстановить</string>
+    <string id="30018">Выбрать путь</string>
+    <string id="30019">Ручной ввод</string>
+    <string id="30020">Выбрать сетевой путь</string>
+    <string id="30021">Имя папки с рез. копиями</string>
+    <string id="30022">Окно с ходом выполнения</string>
+    <string id="30023">Режим</string>
+    <string id="30024">Ввести сетевой путь</string>
+    <string id="30025">Ручной ввод удаленного пути</string>
+    <string id="30026">Кол-во резервных копий (0 - все)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Ключ Dropbox</string>
+    <string id="30029">Секретный ключ Dropbox</string>
+    <string id="30030">Пользовательские дополнения</string>
+    <string id="30031">Данные дополнений</string>
+    <string id="30032">База данных</string>
+    <string id="30033">Плейлист</string>
+    <string id="30034">Миниатюры/Фанарт</string>
+    <string id="30035">Конфигурационные файлы</string>
+    <string id="30036">Пользовательский каталог 1</string>
+    <string id="30037">Пользовательский каталог 2</string>
+    <string id="30038">Обнаружены дополнительные настройки</string>
+    <string id="30039">Файл с дополнительными настройками должен быть восстановлен первым</string>
+    <string id="30040">Нажмите Да, чтоб восстановить этот файл и перезапустить XBMC</string>
+    <string id="30041">Нажмите Нет для продолжения</string>
+    <string id="30042">Возобновить восстановление</string>
+    <string id="30043">XBMC Backup обнаружил неоконченное восстановление из копии</string>
+    <string id="30044">Продолжить?</string>
+    <string id="30045">Ошибка: Сетевой путь не доступен</string>
+    <string id="30046">Начало</string>
+    <string id="30047">Локальная папка</string>
+    <string id="30048">Сетевая папка</string>
+    <string id="30049">Подготавливаем список файлов</string>
+    <string id="30050">Удаленный путь существует - там могут быть старые версии файлов!</string>
+    <string id="30051">Создаём список файлов</string>
+    <string id="30052">Сохраняем файл</string>
+    <string id="30053">Начинаем резервное копирование по расписанию</string>
+    <string id="30054">Удаление резервной копии</string>
+    <string id="30056">Проверьте журнал Dropbox для URL авторизации</string>
+    <string id="30057">Нажмите OK, когда авторизируйтесь</string>
+    <string id="30058">Нужен код разработчика Dropbox</string>
+    <string id="30059">Посетите https://www.dropbox.com/developers</string>
+    <string id="30060">Включить планировщик</string>
+    <string id="30061">Расписание</string>
+    <string id="30062">Час дня</string>
+    <string id="30063">День недели</string>
+    <string id="30064">Планировщик</string>
+    <string id="30065">Воскресенье</string>
+    <string id="30066">Понедельник</string>
+    <string id="30067">Вторник</string>
+    <string id="30068">Среда</string>
+    <string id="30069">Четверг</string>
+    <string id="30070">Пятница</string>
+    <string id="30071">Суббота</string>
+    <string id="30072">Ежедневно</string>
+    <string id="30073">Еженедельно</string>
+    <string id="30074">В первый день месяца</string>
+    <string id="30075">Своё расписание</string>
+    <string id="30076">Завершить работу после резервного копирования</string>
+    <string id="30077">Перезапустить XBMC</string>
+    <string id="30078">Необходимо перезапустить XBMC для продолжения</string>
+    <string id="30079">Только сегодня</string>
+    <string id="30080">Профили</string>
+    <string id="30081">Планировщик будет запущен снова в</string>
+    <string id="30082">Полоса с ходом выполнения</string>
+    <string id="30083">Ход выполнения в фоне</string>
+    <string id="30084">Не выводить (Тихо)</string>
+    <string id="30085">Предупреждение</string>
+    <string id="30086">Используемая версия XBMC отличается от версии, используемой при создании архива</string>
+</strings>

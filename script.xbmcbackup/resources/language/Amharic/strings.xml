@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Amharic language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/am/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">ባጠቃላይ</string>
+    <string id="30023">ዘዴ </string>
+    <string id="30032">ዳታቤዝ</string>
+    <string id="30033">የሚጫወተው ዝርዝር </string>
+    <string id="30062">ሰአት </string>
+    <string id="30065">እሑድ </string>
+    <string id="30066">ሰኞ</string>
+    <string id="30067">ማክሰኞ</string>
+    <string id="30068">ረቡዕ </string>
+    <string id="30069">ሐሙስ</string>
+    <string id="30070">አርብ</string>
+    <string id="30071">ቅዳሜ</string>
+    <string id="30080">ገጽታዎች </string>
+</strings>

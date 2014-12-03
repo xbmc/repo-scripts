@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hungarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC biztonsági mentés</string>
+    <string id="30011">Általános</string>
+    <string id="30012">Fájlok kiválasztás</string>
+    <string id="30013">Időzítés</string>
+    <string id="30016">Biztonsági mentés</string>
+    <string id="30017">Visszaállítás</string>
+    <string id="30018">Útvonal tallózása</string>
+    <string id="30019">Adja meg az útvonalat</string>
+    <string id="30020">Távoli útvonal tallózása</string>
+    <string id="30021">Biztonsási mentés mappa neve</string>
+    <string id="30022">Folyamatkijelzés</string>
+    <string id="30023">Mód</string>
+    <string id="30024">Adja meg a távoli útvonalat</string>
+    <string id="30025">Távoli útvonal típusa</string>
+    <string id="30026">Megtartandó mentések száma (0, ha mindet)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox key</string>
+    <string id="30029">Dropbox secret</string>
+    <string id="30030">Felhasználói kiegészítők</string>
+    <string id="30031">Kiegészítő adatok</string>
+    <string id="30032">Adatbázis</string>
+    <string id="30033">Lejátszási lista</string>
+    <string id="30034">Bélyegképek / Rajongói képek</string>
+    <string id="30035">Konfigurációs fájlok</string>
+    <string id="30036">Saját könyvtár 1</string>
+    <string id="30037">Saját könyvtár 2</string>
+    <string id="30038">Haladó Beállítások Megtalálva</string>
+    <string id="30039">Az advancedsettings fájl visszaállítása szükséges előbb</string>
+    <string id="30040">Válassza az Igen opciót a fájl visszaállításához és az XBMC újraindításához</string>
+    <string id="30041">Válassza a Nem opciót a folytatáshoz</string>
+    <string id="30042">Visszaállítás folyatatása</string>
+    <string id="30043">Az XBMC Backup befejezetlen visszaállítást érzékelt</string>
+    <string id="30044">Folytassuk?</string>
+    <string id="30045">Hiba: A távoli útvonal nem létezik</string>
+    <string id="30046">Kezdődik</string>
+    <string id="30047">Helyi könyvtár</string>
+    <string id="30048">Távoli könyvtár</string>
+    <string id="30049">Fájl lista összegyüjtése</string>
+    <string id="30050">A távoli útvonal létezik - régi fájlok lehetnek benne!</string>
+    <string id="30051">Fájl lista létrehozása</string>
+    <string id="30052">Fájl írása</string>
+    <string id="30053">Időzített mentés kezdete</string>
+    <string id="30054">Mentés törlése</string>
+    <string id="30056">Ellenőrizze a naplófájlt a Dropbox bejelentkezési URL-hez</string>
+    <string id="30057">Nyomja meg az OK-t ha bejelentkezett</string>
+    <string id="30058">Dropbox fejlesztői kód szükséges</string>
+    <string id="30059">További információ: https://www.dropbox.com/developers</string>
+    <string id="30060">Időzítő engedélyezése</string>
+    <string id="30061">Időzítés</string>
+    <string id="30062">A nap órája</string>
+    <string id="30063">A hét napja</string>
+    <string id="30064">Cron időzítő</string>
+    <string id="30065">Vasárnap</string>
+    <string id="30066">Hétfő</string>
+    <string id="30067">Kedd</string>
+    <string id="30068">Szerda</string>
+    <string id="30069">Csütörtök</string>
+    <string id="30070">Péntek</string>
+    <string id="30071">Szombat</string>
+    <string id="30072">Minden nap</string>
+    <string id="30073">Minden Héten</string>
+    <string id="30074">A hónap első napján</string>
+    <string id="30075">Egyéni időzítő</string>
+    <string id="30076">Leállítás a biztonsági mentés után</string>
+    <string id="30077">XBMC újraindítása</string>
+    <string id="30078">Az XBMC újraindítása szükséges a folytatáshoz</string>
+    <string id="30079">Csak Ma</string>
+    <string id="30080">Profilok</string>
+    <string id="30081">Az ütemező következő futása:</string>
+    <string id="30082">Folyamatkijelző</string>
+    <string id="30083">Háttér Folyamatjelző</string>
+    <string id="30084">Nincs (Néma)</string>
+    <string id="30085">Verzió Figyelmeztetés</string>
+    <string id="30086">Az XBMC verziója különbözik attól mint amelyik létrehozta az archívumot</string>
+</strings>

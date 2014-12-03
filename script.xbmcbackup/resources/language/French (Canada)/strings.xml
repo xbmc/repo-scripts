@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- French (Canada) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">Sauvegarde XBMC</string>
+    <string id="30011">Général</string>
+    <string id="30012">Choix des fichiers</string>
+    <string id="30013">Planification</string>
+    <string id="30016">Sauvegarder</string>
+    <string id="30017">Restaurer</string>
+    <string id="30018">Parcourir le chemin</string>
+    <string id="30019">Saisir le chemin</string>
+    <string id="30020">Parcourir le chemin distant</string>
+    <string id="30021">Nom du dossier de sauvegarde</string>
+    <string id="30022">Affichage de la progression</string>
+    <string id="30023">Mode</string>
+    <string id="30024">Saisir le chemin distant</string>
+    <string id="30025">Type de chemin distant</string>
+    <string id="30026">Sauvegardes à garder (0 pour toutes)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Clef Dropbox</string>
+    <string id="30029">Secret Dropbox</string>
+    <string id="30030">Addiciels de l'utilisateur</string>
+    <string id="30031">Données de l'addiciel</string>
+    <string id="30032">Base de données</string>
+    <string id="30033">Liste de lecture</string>
+    <string id="30034">Imagettes/Fanart</string>
+    <string id="30035">Fichiers de configuration</string>
+    <string id="30036">Répertoire personnalisé 1</string>
+    <string id="30037">Répertoire personnalisé 2</string>
+    <string id="30038">Paramètres avancés détectés</string>
+    <string id="30039">Le fichier advancedsettings devrait d'abord être restauré</string>
+    <string id="30040">Choisir Oui pour restaurer ce fichier et redémarrer XBMC</string>
+    <string id="30041">Choisir Non pour continuer</string>
+    <string id="30042">Reprendre la restauration</string>
+    <string id="30043">La sauvegarde de XBMC a détecté une restauration incomplète</string>
+    <string id="30044">Voulez-vous continuer?</string>
+    <string id="30045">Erreur : le chemin distant n'existe pas</string>
+    <string id="30046">Démarrage</string>
+    <string id="30047">Répertoire local</string>
+    <string id="30048">Répertoire distant</string>
+    <string id="30049">Recueil de la liste des fichiers</string>
+    <string id="30050">Le chemin distant existe - il peut contenir des anciens fichiers!</string>
+    <string id="30051">Création de la liste des fichiers</string>
+    <string id="30052">Écriture du fichier</string>
+    <string id="30053">Lancement de la sauvegarde planifiée</string>
+    <string id="30054">Suppression de la sauvegarde</string>
+    <string id="30056">Vérifier le journal pour l'URL d'autorisation de Dropbox</string>
+    <string id="30057">Cliquer sur OK après autorisation</string>
+    <string id="30058">Code du développeur Dropbox requis</string>
+    <string id="30059">Visiter https://www.dropbox.com/developers</string>
+    <string id="30060">Activer l'ordonnanceur</string>
+    <string id="30061">Planification</string>
+    <string id="30062">Heure de la journée</string>
+    <string id="30063">Jour de la semaine</string>
+    <string id="30064">Planification cron</string>
+    <string id="30065">Dimanche</string>
+    <string id="30066">Lundi</string>
+    <string id="30067">Mardi</string>
+    <string id="30068">Mercredi</string>
+    <string id="30069">Jeudi</string>
+    <string id="30070">Vendredi</string>
+    <string id="30071">Samedi</string>
+    <string id="30072">Tous les jours</string>
+    <string id="30073">Toutes les semaines</string>
+    <string id="30074">Premier de chaque mois</string>
+    <string id="30075">Planification personnalisée</string>
+    <string id="30076">Extinction après la sauvegarde</string>
+    <string id="30077">Redémarrer XBMC</string>
+    <string id="30078">Vous devriez redémarrer XBMC pour continuer</string>
+    <string id="30079">Seulement aujourd'hui</string>
+    <string id="30080">Profils</string>
+    <string id="30081">L'ordonnanceur s'exécutera à nouveau</string>
+    <string id="30082">Barre de progression</string>
+    <string id="30083">Barre de progression d'arrière-plan</string>
+    <string id="30084">Aucun (silencieux)</string>
+    <string id="30085">Avertissement de version</string>
+    <string id="30086">Cette version de XBMC est différente de celle utilisée pour créer l'archive</string>
+</strings>

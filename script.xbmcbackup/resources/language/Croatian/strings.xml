@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Croatian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hr/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC sigurnosno kopiranje</string>
+    <string id="30011">Općenito</string>
+    <string id="30012">Odabir datoteke</string>
+    <string id="30013">Planirano vrijeme</string>
+    <string id="30016">Sigurnosno kopiranje</string>
+    <string id="30017">Obnovi</string>
+    <string id="30018">Putanja pregleda</string>
+    <string id="30019">Vrsta putanje</string>
+    <string id="30020">Pregledaj udaljenu putanju</string>
+    <string id="30021">Sigurnosno kopiraj naziv mape</string>
+    <string id="30022">Prikaz napretka</string>
+    <string id="30023">Način</string>
+    <string id="30024">Upišite udaljenu putanju</string>
+    <string id="30025">Vrsta udaljene putanje</string>
+    <string id="30026">Sigurnosna kopiranja za zadržavanje (0 za sve)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox ključ</string>
+    <string id="30029">Dropbox tajna</string>
+    <string id="30030">Dodaci korisnika</string>
+    <string id="30031">Podaci dodatka</string>
+    <string id="30032">Baza podataka</string>
+    <string id="30033">Popisu izvođenja</string>
+    <string id="30034">Minijature/Slike omota</string>
+    <string id="30035">Datoteke podešavanja</string>
+    <string id="30036">Prilagođeni direktorij 1</string>
+    <string id="30037">Prilagođeni direktorij 2</string>
+    <string id="30038">Otkrivene su napredne postavke</string>
+    <string id="30039">Datoteka napredne postavke prvo se treba obnoviti</string>
+    <string id="30040">Odaberite 'Da' za obnavljanje ove datoteke i ponovno pokretanje XBMC-a</string>
+    <string id="30041">Odaberite 'Ne' za nastavak</string>
+    <string id="30042">Nastavi obnovu</string>
+    <string id="30043">XBMC sigurnosno kopiranje je otkrilo nezavršenu obnovu</string>
+    <string id="30044">Želite li nastaviti?</string>
+    <string id="30045">Greška: udaljena putanja ne postoji</string>
+    <string id="30046">Pokretanje</string>
+    <string id="30047">Lokalni direktorij</string>
+    <string id="30048">Udaljeni direktorij</string>
+    <string id="30049">Sakupljanje popisa datoteka</string>
+    <string id="30050">Udaljena putanja postoji - možda sadrži zastarjele datoteke!</string>
+    <string id="30051">Stvaranje popisa datoteka</string>
+    <string id="30052">Zapisivanje datoteke</string>
+    <string id="30053">Pokretanje sigurnosnog kopiranja u planirano vrijeme</string>
+    <string id="30054">Uklanjanje sigurnosnog kopiranja</string>
+    <string id="30056">Provjera zapisa za URL autorizacije Dropboxa</string>
+    <string id="30057">Kliknite 'U redu' kada je autorizirano</string>
+    <string id="30058">Potreban je kôd Dropbox razvijatelja</string>
+    <string id="30059">Posjetite https://www.dropbox.com/developers</string>
+    <string id="30060">Omogući planirano vrijeme</string>
+    <string id="30061">Planirano vrijeme</string>
+    <string id="30062">Sata dnevno</string>
+    <string id="30063">Dan u tjednu</string>
+    <string id="30064">Cron planirano vrijeme</string>
+    <string id="30065">Nedjelja</string>
+    <string id="30066">Ponedjeljak</string>
+    <string id="30067">Utorak</string>
+    <string id="30068">Srijeda</string>
+    <string id="30069">Četvrtak</string>
+    <string id="30070">Petak</string>
+    <string id="30071">Subota</string>
+    <string id="30072">Svaki dan</string>
+    <string id="30073">Svaki tjedan</string>
+    <string id="30074">Prvi dan mjeseca</string>
+    <string id="30075">Prilagođeno vrijeme planiranja</string>
+    <string id="30076">Isključi nakon sigurnosnog kopiranja</string>
+    <string id="30077">Ponovno pokreni XBMC</string>
+    <string id="30078">Za nastavak je potrebno ponovno pokretanje XBMC-a</string>
+    <string id="30079">Samo danas</string>
+    <string id="30080">Profili</string>
+    <string id="30081">Planirano vrijeme će se ponovno pokrenuti</string>
+    <string id="30082">Traka napretka</string>
+    <string id="30083">Pozadina trake napretka</string>
+    <string id="30084">Nepoznato (Tiho)</string>
+    <string id="30085">Upozorenje inačice</string>
+    <string id="30086">Ova inačica XBMC-a je drugačija od one koja se koristila za stvaranje arhive</string>
+</strings>

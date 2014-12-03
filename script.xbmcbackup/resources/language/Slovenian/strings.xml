@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Slovenian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Splošno</string>
+    <string id="30023">Način</string>
+    <string id="30032">Podatkovna baza</string>
+    <string id="30033">Seznam predvajanja</string>
+    <string id="30065">Nedelja</string>
+    <string id="30066">Ponedeljek</string>
+    <string id="30067">Torek</string>
+    <string id="30068">Sreda</string>
+    <string id="30069">Četrtek</string>
+    <string id="30070">Petek</string>
+    <string id="30071">Sobota</string>
+    <string id="30080">Profili</string>
+</strings>

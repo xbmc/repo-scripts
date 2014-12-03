@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Turkish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/tr/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Genel</string>
+    <string id="30016">Yedekle</string>
+    <string id="30023">Mod</string>
+    <string id="30032">Veritabanı</string>
+    <string id="30033">Çalma listesi</string>
+    <string id="30065">Pazar</string>
+    <string id="30066">Pazartesi</string>
+    <string id="30067">Salı</string>
+    <string id="30068">Çarşamba</string>
+    <string id="30069">Perşembe</string>
+    <string id="30070">Cuma</string>
+    <string id="30071">Cumartesi</string>
+    <string id="30080">Profiller</string>
+</strings>

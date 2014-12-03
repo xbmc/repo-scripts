@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Korean language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ko/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC 백업</string>
+    <string id="30011">일반</string>
+    <string id="30012">파일 선택</string>
+    <string id="30013">스케쥴</string>
+    <string id="30016">백업</string>
+    <string id="30017">복구</string>
+    <string id="30018">경로 탐색</string>
+    <string id="30019">경로 입력</string>
+    <string id="30020">원격 경로 탐색</string>
+    <string id="30021">백업 폴더명</string>
+    <string id="30022">진행 표시</string>
+    <string id="30023">모드</string>
+    <string id="30024">원격 경로 입력</string>
+    <string id="30025">원격 경로 유형</string>
+    <string id="30026">유지할 백업 (0은 모두 유지)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox 아이디</string>
+    <string id="30029">Dropbox 비밀번호</string>
+    <string id="30030">사용자 애드온</string>
+    <string id="30031">애드온 데이터</string>
+    <string id="30032">데이터베이스</string>
+    <string id="30033">재생목록</string>
+    <string id="30034">썸네일/팬아트</string>
+    <string id="30035">설정 파일</string>
+    <string id="30036">사용자 디렉터리 1</string>
+    <string id="30037">사용자 디렉터리 2</string>
+    <string id="30038">Advanced Settings 감지 됨</string>
+    <string id="30039">advancedsettings 파일을 먼저 복원하여야 합니다</string>
+    <string id="30040">이 파일을 복원하고 XBMC를 다시 시작하려면 Yes 를 선택하세요</string>
+    <string id="30041">계속하려면 No 를 선택하세요</string>
+    <string id="30042">복원 재개</string>
+    <string id="30043">XBMC Backup이 완료되지 않은 복원을 감지하였습니다</string>
+    <string id="30044">계속 하겠습니까?</string>
+    <string id="30045">오류: 존재하지 않는 원격 경로</string>
+    <string id="30046">시작</string>
+    <string id="30047">로컬 디렉터리</string>
+    <string id="30048">원격 디렉터리</string>
+    <string id="30049">파일 목록을 가져오는 중</string>
+    <string id="30050">원격 경로 있음 - 오래된 파일이 있습니다!</string>
+    <string id="30051">파일 목록 작성 중</string>
+    <string id="30052">파일을 쓰는 중</string>
+    <string id="30053">예약된 백업 시작</string>
+    <string id="30054">백업 삭제</string>
+    <string id="30056">로그에서 Dropbox 인증 URL을 확인하세요</string>
+    <string id="30057">인증이 완료되면 확인을 누르세요</string>
+    <string id="30058">Dropbox 개발자 코드가 필요합니다</string>
+    <string id="30059">https://www.dropbox.com/developers 을 방문하세요</string>
+    <string id="30060">예약 사용</string>
+    <string id="30061">예약</string>
+    <string id="30062">시간</string>
+    <string id="30063">요일</string>
+    <string id="30064">Cron 예약</string>
+    <string id="30065">일요일</string>
+    <string id="30066">월요일</string>
+    <string id="30067">화요일</string>
+    <string id="30068">수요일</string>
+    <string id="30069">목요일</string>
+    <string id="30070">금요일</string>
+    <string id="30071">토요일</string>
+    <string id="30072">매일</string>
+    <string id="30073">매주</string>
+    <string id="30074">매월 첫 날</string>
+    <string id="30075">사용자 예약</string>
+    <string id="30076">백업후 시스템 종료</string>
+    <string id="30077">XBMC 재시작</string>
+    <string id="30078">계속하려면 XBMC를 다시 시작하여야 합니다</string>
+    <string id="30079">오늘만</string>
+    <string id="30080">프로파일</string>
+    <string id="30081">다음 예약 실행: </string>
+    <string id="30082">진행 막대</string>
+    <string id="30083">백드라운드 진행 막대</string>
+    <string id="30084">없음 (표시 안 함)</string>
+    <string id="30085">버전 경고</string>
+    <string id="30086">이 XBMC 버전은 보관되어 있는 XBMC와 다른 버전입니다.</string>
+</strings>

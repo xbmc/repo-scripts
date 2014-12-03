@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Bulgarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/bg/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">XBMC Backup</string>
+    <string id="30011">Основи</string>
+    <string id="30012">Избор на файлове</string>
+    <string id="30013">Планиране</string>
+    <string id="30016">Резервно копие</string>
+    <string id="30017">Възстанови</string>
+    <string id="30018">Преглеждане за път</string>
+    <string id="30019">Въвеждане на път</string>
+    <string id="30020">Прегледайте за отдалечен път</string>
+    <string id="30021">Име на папката за резервните копия</string>
+    <string id="30022">Известяване за напредъка</string>
+    <string id="30023">Режим</string>
+    <string id="30024">Въведете отдалечения път</string>
+    <string id="30025">Окажете пътя до папката с резервни копия</string>
+    <string id="30026">Колко резервни копия да бъдат съхранявани  (0 за всички)</string>
+    <string id="30027">Dropbox</string>
+    <string id="30028">Dropbox ключ</string>
+    <string id="30029">Dropbox секретен ключ</string>
+    <string id="30030">Добавки</string>
+    <string id="30031">Данните на добавките</string>
+    <string id="30032">Базата данни</string>
+    <string id="30033">Плейлисти</string>
+    <string id="30034">Миниатюри/Фанарт</string>
+    <string id="30035">Файловете с настройки</string>
+    <string id="30036">Персонална директория 1</string>
+    <string id="30037">Персонална директория 1</string>
+    <string id="30038">Засечени са допълнителни настройки</string>
+    <string id="30039">Първо трябва да бъде възстановен файла "advancedsettings.xml"</string>
+    <string id="30040">Изберете "Да" за възстановяване от файла и рестартиране на XBMC</string>
+    <string id="30041">Изберете "Не" за да продължите</string>
+    <string id="30042">Възобнови</string>
+    <string id="30043">XBMC Backup засече незавършено възстановяване</string>
+    <string id="30044">Искате ли да продължите?</string>
+    <string id="30045">Грешка: Отдалеченият път не съществува</string>
+    <string id="30046">Стартиране</string>
+    <string id="30047">Локална папка</string>
+    <string id="30048">Отдалечена папка</string>
+    <string id="30049">Изграждане на списък с файлове</string>
+    <string id="30050">Отдалеченият път съществува. Вероятно съдържа стари файлове!</string>
+    <string id="30051">Създаване на списъка с файлове</string>
+    <string id="30052">Записване на файла</string>
+    <string id="30053">Създаване на резервно копие (по план)</string>
+    <string id="30054">Премахване на резервно копие</string>
+    <string id="30056">За оторизационния URL адрес за Dropbox проверете дневника</string>
+    <string id="30057">След оторизирането натиснете "Добре"</string>
+    <string id="30058">Необходим е код за разработчик за Dropbox</string>
+    <string id="30059">Посетете https://www.dropbox.com/developers</string>
+    <string id="30060">Активирай планировчика</string>
+    <string id="30061">Планиране</string>
+    <string id="30062">Час</string>
+    <string id="30063">Ден</string>
+    <string id="30064">Cron планиране</string>
+    <string id="30065">неделя</string>
+    <string id="30066">понеделник</string>
+    <string id="30067">вторник</string>
+    <string id="30068">сряда</string>
+    <string id="30069">четвъртък</string>
+    <string id="30070">петък</string>
+    <string id="30071">събота</string>
+    <string id="30072">Всеки ден</string>
+    <string id="30073">Всяка седмица</string>
+    <string id="30074">Първия ден на месеца</string>
+    <string id="30075">Персонално планиране</string>
+    <string id="30076">Изключвай XBMC след създаването на резервно копиране</string>
+    <string id="30077">Рестартиране на XBMC</string>
+    <string id="30078">Необходимо е да рестартирате XBMC за да продължите</string>
+    <string id="30079">Само днес</string>
+    <string id="30080">Профили</string>
+    <string id="30081">Планировчика ще стартира отново на</string>
+    <string id="30082">Лента за напредъка</string>
+    <string id="30083">Лента за напредъка на заден план</string>
+    <string id="30084">Без (тих режим)</string>
+    <string id="30085">Предупреждение за версията</string>
+    <string id="30086">Версията на XBMC, която ползвате е различна, от тази която се намира в архива</string>
+</strings>

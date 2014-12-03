@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Persian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fa/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">عمومی</string>
+    <string id="30065">یک‌شنبه</string>
+    <string id="30066">دوشنبه</string>
+    <string id="30067">سه‌شنبه</string>
+    <string id="30068">چهارشنبه</string>
+    <string id="30069">پنج‌شنبه</string>
+    <string id="30070">جمعه</string>
+    <string id="30071">شنبه</string>
+    <string id="30080">پروفایل</string>
+</strings>

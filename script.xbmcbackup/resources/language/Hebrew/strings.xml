@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hebrew language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/he/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30010">גיבוי XBMC</string>
+    <string id="30011">כללי</string>
+    <string id="30012">בחירת קובץ</string>
+    <string id="30013">תזמון</string>
+    <string id="30016">גיבוי</string>
+    <string id="30017">שחזור</string>
+    <string id="30018">עיון בנתיב</string>
+    <string id="30019">הזן נתיב</string>
+    <string id="30020">עיון בנתיב מרוחק</string>
+    <string id="30021">שם תיקיית גיבוי</string>
+    <string id="30023">מצב</string>
+    <string id="30024">הזן נתיב מרוחק</string>
+    <string id="30025">סוג נתיב מרוחק</string>
+    <string id="30026">מספר גיבוים לשמירה (0 להכול)</string>
+    <string id="30027">דרופבוקס</string>
+    <string id="30028">Dropbox Key</string>
+    <string id="30029">Dropbox Secret</string>
+    <string id="30030">הרחבות משתמש</string>
+    <string id="30031">נתוני הרחבה</string>
+    <string id="30032">מסד נתונים</string>
+    <string id="30033">רשימת השמעה</string>
+    <string id="30034">תמונות ממוזערות/פאנארט</string>
+    <string id="30035">קבצי הגדרות</string>
+    <string id="30036">תיקיה מותאמת 1</string>
+    <string id="30037">תיקיה מותאמת 2</string>
+    <string id="30038">זוהה Advanced Settings</string>
+    <string id="30039">יש לשחזר תחילה את הקובץ advancedsettings</string>
+    <string id="30040">בחר "כן" לשחזור קובץ זה ולהפעלת XBMC מחדש</string>
+    <string id="30041">בחר "לא" להמשך</string>
+    <string id="30042">המשך שחזור</string>
+    <string id="30043">גיבוי XBMC זיהה שחזור שלא הסתיים</string>
+    <string id="30044">האם ברצונך להמשיך?</string>
+    <string id="30045">שגיאה: נתיב מרוחק אינו קיים</string>
+    <string id="30046">מתחיל</string>
+    <string id="30047">תיקיה מקומית</string>
+    <string id="30048">תיקיה מרוחקת</string>
+    <string id="30049">אוסף רשימת קבצים</string>
+    <string id="30050">נתיב מרוחק נמצא - יתכן שיש בתיקיה זו קבצים ישנים!</string>
+    <string id="30051">יוצר רשימת קבצים</string>
+    <string id="30052">כותב קובץ</string>
+    <string id="30053">מתחיל גיבוי מתוזמן</string>
+    <string id="30054">מסיר גיבוי</string>
+    <string id="30056">בדוק יומן רישום לכתובת דרופבוקס מאושרת</string>
+    <string id="30057">לחץ אישור כשמאושר</string>
+    <string id="30058">נדרש קוד מפתח של דרופבוקס</string>
+    <string id="30059">בקר בכתובת https://www.dropbox.com/developers</string>
+    <string id="30060">הפעל מתזמן</string>
+    <string id="30061">תזמון</string>
+    <string id="30062">שעה ביום</string>
+    <string id="30063">יום בשבוע</string>
+    <string id="30064">תזמון Cron</string>
+    <string id="30065">יום ראשון</string>
+    <string id="30066">יום שני</string>
+    <string id="30067">יום שלישי</string>
+    <string id="30068">יום רביעי</string>
+    <string id="30069">יום חמישי</string>
+    <string id="30070">יום שישי</string>
+    <string id="30071">יום שבת</string>
+    <string id="30072">כל יום</string>
+    <string id="30073">כל שבוע</string>
+    <string id="30074">יום ראשון של החודש</string>
+    <string id="30075">תזמון מותאם אישית</string>
+    <string id="30076">כיבוי בתום הגיבוי</string>
+    <string id="30077">הפעל את XBMC מחדש</string>
+    <string id="30078">להמשך הינך צריך להפעיל את XBMC מחדש</string>
+    <string id="30079">היום בלבד</string>
+    <string id="30080">פרופילים</string>
+    <string id="30081">המתזמן יופעל שוב ב-</string>
+</strings>

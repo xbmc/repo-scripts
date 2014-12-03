@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Ukrainian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/uk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">Загальні</string>
+    <string id="30023">Режим</string>
+    <string id="30032">База даних</string>
+    <string id="30033">Список відтворювання</string>
+    <string id="30065">Неділя</string>
+    <string id="30066">Понеділок</string>
+    <string id="30067">Вівторок</string>
+    <string id="30068">Середа</string>
+    <string id="30069">Четвер</string>
+    <string id="30070">П'ятниця</string>
+    <string id="30071">Субота</string>
+    <string id="30080">Профілі</string>
+</strings>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Chinese (Traditional) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/zh_TW/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30011">一般設定</string>
+    <string id="30023">模式</string>
+    <string id="30032">資料庫</string>
+    <string id="30033">播放列表</string>
+    <string id="30065">星期日</string>
+    <string id="30066">星期一</string>
+    <string id="30067">星期二</string>
+    <string id="30068">星期三</string>
+    <string id="30069">星期四</string>
+    <string id="30070">星期五</string>
+    <string id="30071">星期六</string>
+    <string id="30080">設定檔</string>
+</strings>
