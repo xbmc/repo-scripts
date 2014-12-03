@@ -1,3 +1,6 @@
+v0.2.5
+- Update with 14.0 Helix rc 2
+
 v0.2.4
 - Fix error or unicode
 
