@@ -1,3 +1,6 @@
+[B]0.0.7[/B]
+- Add support to return multiple types in single list
+
 [B]0.0.6[/B]
 - Add support for video playlist count.
 

@@ -57,95 +57,108 @@ class Main:
         self.WINDOW = xbmcgui.Window(10000)
         self.SETTINGSLIMIT = int(__addon__.getSetting("limit"))
         
-        full_liz = list()
-        
-        if self.TYPE == "randommovies":
-            xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-            self.parse_movies( 'randommovies', 32004, full_liz )
-        elif self.TYPE == "recentmovies":
-            xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-            self.parse_movies( 'recentmovies', 32005, full_liz )
-        elif self.TYPE == "recommendedmovies":
-            xbmcplugin.setContent(int(sys.argv[1]), 'movies')
-            self.parse_movies( 'recommendedmovies', 32006, full_liz )
-        elif self.TYPE == "recommendedepisodes":
-            xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-            self.parse_tvshows_recommended( 'recommendedepisodes', 32010, full_liz )
-        elif self.TYPE == "recentepisodes":
-            xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-            self.parse_tvshows( 'recentepisodes', 32008, full_liz )
-        elif self.TYPE == "randomepisodes":
-            xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-            self.parse_tvshows( 'randomepisodes', 32007, full_liz )
-        elif self.TYPE == "recentvideos" :
-            listA = []
-            listB = []
-            dateListA = []
-            dateListB = []
-            self.parse_movies( 'recentmovies', 32005, listA, dateListA, "dateadded" )
-            self.parse_tvshows( 'recentepisodes', 32008, listB, dateListB, "dateadded" )
-            full_liz = self._combine_by_date( listA, dateListA, listB, dateListB )
-        elif self.TYPE == "randomalbums":
-            xbmcplugin.setContent(int(sys.argv[1]), 'albums')
-            self.parse_albums( 'randomalbums', 32016, full_liz )
-        elif self.TYPE == "recentalbums":
-            xbmcplugin.setContent(int(sys.argv[1]), 'albums')
-            self.parse_albums( 'recentalbums', 32017, full_liz )
-        elif self.TYPE == "recommendedalbums":
-            xbmcplugin.setContent(int(sys.argv[1]), 'albums')
-            self.parse_albums( 'recommendedalbums', 32018, full_liz )
-        elif self.TYPE == "randomsongs":
-            xbmcplugin.setContent(int(sys.argv[1]), 'songs')
-            self.parse_song( 'randomsongs', 32015, full_liz )
-        elif self.TYPE == 'playliststats':
-            lo = self.id.lower()
-            if ("activatewindow" in lo) and ("://" in lo) and ("," in lo):
-                startindex = lo.find(",")
-                endindex = lo.find(",",startindex+1)
-                if (endindex > 0):
-                    playlistpath = self.id[startindex+1:endindex].strip()
-                    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["playcount", "resume", "episode", "watchedepisodes", "tvshowid"]}, "id": 1}' % (playlistpath))
-                    json_query = unicode(json_query, 'utf-8', errors='ignore')
-                    json_response = simplejson.loads(json_query)
-                    if (json_response.has_key("result")):
-                        played = 0
-                        numitems = 0
-                        inprogress = 0
-                        episodes = 0
-                        watchedepisodes = 0
-                        tvshows = []
-                        tvshowscount = 0
-                        for item in json_response["result"]["files"]:
-                            if item.has_key('type'):
-                                if item["type"] == "episode":
-                                    episodes += 1
-                                    if item["playcount"] > 0:
-                                        watchedepisodes += 1
-                                    if item["tvshowid"] not in tvshows:
-                                        tvshows.append(item["tvshowid"])
+        for type in self.TYPE.split( "+" ):
+            full_liz = list()
+            if type == "randommovies":
+                xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+                self.parse_movies( 'randommovies', 32004, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "recentmovies":
+                xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+                self.parse_movies( 'recentmovies', 32005, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "recommendedmovies":
+                xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+                self.parse_movies( 'recommendedmovies', 32006, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "recommendedepisodes":
+                xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+                self.parse_tvshows_recommended( 'recommendedepisodes', 32010, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "recentepisodes":
+                xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+                self.parse_tvshows( 'recentepisodes', 32008, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "randomepisodes":
+                xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+                self.parse_tvshows( 'randomepisodes', 32007, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "recentvideos" :
+                listA = []
+                listB = []
+                dateListA = []
+                dateListB = []
+                self.parse_movies( 'recentmovies', 32005, listA, dateListA, "dateadded" )
+                self.parse_tvshows( 'recentepisodes', 32008, listB, dateListB, "dateadded" )
+                full_liz = self._combine_by_date( listA, dateListA, listB, dateListB )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "randomalbums":
+                xbmcplugin.setContent(int(sys.argv[1]), 'albums')
+                self.parse_albums( 'randomalbums', 32016, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "recentalbums":
+                xbmcplugin.setContent(int(sys.argv[1]), 'albums')
+                self.parse_albums( 'recentalbums', 32017, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "recommendedalbums":
+                xbmcplugin.setContent(int(sys.argv[1]), 'albums')
+                self.parse_albums( 'recommendedalbums', 32018, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == "randomsongs":
+                xbmcplugin.setContent(int(sys.argv[1]), 'songs')
+                self.parse_song( 'randomsongs', 32015, full_liz )
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+            elif type == 'playliststats':
+                lo = self.id.lower()
+                if ("activatewindow" in lo) and ("://" in lo) and ("," in lo):
+                    startindex = lo.find(",")
+                    endindex = lo.find(",",startindex+1)
+                    if (endindex > 0):
+                        playlistpath = self.id[startindex+1:endindex].strip()
+                        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["playcount", "resume", "episode", "watchedepisodes", "tvshowid"]}, "id": 1}' % (playlistpath))
+                        json_query = unicode(json_query, 'utf-8', errors='ignore')
+                        json_response = simplejson.loads(json_query)
+                        if (json_response.has_key("result")):
+                            played = 0
+                            numitems = 0
+                            inprogress = 0
+                            episodes = 0
+                            watchedepisodes = 0
+                            tvshows = []
+                            tvshowscount = 0
+                            for item in json_response["result"]["files"]:
+                                if item.has_key('type'):
+                                    if item["type"] == "episode":
+                                        episodes += 1
+                                        if item["playcount"] > 0:
+                                            watchedepisodes += 1
+                                        if item["tvshowid"] not in tvshows:
+                                            tvshows.append(item["tvshowid"])
+                                            tvshowscount += 1
+                                    elif item["type"] == "tvshow":
+                                        episodes += item["episode"]
+                                        watchedepisodes += item["watchedepisodes"]
                                         tvshowscount += 1
-                                elif item["type"] == "tvshow":
-                                    episodes += item["episode"]
-                                    watchedepisodes += item["watchedepisodes"]
-                                    tvshowscount += 1
-                                else:
-                                    numitems += 1
-                                    if item["playcount"] > 0:
-                                        played += 1
-                                    if item["resume"]["position"] > 0:
-                                        inprogress += 1
-                        self.WINDOW.setProperty('PlaylistWatched', str(played))
-                        self.WINDOW.setProperty('PlaylistCount', str(numitems))
-                        self.WINDOW.setProperty('PlaylistTVShowCount', str(tvshowscount))
-                        self.WINDOW.setProperty('PlaylistInProgress', str(inprogress))
-                        self.WINDOW.setProperty('PlaylistUnWatched', str(numitems - played))
-                        self.WINDOW.setProperty('PlaylistEpisodes', str(episodes))
-                        self.WINDOW.setProperty('PlaylistEpisodesUnWatched', str(episodes - watchedepisodes))
-            
-        # Play an albums
-        elif self.TYPE == "play_album":
-            self.play_album( self.ALBUM )
-            return
+                                    else:
+                                        numitems += 1
+                                        if "playcount" in item.keys():
+                                            if item["playcount"] > 0:
+                                                played += 1
+                                            if item["resume"]["position"] > 0:
+                                                inprogress += 1
+                            self.WINDOW.setProperty('PlaylistWatched', str(played))
+                            self.WINDOW.setProperty('PlaylistCount', str(numitems))
+                            self.WINDOW.setProperty('PlaylistTVShowCount', str(tvshowscount))
+                            self.WINDOW.setProperty('PlaylistInProgress', str(inprogress))
+                            self.WINDOW.setProperty('PlaylistUnWatched', str(numitems - played))
+                            self.WINDOW.setProperty('PlaylistEpisodes', str(episodes))
+                            self.WINDOW.setProperty('PlaylistEpisodesUnWatched', str(episodes - watchedepisodes))
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
+                
+            # Play an albums
+            elif type == "play_album":
+                self.play_album( self.ALBUM )
+                return
             
         if not self.TYPE:
             # Show a root menu
@@ -155,8 +168,8 @@ class Main:
                 liz = xbmcgui.ListItem( __localize__( item[0] ) )
                 liz.setIconImage( "DefaultFolder.png" )
                 full_liz.append( ( "plugin://service.library.data.provider?type=" + item[1], liz, True ) )
+            xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
 
-        xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
         xbmcplugin.endOfDirectory(handle= int(sys.argv[1]))
                 
             
@@ -284,6 +297,8 @@ class Main:
                         liz.setInfo( type="Video", infoLabels={ "Rating": str(round(float(item2['rating']),1)) })
                         liz.setInfo( type="Video", infoLabels={ "MPAA": item['mpaa'] })
                         liz.setInfo( type="Video", infoLabels={ "Playcount": item2['playcount'] })
+                        if "director" in item2:
+                            liz.setInfo( type="Video", infoLabels={ "Director": " / ".join(item2['director']) })
                         if "writer" in item2:
                             liz.setInfo( type="Video", infoLabels={ "Writer": " / ".join(item2['writer']) })
                         if "cast" in item2:
@@ -348,6 +363,8 @@ class Main:
                     liz.setInfo( type="Video", infoLabels={ "Rating": str(round(float(item['rating']),1)) })
                     #liz.setInfo( type="Video", infoLabels={ "MPAA": item['mpaa'] })
                     liz.setInfo( type="Video", infoLabels={ "Playcount": item['playcount'] })
+                    if "director" in item:
+                        liz.setInfo( type="Video", infoLabels={ "Director": " / ".join(item['director']) })
                     if "writer" in item:
                         liz.setInfo( type="Video", infoLabels={ "Writer": " / ".join(item['writer']) })
                     if "cast" in item:
