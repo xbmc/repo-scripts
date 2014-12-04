@@ -1,3 +1,6 @@
+v2.2.2
+- Fix when JSON query for movie details return no result
+
 v2.2.1
 - Fix when smart playlist name is not set
 - Fix when property is not defined (ie no studio for a movie)

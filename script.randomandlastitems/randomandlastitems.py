@@ -165,7 +165,7 @@ def _getMovies ( ):
             _json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": {"properties": ["streamdetails"], "movieid":%s }, "id": 1}' %(_movie['id']))
             _json_query = unicode(_json_query, 'utf-8', errors='ignore')
             _json_query = json.loads(_json_query)
-            if _json_query['result'].has_key('moviedetails'):
+            if _json_query.has_key('result') and _json_query['result'].has_key('moviedetails'):
                 item = _json_query['result']['moviedetails']
                 _movie['streamdetails'] = item['streamdetails']
             if _movie['resume']['position'] > 0:
