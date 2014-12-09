@@ -375,3 +375,31 @@ msgstr "Κανάλια"
 msgctxt "#32089"
 msgid "Picture Source"
 msgstr "Πηγή Εικόνων"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "Το αντικείμενο προστέθηκε στο μενού"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Αδυναμία προσθήκης του αντικειμένου στο μενού. Ελέγξτε το αρχείο καταγραφής για σφάλματα."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Αδυναμία δημιουργίας μενού."
+
+msgctxt "#32093"
+msgid "Upload debug log to Kodilogs.com?"
+msgstr "Να ανέβει η καταγραφή σφαλμάτων στο Kodilogs.com;"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader to easily provide a debug log."
+msgstr "Εγκαταστήστε το Kodi Log Uploader για εύκολο ανέβασμα των αρχείων καταγραφής σφαλμάτων."
+
+msgctxt "#32095"
+msgid "Choose default action for main menu item"
+msgstr "Προεπιλεγμένη ενέργεια για το αντικείμενο κεντρικού μενού"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Αναζήτηση..."

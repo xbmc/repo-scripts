@@ -52,6 +52,10 @@ msgctxt "#32022"
 msgid "Live TV"
 msgstr "நேரடி தொலைக்காட்சி"
 
+msgctxt "#32023"
+msgid "Timers"
+msgstr "டைமர்"
+
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "பட்டியல்"
@@ -64,9 +68,17 @@ msgctxt "#32053"
 msgid "None"
 msgstr "எதுவுமில்லை"
 
+msgctxt "#32061"
+msgid "Display"
+msgstr "காட்சி"
+
 msgctxt "#32062"
 msgid "Play"
 msgstr "வாசி"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
 
 msgctxt "#32087"
 msgid "Radio"
@@ -75,3 +87,7 @@ msgstr "வானொலி"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "சேனல்கள்"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "உலாவு..."

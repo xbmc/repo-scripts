@@ -276,6 +276,10 @@ msgctxt "#32065"
 msgid "There are no shortcuts available for the category that you choose."
 msgstr "Það eru engir flýtivísar tiltækir fyrir þann flokk sem þú valdir."
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
 msgctxt "#32087"
 msgid "Radio"
 msgstr "Útvarp"
@@ -283,3 +287,7 @@ msgstr "Útvarp"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Rásir"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Fletta..."

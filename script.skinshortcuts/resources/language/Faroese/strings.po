@@ -16,22 +16,74 @@ msgstr ""
 "Language: fo\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "Add"
+msgstr "Stovna"
+
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Strika"
+
 msgctxt "#32014"
 msgid "Videos"
 msgstr "Video"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Filmar"
 
 msgctxt "#32017"
 msgid "Live TV"
 msgstr "Beinleiðis sjónvarp"
 
+msgctxt "#32019"
+msgid "Music"
+msgstr "Tónleikur"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Myndir"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Forrit"
+
 msgctxt "#32022"
 msgid "Live TV"
 msgstr "Beinleiðis sjónvarp"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Tíðarstýring"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Spælilisti"
+
+msgctxt "#32050"
+msgid "Default"
+msgstr "Vanligt"
 
 msgctxt "#32053"
 msgid "None"
 msgstr "Onki"
 
+msgctxt "#32061"
+msgid "Display"
+msgstr "Vísing"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Spæl"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Útvarp"
+
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Rás"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Leita..."

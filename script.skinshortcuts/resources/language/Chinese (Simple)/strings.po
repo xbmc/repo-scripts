@@ -264,6 +264,10 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "播放"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
 msgctxt "#32075"
 msgid "Sources"
 msgstr "来源"
@@ -275,3 +279,7 @@ msgstr "电台"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "频道"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "浏览..."

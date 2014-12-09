@@ -264,6 +264,10 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "재생"
 
+msgctxt "#32063"
+msgid "Getting directory listing..."
+msgstr "디렉터리 목록 가져오는 중..."
+
 msgctxt "#32064"
 msgid "No Shortcuts"
 msgstr "바로가기 없음"
@@ -308,6 +312,10 @@ msgctxt "#32077"
 msgid "Radio Channel"
 msgstr "라디오 채널"
 
+msgctxt "#32079"
+msgid "Files view"
+msgstr "파일 보기"
+
 msgctxt "#32087"
 msgid "Radio"
 msgstr "라디오"
@@ -315,3 +323,35 @@ msgstr "라디오"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "채널"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "사진 소스"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "메뉴에 항목이 추가 되었습니다"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "메뉴에 항목을 추가할 수 없습니다. 오류 로그를 확인하세요."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "메뉴를 만들 수 없습니다."
+
+msgctxt "#32093"
+msgid "Upload debug log to Kodilogs.com?"
+msgstr "Kodilogs.com에 디버그 로그를 업로드할까요?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader to easily provide a debug log."
+msgstr "디버그 로그를 쉽게 제공하려면 Kodi Log Updater를 설치하세요."
+
+msgctxt "#32095"
+msgid "Choose default action for main menu item"
+msgstr "메인 메뉴 항목 기본 동작 선택"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "찾기..."

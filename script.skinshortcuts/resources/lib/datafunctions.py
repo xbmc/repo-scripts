@@ -207,6 +207,8 @@ class DataFunctions():
             defaultID = node.find( "defaultID" )
             if defaultID == None:
                 xmltree.SubElement( node, "defaultID" ).text = labelID
+            else:
+                defaultID = defaultID.text
             
             # Check that any version node matches current XBMC version
             version = node.find( "version" )
@@ -339,10 +341,15 @@ class DataFunctions():
                 xmltree.SubElement( requiredShortcut, "lock" ).text = xbmc.getSkinDir()
                 
                 
-    def _get_icon_overrides( self, tree, icon, group, labelID, setToDefault = True ):
+    def _get_icon_overrides( self, tree, icon, group, labelID, setToDefault = True ):        
         # This function will get any icon overrides based on labelID or group
         if icon is None:
             return
+            
+        # If the icon is a VAR or an INFO, we aren't going to override
+        if icon.startswith( "$" ):
+            return icon
+            
         oldicon = None
         newicon = icon
         
@@ -466,7 +473,6 @@ class DataFunctions():
         if tree is not None:
             for elemSearch in [["widget", tree.findall( "widgetdefault" )], ["background", tree.findall( "backgrounddefault" )], ["custom", tree.findall( "propertydefault" )] ]:
                 for elem in elemSearch[1]:
-                    
                     if elemSearch[0] == "custom":
                         # Custom property
                         if "group" not in elem.attrib:
@@ -477,6 +483,13 @@ class DataFunctions():
                         # Widget or background
                         if "group" not in elem.attrib:
                             defaultProperties.append( [ "mainmenu", elem.attrib.get( 'labelID' ), elemSearch[0], elem.text, elem.attrib.get( 'defaultID' ) ] )
+                            
+                            if elemSearch[ 0 ] == "background":
+                                # Get and set the background name
+                                backgroundName = self._getBackgroundName( elem.text )
+                                if backgroundName is not None:
+                                    defaultProperties.append( [ "mainmenu", elem.attrib.get( "labelID" ), "backgroundName", backgroundName, elem.attrib.get( 'defaultID' ) ] )
+                                
                             if elemSearch[0] == "widget":
                                 # Get and set widget type and name
                                 widgetDetails = self._getWidgetNameAndType( elem.text )
@@ -486,6 +499,13 @@ class DataFunctions():
                                         defaultProperties.append( [ "mainmenu", elem.attrib.get( "labelID" ), "widgetType", widgetDetails[1], elem.attrib.get( 'defaultID' ) ] )
                         else:
                             defaultProperties.append( [ elem.attrib.get( "group" ), elem.attrib.get( 'labelID' ), elemSearch[0], elem.text, elem.attrib.get( 'defaultID' ) ] )
+                            
+                            if elemSearch[ 0 ] == "background":
+                                # Get and set the background name
+                                backgroundName = self._getBackgroundName( elem.text )
+                                if backgroundName is not None:
+                                    defaultProperties.append( [ "mainmenu", elem.attrib.get( "labelID" ), "backgroundName", backgroundName, elem.attrib.get( 'defaultID' ) ] )
+                            
                             if elemSearch[0] == "widget":
                                 # Get and set widget type and name
                                 widgetDetails = self._getWidgetNameAndType( elem.text )
@@ -506,6 +526,15 @@ class DataFunctions():
                         return [elem.attrib.get( "label" ), elem.attrib.get( "type" )]
                     else:
                         return [ elem.attrib.get( "label" ), None ]
+                        
+        return None
+        
+    def _getBackgroundName( self, backgroundID ):
+        tree = self._get_overrides_skin()
+        if tree is not None:
+            for elem in tree.findall( "background" ):
+                if elem.text == backgroundID:
+                    return elem.attrib.get( "label" )
                         
         return None
                 
@@ -549,38 +578,64 @@ class DataFunctions():
             return item.lower( ).replace( " ", "" )
             
     def checkVisibility ( self, action ):
+        action = action.lower().replace( " ", "" )
+        
         # Return whether mainmenu items should be displayed
-        if action == "ActivateWindow(Weather)":
+        if action == "activatewindow(weather)":
             return "!IsEmpty(Weather.Plugin)"
-        if action.startswith( "ActivateWindowAndFocus(MyPVR" ) or action.startswith( "PlayPvr" ):
-            return "System.GetBool(pvrmanager.enabled)"
-        if action.startswith( "ActivateWindow(Videos,Movie" ):
+        elif action.startswith( "activatewindowandfocus(mypvr" ) or action.startswith( "playpvr" ):
+            return "system.getbool(pvrmanager.enabled)"
+        elif action.startswith( "activatewindow(videos,movie" ):
             return "Library.HasContent(Movies)"
-        if action.startswith( "ActivateWindow(Videos,RecentlyAddedMovies" ):
+        elif action.startswith( "activatewindow(videos,recentlyaddedmovies" ):
             return "Library.HasContent(Movies)"
-        if action.startswith( "ActivateWindow(Videos,TvShow" ) or action.startswith( "ActivateWindow(Videos,TVShow" ):
+        elif action.startswith( "activatewindow(videos,tvshow" ) or action.startswith( "activatewindow(videos,tvshow" ):
             return "Library.HasContent(TVShows)"
-        if action.startswith( "ActivateWindow(Videos,RecentlyAddedEpisodes" ):
+        elif action.startswith( "activatewindow(videos,recentlyaddedepisodes" ):
             return "Library.HasContent(TVShows)"
-        if action.startswith( "ActivateWindow(Videos,MusicVideo" ):
+        elif action.startswith( "activatewindow(videos,musicvideo" ):
             return "Library.HasContent(MusicVideos)"
-        if action.startswith( "ActivateWindow(MusicLibrary,MusicVideo" ):
+        elif action.startswith( "activatewindow(musiclibrary,musicvideo" ):
             return "Library.HasContent(MusicVideos)"
-        if action.startswith( "ActivateWindow(Videos,RecentlyAddedMusicVideos" ):
+        elif action.startswith( "activatewindow(videos,recentlyaddedmusicvideos" ):
             return "Library.HasContent(MusicVideos)"
-        if action.startswith( "ActivateWindow(MusicLibrary," ):
+        elif action.startswith( "activatewindow(musiclibrary," ):
             return "Library.HasContent(Music)"
-        if action == "XBMC.PlayDVD()":
+        elif action == "xbmc.playdvd()":
             return "System.HasMediaDVD"
             
+        # Power menu visibilities
+        elif action == "quit()" or action == "quit":
+            return "System.ShowExitButton"
+        elif action == "powerdown()" or action == "powerdown":
+            return "System.CanPowerDown"
+        elif action == "alarmclock(shutdowntimer,shutdown())":
+            return "!System.HasAlarm(shutdowntimer) + (System.CanPowerDown | System.CanSuspend | System.CanHibernate)"
+        elif action == "cancelalarm(shutdowntimer)":
+            return "System.HasAlarm(shutdowntimer)"
+        elif action == "suspend()" or action == "suspend":
+            return "System.CanSuspend"
+        elif action == "hibernate()" or action == "hibernate":
+            return "System.CanHibernate"
+        elif action == "reset()" or action == "reset":
+            return "System.CanReboot"
+        elif action == "system.logoff":
+            return "(System.HasLoginScreen | IntegerGreaterThan(System.ProfileCount,1)) + System.Loggedon"
+        elif action == "mastermode":
+            return "System.HasLocks"
+        elif action == "inhibitidleshutdown(true)":
+            return "System.HasShutdown +!System.IsInhibit"
+        elif action == "inhibitidleshutdown(false)":
+            return "System.HasShutdown + System.IsInhibit"
+            
         # New Helix visibility conditions
-        if action.startswith( "ActivateWindow(TV" ):
+        elif action.startswith( "activatewindow(tv" ):
             return "PVR.HasTVChannels"
-        if action.startswith( "ActivateWindow(Radio" ):
+        elif action.startswith( "activatewindow(radio" ):
             return "PVR.HasRadioChannels"
             
         # Video node visibility
-        if action.startswith( "ActivateWindow(Videos,videodb://" ) or action.startswith( "ActivateWindow(10025,videodb://" ) or action.startswith( "ActivateWindow(Videos,library://video/" ) or action.startswith( "ActivateWindow(10025,library://video/" ):
+        elif action.startswith( "activatewindow(videos,videodb://" ) or action.startswith( "activatewindow(10025,videodb://" ) or action.startswith( "activatewindow(Videos,library://video/" ) or action.startswith( "activatewindow(10025,library://video/" ):
             path = action.split( "," )
             if path[ 1 ].endswith( ")" ):
                 path[ 1 ] = path[ 1 ][:-1]

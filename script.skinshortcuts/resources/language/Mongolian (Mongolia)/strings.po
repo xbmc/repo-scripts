@@ -9,81 +9,49 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: Basque (http://www.transifex.com/projects/p/xbmc-addons/language/eu/)\n"
+"Language-Team: Mongolian (Mongolia) (http://www.transifex.com/projects/p/xbmc-addons/language/mn_MN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: eu\n"
+"Language: mn_MN\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgctxt "#32000"
-msgid "Add"
-msgstr "Gehitu"
 
 msgctxt "#32001"
 msgid "Delete"
-msgstr "Ezabatu"
+msgstr "Устгах"
 
 msgctxt "#32014"
 msgid "Videos"
-msgstr "Bideoak"
-
-msgctxt "#32015"
-msgid "Movies"
-msgstr "Filmak"
+msgstr "Видео"
 
 msgctxt "#32017"
 msgid "Live TV"
-msgstr "TB"
+msgstr "ТВ"
 
 msgctxt "#32019"
 msgid "Music"
-msgstr "Musika"
+msgstr "Хөгжим"
 
 msgctxt "#32020"
 msgid "Pictures"
-msgstr "Irudiak"
-
-msgctxt "#32021"
-msgid "Programs"
-msgstr "Programak"
+msgstr "Зураг"
 
 msgctxt "#32022"
 msgid "Live TV"
-msgstr "TB"
-
-msgctxt "#32040"
-msgid "Playlist"
-msgstr "Zerrenda"
-
-msgctxt "#32050"
-msgid "Default"
-msgstr "Lehenetsia"
-
-msgctxt "#32053"
-msgid "None"
-msgstr "Bat ere ez"
+msgstr "ТВ"
 
 msgctxt "#32061"
 msgid "Display"
-msgstr "Erakutsi"
+msgstr "Дэлгэц"
 
 msgctxt "#32062"
 msgid "Play"
-msgstr "Play"
-
-msgctxt "#32070"
-msgid "UPnP"
-msgstr "UPnP"
+msgstr "Тоглуулах"
 
 msgctxt "#32087"
 msgid "Radio"
-msgstr "Irratia"
+msgstr "Радио"
 
 msgctxt "#32088"
 msgid "Channels"
-msgstr "Kateak"
-
-msgctxt "#32096"
-msgid "Browse..."
-msgstr "Arakatu..."
+msgstr "Сувгууд"

@@ -63,3 +63,11 @@ msgstr "Приказ"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Репродукуј"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "Прављење рез. копије EEPROM-а"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Потражи..."

@@ -264,6 +264,10 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Включить воспроизведение"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
 msgctxt "#32087"
 msgid "Radio"
 msgstr "Радио"
@@ -271,3 +275,7 @@ msgstr "Радио"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Каналы"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Обзор…"

@@ -16,6 +16,10 @@ msgstr ""
 "Language: en_AU\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "Add"
+msgstr "Add"
+
 msgctxt "#32001"
 msgid "Delete"
 msgstr "Delete"
@@ -31,6 +35,10 @@ msgstr "Music Playlist"
 msgctxt "#32006"
 msgid "Favourite"
 msgstr "Favourite"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "Program"
 
 msgctxt "#32014"
 msgid "Videos"
@@ -64,6 +72,10 @@ msgctxt "#32022"
 msgid "Live TV"
 msgstr "Live TV"
 
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Timer"
+
 msgctxt "#32031"
 msgid "Music Library"
 msgstr "Music Library"
@@ -71,6 +83,10 @@ msgstr "Music Library"
 msgctxt "#32032"
 msgid "Play DVD"
 msgstr "Play DVD"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Playlist"
 
 msgctxt "#32044"
 msgid "Select widget"
@@ -88,10 +104,26 @@ msgctxt "#32053"
 msgid "None"
 msgstr "None"
 
+msgctxt "#32061"
+msgid "Display"
+msgstr "Display"
+
 msgctxt "#32062"
 msgid "Play"
 msgstr "Play"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Channels"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Browse..."

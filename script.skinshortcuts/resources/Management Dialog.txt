@@ -18,12 +18,13 @@ ID	Type	Label	Description
 303	Button	32002	Move shortcut up
 304	Button	32003	Move shortcut down
 305	Button	32025	Change shortcut label (if control 402 is not included)
-306	Button	32026	Change shortcut thumbnail
+306	Button	32026	Browse for thumbnail
 307	Button	32027	Change shortcut action (if control 403 is not included)
 308	Button	32028	Reset shortcuts
 
 309 Button  32044	Change widget (See "Advanced Usage")
 310 Button  32045	Change background (See "Advanced Usage")
+311 Button          Select skin-provided thumbnail (See "Advanced Usage")
 
 401 Button	32048	Alternative method to set a shortcut
 404 Button			Set a custom property

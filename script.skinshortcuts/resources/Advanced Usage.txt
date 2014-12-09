@@ -71,20 +71,17 @@ Multiple Sub-Menus
 
 When using Skin Shortcuts to provide the whole main menu system, you may wish to provide more than one sub menu. For example, you could ape Confluence's favourites - which are displayed below the main and sub-menu's - with an additional sub menu.
 
-In the list where you want an additional sub-menu to appear, put the following in the <content> tag:
- 
-	plugin://script.skinshortcuts?type=submenu&amp;level=1&amp;mainmenuID=9000
-   
-Remember to replace 9000 with the id of the list you are using for the main menu. To provide more sub-menus for a main menu item, increase the value of the 'level' parameter.
+To cause the script to build the additional submenus, include levels=[number of additional submenus] in the build command. You can build up to an additional 5 menus.
 
-The script can provide a list of controls for your overrides.xml to let the user manage the additional sub-menu items.
-  
-In the list where you want these controls to appear, put the following in the <content> tag:
-  
-	plugin://script.skinshortcuts?type=settings&amp;level=1&amp;property=$INFO[Window(10000).Property("skinshortcuts")]
+	RunScript(script.skinshortcuts,type=buildxml&amp;mainmenuID=9000&amp;levels=1)
+
+Then include the additional submenu in the list where you want the items to appear.
+
+	<include>skinshortcuts-submenu-1</include>
 	
-You MUST provide a string for the settings list. See 'overrides.xml' (section 4) for details. Skin Shortcuts supports a maximum of 5 additional sub-menus, numbered 1 through 5.
+Where the number at the end is the number of additional submenu you want displayed.
 
+Within the management dialog, include buttons in the range of 405 - 410 to allow the user to manage the items within the additional submenu. See "Management Dialog.txt" for details.
 
 Alternative Listing Methods
 ---------------------------
@@ -103,9 +100,10 @@ When using this method, you specify which skin strings you want the script to se
 
 To use the script in this way, put the following in an onclick:
 
-RunScript(script.skinshortcuts,type=shortcuts&amp;custom=[True/False]&amp;skinLabel=[skinLabel]&amp;skinAction=[skinAction]&amp;skinType=[skinType]&amp;skinThumbnail=[skinThumbnail])
+RunScript(script.skinshortcuts,type=shortcuts&amp;custom=[True/False]&amp;showNone=[True/False]&amp;skinLabel=[skinLabel]&amp;skinAction=[skinAction]&amp;skinType=[skinType]&amp;skinThumbnail=[skinThumbnail])
 
-[True/False] - Whether you wish to allow the user to type their own custom command. If ommitted this will default to false. [OPTIONAL]
+custom=[True/False] - Whether you wish to allow the user to type their own custom command. If ommitted this will default to False. [OPTIONAL]
+showNone=[True/False] - Whether you wish to show a 'None' option to reset skin labels. If ommitted this will default to False. [OPTIONAL]
 [skinLabel] - The skin string the script will write the label of the selected shortcut to. [OPTIONAL]
 [skinAction] - the skin string the script will write the action of the selected shortcut to. [OPTIONAL]
 [skinType] - The skin string the script will write the type of the selected shortcut to. [OPTIONAL]
@@ -193,17 +191,18 @@ IMPORTANT: In previous versions this element was called <thumbnail> - please upd
 
 If you are using Skin Shortcuts to manage background images, provide a list of backgrounds and defaults for labelID's in the overrides.xml.
 
-<background label="[Label]">[backgroundID]</background>
+<background label="[Label]" condition="[Condition]">[backgroundID]</background>
 <backgrounddefault labelID="[LabelID]" group="[GroupName]">[backgroundID]</backgrounddefault>
 
 [Label] - The display name of the background (can be a localised string)
+[Condition] - [Optional] Boolean condition that must be true for the background to show in the management dialogs Background Select (evaluated when management dialog is loaded)
 [GroupName] - [Optional] The group that the labelID must be in, for example "movies". If omitted, the default will apply to items in the main menu.
 [backgroundID] - A string you use to identify the background
 [labelID] - The labelID you are providing a default for. (Replace with defaultID="[defaultID]" to set default based on this property instead)
 
 If you want to let the user browse for either a single or multi-image background, also include:
 
-<backgroundBrowse default="protocol://path/to/folder>True</backgroundBrowse>
+<backgroundBrowse default="protocol://path/to/folder">True</backgroundBrowse>
 
 where default is an optional path to the folder that will be displayed by default in the select dialog.
 
@@ -228,11 +227,11 @@ You can then choose which background to display based on the 'background' proper
 
 If you are using Skin Shortcuts to manage widgets, provide a list of the widgets your skin supports and defaults for labelID's in the overrides.xml.
 
-<widget label="[label]" type="[type]">[WidgetID]</widget>
+<widget label="[label]" condition="[Condition]" type="[type]">[WidgetID]</widget>
 <widgetdefault labelID="[labelID]" group="[GroupName]">[widgetID]</widgetdefault>
 
 [label] - The display name of the widget, to be shown when choosing widgets (can be a localised string)
-[type] - [Optional] A string you use to identy the type of widget (returned as property widgetType)
+[Condition] - [Optional] Boolean condition that must be true for the background to show in the management dialogs Background Select (evaluated when management dialog is loaded)[type] - [Optional] A string you use to identy the type of widget (returned as property widgetType)
 [GroupName] - [Optional] The group that the labelID must be in, for example "movies". If omitted, the property will apply to items in the main menu.
 [widgetID] - A string you use to identify this widget
 [labelID] - The labelID you are setting the default for. (Replace with defaultID="[defaultID]" to set default based on this property instead)
@@ -321,7 +320,17 @@ When using the script to provide the whole menu, you can specify shortcuts that 
 Note, the type will be set to the id of your skin (skin.name) to indicate that it is specific to the skin.
 
 
-7. Override label of available shortcuts
+7. Check for shortcut in menu system
+
+You can ask the script to check whether a shortcut with a given action is present within the menus it builds. It will then set a skin boolean based on whether it appears or not.
+
+<checkforshortcut property="[propertyName]">[action]</checkforshortcut>
+
+[propertyName] - The name of the skin boolean that will be set or cleared, dependant on existance of action
+[action] - The action to check for
+
+
+8. Override label of available shortcuts
 
 If you want to provide a different label for the list of available shortcuts in the management dialog, you can specify this here.
 
@@ -343,7 +352,7 @@ Please note - you can ONLY override shortcuts in the following groups: Common, X
 You can NOT override the labels for user's own defined custom video nodes.
 
 
-8. Custom shortcut properties
+9. Custom shortcut properties
 
 If you are using Skin Shortcuts to set custom properties for shortcuts, you can set defaults for these items:
 
@@ -369,7 +378,7 @@ If you are using Skin Shortcuts to set these properties, then you must also set 
 </overrides>
 
 
-9. Overriding settings labels
+10. Overriding settings labels
 
 When using Skin Shortcuts to provide the whole main menu, it can provide a list of controls for your skinsettings.xml to launch the management dialog. You can override the default labels for these controls.
 
@@ -386,7 +395,7 @@ When using Skin Shortcuts to provide the whole main menu, it can provide a list 
 </overrides>
 
 
-10. Warn and confirm user wants to delete shortcut
+11. Warn and confirm user wants to delete shortcut
 
 You can use the overrides.xml to warn the user before they delete any particular shortcut and to give them the chance to cancel, for example to settings.
 
@@ -397,7 +406,7 @@ You can use the overrides.xml to warn the user before they delete any particular
 [action] - The action of the existing shortcut that will trigger this message when the user tries to delete/replace it, or edit its action
 
 
-11. Force Settings Link
+12. Force Settings Link
 
 When using Skin Shortcuts to provide the whole main menu, it is possible for the user to delete the link to settings. This would leave them in a position where they are unable to further edit the menu to put it back.
 
@@ -409,6 +418,16 @@ It is recommended that you provide an alternative access to settings somewhere i
 </overrides>
 
 Please note, this will cause the script to create a shortcut with the action ActivateWindow(Settings) if none exists. It doesn't look for any other settings area links. It also doesn't take into account any overrides or visibility conditions that may be attached to a shortcut.
+
+
+13. Provide available thumbnails
+
+When using button 311 in the management dialog, you can provide a list of thumbnails the user can choose from for their shortcut.
+
+<thumbnail label="[label]">[path]</thumbnail>
+
+[label] - The name displayed to the user in the select dialog
+[path] - The path to the image. No need to include full path if the thumbnail is included with your skin.
 
 
 Localisation

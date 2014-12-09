@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32000"
 msgid "Add"
-msgstr "הוסף"
+msgstr "הוספה"
 
 msgctxt "#32001"
 msgid "Delete"
@@ -34,19 +34,47 @@ msgstr "הזז מטה"
 
 msgctxt "#32004"
 msgid "Video Playlist"
-msgstr "רשימות השמעה לוידאו"
+msgstr "רשימת ניגון וידאו"
 
 msgctxt "#32005"
 msgid "Music Playlist"
-msgstr "רשימות השמעה למוזיקה"
+msgstr "רשימת ניגון מוזיקה"
 
 msgctxt "#32006"
 msgid "Favourite"
 msgstr "מועדף"
 
+msgctxt "#32007"
+msgid "Add-On"
+msgstr "הרחבה"
+
+msgctxt "#32008"
+msgid "Mixed Playlist"
+msgstr "רשימת ניגון מעורבת"
+
+msgctxt "#32009"
+msgid "Program"
+msgstr "תוכנה"
+
+msgctxt "#32010"
+msgid "Video Add-On"
+msgstr "הרחבת וידאו"
+
+msgctxt "#32011"
+msgid "Music Add-On"
+msgstr "הרחבת מוזיקה"
+
+msgctxt "#32012"
+msgid "Picture Add-On"
+msgstr "הרחבת תמונות"
+
+msgctxt "#32013"
+msgid "<None>"
+msgstr "<ללא>"
+
 msgctxt "#32014"
 msgid "Videos"
-msgstr "סרטונים"
+msgstr "וידאו"
 
 msgctxt "#32015"
 msgid "Movies"
@@ -66,7 +94,7 @@ msgstr "קליפים"
 
 msgctxt "#32019"
 msgid "Music"
-msgstr "מוסיקה"
+msgstr "מוזיקה"
 
 msgctxt "#32020"
 msgid "Pictures"
@@ -92,9 +120,17 @@ msgctxt "#32031"
 msgid "Music Library"
 msgstr "ספריית מוזיקה "
 
+msgctxt "#32032"
+msgid "Play DVD"
+msgstr "ניגון DVD"
+
+msgctxt "#32033"
+msgid "Eject tray"
+msgstr "הוצאת מגש"
+
 msgctxt "#32040"
 msgid "Playlist"
-msgstr "רשימת השמעה"
+msgstr "רשימת ניגון"
 
 msgctxt "#32041"
 msgid "Action"
@@ -102,7 +138,7 @@ msgstr "פעולה"
 
 msgctxt "#32044"
 msgid "Select widget"
-msgstr "בחר יישומון"
+msgstr "בחירת יישומון"
 
 msgctxt "#32050"
 msgid "Default"
@@ -112,9 +148,21 @@ msgctxt "#32051"
 msgid "Single image"
 msgstr "תמונה בודדת"
 
+msgctxt "#32052"
+msgid "Multi-image"
+msgstr "מספר תמונות"
+
 msgctxt "#32053"
 msgid "None"
 msgstr "ללא"
+
+msgctxt "#32054"
+msgid "Kodi Command"
+msgstr "פקודת Kodi"
+
+msgctxt "#32057"
+msgid "Kodi Commands"
+msgstr "פקודות Kodi"
 
 msgctxt "#32061"
 msgid "Display"
@@ -124,9 +172,49 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "שחק"
 
+msgctxt "#32066"
+msgid "Last TV channel"
+msgstr "ערוץ טלוויזיה אחרון"
+
+msgctxt "#32067"
+msgid "Last radio channel"
+msgstr "ערוץ רדיו אחרון"
+
+msgctxt "#32068"
+msgid "Last channel"
+msgstr "ערוץ אחרון"
+
+msgctxt "#32069"
+msgid "Video Source"
+msgstr "מקור וידאו"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32073"
+msgid "Music Source"
+msgstr "מקור מוזיקה"
+
+msgctxt "#32074"
+msgid "Library Sources"
+msgstr "מקורות ספריה"
+
 msgctxt "#32075"
 msgid "Sources"
 msgstr "מקורות"
+
+msgctxt "#32076"
+msgid "TV Channel"
+msgstr "ערוץ טלוויזיה"
+
+msgctxt "#32077"
+msgid "Radio Channel"
+msgstr "ערוץ רדיו"
+
+msgctxt "#32079"
+msgid "Files view"
+msgstr "תצוגת קבצים"
 
 msgctxt "#32087"
 msgid "Radio"
@@ -135,3 +223,11 @@ msgstr "רדיו"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "ערוצים"
+
+msgctxt "#32089"
+msgid "Picture Source"
+msgstr "מקור תמונות"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "עיון..."

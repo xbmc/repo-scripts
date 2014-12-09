@@ -375,3 +375,31 @@ msgstr "Kanalai"
 msgctxt "#32089"
 msgid "Picture Source"
 msgstr "Nuotraukų šaltinis"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "Elementas buvo pridėtas į meniu"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Neįmanoma pridėti elemento į meniu. Peržiūrėkite klaidas žurnale."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Neįmanoma sukurti meniu."
+
+msgctxt "#32093"
+msgid "Upload debug log to Kodilogs.com?"
+msgstr "Įkelti derinimo žurnalą į Kodilogs.com?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader to easily provide a debug log."
+msgstr "Įdiegti 'Kodi Log Uploader', kad būtų galima lengvai pateikti derinimo žurnalą."
+
+msgctxt "#32095"
+msgid "Choose default action for main menu item"
+msgstr "Pasirinkite pagrindinio meniu elemento numatytąjį veiksmą"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Naršyti..."

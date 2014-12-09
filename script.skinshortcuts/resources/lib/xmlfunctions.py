@@ -35,6 +35,9 @@ class XMLFunctions():
         self.MAINWIDGET = {}
         self.MAINBACKGROUND = {}
         self.hasSettings = False
+        self.widgetCount = 1
+        
+        self.checkForShorctcuts = []
         
     def buildMenu( self, mainmenuID, groups, numLevels, buildMode, options, weEnabledSystemDebug = False, weEnabledScriptDebug = False ): 
         # Entry point for building includes.xml files
@@ -233,6 +236,13 @@ class XMLFunctions():
                 elif hash[0] == "::LANGUAGE::":
                     # We no longer need to rebuild on a system language change
                     pass
+                elif hash[0] == "::SKINBOOL::":
+                    # A boolean we need to set (if profile matches)
+                    if xbmc.getCondVisibility( hash[ 1 ][ 0 ] ):
+                        if hash[ 1 ][ 2 ] == "True":
+                            xbmc.executebuiltin( "Skin.SetBool(%s)" %( hash[ 1 ][ 1 ] ) )
+                        else:
+                            xbmc.executebuiltin( "Skin.Reset(%s)" %( hash[ 1 ][ 1 ] ) )
                 else:
                     hasher = hashlib.md5()
                     hasher.update( xbmcvfs.File( hash[0] ).read() )
@@ -264,10 +274,21 @@ class XMLFunctions():
         
         # Clear any skin settings for backgrounds and widgets
         DATA._reset_backgroundandwidgets()
+        self.widgetCount = 1
         
         # Create a new tree and includes for the various groups
         tree = xmltree.ElementTree( xmltree.Element( "includes" ) )
         root = tree.getroot()
+        
+        # Get any shortcuts we're checking for
+        self.checkForShortcuts = []
+        overridestree = DATA._get_overrides_skin()
+        if overridestree is not None:
+            checkForShorctcutsOverrides = overridestree.getroot().findall( "checkforshortcut" )
+            for checkForShortcutOverride in checkForShorctcutsOverrides:
+                if "property" in checkForShortcutOverride.attrib:
+                    # Add this to the list of shortcuts we'll check for
+                    self.checkForShortcuts.append( ( checkForShortcutOverride.text.lower(), checkForShortcutOverride.attrib.get( "property" ), "False" ) )
         
         mainmenuTree = xmltree.SubElement( root, "include" )
         mainmenuTree.set( "name", "skinshortcuts-mainmenu" )
@@ -298,8 +319,15 @@ class XMLFunctions():
             profileVis = profile[1]
             profileCount += 1
             
+            # Reset whether we have settings
             self.hasSettings = False
             
+            # Reset any checkForShortcuts to say we haven't found them
+            newCheckForShortcuts = []
+            for checkforShortcut in self.checkForShortcuts:
+                newCheckForShortcuts.append( ( checkforShortcut[ 0 ], checkforShortcut[ 1 ], "False" ) )
+            self.checkForShortcuts = newCheckForShortcuts
+
             # Clear any previous labelID's
             DATA._clear_labelID()
             
@@ -329,6 +357,8 @@ class XMLFunctions():
             itemidmainmenu = 0
             percent = profilePercent / len( menuitems )
             
+            mainmenuItems = []
+            
             i = 0
             for item in menuitems:
                 i += 1
@@ -339,8 +369,10 @@ class XMLFunctions():
                 if not isinstance( item, basestring ):
                     submenu = item.find( "labelID" ).text
                     mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1], DATA.slugify( submenu, convertInteger=True ), itemid = itemidmainmenu, options = options )
+                    mainmenuItems.append( mainmenuItemA )
                     if buildMode == "single":
                         mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1], DATA.slugify( submenu, convertInteger=True ), itemid = itemidmainmenu, options = options )
+                        mainmenuItems.append( mainmenuItemB )
                     submenuDefaultID = item.find( "defaultID" ).text
                 else:
                     submenu = DATA._get_labelID( item, None )
@@ -348,8 +380,12 @@ class XMLFunctions():
                 # Build the submenu
                 count = 0
                 for submenuTree in submenuTrees:
-                    if count != 0:
+                    submenuVisibilityName = submenu
+                    if count == 1:
                         submenu = submenu + "." + str( count )
+                    elif count != 0:
+                        submenu = submenu[:-1] + str( count )
+                        submenuVisibilityName = submenu[:-2]
                         
                     if submenu in submenuNodes:
                         justmenuTreeA = submenuNodes[ submenu ][ 0 ]
@@ -365,48 +401,65 @@ class XMLFunctions():
                         submenuNodes[ submenu ] = [ justmenuTreeA, justmenuTreeB ]
                         
                     itemidsubmenu = 0
+                    
+                    if count == 0:
+                        submenudata = DATA._get_shortcuts( submenu, submenuDefaultID, True, profile[0] )
+                    else:
+                        submenudata = DATA._get_shortcuts( submenu, None, True, profile[0] )
                         
-                    submenudata = DATA._get_shortcuts( submenu, submenuDefaultID, True, profile[0] )
                     if type( submenudata ) == list:
                         submenuitems = submenudata
                     else:
                         submenuitems = submenudata.findall( "shortcut" )
                     
                     # Are there any submenu items for the main menu?
-                    if count == 0 and not len( submenuitems ) == 0:
-                        try:
-                            hasSubMenu = xmltree.SubElement( mainmenuItemA, "property" )
-                            hasSubMenu.set( "name", "hasSubmenu" )
-                            hasSubMenu.text = "True"
-                            if buildMode == "single":
-                                hasSubMenu = xmltree.SubElement( mainmenuItemB, "property" )
+                    if count == 0:
+                        if len( submenuitems ) != 0:
+                            try:
+                                hasSubMenu = xmltree.SubElement( mainmenuItemA, "property" )
                                 hasSubMenu.set( "name", "hasSubmenu" )
                                 hasSubMenu.text = "True"
-                        except:
-                            # There probably isn't a main menu
-                            pass
+                                if buildMode == "single":
+                                    hasSubMenu = xmltree.SubElement( mainmenuItemB, "property" )
+                                    hasSubMenu.set( "name", "hasSubmenu" )
+                                    hasSubMenu.text = "True"
+                            except:
+                                # There probably isn't a main menu
+                                pass
+                        else:   
+                            try:
+                                hasSubMenu = xmltree.SubElement( mainmenuItemA, "property" )
+                                hasSubMenu.set( "name", "hasSubmenu" )
+                                hasSubMenu.text = "False"
+                                if buildMode == "single":
+                                    hasSubMenu = xmltree.SubElement( mainmenuItemB, "property" )
+                                    hasSubMenu.set( "name", "hasSubmenu" )
+                                    hasSubMenu.text = "False"
+                            except:
+                                # There probably isn't a main menu
+                                pass
                 
                     # If we're building a single menu, update the onclicks of the main menu
                     if buildMode == "single" and not len( submenuitems ) == 0:
                         for onclickelement in mainmenuItemB.findall( "onclick" ):
                             if "condition" in onclickelement.attrib:
-                                onclickelement.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ") + [" + onclickelement.attrib.get( "condition" ) + "]" )
+                                onclickelement.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ") + [" + onclickelement.attrib.get( "condition" ) + "]" )
                                 newonclick = xmltree.SubElement( mainmenuItemB, "onclick" )
-                                newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenu, convertInteger=True ) + ",10000)"
+                                newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ",10000)"
                                 newonclick.set( "condition", onclickelement.attrib.get( "condition" ) )
                             else:
-                                onclickelement.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ")" )
+                                onclickelement.set( "condition", "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")" )
                                 newonclick = xmltree.SubElement( mainmenuItemB, "onclick" )
-                                newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenu, convertInteger=True ) + ",10000)"
+                                newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ",10000)"
                     
                     # Build the submenu
                     for submenuItem in submenuitems:
                         itemidsubmenu += 1
-                        self.buildElement( submenuItem, submenuTree, submenu, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
+                        self.buildElement( submenuItem, submenuTree, submenu, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
                         self.buildElement( submenuItem, justmenuTreeA, submenu, None, profile[1], itemid = itemidsubmenu, options = options )
-                        self.buildElement( submenuItem, justmenuTreeB, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
+                        self.buildElement( submenuItem, justmenuTreeB, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
                         if buildMode == "single":
-                            self.buildElement( submenuItem, allmenuTree, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenu, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
+                            self.buildElement( submenuItem, allmenuTree, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
                         
                     count += 1
 
@@ -429,9 +482,21 @@ class XMLFunctions():
                             xmltree.SubElement( newelement, "icon" ).text = "DefaultShortcut.png"
                             xmltree.SubElement( newelement, "onclick" ).text = "ActivateWindow(settings)" 
                             xmltree.SubElement( newelement, "visible" ).text = profile[1]
+                            
+            if len( self.checkForShortcuts ) != 0:
+                # Add a value to the variable for all checkForShortcuts
+                for checkForShortcut in self.checkForShortcuts:
+                    if profile[ 1 ] is not None and xbmc.getCondVisibility( profile[ 1 ] ):
+                        # Current profile - set the skin bool
+                        if checkForShortcut[ 2 ] == "True":
+                            xbmc.executebuiltin( "Skin.SetBool(%s)" %( checkForShortcut[ 1 ] ) )
+                        else:
+                            xbmc.executebuiltin( "Skin.Reset(%s)" %( checkForShortcut[ 1 ] ) )
+                    # Save this to the hashes file, so we can set it on profile changes
+                    hashlist.list.append( [ "::SKINBOOL::", [ profile[ 1 ], checkForShortcut[ 1 ], checkForShortcut[ 2 ] ] ] )
                     
         progress.update( 100 )
-        
+                
         # Get the skins addon.xml file
         addonpath = xbmc.translatePath( os.path.join( "special://skin/", 'addon.xml').encode("utf-8") ).decode("utf-8")
         addon = xmltree.parse( addonpath )
@@ -531,11 +596,27 @@ class XMLFunctions():
             else:
                 onclickelement.text = onclick.text
                 
+            # Also add it as a path property
+            pathelement = xmltree.SubElement( newelement, "property" )
+            pathelement.set( "name", "path" )
+            pathelement.text = onclickelement.text
+                
             if onclick.text == "ActivateWindow(Settings)":
                 self.hasSettings = True
                 
             if "condition" in onclick.attrib:
                 onclickelement.set( "condition", onclick.attrib.get( "condition" ) )
+                
+            if len( self.checkForShortcuts ) != 0:
+                # Check if we've been asked to watch for this shortcut
+                newCheckForShortcuts = []
+                for checkforShortcut in self.checkForShortcuts:
+                    if onclick.text.lower() == checkforShortcut[ 0 ]:
+                        # They match, change the value to True
+                        newCheckForShortcuts.append( ( checkforShortcut[ 0 ], checkforShortcut[ 1 ], "True" ) )
+                    else:
+                        newCheckForShortcuts.append( checkforShortcut )
+                self.checkForShortcuts = newCheckForShortcuts
 
         # Visibility
         if visibilityCondition is not None:
@@ -594,6 +675,10 @@ class XMLFunctions():
                     # If this is a widget or background, set a skin setting to say it's enabled
                     if property[0] == "widget":
                         xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-widget-" + property[1] + ")" )
+                        # And if it's the main menu, list it
+                        if groupName == "mainmenu":
+                            xbmc.executebuiltin( "Skin.SetString(skinshortcuts-widget-" + str( self.widgetCount ) + "," + property[ 1 ] + ")" )
+                            self.widgetCount += 1
                     elif property[0] == "background":
                         xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-background-" + property[1] + ")" )
                         

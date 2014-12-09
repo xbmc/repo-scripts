@@ -32,6 +32,10 @@ msgctxt "#32015"
 msgid "Movies"
 msgstr "Filmovi"
 
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "TV"
+
 msgctxt "#32019"
 msgid "Music"
 msgstr "Muzika"
@@ -43,6 +47,14 @@ msgstr "Slike"
 msgctxt "#32021"
 msgid "Programs"
 msgstr "Programi"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "TV"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Tajmer"
 
 msgctxt "#32040"
 msgid "Playlist"
@@ -63,3 +75,19 @@ msgstr "Prikaz"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Reprodukuj"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "Pravljenje rez. kopije EEPROM-a"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Kanali"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Potraži..."
