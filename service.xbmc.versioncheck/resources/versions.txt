@@ -98,6 +98,15 @@
                 "major": "14",
                 "minor": "0",
                 "tag": "releasecandidate",
+                "tagversion":"3",
+                "revision": "20141208-bdf56d0",
+                "extrainfo": "RC3",
+                "addon_support": "yes"
+            },
+            {
+                "major": "14",
+                "minor": "0",
+                "tag": "releasecandidate",
                 "tagversion":"2",
                 "revision": "20141203-35b4f38",
                 "extrainfo": "RC2",
