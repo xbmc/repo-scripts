@@ -1,7 +1,17 @@
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
-What's New for Skinners (version 0.4.2)
+What's New for Skinners (version 0.4.4 - current Repo release)
+-----------------------
+
+ - Just Select method - option to show a 'None' option, which will reset all skin labels passed in. See "Advanced Usage.txt", section "Just Select Shortcuts"
+ - Ability to specify available thumbnails for user to choose from with new button 311. See "Advanced Usage.txt", section "Overrides.xml", part 13 and "Management Dialog.txt"
+ - Ability to specify conditions for widgets and thumbnails to determine if they are available for selection. See "Advanced Usage.txt", section "Overrides.xml", parts 3 and 4
+ - Ability to set skin boolean based on inclusion of a shortcut with a specified action. See "Advanced Usage.txt", section "Overrides.xml", part 7
+ - Advice change - hasSubmenu cannot be relied upon to indicate there are no visible items, there may still be invisible items.
+ 
+
+What's New for Skinners (version 0.4.2 - previous release)
 -----------------------
 
  - Ability to skip warning when resetting all shortcuts. See "Resetting all shortcuts", below
@@ -12,27 +22,6 @@ What's New for Skinners (version 0.4.2)
  - Advice change - consider providing a defaultID in your default shortcuts. See "Providing default shortcuts", below.
  - Advice change - use video node links, rather than library links, in your default shortcuts. See "Providing default shortcuts" below; and "Advanced Usage.txt", section "Overrides.xml", part 1.
  - Shortcuts with a <visible/> element will not only show in management dialog if this property evaluates to true. Though they won't be visible in the management dialog, they will not be removed from the menu, but will move to the end of the menu.
- 
-
-What's New for Skinners (version 0.4.0 - previous release)
------------------------
-
- - New XML file format for storing data - this required no changes on your part, but you can upgrade your default shortcuts to the new format, see "Providing default shortcuts" below
- - New localisation code - all local strings you provide should now simply be the string id, no need for ::LOCAL::stringID or ::SCRIPT::stringID
- - Removal of Gotham list-filling methods - please transition to Includes methods.
- - [bambi73] Use the widgetName as the label for a shortcut when setting widget, see "Advanced Usage.txt", section "Overrides.xml" part 4
- - New property for shortcuts - defaultID - a permanent form of the labelID, see "labelID and defaultID.txt" for details. Please note, on upgrade to XML file format this will be set to the items CURRENT labelID, not its original.
- - New management dialog controls to edit additional sub-menus, see "Management Dialog.txt", sections "Available Controls" and "6. Launch management dialog for submenu / additional menus"
- - New override option to force including settings in menu, see "Providing Alternative Access to Settings" below and "Advanced Usage.txt", section "Overrides.xml" part 11
- - New override option to return thumbnail of available shortcuts as the icon, see "Advanced Usage", section "Overrides.xml" part 2
- - New available shortcut grouping - picturesources
- - Ability to clone widget and background properties from main menu items to submenu and additional menu items when building xml, see "Advanced Usage.txt", sections "Managing Custom Backgrounds" and "Managing Widgets"
- - Advice change - skin-required shortcuts are now recommended for more than just skin-specific features, as they will now persist across skins
- - Advice change - additional submenu includes are now named skinshortcuts-group-[groupname].[level], rather than -[level] as previous (avoids conflicts)
- - Advice change - whilst it is still preferable not to include a script-skinshortcuts-includes.xml file, the script will now recognise if its version has been overwritten and re-write it
- - New PVR options available on Helix systems
- - Updated labelID's for add-ons - shortcuts to add-ons and root of plugins now script.addon.name - see "labelID and defaultID.txt" for details
- - Advice on targeting Helix - see "Targeting Helix (Kodi 14)", below
  
  
 With Thanks - Because their names don't deserve to be at the bottom :)
@@ -305,6 +294,8 @@ Regardless of which method you use, the script will always return a list with a 
 	Property(backgroundName)    - The display name of the widget will appear here
 
 You can also use the script to manage any additional properties you would like. See "resources/Management Dialog.txt" and "resources/Advanced Usage.txt" - "Overrides.xml" - section 5 (Custom shortcut properties)
+
+Note, there is an additional property - Property(hasSubmenu) - which is used by the methods used for building all menus in a single list. It should not be relied upon to determine whether there are any visible items in a submenu, as it will still return True if all items within the submenu are invisible. Suggestion is to use Container.NumItems to determine this information instead.
 	
 	
 Display more controls depending on the mainmenu item

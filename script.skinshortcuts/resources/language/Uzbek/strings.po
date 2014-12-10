@@ -52,6 +52,10 @@ msgctxt "#32022"
 msgid "Live TV"
 msgstr "TV"
 
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Taymer"
+
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Ijro ro'yxati"
@@ -64,10 +68,22 @@ msgctxt "#32053"
 msgid "None"
 msgstr "Yo'q"
 
+msgctxt "#32061"
+msgid "Display"
+msgstr "Ekran"
+
 msgctxt "#32062"
 msgid "Play"
 msgstr "Ijro ettirish"
 
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Kanallar"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Ko'rib chiqish..."

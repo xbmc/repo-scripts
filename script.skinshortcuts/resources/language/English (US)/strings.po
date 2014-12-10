@@ -375,3 +375,31 @@ msgstr "Channels"
 msgctxt "#32089"
 msgid "Picture Source"
 msgstr "Picture Source"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "The item has been added to the menu"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Unable to add item to the menu. Please check log for errors."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Unable to build menu."
+
+msgctxt "#32093"
+msgid "Upload debug log to Kodilogs.com?"
+msgstr "Upload debug log to Kodilogs.com?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader to easily provide a debug log."
+msgstr "Install Kodi Log Uploader to easily provide a debug log."
+
+msgctxt "#32095"
+msgid "Choose default action for main menu item"
+msgstr "Choose default action for main menu item"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Browse..."

@@ -375,3 +375,7 @@ msgstr "Canales"
 msgctxt "#32089"
 msgid "Picture Source"
 msgstr "Fuente de imágenes"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Explorar..."

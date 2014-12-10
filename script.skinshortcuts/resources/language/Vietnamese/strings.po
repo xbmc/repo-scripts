@@ -72,6 +72,18 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Phát"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Kênh"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Duyệt..."

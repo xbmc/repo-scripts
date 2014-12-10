@@ -72,6 +72,10 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "ማጫወቻ "
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
 msgctxt "#32087"
 msgid "Radio"
 msgstr "ሬዲዮ "
@@ -79,3 +83,7 @@ msgstr "ሬዲዮ "
 msgctxt "#32088"
 msgid "Channels"
 msgstr "ጣቢያዎች"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "መቃኛ..."

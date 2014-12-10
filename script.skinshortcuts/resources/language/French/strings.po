@@ -128,6 +128,10 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Lire"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
 msgctxt "#32072"
 msgid "Customize Submenu"
 msgstr "Personnaliser Le Sous-Menu"
@@ -143,3 +147,7 @@ msgstr "Radio"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Canaux"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Parcourir..."

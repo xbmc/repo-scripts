@@ -1,3 +1,13 @@
+v0.4.4
+- [phate89] Use files.getDirectory to list playlists
+- Just Select method - option to show 'None'
+- New management dialog button 311 - select from defined thumbnails
+- Conditions for available widgets and backgrounds
+- Ability to check for shortcuts
+- Speed improvements loading management dialog
+- Fixes
+- Updated language files from Transifex (from 8th December 2014)
+
 v0.4.2
 - [robweber] Fix for profiles shared via path substitution
 - Integration with plugin.program.video.node.editor

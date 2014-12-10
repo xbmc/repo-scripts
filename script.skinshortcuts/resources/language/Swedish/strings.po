@@ -375,3 +375,31 @@ msgstr "Kanaler"
 msgctxt "#32089"
 msgid "Picture Source"
 msgstr "Bildskälla"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "Objektet har lagts till i menyn"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Kunde inte lägga till objektet till menyn. Vänligen kontrollera loggen efter fel."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Kunde inte skapa meny."
+
+msgctxt "#32093"
+msgid "Upload debug log to Kodilogs.com?"
+msgstr "Ladda upp debug-loggen till Kodilogs.com?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader to easily provide a debug log."
+msgstr "Installera Kodi Log Uploader för att tillhandahålla en debuglogg."
+
+msgctxt "#32095"
+msgid "Choose default action for main menu item"
+msgstr "Välj ett standardbeteende för menyobjekt"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Bläddra..."

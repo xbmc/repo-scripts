@@ -52,6 +52,10 @@ msgctxt "#32022"
 msgid "Live TV"
 msgstr "Live TV"
 
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Тајмер"
+
 msgctxt "#32040"
 msgid "Playlist"
 msgstr "Список за реп."
@@ -72,6 +76,18 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Репродуцирај"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "Правење рез. копија на EEPROM"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Радио"
+
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Канали"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Пребарај..."

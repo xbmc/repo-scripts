@@ -56,6 +56,10 @@ msgctxt "#32022"
 msgid "Live TV"
 msgstr "تلویزیون زنده"
 
+msgctxt "#32023"
+msgid "Timers"
+msgstr "تایمر"
+
 msgctxt "#32030"
 msgid "Video Library"
 msgstr "کتابخانه ی ویدیو"
@@ -87,3 +91,11 @@ msgstr "نمایش"
 msgctxt "#32062"
 msgid "Play"
 msgstr "پخش"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "مرور..."

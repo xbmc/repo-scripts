@@ -99,6 +99,8 @@ class Main:
             
         if self.TYPE=="hidesubmenu":
             self._hidesubmenu( self.MENUID )
+        if self.TYPE=="resetlist":
+            self._resetlist( self.MENUID, self.NEXTACTION )
             
         if self.TYPE=="shortcuts":
             # We're just going to choose a shortcut, and save its details to the given
@@ -111,7 +113,7 @@ class Main:
             xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-user-data" )
             xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsAdditionalProperties" )
             
-            selectedShortcut = LIBRARY.selectShortcut( "", custom = self.CUSTOM )
+            selectedShortcut = LIBRARY.selectShortcut( "", custom = self.CUSTOM, showNone = self.NONE )
             
             # Now set the skin strings
             if selectedShortcut is not None and selectedShortcut.getProperty( "Path" ):
@@ -131,6 +133,18 @@ class Main:
                     xbmc.executebuiltin( "Skin.SetString(" + self.THUMBNAIL + "," + selectedShortcut.getProperty( "icon" ) + ")" )
                 if self.THUMBNAIL is not None and selectedShortcut.getProperty( "thumbnail" ):
                     xbmc.executebuiltin( "Skin.SetString(" + self.THUMBNAIL + "," + selectedShortcut.getProperty( "thumbnail" ) + ")" )
+            elif selectedShortcut is not None and selectedShortcut.getLabel() == "::NONE::":
+                # Clear the skin strings
+                if self.LABEL is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.LABEL + ")" )
+                if self.ACTION is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.ACTION + " )" )
+                if self.SHORTCUTTYPE is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.SHORTCUTTYPE + ")" )
+                if self.THUMBNAIL is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.THUMBNAIL + ")" )
+                if self.THUMBNAIL is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.THUMBNAIL + ")" )
                     
         if self.TYPE=="addNode":
             # We've been sent a node from plugin.program.video.node.editor
@@ -171,6 +185,7 @@ class Main:
         self.GROUPNAME = params.get( "groupname", None )
         self.PATH = params.get( "path", "" )
         self.MENUID = params.get( "mainmenuID", "0" )
+        self.NEXTACTION = params.get( "action", "0" )
         self.LEVEL = params.get( "level", "" )
         self.LEVELS = params.get( "levels", "0" )
         self.CUSTOMID = params.get( "customid", "" )
@@ -185,6 +200,7 @@ class Main:
         self.THUMBNAIL = params.get( "skinThumbnail", None )
         self.GROUPING = params.get( "grouping", None )
         self.CUSTOM = params.get( "custom", "False" )
+        self.NONE = params.get( "showNone", "False" )
         
         self.NOLABELS = params.get( "nolabels", "false" ).lower()
         self.OPTIONS = params.get( "options", "" ).split( "|" )
@@ -555,7 +571,19 @@ class Main:
             xbmc.executebuiltin( "Control.Move(" + menuid + "," + str( count ) + " )" )
         
         xbmc.executebuiltin( "ClearProperty(submenuVisibility, 10000)" )
-                    
+        
+    def _resetlist( self, menuid, action ):
+        count = 0
+        while xbmc.getCondVisibility( "!IsEmpty(Container(" + menuid + ").ListItemNoWrap(" + str( count ) + ").Label)" ):
+            count -= 1
+            
+        count += 1
+            
+        if count != 0:
+            xbmc.executebuiltin( "Control.Move(" + menuid + "," + str( count ) + " )" )
+            
+        xbmc.executebuiltin( urllib.unquote( action ) )
+        
 if ( __name__ == "__main__" ):
     log('script version %s started' % __addonversion__)
     

@@ -16,6 +16,10 @@ msgstr ""
 "Language: lv\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
+msgctxt "#32000"
+msgid "Add"
+msgstr "Pievienot"
+
 msgctxt "#32001"
 msgid "Delete"
 msgstr "Dzēst"
@@ -31,6 +35,10 @@ msgstr "Filmas"
 msgctxt "#32016"
 msgid "TV Shows"
 msgstr "TV Šovi"
+
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "Tiešraides TV"
 
 msgctxt "#32018"
 msgid "Music Videos"
@@ -48,9 +56,25 @@ msgctxt "#32021"
 msgid "Programs"
 msgstr "Programmas"
 
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "Tiešraides TV"
+
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Taimeris"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "Spēļsaraksts"
+
 msgctxt "#32050"
 msgid "Default"
 msgstr "Noklusējums"
+
+msgctxt "#32053"
+msgid "None"
+msgstr "Nav"
 
 msgctxt "#32061"
 msgid "Display"
@@ -60,6 +84,18 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Atskaņot"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radio"
+
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Kanāli"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Pārlūkot..."

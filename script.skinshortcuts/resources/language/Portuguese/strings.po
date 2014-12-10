@@ -347,3 +347,7 @@ msgstr "Rádio"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Canais"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Procurar..."

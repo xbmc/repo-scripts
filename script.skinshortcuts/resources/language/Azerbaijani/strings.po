@@ -16,6 +16,46 @@ msgstr ""
 "Language: az\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32001"
+msgid "Delete"
+msgstr "Sil"
+
 msgctxt "#32014"
 msgid "Videos"
 msgstr "Videolar"
+
+msgctxt "#32015"
+msgid "Movies"
+msgstr "Filmlər"
+
+msgctxt "#32017"
+msgid "Live TV"
+msgstr "TV"
+
+msgctxt "#32019"
+msgid "Music"
+msgstr "Musiqi"
+
+msgctxt "#32020"
+msgid "Pictures"
+msgstr "Rəsimlər"
+
+msgctxt "#32021"
+msgid "Programs"
+msgstr "Proqramlar"
+
+msgctxt "#32022"
+msgid "Live TV"
+msgstr "TV"
+
+msgctxt "#32040"
+msgid "Playlist"
+msgstr "İfa siyahı"
+
+msgctxt "#32061"
+msgid "Display"
+msgstr "Displey"
+
+msgctxt "#32062"
+msgid "Play"
+msgstr "Başla"

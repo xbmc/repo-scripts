@@ -63,3 +63,19 @@ msgstr "Screen"
 msgctxt "#32062"
 msgid "Play"
 msgstr "Ara"
+
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "Qari Values minn EEPROM"
+
+msgctxt "#32087"
+msgid "Radio"
+msgstr "Radju"
+
+msgctxt "#32088"
+msgid "Channels"
+msgstr "Stazzjonijiet"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Browżja..."

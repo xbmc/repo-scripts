@@ -72,6 +72,10 @@ msgctxt "#32022"
 msgid "Live TV"
 msgstr "TV"
 
+msgctxt "#32023"
+msgid "Timers"
+msgstr "Optagelse"
+
 msgctxt "#32029"
 msgid "Common"
 msgstr "Almindelig"
@@ -116,6 +120,14 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Spil"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
+msgctxt "#32072"
+msgid "Customize Submenu"
+msgstr "Tilpas undermenu"
+
 msgctxt "#32075"
 msgid "Sources"
 msgstr "Kilder"
@@ -127,3 +139,7 @@ msgstr "Radio"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Kanaler"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Gennemse..."

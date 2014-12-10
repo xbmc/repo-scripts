@@ -276,6 +276,10 @@ msgctxt "#32065"
 msgid "There are no shortcuts available for the category that you choose."
 msgstr "Nincsenek elérhető parancsikonok a kiválasztott kategóriához"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
 msgctxt "#32075"
 msgid "Sources"
 msgstr "Források"
@@ -287,3 +291,7 @@ msgstr "Rádió"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Csatornák"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Tallózás..."

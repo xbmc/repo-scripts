@@ -375,3 +375,31 @@ msgstr "Chaînes"
 msgctxt "#32089"
 msgid "Picture Source"
 msgstr "Source des images"
+
+msgctxt "#32090"
+msgid "The item has been added to the menu"
+msgstr "L'élément a été ajouté au menu"
+
+msgctxt "#32091"
+msgid "Unable to add item to the menu. Please check log for errors."
+msgstr "Impossible d'ajouter l'élément au menu. Veuillez vérifier les erreurs dans le journal."
+
+msgctxt "#32092"
+msgid "Unable to build menu."
+msgstr "Impossible de construire le menu."
+
+msgctxt "#32093"
+msgid "Upload debug log to Kodilogs.com?"
+msgstr "Téléverser le journal de débogage vers Kodilogs.com?"
+
+msgctxt "#32094"
+msgid "Install Kodi Log Uploader to easily provide a debug log."
+msgstr "Installer le téléverseur de journal Kodi pour fournir facilement un journal de débogage."
+
+msgctxt "#32095"
+msgid "Choose default action for main menu item"
+msgstr "Choisir l'action par défaut pour l'élément du menu principal"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Parcourir..."

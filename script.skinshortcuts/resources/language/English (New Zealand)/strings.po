@@ -260,6 +260,10 @@ msgctxt "#32062"
 msgid "Play"
 msgstr "Play"
 
+msgctxt "#32070"
+msgid "UPnP"
+msgstr "UPnP"
+
 msgctxt "#32075"
 msgid "Sources"
 msgstr "Sources"
@@ -271,3 +275,7 @@ msgstr "Radio"
 msgctxt "#32088"
 msgid "Channels"
 msgstr "Channels"
+
+msgctxt "#32096"
+msgid "Browse..."
+msgstr "Browse..."
