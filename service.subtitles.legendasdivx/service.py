@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.2.0
+# Service LegendasDivx.com version 0.2.1
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -96,12 +96,9 @@ Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
 """
 
 subtitle_pattern = "<div\sclass=\"sub_box\">.+?<div\sclass=\"sub_header\">.+?<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?</div>.+?<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">.+?<tr>.+?<th>CDs:</th>.+?<td>(.+?)</td>.+?<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">.+?<th\sclass=\"color2\">Hits:</th>.+?<td>(.+?)</td>.+?<td>(.+?)</td>.+?<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">(.*?)</td>.+?<td\sclass"
-#release_pattern = "([^\W]\w{1,}[\.|\-]{1,1}[^\.|^\ ][^\Ws][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[^\Ws][\w{3,}\-|\.{1,1}]\w{2,})"
 release_pattern = "([^\W][\w\.]{1,}\w{1,}[\.]{1,1}[^\.|^\ |^\.org|^\.com|^\.net][^\Ws|^\.org|^\.com|^\.net][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[^\Ws|^\.org|^\.com|^\.net][\w{3,}\-|\.{1,1}]\w{2,})"
-#release_pattern1 = "([^\W][\w\ ]{4,}[^\Ws][x264|xvid]{1,}-[\w]{1,})"
 release_pattern1 = "([^\W][\w\ |\]|[]{4,}[^\Ws][x264|xvid|ac3]{1,}-[\w\[\]]{1,})"
 year_pattern = "(19|20)\d{2}$"
-#release_pattern = "([^\W][\w\ |\.|\-]{4,}[^\Ws][x264|xvid]{1,}-[\w]{1,})"
 # group(1) = Name, group(2) = Year, group(3) = Number Files, group(4) = ID, group(5) = Hits, group(6) = Requests, group(7) = Description
 #==========
 # Functions
@@ -135,20 +132,6 @@ def urlpost(query, lang, page):
         log(u"Timed out!")
     return response
     
-def geturl(url):
-    class MyOpener(urllib.FancyURLopener):
-        #version = HTTP_USER_AGENT
-        version = ''
-    my_urlopener = MyOpener()
-    log(u"Getting url: %s" % (url,))
-    try:
-        response = my_urlopener.open(url)
-        content = response.read()
-    except:
-        log(u"Failed to get url:%s" % (url,))
-        content = None
-    return content
-
 def getallsubs(searchstring, languageshort, languagelong, file_original_path, searchstring_notclean):
     subtitles_list = []
     log(u"getallsubs: Search String = '%s'" % searchstring)
@@ -311,13 +294,6 @@ def Search(item):
     israr = string.lower(israr[-1])
 
     title = xbmc.getCleanMovieTitle(item['title'])[0]
-#    if item['year'] == '':
-#        log(u"Search: year null? = %s" % (item['year'],))
-#        year = re.search(year_pattern, filename, re.IGNORECASE)
-#        log(u"Search: year pattern = %s" % (year,))
-#        year = year.group(0)
-#        log(u"Search: year group = %s" % (year.group(0),))
-#    else:
     year = item['year']
     ## REMOVING THE YEAR FROM THE TV SHOW FOR BETTER MATCH ##
     tvshow = item['tvshow']
@@ -370,12 +346,7 @@ def Search(item):
                     title = os.path.split(file_original_path)
                     searchstring = title[-1]
             else:
-                # if title == '':
-                    # title = os.path.split(file_original_path)
-                    # searchstring = title[-1]
-                    # log(u"Search: TITLE is NULL using filename as String = %s" % (searchstring,))
-                # else:
-                ########## TODO: EXTRACT THE YEAR FROM THE FILENAME AND ADD IT TO THE SEARCH (WILL BE DONE IN THE NEXT DAYS) ###########
+                ########## TODO: EXTRACT THE YEAR FROM THE FILENAME AND ADD IT TO THE SEARCH ###########
                 if __search__ == '0':
                     if re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE):
                         searchstring = re.search("(.+?s[0-9][0-9]e[0-9][0-9])", filename, re.IGNORECASE)
@@ -424,8 +395,9 @@ def Download(id, filename):
     """Called when subtitle download request from XBMC."""
     # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     # pass that to XBMC to copy and activate
-    if xbmcvfs.exists(__temp__): shutil.rmtree(__temp__)
+    if os.path.isdir(__temp__):shutil.rmtree(__temp__)
     xbmcvfs.mkdirs(__temp__)
+    if not os.path.isdir(__temp__):xbmcvfs.mkdir(__temp__)
 
     subtitles_list = []
     username = __addon__.getSetting( 'LDuser' )
@@ -464,21 +436,6 @@ def Download(id, filename):
             local_file_handle.close()
         except: log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
         if packed:
-###################### OLD APPROACH ########################
-#            files = os.listdir(__temp__)
-#            init_filecount = len(files)
-#            log(u"legendasdivx: número de init_filecount %s" % (init_filecount,)) #EGO
-#            filecount = init_filecount
-#            max_mtime = 0
-            # Determine the newest file from __temp__
-#            for file in files:
-#                if file.split('.')[-1] in SUB_EXTS:
-#                    mtime = os.stat(pjoin(__temp__, file)).st_mtime
-#                    if mtime > max_mtime: max_mtime =  mtime
-#            init_max_mtime = max_mtime
-            # Wait 2 seconds so that the unpacked files are at least 1 second newer
-#            time.sleep(2)
-############################################################
             xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (local_tmp_file.encode("utf-8"), __temp__))
             xbmc.sleep(1000)
 
@@ -491,28 +448,12 @@ def Download(id, filename):
                 subtitles_list.append(subs_file)
             ## ELSE WE WILL GO WITH THE NORMAL PROCEDURE ##
             else:
-###################### OLD APPROACH ########################
-#            waittime  = 0
-#            while filecount == init_filecount and waittime < 30 and init_max_mtime == max_mtime: # nothing yet extracted
-#                time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-#                files = os.listdir(__temp__)
-#                filecount = len(files)
-            # determine if there is a newer file created in __temp__ (marks that the extraction had completed)
-#                for file in files:
-#                    if file.split('.')[-1] in SUB_EXTS:
-#                        mtime = os.stat(pjoin(__temp__, file)).st_mtime
-#                        if mtime > max_mtime: max_mtime =  mtime
-#                waittime  = waittime + 1
-#            if waittime == 30: log(u"Failed to unpack subtitles in '%s'" % (__temp__,))
-#            else:
-############################################################
                 log(u"Unpacked files in '%s'" % (__temp__,))
                 searchsubs = recursive_glob(__temp__, SUB_EXTS)
                 searchsubscount = len(searchsubs)
                 for file in searchsubs:
                     # There could be more subtitle files in __temp__, so make
                     # sure we get the newly created subtitle file
-                    #if file.split('.')[-1] in SUB_EXTS and os.stat(pjoin(__temp__, file)).st_mtime > init_max_mtime:
                     if searchsubscount == 1:
                         # unpacked file is a newly created subtitle file
                         log(u"Unpacked subtitles file '%s'" % (file.decode('utf-8'),))
@@ -572,9 +513,6 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
     for lang in urllib.unquote(params['languages']).decode('utf-8').split(','):
         item['languages'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
-#    if not item['title']:
-#        # no original title, get just Title
-#        item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))
 
     if "s" in item['episode'].lower():
         # Check if season is "Special"
