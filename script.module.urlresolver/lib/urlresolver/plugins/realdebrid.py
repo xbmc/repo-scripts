@@ -25,7 +25,7 @@ from urlresolver.plugnplay.interfaces import SiteAuth
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
-import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
+import xbmc,xbmcplugin,xbmcgui,xbmcaddon
 from t0mm0.common.net import Net
 import simplejson as json
 
@@ -44,6 +44,7 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         self.priority = int(p)
         self.net = Net()
         self.hosters = None
+        self.hosts = None
         try:
             os.makedirs(os.path.dirname(self.cookie_file))
         except OSError:
@@ -81,7 +82,7 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
                 else :
                     return self.unresolvable(0,'No generated_link and no main_link')
         except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %  (str(e), web_url))
+            common.addon.log_error(self.name + ': got http error %d fetching %s' %  (str(e), url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return self.unresolvable(3,str(e))
         except Exception, e:
@@ -107,22 +108,38 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         common.addon.log_debug( 'RealDebrid hosters : %s' %self.hosters)
         return self.hosters
 
+    def get_hosts(self):
+        if self.hosts is None:
+            try:
+                url = 'https://real-debrid.com/api/hosters.php'
+                response = self.net.http_GET(url).content
+                response = response[1:-1]
+                self.hosts = response.split('","')
+            except:
+                self.hosts = []
+        common.addon.log_debug( 'RealDebrid hosts : %s' %self.hosts)
+            
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         if self.get_setting('login') == 'false': return False 
         common.addon.log_debug('in valid_url %s : %s' % (url, host))
-        self.get_all_hosters()
-        for host in self.hosters :
-            #common.addon.log_debug('RealDebrid checking host : %s' %str(host))
-            if re.search(host,url):
-                common.addon.log_debug('RealDebrid Match found')
+        if url:
+            self.get_all_hosters()
+            for host in self.hosters :
+                #common.addon.log_debug('RealDebrid checking host : %s' %str(host))
+                if re.search(host,url):
+                    common.addon.log_debug('RealDebrid Match found')
+                    return True
+        elif host:
+            self.get_hosts()
+            if host in self.hosts or any(item in host for item in self.hosts):
                 return True
         return False
 
     def checkLogin(self):
         url = 'https://real-debrid.com/api/account.php'
         if not os.path.exists(self.cookie_file):
-               return True
+            return True
         self.net.set_cookies(self.cookie_file)
         source = self.net.http_GET(url).content
         common.addon.log_debug(source)

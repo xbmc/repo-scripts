@@ -59,7 +59,7 @@ class DaclipsResolver(Plugin, UrlResolver, PluginSettings):
             else:
                 raise Exception ('Unable to resolve Daclips link')
 
-        except urllib2.URLError, e:
+        except urllib2.HTTPError, e:
             common.addon.log_error('daclips: got http error %d fetching %s' %
                                   (e.code, web_url))
             common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)

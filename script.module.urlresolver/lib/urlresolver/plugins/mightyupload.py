@@ -46,6 +46,9 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
             for i in re.finditer('<input type="hidden" name="(.*?)" value="(.*?)"', html):
                 form_values[i.group(1)] = i.group(2)   
             html = self.net.http_POST(web_url, form_data=form_values).content
+            r = re.search('<IFRAME SRC="(.*?)" .*?></IFRAME>',html,re.DOTALL)
+            if r:
+                html = self.net.http_GET(r.group(1)).content
             r = re.search("<div id=\"player_code\">.*?<script type='text/javascript'>(.*?)</script>",html,re.DOTALL)
             if not r:
                 raise Exception ('Unable to resolve Mightyupload link. Player config not found.')
@@ -63,12 +66,9 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                     (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return self.unresolvable(code=3, msg='Exception: %s' % e) 
         except Exception, e:
             common.addon.log('**** Mightyupload Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]MIGHTYUPLOAD[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' 
-            % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg='Exception: %s' % e)
 
     def get_url(self, host, media_id):

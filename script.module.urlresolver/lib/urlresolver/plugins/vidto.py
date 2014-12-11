@@ -21,9 +21,12 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
+import xbmc
+from lib import jsunpack
+
 net = Net()
 
-
+USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
 class vidto(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vidto"
@@ -35,22 +38,39 @@ class vidto(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         try:
-            url = self.get_url(host, media_id)
-            html = self.net.http_GET(url).content
-            common.addon.show_countdown(6, title='Vidto', text='Loading Video...')
+            web_url = self.get_url(host, media_id)
+            headers = {
+                'Referer': web_url,
+                'User-Agent': USER_AGENT
+            }
 
+            html = self.net.http_GET(web_url).content
             data = {}
-            r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
-            for name, value in r:
-                data[name] = value
-            html = net.http_POST(url, data).content
-
-            r = re.search('<a id="lnk_download" href="(.+?)"', html)
+            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)"', html)
             if r:
-                r=re.sub(' ','%20',r.group(1))
-                return r
+                for name, value in r:
+                    data[name] = value
+                data['referer'] = web_url
+            data['imhuman']='Proceed to video' 
+            xbmc.sleep(6000) # don't replace with countdown, crashes on linux
+            html = net.http_POST(web_url, data, headers=headers).content
+            match = re.search('(eval\(function.*)\s*</script>', html, re.DOTALL)
+            if match:
+                packed_data = match.group(1)
+                js_data = jsunpack.unpack(packed_data)
+                max_label=0
+                stream_url = ''
+                for match in re.finditer('label:\s*"(\d+)p"\s*,\s*file:\s*"([^"]+)', js_data):
+                    label, link = match.groups()
+                    if int(label)>max_label:
+                        stream_url = link
+                        max_label = int(label)
+                if stream_url:
+                    return stream_url
+                else:
+                    raise Exception("File Link Not Found")
             else:
-                raise Exception('could not find video')
+                raise Exception("Packed Data Not Found")
         except Exception, e:
             common.addon.log('**** Vidto Error occured: %s' % e)
             common.addon.show_small_popup('Error', str(e), 5000, '')
@@ -59,10 +79,10 @@ class vidto(Plugin, UrlResolver, PluginSettings):
 
         
     def get_url(self, host, media_id):
-        return 'http://vidto.me/%s' % media_id
+        return 'http://vidto.me/%s.html' % media_id
 
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/([0-9A-Za-z]+)',url)
+        r = re.search('//(.+?)/(?:embed-)?([0-9A-Za-z]+)',url)
         if r:
             return r.groups()
         else:

@@ -1,3 +1,19 @@
+[B]Version 2.6.0[/B]
+- Code Base Changes:
+    - Allow host validation to work with universal resolvers
+- Resolvers Added:
+    - Realvid
+    - Letwatch
+    - Speedvideo
+    - Videohut
+- Resolvers Fixed/Updated:
+    - Vidbull
+    - VeeHD
+    - VODLocker (speed improvement)
+    - MightyUpload
+    - Exashare
+    - Tunepk
+
 [B]Version 2.5.0[/B]
 - Added Teramixer
 - Added Exashare

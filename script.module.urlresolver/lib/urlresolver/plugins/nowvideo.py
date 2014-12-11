@@ -66,7 +66,7 @@ class NowvideoResolver(Plugin, UrlResolver, PluginSettings):
                 raise Exception ('Failed to parse url')
                 
             return stream_url
-        except urllib2.URLError, e:
+        except urllib2.HTTPError, e:
             common.addon.log_error('Nowvideo: got http error %d fetching %s' %
                                     (e.code, web_url))
             return self.unresolvable(code=3, msg=e)
@@ -80,7 +80,7 @@ class NowvideoResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_host_and_id(self, url):
         #print url
-        r = re.search('((?:http://|www.|embed.)nowvideo.(?:eu|sx|ch))/(?:video/|embed.php\?v=)([0-9a-z]+)', url)
+        r = re.search('((?:http://|www.|embed.)nowvideo.(?:eu|sx|ch))/(?:video/|embed.php\?.*?v=)([0-9a-z]+)', url)
         if r:
             return r.groups()
         else:

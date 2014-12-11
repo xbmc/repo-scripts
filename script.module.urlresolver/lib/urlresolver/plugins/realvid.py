@@ -1,19 +1,18 @@
 """
-    urlresolver XBMC Addon
-    Copyright (C) 2011 t0mm0
+realvid urlresolver plugin
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
@@ -28,18 +27,18 @@ from urlresolver import common
 
 logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
-class VodlockerResolver(Plugin, UrlResolver, PluginSettings):
-    implements=[UrlResolver,PluginSettings]
-    name="vodlocker.com"
+class RealvidResolver(Plugin, UrlResolver, PluginSettings):
+    implements = [UrlResolver, PluginSettings]
+    name = "Realvid"
 
     def __init__(self):
-        p=self.get_setting('priority') or 100
-        self.priority=int(p)
-        self.net=Net()
-        self.pattern='http://((?:www.)?vodlocker.com)/(?:embed-)?([0-9a-zA-Z]+)(?:-\d+x\d+.html)?'
+        p = self.get_setting('priority') or 100
+        self.priority = int(p)
+        self.net = Net()
+        self.pattern = 'http://((?:www.)?realvid.net)/(?:embed-)?([0-9a-zA-Z]+)(?:-\d+x\d+.html)?'
     
     def get_url(self,host,media_id): 
-        return 'http://vodlocker.com/embed-%s-640x400.html' % (media_id)
+        return 'http://realvid.net/embed-%s-640x400.html' % (media_id)
 
     def get_host_and_id(self,url):
         r=re.search(self.pattern,url)

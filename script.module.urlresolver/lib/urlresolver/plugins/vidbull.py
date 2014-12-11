@@ -23,6 +23,7 @@ from urlresolver.plugnplay import Plugin
 import re, urllib2, os
 from urlresolver import common
 from lib import jsunpack
+from lib import rijndael
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
@@ -61,7 +62,12 @@ class VidbullResolver(Plugin, UrlResolver, PluginSettings):
                 sUnpacked = jsunpack.unpack(sJavascript)
                 stream_url = re.search('[^\w\.]file[\"\']?\s*[:,]\s*[\"\']([^\"\']+)', sUnpacked)
                 if stream_url:
-                    return stream_url.group(1)
+                    if( re.match('http://.*',stream_url.group(1))):
+                        return stream_url.group(1)
+                    elif (re.match('[0-9a-f]+',stream_url.group(1))):
+                        return decryptHex(stream_url.group(1))
+                    else: 
+                        return stream_url.group(1)
             raise Exception ('File Not Found or removed')
 
         except urllib2.URLError, e:
@@ -93,3 +99,13 @@ class VidbullResolver(Plugin, UrlResolver, PluginSettings):
         return (re.match('http://(www.)?vidbull.com/(?:embed-)?' +
                          '[0-9A-Za-z]+', url) or
                          'vidbull' in host)
+
+def decryptHex(blockString):
+    print("rijndael decryptHex " + blockString)
+    key = bytearray.fromhex('a949376e37b369f17bc7d3c7a04c5721')
+    ciphertext = bytearray.fromhex(blockString)
+    rd=rijndael.rijndael(key, len(key))
+    result = []
+    for x in range(0, int(len(ciphertext)/16)):
+        result.append(rd.decrypt(ciphertext[(x*16):((x+1)*16)]))
+    return ''.join(result)

@@ -22,17 +22,15 @@ import random
 import re
 import urllib, urllib2
 import ast
-import xbmc
-import time
+import xbmc,xbmcplugin,xbmcgui,xbmcaddon,time,datetime
+import cookielib
+import json
+from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import SiteAuth
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
-import xbmc,xbmcplugin,xbmcgui,xbmcaddon, datetime
-import cookielib
-from t0mm0.common.net import Net
-import json
 
 #SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
@@ -97,17 +95,34 @@ class purevid(Plugin, UrlResolver, SiteAuth, PluginSettings):
         return 'purevid' in url
 
     #SiteAuth methods
-    def login(self):
-        common.addon.log('login to purevid')
-        url = 'http://www.purevid.com/?m=login'
-        data = {'username' : self.get_setting('username'), 'password' : self.get_setting('password')}        
-        source = self.net.http_POST(url,data).content        
-        if re.search(self.get_setting('username'), source):            
-            self.net.save_cookies(self.cookie_file)
-            self.net.set_cookies(self.cookie_file)
+    def needLogin(self):
+        url = 'http://www.purevid.com/?m=main'
+        if not os.path.exists(self.cookie_file):
             return True
-        else:
+        self.net.set_cookies(self.cookie_file)
+        source = self.net.http_GET(url).content
+        common.addon.log_debug(source.encode('utf-8'))
+        if re.search("""<span>Welcome <strong>.*</strong></span>""", source) :
+            common.addon.log_debug('needLogin returning False')
             return False
+        else :
+            common.addon.log_debug('needLogin returning True')
+            return True
+    
+    def login(self):
+        if self.needLogin() :
+            common.addon.log('login to purevid')
+            url = 'http://www.purevid.com/?m=login'
+            data = {'username' : self.get_setting('username'), 'password' : self.get_setting('password')}        
+            source = self.net.http_POST(url,data).content        
+            if re.search(self.get_setting('username'), source):            
+                self.net.save_cookies(self.cookie_file)
+                self.net.set_cookies(self.cookie_file)
+                return True
+            else:
+                return False
+        else :
+            return True
                     
     #PluginSettings methods
     def get_settings_xml(self):

@@ -73,13 +73,28 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
             packed = re.search('id="player_code".*?(eval.*?\)\)\))', html,re.DOTALL)
             if packed:
                 js = jsunpack.unpack(packed.group(1))
-                link = re.search('name="src"\s*value="([^"]+)', js.replace('\\',''))
+                link = re.search('name="src"*0="([^"]+)"/>', js.replace('\\',''))
                 if link:
                     common.addon.log('180Upload Link Found: %s' % link.group(1))
                     return link.group(1)
+                else:
+                    link = re.search("'file','(.+?)'", js.replace('\\',''))
+                    if link:
+                        common.addon.log('180Upload Link Found: %s' % link.group(1))
+                        return link.group(1)
                     
             web_url = self.get_url(host, media_id)
             html = net.http_GET(web_url).content
+
+            #Re-grab data values
+            data = {}
+            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)"', html)
+
+            if r:
+                for name, value in r:
+                    data[name] = value
+            else:
+                raise Exception('Unable to resolve 180Upload Link')            
             
             #Check for SolveMedia Captcha image
             solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)

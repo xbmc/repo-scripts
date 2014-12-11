@@ -83,8 +83,6 @@ class HostedMediaFile:
                         self._host, self._media_id = result
                     else:
                         self._resolvers = []
-                else:
-                    self._resolvers = []
             else:    
                 self._url = self._resolvers[0].get_url(host, media_id)
         
@@ -133,6 +131,10 @@ class HostedMediaFile:
             if this was not possible. 
         '''
         if self._resolvers:
+            # universal resolvers aren't resolvable without a url
+            if len(self._resolvers)==1 and self._resolvers[0].isUniversal() and not self._url:
+                return False
+            
             resolver = self._resolvers[0]
             common.addon.log_debug('resolving using %s plugin' % resolver.name)
             if SiteAuth in resolver.implements:
