@@ -28,10 +28,6 @@ msgctxt "#32007"
 msgid "Path:"
 msgstr "Путь:"
 
-msgctxt "#32012"
-msgid "File Types"
-msgstr "Типы файлов"
-
 msgctxt "#32018"
 msgid "Debugging"
 msgstr "Отладка"

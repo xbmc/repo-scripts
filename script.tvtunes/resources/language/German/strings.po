@@ -60,10 +60,6 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Ton beim verlassen ausblenden"
 
-msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Automatisch laden, falls ein exakter Treffer gefunden wurde"
-
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "mehrere Songs mischen"
@@ -73,8 +69,8 @@ msgid "Random start time"
 msgstr "Zufällige Startzeit"
 
 msgctxt "#32012"
-msgid "File Types"
-msgstr "Dateiformate"
+msgid "Change File Types"
+msgstr "Dateitypen ändern"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -143,6 +139,130 @@ msgstr "Standardschema Suchquelle"
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "Spiele Thema beim Durchsuchen der Musikvideo Liste"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nie"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Bildschirmschoner"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "ZufälligesHineinzoomen"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "WieAppleTV"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Zufällig"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Wartezeit (Sekunden)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Effektzeit (Sekunden)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Spalten"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Geschwindigkeit"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Zufällige Reihenfolge"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Bildquelle"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Bildtyp"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Ordner"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Rekursiv"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fankunst"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Vorschaubild"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Besetzung"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Filme, Fernsehsendungen"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fankunst,Vorschaubild,Besetzung"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fankunst,Vorschaubild"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Vorschaubild,Besetzung"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Links"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Rechts"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Oben"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Unten"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Überblendung"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -252,6 +372,10 @@ msgctxt "#32207"
 msgid "Move themes into themes folder?"
 msgstr "Verschiebe Themes in den Themes-Ordner?"
 
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Aktion]: Bildschirmschoner starten"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Wiedergabe"
@@ -267,3 +391,7 @@ msgstr "Dateisystem"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Fehler: Verbindung zu goear.com fehlgeschlagen"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Keine Bilder gefunden!"

@@ -56,10 +56,6 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Myk ut sang når du går ut"
 
-msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Automatisk last ned om eksakt match blir funnet"
-
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Miks flere sanger"
@@ -67,10 +63,6 @@ msgstr "Miks flere sanger"
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "Tilfeldig starttid"
-
-msgctxt "#32012"
-msgid "File Types"
-msgstr "Filtyper"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"

@@ -28,6 +28,10 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Овозможи обележување на грешки"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fan-арт"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Филмови"

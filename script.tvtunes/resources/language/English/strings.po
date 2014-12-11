@@ -340,7 +340,7 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr ""
 
-#empty strings from id 32079 to 32100
+#empty strings from id 32079 to 32099
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
@@ -462,7 +462,7 @@ msgctxt "#32208"
 msgid "[Action]: Start Screensaver"
 msgstr ""
 
-#empty strings from id 32208 to 32990
+#empty strings from id 32209 to 32990
 
 msgctxt "#32991"
 msgid "Playback"

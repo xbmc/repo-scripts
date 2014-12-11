@@ -22,11 +22,11 @@ msgstr "Pobieraj i odtwarzaj motywy muzyczne filmów i seriali"
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Wtyczka TvTunes pozwala pobierać motywy muzyczne dla filmów i seriali z serwisu www.televisiontunes.com. Pobrane motywy zostaną zapisane do pliku o nazwie theme[0-9].mp3 w folderze pliku wideo. Motywy będą odtwarzane podczas przeglądania biblioteki, kiedy wejdziesz do katalogu serialu lub ekranu informacji wideo (niezbędna jest skóra wspierająca tę funkcję)."
+msgstr "Dodatek TvTunes wyposażono w potężny zestaw funkcji umożliwiający pobieranie, organizowanie i odtwarzanie motywów muzycznych podczas przeglądania biblioteki Kodi, przez kompatybilne z nim skóry. Specjalne podziękowanie dla Ppic,Frost i ronie za ich początkową pracę przy tworzeniu TvTunes)"
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Twórcy skór, zapoznajcie się z wiki, by wiedzieć w jaki sposób zintegrować TvTunes ze swoją skórą: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Twórcy skór mogą znaleźć informacje dotyczące integracji TvTunes ze skórą na stronach wiki: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -50,7 +50,7 @@ msgstr "Hasło:"
 
 msgctxt "#32006"
 msgid "Store tunes in a custom path"
-msgstr "Przechowuj motywy w podanej lokalizacji"
+msgstr "Przechowuj motywy w niestandardowym folderze"
 
 msgctxt "#32007"
 msgid "Path:"
@@ -61,20 +61,20 @@ msgid "Fade tune out when exiting"
 msgstr "Wyciszaj stopniowo motyw na końcu"
 
 msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Pobieraj automatycznie, gdy znaleziono dokładne dopasowanie"
+msgid "Automatically Download Theme If"
+msgstr "Pobieraj motyw automatycznie, gdy znaleziono"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
-msgstr "Losowa kolejność motywów"
+msgstr "Losuj kolejność motywów"
 
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "Losowy czas startu "
 
 msgctxt "#32012"
-msgid "File Types"
-msgstr "Typy plików"
+msgid "Change File Types"
+msgstr "Zmieniaj typy pliku"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -102,7 +102,7 @@ msgstr "Diagnozowanie błędów"
 
 msgctxt "#32019"
 msgid "Enable debug logging"
-msgstr "Rejestruj informacje diagnostyczne w dzienniku"
+msgstr "Rejestruj komunikaty diagnostyczne w dzienniku"
 
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
@@ -143,6 +143,178 @@ msgstr "Domyślne źródło motywów "
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "Odtwarzaj motywy podczas przeglądania listy utworów"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Wszystkie"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Pytaj"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nigdy"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Pojedynczy motyw"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Motyw o priorytecie 1 (*)"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Motyw o priorytecie 1 (*) lub 2 (~)"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Wygaszacz"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "Star Wars"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "AppleTV"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Losowo"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Czas oczekiwania (sekund)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Czas efektu (sekund)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Kolumny"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Szybkość"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Losowa kolejność"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Źródło obrazu"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Typ obrazu"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Folder"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Tapeta"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Obsada"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Filmy, Seriale"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Odtwarzaj motywy w trakcie wygaszacza"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Tapeta, Miniatura, Obsada"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Tapeta, Miniatura"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Poziom wygasania"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Miniatura, Obsada"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Lewo"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Prawo"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Góra"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Dół"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Uwzględniaj grafiki dodatku Artwork Downloader"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Pokazuj obrazy tylko, gdy istnieje motyw"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Odtwarzaj jednorazowo, pokazuj wszystkie obrazy"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Odtwarzaj w pętli, pokazuj wszystkie obrazy"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Odtwarzaj jednorazowo, pomijaj pozostałe obrazy"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Reguły zapętlania"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Pokazuj okno wyboru przy nieudanym dopasowaniu"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -222,7 +394,7 @@ msgstr "Wyszukaj za pomocą %s..."
 
 msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
-msgstr "Wyszukaj we wszystkich źródłach (wolne)"
+msgstr "Przeszukuj wszystkie źródła (wolne)"
 
 msgctxt "#32201"
 msgid "Movies"
@@ -252,6 +424,10 @@ msgctxt "#32207"
 msgid "Move themes into themes folder?"
 msgstr "Przenieść motywy do folderu motywów?"
 
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Akcja]: Uruchom wygaszacz ekranu"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Odtwarzanie"
@@ -262,8 +438,12 @@ msgstr "Pobieranie"
 
 msgctxt "#32993"
 msgid "File system"
-msgstr "System plików"
+msgstr "Pliki"
 
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Błąd: Nieudane połączenie z goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Brak obrazów!"

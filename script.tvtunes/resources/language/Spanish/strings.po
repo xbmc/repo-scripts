@@ -60,10 +60,6 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Silenciar gradualmente el tema al salir"
 
-msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Descargar automáticamente si se encuentra una coincidencia exacta"
-
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Mezclar varias pistar"
@@ -71,10 +67,6 @@ msgstr "Mezclar varias pistar"
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "Comenzar en un punto aleatorio"
-
-msgctxt "#32012"
-msgid "File Types"
-msgstr "Tipos de archivo"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"

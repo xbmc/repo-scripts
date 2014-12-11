@@ -18,11 +18,11 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Nabavite i reproducirajte temu vašeg omiljenog filma i TV serije"
+msgstr "Nabavite i reproducirajte temu vašeg omiljenog filma i TV serije prilikom pregledavanja svoje videoteke"
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Ova skripta će vam pomoći u nabavi glazbene teme za vašu zbirku filmova i TV serija sa www.televisiontunes.com spremiti će ih u theme[0-9].mp3 datoteku u svakoj mapi vaših filmova i TV serija. Zatim će se reproducirati tijekom pregleda zbirke vaše TV serije ili prikaza video informacija (vaša presvlaka mora biti kompatibilna sa ovom značajkom)"
+msgstr "TvTunes je opremljen s moćnim značajkama koje omogućavaju nabavljanje, organizaciju i reproduciranje glazbenih tema dok vi pregledavate vašu Kodi videoteku, kada se koristi zajedno s kompatibilnom presvlakom. (Posebna zahvala Ppic,Frost i ronie na njihovom ranijem razvoju TvTunes)"
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
@@ -60,21 +60,13 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Postepeno utišavaj pri završetki"
 
-msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Automatski preuzmi ako se pretraga podudara"
-
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Izmiješaj višestruke zapise"
 
 msgctxt "#32011"
 msgid "Random start time"
-msgstr "Naizmjenično vrijeme početka"
-
-msgctxt "#32012"
-msgid "File Types"
-msgstr "Vrste datoteke"
+msgstr "Naizmjenično vrijeme pokretanja"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -147,6 +139,10 @@ msgstr "Reproduciraj temu pri pregledavanju popisa glazbenih spotova"
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "GREŠKA"
+
+msgctxt "#32102"
+msgid "site unreachable"
+msgstr "stranica nedostupna"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
@@ -239,6 +235,14 @@ msgstr "[Filter]: Prikaži samo teme koje nedostaju"
 msgctxt "#32205"
 msgid "[Action]: Retrieve Missing Themes"
 msgstr "[Radnja]: Preuzmi teme koje nedostaju"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Imate tema koje nisu u mapi tema."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Teme filma u mapi tema?"
 
 msgctxt "#32991"
 msgid "Playback"

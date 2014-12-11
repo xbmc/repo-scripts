@@ -60,10 +60,6 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Arrêter en fondu le thème à la sortie"
 
-msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Télécharger automatiquement si une correspondance exacte est trouvée"
-
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Lecture aléatoire si plusieurs thèmes"
@@ -71,10 +67,6 @@ msgstr "Lecture aléatoire si plusieurs thèmes"
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "Lecture du thème à un endroit aléatoire"
-
-msgctxt "#32012"
-msgid "File Types"
-msgstr "Types de fichier"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"

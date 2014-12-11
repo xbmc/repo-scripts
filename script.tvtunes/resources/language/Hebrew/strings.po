@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "הורד ונגן שירי נושא של סרטים ותכניות טלוויזיה שלך"
+msgstr "הורדה וניגון נעימות של סרטים וסדרות בעת עיון בספריה"
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
@@ -60,10 +60,6 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "דעיכה הדרגתית בעת יציאה"
 
-msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "הורד אוטומטית אם התוצאה תואמת במדוייק"
-
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "ערבב רצועות מרובות"
@@ -71,10 +67,6 @@ msgstr "ערבב רצועות מרובות"
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "השהיית תחילת ניגון אקראית"
-
-msgctxt "#32012"
-msgid "File Types"
-msgstr "פורמט"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -131,6 +123,106 @@ msgstr "שם תיקיה"
 msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
 msgstr "הגבלת ניגון רצועה כשיש מספר שירי נושא (שניות)"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "הכל"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "אך פעם"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "שומר מסך"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "אקראי"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "עמודות"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "מהירות"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "סדר אקראי"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "מקור תמונה"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "סוג תמונה"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "תיקיה"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "רקורסיבי"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "פאנארט"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "תמונה ממוזערת"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "צוות"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "סרטים, סדרות"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "פאנארט, תמונה ממוזערת, צוות"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "פאנארט, תמונה ממוזערת"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "שמאלה"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "ימינה"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "למעלה"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "למטה"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -219,3 +311,7 @@ msgstr "הורדה"
 msgctxt "#32993"
 msgid "File system"
 msgstr "מערכת קבצים"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "לא נמצאו תמונות!"

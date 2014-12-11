@@ -60,10 +60,6 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Fade tune out when exiting"
 
-msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Automatically download if an exact match is found"
-
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Shuffle multiple tracks"
@@ -71,10 +67,6 @@ msgstr "Shuffle multiple tracks"
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "Random start time"
-
-msgctxt "#32012"
-msgid "File Types"
-msgstr "File Types"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"

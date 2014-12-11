@@ -28,6 +28,10 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Povolit zaznamenávání ladících informací"
 
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Operace"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmy"

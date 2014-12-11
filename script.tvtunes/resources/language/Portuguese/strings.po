@@ -61,8 +61,8 @@ msgid "Fade tune out when exiting"
 msgstr "Diminuir volume ao sair"
 
 msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Transferir automaticamente ao encontrar um resultado exacto"
+msgid "Automatically Download Theme If"
+msgstr "Automaticamente Descarregar Tema Se"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
@@ -73,8 +73,8 @@ msgid "Random start time"
 msgstr "Tempo de início aleatório"
 
 msgctxt "#32012"
-msgid "File Types"
-msgstr "Tipos de Ficheiros"
+msgid "Change File Types"
+msgstr "Mudar Tipo de Ficheiro"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -143,6 +143,178 @@ msgstr "Fonte Padrão para Busca de Música"
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "Reproduzir músicas ao navegar pela lista de Videoclipes"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Todos"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Perguntar ao utilizador"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nunca"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Apenas encontrada uma entrada"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Entrada de Prioridade 1 (*) encontrada"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Entrada de Prioridade 1 (*) or 2 (~) encontrada"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Protecção ecrã"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "BoletimVoto"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "GuerraDasEstrelas"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "ZoomAleatório"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "TipoAppleTV"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "MudançaDeGrelha"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Aleatório"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Máximo Tempo de Espera (Seg.)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Tempo de efeito (em segundos)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Colunas"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Velocidade"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Concorrência de Imagens"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Order Aleatória"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Fonte Imagem"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Tipo de Imagem"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Pasta"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Recursivo"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniaturas"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Elenco"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Filmes, Séries"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Reproduzir Temas Durante Protector de Ecran"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fanart,Miniatura,Elenco"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fanart,Miniatura"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Nível de Atenuação Ecrã"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Miniatura,Elenco"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Controlo Deslizante"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Deslizar De"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Esquerda"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Direita"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Topo"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Fundo"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Sobreposição na transição"
 
 msgctxt "#32101"
 msgid "ERROR"

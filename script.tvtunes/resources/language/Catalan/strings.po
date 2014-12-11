@@ -60,10 +60,6 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Suavitzar la melodia en sortir"
 
-msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Descarrega automàticament si es troba una coincidència exacta"
-
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Remena les pistes"
@@ -71,10 +67,6 @@ msgstr "Remena les pistes"
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "Punt d'inici aleatori"
-
-msgctxt "#32012"
-msgid "File Types"
-msgstr "Tipus de fitxers"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"

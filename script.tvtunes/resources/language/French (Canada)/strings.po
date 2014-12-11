@@ -61,8 +61,8 @@ msgid "Fade tune out when exiting"
 msgstr "Fermeture en fondu lors de la sortie"
 
 msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Télécharger automatiquement si une correspondance exacte est trouvée"
+msgid "Automatically Download Theme If"
+msgstr "Télécharger automatiquement le thème si"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
@@ -73,8 +73,8 @@ msgid "Random start time"
 msgstr "Point de départ aléatoire"
 
 msgctxt "#32012"
-msgid "File Types"
-msgstr "Types de fichier"
+msgid "Change File Types"
+msgstr "Changer les types de fichiers"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -143,6 +143,206 @@ msgstr "Source de recherche du thème par défaut"
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "Jouer les thèmes lors du parcours de la liste des vidéos musicales"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Tous"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Demander à l'utilisateur"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Jamais"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Seulement pour les entrées simples trouvées"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Entrées de priorité 1 (*) trouvées"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Entrées de priorité 1 (*) ou 2 (*) trouvées"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Économiseur d'écran"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "Guerre des étoiles"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "Zoom aléatoire"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "À la AppleTV"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "GridSwitch"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Aléatoire"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Délai d'attente (secondes)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Délai de l'effet (secondes)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Colonnes"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Vitesse"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Colatéralité des images"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Tri aléatoire"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Source des images"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Type d'images"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Dossier"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Récursif"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Imagette"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Distribution"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Films, émissions télé"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Jouer les thèmes pendant l'économiseur d'écran"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fanart,imagette,distribution"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fanart,imagette"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Niveau d'assombrissement"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Imagette,distribution"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Curseur"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Glisser à partir de"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Gauche"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Droite"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Haut"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Bas"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Fondu"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Inclure les illustrations du téléchargeur d'images"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Ne montrer les images que si un thème existe"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Jouer le thème une fois, montrer toutes les images"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Montrer toutes les images, répéter le thème"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Jouer le thème une fois, ignorer les images restantes"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Règles de répétition "
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Montrer la boîte de dialogue de sélection si la concordance automatique échoue"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -252,6 +452,10 @@ msgctxt "#32207"
 msgid "Move themes into themes folder?"
 msgstr "Déplacer les thèmes dans le dossier des thèmes?"
 
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Action] : démarrer l'économiseur d'écran"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Lecture"
@@ -267,3 +471,7 @@ msgstr "Système de fichiers"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Erreur : échec de connexion à goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Aucune image trouvée!"

@@ -61,8 +61,8 @@ msgid "Fade tune out when exiting"
 msgstr "Diminuir tema gradativamente ao sair"
 
 msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Baixar automaticamente se uma correspondência exata for encontrada"
+msgid "Automatically Download Theme If"
+msgstr "Automaticamente download tema se"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
@@ -73,8 +73,8 @@ msgid "Random start time"
 msgstr "Reproduzir o arquivo de áudio a partir de um local aleatório na trilha"
 
 msgctxt "#32012"
-msgid "File Types"
-msgstr "Tipos de Arquivos"
+msgid "Change File Types"
+msgstr "Alterar Tipos de Arquivos"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -143,6 +143,206 @@ msgstr "Fonte Padrão para Procura"
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "Reproduzir temas enquanto navegando na coleção de Concertos"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Todos"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Prompt Usuário"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nunca"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Somente uma Entrada Localizada"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Prioridade 1 (*) Entrada Localizada"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Prioridade 1 (*) ou 2 (~) Entradas Localizadas"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Proteção de Tela"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "RandomZoomIn"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "AppleTVLike"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "GridSwitch"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Randômico"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Tempo de Espera (Segundos)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Tempo do Efeito (Segundos)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Colunas"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Velocidade"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Imagens Simultâneas"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Ordenar Randomicamente"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Fonte da Imagem"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Tipo de Imagem"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Diretório"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Recursivo"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Elenco"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Filmes, Seriados"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Reproduzir Temas Durante Proteção de Tela"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fanart,Miniatura,Elenco"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fanart,Miniatura"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Nível de Dimerização"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Miniatura,Elenco"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Deslizar"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Deslizar a partir de"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Esquerda"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Direita"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Topo"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Base"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Crossfade"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Incluir imagens do addon Artwork Downloader"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Mostrar Imagens somente quando existir uma música tema"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Reproduzir Tema uma Vez, Mostrar Todas as Imagens"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Mostrar todas as Imagens, Repetir o Tema"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Reproduzir tema uma vez, escapar das imagens remanescentes"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Repetir Regras"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Mostrar Seleção se Auto Localizar Falhar"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -252,6 +452,10 @@ msgctxt "#32207"
 msgid "Move themes into themes folder?"
 msgstr "Mover temas para dentro do diretório temas?"
 
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Ação]: Iniciar Proteção de Tela"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Reprodução"
@@ -267,3 +471,7 @@ msgstr "Sistema de arquivos"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Erro: Falhou ao tentar conectar em goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Nenhuma imagem encontrada!"

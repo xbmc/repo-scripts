@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Verkrijg en speel je TV shows themes"
+msgstr "Verkrijg en speel je TV serie thema`s"
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
@@ -26,7 +26,7 @@ msgstr "Dit script zoekt thema`s van TV series in jouw TV seriebibliotheek op ww
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Ontwerpers, bekijk de wiki om te zien hoe dit script in je ontwerp dient te integreren:http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Skinners, bekijk de wiki om te zien hoe dit script in je skin te integreren: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -61,8 +61,8 @@ msgid "Fade tune out when exiting"
 msgstr "Vervaag het geluid wanneer je afsluit"
 
 msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "Download automatisch als een exacte match is gevonden"
+msgid "Automatically Download Theme If"
+msgstr "Automatisch thema downloaden als"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
@@ -73,8 +73,8 @@ msgid "Random start time"
 msgstr "Willekeurige starttijd"
 
 msgctxt "#32012"
-msgid "File Types"
-msgstr "bestandstypen"
+msgid "Change File Types"
+msgstr "Verander bestandstypen"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -143,6 +143,206 @@ msgstr "Standaard thema zoekbron"
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "speel thema`s bij bladeren door Muziekvideo lijst"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Prompt gebruiker"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nooit"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Alleen enkele toevoeging gevonden"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Prioriteit 1 (*) toevoeging gevonden"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Prioriteit 1 (*) of 2 (~) toevoeging gevonden"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Schermbeveiliging"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "Willekeurig inzoomen"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "AppleTVLike"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "GridSwitch"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Willekeurig"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Wachttijd (Seconden)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Effect Tijd (Seconden)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Kolommen"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Snelheid"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Afbeelding concurrentie"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Willekeurige volgorde"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Afbeelding bron"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Afbeeldingstype"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Map"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Recursieve"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniatuur"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Cast"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Films, TV-series"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Speel thema`s gedurende schermbeveiliging"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fanart,Miniatuur,Cast"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fanart,Miniatuur"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Dim niveau"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Miniatuur,Cast"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Schuiver"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Schuif in van"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Links"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Rechts"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Top"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Onder"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Vloeiende overgang"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "invoegen Artwork downloader afbeeldingen"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Alleen afbeeldingen tonen wanneer een thema bestaat"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Speel thema eenmaal, Toon alle afbeeldingen"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Toon alle afbeeldingen, Herhaal thema"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Speel Thema eenmaal, overgebleven afbeeldingen overslaan"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Herhaal regels"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Toon selectie dialoog als automatische overeenkomst mislukt"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -252,6 +452,10 @@ msgctxt "#32207"
 msgid "Move themes into themes folder?"
 msgstr "Verplaats deze thema`s naar de themafolder?"
 
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Actie]: start schermbeveiliging"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Afspelen"
@@ -267,3 +471,7 @@ msgstr "Bestandssysteem"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Error: Niet gelukt te verbinden met goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Geen afbeeldingen gevonden!"

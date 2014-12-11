@@ -28,6 +28,46 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "பிழைநீக்கு பதிவை செயல்படுத்தவும்"
 
+msgctxt "#32030"
+msgid "All"
+msgstr "அனைத்தும்"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "ஒருபோதும்"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "திரைக்காப்பு"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "முறையின்றி"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "நெடுவரிசைகள்"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "வேகம்"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "கோப்புறை"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "விசிறிபடம்"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "சிறுபடம்"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "நடித்துள்ளவர்கள்"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "திரைப்படங்கள்"

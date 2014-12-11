@@ -26,7 +26,7 @@ msgstr "라이브러리의 영화와 TV 쇼 테마 음악을 www.televisiontunes
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "스킨 제작자 여러분, 스킨에 통합하는 방법은 위키를 참고하세요: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -61,8 +61,8 @@ msgid "Fade tune out when exiting"
 msgstr "나갈 때 음량을 점점 작게"
 
 msgctxt "#32009"
-msgid "Automatically download if an exact match is found"
-msgstr "정확히 일치하면 자동으로 다운로드"
+msgid "Automatically Download Theme If"
+msgstr "다음 조건일 때 테마 음악 자동 다운로드:"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
@@ -73,8 +73,8 @@ msgid "Random start time"
 msgstr "무작위 위치에서 재생"
 
 msgctxt "#32012"
-msgid "File Types"
-msgstr "파일 종류"
+msgid "Change File Types"
+msgstr "파일 형식 변경"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -143,6 +143,114 @@ msgstr "테마 음악을 검색할 기본 소스"
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "뮤직비디오 목록을 탐색할 때 테마 음악 재생"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "사용 안 함"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "한 개의 항목만 있을 때"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "우선 순위 1 (*) 항목이 있을 때"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "우선 순위 1 (*) 또는 2 (~) 항목이 있을 때"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "화면보호기"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "RandomZoomIn"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "AppleTVLike"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "GridSwitch"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "무작위"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "무작위 순서"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "이미지 소스"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "이미지 형식"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "폴더"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "팬아트"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "썸네일"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "배우"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "영화, TV 쇼"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "팬아트, 썸네일, 배우"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "팬아트, 썸네일"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "썸네일, 배우"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "자동 선택이 실패한 경우 선택 창 보기"
 
 msgctxt "#32101"
 msgid "ERROR"
