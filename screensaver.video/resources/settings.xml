@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32001">
+        <setting id="videoSelection" type="enum" label="32004" lvalues="32020|32021" default="0"/>
+		<setting id="displaySelected" label="32022" subsetting="true" visible="eq(-1,0)" enable="false" type="text" default="- Not Set -"/>
+		<setting label="32050" subsetting="true" visible="eq(-2,0)" type="action" action="RunScript($CWD/download.py)"/>
+		<setting id="screensaverFile" label="32051" subsetting="true" visible="eq(-3,1)" type="video"/>
+		<setting id="showTime" type="bool" label="32052" default="false"/>
+		<setting id="randomStart" type="bool" label="32053" default="false"/>
+    	<setting label="32002" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32003" default="false"/>
+	</category>
+</settings>

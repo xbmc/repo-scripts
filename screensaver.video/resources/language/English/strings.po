@@ -1,0 +1,89 @@
+# Kodi Media Center language file
+# Addon Name: VideoScreensaver
+# Addon id: screensaver.video
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Screensaver that plays a video file."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Plays a video when the screensaver starts, this can be a custom video or one of the built in videos."
+msgstr ""
+
+msgctxt "#32001"
+msgid "Screensaver"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Debugging"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#32004"
+msgid "VideoScreensaver"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Video Selection"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr ""
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Selected Sceensaver"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr ""
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr ""
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr ""
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr ""

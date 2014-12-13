@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="3001">
+	<controls>
+		<control type="videowindow">
+			<description>Video control</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<visible>true</visible>
+		</control>
+		<control type="group" id="3002">
+			<control type="label">
+				<description>Time label</description>
+				<right>20</right>
+				<top>5</top>
+				<width>200</width>
+				<height>30</height>
+				<align>right</align>
+				<aligny>center</aligny>
+				<font>font28_title</font>
+				<textcolor>FFF1F1F1</textcolor>
+				<shadowcolor>FF000000</shadowcolor>
+				<label>$INFO[System.Time]</label>
+			</control>
+			<control type="label">
+				<description>Date label</description>
+				<right>20</right>
+				<top>35</top>
+				<width>200</width>
+				<height>15</height>
+				<align>right</align>
+				<aligny>center</aligny>
+				<font>font10</font>
+				<textcolor>FFF1F1F1</textcolor>
+				<shadowcolor>FF000000</shadowcolor>
+				<label>$INFO[System.Date]</label>
+			</control>
+		</control>
+	</controls>
+</window>
