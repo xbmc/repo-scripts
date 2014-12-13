@@ -45,7 +45,7 @@ seasons = seasons + ["Twenty-first", "Twenty-second", "Twenty-third", "Twenty-fo
                      "Twenty-seventh", "Twenty-eighth", "Twenty-ninth"]
 
 movie_season_pattern = ("<a href=\"(?P<link>/subtitles/[^\"]*)\">(?P<title>[^<]+)\((?P<year>\d{4})\)</a>\s+"
-                        "</div>\s+<div class=\"subtle\">\s+(?P<numsubtitles>\d+)")
+                        "</div>\s+<div class=\"subtle count\">\s+(?P<numsubtitles>\d+)")
 
 
 def find_movie(content, title, year):

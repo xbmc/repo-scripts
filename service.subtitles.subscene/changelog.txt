@@ -1,3 +1,6 @@
+1.0.5
+- fix for "No subtitles found" after a change in the sites HTML
+
 1.0.4
 - fixed an issue where files from prevoius downloads were used instead of the current download
 
