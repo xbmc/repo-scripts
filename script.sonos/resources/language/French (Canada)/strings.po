@@ -84,10 +84,6 @@ msgctxt "#32016"
 msgid "Controller Refresh Interval (Seconds)"
 msgstr "Intervalle de rafraîchissement du contrôleur (secondes)"
 
-msgctxt "#32017"
-msgid "Use Test Data"
-msgstr "Utiliser des données de test"
-
 msgctxt "#32018"
 msgid "Plugin"
 msgstr "Plugiciel"
@@ -179,6 +175,10 @@ msgstr "Diaporama uniquement"
 msgctxt "#32040"
 msgid "Do Not Display Notification If Controller Is Showing"
 msgstr "Ne pas afficher les notifications si le contrôleur est affiché"
+
+msgctxt "#32041"
+msgid "Controller,Slideshow,Bio,Lyrics"
+msgstr "Contrôleur,Diaporama,Bio,Paroles"
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

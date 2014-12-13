@@ -7,7 +7,6 @@
 		<setting id="autoIPUpdate" subsetting="true" enable="!eq(-1,)" type="bool" label="32029" default="false"/>
     	<setting label="32012" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32009" default="false"/>
-		<setting id="useTestData" type="bool" label="32017" default="false"/>
 	</category>
 	<category label="32015">
 		<setting id="displayArtistInfo" type="bool" label="32021" default="false"/>

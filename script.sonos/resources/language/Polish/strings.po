@@ -54,7 +54,7 @@ msgstr "Diagnozowanie błędów"
 
 msgctxt "#32009"
 msgid "Enable debug logging"
-msgstr "Rejestruj informacje diagnostyczne w dzienniku"
+msgstr "Rejestruj komunikaty diagnostyczne w dzienniku"
 
 msgctxt "#32010"
 msgid "Speaker"
@@ -83,10 +83,6 @@ msgstr "Controller"
 msgctxt "#32016"
 msgid "Controller Refresh Interval (Seconds)"
 msgstr "Interwał odświeżania (w sekundach)"
-
-msgctxt "#32017"
-msgid "Use Test Data"
-msgstr "Używaj danych testowych"
 
 msgctxt "#32018"
 msgid "Plugin"

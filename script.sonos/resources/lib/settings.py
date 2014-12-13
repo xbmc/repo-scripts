@@ -10,9 +10,6 @@ __addonid__ = __addon__.getAddonInfo('id')
 # Load the Sonos controller component
 from sonos import Sonos
 
-# Import the Mock Sonos class for testing where there is no live Sonos system
-from mocksonos import TestMockSonos
-
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
@@ -80,13 +77,10 @@ class Settings():
         if __addon__.getSetting("logEnabled") == "true":
             SocoLogging.enable()
         sonosDevice = None
-        if Settings.useTestData():
-            sonosDevice = TestMockSonos()
-        else:
-            if ipAddress is None:
-                ipAddress = Settings.getIPAddress()
-            if ipAddress != "0.0.0.0":
-                sonosDevice = Sonos(ipAddress)
+        if ipAddress is None:
+            ipAddress = Settings.getIPAddress()
+        if ipAddress != "0.0.0.0":
+            sonosDevice = Sonos(ipAddress)
         log("Sonos: IP Address = %s" % ipAddress)
         return sonosDevice
 
@@ -139,10 +133,6 @@ class Settings():
         return __addon__.getSetting("xbmcNotifDialog") == 'true'
 
     @staticmethod
-    def useTestData():
-        return __addon__.getSetting("useTestData") == 'true'
-
-    @staticmethod
     def getRefreshInterval():
         # Convert to milliseconds before returning
         return int(float(__addon__.getSetting("refreshInterval")) * 1000)
@@ -176,6 +166,13 @@ class Settings():
         # Settings are indexed at zero, so add one to match the Window XML
         layoutId = layoutId + 1
         return "script-sonos-artist-slideshow-%s.xml" % layoutId
+
+    @staticmethod
+    def isLyricsInfoLayout():
+        layoutId = int(float(__addon__.getSetting("artistInfoLayout")))
+        # The only lyrics screen is script-sonos-artist-slideshow-4.xml
+        # Settings are indexed at zero, so add one to match the Window XML
+        return layoutId == 3
 
     @staticmethod
     def linkAudioWithSonos():

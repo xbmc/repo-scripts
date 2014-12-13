@@ -80,10 +80,6 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Controller"
 
-msgctxt "#32017"
-msgid "Use Test Data"
-msgstr "Use Test Data"
-
 msgctxt "#32018"
 msgid "Plugin"
 msgstr "Plugin"

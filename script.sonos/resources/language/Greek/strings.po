@@ -84,10 +84,6 @@ msgctxt "#32016"
 msgid "Controller Refresh Interval (Seconds)"
 msgstr "Χρονικό Διάστημα Ενημέρωσης Χειριστηρίου (Δευτ)"
 
-msgctxt "#32017"
-msgid "Use Test Data"
-msgstr "Χρήση ΔοκιμαστικώνΔεδομένων"
-
 msgctxt "#32018"
 msgid "Plugin"
 msgstr "Plugin"

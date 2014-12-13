@@ -44,6 +44,10 @@ msgctxt "#32018"
 msgid "Plugin"
 msgstr "Приставка"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "Подредба"
+
 msgctxt "#32062"
 msgid "Next"
 msgstr "Следващ"

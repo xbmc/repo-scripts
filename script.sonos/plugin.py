@@ -58,13 +58,13 @@ class MenuNavigator():
     COMPOSERS = 'composers'
     TRACKS = 'tracks'
     FOLDERS = 'folders'
+    IMPORTED_PLAYLISTS = 'playlists'
     SONOS_PLAYLISTS = 'sonos_playlists'
 
     # Menu items manually set at the root
     ROOT_MENU_MUSIC_LIBRARY = 'Music-Library'
     ROOT_MENU_QUEUE = 'QueueIcon'
     ROOT_MENU_RADIO_STATIONS = 'Radio-Stations'
-    ROOT_MENU_RADIO_SHOWS = 'Radio-Shows'
     ROOT_MENU_RADIO_SHOWS = 'Radio-Shows'
     ROOT_MENU_SONOS_PLAYLISTS = 'Sonos-Playlists'
     ROOT_MENU_SPEECH = 'Speech'
@@ -79,7 +79,15 @@ class MenuNavigator():
 
     # Creates a URL for a directory
     def _build_url(self, query):
-        return self.base_url + '?' + urllib.urlencode(query)
+        # Make sure all of the characters are correctly encoded
+        processedQuery = query
+        for k, v in processedQuery.iteritems():
+            try:
+                processedQuery[k] = unicode(v).encode('utf-8')
+            except:
+                processedQuery[k] = v
+
+        return "%s?%s" % (self.base_url, urllib.urlencode(processedQuery))
 
     # Display the default list of items in the root menu
     def setRootMenu(self):
@@ -176,6 +184,13 @@ class MenuNavigator():
         self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
+        # Imported Playlists
+        url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.IMPORTED_PLAYLISTS})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32115), iconImage=MediaFiles.SonosPlaylistIcon)
+        li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
+        self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+
         xbmcplugin.endOfDirectory(self.addon_handle)
 
     # Populets the queue list from the Sonos speaker
@@ -260,7 +275,7 @@ class MenuNavigator():
                         list = sonosDevice.get_music_library_information(folderName, totalCollected, Settings.getBatchSize(), True)
                     else:
                         # Make sure the sub category is valid for the message, escape invalid characters
-                        subCategory = cgi.escape(subCategory)
+                        subCategory = urllib.quote(subCategory)
                         # Call the browse version
                         list = sonosDevice.browse_by_idstring(folderName, subCategory, totalCollected, Settings.getBatchSize(), True)
                 except:
@@ -735,6 +750,7 @@ if __name__ == '__main__':
         log("SonosPlugin: Mode is NONE - showing root menu")
         menuNav = MenuNavigator(base_url, addon_handle)
         menuNav.setRootMenu()
+        del menuNav
 
     elif mode[0] == 'folder':
         log("SonosPlugin: Mode is FOLDER")
@@ -743,21 +759,17 @@ if __name__ == '__main__':
         foldername = args.get('foldername', None)
 
         if (foldername is not None) and (len(foldername) > 0):
+            menuNav = MenuNavigator(base_url, addon_handle)
             # Check for the special case of manually defined folders
             if foldername[0] == MenuNavigator.ROOT_MENU_MUSIC_LIBRARY:
-                menuNav = MenuNavigator(base_url, addon_handle)
                 menuNav.setMusicLibrary()
             elif foldername[0] == MenuNavigator.ROOT_MENU_QUEUE:
-                menuNav = MenuNavigator(base_url, addon_handle)
                 menuNav.populateQueueList()
             elif foldername[0] == MenuNavigator.ROOT_MENU_RADIO_STATIONS:
-                menuNav = MenuNavigator(base_url, addon_handle)
                 menuNav.populateRadioStations()
             elif foldername[0] == MenuNavigator.ROOT_MENU_RADIO_SHOWS:
-                menuNav = MenuNavigator(base_url, addon_handle)
                 menuNav.populateRadioShows()
             elif foldername[0] == MenuNavigator.ROOT_MENU_SPEECH:
-                menuNav = MenuNavigator(base_url, addon_handle)
                 menuNav.populateSpeech()
             else:
                 subCategory = args.get('subCategory', '')
@@ -767,8 +779,9 @@ if __name__ == '__main__':
                 log("SonosPlugin: Folder name is %s (%s)" % (foldername[0], subCategory))
 
                 # Populate the menu
-                menuNav = MenuNavigator(base_url, addon_handle)
                 menuNav.processFolderMessage(foldername[0], subCategory)
+
+            del menuNav
 
     elif mode[0] == 'action':
         log("SonosPlugin: Mode is ACTION")
@@ -785,6 +798,7 @@ if __name__ == '__main__':
         if (actionType is not None) and (itemId is not None):
             actionMgr = ActionManager()
             actionMgr.performAction(actionType[0], itemId[0], title)
+            del actionMgr
 
     elif mode[0] == MenuNavigator.COMMAND_CONTROLLER:
         log("SonosPlugin: Mode is launchController")
@@ -802,6 +816,7 @@ if __name__ == '__main__':
             if msg is not None:
                 # Now get the Sonos Sytem to say the message
                 speech.say(msg)
+            del speech
 
     elif mode[0] == MenuNavigator.COMMAND_SPEECH_SAVE:
         log("SonosPlugin: Mode is Speech Save")
@@ -811,3 +826,4 @@ if __name__ == '__main__':
         speech.addPhrase()
         # Refresh the screen now that an item has been removed
         xbmc.executebuiltin('Container.Refresh')
+        del speech

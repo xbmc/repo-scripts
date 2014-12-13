@@ -84,10 +84,6 @@ msgctxt "#32016"
 msgid "Controller Refresh Interval (Seconds)"
 msgstr "Controlar Intervalos de Atualizações (Segundos)"
 
-msgctxt "#32017"
-msgid "Use Test Data"
-msgstr "Usar Dados  de Teste"
-
 msgctxt "#32018"
 msgid "Plugin"
 msgstr "Plugin"

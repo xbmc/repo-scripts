@@ -84,10 +84,6 @@ msgctxt "#32016"
 msgid "Controller Refresh Interval (Seconds)"
 msgstr "Valdiklio atnaujinimo intervalas (sekundės)"
 
-msgctxt "#32017"
-msgid "Use Test Data"
-msgstr "Naudoti testinius duomenis"
-
 msgctxt "#32018"
 msgid "Plugin"
 msgstr "Įskiepis"

@@ -80,10 +80,6 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "Vezérlő"
 
-msgctxt "#32017"
-msgid "Use Test Data"
-msgstr "Teszt adatok használata"
-
 msgctxt "#32018"
 msgid "Plugin"
 msgstr "Bővítmény"

@@ -609,7 +609,7 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
                 # Get the track and creator if they both exist, if only one
                 # exists, then it's most probably a radio station and Next track
                 # title just contains a URI
-                if (track['next_artist'] is not None) and (track['next_title'] is not None):
+                if hasattr(track, 'next_artist') and (track['next_artist'] is not None) and (track['next_title'] is not None):
                     nextTrackCreator = track['next_artist']
                     nextTrackTitle = track['next_title']
 
@@ -633,6 +633,8 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
 # Main window for the Sonos Artist Slide show
 #####################################################
 class SonosArtistSlideshow(SonosControllerWindow):
+    LYRICS = 1345
+
     def __init__(self, *args, **kwargs):
         # Store the ID of this Window
         self.windowId = -1
@@ -726,9 +728,26 @@ class SonosArtistSlideshow(SonosControllerWindow):
         # set the windows properties for ArtistSlideshow
         # Only update if the track has changed
         if self.currentTrack is not None:
+            # Check if we want to show lyrics for the track, although not part of the
+            # artist slideshow feature (it is part of script.cu.lrclyrics) we treat
+            # this in a similar manner, first set the values
+            if Settings.isLyricsInfoLayout():
+                xbmcgui.Window(10000).setProperty('culrc.manual', 'true')
+                xbmcgui.Window(10000).setProperty('culrc.artist', self.currentTrack['artist'])
+                xbmcgui.Window(10000).setProperty('culrc.track', self.currentTrack['title'])
+
+            # Artist Slideshow will set these properties for us
             xbmcgui.Window(self.windowId).setProperty('CURRENTARTIST', self.currentTrack['artist'])
             xbmcgui.Window(self.windowId).setProperty('CURRENTTITLE', self.currentTrack['title'])
             xbmcgui.Window(self.windowId).setProperty('CURRENTALBUM', self.currentTrack['album'])
+
+            # Check if lyrics are enabled, and set the test if they are
+            if Settings.isLyricsInfoLayout():
+                lyricTxt = xbmcgui.Window(10000).getProperty('culrc.lyrics')
+                if lyricTxt is not None:
+                    artistLabel = self.getControl(SonosArtistSlideshow.LYRICS)
+                    artistLabel.reset()
+                    artistLabel.setText(lyricTxt)
 
     def isClose(self):
         # Check if the base class has detected a need to close
@@ -864,6 +883,7 @@ if __name__ == '__main__':
                     event_listener.stop()
                 except:
                     log("Sonos: Failed to stop event listener: %s" % traceback.format_exc())
+                del sub
 
             sonosCtrl.close()
             # Record the fact that the Sonos controller is no longer displayed
@@ -874,5 +894,6 @@ if __name__ == '__main__':
 
         # Make sure we always tidy up the keymap
         keyMapCtrl.cleanup()
+        del keyMapCtrl
     else:
         xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), "IP Address Not Set")

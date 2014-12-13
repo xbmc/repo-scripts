@@ -16,6 +16,10 @@ msgstr ""
 "Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32001"
+msgid "Sonos"
+msgstr "Sonos"
+
 msgctxt "#32002"
 msgid "IP Address"
 msgstr "כתובת IP"
@@ -28,6 +32,10 @@ msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "הפעל רישום שגיאות"
 
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "רמקול"
+
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "התראות"
@@ -35,6 +43,26 @@ msgstr "התראות"
 msgctxt "#32012"
 msgid "Debugging"
 msgstr "ניפוי שגיאות"
+
+msgctxt "#32015"
+msgid "Controller"
+msgstr "בקר"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "שם אזור (רשות)"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "אוטומציה"
+
+msgctxt "#32035"
+msgid "Layout"
+msgstr "פריסה"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "מצגת בלבד"
 
 msgctxt "#32062"
 msgid "Next"
@@ -44,6 +72,22 @@ msgctxt "#32100"
 msgid "Music Library"
 msgstr "ספריית מוזיקה "
 
+msgctxt "#32101"
+msgid "Queue"
+msgstr "הוספה לתור"
+
+msgctxt "#32102"
+msgid "Radio Stations"
+msgstr "תחנות רדיו"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "רשימות ניגון Sonos"
+
+msgctxt "#32105"
+msgid "Speech"
+msgstr "דיבור"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "אמנים"
@@ -52,6 +96,10 @@ msgctxt "#32111"
 msgid "Albums"
 msgstr "אלבומים"
 
+msgctxt "#32112"
+msgid "Composers"
+msgstr "מלחינים"
+
 msgctxt "#32113"
 msgid "Genres"
 msgstr "סגנונות"
@@ -59,3 +107,23 @@ msgstr "סגנונות"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "רצועות"
+
+msgctxt "#32155"
+msgid "Add To Queue"
+msgstr "הוספה לתור"
+
+msgctxt "#32156"
+msgid "Replace Queue"
+msgstr "החלפת תור"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "בוקר טוב"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "אחה\"צ טובים"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "ערב טוב"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sonos" name="Sonos" version="1.2.1" provider-name="robwebset">
+<addon id="script.sonos" name="Sonos" version="1.2.2" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="2.3.0"/>
@@ -32,6 +32,8 @@
 		<summary lang="fr_CA">Contrôleur Sonos</summary>
 	
 		<summary lang="gl">Controlador Sonos</summary>
+	
+		<summary lang="he">בקר Sonos</summary>
 	
 		<summary lang="hu">Sonos Vezérlő</summary>
 	
@@ -91,7 +93,7 @@
 	
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 	
-		<forum>http://forum.xbmc.org/showthread.php?tid=183020</forum>
+		<forum>http://forum.kodi.tv/showthread.php?tid=183020</forum>
 	
 		<source>http://robwebset.googlecode.com/svn/trunk/script.sonos/</source>
 	</extension>

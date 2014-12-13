@@ -292,7 +292,8 @@ if __name__ == '__main__':
     log("SonosService: Starting service (version %s)" % __version__)
 
     # Start by doing any auto-setting of the IP Address
-    AutoUpdateIPAddress()
+    autoIpAdd = AutoUpdateIPAddress()
+    del autoIpAdd
 
     if (not Settings.isNotificationEnabled()) and (not Settings.linkAudioWithSonos()) and (not Settings.autoPauseSonos()):
         log("SonosService: Notifications, Volume Link and Auto Pause are disabled, exiting service")
@@ -397,4 +398,6 @@ if __name__ == '__main__':
                 xbmc.sleep(1000)
                 timeUntilNextCheck = timeUntilNextCheck - 1
 
+            del volumeLink
+            del autoPause
     log("Sonos: Stopping service")

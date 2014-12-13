@@ -1,3 +1,10 @@
+v1.2.2
+- Fix issue with non ascii titles
+- Remove test data option
+- Stop script error cause by event structure changes in latest Sonos Software
+- Add support for viewing and playing imported playlist
+- Fix character encoding when browsing via the plugin
+
 v1.2.1
 - Improve Speaker Search
 - Improve Sonos event update handling
