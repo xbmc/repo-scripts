@@ -1,3 +1,6 @@
+[B]0.9.3[/B]
+- fixed crash on invalid filename encoding from file system
+
 [B]0.9.2[/B]
 - Helix only: progress dialogs are now hidden by default. Can be changed in settings
 - fixed OS X regression

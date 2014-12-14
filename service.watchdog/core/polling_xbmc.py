@@ -25,8 +25,10 @@ from polling import Poller, PollerNonRecursive, file_list_from_walk, hidden
 
 def _walk(path):
     dirs, files = xbmcvfs.listdir(path)
-    dirs = [path + _.decode('utf-8') for _ in dirs if not hidden(_)]
-    files = [path + _.decode('utf-8') for _ in files if not hidden(_)]
+    # xbmcvfs bug: sometimes return invalid utf-8 encoding. we only care about
+    # finding changed paths so it's ok to ignore here.
+    dirs = [path + _.decode('utf-8', 'ignore') for _ in dirs if not hidden(_)]
+    files = [path + _.decode('utf-8', 'ignore') for _ in files if not hidden(_)]
     yield dirs, files
     for d in dirs:
         for dirs, files in _walk(d + '/'):
@@ -35,7 +37,7 @@ def _walk(path):
 
 def _list_files(path):
     dirs, files = xbmcvfs.listdir(path)
-    return [path + '/' + f.decode('utf-8') for f in files if not hidden(f)]
+    return [path + '/' + f.decode('utf-8', 'ignore') for f in files if not hidden(f)]
 
 
 def _get_mtime(path):
