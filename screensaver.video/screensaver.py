@@ -21,6 +21,9 @@ sys.path.append(__lib__)
 # Import the common settings
 from settings import log
 from settings import Settings
+from settings import list_dir
+from settings import os_path_join
+from settings import dir_exists
 
 from VideoParser import VideoParser
 
@@ -93,19 +96,43 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     def _getPlaylist(self):
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
-        videoFile = Settings.getScreensaverVideo()
 
-        if (videoFile is None):
-            videoFile == ""
+        # Check if we are showing all the videos in a given folder
+        if Settings.isFolderSelection():
+            videosFolder = Settings.getScreensaverFolder()
+            if (videosFolder is None):
+                videosFolder == ""
 
-        # Check to make sure the screensaver video file exists
-        if (videoFile == "") or (not xbmcvfs.exists(videoFile)):
-            log("No Screensaver file set or not valid %s" % videoFile)
-            xbmc.executebuiltin('XBMC.Notification(%s, %s, 5, %s)' % (__addon__.getLocalizedString(32300), videoFile, __icon__))
+            # Check if we are dealing with a Folder of videos
+            if videosFolder != "" and dir_exists(videosFolder):
+                dirs, files = list_dir(videosFolder)
+                # Now shuffle the playlist to ensure that if there are more
+                #  than one video a different one starts each time
+                random.shuffle(files)
+                for vidFile in files:
+                    fullPath = os_path_join(videosFolder, vidFile)
+                    log("Screensaver video in directory is: %s" % fullPath)
+                    playlist.add(fullPath)
+        else:
+            # Must be dealing with a single file
+            videoFile = Settings.getScreensaverVideo()
+            if (videoFile is None):
+                videoFile == ""
+
+            # Check to make sure the screensaver video file exists
+            if (videoFile != "") and xbmcvfs.exists(videoFile):
+                log("Screensaver video is: %s" % videoFile)
+                playlist.add(videoFile)
+
+        # If there are no videos in the playlist yet, then display an error
+        if playlist.size() < 1:
+            errorLocation = Settings.getScreensaverVideo()
+            if Settings.isFolderSelection():
+                errorLocation = Settings.getScreensaverFolder()
+
+            log("No Screensaver file set or not valid %s" % errorLocation)
+            xbmc.executebuiltin('XBMC.Notification(%s, %s, 5, %s)' % (__addon__.getLocalizedString(32300), errorLocation, __icon__))
             return None
-
-        log("Screensaver video is: %s" % videoFile)
-        playlist.add(videoFile)
 
         return playlist
 
@@ -160,6 +187,9 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
 # Main of the Video Screensaver
 ##################################
 if __name__ == '__main__':
+    # Before we start, make sure that the settings have been updated correctly
+    Settings.cleanAddonSettings()
+
     screenWindow = ScreensaverWindow.createScreensaverWindow()
     # Now show the window and block until we exit
     screenWindow.doModal()

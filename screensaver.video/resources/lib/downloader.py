@@ -40,13 +40,20 @@ class Downloader:
         select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32020), displayList)
         if select == -1:
             log("Downloader: Selection cancelled by user")
-            return None
+            return (None, None)
+        elif select == len(displayList) - 1:
+            # If it is the last entry in the list, then that means all
+            # of the files, so first display an information dialog so
+            # the user knows it will only use videos already downloaded
+            log("Downloader: Selection is to use all downloaded videos")
+            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32005), __addon__.getLocalizedString(32304), __addon__.getLocalizedString(32305))
+            return (-1, self.videoDir)
         else:
             log("Downloader: Selected item %d" % select)
             selectedItem = Settings.PRESET_VIDEOS[select]
             # Download the file selected
             data = base64.b64decode(selectedItem[2])
-            videoLocation = self.download(data, selectedItem[1], selectedItem[0])
+            videoLocation = self.download(data, selectedItem[1], __addon__.getLocalizedString(selectedItem[0]))
 
         return (select, videoLocation)
 
@@ -58,7 +65,7 @@ class Downloader:
 
         # Check to see if there is already a file present
         if xbmcvfs.exists(destination):
-            overwrite = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32004), __addon__.getLocalizedString(32301), displayName, __addon__.getLocalizedString(32302))
+            overwrite = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32005), __addon__.getLocalizedString(32301), displayName, __addon__.getLocalizedString(32302))
             if overwrite is False:
                 xbmcvfs.delete(destination)
             else:
@@ -103,12 +110,16 @@ class Downloader:
 
         displayList = []
         for videoItem in Settings.PRESET_VIDEOS:
-            displayNamePrefix = ''
+            displayNamePrefix = '   '
             # Check if the file already exists, and has been downloaded already
             if videoItem[1] in files:
                 log("Downloader: File %s already exists" % videoItem[1])
                 displayNamePrefix = '* '
 
-            displayList.append("%s%s" % (displayNamePrefix, videoItem[0]))
+            displayList.append("%s%s" % (displayNamePrefix, __addon__.getLocalizedString(videoItem[0])))
+
+        # Now add the option to allow the user randomly play the downloaded
+        # videos
+        displayList.append(__addon__.getLocalizedString(32100))
 
         return displayList

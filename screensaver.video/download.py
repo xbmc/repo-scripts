@@ -33,12 +33,19 @@ if __name__ == '__main__':
 
     log("Setting new video location to: %s" % videoLocation)
 
-    # Now set the path in the video dialog
-    Settings.setScreensaverVideo(videoLocation)
+    # Check if we are using a directory will multiple videos
+    # or just a single video file
+    if selectId is None:
+        log("Download selection Cancelled")
+    elif selectId == -1:
+        Settings.setScreensaverFolder(videoLocation)
+    else:
+        # Now set the path in the video dialog
+        Settings.setScreensaverVideo(videoLocation)
 
-    log("Setting new video preselect to: %d" % selectId)
-
-    Settings.setPresetVideoSelected(selectId)
+    if selectId is not None:
+        log("Setting new video preselect to: %d" % selectId)
+        Settings.setPresetVideoSelected(selectId)
 
     log("Finished call to download standard videos")
     del download

@@ -37,11 +37,11 @@ msgid "Enable debug logging"
 msgstr ""
 
 msgctxt "#32004"
-msgid "VideoScreensaver"
+msgid "Video Selection"
 msgstr ""
 
-msgctxt "#32004"
-msgid "Video Selection"
+msgctxt "#32005"
+msgid "VideoScreensaver"
 msgstr ""
 
 msgctxt "#32020"
@@ -53,7 +53,11 @@ msgid "User Defined"
 msgstr ""
 
 msgctxt "#32022"
-msgid "Selected Sceensaver"
+msgid "Selected Screensaver"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
 msgstr ""
 
 msgctxt "#32050"
@@ -72,6 +76,34 @@ msgctxt "#32053"
 msgid "Start Video At Random Point"
 msgstr ""
 
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr ""
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr ""
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr ""
@@ -86,4 +118,12 @@ msgstr ""
 
 msgctxt "#32303"
 msgid "Downloading Screensaver Video File"
+msgstr ""
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr ""
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
 msgstr ""

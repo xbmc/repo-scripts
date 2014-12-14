@@ -1,2 +1,5 @@
+v1.0.1
+- Add option to use multiples video files
+
 v1.0.0
 - Initial Version
