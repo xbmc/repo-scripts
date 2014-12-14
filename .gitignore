@@ -1,6 +1,8 @@
 .gz
 .hg
 .idea
+.project
+.pydevproject
 *.pyo
 *.tar
 *.xcf
