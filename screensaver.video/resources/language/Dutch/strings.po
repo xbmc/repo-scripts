@@ -9,129 +9,89 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgctxt "Addon Summary"
-msgid "Screensaver that plays a video file."
-msgstr ""
-
-msgctxt "Addon Description"
-msgid "Plays a video when the screensaver starts, this can be a custom video or one of the built in videos."
-msgstr ""
 
 msgctxt "#32001"
 msgid "Screensaver"
-msgstr ""
+msgstr "Schermbeveiliging"
 
 msgctxt "#32002"
 msgid "Debugging"
-msgstr ""
+msgstr "Foutregistratie"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Foutregistratie inschakelen"
 
 msgctxt "#32004"
 msgid "Video Selection"
-msgstr ""
-
-msgctxt "#32005"
-msgid "VideoScreensaver"
-msgstr ""
-
-#empty strings from id 32006 to 32019
+msgstr "Video selectie"
 
 msgctxt "#32020"
 msgid "Preset Video"
-msgstr ""
+msgstr "Voor ingestelde video"
 
 msgctxt "#32021"
 msgid "User Defined"
-msgstr ""
+msgstr "Gebruiker gedefinieerd"
 
 msgctxt "#32022"
 msgid "Selected Screensaver"
-msgstr ""
+msgstr "Geselecteerde schermbeveiliging"
 
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
-msgstr ""
-
-#empty strings from id 32024 to 32049
+msgstr "Gebruik alle bestanden in een folder"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
-msgstr ""
+msgstr "Instellen/download vooraf ingesteld videobestand"
 
 msgctxt "#32051"
 msgid "Select Video File"
-msgstr ""
+msgstr "Selecteer video bestand"
 
 msgctxt "#32052"
 msgid "Show Time"
-msgstr ""
+msgstr "Toon tijd"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
-msgstr ""
+msgstr "Start video op willekeurig punt"
 
 msgctxt "#32054"
 msgid "Select Videos Folder"
-msgstr ""
-
-#empty strings from id 32055 to 32099
+msgstr "Selecteer videofolder"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
-msgstr ""
-
-msgctxt "#32101"
-msgid "Aquarium 1  - [846MB] - 400p"
-msgstr ""
-
-msgctxt "#32102"
-msgid "Aquarium 2  - [2.7GB] - 720p"
-msgstr ""
-
-msgctxt "#32103"
-msgid "Fireplace 1 - [965MB] - 720p"
-msgstr ""
-
-msgctxt "#32104"
-msgid "Fireplace 2 - [827MB] - 480p"
-msgstr ""
-
-msgctxt "#32105"
-msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr ""
-
-#empty strings from id 32106 to 32299
+msgstr "*** Alle gedownloade video's ***"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
-msgstr ""
+msgstr "Schermbeveiligingsbestand is niet geldig"
 
 msgctxt "#32301"
 msgid "The following default video already exists"
-msgstr ""
+msgstr "De volgende standaard video bestaat al"
 
 msgctxt "#32302"
 msgid "Reuse this file?"
-msgstr ""
+msgstr "Hergebruik dit bestand?"
 
 msgctxt "#32303"
 msgid "Downloading Screensaver Video File"
-msgstr ""
+msgstr "Downloaden schermbeveiliging videobestand"
 
 msgctxt "#32304"
 msgid "This option will use all videos already downloaded"
-msgstr ""
+msgstr "Deze optie zal alle al gedownloade video`s gebruiken"
 
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
-msgstr ""
+msgstr "Elke video vereist zal eerst individueel moeten worden gedownload"

@@ -9,129 +9,113 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgctxt "Addon Summary"
-msgid "Screensaver that plays a video file."
-msgstr ""
-
-msgctxt "Addon Description"
-msgid "Plays a video when the screensaver starts, this can be a custom video or one of the built in videos."
-msgstr ""
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "#32001"
 msgid "Screensaver"
-msgstr ""
+msgstr "Économiseur d'écran"
 
 msgctxt "#32002"
 msgid "Debugging"
-msgstr ""
+msgstr "Débogage"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Activer la journalisation de débogage"
 
 msgctxt "#32004"
 msgid "Video Selection"
-msgstr ""
+msgstr "Choix de la vidéo"
 
 msgctxt "#32005"
 msgid "VideoScreensaver"
-msgstr ""
-
-#empty strings from id 32006 to 32019
+msgstr "Économiseur d'écran vidéo"
 
 msgctxt "#32020"
 msgid "Preset Video"
-msgstr ""
+msgstr "Vidéo prédéfinie"
 
 msgctxt "#32021"
 msgid "User Defined"
-msgstr ""
+msgstr "Définie par l'utilisateur"
 
 msgctxt "#32022"
 msgid "Selected Screensaver"
-msgstr ""
+msgstr "Économiseur d'écran choisi"
 
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
-msgstr ""
-
-#empty strings from id 32024 to 32049
+msgstr "Utiliser toutes les fichiers dans un dossier"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
-msgstr ""
+msgstr "Définir/télécharger un fichier vidéo prédéfini"
 
 msgctxt "#32051"
 msgid "Select Video File"
-msgstr ""
+msgstr "Choisir un fichier vidéo"
 
 msgctxt "#32052"
 msgid "Show Time"
-msgstr ""
+msgstr "Heure de projection"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
-msgstr ""
+msgstr "Démarrer la vidéo en un point aléatoire"
 
 msgctxt "#32054"
 msgid "Select Videos Folder"
-msgstr ""
-
-#empty strings from id 32055 to 32099
+msgstr "Choisir le dossier des vidéos"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
-msgstr ""
+msgstr "*** Toutes les vidéos téléchargées ***"
 
 msgctxt "#32101"
 msgid "Aquarium 1  - [846MB] - 400p"
-msgstr ""
+msgstr "Aquarium 1  - [846 Mo] - 400 p"
 
 msgctxt "#32102"
 msgid "Aquarium 2  - [2.7GB] - 720p"
-msgstr ""
+msgstr "Aquarium 2  - [2,7 Go] - 720 p"
 
 msgctxt "#32103"
 msgid "Fireplace 1 - [965MB] - 720p"
-msgstr ""
+msgstr "Foyer 1 - [965 Mo] - 720 p"
 
 msgctxt "#32104"
 msgid "Fireplace 2 - [827MB] - 480p"
-msgstr ""
+msgstr "Foyer 2 - [827 Mo] - 480 p"
 
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr ""
-
-#empty strings from id 32106 to 32299
+msgstr "Foyer 3 - [2,1 Go] - 1080 p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
-msgstr ""
+msgstr "Le fichier d'économiseur d'écran n'est pas valide"
 
 msgctxt "#32301"
 msgid "The following default video already exists"
-msgstr ""
+msgstr "La vidéo suivante par défaut existe déjà"
 
 msgctxt "#32302"
 msgid "Reuse this file?"
-msgstr ""
+msgstr "Réutiliser ce fichier?"
 
 msgctxt "#32303"
 msgid "Downloading Screensaver Video File"
-msgstr ""
+msgstr "Téléchargement du fichier vidéo de l'économiseur d'écran"
 
 msgctxt "#32304"
 msgid "This option will use all videos already downloaded"
-msgstr ""
+msgstr "Cette option utilisera toutes les vidéos déjà téléchargées"
 
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
-msgstr ""
+msgstr "Chaque vidéo requise devrait d'abord être téléchargée individuellement"

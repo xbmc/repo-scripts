@@ -9,129 +9,113 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgctxt "Addon Summary"
-msgid "Screensaver that plays a video file."
-msgstr ""
-
-msgctxt "Addon Description"
-msgid "Plays a video when the screensaver starts, this can be a custom video or one of the built in videos."
-msgstr ""
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgctxt "#32001"
 msgid "Screensaver"
-msgstr ""
+msgstr "Proteção de Tela"
 
 msgctxt "#32002"
 msgid "Debugging"
-msgstr ""
+msgstr "Depurando"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Ativar log de depuração"
 
 msgctxt "#32004"
 msgid "Video Selection"
-msgstr ""
+msgstr "Seleção de Vídeo"
 
 msgctxt "#32005"
 msgid "VideoScreensaver"
-msgstr ""
-
-#empty strings from id 32006 to 32019
+msgstr "Protetor de Tela"
 
 msgctxt "#32020"
 msgid "Preset Video"
-msgstr ""
+msgstr "Vídeo Pré-Ajustado"
 
 msgctxt "#32021"
 msgid "User Defined"
-msgstr ""
+msgstr "Definido pelo Usuário"
 
 msgctxt "#32022"
 msgid "Selected Screensaver"
-msgstr ""
+msgstr "Protetor de Tela Selecionado"
 
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
-msgstr ""
-
-#empty strings from id 32024 to 32049
+msgstr "Usar Todos os Arquivos em Um Diretório"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
-msgstr ""
+msgstr "Setar/Transferir Arquivo de Vídeo Pré-Ajustado"
 
 msgctxt "#32051"
 msgid "Select Video File"
-msgstr ""
+msgstr "Selecione Arquivo de Vídeo"
 
 msgctxt "#32052"
 msgid "Show Time"
-msgstr ""
+msgstr "Apresentar data e hora"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
-msgstr ""
+msgstr "Iniciar Vídeo em um Ponto Randômico"
 
 msgctxt "#32054"
 msgid "Select Videos Folder"
-msgstr ""
-
-#empty strings from id 32055 to 32099
+msgstr "Selecionar Diretório com Vídeos"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
-msgstr ""
+msgstr "*** Todos os Vídeos Transferidos ***"
 
 msgctxt "#32101"
 msgid "Aquarium 1  - [846MB] - 400p"
-msgstr ""
+msgstr "Aquarium 1  - [846MB] - 400p"
 
 msgctxt "#32102"
 msgid "Aquarium 2  - [2.7GB] - 720p"
-msgstr ""
+msgstr "Aquarium 2  - [2.7GB] - 720p"
 
 msgctxt "#32103"
 msgid "Fireplace 1 - [965MB] - 720p"
-msgstr ""
+msgstr "Fireplace 1 - [965MB] - 720p"
 
 msgctxt "#32104"
 msgid "Fireplace 2 - [827MB] - 480p"
-msgstr ""
+msgstr "Fireplace 2 - [827MB] - 480p"
 
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr ""
-
-#empty strings from id 32106 to 32299
+msgstr "Fireplace 3 - [2.1GB] - 1080p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
-msgstr ""
+msgstr "Arquivo de proteção de tela não é válido"
 
 msgctxt "#32301"
 msgid "The following default video already exists"
-msgstr ""
+msgstr "O vídeo padrão já existe atualmente"
 
 msgctxt "#32302"
 msgid "Reuse this file?"
-msgstr ""
+msgstr "Reutilizar este arquivo?"
 
 msgctxt "#32303"
 msgid "Downloading Screensaver Video File"
-msgstr ""
+msgstr "Transferindo arquivo de vídeo de proteção de tela"
 
 msgctxt "#32304"
 msgid "This option will use all videos already downloaded"
-msgstr ""
+msgstr "Esta opção irá usar todos os arquivos de vídeos transferidos"
 
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
-msgstr ""
+msgstr "Cada vídeo requer que seja efetuado download de forma individual primeiramente."

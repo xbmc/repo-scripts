@@ -12,7 +12,7 @@ import xbmcaddon
 VFS_AVAILABLE = True
 
 
-__addon__     = xbmcaddon.Addon(id='script.videoextras')
+__addon__     = xbmcaddon.Addon(id='screensaver.video')
 __addonid__   = __addon__.getAddonInfo('id')
 
 

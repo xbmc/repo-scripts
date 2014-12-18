@@ -9,129 +9,113 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Kodi Translation Team\n"
-"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/xbmc-addons/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgctxt "Addon Summary"
-msgid "Screensaver that plays a video file."
-msgstr ""
-
-msgctxt "Addon Description"
-msgid "Plays a video when the screensaver starts, this can be a custom video or one of the built in videos."
-msgstr ""
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgctxt "#32001"
 msgid "Screensaver"
-msgstr ""
+msgstr "Wygaszacz ekranu"
 
 msgctxt "#32002"
 msgid "Debugging"
-msgstr ""
+msgstr "Diagnozowanie błędów"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr ""
+msgstr "Rejestruj komunikaty diagnostyczne w dzienniku"
 
 msgctxt "#32004"
 msgid "Video Selection"
-msgstr ""
+msgstr "Wybór wideo"
 
 msgctxt "#32005"
 msgid "VideoScreensaver"
-msgstr ""
-
-#empty strings from id 32006 to 32019
+msgstr "Wygaszacz wideo"
 
 msgctxt "#32020"
 msgid "Preset Video"
-msgstr ""
+msgstr "Predefiniowane wideo"
 
 msgctxt "#32021"
 msgid "User Defined"
-msgstr ""
+msgstr "Zdefiniowane przez użytkownika"
 
 msgctxt "#32022"
 msgid "Selected Screensaver"
-msgstr ""
+msgstr "Wybrany wygaszacz ekranu"
 
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
-msgstr ""
-
-#empty strings from id 32024 to 32049
+msgstr "Używaj wszystkich plików w folderze"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
-msgstr ""
+msgstr "Ustaw/Pobierz predefiniowany plik wideo"
 
 msgctxt "#32051"
 msgid "Select Video File"
-msgstr ""
+msgstr "Wybierz plik wideo"
 
 msgctxt "#32052"
 msgid "Show Time"
-msgstr ""
+msgstr "Pokazuj zegar"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
-msgstr ""
+msgstr "Odtwarzaj wideo w dowolnym momencie"
 
 msgctxt "#32054"
 msgid "Select Videos Folder"
-msgstr ""
-
-#empty strings from id 32055 to 32099
+msgstr "Wybierz folder z plikami wideo"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
-msgstr ""
+msgstr "*** Wszystkie pobrane wideo ***"
 
 msgctxt "#32101"
 msgid "Aquarium 1  - [846MB] - 400p"
-msgstr ""
+msgstr "Akwarium 1 400p [846MB] "
 
 msgctxt "#32102"
 msgid "Aquarium 2  - [2.7GB] - 720p"
-msgstr ""
+msgstr "Akwarium 2 720p [2.7GB]"
 
 msgctxt "#32103"
 msgid "Fireplace 1 - [965MB] - 720p"
-msgstr ""
+msgstr "Kominek 1 720p [965MB]"
 
 msgctxt "#32104"
 msgid "Fireplace 2 - [827MB] - 480p"
-msgstr ""
+msgstr "Kominek 2 480p [827MB]"
 
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr ""
-
-#empty strings from id 32106 to 32299
+msgstr "Kominek 3 1080p [2.1GB]"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
-msgstr ""
+msgstr "Plik wygaszacza jest niepoprawny"
 
 msgctxt "#32301"
 msgid "The following default video already exists"
-msgstr ""
+msgstr "Następujące domyślne wideo już istnieje"
 
 msgctxt "#32302"
 msgid "Reuse this file?"
-msgstr ""
+msgstr "Używać ponownie tego pliku?"
 
 msgctxt "#32303"
 msgid "Downloading Screensaver Video File"
-msgstr ""
+msgstr "Pobieranie pliku wideo wygaszacza"
 
 msgctxt "#32304"
 msgid "This option will use all videos already downloaded"
-msgstr ""
+msgstr "Ta opcja wymusi używanie wszystkich pobranych plików wideo"
 
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
-msgstr ""
+msgstr "Najpierw trzeba pobrać osobno każdy plik wideo"

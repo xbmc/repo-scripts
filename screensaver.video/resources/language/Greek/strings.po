@@ -1,0 +1,65 @@
+# Kodi Media Center language file
+# Addon Name: VideoScreensaver
+# Addon id: screensaver.video
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Screensaver"
+msgstr "Προφύλαξη οθόνης"
+
+msgctxt "#32002"
+msgid "Debugging"
+msgstr "Εντοπισμός σφαλμάτων"
+
+msgctxt "#32003"
+msgid "Enable debug logging"
+msgstr "Καταγραφή σφαλμάτων"
+
+msgctxt "#32004"
+msgid "Video Selection"
+msgstr "Επιλογή Βίντεο"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Επιλεγμένη Προφύλαξη Οθόνης"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "Χρήση Όλων των Αρχείων Στο Φάκελο"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Επιλογή Αρχείου Βίντεο"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Εμφάνιση Ώρας"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "Επιλογή Φακέλου Βίντεο"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** Όλα τα Ληφθέντα Βίντεο ***"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "Το Αρχείο Προφύλαξης Οθόνης Δεν Είναι Έγκυρο"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Να ξαναχρησιμοποιηθεί αυτό το αρχείο;"
