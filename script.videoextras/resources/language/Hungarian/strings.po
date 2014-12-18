@@ -195,3 +195,11 @@ msgstr "Videóklipek"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Ismertetö"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Tartalom szerkesztése"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Tartalom frissítése sikertelen"

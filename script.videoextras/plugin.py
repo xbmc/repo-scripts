@@ -134,7 +134,7 @@ class MenuNavigator():
         json_response = simplejson.loads(json_query)
         log(json_response)
         Videolist = []
-        if ("result" in json_query) and (target in json_response['result']):
+        if ("result" in json_response) and (target in json_response['result']):
             for item in json_response['result'][target]:
                 videoItem = {}
                 videoItem['title'] = item['title']

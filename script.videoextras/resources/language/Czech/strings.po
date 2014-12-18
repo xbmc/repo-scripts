@@ -16,9 +16,45 @@ msgstr ""
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Přidej Video bonusy k Filmům a TV seriím"
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Poskytuje způsob jak přidat Bonusy do vaší video knihovny. Instrukce pro nastavení viz. wiki."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Tvůrci skinu, v případě, že chcete integrovat Video Extras podívejte se prosím na wiki http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
 msgctxt "#32001"
 msgid "Extras"
-msgstr "Další..."
+msgstr "Bonusy"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Jméno adresáře pro Bonusy"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Prohledávej vnořené adresáře"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Zapni Bonusy s File Tag"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Jméno File Tagu pro Bonusy"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Menu po přehrání extra"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Video výběr"
 
 msgctxt "#32008"
 msgid "Information"
@@ -28,13 +64,41 @@ msgctxt "#32009"
 msgid "Home"
 msgstr "Domů"
 
+msgctxt "#32010"
+msgid "File System"
+msgstr "Souborový systém"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Vzdálené umístění bonusů"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Použij uživatelské umístění Bonusů"
+
 msgctxt "#32013"
 msgid "Path"
 msgstr "Cesta"
 
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Uživatelská cesta k podadresáři Filmů"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Uživatelská cesta k podadresáři TV serií"
+
 msgctxt "#32016"
 msgid "Advanced"
 msgstr "Pokročilé"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Vynuť zobrazení tlačítka Bonusy"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Regulární výraz pro nezahrnování souborů"
 
 msgctxt "#32019"
 msgid "Debugging"
@@ -48,6 +112,38 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "Databáze"
 
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Umožni podporu v Databázi"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Operace"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Vyčisti Databázi a Cache"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Použij obrazovku s detailem seznamu"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Okno k zobrazení po opuštění detailního seznamu"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Povol caching bonusů při startu"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Procházej Bonusy"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Uživatelský podadresář pro Hudební videa"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Přehrát vše"
@@ -55,6 +151,14 @@ msgstr "Přehrát vše"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Informace"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Nenalezeny žádné bonusy"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Pokračuj od"
 
 msgctxt "#32105"
 msgid "Start from beginning"
@@ -72,6 +176,10 @@ msgctxt "#32108"
 msgid "Edit title"
 msgstr "Upravit název"
 
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Update titulu skončil chybou"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmy"
@@ -87,3 +195,11 @@ msgstr "Hudební videa"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Děj"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Editace obsahu"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Update obsahu zkončil chybou"

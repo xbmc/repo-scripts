@@ -36,6 +36,10 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "پایگاه داده"
 
+msgctxt "#32102"
+msgid "Info"
+msgstr "اطلاعات"
+
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "شروع از ابتدا"

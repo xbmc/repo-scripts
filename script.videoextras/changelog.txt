@@ -1,3 +1,7 @@
+v1.1.9
+- Update detailed list skin for Helix
+- Make sure simplejson is installed
+
 v1.1.8
 - Update directory existence check for Helix
 

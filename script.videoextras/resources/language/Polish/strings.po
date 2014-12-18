@@ -106,7 +106,7 @@ msgstr "Diagnozowanie błędów"
 
 msgctxt "#32020"
 msgid "Enable debug logging"
-msgstr "Rejestruj informacje diagnostyczne w dzienniku"
+msgstr "Rejestruj komunikaty diagnostyczne w dzienniku"
 
 msgctxt "#32021"
 msgid "Database"

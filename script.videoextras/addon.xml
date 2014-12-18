@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.videoextras" name="VideoExtras" version="1.1.8" provider-name="robwebset">
+<addon id="script.videoextras" name="VideoExtras" version="1.1.9" provider-name="robwebset">
 	<requires>
     	<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
   	</requires>
   	<extension point="xbmc.python.script" library="default.py" />
 	<extension point="xbmc.service" library="service.py" start="login">
@@ -12,6 +13,7 @@
 	</extension>
   	<extension point="xbmc.addon.metadata">
     	<summary lang="ca">Afegeix vídeos extres a les teves pel·lícules i sèries de televisió.</summary>
+    	<summary lang="cs">Přidej Video bonusy k Filmům a TV seriím</summary>
     	<summary lang="de">Video Extras zu deinen Filmen und TV-Sendungen hinzufügen</summary>
     	<summary lang="el">Προσθήκη DVD Extras στις Ταινίες και τις Τηλεοπτικές σας Σειρές.</summary>
     	<summary lang="en">Add Video Extras to your Movies and TV shows.</summary>
@@ -33,6 +35,7 @@
     	<summary lang="pt_BR">Adiciona extras de vídeos em filmes e seriados.</summary>
     	<summary lang="sv">Lägg till Video Extras till dina filmer och TV-program</summary>
     	<description lang="ca">Proporciona una manera d'afegir vídeo extres a la seva biblioteca de vídeo. Mira el wiki per instruccions d'instal·lació.</description>
+    	<description lang="cs">Poskytuje způsob jak přidat Bonusy do vaší video knihovny. Instrukce pro nastavení viz. wiki.</description>
     	<description lang="de">Bietet eine Möglichkeit, um Videoextras zu Ihrer Videobibliothek hinzuzufügen. Schauen Sie ins Wiki für Installationsanweisungen.</description>
     	<description lang="el">Σας παρέχει έναν τρόπο να προσθέσετε DVD Extras στη Συλλογή σας. Ελέγξτε τον ιστότοπο του wiki για οδηγίες εγκατάστασης.</description>
     	<description lang="en">Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions.</description>
@@ -56,7 +59,7 @@
     	<language></language>
     	<platform>all</platform>
     	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    	<forum>http://forum.xbmc.org/showthread.php?tid=178717</forum>
+    	<forum>http://forum.kodi.tv/showthread.php?tid=178717</forum>
     	<source>http://robwebset.googlecode.com/svn/trunk/script.videoextras/</source>
   </extension>
 </addon>

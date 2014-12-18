@@ -120,6 +120,10 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Radnje"
 
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Obriši bazu podataka i predmemoriju"
+
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Koristi zaslon opširnijeg popisa"
@@ -135,6 +139,10 @@ msgstr "Dopusti stvaranje predmemorije dodataka pri pokretanju"
 msgctxt "#32028"
 msgid "Browse Extras"
 msgstr "Pregledaj dodatke"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Prilagođena mapa Glazbe i Video snimaka"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -187,3 +195,11 @@ msgstr "Glazbeni spotovi"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Radnja"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Uredi radnju"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Neuspjelo uređivanje radnje"
