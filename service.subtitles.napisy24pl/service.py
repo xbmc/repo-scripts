@@ -9,6 +9,8 @@ import re
 import urllib2
 import struct
 import shutil
+import StringIO
+import gzip
 from BeautifulSoup import BeautifulSoup
 
 try:
@@ -19,13 +21,6 @@ try:
     import xbmcgui
 except ImportError:
     from stubs import xbmc, xbmcgui, xbmcaddon, xbmcplugin, xbmcvfs
-
-try:
-    #Python 2.6 +
-    from hashlib import md5
-except ImportError:
-    #Python 2.5 and earlier
-    from md5 import new as md5
 
 __addon__ = xbmcaddon.Addon()
 __scriptid__ = __addon__.getAddonInfo('id')
@@ -40,16 +35,13 @@ __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp', '')).decode("utf
 
 sys.path.append(__resource__)
 
-
 def normalizeString(str):
     return unicodedata.normalize(
-        'NFKD', unicode(unicode(str, 'utf-8'))
-    ).encode('ascii', 'ignore')
-
+        'NFKD', unicode(unicode(str, 'latin-1'))
+    ).encode('ascii', 'ignore').decode('latin-1').encode("utf-8")
 
 def log(module, msg):
     xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
-
 
 if __addon__.getSetting("subs_format") == "0":
     subtitle_type = "sr"
@@ -60,126 +52,108 @@ elif __addon__.getSetting("subs_format") == "2":
 elif __addon__.getSetting("subs_format") == "3":
     subtitle_type = "mpl2"
 
-main_url = "http://napisy24.pl/search.php?str="
-base_download_url = "http://napisy24.pl/download/"
-down_url = "%s%s/" % (base_download_url, subtitle_type)
+search_url = "http://napisy24.pl/szukaj?search=%s&page=%d&typ=%d&lang=0"
+download_url = "http://napisy24.pl/download?napisId=%s&typ=%s"
+login_url = "http://napisy24.pl/component/comprofiler/login"
 
+http_headers = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Charset': 'UTF-8,*;q=0.5',
+    'Accept-Encoding': 'gzip,deflate,sdch',
+    'Accept-Language': 'pl,pl-PL;q=0.8,en-US;q=0.6,en;q=0.4',
+    'Connection': 'keep-alive',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.83 Safari/537.1',
+    'Referer': 'http://napisy24.pl/'
+}
 
-def hashFile(file_path):
-    log(__name__, "Hash Standard file")
-    longlongformat = 'q'  # long long
-    bytesize = struct.calcsize(longlongformat)
-    f = xbmcvfs.File(file_path)
+def http_response_content(response):
+    if response.info().get('Content-Encoding') == 'gzip':
+        buf = StringIO.StringIO(response.read())
+        f = gzip.GzipFile(fileobj=buf)
+        content = f.read()
+    else:
+        content = response.read()
 
-    filesize = f.size()
-    hash = filesize
-
-    if filesize < 65536 * 2:
-        return "SizeError"
-
-    buffer = f.read(65536)
-    f.seek(max(0, filesize - 65536), 0)
-    buffer += f.read(65536)
-    f.close()
-    for x in range((65536 / bytesize) * 2):
-        size = x * bytesize
-        (l_value,) = struct.unpack(longlongformat, buffer[size:size + bytesize])
-        hash += l_value
-        hash = hash & 0xFFFFFFFFFFFFFFFF
-
-    returnHash = "%016x" % hash
-    return filesize, returnHash
-
+    return content
 
 def getallsubs(content, item, subtitles_list):
-    languages_map = {'Polski': 'pl', 'Angielski': 'en', 'Niemiecki': 'de'}
 
     soup = BeautifulSoup(content)
-    soup = soup.find("div", {"id": "defaultTable"})
-    subs = soup("tr")
-    first_row = True
-    for row in subs[1:]:
-        sub_id_re = '<a href=\"/download/(\d+)/\"><strong>'
-        title_re = '<a href="/download/\d+?/"><strong>(.+?)</strong></a>'
-        release_re = '<td[^>]*>([^<]+)<br />'
-        rating_re = 'rednia ocena: (\d\,\d\d)<br />'
-        lang_re = 'zyk:.+?alt="(.+?)"'
-        disc_amount_re = '<td.+?style="text-align: center;">[\r\n\t ]+?(\d)[\r\n\t ]+?</td>'
-        video_file_size_re = 'Rozmiar pliku: <strong>(\d+?)</strong>'
-        video_file_size_re_multi = 'Rozmiar pliku:<br />- CD1: <strong>(\d+?)</strong>'
+    subs = soup.findAll('div', {'class': 'tbl'})
 
+    for row in subs[0:]:
         row_str = str(row)
+        
+        sub_id_re = '\?napisId=(\d+)"><h2'
+        title_re = '<div class="subtitle">.+>(.+?)</h2>.+</div>'
+        release_re = '<div class="subtitle">.+>(.+?)</h3>.+</div>'
+        lang_re = '<img src="/images/flags/(.+?).png" class="lang" />'
 
-        if first_row:
-            sub_id = re.findall(sub_id_re, row_str)
-            subtitle = re.findall(title_re, row_str)
-            release = re.findall(release_re, row_str)
-            disc_amount = re.findall(disc_amount_re, row_str)
-            first_row = False
+        infoColumn2 = re.findall("<div class=\"infoColumn2\">(.+?)</div>", row_str, re.DOTALL)[0].split('<br />')
+        infoColumn4 = re.findall("<div class=\"infoColumn4\">(.+?)</div>", row_str, re.DOTALL)[0].split('<br />')
+
+        sub_id = int(re.findall(sub_id_re, row_str)[0])
+        subtitle = re.findall(title_re, row_str)[0]
+        release = re.findall(release_re, row_str)[0]
+        rating = float(infoColumn4[3].replace(',', '.'))
+        language = re.findall(lang_re, row_str)[0]
+        disc_amount = int(infoColumn2[1])
+
+        if rating != 0:
+            rating = int(round(rating/1.2 , 0))
+
+        if disc_amount == 1:
+            video_file_size = re.findall("[\d.]+", infoColumn2[5])
+            if(len(video_file_size) > 0):
+                video_file_size = float(video_file_size[0])
+            else:
+                video_file_size = 0
         else:
-            file_size, SubHash = hashFile(item["file_original_path"])
+            video_file_size = 0
 
-            if len(disc_amount) and disc_amount[0] > '1':
-                video_file_size = re.findall(video_file_size_re_multi, row_str)
+        if video_file_size == 0:
+            sync = False
+        else:
+            file_size = round(item["file_original_size"] / float(1048576), 2)
+            if file_size == video_file_size:
+                sync = True
             else:
-                video_file_size = re.findall(video_file_size_re, row_str)
+                sync = False
 
-            if len(video_file_size) == 0:
-                video_file_size.append('0')
-                sync_value = False
-            else:
-                video_file_size = unicode(video_file_size[0], "UTF-8")
-                video_file_size = video_file_size.replace(u"\u00A0", "")
-                if file_size == video_file_size:
-                    sync_value = True
-                else:
-                    sync_value = False
+        releases = release.split(';')
 
-            rating = re.findall(rating_re, row_str)
-            language = re.findall(lang_re, row_str)
+        if(sync == False):
+            for rel in releases:
+                rel = rel.strip()
+                if(re.findall(rel, item['file_original_name'], re.I)):
+                    sync = True
+                    break
 
-            if len(language) and language[0] in languages_map:
-                language = [languages_map[language[0]]]
-            else:
-                language = []
+        if len(language) > 0:
 
-            if len(language) > 0:
-                first_row = True
-                link = "%s%s/" % (down_url, sub_id[0])
-                log(__name__, "Subtitles found: %s %s (link=%s)" % (subtitle[0], release, link))
-                if xbmc.convertLanguage(language[0], xbmc.ISO_639_2) in item["3let_language"]:
-                    rating_dot = rating[0].replace(",", ".")
-                    if rating_dot == '0.00':
-                        sub_rating = 0
-                    else:
-                        sub_rating = int(round(float(rating_dot) * 0.5, 0))
+            if xbmc.convertLanguage(language, xbmc.ISO_639_2) in item["3let_language"]:
+                link = download_url % (sub_id, subtitle_type)
+                log(__name__, "Subtitles found: %s %s (link=%s)" % (subtitle, release, link))
 
-                    releases = release[0].split("; ")
+                filename_release = "%s.%s" % (subtitle.replace(" ", "."), release)
 
-                    for rel in releases:
-                        filename_release = "%s.%s" % (subtitle[0].replace(" ", "."), rel)
-
-                        subtitles_list.append({'lang_index': item["3let_language"].index(
-                            xbmc.convertLanguage(language[0], xbmc.ISO_639_2)),
-                                               'filename': filename_release,
-                                               'link': link,
-                                               'language_name': xbmc.convertLanguage(language[0],
-                                                                                     xbmc.ENGLISH_NAME),
-                                               'language_flag': xbmc.convertLanguage(language[0],
-                                                                                     xbmc.ISO_639_1),
-                                               'rating': '%s' % (sub_rating,),
-                                               'sync': sync_value,
-                                               'hearing_imp': 0
-                        })
-                else:
-                    continue
+                subtitles_list.append({'lang_index': item["3let_language"].index(
+                    xbmc.convertLanguage(language, xbmc.ISO_639_2)),
+                                       'id': sub_id,
+                                       'filename': filename_release,
+                                       'language_name': xbmc.convertLanguage(language, xbmc.ENGLISH_NAME),
+                                       'language_flag': xbmc.convertLanguage(language, xbmc.ISO_639_1),
+                                       'rating': '%s' % (rating,),
+                                       'sync': sync,
+                                       'hearing_imp': 0
+                })
             else:
                 continue
-
+        else:
+            continue
 
 def Search(item):  #standard input
     subtitles_list = []
-    msg = ""
     if len(item["tvshow"]) > 0:
         for year in re.finditer(' \(\d{4}\)', item["tvshow"]):
             year = year.group()
@@ -189,34 +163,47 @@ def Search(item):  #standard input
                 continue
         tvshow_plus = item["tvshow"].replace(" ", "+")
 
-        season_full = str("%02d" % (int(item["season"]),))
+        season_full = int(item["season"])
         episode_full = str("%02d" % (int(item["episode"]),))
 
-        url = '%s%s+%sx%s' % (main_url, tvshow_plus, season_full, episode_full)
+        search_string = '%s+%sx%s' % (tvshow_plus, season_full, episode_full)
+        search_type = 2
     else:
         original_title = item["title"]
         if len(original_title) == 0:
             log(__name__, "Original title not set")
             movie_title_plus = item["title"].replace(" ", "+")
-            url = '%s%s' % (main_url, movie_title_plus)
+            search_string = movie_title_plus
         else:
             log(__name__, "Original title: [%s]" % (original_title))
             movie_title_plus = original_title.replace(" ", "+")
-            url = '%s%s' % (main_url, movie_title_plus)
+            search_string = movie_title_plus
+            search_type = 1
+
+    url =  search_url % (search_string, 1, search_type)
+
     log(__name__, "Fetching from [ %s ]" % (url))
-    response = urllib2.urlopen(url)
-    content = response.read()
-    re_pages_string = 'postAction%3DszukajZaawansowane">(\d)</a>'
-    page_nr = re.findall(re_pages_string, content)
+
+    request = urllib2.Request(url, None, http_headers)
+    response = urllib2.urlopen(request)
+    content = normalizeString(http_response_content(response))
+
+    re_pages_string = 'href=".+page=(\d).+">.+</a><a class="page-next'
+    pages = re.findall(re_pages_string, content)
+
+    if(len(pages)):
+        pages = int(pages[0])
+    else:
+        pages = 0
 
     getallsubs(content, item, subtitles_list)
-    for i in page_nr:
-        main_url_pages = 'http://napisy24.pl/szukaj/&stronaArch=1&strona='
-        rest_url = '%26postAction%3DszukajZaawansowane'
-        url_2 = '%s%s&szukajNapis=%s%s' % (main_url_pages, i, item["title"], rest_url)
-        response = urllib2.urlopen(url_2)
-        content = response.read()
+    for page in range(1, pages):
+        url =  search_url % (search_string, (page+1), search_type)
+        request = urllib2.Request(url, None, http_headers)
+        response = urllib2.urlopen(request)
+        content = normalizeString(http_response_content(response))
         getallsubs(content, item, subtitles_list)
+        
     if subtitles_list:
         for it in subtitles_list:
             listitem = xbmcgui.ListItem(label=it["language_name"],
@@ -234,15 +221,14 @@ def Search(item):  #standard input
             else:
                 listitem.setProperty("hearing_imp", "false")
 
-            url = "plugin://%s/?action=download&link=%s&filename=%s&language=%s" % (
-                __scriptid__, it["link"], it["filename"], it["language_flag"])
+            url = "plugin://%s/?action=download&id=%d" % (__scriptid__, it["id"])
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
-
-def Download(link, filename):  #standard input
+def Download(sub_id):  #standard input
 
     subtitle_list = []
     exts = [".srt", ".sub", ".txt"]
+    link = download_url % (sub_id, subtitle_type)
 
     ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     ## pass that to XBMC to copy and activate
@@ -251,22 +237,24 @@ def Download(link, filename):  #standard input
     xbmcvfs.mkdirs(__temp__)
 
     cj = CookieJar()
-    headers = {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Charset': 'UTF-8,*;q=0.5',
-        'Accept-Encoding': 'gzip,deflate,sdch',
-        'Accept-Language': 'pl,pl-PL;q=0.8,en-US;q=0.6,en;q=0.4',
-        'Connection': 'keep-alive',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.83 Safari/537.1',
-        'Referer': 'http://napisy24.pl/'
+
+    request = urllib2.Request(login_url, None, http_headers)
+    response = urllib2.urlopen(request)
+    content = normalizeString(http_response_content(response))
+    cbsecuritym3 = re.findall('name="cbsecuritym3" value="(.+?)"', content)[0]
+
+    values = {
+        'username': __addon__.getSetting("username"),
+        'passwd': __addon__.getSetting("password"),
+        'cbsecuritym3': cbsecuritym3,
     }
-    values = {'form_logowanieMail': __addon__.getSetting("username"),
-              'form_logowanieHaslo': __addon__.getSetting("password"), 'postAction': 'sendLogowanie'}
+
     data = urllib.urlencode(values)
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-    request = urllib2.Request("http://napisy24.pl/logowanie/", data, headers)
+    request = urllib2.Request(login_url, data, http_headers)
     response = opener.open(request)
-    request = urllib2.Request(link, "", headers)
+
+    request = urllib2.Request(link, "", http_headers)
     f = opener.open(request)
     local_tmp_file = os.path.join(__temp__, "zipsubs.zip")
     log(__name__, "Saving subtitles to '%s'" % (local_tmp_file))
@@ -288,8 +276,6 @@ def Download(link, filename):  #standard input
 
     return subtitle_list
 
-
-
 def get_params():
     param = []
     paramstring = sys.argv[2]
@@ -308,7 +294,6 @@ def get_params():
 
     return param
 
-
 params = get_params()
 
 if params['action'] in ['search', 'manualsearch']:
@@ -320,8 +305,8 @@ if params['action'] in ['search', 'manualsearch']:
     item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))  # Episode
     item['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
     item['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))  # try to get original title
-    item['file_original_path'] = urllib.unquote(
-        xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path of a playing file
+    item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path of a playing file
+    item['file_original_name'] = os.path.basename(item['file_original_path']) # Name of playing file
     item['3let_language'] = []
     item['preferredlanguage'] = unicode(urllib.unquote(params.get('preferredlanguage', '')), 'utf-8')
     item['preferredlanguage'] = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ISO_639_2)
@@ -352,13 +337,15 @@ if params['action'] in ['search', 'manualsearch']:
     elif params['action'] == "manualsearch":
         item['title'] = params['searchstring']
 
+    item["file_original_size"] = xbmcvfs.File(item["file_original_path"]).size()
+
     log(__name__, "item: %s" %(item))
 
     Search(item)
 
 elif params['action'] == 'download':
     ## we pickup all our arguments sent from def Search()
-    subs = Download(params["link"], params["filename"])
+    subs = Download(params["id"])
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)
