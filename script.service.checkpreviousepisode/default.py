@@ -2,7 +2,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import os
-import simplejson
+import json
 
 __addon__ = xbmcaddon.Addon()
 __cwd__ = __addon__.getAddonInfo('path')
@@ -31,27 +31,18 @@ class MyPlayer( xbmc.Player ):
   def onPlayBackStarted( self ):
     #log('Playback started!')
     command='{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}'
-    result = xbmc.executeJSONRPC( command )
-    result = unicode(result, 'utf-8', errors='ignore')
-    #log("RAW: %s" % result)
-    jsonobject = simplejson.loads(result)
+    jsonobject = json.loads(xbmc.executeJSONRPC(command))
     if(len(jsonobject['result']) == 1):
         resultitem = jsonobject['result'][0]
         #log("Player running with ID: %d" % resultitem['playerid'])
         
         command='{"jsonrpc": "2.0", "method": "Player.GetItem", "params": { "playerid": %d }, "id": 1}' % resultitem['playerid']
-        result = xbmc.executeJSONRPC( command )
-        result = unicode(result, 'utf-8', errors='ignore')
-        #log("RAW: %s" % result)
-        jsonobject = simplejson.loads(result)
+        jsonobject = json.loads(xbmc.executeJSONRPC(command))
         if(jsonobject['result']['item']['type'] == 'episode'):
             #log("An Episode is playing!")
             
             command='{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodeDetails", "params": { "episodeid": %d, "properties": ["tvshowid", "season", "episode"] }, "id": 1}' % jsonobject['result']['item']['id']
-            result = xbmc.executeJSONRPC( command )
-            result = unicode(result, 'utf-8', errors='ignore')
-            #log("RAW: %s" % result)
-            jsonobject = simplejson.loads(result)
+            jsonobject = json.loads(xbmc.executeJSONRPC(command))
             if(len(jsonobject['result']) == 1):
                 playingTvshowid = jsonobject['result']['episodedetails']['tvshowid']
                 playingSeason = jsonobject['result']['episodedetails']['season']
@@ -60,10 +51,7 @@ class MyPlayer( xbmc.Player ):
                 #Lets see if we have the previous episode
                 if(jsonobject['result']['episodedetails']['episode'] > 1): #debuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuug
                     command='{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "season": %d, "properties": ["episode", "playcount"] }, "id": 1}' % (jsonobject['result']['episodedetails']['tvshowid'], jsonobject['result']['episodedetails']['season'])
-                    result = xbmc.executeJSONRPC( command )
-                    result = unicode(result, 'utf-8', errors='ignore')
-                    #log("RAW: %s" % result)
-                    jsonobject = simplejson.loads(result)
+                    jsonobject = json.loads(xbmc.executeJSONRPC(command))
                     if(len(jsonobject['result']) > 0):
                         #log("Finding...")
                         found = False

@@ -1,3 +1,6 @@
+v0.3.1
+* Use builtin json module instead of simplejson (Thanks tamland)
+
 v0.3.0
 * Added option to show a "browse this show" dialog
 
