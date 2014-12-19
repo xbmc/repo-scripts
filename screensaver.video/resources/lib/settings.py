@@ -127,3 +127,7 @@ class Settings():
     @staticmethod
     def isRandomStart():
         return __addon__.getSetting("randomStart") == 'true'
+
+    @staticmethod
+    def isBlockScreensaverIfMediaPlaying():
+        return __addon__.getSetting("mediaPlayingBlock") == 'true'

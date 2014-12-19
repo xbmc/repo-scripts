@@ -9,6 +9,7 @@
 		<setting id="screensaverFolder" label="32054" subsetting="true" visible="eq(-5,1) + eq(-2,true)" type="folder"/>
 		<setting id="showTime" type="bool" label="32052" default="false"/>
 		<setting id="randomStart" type="bool" label="32053" default="false"/>
+		<setting id="mediaPlayingBlock" type="bool" label="32055" default="true"/>
     	<setting label="32002" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32003" default="false"/>
 	</category>

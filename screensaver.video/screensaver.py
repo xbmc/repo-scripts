@@ -89,6 +89,9 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
             # instead we use the built in option
             xbmc.executebuiltin("PlayerControl(Stop)")
 
+        # Reset the Player Repeat
+        xbmc.executebuiltin("PlayerControl(RepeatOff)")
+
         log("Closing Window")
         xbmcgui.WindowXML.close(self)
 

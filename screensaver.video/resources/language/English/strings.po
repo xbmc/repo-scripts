@@ -84,7 +84,11 @@ msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr ""
 
-#empty strings from id 32055 to 32099
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr ""
+
+#empty strings from id 32056 to 32099
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

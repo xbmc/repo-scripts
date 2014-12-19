@@ -32,6 +32,10 @@ msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Video selectie"
 
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "VideoSchermbeveiliger"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Voor ingestelde video"
@@ -71,6 +75,26 @@ msgstr "Selecteer videofolder"
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Alle gedownloade video's ***"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Aquarium 1 - [846MB] - 400p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Aquarium 2  - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Openhaard 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Openhaard 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Openhaard 3 - [2.1GB] - 1080p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
