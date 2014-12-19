@@ -28,15 +28,19 @@ msgstr ""
 
 # Separators
 msgctxt "#30010"
-msgid "Run PartyMode on Startup"
+msgid "Run on Startup"
 msgstr ""
 
 msgctxt "#30011"
-msgid "Run PartyMode on Screensaver"
+msgid "Run on Screensaver"
 msgstr ""
 
 msgctxt "#30012"
 msgid "Fullscreen/Visualisation"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Run Playlist"
 msgstr ""
 
 # setting items
@@ -52,7 +56,11 @@ msgctxt "#30042"
 msgid "Avoid whenever player is on pause"
 msgstr ""
 
-# ADDONS STRINGS
+msgctxt "#30043"
+msgid "Select a playlist"
+msgstr ""
+
+# ADDON STRINGS
 
 msgctxt "#30100"
 msgid "Run PartyMode on Screensaver"

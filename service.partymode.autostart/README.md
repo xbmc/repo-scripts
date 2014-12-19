@@ -2,14 +2,14 @@ XBMC PartyMode Autostart
 =====================
 
 ### Info
-This service simply executes party mode on Kodi startup or on screensaver.
+This service simply executes party mode or playlist on Kodi startup or on screensaver.
 
 Install, enable it (if not already) and enjoy!
 
 If you want change any delays, screensaver and other options go in addon settings.
 
 ### www
-* [Topic ufficiale](http://forum.xbmc.org/showthread.php?tid=203290)
+* [Official Topic](http://forum.xbmc.org/showthread.php?tid=203290)
 * [Kodi Official Page (soon)](http://addons.xbmc.org/show/service.partymode.autostart/)
 
 ### Latest release

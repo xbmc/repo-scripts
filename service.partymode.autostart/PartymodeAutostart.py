@@ -37,14 +37,23 @@ class Main:
         self.delayStartupPartyMode                      = int(__addon__.getSetting('delay-startup-partymode'))
         self.startOnScreensaverPartyMode                = __addon__.getSetting('start-on-screensaver-partymode') == 'true'
         self.avoidOnPauseStartOnScreensaverPartyMode    = __addon__.getSetting('avoid-on-pause-start-on-screensaver-partymode') == 'true'
+        self.startupPlaylist                            = __addon__.getSetting('startup-playlist') == 'true'
+        self.startupPlaylistPath                        = xbmc.getInfoLabel( "Skin.String(Startup.Playlist.Path)" )
 
         self.visualisationPartymode                     = __addon__.getSetting('visualisation-partymode') == 'true'
         self.delayVisualisationPartyMode                = int(__addon__.getSetting('delay-visualisation-partymode'))
 
     def runPartyMode(self):
-        log('Start PartyMode')
+        if self.startupPlaylist:
 
-        xbmc.executebuiltin("XBMC.PlayerControl(PartyMode)")
+            log('Start Playlist: ' + self.startupPlaylistPath)
+
+            xbmc.executebuiltin("XBMC.PlayMedia(" + self.startupPlaylistPath + ")")
+        else:
+
+            log('Start PartyMode')
+
+            xbmc.executebuiltin("XBMC.PlayerControl(PartyMode)")
 
         self.activateVisualisation()
 
@@ -126,6 +135,6 @@ class serviceMonitor(xbmc.Monitor):
         self.onScreensaverActivatedAction = action
 
 if __name__ == "__main__":
-    log('script version %s started' % __addonversion__)
+    log('service version %s started' % __addonversion__)
 
     Main()
