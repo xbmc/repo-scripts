@@ -1,3 +1,6 @@
+v3.0.6
+- fixed missing string in language file
+
 v3.0.5
 - updated language files from Transifex
 

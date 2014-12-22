@@ -1,3 +1,6 @@
+v1.0.1
+- disable logging
+
 v1.0.0
 - bump for helix
 

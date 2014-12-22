@@ -1,3 +1,6 @@
+v2.0.11
+- add option to show both folder- and filename
+
 v2.0.10
 - updated language files from Transifex
 

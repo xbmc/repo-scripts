@@ -218,33 +218,23 @@ class MyPlayer(xbmc.Player):
         self.songs   = kwargs['songs']
         self.radio   = kwargs['radio']
         self.Audio   = False
-        self.Count   = 0
 
     def onPlayBackStarted( self ):
         # only do something if we're playing audio and user has enabled it in settings
         if self.isPlayingAudio() and self.sesskey and self.user and self.pwd and (self.radio or self.songs):
             # we need to keep track of this bool for stopped/ended notifications
             self.Audio = True
-            # keep track of onPlayBackStarted events http://trac.xbmc.org/ticket/13064
-            self.Count += 1
-            log('onPlayBackStarted: %i' % self.Count, SESSION)
+            log('onPlayBackStarted', SESSION)
             # tags are not available instantly and we don't what to announce right away as the user might be skipping through the songs
             xbmc.sleep(500)
             # don't announce if the user already skipped to the next track or stopped playing audio
-            if self.Count == 1 and self.isPlayingAudio():
-                # reset counter
-                self.Count = 0
+            if self.isPlayingAudio():
                 # get tags
                 tags = self._get_tags()
-
                 # check if we have anything to submit
                 if tags:
                     # announce song
                      self.action(tags)
-            elif self.Count != 1:
-                # multiple onPlayBackStarted events occurred, only act on the last one
-                log('ignoring onPlayBackStarted %i event' % self.Count, SESSION)
-                self.Count -= 1
 
     def onPlayBackEnded( self ):
         # ignore onPlayBackEnded notifications from the video player
@@ -286,13 +276,19 @@ class MyPlayer(xbmc.Player):
 
         log('song scrobbling enabled: ' + str(self.songs), SESSION)
         log('radio scrobbling enabled: ' + str(self.radio), SESSION)
+        log('artist: ' + artist, SESSION)
+        log('title: ' + title, SESSION)
+        log('path: ' + path, SESSION)
         log('user flag: ' + user, SESSION)
         # streaming radio of provides both artistname and songtitle as one label
         if title and not artist:
             try:
                 artist = title.split(' - ')[0]
                 title = title.split(' - ')[1]
+                log('extracted artist: ' + artist, SESSION)
+                log('extracted title: ' + title, SESSION)
             except:
+                log('failed to extract artist from title', SESSION)
                 pass
         # make sure we have artist and trackname
         if artist and title:
@@ -313,7 +309,7 @@ class MyPlayer(xbmc.Player):
             return tracktags
 
         else:
-            log('cannot scrobble track with no artist or track information', SESSION)
+            log('cannot scrobble track with no artist and track information', SESSION)
             return None
 
 class MyMonitor(xbmc.Monitor):

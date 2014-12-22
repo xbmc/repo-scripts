@@ -176,7 +176,16 @@ class MyMonitor(xbmc.Monitor):
 log('version %s started: %s' % (__version__, sys.argv))
 
 MONITOR = MyMonitor()
-set_property('WeatherProvider', __addonname__)
+set_property('Forecast.IsFetched' , '')
+set_property('Current.IsFetched'  , '')
+set_property('Today.IsFetched'    , '')
+set_property('Daily.IsFetched'    , '')
+set_property('Weekend.IsFetched'  , '')
+set_property('36Hour.IsFetched'   , '')
+set_property('Hourly.IsFetched'   , '')
+set_property('Alerts.IsFetched'   , '')
+set_property('Map.IsFetched'      , '')
+set_property('WeatherProvider'    , __addonname__)
 set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(__cwd__, 'resources', 'banner.png')))
 
 if sys.argv[1].startswith('Location'):

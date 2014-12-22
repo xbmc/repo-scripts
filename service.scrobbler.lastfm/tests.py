@@ -14,8 +14,10 @@ class TestLastFM(unittest.TestCase):
     def testLocalFileURLs(self):
         assert helpers.is_local("/local/path") == True
         assert helpers.is_local("nonesuch") == True
-
         assert helpers.is_local("file:///local/path") == True
+        assert helpers.is_local("smb://server/share/artist/album/song.mp3") == True
+        assert helpers.is_local("musicdb://artists/22/11/123.mp3?albumartistsonly=false&albumid=11&artistid=22") == True
+        assert helpers.is_local("musicdb://songs/123.mp3") == True
 
     def testLocalIPv4URLs(self):
         assert helpers.is_local("http://8.8.8.8/File.mp3") == False

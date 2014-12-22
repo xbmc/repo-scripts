@@ -1,3 +1,11 @@
+v1.0.5
+- only analyze http(s)/rtmp streams
+
+v1.0.4
+- fixes for local path detection
+- remove old workaround
+- add more logging
+
 v1.0.3
 - update language files from Transifex
 - add better support for streaming radio

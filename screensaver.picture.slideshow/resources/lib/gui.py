@@ -237,6 +237,14 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                             NAME = img[1]
                     elif self.slideshow_name == '2':
                         ROOT, NAME = os.path.split(os.path.dirname(img[0]))
+                    elif self.slideshow_name == '3':
+                        if self.slideshow_type == '2':
+                            ROOT, FOLDER = os.path.split(os.path.dirname(img[0]))
+                            FILE, EXT = os.path.splitext(os.path.basename(img[0]))
+                            NAME = FOLDER + ' / ' + FILE
+                        else:
+                            ROOT, FOLDER = os.path.split(os.path.dirname(img[0]))
+                            NAME = FOLDER + ' / ' + img[1]
                     self.namelabel.setLabel('[B]' + NAME + '[/B]')
                 # set animations
                 if self.slideshow_effect == '0':

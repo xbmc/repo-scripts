@@ -1,7 +1,10 @@
+v3.0.4
+- clear category properties
+
 v3.0.3
 - updated language files from Transifex
 
-v3.0.1
+3.0.2
 - deprecate xbmc.abortRequested
 
 v3.0.1
