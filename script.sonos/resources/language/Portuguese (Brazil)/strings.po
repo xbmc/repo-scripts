@@ -176,6 +176,10 @@ msgctxt "#32040"
 msgid "Do Not Display Notification If Controller Is Showing"
 msgstr "Não mostrar Notificação se Controlador estiver sendo apresentado."
 
+msgctxt "#32041"
+msgid "Controller,Slideshow,Bio,Lyrics"
+msgstr "Controle,Slideshow,Bio,Letras de Músicas"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "O ajuste seguinte deve estar ativo no ArtistSlideshow"
@@ -187,6 +191,10 @@ msgstr "Gostaria disto ativado automaticamente?"
 msgctxt "#32062"
 msgid "Next"
 msgstr "Seguinte"
+
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Falhou para Processar o Evento de Atualização do Sonos"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -231,6 +239,10 @@ msgstr "Gêneros"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Faixas"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Listas de Reprodução Importadas"
 
 msgctxt "#32150"
 msgid "Open Sonos Player"

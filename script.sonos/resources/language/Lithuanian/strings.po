@@ -176,6 +176,10 @@ msgctxt "#32040"
 msgid "Do Not Display Notification If Controller Is Showing"
 msgstr "Nerodyti pranešimų, jei rodomas valdiklis"
 
+msgctxt "#32041"
+msgid "Controller,Slideshow,Bio,Lyrics"
+msgstr "Valdiklis, skaidrių peržiūra, biografija, dainų žodžiai"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "ArtistSlideshow turi būti įjungti šie nustatymai"
@@ -187,6 +191,10 @@ msgstr "Ar norite juos įjungti automatiškai?"
 msgctxt "#32062"
 msgid "Next"
 msgstr "Kitas"
+
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Nepavyko apdoroti Sonos atnaujinimo įvykio"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -231,6 +239,10 @@ msgstr "Žanrai"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Takeliai"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Importuoti grojaraščiai"
 
 msgctxt "#32150"
 msgid "Open Sonos Player"

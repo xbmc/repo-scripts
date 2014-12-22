@@ -247,13 +247,13 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
         randomButton = self.getControl(SonosControllerWindow.BUTTON_RANDOM)
         # We can not calculate the next track if it is random
         if self.isRandom:
-            log("SonosControllerWindow: Random enabled - clearing next track info")
+            log("SonosControllerWindow: Random enabled - Disabling button")
             randomButton.setVisible(False)
             # Set the correct highlighted button
             if focusControl == SonosControllerWindow.BUTTON_RANDOM:
                 self.setFocusId(SonosControllerWindow.BUTTON_RANDOM_ENABLED)
         else:
-            log("SonosControllerWindow: Random disabled - setting next track info")
+            log("SonosControllerWindow: Random disabled - Enabling Button")
             randomButton.setVisible(True)
             # Set the correct highlighted button
             if focusControl == SonosControllerWindow.BUTTON_RANDOM_ENABLED:
@@ -609,7 +609,7 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
                 # Get the track and creator if they both exist, if only one
                 # exists, then it's most probably a radio station and Next track
                 # title just contains a URI
-                if hasattr(track, 'next_artist') and (track['next_artist'] is not None) and (track['next_title'] is not None):
+                if (track['next_artist'] is not None) and (track['next_title'] is not None):
                     nextTrackCreator = track['next_artist']
                     nextTrackTitle = track['next_title']
 

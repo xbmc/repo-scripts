@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "Addon Description"
 msgid "Supports simple Sonos Controls and notifications from Kodi. Look at the wiki for more details."
-msgstr "Ondersteund simpele sonos controles en notificaties van Kodi. Kijk bij de wiki voor meer details."
+msgstr "Ondersteund simpele Sonos bedieningen en notificaties van Kodi. Kijk op de wiki voor meer details."
 
 msgctxt "#32001"
 msgid "Sonos"
@@ -26,7 +26,7 @@ msgstr "Sonos"
 
 msgctxt "#32002"
 msgid "IP Address"
-msgstr "IPadres"
+msgstr "IP adres"
 
 msgctxt "#32003"
 msgid "Enable Notifications (Restart Required)"
@@ -94,7 +94,7 @@ msgstr "Batch Grootte"
 
 msgctxt "#32020"
 msgid "Maximum Entries In Displayed Lists (0 = Unlimited)"
-msgstr "maximum inzendingen in getoonde lijsten (0 = Oneinding)"
+msgstr "Maximum inzendingen in getoonde lijsten (0 = Oneinding)"
 
 msgctxt "#32021"
 msgid "Display Artist Information"
@@ -176,6 +176,10 @@ msgctxt "#32040"
 msgid "Do Not Display Notification If Controller Is Showing"
 msgstr "Toon geen notificatie als de beheerder speelt"
 
+msgctxt "#32041"
+msgid "Controller,Slideshow,Bio,Lyrics"
+msgstr "Beheerder,Diavoorstelling,Bio,Songteksten"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "De volgende instelling in Artiestendiashow moet zijn geactiveerd"
@@ -187,6 +191,10 @@ msgstr "Wil je dit automatisch activeren?"
 msgctxt "#32062"
 msgid "Next"
 msgstr "Volgende"
+
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Niet gelukt om Sonos update gebeurtenis te draaien"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -231,6 +239,10 @@ msgstr "Genres"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Nummers"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "geïmporteerde afspeellijsten"
 
 msgctxt "#32150"
 msgid "Open Sonos Player"

@@ -192,6 +192,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Suivant"
 
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Impossible de traiter l'événement de mise à jour Sonos"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Bibliothèque de musique"
@@ -235,6 +239,10 @@ msgstr "Genres"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Pistes"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Listes de lectures importées"
 
 msgctxt "#32150"
 msgid "Open Sonos Player"

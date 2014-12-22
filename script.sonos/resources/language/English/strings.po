@@ -204,8 +204,7 @@ msgctxt "#32063"
 msgid "Failed To Process Sonos Update Event"
 msgstr ""
 
-
-#empty strings from id 32063 to 32099
+#empty strings from id 32064 to 32099
 
 msgctxt "#32100"
 msgid "Music Library"

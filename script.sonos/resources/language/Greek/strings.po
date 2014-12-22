@@ -176,6 +176,10 @@ msgctxt "#32040"
 msgid "Do Not Display Notification If Controller Is Showing"
 msgstr "Να Μην Εμφανίζονται Ειδοποιήσεις Με Τα Χειριστήρια"
 
+msgctxt "#32041"
+msgid "Controller,Slideshow,Bio,Lyrics"
+msgstr "Χειριστήριο,Παρουσίαση,Βιογραφικό,Στίχοι"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "Η ακόλουθη ρύθμιση στο ArtistSlideshow πρέπει να ενεργοποιηθεί"

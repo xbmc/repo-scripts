@@ -1,3 +1,6 @@
+v1.2.3
+- Fix issue with next track event handling due to latest Sonos Software
+
 v1.2.2
 - Fix issue with non ascii titles
 - Remove test data option
