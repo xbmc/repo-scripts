@@ -44,7 +44,12 @@ msgctxt "#32005"
 msgid "VideoScreensaver"
 msgstr ""
 
-#empty strings from id 32006 to 32019
+msgctxt "#32006"
+msgid "Configuration"
+msgstr ""
+
+
+#empty strings from id 32007 to 32019
 
 msgctxt "#32020"
 msgid "Preset Video"
@@ -88,7 +93,19 @@ msgctxt "#32055"
 msgid "Prevent Screensaver Starting If Playing Media"
 msgstr ""
 
-#empty strings from id 32056 to 32099
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr ""
+
+#empty strings from id 32059 to 32099
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

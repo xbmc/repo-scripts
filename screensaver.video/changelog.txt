@@ -1,3 +1,7 @@
+v1.0.4
+- Add option to change the volume
+- Allow the screen to be dimmed during the screensaver video
+
 v1.0.3
 - Add option to prevent the screensaver starting if playing media already
 - Turn off repeat when exiting the screensaver

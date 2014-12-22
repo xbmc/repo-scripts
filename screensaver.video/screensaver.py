@@ -8,6 +8,11 @@ import xbmcaddon
 import xbmcgui
 import xbmcvfs
 
+if sys.version_info >= (2, 7):
+    import json
+else:
+    import simplejson as json
+
 
 __addon__ = xbmcaddon.Addon(id='screensaver.video')
 __icon__ = __addon__.getAddonInfo('icon')
@@ -30,6 +35,7 @@ from VideoParser import VideoParser
 
 class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     TIME_CONTROL = 3002
+    DIM_CONTROL = 3003
 
     # Static method to create the Window class
     @staticmethod
@@ -50,6 +56,10 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
         # Update the playlist with any settings such as random start time
         self._updatePlaylistForSettings(playlist)
 
+        # Update the volume if needed
+        self.volumeCtrl = VolumeDrop()
+        self.volumeCtrl.lowerVolume()
+
         # Now play the video
         xbmc.Player().play(playlist)
 
@@ -61,6 +71,13 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
         # Default is hidden
         timeControl = self.getControl(ScreensaverWindow.TIME_CONTROL)
         timeControl.setVisible(Settings.isShowTime())
+
+        # Set the value of the dimming for the video
+        dimLevel = Settings.getDimValue()
+        if Settings.getDimValue() is not None:
+            log("Setting Dim Level to: %s" % dimLevel)
+            dimControl = self.getControl(ScreensaverWindow.DIM_CONTROL)
+            dimControl.setColorDiffuse(dimLevel)
 
         # Update any settings that need to be done after the video is playing
         self._updatePostPlayingForSettings(playlist)
@@ -91,6 +108,9 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
 
         # Reset the Player Repeat
         xbmc.executebuiltin("PlayerControl(RepeatOff)")
+
+        # Restore the volume
+        self.volumeCtrl.restoreVolume()
 
         log("Closing Window")
         xbmcgui.WindowXML.close(self)
@@ -185,6 +205,55 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
         log("Duration retrieved is = %d" % duration)
 
         return duration
+
+
+class VolumeDrop(object):
+    def __init__(self, *args):
+        self.screensaverVolume = Settings.getVolume()
+        if self.screensaverVolume > -1:
+            # Save the volume from before any alterations
+            self.original_volume = self._getVolume()
+
+    # This will return the volume in a range of 0-100
+    def _getVolume(self):
+        result = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": { "properties": [ "volume" ] }, "id": 1}')
+
+        json_query = json.loads(result)
+        if ("result" in json_query) and ('volume' in json_query['result']):
+            # Get the volume value
+            volume = json_query['result']['volume']
+
+        log("VolumeDrop: current volume: %s%%" % str(volume))
+        return volume
+
+    # Sets the volume in the range 0-100
+    def _setVolume(self, newvolume):
+        # Can't use the RPC version as that will display the volume dialog
+        # '{"jsonrpc": "2.0", "method": "Application.SetVolume", "params": { "volume": %d }, "id": 1}'
+        xbmc.executebuiltin('XBMC.SetVolume(%d)' % newvolume, True)
+
+    def lowerVolume(self):
+        try:
+            if self.screensaverVolume > -1:
+                vol = self.screensaverVolume
+                # Make sure the volume still has a value, otherwise we see the mute symbol
+                if vol < 1:
+                    vol = 1
+                log("Player: volume goal: %d%%" % vol)
+                self._setVolume(vol)
+            else:
+                log("Player: No reduced volume option set")
+        except:
+            log("VolumeDrop: %s" % traceback.format_exc())
+
+    def restoreVolume(self):
+        try:
+            # Don't change the volume unless requested to
+            if self.screensaverVolume > -1:
+                self._setVolume(self.original_volume)
+        except:
+            log("VolumeDrop: %s" % traceback.format_exc())
+
 
 ##################################
 # Main of the Video Screensaver

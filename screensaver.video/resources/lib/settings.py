@@ -74,6 +74,24 @@ class Settings():
         [32105, "Fireplace003-1080p.mkv", "aHR0cHM6Ly9vbmVkcml2ZS5saXZlLmNvbS9kb3dubG9hZD9yZXNpZD04MEJEMTY5NjNGNUMyMUI1ITEzMSZhdXRoa2V5PSFBQ1ptU0FlRFRVeGR6MjA="]
     )
 
+    DIM_LEVEL = (
+        '00000000',
+        '11000000',
+        '22000000',
+        '33000000',
+        '44000000',
+        '55000000',
+        '66000000',
+        '77000000',
+        '88000000',
+        '99000000',
+        'AA000000',
+        'BB000000',
+        'CC000000',
+        'DD000000',
+        'EE000000'
+    )
+
     @staticmethod
     def getScreensaverVideo():
         return __addon__.getSetting("screensaverFile").decode("utf-8")
@@ -131,3 +149,20 @@ class Settings():
     @staticmethod
     def isBlockScreensaverIfMediaPlaying():
         return __addon__.getSetting("mediaPlayingBlock") == 'true'
+
+    @staticmethod
+    def getVolume():
+        if __addon__.getSetting("alterVolume") == 'false':
+            return -1
+        return int(float(__addon__.getSetting("screensaverVolume")))
+
+    @staticmethod
+    def getDimValue():
+        # The actual dim level (Hex) is one of
+        # Where 00000000 is not changed
+        # So that is a total of 15 different options
+        # FF000000 would be completely black, so we do not use that one
+        if __addon__.getSetting("dimLevel"):
+            return Settings.DIM_LEVEL[int(__addon__.getSetting("dimLevel"))]
+        else:
+            return '00000000'

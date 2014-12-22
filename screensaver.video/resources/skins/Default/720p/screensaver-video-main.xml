@@ -37,5 +37,14 @@
 				<label>$INFO[System.Date]</label>
 			</control>
 		</control>
+		<control type="image" id="3003">
+			<description>Dim Control Image</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>screensaver-black.png</texture>
+			<colordiffuse>00000000</colordiffuse>
+		</control>
 	</controls>
 </window>
