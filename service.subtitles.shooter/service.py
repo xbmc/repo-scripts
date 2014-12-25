@@ -328,15 +328,10 @@ def Search(item):
     xbmc.sleep(50)
     xbmcvfs.mkdirs(__temp__)
 
-    if item['mansearch']:
-        title = item['mansearchstr']
-    else:
-        title = '%s %s' % (item['title'], item['year'])
-        if 'chi' in item['3let_language']:
-            getSubByHash(item['file_original_path'], "chn", "zh", "Chinese")
-        if 'eng' in item['3let_language']:
-            getSubByHash(item['file_original_path'], "eng", "en", "English")
-    getSubByTitle(title, item['3let_language'])
+    if 'chi' in item['3let_language']:
+        getSubByHash(item['file_original_path'], "chn", "zh", "Chinese")
+    if 'eng' in item['3let_language']:
+        getSubByHash(item['file_original_path'], "eng", "en", "English")
 
 def ChangeFileEndcoding(filepath):
     if __addon__.getSetting("transUTF8") == "true" and os.path.splitext(filepath)[1] in [".srt", ".ssa", ".ass", ".smi"]:

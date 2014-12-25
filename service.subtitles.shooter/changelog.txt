@@ -1,3 +1,6 @@
+1.0.5
+- fixed: can't get subtitles by title because website closed
+
 1.0.4
 - reduce unneeded coding convertion to download faster
 
