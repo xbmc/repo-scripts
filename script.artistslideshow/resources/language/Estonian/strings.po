@@ -1,0 +1,217 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Estonian (http://www.transifex.com/projects/p/xbmc-addons/language/et/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Allalaadimine"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Lae alla"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Slaidiesitlus"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Põhjalikumad seaded"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "Puudub"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Lubati silumise logimine"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "Albaania"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "Araabia"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "Valgevene"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "Bosnia (Ladina)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "Bulgaaria"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "Katalaan"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "Hiina"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "Horvaatia"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "Tšehhi"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "Taani"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "Hollandi"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "Inglise"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "Eesti"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "Soome"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "Prantsuse"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "Saksa"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "Kreeka"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "Heebrea"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "Ungari"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "Island"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "Indoneesia"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "Itaalia"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "Jaapani"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "Korea"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "Läti"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "Leedu"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "Makedoonia"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "Norra"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "Poola"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "Portugaalia"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "Portugaalia (Brasiilia)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "Rumeenia"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "Vene"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "Serbia (Ladina)"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "Slovakia"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "Slovenia"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "Hispaania"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "Rootsi"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "Tai"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "Türgi"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "Ukraina"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "Vieetnami"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "Farsi"

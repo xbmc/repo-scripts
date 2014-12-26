@@ -1,0 +1,365 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Dialog Text
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr ""
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr ""
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr ""
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr ""
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr ""
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr ""
+
+#empty strings from id 30306 to 31999
+#Settings
+
+msgctxt "#32000"
+msgid "Download"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.org"
+msgstr ""
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr ""
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr ""
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr ""
+
+msgctxt "#32007"
+msgid "  Download all images regardless of resolution"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr ""
+
+msgctxt "#32010"
+msgid "  Client API key"
+msgstr ""
+
+#empty strings from id 32011 to 32099
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr ""
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Use transparent background when no artist images found"
+msgstr ""
+
+#empty strings from id 32108 to 32109
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr ""
+
+#empty strings from id 32113 to 32199
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr ""
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr ""
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr ""
+
+msgctxt "#32206"
+msgid "None"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr ""
+
+#empty strings from id 32209 to 32900
+#Languages
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr ""
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr ""
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr ""
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr ""
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr ""
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr ""
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr ""
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr ""
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr ""
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr ""
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr ""
+
+msgctxt "#32912"
+msgid "English"
+msgstr ""
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr ""
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr ""
+
+msgctxt "#32915"
+msgid "French"
+msgstr ""
+
+msgctxt "#32916"
+msgid "German"
+msgstr ""
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr ""
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr ""
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr ""
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr ""
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr ""
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr ""
+
+#empty string with id 32923
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr ""
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr ""
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr ""
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr ""
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr ""
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr ""
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr ""
+
+#empty string with id 32931
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr ""
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr ""
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr ""
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr ""
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr ""
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr ""
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr ""
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr ""
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr ""
+
+#empty string with id 32941
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr ""
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr ""
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr ""
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr ""
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr ""

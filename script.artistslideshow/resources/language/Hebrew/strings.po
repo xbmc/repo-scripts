@@ -1,0 +1,337 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "מוריד"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "מוריד תמונות אמן"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "לא הורד דבר"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "לא נמצאו תמונות לאמן"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "הורדה הושלמה"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "כל תמונות האמן הורדו"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "הורד"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr " הורד תמונות מ-last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "הורד תמונות מ-htbackdrops.com"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "רוחב תמונה מינימלי"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "גובה תמונה מינימלי"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "הורד מידע נוסף על האמן"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "שפה מועדפת למידע אמן"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "הורד תמונות ביחס 16:9 בלבד"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "הורד תמונות מ-fanart.tv"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "הורד תמונות מ-theaudiodb.com"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "מצגת"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "תיקיית אמן מקומית"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "קדימות תמונה"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "תיקיה חלופית"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "תיקיית מעקף"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "השתמש במצגת חלופית"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "השתמש במצגת מעקף"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "השתמש תחילה בתמונות מרוחקות"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "השתמש תחילה בתמונות מקומיות"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "השתמש בתמונות מקומיות ומרוחקות"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "מתקדם"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "הגבלת נפח מטמון ההורדות"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "נפח מטמון מירבי (MB)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "אופן התראת הורדה"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "תיקיית תמונות התראה מותאמות"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "שם חלופי לתיקיית פאנארט מקומית"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "ללא"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "התראות טקסט"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "תמונות מותאמות"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "הפעל רישום שגיאות"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "אלבנית"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "ערבית"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "בלרוסית"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "בוסנית (לטינית)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "בולגרית"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "קטלאנית"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "סינית"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "קרואטית"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "צ'כית"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "דנית"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "הולנדית"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "אנגלית"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "אסטונית"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "פינית"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "צרפתית"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "גרמנית"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "יוונית"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "עברית"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "הינדי"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "הונגרית"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "איסלנדית"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "אינדונזית"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "איטלקית"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "יפנית"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "קוריאנית"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "לטבית"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "ליטאית"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "מקדונית"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "נורווגית"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "פולנית"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "פורטוגלית"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "פורטוגזית (ברזיל)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "רומנית"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "רוסית"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "סרבית לטינית"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "סלובקית"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "סלובנית"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "ספרדית"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "שוודית"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "תאית"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "תורכית"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "אוקראינית"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "וייאטנמית"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "פרסית"

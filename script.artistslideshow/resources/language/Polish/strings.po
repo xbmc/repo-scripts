@@ -1,0 +1,337 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/xbmc-addons/language/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "Pobieranie"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "Pobieranie obrazów artysty"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "Nie pobrano niczego"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "Nie znaleziono obrazów wykonawcy"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "Pobieranie zakończone"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "Pobrano obrazy wszystkich wykonawców"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "Pobierz"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "Pobieraj zdjęcia z last.fm"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "Pobieraj zdjęcia z htbackdrops.com"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "Minimalna szerokość obrazu "
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "Minimalna wysokość obrazu "
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "Pobieraj dodatkowe informacje o wykonawcy"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "Preferowany język informacji o wykonawcy"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "Pobieraj obrazy w proporcjach 16:9 "
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "Pobieraj obrazy z fanart.tv "
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "Pobieraj obrazy z theaudiodb.com "
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "Pokaz slajdów"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "Folder wykonawcy"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "Priorytet obrazu"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "Folder zapasowy"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "Folder globalny"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "Używaj rezerwowego folderu pokazu slajdów"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "Używaj globalnego folderu pokazu slajdów"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "Używaj pobranych obrazów w pierwszej kolejności"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "Używaj lokalnych obrazów w pierwszej kolejności"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "Używaj lokalnych i pobranych obrazów"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "Zaawansowane"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "Limit buforu pobierania"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "Maksymalny rozmiar bufora (w megabajtach)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "Pobieraj typ powiadomienia"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "Zdefiniowany folder obrazów powiadomień"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "Alternatywna nazwa folderu tapet"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "brak"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "Powiadomienie"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "Zdefiniowane obrazy"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Rejestruj informacje diagnostyczne w dzienniku"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "albański"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "arabski"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "białoruski"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "bośniacki (łaciński)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "bułgarski"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "kataloński"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "chiński"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "chorwacki"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "czeski"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "duński"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "holenderski"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "angielski"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "estoński"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "fiński"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "francuski"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "niemiecki"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "grecki"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "hebrajski"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "hindi"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "węgierski"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "islandzki"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "indonezyjski"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "włoski"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "japoński"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "koreański"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "łotewski"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "litewski"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "macedoński"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "norweski"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "polski"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "portugalski"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "portugalski (Brazylia)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "rumuński"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "rosyjski"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "serbski (łaciński)"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "słowacki"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "słoweński"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "hiszpański"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "szwedzki"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "tajlandzki"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "turecki"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "ukraiński"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "wietnamski"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "perski"

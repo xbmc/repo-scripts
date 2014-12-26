@@ -1,0 +1,337 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/xbmc-addons/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "ダウンロード中"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "アーティスト画像をダウンロードしています"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "何にもダウンロードしてません"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "アーティストの画像が見つかりません"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "ダウンロード完了"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "アーティストの画像がすべてダウンロード完了"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "ダウンロード"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "last.fm からイメージダウンロード"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "htbackdrops.com からイメージダウンロード"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "画像の幅の最小値"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "画像の高さの最小値"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "アーティスト追加情報をダウンロード"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "アーティスト情報を表示する優先言語"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "16:9の画像をダウンロードしてください"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "画像はfanart.tvからダウンロードしてください"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "画像はtheaudiodb.comからダウンロードしてください"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "スライドショー"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "ローカルアーティストフォルダー"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "画像の優先順位"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "フォールバックのフォルダー"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "フォルダーをオーバーライド"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "スライドショーのフォールバックを使ってください"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "スライドショーのオーバーライドを使ってください"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "リモートの画像を先に使ってください"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "ローカルの画像を先に使ってください"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "ローカルとリモートの画像を使ってくさだい"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "高度な設定"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "ダウンロードキャッシュのサイズを制限"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "最大キャッシュサイズ　(MB)"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "通知タイプをダウンロードする"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "カスタム通知の画像フォルダー"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "ローカルのフアンアートの代替名"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "なし"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "テキストの通知"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "カスタム画像"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "デバッグログ出力を有効にする"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "アルバニア語"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "アラビア語"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "ベラルーシ語"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "ボスニア語 (ラテン)"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "ブルガリア語"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "カタロニア語"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "中国語"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "クロアチア語"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "チェコ語"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "デンマーク語"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "オランダ語"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "英語"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "エストニア語"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "フィンランド語"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "フランス語"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "ドイツ語"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "ギリシャ語"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "ヘブライ語"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "ヒンディー語"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "ハンガリー語"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "アイスランド語"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "インドネシア語"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "イタリア語"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "日本語"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "韓国語"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "ラトビア語"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "リトアニア語"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "マケドニア語"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "ノルウェー語"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "ポーランド語"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "ポルトガル語"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "ポルトガル語 (ブラジル)"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "ルーマニア語"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "ロシア語"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "セルビア語 (ラテン)"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "スロバキア語"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "スロベニア語"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "スペイン語"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "スウェーデン語"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "タイ語"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "トルコ語"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "ウクライナ語"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "ベトナム語"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "ペルシャ語"

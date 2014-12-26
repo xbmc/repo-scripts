@@ -1,0 +1,337 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow
+# Addon id: script.artistslideshow
+# Addon Provider: ronie|pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30300"
+msgid "Downloading"
+msgstr "正在下载"
+
+msgctxt "#30301"
+msgid "Downloading artist images"
+msgstr "下载艺人图片"
+
+msgctxt "#30302"
+msgid "Nothing Downloaded"
+msgstr "未能下载"
+
+msgctxt "#30303"
+msgid "No images found for artist"
+msgstr "未找到艺人的图片"
+
+msgctxt "#30304"
+msgid "Download Complete"
+msgstr "下载完成"
+
+msgctxt "#30305"
+msgid "All artist images downloaded"
+msgstr "所有艺人图片已下载"
+
+msgctxt "#32000"
+msgid "Download"
+msgstr "下载"
+
+msgctxt "#32001"
+msgid "Download images from last.fm"
+msgstr "从last.fm下载图片"
+
+msgctxt "#32002"
+msgid "Download images from htbackdrops.com"
+msgstr "从htbackdrops.com下载图片"
+
+msgctxt "#32003"
+msgid "  Minimal image width"
+msgstr "最小封面宽度"
+
+msgctxt "#32004"
+msgid "  Minimal image height"
+msgstr "最小封面高度"
+
+msgctxt "#32005"
+msgid "Download additional artist information"
+msgstr "下载附加艺人信息"
+
+msgctxt "#32006"
+msgid "  Preferred language for artist information"
+msgstr "首选艺人信息语言"
+
+msgctxt "#32007"
+msgid "  Download only 16:9 images"
+msgstr "仅下载16:9的封面"
+
+msgctxt "#32008"
+msgid "Download images from fanart.tv"
+msgstr "从fanart.tv下载封面"
+
+msgctxt "#32009"
+msgid "Download images from theaudiodb.com"
+msgstr "从theaudiodb.com下载封面"
+
+msgctxt "#32100"
+msgid "Slideshow"
+msgstr "幻灯片播放"
+
+msgctxt "#32101"
+msgid "Local artist folder"
+msgstr "本地艺人目录"
+
+msgctxt "#32102"
+msgid "  Image Priority"
+msgstr "图片优先级"
+
+msgctxt "#32103"
+msgid "Fallback folder"
+msgstr "备选目录"
+
+msgctxt "#32104"
+msgid "Override folder"
+msgstr "覆盖目录"
+
+msgctxt "#32105"
+msgid "Use fallback slideshow"
+msgstr "使用备选幻灯片"
+
+msgctxt "#32106"
+msgid "Use override slideshow"
+msgstr "使用覆盖幻灯片"
+
+msgctxt "#32110"
+msgid "Use remote images first"
+msgstr "先使用远程图片"
+
+msgctxt "#32111"
+msgid "Use local images first"
+msgstr "先使用本地图片"
+
+msgctxt "#32112"
+msgid "Use both local and remote images"
+msgstr "使用本地和远程图片"
+
+msgctxt "#32200"
+msgid "Advanced"
+msgstr "高级"
+
+msgctxt "#32201"
+msgid "Limit size of download cache"
+msgstr "下载缓存限制"
+
+msgctxt "#32202"
+msgid "  Maximum cache size (in megabytes)"
+msgstr "最大缓存（兆）"
+
+msgctxt "#32203"
+msgid "Download notification type"
+msgstr "下载通知类型"
+
+msgctxt "#32204"
+msgid "  Custom notification images folder"
+msgstr "自定义通知图片目录"
+
+msgctxt "#32205"
+msgid "Alternate name for local fanart folder"
+msgstr "本地同人画目录别名"
+
+msgctxt "#32206"
+msgid "None"
+msgstr "关闭"
+
+msgctxt "#32207"
+msgid "Text notifications"
+msgstr "文本通知"
+
+msgctxt "#32208"
+msgid "Custom images"
+msgstr "自定义图片"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "显示除错信息"
+
+msgctxt "#32901"
+msgid "Albanian"
+msgstr "阿尔巴尼亚语"
+
+msgctxt "#32902"
+msgid "Arabic"
+msgstr "阿拉伯语"
+
+msgctxt "#32903"
+msgid "Belarusian"
+msgstr "白俄罗斯语"
+
+msgctxt "#32904"
+msgid "Bosnian (Latin)"
+msgstr "波斯尼亚语（拉丁）"
+
+msgctxt "#32905"
+msgid "Bulgarian"
+msgstr "保加利亚语"
+
+msgctxt "#32906"
+msgid "Catalan"
+msgstr "加泰罗尼亚语"
+
+msgctxt "#32907"
+msgid "Chinese"
+msgstr "中文"
+
+msgctxt "#32908"
+msgid "Croatian"
+msgstr "克罗地亚语"
+
+msgctxt "#32909"
+msgid "Czech"
+msgstr "捷克语"
+
+msgctxt "#32910"
+msgid "Danish"
+msgstr "丹麦语"
+
+msgctxt "#32911"
+msgid "Dutch"
+msgstr "荷兰语"
+
+msgctxt "#32912"
+msgid "English"
+msgstr "英语"
+
+msgctxt "#32913"
+msgid "Estonian"
+msgstr "爱沙尼亚语"
+
+msgctxt "#32914"
+msgid "Finnish"
+msgstr "芬兰语"
+
+msgctxt "#32915"
+msgid "French"
+msgstr "法语"
+
+msgctxt "#32916"
+msgid "German"
+msgstr "德语"
+
+msgctxt "#32917"
+msgid "Greek"
+msgstr "希腊语"
+
+msgctxt "#32918"
+msgid "Hebrew"
+msgstr "希伯来语"
+
+msgctxt "#32919"
+msgid "Hindi"
+msgstr "印地语"
+
+msgctxt "#32920"
+msgid "Hungarian"
+msgstr "匈牙利语"
+
+msgctxt "#32921"
+msgid "Icelandic"
+msgstr "冰岛语"
+
+msgctxt "#32922"
+msgid "Indonesian"
+msgstr "印度尼西亚语"
+
+msgctxt "#32924"
+msgid "Italian"
+msgstr "意大利语"
+
+msgctxt "#32925"
+msgid "Japanese"
+msgstr "日语"
+
+msgctxt "#32926"
+msgid "Korean"
+msgstr "朝鲜语"
+
+msgctxt "#32927"
+msgid "Latvian"
+msgstr "拉脱维亚语"
+
+msgctxt "#32928"
+msgid "Lithuanian"
+msgstr "立陶宛语"
+
+msgctxt "#32929"
+msgid "Macedonian"
+msgstr "马其顿语"
+
+msgctxt "#32930"
+msgid "Norwegian"
+msgstr "挪威语"
+
+msgctxt "#32932"
+msgid "Polish"
+msgstr "波兰语"
+
+msgctxt "#32933"
+msgid "Portuguese"
+msgstr "葡萄牙语"
+
+msgctxt "#32934"
+msgid "Portuguese (Brazil)"
+msgstr "葡萄牙语（巴西）"
+
+msgctxt "#32935"
+msgid "Romanian"
+msgstr "罗马尼亚语"
+
+msgctxt "#32936"
+msgid "Russian"
+msgstr "俄语"
+
+msgctxt "#32937"
+msgid "SerbianLatin"
+msgstr "塞尔维亚拉丁语"
+
+msgctxt "#32938"
+msgid "Slovak"
+msgstr "斯洛伐克语"
+
+msgctxt "#32939"
+msgid "Slovenian"
+msgstr "斯洛文尼亚语"
+
+msgctxt "#32940"
+msgid "Spanish"
+msgstr "西班牙语"
+
+msgctxt "#32942"
+msgid "Swedish"
+msgstr "瑞典语"
+
+msgctxt "#32943"
+msgid "Thai"
+msgstr "泰语"
+
+msgctxt "#32944"
+msgid "Turkish"
+msgstr "土耳其语"
+
+msgctxt "#32945"
+msgid "Ukrainian"
+msgstr "乌克兰语"
+
+msgctxt "#32946"
+msgid "Vietnamese"
+msgstr "越南语"
+
+msgctxt "#32947"
+msgid "Farsi"
+msgstr "波斯语"
