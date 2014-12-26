@@ -1,4 +1,0 @@
-v2.0.0 - broken
-This is the old slideshow screensaver from XBMC Eden,
-it is broken and no longer part of XBMC.
-You should remove it from your system.
