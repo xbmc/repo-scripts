@@ -1,0 +1,57 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Afrikaans (http://www.transifex.com/projects/p/xbmc-addons/language/af/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: af\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr "In staat stel om uitgebreide Wikiquote registrasie"
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr "Teken temperatuur-skaal aan"
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr "Venster Opdateer periode (in sekondes)"
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr "Gebruik Compact vertoning"
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr "Agtergrond Deursigtigheid"
+
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr "Temperatuur inligting"
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr "Waaier Spoed Inligting"
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr "Voltage Inligting"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Stel ontfout log in staat"

@@ -1,0 +1,91 @@
+v.0.7.1
+- updated for Helix
+- fix for display issue in Kodi v14 (Helix)
+
+v.0.6.1
+- if rpm reported as zero 0, then SFID only shows percentage
+
+v.0.6.0
+- fix for crash when using smb path
+
+v.0.5.9
+- fix for required xbmc python version
+- fix for malformed setting.xml file
+- included XML encoding declaration in skin files
+
+v.0.5.8
+- suppress all logging by default with option to turn debug logging on
+- updated language files
+
+v.0.5.7
+- added full support for logfile on remote file system without mapping drive in OS
+- fixed crash when log file can't be parsed
+- updated language files
+
+v.0.5.6
+- fixed crash when logging non-text objects
+
+v.0.5.5
+- added ability to monitor multiple logs
+- script now sets focus on window so you can scroll through it without mouse control
+- added additional metadata to addon
+- updated module import to follow best practice
+- cleaned up code and moved some stuff into external modules
+
+v 0.5.4
+- changed display logic so percents will show even if the number of percent entries doesn't match number of speed entries
+- added Galician language files
+- changed over to Frodo .po language files
+- added check to threading loop for XBMC quitting
+- updated addon.xml with new information and format for repo database
+- updated logging so it uses standard XBMC logging levels
+
+v.0.5.3
+- internal testing version
+
+v.0.5.2
+- updated language files from Transifex
+- added compact display option
+- added logic to keep script from being run multiple times
+
+v0.5.1
+- internal testing version
+
+v0.5.0
+- updated language files from Transifex
+
+v.0.3.5
+-changed the way the degree sign is displayed as old way didn't work either on OSX or with Frodo (not sure which)
+-included new language files for XBMC Frodo and added addon to transifex translation engine
+
+v.0.3.4
+-added support for languages that use comma as the ordinal separator for decimals
+
+v.0.3.3
+-First public release
+-Added visual notice if there is no log file location defined or no log file in the defined location
+-Fixed a typo in one of the verbose logging outputs
+-added a README file with instructions on how to setup the SpeedFan log file
+
+v.0.3.2
+-Fixed issue with voltage headings not displaying correctly.  Required a change in the way you format the SpeedFan log, but since nobody is using it at this point but me, it doesn't matter. '-)
+-Fixed the way the setting.xml passes the temperature scale to default.py so that the code is a little easier to read.
+
+v.0.3.1
+-Fixes to logging engine
+-Updated display XML to be skin independent (mostly having to do with font settings)
+-Moved all text strings into language file so that the plugin can be localized
+-Added icon
+
+v.0.3.0
+-Implemented new logging engine to make it easier to have a basic log for day to day use and full log for troubleshooting
+-updated code to make better use of boolean objects
+
+v.0.2.0
+-Added ability to update screen based on arbitary interval (set by user)
+
+v.0.1.1
+-Fixed some code issues that caused the script not to work on Windows (that's what you get when you develop on a Mac and deploy to Windows)
+
+v.0.1.0
+-Initial internal release

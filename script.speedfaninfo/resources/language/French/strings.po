@@ -1,0 +1,89 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr "Activer l'enregistrement détaillé"
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr "Intervalle de mise à jour de la fenêtre (en secondes)"
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr "Utiliser l'Affichage Compact"
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr "Transparence de l'arrière-plan"
+
+msgctxt "#30006"
+msgid "Log File Location"
+msgstr "Emplacement du fichier de journal"
+
+msgctxt "#30010"
+msgid " Additional Logs"
+msgstr "Journaux additionnels"
+
+msgctxt "#30011"
+msgid "Primary Log File Title"
+msgstr "Titre du fichier de journal principal"
+
+msgctxt "#30012"
+msgid "Use Log File 2"
+msgstr "Utiliser le fichier de journal 2"
+
+msgctxt "#30013"
+msgid "Use Log File 3"
+msgstr "Utiliser le fichier de journal 3"
+
+msgctxt "#30020"
+msgid "    Log File Title"
+msgstr "Titre du fichier de journal"
+
+msgctxt "#30021"
+msgid "    Log File Location"
+msgstr "Emplacement du fichier de journal"
+
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr "Information de la température"
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr "Information de la Vitesse du Ventilateur"
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr "Information du Voltage"
+
+msgctxt "#30103"
+msgid "Log File Error"
+msgstr "Erreur sur le fichier de journal"
+
+msgctxt "#30104"
+msgid "No log file found."
+msgstr "Aucun fichier de journal trouvé"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Activer le mode debug"

@@ -1,0 +1,57 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr "Activar el Registre Detallat"
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr "Registrar l'Escala de Temperatures"
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr "Interval de Refresc de la Finestra (en segons)"
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr "Utilitza la Vista Compacta"
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr "Transparència del Fons"
+
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr "Informació de la Temperatura"
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr "Informació de la Velocitat del Ventilador"
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr "Informació del Voltatge"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Habilita el registre de depuració"

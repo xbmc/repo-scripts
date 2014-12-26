@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.speedfaninfo" name="SpeedFan Information Display" version="0.7.1" provider-name="pkscout">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+		<import addon="xbmc.addon" version="14.0.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="af">Vertoon inligting van jou SpeedFan Aantekenings.</summary>
+		<summary lang="be">Display information from your SpeedFan log.</summary>
+		<summary lang="bg">Показва информация от вашия SpeedFan дневник.</summary>
+		<summary lang="ca">Mostra la informació del Registre de Velocitats del Ventilador.</summary>
+		<summary lang="da">Vis oplysninger fra din SpeedFan-log.</summary>
+		<summary lang="de">Zeige Informationen aus deinem SpeedFan Log.</summary>
+		<summary lang="el">Προβολή πληροφοριών από το αρχείο καταγραφής του SpeedFan.</summary>
+		<summary lang="en">Display information from your SpeedFan log.</summary>
+		<summary lang="en_NZ">Display information from your SpeedFan log.</summary>
+		<summary lang="en_US">Display information from your SpeedFan log.</summary>
+		<summary lang="es">Muestra información del log de SpeedFan</summary>
+		<summary lang="es_MX">Muestra información desde tu log de SpeedFan</summary>
+		<summary lang="et">Kuvab info SpeedFan logist.</summary>
+		<summary lang="fr">Afficher les informations à partir du journal de SpeedFan</summary>
+		<summary lang="fr_CA">Afficher l'information du journal pour SpeedFan</summary>
+		<summary lang="gl">Amosar información do teu rexistro de SpeedFan.</summary>
+		<summary lang="he">הצג מידע מיומן הרישום של SpeedFan.</summary>
+		<summary lang="hr">Prikaz informacija iz vašeg SpeedFan zapisa.</summary>
+		<summary lang="hu">Ventilátor-sebesség napló megjelenítése</summary>
+		<summary lang="id">Menampilkan informasi log SpeedFan Anda.</summary>
+		<summary lang="it">Mostra le informazioni dal tuo log di SpeedFan</summary>
+		<summary lang="nl">Laat informatie zien van het SpeedFan log</summary>
+		<summary lang="pl">Wyświetla infromacje z dziennika SpeedFan</summary>
+		<summary lang="pt">Exibe informação do seu log do Speedfan.</summary>
+		<summary lang="pt_BR">Mostrar informações de seu registro SpeedFan.</summary>
+		<summary lang="ru">Отображает информацию из Вашего журнала SpeedFan.</summary>
+		<summary lang="sk">Zobraziť informácie z Vášho SpeedFan logu.</summary>
+		<summary lang="sv">Visar information från din SpeedFan logg.</summary>
+		<summary lang="zh">显示来源于SpeedFan日志的信息</summary>
+		<description lang="af">Ontleed en vertoon inligting van die SpeedFan Aantekenings. Terwyl hierdie plugin werk op enige platform, SpeedFan werk net op Windows, so dit is optimaal gebou vir mense wat XBMC op Windows gebruik. Sien readme.txt vir inligting oor hoe om jou SpeedFan Aantekenings in te stel sodat die prop dit behoorlik kan ontleed nie.</description>
+		<description lang="be">Parses and displays information from the SpeedFan log. While this plugin works on any platform, SpeedFan only works on Windows, so it is optimally built for people using XBMC on Windows. Please see readme.txt for information on how to configure your SpeedFan log so that the plugin can parse it properly.</description>
+		<description lang="bg">Извлича и показва информацията от дневника на SpeedFan. Приставката работи на всички платформи, но самият SpeedFan работи само на Windows, така че приставката е особено полезна за потребителите ползващи XBMC на Windows. Моля, прочетете readme.txt файла за да получите допълнителна информация, за това как как да конфигурирате вашия SpeedFan дневник, така че приставката да може да го анализира правилно</description>
+		<description lang="ca">Analitza i mostra la informació del Registre de Velocitats del Ventilador. Encara que aquest plugin sigui multiplataforma, el Registre de Velocitats del Ventilador només funciona sobre Windows, de manera que està construït òptimament per les persones que utilitzen XBMC sobre Windows. Si et plau, llegeix el fitxer readme.txt per a més informació sobre com configurar el teu Registre de Velocitats del Ventilador i permetre al plugin analitzar els valors correctament.</description>
+		<description lang="da">Henter og viser information fra SpeedFan log'en. Selvom dette plugin virker på alle platforme, fungerer SpeedFan kun i Windows og er dermed skabt for folk, som kører XBMC på Windows. Se venligst readme.txt for oplysninger om, hvordan du opsætter din SpeedFan log, så plugin'et kan læse den korrekt.</description>
+		<description lang="de">Analysiert und zeigt Informationen vom SpeedFan log. Während dieses Plugin auf allen Plattformen funktioniert, läuft SpeedFan nur unter Windows, also ist es optimal für, die, die XBMC unter Windows nutzen. Bitte ließ die readme.txt für Informationen, wie SpeedFan konfiguriert werden muss, dass das Plugin den Log korrekt analysieren kann.</description>
+		<description lang="el">Αναλύει και προβάλλει πληροφορίες από το αρχείο καταγραφής του SpeedFan. Ενώ αυτό το plugin δουλεύει σε οποιαδήποτε πλατφόρμα, το SpeedFan δουλεύει μόνο σε Windows, συνεπώς είναι φτιαγμένο για ανθρώπους που χρησιμοποιούν το XBMC σε Windows. Δείτε το readme.txt για πληροφορίες σχετικά με τη ρύθμιση του αρχείου καταγραφής του SpeedFan ούτως ώστε το plugin να μπορέσει να το αναλύσει σωστά.</description>
+		<description lang="en">Parses and displays information from the SpeedFan log. While this plugin works on any platform, SpeedFan only works on Windows, so it is optimally built for people using XBMC on Windows. Please see readme.txt for information on how to configure your SpeedFan log so that the plugin can parse it properly.</description>
+		<description lang="en_NZ">Parses and displays information from the SpeedFan log. While this plugin works on any platform, SpeedFan only works on Windows, so it is optimally built for people using XBMC on Windows. Please see readme.txt for information on how to configure your SpeedFan log so that the plugin can parse it properly.</description>
+		<description lang="en_US">Parses and displays information from the SpeedFan log. While this plugin works on any platform, SpeedFan only works on Windows, so it is optimally built for people using XBMC on Windows. Please see readme.txt for information on how to configure your SpeedFan log so that the plugin can parse it properly.</description>
+		<description lang="es">Analiza y muestra información del log de SpeedFan. Aunque este complemento funciona en cualquier plataforma, Speedfan sólo funciona en Windows, por lo que está optimizado para el público que utiliza XBMC en Windows. Por favor, lea el fichero readme.txt para obtener información de cómo configurar el log de SpeedFan, de forma que el complemento la interprete correctamente.</description>
+		<description lang="es_MX">Parsea y muestra información desde el log de SpeedFan. Mientras este plugin funciona en cualquier plataforma, SpeedFan funciona solamente en Windows, así que está construido de manera óptima para personas que usan XBMC en Windows. Para información en como configurar el log de SpeedFan para que el plugin pueda parsearlo de manera adecuada, revisar readme.txt.</description>
+		<description lang="et">Kogub ja kuvab info SpeedFan logist. Kuigi plugin töötab kõigil platvormidel, siis SpeedFan töötab vaid Windowsis, nii et vajalik on ta vaid neile, kes kasutavad XBMC-d Windows platvormil. SpeedFan logi seadistamine nii, et seda plugin suudaks veavabalt töödelda, on kirjas failis readme.txt.</description>
+		<description lang="fr">Analyse et affiche les informations à partir du journal de SpeedFan. Même si ce module fonctionne sur toutes les plateformes, SpeedFan ne fonctionne que sous Windows, il est donc optimisé pour les utilisateurs de XBMC sous Windows. Merci de lire le fichier readme.txt pour savoir comment configurer votre journal SpeedFan afin que le module puisse l'analyser correctement.</description>
+		<description lang="fr_CA">Analyse et affiche les informations du journal SpeedFan. Bien que cette extension fonctionne sur n'importe quelle plateforme, SpeedFan ne fonctionne que sur Windows, il est parfaitement construit pour les personnes utilisant XBMC sur Windows. S'il vous plaît voir le fichier readme.txt pour plus d'informations sur la façon de configurer votre journal SpeedFan pour que le module d'extension puisse l'analyser correctement.</description>
+		<description lang="gl">Ananilza e amosa información do rexistro de SpeedFan. Mentres que este engadido funciona en calquera plataforma, SpeedFan só funciona baixo Windows polo que está optimizado para o XBMC de Windows. Por favor lea readme.txt para obter información de como configurar o rexistro de SpeedFan para que o engadido o poda analizar dunha forma axeitada.</description>
+		<description lang="he">מנתחת ומציגה מידע מיומן הרישום של SpeedFan. אמנם הרחבה זו תרוץ על כל פלטפורמה אך SpeedFan רצה רק על מערכת חלונות, לכן הרחבה זו מתאימה במיוחד למשתמשי XBMC תחת חלונות. אנא ראה readme.txt למידע בנושא הגדרת יומן הרישום של SpeedFan כך שההרחבה תנתח את המידע נכונה.</description>
+		<description lang="hr">Analizira i prikazuje informacije iz SpeedFan zapisa. dok ovaj dodatak radi na bilo kojoj platformi, SpeedFan radi na Windowsima, stoga je optimalno izgrađen za ljude koji koriste XBMC na Windowsima. Pogledajte readme.txt za više informacija o podešavanju vašeg SpeedFan zapisa zato da ga dodatak može ispravno analizirati.</description>
+		<description lang="hu">Feldolgozza és megjeleníti a ventilátor-sebesség napló adatait. Habár ez a plugin működik az összes platformon, a SpeedFan csak Windowson fut. Ezért ez a plugin elsősorban az XBMC-t Windowson futtató felhasználóknak készült. Annak érdekében, hogy az információkat megfelelően dolgozzuk fel, olvassa el a readme.txt fájlt, hogy SpeedFan naplót megfelelően beállíthassa.</description>
+		<description lang="id">Membaca dan menampilkan informasi dari log SpeedFan. Meskipun plugin ini bisa berjalan di platform manapun, SpeedFan hanya dapat berjalan di Windows, jadi plugin ini dibangun seara optimal khusus untuk mereka yang menggunakan XBMC di WIndows. Silakan merujuk ke readme.txt untuk informasi mengenai bagaimana cara mengkonfigurasi log SpeedFan Anda supaya plugin bisa membacanya dengan baik.</description>
+		<description lang="it">Analizza e mostra informazioni dal log. di SpeedFan. Mentre questo plug-in funziona su ogni piattaforma, SpeedFan funziona solo su Windows, quindi ottimizzato per persone che usano XBMC su Windows. Leggi il file readme.txt per le informazioni su come configurare il tuo SpeedFan log. così che il plug-in lo potrà analizzare correttamente.</description>
+		<description lang="nl">Verzameld en laat informatie zien van het SpeedFan log. Deze plugin werkt op elk platform alleen werkt SpeedFan enkel op Windows en is daarom geoptimaliseerd voor mensen die XBMC gebruiken op Windows. Lees alstublieft readme.txt voor informatie hoe je het SpeedFan log in kunt stellen zodat de plugin correct de gegevens verzameld.</description>
+		<description lang="pl">Analizuje i wyświetla informacje z dziennika SpeedFan. Wtyczka powinna działać na każdej platformie, jednakże SpeedFan optymalnie działa w systemie Windows, więc wskazane jest korzystanie z niej tylko na tej platformie. Proszę zapoznaj się z treścią pliku readme.txt, gdzie podane są informacje, jak skonfigurować dziennik SpeedFan tak, aby wtyczka mogła analizować prawidłowo.</description>
+		<description lang="pt">Recolhe e exibe informação do log do Speedfan. Apesar deste plugin funcionar em qualquer plataforma, o Speedfan apenas funciona no Windows. Por favor verifique o readme.txt para obter informação sobre como configurar o seu log do Speedfan, para o plugin poder analisá-lo correctamente.</description>
+		<description lang="pt_BR">Analisa e apresenta informações do registro SpeedFan. Embora este plugin funcione em qualquer plataforma, SpeedFan só funciona no Windows, então é optimizado para as pessoas que utilizam o XBMC no Windows. Por favor, veja o arquivo readme.txt para obter informações sobre como configurar o registro SpeedFan para que o plugin possa analisá-lo corretamente.</description>
+		<description lang="ru">Извлекает и отображает информацию из журнала SpeedFan. Данный плагин работает на всех платформах, но сам SpeedFan есть только для Windows, поэтому данный плагин прежде всего пригодится пользователям Windows. Пожалуйста, ознакомьтесь с файлом readme.txt для более подробной информации о конфигурации SpeedFan и настройках лога, чтобы данный плагин смог правильно его распарсить.</description>
+		<description lang="sk">Rozoberá a zobrazuje informácie zo SpeedFan logu. Síce tento doplnok funguje na všetkých platformách, SpeedFan funguje len na Windows, a preto je tento doplnok určený užívateľom XBMC na Windows. Prosím prečítajte readme.txt aby ste sa dozvedeli ako nastaviť SpeedFan log tak, aby ho tento doplnok vedel správne rozoberať.</description>
+		<description lang="sv">Analyserar och visar information från SpeedFan loggen. Trots att detta tillägg fungerar på alla plattformar, fungerar SpeedFan endast på Windows, så det är optimerat för folk som använder XBMC på Windows. Läs readme.txt för mer information hur du konfigurerar din SpeedFan logg så att tillägget kan analysera det riktigt.</description>
+		<description lang="zh">分析和显示从SpeedFan日志获取的信息。由于SpeedFan只有Windows版，因此本插件仅用于运行在Windows平台的XBMC。请阅读readme.txt中关于如何配置SpeedFan日志以使本插件能正确分析处理的相关说明。</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.xbmc.org/showthread.php?p=1014479</forum>
+		<website>http://wiki.xbmc.org/index.php?title=Add-on:SpeedFan_Information_Display</website>
+		<email>speedfaninfo.xbmc@gmail.com</email>
+		<source>https://github.com/pkscout/script.speedfaninfo</source>
+	</extension>
+</addon>

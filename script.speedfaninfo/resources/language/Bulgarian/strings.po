@@ -1,0 +1,93 @@
+# XBMC Media Center language file
+# Addon Name: SpeedFan Information Display
+# Addon id: script.speedfaninfo
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Основи"
+
+msgctxt "#30001"
+msgid "Enable Verbose Logging"
+msgstr "Подробно водене на дневника"
+
+msgctxt "#30002"
+msgid "Log Temperature Scale"
+msgstr "Дневник за температурната скала"
+
+msgctxt "#30003"
+msgid "Window Update Interval (in seconds)"
+msgstr "Интервал за обновяване на прозорците (в секунди)"
+
+msgctxt "#30004"
+msgid "Use Compact Display"
+msgstr "Ползвай компактен екран"
+
+msgctxt "#30005"
+msgid "    Background Transparency"
+msgstr "Прозрачност на фона"
+
+msgctxt "#30006"
+msgid "Log File Location"
+msgstr "Mясто на дневника"
+
+msgctxt "#30010"
+msgid " Additional Logs"
+msgstr "Допълнителни дневници"
+
+msgctxt "#30011"
+msgid "Primary Log File Title"
+msgstr "Основно име на дневника"
+
+msgctxt "#30012"
+msgid "Use Log File 2"
+msgstr "Ползвай дневник 2"
+
+msgctxt "#30013"
+msgid "Use Log File 3"
+msgstr "Ползвай дневник 3"
+
+msgctxt "#30020"
+msgid "    Log File Title"
+msgstr "Име на дневника"
+
+msgctxt "#30021"
+msgid "    Log File Location"
+msgstr "Mясто на дневника"
+
+msgctxt "#30100"
+msgid "Temperature Information"
+msgstr "Информация за температурата"
+
+msgctxt "#30101"
+msgid "Fan Speed Information"
+msgstr "Информация за скоростта на вентилатора"
+
+msgctxt "#30102"
+msgid "Voltage Information"
+msgstr "Информация за напрежението "
+
+msgctxt "#30103"
+msgid "Log File Error"
+msgstr "Грешка в дневника"
+
+msgctxt "#30104"
+msgid "No log file found."
+msgstr "Няма открит дневник."
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Включи дебъг дневника"
