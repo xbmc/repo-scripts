@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.artistslideshow-helper" name="Artist Slideshow Helper" version="0.4.2" provider-name="pkscout">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+		<import addon="xbmc.addon" version="14.0.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Hilft bei der Verwaltung von Interpreten-, Hintergrund- und Cache-Bilder</summary>
+		<summary lang="el">Βοηθός Διαχείρισης Αποθηκευμένων Εικόνων Καλλιτέχνη</summary>
+		<summary lang="en">Help manage Artist Slideshow Cache Images</summary>
+		<summary lang="en_NZ">Help manage Artist Slideshow Cache Images</summary>
+		<summary lang="en_US">Help manage Artist Slideshow Cache Images</summary>
+		<summary lang="es">Ayudar a controlar cache de imágenes de presentación de artistas</summary>
+		<summary lang="fr_CA">Aide à gérer lles images du cache du diaporama des artistes</summary>
+		<summary lang="gl">Axudar a xestionar a Caché de Imaxes na presentación deslizante de Artistas</summary>
+		<summary lang="hu">Művész képek gyorsítótárazásának menedzselése</summary>
+		<summary lang="is">Hjálpar við að halda utan um myndir í biðminni fyrir skyggnusýningar listamanna</summary>
+		<summary lang="it">Aiuta la gestione della cache immagini artista</summary>
+		<summary lang="ko">Artist Slideshow 캐시 이미지 관리 도우미</summary>
+		<summary lang="lt">Padeda tvarkyti atlikėjų skaidrių demonstracijos talpyklos paveikslėlius</summary>
+		<summary lang="nl">Helpt bij het beheren van artiesten diashow Cache afbeeldingen</summary>
+		<summary lang="pl">Pomaga zarządzać, pokazem slajdów artysty, pamięci podręcznej</summary>
+		<summary lang="pt">Ajuda a gerir as imagens de cache de Artist Slideshow</summary>
+		<summary lang="pt_BR">Ajuda a gerenciar Imagens do cache de artistas do script Artist Slideshow</summary>
+		<summary lang="sv">Hantera cachade bilder för artistbildspel</summary>
+		<summary lang="zh">帮助管理个歌手幻灯片缓存图像</summary>
+		<description lang="el">Το Πρόσθετο Artist Slideshow Helper παρέχει μια λίστα ονομάτων καλλιτεχνών συνδεδεμένων με τον αντίστοιχο φάκελο hash στο φάκελο εικόνων του Artist Slideshow, προκειμένου να διευκολύνει λίγο τη διαχείρισή τους. Σας επιτρέπει, επίσης, να μεταφέρετε εικόνες εκτός του φακέλου προσωρινής αποθήκευσης, σε κάποιον άλλο τοπικό φάκελο.</description>
+		<description lang="en">Artist Slideshow Helper provides a list artist names matched to their hash directory in your Artist Slideshow image directory to make things a little easier to manage.  It also allows you to migrate images out of the cache directory into a local directory structure.</description>
+		<description lang="en_US">Artist Slideshow Helper provides a list artist names matched to their hash directory in your Artist Slideshow image directory to make things a little easier to manage.  It also allows you to migrate images out of the cache directory into a local directory structure.</description>
+		<description lang="es">Artist Slideshow Helper proporciona una lista de nombres de los artistas que coinciden con su carpeta de imágenes de presentación del artista para hacer las cosas un poco más fáciles de manejar. También le permite migrar las imágenes fuera del directorio de caché en una estructura de directorio local.</description>
+		<description lang="fr_CA">L'assistant du diaporama des artistes fournit une liste des noms d'artistes jumelé à leur répertoire de hachage dans votre répertoire d'images du diaporama des artistes pour rendre les choses un peu plus facile à gérer. Il vous permet également de migrer des images sur le répertoire de cache dans une structure de répertoire local.</description>
+		<description lang="gl">O Asistente de Diapositivas de Artistas proporciónalle unha listaxe de nomes de artistas ligada ao hash dos seus cartafoles no cartafol das imaxes de artistas para facer as cousas algo máis doadas. Permítelle tamén migrar as imaxes dende o cartafol da caché a unha estrutura de cartafol local.</description>
+		<description lang="hu">Művész Diavetítés Segítő biztosítja a művészek neveinek a listáját összekapcsolva a  Művész Diavetítés  kép könyvtárral hogy  egyszerűbb legyen kezelni.  Lehetővé teszi hogy képeket migráljon a gyorsítótár könyvtárból egy helyi könyvtárstruktúrába.</description>
+		<description lang="is">Artist Slideshow Helper gefur upp lista af listamannanöfnum samtengdum við hash skráasafn í Artist Slideshow myndasafni þínu til að auðvelda aðeins utanumhald.  Það leyfir þér líka að flytja út myndir úr skráasafni biðminnis yfir í nærtækt skráasafn þitt.</description>
+		<description lang="it">Artist Slideshow Hlper provvede un'accoppiamento tra il nome di un artista in lista con la sua cartella immagini artista per rendere le cose un po' più semplici da gestire. Consente inoltre di migrare le immagini fuori dalla directory della cache verso una cartella locale</description>
+		<description lang="ko">Artist Slideshow의 이미지가 저장된 캐시 디렉터리에서 해시값과 일치하는 아티스트를 목록화하여 관리상의 편의를 제공합니다. 또 캐시 디텍터리의 이미지를 사용자 로컬 디렉터리로 마이그레이션 해 줍니다.</description>
+		<description lang="lt">Artist Slideshow Helper pateikia atlikėjų vardų sąrašą sutapdintą su jų maišos katalogu Artist Slideshow atvaizdų kataloge, kad būtų lengviau tvarkyti. Jis taip pat leidžia migruoti atvaizdus iš talpyklos katalogo į vietinio katalogo struktūrą.</description>
+		<description lang="nl">Artiesten divavoorstellingshelper  Biet een lijst van artiestennamen aan wat overeenkomt naar hun hashmap, dit in jouw artiesten diavoorstelling afbeeldingen map zodat het iets gemakkelijker is te beheren. het geeft je ook de mogelijkheid afbeeldingen te verplaatsen uit de cache map in een lokale map structuur.</description>
+		<description lang="pl">Artist Slideshow Helper zawiera listę hash nazw wykonawców dopasowaną do katalogów pokazu slajdów artysty, co pozwala łatwiej zarządzać obrazami. Pozwala również, przenosić zdjęcia z katalogu pamięci podręcznej do lokalnej struktury katalogów.</description>
+		<description lang="pt">O Artist Slideshow Helper exibe uma lista de nomes de artistas correspondentes aos seus valores hash na pasta de imagens Artist Slideshow, tornando tudo mais fácil de gerir. Também permite a exportação de imagens da pasta de cache para uma estrutura de pastas local.</description>
+		<description lang="pt_BR">Artist Slideshow Helper fornece uma lista com nomes de artistas combinados com o seu diretório de hash do diretório de imagens do Artist Slideshow para tornar as coisas um pouco mais fácil de gerir. Ele também permite que você migre imagens para fora do diretório do cache em uma estrutura de diretório local.</description>
+		<description lang="sv">Artistbildspelsassistenten tillhandahåller en lista med artistnamn som är hashmatchade till mappar i din bildmapp för artistbildspel för att underlätta hanteringen av dem. Den hjälper dig också att migrera bilder ut från mappen till en lokal mappstruktur.</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.xbmc.org/showthread.php?tid=181454</forum>
+		<website>http://wiki.xbmc.org/index.php?title=Add-on:Artist_Slideshow-Helper</website>
+		<email>artistslideshow.xbmc@gmail.com</email>
+		<source>https://github.com/pkscout/script.artistslideshow-helper</source>
+	</extension>
+</addon>

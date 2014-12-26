@@ -1,0 +1,105 @@
+# XBMC Media Center language file
+# Addon Name: Artist Slideshow Helper
+# Addon id: script.artistslideshow-helper
+# Addon Provider: pkscuot
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30300"
+msgid "Starting"
+msgstr "Starten"
+
+msgctxt "#30301"
+msgid "beginning work"
+msgstr "Werk starten"
+
+msgctxt "#30310"
+msgid "Result"
+msgstr "Resultaat"
+
+msgctxt "#30311"
+msgid "successfully wrote hash list file"
+msgstr "Succesvol Hashlijst bestand geschreven"
+
+msgctxt "#30312"
+msgid "unable to create hash list file"
+msgstr "Niet in staat om hashlijst bestand te creëren "
+
+msgctxt "#30320"
+msgid "Error"
+msgstr "Fout"
+
+msgctxt "#30321"
+msgid "no migration folder defined"
+msgstr "Geen verplaats map gedefinieerd"
+
+msgctxt "#30330"
+msgid "Result"
+msgstr "Resultaat"
+
+msgctxt "#30331"
+msgid "migration of files complete"
+msgstr "verplaatsen van bestanden compleet"
+
+msgctxt "#30340"
+msgid "Error"
+msgstr "Fout"
+
+msgctxt "#30341"
+msgid "no hash list folder defined"
+msgstr "Geen hashlijst map gedefinieerd"
+
+msgctxt "#30350"
+msgid "Error"
+msgstr "Fout"
+
+msgctxt "#30351"
+msgid "no action specified in settings"
+msgstr "Geen actie gespecificeerd in instellingen"
+
+msgctxt "#32001"
+msgid "Create artist hash mapping file"
+msgstr "Creëer artiesten hashindeling bestand"
+
+msgctxt "#32002"
+msgid "   Output directory"
+msgstr "Doelmap"
+
+msgctxt "#32003"
+msgid "Migrate images"
+msgstr "Verplaats afbeeldingen"
+
+msgctxt "#32004"
+msgid "   Output directory"
+msgstr "Doelmap"
+
+msgctxt "#32005"
+msgid "    Migration type"
+msgstr "Verplaatsingstype"
+
+msgctxt "#32006"
+msgid "test"
+msgstr "test"
+
+msgctxt "#32007"
+msgid "move"
+msgstr "verplaats"
+
+msgctxt "#32008"
+msgid "copy"
+msgstr "kopieer"
+
+msgctxt "#32209"
+msgid "Enable debug logging"
+msgstr "Foutregistratie inschakelen"
