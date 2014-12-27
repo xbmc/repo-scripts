@@ -64,3 +64,87 @@ msgstr ""
 msgctxt "#32013"
 msgid "Download Failed"
 msgstr ""
+
+msgctxt "#32014"
+msgid "SD Only"
+msgstr ""
+
+msgctxt "#32015"
+msgid "720p"
+msgstr ""
+
+msgctxt "#32016"
+msgid "1080p"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Max Streaming Video Quality"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Disable DASH Video (Recommended)"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Main"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Use user updated youtube-dl core version"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Update automatically"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Update now"
+msgstr ""
+
+msgctxt "#32024"
+msgid "View youtube-dl core info"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Debug Logging"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Highest Available"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Enable youtube-dl verbose logging"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Confirm download path"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Download path"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Stop Current Download"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Stop All Downloads"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Manage Queue"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Download Currently Playing Video"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Settings"
+msgstr ""

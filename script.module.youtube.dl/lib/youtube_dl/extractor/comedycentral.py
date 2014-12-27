@@ -2,11 +2,12 @@ from __future__ import unicode_literals
 
 import re
 
-from .common import InfoExtractor
 from .mtv import MTVServicesInfoExtractor
-from ..utils import (
+from ..compat import (
     compat_str,
     compat_urllib_parse,
+)
+from ..utils import (
     ExtractorError,
     float_or_none,
     unified_strdate,
@@ -31,7 +32,7 @@ class ComedyCentralIE(MTVServicesInfoExtractor):
     }
 
 
-class ComedyCentralShowsIE(InfoExtractor):
+class ComedyCentralShowsIE(MTVServicesInfoExtractor):
     IE_DESC = 'The Daily Show / The Colbert Report'
     # urls can be abbreviations like :thedailyshow or :colbert
     # urls for episodes like:
@@ -49,7 +50,7 @@ class ComedyCentralShowsIE(InfoExtractor):
                           )|
                           (?P<interview>
                               extended-interviews/(?P<interID>[0-9a-z]+)/(?:playlist_tds_extended_)?(?P<interview_title>.*?)(/.*?)?)))
-                     (?:[?#].*|$)'''
+                     '''
     _TESTS = [{
         'url': 'http://thedailyshow.cc.com/watch/thu-december-13-2012/kristen-stewart',
         'md5': '4e2f5cb088a83cd8cdb7756132f9739d',
@@ -83,6 +84,9 @@ class ComedyCentralShowsIE(InfoExtractor):
         'url': 'http://thedailyshow.cc.com/video-playlists/npde3s/the-daily-show-19088-highlights',
         'only_matching': True,
     }, {
+        'url': 'http://thedailyshow.cc.com/video-playlists/t6d9sg/the-daily-show-20038-highlights/be3cwo',
+        'only_matching': True,
+    }, {
         'url': 'http://thedailyshow.cc.com/special-editions/2l8fdb/special-edition---a-look-back-at-food',
         'only_matching': True,
     }, {
@@ -109,18 +113,8 @@ class ComedyCentralShowsIE(InfoExtractor):
         '400': (384, 216),
     }
 
-    @staticmethod
-    def _transform_rtmp_url(rtmp_video_url):
-        m = re.match(r'^rtmpe?://.*?/(?P<finalid>gsp\.comedystor/.*)$', rtmp_video_url)
-        if not m:
-            raise ExtractorError('Cannot transform RTMP url')
-        base = 'http://mtvnmobile.vo.llnwd.net/kip0/_pxn=1+_pxI0=Ripod-h264+_pxL0=undefined+_pxM0=+_pxK=18639+_pxE=mp4/44620/mtvnorigin/'
-        return base + m.group('finalid')
-
     def _real_extract(self, url):
-        mobj = re.match(self._VALID_URL, url, re.VERBOSE)
-        if mobj is None:
-            raise ExtractorError('Invalid URL: %s' % url)
+        mobj = re.match(self._VALID_URL, url)
 
         if mobj.group('shortname'):
             if mobj.group('shortname') in ('tds', 'thedailyshow'):
@@ -212,9 +206,6 @@ class ComedyCentralShowsIE(InfoExtractor):
                     'ext': self._video_extensions.get(format, 'mp4'),
                     'height': h,
                     'width': w,
-
-                    'format_note': 'HTTP 400 at the moment (patches welcome!)',
-                    'preference': -100,
                 })
                 formats.append({
                     'format_id': 'rtmp-%s' % format,

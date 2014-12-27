@@ -4,9 +4,11 @@ import json
 import re
 
 from .common import InfoExtractor
-from ..utils import (
+from ..compat import (
     compat_str,
     compat_urlparse,
+)
+from ..utils import (
     ExtractorError,
 )
 
@@ -83,12 +85,12 @@ class BandcampIE(InfoExtractor):
         initial_url = mp3_info['url']
         re_url = r'(?P<server>http://(.*?)\.bandcamp\.com)/download/track\?enc=mp3-320&fsig=(?P<fsig>.*?)&id=(?P<id>.*?)&ts=(?P<ts>.*)$'
         m_url = re.match(re_url, initial_url)
-        #We build the url we will use to get the final track url
+        # We build the url we will use to get the final track url
         # This url is build in Bandcamp in the script download_bunde_*.js
         request_url = '%s/statdownload/track?enc=mp3-320&fsig=%s&id=%s&ts=%s&.rand=665028774616&.vrs=1' % (m_url.group('server'), m_url.group('fsig'), video_id, m_url.group('ts'))
         final_url_webpage = self._download_webpage(request_url, video_id, 'Requesting download url')
         # If we could correctly generate the .rand field the url would be
-        #in the "download_url" key
+        # in the "download_url" key
         final_url = re.search(r'"retry_url":"(.*?)"', final_url_webpage).group(1)
 
         return {
@@ -104,26 +106,31 @@ class BandcampIE(InfoExtractor):
 
 class BandcampAlbumIE(InfoExtractor):
     IE_NAME = 'Bandcamp:album'
-    _VALID_URL = r'https?://(?:(?P<subdomain>[^.]+)\.)?bandcamp\.com(?:/album/(?P<title>[^?#]+))'
+    _VALID_URL = r'https?://(?:(?P<subdomain>[^.]+)\.)?bandcamp\.com(?:/album/(?P<title>[^?#]+)|/?(?:$|[?#]))'
 
     _TESTS = [{
         'url': 'http://blazo.bandcamp.com/album/jazz-format-mixtape-vol-1',
         'playlist': [
             {
-                'file': '1353101989.mp3',
                 'md5': '39bc1eded3476e927c724321ddf116cf',
                 'info_dict': {
+                    'id': '1353101989',
+                    'ext': 'mp3',
                     'title': 'Intro',
                 }
             },
             {
-                'file': '38097443.mp3',
                 'md5': '1a2c32e2691474643e912cc6cd4bffaa',
                 'info_dict': {
+                    'id': '38097443',
+                    'ext': 'mp3',
                     'title': 'Kero One - Keep It Alive (Blazo remix)',
                 }
             },
         ],
+        'info_dict': {
+            'title': 'Jazz Format Mixtape vol.1',
+        },
         'params': {
             'playlistend': 2
         },
@@ -134,6 +141,12 @@ class BandcampAlbumIE(InfoExtractor):
             'title': 'Hierophany of the Open Grave',
         },
         'playlist_mincount': 9,
+    }, {
+        'url': 'http://dotscale.bandcamp.com',
+        'info_dict': {
+            'title': 'Loom',
+        },
+        'playlist_mincount': 7,
     }]
 
     def _real_extract(self, url):

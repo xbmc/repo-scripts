@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 import re
@@ -8,15 +8,18 @@ import itertools
 from .common import InfoExtractor
 from .subtitles import SubtitlesInfoExtractor
 
-from ..utils import (
-    compat_urllib_request,
+from ..compat import (
     compat_str,
+    compat_urllib_request,
+)
+from ..utils import (
+    ExtractorError,
+    int_or_none,
     orderedSet,
     str_to_int,
-    int_or_none,
-    ExtractorError,
     unescapeHTML,
 )
+
 
 class DailymotionBaseInfoExtractor(InfoExtractor):
     @staticmethod
@@ -26,6 +29,7 @@ class DailymotionBaseInfoExtractor(InfoExtractor):
         request.add_header('Cookie', 'family_filter=off')
         request.add_header('Cookie', 'ff=off')
         return request
+
 
 class DailymotionIE(DailymotionBaseInfoExtractor, SubtitlesInfoExtractor):
     """Information Extractor for Dailymotion"""
@@ -94,7 +98,7 @@ class DailymotionIE(DailymotionBaseInfoExtractor, SubtitlesInfoExtractor):
 
         # It may just embed a vevo video:
         m_vevo = re.search(
-            r'<link rel="video_src" href="[^"]*?vevo.com[^"]*?videoId=(?P<id>[\w]*)',
+            r'<link rel="video_src" href="[^"]*?vevo.com[^"]*?video=(?P<id>[\w]*)',
             webpage)
         if m_vevo is not None:
             vevo_id = m_vevo.group('id')
@@ -112,7 +116,7 @@ class DailymotionIE(DailymotionBaseInfoExtractor, SubtitlesInfoExtractor):
         embed_page = self._download_webpage(embed_url, video_id,
                                             'Downloading embed page')
         info = self._search_regex(r'var info = ({.*?}),$', embed_page,
-            'video info', flags=re.MULTILINE)
+                                  'video info', flags=re.MULTILINE)
         info = json.loads(info)
         if info.get('error') is not None:
             msg = 'Couldn\'t get video, Dailymotion says: %s' % info['error']['title']
@@ -206,7 +210,7 @@ class DailymotionPlaylistIE(DailymotionBaseInfoExtractor):
             if re.search(self._MORE_PAGES_INDICATOR, webpage) is None:
                 break
         return [self.url_result('http://www.dailymotion.com/video/%s' % video_id, 'Dailymotion')
-                   for video_id in orderedSet(video_ids)]
+                for video_id in orderedSet(video_ids)]
 
     def _real_extract(self, url):
         mobj = re.match(self._VALID_URL, url)

@@ -2,15 +2,19 @@
 from __future__ import unicode_literals
 
 import re
+import json
 
 from .common import InfoExtractor
-from ..utils import (
+from ..compat import (
     compat_urllib_parse,
     compat_urllib_request,
     compat_urlparse,
-    unified_strdate,
-    parse_duration,
+)
+from ..utils import (
+    ExtractorError,
     int_or_none,
+    parse_duration,
+    unified_strdate,
 )
 
 
@@ -107,6 +111,9 @@ class NiconicoIE(InfoExtractor):
                 flv_info_request, video_id,
                 note='Downloading flv info', errnote='Unable to download flv info')
 
+        if 'deleted=' in flv_info_webpage:
+            raise ExtractorError('The video has been deleted.',
+                                 expected=True)
         video_real_url = compat_urlparse.parse_qs(flv_info_webpage)['url'][0]
 
         # Start extracting information
@@ -145,4 +152,38 @@ class NiconicoIE(InfoExtractor):
             'comment_count': comment_count,
             'duration': duration,
             'webpage_url': webpage_url,
+        }
+
+
+class NiconicoPlaylistIE(InfoExtractor):
+    _VALID_URL = r'https?://www\.nicovideo\.jp/mylist/(?P<id>\d+)'
+
+    _TEST = {
+        'url': 'http://www.nicovideo.jp/mylist/27411728',
+        'info_dict': {
+            'id': '27411728',
+            'title': 'AKB48のオールナイトニッポン',
+        },
+        'playlist_mincount': 225,
+    }
+
+    def _real_extract(self, url):
+        list_id = self._match_id(url)
+        webpage = self._download_webpage(url, list_id)
+
+        entries_json = self._search_regex(r'Mylist\.preload\(\d+, (\[.*\])\);',
+                                          webpage, 'entries')
+        entries = json.loads(entries_json)
+        entries = [{
+            '_type': 'url',
+            'ie_key': NiconicoIE.ie_key(),
+            'url': ('http://www.nicovideo.jp/watch/%s' %
+                    entry['item_data']['video_id']),
+        } for entry in entries]
+
+        return {
+            '_type': 'playlist',
+            'title': self._search_regex(r'\s+name: "(.*?)"', webpage, 'title'),
+            'id': list_id,
+            'entries': entries,
         }

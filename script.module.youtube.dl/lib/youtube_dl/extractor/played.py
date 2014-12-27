@@ -5,9 +5,12 @@ import re
 import os.path
 
 from .common import InfoExtractor
-from ..utils import (
+from ..compat import (
     compat_urllib_parse,
     compat_urllib_request,
+)
+from ..utils import (
+    ExtractorError,
 )
 
 
@@ -27,8 +30,13 @@ class PlayedIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-
         orig_webpage = self._download_webpage(url, video_id)
+
+        m_error = re.search(
+            r'(?s)Reason for deletion:.*?<b class="err"[^>]*>(?P<msg>[^<]+)</b>', orig_webpage)
+        if m_error:
+            raise ExtractorError(m_error.group('msg'), expected=True)
+
         fields = re.findall(
             r'type="hidden" name="([^"]+)"\s+value="([^"]+)">', orig_webpage)
         data = dict(fields)

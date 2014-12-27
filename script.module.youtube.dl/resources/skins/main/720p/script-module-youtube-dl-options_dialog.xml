@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<defaultcontrol>100</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<left>340</left>
+		<top>160</top>
+	</coordinates>
+	<controls>
+        <control type="image">
+			<description>background image</description>
+			<left>-10</left>
+			<top>-10</top>
+			<width>620</width>
+			<height>420</height>
+			<texture border="20">script-module-youtube-dl-shadow.png</texture>
+		</control>
+		<control type="image">
+			<description>background image</description>
+			<left>0</left>
+			<top>0</top>
+			<width>600</width>
+			<height>400</height>
+			<texture border="20">script-module-youtube-dl-dialog_back.png</texture>
+		</control>
+		<control type="grouplist" id="100">
+			<description>grouplist for context buttons</description>
+			<left>20</left>
+			<top>30</top>
+			<width>600</width>
+			<height max="400">auto</height>
+			<itemgap>2</itemgap>
+
+            <control type="button" id="200">
+    			<description>Stop Current Download</description>
+                <enable>StringCompare(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE)</enable>
+    			<left>-</left>
+    			<top>-</top>
+    			<width>560</width>
+    			<height>50</height>
+    			<font>font13</font>
+    			<align>center</align>
+    			<textcolor>FF999999</textcolor>
+    			<focusedcolor>FFFFFFFF</focusedcolor>
+                <disabledcolor>40999999</disabledcolor>
+    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
+                <label>$ADDON[script.module.youtube.dl 32030]</label>
+    		</control>
+            <control type="button" id="201">
+    			<description>Stop All Downloads</description>
+                <enable>StringCompare(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE)</enable>
+    			<left>-</left>
+    			<top>-</top>
+    			<width>560</width>
+    			<height>50</height>
+    			<font>font13</font>
+    			<align>center</align>
+    			<textcolor>FF999999</textcolor>
+    			<focusedcolor>FFFFFFFF</focusedcolor>
+                <disabledcolor>40999999</disabledcolor>
+    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
+                <label>$ADDON[script.module.youtube.dl 32031]</label>
+    		</control>
+            <control type="button" id="202">
+    			<description>Manage Queue</description>
+                <enable>StringCompare(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE) + IntegerGreaterThan(Window(10000).property(XBMCJsonRAFifoQueue_download.queue.size),0)</enable>
+    			<left>-</left>
+    			<top>-</top>
+    			<width>560</width>
+    			<height>50</height>
+    			<font>font13</font>
+    			<align>center</align>
+    			<textcolor>FF999999</textcolor>
+    			<focusedcolor>FFFFFFFF</focusedcolor>
+                <disabledcolor>40999999</disabledcolor>
+    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
+                <label>$ADDON[script.module.youtube.dl 32032] ($INFO[Window(10000).property(XBMCJsonRAFifoQueue_download.queue.size)])</label>
+    		</control>
+            <control type="button" id="203">
+    			<description>Download Currently Playing Video</description>
+                <enable>Player.HasVideo + !IsEmpty(Window(10000).Property(script.module.youtube.dl_VALID))</enable>
+    			<left>-</left>
+    			<top>-</top>
+    			<width>560</width>
+    			<height>50</height>
+    			<font>font13</font>
+    			<align>center</align>
+    			<textcolor>FF999999</textcolor>
+    			<focusedcolor>FFFFFFFF</focusedcolor>
+                <disabledcolor>40999999</disabledcolor>
+    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
+                <label>$ADDON[script.module.youtube.dl 32033]</label>
+    		</control>
+            <control type="button" id="204">
+    			<description>Settings</description>
+    			<left>-</left>
+    			<top>-</top>
+    			<width>560</width>
+    			<height>50</height>
+    			<font>font13</font>
+    			<align>center</align>
+    			<textcolor>FF999999</textcolor>
+    			<focusedcolor>FFFFFFFF</focusedcolor>
+                <disabledcolor>40999999</disabledcolor>
+    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
+                <label>$ADDON[script.module.youtube.dl 32034]</label>
+    		</control>
+		</control>
+	</controls>
+</window>

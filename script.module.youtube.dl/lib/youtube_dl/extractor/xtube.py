@@ -4,15 +4,17 @@ import re
 import json
 
 from .common import InfoExtractor
-from ..utils import (
+from ..compat import (
     compat_urllib_request,
+)
+from ..utils import (
     parse_duration,
     str_to_int,
 )
 
 
 class XTubeIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?(?P<url>xtube\.com/watch\.php\?v=(?P<videoid>[^/?&]+))'
+    _VALID_URL = r'https?://(?:www\.)?(?P<url>xtube\.com/watch\.php\?v=(?P<id>[^/?&]+))'
     _TEST = {
         'url': 'http://www.xtube.com/watch.php?v=kVTUy_G222_',
         'md5': '092fbdd3cbe292c920ef6fc6a8a9cdab',
@@ -20,7 +22,7 @@ class XTubeIE(InfoExtractor):
             'id': 'kVTUy_G222_',
             'ext': 'mp4',
             'title': 'strange erotica',
-            'description': 'surreal gay themed erotica...almost an ET kind of thing',
+            'description': 'http://www.xtube.com an ET kind of thing',
             'uploader': 'greenshowers',
             'duration': 450,
             'age_limit': 18,
@@ -29,7 +31,7 @@ class XTubeIE(InfoExtractor):
 
     def _real_extract(self, url):
         mobj = re.match(self._VALID_URL, url)
-        video_id = mobj.group('videoid')
+        video_id = mobj.group('id')
         url = 'http://www.' + mobj.group('url')
 
         req = compat_urllib_request.Request(url)
@@ -97,7 +99,7 @@ class XTubeUserIE(InfoExtractor):
             url, username, note='Retrieving profile page')
 
         video_count = int(self._search_regex(
-            r'<strong>%s\'s Videos \(([0-9]+)\)</strong>'%username, profile_page,
+            r'<strong>%s\'s Videos \(([0-9]+)\)</strong>' % username, profile_page,
             'video count'))
 
         PAGE_SIZE = 25

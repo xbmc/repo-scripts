@@ -7,14 +7,14 @@ import itertools
 
 from .common import InfoExtractor
 from .subtitles import SubtitlesInfoExtractor
-from ..utils import (
-    clean_html,
+from ..compat import (
     compat_HTTPError,
     compat_urllib_parse,
     compat_urllib_request,
     compat_urlparse,
+)
+from ..utils import (
     ExtractorError,
-    get_element_by_attribute,
     InAdvancePagedList,
     int_or_none,
     RegexNotFoundError,
@@ -260,7 +260,7 @@ class VimeoIE(VimeoBaseInfoExtractor, SubtitlesInfoExtractor):
                 else:
                     config_re = [r' = {config:({.+?}),assets:', r'(?:[abc])=({.+?});']
                 config = self._search_regex(config_re, webpage, 'info section',
-                    flags=re.DOTALL)
+                                            flags=re.DOTALL)
                 config = json.loads(config)
         except Exception as e:
             if re.search('The creator of this video has not given you permission to embed it on this domain.', webpage):
@@ -514,7 +514,7 @@ class VimeoReviewIE(InfoExtractor):
         'info_dict': {
             'id': '91613211',
             'ext': 'mp4',
-            'title': 'Death by dogma versus assembling agile - Sander Hoogendoorn',
+            'title': 're:(?i)^Death by dogma versus assembling agile . Sander Hoogendoorn',
             'uploader': 'DevWeek Events',
             'duration': 2773,
             'thumbnail': 're:^https?://.*\.jpg$',

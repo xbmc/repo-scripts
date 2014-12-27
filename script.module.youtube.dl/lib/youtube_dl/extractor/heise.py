@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 
 from .common import InfoExtractor
 from ..utils import (
-    get_meta_content,
+    determine_ext,
+    int_or_none,
     parse_iso8601,
 )
 
@@ -24,57 +25,54 @@ class HeiseIE(InfoExtractor):
             'title': (
                 "Podcast: c't uplink 3.3 – Owncloud / Tastaturen / Peilsender Smartphone"
             ),
-            'format_id': 'mp4_720',
+            'format_id': 'mp4_720p',
             'timestamp': 1411812600,
             'upload_date': '20140927',
             'description': 'In uplink-Episode 3.3 geht es darum, wie man sich von Cloud-Anbietern emanzipieren kann, worauf man beim Kauf einer Tastatur achten sollte und was Smartphones über uns verraten.',
+            'thumbnail': 're:^https?://.*\.jpe?g$',
         }
     }
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-
         webpage = self._download_webpage(url, video_id)
-        json_url = self._search_regex(
-            r'json_url:\s*"([^"]+)"', webpage, 'json URL')
-        config = self._download_json(json_url, video_id)
+
+        container_id = self._search_regex(
+            r'<div class="videoplayerjw".*?data-container="([0-9]+)"',
+            webpage, 'container ID')
+        sequenz_id = self._search_regex(
+            r'<div class="videoplayerjw".*?data-sequenz="([0-9]+)"',
+            webpage, 'sequenz ID')
+        data_url = 'http://www.heise.de/videout/feed?container=%s&sequenz=%s' % (container_id, sequenz_id)
+        doc = self._download_xml(data_url, video_id)
 
         info = {
             'id': video_id,
-            'thumbnail': config.get('poster'),
-            'timestamp': parse_iso8601(get_meta_content('date', webpage)),
+            'thumbnail': self._og_search_thumbnail(webpage),
+            'timestamp': parse_iso8601(
+                self._html_search_meta('date', webpage)),
             'description': self._og_search_description(webpage),
         }
 
-        title = get_meta_content('fulltitle', webpage)
+        title = self._html_search_meta('fulltitle', webpage)
         if title:
             info['title'] = title
-        elif config.get('title'):
-            info['title'] = config['title']
         else:
             info['title'] = self._og_search_title(webpage)
 
         formats = []
-        for t, rs in config['formats'].items():
-            if not rs or not hasattr(rs, 'items'):
-                self._downloader.report_warning(
-                    'formats: {0}: no resolutions'.format(t))
-                continue
-
-            for height_str, obj in rs.items():
-                format_id = '{0}_{1}'.format(t, height_str)
-
-                if not obj or not obj.get('url'):
-                    self._downloader.report_warning(
-                        'formats: {0}: no url'.format(format_id))
-                    continue
-
-                formats.append({
-                    'url': obj['url'],
-                    'format_id': format_id,
-                    'height': self._int(height_str, 'height'),
-                })
-
+        for source_node in doc.findall('.//{http://rss.jwpcdn.com/}source'):
+            label = source_node.attrib['label']
+            height = int_or_none(self._search_regex(
+                r'^(.*?_)?([0-9]+)p$', label, 'height', default=None))
+            video_url = source_node.attrib['file']
+            ext = determine_ext(video_url, '')
+            formats.append({
+                'url': video_url,
+                'format_note': label,
+                'format_id': '%s_%s' % (ext, label),
+                'height': height,
+            })
         self._sort_formats(formats)
         info['formats'] = formats
 
