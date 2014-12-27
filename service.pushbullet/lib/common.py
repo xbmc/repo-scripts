@@ -33,7 +33,7 @@ def traceError():
 
 def showNotification(title, message, timeout=2000, icon=__addonicon__):
     if showNotification.proportionalTextLengthTimeout:
-        timeout = len(message)/10*2000
+        timeout = min(len(message)/10*2000, timeout)
 
     title = title.replace('"', '\\"')
     message = message.replace('"', '\\"')
@@ -51,11 +51,35 @@ def executeJSONRPC(jsonStr):
 
     return response
 
+def executeJSONRPCMethod(method, params={}):
+
+    rpc = {
+        'jsonrpc': '2.0',
+        'method': method,
+        'params': params,
+        'id': 1
+    }
+
+    # Check if is there is an active player
+    activePlayers = executeJSONRPC('{"jsonrpc": "2.0", "method": "Player.GetActivePlayers", "id": 1}')
+
+    if len(activePlayers) > 0:
+
+        del activePlayers[0]['type']
+        rpc['params'].update(activePlayers[0])
+
+        if method == 'Player.GoTo':
+            rpc['params'].setdefault('to', 'next')
+
+        from json import dumps
+
+        return executeJSONRPC(dumps(rpc))
+
+    return False
 
 def getMainSetting(name):
     result = executeJSONRPC('{ "jsonrpc": "2.0", "method": "Settings.GetSettingValue", "params": {"setting": "' + str(name) + '"}, "id": 1 }')
     return result['value']
-
 
 def getKodiCmdsFromFiles():
     import os
@@ -103,7 +127,7 @@ def base64ToFile(strBase64, filePath, imgFormat='JPEG', imgSize=None):
         file = cStringIO.StringIO(fileDecoded)
         try:
             from PIL import Image
-    
+
             img = Image.open(file)
             img.thumbnail(imgSize, Image.BICUBIC)
             img.save(filePath, format=imgFormat)
@@ -111,7 +135,7 @@ def base64ToFile(strBase64, filePath, imgFormat='JPEG', imgSize=None):
         except ImportError: #Some platforms don't have PIL...
             log('base64ToFile(): PIL Not available - skipping resize')
             pass #So we just fallback to saving
-            
+
     # only save image (do not image transformation)
     file = open(filePath, "wb")
     file.write(fileDecoded)
@@ -130,21 +154,21 @@ def fileTobase64(filePath, imgFormat='JPEG', imgSize=None):
     file = f.readBytes()
     f.close()
     size = len(file)
-    
+
     # change image size and set format
     if imgSize:
         try:
             from PIL import Image
             import cStringIO
-            
+
             file = cStringIO.StringIO(file)
-    
+
             img = Image.open(file)
             img.thumbnail(imgSize, Image.BICUBIC)
-            
+
             output = cStringIO.StringIO()
             img.save(output, imgFormat)
-    
+
             imgEncoded = base64.b64encode(output.getvalue())
             output.close()
             return imgEncoded

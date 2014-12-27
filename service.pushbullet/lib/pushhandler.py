@@ -5,6 +5,9 @@ import YDStreamExtractor as StreamExtractor
 import YDStreamUtils as StreamUtils
 import common
 
+StreamExtractor.overrideParam('noplaylist',True)
+StreamExtractor.generateBlacklist(('.*:(?:user|channel|search)$','(?i)generic.*'))
+
 def getURLMediaType(url):
     if url.startswith('http'):
         videoTypes = xbmc.getSupportedMedia('video')
@@ -93,7 +96,7 @@ def handlePush(data,from_gui=False):
         return True
 
     return False
-    
+
 protocolURLs = {
     'sop':'plugin://plugin.video.p2p-streams/?url={url}&mode=2&name=title+sopcast',
     'acestream':'plugin://plugin.video.p2p-streams/?url={url}&mode=1&name=acestream+title',
@@ -105,7 +108,7 @@ def protocolMediaType(url):
     protocol = url.split('://',1)[0]
     if protocol in protocolURLs: return 'video'
     return None
-    
+
 def canPlayURL(url):
     protocol = url.split('://',1)[0]
     return protocol in protocolURLs
@@ -123,7 +126,7 @@ def getURLUserAgent(url):
 
 def playMedia(url,title='',thumb='',description='',playlist_type=xbmc.PLAYLIST_VIDEO):
     common.log('Play media: ' + url)
-   
+
     li = xbmcgui.ListItem(label=title,label2=description,iconImage=thumb,thumbnailImage=thumb)
     li.setPath(url)
     li.setInfo('video',{'title':title,'tagline':description})
@@ -139,7 +142,7 @@ def mediaPlaying(): #TODO: make sure we're checking for all media
 #    xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":1,"method":"Playlist.Add","params":{"playlistid":1,"item":{"file":"' + str(url) + '"}}}')
 #    return xbmc.executeJSONRPC('{"jsonrpc":"2.0","id":1,"method":"Player.Open","params":{"item":{"playlistid":1,"position":0}}}')
 
-    
+
     '''{u'iden': u'ujxCHwc6fiSsjAl11HK7y0',
         u'created': 1411009240.141888,
         u'receiver_email': u'ruuk25@gmail.com',

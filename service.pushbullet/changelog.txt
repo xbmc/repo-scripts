@@ -1,3 +1,26 @@
+0.8.22
+-Official repository release
+
+0.8.22b
+- Added auto dismiss pushes on setting (issue #22)
+- Proportional notifications timeout use notification delay as max value
+
+0.8.22a
+- Rename executeJSONRPCMetchod to executeJSONRPCMethod
+
+0.8.20b
+- Added playback action (play, pause) on incoming phone call
+- Fix for bug cause by changes in youtube-dl module
+
+0.8.18b
+- Fix regression on mirrored notification title (https://github.com/elbowz/xbmc.service.pushbullet/issues/20)
+
+0.8.16b
+- Fix the number of caller, in android stock is in the notification title (https://github.com/elbowz/xbmc.service.pushbullet/issues/18)
+
+0.8.14b
+- Fix for YouTube videos from playlists not playing (As well as playlists for a few other sites)
+
 0.8.12b
 - Fix issue with mirror pushes failing due to missing PIL on some platforms
 - Push handling settings now default to play instantly for media and notification for all others

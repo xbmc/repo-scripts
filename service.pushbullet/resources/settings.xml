@@ -10,9 +10,10 @@
         <setting id="load_token_action" label="32015" type="action" action="RunScript(service.pushbullet,TOKEN_FROM_FILE)" />
     </category>
     <category label="30000">
-        <setting id="notification_time" label="30031" type="slider" default="6" range="1,1,60" option="int" enable="eq(1,false)"/>
+        <setting id="notification_time" label="30031" type="slider" default="6" range="1,1,60" option="int"/>
         <setting id="proportional_notification_time" label="30032" type="bool" default="true"/>
-        <setting id="pb_channels" label="30033" type="bool" default="true"/>
+        <setting id="autodismiss_pushes" label="30033" type="bool" default="false"/>
+        <setting id="pb_channels" label="30034" type="bool" default="true"/>
     </category>
     <category label="32107">
         <setting label="32114" type="lsep"/>
@@ -36,6 +37,7 @@
         <setting id="ephmeral_test_action" label="30052" type="action" action="RunScript(service.pushbullet,SEND_EPHEMERAL_TEST)" />
         <setting label="30011" type="lsep"/>
         <setting id="cmd_on_dismiss_push" label="30053" type="labelenum" values="Stop|Pause|Next|None" default="Stop" enable="eq(-3,true)"/>
+        <setting id="cmd_on_phone_call_push" label="30054" type="labelenum" values="Stop|Pause|None" default="Pause" enable="eq(-5,true)"/>
     </category>
     <category label="32003">
         <setting id="load_video_thumbs" type="bool" default="false" label="32011" />
