@@ -27,3 +27,7 @@ msgstr "Arazketa"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Gaitu debug saioa"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfigurazioa"

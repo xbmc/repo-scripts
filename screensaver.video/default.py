@@ -59,3 +59,6 @@ if __name__ == '__main__':
 
         del exitMon
         log("Default screensaver stopped")
+    else:
+        log("Stopping screensaver as media playing")
+        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')

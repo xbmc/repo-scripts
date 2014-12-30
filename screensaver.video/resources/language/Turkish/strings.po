@@ -27,3 +27,7 @@ msgstr "Hata ayıklama"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Hata ayıklama günlüğünü etkinleştir"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Yapılandırma"

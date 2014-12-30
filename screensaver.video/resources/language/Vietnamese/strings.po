@@ -23,3 +23,7 @@ msgstr "Trình bảo vệ màn hình"
 msgctxt "#32002"
 msgid "Debugging"
 msgstr "Tìm sửa lỗi"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Cấu hình"

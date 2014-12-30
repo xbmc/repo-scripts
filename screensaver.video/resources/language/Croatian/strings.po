@@ -31,3 +31,99 @@ msgstr "Omogući zapisivanje otklanjanja grešaka"
 msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Video odabir"
+
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "Video čuvar zaslona"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfiguracija"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "Predložak video snimke"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "Definiran korisnikom"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Odabrani čuvar zaslona"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "Koristi sve datoteke u mapi"
+
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr "Postavi/Preuzmi datoteku predloška video snimke"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Odaberi datoteku vido snimke"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Prikaži vrijeme"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "Pokreni video snimku naizmjenično"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "Odaberi mapu video snimaka"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Spriječi pokretanje čuvara zaslona ako se medij repoducira"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** Sve preuzete video snimke ***"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Aquarium 1  - [846MB] - 400p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Aquarium 2  - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Fireplace 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Kamin 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Kamin 3 - [2.1GB] - 1080p"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "Datoteka čuvara zaslona nije valjana"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "Sljedeća zadana video snimka već postoji"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Ponovno koristi datoteku?"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "Preuzimanje video datoteke čuvara zaslona"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "Ova mogućnost će koristiti sve preuzete video snimke"
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "Svaka video snimka bi trebala biti preuzeta pojedinačno"

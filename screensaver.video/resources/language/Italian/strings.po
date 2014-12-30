@@ -31,3 +31,7 @@ msgstr "Attiva il debug logging"
 msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Selezione video"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Configurazione"

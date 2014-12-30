@@ -27,3 +27,11 @@ msgstr "Debugging"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Mendeteksi  Nilai HDD"
+
+msgctxt "#32004"
+msgid "Video Selection"
+msgstr "Seleksi Video"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfigurasi"

@@ -27,3 +27,7 @@ msgstr "Silumine"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Lubati silumise logimine"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfiguratsioon"

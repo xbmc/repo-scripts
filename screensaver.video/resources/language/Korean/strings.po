@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32001"
 msgid "Screensaver"
-msgstr "화면보호기"
+msgstr "화면 보호기"
 
 msgctxt "#32002"
 msgid "Debugging"
@@ -36,13 +36,29 @@ msgctxt "#32005"
 msgid "VideoScreensaver"
 msgstr "VideoScreensaver"
 
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "환경설정"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "프리셋 비디오"
+
 msgctxt "#32021"
 msgid "User Defined"
-msgstr "사용자 정의"
+msgstr "사용자 비디오"
 
 msgctxt "#32022"
 msgid "Selected Screensaver"
-msgstr "선택한 화면보호기"
+msgstr "선택한 화면 보호기"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "폴더의 모드 파일 사용"
+
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr "프리셋 비디오 파일 설정/다운로드"
 
 msgctxt "#32051"
 msgid "Select Video File"
@@ -50,7 +66,7 @@ msgstr "비디오 파일 선택"
 
 msgctxt "#32052"
 msgid "Show Time"
-msgstr "시각 보기"
+msgstr "시계 보기"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
@@ -59,6 +75,26 @@ msgstr "무작위 위치에서 비디오 시작"
 msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "비디오 폴더 선택"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "미디어가 재생 중일 때 화면 보호기 시작 방지"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "화면 보호기가 시작될 때 음량 변경"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "음량 설정"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "흐림 수준"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** 다운로드한 모든 비디오 ***"
 
 msgctxt "#32101"
 msgid "Aquarium 1  - [846MB] - 400p"
@@ -80,6 +116,26 @@ msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
 msgstr "벽난로 3 - [2.1GB] - 1080p"
 
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "화면 보호기 파일이 적합하지 않음"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "아래의 기본 비디오가 이미 존재합니다"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "이 파일을 사용할까요?"
+
 msgctxt "#32303"
 msgid "Downloading Screensaver Video File"
-msgstr "화면보호기 비디오 파일 다운로드 중"
+msgstr "화면 보호기 비디오 파일 다운로드 중"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "이 옵션은 이미 다운로드한 모든 비디오를 사용합니다"
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "먼저 각각의 비디오를 다운로드하여야 합니다"

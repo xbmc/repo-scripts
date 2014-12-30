@@ -27,3 +27,7 @@ msgstr "Налагодження"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Увімкнути журнал налагодження"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Налаштування"

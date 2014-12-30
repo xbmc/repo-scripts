@@ -31,3 +31,7 @@ msgstr "הפעל יומן רישום מורחב"
 msgctxt "#32004"
 msgid "Video Selection"
 msgstr "בחירת וידאו"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "הגדרות"

@@ -19,3 +19,7 @@ msgstr ""
 msgctxt "#32001"
 msgid "Screensaver"
 msgstr "Skrinsejver"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfigurazzjoni"

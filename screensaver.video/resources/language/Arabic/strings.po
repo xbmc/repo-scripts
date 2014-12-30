@@ -27,3 +27,7 @@ msgstr "التصحيح"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "تمكين تسجيل التصحيح"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "إعدادات"

@@ -32,6 +32,10 @@ msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Sélection de vidéo"
 
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Configuration"
+
 msgctxt "#32021"
 msgid "User Defined"
 msgstr "Défini par l'utilisateur"

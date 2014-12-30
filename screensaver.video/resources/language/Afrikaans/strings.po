@@ -27,3 +27,7 @@ msgstr "Ontfouting"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Stel ontfout log in staat"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfigurasie"

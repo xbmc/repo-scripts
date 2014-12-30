@@ -27,3 +27,7 @@ msgstr "Traženje grešaka"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Omogući bilježenje grešaka"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfiguracija"

@@ -36,6 +36,10 @@ msgctxt "#32005"
 msgid "VideoScreensaver"
 msgstr "VideoScreensaver"
 
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfigūracija"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Išankstinės parinkties vaizdo įrašas"
@@ -71,6 +75,22 @@ msgstr "Paleisti vaizdo įrašą nuo atsitiktinės vietos"
 msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "Pasirinkti vaizdo įrašų aplanką"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Nepaleisti ekrano užsklandos, jei atkuriamas media įrašas"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Pakeisti garsumą, kai paleidžiama ekrano užsklanda"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Nustatyti garsumo lygį į"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Pritemdymo lygis"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

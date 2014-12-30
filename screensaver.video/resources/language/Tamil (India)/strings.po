@@ -27,3 +27,7 @@ msgstr "வழுநீக்கு"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "பிழைநீக்கு பதிவை செயல்படுத்தவும்"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "கட்டமைப்பு"

@@ -27,3 +27,7 @@ msgstr "Dadfygio"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Galluogi cofnodi dadfygio"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Ffurfweddiad"

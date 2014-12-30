@@ -27,3 +27,7 @@ msgstr "دیباگ"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "فعال‌کردن گزارش‌گیری اشکال‌زدایی"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "پیکربندی"

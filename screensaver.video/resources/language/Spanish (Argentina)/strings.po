@@ -27,3 +27,7 @@ msgstr "Depuración"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Habilitar trazas de depuración"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Configuración"

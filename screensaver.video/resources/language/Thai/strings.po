@@ -27,3 +27,7 @@ msgstr "แก้จุดบกพร่อง"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Enable debug logging"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "ปรับตั้งค่า"

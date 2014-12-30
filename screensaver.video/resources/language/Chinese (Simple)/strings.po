@@ -31,3 +31,7 @@ msgstr "显示除错信息"
 msgctxt "#32004"
 msgid "Video Selection"
 msgstr "视频选择"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "系统设置"

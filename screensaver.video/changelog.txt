@@ -1,3 +1,7 @@
+v1.0.5
+- Handle error if screensaver video not set
+- Prevent black screen if playing media when screensaver launches
+
 v1.0.4
 - Add option to change the volume
 - Allow the screen to be dimmed during the screensaver video

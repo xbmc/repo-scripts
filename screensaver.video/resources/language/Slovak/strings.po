@@ -31,3 +31,7 @@ msgstr "Začať ukladať informácie / debug log"
 msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Výber videa"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfigurácia"

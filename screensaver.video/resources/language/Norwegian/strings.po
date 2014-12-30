@@ -27,3 +27,7 @@ msgstr "Feilsøking"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Aktiver feilsøkingslogg"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfigurasjon"

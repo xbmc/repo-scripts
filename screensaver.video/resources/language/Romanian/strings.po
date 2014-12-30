@@ -27,3 +27,7 @@ msgstr "Depanare"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Activează jurnalizare depanare"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Configurație"

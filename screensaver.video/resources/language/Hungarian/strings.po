@@ -31,3 +31,7 @@ msgstr "Naplózás engedélyezése"
 msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Videó Kiválasztása"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfiguráció"

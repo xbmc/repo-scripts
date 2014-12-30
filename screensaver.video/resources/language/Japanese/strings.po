@@ -27,3 +27,7 @@ msgstr "デバッグ"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "デバッグログ出力を有効にする"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "設定"

@@ -34,7 +34,11 @@ msgstr "Wybór wideo"
 
 msgctxt "#32005"
 msgid "VideoScreensaver"
-msgstr "Wygaszacz wideo"
+msgstr "Video Screensaver"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfiguracja"
 
 msgctxt "#32020"
 msgid "Preset Video"
@@ -62,7 +66,7 @@ msgstr "Wybierz plik wideo"
 
 msgctxt "#32052"
 msgid "Show Time"
-msgstr "Pokazuj zegar"
+msgstr "Pokazuj datę i zegar"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
@@ -71,6 +75,22 @@ msgstr "Odtwarzaj wideo w dowolnym momencie"
 msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "Wybierz folder z plikami wideo"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Zapobiegaj uruchomieniu wygaszacza podczas odtwarzania"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Zmieniaj głośność uruchamiając wygaszacz ekranu"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Ustaw głośność na"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Poziom wygasania"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

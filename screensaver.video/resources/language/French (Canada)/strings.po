@@ -36,6 +36,10 @@ msgctxt "#32005"
 msgid "VideoScreensaver"
 msgstr "Économiseur d'écran vidéo"
 
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Configuration"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Vidéo prédéfinie"
@@ -71,6 +75,22 @@ msgstr "Démarrer la vidéo en un point aléatoire"
 msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "Choisir le dossier des vidéos"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Empêcher le démarrage de l'économiseur d'écran en cours de lecture"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Changer le volume quand l'économiseur d'écran démarre"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Définir le volume à"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Niveau d'assombrissement"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

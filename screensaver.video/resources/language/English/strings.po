@@ -48,7 +48,6 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr ""
 
-
 #empty strings from id 32007 to 32019
 
 msgctxt "#32020"

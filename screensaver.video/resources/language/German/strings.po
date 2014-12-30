@@ -36,6 +36,10 @@ msgctxt "#32005"
 msgid "VideoScreensaver"
 msgstr "VideoBildschirmschoner"
 
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfiguration"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Standardvideo"
@@ -71,6 +75,22 @@ msgstr "Video bei zufälliger Stelle starten"
 msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "Videoordner auswählen"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Bildschirmschonerstart verhindern, wenn Medienwiedergabe läuft"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Lautstärke ändern, wenn der Bildschirmschoner startet"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Lautstärke einstellen auf"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Abdunkelungsgrad"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

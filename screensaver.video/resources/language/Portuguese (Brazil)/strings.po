@@ -36,6 +36,10 @@ msgctxt "#32005"
 msgid "VideoScreensaver"
 msgstr "Protetor de Tela"
 
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Configurações"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Vídeo Pré-Ajustado"
@@ -71,6 +75,10 @@ msgstr "Iniciar Vídeo em um Ponto Randômico"
 msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "Selecionar Diretório com Vídeos"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Nível de Dimerização"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

@@ -27,3 +27,7 @@ msgstr "Razhroščevanje"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Vključi zapisovanje razhroščevanja"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Nastavitve"

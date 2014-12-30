@@ -27,3 +27,7 @@ msgstr "Debugging"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Suorituslokin tallennus (debug log)"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Asetukset"

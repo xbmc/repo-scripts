@@ -27,3 +27,7 @@ msgstr "Atkļūdošana"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Ieslēgt atkļūdošanas reģistrēšanu"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Konfigurācija"

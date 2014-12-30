@@ -27,3 +27,7 @@ msgstr "Барање грешки"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Овозможи обележување на грешки"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Конфигурација"

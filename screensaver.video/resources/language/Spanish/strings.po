@@ -31,3 +31,11 @@ msgstr "Habilitar trazas de depuración"
 msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Selección de vídeo"
+
+msgctxt "#32006"
+msgid "Configuration"
+msgstr "Configuración"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Nivel de atenuación"
