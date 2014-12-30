@@ -38,9 +38,9 @@ sys.path.append (__resource__)
 def getmediaUrl(mediaArgs):
     title = re.sub(" \(?(.*.)\)", "", mediaArgs[1])
     if mediaArgs[2] != "":
-      query = "site:divxplanet.com inurl:sub/m \"%s ekibi\" intitle:\"%s\" intitle:\"(%s)\"" % (mediaArgs[0], title, mediaArgs[2])
+      query = "site:altyazi.org/ inurl:sub/m \"%s ekibi\" intitle:\"%s\" intitle:\"(%s)\"" % (mediaArgs[0], title, mediaArgs[2])
     else:
-      query = "site:divxplanet.com inurl:sub/m \"%s ekibi\" intitle:\"%s\"" % (mediaArgs[0], title)
+      query = "site:altyazi.org/ inurl:sub/m \"%s ekibi\" intitle:\"%s\"" % (mediaArgs[0], title)
     br = mechanize.Browser()
     log("Divxplanet: Finding media %s" % query)
     # Cookie Jar
@@ -74,7 +74,7 @@ def getmediaUrl(mediaArgs):
         sLink = li.find('a')
         sSpan = li.find('span', attrs={'class':'st'})
         if sLink:
-            linkurl = re.search(r"\/url\?q=(http:\/\/divxplanet.com\/sub\/m\/[0-9]{3,8}\/.*.\.html).*", sLink["href"])
+            linkurl = re.search(r"\/url\?q=(http:\/\/altyazi.org/\/sub\/m\/[0-9]{3,8}\/.*.\.html).*", sLink["href"])
             if linkurl:
                 linkdictionary.append({"text": sSpan.getText().encode('utf8'), "name": mediaArgs[0], "url": linkurl.group(1)})
                 log("Divxplanet: found media: %s" % (linkdictionary[0]["url"]))
@@ -97,7 +97,7 @@ def Search(item):
         tvurl = getmediaUrl(["dizi",tvshow, year])
         log("Divxplanet: got media url %s" % (tvurl))
         if tvurl != "":
-          divpname = re.search(r"http:\/\/divxplanet.com\/sub\/m\/[0-9]{3,8}\/(.*.)\.html", tvurl).group(1)
+          divpname = re.search(r"http:\/\/altyazi.org/\/sub\/m\/[0-9]{3,8}\/(.*.)\.html", tvurl).group(1)
           season = int(season)
           episode = int(episode)
           # Browser
@@ -168,7 +168,7 @@ def Search(item):
          tvurl = getmediaUrl(["film", title, int(year)-1])
          log("Divxplanet: searching subtitles for %s %s" % (title, int(year)-1))
         log("Divxplanet: got media url %s" % (tvurl))
-        divpname = re.search(r"http:\/\/divxplanet.com\/sub\/m\/[0-9]{3,8}\/(.*.)\.html", tvurl).group(1)
+        divpname = re.search(r"http:\/\/altyazi.org/\/sub\/m\/[0-9]{3,8}\/(.*.)\.html", tvurl).group(1)
         # Browser
         br = mechanize.Browser()
 
@@ -235,7 +235,7 @@ def normalizeString(str):
          ).encode('ascii','ignore')
 
 def Download(link, lang, filename): #standard input
-	
+
     log("Divxplanet: o yoldayiz %s" % (link))
     subtitle_list = []
     ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
@@ -245,7 +245,7 @@ def Download(link, lang, filename): #standard input
     #xbmcvfs.mkdirs(__temp__)
 
     packed = True
-    dlurl = "http://divxplanet.com%s" % link
+    dlurl = "http://altyazi.org/%s" % link
     language = lang
     # Browser
     br = mechanize.Browser()
@@ -274,15 +274,15 @@ def Download(link, lang, filename): #standard input
         localName = r.info()['Content-Disposition'].split('filename=')[1]
         if localName[0] == '"' or localName[0] == "'":
             localName = localName[1:-1]
-    elif r.url != dlurl: 
+    elif r.url != dlurl:
         # if we were redirected, the real file name we take from the final URL
         localName = url2name(r.url)
-    
-    
+
+
 
     log("Divxplanet: Fetching subtitles using url %s" % (dlurl))
     local_tmp_file = os.path.join(__temp__, localName )
-    
+
     try:
         log("Divxplanet: Saving subtitles to '%s'" % (local_tmp_file))
         if not os.path.exists(__temp__):

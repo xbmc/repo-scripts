@@ -1,3 +1,6 @@
+0.0.7
+- Domain used for search replaced from divxplanet.com to altyazi.org
+
 0.0.6
 - Downloaded file handling improved [emreuygur]
 - Movie year may differ from the original one [emreuygur]
