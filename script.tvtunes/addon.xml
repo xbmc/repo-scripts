@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.tvtunes" name="TvTunes" version="4.6.3" provider-name="robwebset">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/> 
+		<import addon="script.module.requests" version="2.3.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.ui.screensaver" library="saver.py"/>
+	<extension point="xbmc.addon.metadata">
+	
+		<summary lang="bg">Сваля и възпроизвежда мелодиите от вашите филми и сериали</summary>
+	
+		<summary lang="ca">Obté i reproduieix els temes de les seves pel·lícules i sèries de televisió</summary>
+	
+		<summary lang="da">Hent og afspil dine Film og TV-show Temaer.</summary>
+	
+		<summary lang="de">Hole und spiele dein TV-Sendungs-Titelsong</summary>
+	
+		<summary lang="el">Λήψη και αναπαραγωγή μουσικών θεμάτων (TvTunes) των τηλεοπτικών σας σειρών</summary>
+	
+		<summary lang="en">Retrieve and play your soundtrack themes whilst browsing your library</summary>
+	
+		<summary lang="en_NZ">Get and play your Movie and TV shows Themes</summary>
+	
+		<summary lang="en_US">Retrieve and play your soundtrack themes while browsing your library</summary>
+	
+		<summary lang="es">Descarga y reproduce las bandas sonoras de las series de tu biblioteca</summary>
+	
+		<summary lang="fr">Récupérez et écoutez les génériques des séries TV</summary>
+	
+		<summary lang="fr_CA">Récupérez et lisez vos thèmes de bandes sonores en parcourant votre vidéothèque</summary>
+	
+		<summary lang="gl">Obter e reproducir a música das súas Series de TV</summary>
+	
+		<summary lang="he">הורדה וניגון נעימות של סרטים וסדרות בעת עיון בספריה</summary>
+	
+		<summary lang="hr">Nabavite i reproducirajte temu vašeg omiljenog filma i TV serije prilikom pregledavanja svoje videoteke</summary>
+	
+		<summary lang="it">Ottieni ed esegui i temi musicali delle tue Serie tV</summary>
+	
+		<summary lang="ko">영화와 TV 쇼의 테마 음악을 가져와서 재생합니다</summary>
+	
+		<summary lang="lt">gauti ir atkurti jūsų filmų ir tv laidų temas</summary>
+	
+		<summary lang="nl">Verkrijg en speel je TV serie thema`s</summary>
+	
+		<summary lang="no">Hent og spill av gjenkjenningsmelodier mens du blar gjennom biblioteket</summary>
+	
+		<summary lang="pl">Pobieraj i odtwarzaj motywy muzyczne filmów i seriali</summary>
+	
+		<summary lang="pt">Obtenha e reproduza as músicas dos seus filmes e séries de TV.</summary>
+	
+		<summary lang="pt_BR">Obtenha e reproduza o tema musical das suas séries de TV</summary>
+	
+		<summary lang="sv">Hämtar och spelar dina TV-serier-teman</summary>
+	
+		<description lang="bg">Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик. (Специални благодарности на Ppic, Frost и ronie за за тяната работа върху TvTunes)</description>
+	
+		<description lang="ca">Aquest script t'ajudarà a cercar la banda sonora de les teves pel·lícules i sèries de televisió en www.televisiontunes.com Les guardarà en un fitxer theme[0-9].mp3 a la carpeta dels vídeos i seran reproduïdes mentre navegues per la teva col·lecció de vídeos, quant entris a la carpeta d'una sèrie o a la pantalla d'informació de vídeo. (Necessites una pell compatible per a aquesta funcionalitat)</description>
+	
+		<description lang="da">Scriptet vil hjælpe dig med at hente temaer til dit film og serie bibliotek fra www.televisiontunes.com. Den gemmer dem som theme[0-9].mp3 i hver af dine videomapper, så de vil blive spillet mens du gennemser dit videobibliotek når du går ind i seriemappen eller Video Information (Dit skin skal være kompatibel med denne feature)</description>
+	
+		<description lang="de">Dieses Skript wird dir helfen, die Titelsongs deiner Filme und TV-Sendungen von www.televisiontunes.com zu holen und diese in als theme[0-9].mp3 in deinen Video Ordnern zu speichern. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)</description>
+	
+		<description lang="el">Αυτό το script θα σας βοηθήσει να κατεβάσετε μουσικά θέματα των τηλεοπτικών σας σειρών από το www.televisiontunes.com, θα τα αποθηκεύει σε αρχεία μορφής theme.mp3 στο φάκελο της εκάστοτε σειράς, και θα τα αναπαράγει κατά την περιήγησή σας στη συλλογή τηλ. σειρών σας (απαιτείται να υποστηρίζεται από το κέλυφός σας)</description>
+	
+		<description lang="en">TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)</description>
+	
+		<description lang="en_NZ">This script will help you to get themes for your movie and TV show library from www.televisiontunes.com It will save them in theme[0-9].mp3 file in each of your video folders then they will be played while browsing your video library when you enter the TV Show folder or Video Information screen (need your skin to be compatible for this feature)</description>
+	
+		<description lang="en_US">TvTunes is equipped with powerful features that enable the fetching, organizing and playing of themes while browsing your Kodi library, when used in conjunction with a compatible skin.</description>
+	
+		<description lang="es">Este script te ayudará a buscar las bandas sonoras de tus películas y series de www.televisiontunes.com y guardará un fichero theme.mp3 en el directorio de tu serie y será reproducido mientras navegas dentro de la carpeta de la serie. (Necesitas una skin compatible para esta funcionalidad)</description>
+	
+		<description lang="fr">Ce script vous aidera à télécharger vos génériques de série depuis www.televisiontunes.com Il les enregistrera dans un fichier theme.mp3 dans vos répertoires de série, ils seront ensuite joué lorsque vous entrerez dans la série correspondante (cette fonctionalité requiert une skin compatible)</description>
+	
+		<description lang="fr_CA">TVTunes est équipé de fonctions puissantes qui permettent l'obtention, l'organisation et la lecture de thèmes tout en parcourant votre vidéothèque, lorsque utilisé en conjonction avec un habillage compatible.</description>
+	
+		<description lang="gl">Este script axudaralle a obter dende www.televisiontunes.com o tema da súa biblioteca de series, gardándoo no ficheiro theme.mp3 por cada cartafol da biblioteca entón reproduciranse ao entrar nos diferentes cartafoles ao navegar pola biblioteca (precisa de que o seu tema sexa compatíbel con esta carácteristica)</description>
+	
+		<description lang="he">סקריפט זה יעזור לך להשיג שירי נושא לספריות הסרטים והסדרות שלך מ-www.televisiontunes.com, ישמור אותם בקובץ בשם theme[0-9].mp3 בכל אחת מתיקיות הוידאו שלך והם ינוגנו בעת עיון בספריית הוידאו כאשר תיכנס לספריית סדרה או במסך מידע וידאו (נדרשת תאימות המעטפת עבור יכולת זו)</description>
+	
+		<description lang="hr">TvTunes je opremljen s moćnim značajkama koje omogućavaju nabavljanje, organizaciju i reproduciranje glazbenih tema dok vi pregledavate vašu Kodi videoteku, kada se koristi zajedno s kompatibilnom presvlakom. (Posebna zahvala Ppic,Frost i ronie na njihovom ranijem razvoju TvTunes)</description>
+	
+		<description lang="it">Questo script ti aiuterà ad ottenere il tema delle serie tv presenti nella tua libreria da www.televisiontunes.com, li salverà nel file theme.mp3 in ogni cartella delle tue serie così quando sfoglierai la serie tv il tema sarà eseguito (il tuo skin deve essere compatibile)</description>
+	
+		<description lang="ko">라이브러리의 영화와 TV 쇼 테마 음악을 www.televisiontunes.com 에서 가져와서 theme[0-9].mp3 형식으로 비디오 폴더에 저장합니다. TV 쇼 폴더나 비디오 정보 화면으로 들어가면 비디오 라이브러리를 탐색하는 동안 주제음악이 재생됩니다. (이 기능 사용하려면 스킨에서 지원하여야 합니다.)</description>
+	
+		<description lang="lt">Šis skriptas jums padės temas jūsų filmų ir tv laidų temas iš www.televisiontunes.com. Jos bus išsaugotos theme[0-9].mp3 faile, kiekviename jūsų vaizdo aplanke ir bus atkurtos, naršant vaizdo bibliotekoje, pasirinkus TV laidos aplanką arba vaizdo informacijos langą (teminė išvaizda turi būti suderinama su šia funkcija)</description>
+	
+		<description lang="nl">Dit script zoekt thema`s van TV series in jouw TV seriebibliotheek op www.televisiontunes.com en slaat ze op in thema[0-9].mp3 bestand in elke TV serie map. Ze worden afgespeeld wanneer je de  TV serie in bibliotheek modus bekijkt of Video-informatiescherm (Het gebruikte ontwerp moet wel compatibel zijn met dit script)</description>
+	
+		<description lang="pl">Dodatek TvTunes wyposażono w potężny zestaw funkcji umożliwiający pobieranie, organizowanie i odtwarzanie motywów muzycznych podczas przeglądania biblioteki Kodi, przez kompatybilne z nim skóry. Specjalne podziękowanie dla Ppic,Frost i ronie za ich początkową pracę przy tworzeniu TvTunes)</description>
+	
+		<description lang="pt">Com este addon, poderá obter as músicas dos filmes e séries TV na sua biblioteca a partir de televisiontunes.com. Serão guardadas em ficheiros theme[0-9].mp3 dentro das pastas de vídeo e serão reproduzidas durante a navegação na biblioteca de vídeo, quando entrar dentro da pasta de Séries TV ou no ecrã de Informação de Vídeo (é necessário um tema compatível).</description>
+	
+		<description lang="pt_BR">Este script ajudará você a obter o tema da sua coleção de séries de TV de www.televisiontunes.com, que serão salvos em um arquivo theme.mp3 em cada uma das pastas de suas séries e serão reproduzidos sempre que você acessar uma série na sua coleção (a skin precisa ser compatível com este recurso)</description>
+	
+		<description lang="sv">Detta skript hjälper dig att hitta teman till ditt tv-seriebibliotek från www.televisiontunes.com som sparas i theme.mp3 filer i varje tv-seriemapp som sedan spelas när du öppnar tv-seriemappen (ditt skal måste vara kompatibelt för detta)</description>
+	
+		<disclaimer lang="bg">До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="ca">Creadors de pells, si us plau, visiteu el wiki per saber com integrar el complement a les vostres pells: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="da">Skinnere, se venligst wikien for hvordan du integrere det i dit skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="de">Skin-Ersteller, bitte schaut ins wiki um zu wissen, wie ihr es in euren Skin integriert: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="el">Skinners, ελέγξτε την ιστοσελίδα για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="en">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="en_NZ">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="en_US">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="es">Skinners, por favor, revisad changelog.txt para saber cómo integrarlo en vuestras skins</disclaimer>
+	
+		<disclaimer lang="fr">Skinneurs, lisez le changelog.txt pour obtenir les infos pour l'intégrer à votre skin</disclaimer>
+	
+		<disclaimer lang="fr_CA">Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="gl">Autores de temas, por favor vexan o changelog.txt para saber como integrar tvtunes no seu tema</disclaimer>
+	
+		<disclaimer lang="he">מפתחי מעטפות, אנא פנו לוויקי ע"מ לדעת כיצד לשלב זאת במעטפת שלכם: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="hr">Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="it">Skinners, guardate il file changelog.txt per sapere come integrare lo script nello skin</disclaimer>
+	
+		<disclaimer lang="ko">스킨 제작자 여러분, 스킨에 통합하는 방법은 위키를 참고하세요: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="lt">Teminių išvaizdų kūrėjai, prašau aplankykite wiki puslapį, norėdami sužinoti kaip integruoti tai į jūsų teminę išvaizdą: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="nl">Skinners, bekijk de wiki om te zien hoe dit script in je skin te integreren: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="no">Designere, vennlist se wikien for å se hvordan du integrerer dette i ditt tema: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="pl">Twórcy skór mogą znaleźć informacje dotyczące integracji TvTunes ze skórą na stronach wiki: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes</disclaimer>
+	
+		<disclaimer lang="pt">Autores dos temas, por favor vejam o changelog.txt para saber como integrar TVTunes nos vossos temas.</disclaimer>
+	
+		<disclaimer lang="pt_BR">Criadores de skins, por favor vejam o changelog.txt para aprender como integrá-lo à sua skin</disclaimer>
+	
+		<disclaimer lang="sv">Skalförfattare, var vänlig läs changelog.txt för instruktioner hur du integrerar detta i ditt skal</disclaimer>
+	
+		<language></language>
+	
+		<platform>all</platform>
+	
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+	
+		<forum>http://forum.kodi.tv/showthread.php?tid=173799</forum>
+	
+		<source>http://robwebset.googlecode.com/svn/trunk/script.tvtunes/</source>
+	</extension>
+</addon>
