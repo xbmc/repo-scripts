@@ -1,5 +1,0 @@
-2.0.1
-- handle ACTION_NAV_BACK to close the script(id 92)
-
-2.0.0
-- initial Eden commit
