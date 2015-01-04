@@ -1,3 +1,6 @@
+4.3.1 by maortal 02/01/2015
+- changed URL from subtitle.co.il -> hebsubs.com
+
 4.3.0 - by CaTz 08/11/2014
 - Bug fix, add slash or backslash at the end of path (fix xbmcvfs.exists in Helix)
 - Add support for preferred language in Helix

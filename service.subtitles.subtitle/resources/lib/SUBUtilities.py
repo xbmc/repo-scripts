@@ -107,7 +107,7 @@ def heb_to_eng(language):
 
 
 class SubtitleHelper:
-    BASE_URL = "http://www.subtitle.co.il"
+    BASE_URL = "http://www.hebsubs.com"
 
     def __init__(self):
         self.urlHandler = URLHandler()
