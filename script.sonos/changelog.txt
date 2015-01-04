@@ -1,0 +1,80 @@
+v1.2.4
+- Allow user to hide the Sonos icon on the controller screen
+
+v1.2.3
+- Fix issue with next track event handling due to latest Sonos Software
+
+v1.2.2
+- Fix issue with non ascii titles
+- Remove test data option
+- Stop script error cause by event structure changes in latest Sonos Software
+- Add support for viewing and playing imported playlist
+- Fix character encoding when browsing via the plugin
+
+v1.2.1
+- Improve Speaker Search
+- Improve Sonos event update handling
+
+v1.2.0
+- Initial version of speech support
+
+v1.1.1
+- Give the search for Sonos systems more time to run
+- Set default for Artist Slideshow selection
+
+v1.1.0
+- Prevent script error if Sonos detect fails
+- Add additional Artist Slideshow with controller screen (No Bio or Albums)
+- Add additional Artist Slideshow Only screen (no controller, bio or Albums)
+- Update images to look more like the latest ipad controls
+- Add support for viewing and playing Sonos Playlists
+
+v1.0.10
+- Highlight which speakers are group coordinators
+
+v1.0.9
+- Add option to Switch Sonos To Line-In On Media Start
+- Add check that Artist Slideshow has transparent image enabled
+- Populate information when using streaming service
+- Add next track details when random is set
+
+v1.0.8
+- Make sure the Play/Pause button has focus after Play/Pause selected
+- Stop screensaver starting when using controller
+- Display the next track if not in random play order
+- Support auto-pause of Sonos when XBMC media starts
+- Add support for Random, Repeat and Crossfade commands
+- Add option to automatically reset the IP Address based on the Zone
+- Add shortcut to controller from the plugin
+
+v1.0.7
+- Add advanced controller with Artist Slideshow information
+- Full support for using a remote control
+- Support linking of XBMC and Sonos Volume
+
+v1.0.6
+- Set Gotham Notification window to not make a noise
+- Add option to restrict number of entries returned
+
+v1.0.5
+- Fix bug with discovery throwing an error
+
+v1.0.4
+- Fix playing from music library bug
+- Add Favourite Radio Stations support
+
+v1.0.3
+- Fix issue with ElementTree on some systems
+- Add plugin support for browsing the music library
+- Add plugin support for view and edit the current play queue
+- Initial remote control support for mini controller - but not perfect
+
+v1.0.2
+- Mini Sonos controller added with album art
+
+v1.0.1
+- Don't display notification on startup if Sonos is not playing
+- Initial version of controller
+
+v1.0.0:
+- Initial release
