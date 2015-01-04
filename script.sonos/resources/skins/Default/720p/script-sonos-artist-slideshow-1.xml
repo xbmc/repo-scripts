@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="3002">
+	<defaultcontrol always="true">100</defaultcontrol>
+	<include>dialogeffect</include>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<description>Main Background</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">msNowPlayingBg_ipad.png</texture>
+		</control>
+		<control type="button" id="900">
+			<description>Close Window button</description>
+			<posx>84r</posx>
+			<posy>0</posy>
+			<width>64</width>
+			<height>32</height>
+			<label>-</label>
+			<font>-</font>
+			<onclick>back</onclick>
+			<texturefocus>DialogCloseButton-focus.png</texturefocus>
+			<texturenofocus>DialogCloseButton.png</texturenofocus>
+			<onleft>100</onleft>
+			<onright>100</onright>
+			<onup>622</onup>
+			<ondown>100</ondown>
+			<visible>system.getbool(input.enablemouse)</visible>
+		</control>
+
+		<control type="image">
+			<description>Left Top Panel Background</description>
+			<posx>60</posx>
+			<posy>30</posy>
+			<width>520</width>
+			<height>230</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">npServiceRatingBg@2x.png</texture>
+		</control>
+		<control type="image">
+			<description>Left Top Panel Inset Background</description>
+			<posx>70</posx>
+			<posy>40</posy>
+			<width>500</width>
+			<height>210</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">msNowPlayingBg_ipad.png</texture>
+		</control>
+
+		<control type="image">
+			<description>Left Bottom Panel Background</description>
+			<posx>60</posx>
+			<posy>270</posy>
+			<width>520</width>
+			<height>420</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">npServiceRatingBg@2x.png</texture>
+		</control>
+		<control type="image">
+			<description>Left Bottom Panel Inset Background</description>
+			<posx>70</posx>
+			<posy>280</posy>
+			<width>500</width>
+			<height>400</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">msNowPlayingBg_ipad.png</texture>
+		</control>
+
+		<control type="image">
+			<description>Right Panel Background</description>
+			<posx>700</posx>
+			<posy>30</posy>
+			<width>520</width>
+			<height>660</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">npServiceRatingBg@2x.png</texture>
+		</control>
+		<control type="image">
+			<description>Right Panel Inset Background</description>
+			<posx>710</posx>
+			<posy>40</posy>
+			<width>500</width>
+			<height>640</height>
+			<colordiffuse>CCFFFFFF</colordiffuse>
+			<texture border="20">msNowPlayingBg_ipad.png</texture>
+		</control>
+
+		<control type="image">
+			<description>Sonos Logo</description>
+			<posx>600</posx>
+			<posy>590</posy>
+			<width>80</width>
+			<height>80</height>
+			<texture>$INFO[Window.Property(SonosAddonIcon)]</texture>
+		</control>
+
+		<control type="multiimage">
+		    <posx>720</posx>
+		    <posy>50</posy>
+		    <width>480</width>
+		    <height>260</height>
+		    <imagepath background="true">$INFO[Window.Property(ArtistSlideshow)]</imagepath>
+			<!-- <aspectratio>keep</aspectratio> -->
+		    <timeperimage>5000</timeperimage>
+		    <fadetime>1000</fadetime>
+		    <randomize>true</randomize>
+		</control>
+
+		<control type="textbox">
+			<description>Artist Biography from Artist Slideshow</description>
+			<posx>725</posx>
+			<posy>315</posy>
+			<width>470</width>
+			<height>360</height>
+			<align>left</align>
+			<aligny>top</aligny>
+			<font>font13</font>
+			<scroll>true</scroll>
+			<wrapmultiline>true</wrapmultiline>
+			<autoscroll time="2000" delay="10000" repeat="5000"></autoscroll>
+			<label>$INFO[Window.Property(ArtistSlideshow.ArtistBiography)]</label>
+			<visible>!IsEmpty(Window.Property(ArtistSlideshow.ArtistBiography))</visible>
+		</control>
+
+
+		<control type="wraplist" id="1345">
+			<posx>75</posx>
+			<posy>285</posy>
+			<width>490</width>
+			<height>390</height>
+			<visible>true</visible>
+			<scrolltime tween="sine" easing="out">4000</scrolltime>
+			<autoscroll>true</autoscroll>
+			<orientation>vertical</orientation>
+			<content>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.1.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.1.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.1.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.2.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.2.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.2.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.3.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.3.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.3.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.4.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.4.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.4.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.5.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.5.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.5.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.6.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.6.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.6.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.7.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.7.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.7.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.8.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.8.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.8.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.9.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.9.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.9.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.10.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.10.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.10.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.11.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.11.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.11.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.12.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.12.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.12.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.13.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.13.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.13.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.14.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.14.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.14.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.15.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.15.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.15.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.16.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.16.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.16.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.17.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.17.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.17.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.18.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.18.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.18.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.19.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.19.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.19.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.20.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.20.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.20.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.21.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.21.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.21.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.22.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.22.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.22.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.23.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.23.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.23.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.24.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.24.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.24.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.25.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.25.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.25.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.26.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.26.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.26.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.27.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.27.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.27.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.28.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.28.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.28.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.29.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.29.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.29.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window.Property(ArtistSlideshow.30.AlbumName))</visible>
+			        <label>$INFO[Window.Property(ArtistSlideshow.30.AlbumName)]</label>
+			        <thumb>$INFO[Window.Property(ArtistSlideshow.30.AlbumThumb)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			</content>
+			<itemlayout height="78" width="490">
+                <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>75</width>
+                        <height>75</height>
+                        <info>ListItem.Icon</info>
+                </control>
+                <control type="label">
+						<description>Album Title</description>
+                        <posx>85</posx>
+                        <posy>0</posy>
+                        <width>400</width>
+                        <height>75</height>
+                        <font>font12</font>
+                        <aligny>center</aligny>
+                        <align>left</align>
+						<wrapmultiline>true</wrapmultiline>
+                        <info>ListItem.Label</info>
+                </control>
+            </itemlayout>
+			<focusedlayout height="78" width="490">
+                <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>75</width>
+                        <height>75</height>
+                        <info>ListItem.Icon</info>
+                </control>
+                <control type="label">
+						<description>Album Title</description>
+                        <posx>85</posx>
+                        <posy>0</posy>
+                        <width>400</width>
+                        <height>75</height>
+                        <font>font12</font>
+                        <aligny>center</aligny>
+                        <align>left</align>
+						<wrapmultiline>true</wrapmultiline>
+                        <info>ListItem.Label</info>
+                </control>
+			</focusedlayout>
+		</control>
+
+		<!-- Music Info -->
+		<control type="group">
+			<control type="group" id="300">
+				<control type="image" id="801">
+					<description>Cover image</description>
+					<posx>90</posx>
+					<posy>50</posy>
+					<width>130</width>
+					<height>130</height>
+				</control>
+				<control type="fadelabel" id="802">
+					<description>Artist label</description>
+					<posx>230</posx>
+					<posy>53</posy>
+					<height>30</height>
+					<width>325</width>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font12_title</font>
+					<textcolor>FF999999</textcolor>		<!-- grey2 -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<scrollout>false</scrollout>
+					<pauseatend>2000</pauseatend>
+				</control>
+				<control type="fadelabel" id="803">
+					<description>Title label</description>
+					<posx>230</posx>
+					<posy>76</posy>
+					<height>30</height>
+					<width>325</width>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>ffffffff</textcolor>		<!-- white -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<scrollout>false</scrollout>
+					<pauseatend>2000</pauseatend>
+				</control>
+				<control type="fadelabel" id="804">
+					<description>Album Label</description>
+					<posx>230</posx>
+					<posy>103</posy>
+					<height>30</height>
+					<width>325</width>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font12</font>
+					<textcolor>ffffffff</textcolor>		<!-- white -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<scrollout>false</scrollout>
+					<pauseatend>2000</pauseatend>
+				</control>
+				<control type="fadelabel" id="805">
+					<description>Next Label</description>
+					<posx>230</posx>
+					<posy>133</posy>
+					<height>30</height>
+					<width>325</width>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font12</font>
+					<textcolor>7fffffff</textcolor>		<!-- grey -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<scrollout>false</scrollout>
+					<pauseatend>2000</pauseatend>
+				</control>
+				<control type="label" id="810">
+					<description>Current Time Position Label</description>
+					<posx>230</posx>
+					<posy>163</posy>
+					<height>15</height>
+					<width>60</width>
+					<label>-</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>font10</font>
+					<textcolor>ffffffff</textcolor>		<!-- white -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<!-- Only display the start time if there is a duration set -->
+					<visible>Control.IsVisible(812)</visible>
+				</control>
+				<control type="slider" id="811">
+					<description>Seek Slider</description>
+					<posx>290</posx>
+					<posy>168</posy>
+					<width>215</width>
+					<height>5</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>pmProgressTrackBar.png</texturesliderbar>
+					<textureslidernib>pmProgressTrackBarFillStretch.png</textureslidernib>
+					<textureslidernibfocus>pmProgressTrackBarFillStretch.png</textureslidernibfocus>
+					<onup>100</onup>
+					<ondown>900</ondown>
+					<!-- Only display the slider if there is a duration set -->
+					<visible>Control.IsVisible(812)</visible>
+				</control>
+				<control type="label" id="812">
+					<description>Duration Label</description>
+					<posx>505</posx>
+					<posy>166</posy>
+					<height>15</height>
+					<width>60</width>
+					<label>-</label>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>font10</font>
+					<textcolor>ffffffff</textcolor>		<!-- white -->
+					<shadowcolor>FF000000</shadowcolor> <!-- black -->
+					<visible>True</visible>
+				</control>
+			</control>
+	
+			<control type="image">
+				<description>Background For the controls</description>
+				<posx>80</posx>
+				<posy>190</posy>
+				<width>480</width>
+				<height>53</height>
+				<colordiffuse>DDFFFFFF</colordiffuse>
+				<texture flipy="false" border="20,20,20,2">custom_button@2x.png</texture>
+			</control>
+			<control type="group" id="100">
+				<posx>95</posx>
+				<posy>197</posy>
+				<defaultcontrol always="true">603</defaultcontrol>
+				<control type="button" id="600">
+					<description>Previous Button</description>
+					<posx>0</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbTransportBack_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbTransportBack.png</texturenofocus>
+					<onleft>102</onleft>
+					<onright>101</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<!-- Group for the Play Pause Button to allow keyboard navigation -->
+				<control type="group" id="101">
+					<control type="button" id="601">
+						<description>Play Button</description>
+						<posx>40</posx>
+						<posy>10</posy>
+						<width>20</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbPlay_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbPlay.png</texturenofocus>
+						<onleft>600</onleft>
+						<onright>603</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>True</visible>
+					</control>
+					<control type="button" id="602">
+						<description>Pause Button</description>
+						<posx>40</posx>
+						<posy>10</posy>
+						<width>20</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbPause_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbPause.png</texturenofocus>
+						<onleft>600</onleft>
+						<onright>603</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>!Control.IsVisible(601)</visible>
+					</control>
+				</control>
+				<control type="button" id="603">
+					<description>Stop Button</description>
+					<posx>80</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbStop_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbStop.png</texturenofocus>
+					<onleft>101</onleft>
+					<onright>604</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<control type="button" id="604">
+					<description>Next Button</description>
+					<posx>120</posx>
+					<posy>10</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<texturefocus>control_buttons/tbTransportForward_sel.png</texturefocus>
+					<texturenofocus>control_buttons/tbTransportForward.png</texturenofocus>
+					<onleft>603</onleft>
+					<onright>104</onright>
+					<onup>900</onup>
+					<ondown>622</ondown>
+				</control>
+				<!-- Group the Repeat Buttons -->
+				<control type="group" id="104">
+					<control type="button" id="605">
+						<description>Repeat Button</description>
+						<posx>190</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbRepeat_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbRepeat.png</texturenofocus>
+						<onleft>604</onleft>
+						<onright>103</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+					</control>
+					<control type="button" id="606">
+						<description>Repeat Button Enabled</description>
+						<posx>190</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbRepeatActive_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbRepeatActive.png</texturenofocus>
+						<onleft>604</onleft>
+						<onright>103</onright>
+						<onup>900</onup>
+						<visible>!Control.IsVisible(605)</visible>
+						<ondown>622</ondown>
+					</control>
+				</control>
+				<!-- Group the Random Buttons -->
+				<control type="group" id="103">
+					<control type="button" id="607">
+						<description>Random Button</description>
+						<posx>220</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbShuffle_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbShuffle.png</texturenofocus>
+						<onleft>104</onleft>
+						<onright>105</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+					</control>
+					<control type="button" id="608">
+						<description>Random Button Enabled</description>
+						<posx>220</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbShuffleActive_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbShuffleActive.png</texturenofocus>
+						<onleft>104</onleft>
+						<onright>105</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>!Control.IsVisible(607)</visible>
+					</control>
+				</control>
+				<!-- Group the Crossfade Buttons -->
+				<control type="group" id="105">
+					<control type="button" id="609">
+						<description>Crossfade Button</description>
+						<posx>250</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbCrossfade_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbCrossfade.png</texturenofocus>
+						<onleft>103</onleft>
+						<onright>102</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+					</control>
+					<control type="button" id="610">
+						<description>Crossfade Button Enabled</description>
+						<posx>250</posx>
+						<posy>10</posy>
+						<width>25</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbCrossfadeActive_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbCrossfadeActive.png</texturenofocus>
+						<onleft>103</onleft>
+						<onright>102</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>!Control.IsVisible(609)</visible>
+					</control>
+				</control>
+				<!-- Group for the Sound and mute Button to allow keyboard navigation -->
+				<control type="group" id="102">
+					<control type="button" id="620">
+						<description>Sound Volume Button</description>
+						<posx>310</posx>
+						<posy>10</posy>
+						<width>20</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbVolume_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbVolume.png</texturenofocus>
+						<onleft>105</onleft>
+						<onright>600</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>True</visible>
+					</control>
+					<control type="button" id="621">
+						<description>Sound Mute Button</description>
+						<posx>310</posx>
+						<posy>10</posy>
+						<width>20</width>
+						<height>20</height>
+						<label>-</label>
+						<texturefocus>control_buttons/tbVolumeMute_sel.png</texturefocus>
+						<texturenofocus>control_buttons/tbVolumeMute.png</texturenofocus>
+						<onleft>105</onleft>
+						<onright>600</onright>
+						<onup>900</onup>
+						<ondown>622</ondown>
+						<visible>!Control.IsVisible(620)</visible>
+					</control>
+				</control>
+				<control type="slider" id="622">
+					<description>Volume Slider</description>
+					<posx>330</posx>
+					<posy>12</posy>
+					<width>120</width>
+					<height>15</height>
+					<texturefocus>-</texturefocus>
+					<texturenofocus>-</texturenofocus>
+					<texturesliderbar>control_buttons/volumeSliderbar.png</texturesliderbar>
+					<textureslidernib>control_buttons/tbVolumeScrubber.png</textureslidernib>
+					<textureslidernibfocus>control_buttons/tbVolumeScrubber_sel.png</textureslidernibfocus>
+					<onup>100</onup>
+					<ondown>900</ondown>
+				</control>
+			</control>
+		</control>
+	</controls>
+ </window>
