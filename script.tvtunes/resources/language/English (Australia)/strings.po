@@ -1,0 +1,53 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (Australia) (http://www.transifex.com/projects/p/xbmc-addons/language/en_AU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_AU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Path:"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Never"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Screensaver"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Movies"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV Shows"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Playback"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Download"

@@ -1,0 +1,269 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Croatian (http://www.transifex.com/projects/p/xbmc-addons/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "Addon Summary"
+msgid "Retrieve and play your soundtrack themes whilst browsing your library"
+msgstr "Nabavite i reproducirajte temu vašeg omiljenog filma i TV serije prilikom pregledavanja svoje videoteke"
+
+msgctxt "Addon Description"
+msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
+msgstr "TvTunes je opremljen s moćnim značajkama koje omogućavaju nabavljanje, organizaciju i reproduciranje glazbenih tema dok vi pregledavate vašu Kodi videoteku, kada se koristi zajedno s kompatibilnom presvlakom. (Posebna zahvala Ppic,Frost i ronie na njihovom ranijem razvoju TvTunes)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Reproduciraj temu u petlji"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Smanji glasnoću zvuka"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Koristi zaštićeno  SMB dijeljenje"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Korisničko ime:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Lozinka:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Spremi temu u prilagođenu putanju"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Putanja:"
+
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Postepeno utišavaj pri završetki"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Izmiješaj višestruke zapise"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Naizmjenično vrijeme pokretanja"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Postepeno utišavaj pri pokretanju"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Uvijek dodaj dodatne teme (bez prepisivanja)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Pretraži filmske teme"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Reproduciraj teme pri pregledavanju popisa filmova"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Reproduciraj teme pri pregledavanju popisa TV serija"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Otklanjanje greške"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Omogući zapisivanje otklanjanja grešaka"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Prikaži TvTunes tipku na Video zaslonu informacija"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Iščezavanje nakon reprodukcije za (minute)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Radnje"
+
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Pregledaj teme"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Odgoda pokretanja teme (sekunde)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Podrži teme u poddirektorijima"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Naziv direktorija"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Ograniči trajanje zapisa kod višestrukih tema (dekunde)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Zadani izvor pretraživača tema "
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Reproduciraj temu pri pregledavanju popisa glazbenih spotova"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nikada"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Čuvar zaslona"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "GREŠKA"
+
+msgctxt "#32102"
+msgid "site unreachable"
+msgstr "stranica nedostupna"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "TvTune preuzimatelj"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Želite li zamijeniti postojeću temu?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TV melodije"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Nabavljanje informacija..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Pretražujem"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "PONIŠTENO"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Radnju je poništio korisnik."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Preuzimanje:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "u:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Odaberite za"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "UPIŠITE RUČNU PRETRAGU"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Preuzmite  ovo?"
+
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Rezulatati pretrage biti će nepotpuni"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Možete pomoći u nabavi više tema na:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Ručna pretraga..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Nastavi sa sljedećim pretraživanjem teme?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Pretraživanje pomoću %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Pretraži pomoću svih stranica (može bit sporo)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmovi"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV serije"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Glazbeni spotovi"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filter]: Prikaži samo teme koje nedostaju"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Radnja]: Preuzmi teme koje nedostaju"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Imate tema koje nisu u mapi tema."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Teme filma u mapi tema?"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Reprodukcija"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Preuzmi"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Datotečni sustav"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "Greška: nemoguće povezivanje s goear.com"

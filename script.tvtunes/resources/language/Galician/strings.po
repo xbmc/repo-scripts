@@ -1,0 +1,269 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/xbmc-addons/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Retrieve and play your soundtrack themes whilst browsing your library"
+msgstr "Obter e reproducir a música das súas Series de TV"
+
+msgctxt "Addon Description"
+msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
+msgstr "Este script axudaralle a obter dende www.televisiontunes.com o tema da súa biblioteca de series, gardándoo no ficheiro theme.mp3 por cada cartafol da biblioteca entón reproduciranse ao entrar nos diferentes cartafoles ao navegar pola biblioteca (precisa de que o seu tema sexa compatíbel con esta carácteristica)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Autores de temas, por favor vexan o changelog.txt para saber como integrar tvtunes no seu tema"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Reproducir o tema continuamente"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Axustar volume do son"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Usar recurso compartido SMB Protexido"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Nome de Usuario:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Contrasinal:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Gardar cancións nun cartafol personalizado"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Ruta:"
+
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Atenuar a música ao saír"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Misturar varias pistas"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Hora de inicio ó chou"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Aumentar a música ao iniciar"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Engadir sempre temas adicionais (non sobreescribir)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Buscar temas de filmes"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Reproducir música ao navegar pola listaxe de filmes"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Reproducir música ao navegar pola listaxe de series"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Depurado"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Activar rexistro de depurado"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Amosar o botón TvTunes na pantalla de Info. do vídeo"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Esvaecer despois de reproducir durante (minutos)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Operacións"
+
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Buscar Temas"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Retraso no Inicio do Tema (Segundos)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Permitir pistas en subcartafoles"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Nome do Cartafol"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Limitar a duración da pista cando existen varias (segundos)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Fonte Predefinida para a Busca de Música"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Reproducir música ao navegar pola listaxe de vídeos musicais"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nunca"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Protector de pantalla"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "Error"
+
+msgctxt "#32102"
+msgid "site unreachable"
+msgstr "sitio non accesíbel"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "Descargador de TVTune"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Mudar o tema existente?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TVTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Obtendo información..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Buscando por"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "CANCELADO"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Operación cancelada polo usuario."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Descargando:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "para:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Seleccionar para"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "INTRODUZA BUSCA MANUAL"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Descargar este?"
+
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Os resultados da busca serán incompletos"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Pode axudar a obter máis temas en:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Busca manual"
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Continuar coa busca da próxima canción?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Buscar Usando %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Buscar empregando Todos os Sitios (Lento)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmes"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Series de TV"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Vídeos Musicais"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filtro]: Amosar só os Temas que Faltan"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Acción]: Obter os Temas que Faltan"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Ten temas que non están no cartafol de temas."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Mover os temas ao cartafol de temas?"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Reprodución"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Descarga"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Sistema de ficheiros"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "Erro: Fallou a conexión a goear.com"

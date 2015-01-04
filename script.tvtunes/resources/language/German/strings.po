@@ -1,0 +1,433 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Retrieve and play your soundtrack themes whilst browsing your library"
+msgstr "Hole und spiele dein TV-Sendungs-Titelsong"
+
+msgctxt "Addon Description"
+msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
+msgstr "Dieses Skript wird dir helfen, die Titelsongs deiner Filme und TV-Sendungen von www.televisiontunes.com zu holen und diese in als theme[0-9].mp3 in deinen Video Ordnern zu speichern. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Skin-Ersteller, bitte schaut ins wiki um zu wissen, wie ihr es in euren Skin integriert: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Spiele Titelsong in einer Schleife"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Geringerer Lautstärke-Wert"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Nutze geschützte SMB-Freigabe"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Benutzername:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Passwort:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Speichere Dateien in einem speziellen Ordner"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Pfad:"
+
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Ton beim verlassen ausblenden"
+
+msgctxt "#32009"
+msgid "Automatically Download Theme If"
+msgstr "Automatisch Thema downloaden, wenn"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "mehrere Songs mischen"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Zufällige Startzeit"
+
+msgctxt "#32012"
+msgid "Change File Types"
+msgstr "Dateitypen ändern"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Den Ton beim starten einblenden"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Immer zusätzliche Titelsongs hinzufügen (nicht überschreiben)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Suche nach Titelsongs von Filmen"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Spiele Titelsong beim Durchsuchen der Film Liste"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Spiele Titelsong beim Durchsuchen der TV-Sendungs Liste"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Debug-Logging aktivieren"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Zeige die TvTunes Schaltfläche im Videoinformations Fenster"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Ausblenden nach X (Minuten) Abspielzeit."
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Operationen"
+
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Themes durchsuchen"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Verzögere Theme Start(Sekunden)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Titelmelodie in Unterverzeichnissen abspielen"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Verzeichnisname"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Songlänge auf X (Sekunden) begrenzen wenn mehrere vorhanden sind"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Standardschema Suchquelle"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Spiele Thema beim Durchsuchen der Musikvideo Liste"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Benutzer auffordern"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nie"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Nur ein einziger Eintrag gefunden"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Priorität 1 (*)-Eintrag gefunden"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Priorität 1 (*) oder 2 (~)-Eintrag gefunden"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Bildschirmschoner"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "ZufälligesHineinzoomen"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "WieAppleTV"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Zufällig"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Wartezeit (Sekunden)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Effektzeit (Sekunden)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Spalten"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Geschwindigkeit"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Zufällige Reihenfolge"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Bildquelle"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Bildtyp"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Ordner"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Rekursiv"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fankunst"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Vorschaubild"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Besetzung"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Filme, Fernsehsendungen"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fankunst,Vorschaubild,Besetzung"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fankunst,Vorschaubild"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Abdunkelungsgrad"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Vorschaubild,Besetzung"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Schieber"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Links"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Rechts"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Oben"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Unten"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Überblendung"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Regeln wiederholen"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "FEHLER"
+
+msgctxt "#32102"
+msgid "site unreachable"
+msgstr "Seite nicht erreichbar"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "TVTune Downloader"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Ersetze aktuelle Titelmelodie?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TVTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Hole Informationen..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Suche nach"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "ABGEBROCHEN"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Operation von Benutzer abgebrochen."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Lade:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "nach:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Wähle für"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "IN MANUELLE SUCHE EINGEBEN"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Lade diesen hier?"
+
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Suchergebnisse werden unvollständig sein"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Du kannst helfen, mehr Titelsongs zu bekommen auf:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Manuelle Suche..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Weiter mit dem nächsten Suchbegriff?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Suche mittels %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Durchsuche alle Seiten (könnte langsam sein)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filme"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Serien"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Musik Videos"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filter]: Zeige nur fehlende Themes"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Aktion]: Hole fehlende Themes"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Du hast Themes außerhalb des Themes-Ordners."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Verschiebe Themes in den Themes-Ordner?"
+
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Aktion]: Bildschirmschoner starten"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Wiedergabe"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Herunterladen"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Dateisystem"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "Fehler: Verbindung zu goear.com fehlgeschlagen"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Keine Bilder gefunden!"

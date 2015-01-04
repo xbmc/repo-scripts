@@ -1,0 +1,61 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Belarusian (http://www.transifex.com/projects/p/xbmc-addons/language/be/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: be\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Path:"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Ніколі"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Screensaver"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "ERROR"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Фільмы"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "ТЫ шоў"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Music Videos"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Playback"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Download"

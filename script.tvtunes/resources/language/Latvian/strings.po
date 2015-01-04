@@ -1,0 +1,61 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Latvian (http://www.transifex.com/projects/p/xbmc-addons/language/lv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lv\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Parole:"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Ceļš:"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Atkļūdošana"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Ieslēgt atkļūdošanas reģistrēšanu"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nekad"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Ekrānsaudzētājs"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmas"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV Šovi"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Mūzikas Video"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Atskaņošana"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Lejupielādēt"

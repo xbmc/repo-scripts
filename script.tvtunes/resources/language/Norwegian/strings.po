@@ -1,0 +1,265 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Retrieve and play your soundtrack themes whilst browsing your library"
+msgstr "Hent og spill av gjenkjenningsmelodier mens du blar gjennom biblioteket"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Designere, vennlist se wikien for å se hvordan du integrerer dette i ditt tema: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Gjena sang"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Lavere volum"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Bruk beskyttet SMB deling"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Brukernavn:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Passord:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Lagre sanger i tilpasset mappe"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Sti:"
+
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Myk ut sang når du går ut"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Miks flere sanger"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Tilfeldig starttid"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Fade inn når sangen starter"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Alltid legg til ekstra sanger (ikke overskrivning)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Søk etter sanger"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Spill sanger mens du viser filmlisten"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Spill sanger mens du viser TV-serie listen"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Feilsøking"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Aktiver feilsøkingslogg"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Vis TvTunes knappen på Video Info skjermen"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Fade out etter å ha spilt i (minutter)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Handlinger"
+
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Bla gjennom sanger"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Utsett sangstart (sekunder)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Støtt sanger i undermapper"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Mappenavn"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Begrens avspillingstid når det er flere sanger (sekunder)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Standard søkekilde"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Spill sanger mens du viser musikkvideolisten"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Aldri"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Skjermsparer"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "FEIL"
+
+msgctxt "#32102"
+msgid "site unreachable"
+msgstr "Kan ikke koble til siden"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "TvTune nedlaster"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Erstatt eksisterende sang?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TVTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Henter informasjon..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Søker etter"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "AVBRUTT"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Handlingen ble avbrutt av bruker."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Laster ned:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "til:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Velg for"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "SKRIV INN MANUELT SØK"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Last ned denne?"
+
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Søkeresultatene vil ikke være komplette"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Du kan hjelpe til å få fler sanger på:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Manuelt søk..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Fortsett med neste sangsøk?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Søker med %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Søk gjennom alle sider (kan ta litt tid)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV Serier"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Musikk videoer"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filter]: Vis kun manglende sanger"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Handling]: Hent kun manglende sanger"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Du har sanger som ikke er i sangmappen."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Flytt sangmappen til temamappen?"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Avspilling"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Last ned"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Filsystem"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "FEIL: Kunne ikke koble to goear.com"

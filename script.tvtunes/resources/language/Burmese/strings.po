@@ -1,0 +1,37 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Burmese (http://www.transifex.com/projects/p/xbmc-addons/language/my/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: my\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "လမ်းကြောင်း -"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "ဘယ်တော့မှ"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Screensaver"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "ရုပ်ရှင်များ"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "ဒေါင်းလုတ်"

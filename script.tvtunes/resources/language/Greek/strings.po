@@ -1,0 +1,477 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Retrieve and play your soundtrack themes whilst browsing your library"
+msgstr "Λήψη και αναπαραγωγή μουσικών θεμάτων (TvTunes) των τηλεοπτικών σας σειρών"
+
+msgctxt "Addon Description"
+msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
+msgstr "Αυτό το script θα σας βοηθήσει να κατεβάσετε μουσικά θέματα των τηλεοπτικών σας σειρών από το www.televisiontunes.com, θα τα αποθηκεύει σε αρχεία μορφής theme.mp3 στο φάκελο της εκάστοτε σειράς, και θα τα αναπαράγει κατά την περιήγησή σας στη συλλογή τηλ. σειρών σας (απαιτείται να υποστηρίζεται από το κέλυφός σας)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Skinners, ελέγξτε την ιστοσελίδα για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Επαναλαμβανόμενη αναπαραγωγή μουσ. θέματος"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Χαμηλότερη ένταση ήχου"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Χρήση Προστατευόμενης SMB Κοινής Χρήσης"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Όνομα Χρήστη:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Κωδικός:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Αποθήκευση μουσικής σε προσαρμοσμένο φάκελο"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Διαδρομή:"
+
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Σταδιακό σβήσιμο της μουσικής κατά την έξοδο"
+
+msgctxt "#32009"
+msgid "Automatically Download Theme If"
+msgstr "Αυτόματη Λήψη Μουσ. Θέματος Αν"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Ανακάτεμα πολλαπλών κομματιών"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Τυχαίος χρόνος έναρξης"
+
+msgctxt "#32012"
+msgid "Change File Types"
+msgstr "Αλλαγή Τύπων Αρχείων"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Σταδιακή εισαγωγή της μουσικής κατά την έναρξη"
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Πάντα να προστίθενται τα επιπλέον θέματα (χωρίς αντικατάσταση)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Αναζήτηση κινηματογραφικών θεμάτων"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "Αναπαραγωγή μουσ. θεμάτων στη Λίστα Ταινιών"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "Αναπαραγωγή μουσ. θεμάτων στη Λίστα Τηλ. Σειρών"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Εντοπισμός σφαλμάτων"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Καταγραφή σφαλμάτων"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Εμφάνιση του πλήκτρου TvTunes στην οθόνη Πληροφοριών Βίντεο"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "Εξασθένιση μετά την αναπαραγωγή χρόνου (λεπτά)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Λειτουργίες"
+
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Περιήγηση στα Θέματα"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Καθυστέρηση Έναρξης Θέματος (Δευτερόλεπτα)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "Υποστήριξη θεμάτων σε υποφακέλους"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Όνομα Φακέλου"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Όριο διάρκειας κομματιού για πολλαπλά θέματα (δευτερόλεπτα)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Προεπιλεγμένη Πηγή Αναζήτησης Θεμάτων"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "Αναπαραγωγή μουσ. θεμάτων στη Λίστα Μουσικών Βίντεο"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Όλα"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Να γίνεται ερώτηση"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Ποτέ"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Βρέθηκε Μόνο Μία Καταχώριση"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Βρέθηκε Καταχώριση Προτεραιότητας 1 (*)"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Βρέθηκε Καταχώριση Προτεραιότητας 1 (*) ή 2 (~)"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Προφύλαξη οθόνης"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "RandomZoomIn"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "AppleTVLike"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "GridSwitch"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Τυχαίο"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Χρόνος Αναμονής (Δευτερόλεπτα)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Χρόνος Εφέ (Δευτερόλεπτα)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Στήλες"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Ταχύτητα"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Ταυτόχρονη Εκτέλεση Εικόνων"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Τυχαία Σειρά"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Πηγή Εικόνας"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Τύπος Εικόνας"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Φάκελος"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Και οι υποφάκελοι"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Μικρογραφία"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Διανομή ρόλων"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Ταινίες, Τηλ. Σειρές"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Αναπαραγωγή Θεμάτων κατά την Προφύλαξη οθόνης"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fanart,Μικρογραφία,Διανομή"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fanart,Μικρογραφία"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Επίπεδο Σκίασης"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Μικρογραφία,Διανομή"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Μπάρα Κύλισης"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Κύλιση Από"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Αριστερά"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Δεξιά"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Πάνω"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Κάτω"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Σταδιακό σβήσιμο"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Συμπερίληση Εικόνων από το Artwork Downloader"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Προβολή Εικόνων Μόνο Αν Υπάρχει Μουσ. Θέμα"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Αναπαραγωγή Θέματος Μία Φορά, Προβολή Όλων Των Εικόνων"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Προβολή Όλων Των Εικόνων, Επανάληψη Θέματος"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Αναπαραγωγή Θέματος Μία Φορά, Παράλειψη Υπόλοιπων Εικόνων"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Κανόνες Επανάληψης"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Εμφάνιση Παραθύρου Επιλογής Αν Αποτύχει η Αυτόματη Ταύτιση"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "ΣΦΑΛΜΑ"
+
+msgctxt "#32102"
+msgid "site unreachable"
+msgstr "αδυναμία σύνδεσης με την ιστοσελίδα"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "Λήψη TvTunes"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Αντικατάσταση του υπάρχοντος θέματος;"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TVTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Γίνεται λήψη πληροφοριών..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Αναζήτηση για"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "ΑΚΥΡΩΘΗΚΕ"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Η διαδικασία ακυρώθηκε από το χρήστη."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Γίνεται λήψη:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "σε:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Επιλογή για"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "ΕΙΣΑΓΩΓΗ ΧΕΙΡΟΚΙΝΗΤΗΣ ΑΝΑΖΗΤΗΣΗΣ"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Να γίνει λήψη αυτού;"
+
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Το αποτέλεσμα της αναζήτησης θα είναι ατελές"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Βοηθήστε στην επαύξηση των μουσ. θεμάτων στο:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Χειροκίνητη Αναζήτηση..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Συνέχιση με την επόμενη αναζήτηση θέματος;"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Αναζήτηση Χρησιμοποιώντας %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Αναζήτηση Σε Όλους Τους Ιστότοπους (Αργό)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Ταινίες"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Τηλ. Σειρές"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Μουσικά Βίντεο"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Φίλτρο]: Εμφάνιση Μόνο Θεμάτων Που Λείπουν"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Ενέργεια]: Ανάκτηση Θεμάτων Που Λείπουν"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Έχετε μουσ. θέματα που δεν είναι στους φακέλους θεμάτων."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Μεταφορά των μουσ. θεμάτων στο φάκελο θεμάτων;"
+
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Ενέργεια]: Προφύλαξη οθόνης"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Αναπαραγωγή"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Λήψη"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Σύστημα αρχείων"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "Σφάλμα: Αποτυχία σύνδεσης στο goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Δε βρέθηκαν Εικόνες!"

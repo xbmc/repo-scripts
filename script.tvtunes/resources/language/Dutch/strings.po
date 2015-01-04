@@ -1,0 +1,477 @@
+# Kodi Media Center language file
+# Addon Name: TvTunes
+# Addon id: script.tvtunes
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Retrieve and play your soundtrack themes whilst browsing your library"
+msgstr "Verkrijg en speel je TV serie thema`s"
+
+msgctxt "Addon Description"
+msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
+msgstr "Dit script zoekt thema`s van TV series in jouw TV seriebibliotheek op www.televisiontunes.com en slaat ze op in thema[0-9].mp3 bestand in elke TV serie map. Ze worden afgespeeld wanneer je de  TV serie in bibliotheek modus bekijkt of Video-informatiescherm (Het gebruikte ontwerp moet wel compatibel zijn met dit script)"
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgstr "Skinners, bekijk de wiki om te zien hoe dit script in je skin te integreren: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+
+msgctxt "#32001"
+msgid "Play theme in loop"
+msgstr "Speel thema herhaald af"
+
+msgctxt "#32002"
+msgid "Lower sound value"
+msgstr "Verlaag het geluidsvolume"
+
+msgctxt "#32003"
+msgid "Use Protected SMB share"
+msgstr "Gebruik een beveiligde SMB share"
+
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Gebruikersnaam:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Wachtwoord:"
+
+msgctxt "#32006"
+msgid "Store tunes in a custom path"
+msgstr "Sla de theme's in een aangepast pad op"
+
+msgctxt "#32007"
+msgid "Path:"
+msgstr "Pad:"
+
+msgctxt "#32008"
+msgid "Fade tune out when exiting"
+msgstr "Vervaag het geluid wanneer je afsluit"
+
+msgctxt "#32009"
+msgid "Automatically Download Theme If"
+msgstr "Automatisch thema downloaden als"
+
+msgctxt "#32010"
+msgid "Shuffle multiple tracks"
+msgstr "Shuffle meerdere nummers"
+
+msgctxt "#32011"
+msgid "Random start time"
+msgstr "Willekeurige starttijd"
+
+msgctxt "#32012"
+msgid "Change File Types"
+msgstr "Verander bestandstypen"
+
+msgctxt "#32013"
+msgid "Fade in the tune when starting"
+msgstr "Vervaag de tune wanneer je Start."
+
+msgctxt "#32014"
+msgid "Always add additional themes (no overwrite)"
+msgstr "Voeg altijd extra thema`s toe (niet overschrijven)"
+
+msgctxt "#32015"
+msgid "Search for movie themes"
+msgstr "Zoek voor filmthema`s"
+
+msgctxt "#32016"
+msgid "Play themes when browsing Movie list"
+msgstr "speel thema`s bij bladeren door filmlijst"
+
+msgctxt "#32017"
+msgid "Play themes when browsing TV Show list"
+msgstr "speel thema`s bij bladeren door TV serieslijst"
+
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Fout registratie"
+
+msgctxt "#32019"
+msgid "Enable debug logging"
+msgstr "Foutregistratie inschakelen"
+
+msgctxt "#32020"
+msgid "Show the TvTunes button on the Video Info screen"
+msgstr "Toon de TVTunes knop op het videoinformatiescherm"
+
+msgctxt "#32021"
+msgid "Fade out after playing for (minutes)"
+msgstr "verdwijn na afspelen voor (minuten)"
+
+msgctxt "#32022"
+msgid "Operations"
+msgstr "Besturingen"
+
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Zoek thema`s"
+
+msgctxt "#32024"
+msgid "Delay Theme Start (Seconds)"
+msgstr "Vertraag thema start (seconden)"
+
+msgctxt "#32025"
+msgid "Support themes in sub directories"
+msgstr "ondersteun thema`s in submappen"
+
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Map naam"
+
+msgctxt "#32027"
+msgid "Limit track duration when multiple themes (seconds)"
+msgstr "Limiteer bestandsduur bij meerdere thema`s (seconden)"
+
+msgctxt "#32028"
+msgid "Default Theme Search Source"
+msgstr "Standaard thema zoekbron"
+
+msgctxt "#32029"
+msgid "Play themes when browsing Music Video list"
+msgstr "speel thema`s bij bladeren door Muziekvideo lijst"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Prompt gebruiker"
+
+msgctxt "#32036"
+msgid "Never"
+msgstr "Nooit"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Alleen enkele toevoeging gevonden"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Prioriteit 1 (*) toevoeging gevonden"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Prioriteit 1 (*) of 2 (~) toevoeging gevonden"
+
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Schermbeveiliging"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "Willekeurig inzoomen"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "AppleTVLike"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "GridSwitch"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Willekeurig"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Wachttijd (Seconden)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Effect Tijd (Seconden)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Kolommen"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Snelheid"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Afbeelding concurrentie"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Willekeurige volgorde"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Afbeelding bron"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Afbeeldingstype"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Map"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Recursieve"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniatuur"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Cast"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Films, TV-series"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Speel thema`s gedurende schermbeveiliging"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fanart,Miniatuur,Cast"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fanart,Miniatuur"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Dim niveau"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Miniatuur,Cast"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Schuiver"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Schuif in van"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Links"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Rechts"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Top"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Onder"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Vloeiende overgang"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "invoegen Artwork downloader afbeeldingen"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Alleen afbeeldingen tonen wanneer een thema bestaat"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Speel thema eenmaal, Toon alle afbeeldingen"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Toon alle afbeeldingen, Herhaal thema"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Speel Thema eenmaal, overgebleven afbeeldingen overslaan"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Herhaal regels"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Toon selectie dialoog als automatische overeenkomst mislukt"
+
+msgctxt "#32101"
+msgid "ERROR"
+msgstr "ERROR"
+
+msgctxt "#32102"
+msgid "site unreachable"
+msgstr "Site onbereikbaar"
+
+msgctxt "#32103"
+msgid "TvTune downloader"
+msgstr "TvTune downloader"
+
+msgctxt "#32104"
+msgid "Replace existing theme?"
+msgstr "Vervang bestaande theme?"
+
+msgctxt "#32105"
+msgid "TVTunes"
+msgstr "TVTunes"
+
+msgctxt "#32106"
+msgid "Getting information..."
+msgstr "Gegevens ophalen..."
+
+msgctxt "#32107"
+msgid "Searching for"
+msgstr "Zoeken naar"
+
+msgctxt "#32108"
+msgid "CANCELED"
+msgstr "GEANNULEERD"
+
+msgctxt "#32109"
+msgid "Operation canceled by user."
+msgstr "Aktie geannuleerd door de gebruiker."
+
+msgctxt "#32110"
+msgid "Downloading:"
+msgstr "Downloaden:"
+
+msgctxt "#32111"
+msgid "to:"
+msgstr "naar:"
+
+msgctxt "#32112"
+msgid "Choose for"
+msgstr "Kies voor"
+
+msgctxt "#32113"
+msgid "ENTER MANUAL SEARCH"
+msgstr "ENTER HANDMATIGE ZOEKAKTIE"
+
+msgctxt "#32114"
+msgid "Download this one?"
+msgstr "Deze downloaden?"
+
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Zoekresultaten zullen incompleet zijn"
+
+msgctxt "#32116"
+msgid "You can help to get more theme on:"
+msgstr "Je kunt helpen om meer theme's te verkrijgen op:"
+
+msgctxt "#32118"
+msgid "Manual Search..."
+msgstr "Manuel zoeken..."
+
+msgctxt "#32119"
+msgid "Continue with next theme search?"
+msgstr "Doorgaan met volgend thema zoeken?"
+
+msgctxt "#32120"
+msgid "Search Using %s..."
+msgstr "Zoeken gebruikt %s..."
+
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Zoeken Gebruik alle Sites (Kan traag zijn)"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV Series"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Musiek Videos"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filter]: Toon alleen missende thema`s"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Actie]: Verkrijg missende thema`s"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "Je hebt thema`s die niet in themafolders staan."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Verplaats deze thema`s naar de themafolder?"
+
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Actie]: start schermbeveiliging"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Afspelen"
+
+msgctxt "#32992"
+msgid "Download"
+msgstr "Downloaden"
+
+msgctxt "#32993"
+msgid "File system"
+msgstr "Bestandssysteem"
+
+msgctxt "#32994"
+msgid "Error: Failed to connect to goear.com"
+msgstr "Error: Niet gelukt te verbinden met goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Geen afbeeldingen gevonden!"
