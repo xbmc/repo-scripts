@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="buttonMenu">
+	<defaultcontrol>9001</defaultcontrol>
+	<animation effect="fade" time="250">WindowOpen</animation>
+	<animation effect="fade" time="250">WindowClose</animation>
+	<allowoverlay>yes</allowoverlay>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="button" id="9001">
+			<description>Make sure we hit the first button in the group list and not the close window button</description>
+			<posx>-16</posx>
+			<posy>-16</posy>
+			<width>4</width>
+			<height>4</height>
+			<label>-</label>
+			<font>-</font>
+			<onfocus>down</onfocus>
+			<texturefocus>-</texturefocus>
+			<texturenofocus>-</texturenofocus>
+			<onleft>9000</onleft>
+			<onright>9000</onright>
+			<onup>9000</onup>
+			<ondown>2</ondown>
+		</control>
+		<control type="image">
+			<description>background image</description>
+			<posx>470</posx>
+			<posy>240</posy>
+			<width>340</width>
+			<height>270</height>
+			<align>center</align>
+			<texture border="20,19,20,0">ContentPanel.png</texture>
+		</control>
+		<!-- Overlay the buttons on top of the background image with a 20 boarder -->
+		<control type="grouplist" id="9000">
+			<posx>490</posx>
+			<posy>240</posy>
+			<width>300</width>
+			<height>270</height>
+			<onleft>9000</onleft>
+			<onright>9000</onright>
+			<onup>9000</onup>
+			<ondown>9000</ondown>
+			<itemgap>0</itemgap>
+			<align>center</align>
+			<control type="button" id="2">
+				<description>Resume button</description>
+				<width>300</width>
+				<height>40</height>
+				<textcolor>FF999999</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32104] </label>
+			</control>
+			<control type="button" id="40">
+				<description>Start from beginning button</description>
+				<width>300</width>
+				<height>40</height>
+				<textcolor>FF999999</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32105]</label>
+			</control>
+			<control type="button" id="41">
+				<description>Mark as watched</description>
+				<width>300</width>
+				<height>40</height>
+				<textcolor>FF999999</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32106]</label>
+			</control>
+			<control type="button" id="42">
+				<description>Mark as unwatched</description>
+				<width>300</width>
+				<height>40</height>
+				<textcolor>FF999999</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32107]</label>
+			</control>
+			<control type="button" id="43">
+				<description>Edit title</description>
+				<width>300</width>
+				<height>40</height>
+				<textcolor>FF999999</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32108]</label>
+			</control>
+			<control type="button" id="44">
+				<description>Edit plot</description>
+				<width>300</width>
+				<height>40</height>
+				<textcolor>FF999999</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<align>center</align>
+				<textwidth>290</textwidth>
+				<pulseonselect>no</pulseonselect>
+				<font>font13</font>
+				<label>$ADDON[script.videoextras 32114]</label>
+			</control>
+		</control>
+	</controls>
+</window>

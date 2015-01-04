@@ -1,0 +1,205 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Ajouter des bonus vidéos à vos films et séries télé."
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Offre une façon d'ajouter des bonus vidéos à votre vidéothèque. Consulter le wiki pour des instructions de configuration."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Bonus"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Nom de répertoire des bonus"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Rechercher dans les répertoires imbriqués"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Activer les bonus avec une balise de fichier"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Balise de nom de fichier des bonus"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Menu à afficher après avoir lu un bonus"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Sélection de la vidéo"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Information"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Accueil"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Système de fichiers"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Emplacement des bonus distants"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Utiliser un emplacement personnalisé pour les bonus"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Chemin"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Sous-dossier personnalisé des films"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Sous-dossier personnalisé des séries télé"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Avancé"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Forcer l'affichage du bouton Bonus"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Exclure les expressions régulières des fichiers"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Débogage"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Activer la journalisation de débogage"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Base de données"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Activer la prise en charge de la base de données"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Opérations"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Nettoyer la base de données et la cache"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Utiliser la liste détaillée"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Fenêtre à afficher en quittant la liste détaillée"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Permettre la mise en cache des suppléments au démarrage"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Parcourir les bonus"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Sous-dossier personnalisé des vidéos musicales"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Tout lire"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Infos"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Aucun bonus trouvé"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Reprendre à partir de"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Jouer à partir du début"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marquer comme regardé"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marquer comme non regardé"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Modifier le titre"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Échec de mise à jour du titre"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Séries télé"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Vidéos musicales"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Intrigue"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Modifier l'intrigue"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Échec lors de la mise à jour de l'intrigue"

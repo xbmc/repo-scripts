@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+	<category label="32001">
+		<setting id="extrasDirName" type="text" label="32002" default="Extras"/>
+		<setting id="searchNested" type="bool" label="32003" default="true"/>
+		<setting id="enableFileTag" type="bool" label="32004" default="false"/>
+		<setting id="extrasFileTag" subsetting="true" enable="eq(-1,true)" type="text" label="32005" default="-extras-"/>
+		<setting id="detailedList" type="bool" label="32025" default="true"/>
+		<setting id="extrasReturn" visible="eq(-1,false)" type="labelenum" label="32006" lvalues="32007|32008|32001|32009" default="32007" />
+		<setting id="detailedReturn" visible="eq(-2,true)" type="labelenum" label="32026" lvalues="32007|32008|32009" default="32007" />
+		<setting label="32023" type="lsep"/>
+		<setting label="32030" type="action" option="close" action="RunScript($CWD/advsettings.py)"/>
+	</category>
+	<category label="32010">
+	    <setting label="32011" type="lsep"/>
+		<setting id="custom_path_enable" type="bool" label="32012" default="false"/>
+		<setting id="custom_path" enable="eq(-1,true)" type="folder" source="files" label="32013" default="" />
+		<setting id="custom_path_movies" enable="eq(-2,true)" type="text" label="32014" default="Movies"/>
+		<setting id="custom_path_tvshows" enable="eq(-3,true)" type="text" label="32015" default="TvShows"/>
+		<setting id="custom_path_musicvideos" enable="eq(-4,true)" type="text" label="32029" default="MusicVideos"/>
+		<setting label="32019" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32020" default="false"/>
+	</category>
+	<category label="32021">
+		<setting id="enableDB" type="bool" label="32022" default="true"/>
+		<setting label="32023" type="lsep"/>
+		<setting enable="eq(-2,true)" label="32024" type="action" action="RunScript($CWD/cleanup.py)"/>
+		<setting label="32028" option="close" type="action" action="RunScript($CWD/default.py)"/>
+	</category>
+	<category label="32016">
+		<setting id="forceButtonDisplay" type="bool" label="32017" default="false"/>
+		<setting id="excludeFiles" type="text" label="32018" default="([A-Za-z0-9]*.(jpg|idx|srt|nfo|sub|db|txt))"/>
+		<setting id="serviceEnabled" type="bool" label="32027" default="true"/>
+		<setting id="useCustomImages" enable="eq(-1,true)" type="bool" label="32032" default="false"/>
+		<setting id="overlayImage" label="32033" subsetting="true" visible="eq(-1,true)" type="image"/>
+		<setting id="listImage" label="32034" subsetting="true" visible="eq(-2,true)" type="image"/>
+		<setting label="32023" type="lsep"/>
+		<setting label="32031" type="action" action="RunScript($CWD/confupdate.py)"/>
+	</category>
+</settings>

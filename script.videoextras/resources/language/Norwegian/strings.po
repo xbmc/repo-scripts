@@ -1,0 +1,117 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Annet"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informasjon"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Hjem"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Sti"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Avansert"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Feilsøking"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Aktiver feilsøkingslogg"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Database"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Handlinger"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Tillatt mellomlagring av ekstra ved oppstart"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Bla gjennom Ekstra"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Tilpasset Musikk Video undermappe"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Spill alle"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Intet ekstra funnet"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Gjenoppta fra"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Start fra begynnelsen"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Merk som sett"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Merk som usett"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Rediger tittel"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Oppdatering av tittel mislyktes"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV Serier"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Musikk videoer"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Handling"
