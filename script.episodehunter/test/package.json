@@ -1,0 +1,6 @@
+{
+  "name": "episodehunter-xbmc",
+  "dependencies": {
+    "simple-mock-server": "*"
+  }
+}
