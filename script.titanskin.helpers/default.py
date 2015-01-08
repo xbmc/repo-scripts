@@ -20,6 +20,17 @@ def sendClick(controlId):
     time.sleep(0.5)
     xbmc.executebuiltin('SendClick('+ controlId +')')
 
+def defaultSettings():
+    # skins default settings for artist slideshow
+    if xbmc.getCondVisibility("System.HasAddon(script.artistslideshow)"):
+        __settings__ = xbmcaddon.Addon(id='script.artistslideshow')
+        __settings__.setSetting('transparent', "true")
+      
+def musicSearch():
+    xbmc.executebuiltin( "ActivateWindow(MusicLibrary)" )
+    xbmc.executebuiltin( "SendClick(8)" )
+
+        
 def showWidget():
     win = xbmcgui.Window( 10000 )
     linkCount = 0
@@ -170,10 +181,19 @@ def updatePlexBackgrounds():
                
 def showInfoPanel():
     win = xbmcgui.Window( 10000 )
-    time.sleep(0.5)
-    xbmc.executebuiltin('Action(info)')
-    time.sleep(6)
-    xbmc.executebuiltin('Action(info)')
+    tryCount = 0
+    secondsToDisplay = "4"
+    secondsToDisplay = xbmc.getInfoLabel("Skin.String(ShowInfoAtPlaybackStart)")
+    while tryCount !=50 and not xbmc.getCondVisibility("Window.IsActive(fullscreeninfo)"):
+        time.sleep(0.1)
+        if not xbmc.getCondVisibility("Window.IsActive(fullscreeninfo)") and xbmc.getCondVisibility("Player.HasVideo"):
+            xbmc.executebuiltin('Action(info)')
+        tryCount += 1
+    
+    # close info again
+    time.sleep(int(secondsToDisplay))
+    if xbmc.getCondVisibility("Window.IsActive(fullscreeninfo)"):
+        xbmc.executebuiltin('Action(info)')
 
 def addShortcutWorkAround():
     win = xbmcgui.Window( 10000 )
@@ -308,6 +328,10 @@ elif action == "UPDATEPLEXBACKGROUNDS":
 elif action == "SHOWWIDGET":   
     showWidget()
 elif action == "SETCUSTOM":
-    setCustomContent(argument1)    
+    setCustomContent(argument1)
+elif action == "DEFAULTSETTINGS":
+    defaultSettings()
+elif action == "MUSICSEARCH":
+    musicSearch()     
 else:
     xbmc.executebuiltin("Notification(Titan Mediabrowser,you can not run this script directly)") 

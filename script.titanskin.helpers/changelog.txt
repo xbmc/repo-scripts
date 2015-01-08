@@ -1,5 +1,6 @@
-1.3.0
-- fixed video stuttering with xbmb3c addon enabled
+1.5.0
+- new methods for widget assignments
+- various fixes
 1.2.7
 - support for plexbmc
 - fixes for MB3 new auth methods
