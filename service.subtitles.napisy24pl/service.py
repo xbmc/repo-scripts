@@ -79,11 +79,11 @@ def http_response_content(response):
 def getallsubs(content, item, subtitles_list):
 
     soup = BeautifulSoup(content)
-    subs = soup.findAll('div', {'class': 'tbl'})
+    subs = soup.findAll('div', {'class': 'moreInfo'})
 
     for row in subs[0:]:
-        row_str = str(row)
-        
+        row_str = str(row.parent.parent)
+
         sub_id_re = '\?napisId=(\d+)"><h2'
         title_re = '<div class="subtitle">.+>(.+?)</h2>.+</div>'
         release_re = '<div class="subtitle">.+>(.+?)</h3>.+</div>'
@@ -97,17 +97,13 @@ def getallsubs(content, item, subtitles_list):
         release = re.findall(release_re, row_str)[0]
         rating = float(infoColumn4[3].replace(',', '.'))
         language = re.findall(lang_re, row_str)[0]
-        disc_amount = int(infoColumn2[1])
 
         if rating != 0:
             rating = int(round(rating/1.2 , 0))
 
-        if disc_amount == 1:
-            video_file_size = re.findall("[\d.]+", infoColumn2[5])
-            if(len(video_file_size) > 0):
-                video_file_size = float(video_file_size[0])
-            else:
-                video_file_size = 0
+        video_file_size = re.findall("[\d.]+", infoColumn2[4])
+        if(len(video_file_size) > 0):
+            video_file_size = float(video_file_size[0])
         else:
             video_file_size = 0
 
