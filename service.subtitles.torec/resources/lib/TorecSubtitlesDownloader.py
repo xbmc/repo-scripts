@@ -1,16 +1,10 @@
 import cookielib
 import datetime
-import zipfile
 import urllib2
 import urllib
-import codecs
-import shutil
 import time
-import os
-import sys
 import re
 import zlib
-import os.path
 import bs4
 
 import xbmcaddon
@@ -20,18 +14,6 @@ from SubtitleHelper import log
 __addon__      = xbmcaddon.Addon()
 __version__    = __addon__.getAddonInfo('version') # Module version
 __scriptname__ = __addon__.getAddonInfo('name')
-
-def convert_file(inFile,outFile):
-	''' Convert a file in cp1255 encoding to utf-8
-	
-	:param inFile: the path to the intput file
-	:param outFile: the path to the output file
-	'''
-	with codecs.open(inFile,"r","cp1255") as f:
-		with codecs.open(outFile, 'w', 'utf-8') as output:
-			for line in f:
-				output.write(line)
-	return
 
 class SubtitleOption(object):
     def __init__(self, name, id):
@@ -68,7 +50,7 @@ class Response(object):
                 pass
         return data
 
-class FirefoxURLHandler():
+class FirefoxURLHandler:
     def __init__(self):
         cj = cookielib.CookieJar()
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
@@ -76,12 +58,11 @@ class FirefoxURLHandler():
                                   ('Accept-Language', 'en-us,en;q=0.5'),
                                   ('Pragma', 'no-cache'),
                                   ('Cache-Control', 'no-cache'),
-                                  ('User-Agent', 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0')]
+                                  ('User-Agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36')]
     
     def request(self, url, data=None, ajax=False, referer=None, cookie=None):
         if (data != None):
             data = urllib.urlencode(data)
-        # FIXME: Awful code duplication
         if (ajax == True):
             self.opener.addheaders += [('X-Requested-With', 'XMLHttpRequest')]
         if (referer != None):
@@ -94,9 +75,9 @@ class FirefoxURLHandler():
 
 class TorecSubtitlesDownloader:
     DEFAULT_SEPERATOR = " "
-    BASE_URL = "http://www.torec.net"
-    SUBTITLE_PATH = "sub.asp?sub_id="
-    DEFAULT_COOKIE = "Torec_NC_s=%(screen_width)d; Torec_NC_sub_%(subId)s=sub=%(current_datetime)s"
+    BASE_URL          = "http://www.torec.net"
+    SUBTITLE_PATH     = "sub.asp?sub_id="
+    DEFAULT_COOKIE    = "Torec_NC_s=%(screen_width)d; Torec_NC_sub_%(subId)s=sub=%(current_datetime)s"
 
     def __init__(self):
         self.urlHandler = FirefoxURLHandler()
@@ -107,33 +88,27 @@ class TorecSubtitlesDownloader:
                                       "subId" : subID, 
                                       "current_datetime" : currentTime}
     
-    def searchMovieName(self, movieName):
-        response = self.urlHandler.request("%s/ssearch.asp" % self.BASE_URL, {"search" : movieName})
+    def search(self, movie_name):
+        santized_name = self.sanitize(movie_name)
+        log(__name__ , "Searching for %s" % santized_name)
+        subtitlePage = self.search_by_movie_name(santized_name)
+        if subtitlePage is None:
+            log(__name__ ,"Couldn't find relevant subtitle page")
+            return None
+        else:
+            log(__name__ , "Found relevant meta data")
+            return subtitlePage
+
+    def search_by_movie_name(self, movie_name):
+        response = self.urlHandler.request("%s/ssearch.asp" % self.BASE_URL, {"search" : movie_name})
         match = re.search('sub\.asp\?sub_id=(\w+)', response.data)
         if (match is None):
             return None
           
-        id = match.groups()[0]
-        subURL = "%s/%s%s" % (self.BASE_URL, self.SUBTITLE_PATH, id)
-        subtitleData = self.urlHandler.request(subURL).data
-        return SubtitlePage(id, movieName, subURL, subtitleData)
-        
-    def findChosenOption(self, name, subtitlePage):
-        name = name.replace(".", " ").replace("-", " ").split()
-        # Find the most likely subtitle (the subtitle which adheres to most of the movie properties)
-        maxLikelihood = 0
-        chosenOption = None
-        for option in subtitlePage.options:
-            subtitleName = self.sanitize(option.name).split(" ")
-            subtitleLikelihood = 0
-            for token in subtitleName:
-                if token in name:
-                    subtitleLikelihood += 1
-                if (subtitleLikelihood > maxLikelihood):
-                    maxLikelihood = subtitleLikelihood
-                    chosenOption = option
-
-        return chosenOption
+        subtitle_id = match.groups()[0]
+        subtitle_url = "%s/%s%s" % (self.BASE_URL, self.SUBTITLE_PATH, subtitle_id)
+        subtitle_data = self.urlHandler.request(subtitle_url).data
+        return SubtitlePage(subtitle_id, movie_name, subtitle_url, subtitle_data)
         
     def _requestSubtitle(self, subID, subURL):
         params = {"sub_id"  : subID, 
@@ -145,7 +120,7 @@ class TorecSubtitlesDownloader:
     def getDownloadLink(self, subID, optionID, subURL, persist=True):        
         requestID = self._requestSubtitle(subID, subURL)
         
-        params = {"sub_id" : subID, "code": optionID, "sh" : "yes", "guest" : requestID, "timewaited" : "16"}
+        params = {"sub_id" : subID, "code": optionID, "sh" : "yes", "guest" : requestID, "timewaited" : "20"}
         for i in xrange(16):
             response = self.urlHandler.request("%s/ajax/sub/downloadun.asp" % self.BASE_URL, params, ajax=True)
             if (len(response.data) != 0 or not persist):
@@ -158,82 +133,28 @@ class TorecSubtitlesDownloader:
         response = self.urlHandler.request("%s%s" % (self.BASE_URL, downloadLink))
         fileName = re.search("filename=(.*)", response.headers["content-disposition"]).groups()[0]
         return (response.data, fileName)
-        
-    def saveData(self, fileName, data, shouldUnzip=True):
-        log(__name__ ,"Saving to %s (size %d)" % (fileName, len(data)))
-        # Save the downloaded zip file
-        with open( fileName,"wb") as f:
-            f.write(data)
-        
-        if shouldUnzip:
-            # Unzip the zip file
-            log(__name__ ,"Unzip the zip file")
-            zipDirPath = os.path.dirname(fileName)
-            zip = zipfile.ZipFile(fileName, "r")
-            zip.extractall(zipDirPath)
-            zip.close()
-            # Remove the unneeded zip file
-            os.remove(fileName)
-            
-            for srtFile in os.listdir(zipDirPath):
-	        if srtFile.endswith(".srt"):
-                    srtFile = os.path.join(zipDirPath,srtFile)
-                    
-                    #convert file from cp1255 to utf-8
-                    tempFileName=srtFile+ ".tmp"
-                    convert_file(srtFile,tempFileName)
-                    shutil.copy(tempFileName,srtFile)
-                    os.remove(tempFileName)
             
     def sanitize(self, name):
-        return re.sub('[\.\[\]\-]', self.DEFAULT_SEPERATOR, name.upper())
+        cleaned_name = re.sub('[\']', '', name.upper())
+        return re.sub('[\.\[\]\-]', self.DEFAULT_SEPERATOR, cleaned_name)
+        
+    def find_most_relevant_option(self, name, subtitles_options):
+        tokenized_name = self.sanitize(name).split()
+        # Find the most likely subtitle (the subtitle which adheres to most of the movie properties)
+        maxLikelihood = 0
+        most_relevant_option = None
+        for option in subtitles_options:
+            subtitleName = self.sanitize(option.name).split()
+            subtitleLikelihood = 0
+            for token in subtitleName:
+                if token in tokenized_name:
+                    subtitleLikelihood += 1
+                if (subtitleLikelihood > maxLikelihood):
+                    maxLikelihood = subtitleLikelihood
+                    most_relevant_option = option
 
-    def getSubtitleMetaData(self, movieName):
-        sanitizedName = self.sanitize(movieName)
-        log(__name__ , "Searching for %s" % sanitizedName)
-        subtitlePage = self.searchMovieName(sanitizedName)
-        if subtitlePage is None:
-            log(__name__ ,"Couldn't find relevant subtitle page")
-            return None
-        else:
-            log(__name__ , "Found relevant meta data")
-            return subtitlePage
-        
-    def getBestMatchID(self, name, subtitlePage):
-        chosen_option = self.findChosenOption(name, subtitlePage)
-        if chosen_option != None:
-            return chosen_option.id
-        else:
-            return None
-    
-    def getSubtitleData(self, movieName, resultSubtitleDirectory):
-        subtitlePage = self.getSubtitleMetaData(movieName)
-        # Try to choose the most relevant option according to the file name
-        chosenOption = self.findChosenOption(subtitlePage.name, subtitlePage)
-        if chosenOption != None:
-            log(__name__ ,"Found the subtitle type - %s" % chosenOption)
-        else:
-            
-            log(__name__ ,"No suitable subtitle found!")
-            log(__name__ ,"Available options are:")
-            options = enumerate(subtitlePage.options, start=1)
-            for num, option in options:
-                log(__name__ ,"\t(%d) %s" % (num, option))
-                
-            choice = int(raw_input("What subtitle do you want to download? "))
-            while (choice < 0 or choice > len(subtitlePage.options)):
-                log(__name__ ,"bad choice")
-                choice = int(raw_input("What subtitle do you want to download? "))
-        
-            chosenOption = subtitlePage.options[choice-1]
+        return most_relevant_option
 
-        # Retrieve the download link and download the subtitle
-        downloadLink = self.getDownloadLink(subtitlePage.id, chosenOption.id, subtitlePage.url)
-        if (downloadLink == ""):
-            log(__name__ ,"Download Unsuccessful!")
-            return
-        
-        (subtitleData, subtitleName) = self.download(downloadLink)
-        
-        resultSubtitlePath = os.path.join(resultSubtitleDirectory, subtitleName)
-        self.saveData(resultSubtitlePath, subtitleData)
+    def get_best_match_id(self, name, subtitle_page):
+        most_relevant_option = self.find_most_relevant_option(name, subtitle_page.options)
+        return most_relevant_option.id if most_relevant_option != None else None

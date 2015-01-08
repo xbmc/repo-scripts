@@ -2,8 +2,11 @@
 
 import os
 import sys
+import time
+import glob
 import shutil
 import urllib
+import codecs
 
 import xbmc
 import xbmcvfs
@@ -31,55 +34,80 @@ sys.path.append (__resource__)
 from SubtitleHelper import log, build_search_string, normalizeString
 from TorecSubtitlesDownloader import TorecSubtitlesDownloader
     
+def convert_to_utf(file):
+  ''' 
+  Convert a file in cp1255 encoding to utf-8
+  :param file: file to converted from CP1255 to UTF8
+  '''
+  try:
+    with codecs.open(file,"r","cp1255") as f:
+      srtData = f.read()
+
+    with codecs.open(file, 'w', 'utf-8') as output:
+      output.write(srtData)
+  except UnicodeDecodeError:
+    log(__name__, "got unicode decode error with reading subtitle data")
+
 def search(item):
     best_match_id = None
-    downloader = TorecSubtitlesDownloader()
+    downloader    = TorecSubtitlesDownloader()
+    search_data   = None
     
+    start_time = time.time()
+
     try:
-        search_string = build_search_string(item)
-        search_data = downloader.getSubtitleMetaData(search_string)
+        search_start_time = time.time()
+        search_string     = build_search_string(item)
+        search_data       = downloader.search(search_string)
         
-        log(__name__, "search_data=%s" % str(search_data))
-        if search_data != None:
-            best_match_id = downloader.getBestMatchID(os.path.basename(item['file_original_path']), search_data)
+        log(__name__, "search took %f" % (time.time() - search_start_time))
     except:
         log( __name__, "failed to connect to service for subtitle search")
         xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , __language__(32001))).encode('utf-8'))
         return
     
     list_items = []
-    if search_data != None:
-        for item_data in search_data.options:
-            listitem = xbmcgui.ListItem(label    = "Hebrew",
-                                  label2         = item_data.name,
-                                  iconImage      = "0",
-                                  thumbnailImage = "he",
-                                  )
-                                  
+    if search_data:
+      best_match_id = downloader.get_best_match_id(os.path.basename(item['file_original_path']), search_data)
 
-            url = "plugin://%s/?action=download&page_id=%s&subtitle_id=%s&filename=%s" % (__scriptid__,
-                                                                        search_data.id,
-                                                                        item_data.id,
-                                                                        item_data.name
-                                                                        )
+      for item_data in search_data.options:
+          listitem = xbmcgui.ListItem(label    = "Hebrew",
+                                label2         = item_data.name,
+                                iconImage      = "0",
+                                thumbnailImage = "he",
+                                )
+                                
 
-            if best_match_id != None and item_data.id == best_match_id:
-                listitem.setProperty("sync", "true")
-                list_items.insert(0, (url, listitem, False,))
-            else:
-                list_items.append((url, listitem, False,))
+          url = "plugin://%s/?action=download&page_id=%s&subtitle_id=%s&filename=%s" % (__scriptid__,
+                                                                      search_data.id,
+                                                                      item_data.id,
+                                                                      item_data.name
+                                                                      )
+
+          if best_match_id != None and item_data.id == best_match_id:
+            log(__name__, "Found most relevant option to be : %s" % item_data.name)
+            listitem.setProperty("sync", "true")
+            list_items.insert(0, (url, listitem, False,))
+          else:
+            list_items.append((url, listitem, False,))
     
     xbmcplugin.addDirectoryItems(handle=int(sys.argv[1]), items=list_items)
-
+    log(__name__, "Overall search took %f" % (time.time() - start_time))
 
 def download(page_id, subtitle_id,filename, stack=False):
+    files = glob.glob(os.path.join(__temp__, "*.srt"))
+    for f in files:
+      log(__name__, "deleting %s" % f)
+      os.remove(f)
+
     subtitle_list = []
     exts = [".srt", ".sub"]
     
-    delay = 20
+    delay         = 20
     download_wait = delay
-    downloader = TorecSubtitlesDownloader()
-    
+    downloader    = TorecSubtitlesDownloader()
+    start_time    = time.time()
+
     try:
         # Wait the minimal time needed for retrieving the download link
         for i in range (int(download_wait)):
@@ -97,16 +125,20 @@ def download(page_id, subtitle_id,filename, stack=False):
         log(__name__ ,"Downloading subtitles from '%s'" % result)
         
         (subtitleData, subtitleName) = downloader.download(result)
-        
-        zip = os.path.join( __temp__, "Torec.zip")
-        downloader.saveData(zip, subtitleData)
+        zip = os.path.join(__temp__, "Torec.zip")
+        with open(zip, "wb") as subFile:
+            subFile.write(subtitleData)
+
+        xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip,__temp__,)).encode('utf-8'), True)
 
         for file in xbmcvfs.listdir(__temp__)[1]:
             log(__name__, "file=%s" % file)
             file = os.path.join(__temp__, file)
-            if (os.path.splitext( file )[1] in exts):
-                subtitle_list.append(file)
+            if (os.path.splitext(file)[1] in exts):
+              convert_to_utf(file)
+              subtitle_list.append(file)
       
+    log(__name__, "Overall download took %f" % (time.time() - start_time))
     return subtitle_list
     
     
@@ -182,7 +214,7 @@ elif params['action'] == 'download':
   subs = download(params["page_id"],params["subtitle_id"],params["filename"])
   for sub in subs:
     listitem = xbmcgui.ListItem(label=sub)
-    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
+    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=sub, listitem=listitem, isFolder=False)
   
   
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

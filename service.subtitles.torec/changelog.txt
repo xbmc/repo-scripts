@@ -1,3 +1,16 @@
-1.0.2 - Fixed an issue with Torec search results parsing
-1.0.1 - Several minor fixes in order to to adhere XBMC add-on repository standards
-1.0.0 - Migrated to Gotham style
+1.0.3
+- many cleanups
+- fixed case comparing issues with rating system (matanelgabsi)
+- reduced the number of files created during download (and extraction)
+- fastened the download process a bit
+- possible fix for UnicodeDecodeError (#4)
+- fixed TOO MANY DL issue (myakove)
+
+1.0.2 
+- Fixed an issue with Torec search results parsing
+
+1.0.1 
+- Several minor fixes in order to to adhere XBMC add-on repository standards
+
+1.0.0 
+- Migrated to Gotham style
