@@ -1,3 +1,7 @@
+Version 1.0.2
+
+updated xbmc.python version to 2.19.0 - should be helix only
+
 Version 1.0.0
 
 rebranded as "Backup"
