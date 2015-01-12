@@ -1,3 +1,6 @@
+v3.0.5
+- fix potential crash on empty values
+
 v3.0.4
 - clear category properties
 

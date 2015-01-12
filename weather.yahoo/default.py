@@ -146,7 +146,10 @@ def properties(data,loc):
     set_property('Current.Condition'     , condition[0].attributes['text'].value.replace('/', ' / '))
     set_property('Current.Temperature'   , condition[0].attributes['temp'].value)
     set_property('Current.Wind'          , wind[0].attributes['speed'].value)
-    set_property('Current.WindDirection' , winddir(int(wind[0].attributes['direction'].value)))
+    if (wind[0].attributes['direction'].value != ''):
+        set_property('Current.WindDirection' , winddir(int(wind[0].attributes['direction'].value)))
+    else:
+        set_property('Current.WindDirection' , '')
     set_property('Current.WindChill'     , wind[0].attributes['chill'].value)
     set_property('Current.Humidity'      , atmosphere[0].attributes['humidity'].value)
     set_property('Current.Visibility'    , atmosphere[0].attributes['visibility'].value)
