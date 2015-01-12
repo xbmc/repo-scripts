@@ -84,7 +84,7 @@ class TorecSubtitlesDownloader:
         
     def _buildDefaultCookie(self, subID):
         currentTime = datetime.datetime.now().strftime("%m/%d/%Y+%I:%M:%S+%p")
-        return self.DEFAULT_COOKIE % {"screen_width" : 1760, 
+        return self.DEFAULT_COOKIE % {"screen_width" : 1440, 
                                       "subId" : subID, 
                                       "current_datetime" : currentTime}
     
@@ -112,7 +112,7 @@ class TorecSubtitlesDownloader:
         
     def _requestSubtitle(self, subID, subURL):
         params = {"sub_id"  : subID, 
-                  "s"       : 1760}
+                  "s"       : 1440}
                   
         return self.urlHandler.request("%s/ajax/sub/guest_time.asp" % self.BASE_URL, params, 
                                         ajax=True, referer=subURL, cookie=self._buildDefaultCookie(subID)).data
@@ -120,7 +120,7 @@ class TorecSubtitlesDownloader:
     def getDownloadLink(self, subID, optionID, subURL, persist=True):        
         requestID = self._requestSubtitle(subID, subURL)
         
-        params = {"sub_id" : subID, "code": optionID, "sh" : "yes", "guest" : requestID, "timewaited" : "20"}
+        params = {"sub_id" : subID, "code": optionID, "sh" : "yes", "guest" : requestID, "timewaited" : "12"}
         for i in xrange(16):
             response = self.urlHandler.request("%s/ajax/sub/downloadun.asp" % self.BASE_URL, params, ajax=True)
             if (len(response.data) != 0 or not persist):

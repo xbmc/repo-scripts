@@ -1,3 +1,6 @@
+1.0.4
+- fixed TOO MANY DL issue, again
+
 1.0.3
 - many cleanups
 - fixed case comparing issues with rating system (matanelgabsi)
