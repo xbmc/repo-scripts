@@ -36,12 +36,7 @@ class WindowShowing():
             return True
         if xbmc.getCondVisibility("Container.Content(Episodes)"):
             return True
-
-        folderPathId = "videodb://2/2/"
-        # The ID for the TV Show Title changed in Gotham
-        if Settings.getXbmcMajorVersion() > 12:
-            folderPathId = "videodb://tvshows/titles/"
-        if xbmc.getInfoLabel("container.folderpath") == folderPathId:
+        if xbmc.getInfoLabel("container.folderpath") == "videodb://tvshows/titles/":
             return True  # TvShowTitles
 
         return False

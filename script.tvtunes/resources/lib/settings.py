@@ -109,9 +109,6 @@ def dir_exists(dirpath):
 # Stores Various Settings
 ##############################
 class Settings():
-    # Value to calculate which version of XBMC we are using
-    xbmcMajorVersion = 0
-
     ALL_ENGINES = 'All'
     TELEVISION_TUNES = 'televisiontunes.com'
     SOUNDCLOUD = 'soundcloud.com'
@@ -226,21 +223,6 @@ class Settings():
     @staticmethod
     def getStartDelaySeconds():
         return int(float(__addon__.getSetting("delayStart")))
-
-    @staticmethod
-    def getXbmcMajorVersion():
-        if Settings.xbmcMajorVersion == 0:
-            xbmcVer = xbmc.getInfoLabel('system.buildversion')
-            log("Settings: XBMC Version = %s" % xbmcVer)
-            Settings.xbmcMajorVersion = 12
-            try:
-                # Get just the major version number
-                Settings.xbmcMajorVersion = int(xbmcVer.split(".", 1)[0])
-            except:
-                # Default to frodo as the default version if we fail to find it
-                log("Settings: Failed to get XBMC version")
-            log("Settings: XBMC Version %d (%s)" % (Settings.xbmcMajorVersion, xbmcVer))
-        return Settings.xbmcMajorVersion
 
     @staticmethod
     def isThemeDirEnabled():

@@ -40,6 +40,14 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Spořič obrazovky"
 
+msgctxt "#32068"
+msgid "Left"
+msgstr "vlevo"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "vpravo"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmy"
