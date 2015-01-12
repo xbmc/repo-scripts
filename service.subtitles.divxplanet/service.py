@@ -36,13 +36,11 @@ sys.path.append (__resource__)
 
 
 def getmediaUrl(mediaArgs):
+    querytype = mediaArgs[0]
     title = re.sub(" \(?(.*.)\)", "", mediaArgs[1])
-    if mediaArgs[2] != "":
-      query = "site:altyazi.org inurl:sub/m \"%s ekibi\" intitle:\"%s\" intitle:\"(%s)\"" % (mediaArgs[0], title, mediaArgs[2])
-    else:
-      query = "site:altyazi.org inurl:sub/m \"%s ekibi\" intitle:\"%s\"" % (mediaArgs[0], title)
+    year = mediaArgs[2]
     br = mechanize.Browser()
-    log("Divxplanet: Finding media %s" % query)
+    log("Divxplanet: Finding %s: %s (%s)" % (querytype, title, year))
     # Cookie Jar
     cj = cookielib.LWPCookieJar()
     br.set_cookiejar(cj)
@@ -60,28 +58,17 @@ def getmediaUrl(mediaArgs):
     # User-Agent (this is cheating, ok?)
     br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 
-    br.open("http://www.google.com")
-    # Select the search box and search for 'foo'
-    br.select_form( 'f' )
-    br.form[ 'q' ] = query
-    br.submit()
+    br.open("http://altyazi.org/index.php?page=arama&arama=%s" % urllib.quote(title))
+
     page = br.response().read()
     soup = BeautifulSoup(page)
 
-    linkdictionary = []
-    query.replace(" ", "-")
-    for li in soup.findAll('li', attrs={'class':'g'}):
-        sLink = li.find('a')
-        sSpan = li.find('span', attrs={'class':'st'})
-        if sLink:
-            linkurl = re.search(r"/url\?q=(http://altyazi.org//sub/m/[0-9]{3,8}/.*.\.html).*", sLink["href"])
-            if linkurl:
-                linkdictionary.append({"text": sSpan.getText().encode('utf8'), "name": mediaArgs[0], "url": linkurl.group(1)})
-                log("Divxplanet: found media: %s" % (linkdictionary[0]["url"]))
-    if len(linkdictionary) > 0:
-      return linkdictionary[0]["url"]
-    else:
-      return ""
+    for result in soup.findAll('td', attrs={'width': '60%'}):
+        link = result.find('a')
+        #print(result.getText())
+        if str(year) in result.getText() and (querytype == "film" or ("tv-shows" in result["style"] and querytype == "dizi")):
+            return "http://altyazi.org%s" % link["href"]
+    return ""
 
 def Search(item):
 #def search_subtitles(tvshow, year, season, episode, title): #standard input
