@@ -26,20 +26,21 @@ def log(msg):
   xbmc.log((u"### [%s] - %s" % (__scriptname__,msg,)).encode('utf-8'),level=xbmc.LOGDEBUG )
 
 def cleanDirectory(directory):
-    try:
-        if xbmcvfs.exists(directory):
-            for root, dirs, files in os.walk(directory):
-                for f in files:
-                    file = os.path.join(root, f)
-                    xbmcvfs.delete(file)
-                for d in dirs:
-                    dir = os.path.join(root, d)
-                    xbmcvfs.rmdir(dir)
-    except:
-        pass
+  try:
+    if xbmcvfs.exists(directory + "/"):
+      for root, dirs, files in os.walk(directory):
+        for f in files:
+          file = os.path.join(root, f)
+          log(file)
+          xbmcvfs.delete(file)
+      for d in dirs:
+        dir = os.path.join(root, d)
+        xbmcvfs.rmdir(dir)
+  except:
+    pass
     
-    if not xbmcvfs.exists(directory):
-        os.makedirs(directory)
+  if not xbmcvfs.exists(directory):
+    xbmcvfs.mkdirs(directory)
 
 def getShowId():
     try:

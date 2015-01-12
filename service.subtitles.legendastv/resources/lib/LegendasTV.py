@@ -147,7 +147,7 @@ class LegendasTV:
             response = normalizeString(urllib2.urlopen(request).read())
             if response.__contains__(u'Usuário ou senha inválidos'):
                 self.Log( u" Login Failed. Check your data at the addon configuration.")
-                return 0
+                return None
             else: 
                 return self.cookie
 
@@ -296,7 +296,7 @@ class LegendasTV:
             for x, content in enumerate(re.findall(regex_1, Response, re.IGNORECASE | re.DOTALL), start=1):
                 LanguageName, LanguageFlag, LanguagePreference = "", "", 0
                 download_id = "%s%s" % ("http://minister.legendas.tv", content[1])
-                release_type = content[0] if not content[0] == "" else "normal"
+                release_type = content[0] if not content[0] == "" else "zero"
                 title = normalizeString(content[2])
                 release = normalizeString(content[2])
                 rating =  content[3]
@@ -332,7 +332,18 @@ class LegendasTV:
                                               "type" : release_type})
 
             self.Log("Message: Retrieved [%s] results for page [%s], Movie[%s], Id[%s]." % (x, Page, MainID["title"], MainID["id"]))
-                
+
+
+    def Download(self, url):
+        Response = urllib2.urlopen(url).read()
+        downloadID = re.findall(regex_3, Response)[0] if re.search(regex_3, Response) else 0
+        if not downloadID:
+            return None
+        Response = urllib2.urlopen(urllib2.Request("http://minister.legendas.tv%s" % downloadID))
+        Sub = Response.read()
+        Type = 'rar' if Response.url.__contains__('.rar') else 'zip'
+        return Sub, Type
+
     def Search(self, **kargs):   
         # Init all variables
         startTime = time.time()
@@ -415,7 +426,7 @@ class LegendasTV:
             IncludedResults.extend(Episodes)
         elif Movie:
             IncludedResults.extend(self.DownloadsResults)
-        IncludedResults = sorted(IncludedResults, key=itemgetter('language_preference'))
+        IncludedResults = sorted(IncludedResults, key=itemgetter('type', 'language_preference'))
 
         # # Log final results
         self.Log(" ")

@@ -1,3 +1,9 @@
+2.2.5
+- Fix cleanup
+- Fix string in pt_PT (thanks to Mafarricos)
+- Fix manual search not working with tv shows
+- Add batch import of subtitle packs
+
 2.2.4
 - Added login support (thanks to Eduardo Franceschi)
 - Highlights are now displayed correctly
