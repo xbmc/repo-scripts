@@ -1,0 +1,30 @@
+v2.0.1
+- small fixes
+- repo release version
+
+v2.0.0
+- Standalone part: MovieDB Browser, extended Info dialogs for movies / TV /seasons / episodes /actors
+- localization
+- too much to count
+
+v1.0.0
+- new calls
+- rewritten caching engine
+
+v0.8.0
+- many Bugfixes
+- removed GoogleMaps functionality and daemon mode
+- exchanged API key
+- some new functions (mostlovedtracks, albumshouts)
+
+v0.0.5
+Fixes & Additions for various info lists from Rotten Tomatoes, TheMovieDB and Trakt.tv (See README file for details).
+
+v0.0.3
+Modified Utils.py and default.py to fix the issues with movie sets in Gotham.
+
+v0.0.2
+File handling updates.
+
+v0.0.1
+Initial Release.
