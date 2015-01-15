@@ -39,6 +39,11 @@ def getmediaUrl(mediaArgs):
     querytype = mediaArgs[0]
     title = re.sub(" \(?(.*.)\)", "", mediaArgs[1])
     year = mediaArgs[2]
+    if year == "":
+        yr = re.search(r"\((\d{4})\)", mediaArgs[1])
+        if yr is not None:
+            year = yr.group(1)
+
     br = mechanize.Browser()
     log("Divxplanet: Finding %s: %s (%s)" % (querytype, title, year))
     # Cookie Jar
@@ -84,7 +89,7 @@ def Search(item):
         tvurl = getmediaUrl(["dizi",tvshow, year])
         log("Divxplanet: got media url %s" % (tvurl))
         if tvurl != "":
-          divpname = re.search(r"http://altyazi.org//sub/m/[0-9]{3,8}/(.*.)\.html", tvurl).group(1)
+          divpname = re.search(r"http://altyazi\.org/sub/m/[0-9]{3,8}/(.*.)\.html", tvurl).group(1)
           season = int(season)
           episode = int(episode)
           # Browser
