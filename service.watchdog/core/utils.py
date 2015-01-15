@@ -116,3 +116,12 @@ class OrderedSetQueue(object):
                 self.not_empty.wait()
         finally:
             self.not_empty.release()
+
+
+class XBMCInterrupt(Exception):
+    pass
+
+
+def raise_if_aborted():
+    if xbmc.abortRequested:
+        raise XBMCInterrupt

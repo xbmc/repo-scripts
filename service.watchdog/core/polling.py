@@ -21,6 +21,7 @@ import xbmc
 import settings
 from watchdog.observers.api import EventEmitter
 from watchdog.events import FileCreatedEvent, FileDeletedEvent
+from utils import log, XBMCInterrupt
 
 
 def _paused():
@@ -83,6 +84,15 @@ class Poller(EventEmitter):
             self.queue_event(FileCreatedEvent(path))
         for path in files_deleted:
             self.queue_event(FileDeletedEvent(path))
+
+    def run(self):
+        try:
+            while self.should_keep_running():
+                self.queue_events(self.timeout)
+        except XBMCInterrupt:
+            log("XBMCInterrupt raised")
+        except Exception:
+            pass
 
 
 class PollerNonRecursive(Poller):

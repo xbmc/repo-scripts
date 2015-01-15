@@ -1,3 +1,6 @@
+[B]0.9.4[/B]
+- improved shutdown time
+
 [B]0.9.3[/B]
 - fixed crash on invalid filename encoding from file system
 

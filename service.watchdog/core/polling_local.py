@@ -21,12 +21,13 @@ import os
 import settings
 from functools import partial
 from polling import Poller, PollerNonRecursive, file_list_from_walk, hidden
-from utils import encode_path, decode_path
+from utils import encode_path, decode_path, raise_if_aborted
 
 
 def _walk(path):
     path = encode_path(path)
     for root, dirs, files in os.walk(path):
+        raise_if_aborted()
         if dirs or files:
             for d in dirs:
                 if hidden(d):
