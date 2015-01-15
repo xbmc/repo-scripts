@@ -160,7 +160,7 @@ def auth_request_token():
     request_token = get_request_token()
     username = addon.getSetting("tmdb_username")
     password = addon.getSetting("tmdb_password")
-    response = GetMovieDBData("authentication/token/validate_with_login?request_token=%s&username=%s&password=%s&" % (request_token, username, password), 0.1)
+    response = GetMovieDBData("authentication/token/validate_with_login?request_token=%s&username=%s&password=%s&" % (request_token, username, password), 999999)
     # prettyprint(response)
     if "success" in response and response["success"]:
         return response["request_token"]
@@ -279,13 +279,8 @@ def HandleTMDBTVShowResult(results, local_first=True, sortkey="year"):
                  'Rating': fetch(tv, 'vote_average'),
                  'User_Rating': str(fetch(tv, 'rating')),
                  'Votes': fetch(tv, 'vote_count'),
-                 'Status': fetch(tv, 'status'),
-                 'homepage': fetch(tv, 'homepage'),
-                 'last_air_date': fetch(tv, 'last_air_date'),
-                 'first_air_date': release_date,
                  'number_of_episodes': fetch(tv, 'number_of_episodes'),
                  'number_of_seasons': fetch(tv, 'number_of_seasons'),
-                 'in_production': fetch(tv, 'in_production'),
                  'Release_Date': release_date,
                  'ReleaseDate': release_date,
                  'Premiered': release_date}
@@ -490,7 +485,7 @@ def SearchforCompany(Company):
     regex = re.compile('\(.+?\)')
     Company = regex.sub('', Company)
     log(Company)
-    response = GetMovieDBData("search/company?query=%s&" % urllib.quote_plus(Company), 30)
+    response = GetMovieDBData("search/company?query=%s&" % urllib.quote_plus(Company), 10)
     try:
         return response["results"]
     except:
@@ -499,7 +494,7 @@ def SearchforCompany(Company):
 
 
 def MultiSearch(String):
-    response = GetMovieDBData("search/multi?query=%s&" % urllib.quote_plus(String), 30)
+    response = GetMovieDBData("search/multi?query=%s&" % urllib.quote_plus(String), 1)
     if response and "results" in response:
         return response["results"]
     else:
@@ -698,7 +693,6 @@ def GetExtendedMovieInfo(movieid=None, dbid=None, cache_time=14):
     directors = []
     genres = []
     year = ""
-    Country = ""
     Studio = []
     mpaa = ""
     SetName = ""
@@ -718,8 +712,6 @@ def GetExtendedMovieInfo(movieid=None, dbid=None, cache_time=14):
             directors.append(item["name"])
     if response['releases']['countries']:
         mpaa = response['releases']['countries'][0]['certification']
-    if response['production_countries']:
-        Country = response['production_countries'][0]["name"]
     for item in response['production_companies']:
         Studio.append(item["name"])
     Set = fetch(response, "belongs_to_collection")
@@ -755,6 +747,7 @@ def GetExtendedMovieInfo(movieid=None, dbid=None, cache_time=14):
              'imdb_id': fetch(response, 'imdb_id'),
              'Plot': fetch(response, 'overview'),
              'OriginalTitle': fetch(response, 'original_title'),
+             'Country': fetch(response, 'original_language'),
              'Genre': " / ".join(genres),
              'Rating': fetch(response, 'vote_average'),
              'Votes': fetch(response, 'vote_count'),
@@ -764,7 +757,6 @@ def GetExtendedMovieInfo(movieid=None, dbid=None, cache_time=14):
              'Path': path,
              'ReleaseDate': fetch(response, 'release_date'),
              'Premiered': fetch(response, 'release_date'),
-             'Country': Country,
              'Studio': " / ".join(Studio),
              'Year': year}
     if "videos" in response:
@@ -809,7 +801,7 @@ def GetExtendedTVShowInfo(tvshow_id=None, cache_time=7):
     session_string = ""
     if checkLogin():
         session_string = "session_id=%s&" % (get_session_id())
-    response = GetMovieDBData("tv/%s?append_to_response=account_states,content_ratings,credits,external_ids,images,keywords,rating,similar,translations,videos&language=%s&include_image_language=en,null,%s&%s" %
+    response = GetMovieDBData("tv/%s?append_to_response=account_states,alternative_titles,content_ratings,credits,external_ids,images,keywords,rating,similar,translations,videos&language=%s&include_image_language=en,null,%s&%s" %
                               (str(tvshow_id), addon.getSetting("LanguageID"), addon.getSetting("LanguageID"), session_string), cache_time)
     # prettyprint(response)
     videos = []
@@ -826,9 +818,57 @@ def GetExtendedTVShowInfo(tvshow_id=None, cache_time=7):
         account_states = None
     if "videos" in response:
         videos = HandleTMDBVideoResult(response["videos"]["results"])
+    tmdb_id = fetch(response, 'id')
+    poster_path = ""
+    duration = ""
+    year = ""
+    backdrop_path = ""
+    if ("backdrop_path" in response) and (response["backdrop_path"]):
+        backdrop_path = base_url + fanart_size + response['backdrop_path']
+    if ("poster_path" in response) and (response["poster_path"]):
+        poster_path = base_url + poster_size + response['poster_path']
+    if "episode_run_time" in response:
+        if len(response["episode_run_time"]) > 1:
+            duration = "%i - %i" % (min(response["episode_run_time"]), max(response["episode_run_time"]))
+        elif len(response["episode_run_time"]) == 1:
+            duration = "%i" % (response["episode_run_time"][0])
+        else:
+            duration = ""
+    release_date = fetch(response, 'first_air_date')
+    if release_date:
+        year = release_date[:4]
+    newtv = {'Art(fanart)': backdrop_path,
+             'Art(poster)': poster_path,
+             'Thumb': poster_path,
+             'Poster': poster_path,
+             'fanart': backdrop_path,
+             'Title': fetch(response, 'name'),
+             'TVShowTitle': fetch(response, 'name'),
+             'OriginalTitle': fetch(response, 'original_name'),
+             'Duration': duration,
+             'ID': tmdb_id,
+             'credit_id': fetch(response, 'credit_id'),
+             'Plot': fetch(response, "overview"),
+             'year': year,
+             'media_type': "tv",
+             'Path': 'plugin://script.extendedinfo/?info=extendedtvinfo&&id=%s' % tmdb_id,
+             'Rating': fetch(response, 'vote_average'),
+             'User_Rating': str(fetch(response, 'rating')),
+             'Votes': fetch(response, 'vote_count'),
+             'Status': fetch(response, 'status'),
+             'ShowType': fetch(response, 'type'),
+             'homepage': fetch(response, 'homepage'),
+             'last_air_date': fetch(response, 'last_air_date'),
+             'first_air_date': release_date,
+             'number_of_episodes': fetch(response, 'number_of_episodes'),
+             'number_of_seasons': fetch(response, 'number_of_seasons'),
+             'in_production': fetch(response, 'in_production'),
+             'Release_Date': release_date,
+             'ReleaseDate': release_date,
+             'Premiered': release_date}
     for item in threads:
         item.join()
-    answer = {"general": HandleTMDBTVShowResult([response])[0],
+    answer = {"general": newtv,
               "actors": actor_thread.listitems,
               "similar": similar_thread.listitems,
               "studios": HandleTMDBMiscResult(response["production_companies"]),
@@ -904,7 +944,7 @@ def GetExtendedActorInfo(actorid):
 
 def GetMovieLists(list_id):
     response = GetMovieDBData("movie/%s?append_to_response=account_states,alternative_titles,credits,images,keywords,releases,videos,translations,similar,reviews,lists,rating&include_image_language=en,null,%s&language=%s&" %
-                              (list_id, addon.getSetting("LanguageID"), addon.getSetting("LanguageID")), 30)
+                              (list_id, addon.getSetting("LanguageID"), addon.getSetting("LanguageID")), 5)
     return HandleTMDBMiscResult(response["lists"]["results"])
 
 
@@ -928,7 +968,7 @@ def GetTVShowsFromNetwork(network_id):
 
 def GetMoviesWithCertification(country, rating):
     response = GetMovieDBData("discover/movie?sort_by=release_date.desc&vote_count.gte=10&certification_country=%s&certification=%s&language=%s&include_adult=%s&" %
-                              (country, str(rating), addon.getSetting("LanguageID"), include_adult), 30)
+                              (country, str(rating), addon.getSetting("LanguageID"), include_adult), 10)
     return HandleTMDBMovieResult(response["results"], False, None)
 
 
@@ -953,7 +993,7 @@ def GetFavItems(media_type):
     return HandleTMDBMovieResult(response["results"], False, None)
 
 
-def GetMoviesFromList(list_id, cache_time=30):
+def GetMoviesFromList(list_id, cache_time=5):
     response = GetMovieDBData("list/%s?language=%s&" % (str(list_id), addon.getSetting("LanguageID")), cache_time)
   #  prettyprint(response)
     return HandleTMDBMovieResult(response["items"], False, None)
@@ -991,7 +1031,7 @@ def GetMovieKeywords(movie_id):
 
 def GetSimilarMovies(movie_id):
     response = GetMovieDBData("movie/%s?append_to_response=account_states,alternative_titles,credits,images,keywords,releases,videos,translations,similar,reviews,lists,rating&include_image_language=en,null,%s&language=%s&" %
-                              (movie_id, addon.getSetting("LanguageID"), addon.getSetting("LanguageID")), 30)
+                              (movie_id, addon.getSetting("LanguageID"), addon.getSetting("LanguageID")), 10)
     if "similar" in response:
         return HandleTMDBMovieResult(response["similar"]["results"])
     else:
@@ -999,7 +1039,7 @@ def GetSimilarMovies(movie_id):
 
 
 def GetMovieDBTVShows(tvshowtype):
-    response = GetMovieDBData("tv/%s?language=%s&" % (tvshowtype, addon.getSetting("LanguageID")), 2)
+    response = GetMovieDBData("tv/%s?language=%s&" % (tvshowtype, addon.getSetting("LanguageID")), 0.3)
     if "results" in response:
         return HandleTMDBTVShowResult(response["results"], False, None)
     else:
@@ -1008,7 +1048,7 @@ def GetMovieDBTVShows(tvshowtype):
 
 
 def GetMovieDBMovies(movietype):
-    response = GetMovieDBData("movie/%s?language=%s&" % (movietype, addon.getSetting("LanguageID")), 2)
+    response = GetMovieDBData("movie/%s?language=%s&" % (movietype, addon.getSetting("LanguageID")), 0.3)
     if "results" in response:
         return HandleTMDBMovieResult(response["results"], False, None)
     else:

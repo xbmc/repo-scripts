@@ -40,7 +40,7 @@ class DialogVideoInfo(xbmcgui.WindowXMLDialog):
         self.logged_in = checkLogin()
         if tmdb_id:
             self.MovieId = tmdb_id
-        elif self.dbid and (int(self.dbid) > -1):
+        elif self.dbid and (int(self.dbid) > 0):
             self.MovieId = GetImdbIDFromDatabase("movie", self.dbid)
             log("IMDBId from local DB:" + str(self.MovieId))
         elif imdb_id:
@@ -386,9 +386,9 @@ class DialogVideoInfo(xbmcgui.WindowXMLDialog):
     def ShowManageDialog(self):
         manage_list = []
         listitems = []
-        movie_id = self.movie["general"].get("DBID", False)
+        movie_id = str(self.movie["general"].get("DBID", ""))
         filename = self.movie["general"].get("FilenameAndPath", False)
-        imdb_id = self.movie["general"].get("imdb_id", False)
+        imdb_id = str(self.movie["general"].get("imdb_id", ""))
         if movie_id:
             temp_list = [[xbmc.getLocalizedString(413), "RunScript(script.artwork.downloader,mode=gui,mediatype=movie,dbid=" + movie_id + ")"],
                          [xbmc.getLocalizedString(14061), "RunScript(script.artwork.downloader, mediatype=movie, dbid=" + movie_id + ")"],

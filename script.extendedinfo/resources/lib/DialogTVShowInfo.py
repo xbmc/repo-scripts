@@ -26,18 +26,19 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin("ActivateWindow(busydialog)")
         self.movieplayer = VideoPlayer(popstack=True)
         xbmcgui.WindowXMLDialog.__init__(self)
-        tmdb_id = kwargs.get('id')
+        tmdb_id = kwargs.get('id', False)
         dbid = kwargs.get('dbid')
         imdb_id = kwargs.get('imdbid')
         tvdb_id = kwargs.get('tvdb_id')
         self.name = kwargs.get('name')
         if tmdb_id:
             self.tmdb_id = tmdb_id
-        elif dbid and (int(dbid) > -1):
+        elif dbid and (int(dbid) > 0):
             tvdb_id = GetImdbIDFromDatabase("tvshow", dbid)
             log("IMDBId from local DB:" + str(tvdb_id))
-            self.tmdb_id = Get_Show_TMDB_ID(tvdb_id)
-            log("tvdb_id to tmdb_id: %s --> %s" % (str(tvdb_id), str(self.tmdb_id)))
+            if tvdb_id:
+                self.tmdb_id = Get_Show_TMDB_ID(tvdb_id)
+                log("tvdb_id to tmdb_id: %s --> %s" % (str(tvdb_id), str(self.tmdb_id)))
         elif tvdb_id:
             self.tmdb_id = Get_Show_TMDB_ID(tvdb_id)
             log("tvdb_id to tmdb_id: %s --> %s" % (str(tvdb_id), str(self.tmdb_id)))
@@ -47,8 +48,6 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
         elif self.name:
             self.tmdb_id = search_media(kwargs.get('name'), "", "tv")
             log("search string to tmdb_id: %s --> %s" % (str(self.name), str(self.tmdb_id)))
-        else:
-            self.tmdb_id = ""
         xbmc.executebuiltin("ActivateWindow(busydialog)")
         if self.tmdb_id:
             self.tvshow = GetExtendedTVShowInfo(self.tmdb_id)
@@ -251,8 +250,8 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
     def ShowManageDialog(self):
         manage_list = []
         listitems = []
-        tvshow_dbid = self.tvshow["general"].get("DBID", False)
-        imdb_id = self.tvshow["general"].get("imdb_id", False)
+        tvshow_dbid = str(self.tvshow["general"].get("DBID", ""))
+        imdb_id = str(self.tvshow["general"].get("imdb_id", ""))
         title = self.tvshow["general"].get("TVShowTitle", "")
 
         # filename = self.tvshow["general"].get("FilenameAndPath", False)

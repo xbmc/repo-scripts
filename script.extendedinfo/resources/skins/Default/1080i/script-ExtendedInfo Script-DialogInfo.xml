@@ -135,6 +135,7 @@
                         <visible>IntegerGreaterThan(Container(150).NumItems,0)</visible>
                         <height>540</height>
                         <control type="label">
+                            <posy>6</posy>
                             <posx>25</posx>
                             <width>500</width>
                             <height>25</height>
@@ -214,12 +215,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="image">
@@ -290,12 +292,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="textbox">
@@ -316,6 +319,7 @@
                         <height>540</height>
                         <visible>IntegerGreaterThan(Container(250).NumItems,0)</visible>
                         <control type="label">
+                            <posy>6</posy>
                             <posx>25</posx>
                             <width>500</width>
                             <height>25</height>
@@ -395,12 +399,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="image">
@@ -471,12 +476,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="textbox">
@@ -497,6 +503,7 @@
                         <visible>IntegerGreaterThan(Container(550).NumItems,0)</visible>
                         <height>540</height>
                         <control type="label">
+                            <posy>6</posy>
                             <posx>25</posx>
                             <width>500</width>
                             <height>25</height>
@@ -576,12 +583,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="image">
@@ -652,12 +660,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="textbox">
@@ -757,12 +766,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="image">
@@ -833,12 +843,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="textbox">

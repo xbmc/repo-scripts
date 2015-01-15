@@ -746,20 +746,21 @@ def GetFavouriteswithType(favtype):
 
 
 def GetFavPath(fav):
+    path = ""
     if fav["type"] == "media":
         path = "PlayMedia(%s)" % (fav["path"])
     elif fav["type"] == "script":
         path = "RunScript(%s)" % (fav["path"])
+    elif "window" in fav and "windowparameter" in fav:
+        path = "ActivateWindow(%s,%s)" % (fav["window"], fav["windowparameter"])
     else:
-        path = "ActivateWindow(%s,%s)" % (
-            fav["window"], fav["windowparameter"])
+        log("error parsing favs")
     return path
 
 
 def GetFavourites():
     items = []
-    json_query = xbmc.executeJSONRPC(
-        '{"jsonrpc": "2.0", "method": "Favourites.GetFavourites", "params": {"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}, "id": 1}')
+    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Favourites.GetFavourites", "params": {"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}, "id": 1}')
     json_query = unicode(json_query, 'utf-8', errors='ignore')
     json_query = simplejson.loads(json_query)
     if json_query["result"]["limits"]["total"] > 0:

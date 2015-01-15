@@ -49,7 +49,7 @@ class DialogVideoList(xbmcgui.WindowXMLDialog):
         self.filter_label = ""
         self.mode = kwargs.get("mode", "filter")
         self.sort = kwargs.get('sort', "popularity")
-        self.sort_label = kwargs.get('sort_label', "Popularity")
+        self.sort_label = kwargs.get('sort_label', addon.getLocalizedString(32110))
         self.order = kwargs.get('order', "desc")
         self.logged_in = checkLogin()
         self.filters = kwargs.get('filters', [])
@@ -186,7 +186,7 @@ class DialogVideoList(xbmcgui.WindowXMLDialog):
         #         self.update_ui()
         elif controlID == 5012:
             dialog = xbmcgui.Dialog()
-            ret = True
+            ret = False
             if not self.type == "tv":
                 ret = dialog.yesno(heading=addon.getLocalizedString(32151), line1=addon.getLocalizedString(32106), nolabel=addon.getLocalizedString(32150), yeslabel=addon.getLocalizedString(32149))
             result = xbmcgui.Dialog().input(xbmc.getLocalizedString(32111), "", type=xbmcgui.INPUT_NUMERIC)
@@ -253,14 +253,15 @@ class DialogVideoList(xbmcgui.WindowXMLDialog):
                 self.update_content()
                 self.update_ui()
         elif controlID == 7000:
+            listitems = []
             if self.type == "tv":
-                listitems = [addon.getLocalizedString(32145)]  # rated tv
                 if self.logged_in:
                     listitems.append(addon.getLocalizedString(32144))   # starred tv
+                listitems.append(addon.getLocalizedString(32145))  # rated tv
             else:
-                listitems = [addon.getLocalizedString(32135)]  # rated movies
                 if self.logged_in:
                     listitems.append(addon.getLocalizedString(32134))   # starred movies
+                listitems.append(addon.getLocalizedString(32135))  # rated movies
             xbmc.executebuiltin("ActivateWindow(busydialog)")
             if self.logged_in:
                 account_lists = GetAccountLists()
@@ -328,8 +329,6 @@ class DialogVideoList(xbmcgui.WindowXMLDialog):
             sort_strings.append(value)
         index = xbmcgui.Dialog().select(addon.getLocalizedString(32104), listitems)
         if index > -1:
-            if sort_strings[index] == "vote_average":
-                self.add_filter("vote_count.gte", "10", "Vote Count (greater)", "10")
             self.sort = sort_strings[index]
             self.sort_label = listitems[index]
 

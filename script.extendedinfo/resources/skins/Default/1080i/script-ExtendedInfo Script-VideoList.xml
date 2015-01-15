@@ -360,6 +360,7 @@
                 <onleft>500</onleft>
                 <textoffsetx>40</textoffsetx>
                 <textoffsety>25</textoffsety>
+                <font>font13</font>
                 <textwidth>315</textwidth>
                 <label>$ADDON[script.extendedinfo 32024]</label>
                 <textcolor>grey</textcolor>
@@ -387,7 +388,7 @@
                 <onleft>500</onleft>
                 <onback>500</onback>
                 <control type="button" id="5007">
-                    <label>Type:</label>
+                    <label>$LOCALIZE[467]:</label> <!--564-->
                     <label2>[COLOR white]$INFO[Window.Property(Type)][/COLOR]</label2>
                     <width>400</width>
                     <height>90</height>

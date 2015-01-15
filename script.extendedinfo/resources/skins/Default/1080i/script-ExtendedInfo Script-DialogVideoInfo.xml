@@ -171,8 +171,11 @@
                                 </control>
                             </control>
                             <control type="group" id="20000">
+                                <posx>0</posx>
+                                <posy>0</posy>
                                 <visible>!StringCompare(Window.Property(type),season)</visible>
                                 <width>280</width>
+                                <height>400</height>
                                 <control type="radiobutton" id="6001">
                                     <label>$ADDON[script.extendedinfo 32129]</label>
                                     <textureradioonfocus colordiffuse="grey">-</textureradioonfocus>
@@ -203,15 +206,17 @@
                                     <radioheight>44</radioheight>
                                 </control>
                                 <control type="label">
-                                    <label>$INFO[Window.Property(movie.rated)]</label>
                                     <posx>0</posx>
+                                    <posy>40</posy>
                                     <align>center</align>
                                     <aligny>center</aligny>
-                                    <posy>-285</posy>
-                                    <heigth>30</heigth>
-                                    <font>font30_title</font>
+                                    <height>30</height>
                                     <width>280</width>
+                                    <textoffsetx>0</textoffsetx>
+                                    <textoffsety>0</textoffsety>
+                                    <font>font30_title</font>
                                     <textcolor>grey</textcolor>
+                                    <label>$INFO[Window.Property(movie.rated)]</label>
                                 </control>
                             </control>
                             <control type="radiobutton" id="6003">
@@ -573,6 +578,8 @@
                                 </control>
                                 <!--Subtitle flags-->
                                 <control type="grouplist" id="12000">
+                                    <posx>0</posx>
+                                    <posy>0</posy>
                                     <animation effect="fade" start="100" end="80" time="40" condition="true">Conditional</animation>
                                     <width>600</width>
                                     <height>25</height>
@@ -1092,12 +1099,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="image">
@@ -1177,12 +1185,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="textbox">
@@ -1283,12 +1292,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="image">
@@ -1359,12 +1369,13 @@
                                             <visible>!IsEmpty(ListItem.Year)</visible>
                                         </control>
                                         <control type="label">
+                                            <posx>5</posx>
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>84</width>
                                             <height>25</height>
                                             <font>font10</font>
                                             <aligny>center</aligny>
-                                            <align>center</align>
+                                            <align>left</align>
                                             <label>$INFO[ListItem.Year]</label>
                                         </control>
                                         <control type="textbox">
@@ -1477,6 +1488,7 @@
                                     <posx>77</posx>
                                     <posy>18</posy>
                                     <control type="image">
+                                        <posx>0</posx>
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
@@ -1485,6 +1497,7 @@
                                         <fadetime>0</fadetime>
                                     </control>
                                     <control type="image">
+                                        <posx>0</posx>
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
@@ -1525,6 +1538,7 @@
                                     <posx>77</posx>
                                     <posy>18</posy>
                                     <control type="image">
+                                        <posx>0</posx>
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
@@ -1916,7 +1930,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>Releases</label>
+                            <label>$ADDON[script.extendedinfo 32168]</label>
                         </control>
                         <control type="image">
                             <posx>0</posx>
@@ -2059,12 +2073,17 @@
                             <itemlayout height="100" width="270">
                                 <control type="group">
                                     <posx>50</posx>
+                                    <posy>0</posy>
                                     <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>280</width>
                                         <height>100</height>
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
                                     </control>
                                     <control type="label">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>280</width>
                                         <height>100</height>
                                         <align>center</align>
@@ -2077,12 +2096,17 @@
                             <focusedlayout height="100" width="270">
                                 <control type="group">
                                     <posx>50</posx>
+                                    <posy>0</posy>
                                     <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>280</width>
                                         <height>100</height>
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
                                     </control>
                                     <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>280</width>
                                         <height>100</height>
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -2090,6 +2114,8 @@
                                         <animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
                                     </control>
                                     <control type="label">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>280</width>
                                         <height>100</height>
                                         <align>center</align>
@@ -2133,7 +2159,10 @@
                             <itemlayout height="400" width="630">
                                 <control type="group">
                                     <posx>50</posx>
+                                    <posy>0</posy>
                                     <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>630</width>
                                         <height>400</height>
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
@@ -2152,12 +2181,15 @@
                             <focusedlayout height="400" width="630">
                                 <control type="group">
                                     <posx>50</posx>
+                                    <posy>0</posy>
                                     <control type="image">
                                         <width>630</width>
                                         <height>400</height>
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
                                     </control>
                                     <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>630</width>
                                         <height>400</height>
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -2209,12 +2241,16 @@
                             <itemlayout height="100" width="270">
                                 <control type="group">
                                     <posx>50</posx>
+                                    <posy>0</posy>
                                     <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>280</width>
                                         <height>100</height>
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
                                     </control>
                                     <control type="label">
+                                        <posy>0</posy>
                                         <posx>20</posx>
                                         <width>240</width>
                                         <height>100</height>
@@ -2227,6 +2263,7 @@
                             </itemlayout>
                             <focusedlayout height="100" width="270">
                                 <control type="group">
+                                    <posy>0</posy>
                                     <posx>50</posx>
                                     <control type="image">
                                         <width>280</width>
@@ -2234,6 +2271,8 @@
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texture>
                                     </control>
                                     <control type="image">
+                                        <posx>0</posx>
+                                        <posy>0</posy>
                                         <width>280</width>
                                         <height>100</height>
                                         <texture border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texture>
@@ -2242,6 +2281,7 @@
                                     </control>
                                     <control type="label">
                                         <posx>20</posx>
+                                        <posy>0</posy>
                                         <width>240</width>
                                         <height>100</height>
                                         <align>center</align>
@@ -2793,12 +2833,14 @@
                             <effect type="zoom" start="100,0" end="100,100" delay="460" time="960" center="0,170" tween="cubic" />
                         </animation>
                         <control type="image">
+                            <posx>0</posx>
                             <posy>90</posy>
                             <width>1042</width>
                             <height>1</height>
                             <texture>info/infopanel_line.png</texture>
                         </control>
                         <control type="image">
+                            <posx>0</posx>
                             <posy>170</posy>
                             <width>1042</width>
                             <height>1</height>
@@ -2812,6 +2854,7 @@
                             <orientation>horizontal</orientation>
                             <usecontrolcoords>true</usecontrolcoords>
                             <control type="image">
+                                <posx>0</posx>
                                 <posy>5</posy>
                                 <width>135</width>
                                 <height>67</height>
@@ -2819,15 +2862,18 @@
                                 <texture colordiffuse="white2" fallback="flags/rating/MPAA_NR_Certificate_US.png">$INFO[Window.Property(movie.mpaa),flags/rating/,.png]</texture>
                             </control>
                             <control type="group">
+                                <posx>0</posx>
                                 <width>155</width>
                                 <visible>!Stringcompare(Window.Property(movie.Rating),0.0) + !IsEmpty(Window.Property(movie.Rating))</visible>
                                 <control type="image">
+                                    <posx>0</posx>
                                     <height>79</height>
                                     <width>2</width>
                                     <height>71</height>
                                     <texture>info/upright.png</texture>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>12</posy>
                                     <width>155</width>
                                     <height>38</height>
@@ -2836,6 +2882,7 @@
                                     <font>font14</font>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>37</posy>
                                     <width>155</width>
                                     <height>38</height>
@@ -2846,15 +2893,18 @@
                                 </control>
                             </control>
                             <control type="group">
+                                <posx>0</posx>
                                 <width>155</width>
                                 <visible>!Stringcompare(Window.Property(movie.Duration),0) + !IsEmpty(Window.Property(movie.Duration))</visible>
                                 <control type="image">
+                                    <posx>0</posx>
                                     <height>79</height>
                                     <width>2</width>
                                     <height>71</height>
                                     <texture>info/upright.png</texture>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>12</posy>
                                     <width>155</width>
                                     <height>38</height>
@@ -2863,6 +2913,7 @@
                                     <font>font14</font>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>37</posy>
                                     <width>155</width>
                                     <height>38</height>
@@ -2873,6 +2924,7 @@
                                 </control>
                             </control>
                             <control type="image">
+                                <posx>0</posx>
                                 <posy>1</posy>
                                 <height>79</height>
                                 <width>2</width>
@@ -2883,6 +2935,7 @@
                                 <width>220</width>
                                 <visible>!IsEmpty(Window.Property(movie.ReleaseDate))</visible>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>12</posy>
                                     <width>220</width>
                                     <height>38</height>
@@ -2891,6 +2944,7 @@
                                     <font>font14</font>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>37</posy>
                                     <width>220</width>
                                     <height>38</height>
@@ -2901,9 +2955,11 @@
                                 </control>
                             </control>
                             <control type="group">
+                                <posx>0</posx>
                                 <width>220</width>
                                 <visible>!IsEmpty(Window.Property(movie.Budget))</visible>
                                 <control type="image">
+                                    <posx>0</posx>
                                     <posy>1</posy>
                                     <height>79</height>
                                     <width>2</width>
@@ -2911,6 +2967,7 @@
                                     <texture>info/upright.png</texture>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>12</posy>
                                     <width>220</width>
                                     <height>38</height>
@@ -2919,6 +2976,7 @@
                                     <font>font14</font>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>37</posy>
                                     <width>220</width>
                                     <height>38</height>
@@ -2929,9 +2987,11 @@
                                 </control>
                             </control>
                             <control type="group" id="3300">
+                                <posx>0</posx>
                                 <width>220</width>
                                 <visible>!IsEmpty(Window.Property(movie.Revenue))</visible>
                                 <control type="image">
+                                    <posx>0</posx>
                                     <posy>1</posy>
                                     <height>79</height>
                                     <width>2</width>
@@ -2939,6 +2999,7 @@
                                     <texture>info/upright.png</texture>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>12</posy>
                                     <width>220</width>
                                     <height>38</height>
@@ -2947,6 +3008,7 @@
                                     <font>font14</font>
                                 </control>
                                 <control type="label">
+                                    <posx>0</posx>
                                     <posy>37</posy>
                                     <width>220</width>
                                     <height>38</height>
