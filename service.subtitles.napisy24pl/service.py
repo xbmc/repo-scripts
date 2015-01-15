@@ -89,19 +89,32 @@ def getallsubs(content, item, subtitles_list):
         release_re = '<div class="subtitle">.+>(.+?)</h3>.+</div>'
         lang_re = '<img src="/images/flags/(.+?).png" class="lang" />'
 
+        infoColumn1 = re.findall("<div class=\"infoColumn1\">(.+?)</div>", row_str, re.DOTALL)[0].split('<br />')
         infoColumn2 = re.findall("<div class=\"infoColumn2\">(.+?)</div>", row_str, re.DOTALL)[0].split('<br />')
+        infoColumn3 = re.findall("<div class=\"infoColumn3\">(.+?)</div>", row_str, re.DOTALL)[0].split('<br />')
         infoColumn4 = re.findall("<div class=\"infoColumn4\">(.+?)</div>", row_str, re.DOTALL)[0].split('<br />')
 
         sub_id = int(re.findall(sub_id_re, row_str)[0])
         subtitle = re.findall(title_re, row_str)[0]
         release = re.findall(release_re, row_str)[0]
-        rating = float(infoColumn4[3].replace(',', '.'))
         language = re.findall(lang_re, row_str)[0]
+
+        rating = 0
+        video_file_size = []
+
+        for i, line in enumerate(infoColumn1):
+            if 'Rozmiar' in line:
+                video_file_size = re.findall("[\d.]+", infoColumn2[i])
+                break
+
+        for i, line in enumerate(infoColumn3):
+            if 'ocena' in line:
+                rating = float(infoColumn4[i].replace(',', '.'))
+                break
 
         if rating != 0:
             rating = int(round(rating/1.2 , 0))
 
-        video_file_size = re.findall("[\d.]+", infoColumn2[4])
         if(len(video_file_size) > 0):
             video_file_size = float(video_file_size[0])
         else:

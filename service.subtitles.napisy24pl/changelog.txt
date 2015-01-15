@@ -1,3 +1,6 @@
+1.0.9 - by DaM 13/01/2014
+- Fix for parsing rating and video_file_size
+
 1.0.8 - by DaM 06/01/2014
 - Fix for changes in HTML
 
