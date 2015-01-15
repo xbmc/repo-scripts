@@ -32,6 +32,110 @@ msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Selezione video"
 
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "Salvaschermo Video"
+
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configurazione"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "Preferenza Video"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "Definito dall'utente"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Selezione Salvaschermo"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "Usa Tutti I File Di Una Cartella"
+
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr "Imposta/Scarica Video File Preferito"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Seleziona un File Video"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Mostra l'Ora"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "Inizia il Video ad Un Punto a Caso"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "Seleziona Cartella Video"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Previeni la Partenza del Salvaschermo se un Media è in Esecuzione"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Cambia il Volume quando il Salvaschermo Inizia"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Imposta il Volume a"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Livello Opacità"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** Tutti i Video Scaricati ***"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Aquario 1 - [846MB] - 400p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Aquario 2 - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Camino 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Camino 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Camino 3 - [2.1GB] - 1080p"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "File Salvaschermo non Valido"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "Il Seguente video predefinito già esiste"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Riutilizza questo file?"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "File Salvaschermo in Downloand"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "Questa opzione userà il video già scaricato"
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "Ogni video richiesto dovrebbe essere scaricato individualmente prima"

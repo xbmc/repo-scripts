@@ -62,7 +62,7 @@ msgstr "Instellen/download vooraf ingesteld videobestand"
 
 msgctxt "#32051"
 msgid "Select Video File"
-msgstr "Selecteer video bestand"
+msgstr "Selecteer videobestand"
 
 msgctxt "#32052"
 msgid "Show Time"
@@ -91,6 +91,14 @@ msgstr "Stel volume in op"
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Dim niveau"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Stop schermbeveiling automatisch"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Stop schermbeveiliging na (minuten)"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -122,7 +130,7 @@ msgstr "Schermbeveiligingsbestand is niet geldig"
 
 msgctxt "#32301"
 msgid "The following default video already exists"
-msgstr "De volgende standaard video bestaat al"
+msgstr "De volgende standaardvideo bestaat al"
 
 msgctxt "#32302"
 msgid "Reuse this file?"
@@ -134,8 +142,8 @@ msgstr "Downloaden schermbeveiliging videobestand"
 
 msgctxt "#32304"
 msgid "This option will use all videos already downloaded"
-msgstr "Deze optie zal alle al gedownloade video`s gebruiken"
+msgstr "Deze optie zal alle reeds gedownloade video`s gebruiken"
 
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
-msgstr "Elke video vereist zal eerst individueel moeten worden gedownload"
+msgstr "Elke benodigde video zal eerst individueel moeten worden gedownload"

@@ -92,6 +92,14 @@ msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Pritemdymo lygis"
 
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Stabdyti ekrano užsklanda automatiškai"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Stabdyti ekrano užsklandą po (minutėmis)"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Visi atsisiųsti vaizdo įrašai ***"

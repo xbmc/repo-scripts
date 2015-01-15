@@ -37,6 +37,9 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     TIME_CONTROL = 3002
     DIM_CONTROL = 3003
 
+    def __init__(self, *args, **kwargs):
+        self.isClosed = False
+
     # Static method to create the Window class
     @staticmethod
     def createScreensaverWindow():
@@ -65,7 +68,10 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
         xbmc.Player().play(playlist)
 
         # Set the video to loop, as we want it running as long as the screensaver
-        xbmc.executebuiltin("PlayerControl(RepeatAll)")
+        repeatType = Settings.getFolderRepeatType()
+        if repeatType is not None:
+            log("Setting Repeat Type to %s" % repeatType)
+            xbmc.executebuiltin("PlayerControl(%s)" % repeatType)
         log("Started playing")
 
         # Now check to see if we are overlaying the time on the screen
@@ -95,6 +101,9 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
         log("OnClick received")
         self.close()
 
+    def isComplete(self):
+        return self.isClosed
+
     # A request to close the window has been made, tidy up the screensaver window
     def close(self):
         log("Ending Screensaver")
@@ -113,8 +122,11 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
         if self.volumeCtrl is not None:
             # Restore the volume
             self.volumeCtrl.restoreVolume()
+            self.volumeCtrl = None
 
         log("Closing Window")
+        # Record that we are closing
+        self.isClosed = True
         xbmcgui.WindowXML.close(self)
 
     # Generates the playlist to use for the screensaver
@@ -267,6 +279,30 @@ if __name__ == '__main__':
 
     screenWindow = ScreensaverWindow.createScreensaverWindow()
     # Now show the window and block until we exit
-    screenWindow.doModal()
+    screensaverTimeout = Settings.screensaverTimeout()
+    if screensaverTimeout < 1:
+        log("Starting Screensaver in Modal Mode")
+        screenWindow.doModal()
+    else:
+        log("Starting Screensaver in Show Mode")
+        screenWindow.show()
+
+        # The timeout is in minutes, and the sleep is in msec, so convert the
+        # countdown into the correct "sleep units" which will be every 0.1 seconds
+        checkInterval = 100
+        countdown = screensaverTimeout * 60 * (1000 / checkInterval)
+
+        # Now wait until the screensaver is closed
+        while not screenWindow.isComplete():
+            xbmc.sleep(checkInterval)
+            # Update the countdown
+            countdown = countdown - 1
+            if countdown < 1:
+                log("Stopping Screensaver as countdown expired")
+                # close the screensaver window
+                screenWindow.close()
+                # Reset the countdown to stop multiple closes being sent
+                countdown = 100
+
     del screenWindow
     log("Leaving Screensaver Script")

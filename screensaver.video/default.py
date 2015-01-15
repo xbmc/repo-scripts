@@ -3,6 +3,7 @@ import sys
 import os
 import xbmc
 import xbmcaddon
+import xbmcgui
 
 
 __addon__ = xbmcaddon.Addon(id='screensaver.video')
@@ -31,34 +32,47 @@ class ExitMonitor(xbmc.Monitor):
 # Main of the Video Screensaver
 ##################################
 if __name__ == '__main__':
-    # Check if media (Music or video) is playing already when the screensaver
-    # starts, as the user may want to stop the screensaver running if they are
-    # playing music
-    if not (xbmc.Player().isPlaying() and Settings.isBlockScreensaverIfMediaPlaying()):
-        # Start the monitor so we can see when the screensaver quits
-        exitMon = ExitMonitor()
-        # When we are called to start the screensaver we need to immediately stop
-        # the screensaver, this is because we want to play a video file, an action
-        # which in itself will cause the screensaver to stop
-        log("Waking screensaver with call to context menu")
-        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
 
-        # Now we need to launch a new script that will start the video
-        # playing for the screensaver, it will then listen for any action or
-        # activity and stop the video being used as the screensaver
-        log("Running video screensaver in separate thread")
-        xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__cwd__, "screensaver.py")))
+    # Only allow one screensaver to run at a time
+    alreadyRunning = xbmcgui.Window(10000).getProperty("VideoScreensaverRunning")
+    if alreadyRunning in ["", None]:
+        xbmcgui.Window(10000).setProperty("VideoScreensaverRunning", "true")
+        # Give a little bit of time for everything to shake out before starting the screensaver
+        # waiting another few seconds to start a screensaver is not going to make a difference
+        # to the user
+        xbmc.sleep(3000)
 
-        # Limit the maximum amount of time to wait for the screensaver to end
-        maxWait = 30
+        # Check if media (Music or video) is playing already when the screensaver
+        # starts, as the user may want to stop the screensaver running if they are
+        # playing music
+        if not (xbmc.Player().isPlaying() and Settings.isBlockScreensaverIfMediaPlaying()):
+            # Start the monitor so we can see when the screensaver quits
+            exitMon = ExitMonitor()
+            # When we are called to start the screensaver we need to immediately stop
+            # the screensaver, this is because we want to play a video file, an action
+            # which in itself will cause the screensaver to stop
+            log("Waking screensaver with call to context menu")
+            xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
 
-        while (not ExitMonitor.stopScreensaver) and (maxWait > 0):
-            log("still running default screensaver, waiting for stop")
-            xbmc.sleep(100)
-            maxWait = maxWait - 1
+            # Limit the maximum amount of time to wait for the screensaver to end
+            maxWait = 30
 
-        del exitMon
-        log("Default screensaver stopped")
+            while (not ExitMonitor.stopScreensaver) and (maxWait > 0):
+                log("still running default screensaver, waiting for stop")
+                xbmc.sleep(100)
+                maxWait = maxWait - 1
+
+            del exitMon
+            log("Default screensaver stopped")
+
+            # Now we need to launch a new script that will start the video
+            # playing for the screensaver, it will then listen for any action or
+            # activity and stop the video being used as the screensaver
+            log("Running video screensaver in separate thread")
+            xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__cwd__, "screensaver.py")))
+            xbmcgui.Window(10000).clearProperty("VideoScreensaverRunning")
+        else:
+            log("Stopping screensaver as media playing")
+            xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
     else:
-        log("Stopping screensaver as media playing")
-        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
+        log("VideoScreensaver already flagged as running")

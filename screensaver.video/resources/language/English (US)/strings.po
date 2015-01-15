@@ -92,6 +92,14 @@ msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Dim Level"
 
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Stop Screensaver Automatically"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Stop Screensaver After (Minutes)"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** All Downloaded Videos ***"

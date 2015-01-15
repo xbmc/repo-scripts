@@ -76,6 +76,18 @@ msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "Selecionar Diretório com Vídeos"
 
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Prevenir que o Protetor de Tela inicie se Reproduzindo Conteúdo"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Alterar Volume Quando Protetor de Tela Iniciar"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Setar Volume Para"
+
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nível de Dimerização"

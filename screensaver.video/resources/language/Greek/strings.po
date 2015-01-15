@@ -92,6 +92,14 @@ msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Επίπεδο Σκίασης"
 
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Αυτόματη Διακοπή Προφύλαξης Οθόνης"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Διακοπή Προφύλαξης Οθόνης Μετά Από (Λεπτά)"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Όλα τα Ληφθέντα Βίντεο ***"
@@ -114,7 +122,7 @@ msgstr "Τζάκι 2 - [827MB] - 480p"
 
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr "Τζάκι3 - [2.1GB] - 1080p"
+msgstr "Τζάκι 3 - [2.1GB] - 1080p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

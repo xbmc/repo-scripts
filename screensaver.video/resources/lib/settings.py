@@ -92,6 +92,11 @@ class Settings():
         'EE000000'
     )
 
+    REPEAT_TYPE = (
+        'RepeatAll',
+        'RepeatOne'
+    )
+
     @staticmethod
     def getScreensaverVideo():
         return __addon__.getSetting("screensaverFile").decode("utf-8")
@@ -166,3 +171,18 @@ class Settings():
             return Settings.DIM_LEVEL[int(__addon__.getSetting("dimLevel"))]
         else:
             return '00000000'
+
+    @staticmethod
+    def screensaverTimeout():
+        timoutSetting = 0
+        if __addon__.getSetting("stopAutomatic") == 'true':
+            timoutSetting = int(float(__addon__.getSetting("stopAfter")))
+        return timoutSetting
+
+    @staticmethod
+    def getFolderRepeatType():
+        repeatType = Settings.REPEAT_TYPE[0]
+        if __addon__.getSetting("videoSelection") == "1":
+            if Settings.isFolderSelection() and __addon__.getSetting("folderRepeatType"):
+                repeatType = Settings.REPEAT_TYPE[int(__addon__.getSetting("folderRepeatType"))]
+        return repeatType
