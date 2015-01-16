@@ -1,3 +1,6 @@
+v1.0.2
+- fix gzip support
+
 v1.0.1
 - disable logging
 
