@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import os, sys, time, socket, urllib2, unicodedata, hashlib, threading, shutil
+import os, sys, time, urllib2, unicodedata, hashlib, threading, shutil, gzip
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 if sys.version_info < (2, 7):
     import simplejson as json
 else:
     import json
 from PIL import Image
+from StringIO import StringIO
 
 __addon__      = xbmcaddon.Addon()
 __addonname__  = __addon__.getAddonInfo('name')
@@ -37,13 +38,11 @@ TEMPUNIT       = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
 MAXDAYS        = 6
 
 def log(txt):
-#    if DEBUG == 'true':
-    if True:
+    if DEBUG == 'true':
         if isinstance (txt,str):
             txt = txt.decode("utf-8")
         message = u'%s: %s' % (__addonid__, txt)
-#        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
-        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGINFO) # spam the log for the time being
+        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 def clear():
     set_property('Current.Condition'     , 'N/A')
