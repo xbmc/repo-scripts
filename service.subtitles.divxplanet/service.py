@@ -70,9 +70,12 @@ def getmediaUrl(mediaArgs):
 
     for result in soup.findAll('td', attrs={'width': '60%'}):
         link = result.find('a')
-        #print(result.getText())
-        if str(year) in result.getText() and (querytype == "film" or ("tv-shows" in result["style"] and querytype == "dizi")):
-            return "http://altyazi.org%s" % link["href"]
+        if querytype == "film":
+            if str(year) == "" or str(year) in result.getText():
+                return "http://altyazi.org%s" % link["href"]
+        elif querytype == "dizi" and result.has_key("style") and "tv-shows" in result["style"]:
+            if (str(year) == "" or str(year) in result.getText()):
+                    return "http://altyazi.org%s" % link["href"]
     return ""
 
 def Search(item):
