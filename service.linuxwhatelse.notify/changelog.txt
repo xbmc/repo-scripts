@@ -1,0 +1,8 @@
+version 1.0.0
+  - first official release
+
+version 0.1.0
+  - Lot's of refactoring and clean-up
+
+version 0.0.1
+  - initial releases

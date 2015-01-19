@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="110">
+		<setting label="111"	type="lsep" />
+		<setting label="113"	id="music_action_on_call"	type="enum"		lvalues="114|115|116|117" default="3" />
+		<setting label="118"	id="unmute_music"			type="bool"		subsetting="true"	visible="eq(-1,1)"	default="true" />
+		<setting label="119"	id="play_music"				type="bool"		subsetting="true"	visible="eq(-2,2)"	default="true" />
+		<setting label="120"	id="music_volume"			type="slider"	subsetting="true"	visible="eq(-3,3)"	option="int"	range="5,5,100"		default="15" />
+		<setting label="121"	id="reset_music_volume"		type="bool"		subsetting="true"	visible="eq(-4,3)"	default="true" />
+
+		<setting label="116"	type="lsep"/>
+		<setting label="113"	id="video_action_on_call"	type="enum"		lvalues="114|115|116|117" default="2" />
+		<setting label="118"	id="unmute_video"			type="bool"		subsetting="true"	visible="eq(-1,1)"	default="true" />
+		<setting label="119"	id="play_video"				type="bool"		subsetting="true"	visible="eq(-2,2)"	default="true" />
+		<setting label="120"	id="video_volume"			type="slider"	subsetting="true"	visible="eq(-3,3)"	option="int"	range="5,5,100"		default="15" />
+		<setting label="121"	id="reset_video_volume"		type="bool"		subsetting="true"	visible="eq(-4,3)"	default="true" />
+	</category>
+
+	<category label="100">
+		<setting label="101"	type="lsep"/>
+		<setting label="102"	id="base_auth_enabled"	type="bool"		default="false" />
+		<setting label="103"	id="username"			type="text"		enable="eq(-1,true)" />
+		<setting label="104"	id="password"			type="text"		option="hidden" enable="eq(-2,true)+!eq(-1,)" />
+		<setting label="105"	id="port"				type="number"	default="8022" />
+	</category>
+</settings>

@@ -1,0 +1,97 @@
+# Kodi Media Center language file
+# Addon Name: notify
+# Addon id: service.linuxwhatelse.notify
+# Addon Provider: linuxwhatelse
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: tadly@linuxwhatelse.de\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: linuxwhatelse\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#100"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#110"
+msgid "Call-Behaviour"
+msgstr ""
+
+msgctxt "#101"
+msgid "Server-Settings"
+msgstr ""
+
+msgctxt "#102"
+msgid "Enable Basic-Authorization"
+msgstr ""
+
+msgctxt "#103"
+msgid "Username"
+msgstr ""
+
+msgctxt "#104"
+msgid "Password"
+msgstr ""
+
+msgctxt "#105"
+msgid "Port"
+msgstr ""
+
+msgctxt "#111"
+msgid "Music"
+msgstr ""
+
+msgctxt "#112"
+msgid "Video"
+msgstr ""
+
+msgctxt "#113"
+msgid "When call arrives"
+msgstr ""
+
+msgctxt "#114"
+msgid "Do nothing"
+msgstr ""
+
+msgctxt "#115"
+msgid "Mute"
+msgstr ""
+
+msgctxt "#116"
+msgid "Pause"
+msgstr ""
+
+msgctxt "#117"
+msgid "Change volume"
+msgstr ""
+
+msgctxt "#118"
+msgid "Unmute after call ends"
+msgstr ""
+
+msgctxt "#119"
+msgid "Play again after call ends"
+msgstr ""
+
+msgctxt "#120"
+msgid "Set volume to"
+msgstr ""
+
+msgctxt "#121"
+msgid "Reset volume after call ended"
+msgstr ""
+
+msgctxt "#200"
+msgid "QR-Code generation not available"
+msgstr ""
+
+msgctxt "#201"
+msgid "Some dependencies are missing so this won't work"
+msgstr ""
