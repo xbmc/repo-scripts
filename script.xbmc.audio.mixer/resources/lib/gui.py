@@ -30,7 +30,7 @@ __version__    = sys.modules[ "__main__" ].__version__
 __addon__      = sys.modules[ "__main__" ].__addon__
 
 
-CANCEL_DIALOG = EXIT_SCRIPT + (  9, 10, 216, 247, 257, 275, 61448, 61467, )
+CANCEL_DIALOG = (  9, 10, 216, 247, 257, 275, 61448, 61467, )
 
 
 class GUI( xbmcgui.WindowXMLDialog ):
