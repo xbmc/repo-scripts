@@ -30,13 +30,11 @@ class Movies(Sync):
         except UserAbortExceptions:
             dialog.create_ok(helper.language(32022))  # "Progress Aborted"
         except ConnectionExceptions as error:
-            self.create_error_dialog(helper.language(32018), error.value)  # "Error"
+            self.create_error_dialog(error.value)
         except SettingsExceptions as error:
-            self.create_error_dialog(helper.language(32018), error.value)  # "Error"
+            self.create_error_dialog(error.value)
         except SystemExit:
             pass
-        except Exception as error:
-            self.create_error_dialog(helper.language(32018), str(error))  # "Error"
 
         self.quit()
 
@@ -63,7 +61,7 @@ class Movies(Sync):
             self.progress.update(50 / num_movies * i)
             if self.is_canceled():
                 break
-            if m.plays <= 0:
+            if m.plays == 0:
                 continue
             if self.movie_set_as_seen_on_eh(m.imdb_id):
                 continue

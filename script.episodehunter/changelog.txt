@@ -1,5 +1,8 @@
+Version 1.1.2:
+      Bug fix: Fixing issue #14 Unwatched episodes was marked as
+      watched on episodehunter.tv
 Version 1.1.1:
-      Language bugfix
+      Language bug fix
 Version 1.1.0:
       Updated the addon for Helix
 Version 1.0.9:
@@ -11,9 +14,10 @@ Version 1.0.9:
       Added basic test case and integrate with Travis
 Version 1.0.8:
       Refactoring
-        - Removed sqllite.db, the offline database is now created in userdata folder
-        - Moved connection.py, database.py, helper.py, httpconn.py and xbmc_helper.py
-          into resources/lib
+        - Removed sqllite.db, the offline database is now created in
+          userdata folder
+        - Moved connection.py, database.py, helper.py, httpconn.py
+          and xbmc_helper.py into resources/lib
         - Renamed a lot of functions and class names
 Version 1.0.7:
       Replace print statements with xbmc.log()

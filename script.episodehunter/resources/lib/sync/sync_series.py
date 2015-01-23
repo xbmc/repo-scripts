@@ -19,7 +19,7 @@ class Series(sync.Sync):
         self.progress = None
         self.upstream_sync = []
         self.downstream_sync = []
-        self.eh_watched_series = None
+        self.eh_watched_series = []
         self.xbmc_series = []
 
     def sync(self):
@@ -32,13 +32,11 @@ class Series(sync.Sync):
         except UserAbortExceptions:
             dialog.create_ok(helper.language(32022))  # "Progress Aborted"
         except ConnectionExceptions as error:
-            self.create_error_dialog(helper.language(32018), error.value)  # "Error"
+            self.create_error_dialog(error.value)
         except SettingsExceptions as error:
-            self.create_error_dialog(helper.language(32018), error.value)  # "Error"
+            self.create_error_dialog(error.value)
         except SystemExit:
             pass
-        except Exception as error:
-            self.create_error_dialog(helper.language(32018), str(error))  # "Error"
 
         self.quit()
 
@@ -68,7 +66,7 @@ class Series(sync.Sync):
                 break
             show.episodes = [
                 e for e in show.episodes
-                if not self.is_marked_as_watched_on_eh(show.tvdb_id, e.season, e.episode) and e.plays >= 0
+                if not self.is_marked_as_watched_on_eh(show.tvdb_id, e.season, e.episode) and e.plays > 0
             ]
             if len(show.episodes) == 0:
                 continue
@@ -96,8 +94,8 @@ class Series(sync.Sync):
         Check if an episode has been set as watched on EH
         :rtype : bool
         """
-        series_id = str(series_id)
-        season = str(season)
+        series_id = int(series_id)
+        season = int(season)
         episode = int(episode)
         if series_id not in self.eh_watched_series:
             return False
@@ -116,12 +114,17 @@ class Series(sync.Sync):
         eh_watched_series = self.connection.get_watched_shows()
         self.eh_watched_series = {}
         for k, v in eh_watched_series.iteritems():
+            k = int(k)
             self.eh_watched_series[k] = {}
             for s in v['seasons']:
-                self.eh_watched_series[k][s['season']] = s['episodes']
+                self.eh_watched_series[k][int(s['season'])] = s['episodes']
 
     def get_series_from_xbmc(self):
         xbmc_series = xbmc_helper.get_tv_shows_from_xbmc()
+
+        if not isinstance(xbmc_series, list):
+            self.xbmc_series = []
+            return
 
         for tvshow in xbmc_series:
             seasons = xbmc_helper.get_seasons_from_xbmc(tvshow)

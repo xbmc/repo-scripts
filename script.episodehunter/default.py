@@ -26,9 +26,15 @@ def menu():
             return
         else:
             if select == 0:  # Movie
-                sync.Movies(connection).sync()
+                try:
+                    sync.Movies(connection).sync()
+                except Exception as error:
+                    dialog.create_error_dialog(str(error))
             elif select == 1:  # TV
-                sync.Series(connection).sync()
+                try:
+                    sync.Series(connection).sync()
+                except Exception as error:
+                    dialog.create_error_dialog(str(error))
             elif select == 2:  # Settings
                 helper.settings.openSettings()
 

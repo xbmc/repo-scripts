@@ -24,9 +24,7 @@ class Sync(object):
 
     @staticmethod
     def create_error_dialog(*msg):
-        helper.debug("Error: " + ", ".join([str(x) for x in msg]))
-        # 'Error uploading watched movies'
-        dialog.create_ok(*msg)
+        dialog.create_error_dialog(*msg)
 
     def create_progress(self, msg):
         self.progress = progress.create(msg)
