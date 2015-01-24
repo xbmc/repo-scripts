@@ -1,0 +1,86 @@
+# XBMC Media Center language file
+# Addon Name: TVShow Time
+# Addon id: script.tvshowtime
+# Addon version: 1.0.0
+# Addon Provider: CXII
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2015-01-22 17:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "TVShow Time"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Automatically set episodes as watched on TVShowTime.com"
+msgstr "Marque automatiquement les épisodes comme lu sur TVShowTime.com"
+
+msgctxt "#32001"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#32002"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32101"
+msgid "Get Your token at bit.ly/TVShowTime"
+msgstr "Récupérez votre jeton sur bit.ly/TVShowTime"
+
+msgctxt "#32102"
+msgid "Token"
+msgstr "Jeton"
+
+msgctxt "#32103"
+msgid "Mark as watched from"
+msgstr "Marquez comme lu à partir de"
+
+msgctxt "#32104"
+msgid "Publish on Facebook"
+msgstr "Plublier sur Facebook"
+
+msgctxt "#32105"
+msgid "Publish on Twitter"
+msgstr "Publier sur Twitter"
+
+msgctxt "#32201"
+msgid "Show notifications"
+msgstr "Afficher les notifications"
+
+msgctxt "#32901"
+msgid "Please set your Token"
+msgstr "veuillez configurer votre jeton"
+
+msgctxt "#32902"
+msgid "Welcome"
+msgstr "Bienvenue"
+
+msgctxt "#32903"
+msgid "Token error - Please try again"
+msgstr "Erreur de jeton - Veuillez réessayer"
+
+msgctxt "#32904"
+msgid "Watching"
+msgstr "Vous regardez"
+
+msgctxt "#32905"
+msgid "Episode not found"
+msgstr "Épisode non trouvé"
+
+msgctxt "#32906"
+msgid "Watched"
+msgstr "Regardé"
+
+msgctxt "#32907"
+msgid "Error 325324"
+msgstr "Erreur 325324"
