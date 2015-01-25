@@ -8,8 +8,6 @@ import variables, notification, call
 import xbmc
 import xbmcaddon
 
-__addon__					= xbmcaddon.Addon(id=variables.__addon_id__)
-
 __notification_posted__		= '/notification/posted'
 __notification_removed__	= '/notification/removed'
 
@@ -18,6 +16,40 @@ __call_ended__				= '/call/ended'
 __call_missed__				= '/call/missed'
 
 SAVED_VOLUME_LEVEL = 0
+
+class Main(xbmc.Monitor):
+	MyServer = None
+
+	def __init__(self):
+		xbmc.Monitor.__init__(self)
+
+		threading.Thread(target=self.startServer).start()
+
+		while not xbmc.abortRequested:
+			xbmc.sleep(500)
+
+		threading.Thread(target=self.stopServer).start()
+
+	def onAbortRequested(self):
+		xbmc.Monitor.onAbortRequested(self)
+		threading.Thread(target=self.stopServer).start()
+
+	def onSettingsChanged(self):
+		threading.Thread(target=self.restartServer).start()
+
+	def startServer(self):
+		port = int(xbmcaddon.Addon().getSetting(variables.__setting_key_port__))
+		self.MyServer = HTTPServer(('', port), PostHandler)
+		self.MyServer.serve_forever()
+
+	def stopServer(self):
+		self.MyServer.shutdown()
+		self.MyServer.socket.close()
+
+	def restartServer(self):
+		self.stopServer()
+		self.startServer()
+
 
 class PostHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
@@ -53,9 +85,9 @@ class PostHandler(BaseHTTPRequestHandler):
 			self.send_response(404)
 
 	def is_authorized(self):
-		is_auth_enabled = __addon__.getSetting('base_auth_enabled')
-		username = __addon__.getSetting('username')
-		password = __addon__.getSetting('password')
+		is_auth_enabled = xbmcaddon.Addon().getSetting('base_auth_enabled')
+		username = xbmcaddon.Addon().getSetting('username')
+		password = xbmcaddon.Addon().getSetting('password')
 
 		if 'Authorization' in self.headers:
 			auth = self.headers['Authorization'].split()[1].decode('base64')
@@ -94,14 +126,4 @@ class PostHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == '__main__':
-	ip = xbmc.getIPAddress()
-	port = int(__addon__.getSetting(variables.__setting_key_port__))
-	server = HTTPServer((ip, port), PostHandler)
-
-	threading.Thread(target=server.serve_forever).start()
-
-	monitor = xbmc.Monitor()
-	while True:
-		if monitor.waitForAbort(5):
-			server.socket.close()
-			break
+	Main()
