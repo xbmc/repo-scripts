@@ -30,7 +30,11 @@ class FindEpisode(object):
         self.opener.get_method = lambda: 'GET'
         
         request_url = "%s%s" % (request_uri, self.action)
-        data = self.send_req(request_url)
+        try:
+            response = self.opener.open(request_url, None)
+            data = json.loads(''.join(response.readlines()))
+        except:
+            data = None
         
         if (data is None) or (data['result'] is "KO"):
            self.is_found = False
@@ -41,13 +45,6 @@ class FindEpisode(object):
            self.episodename = data['episode']['name']
            self.season_number = data['episode']['season_number']
            self.number = data['episode']['number']
-           
-    def send_req(self, url, data = None):
-        try:
-            response = self.opener.open(url, data)
-            return json.loads(''.join(response.readlines()))
-        except:
-            return None
 
 class MarkAsWatched(object):
     def __init__(self, token, filename, facebook=0, twitter=0):
@@ -77,19 +74,16 @@ class MarkAsWatched(object):
         self.opener.get_method = lambda: 'POST'
              
         request_url = "%s%s" % (request_uri, self.action)
-        data = self.send_req(request_url, request_data)
+        try:
+            response = self.opener.open(request_url, request_data)
+            data = json.loads(''.join(response.readlines()))
+        except:
+            data = None
         
         if (data is None) or (data['result'] is "KO"):
            self.is_marked = False
         else:
            self.is_marked = True
-
-    def send_req(self, url, data = None):
-        try:
-            response = self.opener.open(url, data)
-            return json.loads(''.join(response.readlines()))
-        except:
-            return None
             
 class GetUserInformations(object):
     def __init__(self, token):
@@ -123,6 +117,3 @@ class GetUserInformations(object):
            self.resultdata = data['result']
            self.username = data['user']['name']
 
-    def send_req(self, url, data = None):
-        
-            

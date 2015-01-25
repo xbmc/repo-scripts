@@ -1,0 +1,12 @@
+1.0.3
+changed the way of checking episode
+
+1.0.2
+fix error when episode not found
+
+1.0.1
+add onQueueNextItem function
+add format number function to SXXEYY
+
+1.0.0
+First version
