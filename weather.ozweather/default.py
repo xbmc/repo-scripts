@@ -544,7 +544,10 @@ def propertiesPDOM(page, extendedFeatures):
         feelsLike = str(int(round(float(observations[2].strip( '&deg;C' )))))       
         humidity = observations[3].strip('%')
         windTemp = observations[4].partition(' ')
-        pressure = str(int(round(float(observations[6].strip('hPa')))))
+        try:
+            pressure = str(int(round(float(observations[6].strip('hPa')))))
+        except:
+            pressure = "n/a"
         fireDanger = observations[7]
         fireDangerFloat = float(fireDanger)
 

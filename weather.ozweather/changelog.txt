@@ -1,3 +1,6 @@
+V0.8.0
+- Cope with locales that don't provide pressure information
+
 V0.7.9
 - Bring labels in line with Ronie's weather.openweathermap.extended for better cross skin compatibility,
   still supports the old style labels
