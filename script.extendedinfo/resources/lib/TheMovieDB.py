@@ -21,7 +21,7 @@ homewindow = xbmcgui.Window(10000)
 headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'User-agent': 'XBMC/13.2 ( ptemming@gmx.net )'
+    'User-agent': 'XBMC/14.0 ( phil65@kodi.tv )'
 }
 poster_sizes = ["w92", "w154", "w185", "w342", "w500", "w780", "original"]
 logo_sizes = ["w45", "w92", "w154", "w185", "w300", "w500", "original"]
@@ -151,7 +151,7 @@ def get_session_id():
 
 
 def get_request_token():
-    response = GetMovieDBData("authentication/token/new?", 0.1)
+    response = GetMovieDBData("authentication/token/new?", 999999)
     # prettyprint(response)
     return response["request_token"]
 
@@ -524,7 +524,7 @@ def GetPersonID(person):
             return response["results"][0]
     else:
         log("could not find Person ID")
-        return ""
+    return False
 
 
 def GetKeywordID(keyword):
@@ -553,7 +553,7 @@ def SearchForSet(setname):
         return ""
 
 
-def GetMovieDBData(url="", cache_days=14):
+def GetMovieDBData(url="", cache_days=14, folder=False):
     # session_id = get_session_id()
     # url = "http://api.themoviedb.org/3/%sapi_key=%s&session_id=%s" % (url, moviedb_key, session_id)
     url = "http://api.themoviedb.org/3/%sapi_key=%s" % (url, moviedb_key)
@@ -563,7 +563,7 @@ def GetMovieDBData(url="", cache_days=14):
     if not base_url:
         base_url = True
         base_url, poster_size, fanart_size = GetMovieDBConfig()
-    results = Get_JSON_response(url, cache_days)
+    results = Get_JSON_response(url, cache_days, folder)
     return results
 
 
@@ -637,8 +637,8 @@ def GetSeasonInfo(tmdb_tvshow_id, tvshowname, season_number):
         Title = "Specials"
     else:
         Title = "Season %s" % season_number
-    season = {'SeasonDescription': response["overview"],
-              'Plot': response["overview"],
+    season = {'SeasonDescription': cleanText(response["overview"]),
+              'Plot': cleanText(response["overview"]),
               'TVShowTitle': tvshowname,
               'Thumb': poster_path_small,
               'Poster': poster_path,
@@ -723,7 +723,7 @@ def GetExtendedMovieInfo(movieid=None, dbid=None, cache_time=14):
     if ("backdrop_path" in response) and (response["backdrop_path"]):
         backdrop_path = base_url + fanart_size + response['backdrop_path']
     if ("poster_path" in response) and (response["poster_path"]):
-        poster_path = base_url + "w780" + response['poster_path']
+        poster_path = base_url + "original" + response['poster_path']
         poster_path_small = base_url + "w342" + response['poster_path']
     path = 'plugin://script.extendedinfo/?info=youtubevideo&&id=%s' % str(fetch(response, "id"))
     movie = {'Art(fanart)': backdrop_path,
@@ -745,7 +745,7 @@ def GetExtendedMovieInfo(movieid=None, dbid=None, cache_time=14):
              'SetId': SetID,
              'ID': fetch(response, 'id'),
              'imdb_id': fetch(response, 'imdb_id'),
-             'Plot': fetch(response, 'overview'),
+             'Plot': cleanText(fetch(response, 'overview')),
              'OriginalTitle': fetch(response, 'original_title'),
              'Country': fetch(response, 'original_language'),
              'Genre': " / ".join(genres),
@@ -826,7 +826,7 @@ def GetExtendedTVShowInfo(tvshow_id=None, cache_time=7):
     if ("backdrop_path" in response) and (response["backdrop_path"]):
         backdrop_path = base_url + fanart_size + response['backdrop_path']
     if ("poster_path" in response) and (response["poster_path"]):
-        poster_path = base_url + poster_size + response['poster_path']
+        poster_path = base_url + "original" + response['poster_path']
     if "episode_run_time" in response:
         if len(response["episode_run_time"]) > 1:
             duration = "%i - %i" % (min(response["episode_run_time"]), max(response["episode_run_time"]))
@@ -848,7 +848,7 @@ def GetExtendedTVShowInfo(tvshow_id=None, cache_time=7):
              'Duration': duration,
              'ID': tmdb_id,
              'credit_id': fetch(response, 'credit_id'),
-             'Plot': fetch(response, "overview"),
+             'Plot': cleanText(fetch(response, "overview")),
              'year': year,
              'media_type': "tv",
              'Path': 'plugin://script.extendedinfo/?info=extendedtvinfo&&id=%s' % tmdb_id,
@@ -948,30 +948,6 @@ def GetMovieLists(list_id):
     return HandleTMDBMiscResult(response["lists"]["results"])
 
 
-def GetMoviesWithKeyword(keyword_id):
-    response = GetMovieDBData("discover/movie?sort_by=release_date.desc&vote_count.gte=10&with_keywords=%s&language=%s&include_adult=%s&" % (str(keyword_id), addon.getSetting("LanguageID"), include_adult), 30)
-    return HandleTMDBMovieResult(response["results"], False, None)
-
-
-def GetMoviesWithGenre(genre_id):
-    response = GetMovieDBData("discover/movie?sort_by=release_date.desc&vote_count.gte=5&with_genres=%s&language=%s&include_adult=%s&" % (str(genre_id), addon.getSetting("LanguageID"), include_adult), 30)
-    return HandleTMDBMovieResult(response["results"], False, None)
-
-def GetTVShowsWithGenre(genre_id):
-    response = GetMovieDBData("discover/tv?sort_by=popularity.desc&vote_count.gte=5&with_genres=%s&language=%s&" % (str(genre_id), addon.getSetting("LanguageID")), 30)
-    return HandleTMDBTVShowResult(response["results"], False, None)
-
-def GetTVShowsFromNetwork(network_id):
-    response = GetMovieDBData("discover/tv?sort_by=popularity.desc&vote_count.gte=5&with_networks=%s&language=%s&" % (str(network_id), addon.getSetting("LanguageID")), 30)
-    return HandleTMDBTVShowResult(response["results"], False, None)
-
-
-def GetMoviesWithCertification(country, rating):
-    response = GetMovieDBData("discover/movie?sort_by=release_date.desc&vote_count.gte=10&certification_country=%s&certification=%s&language=%s&include_adult=%s&" %
-                              (country, str(rating), addon.getSetting("LanguageID"), include_adult), 10)
-    return HandleTMDBMovieResult(response["results"], False, None)
-
-
 def GetRatedMedia(media_type):
     if checkLogin():
         session_id = get_session_id()
@@ -1025,7 +1001,7 @@ def GetMovieKeywords(movie_id):
             keywords.append(newkeyword)
         return keywords
     else:
-        log("No Keywords in JSON answer")
+        log("No keywords in JSON answer")
         return []
 
 
@@ -1065,7 +1041,7 @@ def GetSetMovies(set_id):
         else:
             backdrop_path = ""
         if ("poster_path" in response) and (response["poster_path"]):
-            poster_path = base_url + poster_size + response['poster_path']
+            poster_path = base_url + "original" + response['poster_path']
             small_poster_path = base_url + "w342" + response["poster_path"]
         else:
             poster_path = ""

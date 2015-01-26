@@ -8,7 +8,7 @@ def GetRottenTomatoesMovies(movietype):
     movies = []
     url = movietype + '.json?apikey=%s' % (rottentomatoes_key)
     results = Get_JSON_response(base_url + url)
-    if results is not None:
+    if results is not None and "movies" in results:
         for item in results["movies"]:
             if "alternate_ids" in item:
                 imdbid = str(item["alternate_ids"]["imdb"])

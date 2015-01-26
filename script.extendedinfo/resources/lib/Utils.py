@@ -630,7 +630,7 @@ def GetStringFromUrl(url):
     while (succeed < 5) and (not xbmc.abortRequested):
         try:
             request = urllib2.Request(url)
-            request.add_header('User-agent', 'XBMC/13.2 ( ptemming@gmx.net )')
+            request.add_header('User-agent', 'XBMC/14.0 ( phil65@kodi.tv )')
             response = urllib2.urlopen(request)
             data = response.read()
             return data
@@ -641,7 +641,7 @@ def GetStringFromUrl(url):
     return None
 
 
-def Get_JSON_response(url="", cache_days=7.0):
+def Get_JSON_response(url="", cache_days=7.0, folder=False):
     now = time.time()
     hashed_url = hashlib.md5(url).hexdigest()
     path = xbmc.translatePath(os.path.join(Addon_Data_Path, hashed_url + ".txt"))

@@ -53,6 +53,7 @@ class DialogVideoInfo(xbmcgui.WindowXMLDialog):
             self.movie = GetExtendedMovieInfo(self.MovieId, self.dbid)
             if not "general" in self.movie:
                 self.close()
+                return None
             log("Blur image %s with radius %i" % (self.movie["general"]["Thumb"], 25))
             youtube_thread = Get_Youtube_Vids_Thread(self.movie["general"]["Label"] + " " + self.movie["general"]["Year"] + ", movie", "", "relevance", 15)
             sets_thread = Get_Set_Items_Thread(self.movie["general"]["SetId"])

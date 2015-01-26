@@ -85,7 +85,10 @@ def get_cached_thumb(filename):
 
 def Get_Colors(img):
     width, height = img.size
-    pixels = img.load()
+    try:
+        pixels = img.load()
+    except:
+        return "FFF0F0F0"
     data = []
     for x in range(width/2):
         for y in range(height/2):
@@ -153,4 +156,3 @@ class MyGaussianBlur(ImageFilter.Filter):
 
     def filter(self, image):
         return image.gaussian_blur(self.radius)
-

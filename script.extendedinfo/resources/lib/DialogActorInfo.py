@@ -8,6 +8,7 @@ from YouTube import *
 import DialogVideoInfo
 import DialogTVShowInfo
 homewindow = xbmcgui.Window(10000)
+from unidecode import unidecode
 
 addon = xbmcaddon.Addon()
 addon_id = addon.getAddonInfo('id')
@@ -24,17 +25,21 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
         self.movieplayer = VideoPlayer(popstack=True)
-        self.id = kwargs.get('id')
+        self.id = kwargs.get('id', False)
         if not self.id:
-            name = kwargs.get('name').decode("utf-8").split(xbmc.getLocalizedString(20347))
-            name = name[0].strip().encode("utf-8")
+            name = kwargs.get('name').decode("utf-8").split(" " + xbmc.getLocalizedString(20347) + " ")
+            name = name[0].strip()
             names = name.split(" / ")
             if len(names) > 1:
                 ret = xbmcgui.Dialog().select("Actor Info", names)
                 if ret == -1:
-                    return False
+                    return None
                 name = names[ret]
-            self.id = GetPersonID(name)["id"]
+            self.id = GetPersonID(unidecode(name))
+            if self.id:
+                self.id = self.id["id"]
+            else:
+                return None
         xbmc.executebuiltin("ActivateWindow(busydialog)")
         if self.id:
             self.person = GetExtendedActorInfo(self.id)
@@ -53,10 +58,11 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
             self.youtube_vids = youtube_thread.listitems
         else:
             Notify(addon.getLocalizedString(32143))
-            self.close()
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     def onInit(self):
+        if not self.id:
+            self.close()
         homewindow.setProperty("actor.ImageColor", self.person["general"]["ImageColor"])
         windowid = xbmcgui.getCurrentWindowDialogId()
         passDictToSkin(self.person["general"], "actor.", False, False, windowid)

@@ -42,7 +42,14 @@
                     <posy>184</posy>
                     <itemgap>20</itemgap>
                     <ondown>4000</ondown>
-                    <onup>4000</onup>
+                    <animation type="Conditional" condition="!IsEmpty(Window(Home).Property(Bounce.Down))" reversible="false">
+                        <effect type="slide" end="0,20" time="60" tween="sine" />
+                        <effect type="slide" end="0,-20" time="180" tween="sine" delay="80" />
+                    </animation>
+                    <animation type="Conditional" condition="!IsEmpty(Window(Home).Property(Bounce.Up))" reversible="false">
+                        <effect type="slide" end="0,-20" time="60" tween="sine" />
+                        <effect type="slide" end="0,20" time="180" tween="sine" delay="80" />
+                    </animation>
                     <width>2100</width>
                     <height>896</height>
                     <control type="group" id="140">
@@ -57,12 +64,12 @@
                             <radioposy>20</radioposy>
                             <radiowidth>46</radiowidth>
                             <radioheight>46</radioheight>
-                            <onup>131</onup>
                             <ondown>5000</ondown>
-                            <textureradioonfocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioonfocus>
-                            <textureradioofffocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioofffocus>
-                            <textureradiooffnofocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradiooffnofocus>
-                            <textureradioonnofocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioonnofocus>
+                            <onup>RunScript(script.extendedinfo,info=bounce,name=Bounce.Up)</onup>
+                            <textureradioonfocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioonfocus>
+                            <textureradioofffocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioofffocus>
+                            <textureradiooffnofocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradiooffnofocus>
+                            <textureradioonnofocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioonnofocus>
                             <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                             <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                             <label>-</label>
@@ -72,6 +79,7 @@
                             <posy>20</posy>
                             <width>960</width>
                             <height>210</height>
+                            <textcolor>FFFAFAFA</textcolor>
                             <align>left</align>
                             <label fallback="No info available">[B]$INFO[Window.Property(movie.TagLine),,[CR]][/B]$INFO[Window.Property(movie.Plot)]</label>
                             <font>font12</font>
@@ -114,10 +122,10 @@
                             <scrolltime tween="quadratic">200</scrolltime>
                             <control type="radiobutton" id="8">
                                 <label>$LOCALIZE[208]</label>
-                                <textureradioonfocus colordiffuse="grey">icons/play.png</textureradioonfocus>
-                                <textureradioofffocus colordiffuse="grey">icons/play.png</textureradioofffocus>
-                                <textureradiooffnofocus colordiffuse="grey">icons/play.png</textureradiooffnofocus>
-                                <textureradioonnofocus colordiffuse="grey">icons/play.png</textureradioonnofocus>
+                                <textureradioonfocus colordiffuse="FF999999">icons/play.png</textureradioonfocus>
+                                <textureradioofffocus colordiffuse="FF999999">icons/play.png</textureradioofffocus>
+                                <textureradiooffnofocus colordiffuse="FF999999">icons/play.png</textureradiooffnofocus>
+                                <textureradioonnofocus colordiffuse="FF999999">icons/play.png</textureradioonnofocus>
                                 <width>280</width>
                                 <height>140</height>
                                 <textoffsetx>0</textoffsetx>
@@ -125,8 +133,8 @@
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                 <font>font13</font>
-                                <textcolor>grey</textcolor>
-                                <focusedcolor>white2</focusedcolor>
+                                <textcolor>FF999999</textcolor>
+                                <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
                                 <textoffsety>77</textoffsety>
                                 <radioposx>118</radioposx>
@@ -148,8 +156,8 @@
                                     <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                     <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                     <font>font13</font>
-                                    <textcolor>grey</textcolor>
-                                    <focusedcolor>white2</focusedcolor>
+                                    <textcolor>FF999999</textcolor>
+                                    <focusedcolor>FFFAFAFA</focusedcolor>
                                     <aligny>bottom</aligny>
                                     <textoffsety>77</textoffsety>
                                     <radioposx>118</radioposx>
@@ -178,10 +186,10 @@
                                 <height>400</height>
                                 <control type="radiobutton" id="6001">
                                     <label>$ADDON[script.extendedinfo 32129]</label>
-                                    <textureradioonfocus colordiffuse="grey">-</textureradioonfocus>
-                                    <textureradioofffocus colordiffuse="grey">icons/heart.png</textureradioofffocus>
-                                    <textureradiooffnofocus colordiffuse="grey">icons/heart.png</textureradiooffnofocus>
-                                    <textureradioonnofocus colordiffuse="grey">-</textureradioonnofocus>
+                                    <textureradioonfocus colordiffuse="FF999999">-</textureradioonfocus>
+                                    <textureradioofffocus colordiffuse="FF999999">icons/heart.png</textureradioofffocus>
+                                    <textureradiooffnofocus colordiffuse="FF999999">icons/heart.png</textureradiooffnofocus>
+                                    <textureradioonnofocus colordiffuse="FF999999">-</textureradioonnofocus>
                                     <posx>0</posx>
                                     <posy>0</posy>
                                     <width>280</width>
@@ -191,8 +199,8 @@
                                     <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                     <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                     <font>font13</font>
-                                    <textcolor>grey</textcolor>
-                                    <focusedcolor>white2</focusedcolor>
+                                    <textcolor>FF999999</textcolor>
+                                    <focusedcolor>FFFAFAFA</focusedcolor>
                                     <onleft>9</onleft>
                                     <onright>6003</onright>
                                     <onup>132</onup>
@@ -215,17 +223,17 @@
                                     <textoffsetx>0</textoffsetx>
                                     <textoffsety>0</textoffsety>
                                     <font>font30_title</font>
-                                    <textcolor>grey</textcolor>
+                                    <textcolor>FF999999</textcolor>
                                     <label>$INFO[Window.Property(movie.rated)]</label>
                                 </control>
                             </control>
                             <control type="radiobutton" id="6003">
                                 <label>$INFO[Window.Property(FavButton_Label)]</label>
                                 <onleft>6001</onleft>
-                                <textureradioonfocus colordiffuse="grey">icons/starminus.png</textureradioonfocus>
-                                <textureradioofffocus colordiffuse="grey">icons/star.png</textureradioofffocus>
-                                <textureradiooffnofocus colordiffuse="grey">icons/star.png</textureradiooffnofocus>
-                                <textureradioonnofocus colordiffuse="grey">icons/starminus.png</textureradioonnofocus>
+                                <textureradioonfocus colordiffuse="FF999999">icons/starminus.png</textureradioonfocus>
+                                <textureradioofffocus colordiffuse="FF999999">icons/star.png</textureradioofffocus>
+                                <textureradiooffnofocus colordiffuse="FF999999">icons/star.png</textureradiooffnofocus>
+                                <textureradioonnofocus colordiffuse="FF999999">icons/starminus.png</textureradioonnofocus>
                                 <width>280</width>
                                 <height>140</height>
                                 <textoffsetx>0</textoffsetx>
@@ -233,8 +241,8 @@
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                 <font>font13</font>
-                                <textcolor>grey</textcolor>
-                                <focusedcolor>white2</focusedcolor>
+                                <textcolor>FF999999</textcolor>
+                                <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
                                 <textoffsety>77</textoffsety>
                                 <radioposx>118</radioposx>
@@ -247,10 +255,10 @@
                             </control>
                             <control type="radiobutton" id="6005">
                                 <label>$ADDON[script.extendedinfo 32107]</label>
-                                <textureradioonfocus colordiffuse="grey">icons/checkmark.png</textureradioonfocus>
-                                <textureradioofffocus colordiffuse="grey">icons/checkmark.png</textureradioofffocus>
-                                <textureradiooffnofocus colordiffuse="grey">icons/checkmark.png</textureradiooffnofocus>
-                                <textureradioonnofocus colordiffuse="grey">icons/checkmark.png</textureradioonnofocus>
+                                <textureradioonfocus colordiffuse="FF999999">icons/checkmark.png</textureradioonfocus>
+                                <textureradioofffocus colordiffuse="FF999999">icons/checkmark.png</textureradioofffocus>
+                                <textureradiooffnofocus colordiffuse="FF999999">icons/checkmark.png</textureradiooffnofocus>
+                                <textureradioonnofocus colordiffuse="FF999999">icons/checkmark.png</textureradioonnofocus>
                                 <width>280</width>
                                 <height>140</height>
                                 <textoffsetx>0</textoffsetx>
@@ -258,8 +266,8 @@
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                 <font>font13</font>
-                                <textcolor>grey</textcolor>
-                                <focusedcolor>white2</focusedcolor>
+                                <textcolor>FF999999</textcolor>
+                                <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
                                 <textoffsety>77</textoffsety>
                                 <radioposx>118</radioposx>
@@ -271,10 +279,10 @@
                             </control>
                             <control type="radiobutton" id="6002">
                                 <label>$ADDON[script.extendedinfo 32130]</label>
-                                <textureradioonfocus colordiffuse="grey">icons/list2.png</textureradioonfocus>
-                                <textureradioofffocus colordiffuse="grey">icons/list2.png</textureradioofffocus>
-                                <textureradiooffnofocus colordiffuse="grey">icons/list2.png</textureradiooffnofocus>
-                                <textureradioonnofocus colordiffuse="grey">icons/list2.png</textureradioonnofocus>
+                                <textureradioonfocus colordiffuse="FF999999">icons/list2.png</textureradioonfocus>
+                                <textureradioofffocus colordiffuse="FF999999">icons/list2.png</textureradioofffocus>
+                                <textureradiooffnofocus colordiffuse="FF999999">icons/list2.png</textureradiooffnofocus>
+                                <textureradioonnofocus colordiffuse="FF999999">icons/list2.png</textureradioonnofocus>
                                 <width>280</width>
                                 <height>140</height>
                                 <textoffsetx>0</textoffsetx>
@@ -282,8 +290,8 @@
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                 <font>font13</font>
-                                <textcolor>grey</textcolor>
-                                <focusedcolor>white2</focusedcolor>
+                                <textcolor>FF999999</textcolor>
+                                <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
                                 <textoffsety>77</textoffsety>
                                 <radioposx>118</radioposx>
@@ -295,10 +303,10 @@
                             </control>
                             <control type="radiobutton" id="6006">
                                 <label>$ADDON[script.extendedinfo 32131]</label>
-                                <textureradioonfocus colordiffuse="grey">icons/list2.png</textureradioonfocus>
-                                <textureradioofffocus colordiffuse="grey">icons/list2.png</textureradioofffocus>
-                                <textureradiooffnofocus colordiffuse="grey">icons/list2.png</textureradiooffnofocus>
-                                <textureradioonnofocus colordiffuse="grey">icons/list2.png</textureradioonnofocus>
+                                <textureradioonfocus colordiffuse="FF999999">icons/list2.png</textureradioonfocus>
+                                <textureradioofffocus colordiffuse="FF999999">icons/list2.png</textureradioofffocus>
+                                <textureradiooffnofocus colordiffuse="FF999999">icons/list2.png</textureradiooffnofocus>
+                                <textureradioonnofocus colordiffuse="FF999999">icons/list2.png</textureradioonnofocus>
                                 <width>280</width>
                                 <height>140</height>
                                 <textoffsetx>0</textoffsetx>
@@ -306,8 +314,8 @@
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                 <font>font13</font>
-                                <textcolor>grey</textcolor>
-                                <focusedcolor>white2</focusedcolor>
+                                <textcolor>FF999999</textcolor>
+                                <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
                                 <textoffsety>77</textoffsety>
                                 <radioposx>118</radioposx>
@@ -325,8 +333,8 @@
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                 <font>font13</font>
-                                <textcolor>grey</textcolor>
-                                <focusedcolor>white2</focusedcolor>
+                                <textcolor>FF999999</textcolor>
+                                <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
                                 <textoffsety>77</textoffsety>
                                 <radioposx>118</radioposx>
@@ -337,10 +345,10 @@
                                 <onclick>XBMC.RunScript(script.videoextras,display,"$INFO[Window.Property(movie.FilenameAndPath)]")</onclick>
                                 <visible>System.HasAddon(script.videoextras) + IsEmpty(Window(movieinformation).Property(HideVideoExtrasButton))</visible>
                                 <visible>!IsEmpty(Window.Property(movie.FilenameAndPath))</visible>
-                                <textureradioonfocus colordiffuse="grey">icons/plus2.png</textureradioonfocus>
-                                <textureradioofffocus colordiffuse="grey">icons/plus2.png</textureradioofffocus>
-                                <textureradiooffnofocus colordiffuse="grey">icons/plus2.png</textureradiooffnofocus>
-                                <textureradioonnofocus colordiffuse="grey">icons/plus2.png</textureradioonnofocus>
+                                <textureradioonfocus colordiffuse="FF999999">icons/plus2.png</textureradioonfocus>
+                                <textureradioofffocus colordiffuse="FF999999">icons/plus2.png</textureradioofffocus>
+                                <textureradiooffnofocus colordiffuse="FF999999">icons/plus2.png</textureradiooffnofocus>
+                                <textureradioonnofocus colordiffuse="FF999999">icons/plus2.png</textureradioonnofocus>
                             </control>
                             <control type="radiobutton" id="445">
                                 <width>280</width>
@@ -350,18 +358,18 @@
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                 <font>font13</font>
-                                <textcolor>grey</textcolor>
-                                <focusedcolor>white2</focusedcolor>
+                                <textcolor>FF999999</textcolor>
+                                <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
                                 <textoffsety>77</textoffsety>
                                 <radioposx>118</radioposx>
                                 <radioposy>30</radioposy>
                                 <radiowidth>44</radiowidth>
                                 <radioheight>44</radioheight>
-                                <textureradioonfocus colordiffuse="grey">icons/tool2.png</textureradioonfocus>
-                                <textureradioofffocus colordiffuse="grey">icons/tool2.png</textureradioofffocus>
-                                <textureradiooffnofocus colordiffuse="grey">icons/tool2.png</textureradiooffnofocus>
-                                <textureradioonnofocus colordiffuse="grey">icons/tool2.png</textureradioonnofocus>
+                                <textureradioonfocus colordiffuse="FF999999">icons/tool2.png</textureradioonfocus>
+                                <textureradioofffocus colordiffuse="FF999999">icons/tool2.png</textureradioofffocus>
+                                <textureradiooffnofocus colordiffuse="FF999999">icons/tool2.png</textureradiooffnofocus>
+                                <textureradioonnofocus colordiffuse="FF999999">icons/tool2.png</textureradioonnofocus>
                                 <label>$ADDON[script.extendedinfo 32133]</label>
                                 <visible>!Skin.HasSetting(kioskmode)</visible>
                             </control>
@@ -391,8 +399,8 @@
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                                 <font>font13</font>
-                                <textcolor>grey</textcolor>
-                                <focusedcolor>white2</focusedcolor>
+                                <textcolor>FF999999</textcolor>
+                                <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
                                 <textoffsety>77</textoffsety>
                                 <radioposx>118</radioposx>
@@ -429,7 +437,7 @@
                                 <width>100</width>
                                 <height>62</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture colordiffuse="white2">$INFO[Window.Property(movie.VideoCodec),flags/source/,.png]</texture>
+                                <texture colordiffuse="FFFAFAFA">$INFO[Window.Property(movie.VideoCodec),flags/source/,.png]</texture>
                                 <visible>!IsEmpty(Control.GetLabel(900012))</visible>
                             </control>
                             <control type="image">
@@ -443,7 +451,7 @@
                                 <width>126</width>
                                 <height>62</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture colordiffuse="white2">$INFO[Window.Property(movie.AudioCodec),flags/audio/,.png]</texture>
+                                <texture colordiffuse="FFFAFAFA">$INFO[Window.Property(movie.AudioCodec),flags/audio/,.png]</texture>
                                 <visible>!IsEmpty(Control.GetLabel(900013))</visible>
                             </control>
                             <control type="image">
@@ -457,7 +465,7 @@
                                 <width>80</width>
                                 <height>62</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture colordiffuse="white2">$INFO[Window.Property(movie.VideoResolution),flags/resolution/,.png]</texture>
+                                <texture colordiffuse="FFFAFAFA">$INFO[Window.Property(movie.VideoResolution),flags/resolution/,.png]</texture>
                                 <visible>!IsEmpty(Control.GetLabel(900014))</visible>
                             </control>
                             <control type="image">
@@ -471,7 +479,7 @@
                                 <width>80</width>
                                 <height>62</height>
                                 <aspectratio>keep</aspectratio>
-                                <texture colordiffuse="white2">$INFO[Window.Property(movie.VideoAspect),flags/aspectratio/,.png]</texture>
+                                <texture colordiffuse="FFFAFAFA">$INFO[Window.Property(movie.VideoAspect),flags/aspectratio/,.png]</texture>
                                 <visible>!IsEmpty(Control.GetLabel(900015))</visible>
                             </control>
                             <control type="image">
@@ -603,7 +611,7 @@
                                         <align>left</align>
                                         <aligny>bottom</aligny>
                                         <label>N / A</label>
-                                        <textcolor>grey</textcolor>
+                                        <textcolor>FF999999</textcolor>
                                         <font>font10</font>
                                         <visible>IsEmpty(Window.Property(movie.SubtitleLanguage.1)) + IsEmpty(Window.Property(movie.SubtitleLanguage.2))</visible>
                                     </control>
@@ -697,7 +705,7 @@
                             <height>30</height>
                             <label>$INFO[Window.Property(movie.FileNameAndPath)]</label>
                             <font>font10</font>
-                            <textcolor>white5</textcolor>
+                            <textcolor>FFFAFAFA5</textcolor>
                             <scroll>true</scroll>
                             <haspath>true</haspath>
                         </control>--></control>
@@ -783,8 +791,9 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <animation effect="fade" start="100" end="70" time="0" condition="Control.HasFocus(1000)">Conditional</animation>
-                                            <label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+                                            <label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR FF999999][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -824,8 +833,9 @@
                                             <posx>0</posx>
                                             <posy>340</posy>
                                             <align>center</align>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR grey][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
+                                            <label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR FF999999][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
                                             <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
                                         </control>
                                     </control>
@@ -896,6 +906,7 @@
                                             <posy>100</posy>
                                             <width>224</width>
                                             <height>325</height>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <label>$INFO[ListItem.Property(department)]</label>
                                             <font>Font_Bold34</font>
                                             <align>center</align>
@@ -920,10 +931,11 @@
                                             <posx>0</posx>
                                             <width>228</width>
                                             <height>140</height>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR grey][CR],[/COLOR]]</label>
+                                            <label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR FF999999][CR],[/COLOR]]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -954,6 +966,7 @@
                                             <posy>100</posy>
                                             <width>224</width>
                                             <height>325</height>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <label>$INFO[ListItem.Property(department)]</label>
                                             <font>Font_Bold34</font>
                                             <align>center</align>
@@ -968,11 +981,12 @@
                                         <control type="textbox">
                                             <posx>0</posx>
                                             <width>228</width>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <height>140</height>
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR grey][CR],[/COLOR]]</label>
+                                            <label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR FF999999][CR],[/COLOR]]</label>
                                             <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
                                         </control>
                                     </control>
@@ -995,10 +1009,10 @@
                             <radioheight>46</radioheight>
                             <onup>750</onup>
                             <ondown>150</ondown>
-                            <textureradioonfocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioonfocus>
-                            <textureradioofffocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioofffocus>
-                            <textureradiooffnofocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradiooffnofocus>
-                            <textureradioonnofocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioonnofocus>
+                            <textureradioonfocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioonfocus>
+                            <textureradioofffocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioofffocus>
+                            <textureradiooffnofocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradiooffnofocus>
+                            <textureradioonnofocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioonnofocus>
                             <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                             <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(movie.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                             <label>-</label>
@@ -1085,7 +1099,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -1130,6 +1144,7 @@
                                             <posx>0</posx>
                                             <width>228</width>
                                             <height>140</height>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
@@ -1163,7 +1178,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -1198,6 +1213,7 @@
                                             <posx>0</posx>
                                             <width>228</width>
                                             <height>140</height>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
@@ -1220,6 +1236,17 @@
                             <aligny>center</aligny>
                             <font>font14</font>
                             <label>$INFO[Window.Property(movie.set.label)]$INFO[Container(250).NumItems, (,)]</label>
+                            <visible>!IsEmpty(Window.Property(movie.set.label))</visible>
+                        </control>
+                        <control type="label">
+                            <posx>25</posx>
+                            <posy>6</posy>
+                            <width>1900</width>
+                            <height>25</height>
+                            <aligny>center</aligny>
+                            <font>font14</font>
+                            <label>$LOCALIZE[33054]$INFO[Container(250).NumItems, (,)]</label>
+                            <visible>IsEmpty(Window.Property(movie.set.label))</visible>
                         </control>
                         <control type="image">
                             <posx>0</posx>
@@ -1271,7 +1298,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                         </control>
                                         <control type="image">
@@ -1314,6 +1341,7 @@
                                             <posx>0</posx>
                                             <width>228</width>
                                             <height>140</height>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
@@ -1347,7 +1375,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -1382,6 +1410,7 @@
                                             <posx>0</posx>
                                             <width>228</width>
                                             <height>140</height>
+                                            <textcolor>FFFAFAFA</textcolor>
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
@@ -1412,7 +1441,7 @@
                                 <height>300</height>
                                 <label>$INFO[Window.Property(movie.set.overview)]</label>
                                 <font>font12</font>
-                                <textcolor>white2</textcolor>
+                                <textcolor>FFFAFAFA</textcolor>
                                 <scroll>true</scroll>
                                 <visible>!StringCompare(Window.Property(movie.set.overview),Window.Property(movie.set.label))</visible>
                             </control>
@@ -1437,7 +1466,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>$ADDON[script.extendedinfo 32117]</label>
+                            <label>$ADDON[script.extendedinfo 32117]$INFO[Container(1150).NumItems, (,)]</label>
                         </control>
                         <control type="image">
                             <posx>-5</posx>
@@ -1492,7 +1521,7 @@
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -1510,6 +1539,7 @@
                                         <posx>0</posx>
                                         <width>323</width>
                                         <height>140</height>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <posy>227</posy>
                                         <align>center</align>
                                         <font>font12</font>
@@ -1542,7 +1572,7 @@
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -1550,6 +1580,7 @@
                                         <posx>0</posx>
                                         <width>323</width>
                                         <height>140</height>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <posy>227</posy>
                                         <align>center</align>
                                         <font>font12</font>
@@ -1569,7 +1600,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>$ADDON[script.extendedinfo 32118]</label>
+                            <label>$ADDON[script.extendedinfo 32118]$INFO[Container(350).NumItems, (,)]</label>
                         </control>
                         <control type="image">
                             <posx>-5</posx>
@@ -1623,7 +1654,7 @@
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -1640,6 +1671,7 @@
                                         <posx>0</posx>
                                         <width>323</width>
                                         <height>100</height>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <posy>227</posy>
                                         <align>center</align>
                                         <font>font12</font>
@@ -1671,13 +1703,14 @@
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
                                     <control type="textbox">
                                         <posx>0</posx>
                                         <width>323</width>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <height>100</height>
                                         <posy>227</posy>
                                         <align>center</align>
@@ -1698,7 +1731,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>$LOCALIZE[20388]</label>
+                            <label>$LOCALIZE[20388]$INFO[Container(550).NumItems, (,)]</label>
                         </control>
                         <control type="image">
                             <posx>0</posx>
@@ -1758,6 +1791,7 @@
                                         <posx>20</posx>
                                         <posy>150</posy>
                                         <width>330</width>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <height>140</height>
                                         <align>center</align>
                                         <font>font12</font>
@@ -1794,6 +1828,7 @@
                                         <posx>20</posx>
                                         <posy>150</posy>
                                         <width>330</width>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <height>140</height>
                                         <align>center</align>
                                         <font>font12</font>
@@ -1814,7 +1849,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>$ADDON[script.extendedinfo 32152]</label>
+                            <label>$ADDON[script.extendedinfo 32152]$INFO[Container(1450).NumItems, (,)]</label>
                         </control>
                         <control type="image">
                             <posx>0</posx>
@@ -1874,6 +1909,7 @@
                                         <posx>20</posx>
                                         <posy>122</posy>
                                         <width>330</width>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <height>69</height>
                                         <align>center</align>
                                         <font>font12</font>
@@ -1910,6 +1946,7 @@
                                         <posx>20</posx>
                                         <posy>122</posy>
                                         <width>330</width>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <height>69</height>
                                         <align>center</align>
                                         <font>font12</font>
@@ -1930,7 +1967,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>$ADDON[script.extendedinfo 32168]</label>
+                            <label>$ADDON[script.extendedinfo 32168]$INFO[Container(650).NumItems, (,)]</label>
                         </control>
                         <control type="image">
                             <posx>0</posx>
@@ -1956,6 +1993,7 @@
                             <posx>25</posx>
                             <posy>250</posy>
                             <width>1850</width>
+                            <textcolor>FFFAFAFA</textcolor>
                             <height>160</height>
                             <font>font12</font>
                             <label>$INFO[Container(650).ListItem.Property(meaning)]</label>
@@ -1997,6 +2035,7 @@
                                         <posx>20</posx>
                                         <posy>100</posy>
                                         <width>160</width>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <height>69</height>
                                         <align>center</align>
                                         <font>font12</font>
@@ -2032,6 +2071,7 @@
                                         <posx>20</posx>
                                         <posy>100</posy>
                                         <width>160</width>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <height>69</height>
                                         <align>center</align>
                                         <font>font12</font>
@@ -2052,7 +2092,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>Genres</label>
+                            <label>$LOCALIZE[135]$INFO[Container(850).NumItems, (,)]</label>
                         </control>
                         <control type="panel" id="850">
                             <animation type="WindowOpen" reversible="false">
@@ -2137,7 +2177,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>$ADDON[script.extendedinfo 32167]</label>
+                            <label>$ADDON[script.extendedinfo 32167]$INFO[Container(1050).NumItems, (,)]</label>
                         </control>
                         <control type="panel" id="1050">
                             <animation type="WindowOpen" reversible="false">
@@ -2170,6 +2210,7 @@
                                     <control type="textbox">
                                         <posx>40</posx>
                                         <posy>40</posy>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <width>550</width>
                                         <height>320</height>
                                         <align>center</align>
@@ -2199,6 +2240,7 @@
                                     <control type="textbox">
                                         <posx>40</posx>
                                         <posy>40</posy>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <width>550</width>
                                         <height>320</height>
                                         <align>center</align>
@@ -2219,7 +2261,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>Keywords</label>
+                            <label>$LOCALIZE[21861]$INFO[Container(950).NumItems, (,)]</label>
                         </control>
                         <control type="panel" id="950">
                             <animation type="WindowOpen" reversible="false">
@@ -2298,11 +2340,12 @@
                         <visible>IntegerGreaterThan(Container(1250).NumItems,0)</visible>
                         <control type="label">
                             <posx>25</posx>
+                            <posy>6</posy>
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>Artwork</label>
+                            <label>$ADDON[script.extendedinfo 32119]$INFO[Container(1250).NumItems, (,)]</label>
                         </control>
                         <control type="panel" id="1250">
                             <posy>30</posy>
@@ -2332,7 +2375,7 @@
                                         <posy>28</posy>
                                         <width>224</width>
                                         <height>325</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -2366,17 +2409,14 @@
                                         <animation effect="fade" start="0" end="100" time="160">Focus</animation>
                                         <animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
                                     </control>
-                                    <control type="group">
+                                    <control type="image">
                                         <posx>77</posx>
-                                        <posy>18</posy>
-                                        <control type="image">
-                                            <posy>10</posy>
-                                            <width>224</width>
-                                            <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
-                                            <aspectratio aligny="center">scale</aspectratio>
-                                            <fadetime>0</fadetime>
-                                        </control>
+                                        <posy>28</posy>
+                                        <width>224</width>
+                                        <height>325</height>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <aspectratio aligny="center">scale</aspectratio>
+                                        <fadetime>0</fadetime>
                                     </control>
                                 </control>
                             </focusedlayout>
@@ -2387,11 +2427,12 @@
                         <visible>IntegerGreaterThan(Container(1350).NumItems,0)</visible>
                         <control type="label">
                             <posx>25</posx>
+                            <posy>6</posy>
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>Fanart</label>
+                            <label>$LOCALIZE[20445]$INFO[Container(1350).NumItems, (,)]</label>
                         </control>
                         <control type="panel" id="1350">
                             <posy>30</posy>
@@ -2421,9 +2462,9 @@
                                         <posy>28</posy>
                                         <width>505</width>
                                         <height>325</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
-                                        <fadetime>0</fadetime>
+                                        <fadetime>200</fadetime>
                                     </control>
                                     <control type="image">
                                         <posx>77</posx>
@@ -2455,17 +2496,14 @@
                                         <animation effect="fade" start="0" end="100" time="160">Focus</animation>
                                         <animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
                                     </control>
-                                    <control type="group">
+                                    <control type="image">
                                         <posx>77</posx>
-                                        <posy>18</posy>
-                                        <control type="image">
-                                            <posy>10</posy>
-                                            <width>505</width>
-                                            <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
-                                            <aspectratio aligny="center">scale</aspectratio>
-                                            <fadetime>0</fadetime>
-                                        </control>
+                                        <posy>28</posy>
+                                        <width>505</width>
+                                        <height>325</height>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <aspectratio aligny="center">scale</aspectratio>
+                                        <fadetime>200</fadetime>
                                     </control>
                                 </control>
                             </focusedlayout>
@@ -2533,7 +2571,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -2571,7 +2609,7 @@
                                             <posy>380</posy>
                                             <align>center</align>
                                             <font>font10</font>
-                                            <textcolor>grey</textcolor>
+                                            <textcolor>FF999999</textcolor>
                                             <label>$INFO[ListItem.Property(Description)]</label>
                                         </control>
                                     </control>
@@ -2602,7 +2640,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -2631,7 +2669,7 @@
                                             <posy>380</posy>
                                             <align>center</align>
                                             <font>font10</font>
-                                            <textcolor>grey</textcolor>
+                                            <textcolor>FF999999</textcolor>
                                             <label>$INFO[ListItem.Property(Description)]</label>
                                         </control>
                                     </control>
@@ -2662,7 +2700,7 @@
                             <onleft>2000</onleft>
                             <onright>2000</onright>
                             <onup>450</onup>
-                            <ondown>450</ondown>
+                            <ondown>RunScript(script.extendedinfo,info=bounce,name=Bounce.Down)</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
                             <focusposition>0</focusposition>
@@ -2683,7 +2721,7 @@
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -2700,6 +2738,7 @@
                                         <posx>0</posx>
                                         <width>323</width>
                                         <height>100</height>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <posy>227</posy>
                                         <align>center</align>
                                         <font>font12</font>
@@ -2731,7 +2770,7 @@
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -2740,6 +2779,7 @@
                                         <width>323</width>
                                         <height>100</height>
                                         <posy>227</posy>
+                                        <textcolor>FFFAFAFA</textcolor>
                                         <align>center</align>
                                         <font>font12</font>
                                         <label>$INFO[ListItem.Episode,[B],[/B]]$INFO[ListItem.Label,[B]:[/B] ]</label>
@@ -2859,7 +2899,7 @@
                                 <width>135</width>
                                 <height>67</height>
                                 <aspectratio align="center">keep</aspectratio>
-                                <texture colordiffuse="white2" fallback="flags/rating/MPAA_NR_Certificate_US.png">$INFO[Window.Property(movie.mpaa),flags/rating/,.png]</texture>
+                                <texture colordiffuse="FFFAFAFA" fallback="flags/rating/MPAA_NR_Certificate_US.png">$INFO[Window.Property(movie.mpaa),flags/rating/,.png]</texture>
                             </control>
                             <control type="group">
                                 <posx>0</posx>
@@ -3040,16 +3080,9 @@
             <control type="image">
                 <width>729</width>
                 <height>1080</height>
-                <aspectratio aligny="top">scale</aspectratio>
-                <fadetime>200</fadetime>
-                <texture background="true">$INFO[Window.Property(movie.ImageFilter)]</texture>
-            </control>
-            <control type="image">
-                <width>729</width>
-                <height>1080</height>
                 <fadetime>300</fadetime>
                 <aspectratio aligny="top">scale</aspectratio>
-                <texture background="true">$INFO[Window.Property(movie.Poster)]</texture>
+                <texture>$INFO[Window.Property(movie.Poster)]</texture>
             </control>
         </control>
     </controls>

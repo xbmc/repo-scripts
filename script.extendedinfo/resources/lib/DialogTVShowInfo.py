@@ -26,6 +26,7 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin("ActivateWindow(busydialog)")
         self.movieplayer = VideoPlayer(popstack=True)
         xbmcgui.WindowXMLDialog.__init__(self)
+        self.tmdb_id = None
         tmdb_id = kwargs.get('id', False)
         dbid = kwargs.get('dbid')
         imdb_id = kwargs.get('imdbid')
@@ -152,10 +153,13 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
             # xbmc.executebuiltin("Dialog.Close(busydialog)")
             # self.OpenVideoList(filters=filters, media_type="tv")
         elif controlID == 950:
-            xbmc.executebuiltin("ActivateWindow(busydialog)")
-            listitems = GetMoviesWithKeyword(self.getControl(controlID).getSelectedItem().getProperty("id"))
-            xbmc.executebuiltin("Dialog.Close(busydialog)")
-            self.OpenVideoList(listitems=listitems)
+            keyword_id = self.getControl(controlID).getSelectedItem().getProperty("id")
+            keyword_name = self.getControl(controlID).getSelectedItem().getLabel()
+            filters = [{"id": keyword_id,
+                        "type": "with_keywords",
+                        "typelabel": addon.getLocalizedString(32114),
+                        "label": keyword_name}]
+            self.OpenVideoList(filters=filters)
         elif controlID == 850:
             xbmc.executebuiltin("ActivateWindow(busydialog)")
             genreid = self.getControl(controlID).getSelectedItem().getProperty("id")

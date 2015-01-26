@@ -16,7 +16,7 @@
                 <width>729</width>
                 <height>1080</height>
                 <aspectratio aligny="top">scale</aspectratio>
-                <texture background="true">$INFO[Window.Property(actor.thumb)]</texture>
+                <texture>$INFO[Window.Property(actor.thumb)]</texture>
             </control>
         </control>
         <control type="group">
@@ -87,6 +87,14 @@
                     <width>2000</width>
                     <itemgap>15</itemgap>
                     <height>1000</height>
+                    <animation type="Conditional" condition="!IsEmpty(Window(Home).Property(Bounce.Down))" reversible="false">
+                        <effect type="slide" end="0,20" time="60" tween="sine" />
+                        <effect type="slide" end="0,-20" time="180" tween="sine" delay="80" />
+                    </animation>
+                    <animation type="Conditional" condition="!IsEmpty(Window(Home).Property(Bounce.Up))" reversible="false">
+                        <effect type="slide" end="0,-20" time="60" tween="sine" />
+                        <effect type="slide" end="0,20" time="180" tween="sine" delay="80" />
+                    </animation>
                     <scrolltime tween="sine">400</scrolltime>
                     <orientation>vertical</orientation>
                     <usecontrolcoords>true</usecontrolcoords>
@@ -95,9 +103,9 @@
                         <posx>40</posx>
                         <width>1000</width>
                         <height min="0" max="500">auto</height>
-                        <label>$INFO[Window.Property(actor.AlsoKnownAs),$ADDON[script.extendedinfo 32016]: [COLOR=white],[/COLOR][CR]]$INFO[Window.Property(actor.Birthday),$ADDON[script.extendedinfo 32012]: [COLOR=white],[/COLOR][CR]]$INFO[Window.Property(actor.PlaceOfBirth),$ADDON[script.extendedinfo 32014]: [COLOR=white],[/COLOR][CR]]$INFO[Window.Property(actor.TotalMovies),$ADDON[script.extendedinfo 32011]: [COLOR=white],[/COLOR][CR]]$INFO[Window.Property(actor.DBMovies),$ADDON[script.extendedinfo 32021]: [COLOR=white],[/COLOR][CR]]$INFO[Window.Property(actor.Homepage),$ADDON[script.extendedinfo 32017]: [COLOR=white],[/COLOR][CR]]$INFO[Window.Property(actor.Deathday),$ADDON[script.extendedinfo 32013]: [COLOR=white],[/COLOR][CR]]</label>
+                        <label>$INFO[Window.Property(actor.AlsoKnownAs),$ADDON[script.extendedinfo 32016]: [COLOR=FFFAFAFA],[/COLOR][CR]]$INFO[Window.Property(actor.Birthday),$ADDON[script.extendedinfo 32012]: [COLOR=FFFAFAFA],[/COLOR][CR]]$INFO[Window.Property(actor.PlaceOfBirth),$ADDON[script.extendedinfo 32014]: [COLOR=FFFAFAFA],[/COLOR][CR]]$INFO[Window.Property(actor.TotalMovies),$ADDON[script.extendedinfo 32011]: [COLOR=FFFAFAFA],[/COLOR][CR]]$INFO[Window.Property(actor.DBMovies),$ADDON[script.extendedinfo 32021]: [COLOR=FFFAFAFA],[/COLOR][CR]]$INFO[Window.Property(actor.Homepage),$ADDON[script.extendedinfo 32017]: [COLOR=FFFAFAFA],[/COLOR][CR]]$INFO[Window.Property(actor.Deathday),$ADDON[script.extendedinfo 32013]: [COLOR=FFFAFAFA],[/COLOR][CR]]</label>
                         <font>font12</font>
-                        <textcolor>grey</textcolor>
+                        <textcolor>FF999999</textcolor>
                     </control>
                     <control type="group" id="140">
                         <height>255</height>
@@ -110,12 +118,12 @@
                             <radioposy>20</radioposy>
                             <radiowidth>46</radiowidth>
                             <radioheight>46</radioheight>
-                            <onup>750</onup>
+                            <onup>RunScript(script.extendedinfo,info=bounce,name=Bounce.Up)</onup>
                             <ondown>150</ondown>
-                            <textureradioonfocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioonfocus>
-                            <textureradioofffocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioofffocus>
-                            <textureradiooffnofocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradiooffnofocus>
-                            <textureradioonnofocus colordiffuse="white">icons/DefaultAddonTvInfo.png</textureradioonnofocus>
+                            <textureradioonfocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioonfocus>
+                            <textureradioofffocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioofffocus>
+                            <textureradiooffnofocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradiooffnofocus>
+                            <textureradioonnofocus colordiffuse="FFFAFAFA">icons/DefaultAddonTvInfo.png</textureradioonnofocus>
                             <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(actor.ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                             <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(actor.ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
                             <label>-</label>
@@ -193,7 +201,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -240,7 +248,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label][CR][COLOR grey]$INFO[ListItem.Property(Character)][/COLOR]</label>
+                                            <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Character)][/COLOR]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -270,7 +278,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -308,7 +316,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label][CR][COLOR grey]$INFO[ListItem.Property(Character)][/COLOR]</label>
+                                            <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Character)][/COLOR]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -377,7 +385,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -424,7 +432,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label][CR][COLOR grey]$INFO[ListItem.Property(Character)][/COLOR]</label>
+                                            <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Character)][/COLOR]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -454,7 +462,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -492,7 +500,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label][CR][COLOR grey]$INFO[ListItem.Property(Character)][/COLOR]</label>
+                                            <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Character)][/COLOR]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -561,7 +569,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -608,7 +616,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label][CR][COLOR grey]$INFO[ListItem.Property(Job)][/COLOR]</label>
+                                            <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Job)][/COLOR]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -638,7 +646,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -676,7 +684,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label][CR][COLOR grey]$INFO[ListItem.Property(Job)][/COLOR]</label>
+                                            <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Job)][/COLOR]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -687,6 +695,7 @@
                         <height>540</height>
                         <visible>IntegerGreaterThan(Container(650).NumItems,0)</visible>
                         <control type="label">
+                            <posy>6</posy>
                             <posx>25</posx>
                             <width>500</width>
                             <height>25</height>
@@ -744,7 +753,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -791,7 +800,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label][CR][COLOR grey]$INFO[ListItem.Property(Job)][/COLOR]</label>
+                                            <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Job)][/COLOR]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -821,7 +830,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -859,7 +868,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
-                                            <label>$INFO[ListItem.Label][CR][COLOR grey]$INFO[ListItem.Property(Job)][/COLOR]</label>
+                                            <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Job)][/COLOR]</label>
                                         </control>
                                     </control>
                                 </control>
@@ -870,6 +879,7 @@
                         <visible>IntegerGreaterThan(Container(350).NumItems,0)</visible>
                         <height>440</height>
                         <control type="label">
+                            <posy>6</posy>
                             <posx>25</posx>
                             <width>500</width>
                             <height>25</height>
@@ -926,7 +936,7 @@
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -965,7 +975,7 @@
                                         <posy>10</posy>
                                         <width>320</width>
                                         <height>200</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -986,6 +996,7 @@
                         <height>450</height>
                         <visible>IntegerGreaterThan(Container(450).NumItems,0)</visible>
                         <control type="label">
+                            <posy>6</posy>
                             <posx>25</posx>
                             <width>500</width>
                             <height>25</height>
@@ -1021,7 +1032,7 @@
                                         <posy>28</posy>
                                         <width>224</width>
                                         <height>325</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                         <fadetime>0</fadetime>
                                     </control>
@@ -1052,7 +1063,7 @@
                                             <posy>10</posy>
                                             <width>224</width>
                                             <height>325</height>
-                                            <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                            <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                             <aspectratio aligny="center">scale</aspectratio>
                                             <fadetime>0</fadetime>
                                         </control>
@@ -1066,6 +1077,7 @@
                         <visible>IntegerGreaterThan(Container(750).NumItems,0)</visible>
                         <control type="label">
                             <posx>25</posx>
+                            <posy>6</posy>
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
@@ -1080,7 +1092,7 @@
                             <onleft>750</onleft>
                             <onright>750</onright>
                             <onup>450</onup>
-                            <ondown>132</ondown>
+                            <ondown>RunScript(script.extendedinfo,info=bounce,name=Bounce.Down)</ondown>
                             <scrolltime>200</scrolltime>
                             <orientation>horizontal</orientation>
                             <animation type="WindowOpen" reversible="false">
@@ -1100,7 +1112,7 @@
                                         <posy>28</posy>
                                         <width>505</width>
                                         <height>325</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                     </control>
                                     <control type="label">
@@ -1139,7 +1151,7 @@
                                         <posy>28</posy>
                                         <width>505</width>
                                         <height>325</height>
-                                        <texture fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+                                        <texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                                         <aspectratio aligny="center">scale</aspectratio>
                                     </control>
                                     <control type="label">
