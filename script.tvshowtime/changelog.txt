@@ -1,3 +1,14 @@
+1.0.6
+Cleaned code
+
+1.0.5
+add a second way to find the episode on TVST
+bug fixes
+
+1.0.4
+add debug log
+bug fixes
+
 1.0.3
 changed the way of checking episode
 

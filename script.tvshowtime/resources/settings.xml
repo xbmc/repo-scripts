@@ -3,7 +3,7 @@
    <category label="32001">
 	   <setting type="lsep" label="32101" />
 	   <setting id="token" type="text" label="32102" default="" />
-	   <setting id="watched-percent" type="labelenum" label="32103" default="2" values="85|90|95|100" />
+	   <setting id="watched-percent" type="labelenum" label="32103" default="3" values="85|90|95|100" />
 	   <setting id="facebook" type="bool" label="32104" default="true" />
 	   <setting id="twitter" type="bool" label="32105" default="true" />
 	</category>

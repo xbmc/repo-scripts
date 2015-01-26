@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#from BeautifulSoup import BeautifulSoup
 import cookielib
 import re
-import urllib, urllib2, urlparse
+import urllib, urllib2
 import json
 
 request_uri = "https://api.tvshowtime.com/v1/"
 
 class FindEpisode(object):
-    def __init__(self, token, filename='', facebook='', twitter=''):
+    def __init__(self, token, filename):
         self.token = token
         self.filename = filename
         self.action = 'episode?access_token=%s&filename=%s' % (self.token, self.filename)
@@ -36,7 +35,7 @@ class FindEpisode(object):
         except:
             data = None
         
-        if (data is None) or (data['result'] is "KO"):
+        if (data is None) or (data['result'] == "KO"):
            self.is_found = False
         else:
            self.is_found = True
@@ -80,7 +79,7 @@ class MarkAsWatched(object):
         except:
             data = None
         
-        if (data is None) or (data['result'] is "KO"):
+        if (data is None) or (data['result'] == "KO"):
            self.is_marked = False
         else:
            self.is_marked = True
@@ -110,7 +109,7 @@ class GetUserInformations(object):
         except:
             data = None
         
-        if (data is None) or (data['result'] is "KO"):
+        if (data is None) or (data['result'] == "KO"):
            self.is_connected = False
         else:
            self.is_connected = True
