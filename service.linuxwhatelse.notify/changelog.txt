@@ -1,3 +1,6 @@
+version 1.1.1
+  - Fixed bug where call behaviour changes would not take effect until restarting Kodi / reloading the Addon
+
 version 1.1.0
   - No more need to disable/enable the addon after you made some changes
 

@@ -1,6 +1,3 @@
-__addon_name__									=	'Notify'
-__addon_id__									=	'service.linuxwhatelse.notify'
-
 # Call behaviour - Music
 __setting_key_music_action_on_call__			=	'music_action_on_call'
 __setting_key_unmute_music__					=	'unmute_music'

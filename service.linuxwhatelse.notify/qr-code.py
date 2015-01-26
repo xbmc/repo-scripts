@@ -7,7 +7,7 @@ import variables
 import xbmc
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id=variables.__addon_id__)
+__addon__ = xbmcaddon.Addon()
 
 '''
 We add our resources/lib directory to path-variable so we can import modules out of it
