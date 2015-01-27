@@ -1,0 +1,197 @@
+[B]Version 2.7.0[/B]
+- Code Base Changes:
+    - Speed enhancements:
+        - Don't load into mem all resolvers on init, load only when used
+        - Only build settings.xml on first init after initial install or new version
+    - Verify final link doesn't give http error before returning
+- Resolvers Added:
+    - RoyalVids
+    - VShare
+    - CloudyVideos
+    - Streamin.to
+- Resolvers Fixed/Updated:
+    - MovReel
+    - BillionUploads
+    - Novamov
+    - Premiumize
+    - TheVideo.me
+    - VidSpot
+    - VeeHD
+    - Vidbull
+- Removed dead resolvers
+    
+[B]Version 2.6.0[/B]
+- Code Base Changes:
+    - Allow host validation to work with universal resolvers
+- Resolvers Added:
+    - Realvid
+    - Letwatch
+    - Speedvideo
+    - Videohut
+- Resolvers Fixed/Updated:
+    - Vidbull
+    - VeeHD
+    - VODLocker (speed improvement)
+    - MightyUpload
+    - Exashare
+    - Tunepk
+
+[B]Version 2.5.0[/B]
+- Added Teramixer
+- Added Exashare
+- Fixed 180Upload
+- Fixed BillionUploads
+- Fixed HugeFiles
+- Fixed VidPlay
+- Fixed MovDivx
+- Fixed ShareSix
+- Fixed Vodlocker
+- Fixed AllMyVideos
+- Fixed Played.To
+- Small fixes  to Sockshare captcha
+
+[B]Version 2.4.0[/B]
+- Reverted back to using t0mm0.common as addon.common is creating naming issues
+
+[B]Version 2.3.0[/B]
+- Added Cloudy
+- Fixed Divxstage
+- Fixed Ecostream
+- Fixed HostingBulk
+- Fixed Movshare
+- Fixed TheFile
+- Fixed Vidxden
+- Updated Putlocker/Firedrive to check for more variations
+- Converted URLResolver completely to use addon.common instead of t0mm0.common
+
+[B]Version 2.2.0[/B]
+- Added CheeseStreams
+- Added Play44
+- Added Bestreams
+- Added FireDrive (renamed Putlocker)
+- Added UploadCrazy
+- Added VidCrazy
+- Added Video44
+- Added VideoFun
+- Added ViUp
+- Added VidZur
+- Added YourUpload
+- Fixed BillionUploads
+- Fixed Divxstage
+- Fixed Ecostream
+- Fixed HugeFiles
+- Fixed Movzap
+- Fixed NowVideo
+- Fixed ShareSix
+- Fixed YouWatch
+- Updated Real-Debrid login methods
+- Updated Vidhog for no wait time
+
+[B]Version 2.1.2[/B]
+- Vidxden bugfix
+
+[B]Version 2.1.1[/B]
+- New unwise class for new unpacking method some sites are now using
+- Added VideoTanker
+- Added NowVideo
+- Added CastAmp - live streaming
+- Updated Divxstage
+- Updated Ecostream
+- Updated Flashx
+- Updated Movshare
+- Updated Novamov
+- Updated Realdebrid
+- Updated Sharesix
+- Updated Tunepk
+- Updated Videoweed
+- Updated BillionUploads
+- Updated premiumize.me - check on if login exists
+- Updated rpnet - check if login exists
+
+[B]Version 2.1.0[/B]
+- New unresolvable() class for resolvers to return in case of an error, specify why it failed for addon to handle
+- New redx.png graphic file for reporting issues in resolvers
+- Updated all resolvers to display small box on exceptions
+- Added DoneVideo
+- Added EntroUpload
+- Added LimeVideo
+- Added MuchShare
+- Added PureVid
+- Added VideoZed
+- Added VidTo
+- Added YouWatch
+- Added LemUploads
+- Added MegaRelease
+- Added NosVideo
+- Added Vidto
+- Added MightyUpload
+- Added PrimeShare
+- Added Vidplay
+- Updated AllDebrid
+- Fixed RealDebrid
+- Fixed BillionUploads
+- Fixed 180Upload
+- Fixed HostingBulk
+- Fixed Ecostream
+- Fixed FlashX
+- Fixed DaClips
+
+[B]Version 2.0.9[/B]
+- Fixed VeeHD
+
+[B]Version 2.0.8[/B]
+- Added Bayfiles
+- Added CrunchyRoll
+- Added Movreel
+- Added Played
+- Added RPNet
+- Updated Sharesix
+- Added TheFile
+- Added Vureel
+- Added WatchFreeInHD
+- Fixed ZooUpload
+- Added BillionUploads
+- Added HugeFiles
+- Added ShareRepo
+- Added VidBull
+- Fixed VeeHD
+- Fixed VidHog
+
+[B]Version 2.0.7[/B]
+- Vidxden: Fixed
+- Added: Sharesix (humla)
+
+[B]Version 2.0.6[/B]
+- Videoweed: Allow Videoweed.eu/files/1423541 type
+- Divstage: Allow embedded urls to resolve
+- Filenuke: Removed www. from regex causing 502 errors
+- Xvidstage: Fixed
+- Stream2k: Fixed
+
+[B]Version 2.0.5[/B]
+- Added streamcloud
+- Added zooupload
+- Fixed divxstage - handle url with .net
+- Fixed flashx.tv - new pattern and embed code
+- Fixed vidstream - new url
+- Fixed ecostream - new embed url pattern
+- Reverted putlocker code, added option for higher vid quality
+
+[B]Version 2.0.4[/B]
+- Frodo branch
+- Updated putlocker and vidxden resolvers
+- Updated real-debrid
+
+[B]Version 1.0.3[/B]
+- Fixed putlocker
+
+[B]Version 1.0.2[/B]
+- Fixed dailymotion
+- Fixed gorillavid
+
+[B]Version 1.0.0[/B]
+- Initial Release.
+
+
+[B]Version 1.0.0[/B]
+- Initial Release.
