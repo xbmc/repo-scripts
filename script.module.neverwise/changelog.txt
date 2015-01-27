@@ -1,0 +1,17 @@
+[B]Version 1.0.4[/B]
+- Small bugfix/improvements.
+
+[B]Version 1.0.3[/B]
+- Improved some functions.
+- Adapted to the xbmc repository guidelines.
+
+[B]Version 1.0.2[/B]
+- Changed structure with the Util class.
+
+[B]Version 1.0.1[/B]
+- Added the BeautifulSoup library.
+- Added error message on the Internet connection.
+- Improved some functions.
+
+[B]Version 1.0.0[/B]
+- Initial version.
