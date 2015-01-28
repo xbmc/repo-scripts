@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.audio.profiles"
     name="Audio Profiles"
-    version="1.0.2"
+    version="1.0.3"
     provider-name="Regss">
     <requires>
         <import addon="xbmc.python" version="2.14.0" />
+        <import addon="service.audio.profiles" />
     </requires>
     <extension point="xbmc.python.script" library="default.py" />
     <extension point="xbmc.addon.metadata">

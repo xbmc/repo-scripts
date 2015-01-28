@@ -16,6 +16,31 @@ msgid "Name of profile 1"
 msgstr "Nazwa profilu 1"
 
 #: Settings
+msgctxt "#32013"
+msgid "Includes Settings"
+msgstr "Uwzględnione Ustawienia"
+
+#: Settings
+msgctxt "#32014"
+msgid "Other"
+msgstr "Inne"
+
+#: Settings
+msgctxt "#32015"
+msgid "Show audio stream select menu on start playing"
+msgstr "Pokaż menu wyboru strumienia audio podczas startu odtwarzania"
+
+#: Settings
+msgctxt "#32016"
+msgid "Auto close audio profiles select menu"
+msgstr "Automatycznie zamknij menu wyboru strumienia audio"
+
+#: Settings
+msgctxt "#32017"
+msgid "Time after which close the menu"
+msgstr "Czas po którym zamknąć menu"
+
+#: Settings
 msgctxt "#32002"
 msgid "Settings"
 msgstr "Ustawienia"
@@ -27,8 +52,18 @@ msgstr "Nazwa profilu 2"
 
 #: Settings
 msgctxt "#32004"
-msgid "Include the volume level"
-msgstr "Uwzględnij poziom głośności"
+msgid "Volume level"
+msgstr "Poziom głośności"
+
+#: Settings
+msgctxt "#32011"
+msgid "Player settings [Video -> Playback]"
+msgstr "Ustawienia odtwarzacza [Video -> Playback]"
+
+#: Settings
+msgctxt "#32012"
+msgid "Video settings [System -> Video]"
+msgstr "Ustawienia Wideo [System -> Video]"
 
 #: Settings
 msgctxt "#32005"
@@ -62,8 +97,28 @@ msgstr "Profil 4"
 
 #: Script
 msgctxt "#32100"
-msgid "Choose profile to save settings"
+msgid "Select profile to save settings"
 msgstr "Wybierz profil aby zapisać ustawienia"
+
+#: Script
+msgctxt "#32106"
+msgid "Select audio profile"
+msgstr "Wybierz profil audio"
+
+#: Script
+msgctxt "#32103"
+msgid "This profile is disabled"
+msgstr "Ten profil jest wyłączony"
+
+#: Script
+msgctxt "#32104"
+msgid "Invalid file for profile"
+msgstr "Niepoprawny plik dla profilu"
+
+#: Script
+msgctxt "#32105"
+msgid "Enable profiles"
+msgstr "Włacz profile"
 
 #: Script
 msgctxt "#32101"
