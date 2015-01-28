@@ -1,3 +1,8 @@
+[B]1.0.3[/B]
+- add: auto open menu to select audio profile on start playing
+- add: auto close menu after a certain time
+- add: optional save settings from video section
+
 [B]1.0.2[/B]
 - add: now is 4 profile to save settings
 

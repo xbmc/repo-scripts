@@ -16,6 +16,31 @@ msgid "Name of profile 1"
 msgstr ""
 
 #: Settings
+msgctxt "#32013"
+msgid "Includes Settings"
+msgstr ""
+
+#: Settings
+msgctxt "#32014"
+msgid "Other"
+msgstr ""
+
+#: Settings
+msgctxt "#32015"
+msgid "Show audio stream select menu on start playing"
+msgstr ""
+
+#: Settings
+msgctxt "#32016"
+msgid "Auto close select menu"
+msgstr ""
+
+#: Settings
+msgctxt "#32017"
+msgid "Time after which close the menu"
+msgstr ""
+
+#: Settings
 msgctxt "#32002"
 msgid "Settings"
 msgstr ""
@@ -27,7 +52,17 @@ msgstr ""
 
 #: Settings
 msgctxt "#32004"
-msgid "Include the volume level"
+msgid "Volume level"
+msgstr ""
+
+#: Settings
+msgctxt "#32011"
+msgid "Player settings [Video -> Playback]"
+msgstr ""
+
+#: Settings
+msgctxt "#32012"
+msgid "Video settings [System -> Video]"
 msgstr ""
 
 #: Settings
@@ -62,7 +97,27 @@ msgstr ""
 
 #: Script
 msgctxt "#32100"
-msgid "Choose profile to save settings"
+msgid "Select profile to save settings"
+msgstr ""
+
+#: Script
+msgctxt "#32106"
+msgid "Select audio profile"
+msgstr ""
+
+#: Script
+msgctxt "#32103"
+msgid "This profile is disabled"
+msgstr ""
+
+#: Script
+msgctxt "#32104"
+msgid "Invalid file for profile"
+msgstr ""
+
+#: Script
+msgctxt "#32105"
+msgid "Enable profiles"
 msgstr ""
 
 #: Script
