@@ -14,6 +14,18 @@ __datapath__ = xbmc.translatePath(os.path.join('special://profile/addon_data/', 
 __path_img__ = __addonpath__ + '/images/'
 __lang__ = __addon__.getLocalizedString
 
+# set vars
+sName = {}
+sProfile = {}
+sProfile[1]      = __addon__.getSetting('profile1')
+sName[1]         = __addon__.getSetting('name1')
+sProfile[2]      = __addon__.getSetting('profile2')
+sName[2]         = __addon__.getSetting('name2')
+sProfile[3]      = __addon__.getSetting('profile3')
+sName[3]         = __addon__.getSetting('name3')
+sProfile[4]      = __addon__.getSetting('profile4')
+sName[4]         = __addon__.getSetting('name4')
+        
 ACTION_PREVIOUS_MENU = 10
 ACTION_SELECT_ITEM = 7
 ACTION_MOVE_UP = 3
@@ -34,101 +46,150 @@ class Start:
         except:
             mode = False
 
-        # start GUI or switch audio
-        if mode == False:
-            gui = GUI()
-            gui.doModal()
-            del gui
-        elif mode == '0' or mode == '1' or mode == '2' or mode == '3' or mode == '4':
-            switch = Switch()
-            switch.check(mode)
+        # check is profiles is set
+        if 'true' not in sProfile.values():
+            Message().msg(__lang__(32105).encode('utf-8'))
+            xbmcaddon.Addon(id=__addon_id__).openSettings()
+            
         else:
-            xbmc.log('## AUDIO PROFILES ##: Wrong arg, use like RunScript("' + __addon_id__ + ',x") x - number of profile')
+            # start GUI or switch audio
+            if mode == False or mode == 'm':
+                gui = GUI(mode)
+                gui.doModal()
+                del gui
+            elif mode == '0' or mode == '1' or mode == '2' or mode == '3' or mode == '4':
+                switch = Switch()
+                switch.check(mode)
+            else:
+                xbmc.log('## AUDIO PROFILES ##: Wrong arg, use like RunScript("' + __addon_id__ + ',x") x - number of profile')
 
-# GUI to configure audio profiles
+# start GUI
 class GUI(xbmcgui.WindowDialog):
 
-    def __init__(self):
-        # set vars
-        self.sName = {}
-        self.sProfile = {}
-        self.sProfile[1]      = __addon__.getSetting('profile1')
-        self.sName[1]         = __addon__.getSetting('name1')
-        self.sProfile[2]      = __addon__.getSetting('profile2')
-        self.sName[2]         = __addon__.getSetting('name2')
-        self.sProfile[3]      = __addon__.getSetting('profile3')
-        self.sName[3]         = __addon__.getSetting('name3')
-        self.sProfile[4]      = __addon__.getSetting('profile4')
-        self.sName[4]         = __addon__.getSetting('name4')
+    def __init__(self, mode):
+        
+        self.mode = mode
+        
+        # check how many controls is enabled
+        p_int = 0
+        for p in sProfile:
+            if 'true' in sProfile[p]:
+                p_int += 1
+                
+        # button dimensions
+        b_ResW = 460
+        b_ResH = 50
+        m_x = 30
+        m_r = 0
         
         # set background
         self.button = {}
         bgResW = 520
-        bgResH = 340
+        bgResH = 80 + p_int*60
         bgPosX = (1280 - bgResW) / 2
         bgPosY = (720 - bgResH) / 2
         self.start = 1
-        
+            
         # add controls
         self.bg = xbmcgui.ControlImage(bgPosX, bgPosY, bgResW, bgResH, __path_img__ + 'bg.png')
         self.addControl(self.bg)
-        
-        self.strActionInfo = xbmcgui.ControlLabel(bgPosX, bgPosY+20, 520, 200, '', 'font14', '0xFFFFFFFF', alignment=2)
+            
+        self.strActionInfo = xbmcgui.ControlLabel(bgPosX+30, bgPosY+10, b_ResW, b_ResH, '', 'font14', '0xFFFFFFFF', alignment=6)
         self.addControl(self.strActionInfo)
-        self.strActionInfo.setLabel(__lang__(32100))
         
-        self.button[1] = xbmcgui.ControlButton(bgPosX+30, bgPosY+80, 460, 50, self.sName[1], alignment=6, font='font13')
-        self.addControl(self.button[1])
-        self.setFocus(self.button[1])
+        if self.mode == 'm':
+            self.strActionInfo.setLabel(__lang__(32106).encode('utf-8'))
+        else:
+            self.strActionInfo.setLabel(__lang__(32100).encode('utf-8'))
         
-        self.button[2] = xbmcgui.ControlButton(bgPosX+30, bgPosY+140, 460, 50, self.sName[2], alignment=6, font='font13')
-        self.addControl(self.button[2])
+        self.b_enabled = []
+        for i in range(1, 5):
+            if 'true' in sProfile[i]:
+                m_r += 1
+                self.b_enabled.append(i)
+                self.button[i] = xbmcgui.ControlButton(bgPosX+m_x, bgPosY+10+(m_r*60), b_ResW, b_ResH, sName[i], alignment=6, font='font13')
+                self.addControl(self.button[i])
+                
+        self.setFocus(self.button[self.b_enabled[0]])
         
-        self.button[3] = xbmcgui.ControlButton(bgPosX+30, bgPosY+200, 460, 50, self.sName[3], alignment=6, font='font13')
-        self.addControl(self.button[3])
+        # for actions
+        self.start = 0
+        self.end = len(self.b_enabled)
         
-        self.button[4] = xbmcgui.ControlButton(bgPosX+30, bgPosY+260, 460, 50, self.sName[4], alignment=6, font='font13')
-        self.addControl(self.button[4])
-
     def onAction(self, action):
         if action == ACTION_PREVIOUS_MENU or action == ACTION_STEP_BACK or action == ACTION_BACKSPACE or action == ACTION_NAV_BACK or action == KEY_BUTTON_BACK or action == ACTION_MOUSE_RIGHT_CLICK:
+            xbmcgui.Window(10000).clearProperty('audio_profiles_menu')
             self.close()
         if action == ACTION_MOVE_UP:
-            if self.start > 1:
+            if self.start > 0:
                 self.start = self.start - 1
-            self.setFocus(self.button[self.start])
+            self.setFocus(self.button[self.b_enabled[self.start]])
         if action == ACTION_MOVE_DOWN:
-            if self.start < 4:
+            if self.start < self.end-1:
                 self.start = self.start + 1
-            self.setFocus(self.button[self.start])
-    
+            self.setFocus(self.button[self.b_enabled[self.start]])
+        
     def onControl(self, control):
         for key in self.button:
             if control == self.button[key]:
-                self.save(key)
+                if self.mode == 'm':
+                    Switch().profile(str(key))
+                    xbmcgui.Window(10000).clearProperty('audio_profiles_menu')
+                else:
+                    self.save(key)
                 self.close()
                     
     # get audio config and save to file
     def save(self, button):
-    
+        
+        sVolume        = __addon__.getSetting('volume')
+        sPlayer        = __addon__.getSetting('player')
+        sVideo         = __addon__.getSetting('video')
+        
+        settingsToSave = {}
+        
         # get all settings from System / Audio section
-        jsonGetSysSettings = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.GetSettings", "params":{"level": "expert", "filter":{"section":"system","category":"audiooutput"}},"id":1}')
-        jsonGetSysSettings = unicode(jsonGetSysSettings, 'utf-8')
-        jsonGetSysSettings = json.loads(jsonGetSysSettings)
+        json_s = ['{"jsonrpc":"2.0","method":"Settings.GetSettings", "params":{"level": "expert", "filter":{"section":"system","category":"audiooutput"}},"id":1}']
         
         # get volume level
-        jsonGetSysSettings2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["volume"]}, "id": 1}')
-        jsonGetSysSettings2 = unicode(jsonGetSysSettings2, 'utf-8')
-        jsonGetSysSettings2 = json.loads(jsonGetSysSettings2)
+        if 'true' in sVolume:
+            json_s.append('{"jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["volume"]}, "id": 1}')
         
-        # prepare json string
-        jsonToWrite = ''
-        if 'result' in jsonGetSysSettings:
-            for set in jsonGetSysSettings['result']['settings']:
-                if str(set['value']) == 'True' or str(set['value']) == 'False': # lowercase bolean values
-                    set['value'] = str(set['value']).lower()
-                jsonToWrite = jsonToWrite + '"' + str(set['id']) + '": "' + str(set['value']) + '", '
-        jsonToWrite = '{' + jsonToWrite + '"volume": "' + str(jsonGetSysSettings2['result']['volume']) + '"}'
+        # get all settings from Video / Playback section
+        if 'true' in sPlayer:
+            json_s.append('{"jsonrpc":"2.0","method":"Settings.GetSettings", "params":{"level": "expert", "filter":{"section":"videos","category":"videoplayer"}}, "id":1}')
+        
+        # get all settings from System / Video section
+        if 'true' in sVideo:
+            json_s.append('{"jsonrpc":"2.0","method":"Settings.GetSettings", "params":{"level": "expert", "filter":{"section":"system","category":"videoscreen"}}, "id":1}')
+        
+        # send json requests
+        for j in json_s:
+            jsonGetSysSettings = xbmc.executeJSONRPC(j)
+            jsonGetSysSettings = unicode(jsonGetSysSettings, 'utf-8')
+            jsonGetSysSettings = json.loads(jsonGetSysSettings)
+            
+            if 'result' in jsonGetSysSettings:
+                if 'settings' in jsonGetSysSettings['result']:
+                    for set in jsonGetSysSettings['result']['settings']:
+                        if 'value' in set.keys():
+                            settingsToSave[set['id']] = set['value']
+                if 'volume' in jsonGetSysSettings['result']:
+                    settingsToSave['volume'] = jsonGetSysSettings['result']['volume']
+                
+        # change all value to string
+        if len(settingsToSave) > 0:
+            for set, val in settingsToSave.items():
+                if val == True or val == False: # lowercase bolean values
+                    settingsToSave[set] = str(val).lower()
+                else:
+                    if type(val) is int:
+                        settingsToSave[set] = str(val)
+                    else:
+                        settingsToSave[set] = val.encode('utf-8')
+        
+        # prepare JSON string to save to file
+        jsonToWrite = json.dumps(settingsToSave)
         
         # create dir in addon data if not exist
         if not xbmcvfs.exists(__datapath__):
@@ -139,42 +200,26 @@ class GUI(xbmcgui.WindowDialog):
         result = f.write(jsonToWrite)
         f.close()
         
-        Message().msg(__lang__(32102) + ' ' + str(button) + ' - ' + self.sName[button])
+        Message().msg(__lang__(32102).encode('utf-8') + ' ' + str(button) + ' (' + sName[button] + ')')
 
 # switching profiles
 class Switch:
 
     def check(self, mode):
-        # set vars
-        self.sName = {}
-        self.sProfile = {}
-        self.sProfile[1]      = __addon__.getSetting('profile1')
-        self.sName[1]         = __addon__.getSetting('name1')
-        self.sProfile[2]      = __addon__.getSetting('profile2')
-        self.sName[2]         = __addon__.getSetting('name2')
-        self.sProfile[3]      = __addon__.getSetting('profile3')
-        self.sName[3]         = __addon__.getSetting('name3')
-        self.sProfile[4]      = __addon__.getSetting('profile4')
-        self.sName[4]         = __addon__.getSetting('name4')
         
         # check profile config
         self.aProfile = []
-        
-        # stop if all profile are disabled
-        if 'true' not in self.sProfile.values():
-            Message().msg(__lang__(32101))
-            return False
-        
+                
         # stop if selected (mode) profile are disabled
-        if mode != '0' and 'false' in self.sProfile[int(mode)]:
-            Message().msg(__lang__(32101) + ': ' + self.sName[int(mode)])
+        if mode != '0' and 'false' in sProfile[int(mode)]:
+            Message().msg(__lang__(32103).encode('utf-8') + ' (' + sName[int(mode)] + ')')
             return False
                 
         # check if profile have settings file
-        for key in self.sProfile:
-            if 'true' in self.sProfile[key]:
+        for key in sProfile:
+            if 'true' in sProfile[key]:
                 if not xbmcvfs.exists(__datapath__ + 'profile' + str(key) + '.json'):
-                    Message().msg(__lang__(32101) + ': ' + self.sName[key])
+                    Message().msg(__lang__(32101).encode('utf-8') + ' ' + str(key) + ' (' + sName[key] + ')')
                     return False
                 self.aProfile.append(str(key))
         
@@ -207,27 +252,35 @@ class Switch:
         self.profile(profile)
         
     def profile(self, profile):
-        self.sVolume        = __addon__.getSetting('volume')
         
         # read settings from profile
         f = xbmcvfs.File(__datapath__ + 'profile'+profile+'.json', 'r')
         result = f.read()
-        jsonResult = json.loads(result)
-        f.close()
+        try:
+            jsonResult = json.loads(result)
+            f.close()
+        except:
+            Message().msg(__lang__(32104).encode('utf-8') + ' ' + profile + ' (' + sName[int(profile)] + ')')
+            return False
         
-        # if volume level is enabled set it from readed profile file
-        if 'true' in self.sVolume:
-            xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Application.SetVolume", "params": {"volume": ' + jsonResult['volume'] + '}, "id": 1}')
-        del jsonResult['volume']
-        
+        # settings needed quote for value
+        quote_needed = [
+        'audiooutput.audiodevice',
+        'audiooutput.passthroughdevice',
+        'locale.audiolanguage'
+        ]
         # set settings readed from profile file
-        for req in jsonResult:
-            if req == 'audiooutput.audiodevice' or req == 'audiooutput.passthroughdevice':
-                xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.SetSettingValue", "params": {"setting": "' + req + '", "value": "' + jsonResult[req] + '"}, "id": 1}')
+        for setName, setValue in jsonResult.items():
+            # add quotes
+            if setName in quote_needed:
+                setValue = '"' + setValue + '"'
+            # set setting
+            if setName == 'volume':
+                xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Application.SetVolume", "params": {"volume": ' + jsonResult['volume'] + '}, "id": 1}')
             else:
-                xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.SetSettingValue", "params": {"setting": "' + req + '", "value": ' + jsonResult[req].lower() + '}, "id": 1}')
+                xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.SetSettingValue", "params": {"setting": "' + setName + '", "value": ' + setValue.encode('utf-8') + '}, "id": 1}')
         
-        Message().msg(self.sName[int(profile)])
+        Message().msg(sName[int(profile)])
         
         # write curent profile
         f = xbmcvfs.File(__datapath__ + 'profile', 'w')
