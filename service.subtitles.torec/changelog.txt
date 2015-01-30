@@ -1,3 +1,6 @@
+1.0.5
+- better handling of TOO MANY DL error by performing retries
+
 1.0.4
 - fixed TOO MANY DL issue, again
 

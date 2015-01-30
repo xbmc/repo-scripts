@@ -123,9 +123,14 @@ class TorecSubtitlesDownloader:
         params = {"sub_id" : subID, "code": optionID, "sh" : "yes", "guest" : requestID, "timewaited" : "12"}
         for i in xrange(16):
             response = self.urlHandler.request("%s/ajax/sub/downloadun.asp" % self.BASE_URL, params, ajax=True)
-            if (len(response.data) != 0 or not persist):
+            if (not persist):
                 break
-            time.sleep(1)
+
+            if (len(response.data) != 0 and (not response.data.startswith("ERROR"))):
+                break
+
+            print "Response received is inadequate (" + response.data + "). Sleeping a bit"
+            time.sleep(0.5)
             
         return response.data
         
