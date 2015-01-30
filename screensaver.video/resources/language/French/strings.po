@@ -44,6 +44,14 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Utiliser tous les fichiers dans un dossier"
 
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Tout Répéter"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Répéter une fois"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Rétablir / Télécharger les fichiers vidéos prédéfini"
@@ -55,6 +63,10 @@ msgstr "Afficher l'heure"
 msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "Choix du dossier vidéo"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Niveau d'assombrissement"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

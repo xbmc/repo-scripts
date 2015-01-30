@@ -31,3 +31,11 @@ msgstr "Aktiver feilsøkingslogg"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurasjon"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Repeter alle"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Repeter èn gang"

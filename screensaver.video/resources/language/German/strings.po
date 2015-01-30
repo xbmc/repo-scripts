@@ -56,6 +56,14 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Alle Dateien in einem Ordner verwenden"
 
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Alle wiederholen"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Eins wiederholen"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Standardvideodatei festlegen/herunterladen"
@@ -91,6 +99,14 @@ msgstr "Lautstärke einstellen auf"
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Abdunkelungsgrad"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Bildschirmschoner automatisch stoppen"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Bildschirmschoner stoppen nach (Minuten)"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

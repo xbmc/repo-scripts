@@ -35,3 +35,11 @@ msgstr "Video Selection"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuration"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Repeat All"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Repeat One"

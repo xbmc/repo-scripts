@@ -56,6 +56,18 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Usar Todos os Arquivos em Um Diretório"
 
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Tipo de Repetição para Múltiplos Arquivos"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Repetir tudo"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Repetir uma vez"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Setar/Transferir Arquivo de Vídeo Pré-Ajustado"
@@ -91,6 +103,14 @@ msgstr "Setar Volume Para"
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nível de Dimerização"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Interromper o Protetor de Tela Automaticamete"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Interromper o Protetor de Tela Após (Minutos)"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

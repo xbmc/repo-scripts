@@ -66,12 +66,28 @@ def list_dir(dirpath):
 # Stores Various Settings
 ##############################
 class Settings():
+    # Locations:
+    # ozibox.com
+    #    Aquarium001.mkv
+    #    Fireplace001-720p.mkv
+    #    Fireplace002.mkv
+    #    Space001-720p.mp4
+    # copy.com
+    #    Aquarium002-720p.mkv
+    #    Aquarium003-720p.mp4
+    #    Beach001-720p.mp4
+    #    Fireplace003-1080p.mkv
+    #    Fireplace004-720p.mp4
     PRESET_VIDEOS = (
-        [32101, "Aquarium001.mkv", "aHR0cHM6Ly9vbmVkcml2ZS5saXZlLmNvbS9kb3dubG9hZD9yZXNpZD04MEJEMTY5NjNGNUMyMUI1ITEyNyZhdXRoa2V5PSFBTGV4OFBrY3dWOExWSmc="],
-        [32102, "Aquarium002-720p.mkv", "aHR0cHM6Ly9vbmVkcml2ZS5saXZlLmNvbS9kb3dubG9hZD9yZXNpZD04MEJEMTY5NjNGNUMyMUI1ITEyOCZhdXRoa2V5PSFBUG5OZkM4WUFDMjBVbUU="],
-        [32103, "Fireplace001-720p.mkv", "aHR0cHM6Ly9vbmVkcml2ZS5saXZlLmNvbS9kb3dubG9hZD9yZXNpZD04MEJEMTY5NjNGNUMyMUI1ITEyOSZhdXRoa2V5PSFBR0VlekE2VFRHVV91ck0="],
-        [32104, "Fireplace002.mkv", "aHR0cHM6Ly9vbmVkcml2ZS5saXZlLmNvbS9kb3dubG9hZD9yZXNpZD04MEJEMTY5NjNGNUMyMUI1ITEzMCZhdXRoa2V5PSFBT2ZfQ2xXbWp6cWtvdVE="],
-        [32105, "Fireplace003-1080p.mkv", "aHR0cHM6Ly9vbmVkcml2ZS5saXZlLmNvbS9kb3dubG9hZD9yZXNpZD04MEJEMTY5NjNGNUMyMUI1ITEzMSZhdXRoa2V5PSFBQ1ptU0FlRFRVeGR6MjA="]
+        [32101, "Aquarium001.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD03QTcyNTkyQTNBNUE0QTVRUVdFMjAxMTY2N0VXUVM="],
+        [32102, "Aquarium002-720p.mkv", "aHR0cDovL2NvcHkuY29tL2NlbXZGQ213M016SVhOMU8vQXF1YXJpdW0wMDItNzIwcC5ta3Y="],
+        [32106, "Aquarium003-720p.mp4", "aHR0cDovL2NvcHkuY29tLzFkaUJkN3Z6SWt3ZFpDdVQvQXF1YXJpdW0wMDMtNzIwcC5tcDQ="],
+        [32109, "Beach001-720p.mp4", "aHR0cDovL2NvcHkuY29tL1VvRE1OZ0JWajBmTVFxeFYvQmVhY2gwMDEtNzIwcC5tcDQ="],
+        [32103, "Fireplace001-720p.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1ENzMwODE2OTNBNUE0QTVRUVdFMjAxMTcyOUVXUVM="],
+        [32104, "Fireplace002.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05QkRBRDdDODNBNUE0QTVRUVdFMjAxMTY4OUVXUVM="],
+        [32105, "Fireplace003-1080p.mkv", "aHR0cDovL2NvcHkuY29tL1dzZEcwdmZ0cWl2V3NqWUQvRmlyZXBsYWNlMDAzLTEwODBwLm1rdg=="],
+        [32107, "Fireplace004-720p.mp4", "aHR0cDovL2NvcHkuY29tL2I2VlJ6UTFYeEVmSXhwU0gvRmlyZXBsYWNlMDA0LTcyMHAubXA0"],
+        [32108, "Space001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1EQ0E4OTFEMTNBNUE0QTVRUVdFMjAxMTc3NkVXUVM="]
     )
 
     DIM_LEVEL = (

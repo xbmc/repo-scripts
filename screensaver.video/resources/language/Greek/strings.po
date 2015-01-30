@@ -56,6 +56,18 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Χρήση Όλων των Αρχείων Στο Φάκελο"
 
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Επανάληψη Τύπου για Πολλαπλά Αρχεία"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Επανάληψη Όλων"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Επανάληψη Ενός"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Ορισμός/Λήψη Προρυθμισμένου Βίντεο"

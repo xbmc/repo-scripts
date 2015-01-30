@@ -35,3 +35,11 @@ msgstr "בחירת וידאו"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "הגדרות"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "חזרה על הכל"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "חזרה אחת"

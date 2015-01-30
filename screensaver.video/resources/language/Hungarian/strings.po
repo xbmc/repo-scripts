@@ -35,3 +35,11 @@ msgstr "Videó Kiválasztása"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguráció"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Ismétlés Mind"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Ismétlés Egyszer"

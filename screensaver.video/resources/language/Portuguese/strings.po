@@ -36,6 +36,14 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuração"
 
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Repetir Todos"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Repetir Um"
+
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nível de Atenuação Ecrã"

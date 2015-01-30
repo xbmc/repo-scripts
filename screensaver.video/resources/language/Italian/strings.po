@@ -56,6 +56,14 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Usa Tutti I File Di Una Cartella"
 
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Ripeti tutto"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Ripeti uno"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Imposta/Scarica Video File Preferito"

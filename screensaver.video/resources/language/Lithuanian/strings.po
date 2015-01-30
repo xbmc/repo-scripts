@@ -56,6 +56,18 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Naudoti visus failus aplanke"
 
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Pakartokite tipą keliems failams"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Kartoti viską"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Kartoti vieną"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Nustatyti/atsisiųsti išankstinės parinkties vaizdo failą"

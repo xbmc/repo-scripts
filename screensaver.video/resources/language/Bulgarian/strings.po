@@ -56,6 +56,14 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Ползвай всички файлове от папка"
 
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Повтори всички"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Повтори един"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Избор / Сваляне на видео файл"
@@ -91,6 +99,14 @@ msgstr "Сила на звука"
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Степен на затъмняване"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Спирай скрийнсейвъра автоматично"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Спирай скрийсейвъра след (мин)"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

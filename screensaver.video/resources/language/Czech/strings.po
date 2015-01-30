@@ -35,3 +35,11 @@ msgstr "Video výběr"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Nastavení"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Opakovat vše"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Opakovat jednou"

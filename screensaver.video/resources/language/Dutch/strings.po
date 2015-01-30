@@ -56,6 +56,18 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Gebruik alle bestanden in een folder"
 
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Herhaal type voor meerdere bestanden"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Alles herhalen"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Eén Herhalen"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Instellen/download vooraf ingesteld videobestand"

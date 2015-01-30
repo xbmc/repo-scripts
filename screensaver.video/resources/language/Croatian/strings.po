@@ -56,6 +56,14 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Koristi sve datoteke u mapi"
 
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Ponovi sve"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Ponovi jednom"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Postavi/Preuzmi datoteku predloška video snimke"
