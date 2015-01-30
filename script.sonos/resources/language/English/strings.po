@@ -183,7 +183,7 @@ msgid "Do Not Display Notification If Controller Is Showing"
 msgstr ""
 
 msgctxt "#32041"
-msgid "Controller,Slideshow,Bio,Lyrics"
+msgid "Controller,Slideshow,Lyrics"
 msgstr ""
 
 msgctxt "#32042"

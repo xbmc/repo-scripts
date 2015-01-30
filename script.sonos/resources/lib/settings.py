@@ -7,9 +7,6 @@ import logging
 __addon__ = xbmcaddon.Addon(id='script.sonos')
 __addonid__ = __addon__.getAddonInfo('id')
 
-# Load the Sonos controller component
-from sonos import Sonos
-
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
@@ -43,47 +40,18 @@ class SocoLogging(logging.Handler):
 
     @staticmethod
     def enable():
-        xbmcLogHandler = SocoLogging()
-        logger = logging.getLogger('soco')
-        logger.setLevel(logging.DEBUG)
-        logger.addHandler(xbmcLogHandler)
+        # Only enable SoCo logging if Addon Logging is enabled
+        if __addon__.getSetting("logEnabled") == "true":
+            xbmcLogHandler = SocoLogging()
+            logger = logging.getLogger('soco')
+            logger.setLevel(logging.DEBUG)
+            logger.addHandler(xbmcLogHandler)
 
 
 ##############################
 # Stores Addon Settings
 ##############################
 class Settings():
-    # Value to calculate which version of XBMC we are using
-    xbmcMajorVersion = 0
-
-    @staticmethod
-    def getXbmcMajorVersion():
-        if Settings.xbmcMajorVersion == 0:
-            xbmcVer = xbmc.getInfoLabel('system.buildversion')
-            log("Settings: XBMC Version = %s" % xbmcVer)
-            Settings.xbmcMajorVersion = 12
-            try:
-                # Get just the major version number
-                Settings.xbmcMajorVersion = int(xbmcVer.split(".", 1)[0])
-            except:
-                # Default to frodo as the default version if we fail to find it
-                log("Settings: Failed to get XBMC version")
-            log("Settings: XBMC Version %d (%s)" % (Settings.xbmcMajorVersion, xbmcVer))
-        return Settings.xbmcMajorVersion
-
-    @staticmethod
-    def getSonosDevice(ipAddress=None):
-        # Set up the logging before using the Sonos Device
-        if __addon__.getSetting("logEnabled") == "true":
-            SocoLogging.enable()
-        sonosDevice = None
-        if ipAddress is None:
-            ipAddress = Settings.getIPAddress()
-        if ipAddress != "0.0.0.0":
-            sonosDevice = Sonos(ipAddress)
-        log("Sonos: IP Address = %s" % ipAddress)
-        return sonosDevice
-
     @staticmethod
     def getIPAddress():
         return __addon__.getSetting("ipAddress")

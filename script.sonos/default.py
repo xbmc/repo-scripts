@@ -25,9 +25,12 @@ sys.path.append(__lib__)
 from settings import Settings
 from settings import log
 
+from sonos import Sonos
+
 # Import the Event Listener for the Sonos system
 from soco.events import event_listener
 
+from lyrics import Lyrics
 
 log('script version %s started' % __version__)
 
@@ -234,6 +237,13 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
             else:
                 durationLabel.setVisible(True)
 
+        # Store the duration in seconds - it is used a few times later on
+        track['duration_seconds'] = self._getSecondsInTimeString(track['duration'])
+
+        # Set the current position of where the track is playing in the seconds format
+        # this makes it easier to use later, instead of always parsing the string format
+        track['position_seconds'] = self._getSecondsInTimeString(track['position'])
+
         # Get the control that currently has focus
         focusControl = -1
         try:
@@ -340,7 +350,7 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
                 volumeSlider.setPercent(currentVolume)
 
             # Set the seek slider
-            self._setSeekSlider(track['position'], track['duration'])
+            self._setSeekSlider(track['position_seconds'], track['duration_seconds'])
         else:
             self.delayedRefresh = self.delayedRefresh - 1
 
@@ -504,10 +514,7 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
         return fullTimeString
 
     # Set the seek slider to the current position of the track
-    def _setSeekSlider(self, currentPosition, trackDuration):
-        currentPositionSeconds = self._getSecondsInTimeString(currentPosition)
-        trackDurationSeconds = self._getSecondsInTimeString(trackDuration)
-
+    def _setSeekSlider(self, currentPositionSeconds, trackDurationSeconds):
         # work out the percentage we are through the track
         currentPercentage = 0
         if trackDurationSeconds > 0:
@@ -549,7 +556,7 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
 
     # Sets the current seek time, sending it to the sonos speaker
     def _setSeekPosition(self, percentage):
-        trackDurationSeconds = self._getSecondsInTimeString(self.currentTrack['duration'])
+        trackDurationSeconds = self.currentTrack['duration_seconds']
 
         if trackDurationSeconds > 0:
             # Get the current number of seconds into the track
@@ -640,6 +647,7 @@ class SonosArtistSlideshow(SonosControllerWindow):
     def __init__(self, *args, **kwargs):
         # Store the ID of this Window
         self.windowId = -1
+        self.lyricListLinesCount = 0
         SonosControllerWindow.__init__(self, *args, **kwargs)
 
     # Static method to create the Window Dialog class
@@ -681,6 +689,17 @@ class SonosArtistSlideshow(SonosControllerWindow):
         log("SonosArtistSlideshow: About to show window")
         # First show the window
         SonosControllerWindow.show(self)
+
+        # Work out how many lines there are on the screen to show lyrics
+        if Settings.isLyricsInfoLayout():
+            lyricControl = self.getControl(SonosArtistSlideshow.LYRICS)
+            if lyricControl is not None:
+                listitem = xbmcgui.ListItem()
+                while xbmc.getInfoLabel('Container(%s).NumPages' % SonosArtistSlideshow.LYRICS) != '2':
+                    lyricControl.addItem(listitem)
+                    xbmc.sleep(10)
+                self.lyricListLinesCount = lyricControl.size() - 1
+                lyricControl.reset()
 
         self.windowId = xbmcgui.getCurrentWindowId()
 
@@ -730,14 +749,12 @@ class SonosArtistSlideshow(SonosControllerWindow):
         # Now we have updated the track currently playing read the details out and
         # set the windows properties for ArtistSlideshow
         # Only update if the track has changed
-        if self.currentTrack is not None:
+        if self.currentTrack not in [None, '']:
             # Check if we want to show lyrics for the track, although not part of the
             # artist slideshow feature (it is part of script.cu.lrclyrics) we treat
             # this in a similar manner, first set the values
-            if Settings.isLyricsInfoLayout():
-                xbmcgui.Window(10000).setProperty('culrc.manual', 'true')
-                xbmcgui.Window(10000).setProperty('culrc.artist', self.currentTrack['artist'])
-                xbmcgui.Window(10000).setProperty('culrc.track', self.currentTrack['title'])
+            lyrics = Lyrics(self.currentTrack, self.getControl(SonosArtistSlideshow.LYRICS), self.lyricListLinesCount)
+            lyrics.setLyricRequest()
 
             # Artist Slideshow will set these properties for us
             xbmcgui.Window(self.windowId).setProperty('CURRENTARTIST', self.currentTrack['artist'])
@@ -745,12 +762,8 @@ class SonosArtistSlideshow(SonosControllerWindow):
             xbmcgui.Window(self.windowId).setProperty('CURRENTALBUM', self.currentTrack['album'])
 
             # Check if lyrics are enabled, and set the test if they are
-            if Settings.isLyricsInfoLayout():
-                lyricTxt = xbmcgui.Window(10000).getProperty('culrc.lyrics')
-                if lyricTxt is not None:
-                    artistLabel = self.getControl(SonosArtistSlideshow.LYRICS)
-                    artistLabel.reset()
-                    artistLabel.setText(lyricTxt)
+            self.currentTrack = lyrics.populateLyrics()
+            lyrics.refresh()
 
     def isClose(self):
         # Check if the base class has detected a need to close
@@ -820,7 +833,7 @@ class KeyMaps():
 
 if __name__ == '__main__':
 
-    sonosDevice = Settings.getSonosDevice()
+    sonosDevice = Sonos.createSonosDevice()
 
     # Make sure a Sonos speaker was found
     if sonosDevice is not None:

@@ -24,7 +24,7 @@ from .compat import (SimpleHTTPRequestHandler, urlopen, URLError, socketserver,
 from .xml import XML
 from .exceptions import SoCoException
 from .utils import camel_to_underscore
-from .data_structures import get_didl_object
+from .data_structures import from_didl_string
 
 
 log = logging.getLogger(__name__)  # pylint: disable=C0103
@@ -132,13 +132,7 @@ def parse_event_xml(xml_event):
                     # If DIDL metadata is returned, convert it to a music
                     # library data structure
                     if value.startswith('<DIDL-Lite'):
-                        didl_xml = XML.fromstring(value.encode('utf-8'))
-                        # Get the item sub-element
-                        item_xml = didl_xml.find(
-                            "{urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/}"
-                            "item"
-                            )
-                        value = get_didl_object(item_xml)
+                        value = from_didl_string(value)[0]
                     channel = last_change_var.get('channel')
                     if channel is not None:
                         if result.get(tag) is None:
@@ -161,6 +155,8 @@ class Event(object):
     Args:
         sid (str): the subscription id
         seq (str): the event sequence number for that subscription
+        timestamp (str): the time that the event was received (from python's
+            time.time() function)
         service (str): the service which is subscribed to the event
         variables (dict): contains the {names: values} of the evented variables
 
@@ -178,12 +174,13 @@ class Event(object):
         which was not returned in the event.
 
     """
-    # pylint: disable=too-few-public-methods
-    def __init__(self, sid, seq, service, variables=None):
+    # pylint: disable=too-few-public-methods, too-many-arguments
+    def __init__(self, sid, seq, service, timestamp, variables=None):
         # Initialisation has to be done like this, because __setattr__ is
         # overridden, and will not allow direct setting of attributes
         self.__dict__['sid'] = sid
         self.__dict__['seq'] = seq
+        self.__dict__['timestamp'] = timestamp
         self.__dict__['service'] = service
         self.__dict__['variables'] = variables if variables is not None else {}
 
@@ -212,19 +209,22 @@ class EventNotifyHandler(SimpleHTTPRequestHandler):
 
     def do_NOTIFY(self):  # pylint: disable=invalid-name
         """ Handle a NOTIFY request.  See the UPnP Spec for details."""
+        timestamp = time.time()
         headers = requests.structures.CaseInsensitiveDict(self.headers)
         seq = headers['seq']  # Event sequence number
         sid = headers['sid']  # Event Subscription Identifier
         content_length = int(headers['content-length'])
         content = self.rfile.read(content_length)
-        log.debug("Event %s received for sid: %s", seq, sid)
-        log.debug("Current thread is %s", threading.current_thread())
         # find the relevant service from the sid
         with _sid_to_service_lock:
             service = _sid_to_service.get(sid)
+        log.info(
+            "Event %s received for %s service on thread %s at %s", seq,
+            service.service_id, threading.current_thread(), timestamp)
+        log.debug("Event content: %s", content)
         variables = parse_event_xml(content)
         # Build the Event object
-        event = Event(sid, seq, service, variables)
+        event = Event(sid, seq, service, timestamp, variables)
         # pass the event details on to the service so it can update its cache.
         if service is not None:  # It might have been removed by another thread
             # pylint: disable=protected-access
@@ -257,7 +257,7 @@ class EventServerThread(threading.Thread):
         # Start the server on the local IP at port 1400.  Handling of requests
         # is delegated to instances of the EventNotifyHandler class
         listener = EventServer(self.address, EventNotifyHandler)
-        log.debug("Event listener running on %s", listener.server_address)
+        log.info("Event listener running on %s", listener.server_address)
         # Listen for events untill told to stop
         while not self.stop_flag.is_set():
             listener.handle_request()
@@ -394,7 +394,7 @@ class Subscription(object):
                 stop_flag = self.stop_flag
                 interval = self.interval
                 while not stop_flag.wait(interval):
-                    log.debug("Autorenewing subscription %s", sub.sid)
+                    log.info("Autorenewing subscription %s", sub.sid)
                     sub.renew()
 
         # TIMEOUT is provided for in the UPnP spec, but it is not clear if
@@ -438,7 +438,7 @@ class Subscription(object):
             self.timeout = int(timeout.lstrip('Second-'))
         self._timestamp = time.time()
         self.is_subscribed = True
-        log.debug(
+        log.info(
             "Subscribed to %s, sid: %s",
             service.base_url + service.event_subscription_url, self.sid)
         # Add the queue to the master dict of queues so it can be looked up
@@ -513,7 +513,7 @@ class Subscription(object):
             self.timeout = int(timeout.lstrip('Second-'))
         self._timestamp = time.time()
         self.is_subscribed = True
-        log.debug(
+        log.info(
             "Renewed subscription to %s, sid: %s",
             self.service.base_url + self.service.event_subscription_url,
             self.sid)
@@ -545,7 +545,7 @@ class Subscription(object):
         response.raise_for_status()
         self.is_subscribed = False
         self._timestamp = None
-        log.debug(
+        log.info(
             "Unsubscribed from %s, sid: %s",
             self.service.base_url + self.service.event_subscription_url,
             self.sid)

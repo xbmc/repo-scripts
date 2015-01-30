@@ -10,7 +10,7 @@
 	</category>
 	<category label="32015">
 		<setting id="displayArtistInfo" type="bool" label="32021" default="false"/>
-		<setting id="artistInfoLayout" subsetting="true" type="enum" label="32035" enable="eq(-1,true)" lvalues="32036|32037|32039" default="0"/>
+		<setting id="artistInfoLayout" subsetting="true" type="enum" label="32035" enable="eq(-1,true)" lvalues="32036|32037|32039|32041" default="0"/>
 		<setting id="hideSonosLogo" subsetting="true" type="bool" label="32042" enable="eq(-2,true)" default="false"/>
 		<setting id="refreshInterval" label="32016" type="slider" default="2" range="0.5,0.5,5" option="float"/>
 		<setting id="avoidDuplicateCommands" label="32022" type="slider" default="1.5" range="0.5,0.5,5" option="float"/>

@@ -29,6 +29,8 @@ from settings import Settings
 from settings import log
 from settings import SocoLogging
 
+from sonos import Sonos
+
 import soco
 
 
@@ -230,8 +232,7 @@ class AutoUpdateIPAddress():
             return
 
         # Set up the logging before using the Sonos Device
-        if __addon__.getSetting("logEnabled") == "true":
-            SocoLogging.enable()
+        SocoLogging.enable()
 
         try:
             sonos_devices = soco.discover()
@@ -298,7 +299,7 @@ if __name__ == '__main__':
     if (not Settings.isNotificationEnabled()) and (not Settings.linkAudioWithSonos()) and (not Settings.autoPauseSonos()):
         log("SonosService: Notifications, Volume Link and Auto Pause are disabled, exiting service")
     else:
-        sonosDevice = Settings.getSonosDevice()
+        sonosDevice = Sonos.createSonosDevice()
 
         # Make sure a Sonos speaker was found
         if sonosDevice is not None:
@@ -374,11 +375,8 @@ if __name__ == '__main__':
                                         if track['album_art'] != "":
                                             albumArt = track['album_art']
 
-                                        if Settings.getXbmcMajorVersion() < 13:
-                                            xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (track['artist'], track['title'], Settings.getNotificationDisplayDuration(), albumArt))
-                                        else:
-                                            # Gotham allows you to have a dialog without making a sound
-                                            xbmcgui.Dialog().notification(track['artist'], track['title'], albumArt, Settings.getNotificationDisplayDuration(), False)
+                                        # Gotham allows you to have a dialog without making a sound
+                                        xbmcgui.Dialog().notification(track['artist'], track['title'], albumArt, Settings.getNotificationDisplayDuration(), False)
                                     else:
                                         sonosPopup = SonosPlayingPopup.createSonosPlayingPopup(track)
                                         sonosPopup.showPopup()

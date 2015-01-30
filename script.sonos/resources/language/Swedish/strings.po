@@ -176,6 +176,14 @@ msgctxt "#32040"
 msgid "Do Not Display Notification If Controller Is Showing"
 msgstr "Visa inte avisering om kontroller visas"
 
+msgctxt "#32041"
+msgid "Controller,Slideshow,Lyrics"
+msgstr "Kontroller, Bildspel, Sångtexter"
+
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Göm Sonos-logo"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "Följande inställningar måste vara aktiverade i ArtistSlideshow"
@@ -187,6 +195,10 @@ msgstr "Vill du ha denna aktiverad automatiskt?"
 msgctxt "#32062"
 msgid "Next"
 msgstr "Nästa"
+
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Misslyckades hantera Sonos Update-händelse"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -231,6 +243,10 @@ msgstr "Genre"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Spår"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Importerade spellistor"
 
 msgctxt "#32150"
 msgid "Open Sonos Player"

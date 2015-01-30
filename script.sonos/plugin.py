@@ -25,6 +25,8 @@ sys.path.append(__lib__)
 from settings import Settings
 from settings import log
 
+from sonos import Sonos
+
 import soco
 from speech import Speech
 
@@ -195,7 +197,7 @@ class MenuNavigator():
 
     # Populets the queue list from the Sonos speaker
     def populateQueueList(self):
-        sonosDevice = Settings.getSonosDevice()
+        sonosDevice = Sonos.createSonosDevice()
 
         # Make sure a Sonos speaker was found
         if sonosDevice is not None:
@@ -251,7 +253,7 @@ class MenuNavigator():
 
     # Process a folder action that requires a lookup from Sonos
     def processFolderMessage(self, folderName, subCategory=''):
-        sonosDevice = Settings.getSonosDevice()
+        sonosDevice = Sonos.createSonosDevice()
 
         # Make sure a Sonos speaker was found
         if sonosDevice is not None:
@@ -275,7 +277,7 @@ class MenuNavigator():
                         list = sonosDevice.get_music_library_information(folderName, totalCollected, Settings.getBatchSize(), True)
                     else:
                         # Make sure the sub category is valid for the message, escape invalid characters
-                        subCategory = urllib.quote(subCategory)
+                        # subCategory = urllib.quote(subCategory)
                         # Call the browse version
                         list = sonosDevice.browse_by_idstring(folderName, subCategory, totalCollected, Settings.getBatchSize(), True)
                 except:
@@ -326,7 +328,7 @@ class MenuNavigator():
 
     # Gets the Sonos favourite Radio Stations
     def populateRadioStations(self):
-        sonosDevice = Settings.getSonosDevice()
+        sonosDevice = Sonos.createSonosDevice()
 
         # Make sure a Sonos speaker was found
         if sonosDevice is not None:
@@ -375,7 +377,7 @@ class MenuNavigator():
 
     # Gets the Sonos favourite Radio Shows
     def populateRadioShows(self):
-        sonosDevice = Settings.getSonosDevice()
+        sonosDevice = Sonos.createSonosDevice()
 
         # Make sure a Sonos speaker was found
         if sonosDevice is not None:
@@ -515,7 +517,7 @@ class MenuNavigator():
                 li = xbmcgui.ListItem(displayTitle, iconImage=defaultIcon)
 
             # Set the right click context menu for the directory
-            self._addContextMenu(li, item.uri)
+            self._addContextMenu(li, item.resources[0].uri)
 
             if totalEntries is not None:
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True, totalItems=totalEntries)
@@ -525,7 +527,7 @@ class MenuNavigator():
     # Adds a track to the listing
     def _addTrack(self, item, totalEntries=None, folderName=None):
         if item is not None:
-            url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY, 'itemId': item.uri})
+            url = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_PLAY, 'itemId': item.resources[0].uri})
 
             # Get a suitable display title
             displayTitle = None
@@ -552,7 +554,7 @@ class MenuNavigator():
             # li.setProperty("IsPlayable","true");
 
             # Set the right click context menu for the track
-            self._addContextMenu(li, item.uri)
+            self._addContextMenu(li, item.resources[0].uri)
 
             if totalEntries is not None:
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False, totalItems=totalEntries)
@@ -632,7 +634,7 @@ class ActionManager():
     ACTION_SPEECH_REMOVE_PHRASE = 'speechRemovePhrase'
 
     def __init__(self):
-        self.sonosDevice = Settings.getSonosDevice()
+        self.sonosDevice = Sonos.createSonosDevice()
 
     def performAction(self, actionType, itemId, title):
         try:
@@ -807,7 +809,7 @@ if __name__ == '__main__':
 
     elif mode[0] == MenuNavigator.COMMAND_SPEECH_INPUT:
         log("SonosPlugin: Mode is Speech Input")
-        sonosDevice = Settings.getSonosDevice()
+        sonosDevice = Sonos.createSonosDevice()
         # Make sure a Sonos speaker was found
         if sonosDevice is not None:
             # Create the speech class and prompt the user for the message

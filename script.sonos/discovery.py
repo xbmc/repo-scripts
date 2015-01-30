@@ -2,6 +2,7 @@
 import sys
 import os
 import traceback
+import socket
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -34,18 +35,61 @@ if __name__ == '__main__':
     log("SonosDiscovery: Searching for Sonos devices")
 
     # Set up the logging before using the Sonos Device
-    if __addon__.getSetting("logEnabled") == "true":
-        SocoLogging.enable()
+    SocoLogging.enable()
 
     # Display the busy icon while searching for files
     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
+    # Use the default method to search for Sonos Devices
     try:
         sonos_devices = soco.discover(timeout=5)
     except:
         log("SonosDiscovery: Exception when getting devices")
         log("SonosDiscovery: %s" % traceback.format_exc())
         sonos_devices = []
+
+    # If there are multiple network devices, then this may not have picked up
+    # the correct network device to broadcast on, so try another way
+    if (sonos_devices is None) or (len(sonos_devices) < 1):
+        try:
+            # Try and find the address ourselves
+            interfaceAddr = socket.gethostbyname(socket.gethostname())
+            log("SonosDiscovery: Searching for devices using gethostname %s" % interfaceAddr)
+            if interfaceAddr not in [None, '']:
+                sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
+        except:
+            log("SonosDiscovery: Exception when getting devices")
+            log("SonosDiscovery: %s" % traceback.format_exc())
+            sonos_devices = []
+
+    # If still not found, try yet another method
+    if (sonos_devices is None) or (len(sonos_devices) < 1):
+        try:
+            # Try and find the address ourselves
+            interfaceAddr = socket.gethostbyname(socket.getfqdn())
+            log("SonosDiscovery: Searching for devices using getfqdn %s" % interfaceAddr)
+            if interfaceAddr not in [None, '']:
+                sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
+        except:
+            log("SonosDiscovery: Exception when getting devices")
+            log("SonosDiscovery: %s" % traceback.format_exc())
+            sonos_devices = []
+
+    # If still not found, try the last option
+    if (sonos_devices is None) or (len(sonos_devices) < 1):
+        try:
+            # Try and find the address ourselves by going to a web page
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("sonos.com", 80))
+            interfaceAddr = s.getsockname()[0]
+            s.close()
+            log("SonosDiscovery: Searching for devices using web search %s" % interfaceAddr)
+            if interfaceAddr not in [None, '']:
+                sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
+        except:
+            log("SonosDiscovery: Exception when getting devices")
+            log("SonosDiscovery: %s" % traceback.format_exc())
+            sonos_devices = []
 
     speakers = {}
 

@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 import traceback
-import logging
 import xbmc
 import xbmcaddon
 
 # Load the Soco classes
 from soco import SoCo
 
+from settings import Settings
+from settings import log
+from settings import SocoLogging
+
+from lyrics import Lyrics
+
 __addon__ = xbmcaddon.Addon(id='script.sonos')
 __icon__ = __addon__.getAddonInfo('icon')
-
-
-# Use the SoCo logger
-LOGGER = logging.getLogger('soco')
 
 
 #########################################################################
@@ -20,6 +21,18 @@ LOGGER = logging.getLogger('soco')
 #########################################################################
 class Sonos(SoCo):
     SHOWN_ERROR = False
+
+    @staticmethod
+    def createSonosDevice(ipAddress=None):
+        # Set up the logging before using the Sonos Device
+        SocoLogging.enable()
+        sonosDevice = None
+        if ipAddress is None:
+            ipAddress = Settings.getIPAddress()
+        if ipAddress != "0.0.0.0":
+            sonosDevice = Sonos(ipAddress)
+        log("Sonos: IP Address = %s" % ipAddress)
+        return sonosDevice
 
     # Reads the current Random and repeat status
     def getPlayMode(self):
@@ -85,33 +98,38 @@ class Sonos(SoCo):
                     # if there is not already one there
                     queueItem = sub.events.get(False)
                 except:
-                    LOGGER.debug("Sonos: Queue get failed: %s" % traceback.format_exc())
+                    log("Sonos: Queue get failed: %s" % traceback.format_exc())
 
             # Now log the details of an event if there is one there
             if queueItem is not None:
-                LOGGER.debug("Event details: %s" % queueItem)
+                log("Event details: %s" % queueItem)
         except:
-            LOGGER.debug("Sonos: Failed to get latest event details: %s" % traceback.format_exc())
+            log("Sonos: Failed to get latest event details: %s" % traceback.format_exc())
 
         return queueItem
 
     # When given a track info structure and an event, will merge the data
     # together so that it is complete and accurate
     def mergeTrackInfoAndEvent(self, track, eventDetails, previousTrack=None):
+        # Check if the new and previous tracks are the same, if they are then we can
+        # check to see if there are lyrics that should be copied over to stop us getting
+        # them again
+        track = Lyrics.copyLyricsIfSameTrack(track, previousTrack)
+
         # If there is no event data, then just return the track unchanged
         if eventDetails is None:
             # Check to see if the track has changed, if it has not, then we can
             # safely use the previous event we stored
             if (previousTrack is not None) and (track['uri'] == previousTrack['uri']) and (previousTrack['lastEventDetails'] is not None):
-                LOGGER.debug("Sonos: Using previous Event details for merge")
+                log("Sonos: Using previous Event details for merge")
                 track['lastEventDetails'] = previousTrack['lastEventDetails']
                 eventDetails = previousTrack['lastEventDetails']
             else:
-                LOGGER.debug("Sonos: Event details not set for merge")
+                log("Sonos: Event details not set for merge")
                 track['lastEventDetails'] = None
                 return track
         else:
-            LOGGER.debug("Sonos: Event details set for merge")
+            log("Sonos: Event details set for merge")
             track['lastEventDetails'] = eventDetails
 
         # We do not want to throw an exception if we fail to process an event
@@ -121,7 +139,7 @@ class Sonos(SoCo):
             # Now process each part of the event message
             if eventDetails.enqueued_transport_uri_meta_data not in [None, '']:
                 enqueued_transport = eventDetails.enqueued_transport_uri_meta_data
-                LOGGER.debug("enqueued_transport_uri_meta_data = %s" % enqueued_transport)
+                log("enqueued_transport_uri_meta_data = %s" % enqueued_transport)
 
                 # Check if this is radio stream, in which case use that as the title
                 # Station Name
@@ -133,7 +151,7 @@ class Sonos(SoCo):
             # Process the current track info
             if eventDetails.current_track_meta_data not in [None, '']:
                 current_track = eventDetails.current_track_meta_data
-                LOGGER.debug("current_track_meta_data = %s" % current_track)
+                log("current_track_meta_data = %s" % current_track)
 
                 # Check if this is radio stream, in which case use that as the album title
                 if hasattr(current_track, 'radio_show') and (current_track.radio_show not in [None, '']):
@@ -177,7 +195,7 @@ class Sonos(SoCo):
             # Process Next Track Information
             if eventDetails.next_track_meta_data not in [None, '']:
                 next_track = eventDetails.next_track_meta_data
-                LOGGER.debug("next_track_meta_data = %s" % next_track)
+                log("next_track_meta_data = %s" % next_track)
                 if hasattr(next_track, 'creator') and (next_track.creator not in [None, '']):
                     if not hasattr(track, 'next_artist') or (track['next_artist'] is None) or (track['next_artist'] == ""):
                         track['next_artist'] = next_track.creator
@@ -191,7 +209,7 @@ class Sonos(SoCo):
                     if not hasattr(track, 'next_art_uri') or (track['next_art_uri'] is None) or (track['next_art_uri'] == ""):
                         track['next_art_uri'] = next_track.album_art_uri
         except:
-            LOGGER.debug("Sonos: Failed to update using event details: %s" % traceback.format_exc())
+            log("Sonos: Failed to update using event details: %s" % traceback.format_exc())
             # Should really display on the screen that some of the display information
             # might not be complete of upto date, only show the error once
             if Sonos.SHOWN_ERROR is not True:

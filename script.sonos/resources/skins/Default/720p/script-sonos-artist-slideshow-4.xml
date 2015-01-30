@@ -17,6 +17,18 @@
 			<colordiffuse>CCFFFFFF</colordiffuse>
 			<texture border="20">msNowPlayingBg_ipad.png</texture>
 		</control>
+
+		<control type="multiimage">
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>1280</width>
+		    <height>720</height>
+		    <imagepath background="true">$INFO[Window.Property(ArtistSlideshow)]</imagepath>
+		    <timeperimage>5000</timeperimage>
+		    <fadetime>1000</fadetime>
+		    <randomize>true</randomize>
+		</control>
+
 		<control type="button" id="900">
 			<description>Close Window button</description>
 			<posx>84r</posx>
@@ -36,117 +48,85 @@
 		</control>
 
 		<control type="image">
-			<description>Left Top Panel Background</description>
-			<posx>60</posx>
-			<posy>30</posy>
-			<width>520</width>
-			<height>230</height>
+			<description>Lyrics Panel Background</description>
+			<posx>90</posx>
+			<posy>5</posy>
+			<width>1100</width>
+			<height>470</height>
 			<colordiffuse>CCFFFFFF</colordiffuse>
 			<texture border="20">npServiceRatingBg@2x.png</texture>
-		</control>
-		<control type="image">
-			<description>Left Top Panel Inset Background</description>
-			<posx>70</posx>
-			<posy>40</posy>
-			<width>500</width>
-			<height>210</height>
-			<colordiffuse>CCFFFFFF</colordiffuse>
-			<texture border="20">msNowPlayingBg_ipad.png</texture>
+			<visible>Control.IsVisible(1345)</visible>
 		</control>
 
-		<control type="image">
-			<description>Left Bottom Panel Background</description>
-			<posx>60</posx>
-			<posy>270</posy>
-			<width>520</width>
-			<height>420</height>
-			<colordiffuse>CCFFFFFF</colordiffuse>
-			<texture border="20">npServiceRatingBg@2x.png</texture>
-		</control>
-		<control type="image">
-			<description>Left Bottom Panel Inset Background</description>
-			<posx>70</posx>
-			<posy>280</posy>
-			<width>500</width>
-			<height>400</height>
-			<colordiffuse>CCFFFFFF</colordiffuse>
-			<texture border="20">msNowPlayingBg_ipad.png</texture>
-		</control>
-
-		<control type="image">
-			<description>Right Panel Background</description>
-			<posx>700</posx>
-			<posy>30</posy>
-			<width>520</width>
-			<height>660</height>
-			<colordiffuse>CCFFFFFF</colordiffuse>
-			<texture border="20">npServiceRatingBg@2x.png</texture>
-		</control>
-		<control type="image">
-			<description>Right Panel Inset Background</description>
-			<posx>710</posx>
-			<posy>40</posy>
-			<width>500</width>
-			<height>640</height>
-			<colordiffuse>CCFFFFFF</colordiffuse>
-			<texture border="20">msNowPlayingBg_ipad.png</texture>
+		<control type="list" id="1345">
+			<description>Lyrics Text List</description>
+			<posx>100</posx>
+			<posy>15</posy>
+			<width>1080</width>
+			<height>450</height>
+			<viewtype label="535">list</viewtype>
+			<scrolltime>200</scrolltime>
+			<itemlayout height="29">
+				<control type="label">
+					<posx>5</posx>
+					<posy>3</posy>
+					<width>1070</width>
+					<height>22</height>
+					<info>ListItem.Label</info>
+					<font>font13</font>
+					<align>center</align>
+					<aligny>center</aligny>
+					<textcolor>FFFFFFFF</textcolor>
+				</control>
+			</itemlayout>
+			<focusedlayout height="29">
+				<control type="label">
+					<posx>5</posx>
+					<posy>3</posy>
+					<width>1070</width>
+					<height>22</height>
+					<info>ListItem.Label</info>
+					<font>font13</font>
+					<align>center</align>
+					<aligny>center</aligny>
+					<textcolor>FFFFFFFF</textcolor>
+					<scroll>true</scroll>
+				</control>
+			</focusedlayout>
 		</control>
 
 		<control type="image">
 			<description>Sonos Logo</description>
-			<posx>600</posx>
-			<posy>590</posy>
+			<posx>1190</posx>
+			<posy>630</posy>
 			<width>80</width>
 			<height>80</height>
 			<texture>$INFO[Window.Property(SonosAddonIcon)]</texture>
 		</control>
 
-		<control type="multiimage">
-		    <posx>720</posx>
-		    <posy>50</posy>
-		    <width>480</width>
-		    <height>260</height>
-		    <imagepath background="true">$INFO[Window.Property(ArtistSlideshow)]</imagepath>
-			<!-- <aspectratio>keep</aspectratio> -->
-		    <timeperimage>5000</timeperimage>
-		    <fadetime>1000</fadetime>
-		    <randomize>true</randomize>
-		</control>
-
-		<control type="textbox">
-			<description>Artist Biography from Artist Slideshow</description>
-			<posx>725</posx>
-			<posy>315</posy>
-			<width>470</width>
-			<height>360</height>
-			<align>left</align>
-			<aligny>top</aligny>
-			<font>font13</font>
-			<scroll>true</scroll>
-			<wrapmultiline>true</wrapmultiline>
-			<autoscroll time="2000" delay="10000" repeat="5000"></autoscroll>
-			<label>$INFO[Window.Property(ArtistSlideshow.ArtistBiography)]</label>
-			<visible>!IsEmpty(Window.Property(ArtistSlideshow.ArtistBiography))</visible>
-		</control>
-
-		<control type="textbox" id="1345">
-			<description>Lyrics</description>
-			<posx>75</posx>
-			<posy>285</posy>
-			<width>490</width>
-			<height>390</height>
-			<align>left</align>
-			<aligny>top</aligny>
-			<font>font13</font>
-			<scroll>true</scroll>
-			<visible>true</visible>
-			<wrapmultiline>true</wrapmultiline>
-			<autoscroll time="2000" delay="3000" repeat="5000"></autoscroll>
-		</control>
-
-
 		<!-- Music Info -->
 		<control type="group">
+		    <posx>320</posx>
+		    <posy>450</posy>
+			<control type="image">
+				<description>Controller Panel Background</description>
+				<posx>60</posx>
+				<posy>30</posy>
+				<width>520</width>
+				<height>230</height>
+				<colordiffuse>CCFFFFFF</colordiffuse>
+				<texture border="20">npServiceRatingBg@2x.png</texture>
+			</control>
+			<control type="image">
+				<description>Controller Panel Inset Background</description>
+				<posx>70</posx>
+				<posy>40</posy>
+				<width>500</width>
+				<height>210</height>
+				<colordiffuse>CCFFFFFF</colordiffuse>
+				<texture border="20">msNowPlayingBg_ipad.png</texture>
+			</control>
+		
 			<control type="group" id="300">
 				<control type="image" id="801">
 					<description>Cover image</description>
