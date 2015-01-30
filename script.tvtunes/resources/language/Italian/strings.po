@@ -60,6 +60,10 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Sfuma tono calando all'uscita"
 
+msgctxt "#32009"
+msgid "Automatically Download Theme If"
+msgstr "Scarica Automaticamente il Tema Se"
+
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Mescola traccie multiple"
@@ -67,6 +71,10 @@ msgstr "Mescola traccie multiple"
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "Random start time"
+
+msgctxt "#32012"
+msgid "Change File Types"
+msgstr "Cambia i Tipi dei File"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -136,13 +144,29 @@ msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "Esegui temi mentre sfogli Musica o Video"
 
+msgctxt "#32030"
+msgid "All"
+msgstr "Tutto"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Conferma Utente"
+
 msgctxt "#32036"
 msgid "Never"
 msgstr "Mai"
 
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Trovate Solo Voci Singole"
+
 msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Salvaschermo"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Livello Opacità"
 
 msgctxt "#32101"
 msgid "ERROR"

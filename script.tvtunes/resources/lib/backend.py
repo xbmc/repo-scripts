@@ -70,16 +70,20 @@ class Player(xbmc.Player):
         log("Player: Restoring player settings")
         while self.isPlayingAudio():
             xbmc.sleep(1)
-        # Force the volume to the starting volume, but onlyif we have changed it
+        # Restore repeat state
+        if self.hasChangedRepeat:
+            xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "%s" }, "id": 1 }' % self.repeat)
+            self.hasChangedRepeat = False
+        # Force the volume to the starting volume, but only if we have changed it
         if self.hasChangedVolume:
+            # There have been reports of some audio systems like PulseAudio return that they have
+            # stopped playing the audio, however they have not quite finished, to accommodate
+            # this we add an extra sleep in here
+            xbmc.sleep(350)
             self._setVolume(self.original_volume)
             # Record that the volume has been restored
             self.hasChangedVolume = False
             log("Player: Restored volume to %d" % self.original_volume)
-        # restore repeat state
-        if self.hasChangedRepeat:
-            xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "%s" }, "id": 1 }' % self.repeat)
-            self.hasChangedRepeat = False
         # Record the time that playing was started (0 is stopped)
         self.startTime = 0
 
