@@ -1,0 +1,38 @@
+[B]Todo:[/B]
+- User interface for queue manipulation
+- Not backgroundable download(With dialog and wait for return)
+- Add "Trying rtmpdump", "Trying vlc", "Trying mplayer" messages to OSD
+- Fix skin xml issue. 
+
+[B]Version 1.9.5[/B]
+- Added possibility to send cookie in downloader params 
+
+[B]Version 1.0.0[/B]
+- Fixed: made plugin work on Frodo
+
+[B]Version 0.9.3[/B]
+- Fix UTF-8 issues.
+- Fix mkdirs issues.
+- Add support for user-agent
+
+[B]Version 0.9.2[/B]
+- Don't use select.select on windows
+- Many updates and fixes.
+
+[B]Version 0.9.1[/B]
+- Added asynchronous option to download (async is used by default)
+- Added movieItemToPosition
+- Added isRTMPInstalled
+- Added isVLCInstalled
+- Added isMPlayerInstalled
+- Made the progress window larger
+- Added support for mms and rtsp servers
+- Removed language and settings dependencies
+
+[B]Version 0.9.0[/B]
+- Downloader autohides while playback is in the foreground
+- Downloader supports RTMP streams
+- Move to front of functionality
+
+[B]Version 0.8.0 (Beta)[/B]
+- Initial public test run

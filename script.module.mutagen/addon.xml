@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.mutagen"
+       name="mutagen"
+       version="1.22.0"
+       provider-name="Joe Wreschnig">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <summary lang="en">Mutagen is a Python module to handle audio metadata.</summary>
+    <description lang="en">Mutagen is a Python module to handle audio metadata. It supports ASF, FLAC, 
+M4A, Monkey's Audio, MP3, Musepack, Ogg Opus, Ogg FLAC, Ogg Speex, Ogg 
+Theora, Ogg Vorbis, True Audio, WavPack and OptimFROG audio files. All 
+versions of ID3v2 are supported, and all standard ID3v2.4 frames are 
+parsed. It can read Xing headers to accurately calculate the bitrate and 
+length of MP3s. ID3 and APEv2 tags can be edited regardless of audio 
+format. It can also manipulate Ogg streams on an individual packet/page 
+level.</description>
+    <disclaimer lang="en">Code taken from http://code.google.com/p/mutagen/</disclaimer>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <website>http://code.google.com/p/mutagen/</website>
+    <source>https://bitbucket.org/lazka/mutagen/overview</source>
+  </extension>
+</addon>

@@ -1,0 +1,77 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "Spørsmål %d av %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "Total poeng:"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "Spørsmål"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "Spillet er over"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Ekstra"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Advarsel"
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr "Feilbeskjeden er:"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Avslutt"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "Generelt"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "TV Serier"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Nedlastinger"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Spill"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Endringslogg"

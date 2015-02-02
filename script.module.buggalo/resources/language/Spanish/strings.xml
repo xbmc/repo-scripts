@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Spanish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/es/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="90000">[B]That's it man, game over man, [I]Game over![/I][/B] ~ Aliens (1986)</string>
+    <string id="90001">[B]¡Tú no puedes encajar la verdad![/B] ~ Algunos Hombres Buenos (1992)</string>
+    <string id="90002">[B]Peligro, Will Robinson[/B] ~ Perdidos en el Espacio (1998)</string>
+    <string id="90003">[B]¿Por qué llora, Sméagol?[/B] ~ Las Dos Torres (2002)</string>
+    <string id="90004">[B]Houston, tenemos un problema...[/B] ~ Apolo 13 (1995)</string>
+    <string id="90005">[B]E.T. teléfono casa[/B] ~ E.T. (1982)</string>
+    <string id="90006">[B]Francamente, querida, eso no me importa[/B] ~ Lo que el viento se llevó (1939)</string>
+    <string id="90007">[B]Anda... alégrame el día[/B] ~ Impacto Súbito (1983)</string>
+    <string id="90008">[B]Que la fuerza esté contigo[/B] ~ Star Wars (1977)</string>
+    <string id="90009">[B]¿Me estás hablando a mi?[/B] ~ Taxi Driver (1976)</string>
+    <string id="90010">[B]Arresten a los sospechosos habituales[/B] ~ Casablanca (1942)</string>
+    <string id="90011">[B]Necesitará otro barco más grande[/B] ~ Tiburón (1975)</string>
+    <string id="91000">Desafortunadamente ha ocurrido un error en el complemento [B]%s[/B]</string>
+    <string id="91001">Puedes ayudar a corregir los problemas enviando un informe de error.</string>
+    <string id="91002">Haz click en  [I]]Mostrar informe de error[/I] para más detalles. No se envía información personal.</string>
+    <string id="91003">Enviar informe de errores</string>
+    <string id="91004">No enviar</string>
+    <string id="91005">¡Gracias por contribuir!</string>
+    <string id="91006">Mostrar informe de errores</string>
+    <string id="91007">Ocultar informe de errores</string>
+    <string id="91008">Ha ocurrido un error al mostrar los detalles...</string>
+    <string id="91009">¡No se ha podido enviar el informe!</string>
+</strings>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Italian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/it/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="90000">[B]Questo è tutto! game over Uomo, [I]Game over![/I][/B] ~ Aliens  (1986)</string>
+    <string id="90001">[B]Tu non puoi reggere la verità![/B] ~ Codice d'Onore (1992)</string>
+    <string id="90002">[B]Pericolo Will Robinson[/B] ~ Lost in Space (1998)</string>
+    <string id="90003">[B]Perché piange, Sméagol?[/B] ~ Le due Torri (2002)</string>
+    <string id="90004">[B]Houston, abbiamo un problema...[/B] ~ Apollo 13 (1995)</string>
+    <string id="90005">[B]E.T. telefono casa[/B] ~ E.T. (1982)</string>
+    <string id="90006">[B]Francamente, mia cara, non me ne frega niente[/B] ~ Via col vento (1939)</string>
+    <string id="90007">[B]Coraggio... fatti ammazzare[/B] ~ Coraggio... fatti ammazzare (1983)</string>
+    <string id="90008">[B]Che la forza sia con te[/B] ~ Star Wars (1977)</string>
+    <string id="90009">[B]Stai parlando con me?[/B] ~ Taxi Driver (1976)</string>
+    <string id="90010">[B]Fermate i soliti sospetti[/B] ~ Casablanca (1942)</string>
+    <string id="90011">[B]Ti servirà una barca più grande[/B] ~ lo squalo (1975)</string>
+    <string id="91000">Sfortunatamente è avvenuto un errore nell'addon [B]%s[/B]</string>
+    <string id="91001">Puoi aiutare nella risoluzione del problema inviando un report dell'errore</string>
+    <string id="91002">Clicca [I]Mostra il report dell'errore[/I] per i dettagli. Nessuna informazione personale sarà inviata.</string>
+    <string id="91003">Invia il report dell'errore</string>
+    <string id="91004">Non inviare</string>
+    <string id="91005">Grazie per il aver contribuito!</string>
+    <string id="91006">Mostra il report dell'errore</string>
+    <string id="91007">Nascondi il report dell'errore</string>
+    <string id="91008">Sfortunatamente c'è stato un problema mente mostravo i dettagli</string>
+    <string id="91009">Impossibile inviare il report dell'errore!</string>
+</strings>

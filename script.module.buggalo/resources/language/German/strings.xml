@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- German language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/de/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="90000">[B]Die Show ist gelaufen, das Spiel ist aus, Freunde! [I]Das Spiel ist aus![/I][/B] ~ Aliens (1986)</string>
+    <string id="90001">[B]Sie können die Wahrheit doch gar nicht vertragen![/B] ~ Eine Frage der Ehre (1992)</string>
+    <string id="90002">[B]Danger Will Robinson[/B] ~ Lost in Space (1998)</string>
+    <string id="90003">[B]Sméagol, warum weint Sméagol?[/B] ~ Die Zwei Türme (2002)</string>
+    <string id="90004">[B]Houston, wir haben ein Problem...[/B] ~ Apollo 13 (1995)</string>
+    <string id="90005">[B]E.T. nach Hause telefonieren[/B] ~ E.T. (1982)</string>
+    <string id="90006">[B]Ehrlich gesagt, meine Liebe, das ist mir egal[/B] ~ Vom Winde verweht (1939)</string>
+    <string id="90007">[B]Mach schon, make my day[/B] ~ Dirty Harry kommt zurück (1983)</string>
+    <string id="90008">[B]Möge die Macht mit dir sein[/B] ~ Krieg der Sterne (1977)</string>
+    <string id="90009">[B]Redest du mit mir?[/B] ~ Taxi Driver (1976)</string>
+    <string id="90010">[B]Verhaftet die üblichen Verdächtigen[/B] ~ Casablanca (1942)</string>
+    <string id="90011">[B]Sie werden ein größeres Boot brauchen[/B] ~ Der weiße Hai (1975)</string>
+    <string id="91000">Es ist ein Fehler in der Erweiterung [B]%s[/B] aufgetreten.</string>
+    <string id="91001">Du kannst helfen indem du einen Report sendest.</string>
+    <string id="91002">Klicke auf [I]Fehlerbericht anzeigen[/I] für Details. Keine Persönlichen Informationen werden gesendet.</string>
+    <string id="91003">Report senden</string>
+    <string id="91004">Nicht senden</string>
+    <string id="91005">Danke für die Mithilfe!</string>
+    <string id="91006">Fehlerbericht anzeigen</string>
+    <string id="91007">Fehlerbericht ausblenden</string>
+    <string id="91008">Leider ist ein Problem beim Anzeigen der Details aufgetreten...</string>
+    <string id="91009">Der Fehlerbericht konnte nicht gesendet werden!</string>
+</strings>

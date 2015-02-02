@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="window" type="windowType" />
+
+    <xs:complexType name="windowType">
+        <xs:all>
+            <xs:element name="allowoverlay" type="yesNoType" />
+            <xs:element name="coordinates" type="yesNoType" />
+            <xs:element name="defaultcontrol" type="yesNoType" />
+        </xs:all>
+        <xs:attribute name="id" type="xs:int" />
+    </xs:complexType>
+
+    <xs:simpleType name="yesNoType">
+        <xs:restriction>
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    
+</xs:schema>

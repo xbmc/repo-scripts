@@ -1,0 +1,677 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "Fråga %d av %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "Totalpoäng:"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "Fråga:"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "Game Over"
+
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr "Du fick %d av %d"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Specialer"
+
+msgctxt "#30006"
+msgid "Season %i"
+msgstr "Säsong %i"
+
+msgctxt "#30007"
+msgid "%B %e, %Y"
+msgstr "%B %e, %Y"
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr "[B]Laddar[/B]"
+
+msgctxt "#30010"
+msgid "Welcome to Movie Quiz, please enter your nickname:"
+msgstr "Välkommen till Movie Quis, ange ditt smeknamn:"
+
+msgctxt "#30011"
+msgid "Replay"
+msgstr "Spela igen"
+
+msgctxt "#30012"
+msgid "Quiz"
+msgstr "Quiz"
+
+msgctxt "#30013"
+msgid "Your score:"
+msgstr "Din poäng:"
+
+msgctxt "#30014"
+msgid "Choose player"
+msgstr "Välj spelare"
+
+msgctxt "#30015"
+msgid "Add player"
+msgstr "Lägg till spelare"
+
+msgctxt "#30016"
+msgid "You must choose a player to play a game!"
+msgstr "Du måste välja en spelare för att kunna spela!"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Varning"
+
+msgctxt "#30051"
+msgid "All movie questions types are disabled,"
+msgstr "Alla filmfrågar har inaktiverats,"
+
+msgctxt "#30052"
+msgid "All TV show questions types are disabled,"
+msgstr "All TV serie frågor har inaktiverats,"
+
+msgctxt "#30053"
+msgid "so this quiz type is not available."
+msgstr "så denna frågetyp är inte tillgänglig."
+
+msgctxt "#30054"
+msgid "Missing requirements!"
+msgstr "Saknar beroenden!"
+
+msgctxt "#30055"
+msgid "To play the Movie Quiz you must have some movies"
+msgstr "För att spela filmquizen måste du ha några filmer"
+
+msgctxt "#30056"
+msgid "or TV shows in your Video library."
+msgstr "eller TV serier i ditt videobiblliotek."
+
+msgctxt "#30057"
+msgid "See the XBMC wiki for information."
+msgstr "Läs XBMCs wiki för information."
+
+msgctxt "#30058"
+msgid "Delete %s?"
+msgstr "Radera %s?"
+
+msgctxt "#30059"
+msgid "This will delete the user and all related"
+msgstr "Detta raderar användaren och alla relaterade"
+
+msgctxt "#30060"
+msgid "highscores permanently!"
+msgstr "resultat för alltid!"
+
+msgctxt "#30061"
+msgid "None of your movies or TV shows are marked"
+msgstr "Inga av dina filmer eller TVserier är markerade"
+
+msgctxt "#30062"
+msgid "as watched, so the [I]Only use watched movies[/I]"
+msgstr "som sedda, så [I]Använd bara sedda filmer[/I]"
+
+msgctxt "#30063"
+msgid "[I]in the questions[/I] setting will be disabled."
+msgstr "[I]i fråge[/I] inställningarna kommer att avaktiveras."
+
+msgctxt "#30064"
+msgid "None of your movies has a MPAA rating, so the"
+msgstr "Inga av dina filmer har MPAA betyg, så den"
+
+msgctxt "#30065"
+msgid "[I]Limit movie selection based on MPAA rating[/I]"
+msgstr "[I]Begränsa filmurvalet baserat på MPAA-betyget[/I]"
+
+msgctxt "#30066"
+msgid "setting will be disabled."
+msgstr "inställningen kommer att bli avaktiverad."
+
+msgctxt "#30067"
+msgid "None of your movies has a Content rating, so the"
+msgstr "Ingen av dina filmer har innehållsklassifiering, så"
+
+msgctxt "#30068"
+msgid "[I]Limit TV show selection based on Content rating[/I]"
+msgstr "[I]Begränsa TV-serieurvalet baserat på innehållsklassifiering[/I]"
+
+msgctxt "#30069"
+msgid "setting will be disabled."
+msgstr "inställningen kommer att bli avaktiverad."
+
+msgctxt "#30070"
+msgid "There was a problem accessing the XBMC database."
+msgstr "Ett problem uppstod då XBMC databasen skulle läsas."
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr "Felmeddelandet är:"
+
+msgctxt "#30100"
+msgid "Play Movie Quiz"
+msgstr "Spela filmquizen"
+
+msgctxt "#30101"
+msgid "Play TV Quiz"
+msgstr "Spela TV quizen"
+
+msgctxt "#30102"
+msgid "Highscores"
+msgstr "Toppoäng"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Avsluta"
+
+msgctxt "#30104"
+msgid "Change player"
+msgstr "Ändra spelare"
+
+msgctxt "#30105"
+msgid "Go back"
+msgstr "Gå bakåt"
+
+msgctxt "#30110"
+msgid "[B]Movie collection trivia[/B]"
+msgstr "[B]Film trivia[/B]"
+
+msgctxt "#30111"
+msgid "%d movies"
+msgstr "%d filmer"
+
+msgctxt "#30112"
+msgid "%d actors"
+msgstr "%d skådespelare"
+
+msgctxt "#30113"
+msgid "%d directors"
+msgstr "%d regissörer"
+
+msgctxt "#30114"
+msgid "%d studios"
+msgstr "%d studios"
+
+msgctxt "#30115"
+msgid "%d hours of entertainment"
+msgstr "%d timmar underhållning"
+
+msgctxt "#30120"
+msgid "[B]TV shows collection trivia[/B]"
+msgstr "[B]TV serie trivia[/B]"
+
+msgctxt "#30121"
+msgid "%d TV shows"
+msgstr "%d TV serier"
+
+msgctxt "#30122"
+msgid "%d seasons"
+msgstr "%d säsonger"
+
+msgctxt "#30123"
+msgid "%d episodes"
+msgstr "%d avsnitt"
+
+msgctxt "#30130"
+msgid "One minute"
+msgstr "En minut"
+
+msgctxt "#30131"
+msgid "%s minutes"
+msgstr "%s minuter"
+
+msgctxt "#30132"
+msgid "%s questions"
+msgstr "%s frågor"
+
+msgctxt "#30133"
+msgid "%d questions left"
+msgstr "%d frågor kvar"
+
+msgctxt "#30134"
+msgid "Last question"
+msgstr "Sista frågan"
+
+msgctxt "#30135"
+msgid "%d mins. left"
+msgstr "%d min. kvar"
+
+msgctxt "#30400"
+msgid "What movie is this?"
+msgstr "Vilken film är det?"
+
+msgctxt "#30401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr "Vilken film är [B]%s[/B] inte med i?"
+
+msgctxt "#30402"
+msgid "What year was [B]%s[/B] released?"
+msgstr "Vilket år släpptes [B]%s[/B]?"
+
+msgctxt "#30403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr "Vilket citat hör ihop med [B]%s[/B]?"
+
+msgctxt "#30404"
+msgid "Who directed [B]%s[/B]?"
+msgstr "Vem regisserade [B]%s[/B?"
+
+msgctxt "#30405"
+msgid "What studio released [B]%s[/B]?"
+msgstr "Vilken studio släppte [B]%s[/B]?"
+
+msgctxt "#30406"
+msgid "What actor is this?"
+msgstr "Vilken skådespelare är det här?"
+
+msgctxt "#30407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Vem spelar [B]%s[/B] i [B]%s[/B]?"
+
+msgctxt "#30408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Vem gör rösten [B]%s[/B] i [B]%s[/B]?"
+
+msgctxt "#30409"
+msgid "What movie is this quote from?"
+msgstr "Vilken film är citatet ifrån?"
+
+msgctxt "#30410"
+msgid "What movie is the newest?"
+msgstr "Vilken film är nyast?"
+
+msgctxt "#30411"
+msgid "What movie is not directed by [B]%s[/B]?"
+msgstr "Vilken film har inte regisserats av [B]%s[/B]?"
+
+msgctxt "#30412"
+msgid "What actor is in these movies?"
+msgstr "Vilken skådespelare är med i dessa filmer?"
+
+msgctxt "#30413"
+msgid "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+msgstr "Vilken skådespelare är med i [B]%s[/B] förutom [B]%s[/B]?"
+
+msgctxt "#30414"
+msgid "What movie has the longest runtime?"
+msgstr "Vilken film är längst?"
+
+msgctxt "#30450"
+msgid "What TV show is this?"
+msgstr "Vilken TV serie är det här?"
+
+msgctxt "#30451"
+msgid "What season of [B]%s[/B] is this?"
+msgstr "Vilken säsong av [B]%s[/B] är detta?"
+
+msgctxt "#30452"
+msgid "What episode of [B]%s[/B] is this?"
+msgstr "Vilket avsnitt av [B]%s[/B] är detta?"
+
+msgctxt "#30453"
+msgid "When was [B]%s[/B] of [B]%s[/B] first aired?"
+msgstr "När visades [B]%s[/B] av [B]%s[/B] först?"
+
+msgctxt "#30454"
+msgid "When was [B]%s[/B] first aired?"
+msgstr "När visades [B]%s[/B] först?"
+
+msgctxt "#30455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Vem spelar [B]%s[/B] i [B]%s[/B]?"
+
+msgctxt "#30456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Vem gör rösten [B]%s[/B] i [B]%s[/B]?"
+
+msgctxt "#30457"
+msgid "What TV show is this quote from?"
+msgstr "Vilken TV serie är citatet ifrån?"
+
+msgctxt "#30458"
+msgid "What TV show is this theme from?"
+msgstr "Från vilken TV serie kommer musiktemat?"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "Allmänna"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "FILMER"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "TV-SERIER"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Nerladdningar"
+
+msgctxt "#30504"
+msgid "Highscore"
+msgstr "Toppoäng"
+
+msgctxt "#30505"
+msgid "Questions"
+msgstr "Frågor"
+
+msgctxt "#30510"
+msgid "Limit number of questions"
+msgstr "Begränsa antalet frågor"
+
+msgctxt "#30511"
+msgid "Question limit"
+msgstr "Max antal frågor"
+
+msgctxt "#30512"
+msgid "Limit movie selection based on MPAA rating"
+msgstr "Begränsa filmurval baserat på MPAA-betyg"
+
+msgctxt "#30513"
+msgid "Max. MPAA rating"
+msgstr "Max. MPAA betyg"
+
+msgctxt "#30514"
+msgid "Display the correct answer, when you answer incorrectly"
+msgstr "Visa det rätta svaret, när du svarat fel"
+
+msgctxt "#30515"
+msgid "Only use watched movies in the questions"
+msgstr "Använd endast sedda filmer i frågorna"
+
+msgctxt "#30516"
+msgid "Limit TV show selection based on Content rating"
+msgstr "Begränsa TV-serieurval baserat på innehållsklassifiering"
+
+msgctxt "#30517"
+msgid "Max. Content rating"
+msgstr "Max innehållsklassifiering"
+
+msgctxt "#30519"
+msgid "Download IMDB data..."
+msgstr "Ladda ner IMDB data"
+
+msgctxt "#30520"
+msgid "Downloading IMDB data..."
+msgstr "LAddar ner IMDB data"
+
+msgctxt "#30521"
+msgid "Retrieved %d of %d mb."
+msgstr "Hämtade %d av %d mb."
+
+msgctxt "#30522"
+msgid "Some questions require additional local data,"
+msgstr "Några frågor kräver ytterligare lokal data,"
+
+msgctxt "#30523"
+msgid "which can be downloaded below:"
+msgstr "som kan laddas ner nedan:"
+
+msgctxt "#30524"
+msgid "Submit scores to online highscore"
+msgstr "Skicka in poäng till onlinehighscore"
+
+msgctxt "#30525"
+msgid "Downloading IMDB data... (%d of %d)"
+msgstr "Laddar ner IMDB data...(%d av%d)"
+
+msgctxt "#30526"
+msgid "IMDB data downloaded and ready for use."
+msgstr "IMDB data nerladdad och klar att använda."
+
+msgctxt "#30550"
+msgid "Use these question types for movies"
+msgstr "Använd den här sortens frågor för filmer"
+
+msgctxt "#30551"
+msgid "Use these question types for TV shows"
+msgstr "Använd den här sortens frågor för TVserier"
+
+msgctxt "#30552"
+msgid "What movie is this?"
+msgstr "Vilken film är det?"
+
+msgctxt "#30553"
+msgid "What movie is actor not in?"
+msgstr "Vilken film är inte skådespelaren med i?"
+
+msgctxt "#30554"
+msgid "What year was movie released?"
+msgstr "Vilket år släpptes filmen?"
+
+msgctxt "#30555"
+msgid "What tagline belongs to movie?"
+msgstr "Vilken tagline hör till vilken film?"
+
+msgctxt "#30556"
+msgid "Who directed this movie?"
+msgstr "Vem regisserade den här filmen?"
+
+msgctxt "#30557"
+msgid "What studio relased this movie?"
+msgstr "Vilken studio släppte den här filmen?"
+
+msgctxt "#30558"
+msgid "What actor is this?"
+msgstr "Vilken skådespelare är det här?"
+
+msgctxt "#30559"
+msgid "Who played this role in movie?"
+msgstr "Vem spelade den här rollen i filmen?"
+
+msgctxt "#30560"
+msgid "What movie is this quote from?"
+msgstr "Vilken film är citatet ifrån?"
+
+msgctxt "#30561"
+msgid "What movie is newest?"
+msgstr "Vilken film är nyast?"
+
+msgctxt "#30562"
+msgid "What movie was not directed by?"
+msgstr "Vilken film var inte regisserad av?"
+
+msgctxt "#30563"
+msgid "What actor is in these movies?"
+msgstr "Vilken skådespelare är med i dessa filmer?"
+
+msgctxt "#30564"
+msgid "What actor is in these movie besides other actor?"
+msgstr "Vilken skådespelare medverkar i dessa filmer förutom denna skådespelare?"
+
+msgctxt "#30565"
+msgid "What movie has longest runtime?"
+msgstr "Vilken film har längst speltid?"
+
+msgctxt "#30580"
+msgid "What TV show is this?"
+msgstr "Vilken TV serie är detta?"
+
+msgctxt "#30581"
+msgid "What season is this?"
+msgstr "Vilken säsong är detta?"
+
+msgctxt "#30582"
+msgid "What episode is this?"
+msgstr "Vilket avsnitt är detta?"
+
+msgctxt "#30583"
+msgid "When was TV show first aired?"
+msgstr "När visades TV serien för första gången?"
+
+msgctxt "#30584"
+msgid "Who played role in TV show?"
+msgstr "Vem spelade rollen i TV serien?"
+
+msgctxt "#30585"
+msgid "What TV show is this quote from?"
+msgstr "Vilken TV serie är citatet ifrån?"
+
+msgctxt "#30586"
+msgid "What TV show is this theme from?"
+msgstr "Från vilken TV serie kommer musiktemat?"
+
+msgctxt "#30600"
+msgid "[B]Choose Movie Quiz game type[/B]"
+msgstr "[B]Välj filmfrågetyp[/B]"
+
+msgctxt "#30601"
+msgid "[B]Choose TV Quiz game type[/B]"
+msgstr "[B]Välj TV-frågetyp[/B]"
+
+msgctxt "#30602"
+msgid "Unlimited"
+msgstr "Obegränsad"
+
+msgctxt "#30603"
+msgid "Time limited"
+msgstr "Tidsbegränsad"
+
+msgctxt "#30604"
+msgid "Question limited"
+msgstr "Begränsat antal frågor"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Spela upp"
+
+msgctxt "#30610"
+msgid "No limit on game time"
+msgstr "Ingen tidsgräns"
+
+msgctxt "#30611"
+msgid "No limit on questions"
+msgstr "Ingen frågegräns"
+
+msgctxt "#30612"
+msgid "End the game by using the Exit option"
+msgstr "Avsluta genom att trycka på Avsluta"
+
+msgctxt "#30613"
+msgid "Game will ends after"
+msgstr "Spelet slutar efter"
+
+msgctxt "#30700"
+msgid "[B]Game Over[/B]"
+msgstr "[B]Game Over[/B]"
+
+msgctxt "#30701"
+msgid "Retry"
+msgstr "Försök igen"
+
+msgctxt "#30702"
+msgid "Global highscore"
+msgstr "Globalt toppoäng"
+
+msgctxt "#30703"
+msgid "Local highscore"
+msgstr "Lokal toppoäng"
+
+msgctxt "#30704"
+msgid "Main menu"
+msgstr "Huvudmeny"
+
+msgctxt "#30705"
+msgid "Unlimited"
+msgstr "Obegränsad"
+
+msgctxt "#30706"
+msgid "%s questions limit"
+msgstr "%s frågegräns"
+
+msgctxt "#30707"
+msgid "one minute time limit"
+msgstr "en minuts tidsgräns"
+
+msgctxt "#30708"
+msgid "%s minuts time limit"
+msgstr "%s minuters tidsgräns"
+
+msgctxt "#30800"
+msgid "Highscores"
+msgstr "Toppoäng"
+
+msgctxt "#30801"
+msgid "About"
+msgstr "Om"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Ändringslogg"
+
+msgctxt "#30803"
+msgid "Statistics"
+msgstr "Statistik"
+
+msgctxt "#30810"
+msgid "Movie Quiz"
+msgstr "Film Quiz"
+
+msgctxt "#30811"
+msgid "TV Show Quiz"
+msgstr "TV serie Quiz"
+
+msgctxt "#30812"
+msgid "[B]Nickname[/B]"
+msgstr "[B]Smeknamn[/B]"
+
+msgctxt "#30813"
+msgid "[B]Score[/B]"
+msgstr "[B]Poäng[/B]"
+
+msgctxt "#30814"
+msgid "[B]Date[/B]"
+msgstr "[B]Datum[/B]"
+
+msgctxt "#30815"
+msgid "Choose type"
+msgstr "Välj typ"
+
+msgctxt "#30816"
+msgid "See complete global highscores at http://tommy.winther.nu/moviequiz/"
+msgstr "Se komplett lista över toppoäng på http://tommy.winther.nu/moviequiz/"
+
+msgctxt "#30820"
+msgid "Statistics based on global highscores data collected since September 2011.[CR][CR][B]%s[/B] unique users in [B]%s[/B] countries has submitted [B]%s[/B] highscores.[CR]A total of [B]%s[/B] questions has been answered with [B]%s[/B] being correct, which is [B]%s[/B] percent."
+msgstr "Statistik baserat på globala highscoredata insamlat sedan september 2011.[CR][CR][B]%s[/B] unika användare i [B]%s[/B]länder har skickat in [B]%s[/B] highscores.[CR]Totalt [B]%s[/B]frågor har besvarats med [B]%s[/B] rätta svar, vilket är [B]%s[/B] procent."
+
+msgctxt "#30821"
+msgid "[B]Top countries[/B]"
+msgstr "[B]Bästa länder[/B]"
+
+msgctxt "#30822"
+msgid "[B]Top players[/B]"
+msgstr "[B]Bästa spelare[/B]"
+
+msgctxt "#39998"
+msgid "Developed by Tommy Winther"
+msgstr "Utvecklad av Tommy Winther"
+
+msgctxt "#39999"
+msgid "Translated by Tommy Winther"
+msgstr "Översatt av Peter Törnqvist"

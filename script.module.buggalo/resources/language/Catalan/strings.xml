@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Catalan language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ca/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="91000">Lamentablement hi ha agut un error en el complement [B]%s[/B].</string>
+    <string id="91001">Pot ajudar a solucionar el problema mitjançant la presentació d'un informe d'error.</string>
+    <string id="91002">Prem [I]Envia l'informe d'errors[/I] per detalls. No s'enviara dades personals.</string>
+    <string id="91003">Envia l'informe d'errors</string>
+    <string id="91004">No enviar</string>
+    <string id="91005">Gràcies per la teva contribució!</string>
+    <string id="91006">Mostra informe d'errors</string>
+    <string id="91007">Amaga informe d'errros</string>
+    <string id="91008">Lamentablement hi ha hagut un error mentre mostrava els detalls...</string>
+    <string id="91009">No es pot enviar l'informe d'errors!</string>
+</strings>

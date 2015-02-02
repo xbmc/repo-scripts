@@ -1,0 +1,73 @@
+[B]Version 2.7.0[/B]
+- Corrected bug to ensure if we don't have a movie filename then send back an emtpy string instead of a partial TMDB url
+- Suppress myconnpy bug which throws errors on sql warnings
+- Bug fix on local cache image file checks
+
+[B]Version 2.6.0[/B]
+- Fixed small bug in tmdb config cache refresh logic
+- Changed location of logging addon version on init
+- Switch to use addon.common instead of t0mm0.common
+- Changed logic to upgrade tmdb image url's for sqlite db's, should be more accurate now
+- New addon icon
+
+[B]Version 2.5.1[/B]
+- Fixed bug in call to TVDB class
+
+[B]Version 2.5.0[/B]
+- Rework TMDB api key so that it can be set when initializing metahandlers - soon will require individual keys
+- Added option in addon settings to delete metahandlers cache db to restart fresh
+- Fixed refresh episode meta data to hold watched status
+- Updated tvdbapi calls for better accuracy
+- Added new config table to cache db - comes with new _set_config(setting, value) and _get_config(setting) methods
+- Get and set TMDB config values, cache in config table
+- Properly set TMDB image locations
+- Temporary SQL update added to clean existing DB's of hardcoded TMDB image url's - keep only filenames
+
+[B]Version 2.4.0[/B]
+- New TMDB API key
+- Updated calls to TMDB so we only make one request per movie
+
+[B]Version 2.3.1[/B]
+- Fixed bug on getting tvshows from cache - returns None instead of letting exception pass
+- Re-added db initialization - stupid mistake
+
+[B]Version 2.3.0[/B]
+- Fixed changed watched on episodes (again)
+- Added fetch of trailers using v3 of tmdb api
+- Check if a match if found from tmdb before requesting rest of data
+- Added search on similar movies from tmdb
+
+[B]Version 2.2.0[/B]
+- Reverted back to simplejson import for TMDB scraper
+- Updated metacontainers folder deleting functionality
+- Added legacy check on xbmcvfs.mkdir
+
+[B]Version 2.1.0[/B]
+- Updated TMDB scraper to use v3 api
+- Added multithreaded support
+- Added language setting
+
+[B]Version 2.0.3[/B]
+- Rewrite of get_episode logic - now supports air date
+- Added search/refresh on tv shows - returns list of possible matches
+- Many code clean ups and fixes
+- Early support for batch meta grabs - still WIP
+
+[B]Version 2.0.2[/B]
+- Added MySQL support
+- Added Year column for TV Shows - Temporary upgrade code in place
+- Playcount now set for Watched Status in Frodo
+- Use of common logging function, reduce amount of logs in normal logging mode
+- Remove usage of date conversion routines
+- Sending back TVShowTitle for episodes for subtitles to work proper
+- More error trapping to protect against script errors
+- Backfilling more missing data from IMDB
+- Fixed Votes not populating properly
+
+[B]Version 1.0.1[/B]
+- Updated for changes in IMDB field names
+- Added return of Year for TV Shows - still to do: save Year in DB
+- Corrected Ratings and Episode values on TV Shows not returning in proper format in all scenarios
+
+[B]Version 1.0.0[/B]
+- Initial Release.

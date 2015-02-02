@@ -1,0 +1,37 @@
+[B]Version 1.1.6 - 2014-10-05[/B]
+- Fixed problem when an addon is invoked through it's settings via RunScript(..)
+- Updated language files from Transifex
+
+[B]Version 1.1.5 - 2013-09-16[/B]
+- Updated language files from Transifex
+
+[B]Version 1.1.4 - 2013-06-05[/B]
+- Improved logging in case of internal buggalo errors
+
+[B]Version 1.1.3 - 2013-05-18[/B]
+- Added support for sending error reports to a gmail account
+- Updated language files from Transifex
+
+[B]Version 1.1.2 - 2012-09-09[/B]
+- Improved UI compatibility with skins other than Confluence
+- Updated movie quotes
+
+[B]Version 1.1.1 - 2012-09-09[/B]
+- Reworked error dialog layout a bit
+
+[B]Version 1.1.0 - 2012-07-11[/B]
+- Added custom error dialog with details view
+- Added support for tracking userflow
+- More robust handling of extra data
+
+[B]Version 1.0.1 - 2012-03-16[/B]
+- Added option to pass extra data along in the error report
+  either through addExtraData(key, value) or directly in
+  onExceptionRaised(data) as a dict or string.
+- Added @buggalo_try_except function decorator to easily wrap
+  a function in a try..except clause.
+
+[B]Version 1.0.0 - 2012-02-04[/B]
+- Initial module version
+- Named after a creature in my favorite animated show:
+  http://theinfosphere.org/Where_the_Buggalo_Roam

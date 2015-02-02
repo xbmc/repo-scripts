@@ -1,0 +1,7 @@
+[B]Version 2.1.1[/B]
+- Frodo Branch
+- Removed unicoding of text when logging a message
+- Added utf-8 encoding check on build_plugin_url function - corrected issues in Frodo
+
+[B]Version 1.0.0[/B]
+- Initial Release.

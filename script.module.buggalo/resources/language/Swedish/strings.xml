@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Swedish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sv/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="90000">[B]That's it man, game over man, [I]Game over![/I][/B] ~ Aliens (1986)</string>
+    <string id="90001">[B]You can't handle the truth![/B] ~ A Few Good Men (1992)</string>
+    <string id="90002">[B]Danger Will Robinson[/B] ~ Lost in Space (1998)</string>
+    <string id="90003">[B]Why does it cry, Sméagol?[/B] ~ The Two Towers (2002)</string>
+    <string id="90004">[B]Houston, we have a problem...[/B] ~ Apollo 13 (1995)</string>
+    <string id="90005">[B]E.T. phone home[/B] ~ E.T. (1982)</string>
+    <string id="90006">[B]Frankly, my dear, I don't give a damn[/B] ~ Gone with the Wind (1939)</string>
+    <string id="90007">[B]Go ahead, make my day[/B] ~ Sudden Impact (1983)</string>
+    <string id="90008">[B]May the Force be with you[/B] ~ Star Wars (1977)</string>
+    <string id="90009">[B]You talkin' to me?[/B] ~ Taxi Driver (1976)</string>
+    <string id="90010">[B]Round up the usual suspects[/B] ~ Casablanca (1942)</string>
+    <string id="90011">[B]You're gonna need a bigger boat[/B] ~ Jaws (1975)</string>
+    <string id="91000">Tyvärr uppstod ett fel i [B]%s[/B] tillägget.</string>
+    <string id="91001">Du kan hjälpa till att lösa problem genom att skicka in felrapport.</string>
+    <string id="91002">Klicka på [I]Visa felrapport[I] för detaljer. Ingen personlig information skickas.</string>
+    <string id="91003">Skicka felrapport</string>
+    <string id="91004">Skicka inte</string>
+    <string id="91005">Tack för att du bidrar!</string>
+    <string id="91006">Visa felrapport</string>
+    <string id="91007">Dölj felrapport</string>
+    <string id="91008">Det uppstod ett fel medans detaljerna visades...</string>
+    <string id="91009">Kunde inte skicka felrapport!</string>
+</strings>

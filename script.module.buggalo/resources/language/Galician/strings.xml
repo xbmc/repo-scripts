@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Galician language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/gl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="90000">[B]That's it man, game over man, [I]Game over![/I][/B] ~ Aliens (1986)</string>
+    <string id="90001">[B]Ti non podes encaixar a verdade![/B] ~ Algúns Homes Bos (1992)</string>
+    <string id="90002">[B]Perigo Will Robinson[/B] ~ Perdidos no Espacio (1998)</string>
+    <string id="90003">[B]Por que chora, Sméagol?[/B] ~ As Dúas Torres (2002)</string>
+    <string id="90004">[B]Houston, temos un problema...[/B] ~ Apollo 13 (1995)</string>
+    <string id="90005">[B]E.T. teléfono casa[/B] ~ E.T. (1982)</string>
+    <string id="90006">B]Francamente querida, impórtame un carallo[/B] ~ Foise co vento (1939)</string>
+    <string id="90007">[B]Veña... alégrame o día[/B] ~ Impacto Súbito (1983)</string>
+    <string id="90008">[B]Que a forza estea contigo[/B] ~ Star Wars (1977)</string>
+    <string id="90009">[B]Estás falando comigo?[/B] ~ Taxi Driver (1976)</string>
+    <string id="90010">[B]Deteñan os sopeitosos habituais[/B] ~ Casablanca (1942)</string>
+    <string id="90011">[B]Vai necesitar dun barco máis grande[/B] ~ Tiburón (1975)</string>
+    <string id="91000">Por desgraza produciuse un erro no engadido [B]%s[/B].</string>
+    <string id="91001">Pode axudar a arranxar o problema enviando un informe de erros.</string>
+    <string id="91002">Prema en [I]Amosar informe de erros[/I] para máis detalles. Non se enviará información persoal.</string>
+    <string id="91003">Enviar informe de erros</string>
+    <string id="91004">Non enviar</string>
+    <string id="91005">Grazas por contribuir!</string>
+    <string id="91006">Amosar informe de erros</string>
+    <string id="91007">Agochar informe de erros</string>
+    <string id="91008">Por desgraza produciuse un problema mentres se estaban a amosar os detalles...</string>
+    <string id="91009">Non se puido enviar o informe de erros!</string>
+</strings>

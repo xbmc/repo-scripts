@@ -1,0 +1,341 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "Въпрос %d от %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "Правилни:"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "Грешни:"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "Играта приключи"
+
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr "Вие отблязахте %d от %d"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Спешъли"
+
+msgctxt "#30006"
+msgid "Season %i"
+msgstr "Сезон %i"
+
+msgctxt "#30007"
+msgid "%B %e, %Y"
+msgstr "%B %e, %Y"
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr "[B]Зарежда...[/B]"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Внимание"
+
+msgctxt "#30100"
+msgid "Play Movie Quiz"
+msgstr "Игра с Филми"
+
+msgctxt "#30101"
+msgid "Play TV Quiz"
+msgstr "Игра със Сериали"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Изход"
+
+msgctxt "#30110"
+msgid "[B]Movie collection trivia[/B]"
+msgstr "[B]Любопитни факти от филми[/B]"
+
+msgctxt "#30111"
+msgid "%d movies"
+msgstr "%d филма"
+
+msgctxt "#30112"
+msgid "%d actors"
+msgstr "%d актьора"
+
+msgctxt "#30113"
+msgid "%d directors"
+msgstr "%d режисьора"
+
+msgctxt "#30114"
+msgid "%d studios"
+msgstr "%d студиа"
+
+msgctxt "#30115"
+msgid "%d hours of entertainment"
+msgstr "%d часа забавления"
+
+msgctxt "#30120"
+msgid "[B]TV shows collection trivia[/B]"
+msgstr "[B]Любопитни факти от сериали[/B]"
+
+msgctxt "#30121"
+msgid "%d TV shows"
+msgstr "%d TV сериали"
+
+msgctxt "#30122"
+msgid "%d seasons"
+msgstr "%d сезона"
+
+msgctxt "#30123"
+msgid "%d episodes"
+msgstr "%d епизода"
+
+msgctxt "#30400"
+msgid "What movie is this?"
+msgstr "Кой филм е това?"
+
+msgctxt "#30401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr "В кой филм [B]%s[/B] не участва?"
+
+msgctxt "#30402"
+msgid "What year was [B]%s[/B] released?"
+msgstr "Коя година [B]%s[/B] е издаден?"
+
+msgctxt "#30403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr "Кой лозунг принадлежи на [B]%s[/B]?"
+
+msgctxt "#30404"
+msgid "Who directed [B]%s[/B]?"
+msgstr "Кой режисира [B]%s[/B]?"
+
+msgctxt "#30405"
+msgid "What studio released [B]%s[/B]?"
+msgstr "Кое студио издава [B]%s[/B]?"
+
+msgctxt "#30406"
+msgid "What actor is this?"
+msgstr "Кой актьор е това?"
+
+msgctxt "#30407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Кой играе [B]%s[/B] в [B]%s[/B]?"
+
+msgctxt "#30408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Кой озвучава [B]%s[/B] в [B]%s[/B]?"
+
+msgctxt "#30409"
+msgid "What movie is this quote from?"
+msgstr "От кой филм е цитатът?"
+
+msgctxt "#30410"
+msgid "What movie is the newest?"
+msgstr "Кой е най-новият филм?"
+
+msgctxt "#30411"
+msgid "What movie is not directed by [B]%s[/B]?"
+msgstr "Кой филм не е режисиран от [B]%s[/B]?"
+
+msgctxt "#30412"
+msgid "What actor is in these movies?"
+msgstr "Кой актьор участва в тези филми?"
+
+msgctxt "#30413"
+msgid "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+msgstr "Кой актьор участва в [B]%s[/B] освен [B]%s[/B]?"
+
+msgctxt "#30414"
+msgid "What movie has the longest runtime?"
+msgstr "Кой е най-дългият филм?"
+
+msgctxt "#30450"
+msgid "What TV show is this?"
+msgstr "Кой TV сериал е това?"
+
+msgctxt "#30451"
+msgid "What season of [B]%s[/B] is this?"
+msgstr "Кой сезон на [B]%s[/B] е това?"
+
+msgctxt "#30452"
+msgid "What episode of [B]%s[/B] is this?"
+msgstr "Кой епизод на [B]%s[/B] е това?"
+
+msgctxt "#30453"
+msgid "When was [B]%s[/B] of [B]%s[/B] first aired?"
+msgstr "Кога е [B]%s[/B] на [B]%s[/B] излъчен за пръв път?"
+
+msgctxt "#30454"
+msgid "When was [B]%s[/B] first aired?"
+msgstr "Кога е [B]%s[/B] излъчен за пръв път?"
+
+msgctxt "#30455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Кой играе [B]%s[/B] в [B]%s[/B]?"
+
+msgctxt "#30456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Кой озвучава [B]%s[/B] в [B]%s[/B]?"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "Общи"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "Филми"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "TV Сериали"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Изтегляния"
+
+msgctxt "#30510"
+msgid "Limit number of questions"
+msgstr "Ограничи броя на въпросите"
+
+msgctxt "#30511"
+msgid "Question limit"
+msgstr "Ограничение на въпросите"
+
+msgctxt "#30512"
+msgid "Limit movie selection based on MPAA rating"
+msgstr "Ограничи избирането на филмите на база MPAA рейтинга"
+
+msgctxt "#30513"
+msgid "Max. MPAA rating"
+msgstr "Макс. MPAA рейтинг"
+
+msgctxt "#30514"
+msgid "Display the correct answer, when you answer incorrectly"
+msgstr "Показвай правилния отговор, когато се отговори неправилно"
+
+msgctxt "#30515"
+msgid "Only use watched movies in the questions"
+msgstr "Използвай само гледаните филми във въпросите"
+
+msgctxt "#30516"
+msgid "Limit TV show selection based on Content rating"
+msgstr "Ограничи избора на TV сериали на база Content рейтинга"
+
+msgctxt "#30517"
+msgid "Max. Content rating"
+msgstr "Макс. Content рейтинг"
+
+msgctxt "#30519"
+msgid "Download IMDB data..."
+msgstr "Изтегли данни от IMDB"
+
+msgctxt "#30520"
+msgid "Downloading IMDB data..."
+msgstr "Изтеглям данни от IMDB..."
+
+msgctxt "#30521"
+msgid "Retrieved %d of %d mb."
+msgstr "Получени %d от %d mb."
+
+msgctxt "#30522"
+msgid "Some questions require additional local data,"
+msgstr "Някои въпроси изискват допълнителни локални данни,"
+
+msgctxt "#30523"
+msgid "which can be downloaded below:"
+msgstr "които могат да бъдат свалени чрез:"
+
+msgctxt "#30552"
+msgid "What movie is this?"
+msgstr "Кой филм е това?"
+
+msgctxt "#30558"
+msgid "What actor is this?"
+msgstr "Кой актьор е това?"
+
+msgctxt "#30560"
+msgid "What movie is this quote from?"
+msgstr "От кой филм е цитатът?"
+
+msgctxt "#30563"
+msgid "What actor is in these movies?"
+msgstr "Кой актьор участва в тези филми?"
+
+msgctxt "#30580"
+msgid "What TV show is this?"
+msgstr "Кой TV сериал е това?"
+
+msgctxt "#30600"
+msgid "[B]Choose Movie Quiz game type[/B]"
+msgstr "[B]Избери Movie Quiz тип на играта[/B]"
+
+msgctxt "#30601"
+msgid "[B]Choose TV Quiz game type[/B]"
+msgstr "[B]Избери TV Quiz тип на играта[/B]"
+
+msgctxt "#30602"
+msgid "Unlimited"
+msgstr "Неограничена"
+
+msgctxt "#30603"
+msgid "Time limited"
+msgstr "Ограничена по време"
+
+msgctxt "#30604"
+msgid "Question limited"
+msgstr "Ограничена по въпроси"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Отказ"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Играй"
+
+msgctxt "#30610"
+msgid "No limit on game time"
+msgstr "Без лимит по време"
+
+msgctxt "#30611"
+msgid "No limit on questions"
+msgstr "Без лимит по въпроси"
+
+msgctxt "#30612"
+msgid "End the game by using the Exit option"
+msgstr "Край на играта, използвайки опцията 'Изход'"
+
+msgctxt "#30613"
+msgid "Game will ends after"
+msgstr "Играта ще приключи след"
+
+msgctxt "#30705"
+msgid "Unlimited"
+msgstr "Неограничена"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Дневник на промените"
+
+msgctxt "#39999"
+msgid "Translated by Tommy Winther"
+msgstr "Превод: Пламен Петков"

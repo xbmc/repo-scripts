@@ -1,0 +1,677 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "Question %d sur %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "Score :"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "Question value:"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "Fin du Quiz"
+
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr "Votre score %d sur %d"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Specials"
+
+msgctxt "#30006"
+msgid "Season %i"
+msgstr "Saison %i"
+
+msgctxt "#30007"
+msgid "%B %e, %Y"
+msgstr "%d %B %Y"
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr "[B]Chargement en cours[/B]"
+
+msgctxt "#30010"
+msgid "Welcome to Movie Quiz, please enter your nickname:"
+msgstr "Bienvenue à Movie Quiz, merci d'entrer votre pseudo :"
+
+msgctxt "#30011"
+msgid "Replay"
+msgstr "Replay"
+
+msgctxt "#30012"
+msgid "Quiz"
+msgstr "Quiz"
+
+msgctxt "#30013"
+msgid "Your score:"
+msgstr "Votre score"
+
+msgctxt "#30014"
+msgid "Choose player"
+msgstr "Choisir le joueur"
+
+msgctxt "#30015"
+msgid "Add player"
+msgstr "Ajouter un joueur"
+
+msgctxt "#30016"
+msgid "You must choose a player to play a game!"
+msgstr "Vous devez choisir un joueur pour lancer un jeu !"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Attention"
+
+msgctxt "#30051"
+msgid "All movie questions types are disabled,"
+msgstr "Toutes les questions sur les films sont désactivées,"
+
+msgctxt "#30052"
+msgid "All TV show questions types are disabled,"
+msgstr "Toutes les questions sur les séries TV sont désactivées,"
+
+msgctxt "#30053"
+msgid "so this quiz type is not available."
+msgstr "ce type de quizz n'est pas disponible."
+
+msgctxt "#30054"
+msgid "Missing requirements!"
+msgstr "Informations nécessaire manquantes !"
+
+msgctxt "#30055"
+msgid "To play the Movie Quiz you must have some movies"
+msgstr "Pour joueur à Movie Quiz vous devez avoir des films"
+
+msgctxt "#30056"
+msgid "or TV shows in your Video library."
+msgstr "ou des séries TV dans votre médiathèque."
+
+msgctxt "#30057"
+msgid "See the XBMC wiki for information."
+msgstr "Voir le wiki XBMC pour plus d'informations."
+
+msgctxt "#30058"
+msgid "Delete %s?"
+msgstr "Supprimer %s ?"
+
+msgctxt "#30059"
+msgid "This will delete the user and all related"
+msgstr "Cela supprimera l'utilisateur et tout ce qui lui est attaché"
+
+msgctxt "#30060"
+msgid "highscores permanently!"
+msgstr "Scores permanent !"
+
+msgctxt "#30061"
+msgid "None of your movies or TV shows are marked"
+msgstr "Aucun de vos films ou séries TV sont marqués"
+
+msgctxt "#30062"
+msgid "as watched, so the [I]Only use watched movies[/I]"
+msgstr "comme vus, donc le réglage [I]Utiliser seulement les films vus[/I]"
+
+msgctxt "#30063"
+msgid "[I]in the questions[/I] setting will be disabled."
+msgstr "[I]dans les questions[/I] sera désactivé."
+
+msgctxt "#30064"
+msgid "None of your movies has a MPAA rating, so the"
+msgstr "Aucun de vos films a une notation MPAA, donc le réglage"
+
+msgctxt "#30065"
+msgid "[I]Limit movie selection based on MPAA rating[/I]"
+msgstr "[I]Limitation des films basés sur la notation MPAA[/I]"
+
+msgctxt "#30066"
+msgid "setting will be disabled."
+msgstr "sera désactivé."
+
+msgctxt "#30067"
+msgid "None of your movies has a Content rating, so the"
+msgstr "Aucun de vos films n'a de notation, donc le réglage"
+
+msgctxt "#30068"
+msgid "[I]Limit TV show selection based on Content rating[/I]"
+msgstr "[I]Limitation de séries TV en fonction de la notation[/I]"
+
+msgctxt "#30069"
+msgid "setting will be disabled."
+msgstr "sera désactivé."
+
+msgctxt "#30070"
+msgid "There was a problem accessing the XBMC database."
+msgstr "Il y a un problème d'accès à la base de donnée XBMC."
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr "Le message d'erreur est :"
+
+msgctxt "#30100"
+msgid "Play Movie Quiz"
+msgstr "Quiz de Films"
+
+msgctxt "#30101"
+msgid "Play TV Quiz"
+msgstr "Quiz de Séries TV"
+
+msgctxt "#30102"
+msgid "Highscores"
+msgstr "Scores"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Quitter"
+
+msgctxt "#30104"
+msgid "Change player"
+msgstr "Changer de joueur"
+
+msgctxt "#30105"
+msgid "Go back"
+msgstr "Retour"
+
+msgctxt "#30110"
+msgid "[B]Movie collection trivia[/B]"
+msgstr "[B]Collection de films[/B]"
+
+msgctxt "#30111"
+msgid "%d movies"
+msgstr "%d films"
+
+msgctxt "#30112"
+msgid "%d actors"
+msgstr "%d acteurs"
+
+msgctxt "#30113"
+msgid "%d directors"
+msgstr "%d réalisateurs"
+
+msgctxt "#30114"
+msgid "%d studios"
+msgstr "%d studios"
+
+msgctxt "#30115"
+msgid "%d hours of entertainment"
+msgstr "%d heures de divertissement"
+
+msgctxt "#30120"
+msgid "[B]TV shows collection trivia[/B]"
+msgstr "[B]Collection de Séries TV[/B]"
+
+msgctxt "#30121"
+msgid "%d TV shows"
+msgstr "%d Séries TV"
+
+msgctxt "#30122"
+msgid "%d seasons"
+msgstr "%d saisons"
+
+msgctxt "#30123"
+msgid "%d episodes"
+msgstr "%d épisodes"
+
+msgctxt "#30130"
+msgid "One minute"
+msgstr "Une minute"
+
+msgctxt "#30131"
+msgid "%s minutes"
+msgstr "%s minutes"
+
+msgctxt "#30132"
+msgid "%s questions"
+msgstr "%s questions"
+
+msgctxt "#30133"
+msgid "%d questions left"
+msgstr "%d questions restantes"
+
+msgctxt "#30134"
+msgid "Last question"
+msgstr "Dernière question"
+
+msgctxt "#30135"
+msgid "%d mins. left"
+msgstr "%d minutes restantes"
+
+msgctxt "#30400"
+msgid "What movie is this?"
+msgstr "Quel est ce film ?"
+
+msgctxt "#30401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr "Dans quel film [B]%s[/B] ne joue pas ?"
+
+msgctxt "#30402"
+msgid "What year was [B]%s[/B] released?"
+msgstr "En quelle année [B]%s[/B] est sortie ?"
+
+msgctxt "#30403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr "Quel est le slogan du film [B]%s[/B] ?"
+
+msgctxt "#30404"
+msgid "Who directed [B]%s[/B]?"
+msgstr "Qui a réalisé [B]%s[/B] ?"
+
+msgctxt "#30405"
+msgid "What studio released [B]%s[/B]?"
+msgstr "Quel studio a produit [B]%s[/B] ?"
+
+msgctxt "#30406"
+msgid "What actor is this?"
+msgstr "Quel est cet acteur ?"
+
+msgctxt "#30407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Qui joue le personnage de [B]%s[/B] dans [B]%s[/B] ?"
+
+msgctxt "#30408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Qui fait la voix de [B]%s[/B] dans [B]%s[/B] ?"
+
+msgctxt "#30409"
+msgid "What movie is this quote from?"
+msgstr "De quel film provient cet extrait ?"
+
+msgctxt "#30410"
+msgid "What movie is the newest?"
+msgstr "Quel film est le plus récent ?"
+
+msgctxt "#30411"
+msgid "What movie is not directed by [B]%s[/B]?"
+msgstr "Quel film n'est pas réalisé par [B]%s[/B] ?"
+
+msgctxt "#30412"
+msgid "What actor is in these movies?"
+msgstr "Quel acteur joue dans ces films ?"
+
+msgctxt "#30413"
+msgid "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+msgstr "Quel acteur joue dans [B]%s[/B] aux côtés de [B]%s[/B] ?"
+
+msgctxt "#30414"
+msgid "What movie has the longest runtime?"
+msgstr "Quel film est le plus long ?"
+
+msgctxt "#30450"
+msgid "What TV show is this?"
+msgstr "Quelle est cette Série TV ?"
+
+msgctxt "#30451"
+msgid "What season of [B]%s[/B] is this?"
+msgstr "Quelle est cette saison de [B]%s[/B] ?"
+
+msgctxt "#30452"
+msgid "What episode of [B]%s[/B] is this?"
+msgstr "Quel est cet épisode de [B]%s[/B] ?"
+
+msgctxt "#30453"
+msgid "When was [B]%s[/B] of [B]%s[/B] first aired?"
+msgstr "Quand l'épisode [B]%s[/B] de [B]%s[/B] a été diffusée pour la première fois ?"
+
+msgctxt "#30454"
+msgid "When was [B]%s[/B] first aired?"
+msgstr "Quand la Série TV [B]%s[/B] a été diffusée pour la première fois ?"
+
+msgctxt "#30455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Qui joue le rôle de [B]%s[/B] dans [B]%s[/B] ?"
+
+msgctxt "#30456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Qui fait la voix de [B]%s[/B] dans [B]%s[/B] ?"
+
+msgctxt "#30457"
+msgid "What TV show is this quote from?"
+msgstr "De quelle série TV provient cette citation ?"
+
+msgctxt "#30458"
+msgid "What TV show is this theme from?"
+msgstr "De quelle série TV provient ce générique ?"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "Séries TV"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Téléchargements"
+
+msgctxt "#30504"
+msgid "Highscore"
+msgstr "Meilleurs scores"
+
+msgctxt "#30505"
+msgid "Questions"
+msgstr "Questions"
+
+msgctxt "#30510"
+msgid "Limit number of questions"
+msgstr "Limiter le nombre de questions"
+
+msgctxt "#30511"
+msgid "Question limit"
+msgstr "Limite de Questions"
+
+msgctxt "#30512"
+msgid "Limit movie selection based on MPAA rating"
+msgstr "Limiter la sélection des films par rapport au contrôle parental"
+
+msgctxt "#30513"
+msgid "Max. MPAA rating"
+msgstr "Max. MPAA rating"
+
+msgctxt "#30514"
+msgid "Display the correct answer, when you answer incorrectly"
+msgstr "Affiche la bonne réponse quand la votre est incorrecte"
+
+msgctxt "#30515"
+msgid "Only use watched movies in the questions"
+msgstr "Prendre seulement les films déjà vus pour le Quiz"
+
+msgctxt "#30516"
+msgid "Limit TV show selection based on Content rating"
+msgstr "Limiter la sélection des série TV par rapport au contrôle parental"
+
+msgctxt "#30517"
+msgid "Max. Content rating"
+msgstr "Max. Content rating"
+
+msgctxt "#30519"
+msgid "Download IMDB data..."
+msgstr "Télécharger sur IMDB..."
+
+msgctxt "#30520"
+msgid "Downloading IMDB data..."
+msgstr "Téléchargement des données d'IMDB..."
+
+msgctxt "#30521"
+msgid "Retrieved %d of %d mb."
+msgstr "%d sur %d Mo."
+
+msgctxt "#30522"
+msgid "Some questions require additional local data,"
+msgstr "Certaines questions requièrent plus d'informations,"
+
+msgctxt "#30523"
+msgid "which can be downloaded below:"
+msgstr "vous pouvez les télécharger ci-dessous :"
+
+msgctxt "#30524"
+msgid "Submit scores to online highscore"
+msgstr "Pseudo"
+
+msgctxt "#30525"
+msgid "Downloading IMDB data... (%d of %d)"
+msgstr "Téléchargement de données IMDB... (%d de %d)"
+
+msgctxt "#30526"
+msgid "IMDB data downloaded and ready for use."
+msgstr "Données IMDB téléchargées et prêtes."
+
+msgctxt "#30550"
+msgid "Use these question types for movies"
+msgstr "Utiliser ce type de question pour les films"
+
+msgctxt "#30551"
+msgid "Use these question types for TV shows"
+msgstr "Utiliser ce type de question pour les séries TV"
+
+msgctxt "#30552"
+msgid "What movie is this?"
+msgstr "Quel est ce film ?"
+
+msgctxt "#30553"
+msgid "What movie is actor not in?"
+msgstr "Dans quel film cet acteur ne joue pas ?"
+
+msgctxt "#30554"
+msgid "What year was movie released?"
+msgstr "Quelle année ce film est-il sorti ?"
+
+msgctxt "#30555"
+msgid "What tagline belongs to movie?"
+msgstr "A quel film appartient ce film ?"
+
+msgctxt "#30556"
+msgid "Who directed this movie?"
+msgstr "Qui dirige ce film ?"
+
+msgctxt "#30557"
+msgid "What studio relased this movie?"
+msgstr "Quel studio a distribué ce film ?"
+
+msgctxt "#30558"
+msgid "What actor is this?"
+msgstr "Quel est cet acteur ?"
+
+msgctxt "#30559"
+msgid "Who played this role in movie?"
+msgstr "Qui joue ce rôle ?"
+
+msgctxt "#30560"
+msgid "What movie is this quote from?"
+msgstr "De quel film provient cet extrait ?"
+
+msgctxt "#30561"
+msgid "What movie is newest?"
+msgstr "Quel film est le plus récent ?"
+
+msgctxt "#30562"
+msgid "What movie was not directed by?"
+msgstr "Quel film n'a-t-il pas dirigé ?"
+
+msgctxt "#30563"
+msgid "What actor is in these movies?"
+msgstr "Quel acteur joue dans ces films ?"
+
+msgctxt "#30564"
+msgid "What actor is in these movie besides other actor?"
+msgstr "Quel acteur est dans le film de ces autres acteurs ?"
+
+msgctxt "#30565"
+msgid "What movie has longest runtime?"
+msgstr "Quel film dure le plus longtemps ?"
+
+msgctxt "#30580"
+msgid "What TV show is this?"
+msgstr "Quelle est cette Série TV ?"
+
+msgctxt "#30581"
+msgid "What season is this?"
+msgstr "De quelle saison s'agit-il ?"
+
+msgctxt "#30582"
+msgid "What episode is this?"
+msgstr "Quel épisode est-ce ?"
+
+msgctxt "#30583"
+msgid "When was TV show first aired?"
+msgstr "Quand cette série a-t-elle été diffusée pour la première fois ?"
+
+msgctxt "#30584"
+msgid "Who played role in TV show?"
+msgstr "Qui a joué un rôle dans une série TV ? "
+
+msgctxt "#30585"
+msgid "What TV show is this quote from?"
+msgstr "De quelle série TV provient cette citation ?"
+
+msgctxt "#30586"
+msgid "What TV show is this theme from?"
+msgstr "De quelle série TV provient ce générique ?"
+
+msgctxt "#30600"
+msgid "[B]Choose Movie Quiz game type[/B]"
+msgstr "[B]Choisissez un Quiz de Films[/B]"
+
+msgctxt "#30601"
+msgid "[B]Choose TV Quiz game type[/B]"
+msgstr "[B]Choisissez un Quiz de Séries TV[/B]"
+
+msgctxt "#30602"
+msgid "Unlimited"
+msgstr "Illimité"
+
+msgctxt "#30603"
+msgid "Time limited"
+msgstr "Limite de Temps"
+
+msgctxt "#30604"
+msgid "Question limited"
+msgstr "Limite de Questions"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Jouer"
+
+msgctxt "#30610"
+msgid "No limit on game time"
+msgstr "Pas de limite de temps"
+
+msgctxt "#30611"
+msgid "No limit on questions"
+msgstr "Pas de limite de questions"
+
+msgctxt "#30612"
+msgid "End the game by using the Exit option"
+msgstr "Arréter le Quiz en utilisant Quitter"
+
+msgctxt "#30613"
+msgid "Game will ends after"
+msgstr "Le Quiz s'arrête après"
+
+msgctxt "#30700"
+msgid "[B]Game Over[/B]"
+msgstr "[B]Fin du Quiz[/B]"
+
+msgctxt "#30701"
+msgid "Retry"
+msgstr "Recommencer"
+
+msgctxt "#30702"
+msgid "Global highscore"
+msgstr "Palmarès général"
+
+msgctxt "#30703"
+msgid "Local highscore"
+msgstr "Meilleurs Scores locaux"
+
+msgctxt "#30704"
+msgid "Main menu"
+msgstr "Menu général"
+
+msgctxt "#30705"
+msgid "Unlimited"
+msgstr "Illimité"
+
+msgctxt "#30706"
+msgid "%s questions limit"
+msgstr "%s questions limite"
+
+msgctxt "#30707"
+msgid "one minute time limit"
+msgstr "1 minute de temps limite"
+
+msgctxt "#30708"
+msgid "%s minuts time limit"
+msgstr "%s minutes de temps limite"
+
+msgctxt "#30800"
+msgid "Highscores"
+msgstr "Scores"
+
+msgctxt "#30801"
+msgid "About"
+msgstr "A propos"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Journal des modifications"
+
+msgctxt "#30803"
+msgid "Statistics"
+msgstr "Statistiques"
+
+msgctxt "#30810"
+msgid "Movie Quiz"
+msgstr "Quizz de films"
+
+msgctxt "#30811"
+msgid "TV Show Quiz"
+msgstr "Quizz de séries TV"
+
+msgctxt "#30812"
+msgid "[B]Nickname[/B]"
+msgstr "[B]Pseudo[/B]"
+
+msgctxt "#30813"
+msgid "[B]Score[/B]"
+msgstr "[B]Score[/B]"
+
+msgctxt "#30814"
+msgid "[B]Date[/B]"
+msgstr "[B]Date[/B]"
+
+msgctxt "#30815"
+msgid "Choose type"
+msgstr "Choisir le type"
+
+msgctxt "#30816"
+msgid "See complete global highscores at http://tommy.winther.nu/moviequiz/"
+msgstr "Voir le palmarès général complet sur http://tommy.winther.nu/moviequiz/"
+
+msgctxt "#30820"
+msgid "Statistics based on global highscores data collected since September 2011.[CR][CR][B]%s[/B] unique users in [B]%s[/B] countries has submitted [B]%s[/B] highscores.[CR]A total of [B]%s[/B] questions has been answered with [B]%s[/B] being correct, which is [B]%s[/B] percent."
+msgstr "Statistiques basées sur les données recueillies des scores mondiaux depuis Septembre 2011. [CR][CR][B]%s[/B] d'utilisateurs uniques en [B]%s[/B] pays ont soumis [B]%s[/B] scores.[CR] Un total de [B]%s[/B] questions ont été répondues et [B]%s[/B] sont correctes soit [B]%s[/B] pourcent."
+
+msgctxt "#30821"
+msgid "[B]Top countries[/B]"
+msgstr "[B]Top des films[/B]"
+
+msgctxt "#30822"
+msgid "[B]Top players[/B]"
+msgstr "[B]Top des joueurs[/B]"
+
+msgctxt "#39998"
+msgid "Developed by Tommy Winther"
+msgstr "Développé par Tommy Winther"
+
+msgctxt "#39999"
+msgid "Translated by Tommy Winther"
+msgstr "Traduit par DanoneKiD"

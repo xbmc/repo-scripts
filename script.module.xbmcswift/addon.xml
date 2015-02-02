@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.xbmcswift" name="xbmcswift" version="0.2.2" provider-name="Jonathan Beluch (jbel)">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <source>https://github.com/jbeluch/xbmcswift</source>
+  </extension>
+</addon>

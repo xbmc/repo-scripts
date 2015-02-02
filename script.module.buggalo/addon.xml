@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.buggalo" name="Buggalo Exception Collector" version="1.1.6" provider-name="twinther">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="af">Outomatiese uitsondering versamelaar</summary>
+        <summary lang="be">Automatic exception collector</summary>
+        <summary lang="ca">Recaptador automàtic d'excepcions</summary>
+        <summary lang="da">Automatisk indsamling af fejl</summary>
+        <summary lang="de">Automatische Fehlerberichterstattung</summary>
+        <summary lang="el">Αυτόματος συλλέκτης εξαιρέσεων</summary>
+        <summary lang="en">Automatic exception collector</summary>
+        <summary lang="en_NZ">Automatic exception collector</summary>
+        <summary lang="en_US">Automatic exception collector</summary>
+        <summary lang="es">Capturador automático de excepciones</summary>
+        <summary lang="es_MX">Recogedor de excepcion automatica</summary>
+        <summary lang="fr">Collecteur automatique d'exceptions</summary>
+        <summary lang="fr_CA">Collecteur automatique d'exceptions</summary>
+        <summary lang="gl">Recolector automático de excepcións</summary>
+        <summary lang="he">אוסף חריגות אוטומטי</summary>
+        <summary lang="hu">Automatikus kivételgyűjtő</summary>
+        <summary lang="it">Raccoglitore automatico di eccezioni</summary>
+        <summary lang="lt">Automatinis išimtinių situacijų rinkiklis</summary>
+        <summary lang="nl">Automatische uitzondering verzamelaar</summary>
+        <summary lang="pl">Automatyczny kolekcjoner wyjątków.</summary>
+        <summary lang="pt">Recolector automático de excepções</summary>
+        <summary lang="pt_BR">Coletor exceção automática</summary>
+        <summary lang="sk">Automatický zberateľ výnimiek</summary>
+        <summary lang="sv">Automatisk undantagsfelsinsamlare</summary>
+        <summary lang="zh">异常自动收集器</summary>
+        <description lang="be">This module can collect various information about an exception and the users system such as Kodi and Python versions, etc. and submit it to a url.</description>
+        <description lang="ca">Aquest mòdul por recaptar diferent informació sobre una excepció i dels usuaris del sistema com ara les versions del Kodi i del Python, etc. i enviar-la a una url.</description>
+        <description lang="da">Dette modul kan indsamle forskellige informationer om en fejl og brugerens system såsom Kodi- og Pythonversioner osv. og sende det til en webadresse.</description>
+        <description lang="de">Dieses Modul kann diverse Informationen über einen Programm-Fehler sowie die Umgebung (Kodi- und Python-Versionen) sammeln und zu einer URL senden.</description>
+        <description lang="el">Αυτό το εργαλείο μπορεί να συλλέγει διάφορες πληροφορίες σχετικά με μία εξαίρεση καθώς και τις Kodi και Python εκδόσεις του συστήματος του χρήστη, κτλ., και να τις υποβάλλει σε μία διεύθυνση url.</description>
+        <description lang="en">This module can collect various information about an exception and the users system such as Kodi and Python versions, etc. and submit it to a url.</description>
+        <description lang="en_NZ">This module can collect various information about an exception and the users system such as Kodi and Python versions, etc. and submit it to a url.</description>
+        <description lang="en_US">This module can collect various information about an exception and the users system such as Kodi and Python versions, etc. and submit it to a url.</description>
+        <description lang="es">Este módulo recopila información acerca de una excepción y el sistema de los usuarios (por ejemplo las versiones de Kodi y Python, etc) y la envía a una URL.</description>
+        <description lang="es_MX">Este modulo puede recoger varia informacionacerca de una excepcion y usuarios del sistema como Kodi y versiones Python, etc. y enviarlo a una url.</description>
+        <description lang="fr">Ce module peut collecter différentes informations sur une exception et le système comme les versions d'Kodi et de Python, etc. et les soumettre sur une URL.</description>
+        <description lang="fr_CA">Ce module peut collecter diverses informations sur une exception et sur le système de l'utilisateur telles que les versions de Kodi et de Python, etc. et les envoyer à une URL. </description>
+        <description lang="gl">Este módulo pode recoller diversa información sobre unha excepción e o sistema dos usuarios , como o Kodi e as versións de Python, etc, e envialo a un url.</description>
+        <description lang="he">מודול זה יכול לאסוף מידע מגוון על חריגה ומערכת המשתמש כמו גרסאות Kodi, פייתון וכדו'. ולשלוח זאת לכתובת.</description>
+        <description lang="hu">Ez a modul információkat szolgáltat a kiváltott kivételekről és a felhasználó rendszeréről(, mint pl. az Kodi vagy Phyton verzió) és egy URL-be helyezi.</description>
+        <description lang="it">Questo modulo può raccogliere varie informazioni circa un'eccezione ed il i sistemi degli utenti come le versioni di Kodi e di Pyton, ecc.... ed inviarle ad un url</description>
+        <description lang="lt">Šis modulis gali surinkti įvairią informaciją apie išimtines situacijas vartotojų sistemas, tokias kaip Kodi ir Python versijas ir kt. bei nusiųsti ją į url adresą.</description>
+        <description lang="nl">Deze module kan diverse informatie verzamelen over uitzonderingen en van het systeem van de gebruiker zoals Kodi en Python versie, enz. en deze versturen naar een URL.</description>
+        <description lang="pl">Modół ten potrafi zbierać różne informacje o wyjątkach, użytkownikach systemów takich jak Kodi oraz Python etc, i przesłać je na podany adres url.</description>
+        <description lang="pt">Este módulo pode obter várias informações sobre uma excepção e o sistema de utilizadores, tal como versões do Kodi e Python, etc, e submetê-la para um url.</description>
+        <description lang="pt_BR">Este módulo pode coletar diversas informações sobre uma exceção no sistema dos usuários, tais como o Kodi e versões de Python, etc, e submetê-lo para uma url</description>
+        <description lang="sk">Tento doplnok môže zbierať rôzne informácie o vzniknutých výnimkách, užívateľskom systéme ako je Kodi, o verzii Python a inom a odoslať ich na URL.</description>
+        <description lang="sv">Den här modulen kan samla in diverse information om undantagsfel och användarens system, såsom Kodi och Python-versioner, etc. och skicka in det till en url.</description>
+        <description lang="zh">此组件可以收集一个异常或用户系统相关的多方面信息如Kodi和Python的版本等。并将此信息发送到一个网址</description>
+        <language></language>
+        <platform>all</platform>
+        <license>GPLv2</license>
+        <forum>http://forum.xbmc.org/showthread.php?tid=121925</forum>
+        <website>http://tommy.winther.nu</website>
+        <email>tommy@winther.nu</email>
+        <source>https://github.com/twinther/script.module.buggalo</source>
+    </extension>
+</addon>

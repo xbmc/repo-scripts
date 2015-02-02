@@ -1,0 +1,30 @@
+[B]Version 1.5.0[/B]
+- Fixed: proper fix for getParameters that only affects Frodo branch
+- Added: new function to get the version of xbmc as a float
+
+
+[B]Version 1.4.0[/B]
+- Special fix for eden branch to unbreak changes for Frodo
+
+[B]Version 1.3.0[/B]
+- Team xbmc decided to stop unquote-ing their path strings, so getParams now does it for them
+
+[B]Version 1.2.0[/B]
+- fetchPage should default to utf-8 encoding
+- parseDOM should handle utf-8 encoding
+
+[B]Version 1.1.0[/B]
+- Handle \t that breaks DOM variable extraction
+- Added extractJS function
+
+[B]Version 1.0.0[/B]
+- Minor fixes
+
+[B]Version 0.9.1[/B]
+- Stability and more functions
+- Add cookie support to fetchPage.
+- Add getCookieInfoAsHTML.
+- Add POST and Refering capabilities to fetchPage
+
+[B]Version 0.9.0[/B]
+- Initial public test run.

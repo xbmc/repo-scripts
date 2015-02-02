@@ -1,0 +1,361 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr "Vraag %d van %d"
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr "Totale Score:"
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr "Vraag:"
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr "Game Over"
+
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr "Je behaalde %d op %d"
+
+msgctxt "#30005"
+msgid "Specials"
+msgstr "Specials"
+
+msgctxt "#30006"
+msgid "Season %i"
+msgstr "Seizoen %i"
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr "[B]Aan het laden[/B]"
+
+msgctxt "#30010"
+msgid "Welcome to Movie Quiz, please enter your nickname:"
+msgstr "Welkom bij de Film Quiz, hoe heet jij?"
+
+msgctxt "#30011"
+msgid "Replay"
+msgstr "Opnieuw spelen"
+
+msgctxt "#30012"
+msgid "Quiz"
+msgstr "Quiz"
+
+msgctxt "#30013"
+msgid "Your score:"
+msgstr "Jouw score"
+
+msgctxt "#30014"
+msgid "Choose player"
+msgstr "Kies speler"
+
+msgctxt "#30015"
+msgid "Add player"
+msgstr "Speler toevoegen"
+
+msgctxt "#30016"
+msgid "You must choose a player to play a game!"
+msgstr "Je moet een speler kiezen om te kunnen spelen!"
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr "Waarschuwing"
+
+msgctxt "#30051"
+msgid "All movie questions types are disabled,"
+msgstr "Alle types filmvragen zijn uitgeschakeld,"
+
+msgctxt "#30052"
+msgid "All TV show questions types are disabled,"
+msgstr "Alle types TV serie vragen zijn uitgeschakeld,"
+
+msgctxt "#30053"
+msgid "so this quiz type is not available."
+msgstr "dus dit type quiz is niet mogelijk."
+
+msgctxt "#30054"
+msgid "Missing requirements!"
+msgstr "Er missen bepaalde voorwaarden!"
+
+msgctxt "#30055"
+msgid "To play the Movie Quiz you must have some movies"
+msgstr "Om de Film Quiz te kunnen spelen, moet in het bezit zijn van enkele films"
+
+msgctxt "#30056"
+msgid "or TV shows in your Video library."
+msgstr "of TV series in je Video bibliotheek."
+
+msgctxt "#30057"
+msgid "See the XBMC wiki for information."
+msgstr "Bekijk de XBMC wiki voor informatie."
+
+msgctxt "#30058"
+msgid "Delete %s?"
+msgstr "%s verwijderen?"
+
+msgctxt "#30059"
+msgid "This will delete the user and all related"
+msgstr "Dit zal de gebruiker en geralteerde items wissen"
+
+msgctxt "#30061"
+msgid "None of your movies or TV shows are marked"
+msgstr "Geen enkele van jouw films of TV series zijn gemarkeerd"
+
+msgctxt "#30062"
+msgid "as watched, so the [I]Only use watched movies[/I]"
+msgstr "als bekeken, dus de [I]Gebruik enkel bekeken films[/I]"
+
+msgctxt "#30063"
+msgid "[I]in the questions[/I] setting will be disabled."
+msgstr "[I]in de vragen[/I] optie zal niet beschikbaar zijn."
+
+msgctxt "#30064"
+msgid "None of your movies has a MPAA rating, so the"
+msgstr "Geen enkele van je films heeft een MPAA-waardering"
+
+msgctxt "#30100"
+msgid "Play Movie Quiz"
+msgstr "Speel Film Quiz"
+
+msgctxt "#30101"
+msgid "Play TV Quiz"
+msgstr "Speel TV Quiz"
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr "Stoppen"
+
+msgctxt "#30110"
+msgid "[B]Movie collection trivia[/B]"
+msgstr "[B]Film bibliotheek trivia[/B]"
+
+msgctxt "#30111"
+msgid "%d movies"
+msgstr "%d films"
+
+msgctxt "#30112"
+msgid "%d actors"
+msgstr "%d acteurs"
+
+msgctxt "#30113"
+msgid "%d directors"
+msgstr "%d regisseurs"
+
+msgctxt "#30114"
+msgid "%d studios"
+msgstr "%d studios"
+
+msgctxt "#30115"
+msgid "%d hours of entertainment"
+msgstr "%d uren vermaak"
+
+msgctxt "#30120"
+msgid "[B]TV shows collection trivia[/B]"
+msgstr "[B]TV series bibliotheek trivia[/B]"
+
+msgctxt "#30121"
+msgid "%d TV shows"
+msgstr "%d TV series"
+
+msgctxt "#30122"
+msgid "%d seasons"
+msgstr "%d seizoenen"
+
+msgctxt "#30123"
+msgid "%d episodes"
+msgstr "%d afleveringen"
+
+msgctxt "#30130"
+msgid "One minute"
+msgstr "Eén minuut"
+
+msgctxt "#30131"
+msgid "%s minutes"
+msgstr "%s minuten"
+
+msgctxt "#30132"
+msgid "%s questions"
+msgstr "%s vragen"
+
+msgctxt "#30133"
+msgid "%d questions left"
+msgstr "%d vragen te gaan"
+
+msgctxt "#30134"
+msgid "Last question"
+msgstr "Laatste vraag"
+
+msgctxt "#30135"
+msgid "%d mins. left"
+msgstr "%d min. over"
+
+msgctxt "#30400"
+msgid "What movie is this?"
+msgstr "Welke film is dit?"
+
+msgctxt "#30401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr "In welke film speelt [B]%s[/B] niet mee?"
+
+msgctxt "#30402"
+msgid "What year was [B]%s[/B] released?"
+msgstr "In welk jaar werd  [B]%s[/B] uitgebracht?"
+
+msgctxt "#30403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr "Welke slagzin hoort bij [B]%s[/B]?"
+
+msgctxt "#30404"
+msgid "Who directed [B]%s[/B]?"
+msgstr "Wie regisseerde [B]%s[/B]?"
+
+msgctxt "#30406"
+msgid "What actor is this?"
+msgstr "Welke acteur is dit?"
+
+msgctxt "#30407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Wie speelt [B]%s[/B] in [B]%s[/B]?"
+
+msgctxt "#30408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Who leende zijn stem aan [B]%s[/B] in [B]%s[/B]?"
+
+msgctxt "#30409"
+msgid "What movie is this quote from?"
+msgstr "Van welke film komt deze uitspraak?"
+
+msgctxt "#30410"
+msgid "What movie is the newest?"
+msgstr "Welke film is het nieuwst?"
+
+msgctxt "#30411"
+msgid "What movie is not directed by [B]%s[/B]?"
+msgstr "Welke film werd niet geregisseerd door [B]%s[/B]?"
+
+msgctxt "#30412"
+msgid "What actor is in these movies?"
+msgstr "Welke acteur speelt in deze films?"
+
+msgctxt "#30413"
+msgid "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+msgstr "Welke acteur speelt in [B]%s[/B] naast [B]%s[/B]?"
+
+msgctxt "#30414"
+msgid "What movie has the longest runtime?"
+msgstr "Welke film heeft de langste speelduur?"
+
+msgctxt "#30450"
+msgid "What TV show is this?"
+msgstr "Welke TV serie is dit?"
+
+msgctxt "#30455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr "Wie speelt [B]%s[/B] in [B]%s[/B]?"
+
+msgctxt "#30456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr "Who leende zijn stem aan [B]%s[/B] in [B]%s[/B]?"
+
+msgctxt "#30500"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr "TV Series"
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr "Downloads"
+
+msgctxt "#30504"
+msgid "Highscore"
+msgstr "Highscore"
+
+msgctxt "#30505"
+msgid "Questions"
+msgstr "Vragen"
+
+msgctxt "#30510"
+msgid "Limit number of questions"
+msgstr "Aantal vragen limiteren"
+
+msgctxt "#30511"
+msgid "Question limit"
+msgstr "Vraaglimiet"
+
+msgctxt "#30514"
+msgid "Display the correct answer, when you answer incorrectly"
+msgstr "Toon juiste antwoord, als je fout antwoord"
+
+msgctxt "#30515"
+msgid "Only use watched movies in the questions"
+msgstr "Gebruik alleen bekenen films in de vragen"
+
+msgctxt "#30520"
+msgid "Downloading IMDB data..."
+msgstr "IMDB data aan het downloaden..."
+
+msgctxt "#30521"
+msgid "Retrieved %d of %d mb."
+msgstr "%d van %d mb ontvangen."
+
+msgctxt "#30552"
+msgid "What movie is this?"
+msgstr "Welke film is dit?"
+
+msgctxt "#30558"
+msgid "What actor is this?"
+msgstr "Welke acteur is dit?"
+
+msgctxt "#30560"
+msgid "What movie is this quote from?"
+msgstr "Van welke film komt deze uitspraak?"
+
+msgctxt "#30563"
+msgid "What actor is in these movies?"
+msgstr "Welke acteur speelt in deze films?"
+
+msgctxt "#30580"
+msgid "What TV show is this?"
+msgstr "Welke TV serie is dit?"
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgctxt "#30606"
+msgid "Play"
+msgstr "Afspelen"
+
+msgctxt "#30801"
+msgid "About"
+msgstr "Over"
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr "Wijzigingen"

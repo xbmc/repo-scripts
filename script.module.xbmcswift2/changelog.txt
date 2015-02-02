@@ -1,0 +1,80 @@
+CHANGES
+=======
+
+
+Version 2.4.0
+-------------
+- Allow ints to be passed to plugin.url_for() and str() them.
+- plugin.set_resolved_url() now takes an item dict instead of a URL. (The URL
+  is still allowed for backwards compatibility but is decprecated).
+- Ability to replace the context menu items by setting 'replace_context_menu'
+  to True in an item dict.
+- pluign.get_setting() now requires an extra paramter, *converter*, which
+  converts the item from XML to a python type specified by converter.
+- Major bug fix to accomodate handles > 0 in XBMC Frodo.
+- Auto-call plugin.finish(succeeded=False) if a view returns None.
+- XBMC now decides the default player when using plugin.play_video().
+- Storages now call sync() when clear() is called.
+- Added plugin.clear_function_cache() which clears the storage behind the
+  @cached and @cached_route decorators.
+- Add ability to set stream info for list items. Also, devs can now add
+  stream_info to item dicts.
+- Added the actions module. Contains actions.background() and
+  actions.update_view() which are convenience wrappers for RunPlugin() and
+  Container.Update().
+- Allow passing of functions to url_for.
+- 'properties' key in an item dict should now be a dictionary. A list of tuples
+  is still allowed for backwards compatibility.
+- Addon user is now prompted and storage automatically cleared if it becomes
+  corrupted.
+- Added subtitles support. A 'subtitles' parameter was added to
+  plugin.set_resolved_url().
+- xbmcswift2 URLs and routing code is now indifferent to a trailing slash.
+- Bug fixes. See https://github.com/jbeluch/xbmcswift2/issues?milestone=3.
+
+
+Version 2.3.2
+-------------
+
+- New version number for frodo
+- Hotfix for handles >= 0
+
+
+Version 1.3.1
+-------------
+
+- Bug fixes
+
+
+Version 1.3
+-----------
+
+- Update usages of pickle to use cPickle if available.
+- Allow settings to be specified as environment variables when running in CLI
+  mode. e.g. to set a username, the environment variable will be
+  XBMCSWIFT2_USERNAME.
+- Add new keyboard helper method available on a plugin instance.
+- Allow TTL to be specified as an arg to the cached_route decorator.
+
+
+Version 1.2
+-----------
+
+- Addon name, id and filepath are now no longer necessary for Plugin(). They
+  will be discovered automatically.
+- Plugin() now creates the storage folder
+- Plugin.set_info now supports different info types
+- Sort methods can be passed as strings to plugin.finish()
+- Plugin caching has been renamed to storage and now works properly
+
+
+Version 1.1.1
+-------------
+
+- Add license
+
+
+Version 1.1
+-----------
+
+- Initial commit for Eden

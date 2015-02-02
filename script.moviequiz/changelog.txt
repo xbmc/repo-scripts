@@ -1,0 +1,173 @@
+[B]Version 1.0.0 - 2013-06-22[/B]
+- Updated language files from Transifex
+
+[B]Version 0.9.4 - 2013-06-03[/B]
+- Fixed statistics in menu
+- Fixed Cinema experience integration
+- Updated language files from Transifex
+
+[B]Version 0.9.3 - 2013-04-21[/B]
+- Many smaller fixes
+- New logo, etc. (thanks PatK)
+- Updated language files from Transifex
+
+[B]Version 0.9.2 - 2013-04-13[/B]
+- Complete rewrite of menus
+- Icons from http://www.famfamfam.com/
+- Logo font from http://www.dafont.com/marcelle.font
+
+[B]Version 0.9.1 - 2013-03-02[/B]
+- Fixed rare UnicodeError related to actor names
+- Updated language files from Transifex
+
+[B]Version 0.9.0 - 2012-11-30[/B]
+- Complete rewrite of question logic to use JSON-RPC (instead of direct database access)
+- Changed video bookmark algorithm to use player seeks instead of database access
+- Updated language files from Transifex
+
+[B]Version 0.5.7 - 2012-07-11[/B]
+- Improved handling of database connection errors
+
+[B]Version 0.5.6 - 2012-07-05[/B]
+- Changed database connection handling to hopefully avoid some errors
+
+[B]Version 0.5.5 - 2012-07-02[/B]
+- Fixed compatibility problem with Python 2.6
+
+[B]Version 0.5.4 - 2012-06-27[/B]
+- Online highscores are now located at http://tommy.winther.nu/moviequiz/
+  - the old URL will expire in a couple of months
+- Fixed a number of minor errors submitted via the error reporting
+- Cleaned up database cursor handling to hopefully avoid some errors
+- Removed a lot of debug messages that might have caused errors
+
+[B]Version 0.5.3 - 2012-05-29[/B]
+- Actually enable script.module.buggalo for error reporting
+- Added support for answering using the 1,2,3,4 buttons on the remote
+
+[B]Version 0.5.2 - 2012-05-15[/B]
+- Make sure cache folder exists before retrieving IMDB data
+
+[B]Version 0.5.1 - 2012-04-20[/B]
+- Fixed problem with New game where score, etc. were not reset
+- Use script.module.buggalo for error reporting
+- Improve MySQL support for XBMC 11.0
+- Improve global highscore loading speed
+
+[B]Version 0.5.0 - 2011-12-07[/B]
+- Improvied support for XBMC Eden
+  (and dropped support for XBMC Dharma - use v.0.4.x instead)
+- Added Highscores browser in main menu
+- New question type
+  - What TV show is this theme from?
+    (Uses TV show themes via the TvTunes addon)
+
+[B]Version 0.4.4 - 2011-09-27[/B]
+- Improved checks for invalid settings that could cause lock-ups and crashes
+- Improved question logic error handling
+- Improved visual feedback while loading
+
+[B]Version 0.4.3 - 2011-09-19[/B]
+- [B]You must re-download IMDB files[/B], due to speed-optimizations in lookups
+- By popular demand: re-added MySQL support
+- New question type
+  - What TV show is this quote from?
+- Fanart from http://wallpapers.brothersoft.com/hollywood-96405.html
+
+[B]Version 0.4.2 - 2011-08-31[/B]
+- Dropped support for MySQL for now (might add support again later with SQLAlchemy)
+- Fixed Retry option in Game Over screen
+- Minor UI tweaks
+
+[B]Version 0.4.1 - 2011-08-27[/B]
+- Added settings to enable and disable individual question types
+- Added global and local highscore support (highscores available at http://moviequiz.xbmc.info)
+- Added user selection on main screen
+- Added Bulgarian translation thanks to Plamen Petkov
+- Added French translation thanks to DanoneKiD
+- Tweaks to better work with different skins
+
+[B]Version 0.4.0 - 2011-07-24[/B]
+- Redesign main game screen
+- New question types
+  - What movie has the longest runtime?
+  - What actor is in movie besides other actor?
+  - Added sound effects
+- Added game type selection screen with option for unlimited, time limited and question limited game types
+- Added audio feedback for correct and wrong answers
+
+[B]Version 0.3.2 - 2011-04-17[/B]
+- Improved support for XBMC Eden nightly builds
+- Added support for Cinema Experience integration
+- Use fanart instead of movie clips where relevant
+- Improved data selection for some questions
+- Added icons for replaying movie clip and exiting the game
+- Removed 'When was episode first aired?' question as it's too difficult
+- Removed French translation as it was outdated
+
+[B]Version 0.3.1 - 2011-03-27[/B]
+- Added support for XBMC Eden nightly builds
+- Fixed Imdb data download
+
+[B]Version 0.3.0 - 2011-03-23[/B]
+- Add support for Imdb movie quotes (Data download required from settings)
+- Avoid the same question multiple times in the same game
+- Avoid video files ending with .nfo
+- New question types
+  - What movie is the newest?
+  - What Movie is not directed by <director>?
+  - What actor is in these movies?
+- Added experimental support for MySQL database
+
+[B]Version 0.2.0 - 2011-03-06[/B]
+- Attempt to fix crash related to calling xbmc.Player.stop()
+- Finished up TV show question settings, limit by content rating
+- Improved menu gui
+  - Walk of Fame icon photos by http://www.flickr.com/photos/xurble/
+- Added TV shows backdrop from
+    http://www.htbackdrops.com/v2/displayimage.php?album=14&pid=4213
+
+[B]Version 0.1.3 - 2011-02-28[/B]
+- Added TV shows quiz and main menu
+- Option to only use watched movies in questions
+- Menu background image from
+    http://upload.wikimedia.org/wikipedia/commons/archive/0/0f/20090626193204!Walk_of_fame.JPG
+- Lots of improvements in question logic
+- New Question types:
+  - Who played <role> in <tv show>?
+  - Who played <role> in <movie>?
+
+[B]Version 0.1.2 - 2011-02-18[/B]
+- Attempt to reset XBMC video bookmark after playback
+- Added settings to show/not show the correct answer, when an incorrect is chosen
+- Better random question logic in case a question type doesn't contain enough data
+- Added custom dialog for game over screen, etc.
+
+[B]Version 0.1.1 - 2011-02-07[/B]
+- Initial i18n support
+  - French by solexalex
+  - German by mad-max
+- Initial settings support
+- New question types
+  - Who directed this movie?
+  - What studio released this movie?
+  - What actor is this?
+
+[B]Version 0.1.0 - 2011-01-29[/B]
+- First public version
+
+[B]Version 0.0.3 - 2011-01-28[/B]
+- Animations and better graphics
+- New question type
+  - What tagline belongs to this movie?
+
+[B]Version 0.0.2 - 2011-01-23[/B]
+- Multiple question types
+  - What movie is this?
+  - What movie is actor not in?
+  - What year was movie released?
+
+[B]Version 0.0.1 - 2011-01-22[/B]
+- Proof of concept
+- Backdrop image from http://www.htbackdrops.com/v2/displayimage.php?album=14&pid=7082
+

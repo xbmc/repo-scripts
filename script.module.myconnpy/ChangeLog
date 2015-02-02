@@ -1,0 +1,101 @@
+MySQL Connector/Python - Release Notes / ChangeLog
+Copyright (c) 2009, 2014, Oracle and/or its affiliates. All rights reserved.
+
+Full release notes:
+ http://dev.mysql.com/doc/relnotes/connector-python/en/
+
+
+1.1.7 (2014-04-16)
+------------------
+* BUG#18465605: Fixed testing using relative server folder
+* BUG#18465031: Fixed Python v3 tests on Windows
+* BUG#18380100: Fix introspection for Django and Python v3
+* BUG#18144971: Error with unicode arguments in prepared statements
+
+1.1.6 (2014-01-11)
+------------------
+* BUG#18187561: Fixed Django backend errors with time functions
+
+1.1.5 (2014-01-31)
+------------------
+* BUG#17857712: Added fixes to use CPY with Django 1.6
+* BUG#18040042: Fixed clearing session with pooled connection
+* BUG#17826833: Fixed executemany for INSERT with no VALUES-clause
+* BUG#17573172: Added support for access modes for START TRANSACTION
+* BUG#18054810: Fixed output of pylint to include msg_id
+* BUG#17889076: Fixed error handling for unittests.py using -t option
+* BUG#17780576: Added support for utf8mb4 character set
+* BUG#17958420: Fix error handling parse_column_count()
+
+1.1.4 (2013-12-11)
+------------------
+* BUG#17890173: Improve performance reading results
+* BUG#17589172: Fixed GPL to/from community RPM upgrades
+* BUG#17035093: Removed extra empty feature in MSI
+* BUG#17888821: Updated MSI upgrade codes
+* BUG#17943078: Adding support for building OS X packages
+
+1.1.3b1 (2013-11-15)
+--------------------
+* WL#7298: Refactored unittesting
+* WL#7230: Added unit tests performing code analysis
+* BUG#17079344: Fixed saving multi-byte strings with \x5c
+* BUG#17578937: Fixed reconnecting of pooled connections
+* BUG#17620395: Fixed packaging on older Debian systems
+* BUG#17372107: Fixed TCP/IP connection for older FreeBSD
+
+
+1.1.2a1 (2013-01-15)
+--------------------
+
+* BUG#17547529: pid option changed to pid-file
+* BUG#17414258: Added check to disallow changing size of pool
+* BUG#17422299: Fixed cmd_shutdown() for MySQL 5.6
+* BUG#17406263: Fixed error message when pool is exhausted
+* BUG#17461777: Fixed reconnect() to stop once it succeeds
+* BUG#17215197: Added prepared argument for MySQLConnection.cursor()
+* BUG#17424009: Fixed RuntimeError on exit using Python v3
+* BUG#17406398: Adding constraints on the pool name
+* BUG#17401406: Adding constraints on pool size
+* BUG#17353327: Fixed commercial MSI upgrade error
+* BUG#17485966: Removed alpha/beta tags from distributions
+* BUG#17473273: Fixed last_executed_query() for Django
+* BUG#13551483: Added converter_class connection argument
+* BUG#13369592: Added compress connection argument
+* BUG#17353301: Fixed MSI to remove previous installations
+* BUG#14273043: Fix warnings.py example
+
+
+1.1.1a1 (2013-08-28)
+--------------------
+
+* WL#6499: Adding database backend for Django
+* WL#6080: Added Connection Pooling
+* WL#7080: Added Distutils command to create Debian packages
+* BUG#17022399: Fixed error message executing while disconnected
+* BUG#16933795: Fixed errors.Error to retain the given message
+* BUG#17065366: Fixed executemany using MySQL functions as values
+* BUG#17041240: Fixed error closing cursor with unread results
+* BUG#17041412: Fixed fetchall() to include self._nextrow
+* BUG#17002411: Fixed loading data using LOAD DATA LOCAL INFILE
+* BUG#16234441: Fixed shutdown using different shutdown types
+* BUG#16660356: Fixed executemany() to do nothing given nothing
+* BUG#16655208: Fixed Unicode database names with Python v2
+* BUG#17028999: Added timing for individual unittests
+* BUG#16656621: Fixed rollback to consume unread results
+* BUG#17028999: Added timing for individual unittests
+* BUG#16662920: Fixed fetching remaining rows in buffered cursors
+* BUG#16736916: Fixed FileNotFound with LOAD DATA INFILE
+* BUG#16972089: Fixed hyphen in version by removing it
+* BUG#16748411: Fixed catching errors of socket.getaddrinfo()
+
+
+1.1.0a1 (2013-06-12)
+--------------------
+
+* BUG#16896702: Updated errors using MySQL 5.7.1
+* WL#6148: Added support for MySQL Prepared Statements
+* BUG#16234372: Fixed relative imports in Python v3 code
+* WL#6573: Added method to start transactions explicitly
+* WL#6517: Added more standard attributes for getting the version
+* WL#6574: Added the possibility to check for an ongoing transaction

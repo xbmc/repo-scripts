@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="script.module.httplib2" name="httplib2" provider-name=" Joe Gregorio" version="0.8.0">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0" />
+  </requires>
+  <extension library="lib" point="xbmc.python.module" />
+  <extension point="xbmc.addon.metadata">
+        <description lan="en">httplib2 module</description>
+        <summary lang="en">httplib2 module</summary>
+        <disclaimer lang="en">Visit https://pypi.python.org/pypi/httplib2</disclaimer>
+        <license>MIT</license>
+        <platform>all</platform>
+        <email></email>
+        <website>https://pypi.python.org/pypi/httplib2</website>
+        <forum></forum>
+        <source>https://pypi.python.org/pypi/httplib2</source>
+        <language></language>
+   </extension>
+</addon>

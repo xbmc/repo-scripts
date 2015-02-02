@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- French (Canada) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="90000">[B][I]Et ben ça y est les mecs, on est baisé, on est baisé![/I][/B] ~ Aliens - Lle retour (1986)</string>
+    <string id="90001">[B]Vous ne l'encaissez pas la vérité![/B] ~ Des hommes d'honneur (1992)</string>
+    <string id="90002">[B]Danger Will Robinson[/B] ~ Perdus dans l'espace (1998)</string>
+    <string id="90003">[B]Pourquoi il pleure, Sméagol?[/B] ~  Les deux tours (2002)</string>
+    <string id="90004">[B]Houston, nous avons eu un problème...[/B] ~ Apollo 13 (1995)</string>
+    <string id="90005">[B]E.T. téléphone maison[/B] ~ E.T. (1982)</string>
+    <string id="90006">[B]Franchement, ma chère, c'est le cadet de mes soucis[/B] ~ Autant en emporte le vent (1939)</string>
+    <string id="90007">[B] Vas-y, allez ! Fais moi plaisir[/B] ~ Le retour de l'inspecteur Harry (1983)</string>
+    <string id="90008">[B]Que la force soit avec toi[/B] ~ La guerre des étoiles (1977)</string>
+    <string id="90009">[B]C'est à moi qu'tu parles?[/B] ~ Taxi Driver (1976)</string>
+    <string id="90010">[B]Arrêtez les suspects habituels[/B] ~ Casablanca (1942)</string>
+    <string id="90011">[B]Il nous faudrait un plus gros bateau[/B] ~ Les dents de la mer (1975)</string>
+    <string id="91000">Malheureusement une erreur est survenue dans l'addiciel [B]%s[/B].</string>
+    <string id="91001">Vous pouvez aider à corriger ce problème en envoyant un rapport d'erreur.</string>
+    <string id="91002">Cliquer sur [I]Afficher le rapport d'erreur[/I] pour des détails. Aucune information personnelle n'est envoyée.</string>
+    <string id="91003">Envoyer un rapport d'erreur</string>
+    <string id="91004">Ne pas envoyer</string>
+    <string id="91005">Merci pour votre contribution!</string>
+    <string id="91006">Afficher le rapport d'erreur</string>
+    <string id="91007">Masquer le rapport d'erreur</string>
+    <string id="91008">Malheureusement une erreur est survenue lors de l'affichage des détails...</string>
+    <string id="91009">Impossible d'envoyer le rapport d'erreurs!</string>
+</strings>

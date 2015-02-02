@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.moviequiz"
+       name="Movie Quiz"
+       version="1.0.1"
+       provider-name="twinther">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.buggalo" version="1.1.2"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="be">Movie and TV Shows Quiz</summary>
+        <summary lang="da">Quiz om Film og TV-serier</summary>
+        <summary lang="de">Film und TV-Sendungen Quiz</summary>
+        <summary lang="el">Κουίζ Ταινιών και Τηλεοπτικών Σειρών</summary>
+        <summary lang="en">Movie and TV Shows Quiz</summary>
+        <summary lang="es">Quiz de Películas y Series</summary>
+        <summary lang="fr">Quizz de films et de séries TV</summary>
+        <summary lang="gl">Concurso sobre Filmes e Series de TV</summary>
+        <summary lang="hu">Mozifilm és televízió kvíz</summary>
+        <summary lang="it">Quiz su Film e Programmi TV</summary>
+        <summary lang="ko">영화와 TV 쇼 퀴즈</summary>
+        <summary lang="nl">Film en TV Series Quiz</summary>
+        <summary lang="no">Film og TV serie Quiz</summary>
+        <summary lang="pl">Quiz z Filmów i Seriali TV</summary>
+        <summary lang="pt">Questionário de Filmes e Séries TV</summary>
+        <summary lang="pt_BR">Quis de Seriados e Filmes</summary>
+        <summary lang="sk">Filmový a TV seriálový kvíz</summary>
+        <summary lang="sv">Film och TV serie Quiz</summary>
+        <description lang="be">Test your wit and skill against all the information on your movie and TV-shows stored inside XBMC.[CR]* Can you tell which movie is playing from a ten seconds clip?[CR]* Do you know the actors by appearance?[CR]* Any idea when your favorite TV show was first aired?[CR]You will get these questions, and a lot more, all presented nicely with movie clips, actor photos, cover art, etc.[CR][CR]More information, comments, support on the forums:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="da">Test din viden og dygtighed op imod de oplysninger om film og TV-serier, der er lagret i XBMC.[CR]* Kan du se, hvilken film der er tale om ud fra et ti-sekunders klip?[CR]* Kender du skuespillerne på deres udseende?[CR]* Nogen ide om, hvornår din yndlings-TV-serie blev sendt første gang?[CR]Du vil få stillet disse spørgsmål og mange flere, præsenteret pænt med filmklip, billeder af skuespillere, covers, mv.[CR][CR]Flere oplysninger, kommentarer og hjælp på forummet:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="de">Teste dich und dein Können gegen all die Informationen über deine Filme und Fernsehsendungen in XBMC.[CR]* Erkennst du einen Film an einem zehnsekündigen Ausschnitt?[CR]* Kennst du dessen Darsteller?[CR]* Erinnerst du dich noch, wann deine Lieblingssendung zum ersten Mal ausgestrahlt wurde?[CR]Diese und viele weiteren Fragen werden auf dich zukommen, alle unterlegt mit Videoclips, Darstellerfotos, CoverArt, etc.[CR][CR]Mehr Informationen, Kommentare und Hilfe im Forum:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="el">Δοκιμάστε την ευφυΐα και τις ικανότητές σας σχετικά με τις ταινίες και τις τηλεοπτικές σειρές που έχετε στο XBMC.[CR]* Μπορείτε να βρείτε τον τίτλο μιας ταινίας από ένα απόσπασμα 10 δευτερολέπτων;[CR]* Ξεχωρίζετε τους ηθοποιούς από την εμφάνισή τους;[CR]* Έχετε ιδέα πότε προβλήθηκε για πρώτη φορά η αγαπημένη σας τηλεοπτική σειρά;[CR]Θα έχετε αυτές τις ερωτήσεις και πολλά περισσότερα, μαζί με αποσπάσματα ταινιών, φωτογραφίες ηθοποιών, εικόνες, αφίσες, κτλ.[CR][CR]Για περισσότερες πληροφορίες, σχόλια και υποστήριξη, πηγαίνετε στο forum:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="en">Test your wit and skill against all the information on your movie and TV-shows stored inside XBMC.[CR]* Can you tell which movie is playing from a ten seconds clip?[CR]* Do you know the actors by appearance?[CR]* Any idea when your favorite TV show was first aired?[CR]You will get these questions, and a lot more, all presented nicely with movie clips, actor photos, cover art, etc.[CR][CR]More information, comments, support on the forums:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="es">Pon a prueba tu ingenio y habilidad con toda la información de tus películas y series de TV almacenados en XBMC.[CR]* ¿Puedes identificar una película a partir de un fragmento de 10 segundos?[CR]* ¿Puedes identificar a los actores por sus fotos?[CR]* ¿Sabes cuándo se estrenó tu show de TV favorito?[CR]Tendrás todas estas preguntas, y muchas más, aderezadas con fragmentos de películas, fotos de actores, carátulas, etc.[CR][CR]Más información, comentarios y ayuda en los foros:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="fr">Testez votre savoir et votre habileté contre toutes les informations sur votre film et séries télé stockée à l'intérieur XBMC. [CR] * Pouvez-vous dire quel film vient ce générique ? [CR] * Connaissez-vous les acteurs d'après leurs apparences? [CR] * Quand votre séries favorite a été diffusée pour la 1ère fois ? [CR] Vous obtiendrez ces questions, et bien plus encore, le tout joliment présentée avec des clips, des photos d'acteurs, de l'art de couverture, etc [CR] [CR] Plus d'd'informations, de commentaires, de soutien sur les forums: [CR] http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="gl">Poña a proba o seu enxeño e habilidade contra toda a información da súa biblioteca de filmes e series de TV do XBMC.[CR]* Pode adiviñar cal é o filme dun clip de 10 segundos?[CR]* En que filmes apareceron certos actores?[CR]* Ten algunha idea de cando se emitiu por primeira vez a súa serie favorita?[CR]Esas preguntas e moitas máis, se lle apresentarán xunto con clips dos filmes, fotos dos actores, portadas, etc.[CR][CR]Máis información, comentarios e soporte nos foros:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="it">Testa la tua intelligenza ed abilità contro le informazioni sui tuoi Film e Programmi TV memorizzate nel tuo XBMC. [CR]* Sai riconoscere un film da una clip di 10 secondi?[CR]* Riconosci gli attori dall'aspetto?[CR]* Hai idea di quando il tuo Programma TV preferito è stato trasmesso per la prima volta?[CR] Avrai queste domande e tante altre, tutte ben presentate con clip video, foto degli attori, copertine ecc...[CR]&#10;[CR]Più informazioni, commenti e supporto sul forum:&#10;[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="ko">XBMC에 저장되어 있는 영화와 TV 쇼 정보에 대한 당신의 재치와 기량을 테스트 해 보세요.[CR]* 10초짜리 영상을 보고 어떤 영화인지 말 할 수 있습니까?[CR]* 출연하는 배우가 누군지 알겠습니까?[CR]* 당신이 좋아하는 TV 쇼의 첫 방송일을 아시나요?[CR]영화 클립, 배우 사진, 커버 사진과 함께 멋지게 표시되는 여러가지 질문들을 받게 될 것입니다.[CR][CR]더 많은 정보, 의견, 지원은 포럼에서:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="pl">Sprawdź swój spryt i umiejętności na bazie informacji ze wszystkich swoich filmów i seriali TV z XBMC.[CR]* Czy potrafisz odgadnąć tytuł filmu na podstawie 10 sek. fragmentu?[CR]* Czy znasz aktorów, którzy w nich wystęują?[CR]* Pamiętasz kiedy po raz pierwszy wyemitowano Twój ulubiony serial?[CR]Te i wiele innych pytań zostaną Ci zaprezentowane w atrakcyjnej formie wraz z fragmentami filmów, zdjęciami aktorów i okładek, idp.[CR][CR]Więcej informacji, komentarze i wspracie znajdziesz na forum:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="pt">Teste a sua inteligência e rapidez em toda a informação de filmes e séries de TV contida no seu XBMC.[CR]* Consegue adivinhar qual é o filme a partir de um trecho de 10 segundos?[CR]* Conhece os filmes em que os actores participaram?[CR]* Sabe quando a sua série de TV preferida estreou?[CR]Serão feitas todas estas perguntas e muitas mais, com uma apresentação de trechos de filmes, fotos de actores, capas, etc.&#10;[CR][CR]Mais informação, comentários e ajuda nos fórums:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="pt_BR">Teste sua inteligência e habilidade contra todas as informações sobre o seu filme e seriado armazenados no XBMC. [CR] * Você pode dizer qual o nome do filme que está sendo reproduzido a partir de um clipe de dez segundos? [CR] * Você conhece os atores pela aparência? [CR] * Tens ideia de quando seu programa favorito de TV foi exibido pela primeira vez? [CR] Você vai ter essas questões, e muito mais, tudo apresentado com clipes de filme, fotos ator, arte da capa, etc [CR] [CR] Mais informação, comentários de apoio, no fórum: [CR] http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="sk">Testujte svoj dôvtip a šikovnosť voči všetkým informáciám o Vašich filmoch a TV seriáloch uložených v XBMC.&#10;* Viete povedať o ktorý film sa jedná z desať sekundového klipu?&#10;* Poznáte herca podľa výzoru?&#10;* Máte tušenie kedy bol Váš obľúbený seriál po prvé vysielaný?&#10;Dostanete takéto otázky a ešte mnohé iné, všetky pekne prezentované s filmovými klipmi, fotkami hercov, obalmi vydané a podobne.&#10;&#10;Viac informácií, komentáre a podpora na fóre:&#10;http://forum.xbmc.org/showthread.php?t=92540</description>
+        <description lang="sv">Testa din kvickhet och skicklighet mot all information från dina filmer och TV-serier i XBMC.[CR]* Kan du säga vilken film som spelas från ett tio sekunders klipp?[CR]* Vet du vilka skådespelare som uppträder?[CR]* Någon ide när din favorit TV-serie först sändes?[CR]Du kommer att få dessa frågor, och fler, allt trevligt presenterat med filmklipp, skådespelarfoton, omslagsbilder, etc.[CR][CR]Mer information, kommentarer, support på forumet:[CR]http://forum.xbmc.org/showthread.php?t=92540</description>
+        <license>GPL 2.0</license>
+        <platform>all</platform>
+        <language></language>
+        <website>http://tommy.winther.nu/moviequiz/</website>
+        <email>tommy@winther.nu</email>
+        <forum>http://forum.xbmc.org/showthread.php?tid=92540</forum>
+        <source>https://github.com/twinther/script.moviequiz</source>
+    </extension>
+</addon>

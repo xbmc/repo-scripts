@@ -1,0 +1,752 @@
+# XBMC Media Center language file
+# Addon Name: Movie Quiz
+# Addon id: script.moviequiz
+# Addon Provider: twinther [tommy@winther.nu]
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#General
+
+msgctxt "#30000"
+msgid "Question %d of %d"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Total Score:"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Question:"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Game Over"
+msgstr ""
+
+#.1st %d is score, 2nd %d is total question
+msgctxt "#30004"
+msgid "You scored %d of %d"
+msgstr ""
+
+#.same value as id="20381" in main xbmc strings.xml
+msgctxt "#30005"
+msgid "Specials"
+msgstr ""
+
+#.same value as id="20358" in main xbmc strings.xml
+msgctxt "#30006"
+msgid "Season %i"
+msgstr ""
+
+#.episode first aired date format: http://docs.python.org/library/time.html#time.strftime
+msgctxt "#30007"
+msgid "%B %e, %Y"
+msgstr ""
+
+msgctxt "#30008"
+msgid "[B]Loading[/B]"
+msgstr ""
+
+#empty string with id 30009
+
+msgctxt "#30010"
+msgid "Welcome to Movie Quiz, please enter your nickname:"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Replay"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Quiz"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Your score:"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Choose player"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Add player"
+msgstr ""
+
+msgctxt "#30016"
+msgid "You must choose a player to play a game!"
+msgstr ""
+
+#empty strings from id 30017 to 30049
+
+msgctxt "#30050"
+msgid "Warning"
+msgstr ""
+
+msgctxt "#30051"
+msgid "All movie questions types are disabled,"
+msgstr ""
+
+msgctxt "#30052"
+msgid "All TV show questions types are disabled,"
+msgstr ""
+
+msgctxt "#30053"
+msgid "so this quiz type is not available."
+msgstr ""
+
+msgctxt "#30054"
+msgid "Missing requirements!"
+msgstr ""
+
+msgctxt "#30055"
+msgid "To play the Movie Quiz you must have some movies"
+msgstr ""
+
+msgctxt "#30056"
+msgid "or TV shows in your Video library."
+msgstr ""
+
+msgctxt "#30057"
+msgid "See the XBMC wiki for information."
+msgstr ""
+
+msgctxt "#30058"
+msgid "Delete %s?"
+msgstr ""
+
+msgctxt "#30059"
+msgid "This will delete the user and all related"
+msgstr ""
+
+msgctxt "#30060"
+msgid "highscores permanently!"
+msgstr ""
+
+msgctxt "#30061"
+msgid "None of your movies or TV shows are marked"
+msgstr ""
+
+msgctxt "#30062"
+msgid "as watched, so the [I]Only use watched movies[/I]"
+msgstr ""
+
+msgctxt "#30063"
+msgid "[I]in the questions[/I] setting will be disabled."
+msgstr ""
+
+msgctxt "#30064"
+msgid "None of your movies has a MPAA rating, so the"
+msgstr ""
+
+msgctxt "#30065"
+msgid "[I]Limit movie selection based on MPAA rating[/I]"
+msgstr ""
+
+msgctxt "#30066"
+msgid "setting will be disabled."
+msgstr ""
+
+msgctxt "#30067"
+msgid "None of your movies has a Content rating, so the"
+msgstr ""
+
+msgctxt "#30068"
+msgid "[I]Limit TV show selection based on Content rating[/I]"
+msgstr ""
+
+msgctxt "#30069"
+msgid "setting will be disabled."
+msgstr ""
+
+msgctxt "#30070"
+msgid "There was a problem accessing the XBMC database."
+msgstr ""
+
+msgctxt "#30071"
+msgid "The error message is:"
+msgstr ""
+
+#empty strings from id 30072 to 30099
+#Menu
+
+msgctxt "#30100"
+msgid "Play Movie Quiz"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Play TV Quiz"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Highscores"
+msgstr ""
+
+msgctxt "#30103"
+msgid "Exit"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Change player"
+msgstr ""
+
+msgctxt "#30105"
+msgid "Go back"
+msgstr ""
+
+#empty strings from id 30106 to 30109
+
+msgctxt "#30110"
+msgid "[B]Movie collection trivia[/B]"
+msgstr ""
+
+#.%d is movie count
+msgctxt "#30111"
+msgid "%d movies"
+msgstr ""
+
+#.%d is actor count
+msgctxt "#30112"
+msgid "%d actors"
+msgstr ""
+
+#.%d is director count
+msgctxt "#30113"
+msgid "%d directors"
+msgstr ""
+
+#.%d is studio count
+msgctxt "#30114"
+msgid "%d studios"
+msgstr ""
+
+msgctxt "#30115"
+msgid "%d hours of entertainment"
+msgstr ""
+
+#empty strings from id 30116 to 30119
+
+msgctxt "#30120"
+msgid "[B]TV shows collection trivia[/B]"
+msgstr ""
+
+#.%d is TV show count
+msgctxt "#30121"
+msgid "%d TV shows"
+msgstr ""
+
+#.%d is season count
+msgctxt "#30122"
+msgid "%d seasons"
+msgstr ""
+
+#.%d is episodes count
+msgctxt "#30123"
+msgid "%d episodes"
+msgstr ""
+
+#empty strings from id 30124 to 30129
+
+msgctxt "#30130"
+msgid "One minute"
+msgstr ""
+
+msgctxt "#30131"
+msgid "%s minutes"
+msgstr ""
+
+msgctxt "#30132"
+msgid "%s questions"
+msgstr ""
+
+msgctxt "#30133"
+msgid "%d questions left"
+msgstr ""
+
+msgctxt "#30134"
+msgid "Last question"
+msgstr ""
+
+msgctxt "#30135"
+msgid "%d mins. left"
+msgstr ""
+
+#empty strings from id 30136 to 30399
+#Movie Questions
+
+msgctxt "#30400"
+msgid "What movie is this?"
+msgstr ""
+
+#.%s is actor name
+msgctxt "#30401"
+msgid "What movie is [B]%s[/B] not in?"
+msgstr ""
+
+#.%s is movie title
+msgctxt "#30402"
+msgid "What year was [B]%s[/B] released?"
+msgstr ""
+
+#.%s is movie title
+msgctxt "#30403"
+msgid "What tagline belongs to [B]%s[/B]?"
+msgstr ""
+
+#.%s is movie title
+msgctxt "#30404"
+msgid "Who directed [B]%s[/B]?"
+msgstr ""
+
+#.%s is movie title
+msgctxt "#30405"
+msgid "What studio released [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#30406"
+msgid "What actor is this?"
+msgstr ""
+
+#.1st %s is role, 2nd %s is movie title
+msgctxt "#30407"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr ""
+
+#.1st %s is role, 2nd %s is movie title
+msgctxt "#30408"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#30409"
+msgid "What movie is this quote from?"
+msgstr ""
+
+msgctxt "#30410"
+msgid "What movie is the newest?"
+msgstr ""
+
+#.%s is director name
+msgctxt "#30411"
+msgid "What movie is not directed by [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#30412"
+msgid "What actor is in these movies?"
+msgstr ""
+
+#.1st %s is movie title, 2nd %s is actor name
+msgctxt "#30413"
+msgid "What actor is in [B]%s[/B] besides [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#30414"
+msgid "What movie has the longest runtime?"
+msgstr ""
+
+#empty strings from id 30415 to 30449
+#TV show Questions
+
+msgctxt "#30450"
+msgid "What TV show is this?"
+msgstr ""
+
+#.%s is tvshow title
+msgctxt "#30451"
+msgid "What season of [B]%s[/B] is this?"
+msgstr ""
+
+#.%s is tvshow title
+msgctxt "#30452"
+msgid "What episode of [B]%s[/B] is this?"
+msgstr ""
+
+#.1st %s is episode, 2nd %s is tvshow title
+msgctxt "#30453"
+msgid "When was [B]%s[/B] of [B]%s[/B] first aired?"
+msgstr ""
+
+#.%s is tvshow title
+msgctxt "#30454"
+msgid "When was [B]%s[/B] first aired?"
+msgstr ""
+
+#.1st %s is role, 2nd %s is tvshow title
+msgctxt "#30455"
+msgid "Who plays [B]%s[/B] in [B]%s[/B]?"
+msgstr ""
+
+#.1st %s is role, 2nd %s is tvshow title
+msgctxt "#30456"
+msgid "Who voices [B]%s[/B] in [B]%s[/B]?"
+msgstr ""
+
+msgctxt "#30457"
+msgid "What TV show is this quote from?"
+msgstr ""
+
+msgctxt "#30458"
+msgid "What TV show is this theme from?"
+msgstr ""
+
+#empty strings from id 30459 to 30499
+#Settings strings
+
+msgctxt "#30500"
+msgid "General"
+msgstr ""
+
+msgctxt "#30501"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#30502"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#30503"
+msgid "Downloads"
+msgstr ""
+
+msgctxt "#30504"
+msgid "Highscore"
+msgstr ""
+
+msgctxt "#30505"
+msgid "Questions"
+msgstr ""
+
+#empty strings from id 30506 to 30509
+
+msgctxt "#30510"
+msgid "Limit number of questions"
+msgstr ""
+
+msgctxt "#30511"
+msgid "Question limit"
+msgstr ""
+
+msgctxt "#30512"
+msgid "Limit movie selection based on MPAA rating"
+msgstr ""
+
+msgctxt "#30513"
+msgid "Max. MPAA rating"
+msgstr ""
+
+msgctxt "#30514"
+msgid "Display the correct answer, when you answer incorrectly"
+msgstr ""
+
+msgctxt "#30515"
+msgid "Only use watched movies in the questions"
+msgstr ""
+
+msgctxt "#30516"
+msgid "Limit TV show selection based on Content rating"
+msgstr ""
+
+msgctxt "#30517"
+msgid "Max. Content rating"
+msgstr ""
+
+#empty string with id 30518
+
+msgctxt "#30519"
+msgid "Download IMDB data..."
+msgstr ""
+
+msgctxt "#30520"
+msgid "Downloading IMDB data..."
+msgstr ""
+
+msgctxt "#30521"
+msgid "Retrieved %d of %d mb."
+msgstr ""
+
+msgctxt "#30522"
+msgid "Some questions require additional local data,"
+msgstr ""
+
+msgctxt "#30523"
+msgid "which can be downloaded below:"
+msgstr ""
+
+msgctxt "#30524"
+msgid "Submit scores to online highscore"
+msgstr ""
+
+msgctxt "#30525"
+msgid "Downloading IMDB data... (%d of %d)"
+msgstr ""
+
+msgctxt "#30526"
+msgid "IMDB data downloaded and ready for use."
+msgstr ""
+
+#empty strings from id 30527 to 30549
+
+msgctxt "#30550"
+msgid "Use these question types for movies"
+msgstr ""
+
+msgctxt "#30551"
+msgid "Use these question types for TV shows"
+msgstr ""
+
+msgctxt "#30552"
+msgid "What movie is this?"
+msgstr ""
+
+msgctxt "#30553"
+msgid "What movie is actor not in?"
+msgstr ""
+
+msgctxt "#30554"
+msgid "What year was movie released?"
+msgstr ""
+
+msgctxt "#30555"
+msgid "What tagline belongs to movie?"
+msgstr ""
+
+msgctxt "#30556"
+msgid "Who directed this movie?"
+msgstr ""
+
+msgctxt "#30557"
+msgid "What studio relased this movie?"
+msgstr ""
+
+msgctxt "#30558"
+msgid "What actor is this?"
+msgstr ""
+
+msgctxt "#30559"
+msgid "Who played this role in movie?"
+msgstr ""
+
+msgctxt "#30560"
+msgid "What movie is this quote from?"
+msgstr ""
+
+msgctxt "#30561"
+msgid "What movie is newest?"
+msgstr ""
+
+msgctxt "#30562"
+msgid "What movie was not directed by?"
+msgstr ""
+
+msgctxt "#30563"
+msgid "What actor is in these movies?"
+msgstr ""
+
+msgctxt "#30564"
+msgid "What actor is in these movie besides other actor?"
+msgstr ""
+
+msgctxt "#30565"
+msgid "What movie has longest runtime?"
+msgstr ""
+
+#empty strings from id 30566 to 30579
+
+msgctxt "#30580"
+msgid "What TV show is this?"
+msgstr ""
+
+msgctxt "#30581"
+msgid "What season is this?"
+msgstr ""
+
+msgctxt "#30582"
+msgid "What episode is this?"
+msgstr ""
+
+msgctxt "#30583"
+msgid "When was TV show first aired?"
+msgstr ""
+
+msgctxt "#30584"
+msgid "Who played role in TV show?"
+msgstr ""
+
+msgctxt "#30585"
+msgid "What TV show is this quote from?"
+msgstr ""
+
+msgctxt "#30586"
+msgid "What TV show is this theme from?"
+msgstr ""
+
+#empty strings from id 30587 to 30599
+#Game type strings
+
+msgctxt "#30600"
+msgid "[B]Choose Movie Quiz game type[/B]"
+msgstr ""
+
+msgctxt "#30601"
+msgid "[B]Choose TV Quiz game type[/B]"
+msgstr ""
+
+msgctxt "#30602"
+msgid "Unlimited"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Time limited"
+msgstr ""
+
+msgctxt "#30604"
+msgid "Question limited"
+msgstr ""
+
+msgctxt "#30605"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30606"
+msgid "Play"
+msgstr ""
+
+#empty strings from id 30607 to 30609
+
+msgctxt "#30610"
+msgid "No limit on game time"
+msgstr ""
+
+msgctxt "#30611"
+msgid "No limit on questions"
+msgstr ""
+
+msgctxt "#30612"
+msgid "End the game by using the Exit option"
+msgstr ""
+
+msgctxt "#30613"
+msgid "Game will ends after"
+msgstr ""
+
+#empty strings from id 30614 to 30699
+#Game over strings
+
+msgctxt "#30700"
+msgid "[B]Game Over[/B]"
+msgstr ""
+
+msgctxt "#30701"
+msgid "Retry"
+msgstr ""
+
+msgctxt "#30702"
+msgid "Global highscore"
+msgstr ""
+
+msgctxt "#30703"
+msgid "Local highscore"
+msgstr ""
+
+msgctxt "#30704"
+msgid "Main menu"
+msgstr ""
+
+msgctxt "#30705"
+msgid "Unlimited"
+msgstr ""
+
+msgctxt "#30706"
+msgid "%s questions limit"
+msgstr ""
+
+msgctxt "#30707"
+msgid "one minute time limit"
+msgstr ""
+
+msgctxt "#30708"
+msgid "%s minuts time limit"
+msgstr ""
+
+#empty strings from id 30709 to 30799
+#About strings
+
+msgctxt "#30800"
+msgid "Highscores"
+msgstr ""
+
+msgctxt "#30801"
+msgid "About"
+msgstr ""
+
+msgctxt "#30802"
+msgid "Changelog"
+msgstr ""
+
+msgctxt "#30803"
+msgid "Statistics"
+msgstr ""
+
+#empty strings from id 30804 to 30809
+
+msgctxt "#30810"
+msgid "Movie Quiz"
+msgstr ""
+
+msgctxt "#30811"
+msgid "TV Show Quiz"
+msgstr ""
+
+msgctxt "#30812"
+msgid "[B]Nickname[/B]"
+msgstr ""
+
+msgctxt "#30813"
+msgid "[B]Score[/B]"
+msgstr ""
+
+msgctxt "#30814"
+msgid "[B]Date[/B]"
+msgstr ""
+
+msgctxt "#30815"
+msgid "Choose type"
+msgstr ""
+
+msgctxt "#30816"
+msgid "See complete global highscores at http://tommy.winther.nu/moviequiz/"
+msgstr ""
+
+#empty strings from id 30817 to 30819
+
+msgctxt "#30820"
+msgid "Statistics based on global highscores data collected since September 2011.[CR][CR][B]%s[/B] unique users in [B]%s[/B] countries has submitted [B]%s[/B] highscores.[CR]A total of [B]%s[/B] questions has been answered with [B]%s[/B] being correct, which is [B]%s[/B] percent."
+msgstr ""
+
+msgctxt "#30821"
+msgid "[B]Top countries[/B]"
+msgstr ""
+
+msgctxt "#30822"
+msgid "[B]Top players[/B]"
+msgstr ""
+
+#empty strings from id 30823 to 39997
+
+msgctxt "#39998"
+msgid "Developed by Tommy Winther"
+msgstr ""
+
+msgctxt "#39999"
+msgid "Translated by Tommy Winther"
+msgstr ""
