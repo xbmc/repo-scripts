@@ -1,3 +1,6 @@
+[B]0.9.5[/B]
+- improved detection of offline media sources
+
 [B]0.9.4[/B]
 - improved shutdown time
 

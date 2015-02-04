@@ -80,6 +80,11 @@ class Poller(EventEmitter):
 
         files_created, files_deleted = self.take_snapshot()
 
+        if self.is_offline():
+            log("poller(%s). path went offline while taking snapshot. "
+                "ignoring changes" % self.watch.path)
+            return
+
         for path in files_created:
             self.queue_event(FileCreatedEvent(path))
         for path in files_deleted:
