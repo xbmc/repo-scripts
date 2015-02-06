@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+  id="resource.language.sr_rs@latin"
+  version="1.0.1"
+  name="Serbian"
+  provider-name="Team Kodi">
+  <requires>
+    <import addon="xbmc.resource" version="1.0.0"/>
+  </requires>
+  <extension
+    point="xbmc.resource.language"
+    locale="sr_RS@latin">
+    <charsets>
+      <gui>CP1251</gui>
+      <subtitle>CP1251</subtitle>
+    </charsets>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Serbian language pack</summary>
+    <description lang="en">Serbian version of all texts used in Kodi.</description>
+    <platform>all</platform>
+  </extension>
+</addon>

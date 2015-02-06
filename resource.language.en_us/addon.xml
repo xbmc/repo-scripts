@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+  id="resource.language.en_us"
+  version="1.0.1"
+  name="English (US)"
+  provider-name="Team Kodi">
+  <requires>
+    <import addon="xbmc.resource" version="1.0.0"/>
+  </requires>
+  <extension
+    point="xbmc.resource.language"
+    locale="en_US">
+    <charsets>
+      <gui>CP1252</gui>
+      <subtitle>CP1252</subtitle>
+    </charsets>
+    <sorttokens>
+      <token>The</token>
+    </sorttokens>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">English (US) language pack</summary>
+    <description lang="en">English (US) version of all texts used in Kodi.</description>
+    <platform>all</platform>
+  </extension>
+</addon>

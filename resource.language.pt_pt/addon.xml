@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+  id="resource.language.pt_pt"
+  version="1.0.1"
+  name="Portuguese"
+  provider-name="Team Kodi">
+  <requires>
+    <import addon="xbmc.resource" version="1.0.0"/>
+  </requires>
+  <extension
+    point="xbmc.resource.language"
+    locale="pt_PT">
+    <charsets>
+      <gui unicodefont="true">CP1252</gui>
+      <subtitle>CP1252</subtitle>
+    </charsets>
+    <sorttokens>
+      <token>The</token>
+      <token>O</token>
+      <token>A</token>
+      <token>Os</token>
+      <token>As</token>
+    </sorttokens>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Portuguese language pack</summary>
+    <description lang="en">Portuguese version of all texts used in Kodi.</description>
+    <platform>all</platform>
+  </extension>
+</addon>

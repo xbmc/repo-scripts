@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<language locale="pt">
+  <regions>
+      <region name="Portugal" locale="PT">
+      <dateshort>DD-MM-YYYY</dateshort>
+      <datelong>DDDD, D' de 'MMMM' de 'YYYY</datelong>
+      <time symbolAM="" symbolPM="">H:mm:ss</time>
+      <tempunit>C</tempunit>
+      <speedunit>kmh</speedunit>
+      <timezone>GMT</timezone>
+    </region>
+  </regions>
+</language>
