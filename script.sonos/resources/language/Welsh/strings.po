@@ -31,3 +31,7 @@ msgstr "Dadfygio"
 msgctxt "#32062"
 msgid "Next"
 msgstr "Nesaf"
+
+msgctxt "#32114"
+msgid "Tracks"
+msgstr "Traciau"

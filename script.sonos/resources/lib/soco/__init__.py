@@ -9,7 +9,7 @@
 
 # Will be parsed by setup.py to determine package metadata
 __author__ = 'The SoCo-Team <python-soco@googlegroups.com>'
-__version__ = '0.10.1'
+__version__ = '0.10.2'
 __website__ = 'https://github.com/SoCo/SoCo'
 __license__ = 'MIT License'
 
@@ -25,7 +25,7 @@ __all__ = [
     'SoCo',
     'SoCoException',
     'UnknownSoCoException',
-    ]
+]
 
 # http://docs.python.org/2/howto/logging.html#library-config
 # Avoids spurious error messages if no logger is configured by the user

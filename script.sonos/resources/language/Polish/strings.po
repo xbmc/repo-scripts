@@ -50,11 +50,11 @@ msgstr "Używaj domyślnego okna powiadomień Kodi"
 
 msgctxt "#32008"
 msgid "Debugging"
-msgstr "Diagnozowanie błędów"
+msgstr "Diagnostyka"
 
 msgctxt "#32009"
 msgid "Enable debug logging"
-msgstr "Rejestruj komunikaty diagnostyczne w dzienniku"
+msgstr "Rejestruj komunikaty diagnostyczne"
 
 msgctxt "#32010"
 msgid "Speaker"
@@ -66,7 +66,7 @@ msgstr "Powiadomienia"
 
 msgctxt "#32012"
 msgid "Debugging"
-msgstr "Diagnozowanie błędów"
+msgstr "Diagnostyka"
 
 msgctxt "#32013"
 msgid "Search For Sonos Speakers..."

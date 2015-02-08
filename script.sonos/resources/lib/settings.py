@@ -143,6 +143,12 @@ class Settings():
         return layoutId == 3
 
     @staticmethod
+    def fullScreenArtistSlideshow():
+        if int(float(__addon__.getSetting("artistInfoLayout"))) != 1:
+            return False
+        return __addon__.getSetting("fullScreenArtistSlideshow") == 'true'
+
+    @staticmethod
     def hideSonosLogo():
         return __addon__.getSetting("hideSonosLogo") == 'true'
 

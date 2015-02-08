@@ -43,18 +43,33 @@
 			<height>470</height>
 			<colordiffuse>CCFFFFFF</colordiffuse>
 			<texture border="20">npServiceRatingBg@2x.png</texture>
+			<visible>IsEmpty(Window().Property("SonosAddonSlideshowFullscreen"))</visible>
 		</control>
 
 		<control type="multiimage">
+			<description>Artist Slideshow Windowed Size</description>
 		    <posx>240</posx>
 		    <posy>15</posy>
 		    <width>800</width>
 		    <height>450</height>
 		    <imagepath background="true">$INFO[Window.Property(ArtistSlideshow)]</imagepath>
-			<!-- <aspectratio>keep</aspectratio> -->
 		    <timeperimage>5000</timeperimage>
 		    <fadetime>1000</fadetime>
 		    <randomize>true</randomize>
+			<visible>IsEmpty(Window().Property("SonosAddonSlideshowFullscreen"))</visible>
+		</control>
+
+		<control type="multiimage">
+			<description>Artist Slideshow Full Screen</description>
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>1280</width>
+		    <height>720</height>
+		    <imagepath background="true">$INFO[Window.Property(ArtistSlideshow)]</imagepath>
+		    <timeperimage>5000</timeperimage>
+		    <fadetime>1000</fadetime>
+		    <randomize>true</randomize>
+			<visible>!IsEmpty(Window().Property("SonosAddonSlideshowFullscreen"))</visible>
 		</control>
 
 		<control type="image">

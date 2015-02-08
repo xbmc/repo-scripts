@@ -190,7 +190,11 @@ msgctxt "#32042"
 msgid "Hide Sonos Logo"
 msgstr ""
 
-#empty strings from id 32043 to 32059
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr ""
+
+#empty strings from id 32044 to 32059
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

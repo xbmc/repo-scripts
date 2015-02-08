@@ -1,3 +1,8 @@
+v1.3.1
+- Fix error on Artist Slideshow screens
+- Improve retrieving track name from streaming services
+- Add option to make Artist Slideshow image full screen
+
 v1.3.0
 - Remove Frodo support from latest version
 - Add Support for Displaying Lyrics

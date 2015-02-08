@@ -709,6 +709,10 @@ class SonosArtistSlideshow(SonosControllerWindow):
         if not Settings.hideSonosLogo():
             xbmcgui.Window(self.windowId).setProperty('SonosAddonIcon', __icon__)
 
+        # Set option to make the artist slideshow full screen
+        if Settings.fullScreenArtistSlideshow():
+            xbmcgui.Window(self.windowId).setProperty('SonosAddonSlideshowFullscreen', "true")
+
         # Now make sure that Artist Slideshow is running
         self.athread = threading.Thread(target=self.runArtistSlideshow)
         self.athread.setDaemon(True)
@@ -753,8 +757,10 @@ class SonosArtistSlideshow(SonosControllerWindow):
             # Check if we want to show lyrics for the track, although not part of the
             # artist slideshow feature (it is part of script.cu.lrclyrics) we treat
             # this in a similar manner, first set the values
-            lyrics = Lyrics(self.currentTrack, self.getControl(SonosArtistSlideshow.LYRICS), self.lyricListLinesCount)
-            lyrics.setLyricRequest()
+            lyrics = None
+            if Settings.isLyricsInfoLayout():
+                lyrics = Lyrics(self.currentTrack, self.getControl(SonosArtistSlideshow.LYRICS), self.lyricListLinesCount)
+                lyrics.setLyricRequest()
 
             # Artist Slideshow will set these properties for us
             xbmcgui.Window(self.windowId).setProperty('CURRENTARTIST', self.currentTrack['artist'])
@@ -762,8 +768,9 @@ class SonosArtistSlideshow(SonosControllerWindow):
             xbmcgui.Window(self.windowId).setProperty('CURRENTALBUM', self.currentTrack['album'])
 
             # Check if lyrics are enabled, and set the test if they are
-            self.currentTrack = lyrics.populateLyrics()
-            lyrics.refresh()
+            if lyrics is not None:
+                self.currentTrack = lyrics.populateLyrics()
+                lyrics.refresh()
 
     def isClose(self):
         # Check if the base class has detected a need to close
