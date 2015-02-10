@@ -1,0 +1,19 @@
+Version 0.0.1
+-Initial Commit
+Version 0.1.0
+-Added settings to control feeds.
+Version 0.2.0
+-Added button, that can be set, to open the twitter dialog.
+Version 0.3.0
+-Minor bug fixes
+Version 0.4.0
+-Added Languages
+Version 0.5.0
+-Added Instructions that can be viewed at any time from the settings dialog.
+Version 1.0.0
+-Fixed minor bugs.
+-Added a dialog that displays on first run.
+Version 1.0.1
+-script.module.elementtree now imported properly.
+Version 1.0.2
+-Fixed search results error due to changes on twitter.

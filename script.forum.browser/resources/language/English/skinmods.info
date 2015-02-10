@@ -1,0 +1,28 @@
+Forum Browser includes a special font and keyboard to enhance the forum experience on XBMC. Installing these is recommended.
+After closing this window, you will be asked if you would like to install them. If you say 'Yes' you will still be asked if you want to install the keyboard.
+
+The special font file includes smiley characters and special formatting characters for things such as quote display.
+It also allows Forum Browser to display consistently on all skins.
+
+Installing the special font will:
+    * Check for a user directory install of the XBMC skin files, and if not found create a copy
+    * Create a backup of the original 'Font.xml' file
+    * Copy the Forum Browser font to the skins 'font' directory
+    * Insert lines into the original 'Font.xml' file for the new font
+    
+This will [I]not[/I] affect XBMC or any other addon. It will simply give Forum Browser access to another font.
+____________________________________________________________________________________________________________________________________________________________________
+
+The keyboard allows long lines to be entered.
+The keyboard on most skins only allows the entry of very few words, which is not suitable when creating a forum post.
+
+Installing the keyboard will:
+    * Check for a user directory install of the XBMC skin files, and if not found create a copy
+    * Create a backup of the current 'DialogKeyboard.xml' file
+    * Allow you to choose either a generic or skin matching (if available) replacement keyboard
+    * Copy a directory of images to the skins 'media' folder
+    * Replace the original 'DialogKeyboard.xml' file
+	
+[B]THE NEW KEYBOARD WILL REPLACE THE OLD KEYBOARD FOR ALL USES IN XBMC[/B]
+
+After the modifications have been installed, XBMC will need to be restarted before they are visible.

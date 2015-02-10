@@ -1,0 +1,449 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Add-on messages id=32001 to 32030
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr ""
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#32026"
+msgid "No"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Close"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Report"
+msgstr ""
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr ""
+
+msgctxt "#32030"
+msgid "No provider ID found for looking up artwork"
+msgstr ""
+
+#Add-on settings: General section id=32031 to 32050
+
+msgctxt "#32031"
+msgid "General"
+msgstr ""
+
+msgctxt "#32032"
+msgid "[B]General settings used in Artwork Downloader[/B]"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Overwrite all existing artwork [I](will be automaticly disabled after downloading) [/I]"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Centralize extrafanart [I](Can be used for extrafanart slideshow) [/I]"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Central TV extrafanart directory"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Central Movie extrafanart directory"
+msgstr ""
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr ""
+
+msgctxt "#32040"
+msgid "-"
+msgstr ""
+
+#empty strings from id 32041 to 32050
+#Add-on settings: Limit section id=32051 to 32060
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr ""
+
+msgctxt "#32052"
+msgid "[B]Options for limiting downloaded artwork[/B]"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Maximum extrafanart"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr ""
+
+#empty strings from id 32059 to 32061
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr ""
+
+#empty strings from id 32063 to 32070
+#Add-on settings: Movie section id=32071 to 32080
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32072"
+msgid "[B]Options for downloading Movie artwork[/B]"
+msgstr ""
+
+#empty strings from id 32073 to 32080
+#Add-on settings: TV Show section id=32081 to 32090
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#32082"
+msgid "[B]Options for downloading TV Show artwork[/B]"
+msgstr ""
+
+msgctxt "#32083"
+msgid "-"
+msgstr ""
+
+msgctxt "#32084"
+msgid "No valid library item selected"
+msgstr ""
+
+#empty strings from id 32085 to 32090
+#Add-on settings: Music section id=32091 to 32100
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr ""
+
+msgctxt "#32092"
+msgid "[B]Options for downloading Musicvideo artwork[/B]"
+msgstr ""
+
+#empty strings from id 32093 to 32100
+#Add-on settings: Advanced settings section id=32101 to 32020
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32102"
+msgid "[B]Some more advanced settings to be used[/B]"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr ""
+
+#empty strings from id 32104 to 32105
+
+msgctxt "#32106"
+msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
+msgstr ""
+
+#empty strings from id 32107 to 32120
+#Add-on messages: Image types id=32121 to 32140
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr ""
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr ""
+
+#empty strings from id 32135 to 32140
+#Add-on messages:
+
+msgctxt "#32141"
+msgid "Language"
+msgstr ""
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr ""
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr ""
+
+msgctxt "#32144"
+msgid "Season"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Size"
+msgstr ""
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr ""
+
+msgctxt "#32147"
+msgid "below limit setting"
+msgstr ""
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr ""
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr ""
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr ""
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr ""
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr ""
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr ""
+
+#empty strings from id 32154 to 32180
+#Add-on settings: Info section id=32181 to 32190
+
+msgctxt "#32181"
+msgid "Info"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr ""
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr ""
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr ""
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr ""
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr ""
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr ""
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr ""
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr ""
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr ""
+
+msgctxt "#32191"
+msgid "[I]For bugs, requests or general questions visit the [/I]"
+msgstr ""
+
+msgctxt "#32192"
+msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
+msgstr ""

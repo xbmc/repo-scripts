@@ -1,0 +1,400 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-04 23:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Choose User On Start"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Save Passwords"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Note Creation: Ask For Target"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Password Encryption Type"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Encryption Key File (Optional - See Help)"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Encryption Help"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Passwords"
+msgstr ""
+
+#empty strings from id 32008 to 32009
+
+msgctxt "#32010"
+msgid "Options"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Create XBMC Log Note"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Create Screenshot Note"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Write Note"
+msgstr ""
+
+msgctxt "#32014"
+msgid "+Add User (Or Re-Authorize)"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Change User"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Create Notebook"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Delete Note"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Delete Notebook"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Choose User"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Enter Note Title"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Enter Note"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Select File"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Enter Notebook Name"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Are you sure?"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Really Delete?"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Move Note"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Choose Notebook"
+msgstr ""
+
+#empty strings from id 32028 to 32029
+
+msgctxt "#32030"
+msgid "Please Wait"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Loading Notebooks..."
+msgstr ""
+
+msgctxt "#32032"
+msgid "Loading Notes..."
+msgstr ""
+
+msgctxt "#32033"
+msgid "Loading Note..."
+msgstr ""
+
+msgctxt "#32034"
+msgid "Loading Resources..."
+msgstr ""
+
+msgctxt "#32035"
+msgid "Publish Notebook"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Un-Publish Notebook"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Show Map"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Add To Stack"
+msgstr ""
+
+#empty string with id 32039
+
+msgctxt "#32040"
+msgid "ERROR"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Error Starting Session"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Failed To Authenticate User"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Error Getting Notebooks"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Error Getting Notes"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Error Getting Note"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Error Creating Note"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Error Adding User"
+msgstr ""
+
+msgctxt "#32048"
+msgid "Error Changing User"
+msgstr ""
+
+msgctxt "#32049"
+msgid "Error Creating Notebook"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Notebook Already Exists"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Error Deleting Note"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Error Deleting Notebook"
+msgstr ""
+
+#empty strings from id 32053 to 32054
+
+msgctxt "#32055"
+msgid "Error Moving Note"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Error (Un)Publishing Notebook"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Error Showing Map"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Error Adding Notebook To Stack"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Error Viewing URL"
+msgstr ""
+
+msgctxt "#32060"
+msgid "XBMC Screenshot: %s"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Enter Username"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Enter Password for %s"
+msgstr ""
+
+msgctxt "#32063"
+msgid "XBMC Log"
+msgstr ""
+
+msgctxt "#32064"
+msgid "URL: "
+msgstr ""
+
+msgctxt "#32065"
+msgid "Enter Description"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Public URL Already In Use"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Bad Public URL"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Continue To Publish?"
+msgstr ""
+
+msgctxt "#32069"
+msgid "All Notes"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Enter Stack Name"
+msgstr ""
+
+msgctxt "#32071"
+msgid "+Add New Stack"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Select Stack"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Error reading encryption keyfile"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Invalid username"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Invalid password"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Reason:"
+msgstr ""
+
+#empty strings from id 32077 to 32099
+
+msgctxt "#32100"
+msgid "Created New User: %s"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Created Log Note: %s"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Created Screenshot Note: %s"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Created Note: %s"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Created Notebook: %s"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Deleted (To Trash) Note: %s"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Deleted Notebook: %s"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Moved Note: %s"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Published Notebook: %s"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Un-Published Notebook: %s"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Notebook %s added to stack: %s"
+msgstr ""
+
+msgctxt "#32111"
+msgid "-Remove User"
+msgstr ""
+
+msgctxt "#32112"
+msgid "View notebook URL"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Linked Notebooks"
+msgstr ""
+
+#empty strings from id 32114 to 32219
+
+msgctxt "#32220"
+msgid "Waiting..."
+msgstr ""
+
+msgctxt "#32221"
+msgid "Waiting for thread to stop..."
+msgstr ""
+
+#empty strings from id 32222 to 32504
+
+msgctxt "#32505"
+msgid "Authorization Complete"
+msgstr ""
+
+msgctxt "#32506"
+msgid "Authorization Complete!"
+msgstr ""
+
+#empty strings from id 32507 to 32508
+
+msgctxt "#32509"
+msgid "Authorize User"
+msgstr ""
+
+#empty strings from id 32510 to 32899
+
+msgctxt "#32900"
+msgid "NOTEBOOKS"
+msgstr ""
+
+msgctxt "#32901"
+msgid "NOTES"
+msgstr ""
+
+msgctxt "#32902"
+msgid "LOADING NOTE..."
+msgstr ""

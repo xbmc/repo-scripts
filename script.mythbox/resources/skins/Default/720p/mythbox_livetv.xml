@@ -1,0 +1,452 @@
+<window>
+  <id>3002</id>
+  <defaultcontrol>600</defaultcontrol>
+  <type>window</type>
+  <coordinates>
+    <system>1</system>
+    <posx>0</posx>
+    <posy>0</posy>
+  </coordinates>
+
+  <controls>
+
+    <!-- ============================================= -->
+    <!--   S C R E E N       B A C K G R O U N D       -->          
+    <!-- ============================================= -->              
+  
+    <!-- Copy of CommonBackground -->
+    <control type="image">
+      <description>background image</description>
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>1280</width>
+      <height>720</height>
+      <texture>bg.png</texture>
+    </control>
+    
+    <control type="group">
+        <description>Content Group</description>
+        <!-- Copy Window_OpenClose_Right_Panel_Animation -->
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+        <animation effect="slide" start="1030,0" end="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+        <animation effect="slide" end="1030,0" start="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+
+        <!-- ============================================= -->
+        <!--   C O N T E N T     B A C K G R O U N D       -->          
+        <!-- ============================================= -->              
+      
+        <!-- Copy of ContentPanel -->
+        <control type="image">
+            <posx>265</posx>
+            <posy>100</posy>
+            <width>1015</width>
+            <height>580</height>
+            <texture border="50,0,0,45">vpanel1.png</texture>
+        </control>
+
+        <!-- ============================================= -->
+        <!--   C H A N N E L S      L I S T B O X          -->          
+        <!-- ============================================= -->              
+
+        <control type="list" id="600">
+            <posx>315</posx>
+            <posy>140</posy>
+            <width>900</width>
+            <height>500</height>
+            <onleft>2000</onleft>
+            <onright>6000</onright>
+            <onup>600</onup>
+            <ondown>600</ondown>
+            <viewtype label="535">list</viewtype>
+            <pagecontrol>6000</pagecontrol>
+            
+            <!-- 
+            <scrolltime>0</scrolltime>
+            <preloaditems>10</preloaditems>
+            -->
+               
+            <itemlayout height="62">
+                
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>900</width>
+                    <height>60</height>
+                    <texture border="10">input-nofocus.png</texture>
+                </control>
+                
+                <control type="image">
+                    <posx>5</posx>
+                    <posy>2</posy>
+                    <width>80</width>
+                    <height>56</height>
+                    <info>ListItem.Property(channelIcon)</info>
+                    <aspectratio>keep</aspectratio>
+                </control>
+
+                <control type="image">
+                    <posx>598</posx>
+                    <posy>2</posy>
+                    <width>300</width>
+                    <height>56</height>
+                    <aspectratio>scale</aspectratio>
+                    <texture diffuse="mb-diffuse-left.png">$INFO[ListItem.Property(banner)]</texture>
+                </control>
+                
+                <control type="label">
+                    <posx>140</posx>
+                    <posy>5</posy>
+                    <width>100</width>
+                    <height>31</height>
+                    <font>font20</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <label>[B]$INFO[ListItem.Property(channelNumber)][/B]</label>
+                </control>
+                
+                <control type="label">
+                    <posx>140</posx>
+                    <posy>31</posy>
+                    <width>100</width>
+                    <height>31</height>
+                    <font>font10</font>
+                    <textcolor>FFA0A0A0</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+<!--                    <wrapmultiline>true</wrapmultiline>-->
+                    <label>$INFO[ListItem.Property(callSign)]</label>
+<!--                    <label>[B]$INFO[ListItem.Property(channelName)][/B]&#10;$INFO[ListItem.Property(channelNumber)]</label>-->
+                </control>
+                
+                <control type="label">
+                    <posx>210</posx>
+                    <posy>5</posy>
+                    <width>700</width>
+                    <height>31</height>
+                    <font>font13</font>
+                    <textcolor>DDFFFFFF</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <info>ListItem.Property(title)</info>
+                </control>
+                
+                <control type="label">
+                    <posx>210</posx>
+                    <posy>31</posy>
+                    <width>650</width>
+                    <height>31</height>
+                    <font>font10</font>
+                    <textcolor>FFB0B0B0</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <wrapmultiline>true</wrapmultiline>
+                    <info>ListItem.Property(description)</info>
+                </control>
+            </itemlayout>
+            
+            <focusedlayout height="62">
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>900</width>
+                    <height>60</height>
+                    <texture border="3">input-focus.png</texture>
+                    <visible>Control.HasFocus(600)</visible>
+                </control>
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>900</width>
+                    <height>60</height>
+                    <texture border="3">input-nofocus.png</texture>
+                    <visible>!Control.HasFocus(600)</visible>
+                </control>
+
+                <control type="image">
+                    <posx>5</posx>
+                    <posy>2</posy>
+                    <width>80</width>
+                    <height>56</height>
+                    <info>ListItem.Property(channelIcon)</info>
+                    <aspectratio>keep</aspectratio>
+                </control>
+
+                <control type="image">
+                    <posx>598</posx>
+                    <posy>2</posy>
+                    <width>300</width>
+                    <height>56</height>
+                    <aspectratio>scale</aspectratio>
+                    <texture diffuse="mb-diffuse-left.png">$INFO[ListItem.Property(banner)]</texture>
+                </control>
+                
+                <control type="label">
+                    <posx>140</posx>
+                    <posy>5</posy>
+                    <width>100</width>
+                    <height>31</height>
+                    <font>font20</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <label>[B]$INFO[ListItem.Property(channelNumber)][/B]</label>
+                </control>
+                
+                <control type="label">
+                    <posx>140</posx>
+                    <posy>31</posy>
+                    <width>100</width>
+                    <height>31</height>
+                    <font>font10</font>
+                    <textcolor>FFA0A0A0</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+<!--                    <wrapmultiline>true</wrapmultiline>-->
+                    <label>$INFO[ListItem.Property(callSign)]</label>
+<!--                    <label>[B]$INFO[ListItem.Property(channelName)][/B]&#10;$INFO[ListItem.Property(channelNumber)]</label>-->
+                </control>
+                
+                <control type="label">
+                    <posx>210</posx>
+                    <posy>5</posy>
+                    <width>700</width>
+                    <height>31</height>
+                    <font>font13</font>
+                    <textcolor>DDFFFFFF</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <info>ListItem.Property(title)</info>
+                </control>
+                
+                <control type="label">
+                    <posx>210</posx>
+                    <posy>31</posy>
+                    <width>650</width>
+                    <height>31</height>
+                    <font>font10</font>
+                    <textcolor>FFB0B0B0</textcolor>
+                    <selectedcolor>FFe2ff43</selectedcolor>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <wrapmultiline>true</wrapmultiline>
+                    <info>ListItem.Property(description)</info>
+                </control>
+            </focusedlayout>
+        </control>
+        
+        <!-- Scrollbar -->
+        <control type="button">
+            <description>Scrollbar Up Arrow</description>
+            <posx>1215</posx>
+            <posy>140</posy>
+            <width>16</width>
+            <height>16</height>
+            <texturenofocus>mb-scroll-up.png</texturenofocus>
+            <texturefocus>mb-scroll-up-focus.png</texturefocus>
+            <onclick>PageUp(6000)</onclick>
+            <visible>Control.IsVisible(6000) + false</visible>
+        </control>
+        
+        <control type="scrollbar" id="6000">
+            <description>Scroll Bar</description>
+            <posx>1215</posx>
+            <posy>140</posy>
+            <width>16</width>
+            <height>500</height>
+    
+            <texturesliderbackground border="2,2,2,2">scrollbar_bar_back2.png</texturesliderbackground> 
+            <texturesliderbar border="2,16,2,16">scrollbar_bar.png</texturesliderbar> 
+            <texturesliderbarfocus border="2,16,2,16">scrollbar_bar_focus.png</texturesliderbarfocus> 
+            <textureslidernib>scrollbar_nib.png</textureslidernib> 
+            <textureslidernibfocus>scrollbar_nib.png</textureslidernibfocus> 
+            
+            <!-- 
+            <texturesliderbackground border="4">scrollbar_background.png</texturesliderbackground>
+            <texturesliderbar border="3">scrollbar_bar.png</texturesliderbar>
+            <texturesliderbarfocus border="3">scrollbar_bar_focus.png</texturesliderbarfocus>
+            <textureslidernib>-</textureslidernib>
+            <textureslidernibfocus>-</textureslidernibfocus>
+            -->
+            
+            <onleft>600</onleft>
+            <onright>250</onright>
+            <showonepage>false</showonepage>
+            <orientation>vertical</orientation>
+        </control>
+        <control type="button">
+            <description>Scrollbar Down Arrow</description>
+            <posx>1215</posx>
+            <posy>624</posy>
+            <width>16</width>
+            <height>16</height>
+            <texturenofocus>mb-scroll-down.png</texturenofocus>
+            <texturefocus>mb-scroll-down-focus.png</texturefocus>
+            <onclick>PageDown(6000)</onclick>
+            <visible>Control.IsVisible(6000) + false</visible>
+        </control>
+
+<!--        <control type="image" id="4010">-->
+<!--            <description>Thumbnail shadow</description>-->
+<!--            <posx>30</posx>-->
+<!--            <posy>190</posy>-->
+<!--            <width>230</width>-->
+<!--            <height>386</height>-->
+<!--            <texture border="40">-</texture>-->
+<!--            <visible>Player.HasVideo</visible>-->
+<!--        </control>-->
+                      
+        <control type="videowindow" id="4011">
+            <posx>30</posx>
+            <posy>60</posy>
+            <width>230</width>
+            <height>386</height>
+            <visible>Player.HasVideo</visible>
+        </control>
+        
+    </control>
+
+    <!-- ============================================= -->
+    <!--        H E A D E R                            -->          
+    <!-- ============================================= -->              
+    <control type="image">
+      <description>Header Panel</description>
+      <posx>0</posx>
+      <posy>0</posy>
+      <width>1280</width>
+      <height>128</height>
+      <texture>mb-header.png</texture>
+    </control>
+
+    <control type="image">
+        <posx>40</posx>
+        <posy>20</posy>
+        <width>460</width>
+        <height>90</height>
+        <texture>mythbox.png</texture>
+        <aspectratio align="left">keep</aspectratio>
+        <animation effect="fade" time="200">WindowOpen</animation>
+        <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+
+    <control type="label">
+      <description>screen title</description>
+      <posx>70r</posx>
+      <posy>25</posy>
+      <width>400</width>
+      <height>35</height>
+      <align>right</align>
+      <aligny>center</aligny>
+      <textcolor>ffffffff</textcolor>
+      <label>SCRIPT700</label>
+      <animation effect="fade" time="200">WindowOpen</animation>
+      <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+
+    <control type="label">
+      <description>date/time label</description>
+      <posx>70r</posx>
+      <posy>65</posy>
+      <width>450</width>
+      <height>35</height>
+      <align>right</align>
+      <aligny>center</aligny>
+      <font>font12</font>
+      <textcolor>ffffffff</textcolor>
+      <label>$INFO[System.Date] [COLOR=88FFFFFF] |  $INFO[System.Time][/COLOR]</label>
+      <animation effect="fade" time="200">WindowOpen</animation>
+      <animation effect="fade" time="200">WindowClose</animation>
+    </control>
+
+<!--  Left nav panel -->
+
+    <control type="group">
+    
+      <!-- Copy of include Window_OpenClose_Left_Panel_Animation -->
+      <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+      <animation effect="fade" time="200" condition="Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+      <animation effect="slide" start="-400,0" end="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowOpen</animation>
+      <animation effect="slide" end="-400,0" start="0,0" time="300" tween="quadratic" easing="out" condition="!Skin.HasSetting(Animate_Skin)">WindowClose</animation>
+            
+      <control type="grouplist" id="2000">
+          <description>Buttons</description>
+          <posx>0</posx>
+          <posy>122</posy>
+          <itemgap>1</itemgap>
+          <onup>2000</onup>
+          <ondown>2000</ondown>
+          <onleft>600</onleft>
+          <onright>600</onright>
+          
+          <control type="button" id="250">
+              <description>Refresh button</description>
+              <label>SCRIPT210</label>
+              <width>285</width>
+              <align>left</align>
+              <textoffsetx>40</textoffsetx>
+              <texturefocus>button_focus.png</texturefocus>
+              <texturenofocus>button_nofocus.png</texturenofocus>
+              <pulseonselect>true</pulseonselect>
+              <enable>!substring(Window.Property(busy),true)</enable>
+          </control>
+           
+      </control>
+    
+      <control type="image">
+          <posx>30</posx>
+          <posy>190</posy>
+          <width>230</width>
+          <height>386</height>
+          <aspectratio aligny="bottom">keep</aspectratio>
+          <fadetime>400</fadetime>
+          <texture>$INFO[Container(600).ListItem.Property(poster)]</texture>
+          <visible>!Player.HasVideo</visible>
+      </control>
+
+      <control type="label">
+          <description>poster size</description>
+          <posx>40</posx>
+          <posy>590</posy>
+          <width>230</width>
+          <height>40</height>
+          <font>font10</font>
+          <textcolor>88FFFFFF</textcolor>
+          <label>$INFO[Container(600).ListItem.Property(posterSize)]</label>
+      </control>
+  
+      <control type="image">
+          <posx>30</posx>
+          <posy>586</posy>
+          <width>230</width>
+          <height>386</height>
+          <aspectratio aligny="top">keep</aspectratio>
+          <fadetime>400</fadetime>          
+          <texture flipy="true" diffuse="diffuse_mirror2.png">$INFO[Container(600).ListItem.Property(poster)]</texture>
+          <visible>!Player.HasVideo</visible>
+      </control>
+
+    </control>
+
+    <control type="multiimage">
+        <description>Busy animation</description>
+        <posx>722</posx>
+        <posy>340</posy>
+        <width>100</width>
+        <height>100</height>
+        <imagepath>busy</imagepath>
+        <timeperimage>50</timeperimage>
+        <fadetime>0</fadetime>
+        <visible>substring(Window.Property(busy),true) + !Player.HasVideo</visible>
+        <animation effect="fade" time="250">VisibleChange</animation>    
+    </control>
+    
+  </controls>
+</window>

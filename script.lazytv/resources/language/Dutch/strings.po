@@ -1,0 +1,513 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General Settings"
+msgstr "Algemene instellingen"
+
+msgctxt "#32001"
+msgid "Primary Function"
+msgstr "Primaire fuctie"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Produceer een lijst met 'volgende afleveringen' voor elke TV serie"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "creëer en start een willekeurige afspeellijst"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Laat mij kiezen bij starten"
+
+msgctxt "#32005"
+msgid "Use Smart Playlist to Filter Shows"
+msgstr "Gebruik slimme afspeellijst om series te filteren"
+
+msgctxt "#32006"
+msgid "Playlist Selection Method"
+msgstr "Afspeellijst selectiemethode"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Laat mij kiezen bij starten"
+
+msgctxt "#32008"
+msgid "Choose a default Playlist"
+msgstr "Kies een standaard afspeellijst"
+
+msgctxt "#32009"
+msgid "Select default playlist"
+msgstr "Selecteer standaard afspeellijst"
+
+msgctxt "#32010"
+msgid "Some shows are fine to watch out of order"
+msgstr "Sommige series zijn prima te volgen in willekeurige volgorde"
+
+msgctxt "#32011"
+msgid "Select random-order shows"
+msgstr "Selecteer willekeurige-volgorde series"
+
+msgctxt "#32012"
+msgid "Only populate with selected TV Shows"
+msgstr "Alleen vullen met geselecteerde TV series"
+
+msgctxt "#32013"
+msgid "Choose shows by ..."
+msgstr "Kies serie`s door ..."
+
+msgctxt "#32014"
+msgid "Manual Selection"
+msgstr "Handmatige selectie"
+
+msgctxt "#32015"
+msgid "Smart Playlist"
+msgstr "Slimme afspeellijst"
+
+msgctxt "#32016"
+msgid "Click here to select TV Shows"
+msgstr "Klik hier om TV series te selecteren"
+
+msgctxt "#32030"
+msgid "Player Options"
+msgstr "Speler opties"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "Aantal shows in de afspeellijst"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "Meerder afleveringen toestaan van de zelfde serie"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Voeg afleveringen toe van niet bekeken TV series"
+
+msgctxt "#32034"
+msgid "Begin partially watched episodes from their resume point"
+msgstr "Begin gedeeltelijk bekeken afleveringen vanaf hun hervattingspunt"
+
+msgctxt "#32035"
+msgid "Display episode details when played"
+msgstr "Toon afleveringsdetails wanneer hij is afgespeeld"
+
+msgctxt "#32036"
+msgid "Include unwatched movies"
+msgstr "insluiten onbekeken films"
+
+msgctxt "#32037"
+msgid "Include watched movies"
+msgstr "insluiten bekeken films"
+
+msgctxt "#32038"
+msgid "Start watched movies at random time"
+msgstr "Start bekeken films op willekeurige tijd"
+
+msgctxt "#32039"
+msgid "Simulates changing the TV channel to a movie in progress"
+msgstr "Simuleert de verandering van TV kanaal naar een film die afspeelt"
+
+msgctxt "#32040"
+msgid "Movie weight"
+msgstr "Film gewicht"
+
+msgctxt "#32041"
+msgid "Weight: 1.0 = 1 show, 1 movie, 0.5 = 2 shows, 1 movie"
+msgstr "Gewicht: 1.0 = 1 aflevering, 1 films, 0.5 = 2 afleveringen, 1 film"
+
+msgctxt "#32042"
+msgid "Weight: 0.0 = unlimited movies"
+msgstr "Gewicht: 0.0 = onbeperkt films "
+
+msgctxt "#32043"
+msgid "Ignore TV shows (movies only)"
+msgstr "Negeer TV series (alleen films)"
+
+msgctxt "#32060"
+msgid "List Options"
+msgstr "Lijst opties"
+
+msgctxt "#32061"
+msgid "Limit the number of shows"
+msgstr "Limiteer het aantal nummers van series"
+
+msgctxt "#32062"
+msgid "Number of Shows to display"
+msgstr "Aantal series te weergeven"
+
+msgctxt "#32063"
+msgid "Reducing length may help improve speed on slow systems"
+msgstr "beperken van grootte kan mogelijk helpen de snelheid te verhogen op trage systemen"
+
+msgctxt "#32064"
+msgid "Show Name"
+msgstr "Toon naam"
+
+msgctxt "#32065"
+msgid "Last Watched"
+msgstr "Laatst bekeken"
+
+msgctxt "#32066"
+msgid "# Unwatched Episodes"
+msgstr "# Niet bekeken afleveringen"
+
+msgctxt "#32067"
+msgid "# Watched Episodes"
+msgstr "# Bekeken afleveringen"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Seizoen"
+
+msgctxt "#32069"
+msgid "Exclude random play shows"
+msgstr "Uitsluiten willekeurig afspelen series"
+
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Sorteer op ..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Omgedraaide volgorde"
+
+msgctxt "#32072"
+msgid "LazyTV User Interface"
+msgstr "LazyTV gebruikersinterface"
+
+msgctxt "#32080"
+msgid "Other Settings"
+msgstr "Overige instellingen"
+
+msgctxt "#32081"
+msgid "Prompt to watch next available episode"
+msgstr "Aanwijzing om eerstvolgende aflevering te bekijken"
+
+msgctxt "#32082"
+msgid "Prompt duration (max = do not close)"
+msgstr "Aanwijzingsduur (max = niet afsluiten)"
+
+msgctxt "#32083"
+msgid "Notify when previous episode is available"
+msgstr "Geef melding wanneer een vorige aflevering beschikbaar is"
+
+msgctxt "#32084"
+msgid "Prompt and notify functions also apply to shows played outside of LazyTV"
+msgstr "Aanwijzing en notificatie functies is ook beschikbaar voor series die worden afgespeeld buiten LazyTV"
+
+msgctxt "#32085"
+msgid "Enable logging for Testing"
+msgstr "Zet log aan voor testen"
+
+msgctxt "#32086"
+msgid "Cloning LazyTV allows multiple Home menu entries."
+msgstr "Klonen LazyTV staat meerdere start menu vermeldingen toe."
+
+msgctxt "#32087"
+msgid "Clone LazyTV Now"
+msgstr "Kloon LazyTV nu"
+
+msgctxt "#32088"
+msgid "It would be nice to know if people are using this addon."
+msgstr "Het zou aardig zijn te weten welke personen deze add-on gebruiken."
+
+msgctxt "#32089"
+msgid "Email +1 to the author (no data is sent)"
+msgstr "Email +1 naar de auteur (data wordt niet mee verzonden)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Standaard actie"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "Niet Afspelen"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Afspelen"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Creëer en behoudt slimme afspeellijst."
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Kopieer LazyTV afleveringen naar gespecifeerde folder. (Script)"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "deze add-on vindt de volgende aflevering in elke serie."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "wilt u een lijst of een willekeurige afspeellijst?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "toon mij"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Verras mij"
+
+msgctxt "#32104"
+msgid "Select the playlist"
+msgstr "Selecteer de afspeellijst"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Sluiten"
+
+msgctxt "#32106"
+msgid "LazyTV Service is not running."
+msgstr "LazyTV service is niet actief."
+
+msgctxt "#32107"
+msgid "Would you like to attempt to start it now?"
+msgstr "Wil je het proberen het nu op te starten?"
+
+msgctxt "#32108"
+msgid "LazyTV Service has updated. Please restart to apply changes."
+msgstr "LazyTV service is geupdate. Start opnieuw op om veranderingen door te voeren."
+
+msgctxt "#32109"
+msgid "Would you like to restart it now?"
+msgstr "Wilt u nu herstarten?"
+
+msgctxt "#32110"
+msgid "LazyTV has updated and this clone is now out of date."
+msgstr "LazyTV is geupdate en deze kloon is nu achterhaald."
+
+msgctxt "#32111"
+msgid "Would you like to update the clone now?"
+msgstr "Wil je de kloon nu updaten?"
+
+msgctxt "#32112"
+msgid "Never"
+msgstr "Nooit"
+
+msgctxt "#32113"
+msgid "day"
+msgstr "Dagelijks"
+
+msgctxt "#32114"
+msgid "days"
+msgstr "Dagen"
+
+msgctxt "#32115"
+msgid "LazyTV is still populating with shows."
+msgstr "Lazy TV wordt nog steeds aangevuld met series."
+
+msgctxt "#32116"
+msgid "Please wait and try again."
+msgstr "Wacht en probeer het opnieuw."
+
+msgctxt "#32139"
+msgid "name your clone"
+msgstr "benoem jouw kloon"
+
+msgctxt "#32140"
+msgid "An error occurred while creating the clone."
+msgstr "Er is een fout ontstaan tijden het creëren van de kloon. "
+
+msgctxt "#32141"
+msgid "Operation cancelled."
+msgstr "Operatie afgebroken."
+
+msgctxt "#32142"
+msgid "This script creates a cloned version of the LazyTV user interface."
+msgstr "Dit script creëert een gekloonde versie van de LazyTV gebruikersinterface."
+
+msgctxt "#32143"
+msgid "It creates a new folder in your addons directory."
+msgstr "het creëert een nieuwe folder in you add`ons directory."
+
+msgctxt "#32144"
+msgid "Do you wish to continue?"
+msgstr "Wilt u doorgaan?"
+
+msgctxt "#32145"
+msgid "That name is in use. Please try another."
+msgstr "De naam is in gebruik. probeer een andere."
+
+msgctxt "#32146"
+msgid "Cloning successful."
+msgstr "Klonen succesvol."
+
+msgctxt "#32147"
+msgid "Clone is now ready for use."
+msgstr "Kloon is nu klaar voor gebruik."
+
+msgctxt "#32148"
+msgid "An error occurred while updating the clone."
+msgstr "Er is een fout ontstaan bij het updaten van de kloon."
+
+msgctxt "#32149"
+msgid "Update successful."
+msgstr "Update geslaagd."
+
+msgctxt "#32160"
+msgid "LazyTV - there are previous unwatched episodes"
+msgstr "LazyTV- er zijn vorige onbekeken afleveringen"
+
+msgctxt "#32161"
+msgid "%s (%sx%s) is in your library."
+msgstr "%s (%sx%s) is in jou bibliotheek."
+
+msgctxt "#32162"
+msgid "Would you like to watch it now?"
+msgstr "Wil je het nu bekijken?"
+
+msgctxt "#32163"
+msgid "\"Now Playing\""
+msgstr "\"Speelt nu\""
+
+msgctxt "#32164"
+msgid "LazyTV -the next unwatched episode is in your library."
+msgstr "LazyTV -de volgende onbekeken aflevering is in jou bibliotheek"
+
+msgctxt "#32165"
+msgid "No, thank you. (Autoclosing in %s seconds)"
+msgstr "Nee, bedankt. (Automatisch sluiten in %s seconden)"
+
+msgctxt "#32166"
+msgid "Yes, start %s %s now."
+msgstr "Ja, start %s %s nu."
+
+msgctxt "#32167"
+msgid "LazyTV   (auto-closing in %s seconds)"
+msgstr "LazyTV (auto-afsluiten in %s seconden)"
+
+msgctxt "#32168"
+msgid "%s %s is in your library."
+msgstr "%s %s is in je bibliotheek."
+
+msgctxt "#32169"
+msgid "Would you like to watch it now?"
+msgstr "Wil je het nu bekijken?"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Opslaan"
+
+msgctxt "#32171"
+msgid "Select All"
+msgstr "Selecteer alles"
+
+msgctxt "#32172"
+msgid "Unselect All"
+msgstr "Deselecteer alles "
+
+msgctxt "#32173"
+msgid "Database analysis complete"
+msgstr "Database analyse compleet"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Kies exporteer locatie"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Sommige bestanden niet gelukt te verplaatsen"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Wil je ze zien?"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Ontvangen bestandsgrootte..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Bestandsverplaatsing bezig..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Bestandsverplaatsing succesvol afgerond."
+
+msgctxt "#32200"
+msgid "Multi-Select (on)"
+msgstr "Multi-selecteren (on)"
+
+msgctxt "#32201"
+msgid "Multi-Select (off)"
+msgstr "Multi-selecteren (uit)"
+
+msgctxt "#32202"
+msgid "Play Selection"
+msgstr "Speel selectie"
+
+msgctxt "#32203"
+msgid "Export Selection"
+msgstr "Exporteer selectie"
+
+msgctxt "#32204"
+msgid "Play Episode"
+msgstr "Speel aflevering"
+
+msgctxt "#32205"
+msgid "Export Episode"
+msgstr "Exporteer aflevering"
+
+msgctxt "#32206"
+msgid "Play From Here"
+msgstr "Afspelen vanaf hier"
+
+msgctxt "#32207"
+msgid "Mark as Watched"
+msgstr "Markeer als bekeken"
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr "Bibliotheek bijwerken"
+
+msgctxt "#32209"
+msgid "Refresh List"
+msgstr "Ververs lijst"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Seizoen"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Aflevering"
+
+msgctxt "#32222"
+msgid "Progress"
+msgstr "Progres"
+
+msgctxt "#32223"
+msgid "Available"
+msgstr "Beschikbaar"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Bekeken"
+
+msgctxt "#32225"
+msgid "Skipped"
+msgstr "Overgeslagen"
+
+msgctxt "#32226"
+msgid "In this episode"
+msgstr "In deze aflevering"

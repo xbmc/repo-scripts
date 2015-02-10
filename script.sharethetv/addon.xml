@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.sharethetv"
+       name="ShareThe.TV"
+       version="2.0.6"
+       provider-name="nmunson">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <summary lang="en">Easily share your movie collection online</summary>
+    <description lang="en">Show off your entire movie collection online with your ShareThe.TV profile!  By enabling this addon, you can keep your XBMC movie collection in sync with your ShareThe.TV profile so that others can check out your collection.  You can also follow other users who share similar tastes, with the goal of getting ideas on more movies you can add to your collection.</description>
+    <disclaimer lang="en">New users will need to create an account at sharethe.tv before using.</disclaimer>
+    <platform>all</platform>
+  </extension>
+</addon>

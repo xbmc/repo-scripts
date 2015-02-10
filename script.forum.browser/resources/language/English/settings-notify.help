@@ -1,0 +1,43 @@
+Settings Help (Notifications)
+@item:enable_notify=Enable Notifications (Enabling Requires XBMC Restart)
+When enabled, Forum Browser new post checking will be enabled. If this was not enabled when XBMC started, XBMC will need to be re-started.
+
+If disabled when XBMC starts, background service will not run.
+@item:notify_only_on_start=Only At XBMC Start (Disabling Requires XBMC Restart) 
+If enabled, the background service will check for notifications once at startup and then close.
+
+If changed to disabled, XBMC will need to be re-started to re-start the background service.
+@item:notify_interval=Check Interval (In Minutes)
+The time between check for new posts.
+This is the amount of time the service will wait (after checking has finished) before it starts the next check.
+@item:notify_stale_time=Hours Until Notify Data Considered Stale
+If the interval specified here has passed when checking for new posts, old data will be discarded and all unread posts will be counted as new.
+@item:notify_method=Method
+Selects what kind of notification will be displayed when new unread posts are found:
+
+[B]Normal XBMC Popup[/B]: The normal XBMC notification popup. Will be displayed for each forum with new unread posts.
+
+[B]Small Dialog[/B]: Stripped down and smaller version of the full dialog.
+
+[B]Full Dialog[/B]: Lists forums, with forums containing new unread posts at the top. The first column displays the number of unread subscriptions and the total subscribed. The second column shows the number of unread PMs. Selecting a forum will open Forum Browser to that forum. The context menu button will toggle notifications for the selected forum. 
+@item:notify_method_video=Method (During Video)
+Selects what kind of notification will be displayed when video is playing. Same options as above.
+@item:notice_duration=XBMC Notice Duration (Seconds)
+How long the XBMC notification popup will display, if it is being used when notifying the user.
+@item:notice_dialog_timeout=Dialog Timeout (0 For None)
+How long to wait to display the notifications dialog (small or full) if it is being used when notifying the user.
+
+Setting this to zero will disable auto-closing the dialog.
+@item:notify_dialog_timeout_only_video=Only When Playing Video
+Use the dialog timeout only when video is playing. When video is not playing, do not auto-close the dialog.
+@item:notify_dialog_timeout_stops_activity=Activity Stops Timeout
+When enabled, user activity in the dialog will stop the auto-close timeout. The user will need to then close the dialog manually.
+@item:notify_dialog_only_enabled=Dialog: Only Show Notify Enabled Forums
+When enabled, the dialog will only show forums with notifications enabled. When disabled, [I]all[/I] added forums will be listed.
+
+This setting does not affect the [I]Notifications Manager[/I].
+@item:notify_open_subs_pms=Open Subscriptions/PMs Window Automatically On Open Forum
+When enabled, if you select a forum in the notifications dialog, when the forum opens, the subscriptions or private messages window will open automatically, depending on which has unread posts.
+If both have unread posts, it will default to the private messages window. 
+@item:notify_prefer_subs=If Both Subs and PMs, Open Subs Window Instead
+When both subscriptions and private messages are unread, default to the subscriptions window instead. 

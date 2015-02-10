@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window>
+	<allowoverlay>no</allowoverlay>
+	<coordinates>
+	        <system>1</system>
+        	<posx>0</posx>
+        	<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>180</posx>
+			<posy>0</posy>
+			<animation effect="slide" start="1100,0" end="0,0" time="400" tween="quadratic" easing="out">WindowOpen</animation>
+			<animation effect="slide" start="0,0" end="1100,0" time="400" tween="quadratic" easing="out">WindowClose</animation>
+			<control type="image">
+				<description>black background</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1100</width>
+				<height>720</height>
+				<texture border="15,0,0,0" flipx="true">rcb-MediaBladeSub.png</texture>
+			</control>
+			<control type="image">
+				<description>background</description>
+				<posx>15</posx>
+				<posy>15</posy>
+				<width>1100</width>
+				<height>720</height>
+				<texture>rcb-black-back.png</texture>
+			</control>
+			<control type="label">
+				<description>header label</description>
+				<posx>30</posx>
+				<posy>20</posy>
+				<width>1030</width>
+				<height>30</height>
+				<font>font35_title</font>
+				<label>$INFO[Listitem.Label]</label>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+			</control>
+			
+			<!-- gameinfoviewgamelist -->
+			<control type="group" id="1000">
+				<control type="wraplist" id="59">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>0</width>
+					<height>0</height>
+					<onleft>3000</onleft>
+					<onright>3000</onright>
+					<onup>3000</onup>
+					<ondown>3000</ondown>
+					<scrolltime>200</scrolltime>
+					<itemlayout height="0" width="0"/>
+					<focusedlayout height="0" width="0">						
+					</focusedlayout>
+				</control>				
+			</control>
+			
+			<!-- Game info -->
+			<control type="group">
+				<posx>25</posx>
+				<posy>90</posy>
+				<control type="label">
+					<posx>165</posx>
+					<posy>0</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32401]:</label>
+				</control>
+				<control type="label" id="6100">
+					<description>Genre value</description>
+					<posx>175</posx>
+					<posy>0</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(genre)]</label>
+				</control>
+				<control type="label">
+					<posx>165</posx>
+					<posy>30</posy>					
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32400]:</label>
+				</control>
+				<control type="label" id="6200">
+					<description>Year value</description>
+					<posx>175</posx>
+					<posy>30</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(year)]</label>
+				</control>
+				<control type="label">
+					<posx>165</posx>
+					<posy>60</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32402]:</label>
+				</control>
+				<control type="label" id="6300">
+					<description>Publisher value</description>
+					<posx>175</posx>
+					<posy>60</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(publisher)]</label>
+				</control>
+				<control type="label">
+					<posx>165</posx>
+					<posy>90</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32403]:</label>
+				</control>
+				<control type="label" id="6400">
+					<description>Developer value</description>
+					<posx>175</posx>
+					<posy>90</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(developer)]</label>
+				</control>		
+				<control type="label">
+					<posx>165</posx>
+					<posy>120</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32750]:</label>
+				</control>
+				<control type="label" id="6500">
+					<description>Region value</description>
+					<posx>175</posx>
+					<posy>120</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(region)]</label>
+				</control>		
+				<control type="label">
+					<posx>165</posx>
+					<posy>150</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32751]:</label>
+				</control>
+				<control type="label" id="6600">
+					<description>Media value</description>
+					<posx>175</posx>
+					<posy>150</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(media)]</label>
+				</control>
+				<control type="label">
+					<posx>165</posx>
+					<posy>180</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32752]:</label>
+				</control>
+				<control type="label" id="6700">
+					<description>Controller value</description>
+					<posx>175</posx>
+					<posy>180</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(controllertype)]</label>
+				</control>
+				<control type="label">
+					<posx>165</posx>
+					<posy>210</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32753]:</label>
+				</control>
+				<control type="label" id="6800">
+					<description>Rating value</description>
+					<posx>175</posx>
+					<posy>210</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(rating)]</label>
+				</control>
+				<control type="label">
+					<posx>165</posx>
+					<posy>240</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32754]:</label>
+				</control>
+				<control type="label" id="7000">
+					<description>Players value</description>
+					<posx>175</posx>
+					<posy>240</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(maxplayers)]</label>
+				</control>
+				<control type="label">
+					<posx>165</posx>
+					<posy>270</posy>
+					<width>160</width>
+					<height>30</height>
+					<align>right</align>
+					<aligny>center</aligny>
+					<font>font13_title</font>
+					<textcolor>FF0084ff</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32755]:</label>
+				</control>
+				<control type="label" id="7400">
+					<description>Launch count value</description>
+					<posx>175</posx>
+					<posy>270</posy>
+					<width>300</width>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(playcount)]</label>
+				</control>			
+				<control type="label" id="7300">
+					<description>URL value</description>
+					<posx>0</posx>
+					<posy>300</posy>
+					<width>500</width>					
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(url)]</label>
+				</control>			
+			</control>
+			
+			
+			<!-- image controls -->
+			<!-- gameinfobig -->
+			<control type="group">
+				<posx>480</posx>
+				<posy>70</posy>
+				<control type="image">
+					<description>gameinfo</description>
+					<posx>25</posx>
+					<posy>25</posy>
+					<width>540</width>
+					<height>280</height>
+					<visible>!Player.HasVideo</visible>
+					<texture>$INFO[ListItem.Property(gameinfobig)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				<!-- videowindowbig -->
+				<control type="videowindow">
+					<description>video control</description>
+					<posx>25</posx>
+					<posy>25</posy>
+					<width>540</width>
+					<height>280</height>												
+					<visible>!IsEmpty(ListItem.Property(videosizebig))</visible>
+				</control>
+				<control type="button">
+					<description>click absorber</description>
+					<posx>25</posx>
+					<posy>25</posy>
+					<width>540</width>
+					<height>280</height>
+					<texturefocus></texturefocus>
+					<texturenofocus></texturenofocus>
+					<visible>!IsEmpty(ListItem.Property(videosizebig))</visible>
+				</control>
+				<!-- gameinfoupperleft -->
+				<control type="image" id="2400">
+					<description>gameinfoupperleft</description>
+					<posx>25</posx>
+					<posy>25</posy>
+					<width>265</width>
+					<height>135</height>						
+					<texture>$INFO[ListItem.Property(gameinfoupperleft)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				<!-- gameinfoupperright -->
+				<control type="image" id="2500">
+					<description>gameinfoupperright</description>
+					<posx>295</posx>
+					<posy>25</posy>
+					<width>265</width>
+					<height>135</height>						
+					<texture>$INFO[ListItem.Property(gameinfoupperright)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				<!-- gameinfolowerleft -->
+				<control type="image" id="2600">
+					<description>gameinfolowerleft</description>
+					<posx>25</posx>
+					<posy>170</posy>
+					<width>265</width>
+					<height>135</height>						
+					<texture>$INFO[ListItem.Property(gameinfolowerleft)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				<!-- gameinfolowerright -->
+				<control type="image" id="2700">
+					<description>gameinfolowerright</description>
+					<posx>295</posx>
+					<posy>170</posy>
+					<width>265</width>
+					<height>135</height>
+					<visible>!Player.HasVideo</visible>
+					<texture>$INFO[ListItem.Property(gameinfolowerright)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				
+				<!-- gameinfoupper -->
+				<control type="image" id="2710">
+					<description>gameinfoupper</description>
+					<posx>25</posx>
+					<posy>25</posy>
+					<width>537</width>
+					<height>135</height>						
+					<texture>$INFO[ListItem.Property(gameinfoupper)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				<!-- gameinfolower -->
+				<control type="image" id="2720">
+					<description>gameinfolower</description>
+					<posx>25</posx>
+					<posy>170</posy>
+					<width>537</width>
+					<height>135</height>						
+					<texture>$INFO[ListItem.Property(gameinfolower)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				<!-- gameinfoleft -->
+				<control type="image" id="2730">
+					<description>gameinfoleft</description>
+					<posx>25</posx>
+					<posy>25</posy>
+					<width>265</width>
+					<height>280</height>						
+					<texture>$INFO[ListItem.Property(gameinfoleft)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				<!-- gameinforight -->
+				<control type="image" id="2740">
+					<description>gameinforight</description>
+					<posx>295</posx>
+					<posy>25</posy>
+					<width>265</width>
+					<height>280</height>						
+					<texture>$INFO[ListItem.Property(gameinforight)]</texture>
+					<bordertexture border="2">rcb-button-nofocus.png</bordertexture>
+					<bordersize>2</bordersize>
+				</control>
+				
+				<!-- videowindowsmall -->
+				<control type="videowindow" id="2800">
+					<description>video control</description>
+					<posx>295</posx>
+					<posy>170</posy>
+					<width>265</width>
+					<height>135</height>
+					<visible>!IsEmpty(ListItem.Property(videosizesmall))</visible>						
+				</control>
+				<control type="button">
+					<description>click absorber</description>
+					<posx>295</posx>
+					<posy>170</posy>
+					<width>265</width>
+					<height>135</height>
+					<texturefocus></texturefocus>
+					<texturenofocus></texturenofocus>
+					<visible>!IsEmpty(ListItem.Property(videosizesmall))</visible>
+				</control>
+			</control>
+			
+			
+			<!-- game description -->
+			<control type="image">
+				<posx>25</posx>
+				<posy>405</posy>
+				<width>1100</width>
+				<height>8</height>
+				<aspectratio>stretch</aspectratio>
+				<texture>rcb-separator.png</texture>
+			</control>
+			<control type="textbox" id="8000">
+				<description>game desc</description>
+				<posx>25</posx>
+				<posy>420</posy>
+				<width>950</width>
+				<height>235</height>
+				<font>font12</font>			
+				<pagecontrol>8100</pagecontrol>			
+				<textcolor>FFFFFFFF</textcolor>
+				<align>justify</align>
+				<label>$INFO[ListItem.Property(plot)]</label>
+			</control>
+			<control type="scrollbar" id="8100">
+				<description>GameDesc Scrollbar</description>
+				<posx>1030</posx>
+				<posy>430</posy>
+				<width>20</width>
+				<height>200</height>
+				<visible>Control.IsVisible(8000)</visible>
+				<texturesliderbackground border="0,14,0,14">rcb-ScrollBarH.png</texturesliderbackground>
+				<texturesliderbar border="0,14,0,14">rcb-ScrollBarH_bar.png</texturesliderbar>
+				<texturesliderbarfocus border="0,14,0,14">rcb-ScrollBarH_bar_focus.png</texturesliderbarfocus>
+				<textureslidernib>rcb-ScrollBarNib.png</textureslidernib>
+				<textureslidernibfocus>rcb-ScrollBarNib.png</textureslidernibfocus>
+				<pulseonselect></pulseonselect>
+				<orientation>vertical</orientation>
+				<showonepage>false</showonepage>
+				<onup>8100</onup>
+				<ondown>8100</ondown>
+				<onleft>3000</onleft>
+				<onright>3000</onright>
+			</control>
+			
+			<control type="button" id="3000">
+				<description>Play Game</description>
+				<posx>25</posx>
+				<posy>670</posy>
+				<width>200</width>
+				<height>30</height>
+				<visible>true</visible>
+				<colordiffuse>DDFFFFFF</colordiffuse>
+				<texturefocus>rcb-button-focus.png</texturefocus>
+				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
+				<label>$ADDON[script.games.rom.collection.browser 32756]</label>
+				<!--font12-->
+				<textcolor>DDFFFFFF</textcolor>
+				<disabledcolor>80FFFFFF</disabledcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textoffsetx></textoffsetx>
+				<textoffsety></textoffsety>
+				<pulseonselect></pulseonselect>
+				<onup>3001</onup>
+				<ondown>3001</ondown>
+				<onleft>8100</onleft>
+				<onright>8100</onright>
+			</control>
+			
+			<control type="button" id="3001">
+				<description>autoplay video</description>
+				<onup>3000</onup>
+				<ondown>3000</ondown>
+				<onleft>3000</onleft>
+				<onright>3000</onright>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>0</width>
+				<height>0</height>
+				<texturefocus></texturefocus>
+				<texturenofocus></texturenofocus>
+				<visible>!IsEmpty(ListItem.Property(autoplayvideoinfo)) + !IsEmpty(ListItem.Property(gameplayinfo))</visible>
+				<animation delay="500" effect="fade" start="100" end="100">Focus</animation>
+				<onfocus>XBMC.PlayMedia($ESCINFO[ListItem.Property(gameplayinfo)],1)</onfocus>
+			</control>
+			
+			<control type="label" id="4000">
+				<description>Messages</description>
+				<posx>10</posx>
+				<posy>560</posy>
+				<width>680</width>
+				<height>10</height>
+				<align>left</align>
+				<scroll>true</scroll>
+				<textcolor>DDFFFFFF</textcolor>
+				<label></label>
+				<font>font10</font>
+			</control>
+		</control>
+	</controls>
+</window>

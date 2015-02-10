@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Finnish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fi/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Satunnainen</string>
+    <string id="3002">Takaisin</string>
+    <string id="3118">Piilotetut</string>
+
+    <!-- Settings -->
+    <string id="3200">Yleiset</string>
+    <string id="3203">Käyttäjänimi</string>
+    <string id="3204">Salasana</string>
+    <string id="3209">Kaikki</string>
+    <string id="3233">Satunnainen</string>
+    <string id="3234">Seuraava</string>
+
+    <!-- Functions -->
+    <string id="3260">Seuraavaksi</string>
+    <string id="3261">Edellinen</string>
+    <string id="3264">Suosikki</string>
+</strings>

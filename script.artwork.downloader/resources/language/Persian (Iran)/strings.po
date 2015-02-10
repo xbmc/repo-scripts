@@ -1,0 +1,73 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Persian (Iran) (http://www.transifex.com/projects/p/xbmc-addons/language/fa_IR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fa_IR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "خطا"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "در حال دریافت"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "بله"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "نه"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "عمومی"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "فیلم ها"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "فن آرت"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "بنر"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "لوگو"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "پوستر"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "زبان"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "رتبه بندی"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "رای"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "فصل"

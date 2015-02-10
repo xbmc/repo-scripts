@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Dutch language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/nl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Rom collectie Browser</string>
+
+    <!-- Error messages -->
+    <string id="35000">Fout: kan database niet benaderen.</string>
+    <string id="35001">Fout tijdens het bijwerken van config.xml.</string>
+    <string id="35002">Fout inlezen config.xml.</string>
+    <string id="35003">Fout: Bestand config.xml bestaat niet.</string>
+    <string id="35004">Fout: Kan config.xml niet inlezen.</string>
+    <string id="35005">Configuratiefout: Zie xbmc.log voor details.</string>
+    <string id="35006">ROM collectie id's zijn niet uniek.</string>
+    <string id="35007">Fout: kan config.xml niet backuppen.</string>
+    <string id="35008">Fout: kan config.xml niet wegschrijven.</string>
+    <string id="35009">%s %s kan niet in config.xml gevonden worden.</string>
+    <string id="35010">Fout: kan artwork folder niet aanmaken.</string>
+    <string id="35011">Controleer xbmc.log voor bijzonderheden.</string>
+    <string id="35012">Fout: kan artworkbestand niet aanmaken.</string>
+    <string id="35013">Spelfout opnieuw uitlezen.</string>
+    <string id="35014">Kan gekozen spel niet inlezen.</string>
+    <string id="35015">Fout bij wijzigen spelopdracht</string>
+    <string id="35016">Fout bij favoriet toevoegen</string>
+    <string id="35017">Fout bij verwijderen spel</string>
+    <string id="35018">Kan geselecteerd spel niet verwijderen</string>
+    <string id="35019">Fout</string>
+    <string id="35020">Fout bij verwijderen Romverzameling</string>
+    <string id="35021">Configuratiefout</string>
+    <string id="35022">Site %s bestaat niet in config.xml</string>
+    <string id="35023">Kan romverzameling met id %s niet ophalen</string>
+    <string id="35024">Gekozen spel kan niet uit de database gelezen worden.</string>
+    <string id="35025">Control met id %s wordt niet gevonden. Controleer WindowXML bestand.</string>
+
+    <!-- <string id="35026">Site %s does not exist in config.xml</string> -->
+    <string id="35027">kan niet scrape %s spellen met %s scraper. [CR] niet mogelijke combinatie van scraper</string>
+
+    <!-- <string id="35028"></string> -->
+    <!-- <string id="35029">can't be used together with offline scrapers.)</string> -->
+    <string id="35030">Fout: kan niet MyGames.db back-uppen: Backup bestand bestaat al.</string>
+    <string id="35031">Fout: Kan MyGames.db niet Backuppen</string>
+    <string id="35032">Fout: Geen update van versie %s naar %s</string>
+
+    <!-- <string id="35033">Control with id: %s could not be found. Check WindowXML file.</string> -->
+    <string id="35034">Fout bij starten spel!</string>
+    <string id="35035">Fout ontstaan bij starten emulator</string>
+    <string id="35036">fout ontstaan bij verwijderen bestand na starten van emulator</string>
+    <string id="35037">Fout ontstaan bij starten emulator: bestand %s bestaat niet!</string>
+    <string id="35038">Fout ontstaan bij het creëren .cut bestand. controleer xbmc.log voor details.</string>
+    <string id="35039">Fout ontstaan bij starten .7z bestand </string>
+    <string id="35040">Fout: Het bestand config_template.xml bestaat niet</string>
+    <string id="35041">RCB kan jou Rom locatie niet bereiken.[CR]weet zeker dat het geen non-ascii karakters bevat.</string>
+    <string id="35042">RCB kan jou artwork locatie niet bereiken.[CR]weet zeker dat het geen non-ascii karakters bevat.</string>
+
+    <!-- Hints / questions -->
+    <string id="40000">Geen configuratiebestand gevonden.</string>
+    <string id="40001">Wilt u er één creëren?</string>
+    <string id="40002">Database en config.xml zijn geüpdated naar nieuwe versie.</string>
+    <string id="40003">Lees a.u.b. de wiki en changelog bij het tegenkomen van problemen.</string>
+    <string id="40004">Rom verwijderen</string>
+    <string id="40005">Roms verwijderen...</string>
+    <string id="40006">Verwijderen van Roms compleet</string>
+    <string id="40007">controleren bestand</string>
+    <string id="40008">opschonen Database...</string>
+    <string id="40009">Database comprimeren...</string>
+    <string id="40010">Database opschoning compleet</string>
+    <string id="40011">importeren spellen...</string>
+    <string id="40012">importeren is bezig</string>
+    <string id="40013">Wilt u de huidige importering annuleren?</string>
+    <string id="40014">Annulering bezig</string>
+    <string id="40015">Importern is wordt nog steeds geannuleerd. probeer het later nog eens.</string>
+    <string id="40016">voer zoekterm in</string>
+    <string id="40017">Zoeken</string>
+    <string id="40018">Wilt u spellen nu importeren?</string>
+    <string id="40019">Lijst laden...</string>
+    <string id="40020">Alle</string>
+    <string id="40021">spellen laden...</string>
+    <string id="40022">importeren Rom collectie</string>
+    <string id="40023">importeren spel</string>
+    <string id="40024">ga door</string>
+    <string id="40025">ga door en negeer fouten</string>
+    <string id="40026">Afbreken</string>
+    <string id="40027">De eerste 10 spellen kunnen niet worden geïmporteerd.</string>
+    <string id="40028">Importeren geannuleerd.</string>
+    <string id="40029">Controleer xbmc.log voor details.</string>
+    <string id="40030">Opbouwen bestandslijst...</string>
+    <string id="40031">downloaden van informatie</string>
+    <string id="40032">Voer %s</string>
+    <string id="40033">Verwijder spel uit favorieten</string>
+    <string id="40034">verwijder selectie uit favorieten</string>
+    <string id="40035">voer spelcommando in</string>
+    <string id="40036">Weet u het zeker dat u dit spel wilt verwijderen?</string>
+    <string id="40037">Verwijder spellen en configuratie</string>
+    <string id="40038">Verwijder alleen de spellen</string>
+    <string id="40039">Emulator</string>
+    <string id="40040">Voer Rom bestand Mask</string>
+    <string id="40041">Pad</string>
+    <string id="40042">Kies een media locatie om toe te voegen</string>
+    <string id="40043">Kies een media locatie om te verwijderen</string>
+    <string id="40044">Er zijn al scrapers aanwezig voor alle Rom Collecties</string>
+    <string id="40045">Wijzig of verwijder bestaande scraper</string>
+    <string id="40046">selecteer scraper naam</string>
+    <string id="40047">Kes een scraper om te verwijderen</string>
+    <string id="40048">Scraper %s is al in gebruik en kan niet worden verwijderd.</string>
+
+    <!-- <string id="40049">Please choose another one.</string> -->
+    <!-- <string id="40050">Automatic: Accurate</string> -->
+    <!-- <string id="40051">Automatic: Guess Matches</string> -->
+    <!-- <string id="40052">Interactive: Select Matches</string> -->
+    <string id="40053">lokale artwork</string>
+    <string id="40054">Lokale nfo</string>
+    <string id="40055">Selecteer Artwork type</string>
+    <string id="40056">Selecteer eigendom</string>
+    <string id="40057">Negeer</string>
+    <string id="40058">Negeer filter</string>
+    <string id="40059">Tonen</string>
+    <string id="40060">Toon alleen spellen met missende bestanden</string>
+    <string id="40061">Verberg</string>
+    <string id="40062">Verberg spellen met missende bestanden</string>
+    <string id="40063">start spel</string>
+    <string id="40064">Kies schijf a.u.b.</string>
+    <string id="40065">Start spel vanaf het begin</string>
+    <string id="40066">start opgeslagen spel van dit spel?</string>
+    <string id="40067">Selecteer slot van opgeslagen spel</string>
+    <string id="40068">voer commando tekst in</string>
+    <string id="40069">bibliotheek exporteren...</string>
+    <string id="40070">exporteren Rom collectie</string>
+    <string id="40071">Exporteer spel</string>
+    <string id="40072">Actie geannuleerd. Config.xml zal niet worden geschreven.</string>
+    <string id="40073">Kies een scenario</string>
+    <string id="40074">Scrape spelinformatie en Artwork online</string>
+    <string id="40075">Spelinformatie en artwork zijn lokaal beschikbaar</string>
+    <string id="40076">Kies een platform</string>
+    <string id="40077">voer platformnaam in</string>
+    <string id="40078">Locatie naar %s emulator</string>
+    <string id="40079">Emulator params ("%ROM%" is gebruikt voor jouw rom bestanden)</string>
+    <string id="40080">Locatie naar %s roms</string>
+    <string id="40081">Bestandsmasker (komma-gesplitst): e.g. *.zip, *.smc</string>
+    <string id="40082">%s Artwork (%s)</string>
+    <string id="40083">Kies een artwork type</string>
+    <string id="40084">Wilt u een ander Artwork locatie instellen?</string>
+    <string id="40085">Structuur van jouw spelbeschrijvingen</string>
+    <string id="40086">Eén beschijvingsbestand per spel</string>
+    <string id="40087">Eén beschijvingsbestand voor alle spellen</string>
+    <string id="40088">Scrape spelinformatie online (of gebruik lokale nfo)</string>
+    <string id="40089">%s spelbeschrijving</string>
+    <string id="40090">Voer beschrijving bestandsmasker</string>
+    <string id="40091">%s parse instructies</string>
+    <string id="40092">Wilt u een andere Rom-collectie toevoegen?</string>
+    <string id="40093">%s Artwork</string>
+    <string id="40094">Voor-start vertraging (ms)</string>
+    <string id="40095">na-start vertraging (ms)</string>
+    <string id="40096">Solo modus opstartvertraging (ms)</string>
+    <string id="40097">Gebruik VB script in solo modus (Alleen in Windows)</string>
+    <string id="40098">Gebruik RetroPlayer om spellen te starten?</string>
+    <string id="40099">Opschorten audio</string>
+    <string id="40100">Minimaliseer XBMC</string>
+    <string id="40101">Locatie naar emu_autoconfig.xml</string>
+    <string id="40102">%s (geïnstalleerd)</string>
+    <string id="40103">Beschikbare autoconfig emulators</string>
+
+    <!-- Settings -->
+    <string id="45000">Algemeen</string>
+    <string id="45001">RCB ontwerp</string>
+    <string id="45002">Log niveau</string>
+    <string id="45003">Buffer optie</string>
+    <string id="45004">bewaar kijkstatus bij afsluiten</string>
+    <string id="45005">bewaar kijkstatus bij starten emu</string>
+    <string id="45006">importeer spellen</string>
+    <string id="45007">importeer spellen bij het starten van XBMC</string>
+    <string id="45008">Toon importeer opties venster</string>
+    <string id="45009">Scraping modus</string>
+    <string id="45010">spel matching fuzzy factor</string>
+    <string id="45011">Creëer lokale nfo file tijdens scraping</string>
+    <string id="45012">Importeer geen spellen zonder beschrijving</string>
+    <string id="45013">Importeer geen spellen zonder artwork</string>
+    <string id="45014">Herscrape al geïmporteerde spellen</string>
+    <string id="45015">Sta overschrijven toe met nul waarden</string>
+    <string id="45016">Gebruik extra nfo folder</string>
+    <string id="45017">nfo folder locatie</string>
+    <string id="45018">zoek spellen</string>
+    <string id="45019">toon sterren voor favorieten</string>
+    <string id="45020">toon filter voor alle consoles</string>
+    <string id="45021">toon filter voor alle genres</string>
+    <string id="45022">toon filter voor alle jaren</string>
+    <string id="45023">toon filter voor alle uitgevers</string>
+    <string id="45024">toon filter voor alle hitlijsten</string>
+    <string id="45025">voorkom ongefilterde zoekingen</string>
+    <string id="45026">start spellen</string>
+    <string id="45027">escape emutor cmd</string>
+
+    <!-- GUI controls -->
+    <!-- main window -->
+    <string id="50000">Jaar</string>
+    <string id="50001">Genre</string>
+    <string id="50002">Uitgever</string>
+    <string id="50003">Ontwerper</string>
+    <string id="50004">Favorieten</string>
+    <string id="50005">Zoeken</string>
+    <string id="50006">Console</string>
+    <string id="50007">A-Z</string>
+    <string id="50008">Bekijken</string>
+    <string id="50009">Filter missende informatie</string>
+    <string id="50010">Items</string>
+    <string id="50011">Pagina</string>
+
+    <!-- context menu -->
+    <string id="51000">Importeer spellen</string>
+    <string id="51001">herschrape geselecteerde spellen</string>
+    <string id="51002">herscrape Selectie</string>
+    <string id="51003">voeg Rom collectie toe</string>
+    <string id="51004">Wijzig rom collectie</string>
+    <string id="51005">wijzig offline scrapers</string>
+    <string id="51006">wijzig spel commando</string>
+    <string id="51007">voeg spel toe aan favorieten</string>
+    <string id="51008">voeg selectie toe aan favorieten</string>
+    <string id="51009">exporteer speldatabase (nfo bestanden)</string>
+    <string id="51010">Verwijder spel</string>
+    <string id="51011">Verwijder Rom collectie</string>
+    <string id="51012">opschonen Database</string>
+    <string id="51013">open Add-on instellingen</string>
+    <string id="51014">Stel spelcliënt in (per spel)</string>
+
+    <!-- editromcollection -->
+    <string id="52000">Instellingen</string>
+    <string id="52001">Rom collectie</string>
+    <string id="52002">Importeer spellen</string>
+    <string id="52003">Importeer Spel gegevens</string>
+    <string id="52004">Zoek spellen</string>
+    <string id="52005">Start spellen</string>
+    <string id="52006">Rom Locatie</string>
+    <string id="52007">Rom bestandsmasker</string>
+    <string id="52008">negeer bij scannen</string>
+    <string id="52009">Sta update toe</string>
+    <string id="52010">Max Folder diepte</string>
+    <string id="52011">CD indicator</string>
+    <string id="52012">Gebruik foldernaam als spelnaam</string>
+    <string id="52013">Scraper 1</string>
+    <string id="52014">Scraper 2</string>
+    <string id="52015">Scraper 3</string>
+    <string id="52016">Media type</string>
+    <string id="52017">Media Locatie</string>
+    <string id="52018">media bestandsmasker</string>
+    <string id="52019">Verwijder Medialocatie</string>
+    <string id="52020">Voeg medialocatie toe</string>
+    <string id="52021">Afbeeldingen (Hoofdscherm)</string>
+    <string id="52022">Afbeeldingen (informatiescherm)</string>
+    <string id="52023">Automatisch afspelen video (hoofdscherm)</string>
+    <string id="52024">Emulator Cmd</string>
+    <string id="52025">Emulator Params</string>
+    <string id="52026">Gebruik emulator in solo modus</string>
+    <string id="52027">Gebruik Popen om emulator te starten</string>
+    <string id="52028">Pak Zip bestanden niet uit</string>
+    <string id="52029">save locatie</string>
+    <string id="52030">Save bestandsmasker</string>
+    <string id="52031">save Params</string>
+    <string id="52032">Voor-start Cmd</string>
+    <string id="52033">Na-start Cmd</string>
+    <string id="52034">Sla configuratie op</string>
+    <string id="52035">Afbreken</string>
+    <string id="52036">automatisch afspelen video (informatiescherm)</string>
+    <string id="52037">Gebruik Retroplayer</string>
+    <string id="52038">Spelcliënt</string>
+
+    <!-- editscraper -->
+    <string id="53000">offline scrapers</string>
+    <string id="53001">Scraper</string>
+    <string id="53002">Gebruik beschrijving per spel</string>
+    <string id="53003">locatie spel desc</string>
+    <string id="53004">spel desc bestandsmasker</string>
+    <string id="53005">Parse instructie</string>
+    <string id="53006">zoek spel via crc</string>
+    <string id="53007">gebruik foldernaam als crc</string>
+    <string id="53008">gebruik bestandsnaam als crc</string>
+    <string id="53009">verwijder scraper</string>
+    <string id="53010">Voeg scraper toe</string>
+
+    <!-- info -->
+    <string id="54000">Regio</string>
+    <string id="54001">Media</string>
+    <string id="54002">controller</string>
+    <string id="54003">Waardering</string>
+    <string id="54004">maximum aantal spelers</string>
+    <string id="54005">Aantal keer gestart</string>
+    <string id="54006">start spel</string>
+
+    <!-- importdialog -->
+    <string id="55000">Importeer spellen</string>
+    <string id="55001">Scraping modus</string>
+    <string id="55002">Verander scrapers voor deze keer</string>
+
+    <!-- Missing info filter -->
+    <string id="56000">RCB - missend informatiefilter</string>
+    <string id="56001">Filtermodus</string>
+    <string id="56002">Filter spellen met missende artwork</string>
+    <string id="56003">EEN van deze items mist</string>
+    <string id="56004">Geen</string>
+    <string id="56005">voeg item toe</string>
+    <string id="56006">Verwijder item</string>
+    <string id="56007">AL deze items missen</string>
+    <string id="56008">Filter spellen met missende informatie</string>
+
+    <!-- Delete Rom Collection -->
+    <string id="57000">RCB - Verwijder Rom collectie</string>
+    <string id="57001">Verwijder optie</string>
+    <string id="57002">Verwijderen</string>
+</strings>

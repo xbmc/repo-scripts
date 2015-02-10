@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+  <defaultcontrol always="true">5006</defaultcontrol>
+  <allowoverlays>true</allowoverlays>
+  <allowoverlay>yes</allowoverlay>
+  <animation effect="fade" time="250">WindowOpen</animation>
+  <animation effect="fade" time="250">WindowClose</animation>
+  <coordinates>
+    <system>1</system>
+    <posx>0</posx>
+    <posy>0</posy>
+  </coordinates>
+
+  <controls>
+    <control type="button" id ="10">
+      <description>Close Window button</description>
+      <posx>1170</posx>
+      <posy>1</posy>
+      <width>64</width>
+      <height>32</height>
+      <label>-</label>
+      <font>-</font>
+      <texturefocus>DialogCloseButton-focus.png</texturefocus>
+      <texturenofocus>DialogCloseButton.png</texturenofocus>
+      <onleft>10</onleft>
+      <onright>10</onright>
+      <onup>5005</onup>
+      <ondown>5006</ondown>
+      <visible></visible>
+    </control>
+
+    <control type="button" id ="5006">
+      <description>Contacts button</description>
+      <posx>970</posx>
+      <posy>50</posy>
+      <width>136</width>
+      <height>40</height>
+      <label>  Contacts</label>
+      <textcolor>FFFFFFFF</textcolor>
+      <font>font14</font>
+      <texturefocus>left_tab.png</texturefocus>
+      <texturenofocus>left_tab_i.png</texturenofocus>
+      <onleft>5003</onleft>
+      <onright>5003</onright>
+      <onup>10</onup>
+<!--      <ondown>5008</ondown>-->
+      <visible></visible>
+    </control>
+
+    <control type="button" id ="5003">
+      <description>Recent button</description>
+      <posx>1106</posx>
+      <posy>50</posy>
+      <width>136</width>
+      <height>40</height>
+      <label>  Recent</label>
+      <textcolor>FFAAAAAA</textcolor>
+      <font>font12</font>
+      <texturefocus>right_tab.png</texturefocus>
+      <texturenofocus>right_tab_i.png</texturenofocus>
+      <onleft>5006</onleft>
+      <onright>5006</onright>
+      <onup>10</onup>
+<!--      <ondown>5008</ondown>-->
+      <visible></visible>
+    </control>
+
+    <!--<control type="image" id="5108">
+      <description>Phonebook background</description>
+      <posx>970</posx>
+      <posy>75</posy>
+      <width>306</width>
+      <height>306</height>
+      <visible>true</visible>
+      <texture border="0" flipy="false" flipx="false">list_bg.png</texture>
+      <info>phonebook.BG</info>
+      <aspectratio>keep</aspectratio>
+    </control>-->
+
+    <!--<control type="list" id="5008">
+        <description>Last 10 from phone book</description>
+        <posx>973</posx>
+        <posy>90</posy>
+        <width>300</width>
+        <height>300</height>
+        <visible>true</visible>
+        <onup>5003</onup>
+        <ondown>5001</ondown>
+        <onleft>5003</onleft>
+        <onright>SendClick(5019)</onright>
+        <textcolor>FFF00FFF</textcolor>
+        <viewtype label="3D list">list</viewtype>
+        <orientation>vertical</orientation>
+        <pagecontrol>10</pagecontrol>
+        <scrolltime tween="sine" easing="out">200</scrolltime>
+        <itemlayout width="300" height="27">
+            <control type="image">
+                <description>Background image</description>
+                <posx>0</posx>
+                <posy>3</posy>
+                <width>300</width>
+                <height>25</height>
+                <texture background="true">button-nofocus.png</texture>
+            </control>
+            <control type="label">
+                <posx>30</posx>
+                <posy>3</posy>
+                <width>300</width>
+                <height>20</height>
+                <font>font12</font>
+                <textcolor>FFFFFFFF</textcolor>
+            </control>
+        </itemlayout>
+        <focusedlayout height="27" width="300">
+            <control type="image">
+                <description>Background image</description>
+                <posx>0</posx>
+                <posy>3</posy>
+                <width>300</width>
+                <height>25</height>
+                <texture background="true">button-focus.png</texture>
+            </control>
+            <control type="label">
+                <posx>30</posx>
+                <posy>3</posy>
+                <width>300</width>
+                <height>25</height>
+                <font>font13</font>
+                <textcolor>FF000000</textcolor>
+            </control>
+        </focusedlayout>
+    </control>-->
+
+    <control type="button" id ="5001" >
+      <description>Call to</description>
+      <posx>980</posx>
+      <posy>400</posy>
+      <width>136</width>
+      <height>40</height>
+      <label></label>
+      <visible>true</visible>
+      <font>-</font>
+      <texturefocus>callto.png</texturefocus>
+      <texturenofocus>callto_i.png</texturenofocus>
+      <label>-</label>
+      <onleft>5011</onleft>
+      <onright>5011</onright>
+<!--      <onup>5008</onup>-->
+      <ondown>5002</ondown>
+      <visible></visible>
+    </control>
+
+    <control type="button" id ="5011">
+      <description>Add contact</description>
+      <posx>1116</posx>
+      <posy>400</posy>
+      <width>136</width>
+      <height>40</height>
+      <label></label>
+      <visible>true</visible>
+      <font>-</font>
+      <texturefocus>addcontact.png</texturefocus>
+      <texturenofocus>addcontact_i.png</texturenofocus>
+      <label>-</label>
+<!--      <textcolor>FFFFFFFF</textcolor>-->
+<!--      <disabledcolor>80FFFFFF</disabledcolor>-->
+      <onleft>5001</onleft>
+      <onright>5001</onright>
+      <onup>5001</onup>
+      <ondown>5002</ondown>
+      <visible></visible>
+    </control>
+
+    <control type="button" id ="5002">
+      <description>Dial button</description>
+      <posx>990</posx>
+      <posy>510</posy>
+      <width>80</width>
+      <height>80</height>
+      <label>-</label>
+      <font>-</font>
+      <texturefocus>answer2.png</texturefocus>
+      <texturenofocus>answer3.png</texturenofocus>
+      <onleft>5002</onleft>
+      <onright>5002</onright>
+      <onup>5001</onup>
+      <ondown>5010</ondown>
+      <visible></visible>
+    </control>
+
+    <control type="button" id ="5004">
+      <description>Hangup button</description>
+      <posx>1150</posx>
+      <posy>510</posy>
+      <width>80</width>
+      <height>80</height>
+      <label>-</label>
+      <font>-</font>
+      <texturefocus>decline2.png</texturefocus>
+      <texturenofocus>decline3.png</texturenofocus>
+      <onleft>5004</onleft>
+      <onright>5004</onright>
+      <onup>5001</onup>
+      <ondown>5010</ondown>
+      <visible></visible>
+    </control>
+
+
+    <!--<control type="slider" id="5009">
+      <description>Slider</description>
+      <posx>980</posx>
+      <posy>610</posy>
+      <width>300</width>
+      <height>16</height>
+      <action></action>
+      <visible></visible>
+      <pulseonselect>true</pulseonselect>
+      <texturesliderbar>slider.png</texturesliderbar>
+      <textureslidernib>slider-nib-nofocus.png</textureslidernib>
+      <textureslidersnibfocus>slider-nib-focus.png</textureslidersnibfocus>
+      <onup>5001</onup>
+      <ondown>5005</ondown>
+    </control>-->
+
+    <control type="button" id="5010">
+      <description>Scaler</description>
+      <posx>980</posx>
+      <posy>600</posy>
+      <width>140</width>
+      <height>35</height>
+      <label>Size</label>
+      <font>font13</font>
+      <visible></visible>
+      <pulseonselect>true</pulseonselect>
+      <textoffsetx>45</textoffsetx>
+      <onup>5001</onup>
+      <onright>5012</onright>
+      <ondown>5005</ondown>
+    </control>
+
+    <control type="button" id="5012">
+      <description>Self View</description>
+      <posx>1140</posx>
+      <posy>600</posy>
+      <width>140</width>
+      <height>35</height>
+      <label>Self View</label>
+      <font>font13</font>
+      <visible></visible>
+      <pulseonselect>true</pulseonselect>
+      <textoffsetx>20</textoffsetx>
+      <onup>5001</onup>
+      <onleft>5010</onleft>
+      <ondown>5005</ondown>
+    </control>
+
+    <control type="button" id ="5005">
+      <description>Settings button</description>
+      <posx>980</posx>
+      <posy>650</posy>
+      <width>300</width>
+      <height>35</height>
+      <label>Settings</label>
+      <font>font13</font>
+      <texturefocus>button-focus.png</texturefocus>
+      <texturenofocus>button-nofocus.png</texturenofocus>
+      <textoffsetx>45</textoffsetx>
+      <onleft>5005</onleft>
+      <onright>5005</onright>
+      <onup>5010</onup>
+      <ondown>5003</ondown>
+      <visible></visible>
+    </control>
+
+    <control type="label" id="5051">
+        <description>debug</description>
+        <posx>380</posx>
+        <posy>700</posy>
+        <width>700</width>
+        <visible>true</visible>
+        <align>left</align>
+        <aligny>center</aligny>
+        <scroll>true</scroll>
+        <label>-</label>
+        <haspath>false</haspath>
+        <font>font11</font>
+        <textcolor>44444444</textcolor>
+        <wrapmultiline>false</wrapmultiline>
+        <scrollspeed>50</scrollspeed>
+        <scrollsuffix> - </scrollsuffix>
+    </control>
+
+    <control type="button" id ="5019">
+        <description>Settings button</description>
+        <posx>1</posx>
+        <posy>1</posy>
+        <width>1</width>
+        <height>1</height>
+        <label></label>
+        <font>font1</font>
+        <visible></visible>
+        <onfocus>SendClick(5019)</onfocus>
+    </control>
+
+    <!-- <control type="button" id ="10003">
+      <description>Phone book</description>
+      <posx>1080</posx>
+      <posy>100</posy>
+      <width>2</width>
+      <height>2</height>
+      <label>-</label>
+      <font>-</font>
+      <texturefocus>phone_book2.png</texturefocus>
+      <texturenofocus>phone_book3.png</texturenofocus>
+      <onleft>10007</onleft>
+      <onright>10007</onright>
+      <onup>10007</onup>
+      <ondown>10007</ondown>
+      <visible></visible>
+    </control>
+    <control type="button" id ="10007">
+      <description>Recieved</description>
+      <posx>1080</posx>
+      <posy>120</posy>
+      <width>2</width>
+      <height>2</height>
+      <label>-</label>
+      <font>-</font>
+      <texturefocus>phone_book2.png</texturefocus>
+      <texturenofocus>phone_book3.png</texturenofocus>
+      <onleft>10</onleft>
+      <onright>10</onright>
+      <onup>10003</onup>
+      <ondown>10</ondown>
+      <visible></visible>
+    </control>-->
+
+  </controls>
+</window>

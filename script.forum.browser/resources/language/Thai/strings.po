@@ -1,0 +1,205 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Thai (http://www.transifex.com/projects/p/xbmc-addons/language/th/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "ทั่วไป"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "ภาษา"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "สว่าง"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "การแจ้งเตือน"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "วิดีโอ"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "ตัวเลือก"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "สำเร็จ"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "เรียกใหม่"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "ลบ"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "รายการที่สมัคร"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "การเชื่อมต่อ:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "กำลังดาวน์โหลด"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "- แก้ไข"
+
+msgctxt "#32244"
+msgid "Help"
+msgstr "ส่วนช่วยเหลือ"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "ใช่"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "เลือก"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "โปร่ง"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "- แก้ไข"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "เรียกดู"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "คำอธิบาย"
+
+msgctxt "#32291"
+msgid "Logo"
+msgstr "โลโก้"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "ไม่รู้จัก"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "ชื่อ"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "สถานะ"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "ข้อมูล"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "ค้นหา"
+
+msgctxt "#32377"
+msgid "New Search"
+msgstr "ค้นหาใหม่"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "อัพเดท"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "บันทึก"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "ชนิด"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "เลือก"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "ลบ"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "ค้นพบ"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "หมวด"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "อินเตอร์เน็ต"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "ต่อไป"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "รายการที่สมัคร"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "ตกลง"
+
+msgctxt "#32914"
+msgid "New Search"
+msgstr "ค้นหาใหม่"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "ค้นหา"
+
+msgctxt "#32931"
+msgid "Help"
+msgstr "ส่วนช่วยเหลือ"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "ย่อย"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "ทั้งหมด"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "ตกลง"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "ยกเลิก"

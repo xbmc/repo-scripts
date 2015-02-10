@@ -1,0 +1,590 @@
+<window id="1000">
+    <defaultcontrol always="false">3000</defaultcontrol>
+    <controls>
+        <control type="group">
+            <description>Group for zooming effect</description>
+            <animation effect="zoom" end="180,180" center="auto" time="500" tween="cubic" easing="inout" condition="Control.HasFocus(3003) + !StringCompare(Window(10000).Property(wtm.main_image),)">Conditional</animation>
+            <control type="image">
+                <description>Background</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>720</height>
+                <texture>background.png</texture>
+            </control>
+            <control type="image">
+                <description>Banner top</description>
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1280</width>
+                <height>100</height>
+                <texture>banner.png</texture>
+            </control>
+            <control type="group">
+                <description>Bottom button controls</description>
+                <posx>280</posx>
+                <posy>620</posy>
+                <width>720</width>
+                <height>36</height>
+                <control type="button" id="3004">
+                    <description>First Button</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>36</width>
+                    <height>36</height>
+                    <texturefocus>button_first_active.png</texturefocus>
+                    <texturenofocus>button_first.png</texturenofocus>
+                    <onleft>3007</onleft>
+                    <onright>3005</onright>
+                    <onup>3003</onup>
+                    <ondown>3008</ondown>
+                </control>
+                <control type="button" id="3005">
+                    <description>Previous Button</description>
+                    <posx>46</posx>
+                    <posy>0</posy>
+                    <width>36</width>
+                    <height>36</height>
+                    <texturefocus>button_prev_active.png</texturefocus>
+                    <texturenofocus>button_prev.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <onleft>3004</onleft>
+                    <onright>3002</onright>
+                    <onup>3003</onup>
+                    <ondown>3009</ondown>
+                </control>
+                <control type="button" id="3002">
+                    <description>Back Button</description>
+                    <posx>92</posx>
+                    <posy>0</posy>
+                    <width>120</width>
+                    <height>36</height>
+                    <texturefocus>button_active.png</texturefocus>
+                    <texturenofocus>button.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <onleft>3005</onleft>
+                    <onright>3000</onright>
+                    <onup>3003</onup>
+                    <ondown>3009</ondown>
+                    <font>font12</font>
+                    <focusedcolor>white</focusedcolor>
+                    <textcolor>grey</textcolor>
+                    <label>$ADDON[script.game.whatthemovie 3002]</label>
+                </control>
+                <control type="button" id="3000">
+                    <description>Guess Button</description>
+                    <posx>222</posx>
+                    <posy>0</posy>
+                    <width>276</width>
+                    <height>36</height>
+                    <texturefocus>button_guess_active.png</texturefocus>
+                    <texturenofocus>button_guess.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <onright>3001</onright>
+                    <onleft>3002</onleft>
+                    <onup>3003</onup>
+                    <ondown>1017</ondown>
+                    <font>font12</font>
+                    <focusedcolor>white</focusedcolor>
+                    <textcolor>grey</textcolor>
+                    <label>$ADDON[script.game.whatthemovie 3000]</label>
+                </control>
+                <control type="button" id="3001">
+                    <description>Random Button</description>
+                    <posx>508</posx>
+                    <posy>0</posy>
+                    <width>120</width>
+                    <height>36</height>
+                    <texturefocus>button_active.png</texturefocus>
+                    <texturenofocus>button.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <onleft>3000</onleft>
+                    <onright>3006</onright>
+                    <onup>3003</onup>
+                    <ondown>3010</ondown>
+                    <font>font12</font>
+                    <focusedcolor>white</focusedcolor>
+                    <textcolor>grey</textcolor>
+                    <label>$ADDON[script.game.whatthemovie 3001]</label>
+                </control>
+                <control type="button" id="3006">
+                    <description>Next Button</description>
+                    <posx>638</posx>
+                    <posy>0</posy>
+                    <width>36</width>
+                    <height>36</height>
+                    <texturefocus>button_next_active.png</texturefocus>
+                    <texturenofocus>button_next.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <onleft>3001</onleft>
+                    <onright>3007</onright>
+                    <onup>3003</onup>
+                    <ondown>3010</ondown>
+                </control>
+                <control type="button" id="3007">
+                    <description>Last Button</description>
+                    <posx>684</posx>
+                    <posy>0</posy>
+                    <width>36</width>
+                    <height>36</height>
+                    <texturefocus>button_last_active.png</texturefocus>
+                    <texturenofocus>button_last.png</texturenofocus>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <onleft>3006</onleft>
+                    <onright>3004</onright>
+                    <onup>3003</onup>
+                    <ondown>3011</ondown>
+                </control>
+                <control type="radiobutton" id="3008">
+                    <description>Favorite Button</description>
+                    <posx>0</posx>
+                    <posy>54</posy>
+                    <width>26</width>
+                    <height>26</height>
+                    <texturenofocus>button_smaller.png</texturenofocus>
+                    <texturefocus>button_smaller_active.png</texturefocus>
+                    <textureradiooff>fav.png</textureradiooff>
+                    <textureradioon>fav_active.png</textureradioon>
+                    <radioposx>7</radioposx>
+                    <radioposy>7</radioposy>
+                    <radiowidth>12</radiowidth>
+                    <radioheight>11</radioheight>
+                    <onleft>3011</onleft>
+                    <onright>3009</onright>
+                    <onup>3004</onup>
+                    <ondown>3003</ondown>
+                    <label></label>
+                </control>
+                <control type="radiobutton" id="3009">
+                    <description>Bookmark Button</description>
+                    <posx>36</posx>
+                    <posy>54</posy>
+                    <width>26</width>
+                    <height>26</height>
+                    <texturenofocus>button_smaller.png</texturenofocus>
+                    <texturefocus>button_smaller_active.png</texturefocus>
+                    <textureradiooff>book.png</textureradiooff>
+                    <textureradioon>book_active.png</textureradioon>
+                    <radioposx>7</radioposx>
+                    <radioposy>7</radioposy>
+                    <radiowidth>12</radiowidth>
+                    <radioheight>12</radioheight>
+                    <onleft>3008</onleft>
+                    <onright>1017</onright>
+                    <onup>3005</onup>
+                    <ondown>3003</ondown>
+                    <label></label>
+                </control>
+                <control type="radiobutton" id="3010">
+                    <description>Solution Button</description>
+                    <posx>658</posx>
+                    <posy>54</posy>
+                    <width>26</width>
+                    <height>26</height>
+                    <texturenofocus>button_smaller.png</texturenofocus>
+                    <texturefocus>button_smaller_active.png</texturefocus>
+                    <textureradiooff>sol.png</textureradiooff>
+                    <textureradioon>sol_active.png</textureradioon>
+                    <radioposx>6</radioposx>
+                    <radioposy>5</radioposy>
+                    <radiowidth>15</radiowidth>
+                    <radioheight>15</radioheight>
+                    <onleft>1017</onleft>
+                    <onright>3011</onright>
+                    <onup>3006</onup>
+                    <ondown>3003</ondown>
+                    <label></label>
+                </control>
+                <control type="button" id="3011">
+                    <description>Jump to Button</description>
+                    <posx>694</posx>
+                    <posy>54</posy>
+                    <width>26</width>
+                    <height>26</height>
+                    <texturefocus>button_smaller_id_active.png</texturefocus>
+                    <texturenofocus>button_smaller_id.png</texturenofocus>
+                    <onleft>3010</onleft>
+                    <onright>3008</onright>
+                    <onup>3007</onup>
+                    <ondown>3003</ondown>
+                </control>
+            </control>
+			<control type="label" id="1001">
+                <description>Login state label</description>
+                <posx>20</posx>
+                <posy>12</posy>
+                <width>450</width>
+                <align>left</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1020">
+                <description>Preload label</description>
+                <posx>300</posx>
+                <posy>12</posy>
+                <width>450</width>
+                <align>left</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1004">
+                <description>Posted by label</description>
+                <posx>280</posx>
+                <posy>115</posy>
+                <width>350</width>
+                <align>left</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1005">
+                <description>Solved label</description>
+                <posx>1000</posx>
+                <posy>115</posy>
+                <width>350</width>
+                <align>right</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1008">
+                <description>Shot ID label</description>
+                <posx>280</posx>
+                <posy>580</posy>
+                <width>200</width>
+                <align>left</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1011">
+                <description>Shot date label</description>
+                <posx>1000</posx>
+                <posy>580</posy>
+                <width>300</width>
+                <align>right</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1003">
+                <description>Score Label</description>
+                <posx>1260</posx>
+                <posy>12</posy>
+                <width>400</width>
+                <align>right</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1012">
+                <description>Shot type label</description>
+                <posx>540</posx>
+                <posy>60</posy>
+                <width>200</width>
+                <align>center</align>
+                <font>font12</font>
+                <textcolor>grey</textcolor>
+                <visible>true</visible>
+            </control>
+            <!-- can be used for visualizing property values during testing:
+                 <control type="label">
+                 <description>solved status</description>
+                 <posx>740</posx>
+                 <posy>60</posy>
+                 <width>200</width>
+                 <label>$INFO[Window(10000).Property(wtm.solved_status)]</label>
+                 <align>center</align>
+                 <font>font12</font>
+                 <textcolor>grey</textcolor>
+                 <visible>true</visible>
+                 </control>
+            -->
+            <control type="label" id="1014">
+                <description>Overall votes label</description>
+                <posx>362</posx>
+                <posy>674</posy>
+                <width>140</width>
+                <align>center</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="label" id="1019">
+                <description>Ratings label (all / own)</description>
+                <posx>778</posx>
+                <posy>674</posy>
+                <width>140</width>
+                <align>center</align>
+                <font>font12</font>
+                <textcolor>white</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <visible>true</visible>
+            </control>
+            <control type="group" id="1016">
+                <description>Group for the rating stars images</description>
+                <posx>520</posx>
+                <posy>674</posy>
+                <width>240</width>
+                <height>24</height>
+                <visible>true</visible>
+                <control type="progress" id="1015">
+                    <description>Overall rating</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>240</width>
+                    <height>24</height>
+                    <visible>true</visible>
+                    <reveal>true</reveal>
+                    <texturebg>rating_stars_empty.png</texturebg>
+                    <midtexture>rating_stars_full.png</midtexture>
+                </control>
+                <control type="progress" id="1018">
+                    <description>Own rating</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>240</width>
+                    <height>24</height>
+                    <visible>true</visible>
+                    <reveal>true</reveal>
+                    <texturebg>rating_stars_bg.png</texturebg>
+                    <midtexture>rating_stars_glow.png</midtexture>
+                </control>
+                <control type="list" id="1017">
+                    <description>Rating stars list</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>240</width>
+                    <height>24</height>
+                    <orientation>horizontal</orientation>
+                    <onup>3000</onup>
+                    <ondown>3003</ondown>
+                    <onleft>3009</onleft>
+                    <onright>3010</onright>
+                    <itemlayout width="24" height="24">
+                        <control type="image">
+                            <description>The star mask</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>24</width>
+                            <height>24</height>
+                            <texture></texture>
+                            <visible>false</visible>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout width="24" height="24">
+                        <control type="image">
+                            <description>The star mask</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>24</width>
+                            <height>24</height>
+                            <texture>rating_star_own.png</texture>
+                            <visible>Control.HasFocus(1017)</visible>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                    </focusedlayout>
+                </control>
+            </control>
+            <control type="group">
+                <description>Input language flag group</description>
+                <posx>540</posx>
+                <posy>574</posy>
+                <width>200</width>
+                <height>32</height>
+                <control type="list" id="1013">
+                    <description>Input language flags</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>200</width>
+                    <height>32</height>
+                    <orientation>horizontal</orientation>
+                    <onleft>3000</onleft>
+                    <onright>3000</onright>
+                    <onup>3000</onup>
+                    <ondown>3000</ondown>
+                    <itemlayout width="42" height="32">
+                        <control type="image">
+                            <description>The Flag if visible</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>32</width>
+                            <height>32</height>
+                            <texture>$INFO[ListItem.Icon]</texture>
+                            <colordiffuse>FFFFFFFF</colordiffuse>
+                            <visible>!ListItem.property(unavailable)</visible>
+                        </control>
+                        <control type="image">
+                            <description>The Flag if unvisible</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>32</width>
+                            <height>32</height>
+                            <texture>$INFO[ListItem.Icon]</texture>
+                            <colordiffuse>22FFFFFF</colordiffuse>
+                            <visible>ListItem.property(unavailable)</visible>
+                        </control>
+                    </itemlayout>
+                    <focusedlayout width="42" height="32">
+                        <control type="image">
+                            <description>The Flag if visible</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>32</width>
+                            <height>32</height>
+                            <texture>$INFO[ListItem.Icon]</texture>
+                            <colordiffuse>FFFFFFFF</colordiffuse>
+                            <visible>!ListItem.property(unavailable)</visible>
+                        </control>
+                        <control type="image">
+                            <description>The Flag if unvisible</description>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>32</width>
+                            <height>32</height>
+                            <texture>$INFO[ListItem.Icon]</texture>
+                            <colordiffuse>22FFFFFF</colordiffuse>
+                            <visible>ListItem.property(unavailable)</visible>
+                        </control>
+                    </focusedlayout>
+                </control>
+            </control>
+            <control type="group">
+                <description>Snapshot image controls</description>
+                <posx>265</posx>
+                <posy>155</posy>
+                <width>720</width>
+                <height>36</height>
+                <control type="image">
+                    <description>Shadow left snapshot image</description>
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>20</width>
+                    <height>410</height>
+                    <texture>img_frame_shadow_l.png</texture>
+                </control>
+                <control type="image">
+                    <description>Shadow right snapshot image</description>
+                    <posx>730</posx>
+                    <posy>0</posy>
+                    <width>20</width>
+                    <height>410</height>
+                    <texture>img_frame_shadow_r.png</texture>
+                </control>
+                <control type="image">
+                    <description>Frame around snapshot image</description>
+                    <posx>15</posx>
+                    <posy>5</posy>
+                    <width>720</width>
+                    <height>400</height>
+                    <texture>black.png</texture>
+                </control>
+                <control type="image" id="1000">
+                    <description>The Picture to guess</description>
+                    <posx>15</posx>
+                    <posy>5</posy>
+                    <width>720</width>
+                    <height>400</height>
+                    <fadetime>500</fadetime>
+                    <texture>$INFO[Window(10000).Property(wtm.main_image)]</texture>
+                    <aspectratio>keep</aspectratio>
+                </control>
+                <control type="image">
+                    <description>Shot of the day overlay image</description>
+                    <posx>625</posx>
+                    <posy>-1</posy>
+                    <width>116</width>
+                    <height>115</height>
+                    <texture>sotd.png</texture>
+                    <visible>!StringCompare(Window(10000).Property(wtm.sotd),) + !Control.HasFocus(3003)</visible>
+                    <animation effect="fade" time="200">VisibleChange</animation>
+                </control>
+                <control type="image" id="1006">
+                    <description>Message Label Background - will be tinted by gui</description>
+                    <posx>15</posx>
+                    <posy>375</posy>
+                    <width>720</width>
+                    <height>30</height>
+                    <texture>solution_back.png</texture>
+                    <visible>Control.IsVisible(1007)</visible>
+                    <animation effect="fade" time="200">VisibleChange</animation>
+                </control>
+                <control type="label" id="1007">
+                    <description>Message Label</description>
+                    <posx>25</posx>
+                    <posy>375</posy>
+                    <width>720</width>
+                    <height>30</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>font12</font>
+                    <scroll>true</scroll>
+                    <textcolor>black</textcolor>
+                    <visible>!StringCompare(Window(10000).Property(wtm.solved_status),inactive) + !StringCompare(Window(10000).Property(wtm.solved_status),) + !StringCompare(Window(10000).Property(wtm.solved_status),loading) + !Control.HasFocus(3003)</visible>
+                    <animation effect="fade" time="200">VisibleChange</animation>
+                </control>
+                <control type="image" id="1009">
+                    <description>Correct answer image</description>
+                    <posx>630</posx>
+                    <posy>295</posy>
+                    <width>140</width>
+                    <height>140</height>
+                    <texture>guess_correct.png</texture>
+                    <visible>StringCompare(Window(10000).Property(wtm.solved_status),correct) + !Control.HasFocus(3003)</visible>
+                    <animation effect="fade" time="200">VisibleChange</animation>
+                </control>
+                <control type="image" id="1010">
+                    <description>Wrong answer image</description>
+                    <posx>630</posx>
+                    <posy>295</posy>
+                    <width>140</width>
+                    <height>140</height>
+                    <texture>guess_wrong.png</texture>
+                    <visible>StringCompare(Window(10000).Property(wtm.solved_status),wrong) + !Control.HasFocus(3003)</visible>
+                    <animation effect="fade" time="200">VisibleChange</animation>
+                </control>
+                <control type="image" id="1002">
+                    <description>Animated loading image</description>
+                    <posx>60</posx>
+                    <posy>35</posy>
+                    <width>48</width>
+                    <height>48</height>
+                    <texture>loader.png</texture>
+                    <visible>StringCompare(Window(10000).Property(wtm.busy),loading)</visible>
+                    <animation effect="fade" time="200">VisibleChange</animation>
+                    <animation effect="rotate" start="720" end="0" center="auto" time="3000" loop="true" condition="Control.IsVisible(1002)">conditional</animation>
+                </control>
+            </control>
+        </control>
+        <control type="button" id="3003">
+            <description>Fake Button to zoom the Picture to Guess</description>
+            <posx>280</posx>
+            <posy>160</posy>
+            <width>720</width>
+            <height>400</height>
+            <visible allowhiddenfocus="true">false</visible>
+            <onclick>Setfocus(3001)</onclick>
+            <onright>3001</onright>
+            <onleft>3002</onleft>
+            <onup>3000</onup>
+            <ondown>3000</ondown>
+        </control>
+    </controls>
+</window>

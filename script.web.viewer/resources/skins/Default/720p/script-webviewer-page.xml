@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+	<defaultcontrol>122</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<control type="image" id="101">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>720</height>
+				<texture border="40">webviewer-default-panel-full.png</texture>
+				<colordiffuse>FF000000</colordiffuse>
+			</control>
+
+			<control type="image" id="251">
+				<description>page header tab icon</description>
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>1260</width>
+				<height>80</height>
+				<texture border="10">webviewer-title-background.png</texture>
+			</control>
+			<control type="image" id="102">
+				<description>Icon</description>
+				<posx>234</posx>
+				<posy>21</posy>
+				<width>48</width>
+				<height>48</height>
+				<texture fallback="webviewer-corner-icon.png">webviewer-corner-icon.png</texture>
+			</control>
+			<control type="label" id="104">
+				<description>Topic</description>
+				<posx>298</posx>
+				<posy>10</posy>
+				<width>783</width>
+				<height>28</height>
+				<font>font12</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<wrapmultiline>false</wrapmultiline>
+			</control>
+
+			<control type="group">
+				<posx>32</posx>
+				<posy>22</posy>
+				<control type="button" id="200">
+					<description>Back</description>
+					<onleft>106</onleft>
+					<onright>202</onright>
+					<onup>122</onup>
+					<ondown>122</ondown>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<visible>true</visible>
+					<colordiffuse>FFFFFFFF</colordiffuse>
+					<font>font12</font>
+					<align>right</align>
+					<textcolor>FF000000</textcolor>
+					<textoffsetx>33</textoffsetx>
+					<texturefocus>webviewer-left-focus.png</texturefocus>
+					<texturenofocus>webviewer-left-nofocus.png</texturenofocus>
+				</control>
+				<control type="image">
+					<description>Back Disabled</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<colordiffuse>30FFFFFF</colordiffuse>
+					<texture>webviewer-left-nofocus.png</texture>
+					<visible>!Control.IsVisible(200)</visible>
+				</control>
+				<control type="button" id="202">
+					<description>Forward</description>
+					<onleft>200</onleft>
+					<onright>105</onright>
+					<onup>122</onup>
+					<ondown>122</ondown>
+					<posx>52</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<visible>true</visible>
+					<colordiffuse>FFFFFFFF</colordiffuse>
+					<font>font12</font>
+					<align>left</align>
+					<textcolor>FF000000</textcolor>
+					<textoffsetx>4</textoffsetx>
+					<texturefocus>webviewer-right-focus.png</texturefocus>
+					<texturenofocus>webviewer-right-nofocus.png</texturenofocus>
+				</control>
+				<control type="image">
+					<description>Back Disabled</description>
+					<posx>52</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<colordiffuse>30FFFFFF</colordiffuse>
+					<texture>webviewer-right-nofocus.png</texture>
+					<visible>!Control.IsVisible(202)</visible>
+				</control>
+				<control type="button" id="105">
+					<description>Page Button</description>
+					<posx>104</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<onleft>202</onleft>
+					<onright>106</onright>
+					<onup>122</onup>
+					<ondown>122</ondown>
+					<font>font12</font>
+					<textcolor>FF000000</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+					<texturefocus>webviewer-refresh.png</texturefocus>
+					<texturenofocus>webviewer-refresh-nofocus.png</texturenofocus>
+					<visible>!Control.IsVisible(106)</visible>
+				</control>
+				<control type="button" id="106">
+					<description>Stop Button</description>
+					<posx>104</posx>
+					<posy>0</posy>
+					<width>48</width>
+					<height>48</height>
+					<onleft>105</onleft>
+					<onright>200</onright>
+					<onup>122</onup>
+					<ondown>122</ondown>
+					<font>font12</font>
+					<textcolor>FF000000</textcolor>
+					<aligny>center</aligny>
+					<align>center</align>
+					<colordiffuse>FFFF0000</colordiffuse>
+					<texturefocus>webviewer-stop.png</texturefocus>
+					<texturenofocus>webviewer-stop-nofocus.png</texturenofocus>
+				</control>
+			</control>
+			<control type="button" id="112">
+				<description>Url Box</description>
+				<posx>1148</posx>
+				<posy>40</posy>
+				<width>30</width>
+				<height>30</height>
+				<texturefocus>webviewer-search.png</texturefocus>
+				<texturenofocus>webviewer-search-nofocus.png</texturenofocus>
+			</control>
+			
+			<control type="button" id="111">
+		        <description>Close Button</description>
+		        <posx>1230</posx>
+		        <posy>15</posy>
+		        <width>32</width>
+		        <height>28</height>
+		        <texturefocus>webviewer-close-button-focus.png</texturefocus>
+		        <texturenofocus>webviewer-close-button.png</texturenofocus>
+		        <visible>system.getbool(input.enablemouse)</visible>
+		        <onclick>PreviousMenu</onclick>
+	      	</control>
+			<control type="image">
+				<description>page header tab icon</description>
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>1260</width>
+				<height>80</height>
+				<texture>webviewer-overlay.png</texture>
+			</control>
+			<control type="button" id="109">
+				<description>Url Box</description>
+				<posx>298</posx>
+				<posy>40</posy>
+				<width>840</width>
+				<height>30</height>
+				<texturenofocus border="2">webviewer-form-text.png</texturenofocus>
+				<texturefocus border="2">webviewer-form-text.png</texturefocus>
+			</control>
+			<control type="label" id="108">
+				<posx>304</posx>
+				<posy>41</posy>
+				<width>828</width>
+				<height>26</height>
+				<font>font12</font>
+				<aligny>center</aligny>
+				<textcolor>black</textcolor>
+				<selectedcolor>black</selectedcolor>
+				<align>left</align>
+			</control>
+			
+			<control type="image" id="300">
+				<posx>300</posx>
+				<posy>42</posy>
+				<width>736</width>
+				<height>1</height>
+				<texture>webviewer-progress.png</texture>
+				<visible>false</visible>
+			</control>
+			<control type="image" id="310">
+				<posx>300</posx>
+				<posy>42</posy>
+				<width>1</width>
+				<height>27</height>
+				<texture>webviewer-progress.png</texture>
+			</control>
+			
+			<control type="image" id="351">
+				<animation effect="fade" start="100" end="75" time="200"
+					condition="!Control.HasFocus(122)|Control.HasFocus(120)">Conditional</animation>
+				<description>page header tab icon</description>
+				<posx>10</posx>
+				<posy>90</posy>
+				<width>1260</width>
+				<height>626</height>
+				<texture border="10">webviewer-text-background.png</texture>
+				<visible>true</visible>
+			</control>
+			<control type="textbox" id="123">
+				<posx>30</posx>
+				<posy>100</posy>
+				<width>805</width>
+				<height>606</height>
+				<font>font12</font>
+				<aligny>center</aligny>
+				<textcolor>black</textcolor>
+				<selectedcolor>black</selectedcolor>
+				<align>left</align>
+				<visible>true</visible>
+			</control>
+			<control type="button" id="122">
+		        <description>Box Focus</description>
+		        <posx>30</posx>
+				<posy>100</posy>
+				<width>805</width>
+				<height>606</height>
+				<onleft>122</onleft>
+				<onright>122</onright>
+				<onup>122</onup>
+				<ondown>122</ondown>
+		        <texturefocus>webviewer-transparent.png</texturefocus>
+		        <texturenofocus>webviewer-transparent.png</texturenofocus>
+	      	</control>
+	      	<control type="image" id="124">
+				<description>Scroll Bar</description>
+				<posx>838</posx>
+				<posy>100</posy>
+				<width>4</width>
+				<height>30</height>
+				<texture>webviewer-progress.png</texture>
+				<visible>true</visible>
+			</control>
+
+		</control>
+		<control type="image">
+			<posx>845</posx>
+			<posy>96</posy>
+			<width>715</width>
+			<height>630</height>
+			<texture border="40">webviewer-default-panel.png</texture>
+			<colordiffuse>FF000000</colordiffuse>
+		</control>
+		<control type="image">
+			<animation effect="fade" start="100" end="75" time="200"
+					condition="!Control.HasFocus(120)+!Control.HasFocus(148)+!Control.HasFocus(150)">Conditional</animation>
+			<posx>845</posx>
+			<posy>96</posy>
+			<width>715</width>
+			<height>630</height>
+			<texture border="40">webviewer-default-panel.png</texture>
+		</control>
+		
+		<control type="group" id="149">
+			<posx>845</posx>
+			<posy>96</posy>
+			<control type="list" id="150">
+				<posx>25</posx>
+				<posy>17</posy>
+				<width>415</width>
+				<height>570</height>
+				<onleft>122</onleft>
+				<onright>122</onright>
+				<onup>150</onup>
+				<ondown>150</ondown>
+				<viewtype label="535">list</viewtype>
+				<!-- <pagecontrol>121</pagecontrol> -->
+				<scrolltime>0</scrolltime>
+				<itemlayout height="168">
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>166</height>
+						<texture border="10">webviewer-text-background.png</texture>
+						<visible>true</visible>
+						<colordiffuse>CC999999</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>166</height>
+						<texture border="10">webviewer-button-focus.png</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>101</posx>
+						<posy>4</posy>
+						<width>128</width>
+						<height>128</height>
+						<texture fallback="webviewer-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<visible>true</visible>
+						<colordiffuse>A0FFFFFF</colordiffuse>
+						<aspectratio>keep</aspectratio>
+					</control>
+					<control type="label">
+						<posx>20</posx>
+						<posy>134</posy>
+						<width>355</width>
+						<height>30</height>
+						<font>font12</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout height="329">
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>327</height>
+						<texture border="10">webviewer-text-background.png</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>327</height>
+						<texture border="10">webviewer-button-focus.png</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>13</posx>
+						<posy>9</posy>
+						<width>292</width>
+						<height>292</height>
+						<texture fallback="webviewer-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+						<aspectratio>keep</aspectratio>
+					</control>
+					<control type="label">
+						<posx>20</posx>
+						<posy>295</posy>
+						<width>355</width>
+						<height>30</height>
+						<font>font12</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+
+		<control type="group" id="147">
+			<posx>845</posx>
+			<posy>96</posy>
+			<control type="list" id="148">
+				<posx>25</posx>
+				<posy>17</posy>
+				<width>415</width>
+				<height>570</height>
+				<onleft>122</onleft>
+				<onright>122</onright>
+				<onup>148</onup>
+				<ondown>148</ondown>
+				<viewtype label="535">list</viewtype>
+				<!-- <pagecontrol>121</pagecontrol> -->
+				<scrolltime>0</scrolltime>
+				<itemlayout height="60">
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>58</height>
+						<texture border="10">webviewer-text-background.png</texture>
+						<visible>true</visible>
+						<colordiffuse>CC999999</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>58</height>
+						<texture border="10">webviewer-button-focus.png</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>6</posy>
+						<width>58</width>
+						<height>48</height>
+						<texture fallback="webviewer-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="label">
+						<posx>69</posx>
+						<posy>1</posy>
+						<width>306</width>
+						<height>58</height>
+						<font>font12</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+				</itemlayout>
+				<focusedlayout height="120">
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>118</height>
+						<texture border="10">webviewer-text-background.png</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>1</posx>
+						<posy>1</posy>
+						<width>500</width>
+						<height>118</height>
+						<texture border="10">webviewer-button-focus.png</texture>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>10</posy>
+						<width>100</width>
+						<height>100</height>
+						<texture fallback="webviewer-broken-image.png">$INFO[ListItem.Icon]</texture>
+						<aspectratio>keep</aspectratio>
+						<visible>true</visible>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+					</control>
+					<control type="label">
+						<posx>115</posx>
+						<posy>1</posy>
+						<width>260</width>
+						<height>78</height>
+						<font>font12</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>true</visible>
+						<wrapmultiline>true</wrapmultiline>
+					</control>
+					<control type="label">
+						<posx>115</posx>
+						<posy>80</posy>
+						<width>260</width>
+						<height>30</height>
+						<font>font12</font>
+						<aligny>center</aligny>
+						<textcolor>FF444444</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label2</info>
+						<visible>true</visible>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+		
+		<control type="group">
+			<posx>845</posx>
+			<posy>96</posy>
+			<control type="list" id="120">
+				<posx>25</posx>
+				<posy>17</posy>
+				<width>400</width>
+				<height>570</height>
+				<onleft>122</onleft>
+				<onright>122</onright>
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<viewtype label="535">list</viewtype>
+				<pagecontrol>121</pagecontrol>
+				<scrolltime>200</scrolltime>
+				<itemlayout height="46">
+					<!-- LABEL -->
+					<control type="label">
+						<posx>10</posx>
+						<posy>2</posy>
+						<width>380</width>
+						<height>36</height>
+						<font>font14</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>StringCompare(ListItem.Genre,label)</visible>
+					</control>
+					<!-- CHECKBOX -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,checkbox)</visible>
+						<control type="image">
+							<description>text input</description>
+							<posx>12</posx>
+							<posy>14</posy>
+							<width>12</width>
+							<height>12</height>
+							<texture border="2">webviewer-form-checkbox-checked.png</texture>
+							<visible>StringCompare(ListItem.Director,checked)</visible>
+						</control>
+						<control type="image">
+							<description>text input</description>
+							<posx>12</posx>
+							<posy>14</posy>
+							<width>12</width>
+							<height>12</height>
+							<texture border="2">webviewer-form-checkbox-unchecked.png</texture>
+							<visible>StringCompare(ListItem.Director,unchecked)</visible>
+						</control>
+						<control type="label">
+							<posx>35</posx>
+							<posy>2</posy>
+							<width>355</width>
+							<height>36</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</control>
+					<!-- TEXT -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,text)</visible>
+						<control type="label">
+							<posx>10</posx>
+							<posy>2</posy>
+							<width>162</width>
+							<height>36</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+						<control type="image">
+							<description>text input</description>
+							<posx>180</posx>
+							<posy>2</posy>
+							<width>218</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-text.png</texture>
+						</control>
+						<control type="label">
+							<posx>193</posx>
+							<posy>3</posy>
+							<width>192</width>
+							<height>34</height>
+							<font>font12</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label2</info>
+						</control>
+					</control>
+					<!-- FILE -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,file)</visible>
+						<control type="image">
+							<description>text input</description>
+							<posx>2</posx>
+							<posy>2</posy>
+							<width>294</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-text.png</texture>
+						</control>
+						<control type="label">
+							<posx>10</posx>
+							<posy>2</posy>
+							<width>290</width>
+							<height>36</height>
+							<font>font12</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+						<control type="image">
+							<description>text input</description>
+							<posx>300</posx>
+							<posy>2</posy>
+							<width>90</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-submit.png</texture>
+						</control>
+						<control type="label">
+							<posx>345</posx>
+							<posy>3</posy>
+							<width>86</width>
+							<height>34</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>center</align>
+							<label>Browse</label>
+						</control>
+					</control>
+					<!-- SELECT -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,select)</visible>
+						<control type="image">
+							<description>select input</description>
+							<posx>20</posx>
+							<posy>2</posy>
+							<width>360</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-select.png</texture>
+						</control>
+						<control type="image">
+							<description>select input button</description>
+							<posx>350</posx>
+							<posy>4</posy>
+							<width>29</width>
+							<height>35</height>
+							<texture border="2">webviewer-form-select-button.png</texture>
+						</control>
+						<control type="label">
+							<posx>190</posx>
+							<posy>3</posy>
+							<width>320</width>
+							<height>34</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>center</align>
+							<info>ListItem.Label</info>
+						</control>
+					</control>
+					<!-- SUBMIT -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,submit)</visible>
+						<control type="image">
+							<description>text input</description>
+							<posx>20</posx>
+							<posy>2</posy>
+							<width>360</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-submit.png</texture>
+						</control>
+						<control type="label">
+							<posx>200</posx>
+							<posy>3</posy>
+							<width>340</width>
+							<height>34</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>center</align>
+							<info>ListItem.Label</info>
+						</control>
+					</control>
+				</itemlayout>
+				<!-- FOCUSED *****************************************************************************-->
+				<focusedlayout height="46">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>400</width>
+						<height>44</height>
+						<texture border="2">webviewer-form-control-focus-box.png</texture>
+					</control>
+					<!-- LABEL -->
+					<control type="label">
+						<posx>10</posx>
+						<posy>2</posy>
+						<width>380</width>
+						<height>36</height>
+						<font>font14</font>
+						<aligny>center</aligny>
+						<textcolor>black</textcolor>
+						<selectedcolor>black</selectedcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+						<visible>StringCompare(ListItem.Genre,label)</visible>
+					</control>
+					<!-- CHECKBOX -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,checkbox)</visible>
+						<control type="image">
+							<description>text input</description>
+							<posx>12</posx>
+							<posy>14</posy>
+							<width>12</width>
+							<height>12</height>
+							<texture border="2">webviewer-form-checkbox-checked.png</texture>
+							<visible>StringCompare(ListItem.Director,checked)</visible>
+						</control>
+						<control type="image">
+							<description>text input</description>
+							<posx>12</posx>
+							<posy>14</posy>
+							<width>12</width>
+							<height>12</height>
+							<texture border="2">webviewer-form-checkbox-unchecked.png</texture>
+							<visible>StringCompare(ListItem.Director,unchecked)</visible>
+						</control>
+						<control type="label">
+							<posx>35</posx>
+							<posy>2</posy>
+							<width>355</width>
+							<height>36</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</control>
+					<!-- TEXT -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,text)</visible>
+						<control type="label">
+							<posx>10</posx>
+							<posy>2</posy>
+							<width>162</width>
+							<height>36</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+						<control type="image">
+							<description>text input</description>
+							<posx>180</posx>
+							<posy>2</posy>
+							<width>218</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-text.png</texture>
+						</control>
+						<control type="label">
+							<posx>193</posx>
+							<posy>3</posy>
+							<width>192</width>
+							<height>34</height>
+							<font>font12</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label2</info>
+						</control>
+					</control>
+					<!-- FILE -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,file)</visible>
+						<control type="image">
+							<description>text input</description>
+							<posx>2</posx>
+							<posy>2</posy>
+							<width>294</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-text.png</texture>
+						</control>
+						<control type="label">
+							<posx>10</posx>
+							<posy>2</posy>
+							<width>290</width>
+							<height>36</height>
+							<font>font12</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+						<control type="image">
+							<description>text input</description>
+							<posx>300</posx>
+							<posy>2</posy>
+							<width>90</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-submit.png</texture>
+						</control>
+						<control type="label">
+							<posx>345</posx>
+							<posy>3</posy>
+							<width>86</width>
+							<height>34</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>center</align>
+							<label>Browse</label>
+						</control>
+					</control>
+					<!-- SELECT -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,select)</visible>
+						<control type="image">
+							<description>select input</description>
+							<posx>20</posx>
+							<posy>2</posy>
+							<width>360</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-select.png</texture>
+						</control>
+						<control type="image">
+							<description>select input button</description>
+							<posx>350</posx>
+							<posy>4</posy>
+							<width>29</width>
+							<height>35</height>
+							<texture border="2">webviewer-form-select-button.png</texture>
+						</control>
+						<control type="label">
+							<posx>190</posx>
+							<posy>3</posy>
+							<width>320</width>
+							<height>34</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>center</align>
+							<info>ListItem.Label</info>
+						</control>
+					</control>
+					<!-- SUBMIT -->
+					<control type="group">
+						<posx>0</posx>
+						<posy>0</posy>
+						<visible>StringCompare(ListItem.Genre,submit)</visible>
+						<control type="image">
+							<description>text input</description>
+							<posx>20</posx>
+							<posy>2</posy>
+							<width>360</width>
+							<height>38</height>
+							<texture border="2">webviewer-form-submit.png</texture>
+						</control>
+						<control type="label">
+							<posx>200</posx>
+							<posy>3</posy>
+							<width>340</width>
+							<height>34</height>
+							<font>font14</font>
+							<aligny>center</aligny>
+							<textcolor>black</textcolor>
+							<selectedcolor>black</selectedcolor>
+							<align>center</align>
+							<info>ListItem.Label</info>
+						</control>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="group">
+				<posx>695</posx>
+				<posy>17</posy>
+				<control type="scrollbar" id="121">
+					<description>scroll bar indicator for lists</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>12</width>
+					<height>570</height>
+					<texturesliderbackground border="6">webviewer-default-scroll_back.png</texturesliderbackground>
+					<texturesliderbar border="6">webviewer-default-scroll_mid.png</texturesliderbar>
+					<texturesliderbarfocus border="6">webviewer-default-scroll_mid.png</texturesliderbarfocus>
+					<textureslidernib>-</textureslidernib>
+					<textureslidernibfocus>-</textureslidernibfocus>
+					<orientation>vertical</orientation>
+					<showonepage>false</showonepage>
+					<visible>Control.IsVisible(120)</visible>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

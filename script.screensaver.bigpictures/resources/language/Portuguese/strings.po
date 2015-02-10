@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: The Big Pictures Screensaver
+# Addon id: script.screensaver.bigpictures
+# Addon Provider: Tristan Fischer (sphere@dersphere.de)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Portuguese (http://www.transifex.com/projects/p/xbmc-addons/language/pt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32110"
+msgid "Picture duration (seconds)"
+msgstr "Duração da imagem (segundos)"
+
+msgctxt "#32400"
+msgid "The Big Picture - Boston.com"
+msgstr "The Big Picture - Boston.com"
+
+msgctxt "#32401"
+msgid "In Focus - The Atlantic"
+msgstr "In Focus - The Atlantic"
+
+msgctxt "#32402"
+msgid "Sacramento Bee - The Frame"
+msgstr "Sacramento Bee - The Frame"
+
+msgctxt "#32403"
+msgid "Photo Journal - Wall Street Journal"
+msgstr "Photo Journal - Wall Street Journal"
+
+msgctxt "#32404"
+msgid "TotallyCoolPix.com"
+msgstr "TotallyCoolPix.com"
+
+msgctxt "#32405"
+msgid "LightBox - From the photo editors of TIME"
+msgstr "LightBox - Dos editores de fotografia da TIME"
+
+msgctxt "#32406"
+msgid "Lens Blog - The New York Times"
+msgstr "Lens Blog - The New York Times"

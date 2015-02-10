@@ -1,0 +1,31 @@
+* XBMC python libraries: http://wiki.xbmc.org/index.php?title=Python_Libraries
+	- module docs: http://mirrors.xbmc.org/docs/python-docs
+
+* Notices to XBMC Addon Devs @ http://forum.xbmc.org/showthread.php?tid=173887
+
+* submission rules: http://wiki.xbmc.org/index.php?title=Submitting_Add-ons
+	- structure notes: http://wiki.xbmc.org/index.php?title=Add-on_structure
+	- addon rules: http://wiki.xbmc.org/index.php?title=Add-on_Rules
+	- addon standards: http://wiki.xbmc.org/index.php?title=Add-on_Standards
+
+* v11/Eden API/coding notes:
+	URLref: http://wiki.xbmc.org/index.php?title=Eden_API_changes
+	...
+
+* v12/Frodo API/coding notes:
+	URLref: http://wiki.xbmc.org/index.php?title=Frodo_API_changes
+	...
+
+* v13/Gotham API/coding notes:
+	URLref: http://wiki.xbmc.org/index.php?title=Gotham_API_changes
+	URLref: http://xbmc.org/xbmc-13-gotham-note-to-add-on-developers
+	"Due to these changes we have set the minimum python API version to 2.1.0 which has to be set in addon.xml. Since this version was already available in Frodo it won’t affect your Add-on in any way. Any Add-on that still has a lower API version set will still work in Frodo but will be marked broken in Gotham."
+
+* example of xbmc.Player subclassing @ http://xbmc-addons.googlecode.com/svn/addons/script.xbmc.lyrics/resources/lib/player.py
+
+* Creating / maintaining an unofficial XBMC addon repository & adding auto-update without distributing a repository file
+	github example @ https://github.com/Xycl/repository.xycl.addons
+	URLrefs:
+		http://wiki.xbmc.org/index.php?title=HOW-TO:Create_a_repository_for_add-ons
+		http://wiki.xbmc.org/?title=Unofficial_add-on_repositories
+		http://wiki.xbmc.org/index.php?title=Add-on_repositories

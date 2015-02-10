@@ -1,0 +1,42 @@
+[COLOR blue][B]Welcome to the Twitter Feeds addon.[/B][/COLOR]
+
+These days many television programs have an associated twitter account "@" or topic hashtag "#". Some programs even display the tweets of viewers in real time, thus the inspiration for this addon. This addon enables you to follow the conversation associated with any show you are watching, or for that matter any other twitter conversation that is occurring.
+
+[COLOR blue][B]Usage[/B][/COLOR]
+
+The twitter search function, which is what this addon hooks in to, is very powerful, allowing you to keep up with twitter conversations exactly how you like. 
+
+[COLOR blue]Searching Multiple Terms:[/COLOR] By default twitter only gives results that contain all of the terms used in the search, however if you would like to follow tweets that contain one search term or another search term you can simply include "or" in your search.
+
+	i.e.  Search String = #cat #dog
+	      Tweet = I like both my #cat and my #dog.
+
+	i.e.  Search String = #cat or #dog
+	      Tweet = I am more of a #dog lover.
+      Tweet = I am a #cat person.
+	      Tweet = I like both my #cat and my #dog.
+
+[COLOR blue]Following A Twitter Account:[/COLOR] When you include a @ in your search string the results will be any tweets that include that @ in their tweet. However if you want to follow the tweets from a specific account you must use the from:"" search parameter.
+
+	i.e. Search String = @XBMC
+	     Tweet = @XBMC is the best thing since sliced bread <- a tweet from @somerandomguy
+	
+	i.e. Search String = from:"XBMC"
+	     Tweet = Come help us test our newest version of XBMC! <- a tweet from @XBMC
+
+[COLOR blue]View Tweets Based On Geographic Location:[/COLOR] Another search function available is near:"" , Using this you are able to narrow your results down to users within a specific geographic location. 
+
+	i.e. Search String = near:"Chicago,IL"
+	     Tweet = Da Bears
+
+
+[COLOR blue][B]Addon Settings[/B][/COLOR]
+
+[COLOR blue]Seconds To Display Tweet:[/COLOR] This is the number of seconds the notification that displays the tweet will stay active.
+[COLOR blue]Seconds To Wait Before Fetching New Tweet:[/COLOR] This is the number of seconds XBMC will wait before searching to see if a new tweet is available, if this is set lower than "Seconds To Display Tweet" and a tweet is found the new tweet will replace the previous tweet.
+[COLOR blue]Tweet Language:[/COLOR] Use this to only display tweets that are written in a specific language. Note: some languages require an alternative font, such as Arial.
+[COLOR blue]Set Twitter Key:[/COLOR] Use this to set the key to open the Twitter Feeds dialog.
+
+
+
+

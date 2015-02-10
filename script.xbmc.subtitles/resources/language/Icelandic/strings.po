@@ -1,0 +1,202 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Icelandic (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/is/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: is\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "Leit"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "Tengist..."
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "Tenging mistókst"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "Þjónustur í boði"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "Tungumál"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "Aðal Tungumál"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "Annað Tungumál"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "Miðlarar"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net Notendanafn"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net Lykilorð"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "Þriðja Tungumál"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "Bæta Tungumáli Við Skráarnafn"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV Notendanafn"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV Lykilorð"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa Notendanafn"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa Lykilorð"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky Notendanafn"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky Lykilorð"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx Notendanafn"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Hollenska"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Enska"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Eistnesks"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finnska"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Franska"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Þýska"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Gríska"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Hebreska"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindí"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Ungverska"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Íslenska"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indónesíska"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Ítalska"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japanska"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Kóreska"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Lattneska"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Litháíska"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norska"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Pólska"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portúgalska"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portúgalska (Brasilía)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Rúmenska"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Rússneska"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Spænska"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Sænska"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Tælenska"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "tyrkneska"

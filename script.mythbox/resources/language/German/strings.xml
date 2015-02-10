@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<!--  Next id = 204 -->
+
+<strings>
+  <string id="0">Myth TV</string>
+  <string id="1">Fernsehen</string>
+  <string id="2">Aufnahmen ansehen (dieser schirm wird umgeschrieben)</string>
+  <string id="3">TV Programm</string>
+  <string id="4">Nächste Aufnahmen</string>
+  <string id="5">Status</string>
+  <string id="6">Einstellungen</string>
+  <string id="7">Primärer Host IP / Name</string>
+  <string id="8">Port</string>
+  <string id="9">Status Port</string>
+  <string id="10">Protokol Version</string>
+  <string id="11">Datenbank Name</string>
+  <string id="12">Benutzer</string>
+  <string id="13">Passwort</string>
+  <string id="14">Aufnahme Verzeichnisse</string>
+  <string id="15"></string>
+  <string id="16"></string>
+  <string id="17">Sichern</string>
+  <string id="18">Myth TV - Einstellungen</string>
+  <string id="19">Myth TV - MySQL Einstellungen</string>
+  <string id="20">Myth TV - Einstellungen Pfade</string>
+  <string id="21">Myth TV</string>
+  <string id="22">MySQL</string>
+  <string id="23">Pfade</string>
+  <string id="24">Einstellungen testen..</string>
+  <string id="25">Einstellungen erfolgreich gespeichert.</string>
+  
+  <string id="29">Einstellungen wurden veränderd. Einstellungen verlieren ?</string>
+  <string id="30">Unzulässiger Integer-Wert angegeben.</string>
+  <string id="31">Fehler beim verbinden zum primären Mythtv-System.</string>
+  <string id="32">Fehler beim verbinden zur MySQL Datenbank.</string>
+  <string id="33">Einstellungen erfolgreich getested.</string>
+  <string id="34">Fehlerhafter '%s' eintrag von Einstellungen.</string>
+  <string id="35">Setup-Datei wurde nicht gefunden.</string>
+  <string id="36">Einstellungen sind veraltet - Standard-Werte wurden gesetzt.</string>
+  <string id="37">MySQL Host IP / Name</string>
+  <string id="38">Sortierung nach: Datum aufsteigend</string>
+  <string id="39">Sortierung nach: Titel aufsteigend</string>
+  <string id="40">Titel</string>
+  <string id="41">Kannal</string>
+  <string id="42">Erstausstrahlung</string>
+  <string id="43">Austrahlung</string>
+  <string id="44">Beschreibung</string>
+  
+  <!-- Strings -->
+  <string id="26">Information</string>
+  <string id="27">Fehler</string>
+  <string id="28">Bestätigung</string>
+  <string id="45">Unbekannt</string>
+  <string id="65">Sind Sie sicher dass Sie diese Aufnahme löschen wollen ?</string>
+  <string id="51">Sind Sie sicher dass Sie diese Aufnahme erneut aufnahmen wollen  ?</string>
+  
+  
+  
+  <string id="46">Nicht zugänglich</string>
+  <string id="47">Aufnahme Details</string>
+  <string id="48">Abspielen</string>
+  <string id="49">Sichern</string>
+  <string id="50">Ablauf</string>
+  
+  <string id="52">Löschen</string>
+  <string id="53">Updaten</string>
+  <string id="54">Sendung '%s' wurde nicht gefunden auf '%s'.</string>
+  <string id="55">Live-Fernsehen Buffer-Grösse (KB)</string>
+  <string id="56">Kategorie</string>
+  <string id="57">Automatisches Löschen</string>
+  <string id="58">Ja</string>
+  <string id="59">Nein</string>
+  <string id="60">Datei Grösse</string>
+  <string id="61">KB</string>
+  <string id="62">MB</string>
+  <string id="63">GB</string>
+  <string id="64">bytes</string>
+  
+  <string id="66">Datei kopiern komplett.</string>
+  <string id="67">Datei kopieren fehlerhaft.</string>
+  <string id="68">Kopieren der Sendung auf die lokale Festplatte ?</string>
+  <string id="69">Sortierung nach: Datum absteigend</string>
+  <string id="70">Sortierung nach: Titel absteigend</string>
+  <string id="71">Tuner Status</string>
+  <string id="72">Zeitplan</string>
+  <string id="73">Machinen Information</string>
+  <string id="74">FQDN oder IP-Adresse des Primären Myth TV Servers.</string>
+  <string id="75">Status Informationen durch den Server konnten nicht gelesen werden.</string>
+  <string id="76">Freier Speicherplatz</string>
+  <string id="77">Gesamter Speicherplatz</string>
+  <string id="78">Speicherplatz benutzt</string>
+  <string id="79">1 Minute</string>
+  <string id="80">5 Minuten</string>
+  <string id="81">15 Minuten</string>
+  <string id="82">Speicherkapazität</string>
+  <string id="83">Systemlast</string>
+  <string id="84">Die nächsten %d Sendungen welche zur Aufnahme vorgesehen sind.</string>
+  <string id="85">Screenshots konnten nicht from backend abgerufen werden.</string>
+  <string id="86">Ihre Einstellungen sind veraltet. Bitte kontrollieren Sie Ihre Einstellungen.</string>
+  <string id="87">Notizen</string>
+  
+  
+  <!-- enums.RecordingStatus -->
+  <string id="88">Sendung wurde aufgezeichnet aber gelöscht vor der Vervollständigung</string>
+  <string id="89">Sendung wurde aufgezeichnet aber gestoppt vor der Vervollständigung</string>
+  <string id="90">Sendung wurde aufgezeichnet</string>
+  <string id="91">Sendung wird aufgezeichnet</string>
+  <string id="92">Sendung wird aufgezeichnet werden</string>
+  <string id="93">Status dieser Sendung ist unbekannt</string>
+  <string id="94">Sendung wurde manuell auf nicht aufnehmen gesetzt</string>
+  <string id="95">Episode wurde bereits augezeichnet</string>
+  <string id="96">Episode wurde bereits aufgezeichnet und ist immer noch vorhanden</string>
+  <string id="97">Episode wird zu einem früheren Zeitpunkt aufgezeichnet</string>
+  <string id="98">Maximale Anzahl Episoden erreicht</string>
+  <string id="99">Zeitplan zur Aufnahme war gesetzt wurde aber manuell abgebrochen</string>
+  <string id="100">Ein anderes Programm mit höherer Priorität wird aufgezeichnet</string>
+  <string id="101">Episode wird zu einem späteren Zeitpunkt aufgezeichnet</string>
+  <string id="102">Episode ist eine Wiederholung und wird nicht aufgezeichnet</string>
+  <string id="103">Dies wird bereits durch eine aktive Aufnahme erledigt</string>
+  <string id="104">Nicht genug Speicherplatz vefügbar zur Aufnahme dieser Sendung</string>
+  <string id="105">Tuner war beschäftigt zur Zeit der Aufnahme</string>
+  
+  
+  <string id="106">Möchten Sie automatisch die Werbeblöcke entfernen ?</string>
+  <string id="107">TV Programm</string>
+  <string id="108">Keine Daten</string>
+  <string id="109">Protokoll Versions Fehler : %s</string>
+  <string id="110">Aufnahmen Zeitplan</string>
+  
+  <!-- enums.ScheduleType -->
+  <string id="111">Einmalig</string>
+  <string id="112">Täglich</string>
+  <string id="113">Kannal</string>
+  <string id="114">Immer</string>
+  <string id="115">Wöchentlich</string>
+  <string id="116">Finden einmalig</string>
+  <string id="117">Überschreiben</string>
+  <string id="118">Nicht aufnehmen</string>
+  
+  
+  <string id="119">Finden täglich</string>
+  <string id="120">Finden wöchentlich</string>
+  <string id="121">Aufnahmen Zeitplan Details - "%s"</string>
+  <string id="122">Aufnahmen Zeitplan exisistiert nicht länger.</string>
+  <string id="123">Typ</string>
+  <string id="124">Profil</string>
+  <string id="125">Gruppe</string>
+  <string id="126">Priorität</string>
+  <string id="127">Duplicates In</string>
+  <string id="128">Erkennungs-Methode</string>
+  <string id="129">Werbung markieren</string>
+  <string id="130">Automatisches löschen</string>
+  <string id="131">Aufnahme-neu Alte-ablaufen</string>
+  <string id="132">Anzahl zu behalten</string>
+  <string id="133">Start Offset</string>
+  <string id="134">Ende Offset</string>
+  
+  <!-- enums.ScheduleType.long_translations -->
+  <string id="135">Nur diese Sendung</string>
+  <string id="136">Täglich um diese Zeit</string>
+  <string id="137">Jeden Zeitpunkt auf diesem Kanal</string>
+  <string id="138">Jeden Zeitpunkt auf einen belibiegem Kanal</string>
+  <string id="139">Wöchentlich um diese Zeit</string>
+  <string id="140">Finde eine Sendung</string>
+  <string id="141">(Überschreibe) Diese spezifische Sendung aufnehmen</string>
+  <string id="142">(Überschreibe) Diese spezifische Sendung nicht aufnehmen</string>
+  <string id="143">Einmalig jeden Tag</string>
+  <string id="144">Einmalig jede Woche</string>
+  
+  <!-- CheckForDupesUsing -->
+  <string id="145">Keine</string>
+  <string id="146">Untertitel</string>
+  <string id="147">Beschreibung</string>
+  <string id="148">Untertitel und Beschreibung</string>
+  <string id="200">Untertitel danach Beschreibung</string>
+  
+  <!-- enums.CheckForDupesIn -->
+  <string id="149">Aktuelle Aufnahmen</string>
+  <string id="150">Vergangene Aufnahmen</string>
+  <string id="153">Alle Aufnahmen</string>
+  
+  <!-- CheckForDupesIn:Filter -->
+  <string id="201">Kein</string>
+  <string id="152">Nur neue Episoden</string>
+  <string id="151">Auschluss Wiederholungen Episoden</string>
+  <string id="202">Auschluss Allgemeine Episoden</string>
+  <string id="203">Auschluss Wiederholungen und Allgemeine Episoden</string>      
+
+  <!-- enums.JobType -->
+  <string id="250">Keine</string>
+  <string id="251">System</string>
+  <string id="252">Transcode</string>
+  <string id="253">Werbung markieren</string>
+  <string id="254">Benutzer Job</string>
+  <string id="255">Benutzer Job 1</string>
+  <string id="256">Benutzer Job 2</string>
+  <string id="257">Benutzer Job 3</string>
+  <string id="258">Benutzer Job 4</string>
+
+  <!-- enums.JobStatus -->
+  <string id="260">Unbekannt</string>
+  <string id="261">Eingereiht</string>
+  <string id="262">Warten</string>
+  <string id="263">Starten</string>
+  <string id="264">Ausführen</string>
+  <string id="265">Stopen</string>
+  <string id="266">Pausieren</string>
+  <string id="267">Wiederholung</string>
+  <string id="268">Fehlerhaft</string>
+  <string id="269">Abrechen</string>
+  <string id="270">Fertig (Status ungültig !)</string>
+  <string id="271">Fertig</string>
+  <string id="272">Abgebrochen</string>
+  <string id="273">Fehlerhaft</string>
+  <string id="274">Abbruch</string>
+  
+  
+  <string id="154">Wert muss &gt= als %d sein</string>
+  <string id="155">Wert muss &lt;= als %d sein</string>
+  <string id="156">Auswählen eines Wertes</string>
+  <string id="157">Aufnahmeplan permament löschen ?</string>
+  <string id="158">Aufnahmeplan Änderungen gespeichert.</string>
+  <string id="159">Aufnahme Gruppe</string>
+  <string id="160">Zeige Titel</string>
+  <string id="161">Episode</string>
+  <string id="162">Live-Fernsehen Tuning abwarten</string>
+  <string id="163">Starte Seiten- ID</string>
+  <string id="164">DVDPlayer für LiveTV</string>
+  <string id="165">DVDPlayer für Aufzeichnungen</string>
+  <string id="166">Aufnahmen Live-Fernsehen</string>
+  <string id="167">Aufnahmen Live-Fernsehen Länge</string>
+  <string id="168">Erneute-Aufzeichnung</string>
+  <string id="169">Abspieln+Überspringen</string>
+  
+  
+  <!--  Common -->
+  <string id="210">Updaten</string>
+  <string id="211">[B]Datum[/B]</string>
+  <string id="212">[B]Titel[/B]</string>
+
+  <!-- Screen Titles -->
+  <string id="295">[B]Einstellungen[/B]</string>
+
+  
+  <!-- Home Screen -->
+  <string id="300">Aufzeichnungen ansehen</string>
+  <string id="301">Fernsehen</string>
+  <string id="302">TV Programm</string>
+  <string id="303">Zeitplan Aufnahmen</string>              
+  <string id="304">Nächste Aufnahmen</string>
+  <string id="305">Einstellungen</string>
+  
+  <string id="310">[B]Tuner[/B]</string>
+  <string id="311">[B]Status[/B]</string>
+  <string id="312">[B]Job[/B]</string>
+
+
+  <!-- Watch Recordings Screen -->
+  <string id="500">[B]Aufzeichnungen[/B]</string>
+
+
+  <!-- Recording Details Screen -->
+  <string id="600">[B]Aufzeichen Details[/B]</string>
+  <string id="601">Abspielen</string>
+  <string id="602">Abspielen + Überspringen</string>
+  <string id="603">Löschen</string>
+  <string id="604">Wieder-Aufnehmen</string>
+  <string id="605">Zeitplan bearbeiten</string>
+  <string id="606">Warteschlangen</string>
+  
+  <string id="610">Titel</string>
+  <string id="611">Beschreibung</string>
+  <string id="612">Erstausstrahlung</string>
+  <string id="613">Kannal</string>
+  <string id="614">Kategory</string>
+  <string id="615">Urspr. Sendedatum</string>
+  <string id="616">Grösse</string>
+  <string id="617">Werbeblöcke</string>
+  
+
+  <!-- Watch TV Screen -->
+  <string id="700">[B]Fernsehen[/B]</string>
+
+
+  <!-- TV Guide Screen -->
+  <string id="800">[B]TV Programm[/B]</string>
+
+
+  <!-- Recording Schedules Screen -->
+  <string id="900">[B]Aufnahmen Zeitplan[/B]</string>
+  <string id="901">[B]Titel[/B]</string>
+  <string id="902">[B]Typ[/B]</string>
+  <string id="903">[B]Priorität[/B]</string>
+  <string id="904">[B]Kannal[/B]</string>
+    
+  
+  <!-- Upcoming Recording Screen -->
+  <string id="1000">[B]Kommende Aufnahmen[/B]</string>
+  <string id="1001">[B]Datum[/B]</string>
+  <string id="1002">[B]Titel[/B]</string>
+  <string id="1003">[B]Start Zeit[/B]</string>
+  <string id="1004">[B]Kannal[/B]</string>
+  <string id="1005">[B]Tuner[/B]</string>
+  
+
+  <!-- Create/Edit schedule dialog -->
+  <string id="1100">titel1</string>
+  <string id="1101">titel2</string>
+  
+  <string id="1102">Aufzeichnen</string>
+  <string id="1103">Priorität</string>
+  <string id="1104">Checke für Dublikate mittels</string>
+  <string id="1105">Checke für Dublikate in</string>
+  <string id="1106">Episoden Filter</string>
+  <string id="1107">Auto-Werbung markieren</string>
+  <string id="1108">Auto-löschen</string>
+  <string id="1109">Auto-transcode</string>
+  <string id="1110">Aktuell halten</string>
+  <string id="1111">Aufzeichnung-neu und setze alte löschen</string>
+  <string id="1112">Start Aufzeichnung</string>
+  <string id="1113">Ende Aufzeichnung</string>
+  <string id="1114">Aufnahme erlaubt</string>
+  
+  <string id="1120">Sichern</string>
+  <string id="1121">Abbruch</string>
+  <string id="1122">Löschen</string>
+  
+  
+  <!-- Settings Screen -->
+  <string id="400">MySQL DB</string>
+  <string id="401">Hostname</string>
+  <string id="402">Port</string>
+  <string id="403">Datenbank Name</string>
+  <string id="404">Benutzer</string>
+  <string id="405">Passwort</string>
+  <string id="406">Standard port ist 3306</string>
+  <string id="407">Standard Datenbank Name ist mythconverg</string>
+  <string id="408">Standard Benutzer ist mythtv</string>
+            
+  <string id="410">MythTV</string>
+  <string id="411">Master Backend Hostname</string>
+  <string id="412">Master Backend Port</string>
+  <string id="413">Lokale Aufzeichnungs Vezeichniss(e)</string>
+
+  <string id="415">Löschen bestätigen</string>
+  <string id="416">Standort der Mythtv-Aufzeichnungen auf dem lokalen file-system.</string>
+  <string id="417">Mehrfache Verzeichnisse können durch eine Komma (Linux/Mac) oder ein Semmiklon (Windows) angegeben werden.</string>
+  
+  <string id="420">Bilder Galerie</string>
+  <string id="421">Erlaube TVDB.com</string>
+  <string id="422">Erlaube TheMovieDB.org</string>
+  <string id="423">Erlaube IMDB.com</string>
+  <string id="424">Erlaube Google Bilder Suche</string>
+  <string id="425">Zwischenspeicher löschen</string>
+  <string id="426">Zwischenspeicher erfolgreich gelöscht</string>
+    
+  <string id="430">Teste Einstellungen..</string>
+  <string id="431">Einstellungen korrekt</string>
+
+  <string id="440">Erweitert</string>
+  <string id="441">Erlaube lirc-anpassungen bei mehrfachen Tasten-Ereignissen</string>
+  <string id="442">Erlaube erweitertes protokollieren</string>
+  <string id="443">Twitter Feeds</string>
+  <string id="444">Sofern Sie lirc benutzen und zeitweise 2 Erreignisse erhalten anstelle von einem</string>
+  <string id="445">aktivieren Sie diese Option</string>
+  <string id="446">Komma separierte Liste mit öffentliche Twitter-Namen</string> 
+  
+  <string id="450">XBMC Einstellungen..</string>
+    
+  <string id="460">Über</string>
+
+  
+</strings>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Spanish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/es/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Izquierda + Derecha = Cambiar Álbum/Foto</string>
+    <string id="32002">Arriba + Abajo = Cambiar Fuente</string>
+    <string id="32003">Seleccionar = Entrar en Álbum</string>
+    <string id="32004">Retroceder = regresar al álbum / salir del complemento</string>
+    <string id="32005">Info = Alternar información en pantalla</string>
+    <string id="32006">Menú Contextual = Descargar Álbum</string>
+    <string id="32007">Reproducir = Comenzar presentación</string>
+    <string id="32008">0 = Alternar aspecto-ratio</string>
+
+    <!-- Settings -->
+    <string id="32100">No mostrar más esta ayuda</string>
+    <string id="32110">Aspecto-ratio por defecto</string>
+    <string id="32111">escala</string>
+    <string id="32112">mantener</string>
+    <string id="32120">Mostrar Flechas</string>
+    <string id="32130">Presentación aleatoria</string>
+    <string id="32140">Ruta de descarga del álbum</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Ayuda</string>
+    <string id="32201">Ajustes</string>
+
+    <!-- Script strings -->
+    <string id="32300">Escoger ruta de descarga por defecto</string>
+    <string id="32301">Obteniendo datos...</string>
+    <string id="32302">Objeto %d/%d</string>
+    <string id="32303">Objeto actual: %s %d%% </string>
+    <string id="32304">Descargando en:  %s</string>
+</strings>

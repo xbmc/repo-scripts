@@ -1,0 +1,48 @@
+version 2.3.1
+  - improved API error handling and debugging
+  - new context menu action via RunScript(script.trakt,action=contextmenu)
+  - silent option for manual sync via RunScript(script.trakt,action=sync,silent=True)
+
+version 2.3.0
+  - moved debug settings to their own menu (nate1280)
+  - new togglewatched action for skins/keymaps (nate1280)
+  - new rate action for skins/keymaps (nate1280)
+  - new tagging/list actions for skins/keymaps (nate1280)
+  - alternate rating notification style (nate1280)
+  - exclusion checks now work in syncing and scrobbling (nate1280)
+
+version 2.2.0
+  - lots of code optimizing and bug fixes (nate1280)
+  - sync fixes (nate1280)
+  - better scrobbling of streaming media (nate1280)
+  - updated translations
+
+version 2.1.0
+  - rate movies and episode after watching them (sschocke, N3MIS15)
+  - use urllib2 for connection (nate1280)
+  - rewrite notification service (nate1280)
+  - scrobbles playlisted items correctly (koying)
+  - exclude settings for media to not scrobble (ezechiel1917)
+  - scrobble multi-part episodes correctly (nate1280)
+
+version 2.0.0
+  - compatible with Frodo only, Eden support dropped
+  - supports absolute and dvd ordering (mizaki)
+  - sync your TV episode and movie collections to trakt (N3MIS15)
+  - auto clean your trakt collection so that it matches up with XBMC (N3MIS15)
+  - keep watched statuses synced between XBMC and trakt (N3MIS15)
+  - retry the telnet connection to prevent timeouts (sschocke)
+  - fixed authentication issue for incorrect username/password
+  - default to HTTPS on
+  - retry failed API calls (nate1280)
+
+version 1.0.1
+  - code optimization (seadog)
+  - use tvdb_id for much improved matching and international support
+  - hide error notifications during playback
+
+version 1.0.0
+  - initial release
+  - tv episode and movie scrobbling
+  - works with local files and remote streams with correct metadata
+  - tested with XBMC library mode, PleXBMC, Amazon, CBS

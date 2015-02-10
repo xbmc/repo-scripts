@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<emu_autoconfig version="1.0.0">
+	<os name="Android">
+		<detectionMethods>
+			<detectionMethod name="packagename">
+				<command>pm list packages</command>
+			</detectionMethod>
+		</detectionMethods>
+		<platform name="Atari 2600">
+			<emulator name="Stella (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/stella_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="2600.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.A2600Emu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.A2600Emu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Ataroid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.atari</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.androidemu.atari/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Commodore 64">
+			<alias>C64</alias>
+			<emulator name="C64.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.C64Emu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.C64Emu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Dreamcast">
+			<alias>Sega Dreamcast</alias>
+			<alias>DC</alias>
+			<emulator name="Reicast">
+				<detectionMethod name="packagename">
+					<packagename>package:com.reicast.emulator</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.reicast.emulator/.GL2JNIActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Game Boy">
+			<alias>GameBoy</alias>
+			<alias>GB</alias>
+			<emulator name="Gambatte (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/gambatte_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="GBC.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.GbcEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.GbcEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="GBCoid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.gbc</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.androidemu.gbc/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Game Boy Advanced">
+			<alias>GameBoy Advanced</alias>
+			<alias>GBA</alias>
+			<emulator name="VBA-M (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/vbam_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="VBA Next (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/vba_next_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="GameBoid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.gba</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.androidemu.gba/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="GBA.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.GbaEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.GbaEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Game Boy Color">
+			<alias>GameBoy Color</alias>
+			<alias>GBC</alias>
+			<emulator name="Gambatte (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/gambatte_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="GBC.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.GbcEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.GbcEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="GBCoid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.gbc</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.androidemu.gbc/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Game Gear">
+			<alias>Sega Game Gear</alias>
+			<alias>GG</alias>
+			<emulator name="Genesis Plus GX (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/genesis_plus_gx_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Gearoid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.gg</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.androidemu.gg/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Genesis">
+			<alias>Sega Genesis</alias>    
+			<emulator name="Genesis Plus GX (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/genesis_plus_gx_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Picodrive (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/picodrive_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Gensoid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.gens</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.androidemu.gens/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>        
+			<emulator name="MD.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.MdEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.MdEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator> 
+		</platform>
+		<platform name="Lynx">
+			<alias>Atari Lynx</alias>
+			<emulator name="Handy (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/handy_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="MAME">
+			<alias>Arcade</alias>
+			<emulator name="MAME 2003 (0.78) (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mame078_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="MAME 2010 (0.139) (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mame2010_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="MSX">
+			<emulator name="MSX.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.MsxEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.MsxEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Neo Geo">
+			<alias>NeoGeo</alias>
+			<alias>Neo</alias>
+			<emulator name="NEO.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.NeoEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.NeoEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Neo Geo Pocket">
+			<alias>NGP</alias>
+			<emulator name="Mednafen Neopop (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mednafen_ngp_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="NGP.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.NgpEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.NgpEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Neo Geo Pocket Color">
+			<alias>NGPC</alias>
+			<emulator name="Mednafen Neopop (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mednafen_ngp_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="NGP.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.NgpEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.NgpEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="NES">
+			<alias>Nintendo Entertainment System</alias>
+			<emulator name="FCEUmm (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/fceumm_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>   
+			<emulator name="Nestopia (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/nestopia_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>       
+			<emulator name="QuickNES (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/quicknes_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="NES.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.NesEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.NesEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="NESoid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.nes</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.androidemu.nes/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Nintendo 64">
+			<alias>N64</alias>
+			<emulator name="Mupen64Plus (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mupen64plus_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Mupen64Plus AE Free">
+				<detectionMethod name="packagename">
+					<packagename>package:paulscode.android.mupen64plus.free</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n paulscode.android.mupen64plus.free/paulscode.android.mupen64plusae.MainActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Mupen64Plus AE Free (root)">
+				<detectionMethod name="packagename">
+					<packagename>package:paulscode.android.mupen64plus.free</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/su</emulatorCommand>
+					<emulatorParams>-c 'am start --user 0 -n paulscode.android.mupen64plus.free/paulscode.android.mupen64plusae.MainActivity -a android.intent.action.VIEW -eu Uri "file://%rom%" &amp;&amp; am start --user 0 -S -n paulscode.android.mupen64plus.free/paulscode.android.mupen64plusae.PlayMenuActivity'</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Mupen64Plus AE">
+				<detectionMethod name="packagename">
+					<packagename>package:paulscode.android.mupen64plus</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n paulscode.android.mupen64plus/paulscode.android.mupen64plusae.MainActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Mupen64Plus AE (root)">
+				<detectionMethod name="packagename">
+					<packagename>package:paulscode.android.mupen64plus</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/su</emulatorCommand>
+					<emulatorParams>-c 'am start --user 0 -n paulscode.android.mupen64plus/paulscode.android.mupen64plusae.MainActivity -a android.intent.action.VIEW -eu Uri "file://%rom%" &amp;&amp; am start --user 0 -S -n paulscode.android.mupen64plus/paulscode.android.mupen64plusae.PlayMenuActivity'</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="N64oid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.n64</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.androidemu.n64/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Nintendo DS">
+			<alias>NDS</alias>
+			<alias>DS</alias>
+			<emulator name="DeSmuME (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/desmume_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="DraStic">
+				<detectionMethod name="packagename">
+					<packagename>package:com.dsemu.drastic</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.dsemu.drastic/.DraSticActivity -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e GAMEPATH "%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Playstation">
+			<alias>PS</alias>
+			<alias>PS1</alias>
+			<emulator name="Mednafen PSX (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mednafen_psx_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="PCSX ReARMed (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/pcsx_rearmed_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="ePSXe">
+				<detectionMethod name="packagename">
+					<packagename>package:com.epsxe.ePSXe</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.epsxe.ePSXe/.ePSXe -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e com.epsxe.ePSXe.isoName "%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="FPSE">
+				<detectionMethod name="packagename">
+					<packagename>package:com.emulator.fpse</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.emulator.fpse/.Main -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e path "%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="PSP">
+			<alias>Playstation Portable</alias>
+			<emulator name="PPSSPP">
+				<detectionMethod name="packagename">
+					<packagename>package:org.ppsspp.ppsspp</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n org.ppsspp.ppsspp/.PpssppActivity -e org.ppsspp.ppsspp.Shortcuts "%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="SEGA 32X">
+			<alias>32X</alias>
+			<emulator name="Picodrive (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/picodrive_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="SEGA CD">
+			<emulator name="Genesis Plus GX (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/genesis_plus_gx_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Picodrive (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/picodrive_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="MD.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.MdEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.MdEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator> 
+		</platform>
+		<platform name="SEGA Master System">
+			<alias>SMS</alias>
+			<emulator name="Genesis Plus GX (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/genesis_plus_gx_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="MD.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.MdEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.MdEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator> 
+		</platform>
+		<platform name="SNES">
+			<alias>Super Nintendo</alias>
+			<alias>Super Nintendo Entertainment System</alias>
+			<emulator name="bSNES (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/bsnes_performance_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="SNES9x (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/snes9x_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="SNES9x Next (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/snes9x_next_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="Snes9x EX">
+				<detectionMethod name="packagename">
+					<packagename>package:com.explusalpha.Snes9xPlus</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.explusalpha.Snes9xPlus/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>  
+			<emulator name="SNesoid">
+				<detectionMethod name="packagename">
+					<packagename>package:com.androidemu.snes</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start -n com.androidemu.snes/.EmulatorActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+
+			<emulator name="SuperGNES">
+				<detectionMethod name="packagename">
+					<packagename>package:com.bubblezapgames.supergnes</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.bubblezapgames.supergnes/.SuperGNES -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="SuperGNES Lite">
+				<detectionMethod name="packagename">
+					<packagename>package:com.bubblezapgames.supergnes_lite</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.bubblezapgames.supergnes_lite/.SuperGNES -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="TurboGrafx-16">
+			<alias>TurboGrafx 16</alias>
+			<alias>TG16</alias>
+			<emulator name="Mednafen PCE Fast (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mednafen_pce_fast_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+			<emulator name="PCE.emu">
+				<detectionMethod name="packagename">
+					<packagename>package:com.PceEmu</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -n com.PceEmu/com.imagine.BaseActivity -a android.intent.action.VIEW -eu Uri "file://%rom%"</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="Virtual Boy">
+			<alias>Nintendo Virtual Boy</alias>
+			<emulator name="Mednafen VB (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mednafen_vb_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+		<platform name="WonderSwan">
+			<emulator name="Mednafen WonderSwan (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mednafen_wswan_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>      
+		<platform name="WonderSwan Color">
+			<emulator name="Mednafen WonderSwan (RetroArch)">
+				<detectionMethod name="packagename">
+					<packagename>package:com.retroarch</packagename>
+				</detectionMethod>
+				<configuration>
+					<emulatorCommand>/system/bin/am</emulatorCommand>
+					<emulatorParams>start --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -e ROM "%rom%" -e LIBRETRO /data/data/com.retroarch/cores/mednafen_wswan_libretro_android.so -e CONFIGFILE /data/data/com.retroarch/retroarch.cfg -e IME com.android.inputmethod.latin/.LatinIME -n com.retroarch/.browser.retroactivity.RetroActivityFuture</emulatorParams>
+				</configuration>
+			</emulator>
+		</platform>
+	</os> 
+	<os name="Windows">
+		<detectionMethods>
+			<detectionMethod name="registry"/>
+			<detectionMethod name="commonFolders"/>
+		</detectionMethods>
+		<commonFolders>
+			<folder/>
+		</commonFolders>
+		<platform name="SNES">
+		</platform>
+	</os>
+	<os name="Linux">
+		<detectionMethods>      
+			<detectionMethod name="commonFolders"/>
+			<detectionMethod name="packagename"/>
+		</detectionMethods>
+		<commonFolders>
+			<folder/>
+		</commonFolders>
+		<platform name="SNES">
+		</platform>
+	</os>
+</emu_autoconfig>

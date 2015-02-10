@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type='dialog'>
+    <defaultcontrol always="true">201</defaultcontrol>
+    <backgroundcolor>0xaaaaaaaa</backgroundcolor>
+    <coordinates>
+        <posx>400</posx>
+        <posy>200</posy>
+    </coordinates>
+    <controls>
+        <control type="image" id="200">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>400</width>
+            <height>250</height>
+            <visible>true</visible>
+            <texture border="5" flipy="true" flipx="false">list_bg.png</texture>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        <control type="button" id ="201">
+            <description>Close Window button</description>
+            <posx>336</posx>
+            <posy>0</posy>
+            <width>64</width>
+            <height>32</height>
+            <label>-</label>
+            <font>-</font>
+            <texturefocus>DialogCloseButton-focus.png</texturefocus>
+            <texturenofocus>DialogCloseButton.png</texturenofocus>
+            <visible></visible>
+            <ondown>206</ondown>
+        </control>
+        <control type="label" id="202">
+            <posx>20</posx>
+            <posy>20</posy>
+            <width>180</width>
+            <visible>true</visible>
+            <label>New contact</label>
+            <font>font13</font>
+            <textcolor>FFFFFFFF</textcolor>
+        </control>
+
+        <control type="label" id="205">
+            <posx>20</posx>
+            <posy>80</posy>
+            <width>80</width>
+            <visible>true</visible>
+            <label>Name</label>
+            <font>font13</font>
+            <textcolor>FFB2D4F5</textcolor>
+        </control>
+        <control type="button" id ="206">
+            <posx>120</posx>
+            <posy>80</posy>
+            <width>250</width>
+            <height>30</height>
+            <label></label>
+            <font>font14</font>
+            <texturefocus>button-focus.png</texturefocus>
+            <texturenofocus>button-nofocus.png</texturenofocus>
+            <onup>201</onup>
+            <ondown>208</ondown>
+            <visible></visible>
+        </control>
+
+        <control type="label" id="207">
+            <posx>20</posx>
+            <posy>130</posy>
+            <width>80</width>
+            <visible>true</visible>
+            <label>URI</label>
+            <font>font13</font>
+            <textcolor>FFB2D4F5</textcolor>
+        </control>
+        <control type="button" id ="208">
+            <posx>120</posx>
+            <posy>130</posy>
+            <width>250</width>
+            <height>30</height>
+            <label></label>
+            <font>font14</font>
+            <texturefocus>button-focus.png</texturefocus>
+            <texturenofocus>button-nofocus.png</texturenofocus>
+            <onup>206</onup>
+            <ondown>220</ondown>
+            <visible></visible>
+        </control>
+
+        <control type="button" id ="220">
+            <posx>130</posx>
+            <posy>180</posy>
+            <width>110</width>
+            <height>30</height>
+            <label>Save</label>
+            <font>font14</font>
+            <align>center</align>
+            <texturefocus>button-focus.png</texturefocus>
+            <texturenofocus>button-nofocus.png</texturenofocus>
+            <onup>208</onup>
+            <onright>221</onright>
+            <ondown>221</ondown>
+            <visible></visible>
+        </control>
+        <control type="button" id ="221">
+            <posx>260</posx>
+            <posy>180</posy>
+            <width>110</width>
+            <height>30</height>
+            <label>Cancel</label>
+            <font>font14</font>
+            <align>center</align>
+            <texturefocus>button-focus.png</texturefocus>
+            <texturenofocus>button-nofocus.png</texturenofocus>
+            <onup>220</onup>
+            <onleft>220</onleft>
+            <visible></visible>
+        </control>
+    </controls>
+</window>

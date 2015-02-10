@@ -1,0 +1,85 @@
+#--------------------------------------------------------------------
+#VBulletin
+#--------------------------------------------------------------------
+
+url:threads=forumdisplay.php?f=!FORUMID!!PAGE!
+url:replies=showthread.php?t=!THREADID!!PAGE!
+
+url:page_arg=&page=!PAGE!
+filter:next=Next Page - Results ([\d,]+) to ([\d,]+) of ([\d,]+).*?(?P<page>Next Page - Results [\d,]+ to [\d,]+ of [\d,]+)
+filter:prev=Prev Page - Results ([\d,]+) to ([\d,]+) of ([\d,]+).*?(?P<page>Prev Page - Results [\d,]+ to [\d,]+ of [\d,]+)
+filter:page=>(?P<display>Page\s(?P<page>\d+)\sof\s(?P<total>\d+))<
+
+url:subscriptions=subscription.php
+url:forum_subscriptions=usercp.php
+
+url:login=login.php?do=login
+form:login_action=login.php
+form:login_user=vb_login_username
+form:login_pass=vb_login_password
+
+#######################################################
+#-- Posting -------------------------------------------
+#######################################################
+url:newpost=newreply.php?do=newreply&noquote=1&p=!POSTID!
+
+form:post_action=newreply.php
+form:post_title=title
+form:post_message=message
+form:post_submit_wait=1
+
+url:editpost=editpost.php?p=!POSTID!&do=editpost
+
+form:edit_post_action=do=updatepost
+form:edit_post_title=title
+form:edit_post_message=message
+form:edit_post_submit_wait=1
+
+url:quotepost=newreply.php?do=newreply&p=!POSTID!
+
+url:deletepost=editpost.php?do=editpost&p=!POSTID!
+form:delete_action=editpost.php?do=deletepost
+form:delete_control1=radio:name.deletepost=delete
+
+#######################################################
+#-- Private Messaging ---------------------------------
+#######################################################
+url:private_messages_csv=private.php?do=downloadpm&dowhat=csv
+format:pm_csv_columns=date,boxid,title,user,to,message
+
+url:pm_new_message=private.php?do=newpm
+form:pm_name=vbform
+form:pm_action=private.php
+form:pm_recipient=recipients
+form:pm_title=title
+form:pm_message=message
+form:pm_submit=sbutton
+form:pm_submit_wait=1
+
+url:private_messages_inbox=private.php?folderid=0
+filter:pm_pmid_list=private.php\?do=showpm&amp;pmid=(?P<pmid>\d+)"
+url:private_messages_delete=private.php?do=showpm&pmid=!PMID!
+form:pm_delete_action=private.php?do=managepm
+form:pm_delete_control1=checkbox:id.deletepm=True
+
+#######################################################
+#-- Subscribing ---------------------------------------
+#######################################################
+form:subscribe_notification_control1=radio:name.emailupdate=1
+form:subscribe_forum_notification_control1=radio:name.emailupdate=2
+form:subscribe_thread_action=doaddsubscription
+form:subscribe_forum_action=doaddsubscription
+
+url:subscribe_thread=http://forums.boxee.tv/subscription.php?do=addsubscription&t=!THREADID!	
+url:unsubscribe_thread=http://forums.boxee.tv/subscription.php?do=removesubscription&t=!THREADID!	
+url:subscribe_forum=http://forums.boxee.tv/subscription.php?do=addsubscription&f=!FORUMID!
+url:unsubscribe_forum=http://forums.boxee.tv/subscription.php?do=removesubscription&f=!FORUMID!
+
+#######################################################
+#-- Post Stuff ----------------------------------------
+#######################################################
+filter:quote_class=bbcode_quote
+filter:quote_user_prefix=posted by(?i)
+filter:quote_tag=quote=%s
+
+filter:post_url_prefix=showthread.php

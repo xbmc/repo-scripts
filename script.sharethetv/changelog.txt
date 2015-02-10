@@ -1,0 +1,41 @@
+Version 2.0.6
+    * Add language localization
+
+Version 2.0.5
+    * Better error handling
+
+Version 2.0.4
+    * Add dialog progress window for library updates
+
+Version 2.0.3
+    * Fix XBMC python version and missing tag in addon.xml
+
+Version 2.0.2
+    * Fix formatting of changelog.txt
+
+Version 2.0.1
+    * Remove unused settings
+
+Version 2.0.0
+    * Frodo compatibility.  Only manually triggered updates are supported in this version, no background updates.
+
+Version 1.1.0
+    * Leaving XBMC running for long periods of time would slow down system.  Method of checking the movie count has changed to fix this.
+
+Version 1.0.6
+    * Fixed bug related to slow shutdowns when autorun enabled
+
+Version 1.0.5
+    * Send imdb id of each movie to improve results
+
+Version 1.0.2
+    * Display message if unable to contact server rather than crashing
+
+Version 1.0.1
+    * Update denied if user has an empty movie library
+
+Version 1.0.0
+    * Updated description, disclaimer
+
+Version 0.9.0
+    * Initial working version

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Thai language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/th/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">สุ่ม</string>
+    <string id="3002">ย้อนกลับ</string>
+    <string id="3118">ซ่อนอยู่</string>
+
+    <!-- Settings -->
+    <string id="3200">ทั่วไป</string>
+    <string id="3203">ชื่อผู้ใช้</string>
+    <string id="3204">รหัสผ่าน</string>
+    <string id="3209">ทั้งหมด</string>
+    <string id="3233">สุ่ม</string>
+    <string id="3234">ต่อไป</string>
+
+    <!-- Functions -->
+    <string id="3260">ต่อไป</string>
+    <string id="3261">ก่อนหน้า</string>
+    <string id="3264">ที่ชื่นชอบ</string>
+</strings>

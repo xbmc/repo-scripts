@@ -1,0 +1,8 @@
+What's new:
+- phone book moved from addons folder to home folder, so it will remains 
+after update/reinstall
+- fixed status of call/hangup buttons
+- added status box with active contact info (incoming/outgoing calls)
+- fixed phone book editing
+- added ability to specify video codec in Settings
+- elaborated addon initialization

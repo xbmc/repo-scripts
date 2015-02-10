@@ -1,0 +1,29 @@
+Message Window Help
+@item:posttop=Title Bar
+At the top left is the users avatar, if available.
+
+Next, the 'Post Reply' or 'Send PM' button opens the editor so you can create a new post/message. If you are not logged in, the button will be disabled.
+
+After That is the post/message title, if set - followed by the post/message date.
+
+The green/gray circle at the top right is green when you are logged in and grey when you are not.
+
+If mouse support is enabled in XBMC, a close button will be visible to the right.
+@item:message=Message View
+Shows the formatted message.
+
+Links will show as: link_text (Link: [B]http://url[/B]) - and can be followed by pressing left to bring up the links list. Clicking a link will open WebViewer to view a web page or, for post and thread links, open them in Forum Browser.
+
+Images will show as: [COLOR FFFF0000]I[/COLOR][COLOR FFFF8000]M[/COLOR][COLOR FF00FF00]G[/COLOR][COLOR FF0000FF]#[/COLOR][COLOR FFFF00FF]0[/COLOR]: [I]http://img_url[/I] - and can be viewed by pressing right to bring up the images list. Clicking an image will bring up the image viewer.
+
+If the ShareSocial addon is installed, when a link or image is selected, the context menu will give the option to copy the link/image url to the clipboard. You can later paste this url into a post/pm.
+@item:context=Context Menu
+Some options will be unavailable depending on login status.
+
+[B]Quote[/B]: Open the post editor dialog with the current post/message quoted
+
+[B]Delete[/B]: Visible on your posts/messages. Delete the current post/message. This may not be available, or may not work depending on the forum interface or what the forum allows.
+
+[B]Edit[/B]: Visible on your posts/messages. Allows you to edit the post/message.
+
+[B]User Extra Info[/B]: View Extra info such as reputation, etc - if available.

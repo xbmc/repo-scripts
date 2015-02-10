@@ -1,0 +1,11 @@
+<parserConfig>
+	<GameGrammar type="multiline">
+		<SkippableContent closeStmnt="true" skipTo="Back Cover&lt;/p&gt;" ></SkippableContent>
+		<SkippableContent closeStmnt="true">Back Cover&lt;/p&gt;</SkippableContent>		
+		<SkippableContent closeStmnt="true" skipTo="&lt;a href=&quot;" ></SkippableContent>
+		<SkippableContent closeStmnt="true">&lt;a href=&quot;</SkippableContent>
+		<url closeStmnt="true" skipTo="&quot;" appendResultTo="http://www.mobygames.com"></url>
+		<SkippableContent closeStmnt="true" skipTo="Media&lt;/p&gt;" ></SkippableContent>
+		<SkippableContent closeStmnt="true">Media&lt;/p&gt;</SkippableContent>
+	</GameGrammar>
+</parserConfig>

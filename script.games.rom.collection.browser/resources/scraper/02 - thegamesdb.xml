@@ -1,0 +1,17 @@
+<parserConfig>
+	<GameGrammar type="xml" root="Game">		
+		<Game>GameTitle</Game>
+		<SearchKey>GameTitle</SearchKey>
+		<Platform>Platform</Platform>
+		<Description>Overview</Description>
+		<Genre>Genres/genre</Genre>
+		<Players>Players</Players>
+		<Developer>Developer</Developer>
+		<Publisher>Publisher</Publisher>
+		<ReleaseYear dateFormat="%m/%d/%Y">ReleaseDate</ReleaseYear>
+		<Filetypefanart appendResultTo="http://thegamesdb.net/banners/">Images/fanart/original</Filetypefanart>
+		<Filetypeboxfront appendResultTo="http://thegamesdb.net/banners/">Images/boxart[@side="front"]</Filetypeboxfront>
+		<Filetypeboxback appendResultTo="http://thegamesdb.net/banners/">Images/boxart[@side="back"]</Filetypeboxback>
+		<Filetypescreenshot appendResultTo="http://thegamesdb.net/banners/">Images/screenshot/original</Filetypescreenshot>
+	</GameGrammar>
+</parserConfig>

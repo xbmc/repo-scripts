@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "אין תיאור"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]טוען מידע ממקור חיצוני...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "מחשב זמן שנותר..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "בערך %d שניות נותרו..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "טעינת מידע כבר מתרחשת ברקע..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "עכבר"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "עכשיו"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]טיפ![/B] אתה יכול גם להשתמש בלחצן הגלילה בעכבר"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "בטל"
+
+msgctxt "#30009"
+msgid "No program available"
+msgstr "אין תכנית זמינה"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "כללי"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "מקור"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "הצג ערוצים מקטגורית"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "קובץ XMLTV"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "נקה מטמון..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "הסתיים!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "הצג התראה לפני התחלת התכניות הנבחרות"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "השתמש בתמונת תכנית כרקע"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "נקה את כל התזכורות..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "זכור לנקות את המטמון בעת החלפת מקור"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "עדכן פרטי תכנית בעת הפעלת XBMC"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "נגן ערוצים בעזרת ההרחבה YouSee web-tv"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "התראות"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "נגן ערוצים בעזרת ההרחבה Danish Live TV"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "אתחול"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- נקה תחילה מטמון"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "חפש אייקוני ערוצים ב-"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "הפעל תפריט OSD"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "השבתת תפריט OSD אולי תפתור בעיית גמגום וידאו."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "השתמש בשיטת הזרמה חלופית (נדרש עבור הרחבות מסוימות)."
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "מצב הזרמה חלופי אינו תואם עם תפריט OSD"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "כתובת XMLTV"
+
+msgctxt "#30123"
+msgid "XMLTV type"
+msgstr "סוג XMLTV"
+
+msgctxt "#30124"
+msgid "Local file"
+msgstr "קובץ מקומי"
+
+msgctxt "#30125"
+msgid "URL"
+msgstr "כתובת"
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "אופס, מצטער!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "לא ניתן היה לטעון פרטי התכנית,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "בדוק הגדרות או נסה שנית מאוחר יותר..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "מאחר וההגדרות אינן נכונות!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "נראה שיש למעטפת שלך"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "גרסה מיוחדת של מדריך התכניות שאינה מעודכנת."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "אנא בדוק מול מעטפת אחרת..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "נראה כי מסד נתוני מדריך התכניות אינו תקין."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "מסד הנתונים ימחק ויווצר מחדש."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "למרבה הצער הגדרות ערוצים, וכו' אבדו."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "ב-[B]%s[/B] בעוד 5 דקות..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "ב-[B]%s[/B] מתחילה כעת..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "צפה ב-%s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "להזכיר"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "אל תזכיר"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "בטל"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "בחר הזרמה"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "אתה יכול לבחור לנגן קובץ strm. משלך, כאשר ברצונך לצפות בערוץ זה."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "הסר קובץ הזרמה"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "ערוצים"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "צא"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]ערוך סדר ערוצים וחשיפה[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "נווט למעלה או למטה לשינוי מיקום [CR]הערוץ. בחר או נווט שמאלה לאישור[CR]שינוי המיקום."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "שמור"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "בטל"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]הגדר הזרמה[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr "קובץ strm"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "מועדפים"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "הרחבות"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "תצוגה מקדימה"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "שמור"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "בטל"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "עצור תצוגה מקדימה"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "עיון..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "חלץ על עיון... שלמטה ונווט לקובץ ההזרמה שלך.לאחר שתבחר את הקובץ תוכל לצפות בהזרמה בתצוגה מקדימה לשם בחינה האם תקין ב-XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "בחר מועדף מלמטה. רק מועדפי [I]PlayMedia[/I] נתמכים."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "ערוץ זה מוצע ע\"י מספר הרחבות.[CR]לצפייה בחר אחת מהן."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "כתובת JSON-EPG"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "נגן ערוצים בעזרת הרחבת Weeb.Tv"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "TV Guide מוגדר להזרים באמצעות ההרחבה Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "שאינה מותקנת."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "הזרמה בעזרת הרחבה זו כעת מנוטרלת."

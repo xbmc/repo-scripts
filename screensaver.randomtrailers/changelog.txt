@@ -1,0 +1,110 @@
+v.1.1.17 (April 05,2014)
+ - fixed issue causing crash with tmdb selected, and layout error in tmdb settings
+
+v.1.1.16 (April 02,2014)
+ - fixed issue with crashing on startup when library movie has no trailer and we try to find one from tmdb.
+ 
+v.1.1.15 (March 08,2014)
+ - fixed issues with rating limits with unrated movies.
+ - now pauses trailer when displaying info
+ - transparent background for info shows dimmed paused trailer.
+
+v.1.1.14 (March 06,2014)
+ - optimized trailer search on tmdb when rating limits applied
+ - fixed issue where search count not displaying correctly for tmdb searches
+ 
+v.1.1.13 (March 03,2014)
+ - updated filter feature to filter by rating limit for all trailers (perviously only iTunes trailers were filtered)
+
+v.1.1.12 (February 12,2014)
+- added feature to play trailers in groups of n with x amount of delay between groups.
+
+v.1.1.11 (February 10,2014)
+- added feature to filter tmdb trailers by New DVD Releases
+
+v.1.10 (February, 07, 2014)
+- fixed issue playing library trailers
+
+v.1.1.9 (February, 05,2014)
+- fixed issue causing crash for not standard ascii characters. Fix EOL
+
+v.1.1.8 (January, 11, 2014:
+- added ability to play trailers from You Tube. Trailers are located using themoviedb.org.
+- added CouchPotato integration, while watching trailer pressing Q puts current movie in you CouchPotato Queue.
+
+v.1.1.7 (January, 5, 2014) :
+- added feature to display trailer info for iTunes trailers.
+-cleaned up and optimized code
+-moved hide info option from library to general settings
+
+v.1.1.6 (December 31,2013) :
+- added feature to select type of trailers form iTunes, Coming Soon, Just Added, Most Popular,  Exclusive and All
+
+v.1.1.5 (Decembeor 30,2013) :
+- added feature to filter iTunes trailers. you can filter by selected genre(s), and by rating limit. so only play family movies that are rated G for example.
+
+v.1.1.4 (December 29, 2013) :
+ - added ability to play random trailers from multiple sources
+ 
+v.1.1.3 (December 28, 2013) :
+ - added ability to play random trailers form apple itunes
+ - reworked options screens to reflect multiple trailer sources
+ 
+v.1.1.2 (December 26, 2013) :
+ - added feature to adjust volume during trailer playback
+ 
+v.1.1.1 (December 09, 2013) :
+ - removed font changes
+ 
+v.1.1.0 (November 27, 2013) :
+ - updates for gothum compatibility
+ - added ability to play trailers from a folder rather than the users library
+ - fixed issue where number of trailers incorrect if hide watched movies selected.
+ - trailers will now not repeat until all trailers have been played.
+ - fixed issue where trailers would start playing while music is playing
+ 
+v.1.0.12 (November 25, 2013) :
+ - added feature if movie title hidden pressing m displays the title for 2 seconds
+ 
+v.1.0.11 (November 25, 2013) :
+ - added option to hide movie title when playing
+ - removed malfunctioning password options
+ 
+v.1.0.9 (july 26, 2013) :
+ - localized strings for dialogs
+ 
+v1.0.8 (July 25, 2013) :
+ - added option to force full screen
+ 
+v1.0.7 (June 16, 2013) :
+ - merged program, service and screensaver into one addon
+ - added option to set number of trailers to 0 for continous playback.
+
+v1.0.6 (June 14, 2013) :
+  - added arrow controls for remotes without keyboards
+      UP = show info
+      DOWN = hide info
+      RIGHT = next trailer
+      LEFT = exit trailers
+      
+v1.0.5 (June 12, 2013) :
+  - fixed module import issues. fixed font issues
+  
+v1.0.4 (June 10, 2013) :
+  - improved movie information screen
+  - added feature and setting to exclude recently watched movies from trailers. Set to number of days after movie
+    has been played before including in trailers
+  
+v1.0.3 (June 4, 2013) :
+  - added setting to hide movie info during playback of trailer
+    press I during playback of trailer to toggle info display
+  
+v1.0.2 (June 3, 2013) :
+  - added feature to allow playing movie of currently playing trailer by pressing enter while trailer is playing
+  - added feature to allow user to press esc to exit, or X to quit trailer but play remaining.
+
+v1.0.1 (May 30, 2013)
+  - added option to not ask for genre filter
+
+v1.0.0 (May 27, 2013) :
+  - initial release, includes opitons for selecting genre, nubmer trailers, and to display open and close animation.

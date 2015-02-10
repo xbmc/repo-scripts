@@ -1,0 +1,7 @@
+1.0.0
+- First Try
+1.0.1
+- Added parameter for mapping multiple buttons
+1.0.2
+- Added some commands to the list
+- Added support for command combinations

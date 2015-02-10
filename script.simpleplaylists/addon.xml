@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.simpleplaylists"
+       name="SimplePlaylists"
+       version="1.1.1"
+       provider-name="AddonScriptorDE">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+    <provides>video audio image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+      <summary lang="en">Add local media (video/audio/images) and add-on content to playlists while browsing/watching your media. To use this addon you have to map the following command to a key: "RunPlugin(plugin://script.simpleplaylists/?mode=addCurrentUrl)". More Info: forum.xbmc.org</summary>
+      <summary lang="de">Lokale Medien (Videos/Musik/Bilder) und Add-on Inhalte beim Durchsuchen/Abspielen zu Playlisten hinzufügen. Um das Addon nutzen zu können muss folgender Befehl einer Taste zugewiesen werden: "RunPlugin(plugin://script.simpleplaylists/?mode=addCurrentUrl)". Mehr Infos: xbmcnerds.com, forum.xbmc.org</summary>
+      <language></language>
+      <description lang="en">Add local media (video/audio/images) and add-on content to playlists while browsing/watching your media. To use this addon you have to map the following command to a key: "RunPlugin(plugin://script.simpleplaylists/?mode=addCurrentUrl)". More Info: forum.xbmc.org</description>
+      <description lang="de">Lokale Medien (Videos/Musik/Bilder) und Add-on Inhalte beim Durchsuchen/Abspielen zu Playlisten hinzufügen. Um das Addon nutzen zu können muss folgender Befehl einer Taste zugewiesen werden: "RunPlugin(plugin://script.simpleplaylists/?mode=addCurrentUrl)". Mehr Infos: xbmcnerds.com, forum.xbmc.org</description>
+    <platform>all</platform>
+  </extension>
+</addon>

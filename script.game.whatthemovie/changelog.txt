@@ -1,0 +1,52 @@
+1.0.9 (28.01.2014)
+- fixed translations in gotham
+
+1.0.8 (unreleased)
+- increate timeout to 30
+- fixed potential exception while retrieving next shot
+- fixed explicit and blocked shot error
+- added experimental preloading of next/prev shots
+
+1.0.7 (28.08.2013)
+- update translations
+
+1.0.6
+- updated translations
+- cosmetic changes
+
+1.0.5
+- Fix image retrieving (again...)
+- Updated translations
+
+1.0.4
+- Fix image retrieving
+
+1.0.3
+- Fix white shot (website changes)
+- Catch HTTPError and URLError in background threads
+
+1.0.2
+- Multithreading background scraping of shots
+- Now showing overall-score in addition to featurefilms-score
+- now going back and forward through already scraped shots with 'back' and 'random'
+- Code cleanups and improvements
+- Removed the need for mechanize-lib
+
+1.0.0
+- Eden release
+
+0.9.1
+- Bugfix (error if player has exactly 1 point)
+
+0.9.0 Initial zip-release version
+- Login with your whatthemovie.com account
+- Solve, favourite, bookmark and rate shots
+- Show the next, next unsolved and next random Shot
+- Instantly go back to the last seen shot
+- Zoom the snapshot
+- Rate with number keys score:1-10 = key:1-0
+- Set random and navigation options
+- Jump automatically to the next or random next shot if your guess was right
+- Chose five Languages to see if you can enter the movietitle in this languages
+- Set hotkeys for the functions: guess, random, back, next, previous, jump, bookmark, favourite and solve
+- Configure the visibility of shot properties: posted by, solved, id, date, flags, tool- and navigation buttons

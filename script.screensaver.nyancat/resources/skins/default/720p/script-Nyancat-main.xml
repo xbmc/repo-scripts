@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+    <controls>
+        <control type="label" id="1">
+            <description>Moving background controller. If visible background will move.</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>0</width>
+            <height>0</height>
+        </control>
+        <control type="largeimage">
+            <description>Background Image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>background.jpg</texture>
+            <animation effect="slide" start="0,0" end="-1280,0" center="auto" time="3000" loop="true" condition="!Control.IsVisible(1)">conditional</animation>
+        </control>
+        <control type="largeimage">
+            <description>Background Image 2</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1280</width>
+            <height>720</height>
+            <texture>background.jpg</texture>
+            <animation effect="slide" start="1280,0" end="0,0" center="auto" time="3000" loop="true" condition="!Control.IsVisible(1)">conditional</animation>
+        </control>
+        <control type="image" id="2">
+            <description>Rainbow</description>
+            <posx>0</posx>
+            <posy>200</posy>
+            <width>480</width>
+            <height>320</height>
+            <texture>rainbow.gif</texture>
+        </control>
+        <control type="image">
+            <description>Nyan nyan nyan nyan nyan nyan nyan nyan nyan nyan nyan</description>
+            <posx>320</posx>
+            <posy>180</posy>
+            <width>640</width>
+            <height>360</height>
+            <texture>nyan_cat.gif</texture>
+        </control>
+    </controls>
+</window>

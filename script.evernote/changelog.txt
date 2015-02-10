@@ -1,0 +1,90 @@
+X-Note Changelog
+
+TODO:
+ Add an option to view public notebook URLs
+
+Current Version : 0.4.0
+
+*** 0.4.0 ***
+
+Remove internal oauth2
+Reduce logging
+
+*** 0.3.1 ***
+
+Added XML declarations to all xml files
+
+*** 0.3.0 ***
+
+Fix a skin issue with overflowing text on the notebooks list
+Fixed deprecated items in skin
+Updated addon.xml for Gotham
+Converted strings.xml to strings.po
+Added fanart.jpg
+
+*** 0.2.11 ***
+
+Fix for errors caused on platforms where setting the timestamp of a file is not allowed
+
+*** 0.2.10 ***
+
+Fix: Added httplib2 for platforms where it is not present (ie Ouya)
+
+*** 0.2.9 ***
+
+Added httplib2 for platforms where it is not present (ie Ouya)
+
+*** 0.2.8 ***
+
+Added an option in the settings 'Authorize User'
+
+*** 0.2.2 - 0.2.7 ***
+
+Small changes for testing
+
+*** 0.2.1 ***
+
+Fix for error when attempting to authorize on some systems
+
+*** 0.2.0 ***
+
+Changes to handle new authentication method
+Removed password/crypto settings
+Fix for viewing image notes
+Fix for empty notes continuing to display 'Loading Content...' after loading
+
+*** 0.1.9 ***
+
+Updated Evenote api to current 1.22 (08-30-2012)
+Added a workaround for SSL errors with some openssl versions (ie with Ubuntu 12.04)
+Use userStore.getNoteStoreUrl to get the NoteStore url as per currnet api example
+
+*** 0.1.8 ***
+
+Made changes to accommodate clipboard name change from Clipboard to SSClipboard
+
+*** 0.1.7 ***
+
+Added an option to view a published notebook's URL, with option to copy the URL to the clipboard (Currently only pasteable into Forum Browser)
+Updated Evenote api to current 1.21 (06-08-2012)
+Now shows linked public and private shared notebooks
+
+*** 0.1.6 ***
+
+Now should find log file on Windows systems (perhaps other systems wouldn't have worked previously as well)
+
+*** 0.1.5 ***
+
+Bug fixes for encoding, errors after creating new note, and error possibly caused when no notebooks have notes.
+
+*** 0.1.4 ***
+
+Added ability to be a share target for ShareSocial interaction
+
+*** 0.1.3 ***
+
+Fixed bug with failed startup
+
+*** 0.1.2 ***
+
+Initial public beta release

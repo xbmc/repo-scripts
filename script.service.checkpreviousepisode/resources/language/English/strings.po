@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Version Check
+# Addon id: script.xbmc.checkpreviousepisode
+# Addon Provider: Lucleonhart
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: xbmc@lucleonhart.de\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Lucleonhart\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Missing Episode"
+msgstr ""
+
+msgctxt "#32002"
+msgid "The previous episode is missing from your library!"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Are you sure you want to play this one?"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Unwatched Episode"
+msgstr ""
+
+msgctxt "#32005"
+msgid "You have not watched the previous episode!"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Browse show"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Would you like to browse the episodes of this show?"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Show Option to browse the show"
+msgstr ""

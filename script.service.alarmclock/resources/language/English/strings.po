@@ -1,0 +1,120 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Alarm Clock
+# Addon id: script.service.alarmclock
+# Addon version: 0.0.1
+# Addon Provider: remigius
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#English
+
+msgctxt "#30001"
+msgid "Alarm 1"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Alarm 2"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Alarm 3"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Alarm 4"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Alarm 5"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Volume"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Hour"
+msgstr ""
+
+msgctxt "#30011"
+msgid "Minute"
+msgstr ""
+
+msgctxt "#30012"
+msgid "Day"
+msgstr ""
+
+msgctxt "#30013"
+msgid "Play"
+msgstr ""
+
+msgctxt "#30014"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "#30015"
+msgid "Action"
+msgstr ""
+
+msgctxt "#30016"
+msgid "Play file"
+msgstr ""
+
+msgctxt "#30017"
+msgid "Play URL"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Enable duration"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Duration in minutes"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#30022"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#30024"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#30026"
+msgid "Sunday"
+msgstr ""
+
+msgctxt "#30027"
+msgid "Mon - Fri"
+msgstr ""
+
+msgctxt "#30028"
+msgid "Everyday"
+msgstr ""

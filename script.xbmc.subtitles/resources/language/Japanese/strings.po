@@ -1,0 +1,486 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "検索"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "検索文字列を手動で入力"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "字幕の検索中 %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "接続中..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "字幕をダウンロード中..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "字幕ファイルがダウンロードされ取り出されました"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "接続に失敗しました"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "字幕の取り出しに失敗"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "ローカルの字幕が利用可能"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "タイムアウトの制限時間内にサービスの反応が返ってきませんでした"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "字幕が見つかりませんでした！"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "字幕が見つかりました"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "親フォルダーを使って検索"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "選択した先には字幕を保存できません"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "この字幕を一時的に有効にしますか？"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "映画名 (年) を入力"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "サーバーが混み合っています。しばらくしてから再度試してください。"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "ログインに失敗しました。アドオン設定を確認してください。"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "通知エリアをご覧ください。"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "通知エリアの画像を見てコードを入力"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "利用可能なサービス"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "これらの字幕をダウンロードするにはログインする必要があります。[CR]アドオン設定が正しいかチェックしてください。"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "アドオン設定"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "字幕フォルダーを選択"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "言語"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "第一言語"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "第二言語"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "サーバー"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net ユーザー名"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net パスワード"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "高度な設定"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "字幕のダウンロードフォルダーを映画と同じに"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- カスタムの字幕ダウンロードパスを設定"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "検索文字列を手動で入力"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "第三言語"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "デフォルトのムービーサービスを選択"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "デフォルトのテレビショーサービスを選択"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "検索結果にファイル名を表示"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "親フォルダーを使って検索"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "ファイル名に言語名を追加"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "デフォルトタイムアウトを設定"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV ユーザー名"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV パスワード"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa ユーザー名"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa パスワード"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky ユーザー名"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky パスワード"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "見つからないときは次の検索サービスで探す"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx ユーザー名"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx パスワード"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs ユーザー名"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs パスワード"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs ユーザー名"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs パスワード"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone ユーザー名"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone パスワード"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- 字幕のタイプを選択:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl ユーザー名"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl パスワード"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents ユーザー名"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents パスワード"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "字幕が見つかりませんでした"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "字幕が見つかりました"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "タイトルを検索中... お待ちください!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "ダウンロード中... しばらくお待ちください"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "取り出し中... しばらくお待ちください"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "取り出し完了!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas ユーザー名"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas パスワード"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "アルバニア語"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "アラビア語"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "ベラルーシ語"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "ボスニア語 (ラテン)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "ブルガリア語"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "カタロニア語"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "中国語"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "クロアチア語"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "チェコ語"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "デンマーク語"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "オランダ語"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "英語"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "エストニア語"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "フィンランド語"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "フランス語"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "ドイツ語"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "ギリシャ語"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "ヘブライ語"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "ヒンディー語"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "ハンガリー語"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "アイスランド語"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "インドネシア語"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "イタリア語"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "日本語"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "韓国語"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "ラトビア語"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "リトアニア語"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "マケドニア語"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "ノルウェー語"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "ポーランド語"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "ポルトガル語"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "ポルトガル語 (ブラジル)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "ルーマニア語"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "ロシア語"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "セルビア語 (ラテン)"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "スロバキア語"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "スロベニア語"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "スペイン語"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "スウェーデン語"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "タイ語"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "トルコ語"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "ウクライナ語"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "ベトナム語"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "ペルシャ語"

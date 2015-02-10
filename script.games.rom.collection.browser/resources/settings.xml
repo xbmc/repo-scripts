@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="45000">
+		<setting id="rcb_skin" label="45001" type="labelenum" values="Confluence|Night|Simplicity" default="Confluence"/>
+		<setting id="rcb_logLevel" label="45002" type="labelenum" values="ERROR|WARNING|INFO|DEBUG" default="INFO"/>
+		<setting id="rcb_cachingOption" label="45003" type="labelenum" values="CACHEALL|CACHEITEM|CACHEITEMANDNEXT" default="CACHEITEMANDNEXT"/>
+		<!--<setting id="rcb_memDB" label="Load the DB into memory" value="false" type="bool" default="false"/>-->
+		<setting id="rcb_saveViewStateOnExit" label="45004" type="bool" default="true"/>
+		<setting id="rcb_saveViewStateOnLaunchEmu" label="45005" type="bool" default="true"/>
+	</category>
+	
+	<category label="45006">
+		<setting id="rcb_scrapOnStartUP" label="45007" value="false" type="bool" default="false"/>
+		<setting id="rcb_showImportOptions" label="45008" type="bool" default="true"/>
+		<setting id="rcb_scrapingMode" label="45009" type="labelenum" values="Automatic: Accurate|Automatic: Guess Matches|Interactive: Select Matches" default="Automatic: Accurate"/>
+		<setting id="rcb_fuzzyFactor" label="45010" type="enum" values="0.5|0.6|0.7|0.8|0.9|1.0" default="2"/>
+		<setting id="rcb_createNfoWhileScraping" label="45011" type="bool" default="true"/>
+		<setting id="rcb_ignoreGamesWithoutDesc" label="45012" type="bool" default="false"/>
+		<setting id="rcb_ignoreGamesWithoutArtwork" label="45013" type="bool" default="false"/>
+		<setting id="rcb_enableFullReimport" label="45014" type="bool" default="false"/>
+		<setting id="rcb_overwriteWithNullvalues" label="45015" type="bool" default="false"/>
+		<setting id="rcb_useNfoFolder" label="45016" type="bool" />
+		<setting id="rcb_nfoFolder" label="45017" type="folder" enable="eq(-1,true)" />
+	</category>
+	
+	<category label="45018">
+		<setting id="rcb_showFavoriteStars" label="45019" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllConsoles" label="45020" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllGenres" label="45021" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllYears" label="45022" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllPublisher" label="45023" type="bool" default="true"/>
+		<setting id="rcb_showEntryAllChars" label="45024" type="bool" default="true"/>
+		<setting id="rcb_preventUnfilteredSearch" label="45025" type="bool" default="false"/>
+	</category>
+	
+	<category label="45026">
+	    <setting id="rcb_useVBInSoloMode" label="40097" type="bool" default="false"/>
+		<setting id="rcb_startupDelay" label="40096" type="slider" default="1000" range="100,100,2000" option="int"/>
+		<setting id="rcb_escapeEmulatorCommand" label="45027" value="false" type="bool" default="false"/>
+		<setting id="rcb_prelaunchDelay" label="40094" type="slider" default="1000" range="100,100,2000" option="int"/>
+		<setting id="rcb_postlaunchDelay" label="40095" type="slider" default="1000" range="100,100,2000" option="int"/>
+		<setting id="rcb_suspendAudio" label="40099" type="bool" default="true"/>
+		<setting id="rcb_toggleScreenMode" label="40100" type="bool" default="true"/>
+		<setting id="rcb_pathToEmuAutoConfig" label="40101" type="file" />
+	</category>
+	
+	<setting id="rcb_view_mode" visible="false" value="" type="text"/>
+	<setting id="rcb_launchOnStartup" visible="false" type="bool" default="false"/>
+	<setting id="rcb_scrapeOnStartupAction" visible="false" type="labelenum" values="update|cancel|nothing" default="nothing"/>
+	<setting id="rcb_favoritesSelected" visible="false" type="bool" default="false"/>
+	<setting id="rcb_searchText" visible="false" value="" type="text"/>
+
+</settings>

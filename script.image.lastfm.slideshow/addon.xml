@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.image.lastfm.slideshow"
+       name="Last.FM - SlideShow"
+       version="2.0.0"
+       provider-name="divingmule">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+  </requires>
+
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Plays a slide show of the currently playing artist.</summary>
+    <description>While playing music, this addon will start a slideshow of images from Last.FM, of the current artist. Tip: Pressing "i" during a slideshow will show the music player info.</description>
+    <platform>all</platform>
+    <language></language>
+  </extension>
+</addon>

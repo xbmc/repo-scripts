@@ -1,0 +1,486 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Basque (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/eu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "Bilaketa"
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Bideoa martxan egon beharko zen"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "Eskuz idatzi bilaketa katea"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "%s azpitituluak bilatzen"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "Konektatzen..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "Azpitituluak deskargatzen..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "Azpititulu fitxategia deskargatu eta aterata"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "Konexioak huts egin du"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "Errorea azpitituluak ateratzean"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "Azpititulu lokala erabilgarri"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "Zerbitzuak ez du denbora-muga barruan erantzun"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "Ez da azpititulurik aurkitu!"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "Azpititulu aurkitua: "
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "Karpeta gurasoa erabiliaz bilatu"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "in dituzu azpitituluak hautatako kokalekuan gorde"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "Aldi baterako azpititulu hau gaitu nahi al duzu?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "Idatzi pelikula izena (urtea)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "Zerbitzaria gainkargatua dago, saiatu beranduago"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "Huts saioa hastean. Egiaztatu zure ezarpenak gehigarri konfigurazioan"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "Zerbitzariak irudiaren kodea berridaztea eskatzen du"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "Mesedez begiratu berri-emate eremuan"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "Idatzi berri-emate eremuko irudiaren kodea"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "Zerbitzu erabilgarriak"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "Saio hasirik eduki behar duzu azpititulu hau deskargatzeko, [CR] gehigarri konfigurazioan zure ezarpenak egiaztatu."
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "Gehigarri konfigurazioa"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Hautatu azpititulu karpeta"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "Hizkuntzak"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "Lehen hizkuntza"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "Bigarren hizkuntza"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "Zerbitzuak"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net erabiltzaile-izena"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net pasahitza"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "Hedatutako aukerak"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "-Ezarri azpititulu deskarga bide pertsonalizatua"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "Eskuz idatzi bilaketa katea"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "Hirugarren hizkuntza"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "Hautatu lehenetsitako filma zerbitzua"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "Hautatu lehenetsitako TB saio zerbitzua"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "Erakutsi fitxategi izena emaitza orrialdean"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "Guraso karpeta erabiliaz bilatu"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "Gehitu hizkuntza fitxategi-izenari"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "Ezarri lehenetsitako denbora-muga"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV erabiltzaile-izena"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV pasahitza"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa erabiltzaile-izena"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa pasahitza"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky erabiltzaile-izena"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky pasahitza"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "Bilatu hurrengo zerbitzu erabilgarrian emaitzarik ez bada aurkitzen"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx erabiltzaile-izena"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx pasahitza"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs erabiltzaile-izena"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs pasahitza"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs erabiltzaile-izena"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs pasahitza"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone erabiltzaile-izena"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone pasahitza"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Hautatu azpititulu mota:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "'Subs' azpikarpeta erabili azpitituluetarako"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl erabiltzaile-izena"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl pasahitza"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents erabiltzaile-izena"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents pasahitza"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "Deskargatzen... Itxoin mesedez!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Ateratzen... Itxoin mesedez!"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "Ateratzea eginda!"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "Titulua erreproduzitzen!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas erabiltzaile-izena"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas pasahitza"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Albaniera"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Arabiera"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Bielorrusiera"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Bosniera (Latin)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Bulgariera"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Katalana"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Txinera"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Kroaziera"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Txekiera"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Daniera"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Nederlandera"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Ingelesa"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estoniera"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finlandiera"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Frantsesa"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Alemana"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Grekoa"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Hebreera"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindia"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Hungariera"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Islandiera"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indonesiera"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Italiera"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japoniera"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Koreera"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Letoniera"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Lituaniera"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Mazedoniera"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norvegiera"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Poloniera"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portugesa"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portugesa (Brasil)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Errumaniera"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Errusiera"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Serbiera Latin"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Eslovakiera"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Esloveniera"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Gaztelania"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Suediera"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Thai"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Turkiera"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ukrainiera"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnamera"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Farsia"

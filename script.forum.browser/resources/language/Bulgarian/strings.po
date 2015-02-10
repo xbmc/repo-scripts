@@ -1,0 +1,189 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Език"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Допълнителни"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Слаб"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Известия"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "видео"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Настройки"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "Готово"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Обнови"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Изтрий"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Абонаменти"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Връзка:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Настройки"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Сваляне"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "Редактиране"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Да"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Запитване"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Ясно"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "Редактиране"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Преглед"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Описание"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Непознат"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Име"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Състояние"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Инф."
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Търси"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Актуализиране"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Запиши"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Тип"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Изберете"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Премахни"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Резултат:"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Категория"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Интернет"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Следващ"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Настройки"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Абонаменти"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "Добре"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Търси"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Субтитри"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Всички"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "Добре"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Отказ"

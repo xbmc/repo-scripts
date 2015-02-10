@@ -1,0 +1,108 @@
+
+DROP TABLE IF EXISTS Console;
+DROP TABLE IF EXISTS RomCollection;
+DROP TABLE IF EXISTS FileTypeForControl;
+DROP TABLE IF EXISTS Scraper;
+DROP TABLE IF EXISTS Path;
+DROP TABLE IF EXISTS FileType;
+
+
+DROP TABLE IF EXISTS RCBSetting_tmp;
+
+ALTER TABLE RCBSetting RENAME TO RCBSetting_tmp;
+
+CREATE TABLE IF NOT EXISTS [RCBSetting]
+(
+	[id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[lastSelectedView] TEXT,
+	[lastSelectedConsoleIndex] INTEGER,	
+	[lastSelectedGenreIndex] INTEGER,
+	[lastSelectedPublisherIndex] INTEGER,
+	[lastSelectedYearIndex] INTEGER,
+	[lastSelectedGameIndex] INTEGER,
+	[autoexecBackupPath] TEXT,
+	[dbVersion] TEXT,
+	[lastFocusedControlMainView] INTEGER,
+	[lastFocusedControlGameInfoView] INTEGER,
+	[lastSelectedCharacterIndex] INTEGER
+);
+
+INSERT INTO RCBSetting(id, lastSelectedView, lastSelectedConsoleIndex, lastSelectedGenreIndex, lastSelectedPublisherIndex, lastSelectedYearIndex, lastSelectedGameIndex, autoexecBackupPath, dbVersion, lastFocusedControlMainView,lastFocusedControlGameInfoView, lastSelectedCharacterIndex)
+SELECT id, lastSelectedView, lastSelectedConsoleIndex, lastSelectedGenreIndex, lastSelectedPublisherIndex, lastSelectedYearIndex, lastSelectedGameIndex, autoexecBackupPath, dbVersion, lastFocusedControlMainView,lastFocusedControlGameInfoView, lastSelectedCharacterIndex
+FROM RCBSetting_tmp;
+
+DROP TABLE RCBSetting_tmp;
+
+
+DROP TABLE IF EXISTS File_tmp;
+
+ALTER TABLE File RENAME TO File_tmp;
+
+CREATE TABLE IF NOT EXISTS [File] 
+(
+	[id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[name] TEXT NOT NULL,
+	[fileTypeId] INTEGER,
+	[parentId] INTEGER
+);
+
+INSERT INTO File(id, name, fileTypeId, parentId)
+SELECT id, name, fileTypeId, parentId
+FROM File_tmp;
+
+DROP TABLE File_tmp;
+
+
+
+DROP TABLE IF EXISTS Game_tmp;
+ALTER TABLE Game RENAME TO Game_tmp;
+
+CREATE TABLE IF NOT EXISTS [Game] 
+(
+	[id] INTEGER PRIMARY KEY AUTOINCREMENT,
+	[name] TEXT NOT NULL,
+	[description] TEXT,
+	[gameCmd] TEXT,
+	[alternateGameCmd] TEXT,
+	[romCollectionId] INTEGER,
+	[publisherId] INTEGER REFERENCES [Publisher]
+	(
+		id
+	),
+	[developerId] INTEGER REFERENCES [Developer]
+	(
+		id
+	),
+	[reviewerId] INTEGER REFERENCES [Reviewer]
+	(
+	id
+	),
+	[yearId] INTEGER REFERENCES [Year]
+	(
+	id
+	),
+	[maxPlayers] TEXT,
+	[rating] TEXT,
+	[numVotes] INTEGER,
+	[url] TEXT,
+	[region] TEXT,
+	[media] TEXT,
+	[perspective] TEXT,
+	[controllerType] TEXT,
+	[isFavorite] INTEGER,
+	[launchCount] INTEGER,
+	[originalTitle] TEXT,
+	[alternateTitle] TEXT,
+	[translatedBy] TEXT,
+	[version] TEXT,
+	UNIQUE (name, romCollectionId)
+);
+
+INSERT INTO Game(id, name, description, gameCmd, alternateGameCmd, romCollectionId, publisherId, developerId, reviewerId, yearId, maxPlayers, rating, numVotes, url, region, media, perspective, controllerType, isFavorite, launchCount, originalTitle, alternateTitle, translatedBy, version)
+SELECT id, name, description, gameCmd, alternateGameCmd, romCollectionId, publisherId, developerId, reviewerId, yearId, maxPlayers, rating, numVotes, url, region, media, perspective, controllerType, isFavorite, launchCount, originalTitle, alternateTitle, translatedBy, version
+FROM Game_tmp;
+
+DROP TABLE Game_tmp;
+
+
+UPDATE RCBSetting SET dbVersion = '0.7.4';

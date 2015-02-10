@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<skin>
+	<defaultresolution>NTSC</defaultresolution>
+	<defaultresolutionwide>NTSC</defaultresolutionwide>
+	<version>1.0</version>
+
+<!-- amount to zoom skin to remove overscan compensation -->
+	<zoom>0</zoom>
+
+	<credits>
+		<skinname>Alaska</skinname>
+		<name>Pandora</name>
+	</credits>
+</skin>

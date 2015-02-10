@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="001">General</string>
+    <string id="002">Debug</string>
+    <string id="003">Autostart with XBMC</string>
+    <string id="004">Timeout in seconds</string>
+    <string id="005">Listen on Port (Windows only)</string>
+
+
+    <string id="100">Error.</string>
+
+    <string id="200">Failed to start commoncache. Check log.</string>
+</strings>

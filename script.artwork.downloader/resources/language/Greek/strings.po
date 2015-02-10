@@ -1,0 +1,413 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr "Προσθέστε εικόνες ή συνδράμετε στα:"
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr "Προγραμματισμένη εκτέλεση σε χρόνο: (24h)"
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr "Βρέθηκε λανθασμένος/άδειος συνδυασμός ρυθμίσεων!"
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr "Επιλέξτε τις προτιμήσεις σας και πιέστε 'Επιλογή' για αποθήκευση"
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr "Εκκαθάριση"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Σφάλμα"
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr "Σφάλμα λήψης αρχείου"
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr "Αναζήτηση για εικόνες"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Γίνεται λήψη"
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr "Το πρόσθετο διεκόπη"
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr "Εντοπίστηκε σφάλμα δικτύου"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Ολοκληρώθηκε"
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr "Ενεργοποίηση λήψης"
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr "Σύνολο Εικόνων"
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr "Παρακαλώ επιλέξτε"
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr "Αντικείμενα που απέτυχαν"
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "Ακυρώθηκε"
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr "Η λήψη ακυρώθηκε από το χρήστη"
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr "Καθυστερημένη έναρξη σε λεπτά:"
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr "Ελήφθησαν"
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr "Επεξεργασία Εικόνων"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "δεν βρέθηκαν!"
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr "Εκτέλεση του πρόσθετου κατά την εκκίνηση"
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr "Εκτέλεση του πρόσθετου σαν υπηρεσία"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Ναι"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Όχι"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Κλείσιμο"
+
+msgctxt "#32028"
+msgid "Report"
+msgstr "Αναφορά"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I](Αφού γίνουν οι αλλαγές πρέπει να επανεκκινήσετε το XBMC) [/I]"
+
+msgctxt "#32030"
+msgid "No provider ID found for looking up artwork"
+msgstr "Δε βρέθηκε ταυτότητα παρόχου (provider ID) για αναζήτηση εικόνων"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#32032"
+msgid "[B]General settings used in Artwork Downloader[/B]"
+msgstr "[B]Γενικές ρυθμίσεις που χρησιμοποιούνται στο Artwork Downloader[/B]"
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr "Εκτέλεση στο παρασκήνιο"
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr "Εμφάνιση παραθύρου σε περίπτωση σφάλματος/τέλους"
+
+msgctxt "#32035"
+msgid "Overwrite all existing artwork [I](will be automaticly disabled after downloading) [/I]"
+msgstr "Αντικατάσταση των υφιστάμενων εικόνων [I](θα απενεργοποιηθεί μετά τη λήψη) [/I]"
+
+msgctxt "#32036"
+msgid "Centralize extrafanart [I](Can be used for extrafanart slideshow) [/I]"
+msgstr "Συγκέντρωση extrafanart [I](Μπορεί να χρησιμοποιηθεί για παρουσίαση extrafanart) [/I]"
+
+msgctxt "#32037"
+msgid "Central TV extrafanart directory"
+msgstr "Κεντρικός κατάλογος extrafanart τηλ. σειρών"
+
+msgctxt "#32038"
+msgid "Central Movie extrafanart directory"
+msgstr "Κεντρικός κατάλογος extrafanart ταινιών"
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr "Προβολή αναφοράς από την τελευταία λήψη"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr "Περιορισμός Εικόνων"
+
+msgctxt "#32052"
+msgid "[B]Options for limiting downloaded artwork[/B]"
+msgstr "[B]Επιλογές για περιορισμό λήψης εικόνων[/B]"
+
+msgctxt "#32053"
+msgid "Maximum extrafanart"
+msgstr "Μέγιστος αριθμός extrafanart"
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr "Ελάχιστη βαθμολογία"
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr "Προτιμώμενη γλώσσα:"
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr "Αποκλεισμός fanart με κείμενο"
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr "Ελάχιστο μέγεθος fanart: Ταινίες"
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr "Ελάχιστο μέγεθος fanart: Τηλ. Σειρές"
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr "Ελάχιστο μέγεθος fanart: Μουσικά Βίντεο"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Ταινίες"
+
+msgctxt "#32072"
+msgid "[B]Options for downloading Movie artwork[/B]"
+msgstr "[B]Επιλογές για λήψη εικόνων Ταινιών[/B]"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "Τηλεοπτικές Σειρές"
+
+msgctxt "#32082"
+msgid "[B]Options for downloading TV Show artwork[/B]"
+msgstr "[B]Επιλογές για λήψη εικόνων Τηλ. Σειρών[/B]"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr "Μουσικά Βίντεο"
+
+msgctxt "#32092"
+msgid "[B]Options for downloading Musicvideo artwork[/B]"
+msgstr "[B]Επιλογές για λήψη εικόνων Μουσικών Βίντεο[/B]"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#32102"
+msgid "[B]Some more advanced settings to be used[/B]"
+msgstr "[B]Επιπλέον ρυθμίσεις για προχωρημένους[/B]"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "Χρήση τοπικών αρχείων"
+
+msgctxt "#32106"
+msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
+msgstr "Χρήση του XBMC pre-caching [I](τοποθετεί προσωρινά τις εικόνες στο φάκελο των μικρογραφιών κατά τη λήψη) [/I]"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr "Επιπλέον fanart (extrafanart)"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Πανό"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "Πανό Κύκλων"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "ClearArt"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Λογότυπο"
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr "Εικόνες Χαρακτήρων"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Αφίσα"
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr "Αφίσες Κύκλων"
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr "Μικρογραφία 16:9 (Τοπίο)"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "Επιπλέον μικρογραφίες (extrathumbs)"
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr "Εικόνες Δίσκων (cdART)"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Εικόνες"
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr "Μικρογραφίες Κύκλων 16:9 (Τοπία)"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Γλώσσα"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Αξιολόγηση"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Ψήφοι"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Κύκλος"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Μέγεθος"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Δίσκος"
+
+msgctxt "#32147"
+msgid "below limit setting"
+msgstr "ρύθμιση κάτω του ορίου"
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr "Χρόνος τέλους"
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr "Δεν βρέθηκαν αποτυχημένα ή απόντα αντικείμενα"
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr "το πρόσθετο διεκόπη λόγω τερματισμού του XBMC"
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr "το πρόσθετο ακυρώθηκε κατά την αναζήτηση Εικόνων"
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr "το πρόσθετο διεκόπη λόγω προβλημάτων"
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr "το πρόσθετο ακυρώθηκε κατά τη λήψη Εικόνων"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Πληροφορίες"
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr "Στηρίξτε μας συνδράμοντας στις ακόλουθες σελίδες:"
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr "[I]fanart.tv [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr "Δημιουργοί πρόσθετου:"
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr "Ευχαριστούμε τους:"
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr "Ομάδα XBMC και τους δημιουργούς των πρόσθετων στα οποία βασίστηκε."
+
+msgctxt "#32191"
+msgid "[I]For bugs, requests or general questions visit the [/I]"
+msgstr "[I]Για προβλήματα, αιτήματα ή γενικές ερωτήσεις επισκεφθείτε το [/I]"
+
+msgctxt "#32192"
+msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
+msgstr "[I]  θέμα του Artwork Downloader στο forum του XBMC. [/I]"

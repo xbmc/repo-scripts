@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Korean language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ko/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">무작위</string>
+    <string id="3002">뒤로</string>
+
+    <!-- Messages -->
+    <string id="3050">로그인 할 수 없음</string>
+    <string id="3053">영화 제목을 입력하세요</string>
+    <string id="3055">스냅샷 가져올 수 없음</string>
+
+    <!-- Labels -->
+    <string id="3100">확인 중: [B]%s[/B]</string>
+    <string id="3101">정답. 원 제목: [B]%s[/B]</string>
+    <string id="3102">오답: [B]%s[/B]</string>
+    <string id="3103">로그인 되지 않음</string>
+    <string id="3104">사용자 [B]%s[/B]으로 로그인 됨</string>
+    <string id="3105">당신의 점수: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3109">날짜: [B]%s[/B]</string>
+    <string id="3110">올린이: [B]%s[/B]</string>
+    <string id="3112">삭제된 사용자</string>
+    <string id="3116">[B]%s[/B] 투표</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
+    <string id="3118">숨겨진</string>
+    <string id="3119">초기화</string>
+    <string id="3120">거부된 스냅샷</string>
+    <string id="3121">이미 푼 스냅샷입니다.</string>
+    <string id="3122">정답은: [B]%s[/B]</string>
+    <string id="3123">당신이 올린 스냅샵</string>
+    <string id="3124">미안합니다, [B]%s[/B] 스냅샷을 볼 수 없습니다 - [B]%s[/B] 로 연결됩니다</string>
+    <string id="3126">굉장해요. 원 제목: [B]%s[/B] +1 Point!</string>
+    <string id="3127">삭제된 스냅샷</string>
+
+    <!-- Settings -->
+    <string id="3200">일반</string>
+    <string id="3201">로그인</string>
+    <string id="3202">whatthemovie.com 계정을 사용하세요</string>
+    <string id="3203">사용자명</string>
+    <string id="3204">비밀번호</string>
+    <string id="3205">"무작위" 버튼 설정 (로그인 필요)</string>
+    <string id="3206">난이도</string>
+    <string id="3207">쉬움</string>
+    <string id="3208">쉬움+중간</string>
+    <string id="3209">모두</string>
+    <string id="3229">탐색 옵션 (로그인 필요)</string>
+    <string id="3233">무작위</string>
+    <string id="3234">다음</string>
+    <string id="3235">도구 버튼 보기</string>
+    <string id="3236">탐색 버튼 보기</string>
+    <string id="3240">페이지 위로</string>
+    <string id="3241">페이지 아래로 </string>
+    <string id="3242">정보 보기</string>
+    <string id="3243">일시정지</string>
+    <string id="3244">정지</string>
+    <string id="3245">다음 항목</string>
+    <string id="3246">이전 항목</string>
+    <string id="3247">빨리감기</string>
+    <string id="3248">되감기</string>
+    <string id="3249">재생</string>
+    <string id="3250">컨텍스트 메뉴</string>
+    <string id="3251">볼륨 크게</string>
+    <string id="3252">볼륨 작게</string>
+    <string id="3253">스크롤 위로</string>
+    <string id="3254">스크롤 아래로</string>
+    <string id="3255">홈</string>
+
+    <!-- Functions -->
+    <string id="3260">다음</string>
+    <string id="3261">이전</string>
+    <string id="3263">책갈피</string>
+    <string id="3264">즐겨찾기</string>
+</strings>

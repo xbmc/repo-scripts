@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.audio.pandora"
+       name="Pandora"
+       version="2.3.2"
+       provider-name="rivy">
+  <requires>
+    <!-- Eden: xbmc.python 1.0; Frodo: xbmc.python 2.1.0; Gotham: ? -->
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+    <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Pandora Radio</summary>
+    <description lang="en">Pandora Radio for XBMC.</description>
+    <license>GPL-3.0</license><!-- see LICENSE.txt or [http://opensource.org/licenses/GPL-3.0] -->
+    <platform>all</platform>
+    <language></language>
+    <website></website>
+    <email></email>
+    <forum>http://forum.xbmc.org/showthread.php?tid=70471</forum>
+    <source>https://github.com/rivy/xbmc-script.audio.pandora</source>
+    <disclaimer></disclaimer>
+  </extension>
+  <!-- make plugin auto-updating without additional repository addon -->
+  <!-- URLref: http://wiki.xbmc.org/index.php?title=HOW-TO:Create_a_repository_for_add-ons#How_to_make_an_add-on_self-updating_without_distributing_a_repository_file -->
+  <!-- DISABLED: places the addon name into the repository list for addons; so, a repository addon is preferred (better UI & scaling)
+    <extension point="xbmc.addon.repository" name="RIVY XBMC Repository">
+      <info compressed="false">https://raw.github.com/rivy/xbmc-repository/master/addons.xml</info>
+      <checksum>https://raw.github.com/rivy/xbmc-repository/master/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.github.com/rivy/xbmc-repository/master/</datadir>
+    </extension>
+  -->
+</addon>

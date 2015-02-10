@@ -1,0 +1,102 @@
+
+
+ALTER TABLE RomCollection ADD COLUMN [searchGameByCRC] INTEGER;
+ALTER TABLE RomCollection ADD COLUMN [searchGameByCRCIgnoreRomName] INTEGER;
+ALTER TABLE RomCollection ADD COLUMN [ignoreGameWithoutDesc] INTEGER;
+
+UPDATE RomCollection SET searchGameByCRC = 'True';
+UPDATE RomCollection SET searchGameByCRCIgnoreRomName = 'False';
+UPDATE RomCollection SET ignoreGameWithoutDesc = 'True';
+
+
+ALTER TABLE FileType ADD COLUMN [type] TEXT;
+ALTER TABLE FileType ADD COLUMN [parent] TEXT;
+
+UPDATE FileType SET type = 'image' WHERE name NOT LIKE 'video%';
+UPDATE FileType SET type = 'video' WHERE name LIKE 'video%';
+UPDATE FileType SET parent = 'game';
+UPDATE FileType SET name = 'gameplay' WHERE name = 'video_gameplay';
+
+UPDATE FileTypeForControl SET control = 'mainviewgameinfobig' WHERE control = 'mainviewgameinfo';
+
+ALTER TABLE Game ADD COLUMN [originalTitle] TEXT;
+ALTER TABLE Game ADD COLUMN [alternateTitle] TEXT;
+ALTER TABLE Game ADD COLUMN [translatedBy] TEXT;
+ALTER TABLE Game ADD COLUMN [version] TEXT;
+
+
+DROP TABLE IF EXISTS File_tmp;
+
+ALTER TABLE File RENAME TO File_tmp;
+
+CREATE TABLE IF NOT EXISTS [File] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL,
+    [fileTypeId] INTEGER NOT NULL REFERENCES [FileTypes]
+    (
+        id
+    ),
+    [parentId] INTEGER
+);
+
+INSERT INTO File(id, name, fileTypeId, parentId)
+SELECT id, name, fileTypeId, gameId
+FROM File_tmp;
+
+DROP TABLE File_tmp;
+
+DROP TABLE IF EXISTS Game_tmp;
+
+ALTER TABLE Game RENAME TO Game_tmp;
+
+CREATE TABLE IF NOT EXISTS [Game] 
+(
+    [id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [name] TEXT NOT NULL,
+    [description] TEXT,
+	[gameCmd] TEXT,
+	[alternateGameCmd] TEXT,
+    [romCollectionId] INTEGER REFERENCES [RomCollection]
+    (
+        id
+    ),    
+    [publisherId] INTEGER REFERENCES [Publisher]
+    (
+        id
+    ),
+	[developerId] INTEGER REFERENCES [Developer]
+    (
+        id
+    ),
+	[reviewerId] INTEGER REFERENCES [Reviewer]
+    (
+        id
+    ),
+    [yearId] INTEGER REFERENCES [Year]
+    (
+        id
+    ),
+	[maxPlayers] TEXT,
+    [rating] TEXT,
+    [numVotes] INTEGER,
+	[url] TEXT,
+    [region] TEXT,
+	[media] TEXT,
+    [perspective] TEXT,
+    [controllerType] TEXT,
+	[isFavorite] INTEGER,
+	[launchCount] INTEGER,
+	[originalTitle] TEXT,
+	[alternateTitle] TEXT,
+	[translatedBy] TEXT,
+	[version] TEXT
+);
+
+INSERT INTO Game(id, name, description, gameCmd, alternateGameCmd, romCollectionId, publisherId, developerId, reviewerId, yearId, maxPlayers, rating, numVotes, url, region, media, perspective, controllerType, isFavorite, launchCount, originalTitle, alternateTitle, translatedBy, version)
+SELECT id, name, description, gameCmd, alternateGameCmd, romCollectionId, publisherId, developerId, reviewerId, yearId, maxPlayers, rating, numVotes, url, region, media, perspective, controllerType, isFavorite, launchCount, originalTitle, alternateTitle, translatedBy, version
+FROM Game_tmp;
+
+DROP TABLE Game_tmp;
+
+UPDATE RCBSetting SET dbVersion = 'V0.5';

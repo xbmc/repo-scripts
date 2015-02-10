@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window id="5200">
+	<defaultcontrol>5211</defaultcontrol>
+	<include>dialogeffect</include>
+	<coordinates>
+		<system>1</system>
+		<posx>280</posx>
+		<posy>200</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>0</posx>
+			<posy>0</posy>
+			<control type="image">
+				<description>background top image</description>
+				<posx>0</posx>
+				<posy>-65</posy>
+				<width>720</width>
+				<height>65</height>
+				<texture border="45,45,45,0">rcb-DialogContextTop.png</texture>
+			</control>
+			<control type="label">
+				<posx>-30</posx>
+				<posy>-30</posy>
+				<width>720</width>
+				<height>30</height>
+				<font>font24_title</font>
+				<textcolor>white</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$ADDON[script.games.rom.collection.browser 32999] - $ADDON[script.games.rom.collection.browser 32800]</label>
+			</control>
+			<control type="button" id="5101">
+				<description>Close Window button</description>
+				<posx>640</posx>
+				<posy>-30</posy>
+				<width>40</width>
+				<height>25</height>
+				<label>-</label>
+				<font>-</font>
+				<texturefocus>rcb-DialogCloseButton-focus.png</texturefocus>
+				<texturenofocus>rcb-DialogCloseButton.png</texturenofocus>
+				<onleft>5211</onleft>
+				<onright>5211</onright>
+				<onup>5300</onup>
+				<ondown>5211</ondown>
+				<visible>system.getbool(input.enablemouse)</visible>
+			</control>
+			<control type="image">
+				<description>background image</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>720</width>
+				<height>280</height>
+				<texture border="45,0,45,0">rcb-DialogContextMiddle.png</texture>				
+			</control>
+			<control type="image">
+				<description>background image</description>
+				<posx>35</posx>
+				<posy>0</posy>
+				<width>640</width>
+				<height>280</height>				
+				<texture border="0,0,0,0">rcb-floor.png</texture>
+			</control>
+			<control type="image">
+				<description>background bottom image</description>
+				<posx>0</posx>
+				<posy>280</posy>
+				<width>720</width>
+				<texture border="45,0,45,49">rcb-DialogContextBottom.png</texture>
+			</control>
+			
+			<control type="list" id="5210">
+				<hitrect x="0" y="0" w="0" h="0" />
+				<posx>40</posx>
+				<posy>35</posy>
+				<width>630</width>
+				<height>30</height>
+				<onleft>5210</onleft>
+				<onright>5210</onright>
+				<onup>5210</onup>
+				<ondown>5210</ondown>
+				<pagecontrol>-</pagecontrol>
+				<scrolltime>0</scrolltime>
+				<itemlayout height="1" width="750">
+				</itemlayout>
+				<focusedlayout height="30" width="630">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>630</width>
+						<height>30</height>
+						<texture>rcb-MenuItemNF.png</texture>
+						<visible>![Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>630</width>
+						<height>30</height>
+						<texture>rcb-MenuItemFO.png</texture>
+						<visible>[Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+					</control>
+					<control type="label">
+						<posx>7</posx>
+						<posy>5</posy>
+						<width>200</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>88FFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.games.rom.collection.browser 32601]</label>
+						<visible>![Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
+					</control>
+					<control type="label">
+						<posx>7</posx>
+						<posy>5</posy>
+						<width>200</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>white</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.games.rom.collection.browser 32601]</label>
+						<visible>[Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
+					</control>
+					<control type="label">
+						<posx>570</posx>
+						<posy>5</posy>
+						<width>330</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>88FFFFFF</textcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+						<visible>![Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
+					</control>
+					<control type="label">
+						<posx>570</posx>
+						<posy>5</posy>
+						<width>330</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>white</textcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+						<visible>[Control.HasFocus(5211) | Control.HasFocus(5212)]</visible>
+						<animation reversible="false" effect="fade" end="50" time="0" condition="Skin.HasSetting(rcb_disableRomcollections)">Conditional</animation>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="button" id="5211">
+				<description>Menu Item Next Button</description>
+				<posx>630</posx>
+				<posy>40</posy>
+				<width>20</width>
+				<height>20</height>
+				<label>-</label>
+				<font>-</font>
+				<texturenofocus>rcb-scroll-down-2.png</texturenofocus>
+				<texturefocus>rcb-scroll-down-focus-2.png</texturefocus>
+				<onclick>Control.Move(5210,1)</onclick>
+				<onleft>5300</onleft>
+				<onright>5212</onright>
+				<onup>5101</onup>
+				<ondown>5222</ondown>
+				<enable>!Skin.HasSetting(rcb_disableRomcollections)</enable>
+			</control>
+			<control type="button" id="5212">
+				<description>Menu Item Prev Button</description>
+				<posx>650</posx>
+				<posy>40</posy>
+				<width>20</width>
+				<height>20</height>
+				<label>-</label>
+				<font>-</font>
+				<texturenofocus>rcb-scroll-up-2.png</texturenofocus>
+				<texturefocus>rcb-scroll-up-focus-2.png</texturefocus>
+				<onclick>Control.Move(5210,-1)</onclick>
+				<onleft>5211</onleft>
+				<onright>5300</onright>
+				<onup>5101</onup>
+				<ondown>5223</ondown>
+				<enable>!Skin.HasSetting(rcb_disableRomcollections)</enable>
+			</control>
+			
+			<!-- Scraping mode -->		
+			<control type="list" id="5220">
+				<hitrect x="0" y="0" w="0" h="0" />
+				<posx>40</posx>
+				<posy>65</posy>
+				<width>630</width>
+				<height>30</height>
+				<onleft>5220</onleft>
+				<onright>5220</onright>
+				<onup>5220</onup>
+				<ondown>5220</ondown>
+				<pagecontrol>-</pagecontrol>
+				<scrolltime>0</scrolltime>
+				<itemlayout height="1" width="750">
+				</itemlayout>
+				<focusedlayout height="30" width="630">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>630</width>
+						<height>30</height>
+						<texture>rcb-MenuItemNF.png</texture>
+						<visible>![Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>630</width>
+						<height>30</height>
+						<texture>rcb-MenuItemFO.png</texture>
+						<visible>[Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
+					</control>
+					<control type="label">
+						<posx>7</posx>
+						<posy>5</posy>
+						<width>200</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>88FFFFFF</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.games.rom.collection.browser 32801]</label>
+						<visible>![Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
+					</control>
+					<control type="label">
+						<posx>7</posx>
+						<posy>5</posy>
+						<width>200</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>white</textcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$ADDON[script.games.rom.collection.browser 32801]</label>
+						<visible>[Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
+					</control>
+					<control type="label">
+						<posx>570</posx>
+						<posy>5</posy>
+						<width>330</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>88FFFFFF</textcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+						<visible>![Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
+					</control>
+					<control type="label">
+						<posx>570</posx>
+						<posy>5</posy>
+						<width>330</width>
+						<height>20</height>
+						<font>font13</font>
+						<textcolor>white</textcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+						<visible>[Control.HasFocus(5222) | Control.HasFocus(5223)]</visible>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="button" id="5222">
+				<description>Menu Item Next Button</description>
+				<posx>630</posx>
+				<posy>70</posy>
+				<width>20</width>
+				<height>20</height>
+				<label>-</label>
+				<font>-</font>
+				<texturenofocus>rcb-scroll-down-2.png</texturenofocus>
+				<texturefocus>rcb-scroll-down-focus-2.png</texturefocus>
+				<onclick>Control.Move(5220,1)</onclick>
+				<onleft>5300</onleft>
+				<onright>5223</onright>
+				<onup>5211</onup>
+				<ondown>5330</ondown>
+			</control>
+			<control type="button" id="5223">
+				<description>Menu Item Prev Button</description>
+				<posx>650</posx>
+				<posy>70</posy>
+				<width>20</width>
+				<height>20</height>
+				<label>-</label>
+				<font>-</font>
+				<texturenofocus>rcb-scroll-up-2.png</texturenofocus>
+				<texturefocus>rcb-scroll-up-focus-2.png</texturefocus>
+				<onclick>Control.Move(5220,-1)</onclick>
+				<onleft>5222</onleft>
+				<onright>5300</onright>
+				<onup>5212</onup>
+				<ondown>5330</ondown>
+			</control>
+			
+			<control type="radiobutton" id="5330">
+				<posx>40</posx>
+				<posy>110</posy>
+				<width>640</width>
+				<height>30</height>
+				<font>font13</font>
+				<label>$ADDON[script.games.rom.collection.browser 32802]</label>
+				<textcolor>88FFFFFF</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<texturefocus>rcb-MenuItemFO.png</texturefocus>
+				<texturenofocus>rcb-MenuItemNF.png</texturenofocus>
+				<onleft>5300</onleft>
+				<onright>5300</onright>
+				<onup>5223</onup>
+				<ondown>5272</ondown>
+				<onclick>Skin.ToggleSetting(rcb_overwriteImportOptions)</onclick>
+			</control>
+			
+			<control type="group">
+				<posx>60</posx>
+				<posy>140</posy>
+				
+				<!-- Scraper 1 -->
+				<control type="list" id="5270">
+					<hitrect x="0" y="0" w="0" h="0" />
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>630</width>
+					<height>30</height>
+					<onleft>5272</onleft>
+					<onright>5270</onright>
+					<onup>5270</onup>
+					<ondown>5270</ondown>
+					<enable>false</enable>
+					<pagecontrol>-</pagecontrol>
+					<scrolltime>0</scrolltime>
+					<itemlayout height="1" width="750">
+					</itemlayout>
+					<focusedlayout height="30" width="630">
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>630</width>
+							<height>30</height>
+							<texture>rcb-MenuItemNF.png</texture>
+							<visible>![Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
+						</control>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>630</width>
+							<height>30</height>
+							<texture>rcb-MenuItemFO.png</texture>
+							<visible>[Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
+						</control>
+						<control type="label">
+							<posx>7</posx>
+							<posy>5</posy>
+							<width>200</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>88FFFFFF</textcolor>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$ADDON[script.games.rom.collection.browser 32613]</label>
+							<visible>![Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>7</posx>
+							<posy>5</posy>
+							<width>200</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$ADDON[script.games.rom.collection.browser 32613]</label>
+							<visible>[Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>550</posx>
+							<posy>5</posy>
+							<width>330</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>88FFFFFF</textcolor>
+							<align>right</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>![Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>550</posx>
+							<posy>5</posy>
+							<width>330</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<align>right</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>[Control.HasFocus(5271) | Control.HasFocus(5272)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+					</focusedlayout>
+				</control>
+				<control type="button" id="5271">
+					<description>Menu Item Next Button</description>
+					<posx>570</posx>
+					<posy>5</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<font>-</font>
+					<texturenofocus>rcb-scroll-down-2.png</texturenofocus>
+					<texturefocus>rcb-scroll-down-focus-2.png</texturefocus>
+					<onclick>Control.Move(5270,1)</onclick>
+					<onleft>5300</onleft>
+					<onright>5272</onright>
+					<onup>5330</onup>
+					<ondown>5281</ondown>
+					<enable>Skin.HasSetting(rcb_overwriteImportOptions)</enable>
+				</control>
+				<control type="button" id="5272">
+					<description>Menu Item Prev Button</description>
+					<posx>590</posx>
+					<posy>5</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<font>-</font>
+					<texturenofocus>rcb-scroll-up-2.png</texturenofocus>
+					<texturefocus>rcb-scroll-up-focus-2.png</texturefocus>
+					<onclick>Control.Move(5270,-1)</onclick>
+					<onleft>5271</onleft>
+					<onright>5300</onright>
+					<onup>5330</onup>
+					<ondown>5282</ondown>
+					<enable>Skin.HasSetting(rcb_overwriteImportOptions)</enable>
+				</control>
+				<!-- Scraper 2 -->
+				<control type="list" id="5280">
+					<hitrect x="0" y="0" w="0" h="0" />
+					<posx>0</posx>
+					<posy>30</posy>
+					<width>630</width>
+					<height>30</height>
+					<onleft>5280</onleft>
+					<onright>5280</onright>
+					<onup>5280</onup>
+					<ondown>5280</ondown>
+					<pagecontrol>-</pagecontrol>
+					<scrolltime>0</scrolltime>
+					<itemlayout height="1" width="750">
+					</itemlayout>
+					<focusedlayout height="30" width="630">
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>630</width>
+							<height>30</height>
+							<texture>rcb-MenuItemNF.png</texture>
+							<visible>![Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
+						</control>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>630</width>
+							<height>30</height>
+							<texture>rcb-MenuItemFO.png</texture>
+							<visible>[Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
+						</control>
+						<control type="label">
+							<posx>7</posx>
+							<posy>5</posy>
+							<width>200</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>88FFFFFF</textcolor>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$ADDON[script.games.rom.collection.browser 32614]</label>
+							<visible>![Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>7</posx>
+							<posy>5</posy>
+							<width>200</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$ADDON[script.games.rom.collection.browser 32614]</label>
+							<visible>[Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>550</posx>
+							<posy>5</posy>
+							<width>330</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>88FFFFFF</textcolor>
+							<align>right</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>![Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>550</posx>
+							<posy>5</posy>
+							<width>330</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<align>right</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>[Control.HasFocus(5281) | Control.HasFocus(5282)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+					</focusedlayout>
+				</control>
+				<control type="button" id="5281">
+					<description>Menu Item Next Button</description>
+					<posx>570</posx>
+					<posy>35</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<font>-</font>
+					<texturenofocus>rcb-scroll-down-2.png</texturenofocus>
+					<texturefocus>rcb-scroll-down-focus-2.png</texturefocus>
+					<onclick>Control.Move(5280,1)</onclick>
+					<onleft>5300</onleft>
+					<onright>5282</onright>
+					<onup>5271</onup>
+					<ondown>5291</ondown>
+					<enable>Skin.HasSetting(rcb_overwriteImportOptions)</enable>
+				</control>
+				<control type="button" id="5282">
+					<description>Menu Item Prev Button</description>
+					<posx>590</posx>
+					<posy>35</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<font>-</font>
+					<texturenofocus>rcb-scroll-up-2.png</texturenofocus>
+					<texturefocus>rcb-scroll-up-focus-2.png</texturefocus>
+					<onclick>Control.Move(5280,-1)</onclick>
+					<onleft>5281</onleft>
+					<onright>5300</onright>
+					<onup>5272</onup>
+					<ondown>5292</ondown>
+					<enable>Skin.HasSetting(rcb_overwriteImportOptions)</enable>
+				</control>
+				<!-- Scraper 3 -->
+				<control type="list" id="5290">
+					<hitrect x="0" y="0" w="0" h="0" />
+					<posx>0</posx>
+					<posy>60</posy>
+					<width>630</width>
+					<height>30</height>
+					<onleft>5290</onleft>
+					<onright>5290</onright>
+					<onup>5290</onup>
+					<ondown>5290</ondown>
+					<pagecontrol>-</pagecontrol>
+					<scrolltime>0</scrolltime>
+					<itemlayout height="1" width="750">
+					</itemlayout>
+					<focusedlayout height="30" width="630">
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>630</width>
+							<height>30</height>
+							<texture>rcb-MenuItemNF.png</texture>
+							<visible>![Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
+						</control>
+						<control type="image">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>630</width>
+							<height>30</height>
+							<texture>rcb-MenuItemFO.png</texture>
+							<visible>[Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
+						</control>
+						<control type="label">
+							<posx>7</posx>
+							<posy>5</posy>
+							<width>200</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>88FFFFFF</textcolor>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$ADDON[script.games.rom.collection.browser 32615]</label>
+							<visible>![Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>7</posx>
+							<posy>5</posy>
+							<width>200</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$ADDON[script.games.rom.collection.browser 32615]</label>
+							<visible>[Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>550</posx>
+							<posy>5</posy>
+							<width>330</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>88FFFFFF</textcolor>
+							<align>right</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>![Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+						<control type="label">
+							<posx>550</posx>
+							<posy>5</posy>
+							<width>330</width>
+							<height>20</height>
+							<font>font13</font>
+							<textcolor>white</textcolor>
+							<align>right</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>[Control.HasFocus(5291) | Control.HasFocus(5292)]</visible>
+							<animation reversible="false" effect="fade" end="50" time="0" condition="!Skin.HasSetting(rcb_overwriteImportOptions)">Conditional</animation>
+						</control>
+					</focusedlayout>
+				</control>
+				<control type="button" id="5291">
+					<description>Menu Item Next Button</description>
+					<posx>570</posx>
+					<posy>65</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<font>-</font>
+					<texturenofocus>rcb-scroll-down-2.png</texturenofocus>
+					<texturefocus>rcb-scroll-down-focus-2.png</texturefocus>
+					<onclick>Control.Move(5290,1)</onclick>
+					<onleft>5300</onleft>
+					<onright>5292</onright>
+					<onup>5281</onup>
+					<ondown>5300</ondown>
+					<enable>Skin.HasSetting(rcb_overwriteImportOptions)</enable>
+				</control>
+				<control type="button" id="5292">
+					<description>Menu Item Prev Button</description>
+					<posx>590</posx>
+					<posy>65</posy>
+					<width>20</width>
+					<height>20</height>
+					<label>-</label>
+					<font>-</font>
+					<texturenofocus>rcb-scroll-up-2.png</texturenofocus>
+					<texturefocus>rcb-scroll-up-focus-2.png</texturefocus>
+					<onclick>Control.Move(5290,-1)</onclick>
+					<onleft>5291</onleft>
+					<onright>5300</onright>
+					<onup>5282</onup>
+					<ondown>5300</ondown>
+					<enable>Skin.HasSetting(rcb_overwriteImportOptions)</enable>
+				</control>
+			</control>
+			
+			
+			<control type="button" id="5300"> 
+				<description>Import</description>
+				<posx>150</posx>
+				<posy>250</posy>
+				<width>200</width>
+				<height>30</height>
+				<visible>true</visible>
+				<font>font13</font>
+				<colordiffuse>DDFFFFFF</colordiffuse>
+				<texturefocus>rcb-button-focus.png</texturefocus>
+				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
+				<label>$ADDON[script.games.rom.collection.browser 32800]</label>
+				<textcolor>DDFFFFFF</textcolor>
+				<disabledcolor>80FFFFFF</disabledcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textoffsetx></textoffsetx>
+				<textoffsety></textoffsety>
+				<pulseonselect></pulseonselect>
+				<onup>5292</onup>
+				<ondown>5101</ondown>
+				<onleft>5310</onleft>
+				<onright>5310</onright>
+			</control>
+			<control type="button" id="5310"> 
+				<description>Cancel</description>
+				<posx>370</posx>
+				<posy>250</posy>
+				<width>200</width>
+				<height>30</height>
+				<visible>true</visible>
+				<font>font13</font>
+				<colordiffuse>DDFFFFFF</colordiffuse>
+				<texturefocus>rcb-button-focus.png</texturefocus>
+				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
+				<label>$ADDON[script.games.rom.collection.browser 32635]</label>
+				<textcolor>DDFFFFFF</textcolor>
+				<disabledcolor>80FFFFFF</disabledcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textoffsetx></textoffsetx>
+				<textoffsety></textoffsety>
+				<pulseonselect></pulseonselect>
+				<onup>5292</onup>
+				<ondown>5101</ondown>
+				<onleft>5300</onleft>
+				<onright>5300</onright>
+			</control>
+		</control>
+	</controls>
+</window>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmc.unpausejumpback" name="XBMC Unpause Jumpback" version="2.3.2" provider-name="Memphiz|Lucleonhart|schumi2004|bossanova808">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="login"></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">XBMC jumpback on unpausing videos</summary>
+    <description lang="en">
+        This addon will jumpback the given number of seconds whenever a movie is unpaused - for finding back into the story.
+        You can set the amount of seconds to jump back and the minimum seconds the pause must take to jump back.
+        It also allows to jump back or forward after rwd or fwd a specified amount of seconds.
+    </description>
+    <platform>all</platform>
+    <website></website>
+    <source>https://github.com/Memphiz/script.xbmc.unpausejumpback/</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=134837</forum>
+    <email></email>
+    <language></language>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+  </extension>
+</addon>
+
+

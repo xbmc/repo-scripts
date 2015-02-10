@@ -1,0 +1,121 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/xbmc-addons/language/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Chyba"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Stahuji"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Dokončeno"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Ano"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Ne"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Zavřít"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Obecné"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "Třídit"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "Seriály"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "Třídit"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "Třídit"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Banner"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Plagát"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "Extra-náhledy"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Grafika"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Jazyk"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Hodnocení"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Počet hlasů"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Řada"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Velikost"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Disk"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Informace"

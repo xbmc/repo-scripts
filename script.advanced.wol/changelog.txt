@@ -1,0 +1,45 @@
+[B]1.2.5[/B]
+- Changed import of xbmc.python to v2.1.0 in addon.xml (needed for Gotham compatibility)
+
+[B]1.2.4[/B]
+- Fix bug regarding log-messages after wakeup, that led to an exception. (thanks to user "Ghostdivision"!)
+
+[B]1.2.3[/B]
+- Add some further log-messages regarding wakeup and library-updates
+- Add option to set delay of library-updates (should fix problems when filesystem on server/nas is not ready yet after successful wake-up)
+
+[B]1.2.2[/B]
+- Added help-text in autostart-settings stating that changes require a restart of XBMC to take effect
+
+[B]1.2.1[/B]
+- Added options to set delay of WOL-signals on wake-on-launch and wake-after-standby (thanks to user "Skyler"!)
+
+[B]1.2.0[/B]
+- Added futher customizability of notification-settings
+- Added options to perform updates of music- and/or video-libraries after a successful wakeup in autostart mode (thanks to user "sw4y"!)
+- Added option to perform wakeup after XBMC itself has returned from sleep/standby/suspend (thanks to users "Marvel" and "yunti"!)
+- Added option to disable the sending of continuous WOL-packets, when XBMC returns from sleep/standby/suspend (thanks to user "jandias"!)
+- Added option to disable the hostup-check via ping, and instead set a fixed timespan, after that the addon should assume, that the remote host is awake (useful, if hostup-check via ping is not possible)
+- Fixed an error with hostup-check on recent OpenELEC-version (thanks to user "tenzion"!)
+- Restructured settings a bit (you might have to customize your settings again)
+
+[B]1.1.3[/B]
+- Fixed script-error on ATV2
+
+[B]1.1.2[/B]
+- Fixed hang-up on XBMC-exit when using continuous WOL-packets- and autostart-feature
+- Fixed problems with XBMC accessing internet-resources when using continuous WOL-packets- and autostart-feature
+
+[B]1.1.1[/B]
+- Fixed error and improved error-message on missing root-rights with hostup-checks on linux machines
+
+[B]1.1.0[/B]
+- Added option to send continuous WOL-packets (thanks to user "TheLexus"!)
+- Added option to enable/disable notifications
+- Added option to enable/disable hostup-check and -notifications
+- Reorganisation of settings
+- Improved error-message on missing administrator-rights with hostup-checks
+- Fixed error with non-ASCII-charakters in error messages of hostup-check
+
+[B]1.0.0[/B]
+- Initial Release

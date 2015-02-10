@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="script.game.netwalk" name="Netwalk Game" version="0.0.5" provider-name="Tristan Fischer (sphere@dersphere.de)">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="game.py"/>
+    <extension point="xbmc.addon.metadata">
+        <language/>
+        <platform>all</platform>
+        <website></website>
+        <source>https://github.com/dersphere/script.game.netwalk</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=156976</forum>
+        <email>sphere@dersphere.de</email>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <summary lang="be">The Game Netwalk</summary>
+        <summary lang="de">The Game Netwalk</summary>
+        <summary lang="el">The Game Netwalk</summary>
+        <summary lang="en">The Game Netwalk</summary>
+        <summary lang="es">El Juego Netwalk</summary>
+        <summary lang="fr">Le Jeu Netwalk</summary>
+        <summary lang="gl">Xogo Netwalk</summary>
+        <summary lang="hr">The Game Netwalk</summary>
+        <summary lang="it">Il Gioco Netwalk</summary>
+        <summary lang="pl">Gra Netwalk</summary>
+        <summary lang="pt">O Game Netwalk</summary>
+        <summary lang="pt_BR">The Game Netwalk</summary>
+        <summary lang="sv">The Game Netwalk</summary>
+        <summary lang="zh">网络漫步游戏</summary>
+        <description lang="be">Netwalk is a puzzle-like game where you have to rotate tiles.[CR]Your goal is to connect all terminals to the server.[CR][CR]See in-game help for more informations.</description>
+        <description lang="de">Netwalk ist ein Puzzelähnliches Spiel, bei dem Kacheln rotiert werden müssen.[CR]Ziel ist es alle Terminals mit den Servern zu verbinden.[CR][CR]Weitere Informationen befinden sich im Hilfesystem des Spiels.</description>
+        <description lang="el">Το Netwalk είναι ένα παιχνίδι παζλ όπου πρέπει να περιστρέφετε τα κομμάτια.[CR]Στόχος σας είναι να συνδέσετε όλα τα τερματικά στο διακομιστή.[CR][CR]Δείτε τη βοήθεια για περισσότερες πληροφορίες.</description>
+        <description lang="en">Netwalk is a puzzle-like game where you have to rotate tiles.[CR]Your goal is to connect all terminals to the server.[CR][CR]See in-game help for more informations.</description>
+        <description lang="es">Netwalk es un juego de tipo puzzle en el que tienes que rotar las piezas.[CR]El objetivo es conectar todos los terminales al servidor.[CR][CR]Sigue las instrucciones del juego para más información.</description>
+        <description lang="fr">Netwalk est un jeu de puzzle où vous devez faire pivoter les faces.[CR]Votre but est de connecter tous les terminaux au serveur.[CR]&#10;[CR]Voir l'aide dans le jeu pour plus d'informations.</description>
+        <description lang="gl">Netwalk e un xogo estilo puzzle onde terá de xirar as fichas.[CR]O obxectivo é conectar todos os terminais ao servidor.[CR][CR]Ver a axuda do xogo para máis información.</description>
+        <description lang="hr">Netwalk je puzle igra gdje morate okretati pločice.[CR]Vaš cilj je povezivanje svih terminala na poslužitelj.[CR][CR]Pogledajte pomoć u igri za više informacija.</description>
+        <description lang="it">Netwalk è n puzzle game dove devi rotare le caselle. [CR]L'obiettivo è collegare tutti i terminali al server.[CR][CR]Vedi l'aiuto per maggiori informazioni.</description>
+        <description lang="pl">Netwalk jest grą podobną do puzzli, w której obracasz płytkami.[CR]Twoim celem jest połączyć wszystkie terminale do serwera.[CR][CR]Sprawdź pomoc w grze, by dostać więcej informacji.</description>
+        <description lang="pt">O Netwalk é um jogo tipo puzzle onde tem de rodar blocos.[CR]O objectivo é ligar todos os terminais ao servidor.[CR][CR]Verifique a ajuda dentrod o jogo para mais informação.</description>
+        <description lang="pt_BR">NetWalk é um jogo de quebra-cabeça como onde você tem que girar blocos. [CR] Seu objetivo é conectar todos os terminais para o servidor. [CR] [CR] Veja ajuda do jogo para mais informações.</description>
+        <description lang="sv">Netwalk är ett pussel-liknande spel där du roterar brickor.[CR]Ditt mål är att ansluta alla terminaler till servern.[CR][CR]Se hjälpen för mer information.</description>
+        <description lang="zh">网络漫步是一个旋转管线的解迷类游戏。[CR]你的目标是将所有终端连接到服务器。[CR][CR]更多信息见游戏中的介绍。</description>
+    </extension>
+</addon>

@@ -1,0 +1,57 @@
+#FluxBB
+
+#------------------------------------- Main URLs
+url:threads=forum/!FORUMID!-/!PAGE!
+url:replies=topic/!THREADID!-/!PAGE!
+
+url:page_arg=page__st__!PAGE!
+format:zero_based_index=True
+filter:main_url_cleaner=/forum(?:/|$)
+
+#------------------------------------- Subscriptions
+url:subscriptions=index.php?app=core&module=search&do=followed
+url:forum_subscriptions=index.php?app=core&module=search&do=followed&search_app=forums&contentType=forums
+
+#------------------------------------- Page Filters
+filter:page=>\s*(?P<display>Page\s(?P<page>\d+)\sof\s(?P<total>\d+))\s<(?i)
+
+filter:next=st__(?P<start>\d+)"[^>]*?>Next</a>
+filter:prev=st__(?P<start>\d+)"[^>]*?>Prev</a>
+
+#------------------------------------- Login
+url:login=index.php
+form:login_action=login&do=process
+form:login_user=ips_username
+form:login_pass=ips_password
+
+#------------------------------------- Formats/Flags
+format:no_9999=True
+
+#------------------------------------- Start Topic - TODO
+#http://community.invisionpower.com/index.php?app=forums&module=post&section=post&do=new_post&f=15
+
+#-- Posting ---------------------------------
+url:newpost=index.php?app=forums&module=post&section=post&do=reply_post&f=!FORUMID!&t=!THREADID!
+url:quotepost=index.php?app=forums&module=post&section=post&do=reply_post&f=!FORUMID!&t=!THREADID!&qpid=!POSTID!
+
+form:post_id=postingform
+form:post_message=Post
+form:post_submit_wait=1
+
+#url:editpost=index.php?app=forums&module=post&section=post&do=edit_post&f=!FORUMID!&t=!THREADID!&pid=!POSTID!
+
+#form:edit_post_id=postingform
+#form:edit_post_message=Post
+#form:edit_post_submit_wait=1
+
+
+#url:deletepost=
+#form:delete_action=
+#form:delete_control1=radio:name.deletepost=delete
+
+#######################################################
+#-- Post Stuff ----------------------------------------
+#######################################################
+filter:quote_class=blockquote
+filter:quote_user_postfix=said:(?i)
+filter:quote_tag=quote name='%s'

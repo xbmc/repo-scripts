@@ -1,0 +1,16 @@
+Settings Help (Advanced)
+@item:crypto_type=Password Encryption Type
+Select between AES & Triple DES, AES and DES encryption. The default is AES & Triple DES. Less encryption may speed password decryption but will be less secure.
+@item:crypto_key_file=Encryption Key File
+Optional.
+Allows you to select a file whose contents will be used as the encryption key. Normally the key is automatically generated as a combination of your system username, your XBMC user name and the forum user name.
+The only restrictions for the file is that it must be readable by XBMC and it contents must not change.
+@item:debug=Enable Debug Logging
+Enables more detailed logging. You should only enable this if the developer asks you to when reporting a bug.
+@item:do_mybb_edit_bug_fix=Enable MyBB Edit Post Bug Re-Subscribe Fix
+A bug in (as of this writing) the current version of the MyBB plugin for tapatalk causes the current thread to be unsubscribed when you submit an edited post. Enabling this will cause forum browser to re-subscribe if you were subscribed before editing.
+@item:disable_act_splash=Disable Activity Splash
+Early Frodo versions caused crashes when the activity splash displayed.
+Though this behavior was fixed, this setting disables the splash.
+@item:exp_stuff=Experimental Stuff
+Enable any experimental features (if available). Experimental features may be broken and are not supported in any way. 

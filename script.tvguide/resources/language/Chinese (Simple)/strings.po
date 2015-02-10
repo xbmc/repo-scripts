@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "无描述"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]从外部源读取数据...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "计算剩余时间..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "剩余约 %d 秒"
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "读取数据已在进行中..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "鼠标控制"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "现在"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]提示！[/ B]你还可以使用滚轮"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#30009"
+msgid "No program available"
+msgstr "无程序可用"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "常用"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "来源"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "从分类显示频道"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV文件"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "清除缓存..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "完成！"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "选定节目开始前显示通知"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "使用节目图片作背景"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "清除所有提醒..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "变更来源前请先清除缓存"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "XBMC启动时更新节目信息"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "使用YouSee web-tv插件播放频道"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "通知"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "使用Danish直播电视插件播放频道"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "启动"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- 先清除缓存"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "搜索频道logo"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "启用OSD菜单"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "禁用OSD菜单可解决视频卡顿问题。"
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "使用备用流方法（需要一些插件）"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "备用流与OSD菜单不兼容"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "XMLTV URL"
+
+msgctxt "#30123"
+msgid "XMLTV type"
+msgstr "XMLTV 类型"
+
+msgctxt "#30124"
+msgid "Local file"
+msgstr "本地文件"
+
+msgctxt "#30125"
+msgid "URL"
+msgstr " "
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "哎呀，抱歉！"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "无法读取节目数据，"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "请检查设置或稍后再试..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "因设置无效！"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "你的当前皮肤有一个特殊的"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "电视指南皮肤版本未更新。"
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "请试试其它皮肤..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "电视指南数据库已损坏。"
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "数据库可删除并重建。"
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "频道设置等已丢失。"
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "对 [B]%s[/B] 于 5 分钟..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "对 [B]%s[/B] 正在启动..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "观看%s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "提醒"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "不提醒"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "选择流"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "当你想观看此频道时，可以选择播放自己的.strm文件。"
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "删除流文件"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "频道"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "退出"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]编辑频道顺序和可见性[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "上下移动改变频道位置。[CR]选定或向左确定位置。"
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "保存"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]设置流[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr ".strm文件"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "收藏夹"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "扩展功能"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "预览媒体流"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "保存"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "停止预览"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "浏览..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "点击浏览... 下面并找到你的流文件。当你选定文件，可以预览流以测试是否能在XBMC中工作。"
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "在下面选择。仅支持 [I]PlayMedia[/I]。"
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "多个插件支持此频道。[CR]选择一个播放流。"
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "JSON-EPG URL"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "使用Weeb.Tv插件播放频道"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "电视指南设置用Weeb.Tv播放媒体流"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "插件未安装。"
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "已禁用此插件播放流。"

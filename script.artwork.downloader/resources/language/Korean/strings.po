@@ -1,0 +1,413 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr "더 많은 아트워크를 얻을 수 있도록 도와주시거나 기부해 주십시요:"
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr "실행 시간 예약: (24h)"
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr "설정이 잘못되었거나 비어있는 부분이 있습니다!"
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr "다시 설정하고 확인을 눌러 저장하세요"
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr "정리중"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "오류"
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr "파일 다운로드 오류"
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr "아트워크 찾는 중"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "다운로딩"
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr "추가기능 취소됨"
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr "네트워크 오류 감지됨"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "완료"
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr "다운로드 함"
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr "모든 아트워크"
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr "선택하세요"
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr "실패한 항목"
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "취소됨"
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr "사용자가 다운로드들 취소함"
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr "실행 지연시간 (분):"
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr "다운로드"
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr "아트워크 처리 중"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "없음!"
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr "로그인할 때 추가기능 실행"
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr "추가기능을 서비스로 실행"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "예"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "아니오"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "닫기"
+
+msgctxt "#32028"
+msgid "Report"
+msgstr "리포트"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I](변경값을 적용하려면 XBMC를 다시 실행해야 합니다) [/I]"
+
+msgctxt "#32030"
+msgid "No provider ID found for looking up artwork"
+msgstr "아트워크를 찾는데 필요한 provider ID가 없습니다"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#32032"
+msgid "[B]General settings used in Artwork Downloader[/B]"
+msgstr "[B]Artwork Downloader 일반 설정[/B]"
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr "백그라운 실행"
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr "종료 또는 오류가 발생하면 대화창 표시"
+
+msgctxt "#32035"
+msgid "Overwrite all existing artwork [I](will be automaticly disabled after downloading) [/I]"
+msgstr "현재 아트워크 모두 덮어쓰기 [I](이 옵션은 다운로드 완료 후 자동으로 비활성화됩니다) [/I]"
+
+msgctxt "#32036"
+msgid "Centralize extrafanart [I](Can be used for extrafanart slideshow) [/I]"
+msgstr "추가팬아트 한곳에 모으기[I](추가팬아트 슬라이드 쇼에 사용) [/I]"
+
+msgctxt "#32037"
+msgid "Central TV extrafanart directory"
+msgstr "통합 TV 추가팬아트 저장 폴더"
+
+msgctxt "#32038"
+msgid "Central Movie extrafanart directory"
+msgstr "통합 영화 추가팬아트 저장 폴더"
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr "마지막 다운로드 실행 결과 리포트 보기"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr "아트워크 제한"
+
+msgctxt "#32052"
+msgid "[B]Options for limiting downloaded artwork[/B]"
+msgstr "[B]아트워크 다운로드 제한 옵션[/B]"
+
+msgctxt "#32053"
+msgid "Maximum extrafanart"
+msgstr "추가팬아트 최대 개수"
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr "최소 등급"
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr "선호 언어:"
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr "문자가 포함된 팬아트 제외"
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr "팬아트 최소 크기: 영화"
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr "팬아트 최소 크기: TV 쇼"
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr "팬아트 최소 크기: 뮤직비디오"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "영화"
+
+msgctxt "#32072"
+msgid "[B]Options for downloading Movie artwork[/B]"
+msgstr "[B]영화 아트워크 다운로드 옵션[/B]"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "TV 쇼"
+
+msgctxt "#32082"
+msgid "[B]Options for downloading TV Show artwork[/B]"
+msgstr "[B]TV 쇼 아트워크 다운로드 옵션[/B]"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr "뮤직비디오"
+
+msgctxt "#32092"
+msgid "[B]Options for downloading Musicvideo artwork[/B]"
+msgstr "[B]뮤직비디오 아트워크 다운로드 옵션[/B]"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "고급"
+
+msgctxt "#32102"
+msgid "[B]Some more advanced settings to be used[/B]"
+msgstr "[B]약간의 고급 설정들[/B]"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "로컬 파일 사용"
+
+msgctxt "#32106"
+msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
+msgstr "XBMC pre-caching 사용 [I](다운로드할 때 이미지를 thumnails 폴더에 캐시함) [/I]"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "팬아트 (Fanart)"
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr "추가팬아트 (Extrafanart)"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "배너 (Banner)"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "시즌 배너 (Season Banners)"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "클리어아트 (ClearArt)"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "로고 (Logo)"
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr "캐릭터 아트 (Character Art)"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "포스터 (Poster)"
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr "시즌 포스터 (Season Poster)"
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr "썸네일 (Thumb) 16:9 "
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "추가썸네일 (Extrathumbs)"
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr "디스크 아트 (Disc Art)"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "아트워크"
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr "시즌 썸네일 (Season Thumbs) 16:9"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "언어"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "등급"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "투표"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "시즌"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "크기"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "디스크"
+
+msgctxt "#32147"
+msgid "below limit setting"
+msgstr "below limit setting"
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr "끝마친 시각"
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr "실패하거나 누락된 항목 없음"
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr "추가기능이 XBMC 종료로 인해 중단됨"
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr "추가기능이 검색 중 취소됨:"
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr "추가기능이 문제점으로 인해 중단됨"
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr "추가기능이 아트워크 다운로드 중 취소됨"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "정보"
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr "지원 하려면 다음 사이트에 기부하거나 아트워크를 제공해 주세요:"
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr "[I]fanart.tv [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr "추가기능 저작자:"
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr "Thanks to:"
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr "XBMC 팀과 이 추가기능의 기본이 되는 다른 추가기능 저작자들."
+
+msgctxt "#32191"
+msgid "[I]For bugs, requests or general questions visit the [/I]"
+msgstr "[I]버그, 요청사항 및 일반적인 질문은 [/I]"
+
+msgctxt "#32192"
+msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
+msgstr "[I]  XBMC 포럼의 Artwork Downloader 글타래를 찾아 주세요. [/I]"

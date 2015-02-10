@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Spanish (Mexico) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/es_MX/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Aleatorio</string>
+    <string id="3002">Regresar</string>
+    <string id="3118">Ocultos</string>
+
+    <!-- Settings -->
+    <string id="3200">General</string>
+    <string id="3203">Usuario</string>
+    <string id="3204">Contraseña</string>
+    <string id="3209">Todos</string>
+    <string id="3233">Aleatorio</string>
+    <string id="3234">Siguiente</string>
+
+    <!-- Functions -->
+    <string id="3260">Siguiente</string>
+    <string id="3261">Anterior</string>
+    <string id="3264">Favorito</string>
+</strings>

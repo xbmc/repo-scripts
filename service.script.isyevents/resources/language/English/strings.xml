@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="32000">ISY Event Handler</string>
+    <string id="32001">XBMC</string>
+    <string id="32002">Video</string>
+    <string id="32003">Audio</string>
+    
+    <!-- SETTINGS -->
+    <!-- HEADER -->
+    <string id="32100">Node Events</string>
+    <string id="32101">Program Events</string>
+    <!-- ENABLE TAGS-->
+    <string id="32201">Enable Starting Event</string>
+    <string id="32202">Enable Quitting Event</string>
+    <string id="32203">Enable Ended Event</string>
+    <string id="32204">Enable Paused Event</string>
+    <string id="32205">Enable Resume Event</string>
+    <string id="32206">Enable Screen Saver On Event</string>
+    <string id="32207">Enable Screen Saver Off Event</string>
+    <!-- NODE SUBOPTIONS -->
+    <string id="32211">Device Address</string>
+    <string id="32212">Set Device To (%)</string>
+    <!-- PROGRAM SUBOPTIONS -->
+    <string id="32221">Program Address</string>
+    <string id="32222">Command</string>
+    
+    <!-- MESSAGES -->
+    <string id="32301">XBMC Event - </string>
+    
+    <!-- ERROR MESSAGES -->
+    <string id="32501">ISY Connection Issue</string>
+    <string id="32502">Could not connect to ISY. Check Settings. Using dummy ISY results.</string>
+    
+    <!-- UPDATE WARNING -->
+    <string id="32600">ISY-Events Update</string>
+    <string id="32601">The ISY Events addon has recently been updated</string>
+    <string id="32602">or installed. As a result some of your settings</string>
+    <string id="32603">may need to be checked before it will work properly.</string>
+</strings>

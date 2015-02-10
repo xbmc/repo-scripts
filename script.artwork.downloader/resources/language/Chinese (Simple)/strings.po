@@ -1,0 +1,413 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr "请帮助提供更多的艺术图片或给予捐赠支持："
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr "计划任务运行时间：（24小时）"
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr "发现错误/空设置组合！"
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr "选择首选项并按“确定”保存"
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr "清除"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "错误"
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr "下载文件错误"
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr "搜索艺术图片"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "正在下载"
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr "插件已终止"
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr "检测到网络错误"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "已完成"
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr "启用下载"
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr "全部艺术图片"
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr "请选择"
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr "失败项"
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "已取消"
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr "下载已被用户取消"
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr "延迟开始（分）："
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr "已下载"
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr "处理艺术图片"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "未找到"
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr "登录时运行插件"
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr "以服务形式运行插件"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "是"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "否"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "关闭"
+
+msgctxt "#32028"
+msgid "Report"
+msgstr "报告"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I]（修改完成后需要重新启动XBMC）[/I]"
+
+msgctxt "#32030"
+msgid "No provider ID found for looking up artwork"
+msgstr "未找到搜索艺术图片的提供者ID"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "常用"
+
+msgctxt "#32032"
+msgid "[B]General settings used in Artwork Downloader[/B]"
+msgstr "[B]艺术图片下载常用设置[/B]"
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr "在后台运行"
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr "完成/出错时显示对话框"
+
+msgctxt "#32035"
+msgid "Overwrite all existing artwork [I](will be automaticly disabled after downloading) [/I]"
+msgstr "覆盖所有已有的艺术图片[I]（下载完成后将被自动禁用）[/I]"
+
+msgctxt "#32036"
+msgid "Centralize extrafanart [I](Can be used for extrafanart slideshow) [/I]"
+msgstr "集中所有附加同人画[I]（用于附加同人画幻灯片）[/I]"
+
+msgctxt "#32037"
+msgid "Central TV extrafanart directory"
+msgstr "集中电视附加同人画目录"
+
+msgctxt "#32038"
+msgid "Central Movie extrafanart directory"
+msgstr "集中电影附加同人画目录"
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr "查看最新下载报告"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr "限制艺术图片"
+
+msgctxt "#32052"
+msgid "[B]Options for limiting downloaded artwork[/B]"
+msgstr "[B]限制下载艺术图片选项[/B]"
+
+msgctxt "#32053"
+msgid "Maximum extrafanart"
+msgstr "最多附加同人画"
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr "最低投票"
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr "首选语言："
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr "排除含文字的同人画"
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr "最小同人画尺寸：电影"
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr "最小同人画尺寸：剧集"
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr "最小同人画尺寸：音乐电视"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "电影"
+
+msgctxt "#32072"
+msgid "[B]Options for downloading Movie artwork[/B]"
+msgstr "[B]下载电影艺术图片选项[/B]"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "剧集"
+
+msgctxt "#32082"
+msgid "[B]Options for downloading TV Show artwork[/B]"
+msgstr "[B]下载剧集艺术图片选项[/B]"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr "音乐电视"
+
+msgctxt "#32092"
+msgid "[B]Options for downloading Musicvideo artwork[/B]"
+msgstr "[B]下载音乐电视艺术图片选项[/B]"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "高级"
+
+msgctxt "#32102"
+msgid "[B]Some more advanced settings to be used[/B]"
+msgstr "[B]一些高级设置[/B]"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "使用本地文件"
+
+msgctxt "#32106"
+msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
+msgstr "使用XBMC预缓存[I]（下载时将图片缓存到缩略图文件夹）[/I]"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "同人画"
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr "附加同人画"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "横幅"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "季横幅"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "ClearArt"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr "角色艺术"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "海报"
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr "季海报"
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr "缩略图16:9"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "扩展缩略图"
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr "光盘艺术"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "艺术图片"
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr "季缩略图16:9"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "语言"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "评分"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "得票"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "季"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "大小"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "光盘"
+
+msgctxt "#32147"
+msgid "below limit setting"
+msgstr "以下限制设置"
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr "完成时间"
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr "无失败及丢失项"
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr "插件因XBMC关闭而中止"
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr "插件被取消于搜索"
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr "插件出现问题而中止"
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr "插件在下载艺术图片过程中被取消"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "信息"
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr "请对以下网站捐赠或提供支持："
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr "[I]fanart.tv [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr "插件作者："
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr "致谢："
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr "XBMC团队以及此插件基于的其它插件的作者。"
+
+msgctxt "#32191"
+msgid "[I]For bugs, requests or general questions visit the [/I]"
+msgstr "[I]错误报告、需求建议和常见问题访问[/I]"
+
+msgctxt "#32192"
+msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
+msgstr "[I] XBMC论坛Artwork Downloader讨论专贴。[/I]"

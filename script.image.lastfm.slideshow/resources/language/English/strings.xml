@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="30000">Last.FM SlideShow</string>
+  <string id="30001">No music playing - Exiting</string>
+  <string id="30002">No images found for - </string>
+  <string id="30003">Http:Error - check log for info</string>
+  <string id="30004">Loading - </string>
+</strings>

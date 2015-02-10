@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<addon id="script.watchlist" name="Watchlist" provider-name="BigNoid, Unfledged" version="0.0.2">
+	<requires>
+		<import addon="xbmc.addon" version="12.0.0"/>
+		<import addon="xbmc.json" version="6.0.0"/>
+		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.simplejson" version="2.0.10"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Script to provide Watchlist function for reFocus 1.x.x</summary>
+		<description lang="en">Script to provide Watchlist of movies and episodes within the library view. Developed for reFocus 1.x.x.</description>
+		<platform>all</platform>
+		<language />
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum />
+		<website />
+		<source>http://github.com/unfledged/script.watchlist</source>
+		<email />
+		<disclaimer lang="en">This script is based on service.library.data.provider by BigNoid, itself based on service.skin.widgets by Martijn and phil65</disclaimer>
+	</extension>
+</addon>

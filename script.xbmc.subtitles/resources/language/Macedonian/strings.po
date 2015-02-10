@@ -1,0 +1,530 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Macedonian (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/mk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: mk\n"
+"Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "Пребарај"
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Видеото би требало да се репродуцира"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "Рачно внесување име на филм"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "Пребарување на Преводи %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "Конектирање..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "Превземање на преводи..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "Превод отпакуван"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "Конекција неуспешна"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "Грешка при отпакување"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "Локален превод достапен"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "Сервисот не одговорил во одреден временски период"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "Не е пронајден ни еден превод!"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "превод најден за"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "Пребарај користејќи име на датотека"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "Не можете да снимите превод на посакуваната локација"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "Сакате ли да го активирате преводот привремено?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "Внесите име на филм (година)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "Серверот е преоптеретен, обидете се повторно подоцна"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "Неуспешно логирање. Проверите ги поставките во Конфигурација на додатоци"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "Серверот бара да ко пишете кодот повторно од имиџот"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "Погледнете во делот за известувања"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "Внесете ког од имиџ во делот за известувања"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "Достапни сервиси"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "Морате да сте логирани за превземање на овие преводи,[CR]потврдете ги поставките во Конфигурација  на додаток"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "Конфигурација  на додаток"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "Автоматско превземање на првиот 'sync' превод"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "Превземање на првиот 'sync' превод"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "превземен првиот 'sync' превод"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Одбери папка за преводи"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "Нема најдени 'sync' преводи"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "Избор на јазици"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "Прв јазик"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "Втор Јазик"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "Избор на сервис"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net Корисничко Име"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net Лозинка"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "Опции"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "Датотека за симнати преводи иста како за филмот"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- Подеси датотека за симнати преводи"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "Рачно внесете име на филм"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "Трет јазик"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "Изберете подразбирачки Сервис за Филм"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "Изаберете подразбирачки Сервис за ТВ"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "Прикажи име на папка на страната со резултати"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "Пребарај користејќи име на датотека"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "Додади јазик во име на преводот"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "Тајмаут на саканиот сервис"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV Корисничко Име"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV Лозинка"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa Корисничко Име"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa Лозинка"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky Корисничко Име"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky Лозинка"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "Пребарај следен достапен сервис ако не е најден резултат"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "Автоматски превземи го првиот \"Синх\" превод"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx Username"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx Password"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs Username"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs Password"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs Username"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs Password"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone Username"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone Password"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Одбери вид на превод:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "Користи 'Subs' папка за складирање преводи"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl Username"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl Password"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents Username"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents Password"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Нема преводи"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "Пребарај рачно или на предходната папка"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Најдени преводи"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Барање наслов... Почекајте!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "Превземање... Почекајте!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Екстракција... Почекајте!"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "Завршена екстракција!"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "Репродукција на Наслов!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas Username"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas Password"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Паузирај додека е прикажан К.И."
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Албански"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Арапски"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Белоруски"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Босански"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Бугарски"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Каталонски"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Кинески"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Хрватски"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Чешки"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Дански"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Холандски"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Англиски"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Естонски"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Фински"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Француски"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Германски"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Грчки"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Хебрејски"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Хинду"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Унгарски"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Исландски"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Индонежански"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Италијански"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Јапонски"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Кореански"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Латвијски"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Литвански"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Македонски"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Норвешки"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Пољски"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Португалски"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Португалски (Бразил)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Романски"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Руски"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Српски"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Словачки"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Словенечки"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Шпански"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Шпански"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Тајландски"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Турски"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Украински"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Виетнамски"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Персиски"

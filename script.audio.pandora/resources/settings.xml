@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting id="username" type="text" label="Username (email)"/>
+	<setting id="password" type="text" label="Password" option="hidden"/>
+	<setting id="pandoraone" type="bool" label="Pandora One (enable only if you're a subscriber)"
+		default="false"/>
+	<setting type="sep"/>
+	<setting id="format" type="enum" label="Audio Quality"
+		values="Low|Medium|High" default="2"/>
+	<setting type="sep"/>
+	<setting id="skin" type="labelenum" label="Skin"
+		values="Default|Alaska|Smoke" default="Default"/>
+	<setting id="thumbnailArtwork" type="enum" label="Thumbnail Artwork"
+		values="Album|Artist" default="0"/>
+	<setting id="sort_stations" type="bool" label="Sort stations"
+		default="false"/>
+	<setting type="sep"/>
+	<setting id="auto_start" type="bool" label="Automatically start playing previously selected station"
+		default="false"/>
+	<setting type="sep"/>
+	<setting id="logo" type="bool" label="Display Pandora logo (in full-screen mode)"
+		default="true"/>
+	<setting type="sep"/>
+	<setting id="proxy_enable" type="bool" label="Use Proxy"
+		default="false"/>
+	<setting id="proxy_server" type="text" label="Proxy Server"
+		visible="eq(-1,true)"/>
+	<setting id="proxy_port" type="number" label="Proxy Port"
+		visible="eq(-2,true)"/>
+	<setting id="proxy_user" type="text" label="Proxy Username"
+		visible="eq(-3,true)"/>
+	<setting id="proxy_pass" type="text" label="Proxy Password"
+		option="hidden" visible="eq(-4,true)"/>
+	<setting type="sep"/>
+	<setting id="scrobble_hack" type="bool" label="Use duration HACK to enable scrobbling"
+		default="false"/>
+	<setting id="scrobble_hack_time" type="enum" label="(For HACK) Time within song to scrobble"
+		visible="eq(-1,true)" values="30s|60s|90s|120s" default="1"/>
+	<setting id="firstrun" type="bool" label="" visible="false"
+		default="true"/>
+	<setting id="last_station_id" type="text" label="" visible="false"
+		default=""/>
+</settings>

@@ -1,0 +1,57 @@
+#Options Help
+@item:addfavorite
+Add the selected forum to your favorites list. When listing forums, favorites are listed on top.
+@item:removefavorite
+Remove selected forum from your favorites list.
+@item:addcurrentonline
+Share the selected forum info to the Forum Browser online database.
+
+If the forum uses the Parser Browser, you will be asked to rate the function and accuracy.
+
+The function rating deals with whether you can view down the tree to posts, whether you can login, etc.
+
+The accuracy rating indicates how well the titles and posts match the actual forum's displayed info. Whether there is a lot of extra text in the posts for example. 
+@item:addforum
+Add a forum by entering it's domain or URL.
+
+Forum Browser will attempt to find the forum via Tapatalk or Forumrunner. If that fails it will attempt to use the Parser Browser. If successful you will then be asked to edit the description and choose a logo image.
+Afterwards you may optionally share it to the Forum Browser online database.
+@item:addonline
+Select a forum to add from the Forum Browser online database, or un-hide removed built-in forums.
+
+Use the context menu button when viewing the forum lists to enter either keywords or a wildcard expression to use as a filter.
+
+Searches are checked against title + space + description, and are not case sensitive.
+
+Example:
+[I]xbmc linux[/I] : will find any entry with both xbmc and linux
+in either the title or description.
+
+[I]*x?mc*linux*[/I] : will find for example 'xbmc' or 'xcmc' as long as 'linux' is found after.
+@item:removeforum
+Remove a forum from the list of forums. For built-in forums, the forum is hidden.
+@item:setcurrentcolor
+Opens the color editor to select the header color for the selected forum. The color editor allows you to change red/green/blue values or enter the hex value of the color.
+@item:updatethemeodb
+Share the selected forum's colors to the Forum Browser online database.
+@item:setlogins
+Set user name and password for forums.
+
+Passwords are stored encrypted.
+Encryption options are available in the addon settings under 'Advanced'.
+@item:help
+Change forums, view notifications info and manage forums.
+
+The list displays an icon for the forum interface, the forum name, the unread/total subscriptions and the unread PM count.
+
+Select a forum to change to that forum. The context menu button will toggle notifications for the selected forum when navigating the forums list and will show help for the selected button when navigating the buttons.
+@item:parserbrowser
+Set login page and custom parser rules for the selected Parser Browser forum.
+
+Some forums use a non-standard login page. Choosing 'Set Login Page' will open WebViewer and allow you to browse to the login page. When you exit WebViewer, you will be asked if you want to use the url you were viewing when you exited.
+
+'Set Post Parser Rules' will open the rules manager.
+You can add head and tail filters, which will remove lines that only have the text entered from the head or tail of the post. This is useful if you have, for instance, the quote button text showing up at the end of all the posts.
+
+You can add 'extras' which are Python regular expressions that match a user info label such as 'Reputation:' and are searched on a html tag by tag basis. For example ^reputation:( \d+)?(?i) is the built in expression to match reputation. The name of the 'extra' is what will be displayed as the label in Forum Browser.
+ 

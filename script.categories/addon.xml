@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.categories" name="Categories" version="2.1.0" provider-name="AddonScriptorDE">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video audio image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <platform>all</platform>
+    <summary lang="en">Add your Video/Audio/Image add-ons to categories (via context menu)</summary>
+    <summary lang="de">Video/Audio/Image Add-ons per Kontextmenü zu Kategorien hinzufügen</summary>
+    <description lang="en">Add your Video/Audio/Image add-ons to categories (via context menu)</description>
+    <description lang="de">Video/Audio/Image Add-ons per Kontextmenü zu Kategorien hinzufügen</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/AddonScriptorDE/script.categories</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=154668</forum>
+    <email>AddonScriptorDE at yahoo dot de</email>
+    <website></website>
+  </extension>
+</addon>

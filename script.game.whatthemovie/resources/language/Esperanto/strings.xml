@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Esperanto language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/eo/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Random</string>
+
+    <!-- Settings -->
+    <string id="3200">Generalo</string>
+    <string id="3203">Uzulonomo</string>
+    <string id="3204">pasvorto</string>
+    <string id="3209">ĉiom</string>
+    <string id="3233">Random</string>
+    <string id="3234">Sekva</string>
+
+    <!-- Functions -->
+    <string id="3260">Sekva</string>
+    <string id="3261">Antaŭa</string>
+</strings>

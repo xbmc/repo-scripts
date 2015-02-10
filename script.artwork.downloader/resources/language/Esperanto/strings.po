@@ -1,0 +1,49 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Esperanto (http://www.transifex.com/projects/p/xbmc-addons/language/eo/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: eo\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Eraro"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Jes"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Ne"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Generalo"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Filmoj"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Lingvo"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Voĉdonoj"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "KD-ingo:"

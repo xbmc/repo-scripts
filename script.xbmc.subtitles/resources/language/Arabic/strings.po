@@ -1,0 +1,442 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "بحث"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "إدخال سلسلة البحث يدويا"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "البحث عن ترجمات %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "اتصال..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "تحميل ترجمات..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "تم تحميل ملف الترجمات و فكه"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "فشل الاتصال"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "فشل فك الترجمات"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "ترجمة محلية متوفرة"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "الخدمة لم تستجب ضمن وقت المهلة"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "لم يتم العثور على ترجمات!"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "العقور علة ترجمات لـ"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "البحث باستخدام المجلد الأصل"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "لا تستطيع حفظ الترجمة للوجهة المحددة"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "هل ترغب بتفعيل هذه الترجمة مؤقتا؟"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "إدخال اسم الفيلم(عام)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "المخدم مجهد, الرجاء المحاولة لاحقا"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "الدخول فشل. الرضاء التحقق من إعداداتك في الملحق"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "المخدم يطلب منك إعادة كتابة الرمز من الصورة"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "الرجاء النظر لمنطقة الإعلان"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "أدخل الرمز من الصورة في منطقة الإعلان"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "الخدمات المتوفرة"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "عليك تسجيل الدخول لتحميل تلك الترجمات,[CR]  تحقق من إعداداتك في الملحق"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "إعدادات الملحق"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "تحميل 'مزامنة' الترجمة الأولى"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "تحميل اول ترجمة (متزامنة)"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "تم تحميل اول ترجمة (متزامنة)"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "اختر ملف الترجمة"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "لم توجد اي ترجمة متزامنة"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "لغات"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "لغة أساسية"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "لغة ثانوية"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "الخدمات"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net اسم المستخدم"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net كلمة المرور"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "خيارات متقدمة"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "تحميل مجلد الترجمة تماما كالفيلم"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "تخصيص مسار تحميل الترجمة"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "إدخال سلسة البحث يدويا"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "لغة ثالثة"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "تحديد خدمة الفيلم الافتراضية"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "تحديد خدمة العرض التلفزيوني الافتراضية"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "عرض اسم الملف في صفحة النتائج"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "البحث باستخدام المجلد الأصلي"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "إضافة لغة للمتصفح"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "ضبط الوقت الافتراضي"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV اسم المستخدم"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV كلمة السر"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "اسم مستخدم اتاسا"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "كلمة مرور اتاسا"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "اسم مستخدم Titulky "
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "كلمة مرور Titulky "
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "البحث عن الخدمة المتوفرة التالية إذا لم يتم العثور على نتائج"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "تحميل تلقائي لأول ترجمة \"متزامنة\""
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx اسم المستخدم"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx كلمة السر"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs اسم المستخدم"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs كلمة السر"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs اسم المستخدم"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs كلمة السر"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone اسم المستخدم"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone كلمة السر"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "الألبانية"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "العربية"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "البيلاروسية"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "البوسنية (الاتينية)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "البلغارية"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "الكتلانية"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "الصينية"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "الكرواتية"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "التشيكية"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "الدنماركية"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "الألمانية"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "الإنجليزية"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "الإستونية"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "إنهاء"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "الفرنسية"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "الجرمانية"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "اليونانية"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "العبرية"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "الهندية"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "الهنغارية"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "الأيسلاندية"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "الإندونيسية"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "الإيطالية"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "اليابانية"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "الكورية"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "اللاتيفية"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "الليتوانية"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "المقدونية"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "النرويجية"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "البولونية"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "البرتغالية"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "البرتغالية (البرازيل)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "الرومانية"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "الروسية"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "الصربية"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "السلوفاكية"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "السلوفينية"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "الإسبانية"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "السويدية"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "التيلاندية"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "التركية"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "الأكرانية"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "الفيتنامية"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "الفارسية"

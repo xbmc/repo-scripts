@@ -1,0 +1,530 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Romanian (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "Căutare"
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Clipul video trebuie să ruleze"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "Introduceţi termenul de căutare manual"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "Caut subtitrare %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "Se conectează..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "Descarc subtitrare..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "Fişierul subtitrare a fost descărcat şi extras"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "Conectare eşuată"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "Eroare la extragerea subitrării"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "Există subtitrare locală"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "Serviciul nu a răspuns in limita de timp"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "Nici o subtitrare găsită!"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "subtirare găsită pentru"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "Caută folosind directorul părinte"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "Nu puteţi salva subtitrări in destinaţia aleasă"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "Doriţi să activaţi subtitrarea temporar?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "Introduceţi numele filmului (an)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "Serverul este suprasolicitat, vă rugăm incercaţi din nou mai târziu"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "Login eşuat. Vă rugăm verificaţi setările in configurarea suplimentului"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "Serverul cere să reintroduceţi codul din imagine"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "Vă rugăm sa verificaţi zona notificărilor"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "Introduceţi codul din imaginea din zona notificărilor"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "Servicii disponibile"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "Trebuie să fiţi logat pentru a descărca această subtitrare, [CR]verificaţi setările dvs. şi setările suplimentului"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "Setările suplimentului"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "Descarcă automat prima subtitrare 'sync'"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "Descarc prima subtitrare 'sync'"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "prima subtitrare 'sync' descărcată"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Alegeţi directorul pentru subtitrare"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "Nu s-a găsit nici o subtitrare 'sync'"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "Limbi"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "Limba principală"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "Limba secundară"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "Servicii"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- utilizator Podnapisi.net"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- parola Podnapisi.net"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "Opţiuni avansate"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "Director descărcare subtitrare identic cu filmul"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "Setaţi cale personalizată pentru descărcare subtitrări"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "Introduceţi manual termenul de căutare"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "A treia limbă"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "Serviciul predefinit Filme"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "Serviciul predefinit Seriale"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "Afişează numele fişier in pagina cu rezultate"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "Caută folosind directorul părinte"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "Adaugă limba la numele fişier"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "Timp abandon predefinit"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- utilizator Legendas.TV"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- parola Legendas.TV"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- utilizator Itasa"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- parola Itasa"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- utilizator Titulky"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- parola Titulky"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "Caută folosind serviciul următor daca nu se găsesc rezultate"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "Descarcă automat prima subtitrare 'sync'"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- utilizator LegendasDivx"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "parola LegendasDivx"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- utilizator PTSubs"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- parola PTSubs"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- utilizator OmniSubs"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- parola OmniSubs"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- utilizator LegendasZone"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- parola LegendasZone"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Alege tipul subtitrărilor:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "Foloseşte un director 'Subs' pentru a stoca subtitrări multiple"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- utilizator napisy24.pl"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- parolă napisy24.pl"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- utilizator euTorrents"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- parolă euTorrents"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Nu există subtitrări în"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "Caută manual sau în părinte!"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Am găsit subtitrare(ri) în"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Se caută titlul...Asteptaţi vă rog!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "Se descarcă... Asteptaţi vă rog!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Se extrage... Asteptaţi vă rog!"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "Extragere terminată!"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "Se redă titlul!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- utilizator Pipocas"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- parolă Pipocas"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Pauză în timp ce afişează interfaţa"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Albaneză"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Arabă"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Belarusă"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Bosniacă (Latin)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Bulgară"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Catalană"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Chineză"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Croată"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Cehă"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Daneză"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Olandeză"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Engleză"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estonă"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finlandeză"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Franceză"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Germană"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Greacă"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Evreiască"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Maghiară"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Islandeză"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indoneziană"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Italiană"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japoneză"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Coreeană"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Letonă"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Lituaniană"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Macedoneană"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norvegiană"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Poloneză"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portugheză"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portugheză (Brazilia)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Română"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Rusă"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Sârbă Latină"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Slovacă"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Slovenă"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Spaniolă"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Suedeză"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Tailandeză"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Turcă"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ucraineană"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnameză"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Farsi"

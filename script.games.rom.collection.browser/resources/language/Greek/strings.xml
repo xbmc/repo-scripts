@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Greek language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/el/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Περιήγηση Συλλογής Rom</string>
+
+    <!-- Error messages -->
+    <string id="35000">Σφάλμα: Αδυναμία πρόσβασης στη βάση δεδομένων.</string>
+    <string id="35001">Σφάλμα κατά την ενημέρωση του config.xml.</string>
+    <string id="35002">Σφάλμα κατά την ανάγνωση του config.xml.</string>
+    <string id="35003">Σφάλμα: Το αρχείο config.xml δεν υπάρχει.</string>
+    <string id="35004">Σφάλμα: Αδυναμία ανάγνωσης του config.xml.</string>
+    <string id="35005">Σφάλμα διαμόρφωση. Ελέγξτε το xbmc.log για λεπτομέρειες.</string>
+    <string id="35006">Τα id της Συλλογής Rom δεν είναι μοναδικά.</string>
+    <string id="35007">Σφάλμα: Αδυναμία δημιουργίας αντιγράφου του config.xml.</string>
+    <string id="35008">Σφάλμα: Αδυναμία εγγραφής του config.xml.</string>
+    <string id="35009">Αδυναμία εύρεσης %s %s στο config.xml.</string>
+    <string id="35010">Σφάλμα: Αδυναμία δημιουργίας φακέλου εικόνων.</string>
+    <string id="35011">Ελέγξτε το xbmc.log για λεπτομέρειες.</string>
+    <string id="35012">Σφάλμα: Αδυναμία δημιουργίας αρχείου εικόνας.</string>
+    <string id="35013">Σφάλμα επανάληψης scrape παιχνιδιών</string>
+    <string id="35014">Αδυναμία φόρτωσης του επιλεγμένου Παιχνιδιού</string>
+    <string id="35015">Σφάλμα Επεξεργασίας Εντολής Παιχνιδιού</string>
+    <string id="35016">Σφάλμα Προσθήκης στα Αγαπημένα</string>
+    <string id="35017">Σφάλμα Διαγραφής Παιχνιδιού</string>
+    <string id="35018">Αδυναμία διαγραφής επιλεγμένου Παιχνιδιού</string>
+    <string id="35019">Σφάλμα</string>
+    <string id="35020">Αδυναμία Διαγραφής Συλλογής Rom</string>
+    <string id="35021">Σφάλμα Διαμόρφωσης</string>
+    <string id="35022">Η ιστοσελίδα %s δεν υπάρχει στο config.xml</string>
+    <string id="35023">Αδυναμία λήψης συλλογής Rom με id: %s</string>
+    <string id="35024">Αδυναμία ανάγνωσης του επιλεγμένου παιχνιδιού από τη βάση δεδομένων.</string>
+    <string id="35025">Δε βρέθηκε στοιχείο με id: %s. Ελέγξτε το αρχείο WindowXML.</string>
+
+    <!-- <string id="35026">Site %s does not exist in config.xml</string> -->
+    <string id="35027">Δεν μπορεί να γίνει scrape %s παιχνιδιών με τον scraper %s.[CR]Λανθασμένος συνδυασμός ρυθμίσεων του scraper.</string>
+
+    <!-- <string id="35028"></string> -->
+    <!-- <string id="35029">can't be used together with offline scrapers.)</string> -->
+    <string id="35030">Σφάλμα: Αδυναμία δημιουργίας αντιγράφου του MyGames.db: Υπάρχει ήδη αντίγραφο.</string>
+    <string id="35031">Σφάλμα: Αδυναμία δημιουργίας αντιγράφου του MyGames.db</string>
+    <string id="35032">Σφάλμα: Καμία Ενημέρωση από την έκδοση %s στην %s.</string>
+
+    <!-- <string id="35033">Control with id: %s could not be found. Check WindowXML file.</string> -->
+    <string id="35034">Σφάλμα κατά την έναρξη του παιχνιδιού!</string>
+    <string id="35035">Σφάλμα κατά την εκκίνηση του εξομοιωτή</string>
+    <string id="35036">Σφάλμα διαγραφής αρχείων μετά την εκκίνηση του εξομοιωτή</string>
+    <string id="35037">Σφάλμα κατά την εκκίνηση του εξομοιωτή: Το αρχείο %s δεν υπάρχει!</string>
+    <string id="35038">Σφάλμα κατά τη δημιουργία αρχείου .cut. Ελέγξτε το xbmc.log για λεπτομέρειες.</string>
+    <string id="35039">Σφάλμα κατά την εκτέλεση του αρχείου .7z.</string>
+    <string id="35040">Σφάλμα: Το αρχείο config_template.xml δεν υπάρχει</string>
+    <string id="35041">Αδυναμία πρόσβασης του RCB στη διαδρομή των ROM.[CR]Σιγουρευτείτε ότι περιέχει μόνο ascii χαρακτήρες.</string>
+    <string id="35042">Αδυναμία πρόσβασης του RCB στη διαδρομή των εικόνων.[CR]Σιγουρευτείτε ότι περιέχει μόνο ascii χαρακτήρες.</string>
+
+    <!-- Hints / questions -->
+    <string id="40000">Δε βρέθηκε αρχείο διαμόρφωσης (config).</string>
+    <string id="40001">Θέλετε να δημιουργήσετε ένα;</string>
+    <string id="40002">Η βάση δεδομένων και το config.xml ενημερώθηκαν σε νέες εκδόσεις.</string>
+    <string id="40003">Διαβάστε το wiki και αρχείο καταγραφής αλλαγών αν έχετε προβλήματα.</string>
+    <string id="40004">Διαγραφή Rom</string>
+    <string id="40005">Διαγραφή των Rom...</string>
+    <string id="40006">Ολοκλήρωση Διαγραφής των Rom</string>
+    <string id="40007">Γίνεται έλεγχος του Αρχείου</string>
+    <string id="40008">Εκκαθάριση Βάσης Δεδομένων...</string>
+    <string id="40009">Συμπίεση Βάσης Δεδομένων...</string>
+    <string id="40010">Ολοκλήρωση Εκκαθάρισης Βάσης Δεδομένων</string>
+    <string id="40011">Εισαγωγή Παιχνιδιών...</string>
+    <string id="40012">Εισαγωγή σε Εξέλιξη</string>
+    <string id="40013">Να ακυρωθεί η τρέχουσα εισαγωγή;</string>
+    <string id="40014">Ακύρωση σε Εξέλιξη</string>
+    <string id="40015">Η εισαγωγή ακόμα ακυρώνεται. Δοκιμάστε ξανά αργότερα.</string>
+    <string id="40016">Εισαγωγή όρου αναζήτησης</string>
+    <string id="40017">Αναζήτηση</string>
+    <string id="40018">Επιθυμείτε να εισάγετε Παιχνίδια τώρα;</string>
+    <string id="40019">φόρτωση λίστας...</string>
+    <string id="40020">Όλα</string>
+    <string id="40021">φόρτωση παιχνιδιών...</string>
+    <string id="40022">Εισαγωγή Συλλογής Rom</string>
+    <string id="40023">Εισαγωγή Παιχνιδιού</string>
+    <string id="40024">Συνέχεια</string>
+    <string id="40025">Συνέχεια και Παράβλεψη Σφαλμάτων</string>
+    <string id="40026">Ακύρωση</string>
+    <string id="40027">Αδυναμία εισαγωγής των 10 πρώτων παιχνιδιών.</string>
+    <string id="40028">Η εισαγωγή ακυρώθηκε.</string>
+    <string id="40029">Ελέγξτε το xbmc.log για λεπτομέρειες.</string>
+    <string id="40030">Δημιουργείται λίστα αρχείων...</string>
+    <string id="40031">πληροφορίες λήψης</string>
+    <string id="40032">Εισάγετε %s</string>
+    <string id="40033">Αφαίρεση Παιχνιδιού από τα Αγαπημένα</string>
+    <string id="40034">Αφαίρεση Επιλεγμένων από τα Αγαπημένα</string>
+    <string id="40035">Εισαγωγή Εντολής Παιχνιδιού</string>
+    <string id="40036">Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το παιχνίδι;</string>
+    <string id="40037">Διαγραφή παιχνιδιών και διαμόρφωσης</string>
+    <string id="40038">Διαγραφή παιχνιδιών μόνο</string>
+    <string id="40039">Εξομοιωτής</string>
+    <string id="40040">Εισαγωγή Μάσκας Αρχείων Rom</string>
+    <string id="40041">Διαδρομή</string>
+    <string id="40042">Επιλογή διαδρομής πολυμέσων για προσθήκη</string>
+    <string id="40043">Επιλογή διαδρομής πολυμέσων για αφαίρεση</string>
+    <string id="40044">Υπάρχουν ήδη scraper για όλες τις Συλλογές Rom</string>
+    <string id="40045">Επεξεργασία ή διαγραφή του υπάρχοντος scraper</string>
+    <string id="40046">Επιλογή ονόματος scraper</string>
+    <string id="40047">Επιλέξτε ένα scraper για αφαίρεση</string>
+    <string id="40048">Το scraper %s χρησιμοποιείται ήδη και δεν μπορεί να διαγραφεί.</string>
+
+    <!-- <string id="40049">Please choose another one.</string> -->
+    <!-- <string id="40050">Automatic: Accurate</string> -->
+    <!-- <string id="40051">Automatic: Guess Matches</string> -->
+    <!-- <string id="40052">Interactive: Select Matches</string> -->
+    <string id="40053">τοπικές εικόνες</string>
+    <string id="40054">τοπικές πληροφορίες</string>
+    <string id="40055">Επιλογή τύπου Εικόνων</string>
+    <string id="40056">Επιλογή ιδιότητας</string>
+    <string id="40057">παράβλεψη</string>
+    <string id="40058">Παράβλεψη φίλτρου</string>
+    <string id="40059">εμφάνιση</string>
+    <string id="40060">Εμφάνιση μόνο παιχνιδιών με ελλιπή αντικείμενα</string>
+    <string id="40061">απόκρυψη</string>
+    <string id="40062">Απόκρυψη παιχνιδιών με ελλιπή αντικείμενα</string>
+    <string id="40063">Έναρξη Παιχνιδιού</string>
+    <string id="40064">Παρακαλώ επιλέξτε δίσκο</string>
+    <string id="40065">Έναρξη παιχνιδιού από την αρχή</string>
+    <string id="40066">Άνοιγμα της αποθηκευμένης κατάστασης αυτού του παιχνιδιού;</string>
+    <string id="40067">Επιλογή υποδοχής αποθηκευμένου παιχνιδιού</string>
+    <string id="40068">Εισαγωγή Κειμένου Εντολής</string>
+    <string id="40069">Εξαγωγή συλλογής...</string>
+    <string id="40070">Εξαγωγή Συλλογής Rom</string>
+    <string id="40071">Εξαγωγή παιχνιδιού</string>
+    <string id="40072">Η ενέργεια ακυρώθηκε. Το config.xml δε θα εγγραφεί.</string>
+    <string id="40073">Επιλογή σεναρίου</string>
+    <string id="40074">Λήψη πληροφοριών και εικόνων των παιχνιδιών διαδικτυακά, μέσω scraper.</string>
+    <string id="40075">Υπάρχουν πληροφορίες και εικόνες των παιχνιδιών διαθέσιμες τοπικά.</string>
+    <string id="40076">Επιλογή πλατφόρμας</string>
+    <string id="40077">Εισαγωγή ονόματος πλατφόρμας</string>
+    <string id="40078">Διαδρομή για τον %s Εξομοιωτή</string>
+    <string id="40079">Παράμετροι Εξομοιωτή (το "%ROM%" χρησιμοποιείται για τα αρχεία rom σας)</string>
+    <string id="40080">Διαδρομή για τις Rom του %s</string>
+    <string id="40081">Μάσκες αρχείων (διαχωρισμένες με κόμμα): π.χ. *.zip, *.smc</string>
+    <string id="40082">Εικόνες %s (%s)</string>
+    <string id="40083">Επιλέξτε έναν τύπο εικόνων</string>
+    <string id="40084">Επιθυμείτε να προσθέσετε άλλη Διαδρομή Εικόνων;</string>
+    <string id="40085">Δομή των περιγραφών παιχνιδιών</string>
+    <string id="40086">Ένα αρχείο περιγραφής ανά παιχνίδι</string>
+    <string id="40087">Ένα αρχείο περιγραφής για όλα τα παιχνίδια</string>
+    <string id="40088">Λήψη πληροφοριών παιχνιδιού μέσω διαδικτυακού scraping (ή χρήση τοπικών πληροφοριών)</string>
+    <string id="40089">Περιγραφή παιχνιδιού %s</string>
+    <string id="40090">Εισάγετε μάσκα αρχείων περιγραφής</string>
+    <string id="40091">Οδηγία ανάλυσης %s</string>
+    <string id="40092">Επιθυμείτε να προσθέσετε άλλη Συλλογή Rom;</string>
+    <string id="40093">Εικόνες του %s</string>
+    <string id="40094">Καθυστέρηση Πριν την Έναρξη (ms)</string>
+    <string id="40095">Καθυστέρηση Μετά την Έναρξη (ms)</string>
+    <string id="40096">Καθυστέρηση έναρξης λειτουργίας solo (ms)</string>
+    <string id="40097">Χρήση VB script στη λειτουργία solo (μόνο για Windows)</string>
+    <string id="40098">Χρήση του RetroPlayer για εκκίνηση παιχνιδιών;</string>
+    <string id="40099">Αναστολή του Ήχου</string>
+    <string id="40100">Ελαχιστοποίηση του XBMC</string>
+    <string id="40101">Διαδρομή του emu_autoconfig.xml</string>
+    <string id="40102">%s (Εγκαταστάθηκε)</string>
+    <string id="40103">Διαθέσιμοι εξομοιωτές autoconfig</string>
+
+    <!-- Settings -->
+    <string id="45000">Γενικά</string>
+    <string id="45001">Κέλυφος RCB</string>
+    <string id="45002">Επίπεδο αρχείου καταγραφής (log)</string>
+    <string id="45003">Επιλογή λανθάνουσας μνήμης</string>
+    <string id="45004">Αποθήκευση της κατάστασης κατά την έξοδο</string>
+    <string id="45005">Αποθήκευση της κατάστασης κατά την εκκίνηση του εξομοιωτή</string>
+    <string id="45006">Εισαγωγή Παιχνιδιών</string>
+    <string id="45007">Εισαγωγή παιχνιδιών κατά την έναρξη του XBMC</string>
+    <string id="45008">Εμφάνιση του παραθύρου επιλογών εισαγωγής</string>
+    <string id="45009">Λειτουργία scrape</string>
+    <string id="45010">Παιχνίδι που ταιριάζει κατά προσέγγιση (fuzzy factor)</string>
+    <string id="45011">Δημιουργία τοπικού αρχείου nfo κατά το scraping</string>
+    <string id="45012">Να μη γίνει εισαγωγή παιχνιδιών χωρίς περιγραφή</string>
+    <string id="45013">Να μη γίνει εισαγωγή παιχνιδιών χωρίς εικόνες</string>
+    <string id="45014">Επανάληψη scrape ήδη εισηγμένων παιχνιδιών</string>
+    <string id="45015">Να επιτρέπεται η αντικατάσταση με κενές τιμές</string>
+    <string id="45016">Χρήση φακέλου επιπλέον nfo</string>
+    <string id="45017">Διαδρομή φακέλου nfo</string>
+    <string id="45018">Περιήγηση στα Παιχνίδια</string>
+    <string id="45019">Εμφάνιση αστεριών στα αγαπημένα</string>
+    <string id="45020">Φίλτρο Όλες οι Παιχνιδομηχανές</string>
+    <string id="45021">Φίλτρο Όλα τα Είδη</string>
+    <string id="45022">Φίλτρο Όλα τα Έτη</string>
+    <string id="45023">Φίλτρο Όλοι οι Εκδότες</string>
+    <string id="45024">Φίλτρο Όλοι οι Χαρακτήρες</string>
+    <string id="45025">Αποτροπή αναζητήσεων χωρίς φίλτρα</string>
+    <string id="45026">Έναρξη Παιχνιδιών</string>
+    <string id="45027">Εντολή Escape εξομοιωτή</string>
+
+    <!-- GUI controls -->
+    <!-- main window -->
+    <string id="50000">Έτος</string>
+    <string id="50001">Είδος</string>
+    <string id="50002">Εκδότης</string>
+    <string id="50003">Δημιουργός</string>
+    <string id="50004">Αγαπημένα</string>
+    <string id="50005">Αναζήτηση</string>
+    <string id="50006">Παιχνιδομηχανή</string>
+    <string id="50007">A-Z</string>
+    <string id="50008">Προβολή</string>
+    <string id="50009">Φιλτράρισμα ελλιπών πληροφοριών</string>
+    <string id="50010">Αντικείμενα</string>
+    <string id="50011">Σελίδα</string>
+
+    <!-- context menu -->
+    <string id="51000">Εισαγωγή Παιχνιδιών</string>
+    <string id="51001">Επανάληψη scrape για το επιλεγμένο Παιχνίδι</string>
+    <string id="51002">Επανάληψη scrape για τα Επιλεγμένα</string>
+    <string id="51003">Προσθήκη Συλλογής Rom</string>
+    <string id="51004">Επεξεργασία Συλλογής Rom</string>
+    <string id="51005">Επεξεργασία Scraper χωρίς σύνδεση</string>
+    <string id="51006">Επεξεργασία Εντολής Παιχνιδιού</string>
+    <string id="51007">Προσθήκη Παιχνιδιών στα Αγαπημένα</string>
+    <string id="51008">Προσθήκη Επιλεγμένων στα Αγαπημένα</string>
+    <string id="51009">Εξαγωγή βάσης δεδομένων παιχνιδιών (αρχεία nfo)</string>
+    <string id="51010">Διαγραφή Παιχνιδιού</string>
+    <string id="51011">Διαγραφή Συλλογής Rom</string>
+    <string id="51012">Εκκαθάριση Βάσης Δεδομένων</string>
+    <string id="51013">Άνοιγμα Ρυθμίσεων Πρόσθετου</string>
+    <string id="51014">Ορισμός Πελάτη Παιχνιδιών (ανά Παιχνίδι)</string>
+
+    <!-- editromcollection -->
+    <string id="52000">Διαμόρφωση</string>
+    <string id="52001">Συλλογή Rom</string>
+    <string id="52002">Εισαγωγή Παιχνιδιών</string>
+    <string id="52003">Εισαγωγή Δεδομένων Παιχνιδιών</string>
+    <string id="52004">Περιήγηση στα Παιχνίδια</string>
+    <string id="52005">Έναρξη Παιχνιδιών</string>
+    <string id="52006">Διαδρομή Rom</string>
+    <string id="52007">Μάσκα Αρχείων Rom</string>
+    <string id="52008">Παράβλεψη κατά τη Σάρωση</string>
+    <string id="52009">Να επιτρέπονται Ενημερώσεις</string>
+    <string id="52010">Μέγ. Βάθος Φακέλου</string>
+    <string id="52011">Ένδειξη Δίσκου</string>
+    <string id="52012">Χρήση ονόματος φακέλου ως όνομα Παιχνιδιού</string>
+    <string id="52013">Scraper 1</string>
+    <string id="52014">Scraper 2</string>
+    <string id="52015">Scraper 3</string>
+    <string id="52016">Τύπος Πολυμέσου</string>
+    <string id="52017">Διαδρομή Πολυμέσου</string>
+    <string id="52018">Μάσκα Αρχείων Πολυμέσων</string>
+    <string id="52019">Αφαίρεση Διαδρομής Πολυμέσου</string>
+    <string id="52020">Προσθήκη Διαδρομής Πολυμέσου</string>
+    <string id="52021">Εικόνες (Κεντρικό παράθυρο)</string>
+    <string id="52022">Εικόνες (Παράθυρο Πληροφοριών)</string>
+    <string id="52023">Αυτόματη αναπαραγωγή Βίντεο (Κεντρικό Παράθυρο)</string>
+    <string id="52024">Εντολή Εξομοιωτή</string>
+    <string id="52025">Παράμετροι Εξομοιωτή</string>
+    <string id="52026">Χρήση Εξομοιωτή σε Λειτουργία Solo</string>
+    <string id="52027">Χρήση του Popen για την Εκκίνηση του Εξομοιωτή</string>
+    <string id="52028">Να μη γίνεται εξαγωγή αρχείων zip</string>
+    <string id="52029">Διαδρομή Αποθηκευμένων Καταστάσεων</string>
+    <string id="52030">Μάσκα Αρχείων Αποθηκευμένης Κατάστασης</string>
+    <string id="52031">Παράμετροι Αποθηκευμένης Κατάστασης</string>
+    <string id="52032">Εντολή Πριν την Έναρξη</string>
+    <string id="52033">Εντολή Μετά την Έναρξη</string>
+    <string id="52034">Αποθήκευση Διαμόρφωσης</string>
+    <string id="52035">Ακύρωση</string>
+    <string id="52036">Αυτόματη Αναπαραγωγή Βίντεο (Παράθυρο Πληροφοριών)</string>
+    <string id="52037">Χρήση RetroPlayer</string>
+    <string id="52038">Πελάτης Παιχνιδιών</string>
+
+    <!-- editscraper -->
+    <string id="53000">Scraper χωρίς σύνδεση</string>
+    <string id="53001">Scraper</string>
+    <string id="53002">Χρήση περιγραφής ανά παιχνίδι</string>
+    <string id="53003">Διαδρομή περιγραφών παιχνιδιών</string>
+    <string id="53004">Μάσκα αρχείων περιγραφής παιχνιδιών</string>
+    <string id="53005">Οδηγία ανάλυσης</string>
+    <string id="53006">Αναζήτηση παιχνιδιού ανά crc</string>
+    <string id="53007">Χρήση ονόματος φακέλου σαν crc</string>
+    <string id="53008">Χρήση ονόματος αρχείου σαν crc</string>
+    <string id="53009">Αφαίρεση scraper</string>
+    <string id="53010">Προσθήκη scraper</string>
+
+    <!-- info -->
+    <string id="54000">Περιοχή</string>
+    <string id="54001">Πολυμέσο</string>
+    <string id="54002">Χειριστήριο</string>
+    <string id="54003">Καταλληλότητα</string>
+    <string id="54004">Μέγ. Παίκτες</string>
+    <string id="54005">Πλήθος Ενάρξεων</string>
+    <string id="54006">Έναρξη Παιχνιδιού</string>
+
+    <!-- importdialog -->
+    <string id="55000">Εισαγωγή Παιχνιδιών</string>
+    <string id="55001">Λειτουργία scrape</string>
+    <string id="55002">Αλλαγή scraper αυτήν τη φορά</string>
+
+    <!-- Missing info filter -->
+    <string id="56000">RCB - Φίλτρο ελλιπών πληροφοριών</string>
+    <string id="56001">Λειτουργία φίλτρου</string>
+    <string id="56002">Φιλτράρισμα παιχνιδιών από τα οποία λείπουν εικόνες</string>
+    <string id="56003">ΕΝΑ από αυτά τα αντικείμενα λείπει</string>
+    <string id="56004">Κανένα</string>
+    <string id="56005">Προσθήκη αντικειμένου</string>
+    <string id="56006">Αφαίρεση αντικειμένου</string>
+    <string id="56007">ΟΛΑ αυτά τα αντικείμενα λείπουν</string>
+    <string id="56008">Φιλτράρισμα παιχνιδιών με ελλιπείς πληροφορίες</string>
+
+    <!-- Delete Rom Collection -->
+    <string id="57000">RCB - Διαγραφή Συλλογής Rom</string>
+    <string id="57001">Επιλογή Αφαίρεσης</string>
+    <string id="57002">Διαγραφή</string>
+</strings>

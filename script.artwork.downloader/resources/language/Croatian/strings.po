@@ -1,0 +1,413 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Croatian (http://www.transifex.com/projects/p/xbmc-addons/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr "Pomozite nam da dobijemo više slika omota ili donirajte na:"
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr "Zakazano pokretanje u: (24h)"
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr "Neispravana/prazna kombinacija postavki pronađena!"
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr "Odaberite svoje postavke i pritisnite 'U redu' za spremanje"
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr "Čišćenje"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Greška"
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr "Greška preuzimanja datoteke"
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr "Pretraživanje slike omota"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Preuzimanje"
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr "Dodatak prekinut"
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr "Otkrivena mrežna greška"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Završeno"
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr "Omogući preuzimanje"
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr "Ukupno slika omota"
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr "Odaberite"
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr "Neuspjele stavke"
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "Poništeno"
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr "Preuzimanje je poništio korisnik"
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr "Odgoda pokretanja u minutama:"
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr "Preuzeto"
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr "Obrađujem slike omota"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "nije pronađeno!"
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr "Pokreni dodatak prilikom prijave"
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr "Pokreni dodatak kao uslugu"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Da"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Ne"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Zatvori"
+
+msgctxt "#32028"
+msgid "Report"
+msgstr "Izvješće"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I](Nakon što su promjene napravljene morate ponovno pokrenuti XBMC) [/I]"
+
+msgctxt "#32030"
+msgid "No provider ID found for looking up artwork"
+msgstr "Nije pronađen ID pružatelja usluga za pretraživanje slika omota"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#32032"
+msgid "[B]General settings used in Artwork Downloader[/B]"
+msgstr "[B]Općenite postavke korištene u Preuzimatelju slika omota[/B]"
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr "Pokreni u pozadini"
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr "Prikaži dijalog kod završetka/greški"
+
+msgctxt "#32035"
+msgid "Overwrite all existing artwork [I](will be automaticly disabled after downloading) [/I]"
+msgstr "Prepiši sve postojeće slike albuma [I](automatski će se onemogućiti nakon preuzimanja) [/I]"
+
+msgctxt "#32036"
+msgid "Centralize extrafanart [I](Can be used for extrafanart slideshow) [/I]"
+msgstr "Centraliziraj dodatne slike omota[I](može se koristiti za slikovnu prezentaciju dodatnih slika omota) [/I]"
+
+msgctxt "#32037"
+msgid "Central TV extrafanart directory"
+msgstr "Središnji TV direktorij dodatnih slika omota"
+
+msgctxt "#32038"
+msgid "Central Movie extrafanart directory"
+msgstr "Središnji filmski direktorij dodatnih slika omota"
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr "Pogledajte izvješće posljednjeg preuzimanja "
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr "Ograničenje slika omota"
+
+msgctxt "#32052"
+msgid "[B]Options for limiting downloaded artwork[/B]"
+msgstr "[B]Mogućnosti za ograničavanje preuzetih slika omota[/B]"
+
+msgctxt "#32053"
+msgid "Maximum extrafanart"
+msgstr "Maksimalno dodatnih slika omota"
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr "Minimalna ocjena"
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr "Željeni jezik:"
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr "Isključi slike omota koje imaju tekst"
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr "Minimalna veličina slike omota: Filmovi"
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr "Minimalna veličina slike omota: TV serije"
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr "Minimalna veličina slike omota: Glazbeni spotovi"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Filmovi"
+
+msgctxt "#32072"
+msgid "[B]Options for downloading Movie artwork[/B]"
+msgstr "[B]Mogućnosti preuzimanja filmskih slika omota[/B]"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "TV serije"
+
+msgctxt "#32082"
+msgid "[B]Options for downloading TV Show artwork[/B]"
+msgstr "[B]Mogućnosti preuzimanja slika omota TV serija[/B]"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr "Glazbeni spot"
+
+msgctxt "#32092"
+msgid "[B]Options for downloading Musicvideo artwork[/B]"
+msgstr "[B]Mogućnosti preuzimanja slika omota glazbenih spotova[/B]"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Napredno"
+
+msgctxt "#32102"
+msgid "[B]Some more advanced settings to be used[/B]"
+msgstr "[B]Dodatne napredne postavke[/B]"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "Koristi lokalne datoteke"
+
+msgctxt "#32106"
+msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
+msgstr "Koristi XBMC predmemoriju [I](predmemorija slika se stvara u mapi minijatura pri preuzimanju) [/I]"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Slika omota"
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr "Dodatna slika omota"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Transparenti"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "Tansparent sezone"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "Prazna slika omota"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logotip"
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr "Slike omota glumaca"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Poster"
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr "Poster sezone"
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr "Minijatura 16:9"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "Dodatne minijature"
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr "Slika omota diska"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Slika omota"
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr "Minijatura sezone 16:9"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Jezik"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Ocjena"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Glasovi"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Sezona"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Veličina"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Disk"
+
+msgctxt "#32147"
+msgid "below limit setting"
+msgstr "ispod ograničenja postavke"
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr "Vrijeme završetka"
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr "Nema pronađenih neuspjelih ili nedostajućih stavki"
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr "dodatak je zatvoren zbog isključivanja XBMC-a"
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr "dodatak je zatvoren tijekom pretraživanja"
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr "dodatak je zatvoren zbog problema"
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr "dodatak je zatvoren prilikom pretraživanja slike omota"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Informacije"
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr "Donirajte ili nam doprinesite na sljedećim stranicama:"
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr "[I]fanart.tv [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr "Autori dodatka:"
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr "Zahvaljujemo:"
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr "Timu XBMC i autorima ostalih dodataka na kojemu je ovaj dodatak temeljen."
+
+msgctxt "#32191"
+msgid "[I]For bugs, requests or general questions visit the [/I]"
+msgstr "[I]Za greške, zahtjeve ili uobičajena pitanja posjetite [/I]"
+
+msgctxt "#32192"
+msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
+msgstr "[I]  Preuzimatelj slika omota na XBMC forumu. [/I]"

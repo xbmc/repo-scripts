@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.plugin.slideshow" name="Plugin Slideshow" version="0.0.9" provider-name="Rick Phillips (ruuk)">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+	</requires>
+	<extension point="xbmc.ui.screensaver" library="pluginscreensaver.py"></extension>
+	<extension point="xbmc.service" library="service.py" start="login"></extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Screensaver that displays an image slideshow from a plugin</summary>
+		<description lang="en">The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show images from image plugins installed on XBMC</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.xbmc.org/showthread.php?tid=153057</forum>
+		<source>http://github.com/ruuk/screensaver.plugin.slideshow</source>
+	</extension>
+</addon>

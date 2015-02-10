@@ -1,0 +1,53 @@
+Settings Help (General)
+@item:always_login=Always Login If Possible
+When enabled, Forum Browser will always login when connecting to a forum. This only works if login user and password are set.
+Normally, Forum Browser will login when needed.
+@item:ask_close_on_exit=Confirm Exit On Quit
+When enabled, when you attempt to close forum browser a dialog will pop up asking if you really want to quit.
+This is useful if you find yourself often quickly backing out of windows and accidentally exiting.
+@item:open_thread_to_newest=Open Thread At Newest Post
+When enabled, when you open a thread, Forum Browser will open the page with the newest post and jump to it.
+@item:search_open_thread=Searching Posts: Open Thread On Post Click
+When searching posts and this is enabled, if you select a post, Forum Browser will open the thread that the post is in to the page with the post and display the post.
+
+When disabled and you select a post, the post contents will be displayed.
+If you then want to jump to the thread, there will be an option on the context menu.
+@item:auto_thread_subscriptions_window=Automatically Open Subscriptions
+When enabled, Forum Browser will automatilly open the subscriptions window when it starts up.
+This only works if login user and password are set for the current forum.
+@item:reverse_sort=Reverse Sort Posts
+Sort the posts with the oldest on top.
+@item:hide_sig=Hide Signatures In Posts
+When enabled, will hide post signatures if possible
+@item:ignore_forum_images=Parser Browser: Ignore Forum Images In Posts
+Try to detect forum software images in posts (such as small icons and such) and remove them from the display.
+@item:post_user_info=Post User Attributes To Display
+A comma separated list of attributes to display in the posts list below the user name and activity information.
+Up to three items will be displayed following the order of the specified list and depending on availability of the data.
+There are built in attributes, as well as anything listed in the user extra info.
+
+Some possible attributes:
+
+status
+postcount
+reputation
+joindate
+location
+homepage
+platform
+@item:show_ok=Always Show OK Button In Message Dialogs
+When enabled, message dialogs will always show an OK button. In either case you may exit the dialogs in the normal fashion.
+@item:use_skin_mods=Use Skin Modifications
+[B]Recommended.[/B]
+When enabled allows Forum Browser to modify the current skin. This allows the use of a custom font for a more consistent display on skins other than Confluence, and also allows the use of a modified keyboard for easier post editing.
+When forum browser next starts, it will ask to install the modifications.
+
+The custom keyboard and font will only show in Forum Browser.
+@item:save_logos=Cache Logo Images Locally
+When enabled, Forum Browser will save the logo file to disk, and use this copy in the future.
+@item:skin=Skin
+Select between the Dark or Light skin. Default is currently the light skin.
+@item:show_media_indicators=Show Post Media Indicators
+When enabled, image and video icons will show in the posts lists view indicating in which posts those media have been detected.
+@item:smi_count_link_images=Count Link Images As Images
+When enabled, image links will also be detected when showing post media indicators

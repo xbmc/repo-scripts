@@ -1,0 +1,450 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Chinese (Traditional) (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "搜尋"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "手動輸入搜尋字串"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "正在搜尋 %s 的字幕"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "正在連線..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "正在下載字幕..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "字幕已下載並解開"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "連線失敗"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "解開字幕時失敗"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "找到本杝端的字幕"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "找不到字幕！"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "使用上一層目錄搜尋"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "你無法儲存字幕到所選的目的地"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "你要暫時啟用這個字幕嗎？"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "輸入電影名稱(年)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "伺服器過載，請稍後再試"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "登入失敗，請檢查你的擴充套件的設定"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "可取得的服務"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "你必須登入才能下載這些巾幕，[CR]請檢查你的擴充套件的設定"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "套件設定"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "選擇字幕資料夾"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "語言"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "主要語言"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "第二語言"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "服務"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net 使用者名稱"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net 密碼"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "進階選項"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "下載字幕到和電影相同的資料夾"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- 設定自訂的字幕下載路徑"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "手動輸入搜尋字串"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "第三語言"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "選擇預設的電影服務"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "選擇預設的電視節目服務"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "在結果頁面中顯示檔案名稱"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "使用上一層目錄搜尋"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "在檔案名稱中加入語言"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "設定預設的逾時時間"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV 使用者名稱"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV 密碼"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa 使用者名稱"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa 密碼"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky 使用者名稱"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky 密碼"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "如果找不到結果的話使用下一個服務來搜尋"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx 使用者名稱"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx 密碼"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs 使用者名稱"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs 密碼"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs 使用者名稱"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs 密碼"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone 使用者名稱"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone 密碼"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- 選擇字幕類型"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "使用 'Subs' 字資料夾來存放字幕"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl 使用者名稱"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl 密碼"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents 使用者名稱"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents 密碼"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "無字幕在"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "找到字幕在"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "下載中...請稍候！"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "解壓縮中...請稍候！"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "解壓縮完成！"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "正在播放標題！"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas 使用者名稱"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas 密碼"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "阿爾巴尼亞語"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "阿拉伯語"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "保加利亞語"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "中文"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "捷克語"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "丹麥語"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "荷蘭語"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "英語"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "芬蘭語"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "法語"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "德語"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "希臘語"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "希伯來語"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "印度語"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "冰島語"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "印尼語"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "義大利語"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "日語"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "韓語"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "拉脫維亞語"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "立陶宛語"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "馬其頓語"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "挪威語"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "波蘭語"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "葡萄牙語"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "葡萄牙語（巴西）"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "羅馬尼亞語"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "俄羅斯語"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "塞爾維亞拉丁語"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "斯洛伐克語"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "斯洛維尼亞語"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "西班牙語"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "瑞典語"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "泰語"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "土耳其語"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "烏克蘭語"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "越南語"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "波斯語"

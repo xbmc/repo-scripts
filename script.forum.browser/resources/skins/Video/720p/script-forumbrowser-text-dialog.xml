@@ -1,0 +1,184 @@
+<window>
+	<defaultcontrol>123</defaultcontrol>
+	<zorder>2</zorder>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<visible>!Control.IsVisible(115)</visible>
+			<control type="group">
+				<posx>40</posx>
+				<posy>40</posy>
+				<control type="image">
+					<posx>-10</posx>
+					<posy>-16</posy>
+					<width>1220</width>
+					<height>672</height>
+					<texture border="10">forum-browser-video-box-white.png</texture>
+					<colordiffuse>44000000</colordiffuse>
+				</control>
+				<control type="image" id="251">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>-6</posy>
+					<width>1200</width>
+					<height>652</height>
+					<texture border="10">forum-browser-video-box.png</texture>
+					<colordiffuse>FF4488AA</colordiffuse>
+				</control>
+				<control type="image" id="251">
+					<description>Large Back</description>
+					<posx>10</posx>
+					<posy>4</posy>
+					<width>1180</width>
+					<height>632</height>
+					<texture border="10">forum-browser-video-box.png</texture>
+				</control>
+				<control type="image">
+					<posx>10</posx>
+					<posy>4</posy>
+					<width>1180</width>
+					<height>40</height>
+					<texture border="10">forum-browser-video-box-header.png</texture>
+				</control>
+	
+				<control type="label" id="104">
+					<description>Caption</description>
+					<posx>20</posx>
+					<posy>4</posy>
+					<width>1160</width>
+					<height>40</height>
+					<font>ForumBrowser-font13</font>
+					<textcolor>white</textcolor>
+					<aligny>center</aligny>
+					<align>left</align>
+					<wrapmultiline>true</wrapmultiline>
+					<label>[B]$INFO[Window.Property(caption)][/B]</label>
+				</control>
+				
+				<control type="textbox" id="122">
+					<posx>30</posx>
+					<posy>44</posy>
+					<width>1125</width>
+					<height>590</height>
+					<pagecontrol>123</pagecontrol>
+					<colordiffuse>FFFFFFFF</colordiffuse>
+					<font>ForumBrowser-font13</font>
+					<scroll>true</scroll>
+					<textcolor>white</textcolor>
+					<visible>true</visible>
+					<label>$INFO[Window.Property(text)]</label>
+				</control>
+	
+				<control type="scrollbar" id="123">
+					<description>Message Scrollbar</description>
+					<hitrect x="30" y="44" w="1147" h="590" /><!-- Doesn't work as of Frodo 12.1 -->
+					<posx>1173</posx>
+					<posy>44</posy>
+					<width>4</width>
+					<height>590</height>
+					<onleft>147</onleft>
+					<onright>149</onright>
+					<onup>123</onup>
+					<ondown>123</ondown>
+					<texturesliderbackground>-</texturesliderbackground>
+					<texturesliderbar>forum-browser-video-white.png</texturesliderbar>
+					<texturesliderbarfocus>forum-browser-video-white.png</texturesliderbarfocus>
+					<textureslidernib>-</textureslidernib>
+					<textureslidernibfocus>-</textureslidernibfocus>
+					<orientation>vertical</orientation>
+					<showonepage>true</showonepage>
+					<colordiffuse>FF224466</colordiffuse>
+					<visible>Control.IsVisible(122)</visible>
+				</control>
+			</control>
+		</control>
+		
+		<control type="group" id="115">
+			<visible>Player.Playing + Player.HasVideo + !StringCompare(Window(10000).Property(ForumBrowser_hidePNP),1)</visible>
+			<posx>10</posx>
+			<posy>20</posy>
+			<control type="image">
+				<posx>-5</posx>
+				<posy>-5</posy>
+				<width>310</width>
+				<height>690</height>
+				<texture border="10">forum-browser-video-box-white.png</texture>
+				<colordiffuse>44000000</colordiffuse>
+			</control>
+			<control type="image">
+				<description>Large Back</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>300</width>
+				<height>680</height>
+				<texture border="10">forum-browser-video-box.png</texture>
+				<colordiffuse>FF4488AA</colordiffuse>
+			</control>
+			<control type="image">
+				<description>Smaller Back</description>
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>280</width>
+				<height>660</height>
+				<texture border="10">forum-browser-video-box-light.png</texture>
+			</control>
+			<control type="image">
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>280</width>
+				<height>40</height>
+				<texture border="10">forum-browser-video-box-header.png</texture>
+			</control>
+
+			<control type="label">
+				<description>Caption</description>
+				<posx>20</posx>
+				<posy>10</posy>
+				<width>260</width>
+				<height>40</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>white</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<label>[B]$INFO[Window.Property(caption)][/B]</label>
+			</control>
+			
+			<control type="textbox">
+				<posx>20</posx>
+				<posy>50</posy>
+				<width>260</width>
+				<height>618</height>
+				<font>ForumBrowser-font13</font>
+				<scroll>true</scroll>
+				<textcolor>white</textcolor>
+				<visible>true</visible>
+				<pagecontrol>123</pagecontrol>
+				<label>$INFO[Window.Property(text)]</label>
+			</control>
+			<control type="scrollbar" id="123">
+				<description>Message Scrollbar</description>
+				<posx>6</posx>
+				<posy>50</posy>
+				<width>4</width>
+				<height>615</height>
+				<onleft>111</onleft>
+				<onright>111</onright>
+				<onup>123</onup>
+				<ondown>123</ondown>
+				<texturesliderbackground>-</texturesliderbackground>
+				<texturesliderbar>forum-browser-video-black.png</texturesliderbar>
+				<texturesliderbarfocus>forum-browser-video-white.png</texturesliderbarfocus>
+				<textureslidernib>-</textureslidernib>
+				<textureslidernibfocus>-</textureslidernibfocus>
+				<colordiffuse>FF4488AA</colordiffuse>
+				<orientation>vertical</orientation>
+				<showonepage>false</showonepage>
+			</control>
+		</control>
+		
+	</controls>
+</window>

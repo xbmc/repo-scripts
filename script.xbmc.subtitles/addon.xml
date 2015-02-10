@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.xbmc.subtitles"
+       name="XBMC Subtitles"
+       version="3.9.18"
+       provider-name="amet, mr_blobby">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.module.mechanize" version="0.2.5"/>
+    <import addon="script.module.requests" version="1.1.0" />
+  </requires>
+  <extension point="xbmc.python.subtitles"
+             library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="af">XBMC Subtitels</summary>
+    <summary lang="ar">ترجمات XBMC</summary>
+    <summary lang="be">XBMC Subtitles</summary>
+    <summary lang="bg">Субтитри за XBMC</summary>
+    <summary lang="ca">Subtítols XBMC</summary>
+    <summary lang="cs">Titulky XBMC</summary>
+    <summary lang="da">XBMC Undertekster</summary>
+    <summary lang="de">XBMC Untertitel</summary>
+    <summary lang="el">Υπότιτλοι XBMC</summary>
+    <summary lang="en">XBMC Subtitles</summary>
+    <summary lang="es">Subtítulos XBMC</summary>
+    <summary lang="es_AR">Subtítulos XBMC</summary>
+    <summary lang="es_MX">Subtítulos XBMC</summary>
+    <summary lang="et">XBMC Subtiitrid</summary>
+    <summary lang="eu">XBMC azpitituluak</summary>
+    <summary lang="fi">XBMC-tekstitykset</summary>
+    <summary lang="fr">Sous-titres XBMC</summary>
+    <summary lang="gl">Subtítulos de XBMC</summary>
+    <summary lang="he">XBMC Subtitles</summary>
+    <summary lang="hr">XBMC Podnaslov</summary>
+    <summary lang="hu">XBMC feliratok</summary>
+    <summary lang="it">Sottotitoli XBMC</summary>
+    <summary lang="ja">XBMC Subtitles</summary>
+    <summary lang="ko">XBMC 자막</summary>
+    <summary lang="lt">XBMC subtitrai</summary>
+    <summary lang="mk">XBMC Преводи</summary>
+    <summary lang="nl">XBMC Ondertitels</summary>
+    <summary lang="no">XBMC undertekster</summary>
+    <summary lang="pl">Napisy XBMC</summary>
+    <summary lang="pt">Legendas XBMC</summary>
+    <summary lang="pt_BR">XBMC Legendas</summary>
+    <summary lang="ro">Subtitrări XBMC</summary>
+    <summary lang="ru">Субтитры XBMC</summary>
+    <summary lang="se">XBMC Undertexter</summary>
+    <summary lang="sk">XBMC Titulky</summary>
+    <summary lang="sl">Podnapisi XBMC</summary>
+    <summary lang="sr">XBMC Преводи</summary>
+    <summary lang="sv">XBMC Undertexter</summary>
+    <summary lang="th">XBMC คำบรรยาย</summary>
+    <summary lang="tr">XBMC Altyazılar</summary>
+    <summary lang="zh">XBMC 字幕</summary>
+    <summary lang="zh_TW">XBMC 字幕</summary>
+    <description lang="af">Soek en laai subtitels af van verskeie verskaffers. Subtitel knoppie op OSD moet geaktiveer wees en pad gestel na XBMC Subtitels onder Stelsel-&gt; Oortreksel-&gt; Byvoegsel Skripte</description>
+    <description lang="be">Search and download subtitles from multipe providers.Subtitle button on OSD needs to be activated and path set to XBMC Subtitles under System-&gt; Skin-&gt; Addon Scripts</description>
+    <description lang="bg">Търси и сваля субтитри от многобройни източници. Трябват ли ви субтитри на български език пробвайте OpenSubtitles.org. Ползващите Eden могат да вкл/изкл бутона за субтитрите от Настройки &gt; Облик &gt; Добавка &gt; Видео OSD</description>
+    <description lang="ca">Busca i descarrega subtítols a múltiples proveïdors. El botó de subtítulos al OSD s'ha d'activar a Sistema-&gt;Skin-&gt;Scripts d'Addon, establint la ruta a XBMC Subtitles</description>
+    <description lang="cs">Hledejte a stahujte titulky od více poskytovatelů. Je třeba aktivovat tlačítko Titulky na OSD a nastavit cestu k titulkům pro XBMC v sekci Systém -&gt; Vzhled -&gt; Skripty doplňků</description>
+    <description lang="da">Søg efter og download undertekster fra en række udbydere. Undertekst-knappen på OSD skal aktiveres og stien sættes til XBMC Subtitles under System-&gt; Skin -&gt; Add-on Scripts</description>
+    <description lang="de">Suche und lade Untertitel von verschiedenen Anbietern. </description>
+    <description lang="el">Αναζήτηση και λήψη υποτίτλων από διάφορους παρόχους. Το πλήκτρο υποτίτλων πρέπει να είναι ενεργό στο OSD και να έχει οριστεί η διαδρομή στους υπότιτλους XBMC στο Σύστημα -&gt; Κέλυφος -&gt; Πρόσθετα Script</description>
+    <description lang="en">Search and download subtitles from multipe providers.Subtitle button on OSD needs to be activated and path set to XBMC Subtitles under System-&gt; Skin-&gt; Addon Scripts</description>
+    <description lang="es">Búsqueda y descarga de subtítulos desde múltiples proveedores.Se necesita activar el botón de subtitulos en OSD y establecer a XBMC subtítulos en Sistema-&gt;Skin-&gt;Addon Scripts</description>
+    <description lang="es_AR">Buscar y descargar los subtítulos desde múltiples proveedores.Se necesita activar el botón de subtítulos en OSD y establecer a XBMC subtítulos en Sistema-&gt;Skin-&gt;Addon Scripts</description>
+    <description lang="es_MX">Búsqueda y descarga de subtítulos de distintos proveedores. El botón de subtítulos en el OSD requiere ser activado con la ruta definida hacia XBMC Subtitles en Systema-&gt;Skin-&gt;Scripts de Addons</description>
+    <description lang="et">Otsi ja lae alla subtiitreid erinevatelt pakkujatelt.Subtiitrite nupp OSD juures peab olema aktiveeritud ja teekonnaks peab olema seatud XBMC Subtiitrid  Süsteemid-&gt; Rüü-&gt; Lisade kood</description>
+    <description lang="fi">Hae ja lataa tekstityksiä monelta tarjoajalta. Tekstitysnappi pitää aktivoida ja hakemistopolku pitää asettaa XBMC-tekstityksiin Järjestelmä -&gt; Skin/Kuosi -&gt; Lisäosaskriptit</description>
+    <description lang="fr">Recherche et téléchargement de sous-titres depuis différentes sources. Activer le bouton de sous-titre dans le menu à l'écran et définir le chemin de sous-titres dans System-&gt;Thème-&gt;Scripts d'extension</description>
+    <description lang="gl">Busca e descarga subtítulos dende varios provedores. O botón dos subtítuos on OSD ten de estar activado e o camino estabelecido en Subtítulos XBMC baixo Sistema-&gt; Tema-&gt; Scripts dos Engadidos</description>
+    <description lang="he">חפש והורד כתוביות ממספר ספקים. כפתור הכתוביות בתפריט ה-OSD צריך להיות פעיל והנתיב צריך היות מוגדר לכתוביות XBMC תחת מערכת -&gt; מעטפת -&gt; הרחבות סקריפטים</description>
+    <description lang="hr">Pretraživanje i preuzimanje titlova od više  providera.Subtitle gumb na OSD-u potreban je da se aktivira put u postavkama na XBMC Titlovi pod System-&gt; Skin-&gt; Addon Scripts</description>
+    <description lang="hu">Feliratok keresése és letöltése több internetes szolgáltatótól. A feliratok gombot az OSD-n aktiválni kell az elérési út beállításával a Beállítások-&gt;Megjelenítés-&gt;Felszín-&gt;Kiegészítő parancsikonok menüpont alatt</description>
+    <description lang="it">Cerca e scarica i sottotitoli da più fornitori. Il pulsante Sottotitoli sull'OSD deve essere attivo e il percorso impostato su Sottotitoli XBMC sotto Sistema -&gt; Skin -&gt; Addon Scripts</description>
+    <description lang="ko">다양한 사이트에서 자막을 찾고 다운로드합니다. OSD에서 자막 버튼을 사용하려면 '시스템 &gt; 스킨 &gt; 자막 추가기능' 에서 'XBMC Subtitles'를 선택하여 활성화하여야 합니다.</description>
+    <description lang="lt">Ieškoti ir atsisiųsti subtitrus iš Multipe teikėjų. Paantraštės mygtukas OSD turi būti aktyvuotas. Nustatytas kelias iki XBMC Subtitrai -&gt; Sistema -&gt; Teminė išvaizda/Tema -&gt; Addon Skriptai</description>
+    <description lang="mk">Барај и превземи преводи од повеќе добавувачи. Копчето за преводи на OSD треба да е активирано и патеката да биде подесена на XBMC Преводи при Систем-&gt; Маска-&gt; Скрипти на додаток</description>
+    <description lang="nl">Zoek en download ondertitels van meerdere aanbieders. De ondertitel knop in het OSD scherm moet zijn geactiveerd met het pad naar XBMC Subtitles via Systeem-&gt; Skin-&gt; Addon Scripts.</description>
+    <description lang="pl">Wyszukaj i pobierz napisy równoczesnie z wielu źródeł. Przycisk napisów w Menu Ekranowym powinien zostać aktywowany w opcjach XBMC. Ścieżka: System-&gt; Skóra-&gt; Skrypty Addon-&gt; XBMC Subtitles</description>
+    <description lang="pt">Procure e transfira legendas de vários fornecedores. O botão das legendas deve ser adicionado no visor e a localização definida em Sistema-&gt; Tema-&gt; Addons</description>
+    <description lang="pt_BR">Procure e efetue download de legendas de múltiplos provedores. Botão de Legendas na tela OSD precisa ser ativado manualmente e o caminho deve estar definido para o XBMC Legendas em Sistema-&gt; Skin-&gt; Scripts de Addons. </description>
+    <description lang="ro">Caută şi descarcă subtitrari folosind servicii multiple. Butonul de subtitrări in OSD trebuie să fie activat şi calea trebuie să fie setată in XBMC-&gt; Costume -&gt; Scripturi supliment</description>
+    <description lang="ru">Поиск и загрузка субтитров со множества сайтов. Необходимо включить кнопку субтитров в OSD и выбрать дополнение субтитров в настройках обложки.</description>
+    <description lang="se">Sök och ladda ner undertexter från flera källor. Undertextknappen i OSD'n behöver aktiveras och sökvägen anges till XBMC Undertexter i Inställningar -&gt; Skal -&gt; Tillägg genvägar</description>
+    <description lang="sk">Hľadajte a preberajte titulky od viacerých poskytovateľov. Je potrebné aktivovať tlačidlo Titulky na OSD obrazovke a nastaviť cestu k adresáru pre XBMC Titulky v ponuke Systém-&gt; Vzhľad-&gt; Skripty doplnkov</description>
+    <description lang="sl">Poiščite in prenesite podnapise različnih ponudnikov. Gumb za podnapise na OSD mora biti vključen in nastavljen na dodatek v nastavitvah preobleke.</description>
+    <description lang="sr">Претражи и скини преводе од многобројних провајдера. Дугме за преводе на OSD треба да се активира и изабере XBMC Subtitles у Систем-&gt; Маска-&gt; Скрипт додаци</description>
+    <description lang="sv">Sök och ladda ner undertexter från flera källor. Undertextknappen på OSB behöver vara aktiverad och sökvägen till XBMC Undertexter angiven i System -&gt; Skal -&gt; Tillägg</description>
+    <description lang="th">ค้นหาและดาวน์โหลดคำบรรยายจากผู้ให้บริการหลายแหล่ง ปุ่มคำบรรยายที่อยู่ในการแสดงผลหน้าจอจำเป็นต้องเปิดใช้งานและตั้งค่าในส่วนของการตั้งค่าคำบรรยายใน System-&gt; Skin-&gt; Addon Scripts</description>
+    <description lang="zh">从多个服务提供者搜索并下载字幕。需要激活视频OSD菜单中的字幕按钮，并将字幕扩展功能设置为XBMC字幕。设置方法：系统设置-&gt;皮肤-&gt;扩展功能</description>
+    <platform>all</platform>
+    <website></website>
+    <source>https://github.com/amet/script.xbmc.subtitles</source>
+    <forum>http://forum.xbmc.org/showthread.php?tid=126495</forum>
+    <email></email>
+  </extension>
+</addon>

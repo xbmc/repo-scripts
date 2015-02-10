@@ -1,0 +1,1208 @@
+Forum Browser Changelog
+
+Special thanks to John Hanselman for all his testing which helped make Forum Browser better than it would have been without it.
+
+TODO:
+ Short Term:
+  Back on video also goes back a window - see what I can do (and see if other controls are affected)
+  
+ Long Term:
+  Check on optional import behavior
+  Check for new parser rules automatically or add option to check for new rules
+  Image zoom/rotate etc
+  Look at using the AlarmClock builtin for the service - Easier to restart and less overall memory usage perhaps?
+  When adding a forum, ask for logo background color (or image?) or ask later
+  Option to save posts when exiting and not posting
+  Use new option menus for context?
+  Adjustable text size
+  Logo url from field in forum config data?
+  Add missing smilies other forum types
+  Add missing quote formats for other forum systems
+  Smiley dialog
+  Tapatalk: Use charset from get_config
+  Find forum mobiquo.php path from tapatalk.js path in html page
+  Latest Threads
+  Today's New Posts?
+  Make a million dollars
+  
+ Investigated And Possibly Unfixable:
+  Skip forward on remote causes XBMC dialog
+ 
+ Awaiting Future Developments:
+  Show more extra info in tapatalk (e.g. followers) - TTv4
+
+Current Version : 2.1.0
+
+*** 2.1.0 *** 04-24-2013 ***
+
+Created custom skins and handling for Yes/No style dialogs
+When editing a forum logo in the forum settings dialog, now does nothing if you exit the Edit/Browse dialog instead of choosing
+Added text dialog skin for the Video skin (eg. the dialog where you view the changelog)
+Added help dialog skin for the Video skin
+Updated translations
+
+*** 2.0.6 ***
+
+Fixed duplicate error message dialogs
+Fixed a bug causing some signatures not to show
+Tapatalk: Improved progress bar updates on posts view
+Video Skin: Moved progress bar to a slide-out at the bottom of the screen
+Video Skin: Made previous and next page buttons appear disabled (instead of hidden) when no prev/next page
+Added a button on the keyboard mod skins that toggles the large/small view
+
+*** 2.0.5 ***
+
+Moved the base windows classes to their own module
+Moved XBMC constants to their own module
+Logged in indicator now refreshes when returning to a window
+Page menu now uses FB dialog instead of XBMC dialog
+Fixed skin error with Video skin for missing default avatar file
+Moved some of the Video skins lists into groups to get rid of the "Control BLAH in window BLAH has been asked to focus, but it can't" log messages
+In Video skin, made back/edit close the slide out menu (if open) to match rest of skin behavior
+In Video skin, in the full message view, fixed the links list so that it doesn't overflow the background
+In posts view in Video skin, selected post now better highlighted. Changed own post highlight color
+
+*** 2.0.4 ***
+
+Fixed a bug where FB fails on fresh installs
+Shiny new progress bar on Video skin. Moved stop button away from progress bar
+Added asynchronous connections to Parser Browser
+
+*** 2.0.3 ***
+
+Made logged-in indicator on post editor in Video skin work
+Extended button decorations to all skins in Video skin and made it look better
+Added Message dialog skin to Video skin
+When adding a new forum or editing a forum, setting the description now brings up the large keyboard if installed
+The forum logo in forum settings now shows the header color as a background
+Added forum settings skin to Video skin
+Post editor now opens as a window instead of as a dialog, this lowers CPU usage (especially when video is playing) because it stops it from having to render both windows
+Fixed a bug causing the notifications service to fail
+
+*** 2.0.2 ***
+
+Fixed a bug where settings/signals file could become permanently locked causing failure to open Forum Browser
+Fixed a bug where '[size]' tags that included a '-' in the tag (for example [size=x-large]) were not parsed out
+Added post editor skin to Video skin
+Added forums manager skin to Video skin
+Added some elements to buttons on the Video skin forums window and forums manager
+
+*** 2.0.1 ***
+
+Fixed: When viewing a forum that was selected in 'Subscriptions' the context menu would show 'Unsubscribe from forum: ' without the forum name.
+In the image viewer, moving left and right now navigates the images instead of navigating the buttons and highlights the button for the direction pressed
+Re-enable the Video skin in settings
+Fix the image viewer window for the Video skin
+Generic select dialogs now have a custom skin for all skins and move out of the way of video
+Various video skin tweaks
+
+*** 2.0.0 *** 04-14-2013 ***
+
+Added translations from translations project
+
+*** 1.5.3 RC6 ***
+
+Some minor code changes
+Preview of Video skin (will be removed as an option for the 2.0 release)
+
+*** 1.5.2 RC5 ***
+
+Some minor internal changes that I hope will fix the settings reset issue
+
+*** 1.5.1 RC4 ***
+
+Added setting 'Reverse Sort Search Results'
+When loading a forum, logo and theme will now not change unless it succeeds. On failure, underlying forum interface reverts to the currently displayed forum
+
+*** 1.5.0 RC3 ***
+
+Added a fix for some avatar urls not being fetched by XMBC properly
+Fixed a skin mod string id
+Changed from splash to progress dialog when getting forum logos and made cancelable
+Fix: Search user will now show [Recent Posts] and [Recent Threads] options even when there is no history
+Now when adding forum from online DB and a forum is added, returns to list (again - when did I break this =] )
+User '[Recent Posts]' now ignores 'Reverse Sort Posts' setting
+
+
+*** 1.4.9 RC2 ***
+
+Tapatalk: Fixed an error message bug where some errors would display as 'em'
+Fixed string ids for settings with miltiple choices
+Most connections now asynchronous (can be cancelled) - may default this to off by default until it's tested more
+Added setting 'Disable asynchronous connections' to settings:advanced
+
+*** 1.4.8 RC1 ***
+
+Change to more robust method of signaling for asynchronous operations
+Added a pulsing indicator when notifications causes a forums manager window refresh
+Reorganized code structure
+Fix bug with Category strings (ie blank categories when searching database)
+
+*** 1.4.7 ***
+
+Removed strings.xml
+Removed polish language (Will return when transifex translation available. Was probably no longer accurate, and only about 15% complete anyway)
+When Forum Browser is open and service notifies, it will now trigger Forum Browser to open the dialog instead of opening from the service. If the forums manager is open, it will be refresh instead.
+Fix string IDs in tapatalk.py
+Forum loading is no longer interrupted by dialogs
+
+*** 1.4.6 ***
+
+Added shadow behind wrench tab on forums manager window
+
+*** 1.4.5 ***
+
+Fix string IDs in skins
+Change remaining static strings in skins to ID refrences
+Change On label on notifications full dialog to "!" icon
+Shortened translation function name for easier reading
+
+*** 1.4.4 ***
+
+Convert raw strings into translatable strings
+Choose logo splash now stays until logo list appears
+Improved dialogs with custom buttons for edit/browsing logo and clear/browse existing login url
+Changes to ensure skin refreshed on FB restart after installing/removing skin mod
+
+*** 1.4.3 ***
+
+Keyboard mods now can change between "Normal" and mod appearance, and "Normal" is moved down some to accommodate captchas
+Keyboard now only displays modified view when editing posts 
+
+*** 1.4.2 ***
+
+Disabling the the keyboard mod will now cause the mod to be removed
+Mod install/removal now only needs FB restart instead of XBMC restart. It wouldn't need any restart, but reloading the skin while FB is open apparently crashes XBMC
+Forumrummer: Search now working here too
+Time offset is now in format -mmm:ss. The original offset I added this for turned out to be a daylight savings issue. While this can still be used to correct large offsets, it is most useful, for example, on xbmc.org which currently has it's time off by about 14:30 :)
+
+*** 1.4.1 ***
+
+Now uses xbmcvfs to copy files. Fixes copying errors when installing skin mods on Android (At least on MY phone =] )
+Now indicates file copy activity when copying skin directory to local dir
+Focusing wrench tab on forums manager now slides out the buttons. Useful on touch interfaces
+Added to the help for the 'Share To Online DB' button 
+Added DST adjustment to post dates
+Added notifications settings 'Open Subscriptions/PMs Window Automatically On Open Forum' and subsetting 'If Both Subs and PMs, Open Subs Window Instead' and updated help
+'Global' search history is now in the correct order
+Fixed a bug causing [COLOR] tags to sometimes appear on the subscribe option when when in a search result
+Fixed pagination for 'Search Posts'
+Fixed errors when posting to a search result thread
+Fixed open to newest post not working properly when opening a thread on a search result
+
+*** 1.4.0 ***
+
+Added advanced settings option 'Show Traceback Dialog On Errors' - mostly for testing on my android phone
+
+*** 1.3.9 ***
+
+Improved titles (when available) for post videos in full message view
+
+*** 1.3.8 ***
+
+Added forum setting 'Time Offset' which allows you to set a time offset in hours to correct displayed time being offset from your local time. Currently works with Tapatalk for user activity and post time
+Fixed a bug causing errors when trying to edit a post
+
+*** 1.3.7 ***
+
+Changed 'Search User Posts' button to 'Search User'
+Added '[Recent Posts]' and '[Recent Threads]' to search options on 'Search User'
+Finally fixed (hopefully) the daylight savings time handling code for user activity display
+Show last seen time instead of activity if user not online
+Show last activity time for online users even if no activity text available.
+Fix for forum manager night always highlighting the correct forum on open
+Logo and logo background color now update in forums manager when changed in forum settings
+Logo and header color now update in forums window when changed in forum settings and forums manager is closed
+Fix: Some forums (notably XBMC.org) weren't getting last post user data because they used a different key name for the value
+Known Issue: xbmc.org (and probably some other mybb forums) show the last poster as the starter. This is a bug in the forums Tapatalk plugin (that means not Forum Browser =] )
+
+*** 1.3.6 ***
+
+Swapped 'Forums' and 'Settings' buttons
+Moved some functions out of the default.py file to their own modules. Hopefully I didn't break anything
+Now has separate search history for post, thread and user post searches, plus a global search history
+Clicking a search button will now show a menu with options to start a new search or pick from the search history, with button specific history on top, and global below
+Added general setting 'Search: Show Search History'
+
+*** 1.3.5 ***
+
+Improved html ordered list display in posts
+Fix bug in service caused by moving the video functions to WebViewer
+Keyboard mod now replaces XBMC keyboard, currently has generic, Confluence and Transparency replacements
+Added an info window that explains the mods (what they do and the caveats) before asking to install
+Added a setting 'Use keyboard mod' subsetting below 'Use skin modifications' in general settings
+Fixed a bug causing full message view not to display when 'Searching Posts: Open Thread On Post Click' is enabled
+Fixed a bug causing infinite loop when 'Searching Posts: Open Thread On Post Click' is enabled
+Fixed a bug causing 'None' to be displayed when returning from full message view to post search results 
+
+*** 1.3.4 ***
+
+Improved progress contrast on forums window with dark header backgrounds
+ParserBrowser: IPBoard: Improved thread parsing and improved post parsing (especially for single post threads)
+Moved video functions to WebViewer and changed WebViewer requirement to 0.9.6
+Added ShareSocial as an optional import in addon.xml
+
+*** 1.3.3 ***
+
+Added forums context menu item 'Search <FORUMNAME>' for searching within a single forum
+Added threads/subscriptions context menu item 'Search <THREAD/FORUMNAME>' for searching within a single thread/forum
+When searching posts, post title area now shows the thread topic
+Added 'Search User Posts' button in 'Search' button menu which allows you to enter a user name and search that users posts
+Added 'Search In Posts Of <USER>' in online users list context menu
+Improved display of posts by creating items first and then adding them to the list all at once
+Fix for some post encoding errors
+Fix improvement for 'Forbidden' errors issue that doesn't cause any extra delays 
+
+*** 1.3.2 ***
+
+Posts window with search results now shows 'New Search' button
+Added threads searching
+Added 'Search' button to main window which when clicked shows 'Search Posts' and 'Search Threads' buttons, and removed the search posts option from the forums window context menu
+Added option to 'General' settings: 'Searching Posts: Open Thread On Post Click' - When searching posts and selecting a post, causes the thread to be opened and then the post selected to be displayed, instead of just showing the post content
+Added help for setting 'Searching Posts: Open Thread On Post Click'
+Fix for decoding errors on some messages when displaying a signature
+
+*** 1.3.1 ***
+
+Tapatalk: Added check for 'current_action' (API 4) in addition to current check for 'current_activity' (API 3)
+When changing logo in forum settings, now asks if you want to edit the URL instead of browse site images
+When logo is changed in forum settings, the old cached logo is now deleted
+Added search posts option to forums window context menu
+ParserBrowser: Handle more URL formats and fixes for parsing posts on some forums
+Added wrench icon tab to Forums Manager to help indicate that forum settings are to the right
+
+*** 1.3.0 ***
+
+Tapatalk: Now converts HTML entities in posts - fixes some errors with links
+ParserBrowser: Fix causing errors on Python 2.6 and below when parsing posts
+Now requires WebViewer at 0.9.5 or above
+
+*** 1.2.9 ***
+
+Removed hidden forums concept. xbmc.org is now created automatically on first run from local copy
+Fix: Forums Manager now focuses on 'Add Forum' when forums list is empty
+Fix for notifications dialog skin (was broken due to changes to Forums Manager skin)
+Fix for Forums Manager color issues when a dialog is opened
+Forums Manager list and buttons no longer wrap left and right
+Added Forum Settings help for 'Post Attributes'
+Fix for opening Forums Manager after failed first forum open
+Tapatalk: Added the ability to like/unlike posts (where available - notably XBMCHub) via context menu
+
+*** 1.2.8 ***
+
+Re-worked Forums Manager display to better show what's going on
+Added Post Attributes to forum settings for a per-forum preferred attributes display
+Fixed a bug causing forums manager to not open on a fresh install
+
+*** 1.2.7 ***
+
+Fixed handling of [size] tags
+ParserBrowser: Fix for finding login page on some forums
+ParserBrowser: Fix for handling gzipped resonses
+Added time to forums window
+Forums Manager now focuses on open to current forum and focuses to a forum that has just been added
+Forum Settings now updates the logo preview after selecting new logo
+When editing forum colors, the logo and starting color are now from the settings view rather than the forum's current color and logo
+When login details are first set on a forum, when exiting the Forums Manager FB will now login
+On the Forum Settings dialog, if a setting has been changed and you attempt to cancel or exit without clicking OK, it will ask if you want to discard changes
+Fix for [color] tags issue in message view
+Added activity splash when adding a forum or theme to the online database
+Now converts forum names to lower case when adding to prevent name conflicts
+
+*** 1.2.6 ***
+
+Changed 'Set Logins' on Forum Manager to 'Forum Settings' which opens a per forum settings editor
+Removed 'Set Theme' and 'ParserBrowser' buttons from the forums manager, as they are now handled in the 'Forum Settings' dialog
+When video is playing, the Forum Manager now opens to the left and hides the buttons panel, which slides out on focus
+Changed look of Forum Manager list highlighting when forum action buttons are focused
+Tapatalk: The PMs list now show only a short preview again, unltil you click for the message view
+Added more robust handling of 'Forbidden' errors, hopefully fixing this issue once and for all!
+Since tapatalk strips all formatting from the signatures, I lightened the sigs to set them apart from the post text
+Added likes data to extra info (ie XBMCHub) 'like users' (list of users who liked) and 'likes' (number of users who liked)
+Changed 'User Extra Info' to 'User/Post Extra Info'
+
+*** 1.2.5 ***
+
+Forum Manager: Adding forums now refreshes the forums list
+Fixed a bug causing errors when trying to play video
+Fixed tapatalk 'Forbidden' errors issue for some forums with notification service
+ParserBrowser: Improved progress bar movement when parsing Forums and Posts
+Now asks for confirmation when removing a forum
+
+*** 1.2.4 ***
+
+Created Forums Manager based on notifcations dialog
+'Change Forum' button changed to 'Forums' which now opens the Forums Manager
+'Options' button changed to 'Settings' which now only opens the forum settings
+Previous items under 'Options' have been migrated to the Forums manager
+The 'Set Login Page' option now asks if you want to use the URL after exiting WebViewer
+Moved the 'Manage Parser Rules' option from posts context and 'Set Login Page' to the Forums Manager 'Parser Browser' button (clicking the button brings up a menu asking which one you want to do)
+Fixed a bug where some forums caused 'Forbidden' errors when making calls too quickly (Notably xbmc.org)
+Taptalk: Now sets 'return_html' when getting posts which gives bold, italics, underline and color data. 
+
+*** 1.2.3 ***
+
+Fix a bug corrupting user passwords
+Added 'Login Page' to data shared when sharing ParserBrowser forum rules
+
+*** 1.2.2 ***
+
+ParserBrowser: Fixed bug with IPBoard forums with urls that ended in /forum being unable to list threads
+ParserBrowser: Added a very small tweak for removing extraneous ':' from some post user data
+Fixed a bug causing errors when stopping video
+ParserBrowser: Added item to 'Options' dialog 'Set Login Page' (Parser Browser forums only) which will open the forum in WebViewer, and allow you to browse to the login page to set the page to use for logins
+ParserBrowser: IPBoard - fix for some forums not displaying posts properly past page 1
+Fix spelling/grammar errors, added '(Seconds)' to 'XBMC Notice Duration' setting
+ParserBrowser: Added option in the posts list context menu 'Manage Rules' for creating some simple forum specific parsing rules and sharing them to the online database
+Now retrieves parsing rules if available from the online database
+Fix for some bad video ID extraction when parsing YouTube video URLs
+Fixed link parsing errors occuring in some forums (Notably XBMCHub)
+Added settings in Video section 'Start Video In Overlay' and 'Resume Video In Overlay'
+Now can show up to three custom infos on posts lists
+Added debugging code for unrecognized Tapatalk errors
+All post info (normal and extra) is now pooled together. Extra Info items are now all info that is not shown in the post list. This has the added benefit that all info can now be seen from the 'User Extra Info' item on the message window
+ParserBrowser: Now ignores 'Open Thread At Newest Post' setting, so no longer jumps to the bottom of list (as it can't jump to the last page yet)
+Now optionally shows image and video icons in posts list for posts where these media were detected
+Added settings option in General section: 'Show Post Media Indicators' and 'Count Link Images As Images'
+Some improvements detecting Thread links and Post links for some forum types
+
+*** 1.2.1 ***
+
+Fix: Notify service dialog will now popup over Forum Browser dialogs.
+Added the ability to filter forum lists in the add from online database dialog by keywords or wildcards
+Added 'Search Database' to the the category list in the add from online database dialog
+When clicking the stop button, focus now moves to the 'Change Forum' button
+Options dialog can now open with no connection, options that require a connection will be disabled
+Clicking disabled items in a dialog will no longer close the dialog, they will just do nothing 
+Forums window context menu will now popup when no connection, showing only 'Refresh' and 'Help'
+Removed attempt to compensate for DST in activity times in the posts list as it appears unnecessary (and breaks the time)
+Added the 'Post User Attributes To Display' to General section in settings, allowing users to define info shown in posts lists
+Fix: When failing to connect when getting forum lists, was still trying to get PM counts
+
+*** 1.2.0 ***
+
+Fix a bug causing errors when retrieving a cached logo
+Make 'Manage Notifications' dialog build the forums list before displaying so that it waits to pop-up till after the processing is done
+Added help for 'Manage Notifications' on the options menu
+Rearranged settings sections to 'General', 'Notifications' and then 'Advanced'
+Created 'Video' section in settings
+Moved 'Hide Video Overlay' to Video section in settings
+Added 'Ask Before Interrupting Video', 'Return To Interrupted Video', 'Pause Video On Dialogs', 'Stop Forum Video On Forum Browser Close', 'Allow Return To Interrupted Video After Close', 'Bypass XBMC Resume Dialog' and 'Pre-Offset (Seconds)' to Video section in settings
+Fix: When service failed to get forum info, a notification display was triggered
+Fixed issue with not giving immediate focus to notifications dialog
+Fix: Unsubscribing from thread/forum crashing XBMC
+Fix for signatures not appearing when signature is saved in extra info in the format of "name's signature"
+Added 'Hours Until Notify Data Considered Stale' and 'Dialog: Only Show Notify Enabled Forums' to Notifications section in settings
+Split settings help into separate help option for each section, and updated help for all settings.
+
+*** 1.1.9 ***
+
+Add some missing image files
+
+*** 1.1.8 ***
+
+Fix: Overlay video box will no longer display when audio is playing
+Added 'Manage Notifications' to the Options menu which opens dialog for toggling notifications and viewing new post/pm status. Context button toggles notifications on/off and selecting a forum will go to that forum
+Added 'Method' in notifications settings - Choose method of notification when no video is playing: Normal XBMC Popup, Small Dialog, Full Dialog
+Added 'Method (During Video)' in notifications settings - Choose method of notification when video IS playing: Normal XBMC Popup, Small Dialog, Full Dialog
+Added 'XBMC Notice Duration' in notifications settings - Set the number of seconds the XBMC popup will display
+
+*** 1.1.7 ***
+
+Fix: Skin mod will now update when skin version changes on XBMC upgrade
+Fix: Saying 'No' to skin mods now properly disables skin mods (which also stops it from asking to install skin mods)
+
+*** 1.1.6 ***
+
+Small fix to new settings conversion function
+
+*** 1.1.5 ***
+
+Added PIP video overlay so you can continue to watch video while browsing forums. Pausing video will hide the overlay.
+Added setting 'Hide Video Overlay'
+
+*** 1.1.4 ***
+
+When selecting a forum from the online database, it now returns to the list
+When removing added forums, it now returns to the list after selecting a forum to remove
+Fixed bug not allowing color dialog to open on Dark skin
+Fix for encoding errors when viewing private messages
+Added unread subscriptions/PMs notify service
+Added 'Turn On/Off Notifications' to options menu which toggles for the current forum
+Added 'Notifications' section in settings with options for enabling, showing only on startup, and interval
+Forum usernames/passwords and other user data now saved in forum_settings/forumID for each forum instead of in settings.xml
+ -Added conversion function to copy forum user data from settings.xml to forum data files
+
+*** 1.1.3 ***
+
+Vimeo video links now work again (Vimeo plugin must be installed)
+Fix for some issues with skin modification installation and detection
+Brought back activity splash (seems to be fine in Frodo RC3)
+Added 'Disable Activity Splash' in settings:advanced in case anyone still has issues
+
+*** 1.1.2 ***
+
+Disabled activity splash as it was causing crashes in FRODO (Should return in a later release when fixed)
+Fixed a bug in onAction() causing errors in the (FRODO) log (log said ignoring the error could cause memory leaks, so perhaps fixed a memory leak :) )
+Fixed a bug where if the copy of the XBMC skin in the users directory was older than the copy in the install directory, the skin mods would fail to be used. This probably only affected the default skin.
+
+*** 1.1.1 ***
+
+Fixed a bug causing forums to be added to the ODB with a bad header color string
+Fixed a bug where forums with a bad header color string would cause the ODB forums list to be cut off
+
+*** 1.1.0 ***
+
+Version bump for push to main repo 
+
+*** 1.0.16 ***
+
+More improvements to image parsing for logo chooser
+Improved dark background color detection (for switching header text to white)
+Fixed a skin bug where the '#' character was showing as '&35;'
+Fixed a bug causing errors when opening links in WebViewer
+Now properly translates '&amp;' to '&' in links
+
+*** 1.0.15 ***
+
+Fixes a bug created with the last version that caused forums to be added/updated with a null URL
+
+*** 1.0.14 ***
+
+Online database now points to 2ndmind.com (got my domains and new hosting all set up)
+Added the ability to share Parser Browser forums to the online database (with required simple rating system)
+Improved the forum selection dialog with interface icons, and rating icons for Parser Browser forums when adding from online)
+Parser Browser: Fixed a recently created bug where some [url] tag artifacts were remaining in posts
+Adding a forum to the online database now includes theme data
+When adding a forum already in the online database, the dialog now shows that it exists and was updated
+No longer asks for description and logo when adding the current forum to the online database
+
+*** 1.0.13 ***
+
+Now requires WebViewer 0.9.1 or greater
+Updated help
+ParserBrowser: Added handling for forum type SMF (Simple Machines Forum) (Currently very basic with page handling - readonly)
+ParserBrowser: Added handling for Gender stat in posts (Shows in extra info)
+Now handles image URLs with '/../../../' or similar in them in posts and when getting a logo when adding a forum
+Added settings option 'Parser Browser: Ignore Forum Images' - when enabled it will filter out images hosted on the forum (ie smileys and arrows and stuff)
+Added the ability to set a theme (just 'header' color for now) for the forums display with a new color dialog (options menu)
+Added the ability to share current forum theme to the online database (options menu)
+Online database now replaces existing forum details instead of reporting that it already exists
+Online database now pointing to domain 2ndmind.tk (with new hosting) until I can get my crappy registrar (also provider of my crappy old hosting) to answer my emails, chats or phone calls  
+
+*** 1.0.12 ***
+
+Opening a forum subscription now leaves the subscriptions window open (so when closing the forum's threads window it returns to the subscriptions list)
+Added settings option 'Always Show OK Button In Message Dialogs'
+Multiple fast button presses will no longer trigger multiple quit confirmation dialogs
+Improved smiley formatting - now ignores smiley text not preceded by whitespace -example "prompt:(name)" used to trigger a smiley
+Added more smiley handling (phpbb)
+Forumrunner: Fix for forums where the listed forums are links - now opens the link in WebViewer when the forum is selected
+Improved page info fetching when adding a forum by changing the reported user-agent (browser type)
+Added the ability to disable items in options menus
+'Add Current Forum To Online Database' now disabled in the options menu. (For Now)
+
+*** 1.0.11 ***
+
+Fixed a bug with some testing code left in
+Fixed a bug when adding a forum and it fails to get forum info (ie description and images)
+Fixed a bug when adding current forum to online database
+When adding a forum and asking if it requires a login, it now gives a better explanation
+
+*** 1.0.10 ***
+
+Added activity splash when getting forum list from online database
+Changed database interface code to handle the new database
+Added category name and interface type to forum description when displaying forums from the online database, plus added some color
+When adding a forum TO the online database, it now asks you to choose a category
+When adding a forum FROM the online database, you can now view all forums or choose a category to view
+
+*** 1.0.9 ***
+
+Fix for adding forums via Parser Browser that require login and/or have captcha
+Now asks if forum requires login before checking for Parser Browser compatibility (then asks for user/pass if you say yes)
+Parser Browser: Added info dialogs for normal and generic methods when adding a forum that explain the possible limitations
+Added 'View Forum Info' to forums view context menu
+
+*** 1.0.8 ***
+
+Tapatalk: Signatures will now show in posts when available (ie xbmchub.com)
+Added settings option 'Hide Signatures In Posts'
+Made user info windows scrollable
+Tapatalk: How long ago on activity now shows 0s ago when less than one second ago
+Improved logo detecting when adding a forum
+Removed Parser Browser from experimental and integrated it into normal 'Add Forum' process
+Removed Boxee from the included forums and added it to the online database
+Removed old VBulletin parserbrowser code
+
+Experimental:
+ - FB now passes the web session to WebViewer preserving logged in status and such
+ - Fix for relative URLs in posts not passing properly to WebViewer
+ - VBulletin: Full post formatting, PM create/delete and subscribe/unSubscribe threads/forums
+ - Fix for over-eager error message detection after creating a post
+
+*** 1.0.7 ***
+
+Tapatalk: "Get Online Users" availability is now checked in the initial forum config info
+Tapatalk: Now checks if guest is ok before displaying forums, and if not, and no login details are set, asks if you want to set them now
+Tapatalk: Fix for 'Simple Machines Forum' forums giving 'bad boolean error' value and not showing thread authors
+Added activity splash when getting online users list
+Added context menu to 'Online Users' list with option to PM selected user and an option to view user info
+Online users now sorted alphabetically
+Show how long ago users activity was in posts list
+Show extra info in posts list context menu for tapatalk forums
+
+*** 1.0.6 ***
+
+Fixed some more bugs causing errors with boxee
+Tapatalk: Added handling for errors messages returned from the plugin (ie Forum is in maintenance mode)
+Forumrunner: Fixed encoding issue
+Added 'To:' in front of username when private messages are sent messages
+Tapatalk: Fixed bug with online status displaying incorrectly in other PM boxes/folders (sent?)
+Forumrunner: Added 'Contact admin if continues' message when failing to connect to plugin
+Tapatalk: Notify users on "Moved Permanently" errors that the forum may have moved
+Tatatalk & Forumrunner: Notify users on "404 Not Found" errors that the interface is removed, missing or moved etc
+Tatatalk & Forumrunner: Now in some instances, when forum interface is broken, FB can detect a change of interface (ie from Forumrunner to Tapatalk) and notify the user
+Forum lists are now sorted alphabetically (ie choose forum, remove forum, set logins)
+
+*** 1.0.5 ***
+
+Tapatalk: Thread subscriptions now sort with recently updated on top down to least recently updated on the bottom
+Fixed a bug causing errors with Boxee
+Removed "Send PM To ..." from Private Messages view, as it is already there in the form of Reply/Forward
+Updated the online help with new features and changes
+
+*** 1.0.4 ***
+
+If you're closing the post/pm window when a title or message has been entered, it will now ask if you are sure to prevent accidental exit and loss of all your hard work :)
+When sending a PM from the posts list, FB will now ask if you want to quote the message instead of doing it automatically
+Fixed a bug caused by local forum.xbmc.org forum def causing duplicate entries by changing to xbmc.org
+Fixed a bug in 'add to online database' code that was causing it to fail in some instances
+ 
+Experimental:
+- PhpBB: Added the ability to create and edit posts
+- Can now detect some forum posting error messages (ie you are not allowed to post in this forum, your post is too short)
+- Can now (sometimes at least) handle forums that link to an alternate login page from the standard login page for the forum type
+- Added some code that should alert you (at least some of the time) if posting is moderated
+
+*** 1.0.3 ***
+
+Now removes "forum." and "forums." when adding a forum
+Added 'View Online Users' option to forums view context menu
+Made changes to accommodate clipboard name change from Clipboard to SSClipboard
+Fixed a bug when displaying context menu on PM list when list is empty
+Added ability to select and view other private message boxes/folders to PM list context menu
+
+Experimental:
+- FluxBB: Added the ability to create, edit and delete posts
+- MyBB: Added the ability to create, edit and delete posts
+- When editing or quoting, the message and title are now taken from the form. (so now it will be the same as if you were doing it via a browser)
+
+*** 1.0.2 ***
+
+Added ability to create threads with Tapatalk and Forumrunner forums from context menu on threads view
+When creating a PM or new thread, the Post Editor will now OPEN the set title dialog instead of just focusing the button
+Added ability to PM author of selected post from the context menu
+Now, when post or PM fails do to error (such as timeout), the post/PM will be saved and when next attempting to PM the same user or post in the same thread, FB will ask if you want to re-use that post/PM 
+
+*** 1.0.1 ***
+
+Links list will now show images from the link 'text' (ie thumbnail) in preference to an image the link points to
+Links that are detected as images that have images in the link 'text' (ie thumbnail) will now open in Web Viewer
+ 
+Experimental:
+- Posting options will no longer show if not available
+- VBulletin: Can now create a post, edit a post and delete a post (only tested on forum.boxee.tv)
+
+*** 1.0.0 ***
+
+Added clipboard functionality for post images and links (link, video and image) via ShareSocial clipboard
+Added help for 'User Extra Info' option in posts and full post view
+
+*** 0.9.53 RC11 ***
+
+Fixed a youtube url parsing issue
+Stop button text should now stay black
+
+*** 0.9.52 RC10 ***
+
+Improved thread termination
+Set focused color on stop button to possibly fix some issues with it changing to white on some skins
+
+Experimental:
+ - FluxBB: logins, view thread subscriptions
+ - MyBB: logins, view forum and thread subscriptions
+ - PhpBB: logins, view forum and thread subscriptions
+ - IPBoard: logins, view forum and thread subscriptions
+ - Generic: logins, view thread subscriptions
+ - Captcha handling
+ - Pre-forum-list login page handling 
+ - Now handles <object> tags as links (mainly for embedded video)
+ - Better login handling
+ - New backend html parser based on html5lib (should now handle most html well)
+ - Cookies now saved to file so FB won't re-login if unnecessary
+ - Post context menu now has 'User Extra Info Option' for collected info not listed under username (info icon shows in user info area when available)
+ - Some colored text handling
+
+*** 0.9.51 RC9 ***
+
+Context menus no longer show options that are not available when not logged in or not available for the parser type
+Error when getting video info will no longer cause links not to be displayed
+Now plays embedded video (ie [video] tags) - shows them as links
+
+Experimental:
+ - VBulletin: Added logins and viewing of subscriptions (only tested with Boxee) 
+
+*** 0.9.50 RC8 ***
+
+Fixed Flickr video playback
+Removed Vimeo video handling (will still show thumbnails on link) - Getting Vimeo .flv link method is broken
+Added activity splash when getting video info
+Removed SSL references from help
+Fixed formatting for private messages (ie smilies show, etc)
+Reply/Forward PM now quotes the message and fills the title
+Added activity splash when opening PMs/Posts in full view
+Fixed error handling BB code url links with quotes ie. [url="http://www.google.com"]Google[/url]
+No longer continues trying to login after login error
+Subscriptions and Messages buttons now remain disabled until logged in
+Removed login error messages from threads and posts view
+Logged in indicator now turns red on login error
+Tapatalk: Added some code that may alleviate some connection related errors
+Possible fix for last post deletion failing to clear list
+
+Experimental:
+ - Thread starter and last poster for threads lists (all - more or less)
+ - Page handling for MyBB, PhBB, FluxBB, IPBoard (VBulletin was already working) + some generic page handling
+
+*** 0.9.49 RC7 ***
+
+Fixed issue with links not displaying in links list on full post view
+When creating a new private message, it now focuses the title button on startup
+Now puts a separator between message and signature (when it can even show a signature)
+[u] (underline) BB Code tags are now translated in the form of: _underlined_
+Video links (YouTube,Vimeo and Flickr) are now playable
+Fix for error handling on PM list refresh
+Fixed error messages in PM window to say private messages instead of posts
+Fixed a bug that caused the PM list not to be refreshed when deleting the last PM
+Experimental - General Browser: Lots of work done all over, mostly on post handling. Added some ability to handle forums types not specifically handled
+
+*** 0.9.48 RC6 ***
+
+Removed 'Enable SSL' settings and SSL usage - I found it wasn't actually using an SSL connection, and when I fixed it found that none of the forums worked via SSL
+Experimental: Now handles Forums/Threads/Posts on IP.Board also added some generic forum type handling (still working on it).
+After editing a post from the posts view, returns focus to the same post after refresh. In full post view, re-opens the post after refresh.
+Improved error handling and error messages when viewing private messages
+
+*** 0.9.47 RC5 ***
+
+Fixed some spelling errors in the help
+Fixed a bug (well, handled a Tapatalk plugin bug) that caused a 'No Posts' error after submitting a new post.
+Made initial forum setup/connection threaded so it is stoppable like the rest
+
+Experimental: Now handles Forums/Threads/Posts on VBulletin/MyBB/FluxBB/PhpBB and pagination on Vbulletin - Use at your own risk
+Experimental: Moved 'General Forum Browser' option to bottom of 'Change Forum' menu, and added a saved list with add/remove options
+
+*** 0.9.46 RC4 ***
+
+When no private messages, private messages view now shows "No messages" in the title bar instead of showing an error
+Added an option in settings: 'Experimental' which enables experimental stuff. Right now it enables a WIP general forum browser
+
+*** 0.9.45 RC3 ***
+
+Now all pm's now show delete option, not just ones created by the user
+Boxee: fixed some issues with deleting PMs
+Changed 'Quote' to 'Reply/Forward' in context menus for PMs, and auto fill recipient when selected
+
+*** 0.9.44 RC2 ***
+
+Removed testing code
+
+*** 0.9.43 RC1 ***
+
+Disabled the pulsing of the stop button over the progress bar
+Added dark overly when opening addon settings so XBMC skins with transparent settings windows are easier to see
+Fixed: when selecting forums listed in the threads view, stop button was not getting focus
+Fixed not logging in and logged in status not showing when setting passwords on boxee
+When editing a post, the post title now displays on the title button on editor open
+Boxee: Edit posts
+Fix: Delete now shows up for private messages
+Deleting now asks if you are sure
+Private messages view now shows 1 of 1 on the page button instead of 1 of 0
+'www.' removed from name when adding forum both in Forum Browser and on the database. The database also now checks against '.com' and '.net' duplicates
+
+*** 0.9.42 ***
+
+Missing files in zip
+
+*** 0.9.41 ***
+
+Logo chooser now also extracts images from stylesheets
+Fixed some issues with adding new/current forum
+Fixed a bug where some links were being detected as links to images when the were not
+Now properly handles [url] tags containing [img] tags (images ti the images list, and the links to the links list with a thumbnail to the image)
+Fixed some issues with context menu subscription option visibility on threads view
+Boxee: subscribe to/unsubscribe from threads and forums, plus added forums to subscriptions view
+Boxee: Create post, delete post, quote post
+Boxee: Code, HTML, PHP, color and size handling
+Added activity splashes for subscribing/unsubscribing
+Added caption to activity splash
+After many years of programming in python, I just found out "def function(x={}): self.y = x" or similar is a bad idea. Changed instances of that throughout
+In context menu, now shows name for subscribe/unsubscribe for the forum/thread you are in. example Subscribe to forum: Forum Name
+Added VBulletin forum to show off the new parsing engine used with Boxee. It works for both without any modification
+New fanart
+
+*** 0.9.40 ***
+
+Fixed a bug on startup when an old unused setting was set
+
+*** 0.9.39 ***
+
+Tapatalk: Private message list users online statuses now show correctly
+After submitting a new post, now goes to the page with the new post and jumps to it
+Logo chooser dialog now properly gets images with '/' prefixed urls
+Fixes for issues when not using skin mods
+Finished applying custom font usage to all windows
+Changed forumrunner icon... again :)
+Link images now work in the image viewer again, plus image viewer will now show all images (normal and link)
+Added advanced settings option to disable SSL for Forumrunner (default=true). None of the forums I've tested seem to work with it and it just causes a delay on startup
+
+*** 0.9.38 ***
+
+Changed forumrunner icon to forumrunner android icon
+Removed 'Threads' from upper left corner when in subscriptions view
+Fixed error when canceling some operations
+Added a prompt to restart forum browser when switching skins
+When unsubscribing within subscriptions view, unsubscribed item is now removed
+Fixed focus issue on image viewer window with mouse support disabled
+Added white background on image viewer for dark skin for viewing of images with transparent background
+On forums view, focus now goes to stop button when loading, plus changed stop nofocus image and fixed navigation to/from stop button
+On Threads and Posts views, focus now goes to stop button when loading, plus changed stop nofocus image
+Removed 'Default' from 'Skin' setting in addon settings as it was confusing
+Added Forum Browser version number over change forum button
+Added help for message view
+Added help for image viewer
+Added activity splash when waiting for 'add from online database' menu
+Improved contrast of progress bars
+Added white backgrounds to images on logo chooser dialog to properly view images with transparent background
+Added colored borders to message dialogs indicating success, failure and script error (green, yellow and red)
+Logo chooser dialog now properly removes duplicate images.
+Now using custom font on forums view and threads view
+
+*** 0.9.37 ***
+
+Forumrunner: Fixed a bug causing an error with no message on login failure
+When 'reverse posts' and 'open thread at newest post' are enabled it no longer jumps to the bottom
+Reversed PM listings so that newest is at the top.
+Fixed new bug with boxee error when showing private messages 
+
+*** 0.9.36 ***
+
+Forumrunner: Send private messages, Thread Unsubscribe, Delete PMs, Delete Posts
+Tapatalk: Added a check for thread subscriptions when showing the context menu because we can't trust the data returned with the thread list
+Added refresh to the forums context menu
+Tapatalk & Forumrunner: Message BB Code tag processing for Code,HTML,PHP,indent,bulleted list, numbered list, color tags, size tags(removes them)
+Tapatalk: process non-user post html tags for quote, link, image etc
+Removed XBMCHub (It's broken and they're getting Tapatalk)
+Added dialogs when deleting posts and PMs
+Added a dialog after successfully sending a PM/Post
+Tapatalk: Since the api currently only allows deleting posts by moderators, deleting is now disabled (not on menu) unless the user is a moderator
+Logos now cached with correct filename extension
+Tapatalk: Fix bug causing error on forums without forum subscriptions or when not logged in when showing dialogs
+Show activity splash when waiting for dialogs that fetch data
+
+*** 0.9.35 ***
+
+When selecting buttons on threads view, selected thread now loses highlight to better show where the focus is
+Moved all forumbrowser modules into one folder
+Forumrunner: Now handles announcements
+Choosing 'Go To Newest Post' from the page button menu now jumps to the new post when it goes to the newest page
+Tapatalk: Added code, php and color post tag processing
+Tapatalk: Optimization of message processing
+Better error messages
+Fixed a bug causing error after creating/editing a post
+
+*** 0.9.34 ***
+
+Fix encoding error when formatting quotes
+Reverse boxee replies order to match the rest
+Use skin animation for activity indicator in dark skin
+Added help for threads window, subscriptions window, posts window, full message view window, message editor window and addon settings
+Now when 'Open Thread At Newest Post' is enabled, it will jump to the newest post. Previously it just opened to the page containing the post.
+Applied skin mod font to post editor
+Fixed some quote handling issues
+When selecting buttons on posts view, selected post now loses highlight to better show where the focus is
+Fixed a bug that caused multiple refreshes of the posts view (and perhaps others). This bug was also causing triple error messages.
+Fixed a bug that caused the wrong page to be displayed after following a post link form the post view
+Button in Private Messages window now says 'Send PM' instead of 'Post Reply'
+Moving off list in Message Editor now removes highlight to better show where the focus is
+Message editor no longer shows 'Add Line Before' and 'Delete' when there are no lines in the editor
+
+*** 0.9.33 ***
+
+On startup error, fix focus and hide activity icon
+Improved message dialogs (can show longer messages)
+Changed 'Setting' button to 'Options'
+New options menu with icons and descriptions
+Fixed default quote matching so forums that do not have them defined will still show quoting decently
+Added help option with forums window help which includes an option to view the changelog
+Added option in settings to cache logos locally to disk
+Subforums now display indented
+
+*** 0.9.32 ***
+
+Added subscribed forums to the subscriptions view (tapatalk only so far)
+Added ability to subscribe to/unsubscribe from forums from the context menu on the forums and threads windows
+Image viewer now lets you navigate through all images in the post with the arrow buttons
+Removed local dvhk.pl (now tapatalk enabled)
+Local hidden forums now show logo in the 'Add From Online Database' menu
+Tapatalk: Now detects whether guest access is allowed, and asks if you want to set login info if not
+Added icon for forum type on forums view (ie tapatalk, forumrunner or native)
+Set logins now auto-selects the current forum
+
+*** 0.9.31 ***
+
+Remove testing code
+
+*** 0.9.30 ***
+
+Fixed hard to see progress bars on dark skin
+Fixed issue with images not showing up in the images list
+Fix encoding issues with application/json error (forumrunner)
+Remove included XBMC4XBox scraper definition (now tapatalk enabled)
+Fix some encoding errors with smilies
+Added quote parsing for Phpbb forums
+Fixed boxee forums with new parsing method (mostly)
+
+*** 0.9.29 ***
+
+Changed quote delimiters and removed italics
+Nested quotes now alternate color infinitely
+Skin mod install option now includes font modification 
+Improved quote decorations
+Fix focus issues when forums list is empty
+
+*** 0.9.28 ***
+
+Fix bug when trying to view posts from other users on some forums (ie vwvortex)
+Handle smilies
+Change preview color on post editor to white/black for better visibility
+Dialogs on add/remove favorites
+Dialogs on add/remove forum
+Dialogs on set/clear logins
+Fixed some bugs when clearing passwords
+Added option to add a current forum to online database
+Fixed bug when adding forum with full URL
+Added fanart.jpg (Just whipped this up. If someone wants to, please create something that is actually good :) )
+Added option to automatically open thread subscriptions window
+Added join date to posts view
+Added post numbers to full screen message view
+Hide post counts when no count available
+
+*** 0.9.27 ***
+
+Passwords now stored encrypted
+Added unsubscribe from thread to context menu (now both subscribe and unsubscribe show in the context menu on the threads list and replies window)
+Added secure icon for SSL connections
+Added fallback to normal HTTP for forumrunner when SSL fails
+Quotes within a quote are now green
+
+*** 0.9.26 ***
+
+Handling for nested quotes
+Quotes are now colored
+Selected thread text fixed to white in light skin
+Lightened unread thread text slightly in dark skin
+Fixed (I hope) responding to remote back button (for asking to exit)
+
+*** 0.9.25 ***
+
+Fixed posting from fullscreen message view
+Added ability to save images in posts
+Added option to ask if you really want to quit
+Clear bold (unread) from threads when clicked
+
+*** 0.9.24 ***
+
+Fix for scraper forums failing to load definitions
+Hide postcount display when no data available
+Hide next/prev buttons while loading
+
+*** 0.9.23 ***
+
+Fixed the skin for the image viewer window
+Carried loading image to threads and posts windows
+Fixed a few issues with the Dark skin
+Possibly fixed a scraping forum issue with encoding
+
+*** 0.9.22 ***
+
+Another focus fix on forum errors
+Added loading icon on forums view (will extend to other views later)
+Added post numbers to posts
+Forumrunner - Added: Login, view subscriptions, subscribe to thread, post reply, edit post, view private messages and other improvements
+
+*** 0.9.21 ***
+
+Improved/fixed extracting of images from page when adding a forum
+
+*** 0.9.20 ***
+
+Added confirmation dialog when adding forums to online database
+Added '(requires restart)' next to skin setting description
+Threads with new/unread posts are now bold
+Improved finding of forums and finding of description/images
+Added (WORK IN PROGRESS) Forumrunner support
+Added subscribe option in posts list
+
+*** 0.9.19 ***
+
+Fixed a bug preventing images/links from showing in the post view
+Add option in settings to select 'Dark' skin (and obviously added a dark skin)
+
+*** 0.9.18 ***
+
+Removed red highlighting of name for posts by user - instead darken the background of the post
+
+*** 0.9.17 ***
+
+Carried logged in indicator through to all views
+Fixed another bug in the code for handling older python versions in xmlrpclib
+
+*** 0.9.16 ***
+
+Fixed a bug in the code for handling older python versions in xmlrpclib
+Fixed a bug when forums failed to get data
+
+*** 0.9.15 ***
+
+Fixed link finding in posts for link list
+Fixed a bug for non-tapatalk forums that was added in the last version
+
+*** 0.9.14 ***
+
+Fixed a bug preventing quoting.
+Fixed a startup bug on non-tapatalk forums
+Now resets indicators after login data changes
+Failed logins now show a message next to the indicator
+
+*** 0.9.13 ***
+
+Added an option in settings (enabled by default) to account for the bug in the Tapatalk MyBB plugin which unsubscribes you
+from the thread when you edit a post. The fix just checks the plugin version, checks whether you are subscribed to the thread,
+and if you are then it re-subscribes you to the thread after saving the post.
+Added password hashing for forums that require or support it
+Removed delete option from post view context menu when not users post
+Added keyboard mod options in settings which displays a more suitable keyboard when editing posts
+Improved some post display handling
+Added 'Enable SSL' option in settings which causes Forum Browser to connect with https
+
+*** 0.9.12 ***
+
+Man I hope this is the final fix for the xmlrpclib python version conflicts :)
+Added 'Edit' to message view context menu 
+
+*** 0.9.11 ***
+
+Fix for xmlrpclib for older python versions
+Minor skin adjustments in message view for links/images overlays
+Fix progress bar not showing on posts view
+Added the ability to edit your own posts
+
+*** 0.9.10 ***
+
+Fix in xmlrpc Transport for older python versions
+
+*** 0.9.9 ***
+
+Changed session cookie handling so it will hopefully work across python versions
+Added post count, activity and status to posts
+Changed online indicator to an icon in posts
+
+*** 0.9.8 ***
+
+Fixed/Changed progress bar and improved progress updating
+Added 'Enable Debug Logging' option in settings which turns on more detailed logging
+Empty forums now show a 'Empty Forum' dialog instead of the error dialog
+Fix handling of failed forum change
+Added some missing images
+
+*** 0.9.7 ***
+
+Fixed error in post failure reporting
+
+*** 0.9.6 ***
+
+Logged in status now checks api response headers value to catch expired login (previously just set to true on successful login)
+Improved error handling and messages, should help with lost focus on errors
+When adding Tapatalk forum, adds favicon to the logo list (in case there is nothing better)
+Added the ability to remove/add built-in forums from the forums list
+Fixed a bug with page display being blank on PM's
+Fixed some issues with quoting from the message view
+Removed all translation code as google now has only a paid translation service
+Fixes some preview issues in the 'Post Reply' dialog
+Cleaned out unused images, fixed some scrollbars
+
+*** 0.9.5 ***
+
+Fixed a bug with character encoding errors
+Added dialog with the reason when when creating a new post fails
+Skin Redone
+Added logged in indicator on forums window
+Disabled settings which currently won't work (Because of Tapatalk api and skin changes)
+Added logging of version
+
+*** 0.9.4 ***
+
+Some skin changes
+Missing media now included
+
+*** 0.9.3 ***
+
+Fixed bug causing wrong forum to be selected when choosing forums
+Small skin changes
+
+*** 0.9.2 ***
+
+Fixed a bug stopping logins from occurring
+Fixed bug causing no focus when forum loading failed
+Hide categories (which contain no threads)
+Added ability to add share forums to the online database
+Added ability to add forums from online database
+Added ability to set description and logo when adding a forum
+Improved the forum chooser with logos and description
+
+*** 0.9.1 ***
+
+Added ability to delete added forums
+Added the ability to add/remove forums from favorites (favorites will be at the top of the list)
+Fixed the settings menu
+Fixed the ign.com forum def
+
+*** 0.9.0 ***
+
+Added the ability to access Tapatalk enabled forums
+Added 'Add Tapatalk Enabled Forum' to settings menu
+Cosmetic changes to the posts view
+Small fixes here and there
+
+*** 0.8.9 ***
+
+Made forum xbmchub work again
+Improved/changed xbmchub:
+	Added paging
+	Renamed to www.xbmchub.com
+	Improved avatar handling
+
+*** 0.8.8 ***
+
+Removed xbmcgui.lock()/unlock() to get rid of the log warnings
+Fixed a minor skin bug for highlighting threads with last reply by the user
+Added ability to handle forums in the threads listing
+Added forum www.xbmchub.info (Mostly)
+
+*** 0.8.7 ***
+
+Changes for Eden
+
+*** 0.8.6 ***
+
+Eden commit - no changes
+
+*** 0.8.5 ***
+
+Made boxee compatible
+
+*** 0.8.4 ***
+
+More changes to enable successful skinning
+
+*** 0.8.3 ***
+
+Added 'Use Forum Colors' option in settings (disabled by default). Allows other skins to diplay properly.
+Renamed skin image files to give a unique namespace
+
+*** 0.8.2 ***
+
+Remove version requirement from addon.xml to stop import error
+
+*** 0.8.1 ***
+
+Follow links in Web Viewer
+
+*** 0.8.0 ***
+
+Fixed: dvhk.pl now works again (Can view and create PM's but PM counts on the message button don't work - I will have to fix that)
+Fixed: Selecting the post editor list when empty caused error
+Added close buttons for mouse users
+Missing images in Post Message window now show a default if XBMC fails to display them 
+Fixed: Clicking on empty list while loading was aborting load
+Now disables "Messages" button when not implemented (for example xbmc4xbox.org, currently)
+Experimental: Added an option in settings to use a text editor instead of the current 'line' editor
+  for editing posts/PM's. Currently needs a keyboard and will probably only work with US keyboards.
+  XBMC doesn't have a multi-line text input so I had to do some fancy tricks to make to make this work.
+  Expect a few minor quirks with text navigation. Also - and = will work but will also change the volume. 
+  Use CTRL-\ for backslash otherwise you'll just toggle fullscreen and there's nothing I can do about that :)
+  Controls: Use the context menu button/right mouse click for options. CTRL-PgUp/PgDn will operate on
+    the preview window.
+
+*** 0.7.9 ***
+
+Modified theme in replies for highlighted users
+Added default avatar for users without avatar
+Fix dialogs and displays for private messages to match the context
+Got avatars working for boxee.tv and member status working for boxee.tv and xbmc4xbox.org
+Mark sticky threads for all forums (probably including dvhk.pl if I can ever connect to it)
+Next/Previous paging buttons now only visible if necessary.
+
+*** 0.7.8 ***
+
+Added avatars to private messages
+Fixed avatar image updating issue
+Added theme coloring to post message window
+Changed colors for xbmc.org
+Forums, threads and posts now load in a background thread and are interruptible/cancelable
+Fixed bug with xbmc4xboc paging
+Improved Forums and Threads window interface.
+Fixed handling of nested display tags.
+Added the ability to delete private messages (xbmc.org,boxee.tv,dvhk.pl)
+Added theming to lists (dark and light) default is to set by forum, but can be overridden in settings.
+
+*** 0.7.7 ***
+
+Re-designed Posts interface
+Added Post view with links and images side menus
+Added Polish translation - thanks to scalpel
+Added ability to view Private messages ('Messages' button) for xbmc.org, boxee.tv and dvhk.pl
+Added 'Always Login If Possible' setting, which for now allows updating pm count
+Added 'Add Line Before' in post editing context menu
+Changed page jumping on posts and threads to handle logged in sort/page number issues
+Changed page options in settings to 'Open Thread At Newest Post' and 'Reverse Sort Posts'
+
+*** 0.7.6 ***
+
+Added simplejson import to addon.xml
+
+*** 0.7.5 ***
+
+Fixed some color handling in posts
+Fixed some code box handling in posts
+Improved post editing preview
+Added forum.dvhk.pl
+Added ability to handle forums which require login
+Add ability to translate posts with Google Translate
+Added language option in settings
+Added progress indicators for all windows
+Finished strings.xml for translatablity
+Added ability to follow thread and post links
+
+*** 0.7.4 ***
+
+Fixed a bug handling unicode chars in posts
+Added the ability to view image links
+Added the ability to download links
+Improved post formatting handling
+Fixed post quote handling regex for xbmc.org/boxee.tv
+
+*** 0.7.3 ***
+
+Initial public beta release

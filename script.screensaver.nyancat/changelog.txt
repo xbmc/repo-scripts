@@ -1,0 +1,9 @@
+0.1.0 (13.08.2013)
+ - added optional animated background (default enabled)
+ - added optional animated rainbow (default enabled)
+
+0.0.2 (16.07.2013)
+ - first repo version
+
+0.0.1 (unreleased)
+ - initial version

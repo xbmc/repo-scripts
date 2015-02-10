@@ -1,0 +1,105 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Thai (http://www.transifex.com/projects/p/xbmc-addons/language/th/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "ผิดพลาด"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "กำลังดาวน์โหลด"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "ใช่"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "ไม่"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "ปิด"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "ทั่วไป"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "ภาพยนต์"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "รายการทีวี"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "แฟนอาร์ต"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "ป้าย"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "อาร์ตพื้นใส"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "โลโก้"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "โปสเตอร์"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "รูปย่อพิเศษ"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "อาร์ตเวิร์ค"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "ภาษา"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "เรตติ้ง"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "โหวต"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "ฤดู"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "ขนาด"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "แผ่น"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "ข้อมูล"

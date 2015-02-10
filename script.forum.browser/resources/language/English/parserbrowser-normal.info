@@ -1,0 +1,15 @@
+[B]Notes:[/B] ([COLOR FF880000]Please Read[/COLOR])
+
+This forum [I]appears[/I] to be compatible with the Forum Browser's [B]Parser Browser[/B].
+
+The [B]Parser Browser[/B] works by parsing forum pages, and extracting the relevant forum data for display within Forum Browser.
+While the [B]Parser Browser[/B] attempts to handle the differences in forum page formatting, the wide range of possible formats means that it may fail in some cases.
+
+The most likely issue will be errors in post display, such as extra text, incorrect user stats, blank posts etc.
+Also not all features will be available with all forums, and some features may not work correctly (ie posting, subscribing, viewing private messages)
+
+That being said, many forums will work quite well :)
+
+Please feel free to let me (ruuk) know of any major issues in the Forum Browser support thread at forum.xbmc.org. I can't promise I'll fix it, but I'm improving the [B]Parser Browser[/B] all the time and any feedback will help. 
+
+

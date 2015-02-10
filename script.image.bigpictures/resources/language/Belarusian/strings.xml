@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Belarusian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/be/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Left + Right = Switch Album/Photo</string>
+    <string id="32002">Up + Down = Switch Source</string>
+    <string id="32003">Select = Enter album</string>
+    <string id="32004">Back = back to album/leave addon</string>
+    <string id="32005">Info = Toggle onscreen info</string>
+    <string id="32006">Context = Download album</string>
+    <string id="32007">Play = Start slideshow</string>
+    <string id="32008">0 = Toggle aspect-ratio</string>
+
+    <!-- Settings -->
+    <string id="32100">Don't show this help again</string>
+    <string id="32110">Default aspect-ratio</string>
+    <string id="32111">scale</string>
+    <string id="32112">keep</string>
+    <string id="32120">Show Arrows</string>
+    <string id="32130">Randomize slideshow</string>
+    <string id="32140">Album download path</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Help</string>
+    <string id="32201">Settings</string>
+
+    <!-- Script strings -->
+    <string id="32300">Choose default download path</string>
+    <string id="32301">Gathering data...</string>
+    <string id="32302">Item %d/%d</string>
+    <string id="32303">Current item: %s %d%%</string>
+    <string id="32304">Downloading to: %s</string>
+</strings>

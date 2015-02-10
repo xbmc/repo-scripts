@@ -1,0 +1,129 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "获取即将播出的剧集的信息。"
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "获取即将播出的剧集的信息。你不会再错过好节目了。"
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "显示"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "缩略图类型"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "下载横幅（需要Artwork Downloader）"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "下载logos（需要Artwork Downloader）"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "启用背景同人画"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "启用16:9预览缩略图"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "下载16:9预览缩略图（需要Artwork Downloader）"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "下载海报（需要Artwork Downloader）"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "显示主界面屏幕所有剧集（需要皮肤支持）"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "电视指南"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "剧集 - 即将播出"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "获取信息..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "已取消"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "操作已被用户取消"
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "回归系列"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "已取消/终止"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "待定"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "制作中"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "新系列"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "从未播出"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "最终季"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "间歇期"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "试播集已预定"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "试播集被拒绝"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "已取消"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "已终止"

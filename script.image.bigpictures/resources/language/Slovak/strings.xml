@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Slovak language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Vľavo + Vpravo = Prepnúť Album/Fotku</string>
+    <string id="32002">Hore + Dole = Prepnúť zdroj</string>
+    <string id="32003">Vybrať = Vstúpiť do alba</string>
+    <string id="32004">Späť = späť do alba / opustiť doplnok</string>
+    <string id="32005">Info = Prepnúť zobrazenie informácií</string>
+    <string id="32006">Context = Stiahnuť album</string>
+    <string id="32007">Play = Spustiť prezentáciu</string>
+    <string id="32008">0 = Prepnúť pomer strán</string>
+
+    <!-- Settings -->
+    <string id="32100">Neukazovať túto nápovedu</string>
+    <string id="32110">Predvolený pomer strán</string>
+    <string id="32111">mierka</string>
+    <string id="32112">ponechať</string>
+    <string id="32120">Ukázať šípky</string>
+    <string id="32130">Náhodné poradie prezentácie</string>
+    <string id="32140">Priečinok pre sťahovanie albumov</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Nápoveda</string>
+    <string id="32201">Nastavenia</string>
+
+    <!-- Script strings -->
+    <string id="32300">Zvoliť predvolený priečinok sťahovania</string>
+    <string id="32301">Zbieram dáta...</string>
+    <string id="32302">Položka %d/%d</string>
+    <string id="32303">Aktuálna položka: %s %d%%</string>
+    <string id="32304">Sťahujem do: %s</string>
+</strings>

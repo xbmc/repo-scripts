@@ -1,0 +1,41 @@
+<fonts>
+<fontset id="ircchat" unicode="true">
+
+	
+	<!---------------------------------------------------------------------->
+	<!-----These font names should be defined in your skin's font.xml------->
+	<!-----But you don't have to use the same fonts of course--------------->
+	<!---------------------------------------------------------------------->
+	
+	<font><!------Chat messages----->
+		<name>fontContextMenu</name>
+		<filename>Roboto-Regular.ttf</filename>
+		<size>18</size>
+	</font>
+	
+	<font><!------Channel name----->
+		<name>font28_title</name>
+		<filename>Roboto-Bold.ttf</filename>
+		<size>28</size>
+	</font>
+	
+	<font><!------Chat button----->
+		<name>font16</name>
+		<filename>Roboto-Regular.ttf</filename>
+		<size>25</size>
+	</font>
+	
+	<font><!------Names list / Nicknames / Connect btn / Color label----->
+		<name>font13</name>
+		<filename>Roboto-Regular.ttf</filename>
+		<size>20</size>
+	</font>
+	
+	<font><!------Close button / Color edit buton----->
+		<name>font14</name>
+		<filename>Roboto-Regular.ttf</filename>
+		<size>22</size>
+	</font>
+	
+</fontset>
+</fonts>

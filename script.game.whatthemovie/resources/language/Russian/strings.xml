@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Russian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ru/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Случайно</string>
+    <string id="3002">Назад</string>
+    <string id="3118">Скрытый</string>
+    <string id="3119">-</string>
+
+    <!-- Settings -->
+    <string id="3200">Выкл.</string>
+    <string id="3201">Вход</string>
+    <string id="3203">Имя пользователя</string>
+    <string id="3204">Пароль</string>
+    <string id="3209">Все</string>
+    <string id="3233">Случайно</string>
+    <string id="3234">Следующ.</string>
+
+    <!-- Functions -->
+    <string id="3260">Далее</string>
+    <string id="3261">Предыдущий</string>
+    <string id="3264">Избранное</string>
+</strings>

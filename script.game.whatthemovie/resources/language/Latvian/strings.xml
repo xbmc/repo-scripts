@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Latvian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/lv/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3002">Atpakaļ</string>
+
+    <!-- Settings -->
+    <string id="3200">Vispārīgi</string>
+    <string id="3234">Nākamais</string>
+
+    <!-- Functions -->
+    <string id="3260">Nākamais</string>
+    <string id="3261">Iepriekšējais</string>
+</strings>

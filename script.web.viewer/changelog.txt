@@ -1,0 +1,187 @@
+Web Viewer Changelog 
+
+TODO:
+	Handle more video types
+
+Current Version : 0.9.15
+
+*** 0.9.15 ***
+
+Added XML declarations to XML files
+Removed internal mechanize
+Added mechanize import to addon.xml
+
+*** 0.9.14 ***
+
+Minor formatting change to addon.xml
+Version bump for official repo submission
+
+*** 0.9.13 ***
+
+Video handling library now gets high resolution thumbnails for youtube
+
+*** 0.9.12 ***
+
+Added setting 'URL Open Timeout'
+
+*** 0.9.11 ***
+
+Fixed a bug where sub-urls were not resolving properly
+
+*** 0.9.10 ***
+
+Fix string IDs
+Convert static strings to string IDs
+Metacafe now falls back to metacafe addon for playing
+Metacafe now handles CBS based video if "appropriate" addon is installed
+Convert %s to .format() method
+Files can now be downloaded to writable network locations
+Added failed download dialogs
+Cleaned up code warnings
+
+*** 0.9.9 ***
+
+Added Metacafe to list of supported video URLs
+
+*** 0.9.8 ***
+
+Added Dailymotion to list of supported video URLs
+
+*** 0.9.7 ***
+
+Fix for image dialog not closing on 'Previous Menu' button
+Fix for inline frames links and images having incorrect URLs
+Added setting 'Show Frames At Bottom (More Compatible)' - helps prevent, for instance, the frame from being in the middle of a form
+
+*** 0.9.6 ***
+
+Added setting 'Experimental: Enable Inline Frames' which, when enabled, loads frames into the page
+Now processes embed tags as links
+Can now play YouTube, Vimeo and flickr video from links (asks if you want to view the video or visit the page)
+Context menu now shows 'Play Page Video' when on a video's page - also pressing play when on a video's page will play the video (if possible)
+
+*** 0.9.5 ***
+
+Added 'accept' header to mechanize.browser to avoid '403 Bad Behavior' errors on some sites
+
+*** 0.9.4 ***
+
+Improved labeling of form inputs
+
+*** 0.9.3 ***
+
+Fixed a bug causing some controls not to work in FRODO - so now you can exit the browser :)
+
+*** 0.9.2 ***
+
+Fixed a bug in onAction() causing errors in FRODO - (log said ignoring the error could cause memory leaks, so perhaps fixed a memory leak :) )
+
+*** 0.9.1 ***
+
+Added an option to getWebResult() to pass in a mechanize.Browser instance for WebViewer to use
+Updated mechanize
+Fixed relative URL handling
+When simple controls are enabled (ie ATV2), the parent directory (backspace on the keyboard) action will now exit when there are no more pages in the history.
+
+*** 0.9.0 ***
+
+Now on ATV2 systems, automatically detects ATV2 and sets simple controls to true if unset.
+
+*** 0.8.9 ***
+
+When viewing from another addon, the parent directory (backspace on the keyboard) action will now exit when there are no more pages in the history.
+
+*** 0.8.8 ***
+
+Handle alternate code for 'Previous Menu' action
+
+*** 0.8.7 ***
+
+Fix broken skin for image viewer
+
+*** 0.8.6 ***
+
+Remove autoforms logging that could print passwords to the log in plain text
+Added logging of version and python version
+
+*** 0.8.5 ***
+
+Fixed a bug causing downloads to fail
+
+*** 0.8.4 ***
+
+Handle more complex <br /> tags
+Added Read View to sub-options menu (For viewing pages without selectable elements or with widely spaced selectable elements.
+Parse file:// out of links so they display properly in local links
+Fix for pages without elements
+
+*** 0.8.3 ***
+
+Fixed an autoforms bug which caused infinite loops when form failed and then redirected back to the same form.
+
+*** 0.8.2 ***
+
+Encode log entries
+Remove xbmcgui.lock()/xbmcgui.unlock() to get rid of the annoying xbmc.log messages :)
+Fixed bug with viewing images
+Fixed a bug causing webviewer to lock on nonsense urls
+Fixed bug with link list failing to display link images with relative URLs
+Fixed a bug with improperly identifying links URLs with imbedded image URLs as being links to images
+Improved message/error logging
+Added fanart.jpg:   (anyone wants to make something better, feel free =] )
+  Made with some free images - attribution: 
+    Image: Danilo Rizzuti / FreeDigitalPhotos.net
+    Image: suphakit73 / FreeDigitalPhotos.net
+
+*** 0.8.1 ***
+
+Fixed bug causing page load to fail when launched as a skin shortcut
+
+*** 0.8.0 ***
+
+Eden commit - no changes
+
+*** 0.7.9 ***
+
+Added 'Exit Web Viewer' option to simple controls
+
+*** 0.7.8 ***
+
+New icon courtesy of freezy
+Added autofill option for autoforms
+Added autosubmit option for autoforms
+
+*** 0.7.7 ***
+
+Made compatible with Boxee
+
+*** 0.7.6 ***
+
+Added settings option to prefill 'Goto URL' with current URL
+Right clicking with mouse on buttons now brings up context menu, instead of closing window
+Added 'Search Google' to context menu and Google button
+Added dialog when links are clicked that cannot be followed.
+Bug Fix: Scrolling through links list was sometimes selecting wrong page elements
+Added 'Search Page' to context menu
+Changed 'Settings' to 'Options' on context menu
+Changed 'Preferences' to 'Settings' under 'Options' on context menu
+Added 'View' source to 'Options' on context menu
+
+*** 0.7.5 ***
+	
+Fixed a bug with default link icon
+Fixed a bug with some form controls
+Reduced number of empty lines in page display
+Fixed bug with parsing images
+
+*** 0.7.4 ***
+
+Added 'Submit' button to forms without it
+Added settings option to disable this behaviour
+Improved handling of forms labels and some other tags
+getWebResult(): Modified autoForms - index must match if specified
+getWebResult(): Added autoClose parameter 
+
+*** 0.7.3 ***
+
+Initial public beta release

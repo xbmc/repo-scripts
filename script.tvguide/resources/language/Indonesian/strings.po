@@ -1,0 +1,305 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Indonesian (http://www.transifex.com/projects/p/xbmc-addons/language/id/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "Tak ada deskripsi"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]Memuat data dari sumber luar...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Menghitung sisa waktu..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "Diperkirakan selesai dalam %d detik..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Pemuatan data masih dalam proses..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Kontrol tetikus"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Sekarang"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Tips![/B] Anda juga dapat menggunakan putaran roda tetikus"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Batal"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Umum"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Sumber"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Tampilkan kanal dari kategori"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "Berkas XMLTV"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Bersihkan cache..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Selesai!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "Tampilkan notifikasi sebelum program yang dipilih dimulai"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "Gunakan gambar program sebagai latar"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Bersihkan seluruh pengingat..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "Ingatkan untuk membersihkan cache apabila Anda mengubah sumber"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "Perbarui informasi program saat XBMC dimulai"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "Mainkan kanal menggunakan addon YouSee web-tv"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Notifikasi"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Mainkan kanal menggunakan addon Danish LiveTV"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Memulai"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- bersihkan cache terlebih dulu"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Cari logo kanal di"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Aktifkan menu OSD"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Menonaktifkan menu OSD mungkin bisa menghilangkan masalah video patah-patah."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Gunakan metode streaming alternatif (diperlukan untuk beberapa addon)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Streaming alternatif tidak kompatibel dengan menu OSD"
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Ups, maaf!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "Tidak berhasil memuat data program,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "cek pengaturan atau coba lagi nanti..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "karena pengaturan tidak benar!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "Sepertinya setelan kulit yang dipakai memiliki"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "versi spesial dari Panduan TV yang tidak diperbarui."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Silakan coba dengan kulit lain..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Sepertinya basis data Panduan TV ini bermasalah."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "Basis data akan dihapus dan dibuat ulang."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "Sayangnya konfigurasi kanal dll. hilang."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "pada [B]%s[/B] dalam 5 menit..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "pada [B]%s[/B] segera dimulai..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Tonton %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Ingatkan"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Jangan ingatkan"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Batal"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Pilih stream"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "Anda dapat memilih sendiri berkas .strm untuk diputar, apabila Anda ingin menonton kanal ini."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Hapus berkas stream"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Saluran"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Keluar"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Edit urutan kanal dan penampakan[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Geser naik dan turun untuk mengubah posisi dari[CR]kanal. Pilih atau navigasikan ke kiri untuk menerima[CR]posisinya."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Simpan"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Batal"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Setel stream[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr "berkas .strm"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Favorit"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Addon"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Pratayan stream"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Simpan"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Batal"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Hentikan pratayang"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Jelajah..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Klik Telusuri... di bawah dan navigasikan ke berkas stream Anda. Jika Anda telah memilih berkas tersebut Anda dapat melihat pratayang stream untuk mencoba apakah bisa bekerja di XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Pilih yang favorit di bawah. Hanya favorit dari [I]PlayMedia[/I] yang didukung."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Banyak addon menyediakan kanal ini.[CR]Pilih salah satu untuk menonton [I]stream[I]."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "URL JSON-EPG"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Mainkan kanal menggunakan addon Weeb.Tv"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "Panduan TV dikonfigurasikan untuk menggunakan stream Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "addon yang tidak terpasang."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Streaming menggunakan addon tersebut dinonaktifkan."

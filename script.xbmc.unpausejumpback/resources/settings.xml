@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32000">
+    <setting id="jumpbacksecs" type="slider" label="32001" default="0" range="0,60" />
+    <setting id="waitforjumpback" type="slider" label="32002" default="10" range="0,600" />
+  </category>
+  <category label="32010">
+    <setting id="jumpbacksecsfwdx2" type="slider" label="32011" default="2" range="0,60" />
+    <setting id="jumpbacksecsfwdx4" type="slider" label="32012" default="4" range="0,60" />
+    <setting id="jumpbacksecsfwdx8" type="slider" label="32013" default="8" range="0,60" />
+    <setting id="jumpbacksecsfwdx16" type="slider" label="32014" default="16" range="0,60" />
+    <setting id="jumpbacksecsfwdx32" type="slider" label="32015" default="32" range="0,60" />
+  </category>
+  <category label="32020">
+    <setting id="jumpbacksecsrwdx2" type="slider" label="32021" default="2" range="0,60" />
+    <setting id="jumpbacksecsrwdx4" type="slider" label="32022" default="4" range="0,60" />
+    <setting id="jumpbacksecsrwdx8" type="slider" label="32023" default="8" range="0,60" />
+    <setting id="jumpbacksecsrwdx16" type="slider" label="32024" default="16" range="0,60" />
+    <setting id="jumpbacksecsrwdx32" type="slider" label="32025" default="32" range="0,60" />
+  </category>
+  <category label="32030">
+    <setting id="ExcludeLiveTV" type="bool" label="32031" default="false"/>
+    <setting id="ExcludeHTTP" type="bool" label="32032" default="false"/>    
+    <setting id="ExcludePathOption" type="bool" label="32033" default="false" />
+    <setting id="ExcludePath" type="folder" source="video" label="32034" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+    <setting id="ExcludePathOption2" type="bool" label="32033" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+    <setting id="ExcludePath2" type="folder" source="video" label="32034" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+    <setting id="ExcludePathOption3" type="bool" label="32033" default="false" visible= "eq(-2,true)" enable="eq(-2,true)" />
+    <setting id="ExcludePath3" type="folder" source="video" label="32034" default="" visible= "eq(-1,true)" enable="eq(-1,true)" />
+  </category>
+</settings>

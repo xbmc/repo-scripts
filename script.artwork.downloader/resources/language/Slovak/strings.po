@@ -1,0 +1,413 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Slovak (http://www.transifex.com/projects/p/xbmc-addons/language/sk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr "Prosím pomôžte získať viac umeleckej grafiky a prispejte na:"
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr "Spustenie naplánované: (24h)"
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr "Nájdené chybné/prázdne nastavenie!"
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr "Zvoľte Vaše preferencie a stlačte OK pre uloženie"
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr "Upratujem"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Chyba"
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr "Chyba pri sťahovaní súboru"
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr "Vyhľadáva sa umelecká grafika"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Preberá sa"
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr "Doplnok ukončený"
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr "Vyskytla sa sieťová chyba"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Dokončené"
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr "Povoliť sťahovanie"
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr "Súhrn umeleckej grafiky"
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr "Prosím zvoľte"
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr "Chybné položky"
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "Zrušené"
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr "Sťahovanie zrušené užívateľom"
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr "Odložený štart v minútach:"
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr "Stiahnuté"
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr "Spracúvam umeleckú grafiku"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "nenájdené!"
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr "Spustiť doplnok pri prihlásení"
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr "Spustiť doplnok ako službu"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Áno"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Nie"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Zavrieť"
+
+msgctxt "#32028"
+msgid "Report"
+msgstr "Hlásenie"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I](Po vykonaní zmien musíte reštartovať XBMC) [/I]"
+
+msgctxt "#32030"
+msgid "No provider ID found for looking up artwork"
+msgstr "Nenájdené ID poskytovateľa pri hľadaní umeleckej grafiky"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Všeobecné"
+
+msgctxt "#32032"
+msgid "[B]General settings used in Artwork Downloader[/B]"
+msgstr "[B]Všeobecné nastavenia pre Artwork Downloader[/B]"
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr "Bežať v pozadí"
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr "Ukázať dialóg pri skončení/chybe"
+
+msgctxt "#32035"
+msgid "Overwrite all existing artwork [I](will be automaticly disabled after downloading) [/I]"
+msgstr "Prepísať existujúcu umeleckú grafiku [I](bude automaticky zakázané po skončení sťahovania) [/I]"
+
+msgctxt "#32036"
+msgid "Centralize extrafanart [I](Can be used for extrafanart slideshow) [/I]"
+msgstr "Sústrediť extrafanart [I](Môže byť použité extrafanart prezentáciou) [/I]"
+
+msgctxt "#32037"
+msgid "Central TV extrafanart directory"
+msgstr "Centrálny priečinok pre TV extrafanart"
+
+msgctxt "#32038"
+msgid "Central Movie extrafanart directory"
+msgstr "Centrálny priečinok pre filmový extrafanart"
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr "Zobraziť hlásenie z posledného sťahovania"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr "Obmedziť umeleckú grafiku"
+
+msgctxt "#32052"
+msgid "[B]Options for limiting downloaded artwork[/B]"
+msgstr "[B]Nastavenie pre obmedzenie sťahovania umeleckej grafiky[/B]"
+
+msgctxt "#32053"
+msgid "Maximum extrafanart"
+msgstr "Maximum extrafanart"
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr "Minimálne hodnotenie"
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr "Preferovaný jazyk:"
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr "Vylúčiť FanArt obsahujúci text"
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr "Minimálna veľkosť FanArt: Filmy"
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr "Minimálna veľkosť FanArt: TV seriály"
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr "Minimálna veľkosť FanArt: Hudobné videá"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32072"
+msgid "[B]Options for downloading Movie artwork[/B]"
+msgstr "[B]Nastavenie pre sťahovanie Filmovej umeleckej grafiky[/B]"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "TV Seriály"
+
+msgctxt "#32082"
+msgid "[B]Options for downloading TV Show artwork[/B]"
+msgstr "[B]Nastavenie pre sťahovanie TV seriálovej umeleckej grafiky[/B]"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr "Hudobné video"
+
+msgctxt "#32092"
+msgid "[B]Options for downloading Musicvideo artwork[/B]"
+msgstr "[B]Nastavenie pre sťahovanie umeleckej grafiky k hudobným videám[/B]"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32102"
+msgid "[B]Some more advanced settings to be used[/B]"
+msgstr "[B]Niektoré pokročilé nastavenia[/B]"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "Použiť lokálne súbory"
+
+msgctxt "#32106"
+msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
+msgstr "Použiť XBMC predčítanie [I](počas sťahovania predčítava obrázky do priečinka náhľadov) [/I]"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "FanArt"
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr "Extrafanart"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Transparent"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "Transparenty série"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "ClearArt"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr "Character Art"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Plagát"
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr "Plagáty série"
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr "Náhľad16:9"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "Extra náhľady"
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr "Disc Art"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Umelecká grafika"
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr "Náhľady série 16:9"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Jazyk"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Hodnotenie"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Hlasov"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Sezóna"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Veľkosť"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Disk"
+
+msgctxt "#32147"
+msgid "below limit setting"
+msgstr "nespĺňa nastavené limity"
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr "Čas do konca"
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr "Nenájdené zlýhané či chýbajpce položky"
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr "Doplnok bol ukončený lebo XBMC sa vypína"
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr "Doplnok prerušený počas vyhľadávania"
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr "Doplnok ukončený kvôli problémom"
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr "Doplnok prerušený počas sťahovania umeleckej grafiky"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr "Prosím darujte alebo prispejte týmto stránkam aby ste prejavili podporu:"
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr "[I]fanart.tv [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr "Autori doplnku:"
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr "Vďaka:"
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr "Tímu XBMC a autorom ostatných doplnkov na ktorých bol tento založený."
+
+msgctxt "#32191"
+msgid "[I]For bugs, requests or general questions visit the [/I]"
+msgstr "[I]Pre chyby, požiadavky alebo všeobecné otázky navštívte [/I]"
+
+msgctxt "#32192"
+msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
+msgstr "[I] \"Artwork Downloader\" vlákno na XBMC fóre. [/I]"

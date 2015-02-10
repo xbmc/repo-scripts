@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- All %s must remain in string but can change position -->
+    <string id="32000">Number Of Trailers to Play (0 for Continous)</string>
+    <string id="32001">Play Opening and Closing Animation</string>
+    <string id="32002">Filter by Genre (Not Applicable for Screensaver) </string>
+    <string id="32003">Hide Movie Info</string>
+    <string id="32004">Hide Trailers of Watched Movie</string>
+    <string id="32005">Number of Days to Hide Trailers</string>
+    <string id="32006">Adjust Volume During Playback</string>
+    <string id="32007">Force Full Screen</string>
+    <string id="32008">Hide Movie Title</string>
+    <string id="32009">Folder Settings</string>
+    <string id="32010">Path to Trailers</string>
+    <string id="32011">Volume (0-100)</string>
+    <string id="32012">Library Settings</string>
+    <string id="32013">Apple iTunes Settings</string>
+    <string id="32014">Quality</string>
+    <string id="32015">Library</string>
+    <string id="32016">Common</string>
+    <string id="32017">Source of Trailers</string>
+    <string id="32018">Include Clips</string>
+    <string id="32019">Include Featurettes</string>
+    <string id="32020">Multiple Source Settings (Configure Each First)</string>
+    <string id="32021">Include Trailers From Library</string>
+    <string id="32022">Include Trailers From Folder</string>
+    <string id="32023">Include Trailers From Apple iTunes</string>
+    <string id="32024">Folder</string>
+    <string id="32025">Apple iTunes</string>
+    <string id="32026">Common Settings</string>
+    <string id="32027">Selected Genres</string>
+    <string id="32028">Action and Adventure</string>
+    <string id="32029">Comedy</string>
+    <string id="32030">Documentary</string>
+    <string id="32031">Drama</string>
+    <string id="32032">Family</string>
+    <string id="32033">Fantasy</string>
+    <string id="32034">Foreign</string>
+    <string id="32035">Horror</string>
+    <string id="32036">Musical</string>
+    <string id="32037">Romance</string>
+    <string id="32038">Science Fiction</string>
+    <string id="32039">Thriller</string>
+    <string id="32040">Rating Limit</string>
+    <string id="32041">Include Not Yet Rated</string>
+    <string id="32042">Include Not Rated (NR)</string>
+    <string id="32043">Type of Trailers to Include</string>
+    <string id="32044">Include Trailers from themoviedb.org (YouTube)</string>
+    <string id="32045">Themoviedb.org</string>
+    <string id="32046">Themoviedb.org Settings</string>
+    <string id="32047">Popular</string>
+    <string id="32048">Top Rated</string>
+    <string id="32049">Upcoming</string>
+    <string id="32050">Now Playing</string>
+    <string id="32051">All</string>
+	<string id="32052">New DVD Releases</string>
+	<string id="32053">Play Trailers in Groups</string>
+	<string id="32054">Number of Trailers in Each Group</string>
+	<string id="32055">Minutes Between Groups</string>
+    <string id="32102">Genres</string>    
+    <string id="32100">Select Genre</string>
+    <string id="32101">Do you want to select a genre to watch?</string>
+</strings>
+

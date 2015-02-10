@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32000">
+    <setting id="always_login" type="bool" label="32004" default="false" />
+    <setting id="ask_close_on_exit" type="bool" label="32015" default="false" />
+    <setting id="open_thread_to_newest" type="bool" label="32001" default="true" />
+    <setting id="search_open_thread" type="bool" label="32046" default="false" />
+    <setting id="show_search_history" type="bool" label="32047" default="true" />
+    <setting id="auto_thread_subscriptions_window" type="bool" label="32009" default="false" />
+    <setting id="reverse_sort" type="bool" label="32002" default="false" />
+    <setting id="reverse_sort_search" type="bool" label="32525" default="false" />
+    <setting id="hide_signatures" type="bool" label="32013" default="false" />
+    <setting id="ignore_forum_images" type="bool" label="32016" default="true" />
+    <setting label="32518" type="text" id="post_user_info" default="status,postcount,reputation,joindate,location"/>
+    <setting id="message_dialog_always_show_ok" type="bool" label="32014" default="false" />
+    <setting id="use_skin_mods" type="bool" label="32234" default="true" />
+    <setting id="use_keyboard_mod" type="bool" label="32237" subsetting="true" default="false"  enable="eq(-1,true)"/>
+    <setting id="enable_ssl" type="bool" label="32235" default="false" visible="false"/>
+    <setting id="save_logos" type="bool" label="32245" default="false" />
+    <setting id="skin" type="enum" label="32005" lvalues="32012|32011|32022" default="0" />
+    <setting id="show_media_indicators" type="bool" label="32044" default="true" />
+    <setting id="smi_count_link_images" type="bool" label="32045" subsetting="true" default="false" enable="eq(-1,true)"/>
+    <setting label="32244" type="action" action="RunScript(script.forum.browser,settingshelp_general)"/>
+  </category>
+  <category label="32018">
+    <setting id="notify_enabled" type="bool" label="32019" default="false" />
+    <setting id="notify_only_on_start" type="bool" label="32021" default="false" enable="eq(-1,true)"/>
+    <setting label="32020" type="slider" id="notify_interval" default="20" range="5,5,600" option="int"  enable="eq(-2,true)"/>
+    <setting label="32040" type="slider" id="notify_stale_time" default="1" range="1,1,48" option="int"  enable="eq(-3,true)"/>
+    <setting id="notify_method" type="enum" label="32023" lvalues="32025|32026|32027" default="0" enable="eq(-4,true)"/>
+    <setting id="notify_method_video" type="enum" label="32024" lvalues="32025|32026|32027" default="0" enable="eq(-5,true)"/>
+    <setting label="32028" type="slider" id="notify_xbmc_duration" default="3" range="1,1,30" option="int"  enable="eq(-6,true)"/>
+    <setting label="32029" type="slider" id="notify_dialog_timout" default="0" range="0,1,60" option="int"  enable="eq(-7,true)"/>
+    <setting id="notify_dialog_close_only_video" type="bool" label="32030" subsetting="true"  default="true" enable="eq(-8,true)"/>
+    <setting id="notify_dialog_close_activity_stops" type="bool" label="32031" subsetting="true" default="true" enable="eq(-9,true)"/>
+    <setting id="notify_dialog_only_enabled" type="bool" label="32041" default="true" enable="eq(-10,true)"/>
+    <setting id="notify_open_subs_pms" type="bool" label="32519" default="true" enable="eq(-11,true)"/>
+    <setting id="notify_prefer_subs" type="bool" label="32520" subsetting="true" default="false" enable="eq(-12,true) + eq(-1,true)"/>
+    <setting label="32244" type="action" action="RunScript(script.forum.browser,settingshelp_notify)"/>
+  </category>
+  <category label="32022">
+    <setting id="hide_pnp" type="bool" label="32035" default="false" />
+    <setting id="video_pause_on_dialog" type="bool" label="32034" default="false" />
+    <setting id="video_ask_interrupt" type="bool" label="32032" default="true" />
+    <setting id="video_return_interrupt" type="bool" label="32033" default="true" />
+    <setting id="video_bypass_resume_dialog" type="bool" label="32038" subsetting="true" default="true" enable="eq(-1,true)"/>
+    <setting label="32039" type="slider" id="video_resume_offset" subsetting="true" default="0" range="0,1,60" option="int"  enable="eq(-2,true) + eq(-1,true)"/>
+    <setting id="video_return_interrupt_after_exit" type="bool" label="32037" subsetting="true" default="false" enable="eq(1,false) + eq(-3,true)"/>
+    <setting id="video_stop_on_exit" type="bool" label="32036" default="true" />
+    <setting id="video_start_preview" type="bool" label="32043" default="true" />
+    <setting id="video_resume_as_preview" type="bool" label="32042" default="false" />
+    <setting label="32244" type="action" action="RunScript(script.forum.browser,settingshelp_video)"/>
+  </category>
+  <category label="32008">
+  	<setting id="crypto_type" type="enum" label="32238" values="AES|Triple DES|AES &amp; Triple DES" default="2" />
+    <setting label="32239" type="file" id="crypto_key_file" default="" />
+    <setting id="debug" type="bool" label="32228" default="false" />
+    <setting id="debug_show_traceback_dialog" type="bool" label="32048" default="false" />
+    <setting id="do_mybb_edit_bug_fix" type="bool" label="32233" default="true" />
+    <setting id="hide_activity_splash" type="bool" label="32017" default="false" />
+    <setting id="forumrunner_disable_ssl" type="bool" label="32247" default="true" visible="false"/>
+    <setting id="disable_async_connections" type="bool" label="32524" default="false" />
+    <setting id="experimental" type="bool" label="Experimental Stuff" default="false" />
+    <setting label="32244" type="action" action="RunScript(script.forum.browser,settingshelp_advanced)"/>
+  </category>
+</settings>

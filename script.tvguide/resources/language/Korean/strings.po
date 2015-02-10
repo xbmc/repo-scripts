@@ -1,0 +1,273 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "설명 없음"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]외부 소스에서 데이터를 불러오는중...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "남은 시간 계산중..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "약 %d초 남음..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "데이터 가져오기가 진행중입니다..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "마우스 제어"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "현재 방송"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]팁![/B] 마우스 휠을 사용할 수 있습니다"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "취소"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "소스"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "범주에서 채널 보기"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV 파일"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "캐시 지우기..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "완료!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "선택한 프로그램 시작 전 알림 보기"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "프로그램 이미지를 배경화면으로 사용"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "모든 알림 지우기..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "소스를 변경할 때 캐시 지우기 기억"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "XBMC 시작시 프로그램 정보 업데이트"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "YouSee web-tv 애드온을 사용해서 채널 재생"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "알림"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Danish Live TV 애드온을 사용해서 채널 재생"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "시작"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- 먼저 캐시 지우기"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "채널로고 찾기"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "OSD 메뉴 사용"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "OSD 메뉴를 사용하지 않으면 비디오 재생 문제를 해결할 수도 있습니다."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "다른 스트리밍 방법 사용 (몇몇 애드온에 필요함)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "다른 스트리밍은 OSD 메뉴와 호환되지 않음"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "프로그램 데이터를 불러올 수 없습니다,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "설정을 확인하거나 다음에 다시 시도하세요..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "설정이 잘못되었습니다!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "현재 스킨이 최신 버전이 아닌"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "특별한 TV Guide 스킨인 것 같습니다."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "다른 스킨을 선택하세요..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "TV Guide 데이터베이스가 깨진 것 같습니다."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "데이터베이스가 삭제되고 새로 만들어집니다."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "채널 설정 등이 손실됩니다."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "on [B]%s[/B] in 5 분..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "%s 보기"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "알림"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "알리지 않음"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "취소"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "스트림 선택"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "이 채널을 시청하려할 때 재생할 .strm 파일을 선택할 수 있습니다."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "스트림 파일 제거"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "채널"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "종료"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]채널 순서와 보이기 편집[/B]"
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "저장"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "취소"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]스트림 설정[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr ".strm 파일"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "즐겨찾기"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "애드온"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "스트림 미리보기"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "저장"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "취소"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "미리보기 정지"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "찾기..."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "JSON-EPG URL"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Weeb.Tv 애드온을 이용해서 채널 재생"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "Weeb.Tv를 이용해서 스트림하도록 설정됨"

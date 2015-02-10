@@ -1,0 +1,309 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "Pas de description"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]Chargement...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Calcul du temps restant..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "Approximativement %d secondes restantes..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Chargement des données déjà en cours..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Contrôle de la souris"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Maintenant"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Astuce ![/B] Vous pouvez aussi utiliser la molette de la souris"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Source"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Afficher les chaines par catégorie"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "Fichier XMLTV"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Effacer la cache..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Complété!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "Afficher les rappels avant le début des programmes sélectionnés"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "Image programme comme fond d'écran"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Effacer tous les rappels..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "Note: Effacer la cache lorsque vous changez la source"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "Mise à jour des informations au départ d'XBMC"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "Regarder les chaines avec l'addon YouSee web-tv"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Rappels"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Regarder les chaines avec l'addon Danish Live TV"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Démarrage"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- Effacer la cache d'abord"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Chercher les logos des chaines dans..."
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Activer le menu OSD"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Désactiver le menu OSD peut résoudre les problèmes de scintillement vidéo."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Utiliser une méthode alternative de streaming (requis par certaines extensions)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Le streaming alternatif n'est pas compatible avec le menu OSD"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "URL du fichier XMLTV"
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Oops, Désolé!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "Il n'a pas été possible de charger les données,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "s.v.p. réessayer plus tard..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "parce que les paramètres sont invalides"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "Il semble que votre thème actuel a un spécial"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "version du thème TV Guide n'est pas à jour."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Essayez avec un thème différent..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Il semble que la base de données de TV Guide soit corrompue."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "La base de données va être effacée et recréée."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "La configuration du canal, etc. est perdue."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "sur [B]%s[/B] dans 5 minutes..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "de [B]%s[/B] commence maintenant..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Regarder %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Créer un rappel"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Annuler le rappel"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Choisir un fichier de flux"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "Pour regarder cette chaine, vous pouvez choisir parmis vos fichiers de flux (.strm)."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Enlever le fichier de flux"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Chaînes"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Quitter"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Éditer l'ordre et la visibilité de la chaîne[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Appuyer sur haut et bas pour changer la position de[CR]la chaîne. Sélectionner ou appuyer sur gauche pour confirmer[CR]la position."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Enregistrer"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Configurer le flux[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr "fichier .strm"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Favoris"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Extensions"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Prévisualiser le flux"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Enregistrer"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Arrêter la prévisualisation"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Parcourir..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Cliquez sur Explorer... et ouvrez votre fichier de flux. Une fois que vous avez choisi votre fichier, vous pouvez prévisualiser le flux pour le tester avec XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Choisissez un favori. Seuls les favoris [I]PlayMedia[/I] sont supportés."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Plusieurs extensions fournissent ces chaînes.[CR]Choisissez-en une pour regarder le flux."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "URL JSON-EPG"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Voir les chaînes en utilisant l'extension Weeb.Tv"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "TV Guide est configuré pour diffuser avec Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "extension qui n'est pas installée."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Le streaming avec cette extension est désactivé."

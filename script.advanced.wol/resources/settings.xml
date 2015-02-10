@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="51000">
+		<setting id="macAddress" type="text" label="51001" default="00:25:11:c4:fb:8a" />
+		<setting id="hostOrIp" type="text" label="51002" default="my-server" />
+	</category>
+	<category label="54000">
+		<setting id="separator" type="lsep" label="54001"/>
+		<setting type="sep"/>
+		<setting id="separator" type="lsep" label="54010"/>
+		<setting id="autostart" type="bool" label="54011"  default="false" />
+		<setting id="wolDelayOnLaunch" type="labelenum" label="54012" values="0|5|10|15|20" default="0" visible="eq(-1,true)" />
+		<setting type="sep"/>
+		<setting id="separator" type="lsep" label="54020" visible="eq(-3,true)"/>
+		<setting id="wolAfterStandby" type="bool" label="54021" default="false" visible="eq(-4,true)" />
+		<setting id="wolDelayAfterStandby" type="labelenum" label="54022" values="0|5|10|15|20" default="0" enable="eq(-1,true)" visible="eq(-5,true)" />
+		<setting type="sep"/>
+		<setting id="separator" type="lsep" label="54030" visible="eq(-7,true)"/>
+		<setting id="updateVideoLibraryAfterWol" type="bool" label="54031" default="false" visible="eq(-8,true)" />
+		<setting id="updateMusicLibraryAfterWol" type="bool" label="54032" default="false" visible="eq(-9,true)" />
+		<setting id="libraryUpdatesDelay" type="labelenum" label="54033" values="0|10|20|30|60|120" default="10" visible="eq(-10,true)" />
+	</category>
+	<category label="52000">
+		<setting id="enableLaunchNotifies" type="bool" label="52001" default="true" />
+		<setting id="enablePingCounterNotifies" type="bool" label="52002" default="true" />
+		<setting id="enableHostupNotifies" type="bool" label="52003" default="true" />
+		<setting id="enableErrorNotifies" type="bool" label="52004" default="true" />
+	</category>
+	<category label="53000">
+		<setting id="separator" type="lsep" label="53010"/>
+		<setting id="pingTimeout" type="labelenum" label="53011" values="10|20|30|40|50|60|120" default="30" enable="eq(1,false)" />
+		<setting id="disablePingHostupCheck" type="bool" label="53012" default="false" />
+		<setting id="hostupWaitTime" type="labelenum" label="53013" values="10|20|30|40|50|60|120" default="30" visible="eq(-1,true)" />
+		<setting type="sep"/>
+		<setting id="separator" type="lsep" label="53020"/>
+		<setting id="continuousWol" type="bool" label="53021" default="false" />
+		<setting id="continuousWolDelay" type="labelenum" label="53022" values="10|20|30|40|50|60|120" default="30" visible="eq(-1,true)" />
+		<setting id="continuousWolAfterStandby" type="bool" label="53023" default="true" visible="eq(-2,true)" />
+	</category>
+</settings>

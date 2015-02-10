@@ -1,0 +1,9 @@
+<parserConfig>
+	<GameGrammar type="multiline">
+		<SkippableContent skipTo="&lt;center&gt;&lt;img alt=&quot;" closeStmnt="true"></SkippableContent>
+		<SkippableContent closeStmnt="true">&lt;center&gt;&lt;img alt=&quot;</SkippableContent>
+		<SkippableContent skipTo="src=&quot;" closeStmnt="true"></SkippableContent>
+		<SkippableContent closeStmnt="true">src=&quot;</SkippableContent>
+		<Filetypecartridge closeStmnt="true" skipTo="&quot;"></Filetypecartridge>
+	</GameGrammar>
+</parserConfig>

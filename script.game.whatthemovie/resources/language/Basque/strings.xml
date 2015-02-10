@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Basque language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/eu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Ausazkoa</string>
+    <string id="3118">Ezkutatua</string>
+
+    <!-- Settings -->
+    <string id="3200">Orokorra</string>
+    <string id="3203">Erabiltzailea</string>
+    <string id="3204">Pasahitza</string>
+    <string id="3209">Denak</string>
+    <string id="3233">Ausazkoa</string>
+    <string id="3234">Hurrengoa</string>
+    <string id="3243">Pausatu</string>
+    <string id="3244">Gelditu</string>
+
+    <!-- Functions -->
+    <string id="3260">Hurrengoa</string>
+    <string id="3261">Aurrekoa</string>
+</strings>

@@ -1,0 +1,132 @@
+#!/usr/bin/python
+
+import getopt, glob, sys, re
+
+def main(argv):
+    try:
+        opts, args = getopt.getopt(argv, "h", ["help"])
+    except getopt.GetoptError:
+        usage()
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            usage()
+        else:
+            sys.exit(42) # Impossible...
+
+    files_re = re.compile(r"^<!--FILES(\s.+?)--> *\n", re.MULTILINE | re.DOTALL)
+
+    for in_fn in glob.glob('*.template'):
+        print "Filtering", in_fn
+
+        with open(in_fn) as in_fp:
+            text = in_fp.read()
+
+        m = files_re.search(text)
+        if not m:
+            print "Failed to find <!--FILES ... -> prefixed in", in_fn
+            sys.exit(2)
+        text = files_re.sub('', text)
+        files_str = m.group(1)
+
+        files = re.findall(r"\s\[(\d+)\]\s*=\s*(.+?)(?=\s+\[\d|\s*$)", files_str)
+        if not files:
+            print "Failed to parse files from", files_str
+            sys.exit(2)
+
+        for filenum, name in files:
+            generate_file(filenum, name, text)
+
+
+def generate_file(filenum, out_fn, text):
+    print "    Generating", out_fn
+
+    # Turn the ONLY .. ONLY-END items into single-instance REPEAT blocks.
+    only_re = re.compile(r"^<!--ONLY(-END\s*-->)", re.MULTILINE)
+    text = only_re.sub(r"<!--REPEAT\1", text)
+    only_re = re.compile(r"^<!--ONLY(\s[^>]+)-->", re.MULTILINE)
+    text = only_re.sub(lambda m: "<!--REPEAT\n" + (''.join(["%s ONE_REPEAT_FOR_ONLY=1\n" % x for x in m.group(1).split()])) + "-->", text)
+
+    # We allow nesting of REPEAT sections by making sure that we match inner repeats first.
+    repeat_re = re.compile(r"<!--REPEAT(\s[^>]+)-->[ \t]*\n(((?!<!--REPEAT).*\n)*)<!--REPEAT-END\s*-->[ \t]*\n")
+    global check_for_replace_blocks
+    check_for_replace_blocks = True
+    while check_for_replace_blocks:
+        check_for_replace_blocks = False
+        text = repeat_re.sub(lambda m: repeat_expand(filenum, m.group(1), m.group(2)), text)
+
+    with open(out_fn, 'w') as out_fp:
+        out_fp.write(text)
+
+
+def repeat_expand(filenum, var_txt, text):
+    global check_for_replace_blocks
+    check_for_replace_blocks = True # Tell the caller we need to try again (to handle nested blocks).
+
+    # If var_txt has a [1]-style limitation, we only continue if we find our filenum section.
+    if re.search(r"^[ \t]*\[\d+\]\s", var_txt, re.MULTILINE):
+        this_num_re = re.compile(r"^[ \t]*\[" + filenum + r"\]\s+(.+?)(\n[ \t]*\[\d+\]\s|\s*\Z)", re.MULTILINE | re.DOTALL)
+        m = this_num_re.search(var_txt)
+        if not m:
+            return ''
+        var_txt = m.group(1)
+
+    var_txt = re.sub(r"\n", ' ', var_txt)
+    var_list = re.findall(r"(?:^|\s)([A-Z][A-Z0-9_]*)\s*=\s*(.+?)(?=\s+[A-Z][A-Z0-9_]*\s*=|\s*$)", var_txt, re.DOTALL)
+    if not var_list:
+        print "Failed to parse vars from", var_txt
+        sys.exit(2)
+
+    dot_dot_re = re.compile(r"(\d+)\.\.(\d+)")
+
+    iters = None
+    for i in range(len(var_list)):
+        var, val_txt = var_list[i]
+        vals = []
+        for val in re.split(r"\s*\|\s*", val_txt):
+            val = re.sub(r"%!%", '|', val) # Support %!% for a literal "|" in a var list.
+            subs = []
+            while True:
+                m = dot_dot_re.search(val)
+                if not m:
+                    break
+                val = dot_dot_re.sub('%%%d%%' % len(subs), val, 1)
+                subs.append(range(int(m.group(1)), int(m.group(2))+1))
+
+            if subs:
+                subs_cnt = len(subs[0])
+                for j in range(1, len(subs)):
+                    if len(subs[j]) != subs_cnt:
+                        print "Mismatched X..Y sequences in", val
+                        sys.exit(2)
+                for j in range(subs_cnt):
+                    new_val = val
+                    for k in range(len(subs)):
+                        new_val = new_val.replace("%%%d%%" % k, str(subs[k][j]))
+                    vals.append(new_val)
+            else:
+                vals.append(val)
+
+        var_list[i] = (var, vals)
+        if iters is None:
+            iters = len(vals)
+        elif iters != len(vals):
+            print "Var %s doesn't have %d values (has %d)" % (var, iters, len(vals))
+            sys.exit(2)
+
+    text_list = []
+    for j in range(iters):
+        text_list.append(text)
+        for var, vals in var_list:
+            text_list[-1] = text_list[-1].replace("%%%s%%" % var, vals[j])
+
+    return ''.join(text_list)
+
+
+def usage():
+    print "expand-templates [--help]"
+    sys.exit(1)
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
+
+# vim: sw=4 ts=8 et

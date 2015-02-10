@@ -1,0 +1,144 @@
+Version 0.13.2
+
+don't change window property until the first set of images have been loaded
+
+Version 0.13.1
+
+decode json string before parsing
+
+Version 0.13.0
+
+added logo to Global properties per Jeroen's request
+
+Version 0.12.9
+
+added path and logo properties for videos
+
+Version 0.12.8
+
+removed constant logging of what is being displayed
+
+Version 0.12.7
+
+added a startup window property, per request from Jeroen
+
+Version 0.12.6
+
+added website tag
+removed settings visibility
+removed strings
+
+Version 0.12.5
+
+change startup type to "login" 
+
+Version 0.12.4
+
+only clear lists when we know there is new content
+added try/catch for index error
+changed some logging to debug only
+icon file updated
+
+Version 0.12.3
+
+added script ext back but removed visibility in programs area
+
+Version 0.12.2
+
+Removed Programs extension point. No need for this anymore.
+
+added source and forum to addon file
+
+Version 0.12.1
+
+start populating arrays right away, cuts down initial wait time. Thanks to SpaceMonkey
+
+Version 0.12.0
+
+fixed incorrect logging, thanks MilhouseVH
+
+Version 0.11.9
+
+added 'global' property
+
+Version 0.11.8
+
+updated xbmc python version for Frodo/Gotham
+
+Version 0.11.7
+
+should be greater than or equal to
+
+Version 0.11.6
+
+randomize the array and march through it in order- ensures all fanarts display
+
+Version 0.11.5
+
+added verify to make sure media has required attributes
+
+Version 0.11.4
+
+added additional window properties - thanks MassIV for suggestions
+
+Version 0.11.3
+
+fixed indentation error, caused update threads to spawn constantly
+
+Version 0.11.2
+
+Extended refresh time from 10 min to 1 hr
+10% chance of "video" property showing tv show instead of 25%
+
+Version 0.11.1
+
+Added more window properties
+removed need for "mediatype" variable
+misc fixes
+
+Version 0.11.0
+
+Total rewrite to use skin properties instead of cache fanart into directory
+
+Version 0.10.0
+
+added check for first run so that cache can be built automatically
+
+Version 0.0.9
+
+added music fanart can be run manually or listen for DB updates
+
+Version 0.0.8
+
+added startup service for fanart grabber. will run on video database update automatically
+
+Version 0.0.7
+
+Added arguments for calling in skins or other programs
+
+Version 0.0.6
+
+added support for ignore_paths
+
+Version 0.0.5
+
+now prompt to create fanart directory
+
+minor bug fixes
+
+Version 0.0.4
+
+Because of CRC hash "download new" option removed
+old files removed automatically
+Added progress bar (if wanted)
+
+Version 0.0.3
+calc the CRC hash like xbmc does
+
+Version 0.0.2
+Use xbmcvfs in case of local paths
+
+Version 0.0.1
+
+First version, should copy files as intended
+

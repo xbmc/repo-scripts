@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+  id="service.rom.collection.browser"
+  version="1.0.0"
+  name="Rom Collection Browser Service"
+  provider-name="carabalb, jimyx17, malte">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="login"></extension>
+  <extension point="xbmc.addon.metadata">
+    <language></language>
+    <summary>Performs Rom Collection Browser startup tasks</summary>    
+    <description>Some features in Rom Collection Browser require actions on XBMC startup: starting RCB after launching emulators in solo mode and scraping games on XBMC startup.</description>
+    <license>GPL 2.0</license>
+    <platform>all</platform>        
+  </extension>
+</addon>

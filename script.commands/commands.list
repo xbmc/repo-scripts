@@ -1,0 +1,58 @@
+Sleep Timer###AlarmClock(Sleep Timer, ShutDown)
+Show Playlist###Action(playlist)
+Toggle Random###PlayerControl(Random)
+Cycle Repeat###PlayerControl(Repeat)
+Cycle Subtitles###Action(nextsubtitle)
+Toggle Subtitles###Action(showsubtitles)
+Cycle Languages###Action(audionextlanguage)
+Cycle Aspect Ratios###Action(aspectratio)
+Show Subtitle Delay###Action(subtitledelay)
+Show Audio Delay###Action(audiodelay)
+Toggle Audio Output###Action(audiotoggledigital)
+Take Screenshot###TakeScreenshot
+Refresh RSS feeds###RefreshRSS
+Eject Tray###EjectTray
+Play DVD###PlayDVD
+Rip Audio CD###RipCD
+Clean Playlist###Playlist.Clear
+Toggle Fullscreen###Action(togglefullscreen)
+Update Video DB###UpdateLibrary(video)
+Update Music DB###UpdateLibrary(music)
+Clean Video DB###CleanLibrary(video)
+Clean Music DB###CleanLibrary(music)
+Toggle Sort Direction###Container.SortDirection
+Cycle View Modes###Container.NextViewMode
+Update Addon Repos###UpdateAddonRepos
+Update Local Addons###UpdateLocalAddons
+Force Weather Refresh###Weather.Refresh
+Next Weather Location###Weather.LocationNext
+Search Video Library###VideoLibrary.Search
+Video Partymode###PlayerControl(Partymode(video))
+Music Partymode###PlayerControl(Partymode(music))
+Rotate Picture###Action(rotate)
+Reload Skin###ReloadSkin
+Reboot System###Reboot
+ShutDown System###ShutDown
+Hibernate System###Hibernate
+Suspend System###Suspend
+Restart XBMC###RestartApp
+Quit XBMC###Quit
+Show HOME###ActivateWindow(10000)
+Show Videos###ActivateWindow(10006)
+Show Video Addons###ActivateWindow(10025,addons://sources/video/)
+Show Music###ActivateWindow(10005)
+Show Music Addons###ActivateWindow(10502,addons://sources/audio/)
+Show Images###ActivateWindow(10002)
+Show Image Addons###ActivateWindow(10002,addons://sources/image/)
+Show Programs###ActivateWindow(10001)
+Show System Info###ActivateWindow(10007)
+Show Settings###ActivateWindow(10004)
+Show Shutdown Menu###ActivateWindow(10111)
+Show Favourites###ActivateWindow(10134)
+Visualisation: Info###Action(ShowPreset)
+Visualisation: Menu###ActivateWindow(VisualisationPresetList)
+Visualisation: Lock###Action(LockPreset)
+Visualisation: Next###Action(nextpreset)
+Visualisation: Prev###Action(previouspreset)
+SimplePlaylists: Add###RunPlugin(plugin://script.simpleplaylists/?mode=addCurrentUrl)
+SimplePlaylists: View###RunPlugin(plugin://script.simpleplaylists/?mode=showPlaylists)

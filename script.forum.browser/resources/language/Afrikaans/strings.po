@@ -1,0 +1,193 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Afrikaans (http://www.transifex.com/projects/p/xbmc-addons/language/af/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: af\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Taal"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Gevorderde"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Ligte"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Kennisgewings"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Opsies"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "Klaar"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Verfris"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Wis uit"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Subskripsies"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Skakel:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Verstellings"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Laai af"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "Redigeer"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Ja"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Klaar"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Kies"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Helder"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "Redigeer"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Soek"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Beskrywing"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Onbekend"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Naam"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Soek"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Opdateer"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Stoor"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Tipe"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Selekteer"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Verwyder"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Gevind"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Kategorie"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Internet"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Volgende"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Verstellings"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Subskripsies"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Soek"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Onderskrifte"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Almal"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Kanselleer"

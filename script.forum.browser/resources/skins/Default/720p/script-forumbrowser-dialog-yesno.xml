@@ -1,0 +1,187 @@
+<window>
+	<defaultcontrol>112</defaultcontrol>
+	<zorder>2</zorder>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group">
+			<posx>240</posx>
+			<posy>100</posy>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-10</posy>
+				<width>840</width>
+				<height>482</height>
+				<texture border="30">forum-browser-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="group">
+				<posx>0</posx>
+				<posy>-6</posy>
+				<control type="image">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>452</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FF444444</colordiffuse>
+					<visible>StringCompare(Window.Property(error),)</visible>
+				</control>
+				<control type="image">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>452</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FFFF0000</colordiffuse>
+					<visible>StringCompare(Window.Property(error),error)</visible>
+				</control>
+				<control type="image">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>452</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FFFFFF00</colordiffuse>
+					<visible>StringCompare(Window.Property(error),warning)</visible>
+				</control>
+				<control type="image">
+					<description>Large Back</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>800</width>
+					<height>452</height>
+					<texture border="20">forum-browser-white-boxr.png</texture>
+					<colordiffuse>FF00FF00</colordiffuse>
+					<visible>StringCompare(Window.Property(error),success)</visible>
+				</control>
+			</control>
+			
+			<control type="image">
+				<description>Large Back</description>
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>780</width>
+				<height>432</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FF888888</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>10</posx>
+				<posy>4</posy>
+				<width>780</width>
+				<height>85</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+			</control>
+			<control type="image">
+				<description>Smaller Back</description>
+				<posx>10</posx>
+				<posy>84</posy>
+				<width>780</width>
+				<height>352</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+			</control>
+
+			<control type="label">
+				<description>Caption</description>
+				<posx>35</posx>
+				<posy>14</posy>
+				<width>600</width>
+				<height>60</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>black</textcolor>
+				<aligny>center</aligny>
+				<align>left</align>
+				<wrapmultiline>true</wrapmultiline>
+				<label>$INFO[Window.Property(caption)]</label>
+			</control>
+			
+			<control type="button">
+				<description>Close Button</description>
+				<posx>750</posx>
+				<posy>15</posy>
+				<width>28</width>
+				<height>28</height>
+				<texturefocus>forum-browser-close-button-focus.png</texturefocus>
+				<texturenofocus>forum-browser-close-button.png</texturenofocus>
+				<visible>system.getbool(input.enablemouse)</visible>
+				<onclick>PreviousMenu</onclick>
+			</control>
+			
+			<control type="textbox">
+				<posx>30</posx>
+				<posy>97</posy>
+				<width>725</width>
+				<height>275</height>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+				<font>ForumBrowser-font13</font>
+				<scroll>true</scroll>
+				<textcolor>FF000000</textcolor>
+				<visible>true</visible>
+				<label>$INFO[Window.Property(text)]</label>
+			</control>
+			
+			<control type="group" id="112">
+				<defaultcontrol>111</defaultcontrol>
+				<control type="image">
+					<posx>30</posx>
+					<posy>380</posy>
+					<width>370</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="110">
+					<description>Yes Button</description>
+					<posx>30</posx>
+					<posy>380</posy>
+					<width>350</width>
+					<height>40</height>
+					<onleft>111</onleft>
+					<onright>111</onright>
+					<font>font13</font>
+					<align>center</align>
+					<label>$INFO[Window.Property(yes_label)]</label>
+					<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+				</control>
+				
+				<control type="image">
+					<posx>405</posx>
+					<posy>380</posy>
+					<width>370</width>
+					<height>60</height>
+					<texture border="30">forum-browser-white-box.png</texture>
+					<colordiffuse>AA000000</colordiffuse>
+				</control>
+				<control type="button" id="111">
+					<description>No Button</description>
+					<posx>405</posx>
+					<posy>380</posy>
+					<width>350</width>
+					<height>40</height>
+					<onleft>110</onleft>
+					<onright>110</onright>
+					<font>font13</font>
+					<align>center</align>
+					<label>$INFO[Window.Property(no_label)]</label>
+					<texturefocus border="20">forum-browser-grey-boxr.png</texturefocus>
+					<texturenofocus border="20">forum-browser-white-boxr.png</texturenofocus>
+					<textcolor>black</textcolor>
+					<disabledcolor>60000000</disabledcolor>
+					<focusedcolor>white</focusedcolor>
+				</control>
+				
+			</control>
+		</control>
+	</controls>
+</window>

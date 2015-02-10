@@ -1,0 +1,161 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Vietnamese (http://www.transifex.com/projects/p/xbmc-addons/language/vi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Chung"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Nâng cao"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Nhẹ"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Thiết lập"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Refresh"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Xóa"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Đăng kí theo dõi"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Đường link:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Cài đặt"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Đang tải về"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Có"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Đã xong"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Quang"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Duyệt"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Không biết"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Tên"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Trạng thái"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Thông Tin"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Tìm kiếm"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Lưu"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Kiểu"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Chọn"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Xóa"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Tìm Rồi"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Internet"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Kế"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Cài đặt"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Đăng kí theo dõi"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Tìm kiếm"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Phụ đề"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Tất cả"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Hủy bỏ"

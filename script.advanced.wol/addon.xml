@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.advanced.wol"
+       name="Advanced Wake On Lan"
+       version="1.2.5"
+       provider-name="mandark">
+  <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py" />
+  <extension point="xbmc.service"
+             library="autostart.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Wake up a sleeping device (e.g. NAS, Server, etc.) using Wake-On-Lan</summary>
+    <description lang="en">Sends a WOL magic packet to a remote device using its ethernet MAC address and displays a notification if and when the device is available.
+------------------------
+The Addon can be launched manually from the Programs-section of XBMC (and thus added to your favourites, etc.), and can also be configured in the addon-settings to autostart with XBMC, thus waking up your remote device when XBMC starts.
+There is also a setting that will also send a wake-up signal, if XBMC comes out from standby/sleep/suspend.
+------------------------
+When autostarted with XBMC you can also set the addon to update the video- and/or music-libraries automatically after a successful wake-up.
+You can also set up a delay for the library scans. This is needed, if the filesystem needs some further time to get ready after a successful wake-up.
+------------------------
+Additionally another command (e.g. activate a specific window) can be handed to the script as a parameter. It then launches that command either immediately or not until the remote device is available. Behaviour can be set by a second parameter:
+  - False: launch immediately (default)
+  - True: wait for remote device
+
+As an example, you could add the following entry to your favourites.xml:
+  &quot;RunScript(&amp;quot;script.advanced.wol&amp;quot;,ActivateWindow(MyVideoLibrary),True)&quot;
+This would attempt to wake the remote device configured in the &quot;Advanced Wake On Lan&quot;-Settings, wait until it is awake, and only then launch the XBMC-Video-Library.
+
+This feature is especially useful, if you want to launch your remote device, when entering a specific menu-item in XBMC.
+------------------------
+You can also pass the Host/IP and MAC-Address of the rmote device to the script as the third parameter, bypassing the config in the addon-settings. E.g.:
+  &quot;RunScript(&amp;quot;script.advanced.wol&amp;quot;,,,my-server@50:E5:49:B5:61:34)&quot;
+
+This is useful, if you have more then one remote device you want to wake independently.
+------------------------
+In the advanced settings you can also set the addon to continue sending WOL packets with a configurable delay.
+This is useful, when the remote device or NAS is kept awake, as long as WOL-packets are received.
+Normally the continuous WOL-packets will also continue after XBMC has returned from standby/sleep/suspend, but there is an option to turn this behaviour off.
+------------------------
+If for any reason the check of a successful wake-up via ping is not possible or fails on your system, please note the following:
+  - XBMC must be run as Administrator on Windows / with root rights on Linux for ping-based host-up checks to work.
+  - If this is not possible or it still fails, you can disable ping-based host-up checks in the advanced addon-settings.
+    This allows you to set a fixed timespan, after which the addon just assumes, that the remote host is awake (to display success-notifies, launch other commands, etc.).</description>
+    <disclaimer lang="en">Uses XBMC-builtin-command &quot;WakeOnLan&quot; to send the wakeup-packet, and the GNU-licensed &quot;python-ping&quot;-script to determine the status of the server. Please see the file &quot;ping.py&quot; for infos on the latter one.</disclaimer>
+    <platform>all</platform>
+  </extension>
+</addon>

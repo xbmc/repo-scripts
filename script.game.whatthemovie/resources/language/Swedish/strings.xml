@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Swedish language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sv/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Buttons -->
+    <string id="3000">Gissa!</string>
+    <string id="3001">Slumpmässig</string>
+    <string id="3002">Bakåt</string>
+
+    <!-- Messages -->
+    <string id="3050">Kunde inte logga in</string>
+    <string id="3051">Lösenordet fel eller användarnamnet okänt: [B]%s[/B][CR]Var vänlig ändra inloggningsuppgifter eller avaktivera inloggning</string>
+    <string id="3052">Ange fotoID</string>
+    <string id="3053">Skriv in filmtiteln</string>
+    <string id="3054">Inloggningssajten kunde inte nås</string>
+    <string id="3055">Kunde inte hämta fotot</string>
+    <string id="3066">Kunde inte kontrollera gissningen</string>
+
+    <!-- Labels -->
+    <string id="3100">Kontrollerar: [B]%s[/B]</string>
+    <string id="3101">Korrekt. Originaltiteln är: [B]%s[/B]</string>
+    <string id="3102">Fel: [B]%s[/B]</string>
+    <string id="3103">Inte inloggad</string>
+    <string id="3104">Inloggad som användare: [B]%s[/B]</string>
+    <string id="3105">Ditt poäng: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Löst [B][COLOR=ff008B00]%s[/COLOR][/B] gånger, först av [B]%s[/B]</string>
+    <string id="3107">Inte löst ännu</string>
+    <string id="3108">FotoID: [B]%s[/B]</string>
+    <string id="3109">Datum: [B]%s[/B]</string>
+    <string id="3110">Postad av: [B]%s[/B]</string>
+    <string id="3111">Inte utgiven</string>
+    <string id="3112">Tog bort användare</string>
+    <string id="3113">Ny inskickningar</string>
+    <string id="3114">Presenterade filmer</string>
+    <string id="3115">Arkivet</string>
+    <string id="3116">[B]%s[/B] röster</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
+    <string id="3118">Dold</string>
+    <string id="3119">-</string>
+    <string id="3120">Avvisade foton</string>
+    <string id="3121">Du har redan löst detta foto</string>
+    <string id="3122">Den rätta lösningen var: [B]%s[/B]</string>
+    <string id="3123">Du postade detta foto</string>
+    <string id="3124">Ledsen, du har inte behörighet att visa fotot [B]%s[/B] - omdirigerad till [B]%s[/B]</string>
+    <string id="3125">Valvet</string>
+    <string id="3126">Överlägset. Originaltiteln är: [B]%s[/B] +1 poäng!</string>
+    <string id="3127">Borttagna foton</string>
+    <string id="3128">Ledsen, inget sådant foto [B]%s[/B] - omdirigerad till [B]%s[/B]</string>
+
+    <!-- Settings -->
+    <string id="3200">Allmän</string>
+    <string id="3201">Logga in</string>
+    <string id="3202">Använd whatthemovie.com-konto</string>
+    <string id="3203">Användarnamn</string>
+    <string id="3204">Lösenord</string>
+    <string id="3205">Inställning för "slumpmässig"-knappen (inloggning krävs)</string>
+    <string id="3206">Svårighetsgrad</string>
+    <string id="3207">Lätt</string>
+    <string id="3208">Lätt+medel</string>
+    <string id="3209">Alla</string>
+    <string id="3210">Inkludera arkiv</string>
+    <string id="3211">Inkludera lösta</string>
+    <string id="3212">Utseende+känsla</string>
+    <string id="3213">Utseende</string>
+    <string id="3214">Visa "postad av"</string>
+    <string id="3215">Visa "lösta"</string>
+    <string id="3216">Visa "fotoID"</string>
+    <string id="3217">Visa "fotodatum"</string>
+    <string id="3218">Beteende</string>
+    <string id="3219">Autohoppa efter rätt gissning</string>
+    <string id="3220">...efter x sekunder</string>
+    <string id="3221">Visa "fotoflaggor"</string>
+    <string id="3222">Flaggor</string>
+    <string id="3223">Flagga 1</string>
+    <string id="3224">Flagga 2</string>
+    <string id="3225">Flagga 3</string>
+    <string id="3226">Flagga 4</string>
+    <string id="3227">Flagga 5</string>
+    <string id="3228">Välj flaggor du vill se</string>
+    <string id="3229">Navigeringsval (inloggning krävs)</string>
+    <string id="3230">Endast olösta foton</string>
+    <string id="3231">Visa "fotobetyg"</string>
+    <string id="3232">Hoppa till</string>
+    <string id="3233">Slumpmässig</string>
+    <string id="3234">Nästa</string>
+    <string id="3235">Visa verktygsknappar</string>
+    <string id="3236">Visa navigeringsknappar</string>
+    <string id="3237">Tangenter</string>
+    <string id="3238">Välj knappar för händelser</string>
+
+    <!-- Keys -->
+    <string id="3239">Inga tangenter</string>
+    <string id="3240">sida upp</string>
+    <string id="3241">sida ner</string>
+    <string id="3242">visa info</string>
+    <string id="3243">pausa</string>
+    <string id="3244">stopp</string>
+    <string id="3245">nästa objekt</string>
+    <string id="3246">föregående objekt</string>
+    <string id="3247">spola framåt</string>
+    <string id="3248">spola tillbaka</string>
+    <string id="3249">spela</string>
+    <string id="3250">innehållsmeny</string>
+    <string id="3251">öka volym</string>
+    <string id="3252">minska volym</string>
+    <string id="3253">skrolla upp</string>
+    <string id="3254">skrolla ner</string>
+    <string id="3255">hem</string>
+    <string id="3256">slut</string>
+
+    <!-- Functions -->
+    <string id="3260">Nästa</string>
+    <string id="3261">Föregående</string>
+    <string id="3262">Hoppa</string>
+    <string id="3263">Bokmärke</string>
+    <string id="3264">Favorit</string>
+    <string id="3265">Lös</string>
+</strings>

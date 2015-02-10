@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting type="enum" id="sortOrder" label="32001" lvalues="32002|32003|32004|32005"/>
+</settings>

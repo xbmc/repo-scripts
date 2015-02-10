@@ -1,0 +1,510 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Turkish (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/tr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "Ara "
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "El ile arama dizesi gir"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "%s Altyazı aranıyor"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "Bağlanıyor..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "Altyazılar indiriliyor..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "Altyazı dosyası indirildi ve açıldı"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "Bağlantı başarısız"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "Altyazı açma hatası"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "Yerel altyazı mevcut"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "Hizmet zaman aşımı süresi içinde yanıt vermedi"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "Altyazı Bulunamadı!"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "için altyazılar bulundu"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "Üst Klasörleri Kullanarak Ara"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "Altyazıyı seçilen hedefe kayıt edemezsiniz"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "Bu altyazıyı geçici olarak etkinleştirmek ister misiniz?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "Filmin Adını Girin (yıl)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "Sunucu aşırı yüklendi, lütfen daha sonra tekrar deneyin"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "Giriş başarısız. Lütfen eklenti yapılandırmasında ayarlarınızı doğrulayın"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "Sunucu resim kodunun tekrar girilmesini gerektiriyor"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "Lütfen bildirim alanına bakın"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "Bildirim alanıdaki resim kodunu girin"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "Mevcut Hizmetler"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "Bu altyazıları indirebilmek için giriş yapmalısınız,[CR]eklenti yapılandırmasında ayarlarınızı doğrulayın"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "Eklenti Ayarları"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "Otomatik olarak ilk 'sync' altyazıyı indir"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "İlk 'sync' altyazı karşıdan yükleniyor"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "ilk 'sync' altyazı karşıdan yüklendi"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Altyazı Klasörü Seç"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "'sync' altyazı bulunamadı"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "Diller"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "Birincil Dil"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "İkincil Dil"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "Hizmetler"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net Kullanıcı Adı"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net Parola"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "Gelişmiş Seçenekler"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "Altyazıyı Film Klasörüne İndir"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- Özel Altyazı İndirme Yolunu Ayarla"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "El İle Arama Dizesi Gir"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "Üçüncü Dil"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "Varsayılan Film Hizmetini Seç"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "Varsayılan Dizi Hizmetini Seç"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "Sonuç sayfasında dosya adını göster"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "Üst Klasörleri Kullanarak Ara"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "Dil Kodunu Dosya Adına Ekle "
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "Varsayılan Zaman Aşımını Ayarla"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV Kullanıcı Adı"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV Parola"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa Kullanıcı Adı"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa Parola"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky Kullanıcı Adı"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky Parola"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "Eğer sonuç bulunamazsa mevcut olan sonraki hizmette ara"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "Otomatik olarak ilk 'sync' altyazıyı indir"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx Kullanıcı Adı"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx Parola"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs Kullanıcı Adı"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs Parola"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs Kullanıcı Adı"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs Parola"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone Kullanıcı Adı"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone Parola"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Altyazı türünü seç:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "Altyazıları depolamak için 'Subs' alt klasörünü kullan"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl Kullanıcı Adı"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl Parola"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents Kullanıcı Adı"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents Parola"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Altyazı(lar) yok"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Altyazı(lar) bulundu"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Başlık Aranıyor... Lütfen bekleyin!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "İndiriliyor... Lütfen Bekleyin!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Çıkartılıyor... Lütfen Bekleyin!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas Kullanıcı Adı"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas Parola"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Arnavutça"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Arapça"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Beyaz Rusyaca"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Boşnakça (Latin)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Bulgarca"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Katalanca"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Çince"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Hırvatça"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Çekçe"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Danca"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Hollandaca"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "İngilizce"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estce"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Fince"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Fransızca"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Almanca"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Yunanca"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "İbranice"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hintçe"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Macarca"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "İzlandaca"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Endonezca"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "İtalyanca"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japonca"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Korece"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Letonca"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Litvanca"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Makedonca"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norveççe"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Lehçe"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portekizce"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portekizce (Brazilya)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Rumence"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Rusça"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Sırpça"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Slovakça"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Slovenyaca"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "İspanyolca"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "İsveççe"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Taice"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Türkçe"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ukraynaca"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnamca"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Farsça"

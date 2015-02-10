@@ -1,0 +1,17 @@
+Version 2.0.0
+major version bump for frodo
+fix new api key
+
+Version 1.0.0
+new for Eden
+added support for radio streams that supply the artist name in the title
+slide-show will refresh when the artist changes instead of "onPlaybackStarted"
+
+Version 0.0.3
+new icon. thanks djtoll
+
+Version 0.0.2
+removed settings, no longer required
+
+Version 0.0.1
+initial

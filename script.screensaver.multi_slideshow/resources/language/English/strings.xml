@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="32100">Mode</string>
+    <string id="32200">Image Source</string>
+
+    <string id="32000">Screensaver</string>
+    <string id="32001">TableDrop</string>
+    <string id="32002">StarWars</string>
+    <string id="32003">RandomZoomIn</string>
+    <string id="32004">AppleTVLike</string>
+    <string id="32005">GridSwitch</string>
+    <string id="32006">Random</string>
+    <string id="32007">Random Order</string>
+    <string id="32008">Recursive</string>
+
+    <string id="32010">Source</string>
+    <string id="32011">Movies</string>
+    <string id="32012">Folder</string>
+    <string id="32013">Property</string>
+    <string id="32014">Albums</string>
+    <string id="32015">Fanart</string>
+    <string id="32016">Thumbnail</string>
+    <string id="32017">TV-Shows</string>
+
+    <string id="32300">Wait Time</string>
+    <string id="32301">Effect Time</string>
+    <string id="32302">Rows and Columns</string>
+    <string id="32303">Speed</string>
+    <string id="32304">Image Concurrency</string>
+    <string id="32305">Random Order</string>
+    <string id="32500">No Images found!</string>
+    <string id="32501">Using Fallback Movie or Music Fanart</string>
+</strings>

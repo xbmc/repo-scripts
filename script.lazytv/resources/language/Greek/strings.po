@@ -1,0 +1,449 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General Settings"
+msgstr "Γενικές Ρυθμίσεις"
+
+msgctxt "#32001"
+msgid "Primary Function"
+msgstr "Βασική Λειτουργία"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Δημιουργία λίστας 'επόμενων επεισοδίων' για καθεμία από τις Τηλ. Σειρές"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Δημιουργία και έναρξη λίστας αναπ/γής τυχαίων"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Να επιλέγω κατά την εκκίνηση"
+
+msgctxt "#32005"
+msgid "Use Smart Playlist to Filter Shows"
+msgstr "Χρήση Έξυπνης Λίστας Αναπ/γής για Φιλτράρισμα Σειρών"
+
+msgctxt "#32006"
+msgid "Playlist Selection Method"
+msgstr "Μέθοδος Επιλογής Λίστας Αναπ/γής"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Να επιλέγω κατά την εκκίνηση"
+
+msgctxt "#32008"
+msgid "Choose a default Playlist"
+msgstr "Επιλογή μιας προεπιλεγμένης Λίστας Αναπ/γής"
+
+msgctxt "#32009"
+msgid "Select default playlist"
+msgstr "Επιλογή προεπιλεγμένης Λίστας Αναπ/γής"
+
+msgctxt "#32010"
+msgid "Some shows are fine to watch out of order"
+msgstr "Κάποιες εκπομπές μπορούν να προβληθούν με τυχαία σειρά επεισοδίων"
+
+msgctxt "#32011"
+msgid "Select random-order shows"
+msgstr "Επιλογή εκπομπών με τυχαία σειρά επεισοδίων"
+
+msgctxt "#32012"
+msgid "Only populate with selected TV Shows"
+msgstr "Συμπλήρωση μόνο με τις επιλεγμένες Τηλ. Σειρές"
+
+msgctxt "#32013"
+msgid "Choose shows by ..."
+msgstr "Επιλογή σειρών από ..."
+
+msgctxt "#32014"
+msgid "Manual Selection"
+msgstr "Χειροκίνητη Επιλογή"
+
+msgctxt "#32015"
+msgid "Smart Playlist"
+msgstr "Έξυπνη Λίστα Αναπ/γής"
+
+msgctxt "#32016"
+msgid "Click here to select TV Shows"
+msgstr "Πιέστε εδώ για επιλογή Τηλ. Σειρών"
+
+msgctxt "#32030"
+msgid "Player Options"
+msgstr "Επιλογές Αναπαραγωγής"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "Πλήθος σειρών στη λίστα αναπ/γής"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "Να επιτρέπονται πολλαπλά επεισόδια της ίδιας Τηλ. Σειράς"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Συμπερίληψη επεισοδίων από μη προβληθείσες Τηλ. Σειρές"
+
+msgctxt "#32034"
+msgid "Begin partially watched episodes from their resume point"
+msgstr "Έναρξη μερικώς προβληθέντων επεισοδίων από το σημείο συνέχισης"
+
+msgctxt "#32035"
+msgid "Display episode details when played"
+msgstr "Εμφάνιση πληροφοριών επεισοδίου κατά την αναπαραγωγή"
+
+msgctxt "#32036"
+msgid "Include unwatched movies"
+msgstr "Να περιληφθούν και μη προβληθείσες ταινίες"
+
+msgctxt "#32037"
+msgid "Include watched movies"
+msgstr "Να περιληφθούν και προβληθείσες ταινίες"
+
+msgctxt "#32038"
+msgid "Start watched movies at random time"
+msgstr "Έναρξη προβληθέντων ταινιών σε τυχαίο χρόνο"
+
+msgctxt "#32039"
+msgid "Simulates changing the TV channel to a movie in progress"
+msgstr "Προσομοιώνει το ζάπινγκ σε ταινία που είναι σε εξέλιξη"
+
+msgctxt "#32040"
+msgid "Movie weight"
+msgstr "\"Βάρος\" ταινίας"
+
+msgctxt "#32041"
+msgid "Weight: 1.0 = 1 show, 1 movie, 0.5 = 2 shows, 1 movie"
+msgstr "Βάρος: 1.0 = 1 σειρά, 1 ταινία, 0.5 = 2 σειρές, 1 ταινία"
+
+msgctxt "#32042"
+msgid "Weight: 0.0 = unlimited movies"
+msgstr "Βάρος: 0.0 = απεριόριστες ταινίες"
+
+msgctxt "#32043"
+msgid "Ignore TV shows (movies only)"
+msgstr "Να αγνοούνται οι σειρές (μόνο ταινίες)"
+
+msgctxt "#32060"
+msgid "List Options"
+msgstr "Επιλογές Λίστας"
+
+msgctxt "#32061"
+msgid "Limit the number of shows"
+msgstr "Περιορισμός του πλήθους των σειρών"
+
+msgctxt "#32062"
+msgid "Number of Shows to display"
+msgstr "Πλήθος Σειρών που εμφανίζονται"
+
+msgctxt "#32063"
+msgid "Reducing length may help improve speed on slow systems"
+msgstr "Μείωση του μεγέθους μπορεί να αυξήσει την ταχύτητα σε αργά συστήματα"
+
+msgctxt "#32064"
+msgid "Show Name"
+msgstr "Εμφάνιση Ονόματος"
+
+msgctxt "#32065"
+msgid "Last Watched"
+msgstr "Τελευταίο Προβληθέν"
+
+msgctxt "#32066"
+msgid "# Unwatched Episodes"
+msgstr "# Μη Προβληθέντα Επεισόδια"
+
+msgctxt "#32067"
+msgid "# Watched Episodes"
+msgstr "# Προβληθέντα Επεισόδια"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Κύκλος"
+
+msgctxt "#32069"
+msgid "Exclude random play shows"
+msgstr "Να εξαιρεθούν εκπομπές με τυχαία σειρά επεισοδίων"
+
+msgctxt "#32070"
+msgid "Sort by ..."
+msgstr "Ταξινόμηση ανά ..."
+
+msgctxt "#32071"
+msgid "Reverse Order"
+msgstr "Ανάποδη Σειρά"
+
+msgctxt "#32080"
+msgid "Other Settings"
+msgstr "Άλλες Ρυθμίσεις"
+
+msgctxt "#32081"
+msgid "Prompt to watch next available episode"
+msgstr "Ερώτηση για προβολή του επόμενο διαθέσιμου επεισοδίου"
+
+msgctxt "#32082"
+msgid "Prompt duration (max = do not close)"
+msgstr "Διάρκεια ερώτησης (μεγ. = δεν κλείνει)"
+
+msgctxt "#32083"
+msgid "Notify when previous episode is available"
+msgstr "Ειδοποίηση όταν υπάρχει το προηγούμενο επεισόδιο"
+
+msgctxt "#32084"
+msgid "Prompt and notify functions also apply to shows played outside of LazyTV"
+msgstr "Οι ερωτήσεις και οι ειδοποιήσεις εφαρμόζονται και σε σειρές που αναπαράγονται εκτός του LazyTV"
+
+msgctxt "#32085"
+msgid "Enable logging for Testing"
+msgstr "Ενεργοποίηση καταγραφής για Τεστάρισμα"
+
+msgctxt "#32086"
+msgid "Cloning LazyTV allows multiple Home menu entries."
+msgstr "Κλωνοποιώντας το LazyTV μπορείτε να έχετε πολλαπλές καταχωρίσεις Αρχ. Μενού"
+
+msgctxt "#32087"
+msgid "Clone LazyTV Now"
+msgstr "Κλωνοποίηση του LazyTV τώρα"
+
+msgctxt "#32088"
+msgid "It would be nice to know if people are using this addon."
+msgstr "Θα ήταν καλό να ξέραμε αν ο κόσμος χρησιμοποιεί αυτό το πρόσθετο."
+
+msgctxt "#32089"
+msgid "Email +1 to the author (no data is sent)"
+msgstr "Αποστολή email +1 στο δημιουργό (δεν αποστέλλονται δεδομένα)"
+
+msgctxt "#32090"
+msgid "Default action"
+msgstr "Προεπιλεγμένη ενέργεια"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Εκκίνηση"
+
+msgctxt "#32093"
+msgid "Create and maintain smart playlist."
+msgstr "Δημιουργία και συντήρηση έξυπνης λίστας αναπ/γής."
+
+msgctxt "#32094"
+msgid "Copy LazyTV episodes to specified folder. (Script)"
+msgstr "Αντιγραφή επεισοδίων LazyTV σε καθορισμένο φάκελο. (Script)"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "Αυτό το πρόσθετο βρίσκει το επόμενο επεισόδιο για κάθε Τηλ. Σειρά."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "Θέλετε μια λίστα ή μια λίστα αναπ/γής τυχαίων;"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "Δείξε μου"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Κάνε μου έκπληξη"
+
+msgctxt "#32104"
+msgid "Select the playlist"
+msgstr "Επιλογή της λίστας αναπ/γής"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Κλείσιμο"
+
+msgctxt "#32106"
+msgid "LazyTV Service is not running."
+msgstr "Η Υπηρεσία LazyTV δεν εκτελείται."
+
+msgctxt "#32107"
+msgid "Would you like to attempt to start it now?"
+msgstr "Να γίνει τώρα προσπάθεια έναρξής της;"
+
+msgctxt "#32108"
+msgid "LazyTV Service has updated. Please restart to apply changes."
+msgstr "Η Υπηρεσία LazyTV ενημερώθηκε. Κάνετε επανεκκίνηση για εφαρμογή των αλλαγών."
+
+msgctxt "#32109"
+msgid "Would you like to restart it now?"
+msgstr "Να γίνει επανεκκίνηση τώρα;"
+
+msgctxt "#32110"
+msgid "LazyTV has updated and this clone is now out of date."
+msgstr "Το LazyTV ενημερώθηκε και αυτός ο κλώνος είναι πλέον απαρχαιωμένος."
+
+msgctxt "#32111"
+msgid "Would you like to update the clone now?"
+msgstr "Επιθυμείτε να ενημερώσετε τον κλώνο τώρα;"
+
+msgctxt "#32112"
+msgid "Never"
+msgstr "Ποτέ"
+
+msgctxt "#32113"
+msgid "day"
+msgstr "ημέρα"
+
+msgctxt "#32114"
+msgid "days"
+msgstr "ημέρες"
+
+msgctxt "#32115"
+msgid "LazyTV is still populating with shows."
+msgstr "Το LazyTV ακόμα συμπληρώνεται με σειρές."
+
+msgctxt "#32116"
+msgid "Please wait and try again."
+msgstr "Δοκιμάστε ξανά αργότερα."
+
+msgctxt "#32139"
+msgid "name your clone"
+msgstr "ονομάστε τον κλώνο σας"
+
+msgctxt "#32140"
+msgid "An error occurred while creating the clone."
+msgstr "Προέκυψε ένα σφάλμα κατά τη δημιουργία του κλώνου."
+
+msgctxt "#32141"
+msgid "Operation cancelled."
+msgstr "Η διαδικασία ακυρώθηκε."
+
+msgctxt "#32142"
+msgid "This script creates a cloned version of the LazyTV user interface."
+msgstr "Αυτό το script δημιουργεί μια κλωνοποιημένη έκδοση του περιβάλλοντος εργασίας του LazyTV."
+
+msgctxt "#32143"
+msgid "It creates a new folder in your addons directory."
+msgstr "Δημιουργεί ένα νέο φάκελο στο φάκελο με τα πρόσθετά σας."
+
+msgctxt "#32144"
+msgid "Do you wish to continue?"
+msgstr "Επιθυμείτε να συνεχίσετε;"
+
+msgctxt "#32145"
+msgid "That name is in use. Please try another."
+msgstr "Αυτό το όνομα χρησιμοποιείται ήδη. Δοκιμάστε άλλο."
+
+msgctxt "#32146"
+msgid "Cloning successful."
+msgstr "Επιτυχής κλωνοποίηση."
+
+msgctxt "#32147"
+msgid "Clone is now ready for use."
+msgstr "Ο κλώνος είναι έτοιμος προς χρήση."
+
+msgctxt "#32148"
+msgid "An error occurred while updating the clone."
+msgstr "Προέκυψε ένα σφάλμα κατά την ενημέρωση του κλώνου."
+
+msgctxt "#32149"
+msgid "Update successful."
+msgstr "Επιτυχής ενημέρωση."
+
+msgctxt "#32160"
+msgid "LazyTV - there are previous unwatched episodes"
+msgstr "LazyTV - υπάρχουν προηγούμενα μη προβληθέντα επεισόδια"
+
+msgctxt "#32161"
+msgid "%s (%sx%s) is in your library."
+msgstr "Το %s (%sx%s) υπάρχει στη συλλογή σας."
+
+msgctxt "#32162"
+msgid "Would you like to watch it now?"
+msgstr "Θέλετε να το δείτε τώρα;"
+
+msgctxt "#32163"
+msgid "\"Now Playing\""
+msgstr "\"Τώρα Εκτελείται\""
+
+msgctxt "#32164"
+msgid "LazyTV -the next unwatched episode is in your library."
+msgstr "LazyTV - το επόμενο μη προβληθέν επεισόδιο υπάρχει στη συλλογή σας."
+
+msgctxt "#32165"
+msgid "No, thank you. (Autoclosing in %s seconds)"
+msgstr "Όχι, ευχαριστώ. (Αυτόματο κλείσιμο σε %s δευτερόλεπτα)"
+
+msgctxt "#32166"
+msgid "Yes, start %s %s now."
+msgstr "Ναι, έναρξη %s %s τώρα."
+
+msgctxt "#32167"
+msgid "LazyTV   (auto-closing in %s seconds)"
+msgstr "LazyTV (αυτόματο κλείσιμο σε %s δευτερόλεπτα)"
+
+msgctxt "#32168"
+msgid "%s %s is in your library."
+msgstr "Το %s %s υπάρχει στη συλλογή σας."
+
+msgctxt "#32169"
+msgid "Would you like to watch it now?"
+msgstr "Θέλετε να το δείτε τώρα;"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgctxt "#32171"
+msgid "Select All"
+msgstr "Επιλογή Όλων"
+
+msgctxt "#32172"
+msgid "Unselect All"
+msgstr "Απο-επιλογή Όλων"
+
+msgctxt "#32173"
+msgid "Database analysis complete"
+msgstr "Ολοκλήρωση ανάλυσης της βάσης δεδομένων"
+
+msgctxt "#32180"
+msgid "Choose export location"
+msgstr "Τοποθεσία εξαγωγής"
+
+msgctxt "#32181"
+msgid "Some files failed to transfer"
+msgstr "Αποτυχία μεταφορά κάποιων αρχείων"
+
+msgctxt "#32182"
+msgid "Would you like to see them?"
+msgstr "Θέλετε να τα δείτε;"
+
+msgctxt "#32183"
+msgid "Retrieving file size..."
+msgstr "Ανάκτηση μεγέθους αρχείου..."
+
+msgctxt "#32184"
+msgid "File transfer in progress..."
+msgstr "Μεταφορά αρχείων σε εξέλιξη..."
+
+msgctxt "#32185"
+msgid "File export completed successfully"
+msgstr "Ολοκληρώθηκε η εξαγωγή αρχείων"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Κύκλος"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Επεισόδιο"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Προβληθέντα"

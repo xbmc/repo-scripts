@@ -1,0 +1,205 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/xbmc-addons/language/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Obecné"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Jazyk"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Lehký(é)"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Oznamování"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Možnosti"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "Hotovo"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Obnovit"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Smazat"
+
+msgctxt "#32175"
+msgid "Subscriptions"
+msgstr "Odběry"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Linka:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Nastavení"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Stahuji"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "- Upravit"
+
+msgctxt "#32244"
+msgid "Help"
+msgstr "Nápověda"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Ano"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Dokončeno"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Zobrazit nabídku"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Jasno"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "- Upravit"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Vyhledat"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Popis"
+
+msgctxt "#32291"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "Neznámý"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Název"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Stav"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Informace"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Hledat"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Aktualizovat"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Uložit"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Druh"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Vybrat"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Odstranit"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Nalezeno"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Kategorie"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Internet"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Další"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Nastavení"
+
+msgctxt "#32904"
+msgid "Subscriptions"
+msgstr "Odběry"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Hledat"
+
+msgctxt "#32931"
+msgid "Help"
+msgstr "Nápověda"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Titulky"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Vše"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Zrušit"

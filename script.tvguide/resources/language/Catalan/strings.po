@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "Sense descripció"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]Carregant les dades des de una font externa...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Calculant temps restant..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "Queden aproximadament %d segons...."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "La carrega de dades ja en curs..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Control per ratolí"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Ara"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Consell![/B] També pot utilitzar la roda de desplaçament"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "#30009"
+msgid "No program available"
+msgstr "No hi ha cap programa disponible"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Font"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Mostra els canals per categories"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "Fitxer XMLTV"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Netejant la memòria cau..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Fet!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "Mostra la notificació abans que el programa comenci"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "Utilitza la imatge del programa com a fons"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Neteja tots els recordatoris..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "Recorda de netejar la memòria cau quan canvii la font"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "Actualitza la informació dels programes quan inicii l'XBMC"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "Reprodueix els canals utilitzant el complement YouSee web-tv"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Notificacions"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Reprodueix els canals utilitzant el complement Danish Live TV"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Inici"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- primer neteja la memòria cau"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Cerca logotips dels canals a"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Habilita el menú OSD"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Inhabilitar el menú OSD pot arreglar las tartamudesa del vídeo."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Utilitza un flux de dades alternatiu (necessari per a alguns complements)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "El flux de dades alternatiu no és compatible amb un menú OSD"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "URL de XMLTV"
+
+msgctxt "#30123"
+msgid "XMLTV type"
+msgstr "Tipus de XMLTV"
+
+msgctxt "#30124"
+msgid "Local file"
+msgstr "Fitxer local"
+
+msgctxt "#30125"
+msgid "URL"
+msgstr "URL"
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Ui, ho sento!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "No ha sigut possible carregar les dades del programa,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "comprova la configuració o intenta-ho més tard..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "perquè la configuració no es valida!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "Sembla que la pell actual té una versió especial"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "de la pell per a la Guia de TV que no està actualitzada."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Si us plau, tria una pell diferent..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Sembla que la base de dades de la Guia de TV esta danyada."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "La base de dades serà eliminada i recreada."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "Configuració dels canals, etc. es perdera."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "a [B]%s[/B] en 5 minuts..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "a [B]%s[/B] començant ara..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Veure %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Recorda"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "No recordis"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Trieu el flux"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "Pots triar el teu propi fitxer .strm per reproduir, quan vulguis veure aquest canal."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Elimina el fitxer de flux"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Canals"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Surt"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Edita el ordre i la visibilitat dels canals[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Moure cap amunt i cap avall per canviar la posició[CR]del canal. Seleccioneu o navegui esquerra per acceptar[CR]la posició."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Desa"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Configura el flux[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr "Fitxer .strm"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Preferits"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Complements"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Vista prèvia del flux"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Desa"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Atura la previsualització"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Explora..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Clica a Explora... i navega fins al teu fitxer de flux. Quant hagis triat el vostre fitxer es pot obtenir una vista prèvia del flux per comprovar si funciona en l'XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Tria un preferit a sota. Només estan suportats els preferits de [I]PlayMedia[/I]."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Múltiples complements proporcionen aquest canal.[CR]Trieu un per veure el flux."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "JSON-EPG URL"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Reprodueix els canals utilitzant el complement Weeb.Tv"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "La Guia de TV està configurada per utilitzar el flux de Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "complement que no està instal·lat."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Està inhabilitat el flux de dades utilitzat aquest complement."

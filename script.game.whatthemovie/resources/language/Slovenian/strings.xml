@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Slovenian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/sl/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Naključno</string>
+    <string id="3002">Nazaj</string>
+    <string id="3118">Skrito</string>
+
+    <!-- Settings -->
+    <string id="3200">Splošno</string>
+    <string id="3203">Uporabniško ime</string>
+    <string id="3204">Geslo</string>
+    <string id="3209">Vse</string>
+    <string id="3233">Naključno</string>
+    <string id="3234">Naslednji</string>
+
+    <!-- Functions -->
+    <string id="3260">Naslednji</string>
+    <string id="3261">Prejšnji</string>
+</strings>

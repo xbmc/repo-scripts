@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (US) (http://www.transifex.com/projects/p/xbmc-addons/language/en_US/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "No description"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]Loading data from external source...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Calculating remaning time..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "Approximately %d seconds left..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Loading of data already in progress..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Mouse control"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Now"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Tip![/B] You can also use the scroll wheel"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Cancel"
+
+msgctxt "#30009"
+msgid "No program available"
+msgstr "No program available"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "General"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Source"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Show channels from category"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV file"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Clear cache..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Done!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "Show notification before selected programs start"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "Use program image as background"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Clear all reminders..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "Remember to clear the cache when you change source"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "Update program information on XBMC startup"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "Play channels using the YouSee web-tv addon"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Play channels using the Danish Live TV addon"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Startup"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- clear cache first"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Search for channel logos in"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Enable OSD menu"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Disabling the OSD menu may fix video stuttering."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Use alternate streaming method (required for some addons)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Alternative streaming is not compatible with OSD menu"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "XMLTV URL"
+
+msgctxt "#30123"
+msgid "XMLTV type"
+msgstr "XMLTV type"
+
+msgctxt "#30124"
+msgid "Local file"
+msgstr "Local file"
+
+msgctxt "#30125"
+msgid "URL"
+msgstr "URL"
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Oops, sorry about that!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "It was not possible to load program data,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "check settings or try again later..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "because the settings are invalid!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "It looks like your current skin has a special"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "version of the TV Guide skin that is not up-to-date."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Please try with a different skin..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "It looks like the TV Guide database is broken."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "The database will be deleted and recreated."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "Channel configuration, etc. is unfortunately lost."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "on [B]%s[/B] in 5 minutes..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "on [B]%s[/B] is starting now..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Watch %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Remind"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Don't remind"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Cancel"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Choose stream"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "You can choose your own .strm file to play, when you want to watch this channel."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Remove stream file"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Channels"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Quit"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Edit channel order and visibility[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Save"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Cancel"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Setup stream[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr ".strm file"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Favourites"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Addons"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Preview stream"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Save"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Cancel"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Stop preview"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Browse..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "JSON-EPG URL"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Play channels using the Weeb.Tv addon"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "TV Guide is configured to stream using Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "addon which is not installed."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Streaming using that addon is now disabled."

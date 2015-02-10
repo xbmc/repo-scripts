@@ -1,0 +1,185 @@
+# XBMC Media Center language file
+# Addon Name: Forum Browser
+# Addon id: script.forum.browser
+# Addon Provider: Rick Phillips (ruuk)
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Albanian (http://www.transifex.com/projects/p/xbmc-addons/language/sq/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sq\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Të përgjithshëm"
+
+msgctxt "#32003"
+msgid "Language"
+msgstr "Gjuha"
+
+msgctxt "#32008"
+msgid "Advanced"
+msgstr "Të shtuar"
+
+msgctxt "#32012"
+msgid "Light"
+msgstr "Dritë"
+
+msgctxt "#32018"
+msgid "Notifications"
+msgstr "Njoftimet"
+
+msgctxt "#32022"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#32051"
+msgid "Options"
+msgstr "Opcionet"
+
+msgctxt "#32052"
+msgid "Done"
+msgstr "E përfunduar"
+
+msgctxt "#32054"
+msgid "Refresh"
+msgstr "Ringarko"
+
+msgctxt "#32141"
+msgid "Delete"
+msgstr "Fshij"
+
+msgctxt "#32182"
+msgid "Link:"
+msgstr "Statusi:"
+
+msgctxt "#32203"
+msgid "Settings"
+msgstr "Cilësimet"
+
+msgctxt "#32205"
+msgid "Downloading"
+msgstr "Duke shkarkuar"
+
+msgctxt "#32232"
+msgid "Edit"
+msgstr "Modifiko"
+
+msgctxt "#32265"
+msgid "Yes"
+msgstr "Po"
+
+msgctxt "#32266"
+msgid "Finished"
+msgstr "Përfundoi"
+
+msgctxt "#32272"
+msgid "Choose"
+msgstr "Zgjidh"
+
+msgctxt "#32275"
+msgid "Clear"
+msgstr "Fshij"
+
+msgctxt "#32279"
+msgid "Edit"
+msgstr "Modifiko"
+
+msgctxt "#32280"
+msgid "Browse"
+msgstr "Shfleto"
+
+msgctxt "#32290"
+msgid "Description"
+msgstr "Përshkrimi"
+
+msgctxt "#32348"
+msgid "Unknown"
+msgstr "I panjohur"
+
+msgctxt "#32362"
+msgid "Name"
+msgstr "Emri"
+
+msgctxt "#32363"
+msgid "Status"
+msgstr "Statusi"
+
+msgctxt "#32368"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32371"
+msgid "Search"
+msgstr "Kërko"
+
+msgctxt "#32393"
+msgid "Update"
+msgstr "Aktualizoni"
+
+msgctxt "#32401"
+msgid "Save"
+msgstr "Ruaj"
+
+msgctxt "#32402"
+msgid "Type"
+msgstr "Tipi"
+
+msgctxt "#32408"
+msgid "Select"
+msgstr "Zgjidh"
+
+msgctxt "#32409"
+msgid "Remove"
+msgstr "Fshij"
+
+msgctxt "#32432"
+msgid "Found"
+msgstr "Gjetur"
+
+msgctxt "#32441"
+msgid "Category"
+msgstr "Kategoria"
+
+msgctxt "#32515"
+msgid "Internet"
+msgstr "Interneti"
+
+msgctxt "#32901"
+msgid "Next"
+msgstr "Pasues"
+
+msgctxt "#32903"
+msgid "Settings"
+msgstr "Cilësimet"
+
+msgctxt "#32913"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32916"
+msgid "Search"
+msgstr "Kërko"
+
+msgctxt "#32932"
+msgid "Subs"
+msgstr "Subtitrat"
+
+msgctxt "#32935"
+msgid "All"
+msgstr "Gjithë"
+
+msgctxt "#32938"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#32939"
+msgid "Cancel"
+msgstr "Anulo"

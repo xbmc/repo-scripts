@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Portuguese language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/pt/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Help -->
+    <string id="32001">Esquerda + Direita = Mudar Álbum/Foto</string>
+    <string id="32002">Cima + Baixo = Mudar Fonte</string>
+    <string id="32003">Seleccionar = Introduzir álbum</string>
+    <string id="32004">Back = voltar ao álbum/sair do addon</string>
+    <string id="32005">Info = Cambiar info no ecrã</string>
+    <string id="32006">Contexto = Transferir álbum</string>
+    <string id="32007">Play = Iniciar Slides</string>
+    <string id="32008">0 = Cambiar rácio de aspecto</string>
+
+    <!-- Settings -->
+    <string id="32100">Não mostrar esta ajuda de novo</string>
+    <string id="32110">rácio de aspecto padrão</string>
+    <string id="32111">redimensionar</string>
+    <string id="32112">manter</string>
+    <string id="32120">Exibir Setas</string>
+    <string id="32130">Slides Aleatórios</string>
+    <string id="32140">Localização de transferência de álbum</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Ajuda</string>
+    <string id="32201">Definições</string>
+
+    <!-- Script strings -->
+    <string id="32300">Escolher localização padrão para transferências</string>
+    <string id="32301">Obtendo dados...</string>
+    <string id="32302">Item %d/%d</string>
+    <string id="32303">Item actual: %s %d%%</string>
+    <string id="32304">Transferindo para: %s</string>
+</strings>

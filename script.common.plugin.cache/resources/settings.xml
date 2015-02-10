@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+
+  <!-- General -->
+  <category label="001">
+    <setting id="debug" type="bool" label="002" default="false" />
+    <setting id="autostart" type="bool" label="003" default="true" />
+    <setting id="port" type="number" label="005" default="59994" />
+    <setting id="timeout" type="number" label="004" enable="!eq(-1,true)" default="15" />
+  </category>
+</settings>

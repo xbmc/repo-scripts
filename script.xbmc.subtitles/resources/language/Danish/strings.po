@@ -1,0 +1,530 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "Søg"
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Video burde køre"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "Indtast søgetekst manuelt"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "Søger efter undertekster %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "Forbinder..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "Henter undertekster..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "Undertekstfil hentet og pakket ud"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "Forbindelse mislykkedes"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "Fejl ved udpakning af undertekster"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "Lokal undertekst tilgængelig"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "Tjenesten svarede ikke inden for tidsfristen"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "Ingen undertekster fundet!"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "undertekster fundet for"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "Brug mappenavn ved søgning"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "Du kan ikke gemme undertekst til den valgte destination"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "Vil du gerne aktivere denne undertekst midlertidigt?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "Indtast Filmnavn (år)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "Serveren er overbelastet, prøv venligst igen senere"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "Log ind mislykkedes. Kontroller venligst dine indstillinger"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "Serveren kræver, at du omskriver kode fra billede"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "Kig venligst i beskedområdet"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "Indtast billedets kode i beskedområdet"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "Tilgængelige tjenester"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "Du skal være logget ind for at downloade disse undertekster,[CR]kontroller dine indstillinger"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "Add-on indstillinger"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "Hent automatisk første \"sync\" undertekst"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "Henter første \"sync\" undertekst"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "Første \"sync\" undertekst hentet"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Vælg mappe til Undertekster"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "Ingen \"sync\" undertekst fundet"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "Sprog"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "Primært Sprog"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "Sekundært Sprog"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "Tjenester"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net-brugernavn"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net-adgangskode"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "Avancerede Indstillinger"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "Gem undertekst i samme mappe som Filmen"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- Vælg mappe til hentede undertekster"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "Indtast søgetekst manuelt"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "Tredje Sprog"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "Vælg Standard Filmtjeneste"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "Vælg Standard Tjeneste til TV-serier"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "Vis filnavn på resultatside"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "Brug mappenavn ved søgning"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "Tilføj sprog til filnavn"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "Vælg standard tidsfrist"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV-brugernavn"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV-adgangskode"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa-brugernavn"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa-adgangskode"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky-brugernavn"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky-adgangskode"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "Søg i næste tilgængelige tjeneste, hvis der ikke blev fundet noget"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "Hent automatisk første \"sync\" undertekst"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx-brugernavn"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx-adgangskode"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs-brugernavn"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs-adgangskode"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs-brugernavn"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs-adgangskode"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone-brugernavn"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone-kodeord"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Vælg underteksttype:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPI2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "Brug \"Subs\" undermappe til at gemme undertekster"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl Brugernavn"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl Kodeord"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents Brugernavn"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents Kodeord"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Ingen undertekst(er) i"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "Søg manuelt eller automatisk!"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Undertekst(er) fundet i"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Søger efter Titel... Vent venligst!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "Henter... Vent venligst!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Udpakker... Vent venligst!"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "Udpakning færdig!"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "Afspiller Titel!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas Brugernavn"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas Kodeord"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Pause mens brugerflade vises"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Albansk"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Arabisk"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Hviderussisk"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Bosnisk (Latin)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Bulgarsk"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Catalansk"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Kinesisk"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Kroatisk"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Tjekkisk"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Dansk"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Hollandsk"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Engelsk"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estisk"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finsk"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Fransk"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Tysk"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Græsk"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Hebræisk"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Ungarsk"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Islandsk"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indonesisk"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Italiensk"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japansk"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Koreansk"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Lettisk"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Litauisk"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Makedonsk"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norsk"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Polsk"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portugisisk"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portugisisk (Brasilien)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Romænsk"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Russisk"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Serbisk"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Slovakisk"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Slovensk"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Spansk"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Svensk"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Thailandsk"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Tyrkisk"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ukrainsk"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnamesisk"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Farsi"

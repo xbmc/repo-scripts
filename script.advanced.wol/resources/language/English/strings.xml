@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="51000">Basic settings</string>
+    <string id="51001">Ethernet MAC-address</string>
+	<string id="51002">IP-address or hostname</string>
+	
+	<string id="54000">Autostart</string>
+	<string id="54001">NOTE: Changing these settings requires a XBMC-restart to take effect!</string>
+	<string id="54010">Wake on XBMC-launch</string>
+    <string id="54011">Activate wake-on-launch</string>
+	<string id="54012">Delay WOL-signal on wake-on-launch (in seconds)</string>
+	<string id="54020">Also wake after XBMC returns from standby</string>
+	<string id="54021">Activate wake-after-standby</string>
+	<string id="54022">Delay WOL-signal on wake-after-standby (in seconds)</string>
+	<string id="54030">Update libraries after succesful wake-on-launch and wake-after-standby</string>
+	<string id="54031">Update video library</string>
+	<string id="54032">Update music library</string>
+	<string id="54033">Delay library updates (in seconds)</string>
+	
+	<string id="52000">Notifications</string>
+    <string id="52001">Enable launch notification</string>
+    <string id="52002">Enable ping- or waiting-counter -notifications</string>
+	<string id="52003">Enable host-up success/failure notification</string>
+	<string id="52004">Enable error notifications</string>
+    
+	<string id="53000">Advanced settings</string>
+	<string id="53010">Host-up check</string>
+	<string id="53011">Ping-timeout for host-up check (in seconds)</string>
+	<string id="53012">Disable host-up check via ping...</string>
+	<string id="53013">...and simply assume wake-up after this timespan (in seconds)</string>
+	<string id="53020">Continuous WOL-signals</string>
+	<string id="53021">Send continuous WOL-packets</string>
+	<string id="53022">Delay between packets (in seconds)</string>
+	<string id="53023">Continue sending after XBMC returns from standby</string>
+
+    <string id="60000">Waking up %hostOrIp%...</string>
+    <string id="60001">Waiting for %hostOrIp% to wake up...</string>
+    <string id="60002">%timecount% of %timeout% seconds</string>
+    <string id="60003">%hostOrIp% did not wake up!</string>
+    <string id="60004">%hostOrIp% is awake!</string>
+    <string id="60005">ERROR on hostup-check</string>
+    <string id="60006">Host %hostOrIp% could not be resolved.</string>
+    <string id="60007">Launching command...</string>
+	<string id="60008">WOL-packets will continue with a delay of %continuousWolDelay% seconds.</string>
+	<string id="60009">XBMC must be run as Administrator for ping-based host-up checks to work. You can disable the &quot;host-up check via ping&quot; in the addon-settings to prevent this error.</string>
+	<string id="60010">XBMC must be run as root for ping-based host-up checks to work. You can disable the &quot;host-up check via ping&quot; in the addon-settings to prevent this error.</string>
+	<string id="60011">%hostOrIp% should be awake now!</string>
+</strings>

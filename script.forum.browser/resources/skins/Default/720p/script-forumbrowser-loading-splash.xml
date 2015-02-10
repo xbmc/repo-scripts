@@ -1,0 +1,71 @@
+<window>
+	<zorder>1</zorder>
+	<!--   defaultcontrol>200</defaultcontrol -->
+	<coordinates>
+		<system>1</system>
+		<posx>556</posx>
+		<posy>206</posy>
+	</coordinates>
+	<controls>
+			<control type="image" id="115">
+				<posx>-10</posx>
+				<posy>-10</posy>
+				<width>10</width>
+				<height>10</height>
+				<texture></texture>
+				<visible>Player.Playing + Player.HasVideo + !StringCompare(Window(10000).Property(ForumBrowser_hidePNP),1)</visible>
+			</control>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-10</posy>
+				<width>208</width>
+				<height>198</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>168</width>
+				<height>168</height>
+				<texture border="20">forum-browser-white-boxr.png</texture>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+			<control type="label" id="100">
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>148</width>
+				<height>10</height>
+				<font>ForumBrowser-font10</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textcolor>FF000000</textcolor>
+			</control>
+			<control type="image">
+				<posx>48</posx>
+				<posy>48</posy>
+				<width>72</width>
+				<height>72</height>
+				<texture>forum-browser-loading.gif</texture>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+			<control type="button" id="200">
+				<description>Stop Button</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>168</width>
+				<height>168</height>
+				<font>ForumBrowser-font12</font>
+				<textcolor>FF000000</textcolor>
+				<focusedcolor>FF000000</focusedcolor>
+				<aligny>center</aligny>
+				<align>center</align>
+				<label>[B]$ADDON[script.forum.browser 32910][/B]</label>
+				<colordiffuse>FFFF0000</colordiffuse>
+				<pulseonselect>false</pulseonselect>
+				<texturefocus></texturefocus>
+				<texturenofocus></texturenofocus>
+				<visible>false</visible>
+			</control>
+	</controls>
+</window>

@@ -1,0 +1,518 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "검색"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "검색어 직접 입력"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "%s 자막 검색중"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "연결..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "자막 다운로드..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "자막이 다운로드되었습니다"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "연결 실패"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "자막 추출 실패"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "로컬 자막 있음"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "제한시간 내에 서비스가 응답하지 않았습니다"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "자막 없음!"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "자막 찾음"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "폴더명으로 검색"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "선택한 위치에 자막을 저장할 수 없습니다"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "임시로 이 자막을 사용하겠습니까?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "영화 제목 (연도) 입력"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "서버 과부하 상태. 다음에 시도하세요"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "로그인 실패. 추가기능 설정을 확인하세요"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "이미지에 표시된 코드를 다시 입력하세요"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "알림 영역을 확인하세요"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "알림 영역의 이미지에 표시된 코드를 입력하세요"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "사용가능한 서비스"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "이 자막을 다운로드하려면 로그인해야 합니다.[CR]추가기능 설정을 확인하세요"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "추가기능 설정"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "첫번째 '싱크' 자막 자동 다운로드"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "첫번째 '싱크' 자막 자동 다운로드"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "첫번째 '싱크' 자막 다운로드 됨"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "자막 폴더 선택"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "'싱크' 자막 없음"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "언어"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "첫번째 언어"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "두번째 언어"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "서비스"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net Username"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net Password"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "고급 옵션"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "영화 파일 폴더에 자막 다운로드"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr " - 자막 다운로드 폴더 사용자 설정"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "검색어 직접 입력"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "세번째 언어"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "기본 영화 서비스 선택"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "기본 TV 쇼 서비스 선택"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "결과 화면에 파일명 표시"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "폴더명을 이용해 검색"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "파일명에 언어 표시 추가"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "기본 타임아웃 시간 설정"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV Username"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV Password"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa Username"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa Password"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky Username"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky Password"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "검색 결과가 없으면 다음 서비스에서 검색"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "첫번째 \"싱크\" 자막 자동 다운로드"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx Username"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx Password"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs Username"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs Password"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs Username"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs Password"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone Username"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone Password"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- 자막 종류 선택:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "자막을 저장할 때 'Subs' 하위폴더 사용"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl Username"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl Password"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents Username"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents Password"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "자막 없음:"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "수동 또는 폴더명으로 검색!"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "자막 찾음:"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "자막 찾는 중... 기다려 주세요!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "다운로드 중... 기다려 주세요!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "추출 중... 기다려 주세요!"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "추출 완료!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas Username"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas Password"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "알바니아어"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "아랍어"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "벨라루스어"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "보스니아어 (라틴)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "불가리아어"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "카탈로니아어"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "중국어"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "크로아티아어"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "체코어"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "덴마크어"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "네덜란드어"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "영어"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "에스토니아어"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "핀란드어"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "프랑스어"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "독일어"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "그리스어"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "헤브라이어"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "힌두어"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "헝가리어"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "이이슬란드어"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "인도네시아어"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "이탈리아어"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "일본어"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "한국어"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "라트비아어"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "리투아니아어"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "마케도니아어"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "노르웨이어"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "폴란드어"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "포르투갈어"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "포르투갈어 (브라질)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "루마니아어"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "러시아어"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "세르비아라틴어"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "슬로바키아어"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "슬로베니아어"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "스페인어"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "스웨덴어"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "태국어"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "터키어"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "우크라니아어"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "베트남어"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "이탈리아어"

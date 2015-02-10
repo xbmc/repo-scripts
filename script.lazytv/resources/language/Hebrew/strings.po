@@ -1,0 +1,89 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "צור רשימת \"הפרקים הבאים\" עבור כל סדרה"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "צור והפעל רשימת השמעה אקראית"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "תן לי לבחור בעת הפעלה"
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "תן לי לבחור בעת הפעלה"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "מספר תכניות ברשימת הניגון"
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "אפשר מספר פרקים מרובה של אותה סדרה"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "כלול פרקים מסדרות שלא נצפו"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "עונה"
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "שחק"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "הרחבה זו מוצאת את הפרק הבא לכל סדרה."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "האם אתה רוצה רשימה או רשימת ניגון אקראית?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "הצג לי"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "הפתע אותי"
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "סגור"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "שמירה"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "עונה"
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "פרק"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "נצפו"

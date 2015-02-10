@@ -1,0 +1,264 @@
+v12.0.29
+- Update to fanart.tv API v3
+
+v12.0.28
+- Don't set simplejson module to optional
+
+v12.0.27
+- Fix wrong order of listing using votes for artwork from fanart.tv
+
+v12.0.26
+- Call TMDb config to get up-to-date image base URL
+
+v12.0.25
+- Always apply language filters else you end up with a random language
+
+v12.0.24
+- Fix unicode error in season query
+
+v12.0.23
+- Fix multiple text search for disctype in filename and avoiding ac3 dubs to be recognized as 3d (ex. ac3d)
+
+v12.0.22
+- Fix that some files where never found or downloaded
+
+v12.0.21
+- Fix change image url for TheMovieDB
+
+v12.0.20
+- Fix local scraping
+
+v12.0.19
+- Gracefully fail if a non library item is send to the script
+- Fix not downloading extrafanart any more
+- Correct local scraper behaviour
+- Catch edge cases where it can't get data from library
+- Fix skin calling methods
+
+v12.0.18
+- Fixed wrong variable
+
+v12.0.17
+- Fixed wrong filename for season landscape
+- Fixed extra slash for BDMV and VIDEO_TS
+
+v12.0.16
+- A lot of code cleanup
+- Updated language files from Transifex
+
+v12.0.15
+- Fixed custom mode
+- Added option to show image selection directly if type is specified
+
+v12.0.14
+- Fixed missing brackets
+
+v12.0.13
+- Add better support for local artwork: allow selection in gui mode and also scrape local artwork without a valid media id
+- Update language files
+
+v12.0.12
+- Update languages
+- Fix script error on some season artwork
+
+v12.0.10
+- Bump dependency versions to prevent being marked as broken
+
+v12.0.10
+- Fixed correct check on season artwork so it isn't downloaded again and again
+- Added quick hack to support local artwork if nothing present on fanart.tv
+
+v12.0.9
+- Fix wrong filename for season landscape
+- Remove old code
+
+v12.0.7
+- Change API url
+
+v12.0.6
+- Fix report on wrong setting combination
+- Enable some artwork by default
+- Change poster and banner filenaming to match Frodo
+
+v12.0.5
+- Force overwrite when using GUI mode
+
+v12.0.4
+- Directly add the image URL to the databse
+- Option to override with local file
+
+v12.0.1
+- Fix bulk downloading for a single movie/tvshow
+
+v12.0.0
+- XBMC12.0 Frodo version
+- use ListItem.DBID for matching media items
+- Depricate use of ListItem.Title and ListItem.Path
+- Remove db caching because it's not needed anymore
+
+v1.0.19
+- Add fix (again) for Frodo users
+
+v1.0.18
+- Add fix for Frodo users
+
+v1.0.17
+- Forgot to update settings.xml
+
+v1.0.16
+- Added: Movie Thumb
+- Added: Movie Banner
+- Added: HD artwork takes priority
+
+v1.0.15
+- Disable autorun
+- Disable fanart deletion and reduce max number of image
+
+v1.0.14
+- Fixed: Possible empty library list when there was no season data
+
+v1.0.13
+- Fixed: Forgot to remove test line
+
+v1.0.12
+- Fixed: Didn't cache empty results
+- Fixed: Should now also work for multipath://
+- Changed: Improved coding in some parts
+
+v1.0.11
+- Fixed: Image selection wasn't working when there was a username/password in source
+
+v1.0.10
+- Added: Korean translation (thx piodio)
+- Added: Debug option
+- Change: Code handling
+
+v1.0.9
+- Changed: increase the API cache expire time to stop trashing the fanart.tv site
+- Added: Only show artwork types in GUI mode that are avaiable
+- Fixed: Unicode error in custom/gui mode search
+
+v1.0.8
+- Added: Increased speed by using commingcache for library JSON when using custom/gui mode (expires after 1 hour)
+- Added: Greek translation (thx CutSickAss)
+- Added: Spanish translation (thx PatOso)
+- added: Portuguese translation (Brazil) (thx Wanilton)
+- added: French translation (thx mikebzh44)
+- Added: Localization of the download report
+- Added: TV Show Season Posters
+- Added: TV Show Season Banners
+- Added: TV Show Season Thumb 16:9
+- Added: Movie Clearlogo
+- Added: Movie Clearart
+- Added: Movie Discart
+- Fixed: Don't run script twice when it was started on service time caused by the speed increase by using commoncache
+- Changed: Switched to the new fanart.tv API
+- Changed: increase caching of API calls because provider data doesn't change that (24->48 hours)
+
+v1.0.7 
+- Changed: Revert 1.0.6 because dependencies are now met. Meaning options from 1.0.5 are now active
+- Fixed: Limit TMDB by rating not by number of votes
+
+v1.0.6
+
+- Fixed: Revert 1.0.5 because dependencies were not met yet
+
+v1.0.5
+- Added: Use commoncache module to decrease API load on providers
+- Added: TV Show seasonbanners "seasonx-banner.jpg"
+
+v1.0.4
+- Fixed: After doing ID conversion it skipped that movie
+- Fixed: Some mayor bug that no ones has noticed so far
+- Fixed: When no exact title match was found it downloaded the entire library
+- Fixed: Close progress dialog before opening the image selection window
+- Changed: Reverted old change of using image ID from tmdb as filename. This is not available any more in new API v3
+- Changed: Use the new TMDB API v3
+- Changed: Use smaller image in GUI dialog for faster loading of images (when posible)
+- Changed: You can now set preferred language. Will always use English as fallback
+- Changed: Show yes/no dialog for faulty settings instead of looping
+- Changed: Only start service when user is logged in (requires minimal XBMC beta2)
+- Added: Polish translation (thx cienislaw)
+- Added: Dutch translation (thx Martijn)
+- Added: German translation (thx Suven)
+- Added: Download report is accessible from the add-on settings window
+- Added: Download report is accessible from the yes/no dialog when finished (not when background/silent/custom run)
+- Added: Extra info to gui dialog (language, rating, votes, season and size)
+- Added: Ratings for movie artwork 
+- Added: Now tries to look up the 'tmdb ID' if no 'imdb ID' is found and retrieves artwork using that
+- Added: Added musicvideo section that uses the title to search for artwork on TMDB
+         Needs extra argument from skin (see runscript.txt)
+
+v1.0.3
+- Fixed: Error below limit check
+- Fixed: Custom download for specific movie artwork only
+- Fixed: Downloads artwork for selected movie when multiple exist with same name
+         Needs extra argument from skin (see runscript.txt)
+- Fixed: Did not run service when set to 00->09
+- Added: Try conversion of non standard IMDB Id
+
+v1.0.2
+- Added: Log summary on failed/missing items
+- Added: Support the providers message on finished
+- Added: Custom mode pops-up a image selection when run on single tvshow/movie
+- Added: First retrieve image list(s) and then do batch download
+- Changed: Run add-on on specified time of day instead on interval
+- Fixed: Problems caused with UTF-8 characters in titles
+- Fixed: Some images didn't show in GUI because of spaces in image URL
+- Fixed: Show correct download count in log
+- Fixed: Don't show dialog.OK when finished run in silent mode
+
+v1.0.1
+- Added: Ability for skinners to run a custom mode specifying artwork types
+         see /resources/docs/runscript.txt
+- Fixed: Downloading logos in overwrite all mode
+- Fixed: Problems with folder creation for .rar media
+- Removed: Version/settings.xml check
+
+v1.0.0
+- Name change: Extrafanart Downloader -> Artwork Downloader
+- Fixed: Refactored JSON query to prevent reg-ex problems
+- Fixed: Total refactor on downloading and limiting
+- Added: Limit extrafanart on image size
+- Added: Dialog on finished when run in background
+- Added: Version check between settings and addon
+- Added: Movie Fanart
+- Added: Movie Poster
+- Added: Movie Default Thumb (folder.jpg=Poster)
+- Added: TV Show Poster
+- Added: TV Show Fanart
+- Added: TV Show Clearart
+- Added: TV Show Characterart
+- Added: TV Show Logo
+- Added: TV Show Banner
+- Added: TV Show Thumb
+- Added: TV Show Default Thumb (folder.jpg=Poster|Banner|Thumb)
+- Added: Solo run mode with GUI
+- Added: Overwrite all artwork option (will be reset when finished)
+- Added: 'silent=true' add-on start argument (displays notification on finished)
+- Added: Add-on can be run as service and at startup
+
+v0.4.1
+- Added: Extrathumbs support for Movies
+- Fixed: New TMDB image locations on site
+         Advisable is to delete all existing movie extrafanart folders
+
+v0.4.0
+- Added: Silent downloading in background
+- Added: Extrafanart limiter (maximum fanart/language/no text) 
+- Added: Download backup folder for fanart
+- Added: More extensive error checking
+- Added: More extensive debug logging
+- Added: Open Settings on first run
+- Updated: Skin integration examples
+
+v0.3.8
+- Added: option to centralize fanart storage
+- Splitting code into libraries
+
+v0.3.7
+- Added: Skin integration options (see readme file)
+
+v0.3.6
+- Initial commit
+- Initial version for official XBMC-repo

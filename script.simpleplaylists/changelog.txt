@@ -1,0 +1,55 @@
+1.0.0
+- First Try
+
+1.0.1
+- New: Adding currently selected Item
+- Removed main menu
+
+1.0.2
+- Added space for more playlists
+- Added option for alternate playlist path
+- Addon is now also shown under Music-Addons
+
+1.0.3
+- Covers are now shown in the playlists
+- New Option: Show Keyboard to change title
+- Fixed some problems when deleting entries
+- Added Context Menus for deleting one/all playlists
+- Date is no longer shown in the title but the entries are still sorted by date
+
+1.0.4
+- Some small fixes and optical modifications
+- Added Portuguese (Brazil) strings (Thx @ Wanilton)
+- Changed add-on name because of audio support (WatchItLater --> SimplePlaylists)
+
+1.0.5
+- Fixed check for dupes when adding items
+- Added support for images
+- Playlists are now divided in Video/Audio/Image
+
+1.0.6
+- Added support for advanced db infos
+
+1.0.7
+- Fixed check for dupes when adding items
+
+1.0.8
+- Changed type of accessing db infos when adding selected items
+- Changed type of playlist definitions/management
+- Added parameter for viewing playlists with content-type overview
+- Added context menu for managing playlists/subfolders
+- Added automatic content detection when adding selected items
+- Added playlist subfolders
+- Fixed bug when removing playlist entries
+- Some small other fixes
+- Changed addon id
+
+1.0.9
+- Added support for adding full albums (via json), full tv-shows and directories
+- Changed/added parts of the playlist/subfolder navigation
+- Added context menu for renaming playlist items
+- Added some more db infos
+- Fixed some bugs
+
+1.1.0
+- Fixed bug when adding currently playing videos

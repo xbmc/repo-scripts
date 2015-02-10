@@ -1,0 +1,8 @@
+1.0.0 - Rebranding. Fixed JSON glitch that caused random crashes.
+0.2.1 - Redesigned settings menu to allow custom dim settings on devices (Issue 7) and reduce clutter, Added Screen Saver events
+0.2.0 - Addressed isue that printed excessive messages to the XBMC log (Issue 4), Updated pause detection to use JSON (Issue 5)
+0.1.0 - First Release to XBMC Repository
+0.0.1 - Alpha Release
+
+Images Courtesy Of http://openclipart.org
+               And warszawianka

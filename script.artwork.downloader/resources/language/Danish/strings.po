@@ -1,0 +1,413 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/xbmc-addons/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr "Hjælp os med at få mere fankunst eller donér på:"
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr "Planlagt kørsel kl: (24t)"
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr "Forkert/tom kombination af indstillinger fundet!"
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr "Vælg dine indstillinger og tryk OK for at gemme"
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr "Rydder op"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Fejl"
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr "Fejl ved download af fil"
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr "Søger efter illustrationer"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Henter"
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr "Addon afbrudt"
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr "Netværksfejl opdaget"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Færdig"
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr "Aktivér download"
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr "Al Fankunst"
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr "Vælg venligst"
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr "Emner, der fejlede"
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "Annulleret"
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr "Bruger annullerede download"
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr "Antal minutter før forsinket start:"
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr "Downloadet"
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr "Behandler Illustrationer"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "ikke fundet!"
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr "Start Addon ved login"
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr "Kør addon som en tjeneste"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Ja"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Nej"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Luk"
+
+msgctxt "#32028"
+msgid "Report"
+msgstr "Rapportér"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I](Ved ændringer skal du genstarte XBMC) [/I]"
+
+msgctxt "#32030"
+msgid "No provider ID found for looking up artwork"
+msgstr "Leverandør-ID til søgning af fankunst ikke fundet"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Generelt"
+
+msgctxt "#32032"
+msgid "[B]General settings used in Artwork Downloader[/B]"
+msgstr "[B]Generelle indstillinger til Artwork Downloader[/B]"
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr "Kør i baggrunden"
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr "Vis dialogboks ved fuldendte/fejl"
+
+msgctxt "#32035"
+msgid "Overwrite all existing artwork [I](will be automaticly disabled after downloading) [/I]"
+msgstr "Overskriv alle eksisterende illustrationer[I](Deaktiveres automatisk efter download) [/I]"
+
+msgctxt "#32036"
+msgid "Centralize extrafanart [I](Can be used for extrafanart slideshow) [/I]"
+msgstr "Gem ekstrafanart lokalt[I](Kan benyttes til diasshow med ekstrafanart) [/I]"
+
+msgctxt "#32037"
+msgid "Central TV extrafanart directory"
+msgstr "Lokal mappe til TV-ekstrafanart"
+
+msgctxt "#32038"
+msgid "Central Movie extrafanart directory"
+msgstr "Lokal mappe til Film-ekstrafanart"
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr "Se rapport om seneste download"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr "Begræns Illustrationer"
+
+msgctxt "#32052"
+msgid "[B]Options for limiting downloaded artwork[/B]"
+msgstr "[B]Indstillinger til begrænsning af hentede illustrationer[/B]"
+
+msgctxt "#32053"
+msgid "Maximum extrafanart"
+msgstr "Maksimum ekstrafanart"
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr "Minimumsvurdering"
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr "Foretrukket sprog:"
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr "Udeluk fankunst med tekst"
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr "Mindste størrelse på fankunst: Film"
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr "Mindste størrelse på fankunst: TV-serier"
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr "Mindste størrelse på fankunst: Musikvideoer"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Film"
+
+msgctxt "#32072"
+msgid "[B]Options for downloading Movie artwork[/B]"
+msgstr "[B]Indstillinger til download af Film-fankunst[/B]"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "TV-serier"
+
+msgctxt "#32082"
+msgid "[B]Options for downloading TV Show artwork[/B]"
+msgstr "[B]Indstillinger til download af fankunst til TV-serier[/B]"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr "Musikvideo"
+
+msgctxt "#32092"
+msgid "[B]Options for downloading Musicvideo artwork[/B]"
+msgstr "[B]Indstillinger til download af fankunst til Musikvideoer[/B]"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Udvidet"
+
+msgctxt "#32102"
+msgid "[B]Some more advanced settings to be used[/B]"
+msgstr "[B]Nogle flere avancerede indstillinger du kan bruge[/B]"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "Anvend lokale filer"
+
+msgctxt "#32106"
+msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
+msgstr "Anvend XBMC præ-caching [I](cacher billeder til mappe med minibilleder, mens der hentes) [/I]"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fankunst"
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr "Ekstrafankunst"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Banner"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "Sæsonbannere"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "ClearArt"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr "Karakterkunst"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Plakat"
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr "Sæsonplakater"
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr "Minibillede 16:9"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "Flere miniaturer"
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr "Diskkunst"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Illustrationer"
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr "Sæsonminiaturer 16:9"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Sprog"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Bedømmelse"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Stemmer"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Sæson"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Størrelse"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Disk"
+
+msgctxt "#32147"
+msgid "below limit setting"
+msgstr "under grænseværdi"
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr "Sluttidspunkt"
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr "Ingen mislykkede eller manglende emner fundet"
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr "addon afbrudt, fordi XBMC lukker ned"
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr "addon annulleret, mens der søges efter"
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr "addon afbrudt pga. problemer"
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr "addon afbrudt, mens Illustrationer downloades"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr "Du kan vise din støtte ved at donere eller bidrage til de følgende sider:"
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr "[I]fanart.tv [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr "Forfattere til addon:"
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr "Tak til:"
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr "Team XBMC og skaberne af de andre addons, som dette er baseret på. "
+
+msgctxt "#32191"
+msgid "[I]For bugs, requests or general questions visit the [/I]"
+msgstr "[I]Ved fejl, forespørgsler eller generelle spørgsmål besøg[/I]"
+
+msgctxt "#32192"
+msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
+msgstr "[I]  Artwork Downloader-tråden på XBMCs forum. [/I]"

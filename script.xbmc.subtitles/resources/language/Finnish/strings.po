@@ -1,0 +1,530 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Finnish (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/fi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "Hae osoitteesta "
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "Videon pitäisi olla käynnissä"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "Syötä hakuteksti manuaalisesti"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "Etsitään tekstityksiä %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "Yhdistetään..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "Ladataan tekstityksiä..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "Tekstitystiedosto ladattu ja purettu"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "Yhteys epäonnistui"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "Virhe tekstitysten purkamisessa"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "Paikallisia tekstityksiä saatavilla"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "Palvelu ei vastannut aikarajaan mennessä"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "Tekstityksiä ei löytynyt!"
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "tekstitystä löydetty kohteelle"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "Sisällytä ylakansiot hakuun"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "Tekstitystä ei voi tallentaa tähän kohteeseen"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "Haluatko aktivoida tämän tekstityksen väliaikaisesti?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "Syötä Elokuvan Nimi (vuosi)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "Palvelu ei vastaa, yritä myöhemmin uudelleen"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "Tunnus ei kelpaa. Tarkista lisäosan asetukset"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "Server requires you to rewrite code from image"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "Please take look at notification area"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "Enter code of image in notification area"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "Käytettävissä olevat palvelut"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "Kirjaudu sisään ladataksesi näitä tekstityksiä,[CR]tarkista lisäosan asetukset"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "Asetukset"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "Ladataan ensimmäistä 'sync' tekstitystä"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "Lataa ensimmäistä 'sync'-tekstitystä"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "ensimmäinen 'sync'-tekstitys ladattu"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Valitse tekstityskansio"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "'sync'-tekstitystä ei löytynyt"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "Valitse kielet"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "Ensisijainen kieli"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "Toissijainen kieli"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "Valitse palvelut"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Podnapisi.net-käyttäjätunnus"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Podnapisi.net-salasana"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "Lisäasetukset"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "Tekstitystiedoston tallennushakemisto sama kuin elokuvalla"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- Aseta oma tekstitystiedostojen tallennushakemisto"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "Syötä hakuteksti manuaalisesti"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "Kolmas kieli"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "Valitse oletuspalvelu elokuville"
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "Valitse oletuspalvelu tv-sarjoille"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "Näytä tiedostonnimi hakutulos sivulla"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "Sisällytä ylakansiot hakuun"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "Lisää kieli tiedoston nimeen"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "Oletus aikaraja"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Legendas.TV-käyttäjätunnus"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Legendas.TV-salasana"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Itasa-käyttäjätunnus"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Itasa-salasana"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Titulky-käyttäjätunnus"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Titulky-salasana"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "Etsi seuraavasta mahdollisesta palvelusta, jos tuloksia ei löydy"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "Lataa automaattisesti ensimmäinen 'sync' tekstitys"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- LegendasDivx-käyttäjätunnus"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- LegendasDivx-salasana"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- PTSubs-käyttäjätunnus"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- PTSubs-salasana"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- OmniSubs-käyttäjätunnus"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- OmniSubs-salasana"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- LegendasZone-käyttäjätunnus"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- LegendasZone-salasana"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Valitse tekstityksen tyyppi:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "Käytä 'subs'-alihakemistoa tekstitysten varastona"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- napisy24.pl-käyttäjätunnus"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- napisy24.pl-salasana"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- euTorrents-käyttäjätunnus"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- euTorrents-salasana"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Ei tekstityksiä"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "Etsi käsin tai isäntähakemistosta!"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Tekstityksiä löytyi"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Etsii... odota!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "Lataa... odota!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Purkaa... odota!"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "Purkaminen valmistui!"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "Toistetaan!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Pipocas-käyttäjätunnus"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Pipocas-salasana"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Keskeytä toisto, kun käyttöliittymä näytetään"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Albania"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Arabia"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Valkovenäjä"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Bosnia (Latina)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Bulgaria"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Katalaani"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Kiina"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Kroatia"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Tsekki"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Tanska"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Hollanti"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Englanti"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Viro"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Suomi"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Ranska"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Saksa"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Kreikka"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Heprea"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Unkari"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Islanti"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indonesia"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Italia"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Japani"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Korea"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Latvia"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Liettua"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Makedonia"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Norja"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Puola"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portugali"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portugali (Brasilia)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Romania"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Venäjä"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "Serbianlatina"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Slovakia"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Slovenia"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Espanja"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Ruotsi"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Thai"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Turkki"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ukraina"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnami"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Farsi"

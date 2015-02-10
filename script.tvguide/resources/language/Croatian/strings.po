@@ -1,0 +1,325 @@
+# XBMC Media Center language file
+# Addon Name: TV Guide
+# Addon id: script.tvguide
+# Addon Provider: twinther
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Croatian (http://www.transifex.com/projects/p/xbmc-addons/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "#30000"
+msgid "No description"
+msgstr "Nema opisa"
+
+msgctxt "#30001"
+msgid "[B]Loading data from external source...[/B]"
+msgstr "[B]Učitavanje podataka iz vanjskog izvora...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Izračunavanje preostalog vremena..."
+
+msgctxt "#30003"
+msgid "Approximately %d seconds left..."
+msgstr "Približno je preostalo %d sekundi..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Učitavanje podataka je već u tijeku..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Upravljanje mišem"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Sada"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Tip![/B] Možete koristiti i kotačić miša"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Poništi"
+
+msgctxt "#30009"
+msgid "No program available"
+msgstr "Nema dostupnih programa"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#30101"
+msgid "Source"
+msgstr "Izvor"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Prikaži programe iz kategorije"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV datoteka"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Očisti predmemoriju..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Završeno!"
+
+msgctxt "#30106"
+msgid "Show notification before selected programs start"
+msgstr "Prikaži obavijest prije pokretanja odabranog programa"
+
+msgctxt "#30107"
+msgid "Use program image as background"
+msgstr "Koristi sliku programa kao pozadinu"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Očisti sve podsjetnike..."
+
+msgctxt "#30109"
+msgid "Remember to clear the cache when you change source"
+msgstr "Zapamti očistiti predmemoriju pri promjeni izvora"
+
+msgctxt "#30110"
+msgid "Update program information on XBMC startup"
+msgstr "Ažuriraj informacije programa pri pokretanju XBMC-a"
+
+msgctxt "#30111"
+msgid "Play channels using the YouSee web-tv addon"
+msgstr "Reproduciraj programe koristeći YouSee web-tv dodatak"
+
+msgctxt "#30112"
+msgid "Notifications"
+msgstr "Obavijesti"
+
+msgctxt "#30113"
+msgid "Play channels using the Danish Live TV addon"
+msgstr "Reproduciraj programe koristeći Danish Live TV dodatak"
+
+msgctxt "#30114"
+msgid "Startup"
+msgstr "Pokretanje"
+
+msgctxt "#30115"
+msgid "- clear cache first"
+msgstr "- prvo očisti predmemoriju"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Pretraži logotipove programa u"
+
+msgctxt "#30118"
+msgid "Enable OSD menu"
+msgstr "Omogući OSD izbornik"
+
+msgctxt "#30119"
+msgid "Disabling the OSD menu may fix video stuttering."
+msgstr "Onemogućavanje OSD izbornika može popraviti video trzanje."
+
+msgctxt "#30120"
+msgid "Use alternate streaming method (required for some addons)"
+msgstr "Koristi alternativne načine streamanja (potrebno je za neke dodatke)"
+
+msgctxt "#30121"
+msgid "Alternative streaming is not compatible with OSD menu"
+msgstr "Alternativno streamanje nije kompatibilno sa OSD izbornikom"
+
+msgctxt "#30122"
+msgid "XMLTV URL"
+msgstr "XMLTV URL"
+
+msgctxt "#30123"
+msgid "XMLTV type"
+msgstr "XMLTV vrsta"
+
+msgctxt "#30124"
+msgid "Local file"
+msgstr "Lokalna datoteka"
+
+msgctxt "#30125"
+msgid "URL"
+msgstr "URL"
+
+msgctxt "#30150"
+msgid "Oops, sorry about that!"
+msgstr "Ups, oprostite zbog ovoga!"
+
+msgctxt "#30151"
+msgid "It was not possible to load program data,"
+msgstr "Nemoguće učitavanje podataka programa,"
+
+msgctxt "#30152"
+msgid "check settings or try again later..."
+msgstr "provjerite postavke ili pokušajte kasnije..."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "zato jer su postavke neispravne!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin has a special"
+msgstr "Izgleda da vaša trenutna presvlaka ima posebnu"
+
+msgctxt "#30155"
+msgid "version of the TV Guide skin that is not up-to-date."
+msgstr "inačicu presvlake TV vodiča koja nije ažurirana."
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Pokušajte sa drugom presvlakom..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Izgleda da je baza podataka TV vodiča oštećena."
+
+msgctxt "#30158"
+msgid "The database will be deleted and recreated."
+msgstr "Baza podataka biti će obrisana i ponovno izgrađena."
+
+msgctxt "#30159"
+msgid "Channel configuration, etc. is unfortunately lost."
+msgstr "Podešavanja programa, itd. nažalost su izgubljena."
+
+msgctxt "#30200"
+msgid "on [B]%s[/B] in 5 minutes..."
+msgstr "na [B]%s[/B] za 5 minuta..."
+
+msgctxt "#30201"
+msgid "on [B]%s[/B] is starting now..."
+msgstr "na [B]%s[/B] započinje sada..."
+
+msgctxt "#30300"
+msgid "Watch %s"
+msgstr "Gledajte %s"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Podsjeti"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Nemoj podsjetiti"
+
+msgctxt "#30303"
+msgid "Cancel"
+msgstr "Poništi"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Odaberite stream"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file to play, when you want to watch this channel."
+msgstr "Možete odabrati vaše vlastite .strm datoteke za reprodukciju, kada želite gledati ovaj program."
+
+msgctxt "#30306"
+msgid "Remove stream file"
+msgstr "Ukloni stream datoteku"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Programi"
+
+msgctxt "#30308"
+msgid "Quit"
+msgstr "Zatvori"
+
+msgctxt "#30500"
+msgid "[B]Edit channel order and visibility[/B]"
+msgstr "[B]Uredi redoslijed i vidljivost programa[/B]"
+
+msgctxt "#30501"
+msgid "Move up and down to change the position of[CR]the channel. Select or navigate left to accept[CR]the position."
+msgstr "Pomičite gore i dolje za promjenu položaja[CR]programa. Odaberite ili idite lijevo za prihvatanje[CR]položaja."
+
+msgctxt "#30502"
+msgid "Save"
+msgstr "Spremi"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Poništi"
+
+msgctxt "#30600"
+msgid "[B]Setup stream[/B]"
+msgstr "[B]Postavke streama[/B]"
+
+msgctxt "#30601"
+msgid ".strm file"
+msgstr ".strm datoteka"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Omiljeni"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Dodaci"
+
+msgctxt "#30604"
+msgid "Preview stream"
+msgstr "Pogledaj stream"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Spremi"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Poništi"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Zaustavi gledanje"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Pregledaj..."
+
+msgctxt "#30611"
+msgid "Click Browse... below and navigate to your stream file. When you have chosen your file you can preview the stream to test if it works in XBMC."
+msgstr "Kliknite Pregledaj... ispod i idite do stream datoteke. Kada odaberete vašu datoteku možete pogledati stream, ako želite testirati radi li u XBMC-u."
+
+msgctxt "#30620"
+msgid "Choose a favourite below. Only [I]PlayMedia[/I] favourites are supported."
+msgstr "Odaberite omiljene ispod. Samo [I]PlayMedia[/I] omiljni su podržani."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Više dodataka omogućuje ovaj program.[CR]Odaberite jedan za gledanje streama."
+
+msgctxt "#30800"
+msgid "JSON-EPG URL"
+msgstr "JSON-EPG URL"
+
+msgctxt "#30801"
+msgid "Play channels using the Weeb.Tv addon"
+msgstr "Reproduciraj program koristeći Weeb.Tv dodatak"
+
+msgctxt "#30802"
+msgid "TV Guide is configured to stream using Weeb.Tv"
+msgstr "TV vodič je podešen da streama koristeći Weeb.Tv"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "dodatak koji nije instaliran."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Stremanje pomoću tog dodatka je sada onemogućeno."

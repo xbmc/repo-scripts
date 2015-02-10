@@ -1,0 +1,413 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr "Por favor colabora con más artwork o donando en:"
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr "Programar hora de ejecución: (24h)"
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr "Configuración defectuosa/vacia encontrada!"
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr "Seleccione sus preferencias y pulsa Aceptar para guardar"
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr "Limpieza en curso"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Error"
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr "Error al descargar archivo"
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr "Búsqueda de artwork en curso"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Descargando"
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr "Add-on anulado"
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr "Fallo de conexión"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Completado"
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr "Habilitar descargas"
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr "Artwork completo"
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr "Por favor seleccione"
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr "Elementos fallidos"
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "Cancelado"
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr "Descarga cancelada por el usuario"
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr "Tiempo de retardo para comenzar en minutos:"
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr "Descargado"
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr "Procesando Artwork"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "no encontrado!"
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr "Ejecutar add-on al iniciar sesión"
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr "Ejecutar add-on como un servicio"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Si"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "No"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Cerrar"
+
+msgctxt "#32028"
+msgid "Report"
+msgstr "Informe"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I](Los cambios tendrán efecto después de reiniciar XBMC) [/I]"
+
+msgctxt "#32030"
+msgid "No provider ID found for looking up artwork"
+msgstr "No encuentra ID del proveedor para buscar artwork"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32032"
+msgid "[B]General settings used in Artwork Downloader[/B]"
+msgstr "[B]Ajustes generales usados en Artwork Downloader[/B]"
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr "Ejecutar en segundo plano"
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr "Mostrar dialogo en completado/errores"
+
+msgctxt "#32035"
+msgid "Overwrite all existing artwork [I](will be automaticly disabled after downloading) [/I]"
+msgstr "Sobrescribir todos los artwork existentes [I](se desactiva automáticamente después de descargar) [/I]"
+
+msgctxt "#32036"
+msgid "Centralize extrafanart [I](Can be used for extrafanart slideshow) [/I]"
+msgstr "Centralizar extrafanart [I](Puede ser usado para extrafanart slideshow) [/I]"
+
+msgctxt "#32037"
+msgid "Central TV extrafanart directory"
+msgstr "Carpeta extrafanart de Series"
+
+msgctxt "#32038"
+msgid "Central Movie extrafanart directory"
+msgstr "Carpeta extrafanart de Películas"
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr "Mostrar informe de la última ejecución"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr "Limitar Artwork"
+
+msgctxt "#32052"
+msgid "[B]Options for limiting downloaded artwork[/B]"
+msgstr "[B]Opciones para limitar la descarga de artwork[/B]"
+
+msgctxt "#32053"
+msgid "Maximum extrafanart"
+msgstr "Extrafanart máximo"
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr "Valoración mínima"
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr "Lenguaje principal:"
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr "Excluir fanart con texto"
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr "Tamaño mínimo fanart: Películas"
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr "Tamaño mínimo fanart: Series"
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr "Tamaño mínimo fanart: Videoclips"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Películas"
+
+msgctxt "#32072"
+msgid "[B]Options for downloading Movie artwork[/B]"
+msgstr "[B]Opciones para descargar artwork de Películas[/B]"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "Series"
+
+msgctxt "#32082"
+msgid "[B]Options for downloading TV Show artwork[/B]"
+msgstr "[B]Opciones para descargar artwork de Series[/B]"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr "Videoclips"
+
+msgctxt "#32092"
+msgid "[B]Options for downloading Musicvideo artwork[/B]"
+msgstr "[B]Opciones para descargar artwork de Videoclips[/B]"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32102"
+msgid "[B]Some more advanced settings to be used[/B]"
+msgstr "[B]Más opciones de ajustes avanzados[/B]"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "Usar archivos locales"
+
+msgctxt "#32106"
+msgid "Use XBMC pre-caching [I](caches images to thumbnails folder while downloading) [/I]"
+msgstr "Usar XBMC pre-caché [I](crea imágenes en carpeta miniaturas durante la descarga) [/I]"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32122"
+msgid "Extrafanart"
+msgstr "Extrafanart"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "Banner"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "Banners Temporada"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "ClearArt"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr "Character Art"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Poster"
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr "Posters Temporada"
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr "Thumb 16:9"
+
+msgctxt "#32131"
+msgid "Extrathumbs"
+msgstr "Extrathumbs"
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr "Disc Art"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Artwork"
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr "Thumbs Temporada 16:9"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Lenguaje"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Valoración"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Votos"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Temporada"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Resolución"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Disco"
+
+msgctxt "#32147"
+msgid "below limit setting"
+msgstr "Restringir ajustes inferiores"
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr "Hora de finalización"
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr "No encontrados elementos fallidos o ausentes"
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr "add-on anulado porque XBMC se cierra"
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr "add-on interrumpido durante la búsqueda"
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr "add-on anulado debido a problemas"
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr "add-on interrumpido al descargar Artwork"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr "Por favor, necesitamos su apoyo donando o participando en los siguientes sitios:"
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32184"
+msgid "[I]fanart.tv [/I]"
+msgstr "[I]fanart.tv [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr "Autores del Add-on:"
+
+msgctxt "#32188"
+msgid "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+msgstr "[I]paddycarey, Martijn Kaijser, putneyj [/I]"
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr "Gracias al:"
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr "Equipo XBMC y autores de los otros addons en el que este se basa."
+
+msgctxt "#32191"
+msgid "[I]For bugs, requests or general questions visit the [/I]"
+msgstr "[I]Para informar de errores, hacer peticiones o preguntas visiten el [/I]"
+
+msgctxt "#32192"
+msgid "[I]  Artwork Downloader thread on the XBMC forum. [/I]"
+msgstr "[I]  hilo Artwork Downloader en el foro de XBMC. [/I]"

@@ -1,0 +1,52 @@
+
+http://xbmc.org/wiki/?title=Conditional_Visibility
+
+<colors>
+    <color name="white">FFFFFFFF</color>
+    <color name="grey">66FFFFFF</color>
+    <color name="grey2">88FFFFFF</color>
+    <color name="grey3">33FFFFFF</color>
+    <color name="black">FF000000</color>
+    <color name="green">ffe2ff43</color>
+    <color name="dialogheader">DDced8da</color>
+</colors>
+
+<visible>system.getbool(lookandfeel.enablemouse)</visible>
+<visible>!IsEmpty(ListItem.Artist)</visible>
+<visible>!Skin.HasSetting(ShutdownUseHibernate)</visible>
+<visible>System.CanSuspend</visible>
+<visible>Container(450).HasPrevious</visible>
+<visible>Control.HasFocus(2) | Control.HasFocus(60)</visible>
+<visible>Player.Playing + !Player.Seeking</visible>
+<visible>Container.Scrolling</visible>
+<visible>substring(ListItem.VideoCodec,xvid)</visible>
+<visible>substring(ListItem.AudioCodec,ac3) + !substring(ListItem.AudioChannels,6)</visible>
+<visible>yes</visible>
+<visible>true</visible>
+<visible>[Player.ShowInfo  + !Window.IsVisible(visualisationsettings) + !Window.IsVisible(visualisationpresetlist)] | [Window.IsVisible(script-XBMC_Lyrics-main.xml) + !Skin.HasSetting(Music_Info_In_Lyrics)]</visible>
+<visible>System.Platform.Xbox</visible>
+
+<aspectratio aligny="center">keep|stretch|scale</aspectratio>
+<label>[B]$INFO[Container(500).ListItem.Property(title)][/B] - $INFO[Container(500).ListItem.Property(description)]</label>
+
+xbmc.executebuiltin('ActivateWindow(xxx)')
+
+fullscreenvideo  -- reset to only video playing
+videoosd         -- player controls
+fullscreeninfo   -- video info at bottom of screen with time bar, tiitle, etc
+
+xbmc.executebuiltin('Action(xxx)')
+
+Up
+Down
+Stop
+Play
+PreviousMenu
+Fullscreen
+
+
+
+WINDOW_FULLSCREEN_VIDEO
+12005
+2005
+VideoFullScreen.xml

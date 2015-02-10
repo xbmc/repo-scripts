@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.unaryclock" name="Unary Clock Screensaver" version="0.7.1" provider-name="Philip Schmiegelt" >
+  <requires>
+     <import addon="xbmc.python" version="2.1.0"/>
+     <import addon="xbmc.addon"  version="12.0.0"/>
+  </requires>
+  <extension point="xbmc.ui.screensaver" library="default.py"/>
+  <extension point="xbmc.addon.metadata">
+    <provides>executable</provides>
+    <summary lang="en">Screensaver unary clock</summary>
+    <description lang="en">A screensaver which displays a unary clock</description>
+    <platform>all</platform>
+    <disclaimer lang="en">For bugs, requests or general questions visit see https://github.com/schmiegelt/xbmc.screensaver.unaryclock </disclaimer>
+    <language></language>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://forum.xbmc.org/showthread.php?tid=179237</forum>
+    <website>https://github.com/schmiegelt/xbmc.screensaver.unaryclock</website>
+    <email></email>
+    <source>https://github.com/schmiegelt/xbmc.screensaver.unaryclock</source>
+  </extension>
+</addon>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Belarusian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/be/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Buttons -->
+    <string id="3000">Guess!</string>
+    <string id="3001">Выпадкова</string>
+    <string id="3002">Back</string>
+
+    <!-- Messages -->
+    <string id="3050">Could not log in</string>
+    <string id="3051">Password wrong or username unknown: [B]%s[/B][CR]Please change credentials or disable login</string>
+    <string id="3052">Enter shot ID</string>
+    <string id="3053">Type the movie title</string>
+    <string id="3054">Login site unreachable</string>
+    <string id="3055">Could not retrieve shot</string>
+    <string id="3066">Could not check guess</string>
+
+    <!-- Labels -->
+    <string id="3100">Checking: [B]%s[/B]</string>
+    <string id="3101">Correct. Original title is: [B]%s[/B]</string>
+    <string id="3102">Wrong: [B]%s[/B]</string>
+    <string id="3103">Not logged in</string>
+    <string id="3104">Logged in as user: [B]%s[/B]</string>
+    <string id="3105">Your score: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Solved [B][COLOR=ff008B00]%s[/COLOR][/B] times, first by [B]%s[/B]</string>
+    <string id="3107">Not solved yet</string>
+    <string id="3108">Shot ID: [B]%s[/B]</string>
+    <string id="3109">Date: [B]%s[/B]</string>
+    <string id="3110">Posted by: [B]%s[/B]</string>
+    <string id="3111">Not released</string>
+    <string id="3112">Deleted user</string>
+    <string id="3113">New Submissions</string>
+    <string id="3114">Feature Films</string>
+    <string id="3115">The Archive</string>
+    <string id="3116">[B]%s[/B] votes</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
+    <string id="3118">Hidden</string>
+    <string id="3119">-</string>
+    <string id="3120">Rejected shots</string>
+    <string id="3121">You already solved this shot</string>
+    <string id="3122">The correct solution was: [B]%s[/B]</string>
+    <string id="3123">You posted this shot</string>
+    <string id="3124">Sorry, you are not allowed to view the shot [B]%s[/B] - redirected to [B]%s[/B]</string>
+    <string id="3125">The Vault</string>
+    <string id="3126">Awesome. Original title is: [B]%s[/B] +1 Point!</string>
+    <string id="3127">Deleted Shots</string>
+    <string id="3128">Sorry, no such shot [B]%s[/B] - redirected to [B]%s[/B]</string>
+
+    <!-- Settings -->
+    <string id="3200">General</string>
+    <string id="3201">Login</string>
+    <string id="3202">Use whatthemovie.com account</string>
+    <string id="3203">Username</string>
+    <string id="3204">Password</string>
+    <string id="3205">Settings for "random" button (login required)</string>
+    <string id="3206">Difficulty</string>
+    <string id="3207">Easy</string>
+    <string id="3208">Easy+medium</string>
+    <string id="3209">All</string>
+    <string id="3210">Include archive</string>
+    <string id="3211">Include solved</string>
+    <string id="3212">Look+feel</string>
+    <string id="3213">Look</string>
+    <string id="3214">Show "posted by"</string>
+    <string id="3215">Show "solved"</string>
+    <string id="3216">Show "shot ID"</string>
+    <string id="3217">Show "shot date"</string>
+    <string id="3218">Behaviour</string>
+    <string id="3219">Auto jump after guess was right</string>
+    <string id="3220">...after x seconds</string>
+    <string id="3221">Show "shot flags"</string>
+    <string id="3222">Flags</string>
+    <string id="3223">Flag 1</string>
+    <string id="3224">Flag 2</string>
+    <string id="3225">Flag 3</string>
+    <string id="3226">Flag 4</string>
+    <string id="3227">Flag 5</string>
+    <string id="3228">Choose the flags you want to see</string>
+    <string id="3229">Navigation options (login required)</string>
+    <string id="3230">Only unsolved Shots</string>
+    <string id="3231">Show "shot rating"</string>
+    <string id="3232">Jump to</string>
+    <string id="3233">Random</string>
+    <string id="3234">Next</string>
+    <string id="3235">Show tool buttons</string>
+    <string id="3236">Show navigation buttons</string>
+    <string id="3237">Keys</string>
+    <string id="3238">Choose buttons for actions</string>
+
+    <!-- Keys -->
+    <string id="3239">No key</string>
+    <string id="3240">page up</string>
+    <string id="3241">page down</string>
+    <string id="3242">show info</string>
+    <string id="3243">pause</string>
+    <string id="3244">stop</string>
+    <string id="3245">next item</string>
+    <string id="3246">prev item</string>
+    <string id="3247">fast forward</string>
+    <string id="3248">rewind</string>
+    <string id="3249">play</string>
+    <string id="3250">context menu</string>
+    <string id="3251">volume up</string>
+    <string id="3252">volume down</string>
+    <string id="3253">scroll up</string>
+    <string id="3254">scroll down</string>
+    <string id="3255">home</string>
+    <string id="3256">end</string>
+
+    <!-- Functions -->
+    <string id="3260">Наступны</string>
+    <string id="3261">Previous</string>
+    <string id="3262">Jump</string>
+    <string id="3263">Bookmark</string>
+    <string id="3264">Favourite</string>
+    <string id="3265">Solve</string>
+</strings>

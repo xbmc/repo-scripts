@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon
+    id="script.mythbox"
+    name="MythBox"
+    version="1.1.1"
+    provider-name="Semir Patel">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0" />
+        <import addon="script.module.beautifulsoup" version="3.2.0" />
+        <import addon="script.module.elementtree" version="1.2.7"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">MythBox for XBMC</summary>
+        <summary lang="fr">MythBox pour XBMC</summary>
+        <description lang="en">[B]MythBox is a MythTV frontend for XBMC[/B]
+
+        - Watch recordings with commercial skipping
+        - Watch live tv
+        - Create and edit recording schedules
+        - Fan art from tvdb, tmdb, tvrage, imdb, and google
+        - Enhanced program guide
+        - Show upcoming recordings
+        - Tuner and job status
+        - Supports MythTV 0.24
+        </description>
+        <description lang="fr">[B]MythBox est un frontal MythTV pour XBMC[/B]
+
+        - Regarder les enregistrements avec saut de la publicité
+        - Regarder la tv en direct
+        - Créer et éditer des planifications d'enregistrements
+        - Fanart à partir de tvdb, tvrage, tmdb, imdb, et google
+        - Guide de programme amélioré
+        - Afficher les enregistrements à venir
+        - Statut du syntoniseur et des travaux
+        - Support de MythTV 0.24
+        </description>
+        <email>analogue@yahoo.com</email>
+    </extension>
+</addon>

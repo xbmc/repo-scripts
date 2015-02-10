@@ -1,0 +1,168 @@
+TVRage-Eps Changelog
+
+Current Version : 1.1.1
+
+*** 1.1.1 ***
+
+Convert 'special://' paths to current 'getAddonInfo()' method
+Add version to requests import in addon.xml
+
+*** 1.1.0 ***
+
+Minor code change for error handling
+Version bump for submission to official repo
+
+*** 1.0.17 ***
+
+Fix addon.xml requests import
+
+*** 1.0.16 ***
+
+Use Reqests module for http library access
+
+*** 1.0.15 ***
+
+More error handling for HTTP access
+
+*** 1.0.14 ***
+
+Fixed accessing library via HTTP
+Improved error handling of HTTP access
+
+*** 1.0.13 ***
+
+Now search is aborted when no terms are entered
+Added some debug logging
+
+*** 1.0.12 ***
+
+Now shows a dialog when the video library is empty
+
+*** 1.0.11 ***
+
+Fixed a bug that intermittently causes shows to sort improperly on startup
+Canceled shows are now dimmed to better differentiate from current shows
+
+*** 1.0.10 ***
+
+Fix skin string localization
+Update addon.xml for Gotham
+Converted strings.xml to strings.po
+Added XML declarations
+Fix bug causing errors when trying to play a video
+
+*** 1.0.9 ***
+
+Fixed a bug which prevented navigating to the buttons when the list was empty.
+
+*** 1.0.8 ***
+
+Updates for Eden
+Better error handling
+Icon and image updates to match site
+Added fanart.jpg
+Handle html character codes in show tiles when searching
+
+*** 1.0.7 ***
+
+Fix ep summary weirdness
+
+*** 1.0.6 ***
+
+Fix missing ep summary in ep summary dialog
+
+*** 1.0.5 ***
+
+replaced os.getcwd() to fix errors with current nightlies
+
+*** 1.0.4 ***
+
+Extended airtime offset values in settings to +-23
+Bug Fix (Hopefully =] ): Old shows staying at top of list
+
+*** 1.0.3 ***
+
+Fix: Error when failing to fetch data for show
+
+*** 1.0.2 ***
+
+Added encoding declaration to .py files for python > 2.4
+
+*** 1.0.1 ***
+
+Fixed bug causing errors when adding shows from library
+
+*** 1.0.0 ***
+
+Fixed bug: Time was showing incorrectly when offset was changed
+Added 'Loading episodes...' message when loading episodes dialog
+
+*** 0.9.91 ***
+
+Fixed bug: failing on bad xml (ie & when should be &amp;) when getting show data
+Fixed bug: adding single show had blank title in "Add XBMC name: " - changed to "Add as (Empty): "
+
+*** 0.9.9 ***
+
+Added ability to add show not found on TVRage.com (As a dummy listing), mainly to keep library scan from asking every time
+'Add All From Library' now lists unmatched shows at the end with the option to skip all or choose shows to add
+Added 'Refresh' option to list options
+
+*** 0.9.8 ***
+
+Fixed bug in a debugging print statement crashing on unicode
+Added summary dialog after adding all from library
+Pressing play on episode plays episode (list and summary)
+
+*** 0.9.7 ***
+
+Fixed a bug with fetching images on some shows causing an error
+Fixed: Was adding canceled shows if chosen from list on 'Add all from library'
+Added provides video & executable to addon.xml
+Added < Skip > option when prompting for choice
+Fixed a search bug causing errors on special characters
+Made setting 'Prompt if match not found' actually do something :)
+Added cancel option on show options
+Revamped interface
+ +Added 'Add All From Library Button'
+ -Removed 'Add All From Library' from show options lists
+ -Removed 'Add/Search' from show options lists
+ +Added 'Settings' button
+ +Larger show images
+
+*** 0.9.6 ***
+
+Fixed remote/keyboard click on 'Add Show' button bringing up the episode list
+No longer needs to use HTTP for accessing library (but still can as an option if, for example, you want to pull data from another computer)
+
+*** 0.9.5 ***
+
+Bug fix: missing import for simplejson in addon.xml
+
+*** 0.9.4 ***
+
+Added option to add all from XBMC library
+	-Added settings options category 'Library Access' to control behavior
+Added settings option to change episodes times by an offset
+Canceled shows now show end date
+Search/Add now finds better show matches
+
+*** 0.9.3 ***
+
+Made interface more mouse friendly
+  -Fixed mouse click on lists for select
+  -Added 'Add Show' Button
+Added 'Reverse Sort' and  'Jump To Bottom' options in settings
+Added 'Reverse Sort' option on context menu
+
+*** 0.9.2 ***
+
+Added missing xml file for summary dialog
+
+*** 0.9.1 ***
+
+Added show summary dialog when clicking an episode
+
+*** 0.9.0 ***
+
+Initial Release

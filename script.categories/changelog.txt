@@ -1,0 +1,31 @@
+1.0.0
+- First Try
+1.0.1
+- Fixed bug while deleting from categories
+1.0.2
+- Fixed bug while handling invalid addon ids
+1.0.3
+- Changed addon id handling
+- Fixed encoding bug
+1.0.4
+- Fixed addon handling for Eden
+1.0.5
+- Small bugfix
+1.0.6
+- Fixed "last category missing" bug
+- Divided category-settings into video/audio/image
+- Added main menu with content selection
+- Added context menu for removing whole category
+1.0.7
+- Added context menu for renaming categories
+1.0.8 / 2.0.8
+- Added Portuguese (Brazil) strings (thx@Wanilton)
+- Fixed problem with addons using the "content_type" parameter
+- Added setting for showing the number of addons and addon version in title
+- Added setting for notifications
+1.0.9 / 2.0.9
+- Fixed not working add-ons
+2.1.0
+- New icon (thx@djtoll)
+- Changed name to "Categories"
+- Changed content type to "addons"

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon
+ id="script.service.twitter"
+    version="1.0.2"
+    name="Twitter Feeds"
+    provider-name="Romans I XVI"
+    >
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.elementtree" version="1.2.8"/>
+    </requires>
+    <extension point="xbmc.service"
+             library="default.py" start="startup">
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <language />
+        <summary>XBMC Twitter Feeds</summary>
+        <description>These days many television programs have an associated twitter account "@" or topic hashtag "#". Some programs even display the tweets of viewers in real time, thus the inspiration for this addon.[CR][CR]This addon enables you to follow the conversation associated with any show you are watching, or for that matter any other twitter conversation that is occurring.</description>
+        <platform>all</platform>
+	<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+	<forum>http://forum.xbmc.org/showthread.php?tid=185834</forum>
+	<source>https://github.com/asojka09/script.service.twitter</source>
+	<email>austinsojka@hotmail.com</email>
+    </extension>
+</addon>
+

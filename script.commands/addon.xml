@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.commands"
+       name="Commands"
+       version="1.0.3"
+       provider-name="AddonScriptorDE">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+      <summary lang="en">Map multiple XBMC commands to one remote button. All availabe commands: http://wiki.xbmc.org/?title=List_of_Built_In_Functions</summary>
+      <summary lang="de">Mehrere XBMC Befehle einer Taste zuweisen. Alle verfügbaren Befehle: http://wiki.xbmc.org/?title=List_of_Built_In_Functions</summary>
+      <language></language>
+      <description lang="en">Map multiple XBMC commands to one remote button. All availabe commands: http://wiki.xbmc.org/?title=List_of_Built_In_Functions</description>
+      <description lang="de">Mehrere XBMC Befehle einer Taste zuweisen. Alle verfügbaren Befehle: http://wiki.xbmc.org/?title=List_of_Built_In_Functions</description>
+      <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+      <source>https://github.com/AddonScriptorDE/script.commands</source>
+      <forum>http://forum.xbmc.org/showthread.php?tid=134129</forum>
+      <email>AddonScriptorDE at yahoo dot de</email>
+      <website></website>
+  </extension>
+</addon>

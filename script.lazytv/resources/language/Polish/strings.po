@@ -1,0 +1,129 @@
+# XBMC Media Center language file
+# Addon Name: LazyTV
+# Addon id: script.lazytv
+# Addon Provider: KodeKarnage
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/xbmc-addons/language/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "General Settings"
+msgstr "Ustawienia ogólne"
+
+msgctxt "#32001"
+msgid "Primary Function"
+msgstr "Podstawowa funkcja"
+
+msgctxt "#32002"
+msgid "Produce a list of 'next episodes' for each TV series"
+msgstr "Tworzenie listy \"kolejnych odcinków\" dla każdego serialu"
+
+msgctxt "#32003"
+msgid "Create and launch randomised playlist"
+msgstr "Tworzenie i uruchamianie losowej listy odtwarzania"
+
+msgctxt "#32004"
+msgid "Let me choose on launch"
+msgstr "Pozwól mi wybrać "
+
+msgctxt "#32005"
+msgid "Use Smart Playlist to Filter Shows"
+msgstr "Inteligentna lista odtwarzania jako filtr multimedii"
+
+msgctxt "#32006"
+msgid "Playlist Selection Method"
+msgstr "Metoda wyboru listy odtwarzania "
+
+msgctxt "#32007"
+msgid "Let me choose on launch"
+msgstr "Pozwól mi wybrać "
+
+msgctxt "#32008"
+msgid "Choose a default Playlist"
+msgstr "Wybrano domyślną listę odtwarzania"
+
+msgctxt "#32009"
+msgid "Select default playlist"
+msgstr "Wytypuj domyślną listę odtwarzania"
+
+msgctxt "#32010"
+msgid "Some shows are fine to watch out of order"
+msgstr "Niektóre multimedia można oglądać bez selekcji"
+
+msgctxt "#32015"
+msgid "Smart Playlist"
+msgstr "Inteligentna lista odtwarzania"
+
+msgctxt "#32031"
+msgid "Number of shows in playlist"
+msgstr "Liczba widowisk w liście odtwarzania "
+
+msgctxt "#32032"
+msgid "Allow multiple episodes of same TV Show"
+msgstr "Wyświetlaj wiele epizodów w tym samym serialu"
+
+msgctxt "#32033"
+msgid "Include episodes from unwatched TV series"
+msgstr "Uwzględnij epizody z częściowo oglądanymi serialami "
+
+msgctxt "#32064"
+msgid "Show Name"
+msgstr "Pokaż nazwę"
+
+msgctxt "#32068"
+msgid "Season"
+msgstr "Sezon "
+
+msgctxt "#32092"
+msgid "Play"
+msgstr "Odtwarzaj"
+
+msgctxt "#32100"
+msgid "This addon finds the next episode in each TV show."
+msgstr "Ta wtyczka znajdzie kolejny epizod w każdym programie telewizyjnym."
+
+msgctxt "#32101"
+msgid "Do you want a list or a randomised playlist?"
+msgstr "Chcesz listę czy losową listę odtwarzania?"
+
+msgctxt "#32102"
+msgid "Show me"
+msgstr "Pokaż mi"
+
+msgctxt "#32103"
+msgid "Surprise me"
+msgstr "Zaskocz mnie "
+
+msgctxt "#32105"
+msgid "Close"
+msgstr "Zamknij"
+
+msgctxt "#32170"
+msgid "Save"
+msgstr "Zapisz"
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr "Aktualizuj bibliotekę"
+
+msgctxt "#32220"
+msgid "Season"
+msgstr "Sezon "
+
+msgctxt "#32221"
+msgid "Episode"
+msgstr "Epizod"
+
+msgctxt "#32224"
+msgid "Watched"
+msgstr "Oglądane"

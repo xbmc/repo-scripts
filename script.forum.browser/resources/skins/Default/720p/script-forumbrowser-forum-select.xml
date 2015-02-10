@@ -1,0 +1,300 @@
+<window>
+	<defaultcontrol always="true">120</defaultcontrol>
+	<zorder>2</zorder>
+	<type>dialog</type>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<control type="group" id="199">
+		<control type="group" id="250">
+			<posx>100</posx>
+			<posy>50</posy>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-10</posy>
+				<width>640</width>
+				<height>650</height>
+				<texture border="20">forum-browser-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>600</width>
+				<height>620</height>
+				<texture border="20">forum-browser-black-box.png</texture>
+			</control>
+			<control type="label" id="300">
+				<posx>50</posx>
+				<posy>10</posy>
+				<width>500</width>
+				<height>20</height>
+				<font>ForumBrowser-font13</font>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+				<align>center</align>
+			</control>
+			<control type='list' id="120">
+				<posx>15</posx>
+				<posy>40</posy>
+				<width>570</width>
+				<height>570</height>
+				<onleft>120</onleft>
+				<onright>120</onright>
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<!-- pagecontrol>121</pagecontrol -->
+				<scrolltime>200</scrolltime>
+				<itemlayout height="100">
+					<control type="image">
+						<posx>5</posx>
+						<posy>5</posy>
+						<width>210</width>
+						<height>90</height>
+						<texture diffuse="forum-browser-white-boxr-210x90.png">$INFO[ListItem.Property(bgfile)]</texture>
+						<visible>true</visible>
+						<aspectratio>stretch</aspectratio>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>100</posy>
+						<width>570</width>
+						<height>1</height>
+						<texture>forum-browser-white-box.png</texture>
+						<visible>StringCompare(ListItem.Property(SEPARATOR),SEPARATOR)</visible>
+					</control>
+					<control type="image">
+						<posx>15</posx>
+						<posy>15</posy>
+						<width>190</width>
+						<height>70</height>
+						<texture>$INFO[ListItem.Thumb]</texture>
+					</control>
+					<control type="label">
+						<posx>220</posx>
+						<posy>10</posy>
+						<width>340</width>
+						<height>80</height>
+						<font>ForumBrowser-font13</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+					</control>
+				</itemlayout>
+				<focusedlayout height="100">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>570</width>
+						<height>100</height>
+						<texture border="20">forum-browser-black-box.png</texture>
+					</control>
+					<control type="image">
+						<posx>5</posx>
+						<posy>5</posy>
+						<width>210</width>
+						<height>90</height>
+						<texture border="20">forum-browser-white-boxr.png</texture>
+						<colordiffuse>$INFO[Container(120).ListItem.Property(bgcolor)]</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>100</posy>
+						<width>570</width>
+						<height>1</height>
+						<texture>forum-browser-white-box.png</texture>
+						<visible>StringCompare(ListItem.Property(SEPARATOR),SEPARATOR)</visible>
+					</control>
+					<control type="image">
+						<posx>15</posx>
+						<posy>15</posy>
+						<width>190</width>
+						<height>70</height>
+						<texture>$INFO[ListItem.Thumb]</texture>
+					</control>
+					<control type="label">
+						<posx>220</posx>
+						<posy>10</posy>
+						<width>340</width>
+						<height>80</height>
+						<font>ForumBrowser-font13</font>
+						<aligny>center</aligny>
+						<textcolor>white</textcolor>
+						<align>left</align>
+						<info>ListItem.Label</info>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+		<control type="group" id="260">
+			<posx>720</posx>
+			<posy>50</posy>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-10</posy>
+				<width>500</width>
+				<height>550</height>
+				<texture border="30">forum-browser-white-box.png</texture>
+				<colordiffuse>AA000000</colordiffuse>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>460</width>
+				<height>520</height>
+				<texture border="30">forum-browser-black-box.png</texture>
+			</control>
+
+			<control type="group">
+				<posx>20</posx>
+				<posy>20</posy>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>64</width>
+					<height>64</height>
+					<texture>forum-browser-tapatalk.png</texture>
+				</control>
+				<control type="label">
+					<posx>80</posx>
+					<posy>10</posy>
+					<width>300</width>
+					<height>40</height>
+					<font>ForumBrowser-font13</font>
+					<aligny>center</aligny>
+					<textcolor>white</textcolor>
+					<align>left</align>
+					<label>[B]Tapatalk[/B]</label>
+				</control>
+				<visible>
+					StringCompare(Container(120).ListItem.Property(interface),TT)
+				</visible>
+			</control>
+			
+			<control type="group">
+				<posx>20</posx>
+				<posy>20</posy>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>64</width>
+					<height>64</height>
+					<texture>forum-browser-forumrunner.png</texture>
+				</control>
+				<control type="label">
+					<posx>80</posx>
+					<posy>10</posy>
+					<width>300</width>
+					<height>40</height>
+					<font>ForumBrowser-font13</font>
+					<aligny>center</aligny>
+					<textcolor>white</textcolor>
+					<align>left</align>
+					<label>[B]Forumrunner[/B]</label>
+				</control>
+				<visible>
+					StringCompare(Container(120).ListItem.Property(interface),FR)
+				</visible>
+			</control>
+			
+			<control type="group">
+				<posx>20</posx>
+				<posy>20</posy>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>64</width>
+					<height>64</height>
+					<texture>forum-browser-logo-128.png</texture>
+				</control>
+				<control type="label">
+					<posx>80</posx>
+					<posy>10</posy>
+					<width>300</width>
+					<height>40</height>
+					<font>ForumBrowser-font13</font>
+					<aligny>center</aligny>
+					<textcolor>white</textcolor>
+					<align>left</align>
+					<label>[B]Parser Browser[/B]</label>
+				</control>
+				<visible>
+					StringCompare(Container(120).ListItem.Property(interface),GBalt)
+				</visible>
+			</control>
+			
+			<control type="group">
+				<posx>20</posx>
+				<posy>20</posy>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>64</width>
+					<height>64</height>
+					<texture>forum-browser-logo-128.png</texture>
+				</control>
+				
+				<control type="image">
+					<posx>75</posx>
+					<posy>5</posy>
+					<width>20</width>
+					<height>20</height>
+					<texture>forum-browser-logged-in.png</texture>
+					<colordiffuse>$INFO[Container(120).ListItem.Property(function)]</colordiffuse>
+				</control>
+				
+				<control type="image">
+					<posx>75</posx>
+					<posy>35</posy>
+					<width>20</width>
+					<height>20</height>
+					<texture>forum-browser-logged-in.png</texture>
+					<colordiffuse>$INFO[Container(120).ListItem.Property(accuracy)]</colordiffuse>
+				</control>
+				
+				<control type="label">
+					<posx>100</posx>
+					<posy>5</posy>
+					<width>300</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<aligny>center</aligny>
+					<textcolor>white</textcolor>
+					<align>left</align>
+					<label>$ADDON[script.forum.browser 32936]</label>
+				</control>
+				<control type="label">
+					<posx>100</posx>
+					<posy>35</posy>
+					<width>300</width>
+					<height>20</height>
+					<font>ForumBrowser-font13</font>
+					<aligny>center</aligny>
+					<textcolor>white</textcolor>
+					<align>left</align>
+					<label>$ADDON[script.forum.browser 32937]</label>
+				</control>
+				
+				<visible>
+					StringCompare(Container(120).ListItem.Property(interface),GB)
+				</visible>
+			</control>
+
+			<control type="textbox" id="310">
+				<posx>20</posx>
+				<posy>120</posy>
+				<width>420</width>
+				<height>380</height>
+				<font>ForumBrowser-font13</font>
+				<textcolor>white</textcolor>
+				<align>center</align>
+				<info>Container(120).ListItem.Label2</info>
+			</control>
+		</control>
+		</control>
+	</controls>
+</window>

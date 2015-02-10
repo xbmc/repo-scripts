@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Italian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/it/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Collezione Rom</string>
+
+    <!-- Error messages -->
+    <string id="35000">Errore: Non posso accedere al database.</string>
+    <string id="35001">Errore durante aggiornamento di config.xml</string>
+    <string id="35002">Errore leggendo config.xml</string>
+    <string id="35003">Errore: il file config.xml non esiste</string>
+    <string id="35004">Errore: Non è possibile leggere config.xml</string>
+    <string id="35005">Errore di configurazione. Vedi il log di XBMC per i dettagli.</string>
+    <string id="35006">GLi ID delle collezioni di Rom non sono unici.</string>
+    <string id="35007">Errore:  Impossibile salvare config.xml</string>
+    <string id="35008">Errore:  Impossibile scrivere config.xml</string>
+    <string id="35009">Impossibile trovare %s %s in config.xml</string>
+    <string id="35010">Errore: Impossibile creare la cartella artwork</string>
+    <string id="35011">Verifica il log di XBMC per i dettagli.</string>
+    <string id="35012">Errore:  impossibile creare i file artwork.</string>
+    <string id="35013">Errori nello scraper dei giochi</string>
+    <string id="35014">Non posso caricare i giochi selezionati</string>
+    <string id="35015">Errore Edita Comando Giochi</string>
+    <string id="35016">Errore aggiungi ai preferiti</string>
+    <string id="35017">Errore Cancella gioco</string>
+    <string id="35018">Non posso cancellare il gioco selezionato</string>
+    <string id="35019">Errore</string>
+    <string id="35020">Errore cancellando la collezione di Rom</string>
+    <string id="35021">Errore configurazione</string>
+    <string id="35022">Il sito %s non esiste in config.xml</string>
+    <string id="35023">Impossibile ottenere la collezione di rom con ID: %s</string>
+    <string id="35024">Il gioco selezionato no può essere letto dal database</string>
+    <string id="35025">Il controllo con l'ID: %s non può essere trovato. Verifica il file WindowXML.</string>
+
+    <!-- <string id="35026">Site %s does not exist in config.xml</string> -->
+    <string id="35027">Impossibile esaminare %s giochi con %s scraper.[CR]Combinazione errata delle impostazioni dello scraper.</string>
+
+    <!-- <string id="35028"></string> -->
+    <!-- <string id="35029">can't be used together with offline scrapers.)</string> -->
+    <string id="35030">Errore:  Impossibile salvare MyGames.db: il file esiste.</string>
+    <string id="35031">Errore: Impossibile salvare MyGames.db</string>
+    <string id="35032">Errore: Nessun aggiornamento dalla versione %s alla %s</string>
+
+    <!-- <string id="35033">Control with id: %s could not be found. Check WindowXML file.</string> -->
+    <string id="35034">Errore avvio gioco!</string>
+    <string id="35035">Errore durante il lancio dell'emulatore</string>
+    <string id="35036">Errore durante l'eliminazione dei file dopo il lancio dell'emulatore</string>
+    <string id="35037">Errore durante il lancio dell'emulatore: File %s non esiste!</string>
+    <string id="35038">Errore nella creazione del file .cut. Controlla il file xbmc.log per i dettagli.</string>
+    <string id="35039">Errore avvio .7z file.</string>
+    <string id="35040">Errore: Il file config_template.xml non esiste</string>
+    <string id="35041">RCB non riesce ad accedere al percorso delle tue ROM.[CR]Assicurati che non contenga nessun carattere non ascii</string>
+    <string id="35042">RCB non riesce ad accedere al percorso dei tuoi artwork.[CR]Assicurati che non contenga nessun carattere non ascii.</string>
+
+    <!-- Hints / questions -->
+    <string id="40000">Nessun file di configurazione trovato.</string>
+    <string id="40001">Vuoi crearne uno?</string>
+    <string id="40002">Database e config.xml aggiornati alla nuova versione.</string>
+    <string id="40003">Se incontri dei problemi, per favori leggi la wiki e il changelog</string>
+    <string id="40004">Cancellazione Rom</string>
+    <string id="40005">Cancellazione Roms...</string>
+    <string id="40006">Cancellazione Roms completa</string>
+    <string id="40007">Verifica File</string>
+    <string id="40008">Riorganizzazione Database...</string>
+    <string id="40009">Compressione archivio...</string>
+    <string id="40010">Pulizia Database Completa</string>
+    <string id="40011">Importazione Giochi...</string>
+    <string id="40012">Importazione in corso</string>
+    <string id="40013">Vuoi annullare l'importazione attuale?</string>
+    <string id="40014">Annullamento in corso</string>
+    <string id="40015">L'importazione è ancora in fase di annullamento. Prego, riprovare più tardi.</string>
+    <string id="40016">Inserire il termine da cercare</string>
+    <string id="40017">Cerca</string>
+    <string id="40018">Vuoi importare i Giochi adesso?</string>
+    <string id="40019">caricamento lista...</string>
+    <string id="40020">Tutto</string>
+    <string id="40021">caricamento giochi...</string>
+    <string id="40022">Importazione Rom Collection</string>
+    <string id="40023">Importazione Gioco</string>
+    <string id="40024">Continua</string>
+    <string id="40025">Continua ignorando gli errori</string>
+    <string id="40026">Annulla</string>
+    <string id="40027">Non è possibile importare i primi 10 giochi.</string>
+    <string id="40028">Importazione cancellata.</string>
+    <string id="40029">Si prega di verificare xbmc.log per ulteriori dettagli. </string>
+    <string id="40030">Creazione lista di file...</string>
+    <string id="40031">scaricamento info</string>
+    <string id="40032">Inserire %s</string>
+    <string id="40033">Rimuovi il gioco dai Preferiti</string>
+    <string id="40034">Rimuovi la selezione dai Preferiti</string>
+    <string id="40035">Inserisci comando gioco</string>
+    <string id="40036">Sei sicuro di voler eliminare questo gioco?</string>
+    <string id="40037">Elimina gioco e configurazione</string>
+    <string id="40038">Cancella solo il gioco</string>
+    <string id="40039">Emulatore</string>
+    <string id="40040">Inserisci la maschera per i file Rom</string>
+    <string id="40041">Percorso</string>
+    <string id="40042">Scegliere un percorso multimediale da aggiungere</string>
+    <string id="40043">Scegliere un percorso multimediale da rimuovere</string>
+    <string id="40044">Ci sono già degli scraper per tutte le collezioni di Rom</string>
+    <string id="40045">Modifica o cancella uno scraper esistente</string>
+    <string id="40046">Scegli il nome per lo scraper</string>
+    <string id="40047">Scegli uno scraper da rimuovere</string>
+    <string id="40048">Lo scraper %s è già in uso e non può essere eliminato.</string>
+
+    <!-- <string id="40049">Please choose another one.</string> -->
+    <!-- <string id="40050">Automatic: Accurate</string> -->
+    <!-- <string id="40051">Automatic: Guess Matches</string> -->
+    <!-- <string id="40052">Interactive: Select Matches</string> -->
+    <string id="40053">Artwork locale</string>
+    <string id="40054">nfo locale</string>
+    <string id="40055">Scegli il tipo di Artwork</string>
+    <string id="40056">Seleziona propriet</string>
+    <string id="40057">Ignora</string>
+    <string id="40058">Ignora filtro</string>
+    <string id="40059">mostra</string>
+    <string id="40060">Mostra solo giochi con elementi mancanti</string>
+    <string id="40061">Nascondi</string>
+    <string id="40062">Nascondi giochi con elementi mancanti</string>
+    <string id="40063">Avvia gioco</string>
+    <string id="40064">Seleziona disco</string>
+    <string id="40065">Lancia il gioco dall'inizio</string>
+    <string id="40066">Lancio il gioco dallo stato salvato?</string>
+    <string id="40067">Seleziona lo slot del salvataggio</string>
+    <string id="40068">Inserisci testo del commando</string>
+    <string id="40069">Esporta libreria...</string>
+    <string id="40070">Esportazione Collezione di Roms</string>
+    <string id="40071">Esporta gioco</string>
+    <string id="40072">Azione annullata. Il file Config.xml non verrà scritto.</string>
+    <string id="40073">Scegli uno scenario</string>
+    <string id="40074">Esegui scraping online delle informazioni sul gioco e sull'artwork</string>
+    <string id="40075">Le informazioni sul giorco e l'artwork sono disponibili localmente</string>
+    <string id="40076">Scegli una piattaforma</string>
+    <string id="40077">Inserisci nome piattaforma</string>
+    <string id="40078">Percorso all'emulatore %s</string>
+    <string id="40079">Parametri emulatore ("%ROM%" viene usato per i tuoi file rom)</string>
+    <string id="40080">Percorso ai Rom %s</string>
+    <string id="40081">Maschere file (separate da virgole): per es. *.zip, *.smc</string>
+    <string id="40082">%s Artwork (%s)</string>
+    <string id="40083">Scegli un tipo di artwork</string>
+    <string id="40084">Vuoi aggiungere un altro percorso per gli artwork?</string>
+    <string id="40085">Struttura descrizione giochi</string>
+    <string id="40086">Un file descrizione per gioco</string>
+    <string id="40087">Un file descrizione per tutti i giochi</string>
+    <string id="40088">Esegui scraping online delle informazioni sul gioco (oppure usa informazioni in locale)</string>
+    <string id="40089">Descrizione del gioco %s</string>
+    <string id="40090">Inserisci la maschera per i file di descrizione</string>
+    <string id="40091">%s elaborazione istruzioni</string>
+    <string id="40092">Vuoi aggiungere un'altra collezione rom?</string>
+    <string id="40093">%s Artwork</string>
+    <string id="40094">Ritardo (ms) prima del lancio</string>
+    <string id="40095">Ritardo (ms) dopo il lancio</string>
+    <string id="40096">Ritardo (ms) avvio "Solo mode"</string>
+    <string id="40097">Usa VB Script in "solo mode" (Valido solo su Windows)</string>
+    <string id="40098">Desideri usare RetroPlayer per avviare i giochi?</string>
+    <string id="40099">Sospendi audio</string>
+    <string id="40100">Minimizza XBMC</string>
+    <string id="40101">Percorso di emu_autoconfig.xml</string>
+    <string id="40102">%s (installato)</string>
+    <string id="40103">Disponibile autoconfigurazione emulatori</string>
+
+    <!-- Settings -->
+    <string id="45000">Menu</string>
+    <string id="45001">Skin RCB</string>
+    <string id="45002">Livello log</string>
+    <string id="45003">Opzioni cache</string>
+    <string id="45004">Salva stato visualizzazione all'uscita</string>
+    <string id="45005">Salva stato della vista all'avio dell'emu</string>
+    <string id="45006">Importa giochi</string>
+    <string id="45007">Importa giochi all'avvio di XBMC</string>
+    <string id="45008">Mostra dialogo opzioni importazione</string>
+    <string id="45009">Modalità scraping</string>
+    <string id="45010">Fattore di corrispondenza fuzzy gioco</string>
+    <string id="45011">Crea file nfo in locale durante lo scraping</string>
+    <string id="45012">Non importare giochi privi di descrizione</string>
+    <string id="45013">Non importare giochi senza artwork</string>
+    <string id="45014">Riesegui scraping dei giochi già importati</string>
+    <string id="45015">Consenti di sovrascrivere con valori vuoti</string>
+    <string id="45016">Usa le cartelle nfo aggiuntive</string>
+    <string id="45017">percorso cartella nfo</string>
+    <string id="45018">Sfoglia giochi</string>
+    <string id="45019">Mostra le stelle per i favoriti</string>
+    <string id="45020">Mostra filtro "Tutte le console"</string>
+    <string id="45021">Mostra filtro "Tutti i generi"</string>
+    <string id="45022">Mostra filtro "Tutti gli anni"</string>
+    <string id="45023">Mostra filtro "Tutti i publisher"</string>
+    <string id="45024">Mostra filtro "Tutti i personaggi"</string>
+    <string id="45025">Impedisci ricerche senza filtri</string>
+    <string id="45026">Avvia giochi</string>
+    <string id="45027">Esegui l'escaping per il comando dell'emulatore</string>
+
+    <!-- GUI controls -->
+    <!-- main window -->
+    <string id="50000">Anno</string>
+    <string id="50001">Genere</string>
+    <string id="50002">Publisher</string>
+    <string id="50003">Sviluppatore</string>
+    <string id="50004">Preferiti</string>
+    <string id="50005">Cerca</string>
+    <string id="50006">Console</string>
+    <string id="50007">A-Z</string>
+    <string id="50008">Visualizza</string>
+    <string id="50009">Filtra informazioni mancanti</string>
+    <string id="50010">Elementi</string>
+    <string id="50011">Pagina</string>
+
+    <!-- context menu -->
+    <string id="51000">Importa giochi</string>
+    <string id="51001">Riesegui lo scraping del gioco selezionato</string>
+    <string id="51002">Riesegui lo scraping di quanto selezionato</string>
+    <string id="51003">Aggiungi collezione Rom</string>
+    <string id="51004">Modifica collezione Rom</string>
+    <string id="51005">Modifica scraper offline</string>
+    <string id="51006">Modifica il comando di gioco</string>
+    <string id="51007">Aggiungi il gioco ai favoriti</string>
+    <string id="51008">Aggiungi quanto selezionato ai favoriti</string>
+    <string id="51009">Esporta il database dei gioco (file nfo)</string>
+    <string id="51010">Elimina gioco</string>
+    <string id="51011">Elimina collezione Rom</string>
+    <string id="51012">Svuota il database</string>
+    <string id="51013">Apre le impostazioni dell'addon</string>
+    <string id="51014">Imposta Gameclient (per gioco)</string>
+
+    <!-- editromcollection -->
+    <string id="52000">Configurazione</string>
+    <string id="52001">Collezione Rom</string>
+    <string id="52002">Importa giochi</string>
+    <string id="52003">Importa dati gioco</string>
+    <string id="52004">Sfoglia giochi</string>
+    <string id="52005">Avvia giochi</string>
+    <string id="52006">Percorso Rom</string>
+    <string id="52007">Inserisci la maschera per i file Rom</string>
+    <string id="52008">Ignora durante la scansione</string>
+    <string id="52009">Permetti aggiornamento</string>
+    <string id="52010">Profondità massima cartelle</string>
+    <string id="52011">Indicatore disco</string>
+    <string id="52012">Usa il nome della cartella come titolo del gioco</string>
+    <string id="52013">Scraper 1</string>
+    <string id="52014">Scraper 2</string>
+    <string id="52015">Scraper 3</string>
+    <string id="52016">Tipo di media</string>
+    <string id="52017">Percorso media</string>
+    <string id="52018">Insersci la maschera per il file media</string>
+    <string id="52019">Rimuovi percorso media</string>
+    <string id="52020">Aggiungi percorso media</string>
+    <string id="52021">Immagini (Finestra principale)</string>
+    <string id="52022">Immagini (Finestra informazioni)</string>
+    <string id="52023">Esegui video automaticamente (Finestra principale)</string>
+    <string id="52024">Comando emulatore</string>
+    <string id="52025">Parametri emulatore</string>
+    <string id="52026">Usa l'emulatore in "Solo Mode"</string>
+    <string id="52027">Usa Popen per lanciare l'emulatore</string>
+    <string id="52028">Non estrarre files dagli archivi .zip</string>
+    <string id="52029">Percorso salvataggio</string>
+    <string id="52030">Inserisci la maschera per i file dei salvataggi</string>
+    <string id="52031">Parametri salvataggi</string>
+    <string id="52032">Comando pre-lancio</string>
+    <string id="52033">Comando post-lancio</string>
+    <string id="52034">Salva configurazione</string>
+    <string id="52035">Annulla</string>
+    <string id="52036">Avvio automatico Video (Finestra Informazioni)</string>
+    <string id="52037">Usa RetroPlayer</string>
+    <string id="52038">Gameclient</string>
+
+    <!-- editscraper -->
+    <string id="53000">Scraper offline</string>
+    <string id="53001">Scraper</string>
+    <string id="53002">Usa la descrizione per i giochi</string>
+    <string id="53003">Percorso descrizione del gioco</string>
+    <string id="53004">Inserisci la maschera per i file di descrizione del gioco</string>
+    <string id="53005">Istruzione di parsing</string>
+    <string id="53006">Cerca gioco tramite crc</string>
+    <string id="53007">Usa il nome della cartella come crc</string>
+    <string id="53008">Usa il nome del file come crc</string>
+    <string id="53009">Rimuovi scraper</string>
+    <string id="53010">Aggiungi scraper</string>
+
+    <!-- info -->
+    <string id="54000">Regione</string>
+    <string id="54001">Media</string>
+    <string id="54002">Controller</string>
+    <string id="54003">Voto</string>
+    <string id="54004">N. mass. giocatori</string>
+    <string id="54005">Conteggio esecuzioni</string>
+    <string id="54006">Gioca</string>
+
+    <!-- importdialog -->
+    <string id="55000">Importa giochi</string>
+    <string id="55001">Modalità scraping</string>
+    <string id="55002">Cambia gli scraper per questa esecuzione</string>
+
+    <!-- Missing info filter -->
+    <string id="56000">RCB - Manca filtro info</string>
+    <string id="56001">Modalità filtraggio</string>
+    <string id="56002">Filtra giochi senza artwork</string>
+    <string id="56003">UNA di queste cose è mancante</string>
+    <string id="56004">Nessuno</string>
+    <string id="56005">Aggiungi oggetto</string>
+    <string id="56006">Rimuovi oggetto</string>
+    <string id="56007">TUTTE queste cose mancano</string>
+    <string id="56008">Filtra giochi con informazioni mancanti</string>
+
+    <!-- Delete Rom Collection -->
+    <string id="57000">RCB - Cancella collezione di ROM</string>
+    <string id="57001">Opzioni rimozione</string>
+    <string id="57002">Elimina</string>
+</strings>

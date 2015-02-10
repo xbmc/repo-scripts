@@ -1,0 +1,42 @@
+[B]Version 2.5.5[/B]
+- Fix ascii error with non UTF-8 characters on print statement
+
+[B]Version 1.5.2[/B]
+- Fixed: Dharma error with sqlite. [mswiege]
+- User selectable port on windows
+- Notification of port/socket collision.
+
+[B]Version 1.5.1[/B]
+- Fixed: Move position of socket and database file back
+
+[B]Version 1.5.0[/B]
+- Changed: Move position of socket and database file
+
+[B]Version 1.4.0[/B]
+- Fixed: edge case where unicode input values would cause cache to crash
+- Fixed: Only bind to 127.0.0.1 on windows
+
+[B]Version 1.3.0[/B]
+- Minor fixes
+
+[B]Version 1.2.0[/B]
+- Minor fixes
+
+[B]Version 1.1.0[/B]
+- Minor fixes
+
+[B]Version 1.0.0[/B]
+- Minor fixes
+
+[B]Version 0.9.2[/B]
+- Don't autodetect instancemode
+- Set timeout of instancemode in settings
+
+[B]Version 0.9.1[/B]
+- Update interface
+
+[B]Version 0.9.0[/B]
+- Better stability
+
+[B]Version 0.8.0[/B]
+- Initial public test run.

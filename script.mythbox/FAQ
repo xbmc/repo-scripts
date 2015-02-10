@@ -1,0 +1,196 @@
+
+                  Frequently Asked Questions
+                  --------------------------
+
+Q1. What should I do if I run into problems or something doesn't work?
+Q2. How to I change the log settings?
+Q3. Where are the MythBox configuration settings stored?
+Q4. When is the next release coming out?
+Q5. How do I specify more than one recording directory in the settings?
+Q6. Where can I discuss MythBox online with other MythBox users?
+Q7. Commercial skipping doesn't seem to be accurate when 'Enable Streaming'
+    is selected.  
+Q8. Are there advantages to streaming vs remotely mounted storage groups?
+Q9. Where is the source code?
+Q10. When are you going to add feature <insert your feature here> to MythBox?
+Q11. What sort of MythTV setup do you use with MythBox?
+Q12. When I play a recorded program, I get nothing but a green screen.
+Q13. How do I fix a 'MySQL connection error 1043 bad handshake' error? 
+Q14. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
+Q15. How do I run the unit tests in MythBox's debug shell?
+
+-------------------------------------------------------------------------
+Q1. What should I do if I run into problems or something doesn't work?
+
+A1. File a defect if the issue has not already been identified @
+    http://code.google.com/p/mythbox/issues/list
+
+    Creating a new defect:
+    
+    1. Grab the XBMC log file:
+       - Linux  : ~/.xbmc/temp/xbmc.log
+       - Mac    : ~/Library/logs/xbmc.log 
+       - Windows: C:\Documents and Settings\[user]\Application Data\XBMC\xbmc.log
+       - Vista  : C:\Users\[user]\AppData\Roaming\XBMC\xbmc.log
+       - iPad   : /var/mobile/Library/Preferences/xbmc.log
+       
+    2. Take a screenshot in XBMC (PrintScreen key) if possible. 
+   
+    3. Create a defect @ http://code.google.com/p/mythbox/issues/list
+       - attach the log files and/or screenshot
+       - enter the list of steps to reproduce the problem
+
+-------------------------------------------------------------------------------
+Q2. How to I change the log settings?
+
+A2. MythBox -> Settings -> Advanced -> Enabled debug logging 
+
+-------------------------------------------------------------------------------
+Q3. Where are the MythBox configuration settings stored?
+
+A3. Linux  : ~/.xbmc/userdata/addon_data/script.mythbox/settings.xml
+    Mac    : ~/Library/Application Support/UserData/addon_data/script.mythbox/settings.xml
+    Windows: C:\Document and Settings\[user]\Application Data\XBMC\UserData\addon_data\script.mythbox\settings.xml
+    Vista  : C:\Users\[user]\AppData\Roaming\XBMC\UserData\addon_data\script.mythbox\settings.xml
+    iPad   : /var/mobile/Library/Preferences/XBMC/userdata/addon_data/script.mythbox/settings.xml
+
+-------------------------------------------------------------------------------
+Q4. When is the next release coming out?
+
+A4. Subscribe to this RSS Feed and you'll be the first to know...
+    http://code.google.com/feeds/p/mythbox/downloads/basic
+    
+-------------------------------------------------------------------------------
+Q5. How do I specify more than one recording directory in the settings?
+
+A5. You can enter multiple directories by separating them with a colon on 
+    Linux/Mac or a semi-colon on windows.
+    
+-------------------------------------------------------------------------------
+Q6. Where can I discuss MythBox online with other MythBox users?
+
+A6. Try the XBMC forums @ http://xbmc.org/forum/showthread.php?t=43115
+
+-------------------------------------------------------------------------------
+Q7. Commercial skipping doesn't seem to be accurate when 'Enable Streaming'
+    is selected.  
+
+A7. When 'Enable Streaming' is selected, commercials are skipped using XBMC's
+    built-in commercial skip support. I've found that there are some cases in
+    which this is not entirely accurate. If you deselect 'Enable Streaming', 
+    commercials will be skipped using MythBox's implementation which may
+    give you better results (you will have to mount your remote storage
+    groups locally).
+
+-------------------------------------------------------------------------------
+Q8. Are there advantages to streaming vs remotely mounted storage groups?
+
+A8. Streaming uses XBMC's native implementation of commercial skipping. 
+    Remotely mounted storage groups uses MythBox's internal implemenation of
+    commercial skipping. Your results may vary. Use whichever one works best
+    for you.
+
+-------------------------------------------------------------------------------
+Q9. Where is the source code?  
+    
+A9. To checkout the source (assuming you have Git installed): 
+  
+    git clone git://github.com/analogue/mythbox.git
+  
+    Description of source tree:
+    
+        +-bin        - packaging scripts
+        +-resources
+            +-src    - source code
+            +-test   - unit tests
+            +-lib    - 3rd party libs
+            +-skins  - default skin xml files + images
+                
+    To run unit tests from the MythBox dir:
+    
+        $ source bin/setenv; python resources/test/runtests.py                
+
+-------------------------------------------------------------------------------    
+Q10. When are you going to add feature <insert your feature here> to MythBox?  
+     
+A10. If I find the feature compelling enough, there is reasonable chance that
+     it might make its way into the codebase. If you're technically inclined,
+     feel free to submit a patch via GitHub pull request. High quality patches 
+     are always welcome! Otherwise, create an enhancement request on Google 
+     Code's issue tracker so that the feature can be tracked.
+
+-------------------------------------------------------------------------------      
+Q11. What sort of MythTV setup do you use with MythBox? My setup doesn't seem
+     to work.
+
+     It is quite possible that you may be having problems getting MythBox to work
+     if your setup is significantly different from mine.
+
+     FrontEnd (Zotac HD-U11 - Atom 1.8Ghz - NVidia ION2 - 2GB)
+        Ubuntu 11.04 Natty (32bit)
+        XBMC 11.0 + VDPAU playback
+        50" Plasma (1920x1080)
+        Realtek Gigabit Ethernet
+        Storage groups mounted via NFS
+        HP MCE Remote
+     
+     Master Backend (Athlon 4800+ / 6GB RAM)
+        Ubuntu 11.04 Natty (32bit)
+        MythTV 0.24.1
+        Silicon Dust HD HomeRunPrime Cablecard Tuner
+        Intel Gigabit Ethernet
+        2 x 2TB HDs
+        2 comm flagging slots
+             
+     FrontEnd (Mac Book Pro)
+        Mac OS X Lion
+        XBMC 11.0
+        1680x1050
+        Wireless 802.11n
+        Streaming Enabled 
+
+---------------------------------------------------------------------------------
+Q12. When I play a recorded program, I get nothing but a green screen.
+
+     You need to change your recording profile to use MPEG4 instead of RTjpeg.
+     1. Start the MythTV frontend
+     2. Go to Utilites/Setup->Setup->TV Settings->Recording Profiles->Software Encoders->Live TV
+     3. Set the codec to MPEG4 instead of RTjpeg.
+
+---------------------------------------------------------------------------------     
+Q13. How do I fix a 'MySQL connection error 1043 bad handshake' error?
+
+     Your MySQL database server is set to authenticate using the old MySQL 4.0 style 
+     instead of the newer style used since MySQL 4.1+. This is pretty easy to fix 
+     if you have phpMyAdmin installed (highly recommended). Just login to phpMyAdmin
+     using your mythtv username and password and then click on the password link to
+     reset it making sure you select MySQL 4.1+ for 'Password hashing'.
+     
+---------------------------------------------------------------------------------     
+Q14. How do I fix a 'Connect to MySQL failed: Found EOF after Auth' error?
+
+     1. Edit /etc/mysql/my.cnf and change old_passwords=1 to old_passwords=0
+     2. Reset the password for the MythTV database (see Q13) and restart MythBox
+
+---------------------------------------------------------------------------------
+Q15. How do I run the unit tests in MythBox's debug shell?
+
+     1. You have to be running MythBox directly as a clone of the hg repo, not as 
+        an installed addon:
+            $ cd ~/.xbmc/addons 
+            $ mv script.mythbox script.mythbox.installed
+            $ ln -s <dir where your mythbox hg repo is cloned> script.mythbox   
+     
+     2. Edit bootstrapper.py and add your hostname to bootstrapDebugShell()
+     3. Start up XBMC and launch MythBox
+     4. In a shell:      
+            $ telnet localhost 9999  (user/pw = mb/mb)
+              import unittest2
+              unittest2.TestProgram(
+                    module='mythboxtest.mythtv.test_domain', 
+                    defaultTest='JobTest', 
+                    exit=False, 
+                    verbosity=2)
+
+     Test output shows up in mythbox.log
+     

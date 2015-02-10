@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window id="5100">
+	<defaultcontrol>5110</defaultcontrol>
+	<include>dialogeffect</include>
+	<coordinates>
+		<system>1</system>
+		<posx>440</posx>
+		<posy>200</posy>
+	</coordinates>
+	<controls>
+		<control type="image">
+			<description>background top image</description>
+			<posx>0</posx>
+			<posy>-160</posy>
+			<width>400</width>
+			<height>65</height>
+			<texture border="60,60,60,0">rcb-DialogContextTop.png</texture>
+		</control>
+		<control type="button" id="5101">
+			<description>Close Window button</description>
+			<posx>320</posx>
+			<posy>-130</posy>
+			<width>40</width>
+			<height>30</height>
+			<label>-</label>
+			<font>-</font>
+			<texturefocus>rcb-DialogCloseButton-focus.png</texturefocus>
+			<texturenofocus>rcb-DialogCloseButton.png</texturenofocus>
+			<onleft>5110</onleft>
+			<onright>5110</onright>
+			<onup>5224</onup>
+			<ondown>5110</ondown>
+			<visible>system.getbool(input.enablemouse)</visible>
+		</control>
+		<control type="image">
+			<description>background image</description>
+			<posx>0</posx>
+			<posy>-100</posy>
+			<width>400</width>
+			<height>550</height>
+			<texture border="45,0,45,0">rcb-DialogContextMiddle.png</texture>
+		</control>
+		<control type="image">
+			<description>background bottom image</description>
+			<posx>0</posx>
+			<posy>450</posy>
+			<width>400</width>
+			<texture border="45,0,45,49">rcb-DialogContextBottom.png</texture>
+		</control>
+		<control type="button" id="5110">
+			<description>button import games</description>
+			<posx>34</posx>
+			<posy>-100</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32500]</label>
+			<onup>5101</onup>
+			<ondown>5121</ondown>
+		</control>
+		
+		<control type="button" id="5121">
+			<description>button rescrape game</description>
+			<posx>34</posx>
+			<posy>-62</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32501]</label>
+			<onup>5110</onup>
+			<ondown>5122</ondown>
+		</control>
+		<control type="button" id="5122">
+			<description>button rescrape selection</description>
+			<posx>34</posx>
+			<posy>-24</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32502]</label>
+			<onup>5121</onup>
+			<ondown>5111</ondown>
+		</control>
+		
+		<control type="button" id="5111">
+			<description>button add rom collection</description>
+			<posx>34</posx>
+			<posy>14</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32503]</label>
+			<onup>5122</onup>
+			<ondown>5112</ondown>
+		</control>
+		<control type="button" id="5112">
+			<description>button edit rom collection</description>
+			<posx>34</posx>
+			<posy>52</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32504]</label>
+			<onup>5111</onup>
+			<ondown>5117</ondown>
+		</control>
+		<control type="button" id="5117">
+			<description>button edit offline scraper</description>
+			<posx>34</posx>
+			<posy>90</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32505]</label>
+			<onup>5112</onup>
+			<ondown>5113</ondown>
+		</control>
+		<control type="button" id="5113">
+			<description>button edit command</description>
+			<posx>34</posx>
+			<posy>126</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32506]</label>
+			<onup>5117</onup>
+			<ondown>5118</ondown>
+		</control>
+		
+		<control type="button" id="5118">
+			<description>button game as favorite</description>
+			<posx>34</posx>
+			<posy>162</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32507]</label>
+			<onup>5113</onup>
+			<ondown>5119</ondown>
+		</control>
+		<control type="button" id="5119">
+			<description>button selection as favorite</description>
+			<posx>34</posx>
+			<posy>200</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32508]</label>
+			<onup>5118</onup>
+			<ondown>5120</ondown>
+		</control>
+		
+		<control type="button" id="5120">
+			<description>button export nfo files</description>
+			<posx>34</posx>
+			<posy>238</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32509]</label>
+			<onup>5119</onup>
+			<ondown>5114</ondown>
+		</control>
+		
+		<control type="button" id="5114">
+			<description>button delete rom</description>
+			<posx>34</posx>
+			<posy>276</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32510]</label>
+			<onup>5120</onup>
+			<ondown>5115</ondown>
+		</control>
+		<control type="button" id="5115">
+			<description>button delete rom collection</description>
+			<posx>34</posx>
+			<posy>314</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32511]</label>
+			<onup>5114</onup>
+			<ondown>5116</ondown>
+		</control>
+		<control type="button" id="5116">
+			<description>button clean database</description>
+			<posx>34</posx>
+			<posy>352</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32512]</label>
+			<onup>5115</onup>
+			<ondown>5223</ondown>
+		</control>
+		<control type="button" id="5223">
+			<description>button open settings</description>
+			<posx>34</posx>
+			<posy>390</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32513]</label>
+			<onup>5116</onup>
+			<ondown>5224</ondown>
+		</control>
+		<control type="button" id="5224">
+			<description>button set gameclient</description>
+			<posx>34</posx>
+			<posy>428</posy>
+			<width>328</width>
+			<height>38</height>
+			<font>fontContextMenu</font>
+			<align>center</align>
+			<textcolor>0x88FFFFFF</textcolor>
+			<focusedcolor>0xFFFFFFFF</focusedcolor>
+			<texturefocus border="5">rcb-button-focus.png</texturefocus>
+			<texturenofocus border="5">rcb-button-nofocus.png</texturenofocus>
+			<label>$ADDON[script.games.rom.collection.browser 32514]</label>
+			<onup>5223</onup>
+			<ondown>5101</ondown>
+		</control>
+	</controls>
+</window>

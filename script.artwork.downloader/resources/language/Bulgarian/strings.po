@@ -1,0 +1,93 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/xbmc-addons/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Грешка"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Сваляне"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Да"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Не"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Затвори"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Общи"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Филми"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "TV Сериали"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Допълнителни"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Плакат"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Изображения"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Език"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Гласове"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Сезон"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Размер"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Диск"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Инф."

@@ -1,0 +1,74 @@
+<settings>
+  <category label="30006">
+    <setting id="cat_video_0" type="text" label="30100" default="" />
+    <setting id="cat_video_1" type="text" label="30101" default="" />
+    <setting id="cat_video_2" type="text" label="30102" default="" />
+    <setting id="cat_video_3" type="text" label="30103" default="" />
+    <setting id="cat_video_4" type="text" label="30104" default="" />
+    <setting id="cat_video_5" type="text" label="30105" default="" />
+    <setting id="cat_video_6" type="text" label="30106" default="" />
+    <setting id="cat_video_7" type="text" label="30107" default="" />
+    <setting id="cat_video_8" type="text" label="30108" default="" />
+    <setting id="cat_video_9" type="text" label="30109" default="" />
+    <setting id="cat_video_10" type="text" label="30110" default="" />
+    <setting id="cat_video_11" type="text" label="30111" default="" />
+    <setting id="cat_video_12" type="text" label="30112" default="" />
+    <setting id="cat_video_13" type="text" label="30113" default="" />
+    <setting id="cat_video_14" type="text" label="30114" default="" />
+    <setting id="cat_video_15" type="text" label="30115" default="" />
+    <setting id="cat_video_16" type="text" label="30116" default="" />
+    <setting id="cat_video_17" type="text" label="30117" default="" />
+    <setting id="cat_video_18" type="text" label="30118" default="" />
+    <setting id="cat_video_19" type="text" label="30119" default="" />
+  </category>
+  <category label="30007">
+    <setting id="cat_audio_0" type="text" label="30100" default="" />
+    <setting id="cat_audio_1" type="text" label="30101" default="" />
+    <setting id="cat_audio_2" type="text" label="30102" default="" />
+    <setting id="cat_audio_3" type="text" label="30103" default="" />
+    <setting id="cat_audio_4" type="text" label="30104" default="" />
+    <setting id="cat_audio_5" type="text" label="30105" default="" />
+    <setting id="cat_audio_6" type="text" label="30106" default="" />
+    <setting id="cat_audio_7" type="text" label="30107" default="" />
+    <setting id="cat_audio_8" type="text" label="30108" default="" />
+    <setting id="cat_audio_9" type="text" label="30109" default="" />
+    <setting id="cat_audio_10" type="text" label="30110" default="" />
+    <setting id="cat_audio_11" type="text" label="30111" default="" />
+    <setting id="cat_audio_12" type="text" label="30112" default="" />
+    <setting id="cat_audio_13" type="text" label="30113" default="" />
+    <setting id="cat_audio_14" type="text" label="30114" default="" />
+    <setting id="cat_audio_15" type="text" label="30115" default="" />
+    <setting id="cat_audio_16" type="text" label="30116" default="" />
+    <setting id="cat_audio_17" type="text" label="30117" default="" />
+    <setting id="cat_audio_18" type="text" label="30118" default="" />
+    <setting id="cat_audio_19" type="text" label="30119" default="" />
+  </category>
+  <category label="30008">
+    <setting id="cat_image_0" type="text" label="30100" default="" />
+    <setting id="cat_image_1" type="text" label="30101" default="" />
+    <setting id="cat_image_2" type="text" label="30102" default="" />
+    <setting id="cat_image_3" type="text" label="30103" default="" />
+    <setting id="cat_image_4" type="text" label="30104" default="" />
+    <setting id="cat_image_5" type="text" label="30105" default="" />
+    <setting id="cat_image_6" type="text" label="30106" default="" />
+    <setting id="cat_image_7" type="text" label="30107" default="" />
+    <setting id="cat_image_8" type="text" label="30108" default="" />
+    <setting id="cat_image_9" type="text" label="30109" default="" />
+    <setting id="cat_image_10" type="text" label="30110" default="" />
+    <setting id="cat_image_11" type="text" label="30111" default="" />
+    <setting id="cat_image_12" type="text" label="30112" default="" />
+    <setting id="cat_image_13" type="text" label="30113" default="" />
+    <setting id="cat_image_14" type="text" label="30114" default="" />
+    <setting id="cat_image_15" type="text" label="30115" default="" />
+    <setting id="cat_image_16" type="text" label="30116" default="" />
+    <setting id="cat_image_17" type="text" label="30117" default="" />
+    <setting id="cat_image_18" type="text" label="30118" default="" />
+    <setting id="cat_image_19" type="text" label="30119" default="" />
+  </category>
+  <category label="30013">
+    <setting id="catCount" type="bool" label="30016" default="true"/>
+    <setting id="showMessages" type="bool" label="30020" default="false"/>
+    <setting id="forceView" type="bool" label="30014" default="true"/>
+    <setting id="viewMode2" type="number" label="30015" default="550"/>
+  </category>
+</settings>

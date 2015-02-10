@@ -1,0 +1,530 @@
+# XBMC Media Center language file
+# Addon Name: XBMC Subtitles
+# Addon id: script.xbmc.subtitles
+# Addon version: 3.9.2
+# Addon Provider: amet, mr_blobby
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#610"
+msgid "Search "
+msgstr "Buscar"
+
+msgctxt "#611"
+msgid "Video should be running"
+msgstr "O vídeo ten de estar en reprodución"
+
+msgctxt "#612"
+msgid "Manually enter search string"
+msgstr "Inserir manualmente a cadea a buscar"
+
+msgctxt "#642"
+msgid "Searching subtitles %s"
+msgstr "Buscando os subtítulos %s"
+
+msgctxt "#646"
+msgid "Connecting..."
+msgstr "Conectando..."
+
+msgctxt "#649"
+msgid "Downloading subtitles..."
+msgstr "Descargando subtítulos..."
+
+msgctxt "#652"
+msgid "Subtitles file downloaded and extracted"
+msgstr "Descargouse e extraeuse o ficheiro de subtítulos"
+
+msgctxt "#653"
+msgid "Connection failed"
+msgstr "Fallou a conexión"
+
+msgctxt "#654"
+msgid "Error extracting subtitles"
+msgstr "Produciuse un error ao extraer os subtítulos"
+
+msgctxt "#655"
+msgid "Local subtitle available"
+msgstr "subtítulos locais dispoñíbeis"
+
+msgctxt "#656"
+msgid "Service did not respond within the time out limit"
+msgstr "O servizo non respondeu dentro do tempo de espera"
+
+msgctxt "#657"
+msgid "No Subtitles Found!"
+msgstr "Non se atoparon subtítulos."
+
+msgctxt "#744"
+msgid "subtitles found for"
+msgstr "subtítulos atopados para"
+
+msgctxt "#747"
+msgid "Search Using Parent Folder"
+msgstr "Buscar usando o cartafol pai"
+
+msgctxt "#748"
+msgid "You can't save subtitle to selected destination"
+msgstr "Non se pode gardar os subtítulos no destino seleccionado"
+
+msgctxt "#750"
+msgid "Would you like to activate this subtitle temporarily?"
+msgstr "Quere activar temporalmente este subtítulo?"
+
+msgctxt "#751"
+msgid "Enter Movie Name (year)"
+msgstr "Inserir o nome do filme (ano)"
+
+msgctxt "#755"
+msgid "Server is overloaded, please try again later"
+msgstr "O servidor está sobrecardado, por favor ténteo máis tarde"
+
+msgctxt "#756"
+msgid "Login failed. Please verify your settings at the addon Configuration"
+msgstr "Fallo no inicio de sesión. Por favor verifique os seus axustes na configuración do engadido"
+
+msgctxt "#757"
+msgid "Server requires you to rewrite code from image"
+msgstr "O servidor require que volva escribir o código da imaxe"
+
+msgctxt "#758"
+msgid "Please take look at notification area"
+msgstr "Por favor bótelle unha ollada á área de notificación"
+
+msgctxt "#759"
+msgid "Enter code of image in notification area"
+msgstr "Inserir o código da imaxe na área de notificación"
+
+msgctxt "#760"
+msgid "Available Services"
+msgstr "Servizos Dispoñíbeis"
+
+msgctxt "#761"
+msgid "You must be logged in to download these subtitles,[CR]verify your settings at the addon Configuration"
+msgstr "Ten de ter iniciado sesión para descargar estes subtítulos,[CR]verifique os seus axustes na configuración do engadido"
+
+msgctxt "#762"
+msgid "Addon Settings"
+msgstr "Axustes do Engadido"
+
+msgctxt "#763"
+msgid "Auto downloading first 'sync' subtitle"
+msgstr "descargando automaticamente o primeiro subtítulo 'sincro'"
+
+msgctxt "#764"
+msgid "Downloading first 'sync' sub"
+msgstr "Descargando o primeiro sub 'sincro'"
+
+msgctxt "#765"
+msgid "first 'sync' subtitle downloaded"
+msgstr "descargado o primeiro subtítulo 'sincro'"
+
+msgctxt "#766"
+msgid "Choose Subtitle folder"
+msgstr "Seleccionar o cartafol dos subtítulos"
+
+msgctxt "#767"
+msgid "No 'sync' subtitle found"
+msgstr "Non se atopou o subtítulo 'sincro'"
+
+msgctxt "#30100"
+msgid "Languages"
+msgstr "Idiomas"
+
+msgctxt "#30101"
+msgid "Primary Language"
+msgstr "Idioma Principal"
+
+msgctxt "#30102"
+msgid "Secondary Language"
+msgstr "Idioma Secundario"
+
+msgctxt "#30103"
+msgid "Services"
+msgstr "Servizos"
+
+msgctxt "#30104"
+msgid "- Podnapisi.net Username"
+msgstr "- Nome de usuario de Podnapisi.net"
+
+msgctxt "#30105"
+msgid "- Podnapisi.net Password"
+msgstr "- Contrasinal de Podnapisi.net"
+
+msgctxt "#30106"
+msgid "Advanced Options"
+msgstr "Opcións Avanzadas"
+
+msgctxt "#30107"
+msgid "Subtitle Download Folder Same As Movie"
+msgstr "Usar o cartafol de filmes para a descarga de subtítulos"
+
+msgctxt "#30108"
+msgid "- Set Custom Subtitle Download Path"
+msgstr "- Estabelecer o camiño personalizado de descarga de subtítulos"
+
+msgctxt "#30110"
+msgid "Manually Enter Search String"
+msgstr "Inserir manualmente a cade a buscar"
+
+msgctxt "#30111"
+msgid "Third Language"
+msgstr "Terceiro Idioma"
+
+msgctxt "#30113"
+msgid "Select Default Movie Service"
+msgstr "Seleccionar o servizo de filmes predefinido "
+
+msgctxt "#30114"
+msgid "Select Default TV Show Service"
+msgstr "Seleccionar o servizo de programas de TV predefinido"
+
+msgctxt "#30118"
+msgid "Display file name in results page"
+msgstr "Amosar o nome do ficheiro na páxina de resultados"
+
+msgctxt "#30119"
+msgid "Search Using Parent Folder"
+msgstr "Buscar usando o cartafol pai"
+
+msgctxt "#30121"
+msgid "Add Language To Filename "
+msgstr "Engadir un idioma ao ficheiro"
+
+msgctxt "#30122"
+msgid "Set Default Timeout"
+msgstr "Estabelecer o tempo de espera predefinido"
+
+msgctxt "#30123"
+msgid "- Legendas.TV Username"
+msgstr "- Nome de usuario de Legendas.TV"
+
+msgctxt "#30124"
+msgid "- Legendas.TV Password"
+msgstr "- Contrasinal de Legendas.TV"
+
+msgctxt "#30126"
+msgid "- Itasa Username"
+msgstr "- Nome de usuario de Itasa"
+
+msgctxt "#30127"
+msgid "- Itasa Password"
+msgstr "- Contrasinal de Itasa"
+
+msgctxt "#30128"
+msgid "- Titulky Username"
+msgstr "- Nome de usuario de Titulky"
+
+msgctxt "#30129"
+msgid "- Titulky Password"
+msgstr "- Contrasinal de Titulky"
+
+msgctxt "#30130"
+msgid "Search next available service if no results are found"
+msgstr "Se non se atopan resultados buscar no seguinte servizo dispoñíbel"
+
+msgctxt "#30131"
+msgid "Auto download first \"sync\" subtitle"
+msgstr "descargar automaticamente o primeiro subtítulo 'sincro'"
+
+msgctxt "#30132"
+msgid "- LegendasDivx Username"
+msgstr "- Nome de usuario de LegendasDivx"
+
+msgctxt "#30133"
+msgid "- LegendasDivx Password"
+msgstr "- Contrasinal de LegendasDivx"
+
+msgctxt "#30134"
+msgid "- PTSubs Username"
+msgstr "- Nome de usuario de PTSubs"
+
+msgctxt "#30135"
+msgid "- PTSubs Password"
+msgstr "- Contrasinal de PTSubs"
+
+msgctxt "#30136"
+msgid "- OmniSubs Username"
+msgstr "- Nome de usuario de OmniSubs"
+
+msgctxt "#30137"
+msgid "- OmniSubs Password"
+msgstr "- Contrasinal de OmniSubs"
+
+msgctxt "#30138"
+msgid "- LegendasZone Username"
+msgstr "- Nome de usuario de LegendasZone"
+
+msgctxt "#30139"
+msgid "- LegendasZone Password"
+msgstr "- Contrasinal de LegendasZone"
+
+msgctxt "#30140"
+msgid "- Choose subs type:"
+msgstr "- Seleccionar o tipo de subtítulos:"
+
+msgctxt "#30141"
+msgid "SubRip"
+msgstr "SubRip"
+
+msgctxt "#30142"
+msgid "TMPlayer"
+msgstr "TMPlayer"
+
+msgctxt "#30143"
+msgid "MicroDVD"
+msgstr "MicroDVD"
+
+msgctxt "#30144"
+msgid "MPl2"
+msgstr "MPl2"
+
+msgctxt "#30145"
+msgid "Use 'Subs' subfolder for storing subtitles"
+msgstr "Usar o subcartafol 'Subs' para gardar o subtítulos"
+
+msgctxt "#30146"
+msgid "- napisy24.pl Username"
+msgstr "- Nome de usuario de napisy24.pl"
+
+msgctxt "#30147"
+msgid "- napisy24.pl Password"
+msgstr "- Contrasinal de napisy24.pl"
+
+msgctxt "#30148"
+msgid "- euTorrents Username"
+msgstr "- Nome de usuario de euTorrents"
+
+msgctxt "#30149"
+msgid "- euTorrents Password"
+msgstr "- Contrasinal euTorrents"
+
+msgctxt "#30150"
+msgid "No sub(s) in"
+msgstr "Sen subtítulo(s)"
+
+msgctxt "#30151"
+msgid "Search manual or parent!"
+msgstr "Busca manual o no pai!"
+
+msgctxt "#30152"
+msgid "Found sub(s) in"
+msgstr "Atopados subtítulo(s)"
+
+msgctxt "#30153"
+msgid "Searching Title... Please wait!"
+msgstr "Buscando o título... Agarda por favor!"
+
+msgctxt "#30154"
+msgid "Downloading... Please Wait!"
+msgstr "Descargando... Agarda por favor!"
+
+msgctxt "#30155"
+msgid "Extracting... Please Wait!"
+msgstr "Extraendo... Argarda por favor!"
+
+msgctxt "#30156"
+msgid "Done Extracting!"
+msgstr "Rematou a extracción!"
+
+msgctxt "#30157"
+msgid "Playing Title!"
+msgstr "Reproducindo o título!"
+
+msgctxt "#30158"
+msgid "- Pipocas Username"
+msgstr "- Nome de usuario de Pipocas"
+
+msgctxt "#30159"
+msgid "- Pipocas Password"
+msgstr "- Contrasinal de Pipocas"
+
+msgctxt "#30160"
+msgid "Pause while showing UI"
+msgstr "Pausar mentres se mostra a Interface de Usuario"
+
+msgctxt "#30201"
+msgid "Albanian"
+msgstr "Albanés"
+
+msgctxt "#30202"
+msgid "Arabic"
+msgstr "Árabe"
+
+msgctxt "#30203"
+msgid "Belarusian"
+msgstr "Bielorruso"
+
+msgctxt "#30204"
+msgid "Bosnian (Latin)"
+msgstr "Bosníaco (Latino)"
+
+msgctxt "#30205"
+msgid "Bulgarian"
+msgstr "Búlgaro"
+
+msgctxt "#30206"
+msgid "Catalan"
+msgstr "Catalán"
+
+msgctxt "#30207"
+msgid "Chinese"
+msgstr "Chines"
+
+msgctxt "#30208"
+msgid "Croatian"
+msgstr "Croata"
+
+msgctxt "#30209"
+msgid "Czech"
+msgstr "Checo"
+
+msgctxt "#30210"
+msgid "Danish"
+msgstr "Danés"
+
+msgctxt "#30211"
+msgid "Dutch"
+msgstr "Neerlandés"
+
+msgctxt "#30212"
+msgid "English"
+msgstr "Inglés"
+
+msgctxt "#30213"
+msgid "Estonian"
+msgstr "Estoniano"
+
+msgctxt "#30214"
+msgid "Finnish"
+msgstr "Finlandés"
+
+msgctxt "#30215"
+msgid "French"
+msgstr "Francés"
+
+msgctxt "#30216"
+msgid "German"
+msgstr "Alemán"
+
+msgctxt "#30217"
+msgid "Greek"
+msgstr "Grego"
+
+msgctxt "#30218"
+msgid "Hebrew"
+msgstr "Hebreo"
+
+msgctxt "#30219"
+msgid "Hindi"
+msgstr "Hindi"
+
+msgctxt "#30220"
+msgid "Hungarian"
+msgstr "Húngaro"
+
+msgctxt "#30221"
+msgid "Icelandic"
+msgstr "Islandés"
+
+msgctxt "#30222"
+msgid "Indonesian"
+msgstr "Indonesio"
+
+msgctxt "#30224"
+msgid "Italian"
+msgstr "Italiano"
+
+msgctxt "#30225"
+msgid "Japanese"
+msgstr "Xaponés"
+
+msgctxt "#30226"
+msgid "Korean"
+msgstr "Coreano"
+
+msgctxt "#30227"
+msgid "Latvian"
+msgstr "Letón"
+
+msgctxt "#30228"
+msgid "Lithuanian"
+msgstr "Lituano"
+
+msgctxt "#30229"
+msgid "Macedonian"
+msgstr "Macedonio"
+
+msgctxt "#30230"
+msgid "Norwegian"
+msgstr "Noruegués"
+
+msgctxt "#30232"
+msgid "Polish"
+msgstr "Polaco"
+
+msgctxt "#30233"
+msgid "Portuguese"
+msgstr "Portugués"
+
+msgctxt "#30234"
+msgid "Portuguese (Brazil)"
+msgstr "Portugués (Brasil)"
+
+msgctxt "#30235"
+msgid "Romanian"
+msgstr "Romanés"
+
+msgctxt "#30236"
+msgid "Russian"
+msgstr "Ruso"
+
+msgctxt "#30237"
+msgid "SerbianLatin"
+msgstr "SerbioLatino"
+
+msgctxt "#30238"
+msgid "Slovak"
+msgstr "Eslovaco"
+
+msgctxt "#30239"
+msgid "Slovenian"
+msgstr "Esloveno"
+
+msgctxt "#30240"
+msgid "Spanish"
+msgstr "Castelán"
+
+msgctxt "#30242"
+msgid "Swedish"
+msgstr "Sueco"
+
+msgctxt "#30243"
+msgid "Thai"
+msgstr "Tailandés"
+
+msgctxt "#30244"
+msgid "Turkish"
+msgstr "Turco"
+
+msgctxt "#30245"
+msgid "Ukrainian"
+msgstr "Ucraíno"
+
+msgctxt "#30246"
+msgid "Vietnamese"
+msgstr "Vietnamita"
+
+msgctxt "#30247"
+msgid "Farsi"
+msgstr "Persa"

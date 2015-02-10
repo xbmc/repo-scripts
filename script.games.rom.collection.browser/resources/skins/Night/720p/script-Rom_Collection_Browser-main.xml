@@ -1,0 +1,1783 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window>		
+	<allowoverlay>no</allowoverlay>
+	<defaultcontrol always="false">500</defaultcontrol>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<controls>
+		<!-- background -->
+		<control type="image" id="75">
+		    <description>background image</description>
+		    <posx>0</posx>
+		    <posy>0</posy>
+		    <width>1280</width>
+		    <height>720</height>
+		    <aspectratio>stretch</aspectratio>
+			<texture fallback="curtains.png">$INFO[ListItem.Property(background)]</texture>
+			<animation effect="fade" start="0" end="100" time="800">WindowOpen</animation>	
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<animation effect="fade" start="0" end="100" time="200">Visible</animation>	
+			<animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+			<visible>!Control.IsVisible(52)</visible>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>file-black-background1.png</texture>
+			<visible>Control.IsVisible(50)</visible>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<fadetime>400</fadetime>
+			<texture>curtains_diffuse.png</texture>
+			<animation effect="fade" start="0" end="100" time="800">WindowOpen</animation>	
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<visible>Control.IsVisible(52)</visible>
+		</control>
+		<control type="image"><!-- Fanart -->
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>movie-back3.png</texture>
+			<aspectratio>stretch</aspectratio>
+			<animation effect="fade" start="0" end="100" time="800">WindowOpen</animation>	
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<animation effect="fade" start="0" end="100" time="200">Visible</animation>	
+			<animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+			<visible>Control.IsVisible(51)</visible>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>pic_back.png</texture>
+			<visible>Control.IsVisible(52)</visible>
+		</control>
+		<control type="image"><!-- Fanart -->
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>movie-back3.png</texture>
+			<aspectratio>stretch</aspectratio>
+			<visible>Control.IsVisible(55)</visible>
+		</control>
+		
+		<!-- gamelist groups -->
+		<control type="group" id="200">
+			<control type="fixedlist" id="50">
+				<posx>0</posx>
+				<posy>-14</posy>
+				<height>885</height>
+				<width>1680</width>
+				<onup>50</onup>
+				<ondown>50</ondown>
+				<onleft>500</onleft>
+				<onright>2</onright>
+				<scrolltime>0</scrolltime>
+				<viewtype label="Files">list</viewtype>
+				<orientation>vertical</orientation>
+				<focusposition>9</focusposition>
+				<movement>9</movement>
+				<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+				<animation type="WindowOpen">
+					<effect type="slide" start="-1000,0" end="0,0" time="600" tween="cubic" easing="inout" />
+				</animation>			
+				<animation type="WindowClose">
+					<effect type="slide" start="0" end="-1000,0" time="600" tween="cubic" easing="inout" />
+				</animation>
+				<itemlayout width="1210" height="36">
+					<control type="label">
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>700</width>
+						<height>46</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_24</font>
+						<textcolor>67a1a1a1</textcolor>
+						<selectedcolor>FF67ffff</selectedcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>38</posy>
+						<width>880</width>
+						<height>4</height>
+						<aspectratio>stretch</aspectratio>
+						<texture>separator.png</texture>
+					</control>
+					<control type="image">
+						<posx>700</posx>
+						<posy>15</posy>
+						<width>100</width>
+						<height>25</height>
+						<texture>rcb-star.png</texture>					
+						<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout width="1210" height="36">
+					<control type="image">
+						<posx>0</posx>
+						<posy>38</posy>
+						<width>880</width>
+						<height>4</height>
+						<aspectratio>stretch</aspectratio>
+						<texture>separator.png</texture>
+					</control>
+					<control type="image">
+						<posx>-70</posx>
+						<posy>-34</posy>
+						<width>930</width>
+						<height>121</height>
+						<texture>highlight.png</texture>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+						<animation type="Focus" reversible="false">
+							<effect type="fade" start="0" end="70" time="800" />
+						</animation>
+					</control>
+					<control type="label">
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>680</width>
+						<height>46</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_24</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+					<control type="image">
+						<posx>700</posx>
+						<posy>15</posy>
+						<width>100</width>
+						<height>25</height>
+						<texture>rcb-star.png</texture>					
+						<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+					</control>
+				</focusedlayout>
+			</control>
+
+			<control type="group">
+				<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+				<visible>Control.IsVisible(50)</visible>
+				<animation type="WindowOpen">
+					<effect type="slide" start="800,0" end="0,0" time="600" delay="600" tween="cubic" easing="inout" />
+				</animation>			
+				<animation type="WindowClose">
+					<effect type="slide" start="0" end="800,0" time="600" delay="600" tween="cubic" easing="inout" />
+				</animation>
+				<control type="image">
+					<posx>870</posx>
+					<posy>360</posy>
+					<width>400</width>
+					<height>360</height>
+					<aspectratio align="right" aligny="bottom">keep</aspectratio>
+					<texture background="true">$INFO[ListItem.Icon]</texture>
+					<bordertexture border="5">button-nofocus.png</bordertexture>
+					<bordersize>5</bordersize>
+					<fadetime>100</fadetime>
+				</control>
+				<control type="image">
+					<posx>870</posx>
+					<posy>360</posy>
+					<width>400</width>
+					<height>360</height>
+					<aspectratio align="right" aligny="bottom">keep</aspectratio>
+					<texture background="true">$INFO[ListItem(-1).Icon]</texture>
+					<bordertexture border="5">button-nofocus.png</bordertexture>
+					<bordersize>5</bordersize>
+					<animation type="Hidden">
+					<effect type="zoom" time="400" center="1140,660" start="100" end="180" tween="cubic" easing="in" />
+						<effect type="fade" time="400" start="100" end="0" />
+					</animation>
+					<visible>Container(50).OnNext</visible>
+				</control>
+				<control type="image">
+					<posx>870</posx>
+					<posy>360</posy>
+					<width>400</width>
+					<height>360</height>
+					<aspectratio align="right" aligny="bottom">keep</aspectratio>
+					<texture background="true">$INFO[ListItem(1).Icon]</texture>
+					<bordertexture border="5">button-nofocus.png</bordertexture>
+					<bordersize>5</bordersize>
+					<animation type="Hidden">
+						<effect type="zoom" time="400" center="1140,660" start="100" end="180" tween="cubic" easing="in" />
+						<effect type="fade" time="400" start="100" end="0" />
+					</animation>
+					<visible>Container(50).OnPrevious</visible>
+				</control>
+			</control>
+		
+			<!-- gamelist 51 -->
+			<control type="group">
+				<control type="fixedlist" id="51">
+					<posx>-100</posx>
+					<posy>250</posy>
+					<height>715</height>
+					<width>1500</width>
+					<onleft>51</onleft>
+					<onright>51</onright>
+					<onup>500</onup>
+					<ondown>2</ondown>
+					<viewtype label="3D Landscape">list</viewtype>
+					<orientation>horizontal</orientation>
+					<focusposition>2</focusposition>
+					<scrolltime>400</scrolltime>
+					<preloaditems>2</preloaditems>
+					<animation type="WindowOpen">
+						<effect type="slide" start="1400" end="0,0" time="1000" delay="200" tween="cubic" easing="inout" />
+					</animation>			
+					<animation type="WindowClose">
+						<effect type="slide" start="0" end="1400,0" time="1000" delay="200" tween="cubic" easing="inout" />
+					</animation>
+					<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+					<camera x="1340" y="380" />
+					<animation effect="rotatey" center="50" start="12" end="10" time="0" condition="true">Conditional</animation>
+					<itemlayout width="316" height="245">
+						<control type="group">
+							<posx>150</posx>
+							<posy>60</posy>
+							<control type="image">
+								<posx>136</posx>
+								<posy>132</posy>
+								<width>28</width>
+								<height>168</height>
+								<texture>newcase.png</texture>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+							</control>
+							<control type="image">
+								<posx>136</posx>
+								<posy>290</posy>
+								<width>36</width>
+								<height>304</height>
+								<texture>reflect_bottom2.png</texture>
+								<colordiffuse>89FFFFFF</colordiffuse>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+							</control>
+							<control type="image">
+								<posx>-150</posx>
+								<posy>130</posy>
+								<width>304</width>
+								<height>172</height>
+								<texture>xper_test.png</texture>
+								<colordiffuse>ccFFFFFF</colordiffuse>
+							</control>
+							<control type="image">
+								<posx>-150</posx>
+								<posy>130</posy>
+								<width>304</width>
+								<height>172</height>
+								<texture background="true" diffuse="xper_test.png">$INFO[ListItem.thumb]</texture>
+								<fadetime>200</fadetime>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+							</control>
+							<control type="image">
+								<posx>-150</posx>
+								<posy>298</posy>
+								<width>304</width>
+								<height>172</height>
+								<texture background="true" flipy="true" diffuse="xper_test.png">$INFO[ListItem.thumb]</texture>
+								<fadetime>200</fadetime>
+								<colordiffuse>89FFFFFF</colordiffuse>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+							</control>
+							<control type="image">
+								<posx>-200</posx>
+								<posy>285</posy>
+								<width>100</width>
+								<height>25</height>
+								<texture>rcb-star.png</texture>					
+								<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout width="360" height="515">
+						<control type="group">
+							<posx>124</posx>
+							<posy>60</posy>
+							<control type="image">
+								<posx>-186</posx>
+								<posy>60</posy>
+								<width>500</width>
+								<height>305</height>
+								<texture>3d_side_shadow.png</texture>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+								<animation type="Focus" reversible="false">
+									<effect type="fade" start="0" end="80" time="600" delay="100" />
+								</animation>
+							</control>
+							<control type="image">
+								<posx>236</posx>
+								<posy>90</posy>
+								<width>38</width>
+								<height>226</height>
+								<texture>newcase.png</texture>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+								<animation type="Focus" reversible="false">
+									<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+									<effect type="fade" start="0" end="100" time="600" />
+								</animation>
+							</control>
+							<control type="image">
+								<posx>238</posx>
+								<posy>306</posy>
+								<width>54</width>
+								<height>304</height>
+								<texture>test2.png</texture>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+								<animation type="Focus" reversible="false">
+									<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+									<effect type="fade" start="0" end="800" time="800" />
+								</animation>
+							</control>
+							<control type="image">
+								<posx>-150</posx>
+								<posy>86</posy>
+								<width>407</width>
+								<height>232</height>
+								<texture>xper_test.png</texture>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+								<animation type="Focus" reversible="false">
+									<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+								</animation>
+							</control>
+							<control type="image">
+								<posx>-148</posx>
+								<posy>314</posy>
+								<width>402</width>
+								<height>226</height>
+								<texture>mask_border2_3d1.png</texture>
+								<fadetime>200</fadetime>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+								<animation type="Focus" reversible="false">
+									<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+									<effect type="fade" start="0" end="50" time="600" />
+								</animation>
+							</control>
+							<control type="image">
+								<posx>-148</posx>
+								<posy>310</posy>
+								<width>400</width>
+								<height>224</height>
+								<texture flipy="true">xper_test.png</texture>
+								<colordiffuse>ff000000</colordiffuse>
+								<fadetime>200</fadetime>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+								<animation type="Focus" reversible="false">
+									<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+									<effect type="fade" start="0" end="100" time="600" />
+								</animation>
+							</control>
+							<control type="image">
+								<posx>-150</posx>
+								<posy>312</posy>
+								<width>407</width>
+								<height>224</height>
+								<texture background="true" flipy="true" diffuse="xper_test.png">$INFO[ListItem.Thumb]</texture>
+								<fadetime>200</fadetime>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+								<animation type="Focus" reversible="false">
+									<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+									<effect type="fade" start="0" end="70" time="600" />
+								</animation>
+							</control>
+							<control type="image">
+								<posx>-150</posx>
+								<posy>86</posy>
+								<width>407</width>
+								<height>232</height>
+								<texture background="true" diffuse="xper_test.png">$INFO[ListItem.Thumb]</texture>
+								<fadetime>200</fadetime>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+								<animation type="Focus" reversible="false">
+									<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+								</animation>
+							</control>
+							<control type="image">
+								<posx>-190</posx>
+								<posy>298</posy>
+								<width>100</width>
+								<height>25</height>
+								<texture>rcb-star.png</texture>					
+								<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+							</control>
+						</control>	
+					</focusedlayout>
+				</control>
+				<control type="image">
+					<visible>Control.IsVisible(51)</visible>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1280</width>
+					<height>720</height>
+					<texture>last-overlay.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="group">
+					<visible>Control.IsVisible(51)</visible>
+					<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+					<animation type="WindowOpen">
+						<effect type="slide" start="-600" end="0,0" time="600" tween="cubic" easing="inout" />
+					</animation>			
+					<animation type="WindowClose">
+						<effect type="slide" start="0,0" end="-600,0" time="600" tween="cubic" easing="inout" />
+					</animation>
+					<control type="label"><!--Movie title-->
+						<posx>15</posx>
+						<posy>-2</posy>
+						<width>1280</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>DejaVuSans_40</font>
+						<textcolor>FF67ffff</textcolor>
+						<label>[B]$INFO[ListItem.Label][/B]</label>
+					</control>
+					<control type="label"><!--Duration-->
+						<posx>15</posx>
+						<posy>33</posy>
+						<width>394</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_24</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label>$INFO[ListItem.Property(console)]</label>
+					</control>
+					<control type="label"><!--Year-->
+						<posx>15</posx>
+						<posy>56</posy>
+						<width>394</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_24</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label>$INFO[ListItem.Property(year)]</label>
+					</control>
+				</control>
+			</control>						
+			
+			<!-- gamelist 52 -->
+			<control type="group">
+				<control type="group">
+					<posx>-20</posx>
+					<posy>0</posy>
+					<visible>Control.IsVisible(52)</visible>
+					<control type="image">
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>436</width>
+						<height>244</height>
+						<visible>!Player.HasVideo | IsEmpty(ListItem.Property(gameplaymain))</visible>
+						<texture background="true" diffuse="showcase-diffuse.png" fallback="missing.jpg">$INFO[ListItem.Property(gameinfobig)]</texture>
+						<fadetime>400</fadetime>
+						<aspectratio>stretch</aspectratio>
+						<animation type="WindowOpen" reversible="false">
+							<effect type="slide" start="0,100" end="0,0" time="400" tween="cubic" easing="out" />
+							<effect type="fade" start="0" end="100" time="400" />
+						</animation>
+						<animation type="WindowClose" reversible="false">
+							<effect type="fade" start="100" end="0" time="400" />
+						</animation>
+						<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+					</control>
+					<!-- videowindowbig -->
+					<control type="videowindow">
+						<animation type="WindowOpen" reversible="false">
+							<effect type="slide" start="0,100" end="0,0" time="400" tween="cubic" easing="out" />
+							<effect type="fade" start="0" end="100" time="400" />
+						</animation>
+						<animation type="WindowClose" reversible="false">
+							<effect type="fade" start="100" end="0" time="400" />
+						</animation>
+						<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+						<description>video control</description>
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>436</width>
+						<height>244</height>											
+						<visible>!IsEmpty(ListItem.Property(videosizebig)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
+					</control>
+					<control type="button">
+						<description>click absorber</description>
+						<posx>20</posx>
+						<posy>0</posy>
+						<width>436</width>
+						<height>244</height>
+						<texturefocus></texturefocus>
+						<texturenofocus></texturenofocus>
+						<visible>!IsEmpty(ListItem.Property(videosizebig))</visible>
+					</control>	
+					<control type="wraplist" id="52">
+						<posx>-70</posx>
+						<posy>220</posy>
+						<height>515</height>
+						<width>1380</width>
+						<onleft>52</onleft>
+						<onright>52</onright>
+						<onup>500</onup>
+						<ondown>2</ondown>
+						<viewtype label="Showcase">list</viewtype>
+						<orientation>horizontal</orientation>
+						<focusposition>4</focusposition>
+						<scrolltime>300</scrolltime>
+						<preloaditems>2</preloaditems>
+						<animation type="WindowOpen">
+							<effect type="zoom" time="400" center="640,360" start="50" end="100" tween="cubic" easing="out" />
+							<effect type="fade" time="400" start="0" end="100" />
+						</animation>			
+						<animation type="WindowClose">
+							<effect type="zoom" time="400" center="640,360" start="100" end="50" tween="cubic" easing="in" />
+							<effect type="fade" time="400" start="100" end="0" />
+						</animation>
+						<itemlayout width="150" height="245">
+							<control type="group">
+								<posx>0</posx>
+								<posy>180</posy>
+								<control type="image">
+									<posx>0</posx>
+									<posy>0</posy>
+									<width>150</width>
+									<height>260</height>
+									<aspectratio align="center" aligny="bottom">keep</aspectratio>
+									<texture background="true">$INFO[ListItem.Icon]</texture>
+									<bordertexture border="5">button-nofocus.png</bordertexture>
+									<bordersize>5</bordersize>
+									<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="image">
+									<posx>0</posx>
+									<posy>260</posy>
+									<width>150</width>
+									<height>260</height>
+									<aspectratio align="center" aligny="top">keep</aspectratio>
+									<texture background="true" flipy="true">$INFO[ListItem.Icon]</texture>
+									<bordertexture border="5">button-nofocus.png</bordertexture>
+									<bordersize>5</bordersize>
+									<animation effect="fade" start="30" end="30" time="0" condition="true">Conditional</animation>
+									<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="image">
+									<posx>-45</posx>
+									<posy>250</posy>
+									<width>100</width>
+									<height>25</height>
+									<texture>rcb-star.png</texture>					
+									<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+									<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+							</control>
+						</itemlayout>
+						<focusedlayout width="250" height="500">
+							<control type="group">
+								<posx>0</posx>
+								<posy>160</posy>
+								<control type="image">
+									<posx>0</posx>
+									<posy>0</posy>
+									<width>250</width>
+									<height>300</height>
+									<aspectratio align="center" aligny="bottom">keep</aspectratio>
+									<texture background="true">$INFO[ListItem.Icon]</texture>
+									<bordertexture border="5">pic_border.png</bordertexture>
+									<bordersize>5</bordersize>
+									<animation type="Focus" reversible="false">
+										<effect type="zoom" center="80,238" start="81" end="100" time="400" tween="back" easing="out" />
+									</animation>
+									<animation effect="fade" start="100" end="0" time="150" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="image">
+									<posx>0</posx>
+									<posy>300</posy>
+									<width>250</width>
+									<height>300</height>
+									<aspectratio align="center" aligny="top">keep</aspectratio>
+									<texture background="true" flipy="true">$INFO[ListItem.Icon]</texture>
+									<bordertexture border="5">pic_border.png</bordertexture>
+									<bordersize>5</bordersize>
+									<animation type="Focus" reversible="false">
+										<effect type="zoom" center="80,238" start="81" end="100" time="400" tween="back" easing="out" />
+									</animation>
+									<animation effect="fade" start="30" end="30" time="0" condition="true">Conditional</animation>
+									<animation effect="fade" start="100" end="0" time="150" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="image">
+									<posx>-45</posx>
+									<posy>290</posy>
+									<width>100</width>
+									<height>25</height>
+									<texture>rcb-star.png</texture>					
+									<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+									<animation effect="fade" start="100" end="0" time="150" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+								</control>
+								<control type="button">
+									<description>Autoplay video</description>
+									<posx>0</posx>
+									<posy>0</posy>
+									<width>0</width>
+									<height>0</height>
+									<texturefocus></texturefocus>
+									<texturenofocus></texturenofocus>
+									<visible>!IsEmpty(ListItem.Property(autoplayvideomain)) + !IsEmpty(ListItem.Property(gameplaymain))</visible>
+									<animation delay="300" effect="fade" start="100" end="100">Focus</animation>
+									<onfocus>XBMC.PlayMedia($ESCINFO[ListItem.Property(gameplaymain)],1)</onfocus>
+								</control>
+							</control>
+						</focusedlayout>
+					</control>											
+				</control>								
+				
+				<control type="group">
+					<visible>Control.IsVisible(52)</visible>
+					<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+					<animation type="WindowOpen">
+						<effect type="slide" start="-600" end="0,0" time="600" tween="cubic" easing="inout" />
+					</animation>			
+					<animation type="WindowClose">
+						<effect type="slide" start="0,0" end="-600,0" time="600" tween="cubic" easing="inout" />
+					</animation>
+					<control type="label"><!--Movie title-->
+						<posx>15</posx>
+						<posy>245</posy>
+						<width>394</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_28</font>
+						<textcolor>FF67ffff</textcolor>
+						<label>[B]$INFO[ListItem.Label][/B]</label>
+					</control>
+					<control type="label"><!--Duration-->
+						<posx>15</posx>
+						<posy>268</posy>
+						<width>394</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_24</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label>$INFO[ListItem.Property(console)]</label>
+					</control>
+					<control type="label"><!--Year-->
+						<posx>15</posx>
+						<posy>292</posy>
+						<width>394</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_24</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label>$INFO[ListItem.Property(year)]</label>
+					</control>
+				</control>
+				
+				<control type="grouplist">
+					<visible>Control.IsVisible(52)</visible>
+					<posx>1020</posx>
+					<posy>22</posy>
+					<itemgap>0</itemgap>
+					<animation type="WindowOpen">
+						<effect type="slide" start="800,0" end="0,0" time="800" delay="200" tween="cubic" easing="inout" />
+					</animation>			
+					<animation type="WindowClose">
+						<effect type="slide" start="0,0" end="800,0" time="800" delay="200" tween="cubic" easing="inout" />
+					</animation>
+					<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+					<control type="label"><!--Director-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF15efd9</textcolor>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32401][/B]</label>						
+					</control>
+					<control type="label"><!--Director-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_18</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label fallback="Not Available">$INFO[ListItem.Property(genre)]</label>
+					</control>
+					<control type="label">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>10</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF15efd9</textcolor>
+						<label></label>
+					</control>
+					<control type="label"><!--Writer-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF67ffff</textcolor>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32402][/B]</label>
+					</control>
+					<control type="label"><!--Writer-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_18</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label fallback="Not Available">$INFO[ListItem.Property(publisher)]</label>
+					</control>
+					<control type="label"><!--Director-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>10</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF15efd9</textcolor>
+						<label></label>
+					</control>
+					<control type="label"><!--Genre-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF15efd9</textcolor>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32403][/B]</label>
+					</control>
+					<control type="label"><!--Genre-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_18</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label fallback="Not Available">$INFO[ListItem.Property(developer)]</label>
+					</control>
+					<control type="label"><!--Director-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>10</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF15efd9</textcolor>
+						<label></label>
+					</control>
+					<control type="label"><!--Rating-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF15efd9</textcolor>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32753][/B]</label>
+					</control>
+					<control type="label"><!--Rating-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_18</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label fallback="Not Available">$INFO[ListItem.Property(rating)]</label>
+					</control>
+					<control type="label"><!--Director-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>10</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF15efd9</textcolor>
+						<label></label>
+					</control>
+					<control type="label"><!--Studio-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_22</font>
+						<textcolor>FF15efd9</textcolor>
+						<label>[B]$ADDON[script.games.rom.collection.browser 32754][/B]</label>
+					</control>
+					<control type="label"><!--Rating-->
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>390</width>
+						<height>24</height>
+						<font>LiberationSans_Regular_18</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label fallback="Not Available">$INFO[ListItem.Property(maxplayers)]</label>
+					</control>
+				</control>
+				
+				<control type="group" id="350">
+					<visible>Control.IsVisible(52)</visible>
+					<control type="textbox">
+						<posx>460</posx>
+						<posy>25</posy>
+						<width>540</width>
+						<height>348</height>
+						<font>LiberationSans_Regular_20</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label>$INFO[ListItem.Property(plot)]</label>
+						<align>justify</align>
+						<autoscroll time="3000" delay="5000" repeat="5000">Skin.HasSetting(autoscroll)</autoscroll>
+						<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+						<animation type="WindowOpen">
+							<effect type="slide" start="0,-800" end="0,0" time="600" tween="cubic" easing="inout" />
+						</animation>			
+						<animation type="WindowClose">
+							<effect type="slide" start="0,0" end="0,-800" time="600" tween="cubic" easing="inout" />
+						</animation>
+					</control>
+				</control>				
+			</control>
+			
+			<!-- gamelists without video support go from id 55-58--> 			
+			
+			<control type="fixedlist" id="55">
+				<posx>-30</posx>
+				<posy>250</posy>
+				<height>615</height>
+				<width>1400</width><!-- 1400 -->
+				<onleft>55</onleft>
+				<onright>55</onright>
+				<onup>500</onup>
+				<ondown>2</ondown>
+				<viewtype label="Poster">list</viewtype>
+				<orientation>horizontal</orientation>
+				<focusposition>3</focusposition>
+				<scrolltime>400</scrolltime>
+				<preloaditems>2</preloaditems>
+				<pagecontrol>65</pagecontrol>
+				<animation type="WindowOpen">
+					<effect type="zoom" time="400" center="640,360" start="50" end="100" tween="cubic" easing="out" />
+					<effect type="fade" time="400" start="0" end="100" />
+				</animation>			
+				<animation type="WindowClose">
+					<effect type="zoom" time="400" center="640,360" start="100" end="50" tween="cubic" easing="in" />
+					<effect type="fade" time="400" start="100" end="0" />
+				</animation>
+				<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+				<camera x="1340" y="380" />
+				<animation effect="rotatey" center="50" start="12" end="10" time="0" condition="true">Conditional</animation>
+				<itemlayout width="176" height="245">
+					<control type="group">
+						<posx>150</posx>
+						<posy>0</posy>
+						<control type="image">
+							<posx>-2</posx>
+							<posy>133</posy>
+							<width>28</width>
+							<height>238</height>
+							<texture>newcase.png</texture>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+						</control>
+						<control type="image">
+							<posx>-2</posx>
+							<posy>360</posy>
+							<width>36</width>
+							<height>304</height>
+							<texture>reflect_bottom2.png</texture>
+							<colordiffuse>89FFFFFF</colordiffuse>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+						</control>
+						<control type="image">
+							<posx>-149</posx>
+							<posy>131</posy>
+							<width>162</width>
+							<height>241</height>
+							<texture>posterview_diffuse.png</texture>
+						</control>
+						<control type="image">
+							<posx>-149</posx>
+							<posy>131</posy>
+							<width>162</width>
+							<height>241</height>
+							<texture background="true" diffuse="posterview_diffuse.png">$INFO[ListItem.Icon]</texture>
+							<fadetime>200</fadetime>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+						</control>
+						<control type="image">
+							<posx>-150</posx>
+							<posy>368</posy>
+							<width>162</width>
+							<height>241</height>
+							<texture flipy="true">posterview_diffuse_border.png</texture>
+							<fadetime>200</fadetime>
+							<colordiffuse>89FFFFFF</colordiffuse>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+							<animation effect="fade" start="0" end="30" time="0" condition="true">Conditional</animation>
+						</control>
+						<control type="image">
+							<posx>-150</posx>
+							<posy>368</posy>
+							<width>162</width>
+							<height>241</height>
+							<texture background="true" flipy="true" diffuse="posterview_diffuse.png">$INFO[ListItem.Icon]</texture>
+							<fadetime>200</fadetime>
+							<colordiffuse>89FFFFFF</colordiffuse>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+						</control>
+						<control type="image">
+							<posx>-195</posx>
+							<posy>355</posy>
+							<width>100</width>
+							<height>25</height>
+							<texture>rcb-star.png</texture>					
+							<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+						</control>
+					</control>
+				</itemlayout>
+				<focusedlayout width="220" height="515">
+					<control type="group">
+					<posx>140</posx>
+					<posy>0</posy>
+						<control type="image">
+							<posx>44</posx>
+							<posy>93</posy>
+							<width>36</width>
+							<height>294</height>
+							<texture>newcase.png</texture>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+							<animation type="Focus" reversible="false">
+								<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+								<effect type="fade" start="0" end="100" time="600" />
+							</animation>
+						</control>
+						<control type="image">
+							<posx>48</posx>
+							<posy>378</posy>
+							<width>48</width>
+							<height>304</height>
+							<texture>test2.png</texture>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+							<animation type="Focus" reversible="false">
+								<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+								<effect type="fade" start="0" end="800" time="800" />
+							</animation>
+						</control>
+						<control type="image">
+							<posx>-148</posx>
+							<posy>90</posy>
+							<width>211</width>
+							<height>300</height>
+							<texture>posterview_diffuse.png</texture>
+							<fadetime>200</fadetime>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+							<animation type="Focus" reversible="false">
+								<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+							</animation>
+						</control>
+						<control type="image">
+							<posx>-148</posx>
+							<posy>390</posy>
+							<width>211</width>
+							<height>300</height>
+							<texture flipy="true">posterview_diffuse.png</texture>
+							<colordiffuse>ff000000</colordiffuse>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+							<animation type="Focus" reversible="false">
+								<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+								<effect type="fade" start="0" end="100" time="600" />
+							</animation>
+						</control>
+						<control type="image">
+							<posx>-148</posx>
+							<posy>90</posy>
+							<width>211</width>
+							<height>300</height>
+							<texture background="true" diffuse="posterview_diffuse.png">$INFO[ListItem.Icon]</texture>
+							<fadetime>200</fadetime>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+							<animation type="Focus" reversible="false">
+								<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+							</animation>
+						</control>
+						<control type="image">
+							<posx>-148</posx>
+							<posy>386</posy>
+							<width>211</width>
+							<height>300</height>
+							<texture flipy="true">posterview_diffuse_border.png</texture>
+							<fadetime>200</fadetime>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+							<animation type="Focus" reversible="false">
+								<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+								<effect type="fade" start="0" end="30" time="600" />
+							</animation>
+						</control>
+						<control type="image">
+							<posx>-148</posx>
+							<posy>386</posy>
+							<width>211</width>
+							<height>300</height>
+							<texture background="true" flipy="true" diffuse="posterview_diffuse.png">$INFO[ListItem.Icon]</texture>
+							<fadetime>200</fadetime>
+							<aspectratio scalediffuse="false">stretch</aspectratio>
+							<animation type="Focus" reversible="false">
+								<effect type="zoom" center="60,238" start="80" end="100" time="600" tween="back" easing="out" />
+								<effect type="fade" start="0" end="70" time="600" />
+							</animation>
+						</control>
+						<control type="image">
+							<posx>-195</posx>
+							<posy>375</posy>
+							<width>100</width>
+							<height>25</height>
+							<texture>rcb-star.png</texture>					
+							<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+						</control>
+					</control>	
+				</focusedlayout>
+			</control>
+			
+			
+			<control type="group">
+				<visible>Control.IsVisible(55)</visible>
+				<animation effect="fade" start="100" end="0" time="200" condition="Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(songinformation)">Conditional</animation>
+				<animation type="WindowOpen">
+					<effect type="slide" start="-600" end="0,0" time="600" tween="cubic" easing="inout" />
+				</animation>			
+				<animation type="WindowClose">
+					<effect type="slide" start="0,0" end="-600,0" time="600" tween="cubic" easing="inout" />
+				</animation>
+				<control type="label"><!--Movie title-->
+					<posx>15</posx>
+					<posy>2</posy>
+					<width>1280</width>
+					<height>50</height>
+					<aligny>center</aligny>
+					<font>LiberationSans_Regular_40</font>
+					<textcolor>FF67ffff</textcolor>
+					<label>[B]$INFO[ListItem.Label][/B]</label>
+				</control>
+				<control type="label"><!--Duration-->
+					<posx>15</posx>
+					<posy>33</posy>
+					<width>394</width>
+					<height>50</height>
+					<aligny>center</aligny>
+					<font>LiberationSans_Regular_24</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(console)]</label>
+				</control>
+				<control type="label"><!--Year-->
+					<posx>15</posx>
+					<posy>56</posy>
+					<width>394</width>
+					<height>50</height>
+					<aligny>center</aligny>
+					<font>LiberationSans_Regular_24</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<label>$INFO[ListItem.Property(year)]</label>
+				</control>
+			</control>
+			
+			<!-- gamelist 56 -->
+			
+			<control type="group">
+				<visible>Control.IsVisible(56)</visible>
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1280</width>
+					<height>720</height>
+					<texture>tv-background.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<animation effect="fade" start="0" end="100" time="800">WindowOpen</animation>	
+					<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+					<animation effect="fade" start="0" end="100" time="200">Visible</animation>	
+					<animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+				</control>
+				
+				<control type="wraplist" id="56">
+					<posx>-100</posx>
+					<posy>0</posy>
+					<height>615</height>
+					<width>1400</width><!-- 1400 -->
+					<onleft>56</onleft>
+					<onright>56</onright>
+					<onup>500</onup>
+					<ondown>2</ondown>
+					<viewtype label="Slide">list</viewtype>
+					<orientation>horizontal</orientation>
+					<focusposition>2</focusposition>
+					<scrolltime>400</scrolltime>
+					<preloaditems>2</preloaditems>
+					<pagecontrol>5950</pagecontrol>
+					<animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>	
+					<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+					<animation effect="fade" start="0" end="100" time="200">Visible</animation>	
+					<animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+					<itemlayout width="210" height="700">
+						<control type="group">
+							<posx>0</posx>
+							<posy>200</posy>
+							<animation effect="fade" start="100" end="0" time="400" delay="400" condition="Control.HasFocus(8241)">Conditional</animation>
+							<control type="image">
+								<posx>0</posx>
+								<posy>0</posy>
+								<width>235</width>
+								<height>329</height>
+								<texture>poster_back_item.png</texture>
+								<fadetime>200</fadetime>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+							</control>
+							<control type="image">
+								<posx>16</posx>
+								<posy>10</posy>
+								<width>201</width>
+								<height>301</height>
+								<texture background="true" diffuse="poster_diffuse_itemlist.png">$INFO[ListItem.Icon]</texture>
+								<fadetime>200</fadetime>
+								<aspectratio scalediffuse="false">stretch</aspectratio>
+							</control>
+							<control type="image">
+								<posx>-30</posx>
+								<posy>300</posy>
+								<width>100</width>
+								<height>25</height>
+								<texture>rcb-star.png</texture>					
+								<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout width="304" height="800">
+						<control type="group">
+							<posx>10</posx>
+							<posy>200</posy>
+						</control>
+					</focusedlayout>
+				</control>
+			
+				<control type="image"><!-- Last Overlay -->
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1280</width>
+					<height>720</height>
+					<texture>2nd-overlay.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<animation effect="fade" start="0" end="100" time="800">WindowOpen</animation>	
+					<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+					<animation effect="fade" start="0" end="100" time="200">Visible</animation>	
+					<animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+				</control>
+				<control type="group">
+					<posx>300</posx>
+					<posy>120</posy>
+					<animation type="WindowOpen">
+						<effect type="zoom" time="400" center="640,360" start="180" end="100" tween="cubic" easing="out" />
+						<effect type="fade" time="400" start="0" end="100" />
+					</animation>			
+					<animation type="WindowClose">
+						<effect type="zoom" time="400" center="640,360" start="100" end="280" tween="cubic" easing="in" />
+						<effect type="fade" time="400" start="100" end="0" />
+					</animation>
+					<control type="image">
+						<posx>-108</posx>
+						<posy>-120</posy>
+						<width>583</width>
+						<height>720</height>
+						<texture>comic_glow.png</texture>
+						<colordiffuse>FFFFFFFF</colordiffuse>
+						<aspectratio scalediffuse="false">stretch</aspectratio>
+						<animation effect="fade" start="0" end="100" time="1000" delay="1000" condition="![Container(56).OnNext | Container(56).OnPrevious]">Conditional</animation>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>360</width>
+						<height>502</height>
+						<texture>poster_back.png</texture>
+						<fadetime>200</fadetime>
+						<aspectratio scalediffuse="false">stretch</aspectratio>
+					</control>
+					<control type="image">
+						<posx>39</posx>
+						<posy>21</posy>
+						<width>296</width>
+						<height>451</height>
+						<texture background="true" diffuse="poster_diffuse.png">$INFO[ListItem.Icon]</texture>
+						<fadetime>200</fadetime>
+						<aspectratio scalediffuse="false">stretch</aspectratio>
+					</control>
+					<control type="image">
+						<posx>-10</posx>
+						<posy>460</posy>
+						<width>100</width>
+						<height>25</height>
+						<texture>rcb-star.png</texture>					
+						<visible>!IsEmpty(ListItem.Property(isfavorite))</visible>
+					</control>
+				</control>
+				<control type="group">
+					<posx>640</posx>
+					<posy>290</posy>
+					<visible>!SubString(ListItem.Icon,DefaultFolderBack.png,Left)</visible>
+					<animation effect="fade" start="0" end="100" time="800">WindowOpen</animation>	
+					<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+					<animation effect="fade" start="0" end="100" time="200">Visible</animation>	
+					<animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+					<control type="label"><!--Movie title-->
+						<posx>15</posx>
+						<posy>245</posy>
+						<width>600</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_34</font>
+						<textcolor>FF67ffff</textcolor>
+						<label>[B]$INFO[ListItem.Label][/B]</label>
+					</control>
+					<control type="label">
+						<posx>15</posx>
+						<posy>273</posy>
+						<width>394</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_24</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label>$INFO[ListItem.Property(console)]</label>
+					</control>
+					<control type="label">
+						<posx>15</posx>
+						<posy>296</posy>
+						<width>394</width>
+						<height>50</height>
+						<aligny>center</aligny>
+						<font>LiberationSans_Regular_24</font>
+						<textcolor>FFFFFFFF</textcolor>
+						<label>$INFO[ListItem.Property(year)]</label>
+					</control>
+				</control>	
+			</control>
+		</control>
+				
+		<!-- filter controls -->
+		<control type="group" id="100">		
+			<animation effect="slide" start="0,0" end="0,0" delay="0" time="400" tween="quadratic" easing="out" condition="ControlGroup(100).HasFocus">Conditional</animation>
+			<animation effect="slide" start="0,0" end="0,-200" delay="0" time="400" tween="quadratic" easing="out" condition="!ControlGroup(100).HasFocus">Conditional</animation>
+			<control type="image">
+				<animation effect="zoom" start="0,0,1280,1" end="0,0,1280,180" time="300" tween="quadratic" easing="out" condition="ControlGroup(100).HasFocus">Conditional</animation>
+				<description>filter background image</description>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>160</height>
+				<texture flipy="true">InfoMessagePanel2.png</texture>
+				<colordiffuse>FFFFFFFF</colordiffuse>
+			</control>
+			<control type="radiobutton" id="1000">
+				<posx>25</posx>
+				<posy>50</posy>
+				<width>200</width>
+				<height>30</height>
+				<font>font13</font>
+				<label>$ADDON[script.games.rom.collection.browser 32404]</label>
+				<textcolor>FF000000</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<texturefocus>rcb-button-focus.png</texturefocus>
+				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
+				<onleft>900</onleft>
+				<onright>500</onright>
+				<onup>50</onup>
+				<ondown>1100</ondown>
+			</control>
+			<control type="button" id="1100"> 
+				<description>Search</description>
+				<posx>25</posx>
+				<posy>82</posy>
+				<width>200</width>
+				<height>30</height>
+				<visible>true</visible>
+				<colordiffuse>DDFFFFFF</colordiffuse>
+				<texturefocus>rcb-button-focus.png</texturefocus>
+				<texturenofocus>rcb-button-nofocus.png</texturenofocus>
+				<label>$ADDON[script.games.rom.collection.browser 32405]</label>
+				<textcolor>FF000000</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<disabledcolor>80FFFFFF</disabledcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textoffsetx>7</textoffsetx>
+				<textoffsety></textoffsety>
+				<pulseonselect></pulseonselect>
+				<onup>1000</onup>
+				<ondown>50</ondown>
+				<onleft>900</onleft>
+				<onright>500</onright>
+			</control>
+			<control type="image">
+				<posx>240</posx>
+				<posy>5</posy>
+				<width>5</width>
+				<height>160</height>
+				<texture>rcb-separator_vertical.png</texture>
+			</control>
+			
+			<control type="group">
+				<posx>250</posx>
+				<posy>0</posy>
+				<!-- Console filter -->
+				<control type="label">
+					<description>Consoles</description>
+					<posx>0</posx>
+					<posy>20</posy>
+					<width>200</width>
+					<align>center</align>
+					<textcolor>FF000000</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32406]</label>
+				</control>		
+				<control type="wraplist" id="500">
+					<posx>0</posx>
+					<posy>50</posy>
+					<width>200</width>
+					<height>96</height>
+					<onleft>1000</onleft>
+					<onright>600</onright>
+					<onup>500</onup>
+					<ondown>500</ondown>
+					<viewtype label="Console">wrap</viewtype>
+					<focusposition>1</focusposition>
+					<scrolltime>200</scrolltime>
+					<itemlayout height="32">
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>190</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FF000000</textcolor>
+							<selectedcolor>FF000000</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</itemlayout>
+					<focusedlayout height="32">
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>Control.HasFocus(500)</visible>
+							<texture border="5">rcb-button-focus.png</texture>
+						</control>
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>!Control.HasFocus(500)</visible>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>190</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FFFFFFFF</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</focusedlayout>
+				</control>
+				<control type="image">
+					<posx>205</posx>
+					<posy>5</posy>
+					<width>5</width>
+					<height>160</height>
+					<texture>rcb-separator_vertical.png</texture>
+				</control>
+				
+				<!-- Genre filter -->	
+				<control type="label">
+					<description>Genre</description>
+					<posx>210</posx>
+					<posy>20</posy>
+					<width>200</width>
+					<textcolor>FF000000</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32401]</label>
+					<align>center</align>
+				</control>
+				<control type="wraplist" id="600">
+					<posx>210</posx>
+					<posy>50</posy>
+					<width>200</width>
+					<height>96</height>
+					<onleft>500</onleft>
+					<onright>700</onright>
+					<onup>600</onup>
+					<ondown>600</ondown>
+					<viewtype label="Genre">wrap</viewtype>
+					<focusposition>1</focusposition>			
+					<scrolltime>200</scrolltime>
+					<itemlayout height="32">
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>190</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FF000000</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</itemlayout>
+					<focusedlayout height="32">
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>Control.HasFocus(600)</visible>
+							<texture border="5">rcb-button-focus.png</texture>
+						</control>
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>!Control.HasFocus(600)</visible>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>190</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FFFFFFFF</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</focusedlayout>
+				</control>
+				<control type="image">
+					<posx>415</posx>
+					<posy>5</posy>
+					<width>5</width>
+					<height>160</height>
+					<texture>rcb-separator_vertical.png</texture>
+				</control>
+				
+				<!-- Year filter -->	
+				<control type="label">
+					<description>Year</description>
+					<posx>420</posx>
+					<posy>20</posy>
+					<width>200</width>
+					<align>center</align>
+					<textcolor>FF000000</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32400]</label>
+				</control>		
+				<control type="wraplist" id="700">
+					<posx>420</posx>
+					<posy>50</posy>
+					<width>200</width>
+					<height>96</height>
+					<onleft>600</onleft>
+					<onright>800</onright>
+					<onup>700</onup>
+					<ondown>700</ondown>
+					<viewtype label="Year">wrap</viewtype>
+					<focusposition>1</focusposition>			
+					<scrolltime>200</scrolltime>
+					<itemlayout height="32">
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>190</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FF000000</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</itemlayout>
+					<focusedlayout height="32">
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>Control.HasFocus(700)</visible>
+							<texture border="5">rcb-button-focus.png</texture>
+						</control>
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>!Control.HasFocus(700)</visible>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>190</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FFFFFFFF</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</focusedlayout>
+				</control>
+				<control type="image">
+					<posx>625</posx>
+					<posy>5</posy>
+					<width>5</width>
+					<height>160</height>
+					<texture>rcb-separator_vertical.png</texture>
+				</control>
+				
+				<!-- Publisher filter -->	
+				<control type="label">
+					<description>Publisher</description>
+					<posx>630</posx>
+					<posy>20</posy>
+					<width>200</width>
+					<align>center</align>
+					<textcolor>FF000000</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32402]</label>
+				</control>		
+				<control type="wraplist" id="800">
+					<posx>630</posx>
+					<posy>50</posy>
+					<width>200</width>
+					<height>96</height>
+					<onleft>700</onleft>
+					<onright>900</onright>
+					<onup>800</onup>
+					<ondown>800</ondown>
+					<viewtype label="Year">wrap</viewtype>
+					<focusposition>1</focusposition>			
+					<scrolltime>200</scrolltime>
+					<itemlayout height="32">
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>190</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FF000000</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</itemlayout>
+					<focusedlayout height="32">
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>Control.HasFocus(800)</visible>
+							<texture border="5">rcb-button-focus.png</texture>
+						</control>
+						<control type="image">
+							<width>200</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>!Control.HasFocus(800)</visible>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>190</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FFFFFFFF</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</focusedlayout>
+				</control>
+				<control type="image">
+					<posx>835</posx>
+					<posy>5</posy>
+					<width>5</width>
+					<height>160</height>
+					<texture>rcb-separator_vertical.png</texture>
+				</control>
+				
+				<!-- Character filter -->	
+				<control type="label">
+					<description>Character</description>
+					<posx>840</posx>
+					<posy>20</posy>
+					<width>60</width>
+					<align>center</align>
+					<textcolor>FF000000</textcolor>
+					<label>$ADDON[script.games.rom.collection.browser 32407]</label>
+				</control>		
+				<control type="wraplist" id="900">
+					<posx>840</posx>
+					<posy>50</posy>
+					<width>60</width>
+					<height>96</height>
+					<onleft>800</onleft>
+					<onright>1000</onright>
+					<onup>900</onup>
+					<ondown>900</ondown>
+					<viewtype label="Character">wrap</viewtype>
+					<focusposition>1</focusposition>
+					<scrolltime>200</scrolltime>
+					<itemlayout height="32">
+						<control type="image">
+							<width>60</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>0</posx>
+							<posy>0</posy>
+							<width>60</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FF000000</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</itemlayout>
+					<focusedlayout height="32">
+						<control type="image">
+							<width>60</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>Control.HasFocus(900)</visible>
+							<texture border="5">rcb-button-focus.png</texture>
+						</control>
+						<control type="image">
+							<width>60</width>
+							<height>30</height>
+							<posx>0</posx>
+							<posy>0</posy>
+							<visible>!Control.HasFocus(900)</visible>
+							<texture border="5">rcb-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<posx>5</posx>
+							<posy>0</posy>
+							<width>50</width>
+							<height>30</height>
+							<font>font13</font>
+							<aligny>center</aligny>
+							<textcolor>FFFFFFFF</textcolor>
+							<selectedcolor>ffA60316</selectedcolor>
+							<align>left</align>
+							<info>ListItem.Label</info>
+						</control>
+					</focusedlayout>
+				</control>
+			</control>
+		</control>
+		
+		<!-- Button group -->
+		<control type="group" id="400">
+			<animation effect="slide" start="0,600" end="0,650" delay="0" time="400" tween="quadratic" easing="out" condition="ControlGroup(400).HasFocus">Conditional</animation>
+			<animation effect="slide" start="0,0" end="0,1300" delay="0" time="400" tween="quadratic" easing="out" condition="!ControlGroup(400).HasFocus">Conditional</animation>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1280</width>
+				<height>70</height>
+				<texture>InfoMessagePanel2.png</texture>
+				<visible></visible>				
+			</control>
+			<control type="button" id="2"> 
+				<description>Change View</description>
+				<posx>25</posx>
+				<posy>25</posy>
+				<width>250</width>
+				<height>30</height>
+				<visible>true</visible>
+				<colordiffuse>DDFFFFFF</colordiffuse>
+				<texturefocus>rcb-button-focus.png</texturefocus>
+				<label>$ADDON[script.games.rom.collection.browser 32408]</label>
+				<textcolor>FF000000</textcolor>
+				<focusedcolor>FFFFFFFF</focusedcolor>
+				<disabledcolor>80FFFFFF</disabledcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textoffsetx></textoffsetx>
+				<textoffsety></textoffsety>
+				<pulseonselect></pulseonselect>
+				<onup>50</onup>
+				<ondown>50</ondown>
+				<onleft>50</onleft>
+				<onright>50</onright>				
+			</control>			
+		</control>
+		
+		<!-- Messages -->
+		<control type="label" id="4000">
+			<description>Notes</description>
+			<posx>10</posx>
+			<posy>560</posy>
+			<width>680</width>
+			<height>10</height>
+			<align>left</align>
+			<scroll>true</scroll>
+		    <textcolor>DDFFFFFF</textcolor>
+		    <label></label>
+			<font>font10</font>
+		</control>		
+	</controls>
+</window>

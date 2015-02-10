@@ -1,0 +1,41 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Malay (http://www.transifex.com/projects/p/xbmc-addons/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Error"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Ya"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "Tidak"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "Am"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Bahasa"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Undian"

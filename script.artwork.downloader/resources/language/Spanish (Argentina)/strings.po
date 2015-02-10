@@ -1,0 +1,101 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Spanish (Argentina) (http://www.transifex.com/projects/p/xbmc-addons/language/es_AR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_AR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "Error"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "Descargando"
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "Finalizado"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "Sí"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "No"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "Cerrar"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "Películas"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "ClearArt"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "Logo"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "Póster"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "Imágenes"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "Idioma"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "Valoración"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr "Votos"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "Temporada"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "Tamaño"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "Disco"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "Info"

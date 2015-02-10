@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.forum.browser"
+       name="Forum Browser"
+       version="2.1.0"
+       provider-name="Rick Phillips (ruuk)">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.simplejson" version="2.0.9"/>
+    <import addon="script.web.viewer" version="0.9.6"/>
+  </requires>
+  <extension point="xbmc.python.script"
+             library="default.py">
+    <provides>executable</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="login"></extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">Durchsuche Foren innerhalb von XBMC</summary>
+    <summary lang="el">Περιήγηση σε φόρουμ μέσω του XBMC</summary>
+    <summary lang="en">Browse forums within XBMC</summary>
+    <summary lang="fr">Naviguer dans les forums avec XBMC</summary>
+    <summary lang="it">Sfoglia i forum dall'XBMC</summary>
+    <summary lang="ko">XBMC에서 포럼 탐색</summary>
+    <summary lang="pt">Navegue pelos fórums através do XBMC</summary>
+    <summary lang="pt_BR">Navegue pelos fórums através do XBMC</summary>
+    <description lang="de">Durchsuchen Forums in XBMC. Unterstützt Tapatalk aktivierte Foren (über 30000) und Forumrunner aktivierte Foren. Unterstützt auch boxee.tv. Foren, Themen, Beiträge , Abonnements und private Nachrichten anzeigen. Folgen Sie den Links im Web Viewer. Beiträge Antworten, private Nachrichten senden, Beiträge löschen, Zitate auch. Anzeigen von Bildern in Beiträgen, Forumsbeiträge Links folgen und Links downloaden. </description>
+    <description lang="el">Περιηγηθείτε σε Φόρουμ μέσω του XBMC. Υποστηρίζονται φόρουμ με ενεργό Tapatalk (πάνω από 30000) και Forumrunner, καθώς και το boxee.tv. Δείτε φόρουμ, θέματα, αναρτήσεις, συνδρομές και προσωπικά μηνύματα. Ακολουθήστε συνδέσμους στη Προβολή Ιστού. Αναρτήστε απαντήσεις, στείλτε προσωπικά μηνύματα, διαγράψτε αναρτήσεις, παραθέστε αναρτήσεις. Προβάλλετε εικόνες σε αναρτήσεις, ακολουθήστε συνδέσμους αναρτήσεων λήψεων.</description>
+    <description lang="en">Browse Forums in XBMC. Supports Tapatalk enabled forums (over 30000) and Forumrunner enabled forums. Also supports boxee.tv. View forums, threads, posts, subscriptions and private messages. Follow links in Web Viewer. Post replies, send private messages, delete posts, quote posts. View images in posts, follow post forum links and download post links.</description>
+    <description lang="fr">Naviguer dans les forums dans XBMC. Supporte Tapatalk  forums activés (plus de 30000) et Forumrunner forums activés. Supporte aussi boxee.tv. Voir les forum, fils de discussion, messages, souscriptions et messages privés.&#10;Suivre les liens dans Web Viewer. Poster des réponses, envoyer des messages privés, effacer des messages, coter des messages. Voir des images dans les messages, suivre les liens des messages de forum et les télécharger.</description>
+    <description lang="it">Sfoglia i Forum dall'XBMC. Supporta i forum che usano Tapatlk (circa 30000) e Forumrunner. Supporta pure boxee.tv. Vedi i forum, le discussioni, i post, le sottoscrizioni ed i messaggi privati. Segui i link nel Visualizzatore Web. Rispondi ai post, invia messaggi privati, cancella i post e quotali. Vedi le immagini, segui i link dei post e scaricali.</description>
+    <description lang="pt">Navegue pelos fórums no XBMC. Compatível com fórums tapatalk (mais de 30000) e Forumrunner. Também suporta boxee.tv. Veja fórums, tópicos, mensagens, subscrições e mensagens privadas. Consulte ligações através do Web Viewer. Coloque respostas, envie mensagens privadas, apague mensagens, cite mensagens. Veja imagens nas mensagens, consulte ligações das mensagens do fórum e transfira ligações das mensagens.</description>
+    <description lang="pt_BR">Navegue pelos fórums no XBMC. Compatível com fórums tapatalk (mais de 30000) e Forumrunner. Também suporta boxee.tv. Veja fórums, tópicos, mensagens, subscrições e mensagens privadas. Consulte ligações através do Web Viewer. Coloque respostas, envie mensagens privadas, apague mensagens, cite mensagens. Veja imagens nas mensagens, consulte ligações das mensagens do fórum e transfira ligações das mensagens.</description>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://forum.xbmc.org/showthread.php?tid=85018</forum>
+    <source>http://github.com/ruuk/script.forum.browser</source>
+  </extension>
+</addon>

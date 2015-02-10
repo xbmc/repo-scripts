@@ -1,0 +1,18 @@
+0.0.5 (81.01.2014)
+ - fixed translations in gotham
+
+0.0.4 (28.08.2013)
+ - added translations
+
+0.0.3
+ - In-game help
+ - New icon
+
+0.0.2
+ - New skin (thanks to Jugger)
+ - Avoid 4-connection tiles
+ - Fix keyboard navigation between buttons and the grid
+ - Code refactoring
+
+0.0.1
+ - Initial version

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<!-- 
+To submit translations for your native language
+
+1. Create a copy of this file
+2. Replace all english terms with your native equivalent
+3. Email the file to analogue@yahoo.com or create an issue on the googlecode issue tracker.
+-->
+
+<strings>
+  <string id="0">Myth TV</string>
+  <string id="1">Sledovat TV</string>
+  <string id="2">Sledovat záznamy (tato obrazovka bude přepsána)</string>
+  <string id="3">TV Program</string>
+  <string id="4">Následující záznamy</string>
+  <string id="5">Stav</string>
+  <string id="6">Nastavení</string>
+  <string id="7">IP/Název primárního serveru</string>
+  <string id="8">Port</string>
+  <string id="9">Port stavu</string>
+  <string id="10">Verze protokolu</string>
+  <string id="11">Název databáze</string>
+  <string id="12">Uživatel</string>
+  <string id="13">Heslo</string>
+  <string id="14">Adresáře pro záznam</string>
+  <string id="15"></string>
+  <string id="16"></string>
+  <string id="17">Uložit</string>
+  <string id="18">Myth TV - Nastavení</string>
+  <string id="19">Myth TV - Nastavení MySQL</string>
+  <string id="20">Myth TV - Nastavení cest</string>
+  <string id="21">Myth TV</string>
+  <string id="22">MySQL</string>
+  <string id="23">Cesty</string>
+  <string id="24">Test nastavení..</string>
+  <string id="25">Nastavení bylo úspěšně uloženo.</string>
+  
+  <string id="29">Nastavení bylo změněno. Zahodit neuložené změny?</string>
+  <string id="30">Zadána neplatná hodnota čísla.</string>
+  <string id="31">Selhalo připojení k promárnímu serveru backendu Myth TV.</string>
+  <string id="32">Selhalo připojení k MySQL databázi.</string>
+  <string id="33">Nastavení bylo úspěšně otestováno.</string>
+  <string id="34">V nastavení chybí hodnota '%s'.</string>
+  <string id="35">Soubor nastavení nebyl nalezen.</string>
+  <string id="36">Soubor nastavení je neaktuální - sloučím se standardním.</string>
+  <string id="37">IP/Název serveru MySQL</string>
+  <string id="38">Seřadit dle: Data vzestupně</string>
+  <string id="39">Seřadit dle: Názvu vzestupně</string>
+  <string id="40">Název</string>
+  <string id="41">Kanál</string>
+  <string id="42">Originál vysílán</string>
+  <string id="43">Datum vysílání</string>
+  <string id="44">Popis</string>
+  
+  <!-- Strings -->
+  <string id="26">Informace</string>
+  <string id="27">Chyba</string>
+  <string id="28">Potvrzení</string>
+  <string id="45">Neznámé</string>
+  <string id="65">Opravdu chcete záznam smazat?</string>
+  <string id="51">Opravdu chcete záznam zaznamenat znovu?</string>
+  
+  
+  
+  <string id="46">Nedostupný</string>
+  <string id="47">Detaily zaznamenaného pořadu</string>
+  <string id="48">Přehrát</string>
+  <string id="49">Uložit</string>
+  <string id="50">Vyprší</string>
+  
+  <string id="52">Smazat</string>
+  <string id="53">Obnovit</string>
+  <string id="54">Nelze nalézt pořad '%s' na '%s'.</string>
+  <string id="55">Velikost vyrovnávací paměti LiveTV (v KB)</string>
+  <string id="56">Kategorie</string>
+  <string id="57">Automatická expirace</string>
+  <string id="58">Ano</string>
+  <string id="59">Ne</string>
+  <string id="60">Velikost souboru</string>
+  <string id="61">KB</string>
+  <string id="62">MB</string>
+  <string id="63">GB</string>
+  <string id="64">bytů</string>
+  
+  <string id="66">Kopírování souboru dokončeno.</string>
+  <string id="67">Kopírování souboru selhalo.</string>
+  <string id="68">Kopírovat pořad na místní pevný disk?</string>
+  <string id="69">Seřadit dle: Datum sestupně</string>
+  <string id="70">Seřadit dle: Názvu sestupně</string>
+  <string id="71">Stav tuneru</string>
+  <string id="72">Plánování</string>
+  <string id="73">Informace o zařízení</string>
+  <string id="74">Zadejte FQDN nebo IP adresu vašeho primárního serveru Myth TV.</string>
+  <string id="75">Nelze analyzovat stavové informace vrácené serverem.</string>
+  <string id="76">Volné místo</string>
+  <string id="77">Celkové místo</string>
+  <string id="78">Použité místo</string>
+  <string id="79">1 minuta</string>
+  <string id="80">5 minut</string>
+  <string id="81">15 minut</string>
+  <string id="82">Velikost disku</string>
+  <string id="83">Vytížení</string>
+  <string id="84">Dalších %d pořadů naplánovaných pro nahrávání.</string>
+  <string id="85">Z backendu nelze získat snímek obrazovky.</string>
+  <string id="86">Vaše nastavení chybí nebo je zastaralé. Prosím zkontrolujte vaše nastavení.</string>
+  <string id="87">Poznámky</string>
+  
+  
+  <!-- enums.RecordingStatus -->
+  <string id="88">Pořad byl nahrán, ale poté smazán před dokončením</string>
+  <string id="89">Pořad byl nahrán, ale zastaven před dokončením</string>
+  <string id="90">Pořad byl nahrán</string>
+  <string id="91">Pořad je nahráván</string>
+  <string id="92">Pořad bude nahrán</string>
+  <string id="93">Stav tohoto pořadu není znám</string>
+  <string id="94">Pořadu bylo ručně vypnuto nahrávání</string>
+  <string id="95">Díl už byl nahrán dříve</string>
+  <string id="96">Díl už byl nahrán dříve a zůstal dostupný</string>
+  <string id="97">Díl bude nahrán později</string>
+  <string id="98">Dosažen maximální počet nahrávek</string>
+  <string id="99">Naplánováno nahrávání, ale ručně zrušeno</string>
+  <string id="100">Bude nahráván jiný program s vyšší prioritou</string>
+  <string id="101">Díl bude nahráván později</string>
+  <string id="102">Díl je opakován a nebude nahráván</string>
+  <string id="103">Pořad je zajištěn jinou naplánovanou nahrávkou</string>
+  <string id="104">Nedostatek místa na disku pro nahrání tohoto pořadu</string>
+  <string id="105">Tuner byl zaneprázdněn během tohoto nahrávání</string>
+  
+  
+  <string id="106">Chcete automaticky přeskakovat reklamy?</string>
+  <string id="107">TV Program</string>
+  <string id="108">Žádná data</string>
+  <string id="109">Chyba verze protokolu: %s</string>
+  <string id="110">Plánování záznamů</string>
+  
+  <!-- enums.ScheduleType -->
+  <string id="111">Jednou</string>
+  <string id="112">Denně</string>
+  <string id="113">Kanál</string>
+  <string id="114">Vždy</string>
+  <string id="115">Týdně</string>
+  <string id="116">Najít jeden</string>
+  <string id="117">Potlačit</string>
+  <string id="118">Nenahrát</string>
+  
+  
+  <string id="119">Hledat denně</string>
+  <string id="120">Hledat týdně</string>
+  <string id="121">Detaily plánování nahrávání - "%s"</string>
+  <string id="122">Plánování nahrávání dále neexistuje.</string>
+  <string id="123">Typ</string>
+  <string id="124">Profil</string>
+  <string id="125">Skupina</string>
+  <string id="126">Priorita</string>
+  <string id="127">Duplikát</string>
+  <string id="128">Metoda ověření</string>
+  <string id="129">Značkovat reklamy</string>
+  <string id="130">Autoexpirace</string>
+  <string id="131">Nahrávat nové, expirovat staré</string>
+  <string id="132">Počet ponechaných</string>
+  <string id="133">Odložení začátku</string>
+  <string id="134">Odložení konce</string>
+  
+  <!-- enums.ScheduleType.long_translations -->
+  <string id="135">Pouze jednou</string>
+  <string id="136">Denně v tomto čase</string>
+  <string id="137">Kdykoli na tomto kanálu</string>
+  <string id="138">Kdykoli na všech kanálech</string>
+  <string id="139">Týdně v tomto čase</string>
+  <string id="140">Hledat jednou</string>
+  <string id="141">(Potlačit) Nahrávat tento jednotlivý pořad</string>
+  <string id="142">(Potlačit) Nenahrávat tento jednotlivý pořad</string>
+  <string id="143">Každý den jednou</string>
+  <string id="144">Každý týden jednou</string>
+  
+  <!-- enums.CheckForDupesUsing -->
+  <string id="145">Nic</string>
+  <string id="146">Podnadpis</string>
+  <string id="147">Popis</string>
+  <string id="148">Podnadpis a popis</string>
+  <string id="200">Podnadpis a poté popis</string>
+  
+  <!-- enums.CheckForDupesIn -->
+  <string id="149">Aktuální nahrávání</string>
+  <string id="150">Předchozí nahrávání</string>
+  <string id="153">Všechna nahrávání</string>
+  
+  <!-- enums.EpisodeFilter -->
+  <string id="201">Žádný</string>
+  <string id="152">Pouze nové epizody</string>
+  <string id="151">Vyloučit opakované díly</string>
+  <string id="202">Vyloučit běžné díly</string>
+  <string id="203">Vyloučit opakované a běžné díly</string>      
+
+  <!-- enums.JobType -->
+  <string id="250">Žádný</string>
+  <string id="251">Systémový</string>
+  <string id="252">Překódování</string>
+  <string id="253">Značkování reklam</string>
+  <string id="254">Uživatelská úloha</string>
+  <string id="255">Uživatelská úloha 1</string>
+  <string id="256">Uživatelská úloha 2</string>
+  <string id="257">Uživatelská úloha 3</string>
+  <string id="258">Uživatelská úloha 4</string>
+
+  <!-- enums.JobStatus -->
+  <string id="260">Neznámý</string>
+  <string id="261">Zařazeno</string>
+  <string id="262">Čekající</string>
+  <string id="263">Zahájený</string>
+  <string id="264">Běžící</string>
+  <string id="265">Zastavený</string>
+  <string id="266">Pozastavený</string>
+  <string id="267">Opakovaný</string>
+  <string id="268">Chybný</string>
+  <string id="269">Rušený</string>
+  <string id="270">Dokončený (Chyba!)</string>
+  <string id="271">Dokončený</string>
+  <string id="272">Zrušený</string>
+  <string id="273">Chýbný</string>
+  <string id="274">Zrušený</string>
+  
+  
+  <string id="154">Hodnota musí být &gt;= než %d</string>
+  <string id="155">Hodnota musí být &lt;= než %d</string>
+  <string id="156">Vyberte hodnotu</string>
+  <string id="157">Smazat plánování trvale?</string>
+  <string id="158">Změny plánování úspěšně uloženy.</string>
+  <string id="159">Skupina nahr.</string>
+  <string id="160">Zobrazit název</string>
+  <string id="161">Díl</string>
+  <string id="162">Čekání ladění LiveTV</string>
+  <string id="163">ID startovací stránky</string>
+  <string id="164">DVD přehrávač pro LiveTV</string>
+  <string id="165">DVD přehrávač pro záznamy</string>
+  <string id="166">Záznam LiveTV</string>
+  <string id="167">Délka záznamu LiveTV</string>
+  <string id="168">Nahrát znovu</string>
+  <string id="169">Přehrát+Přeskakovat</string>
+  
+  
+  <!--  Common -->
+  <string id="210">Obnovit</string>
+  <string id="211">[B]Datum[/B]</string>
+  <string id="212">[B]Název[/B]</string>
+
+  <!-- Screen Titles -->
+  <string id="295">[B]Nastavení[/B]</string>
+
+  
+  <!-- Home Screen -->
+  <string id="300">Sledovat záznamy</string>
+  <string id="301">Sledovat TV</string>
+  <string id="302">TV Program</string>
+  <string id="303">Plány nahrávání</string>              
+  <string id="304">Následující nahrávání</string>
+  <string id="305">Nastavení</string>
+  
+  <string id="310">[B]Tuner[/B]</string>
+  <string id="311">[B]Stav[/B]</string>
+  <string id="312">[B]Úloha[/B]</string>
+  
+  <string id="313">Značkování reklam</string>
+  <string id="314">Překódování</string>
+  <string id="315">zpracování</string>
+  <string id="316">Čekání na značkování reklam</string>
+  <string id="317">Čekání na překódování</string>
+  <string id="318">Čekání na dokončení %s na %s</string>
+    
+  <string id="319">Nečinný</string>
+  <string id="320">Další záznam %s začne od %s</string>
+  <string id="321">Sledování %s od %s. Pořad skončí v %s.</string> 
+  <string id="322">Sledování nahraného videa</string>    
+  <string id="323">Sledování a nahrávání %s od %s do %s</string>
+  <string id="324">Nahrávání %s od %s do %s</string>
+  <string id="325">Zaneprázdněn</string>
+  <string id="326">Neznámý stav tuneru %d</string>
+      
+  <!-- Watch Recordings Screen -->
+  <string id="500">[B]Nahrávky[/B]</string>
+
+
+  <!-- Recording Details Screen -->
+  <string id="600">[B]Detaily nahrávky[/B]</string>
+  <string id="601">Přehrát</string>
+  <string id="602">Přehrát + Přeskakovat</string>
+  <string id="603">Smazat</string>
+  <string id="604">Znovu nahrát</string>
+  <string id="605">Upravit plánování</string>
+  <string id="606">Začátek fronty</string>
+  
+  <string id="610">Název</string>
+  <string id="611">Popis</string>
+  <string id="612">Datum vysílání</string>
+  <string id="613">Kanál</string>
+  <string id="614">Kategorie</string>
+  <string id="615">Datum vys. orig.</string>
+  <string id="616">Velikost</string>
+  <string id="617">Reklam</string>
+  
+  <string id="630">Úloha nenalazena</string>
+  <string id="631">Načítám...</string>
+  <string id="632">Žádný</string>
+  <string id="633">Zařazeno %d z %d</string>
+  <string id="634">Dokončeno %s při %s fps</string>
+  <string id="635">zap</string>
+  <string id="636">Nahrávka %s nenalezena.</string>
+  <string id="637">%s při %s fps</string>
+  <string id="638">Nahrávání %s z %s</string>
+  
+  
+  <!-- Watch TV Screen -->
+  <string id="700">[B]Sledovat TV[/B]</string>
+  <string id="701">Všechny tuner(y) jsou zaneprázdněny.</string>
+  <string id="702">Všechny tuner(y) s kanálem %s jsou zaneprázdněny.</string>
+
+
+  <!-- Player -->
+  <string id="750">Pokračování od %s</string>
+  <string id="751">Přeskakování reklamy %s</string>
+  <string id="752">Pokračování s reklamou %s</string>
+
+  <!-- TV Guide Screen -->
+  <string id="800">[B]TV Program[/B]</string>
+  <string id="801">Nejsou dostupné žádné informace o programu.</string>
+
+
+  <!-- Recordings Screen -->
+  <string id="850">Datum</string>
+  <string id="851">Název</string>
+  <string id="852">Datum vysílání orig.</string>
+  <string id="853">Řazení</string>  
+  
+  <!-- Recording Schedules Screen -->
+  <string id="900">[B]Plánování nahrávání[/B]</string>
+  <string id="901">[B]Název[/B]</string>
+  <string id="902">[B]Typ[/B]</string>
+  <string id="903">[B]Priorita[/B]</string>
+  <string id="904">[B]Kanál[/B]</string>
+    
+  
+  <!-- Upcoming Recording Screen -->
+  <string id="1000">[B]Následující nahrávání[/B]</string>
+  <string id="1001">[B]Datum[/B]</string>
+  <string id="1002">[B]Název[/B]</string>
+  <string id="1003">[B]Čas začátku[/B]</string>
+  <string id="1004">[B]Kanál[/B]</string>
+  <string id="1005">[B]Tuner[/B]</string>
+  
+  <string id="1010">Program nemá přidružené plánování nahrávání</string>
+  <string id="1011">Plánování nahrávání %d nebylo nalezeno</string>
+  <string id="1012">Dnes</string>
+  <string id="1013">Zítra</string>  
+
+  <!-- Create/Edit schedule dialog -->
+  <string id="1100">Nové plánování nahrávání</string>
+  <string id="1101">Upravit plánování nahrávání</string>
+  
+  <string id="1102">Nahrávání</string>
+  <string id="1103">Priorita</string>
+  <string id="1104">Pro kontrolu duplikátů použít</string>
+  <string id="1105">Kontrolovat duplikáty</string>
+  <string id="1106">Filtr dílů</string>
+  <string id="1107">Automaticky značkovat reklamy</string>
+  <string id="1108">Automaticky expirovat</string>
+  <string id="1109">Automaticky překódovat</string>
+  <string id="1110">Počet zachovaných</string>
+  <string id="1111">Nahrávat nový a expirovat starý</string>
+  <string id="1112">Začátek nahrávání</string>
+  <string id="1113">Konec nahrávání</string>
+  <string id="1114">Plánování povoleno</string>
+  <string id="1115">%d díl(ů)</string>
+  <string id="1116">Všechny díly</string>
+  <string id="1117">%d minut(u) dříve</string>
+  <string id="1118">Přesně</string>
+  <string id="1119">%d minut(u) později</string>  
+  <string id="1123">Hodnota musí být v rozmezí %d a %d</string>
+  
+  <string id="1120">Uložit</string>
+  <string id="1121">Zrušit</string>
+  <string id="1122">Smazat</string>
+  
+  
+  <!-- Settings Screen -->
+  <string id="400">MySQL DB</string>
+  <string id="401">Název serveru</string>
+  <string id="402">Port</string>
+  <string id="403">Název databáze</string>
+  <string id="404">Uživatel</string>
+  <string id="405">Heslo</string>
+  <string id="406">Standardní port je 3306</string>
+  <string id="407">Standardní název databáze je mythconverg</string>
+  <string id="408">Standardní uživetel je mythtv</string>
+            
+  <string id="410">MythTV</string>
+  <string id="411">Název hlavního backend serveru</string>
+  <string id="412">Port hlavního backend serveru</string>
+  <string id="413">Místní adresář(e) nahrávání</string>
+
+  <string id="415">Potvrzení smazání</string>
+  <string id="416">Umístění nahrávek MythTV na místním souborovém systému (připojená skupina adresářů úložišť, jestliže je váš backend vzdálený).</string>
+  <string id="417">Více adresářů může být odděleno čárkou pro systémy Linux/Mac nebo středníkem pro Windows.</string>
+  <string id="419">Povolit agresivní vyrovnávací paměť</string>
+  <string id="427">Data ukládané do agresivní vyrovnávací paměti zvyšují režii zvýšením zátěže backend serveru a zvyšují využití datového pásma.</string>
+  <string id="428">NEPOUŽÍVEJTE při připojení k vašemu MythTV backend serveru přes bezdrátové spoje.</string>
+  
+    
+  <string id="420">Fan Art</string>
+  <string id="421">Povolit TVDB.com</string>
+  <string id="422">Povolit TheMovieDB.org</string>
+  <string id="423">Povolit IMDB.com</string>
+  <string id="424">Povolit hledání Obrázky Google</string>
+  <string id="425">Smazat vyrovnávací paměť</string>
+  <string id="426">Vyrovnávací paměť úspěšně smazána</string>
+  <string id="429">Povolit TVRage.com</string>
+    
+  <string id="430">Test Nastavení..</string>
+  <string id="431">Nastavení OK</string>
+
+  <string id="440">Rozšířené</string>
+  <string id="441">Povolit hack lirc pro opakované stisky tlačítka</string>
+  <string id="442">Povolit ladicí logování</string>
+  <string id="443">Feedy Twitteru</string>
+  <string id="444">Pokud používáte dálkové ovládání lirc a občas obdržíte dvě události tlačítka místo jedné</string>
+  <string id="445">potom povolte toto řešení pro obsluhu dodatečných událostí.</string>
+  <string id="446">Seznam čárkou oddělených veřejných jmen Twitteru. Zkuste: cnnbrk, woot, thelittleidiot, wired, current...</string> 
+  
+  <string id="450">XBMC Nastavení..</string>
+    
+  <string id="460">O programu</string>
+
+  
+</strings>

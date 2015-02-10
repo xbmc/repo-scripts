@@ -1,0 +1,19 @@
+0.1.0 (09.01.2014)
+ - added possibility to choose between fanart and thumbnail on movies and albums
+ - added possibility to start the slideshow as program plugin (press exit, back or stop to exit)
+ - possibly fix star wars effect race condition on slow machines
+ - ignore directories with leading dot (e.g. .git, .DS_Store)
+
+0.0.2 (unreleased)
+ - fix script error with float wait time
+ - catch empty image folder
+ - allow recursive folder lookup
+ - added setting for disabling random image order
+ - fix fast image preload race condition
+ - allow more speed and concurrency in AppleTVLike
+ - added setting to disable random order on GridSwitch
+ - more precise wait time calculation
+ - fix short flashing of the next image in StarWarsScreensaver
+
+0.0.1 (unreleased)
+ - initial version

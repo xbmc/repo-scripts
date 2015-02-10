@@ -1,0 +1,6 @@
+2014-04-14 v0.7.1 ensured XBMC compliance
+2014-02-11 v0.7 added user chosen colors
+2014-01-21 v0.6 added additional user-driven options to control hh:mm:ss block randomization
+2013-12-05 v0.5 fixed autoscaling and display bugs
+2013-11-29 v0.4 added settings (show seconds and redraw interval)
+2013-11-27 v0.3 initial release

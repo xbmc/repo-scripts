@@ -1,0 +1,8 @@
+1.0.2
+- only run at startup
+- update to repo guidelines
+1.0.1
+- fixed typo
+1.0.0
+- initial commit
+ 

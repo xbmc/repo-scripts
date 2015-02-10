@@ -1,0 +1,31 @@
+v 0.1.0
+- catch error if dbid is empty or no number
+
+v 0.0.9
+- music video support
+- exception handling
+- optimization
+
+v 0.0.8
+- added option to force type
+
+v 0.0.7
+- added backend mode
+
+v 0.0.6
+- fixed script error if dbid is -1 (e.g. in the trailers add-on)
+
+v 0.0.5
+- script now clears property 1 to 99 instead of 1 to 9
+
+v 0.0.4
+- fixed error with audio channels
+
+v 0.0.3:
+- added properties for audio codec & audio channels
+
+v 0.0.2:
+- fixed error for episodes
+
+v 0.0.1:
+- initial release

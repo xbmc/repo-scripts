@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window type="window">
+	<defaultcontrol always="true">120</defaultcontrol>
+	<allowoverlay>no</allowoverlay>
+	<controls>
+		<!--  BACKGROUND    -->
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>facebook-media-background.jpg</texture>
+		</control>
+		<control type="image" id="100">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<aspectratio>scale</aspectratio>
+			<fadetime>200</fadetime>
+			<texture background="true">$INFO[Container(120).ListItem.property(image0)]</texture>
+		</control>
+		
+		<!--  CAPTION    -->
+		<control type="group" id="210">
+			<animation effect="slide" end="385,0" time="400" condition="!StringCompare(Container(120).ListItem.property(caption),)">Conditional</animation>
+			<animation effect="slide" end="0,0" time="400" condition="StringCompare(Container(120).ListItem.property(caption),)">Conditional</animation>
+			<posx>-370</posx>
+			<posy>55</posy>
+			<width>370</width>
+			<height>130</height>
+			<control type="image">
+				<width>370</width>
+				<height>130</height>
+				<texture border="20">facebook-media-tube-back.png</texture>
+			</control>
+			<control type="textbox">
+				<posx>20</posx>
+				<posy>10</posy>
+				<width>330</width>
+				<height>110</height>
+				<font>font12_title</font>
+				<textcolor>white</textcolor>
+				<info>Container(120).ListItem.property(caption)</info>
+				<shadowcolor>ff000000</shadowcolor>
+				<autoscroll delay="5000" time="1000" repeat="2000">Control.IsVisible(210)</autoscroll>
+			</control>
+			<control type="image">
+				<width>370</width>
+				<height>130</height>
+				<texture border="20">facebook-media-tube-overlay-lr.png</texture>
+			</control>
+		</control>
+		
+		<!-- PHOTOVIDEO MENU - - - - - - - - - - - - - - - - - - - - - - - - - - PHOTOVIDEO MENU  -->
+		<control type="group" id="127">
+			<!-- <animation effect="slide" start="0,0" end="1010,0" time="200" condition="Control.HasFocus(128) | Control.HasFocus(138)">Conditional</animation> -->
+			<animation effect="zoom" start="100,0" end="100,100" center="640,465" time="200">VisibleChange</animation>
+			<posx>340</posx>
+			<posy>420</posy>
+			<visible allowhiddenfocus="true">Control.HasFocus(128) | Control.HasFocus(138)</visible>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>600</width>
+				<height>50</height>
+				<texture>facebook-media-tube-back.png</texture>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>600</width>
+				<height>50</height>
+				<texture border="3">facebook-media-tube-overlay-lr.png</texture>
+			</control>
+			<control type="list" id="128">
+				<onup>138</onup>
+				<ondown>120</ondown>
+				<width>880</width>
+				<height>50</height>
+				<orientation>horizontal</orientation>
+				<scrolltime>100</scrolltime>
+				<itemlayout width="200" height="50">
+					<control type="label">
+						<posx>100</posx>
+						<posy>0</posy>
+						<width>200</width>
+						<height>30</height>
+						<font>font12_title</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<info>ListItem.Label</info>
+						<textcolor>white</textcolor>
+					</control>
+				</itemlayout>
+				<focusedlayout width="200" height="50">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>200</width>
+						<height>50</height>
+						<texture>facebook-media-progress-bar.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>200</width>
+						<height>50</height>
+						<texture border="3">facebook-media-tube-overlay-lr.png</texture>
+					</control>
+					<control type="group">
+						<visible>!StringCompare(Container(128).ListItem.Property(data),)</visible>
+						<control type="image">
+							<posx>0</posx>
+							<posy>50</posy>
+							<width>200</width>
+							<height>10</height>
+							<texture>facebook-media-tube-back.png</texture>
+						</control>
+						<control type="image">
+							<posx>0</posx>
+							<posy>50</posy>
+							<width>200</width>
+							<height>10</height>
+							<texture>facebook-media-progress-bar.png</texture>
+						</control>
+						<control type="image">
+							<posy>0</posy>
+							<width>200</width>
+							<height>50</height>
+							<texture border="3">facebook-media-clear-overlay.png</texture>
+						</control>
+					</control>
+					<control type="label">
+						<posx>100</posx>
+						<posy>0</posy>
+						<width>200</width>
+						<height>30</height>
+						<font>font12_title</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<info>ListItem.Label</info>
+						<textcolor>white</textcolor>
+					</control>
+					<control type="label">
+						<posx>100</posx>
+						<posy>31</posy>
+						<width>200</width>
+						<height>10</height>
+						<font>font10_title</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<info>ListItem.Property(sublabel)</info>
+						<textcolor>white</textcolor>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="group" id="129">
+				<posy>-260</posy>
+				<posx>-100</posx>
+				<visible>!StringCompare(Container(128).ListItem.Property(data),)</visible>
+				<control type="image">
+					<width>800</width>
+					<height>260</height>
+					<texture>facebook-media-tube-back.png</texture>
+				</control>
+				<control type="image">
+					<width>800</width>
+					<height>260</height>
+					<texture>facebook-media-tube-back.png</texture>
+					<visible>Control.HasFocus(138)</visible>
+				</control>
+				<control type="image">
+					<width>800</width>
+					<height>260</height>
+					<texture>facebook-media-progress-bar.png</texture>
+				</control>
+				<control type="textbox">
+					<posx>10</posx>
+					<posy>10</posy>
+					<width>780</width>
+					<height>240</height>
+					<font>font13_title</font>
+					<pagecontrol>138</pagecontrol>
+					<info>Container(128).ListItem.Property(data)</info>
+					<textcolor>white</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<!-- <autoscroll delay="5000" time="1000" repeat="2000">!Control.HasFocus(138)</autoscroll> -->
+				</control>
+				<control type="scrollbar" id="138">
+					<onleft>128</onleft>
+					<onright>128</onright>
+					<ondown>128</ondown>
+					<description>Media Menu Drop Down Scroll Bar</description>
+					<posx>792</posx>
+					<posy>10</posy>
+					<width>3</width>
+					<height>240</height>
+					<visible>true</visible>
+					<texturesliderbackground>facebook-media-progress-bar.png</texturesliderbackground>
+					<texturesliderbar>facebook-media-tube-back.png</texturesliderbar>
+					<texturesliderbarfocus>facebook-media-tube-back.png</texturesliderbarfocus>
+					<orientation>vertical</orientation>
+					<showonepage>false</showonepage>
+				</control>
+				<control type="image">
+					<width>800</width>
+					<height>260</height>
+					<texture border="3">facebook-media-clear-overlay.png</texture>
+				</control>
+				<control type="image">
+					<width>800</width>
+					<height>260</height>
+					<texture border="1">facebook-media-black-outline.png</texture>
+				</control>
+			</control>
+		</control>
+		
+		<!--  MAIN - FILMSTRIP    -->
+		<control type="group">
+			<posx>-151</posx>
+			<posy>478</posy>
+			<control type="button" id="118">
+				<onup>120</onup>
+				<ondown>120</ondown>
+				<onleft>120</onleft>
+				<onright>120</onright>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>10</width>
+				<height>10</height>
+				<textcolor>FFFFFFFF</textcolor>
+				<texturefocus>facebook-media-transparent.png</texturefocus>
+				<texturenofocus>facebook-media-transparent.png</texturenofocus>
+			</control>
+			<control type="fixedlist" id="120">
+				<onleft>118</onleft>
+				<onright>118</onright>
+				<ondown>119</ondown>
+				<width>1451</width>
+				<height>175</height>
+				<focusposition>3</focusposition>
+				<scrolltime>400</scrolltime>
+				<orientation>horizontal</orientation>
+				<preloaditems>10</preloaditems>
+				<itemlayout width="226" height="175">
+					<control type="image">
+						<posx>5</posx>
+						<posy>27</posy>
+						<width>216</width>
+						<height>120</height>
+						<texture>facebook-media-filmstrip-mask.png</texture>
+						<colordiffuse>66000000</colordiffuse>
+						<visible>StringCompare(ListItem.Property(paging),)</visible>
+					</control>
+					<control type="image">
+						<posx>5</posx>
+						<posy>27</posy>
+						<width>216</width>
+						<height>120</height>
+						<aspectratio scalediffuse="false">scale</aspectratio>
+						<texture diffuse="facebook-media-filmstrip-mask.png">$INFO[ListItem.Thumb]</texture>
+					</control>
+					<control type="image">
+						<posx>5</posx>
+						<posy>27</posy>
+						<width>216</width>
+						<height>120</height>
+						<aspectratio scalediffuse="false">scale</aspectratio>
+						<texture  diffuse="facebook-media-filmstrip-mask.png">$INFO[ListItem.property(image0)]</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>226</width>
+						<height>175</height>
+						<texture>facebook-media-filmstrip.png</texture>
+						<visible>StringCompare(ListItem.Property(paging),)</visible>
+					</control>
+					<control type="label">
+						<posx>20</posx>
+						<posy>130</posy>
+						<width>200</width>
+						<height>12</height>
+						<font>font10_title</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>black</shadowcolor>
+					</control>
+				</itemlayout>
+				<focusedlayout width="226" height="175">
+					<control type="image">
+						<animation effect="fade" start="41" end="100" time="400">Focus</animation>
+						<animation effect="fade" start="41" end="41" time="400">UnFocus</animation>
+						<posx>5</posx>
+						<posy>27</posy>
+						<width>216</width>
+						<height>120</height>
+						<texture>facebook-media-filmstrip-mask.png</texture>
+						<colordiffuse>FF000000</colordiffuse>
+						<visible>StringCompare(ListItem.Property(paging),)</visible>
+					</control>
+					<control type="image">
+						<animation effect="fade" start="53" end="53" time="400">UnFocus</animation>
+						<posx>5</posx>
+						<posy>27</posy>
+						<width>216</width>
+						<height>120</height>
+						<aspectratio scalediffuse="false">scale</aspectratio>
+						<texture diffuse="facebook-media-filmstrip-mask.png">$INFO[ListItem.Thumb]</texture>
+					</control>
+					<control type="image">
+						<posx>5</posx>
+						<posy>27</posy>
+						<width>216</width>
+						<height>120</height>
+						<aspectratio scalediffuse="false">scale</aspectratio>
+						<texture  diffuse="facebook-media-filmstrip-mask.png">$INFO[ListItem.property(image0)]</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>226</width>
+						<height>175</height>
+						<texture>facebook-media-filmstrip.png</texture>
+						<visible>StringCompare(ListItem.Property(paging),)</visible>
+					</control>
+					<control type="label">
+						<posx>20</posx>
+						<posy>130</posy>
+						<width>200</width>
+						<height>12</height>
+						<font>font10_title</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>black</shadowcolor>
+					</control>
+				</focusedlayout>
+			</control>
+		</control>
+			
+		
+		<control type="image">
+			<posx>0</posx>
+			<posy>-45</posy>
+			<width>1280</width>
+			<height>90</height>
+			<texture>facebook-media-tube-back.png</texture>
+		</control>
+		
+		<!-- CURRENT USER PIC    -->
+		<control type="group">
+			<posx>10</posx>
+			<posy>0</posy>
+			<control type="image" id="140">
+				<description>Current User Pic</description>
+				<posx>0</posx>
+				<posy>6</posy>
+				<width>40</width>
+				<height>32</height>
+				<aspectratio>keep</aspectratio>
+				<texture fallback="facebook-media-icon-generic-user.png">-</texture>
+			</control>
+			<control type="label" id="141">
+				<posx>46</posx>
+				<posy>0</posy>
+				<width>320</width>
+				<height>40</height>
+				<font>font24_title</font>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>
+		</control>
+		
+		<!--  HEIRARCHY/FLAGS    -->
+		<control type="group">
+			<posx>800r</posx>
+			<posy>0</posy>
+			<control type="image">
+				<posx>42r</posx>
+				<posy>4</posy>
+				<width>32</width>
+				<height>32</height>
+				<texture>facebook-media-icon-tags.png</texture>
+				<colordiffuse>80333333</colordiffuse>
+				<visible>StringCompare(Container(120).ListItem.property(tags),)</visible>
+			</control>
+			<control type="image">
+				<posx>79r</posx>
+				<posy>4</posy>
+				<width>32</width>
+				<height>32</height>
+				<texture>facebook-media-icon-comments.png</texture>
+				<colordiffuse>80333333</colordiffuse>
+				<visible>StringCompare(Container(120).ListItem.property(comments),)</visible>
+			</control>
+			<control type="image">
+				<posx>42r</posx>
+				<posy>4</posy>
+				<width>32</width>
+				<height>32</height>
+				<texture>facebook-media-icon-tags.png</texture>
+				<visible>!StringCompare(Container(120).ListItem.property(tags),)</visible>
+			</control>
+			<control type="image">
+				<posx>79r</posx>
+				<posy>4</posy>
+				<width>32</width>
+				<height>32</height>
+				<texture>facebook-media-icon-comments.png</texture>
+				<visible>!StringCompare(Container(120).ListItem.property(comments),)</visible>
+			</control>
+			<control type="label" id="195">
+				<posx>20</posx>
+				<posy>0</posy>
+				<width>760</width>
+				<height>40</height>
+				<font>font12_title</font>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>FFFFFFFF</textcolor>
+			</control>
+		</control>
+		
+		<control type="image">
+			<posx>0</posx>
+			<posy>-45</posy>
+			<width>1280</width>
+			<height>90</height>
+			<texture border="3">facebook-media-tube-overlay.png</texture>
+		</control>
+		
+		<!-- OPTIONS MENU - - - - - - - - - - - - - - - - - - - - - - - - - - - - OPTIONS MENU  -->
+		<control type="group">
+			<animation effect="slide" start="0,0" end="400,0" time="300">Visible</animation>
+			<animation effect="slide" start="400,0" end="0,0" time="300">Hidden</animation>
+			<visible allowhiddenfocus="true">Control.HasFocus(125)</visible>
+			<posx>-400</posx>
+			<posy>0</posy>
+			
+			<control type="image">
+				<posy>-10</posy>
+				<width>400</width>
+				<height>740</height>
+				<texture border="10">facebook-media-filmstrip-mask.png</texture>
+				<colordiffuse>CC333333</colordiffuse>
+			</control>
+			
+			<control type="list" id="125">
+				<onleft>120</onleft>
+				<onright>120</onright>
+				<posy>10</posy>
+				<width>400</width>
+				<height>700</height>
+				<orientation>vertical</orientation>
+				<scrolltime>100</scrolltime>
+				<itemlayout width="400" height="100">
+					<control type="image">
+						<posx>10</posx>
+						<posy>4</posy>
+						<width>92</width>
+						<height>92</height>
+						<aspectratio>scale</aspectratio>
+						<info>ListItem.Thumb</info>
+					</control>
+					<control type="label">
+						<posx>112</posx>
+						<posy>0</posy>
+						<width>280</width>
+						<height>100</height>
+						<font>font13_title</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<scroll>false</scroll>
+						<wrapmultiline>true</wrapmultiline>
+						<info>ListItem.Label</info>
+						<textcolor>white</textcolor>
+					</control>
+				</itemlayout>
+				<focusedlayout width="400" height="100">
+					<control type="image">
+						<width>395</width>
+						<height>100</height>
+						<texture>facebook-media-progress-bar.png</texture>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>4</posy>
+						<width>92</width>
+						<height>92</height>
+						<aspectratio>scale</aspectratio>
+						<info>ListItem.Thumb</info>
+					</control>
+					<control type="image">
+						<width>395</width>
+						<height>100</height>
+						<texture border="3">facebook-media-tube-overlay-right.png</texture>
+					</control>
+					<control type="label">
+						<posx>112</posx>
+						<posy>0</posy>
+						<width>280</width>
+						<height>100</height>
+						<font>font13_title</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<scroll>false</scroll>
+						<wrapmultiline>true</wrapmultiline>
+						<info>ListItem.Label</info>
+						<textcolor>white</textcolor>
+					</control>
+				</focusedlayout>
+			</control>
+			
+			<control type="image">
+				<width>400</width>
+				<height>720</height>
+				<texture border="1">facebook-media-tube-vertical-overlay.png</texture>
+			</control>
+		</control>
+		
+		<!-- SELECTION OVERLAY - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
+		<control type="group">
+			<posx>512</posx>
+			<posy>461</posy>
+			<control type="image">
+				<visible>!Control.IsVisible(127)</visible>
+				<animation effect="fade" start="0" end="100" time="200">VisibleChange</animation>
+				<posx>65</posx>
+				<posy>-69</posy>
+				<width>128</width>
+				<height>128</height>
+				<colordiffuse>88FFFFFF</colordiffuse>
+				<texture>facebook-media-arrow-up.png</texture>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>256</width>
+				<height>259</height>
+				<texture>facebook-media-filmstrip-selection.png</texture>
+			</control>
+			<control type="button" id="119">
+				<ondown>125</ondown>
+				<posx>28</posx>
+				<posy>234</posy>
+				<width>200</width>
+				<height>20</height>
+				<font>font10_title</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$INFO[Container(120).ListItem.property(previous)]</label>
+				<wrapmultiline>true</wrapmultiline>
+				<textcolor>FFFFFFFF</textcolor>
+				<texturefocus>facebook-media-transparent.png</texturefocus>
+				<texturenofocus>facebook-media-transparent.png</texturenofocus>
+			</control>
+			<control type="image">
+				<posx>65</posx>
+				<posy>149</posy>
+				<width>128</width>
+				<height>128</height>
+				<colordiffuse>88FFFFFF</colordiffuse>
+				<texture flipy="true">facebook-media-arrow-up.png</texture>
+			</control>
+		</control>
+		
+		<!--  INPUT BLOCK OVERLAY    -->
+		<control type="button" id="160">
+			<animation effect="slide" start="0,0" end="0,720" time="0">Visible</animation>
+			<animation effect="slide" start="0,720" end="0,0" time="0">Hidden</animation>
+			<description>Box Focus</description>
+			<posx>0</posx>
+			<posy>-720</posy>
+			<width>1280</width>
+			<height>720</height>
+			<onleft>160</onleft>
+			<onright>160</onright>
+			<onup>160</onup>
+			<ondown>160</ondown>
+			<texturefocus>facebook-media-progress-overlay.png</texturefocus>
+			<texturenofocus>facebook-media-progress-overlay.png</texturenofocus>
+			<visible allowhiddenfocus="true">!StringCompare(Control.GetLabel(152),)</visible>
+		</control>
+		
+		<!--  PROGRESS BAR    -->
+		<control type="group" id="150">
+			<animation effect="slide" start="0,0" end="-500,0" time="400">Visible</animation>
+			<animation effect="slide" start="-500,0" end="0,0" time="400">Hidden</animation>
+			<posx>1280</posx>
+			<posy>55</posy>
+			<width>500</width>
+			<height>60</height>
+			<visible>!StringCompare(Control.GetLabel(152),)</visible>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>500</width>
+				<height>60</height>
+				<texture>facebook-media-tube-back.png</texture>
+			</control>
+			<control type="image" id="153">
+				<posy>0</posy>
+				<width>1</width>
+				<height>60</height>
+				<texture>facebook-media-progress-bar.png</texture>
+			</control>
+			<control type="label" id="152">
+				<posx>50</posx>
+				<posy>0</posy>
+				<width>400</width>
+				<height>60</height>
+				<font>font24_title</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textcolor>white</textcolor>
+			</control>
+			<control type="image">
+				<posy>0</posy>
+				<width>500</width>
+				<height>60</height>
+				<texture border="3">facebook-media-tube-overlay-left.png</texture>
+			</control>
+		</control>
+		
+	</controls>
+</window>

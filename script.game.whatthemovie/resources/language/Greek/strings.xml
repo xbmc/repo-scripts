@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Greek language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/el/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Buttons -->
+    <string id="3000">Μαντέψτε!</string>
+    <string id="3001">Τυχαίο</string>
+    <string id="3002">Πίσω</string>
+
+    <!-- Messages -->
+    <string id="3050">Αδυναμία εισόδου</string>
+    <string id="3051">Λανθασμένος κωδικός ή άγνωστο όνομα χρήστη: [B]%s[/B][CR]Αλλάξτε τα στοιχεία ή απενεργοποιήστε την είσοδο</string>
+    <string id="3052">Εισάγετε το ID του στιγμιότυπου</string>
+    <string id="3053">Εισάγετε τον τίτλο της ταινίας</string>
+    <string id="3054">Αδυναμία σύνδεσης με την ιστοσελίδα</string>
+    <string id="3055">Αδυναμία λήψης στιγμιότυπου</string>
+    <string id="3066">Αδυναμία ελέγχου μαντεψιάς</string>
+
+    <!-- Labels -->
+    <string id="3100">Έλεγχος: [B]%s[/B]</string>
+    <string id="3101">Σωστό. Ο αρχικός τίτλος είναι: [B]%s[/B]</string>
+    <string id="3102">Λάθος: [B]%s[/B]</string>
+    <string id="3103">Δεν είστε συνδεδεμένος</string>
+    <string id="3104">Συνδεδεμένος ως: [B]%s[/B]</string>
+    <string id="3105">Το σκορ σας: [B]%s[/B] ([B]%s[/B])</string>
+    <string id="3106">Επιλύθηκε [B][COLOR=ff008B00]%s[/COLOR][/B] φορές, πρώτη φορά από [B]%s[/B]</string>
+    <string id="3107">Δε λύθηκε ακόμη</string>
+    <string id="3108">ID Στιγμιότυπου: [B]%s[/B]</string>
+    <string id="3109">Ημερομηνία: [B]%s[/B]</string>
+    <string id="3110">Υπεβλήθη από: [B]%s[/B]</string>
+    <string id="3111">Δεν κυκλοφόρησε</string>
+    <string id="3112">Διεγραμμένος χρήστης</string>
+    <string id="3113">Νέες Υποβολές</string>
+    <string id="3114">Κύριες Ταινίες</string>
+    <string id="3115">Αρχείο</string>
+    <string id="3116">[B]%s[/B] ψήφοι</string>
+    <string id="3117">[B]%s[/B] / [B]%s[/B]</string>
+    <string id="3118">Κρυφά</string>
+    <string id="3119">-</string>
+    <string id="3120">Απορριφθέντα στιγμιότυπα</string>
+    <string id="3121">Έχετε ήδη λύσει αυτή τη μικρογραφία</string>
+    <string id="3122">Η σωστή λύση ήταν: [B]%s[/B]</string>
+    <string id="3123">Υποβάλλατε αυτό το στιγμιότυπο</string>
+    <string id="3124">Δυστυχώς δεν έχετε το δικαίωμα να δείτε το στιγμιότυπο [B]%s[/B] - γίνεται ανακατεύθυνση στο [B]%s[/B]</string>
+    <string id="3125">Θησαυροφυλάκιο</string>
+    <string id="3126">Τέλεια. Ο αρχικός τίτλος είναι: [B]%s[/B] +1 Πόντος!</string>
+    <string id="3127">Διαγραμμένα Στιγμιότυπα</string>
+    <string id="3128">Δυστυχώς το στιγμιότυπο B]%s[/B] δεν υπάρχει - γίνεται ανακατεύθυνση στο B]%s[/B]</string>
+
+    <!-- Settings -->
+    <string id="3200">Γενικά</string>
+    <string id="3201">Είσοδος</string>
+    <string id="3202">Χρήση λογαριασμού whatthemovie.com</string>
+    <string id="3203">Όνομα χρήστη</string>
+    <string id="3204">Κωδικός πρόσβασης</string>
+    <string id="3205">Ρυθμίσεις για το πλήκτρο "τυχαίων" (απαιτείται είσοδος)</string>
+    <string id="3206">Δυσκολία</string>
+    <string id="3207">Εύκολο</string>
+    <string id="3208">Εύκολο+Μεσαίο</string>
+    <string id="3209">Όλα</string>
+    <string id="3210">Συμπερίληψη αρχείου</string>
+    <string id="3211">Συμπερίληψη λυμένων</string>
+    <string id="3212">Όψη+αφή</string>
+    <string id="3213">Όψη</string>
+    <string id="3214">Εμφάνιση "υπεβλήθη από"</string>
+    <string id="3215">Εμφάνιση "λυμένων"</string>
+    <string id="3216">Εμφάνιση "ID στιγμιότυπου"</string>
+    <string id="3217">Εμφάνιση "ημερομηνία στιγμιότυπου"</string>
+    <string id="3218">Συμπεριφορά</string>
+    <string id="3219">Αυτόματη μετάβαση αν η μαντεψιά ήταν σωστή</string>
+    <string id="3220">...μετά από x δευτερόλεπτα</string>
+    <string id="3221">Εμφάνιση "σημαιών στιγμιοτύπων"</string>
+    <string id="3222">Σημαίες</string>
+    <string id="3223">Σημαία 1</string>
+    <string id="3224">Σημαία 2</string>
+    <string id="3225">Σημαία 3</string>
+    <string id="3226">Σημαία 4</string>
+    <string id="3227">Σημαία 5</string>
+    <string id="3228">Επιλέξτε τις σημαίες που θέλετε να δείτε</string>
+    <string id="3229">Επιλογές πλοήγησης (απαιτείται είσοδος)</string>
+    <string id="3230">Μόνο τα ανεπίλυτα Στιγμιότυπα</string>
+    <string id="3231">Εμφάνιση "βαθμολογίας στιγμιότυπου"</string>
+    <string id="3232">Μετάβαση σε</string>
+    <string id="3233">Τυχαίο</string>
+    <string id="3234">Επόμενο</string>
+    <string id="3235">Εμφάνιση πλήκτρων εργαλείων</string>
+    <string id="3236">Εμφάνιση πλήκτρων πλοήγησης</string>
+    <string id="3237">Κλειδιά</string>
+    <string id="3238">Επιλέξτε πλήκτρα για τις ενέργειες</string>
+
+    <!-- Keys -->
+    <string id="3239">Κανένα κλειδί</string>
+    <string id="3240">page up</string>
+    <string id="3241">page down</string>
+    <string id="3242">Εμφάνιση πληροφοριών</string>
+    <string id="3243">παύση</string>
+    <string id="3244">διακοπή</string>
+    <string id="3245">επόμενο αντικείμενο</string>
+    <string id="3246">προηγούμενο αντικείμενο</string>
+    <string id="3247">μπροστά</string>
+    <string id="3248">πίσω</string>
+    <string id="3249">αναπαραγωγή</string>
+    <string id="3250">μενού επιλογών</string>
+    <string id="3251">ένταση πάνω</string>
+    <string id="3252">ένταση κάτω</string>
+    <string id="3253">κύλιση πάνω</string>
+    <string id="3254">κύλιση κάτω</string>
+    <string id="3255">home</string>
+    <string id="3256">end</string>
+
+    <!-- Functions -->
+    <string id="3260">Επόμενο</string>
+    <string id="3261">Προηγούμενο</string>
+    <string id="3262">Μετάβαση</string>
+    <string id="3263">Σελιδοδείκτης</string>
+    <string id="3264">Αγαπημένο</string>
+    <string id="3265">Επίλυση</string>
+</strings>

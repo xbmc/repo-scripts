@@ -1,0 +1,333 @@
+# XBMC Media Center language file
+# Addon Name: Artwork Downloader
+# Addon id: script.artwork.downloader
+# Addon Provider: Martijn
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Please help get more artwork or donate on:"
+msgstr "בבקשה עזור לקבל עוד עטיפות או תרום ב:"
+
+msgctxt "#32002"
+msgid "Scheduled run at time: (24h)"
+msgstr "מתוזמן לפעול בשעה:(24H)"
+
+msgctxt "#32003"
+msgid "Faulty/empty settings combination found!"
+msgstr "תצורת הגדרות נמצאה שגויה/ריקה!"
+
+msgctxt "#32004"
+msgid "Select your preferences and press OK to save"
+msgstr "בחר בהעדפות שלך ולחץ על אישור לשמירה"
+
+msgctxt "#32005"
+msgid "Cleaning up"
+msgstr "מנקה"
+
+msgctxt "#32006"
+msgid "Error"
+msgstr "שגיאה"
+
+msgctxt "#32007"
+msgid "Error downloading file"
+msgstr "שגיאה בהורדת קובץ"
+
+msgctxt "#32008"
+msgid "Searching for artwork"
+msgstr "מחפש עטיפה"
+
+msgctxt "#32009"
+msgid "Downloading"
+msgstr "מוריד"
+
+msgctxt "#32010"
+msgid "Add-on aborted"
+msgstr "תוסף בוטל"
+
+msgctxt "#32011"
+msgid "Network error detected"
+msgstr "אובחנה שגיאת רשת "
+
+msgctxt "#32012"
+msgid "Finished"
+msgstr "הסתיים"
+
+msgctxt "#32013"
+msgid "Enable downloading"
+msgstr "אפשר הורדות"
+
+msgctxt "#32014"
+msgid "Total Artwork"
+msgstr "סה״כ עטיפות"
+
+msgctxt "#32015"
+msgid "Please choose"
+msgstr "בבקשה בחר"
+
+msgctxt "#32016"
+msgid "Failed items"
+msgstr "פריטים שנכשלו"
+
+msgctxt "#32017"
+msgid "Cancelled"
+msgstr "בוטל"
+
+msgctxt "#32018"
+msgid "Download canceled by user"
+msgstr "הורדה בוטלה ע״י משתמש"
+
+msgctxt "#32019"
+msgid "Delayed start in minutes:"
+msgstr "השהיית הפעלה בדקות:"
+
+msgctxt "#32020"
+msgid "Downloaded"
+msgstr "הורד"
+
+msgctxt "#32021"
+msgid "Processing Artwork"
+msgstr "מעבד תמונת עטיפה"
+
+msgctxt "#32022"
+msgid "not found!"
+msgstr "לא נמצא!"
+
+msgctxt "#32023"
+msgid "Run add-on at login"
+msgstr "הרץ תוסמך בהפעלה"
+
+msgctxt "#32024"
+msgid "Run add-on as a service"
+msgstr "הרץ תוסף כשרות מערכת"
+
+msgctxt "#32025"
+msgid "Yes"
+msgstr "כן"
+
+msgctxt "#32026"
+msgid "No"
+msgstr "לא"
+
+msgctxt "#32027"
+msgid "Close"
+msgstr "סגור"
+
+msgctxt "#32028"
+msgid "Report"
+msgstr "דווח"
+
+msgctxt "#32029"
+msgid "[I](After changes are made you must restart XBMC) [/I]"
+msgstr "[I](לאחר ביצוע שינויים יש לאתחל אתXBMC) [/I]"
+
+msgctxt "#32031"
+msgid "General"
+msgstr "כללי"
+
+msgctxt "#32033"
+msgid "Run in background"
+msgstr "הרץ ברקע"
+
+msgctxt "#32034"
+msgid "Show dialog on finished/errors"
+msgstr "הצג דיאלוג בסיום/שגיאות"
+
+msgctxt "#32039"
+msgid "View download report from latest download run"
+msgstr "צפה בדוח הורדות מהורדה אחרונה"
+
+msgctxt "#32040"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32051"
+msgid "Limit Artwork"
+msgstr "הגבל עטיפות"
+
+msgctxt "#32054"
+msgid "Minimum rating"
+msgstr "דירוג מינימלי"
+
+msgctxt "#32055"
+msgid "Preferred language:"
+msgstr "שפה מועדפת:"
+
+msgctxt "#32056"
+msgid "Exclude fanart that has text"
+msgstr "התעלם מעטיפות המכילות טקסט"
+
+msgctxt "#32057"
+msgid "Minimum fanart size: Movies"
+msgstr "גודל מינימלי של עטיפה:סרטים"
+
+msgctxt "#32058"
+msgid "Minimum fanart size: TV Shows"
+msgstr "גודל מינימלי של עטיפה:תוכניות טלויזיה"
+
+msgctxt "#32062"
+msgid "Minimum fanart size: Musicvideos"
+msgstr "גודל מינימלי של עטיפה:סירטי מוסיקה"
+
+msgctxt "#32071"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#32081"
+msgid "TV Shows"
+msgstr "תוכניות טלויזיה"
+
+msgctxt "#32083"
+msgid "-"
+msgstr "-"
+
+msgctxt "#32091"
+msgid "Musicvideo"
+msgstr "סירטי מוסיקה"
+
+msgctxt "#32101"
+msgid "Advanced"
+msgstr "מתקדם"
+
+msgctxt "#32103"
+msgid "Use local files"
+msgstr "השתמש בקבצים מקומיים"
+
+msgctxt "#32121"
+msgid "Fanart"
+msgstr "פאנארט"
+
+msgctxt "#32123"
+msgid "Banner"
+msgstr "באנר"
+
+msgctxt "#32124"
+msgid "Season Banners"
+msgstr "באנרי עונה"
+
+msgctxt "#32125"
+msgid "ClearArt"
+msgstr "נקה עטיפה"
+
+msgctxt "#32126"
+msgid "Logo"
+msgstr "לוגו"
+
+msgctxt "#32127"
+msgid "Character Art"
+msgstr "עטיפת שחקן"
+
+msgctxt "#32128"
+msgid "Poster"
+msgstr "פוסטר"
+
+msgctxt "#32129"
+msgid "Season Posters"
+msgstr "פוסטר עונה"
+
+msgctxt "#32130"
+msgid "Thumb 16:9"
+msgstr "תמונה ממוזערת 16:9"
+
+msgctxt "#32132"
+msgid "Disc Art"
+msgstr "עטיפת דיסק"
+
+msgctxt "#32133"
+msgid "Artwork"
+msgstr "גרפיקה"
+
+msgctxt "#32134"
+msgid "Season Thumbs 16:9"
+msgstr "תמונה ממוזערת עונה 16:9"
+
+msgctxt "#32141"
+msgid "Language"
+msgstr "שפה"
+
+msgctxt "#32142"
+msgid "Rating"
+msgstr "דירוג"
+
+msgctxt "#32143"
+msgid "Votes"
+msgstr ":הצבעות"
+
+msgctxt "#32144"
+msgid "Season"
+msgstr "עונה"
+
+msgctxt "#32145"
+msgid "Size"
+msgstr "גודל"
+
+msgctxt "#32146"
+msgid "Disc"
+msgstr "דיסק"
+
+msgctxt "#32148"
+msgid "Time of finish"
+msgstr "זמן לסיום"
+
+msgctxt "#32149"
+msgid "No failed or missing items found"
+msgstr "לא נמצא וקבצים שנכשלו או חסרים"
+
+msgctxt "#32150"
+msgid "add-on aborted because of XBMC shutting down"
+msgstr "תוסף הפסיק בגלל כיבוי XBMC"
+
+msgctxt "#32151"
+msgid "add-on cancelled while searching for"
+msgstr "תוסף התבטל בזמן חיפוש של"
+
+msgctxt "#32152"
+msgid "add-on aborted because of problems"
+msgstr "תוסף הפסיק בגלל תקלות"
+
+msgctxt "#32153"
+msgid "add-on cancelled while downloading Artwork"
+msgstr "התוסף בוטל תוך כדי הורדת עטיפות"
+
+msgctxt "#32181"
+msgid "Info"
+msgstr "מידע"
+
+msgctxt "#32182"
+msgid "Please donate or contribute to the following sites to show your support:"
+msgstr "בבקשה תרום ״ב׳״ או לאתרים אלו להראות את תמיכתך בפרויקט:"
+
+msgctxt "#32183"
+msgid "[I]www.xbmc.org [/I]"
+msgstr "[I]www.xbmc.org [/I]"
+
+msgctxt "#32185"
+msgid "[I]www.thetvdb.com [/I]"
+msgstr "[I]www.thetvdb.com [/I]"
+
+msgctxt "#32186"
+msgid "[I]www.themoviedb.org [/I]"
+msgstr "[I]www.themoviedb.org [/I]"
+
+msgctxt "#32187"
+msgid "Add-on authors:"
+msgstr "מחברי התוסף:"
+
+msgctxt "#32189"
+msgid "Thanks to:"
+msgstr "תודות ל:"
+
+msgctxt "#32190"
+msgid "Team XBMC and the authors of the other addons on which this was based."
+msgstr "צוות XBMC ומחברי התוספים האחרים שתוסף זה מסתמך עליהם."

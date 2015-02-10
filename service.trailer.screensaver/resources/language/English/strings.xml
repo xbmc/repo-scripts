@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- All %s must remain in string but can change position -->
+	<string id="32000">Screensaver Timeout (MIN)</string>
+    <string id="32001">Number Of Trailers to Play</string>
+	<string id="32002">Play Opening and Closing Animation</string>
+	<string id="32003">Mute Trailer During Playback</string>
+</strings>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Ukrainian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/uk/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Випадково</string>
+    <string id="3002">Назад</string>
+    <string id="3118">Приховані</string>
+
+    <!-- Settings -->
+    <string id="3200">Загальні</string>
+    <string id="3201">Логін</string>
+    <string id="3203">Ім'я користувача</string>
+    <string id="3204">Пароль</string>
+    <string id="3209">Усі треки</string>
+    <string id="3233">Випадково</string>
+    <string id="3234">Наступний</string>
+
+    <!-- Functions -->
+    <string id="3260">Наступний</string>
+    <string id="3261">Попередній</string>
+</strings>

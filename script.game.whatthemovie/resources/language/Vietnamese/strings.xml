@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Vietnamese language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/vi/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="3001">Ngẫu nhiên</string>
+    <string id="3002">Lùi</string>
+
+    <!-- Settings -->
+    <string id="3200">Tổng Quan</string>
+    <string id="3201">Đăng nhập</string>
+    <string id="3203">Tên truy nhập</string>
+    <string id="3204">Mật khẩu</string>
+    <string id="3209">Tất cả</string>
+    <string id="3233">Ngẫu nhiên</string>
+    <string id="3234">Kế</string>
+
+    <!-- Functions -->
+    <string id="3260">Kế</string>
+    <string id="3261">Lùi</string>
+</strings>
