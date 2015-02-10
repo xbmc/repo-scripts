@@ -97,8 +97,11 @@ def find_tv_show_season(content, tvshow, season):
 
 
 def append_subtitle(item):
+    title = item['filename']
+    if 'comment' in item and item['comment'] != '':
+        title = "%s [COLOR gray][I](%s)[/I][/COLOR]" % (title, item['comment'])
     listitem = xbmcgui.ListItem(label=item['lang']['name'],
-                                label2=item['filename'],
+                                label2=title,
                                 iconImage=item['rating'],
                                 thumbnailImage=item['lang']['2let'])
 
@@ -122,9 +125,12 @@ def getallsubs(content, allowed_languages, filename="", search_string=""):
                         "<span>\s+(?P<filename>[^\r\n\t]+)\s+</span>\s+"
                         "</a>\s+</td>\s+"
                         "<td class=\"[^\"]+\">\s+(?P<numfiles>[^\r\n\t]*)\s+</td>\s+"
-                        "<td class=\"(?P<hiclass>[^\"]+)\">")
+                        "<td class=\"(?P<hiclass>[^\"]+)\">"
+                        "(?P<rest>.*?)</tr>")
+    comment_pattern = "<td class=\"a6\">\s+<div>\s+(?P<comment>[^\"]+)&nbsp;\s*</div>"
 
     subtitles = []
+    h = HTMLParser.HTMLParser()
 
     for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL):
         numfiles = 1
@@ -138,10 +144,15 @@ def getallsubs(content, allowed_languages, filename="", search_string=""):
             subtitle_name = string.strip(matches.group('filename'))
             hearing_imp = (matches.group('hiclass') == "a41")
             rating = '0'
+            comment = ''
             if matches.group('quality') == "bad-icon":
                 continue
             if matches.group('quality') == "positive-icon":
                 rating = '5'
+
+            commentmatch = re.search(comment_pattern, matches.group('rest'), re.IGNORECASE | re.DOTALL);
+            if commentmatch != None:
+                comment = re.sub("[\r\n\t]+", " ", h.unescape(string.strip(commentmatch.group('comment'))))
 
             sync = False
             if filename != "" and string.lower(filename) == string.lower(subtitle_name):
@@ -150,14 +161,14 @@ def getallsubs(content, allowed_languages, filename="", search_string=""):
             if search_string != "":
                 if string.find(string.lower(subtitle_name), string.lower(search_string)) > -1:
                     subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
-                                     'lang': language_info, 'hearing_imp': hearing_imp})
+                                     'lang': language_info, 'hearing_imp': hearing_imp, 'comment': comment})
                 elif numfiles > 2:
                     subtitle_name = subtitle_name + ' ' + (__language__(32001) % int(matches.group('numfiles')))
                     subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
-                                     'lang': language_info, 'hearing_imp': hearing_imp, 'find': search_string})
+                                     'lang': language_info, 'hearing_imp': hearing_imp, 'comment': comment, 'find': search_string})
             else:
                 subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
-                                 'lang': language_info, 'hearing_imp': hearing_imp})
+                                 'lang': language_info, 'hearing_imp': hearing_imp, 'comment': comment})
 
     subtitles.sort(key=lambda x: [not x['sync']])
     for s in subtitles:
