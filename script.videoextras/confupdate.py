@@ -52,8 +52,12 @@ class ConfUpdate():
 
     # Method to update all of the required Confluence files
     def updateSkin(self):
+        # Start by copying the include file, will return if the copy worked and the file was created
+        if not self._addIncludeFile():
+            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32160), __addon__.getLocalizedString(32161))
+            return
+
         # Update the files one at a time
-        self._addIncludeFile()
         self._updateDialogVideoInfo()
         self._updateViewsVideoLibrary()
         self._updateViewsFileMode()
@@ -73,6 +77,11 @@ class ConfUpdate():
         tgtFile = os_path_join(self.confpath, 'IncludesVideoExtras.xml')
         log("IncludesVideoExtras: Copy from %s to %s" % (incFile, tgtFile))
         xbmcvfs.copy(incFile, tgtFile)
+
+        # Now the file should be copied to the target location
+        # Check to make sure it worked, if it did not then the directory may not
+        # have the correct permissions for us to write to
+        return xbmcvfs.exists(tgtFile)
 
     # Save the new contents, taking a backup of the old file
     def _saveNewFile(self, dialogXml, dialogXmlStr):

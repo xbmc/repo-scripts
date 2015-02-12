@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
 msgstr "Proporciona una manera d'afegir vídeo extres a la seva biblioteca de vídeo. Mira el wiki per instruccions d'instal·lació."
 
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
-msgstr "Skinner, si us plau, consulteu el wiki per saber com integrar-lo en la vostra pell: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
-
 msgctxt "#32001"
 msgid "Extras"
 msgstr "Extres"

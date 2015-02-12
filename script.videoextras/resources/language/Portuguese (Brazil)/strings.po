@@ -144,6 +144,26 @@ msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
 msgstr "Subpasta Concertos Customizada"
 
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Atualizar o aquivo advancedsettings.xml"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Atualizar Skin Confluence"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Usar Imagens Customizadas"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Imagem Sobreposição"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Imagem Lista"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Reproduzir todos"
@@ -203,3 +223,43 @@ msgstr "Editar enredo"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Falhou ao atualizar enredo"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Está ação irá atualizar o arquivo advancedsettings.xml para assegurar que os arquivos extra sejam manuseados adequadamente. Tenha certeza que tais alterações foram salvas antes de rodar. Continuar?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Não foi possível atualizar advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Por favor verifique o log para maiores detalhes"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Inválido advancedsettings.xml, impossível atualizar"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml atualização completada com sucesso"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Isto irá atualizar a sua skin Confluence para incluir os recursos VideoExtras. Continuar?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Não foi possível atualizar a skin Confluence"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Nem todos os arquivos foram atualizados como esperado"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Skin Confluence Atualizada"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "É recomendável que reinicie agora o Kodi"

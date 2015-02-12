@@ -26,7 +26,7 @@ msgstr "Biedt een manier om Video extra`s toe te voegen aan jou videobibliotheek
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
-msgstr "Skinners, bekijk de wiki om te weten hoe je het moet integreren in jouw skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skinners, bekijk de wikie om te weten hoe je heet moet integreren in jouw skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
 
 msgctxt "#32001"
 msgid "Extras"
@@ -144,6 +144,26 @@ msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
 msgstr "Aangepaste muziekvideo Sub-folder"
 
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Update advancedsettings.xml bestand"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Update Confluence Skin"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Gebruik aangepaste afbeeldingen"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Overlap afbeelding"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Lijst afbeelding"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Speel alles af"
@@ -203,3 +223,43 @@ msgstr "Wijzig verhaallijn"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Niet gelukt verhaallijn te updaten"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Deze actie zal het bestand advancedsettings.xml updaten om zeker te zijn dat de extra bestanden juist worden behandeld. weet zeker dan alle veranderingen zijn opgeslagen voor starten, Verdergaan?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Niet mogelijk Advancedsettings.xml te updaten"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Controleer het log voor meer details"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Onjuist advancedsettings.xml, niet mogelijk te updaten"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "Advancedsettings.xml update compleet"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Dit zal jouw Confluence skin updaten om de videoextras features toe te voegen, Doorgaan?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Niet gelukt de Confluence skin te updaten"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Niet alle bestanden zijn geüpdated als verwacht"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence skin geüpdatet"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Het is aanbevolen dat je nu Kodi herstart"

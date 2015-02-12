@@ -1,3 +1,8 @@
+v1.2.2
+- Update forum link
+- Remove Frodo support from latest version
+- Give error if the Confluence skin directory is not writable
+
 v1.2.0
 - Allow users to specify their own overlay image
 - Add support for advancedsettings.xml update

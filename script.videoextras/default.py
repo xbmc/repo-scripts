@@ -21,11 +21,6 @@ import xbmc
 import xbmcgui
 import xbmcaddon
 
-if sys.version_info < (2, 7):
-    import simplejson
-else:
-    import json as simplejson
-
 
 __addon__ = xbmcaddon.Addon(id='script.videoextras')
 __addonid__ = __addon__.getAddonInfo('id')
@@ -137,14 +132,8 @@ class SourceDetails():
                 SourceDetails.isTvSource = True
             if xbmc.getCondVisibility("Container.Content(Episodes)"):
                 SourceDetails.isTvSource = True
-
-            folderPathId = "videodb://2/2/"
-            # The ID for the TV Show Title changed in Gotham
-            if Settings.getXbmcMajorVersion() > 12:
-                folderPathId = "videodb://tvshows/titles/"
-            if xbmc.getInfoLabel("container.folderpath") == folderPathId:
+            if xbmc.getInfoLabel("container.folderpath") == "videodb://tvshows/titles/":
                 SourceDetails.isTvSource = True  # TvShowTitles
-
             # If still not set
             if SourceDetails.isTvSource is None:
                 SourceDetails.isTvSource = False
@@ -591,37 +580,7 @@ if __name__ == '__main__':
             # Close any open dialogs
             xbmc.executebuiltin("Dialog.Close(all, true)", True)
 
-            if Settings.getXbmcMajorVersion() > 12:
-                log("VideoExtras: Running as Addon/Plugin")
-                xbmc.executebuiltin("RunAddon(script.videoextras)")
-            else:
-                log("VideoExtras: Navigating to Plugin")
-                # Default to the plugin method
-                xbmc.executebuiltin("xbmc.ActivateWindow(Video, addons://sources/video/)", True)
-
-                # It is a bit hacky, but the only way I can get it to work
-                # After loading the plugin screen, navigate to the VideoExtras entry and select it
-                maxChecks = 100
-                selectedTitle = None
-                while selectedTitle != 'VideoExtras' and maxChecks > 0:
-                    maxChecks = maxChecks - 1
-                    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.Up", "params": { }, "id": 1}')
-                    json_query = unicode(json_query, 'utf-8', errors='ignore')
-                    json_response = simplejson.loads(json_query)
-                    log(json_response)
-
-                    # Allow time for the command to be reflected on the screen
-                    xbmc.sleep(100)
-
-                    selectedTitle = xbmc.getInfoLabel('ListItem.Label')
-                    log("VideoExtras: plugin screen selected Title=%s" % selectedTitle)
-
-                # Now select the menu item if it is TvTunes
-                if selectedTitle == 'VideoExtras':
-                    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.Select", "params": { }, "id": 1}')
-                    json_query = unicode(json_query, 'utf-8', errors='ignore')
-                    json_response = simplejson.loads(json_query)
-                    log(json_response)
-
+            log("VideoExtras: Running as Addon/Plugin")
+            xbmc.executebuiltin("RunAddon(script.videoextras)")
     except:
         log("VideoExtras: %s" % traceback.format_exc(), xbmc.LOGERROR)

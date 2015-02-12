@@ -144,6 +144,26 @@ msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
 msgstr "Υποφάκελος Προσαρμοσμένων Μουσικών Βίντεο"
 
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Ενημέρωση του αρχείου advancedsettings.xml"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Ενημέρωση του κελύφους Confluence"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Χρήση Προσωπικών Εικόνων"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Εικόνα Επικάλυψης"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Εικόνα σε Λίστα"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Αναπαραγωγή Όλων"
@@ -203,3 +223,43 @@ msgstr "Επεξεργασία πλοκής"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Αποτυχία ενημέρωσης πλοκής"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Θα ενημερωθεί το αρχείο advancedsettings.xml για να διαχειριστεί σωστά το αρχείο των Extras. Σιγουρευτείτε ότι όλες οι αλλαγές έχουν αποθηκευθεί πριν ξεκινήσετε. Να εκτελεστεί;"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Αδυναμία ενημέρωσης του advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Ελέγξτε το αρχείο καταγραφής για λεπτομέρειες"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Εσφαλμένο advancedsettings.xml, αδυναμία ενημέρωσης"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "Η ενημέρωση του advancedsettings.xml ολοκληρώθηκε"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Θα ενημερωθεί το κέλυφος Confluence για να συμπεριληφθούν οι λειτουργίες του VideoExtras. Να εκτελεστεί;"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Αδυναμία ενημέρωσης του κελύφους Confluence"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Δεν αντιγράφηκαν όλα τα αρχεία όπως έπρεπε"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Το κέλυφος Confluence ενημερώθηκε"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Προτείνεται να επανεκκινήσετε το Kodi"

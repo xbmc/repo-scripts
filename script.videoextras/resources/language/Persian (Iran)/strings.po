@@ -24,6 +24,10 @@ msgctxt "#32013"
 msgid "Path"
 msgstr "مسیر"
 
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "پیشرفته"
+
 msgctxt "#32019"
 msgid "Debugging"
 msgstr "دیباگ"

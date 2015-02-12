@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Add Video Extras to your Movies and TV shows."
-msgstr "영화와 TV 쇼에 부가영상 추가"
+msgstr "영화와 TV 쇼 라이브러리에 부가영상 추가"
 
 msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
@@ -30,7 +30,7 @@ msgstr "스킨 제작자 여러분, 스킨에 통합하는 방법은 위키를 �
 
 msgctxt "#32001"
 msgid "Extras"
-msgstr "기타"
+msgstr "부가영상"
 
 msgctxt "#32002"
 msgid "Extras Directory Name"
@@ -144,6 +144,26 @@ msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
 msgstr "뮤직 비디오 하위 폴더 사용자 설정"
 
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "advancedsettings.xml 파일 업데이트"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Update Confluence 스킨 업데이트"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "사용자 이미지 사용"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "오버레이 이미지"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "목록 이미지"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "모두 재생"
@@ -203,3 +223,43 @@ msgstr "줄거리 편집"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "줄거리 업데이트 실패"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "부가 영상 파일을 정확하게 처리하기 위해 advancedsettings.xml 을 수정합니다. 실행하기 전에 변경 사항을 저장하세요. 계속하겠습니까?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "advancedsettings.xml 파일을 수정할 수 없음"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "자세한 사항은 로그를 확인하세요"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "유효하지 않은 advancedsettings.xml 파일. 수정할 수 없음"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml 수정 완료"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "VideoExtras 사용하기 위해 Confluence 스킨을 수정합니다. 계속할까요?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Confluence 스킨을 수정할 수 없음"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "일부 파일이 수정되지 않았습니다"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence 스킨 수정 완료"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "지금 Kodi를 다시 시작하세요"

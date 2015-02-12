@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
 msgstr "Bietet eine Möglichkeit, um Videoextras zu Ihrer Videobibliothek hinzuzufügen. Schauen Sie ins Wiki für Installationsanweisungen."
 
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
-msgstr "Skin-Ersteller, bitte schauen Sie ins Wiki für Informationen über die Integration in Ihren Skin:\nhttp://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
-
 msgctxt "#32001"
 msgid "Extras"
 msgstr "Extras"
@@ -144,6 +140,26 @@ msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
 msgstr "Benutzerdefinierter Musikvideo-Unterordner"
 
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "advancedsettings.xml-Datei aktualisieren"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Confluence-Skin aktualisieren"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Benutzerdefinierte Bilder verwenden"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Überlagerungsbild"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Auflistungsbild"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Alle wiedergeben"
@@ -203,3 +219,35 @@ msgstr "Handlung bearbeiten"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Aktualisierung der Handlung fehlgeschlagen"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Kann advancedsettings.xml nicht aktualisieren"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Bitte sehen Sie im Protokoll für weitere Details nach"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Ungültige advancedsettings.xml, kann nicht aktualisieren"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml-Aktualisierung abgeschlossen"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Kann Confluence-Skin nicht aktualisieren"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Nicht alle Dateien wurden wie erwartet aktualisiert"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence-Skin aktualisiert"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Es wird empfohlen, dass Sie Kodi jetzt neu starten"

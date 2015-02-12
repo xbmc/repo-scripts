@@ -72,6 +72,14 @@ msgctxt "#32110"
 msgid "Movies"
 msgstr "Filmi"
 
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV oddaje"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Glasbeni videi"
+
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Povzetek"

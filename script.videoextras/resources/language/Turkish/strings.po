@@ -20,6 +20,10 @@ msgctxt "#32001"
 msgid "Extras"
 msgstr "Ekstralar"
 
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Video Seçimi"
+
 msgctxt "#32008"
 msgid "Information"
 msgstr "Bilgi"

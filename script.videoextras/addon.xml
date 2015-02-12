@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.videoextras" name="VideoExtras" version="1.2.1" provider-name="robwebset">
+<addon id="script.videoextras" name="VideoExtras" version="1.2.2" provider-name="robwebset">
 	<requires>
     	<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -27,10 +27,10 @@
     	<summary lang="hu">Videó Extrák a Filmekhez és Sorozatokhoz</summary>
     	<summary lang="is">Bætir Video Extras við Kvikmyndir og Sjónvarpsþætti</summary>
     	<summary lang="it">Aggiungi i Video Extra ai tuoi Video e Serie tv</summary>
-    	<summary lang="ko">영화와 TV 쇼에 부가영상 추가</summary>
+    	<summary lang="ko">영화와 TV 쇼 라이브러리에 부가영상 추가</summary>
     	<summary lang="lt">Pridėkite video priedus filmams ir TV laidoms.</summary>
     	<summary lang="nl">Voeg Video extra`s toe aan jou Films en TV series.</summary>
-    	<summary lang="pl">Dodatki wideo do Twoich filmów i seriali telewizyjnych.</summary>
+    	<summary lang="pl">Wparcie dodatkowych materiałów dla filmów i seriali telewizyjnych.</summary>
     	<summary lang="pt">Adicionar Extras de Vídeo aos seus Filmes e Séries TV</summary>
     	<summary lang="pt_BR">Adiciona extras de vídeos em filmes e seriados.</summary>
     	<summary lang="sv">Lägg till Video Extras till dina filmer och TV-program</summary>
@@ -52,14 +52,14 @@
     	<description lang="ko">비디오 라이브러리에 부가영상(보너스 영상, 셔플, 다른 버전 등)을 추가할 수 있게 합니다. 설치 방법은 Kodi 위키를 참조하세요.</description>
     	<description lang="lt">Suteikia būdą pridėti video priedus į vaizdo biblioteką. Nustatymo instrukcijas galite rasti vikio puslapyje.</description>
     	<description lang="nl">Biedt een manier om Video extra`s toe te voegen aan jou videobibliotheek. Kijk op de wiki voor instellingsinstructies.</description>
-    	<description lang="pl">Pozwala dodać Wideo Dodatki do biblioteki wideo. Zapoznaj się z wiki w celu poprawnej konfiguracji. </description>
+    	<description lang="pl">Umożliwia dodanie dodatkowych materiałów wideo do biblioteki wideo. Zapoznaj się z informacjami na stronach Wiki w celu poprawnej konfiguracji. </description>
     	<description lang="pt">Permite adicionar extras de vídeo à sua Biblioteca de Vídeos. Leia o wiki para mais instruções de configuração.</description>
     	<description lang="pt_BR">Prove um caminho para vídeo extras via info de vídeo. Ver o wiki para instruções de configuração.</description>
     	<description lang="sv">Tillhandahåller ett sätt att lägga till Video Extras till ditt filmbibliotek. Se wiki för inställningsanvisningar.</description>
     	<language></language>
     	<platform>all</platform>
     	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    	<forum>http://forum.kodi.tv/showthread.php?tid=178717</forum>
+    	<forum>http://forum.kodi.tv/showthread.php?tid=214289</forum>
     	<source>http://robwebset.googlecode.com/svn/trunk/script.videoextras/</source>
   </extension>
 </addon>

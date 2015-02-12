@@ -24,10 +24,6 @@ msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
 msgstr "Gerir kleyft að bæta við Video Extras við myndasöfnin þín. Skoðaðu wiki til að sjá hvernig þetta er sett upp. Video Extras heldur utan um smámyndir og Fanart og fl og sér á skipulegan hátt um að geyma og halda utan um það."
 
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
-msgstr "Viðmótshönnuðir, vinsamlega lesið wiki til að sjá hvernig er hægt að fella þetta inní viðmót ykkar: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
-
 msgctxt "#32001"
 msgid "Extras"
 msgstr "Aukahlutir"

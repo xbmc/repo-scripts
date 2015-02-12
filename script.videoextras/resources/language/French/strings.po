@@ -52,6 +52,10 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "Base de donnée"
 
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Opérations"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Tout lire"

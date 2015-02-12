@@ -144,6 +144,26 @@ msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
 msgstr "Custom Music Video Sub-Folder"
 
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Update advancedsettings.xml File"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Update Confluence Skin"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Use Custom Images"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Overlay Image"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "List Image"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Play All"
@@ -203,3 +223,43 @@ msgstr "Edit plot"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Failed to update plot"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Unable to update advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Please check the log for more details"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Invalid advancedsettings.xml, unable to update"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml update complete"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Unable to update the Confluence skin"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Not all files were updated as expected"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence Skin Updated"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "It is recommended that you now restart Kodi"

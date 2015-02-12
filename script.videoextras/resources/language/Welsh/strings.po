@@ -44,6 +44,10 @@ msgctxt "#32102"
 msgid "Info"
 msgstr "Gwybodaeth"
 
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Ffilmiau"
+
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Plot"
