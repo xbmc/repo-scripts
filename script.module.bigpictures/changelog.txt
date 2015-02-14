@@ -1,3 +1,13 @@
+1.2.0 (14.02.2015)
+ - fixed The Big Picture Scraper (thx to Tobias Kühne)
+ - fixed AtlanticInFocus Scraper
+ - fixed SacBeeFrame Scraper
+ - fixed WallStreetJournal Scraper
+ - fixed TotallyCoolPix Scraper
+ - removed TimeLightbox Scraper
+ - removed NewYorkTimesLens Scraper
+ - improved performance on weak machines in The Big Picture and Atlantic in Focus
+
 1.1.4 (08.09.2013)
  - fixed WallStreetJournal Scraper (Website changes)
 

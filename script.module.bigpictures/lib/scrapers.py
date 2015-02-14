@@ -21,6 +21,8 @@ import re
 import json
 import urllib2
 from BeautifulSoup import BeautifulSoup
+from CommonFunctions import parseDOM, stripTags
+import HTMLParser
 
 try:
     import xbmc
@@ -35,8 +37,8 @@ ALL_SCRAPERS = (
     'SacBeeFrame',
     'WallStreetJournal',
     'TotallyCoolPix',
-    'TimeLightbox',
-    'NewYorkTimesLens',
+    # 'TimeLightbox',
+    # 'NewYorkTimesLens',
 )
 
 
@@ -49,6 +51,7 @@ class BasePlugin(object):
         self._albums = []
         self._photos = {}
         self._id = _id
+        self._parser = HTMLParser.HTMLParser()
 
     def get_albums(self):
         return self._albums or self._get_albums()
@@ -63,13 +66,7 @@ class BasePlugin(object):
         raise NotImplementedError
 
     def _get_tree(self, url, language='html'):
-        self.log('get_tree opening url "%s"' % url)
-        req = urllib2.Request(url)
-        try:
-            html = urllib2.urlopen(req).read()
-            self.log('get_tree received %d bytes' % len(html))
-        except urllib2.HTTPError, error:
-            self.log('HTTPError: %s' % error)
+        html = self._get_html(url)
         try:
             tree = BeautifulSoup(html, convertEntities=language)
         except TypeError:
@@ -78,6 +75,13 @@ class BasePlugin(object):
             html = html.decode('utf-8', 'ignore')
             tree = BeautifulSoup(html, convertEntities=language)
         return tree
+
+    def _get_html(self, url):
+        self.log('_get_html opening url "%s"' % url)
+        req = urllib2.Request(url)
+        html = urllib2.urlopen(req).read()
+        self.log('get_tree received %d bytes' % len(html))
+        return html
 
     def _collapse(self, iterable):
         return u''.join([e.string.strip() for e in iterable if e.string])
@@ -107,47 +111,48 @@ class BasePlugin(object):
 
 class TheBigPictures(BasePlugin):
 
-    _title = 'Boston.com: The Big Picture'
+    _title = 'The Boston Globe: The Big Picture'
 
     def _get_albums(self):
         self._albums = []
-        url = 'http://www.boston.com/bigpicture/'
-        tree = self._get_tree(url)
-        albums = tree.findAll('div', 'headDiv2')
-        for id, album in enumerate(albums):
-            title = album.find('a').string
-            album_url = album.find('a')['href']
-            d = album.find('div', {'class': 'bpBody'})
+        url = 'http://www.bostonglobe.com/news/bigpicture'
+
+        html = self._get_html(url)
+
+        for _id, album in enumerate(parseDOM(html, 'section')):
+            title = parseDOM(album, 'a')[0]
+            album_url = 'http://www.bostonglobe.com' + parseDOM(album, 'a', ret='href')[0]
+            d = parseDOM(album, 'div', attrs={'class': 'subhead geor'})[0]
             if not d:
                 continue
-            description = self._collapse(d.contents)
-            pic = album.find('img', {'class': 'bpImage'})
+            description = stripTags(self._parser.unescape(d))
+            pic = urllib2.quote(parseDOM(album, 'img', ret='src')[0])
             if not pic:
                 continue
             self._albums.append({
                 'title': title,
-                'album_id': id,
-                'pic': pic['src'],
+                'album_id': _id,
+                'pic': 'http:' + pic,
                 'description': description,
-                'album_url': album_url}
-            )
+                'album_url': album_url})
+
         return self._albums
 
     def _get_photos(self, album_url):
         self._photos[album_url] = []
-        tree = self._get_tree(album_url)
-        album_title = tree.find('h2').a.string
-        images = tree.findAll('div', {'class':
-                                      re.compile('bpImageTop|bpBoth')})
-        for id, photo in enumerate(images):
-            pic = photo.img['src']
-            d = photo.find('div', {'class': 'bpCaption'}).contents
-            description = self._collapse(d).rstrip('#')
+        html = self._get_html(album_url)
+        album_title = parseDOM(html, 'title')[0]
+        images = parseDOM(html, 'div', attrs={'class': 'photo'})
+        descs = parseDOM(html, 'article', attrs={'class': 'pcaption'})
+
+        for _id, photo in enumerate(images):
+            pic = urllib2.quote(parseDOM(photo, 'img', ret='src')[0])
+            description = stripTags(parseDOM(descs[_id], 'div', attrs={'class': 'gcaption geor'})[0])
             self._photos[album_url].append({
-                'title': '%d - %s' % (id + 1, album_title),
+                'title': '%d - %s' % (_id + 1, album_title),
                 'album_title': album_title,
-                'photo_id': id,
-                'pic': pic,
+                'photo_id': _id,
+                'pic': 'http:' + pic,
                 'description': description,
                 'album_url': album_url
             })
@@ -161,43 +166,41 @@ class AtlanticInFocus(BasePlugin):
     def _get_albums(self):
         self._albums = []
         url = 'http://www.theatlantic.com/infocus/'
-        tree = self._get_tree(url)
-        section = tree.find('div', {'class': 'middle'})
-        headlines = section.findAll('h1', {'class': 'headline'})
-        descriptions = section.findAll('div', {'class': 'dek'})
-        images = section.findAll('span', 'if1280')
-        for id, node in enumerate(headlines):
-            title = node.a.string
-            album_url = headlines[id].a['href']
-            d = descriptions[id].p.contents
-            description = self._collapse(d).replace('\n', '')
-            pic = images[id].find('img')['src']
-            self._albums.append({
-                'title': title,
-                'album_id': id,
-                'pic': pic,
-                'description': description,
-                'album_url': album_url}
-            )
+        html = self._get_html(url)
+        pattern = r'@media\(min-width:1632px\){#river1 \.lead-image{background-image:url\((.+?)\)'
+        for _id, li in enumerate(parseDOM(html, 'li', attrs={'class': 'article'})):
+            headline = parseDOM(li, 'h1')[0]
+            match = re.search(pattern.replace('river1', 'river%d' % (_id + 1)), html)
+            if match:
+                self._albums.append({
+                    'title': parseDOM(headline, 'a')[0],
+                    'album_id': _id,
+                    'pic': match.group(1),
+                    'description': stripTags(self._parser.unescape(parseDOM(li, 'p', attrs={'class': 'dek'})[0])),
+                    'album_url': 'http://www.theatlantic.com' + parseDOM(headline, 'a', ret='href')[0],
+                })
         return self._albums
 
     def _get_photos(self, album_url):
         self._photos[album_url] = []
-        tree = self._get_tree(album_url)
-        album_title = tree.find('h1', 'headline').string
-        images = tree.findAll('span', {'class': 'if1024'})
-        for id, photo in enumerate(images):
-            pic = photo.find('img')['src']
-            d = photo.find('div', 'imgCap').contents
-            description = self._collapse(d)
-            self._photos[album_url].append({
-                'title': '%d - %s' % (id + 1, album_title),
-                'album_title': album_title,
-                'photo_id': id,
-                'pic': pic,
-                'description': description,
-                'album_url': album_url
-            })
+        html = self._get_html(album_url)
+        pattern = r'@media\(min-width:1592px\){#img01 \.img{background-image:url\((.+?)\)'
+        id_pattern = re.compile(r'#img(\d\d)')
+        album_title = parseDOM(html, 'title')[0]
+        for _id, p in enumerate(parseDOM(html, 'p', attrs={'class': 'caption'})):
+            match = re.search(id_pattern, p)
+            if match:
+                img_id = match.group(1)
+                match = re.search(pattern.replace('img01', 'img%s' % img_id), html)
+                if match:
+                    self._photos[album_url].append({
+                        'title': '%d - %s' % (_id + 1, album_title),
+                        'album_title': album_title,
+                        'photo_id': _id,
+                        'pic': match.group(1),
+                        'description': stripTags(self._parser.unescape(p)).replace('\n                #', ''),
+                        'album_url': album_url,
+                    })
         return self._photos[album_url]
 
 
@@ -253,18 +256,11 @@ class WallStreetJournal(BasePlugin):
         self._albums = []
         url = 'http://blogs.wsj.com/photojournal/'
         tree = self._get_tree(url)
-        albums = tree.findAll('li', 'postitem imageFormat-P')
+        albums = tree.findAll('article', {'class': re.compile('post-snippet')})
         for id, album in enumerate(albums):
-            author = album.find('cite').string
-            if not author == u'By WSJ Staff':
-                continue
-            if not album.find('img'):
-                continue
-            if not album.find('h2'):
-                continue
             title = album.find('h2').a.string
             album_url = album.find('h2').a['href']
-            d = album.findAll('div', {'class': 'postContent'})[1].p
+            d = album.findAll('div', {'class': 'post-content'})[0].p
             description = self._collapse(d)
             pic = album.find('img')['src'].strip()
             self._albums.append({
@@ -289,14 +285,12 @@ class WallStreetJournal(BasePlugin):
         page_photos = []
         next_page_url = None
         tree = self._get_tree(album_url)
-        c = 'articleHeadlineBox headlineType-newswire'
-        album_title = tree.find('div', c).h1.string
-        section = tree.find('div', {'class': 'articlePage'})
-        images = section.findAll('p')
+        album_title = self._collapse(tree.find('h1', {'class': 'post-title h-main'}).contents)
+        images = tree.findAll('dl')
         for id, photo in enumerate(images):
             if not photo.find('img'):
                 continue
-            pic = photo.img['src'].strip()
+            pic = photo.find('img')['src'].strip()
             description = self._collapse(photo.contents)
             page_photos.append({
                 'title': '%d - %s' % (id + 1, album_title),
@@ -319,13 +313,14 @@ class TotallyCoolPix(BasePlugin):
         self._albums = []
         url = 'http://totallycoolpix.com/'
         tree = self._get_tree(url)
-        section = tree.find('div', {'class': 'pri'})
-        albums = section.findAll('div', {'class': 'block'})
+        albums = tree.findAll('div', {'class': 'item'})
         for id, album in enumerate(albums):
-            title = album.find('h1').a.string
-            album_url = album.find('h1').a['href']
-            d = album.find('div', {'class': 'post-intro'}).p.contents
-            description = self._collapse(d)
+            if not album.find('a', {'class': 'open'}):
+                continue
+            title = album.find('h2').string
+            album_url = album.find('a')['href']
+            p = album.find('p')
+            description = self._collapse(p.contents) if p else ''
             pic = album.find('img')['src']
             self._albums.append({
                 'title': title,
@@ -339,18 +334,18 @@ class TotallyCoolPix(BasePlugin):
     def _get_photos(self, album_url):
         self._photos[album_url] = []
         tree = self._get_tree(album_url)
-        album_title = tree.find('h1').a.string
-        photos = tree.findAll('div', {
-            'class': re.compile('^wp-caption')
-        })
-        for id, photo in enumerate(photos):
-            pic = photo.img['src']
-            description = self._collapse(photo.p.contents)
+        album_title = tree.find('h2').string
+        for id, photo in enumerate(tree.findAll('div', {'class': 'image'})):
+            print photo
+            img = photo.find('img')
+            if not img:
+                continue
+            description = self._collapse(photo.find('p', {'class': 'info-txt'}).contents)
             self._photos[album_url].append({
                 'title': '%d - %s' % (id + 1, album_title),
                 'album_title': album_title,
                 'photo_id': id,
-                'pic': pic,
+                'pic': img['src'],
                 'description': description,
                 'album_url': album_url
             })
