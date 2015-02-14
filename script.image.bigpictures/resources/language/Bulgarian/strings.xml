@@ -4,5 +4,29 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <string id="32002">Up + Down = Превключване на източника</string>
+    <string id="32007">Play = Стартира слайдшоуто</string>
+    <string id="32101">Ползвай черен фон (за скриване на изображение)</string>
+    <string id="32120">Покажи стрелките</string>
+    <string id="32130">Произволно слайдшоу</string>
+    <string id="32140">Сваляне на албумите в:</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Помощ</string>
     <string id="32201">Настройки</string>
+    <string id="32202">Източник</string>
+
+    <!-- Script strings -->
+    <string id="32300">Стандартен път за свалените файлове</string>
+    <string id="32302">Елемент %d/%d</string>
+    <string id="32303">Текущ елемент: %s %d%%</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - От фото редакторите на TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

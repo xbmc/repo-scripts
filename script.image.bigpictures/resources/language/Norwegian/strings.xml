@@ -4,5 +4,18 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Settings categories -->
+    <string id="32200">Hjelp</string>
     <string id="32201">Innstillinger</string>
+    <string id="32202">Kilder</string>
+    <string id="32304">Laster ned til: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - Fra bildeskaperne i TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

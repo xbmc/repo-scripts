@@ -16,6 +16,7 @@
 
     <!-- Settings -->
     <string id="32100">Příště nezobrazovat tuto nápovědu</string>
+    <string id="32101">Použij černé pozadí (schová obrázek)</string>
     <string id="32110">Výchozí poměr stran</string>
     <string id="32111">škálovat</string>
     <string id="32112">zachovat</string>
@@ -26,6 +27,7 @@
     <!-- Settings categories -->
     <string id="32200">Nápověda</string>
     <string id="32201">Nastavení</string>
+    <string id="32202">Zdroje</string>
 
     <!-- Script strings -->
     <string id="32300">Zvolte výchozí cestu pro stahování</string>
@@ -33,4 +35,13 @@
     <string id="32302">%d. položka z %d</string>
     <string id="32303">Aktuální položka: %s %d%%</string>
     <string id="32304">Stahuje se do: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - From the photo editors of TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

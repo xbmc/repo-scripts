@@ -4,5 +4,16 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Settings categories -->
+    <string id="32200">Yardım</string>
     <string id="32201">Ayarlar</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">Odağında - The Atlantic</string>
+    <string id="32402">Sacramento Arısı - The Frame</string>
+    <string id="32403">Fotoğraf Günlüğü  - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - TIME fotoğraf editörlerinden</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

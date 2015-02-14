@@ -4,5 +4,44 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Help -->
+    <string id="32001">Left + Right = Promijeni Album/Fotografiju</string>
+    <string id="32002">Up + Down = Promijeni izvor</string>
+    <string id="32003">Select = Otvori album</string>
+    <string id="32004">Back = natrag na album/napusti dodatak</string>
+    <string id="32005">Info = Uključi/Isključi zaslonske informacije</string>
+    <string id="32006">Context = Preuzmi album</string>
+    <string id="32007">Play = Pokreni slikovnu prezentaciju</string>
+    <string id="32008">0 = Uključi/Isključi omjer slike</string>
+
+    <!-- Settings -->
+    <string id="32100">Ne prikazuj više ovu pomoć</string>
+    <string id="32101">Koristi crnu pozadinu (sakrij sliku)</string>
+    <string id="32110">Uobičajeni omjer slike</string>
+    <string id="32111">promjeni veličinu</string>
+    <string id="32112">zadrži</string>
+    <string id="32120">Prikaži strelice</string>
+    <string id="32130">Naizmjenična slikovna prezentacija</string>
+    <string id="32140">Putanja preuzimanja albuma</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Pomoć</string>
     <string id="32201">Postavke</string>
+    <string id="32202">Izvori</string>
+
+    <!-- Script strings -->
+    <string id="32300">Odaberi zadanu putanju preuzimanja</string>
+    <string id="32301">Prikupljanje podataka...</string>
+    <string id="32302">Stavka %d/%d</string>
+    <string id="32303">Trenutna stavka: %s %d%%</string>
+    <string id="32304">Preuzimanje u: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - od urednika fotografija TIME-a</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

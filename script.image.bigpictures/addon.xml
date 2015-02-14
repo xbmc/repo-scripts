@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.image.bigpictures" name="The Big Picture" version="4.1.2" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="script.image.bigpictures" name="The Big Picture" version="4.2.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.bigpictures" version="1.1.2"/>
+        <import addon="script.module.bigpictures" version="1.2.0"/>
     </requires>
     <extension point="xbmc.python.script" library="script.py">
         <provides>image</provides>
@@ -20,16 +20,24 @@
         <email>sphere@dersphere.de</email>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <summary lang="be">Photojournalism</summary>
+        <summary lang="bg">Фотожурналистика</summary>
+        <summary lang="ca">Fotoperiodisme</summary>
         <summary lang="cs">Fotoreportáže</summary>
         <summary lang="da">Fotojournalistik</summary>
         <summary lang="de">Fotojournalismus</summary>
         <summary lang="el">Φωτορεπορτάζ</summary>
         <summary lang="en">Photojournalism</summary>
+        <summary lang="en_NZ">Photojournalism</summary>
+        <summary lang="en_US">Photojournalism</summary>
         <summary lang="es">Fotoperiodismo</summary>
         <summary lang="fa_IR">عکس های خبری</summary>
         <summary lang="fr">Photojournalisme</summary>
+        <summary lang="fr_CA">Photojournalisme</summary>
         <summary lang="gl">Fotoxornalismo</summary>
+        <summary lang="he">צילום עיתונות</summary>
+        <summary lang="hr">Fotonovinarstvo</summary>
         <summary lang="hu">Sajtófotók</summary>
+        <summary lang="id">Journalisme Foto</summary>
         <summary lang="it">Fotagiornalismo</summary>
         <summary lang="ko">포토저널리즘</summary>
         <summary lang="lt">Fotoreportažai</summary>
@@ -37,22 +45,32 @@
         <summary lang="pl">Reportaże</summary>
         <summary lang="pt">Fotojornalismo</summary>
         <summary lang="pt_BR">Fotojornalismo</summary>
+        <summary lang="ru">Фотожурнализм</summary>
         <summary lang="sk">Foto-žurnalistika</summary>
         <summary lang="sv">Fotojournalism</summary>
         <summary lang="zh">新闻摄影</summary>
+        <description lang="be">This addon provides beautiful albums and photos from some nice photojournalism websites.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="ca">Aquest complement proporciona bells àlbums i fotos d'alguns llocs web de fotoperiodisme.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="cs">Tento doplněk poskytuje přístup k nádherným albům a fotografiím z vybraných webových stránek s fotoreportážemi.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="da">Denne add-on leverer smukke fotoalbummer og billeder fra nogle lækre websider om fotojournalistik.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup</description>
         <description lang="de">Dieses Addon bietet schöne Alben und Photos von Fotojournalismus Webseiten.[CR][CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="el">Αυτό το πρόσθετο παρέχει όμορφα άλμπουμ και φωτογραφίες από διάφορες ιστοσελίδες φωτορεπορτάζ.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="en">This addon provides beautiful albums and photos from some nice photojournalism websites.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="en_NZ">This addon provides beautiful albums and photos from some nice photojournalism websites.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="en_US">This addon provides beautiful albums and photos from some nice photojournalism websites.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="es">Este complemento muestra hermosos álbumes y fotos de algunas webs de fotoperiodismo.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="fr">Cet addon affiche de magnifiques albums et photos de plusieurs sites Web de photojournalisme.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="fr_CA">Cet addiciel fournit de beaux albums et des photos de certains sites de photojournalisme agréable.[CR]- Boston.com : The Big Picture[CR]- The Atlantic : In Focus[CR]- Sacramento Bee : The Frame[CR]- Wallstreetjournal : The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com : LightBox - Closeup[CR]- NewYorkTimes.com : Lens Blog</description>
         <description lang="gl">Este complemento prové de fermosos álbums e fotos dalgúns dos mellores sitios web de fotoxornalismo.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="he">הרחבה זו מספקת אלבומים ותמונות יפיפיים ממספר אתרי צילומי עיתונות איכותיים.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="hr">Ovaj dodatak omogućava predivne albume i fotografije s nekih fotonovinarskih web stranica.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="hu">Ez a kiegészítő gyönyörű albumokat és képeket szolgáltat néhány sajtófotó weboldalról.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="it">Questo addon fornisce bei album e foto da alcuni siti di fotogiornalismo. [CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="ko">이 애드온은 사진저널리즘 웹사이트의 아름다운 앨범과 사진들을 보여줍니다.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
-        <description lang="lt">Šis priedas yra gražių albumų ir nuotraukų rinkinys iš fotožurnalistikos svetainių[Cr]- Boston.com: The Big Picture[CR]- Atlanto: In Focus[CR]- Sacramento Bee: Frame[CR]- Wallstreetjournal: Nuotraukų žurnalo [CR]- TotallyCoolPix.com [CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="lt">Šis priedas suteikia prieigą prie nuostabių albumų ir nuotraukų iš fotožurnalistikos svetainių[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: Frame[CR]- Wallstreetjournal:The Photo Journal[CR]- TotallyCoolPix.com [CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="nl">Deze addon toont prachtige albums en fotos van enkele knappe photojournalisme websites.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="pl">Wtyczka ta daje ci dostęp do pięknych albumów oraz zdjęć z paru niezłych witryn fotodziennikarskich. [CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - zbliżnie[CR]- NewYorkTimes.com: Lens Blog</description>
-        <description lang="pt">Este addon apresenta belíssimos álbuns e fotografias de alguns bons sites de fotojornalismo.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
+        <description lang="pt">Este add-on apresenta belíssimos álbuns e fotografias de alguns bons sites de fotojornalismo.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="pt_BR">Este addon oferece belos álbuns e fotos de alguns dos principais sites de fotojornalismo ​​[CR] - Boston.com:. The Big Picture [CR] - The Atlantic: Em Foco [CR] - Sacramento Bee: The Frame [CR] - Wallstreetjournal: A Foto Jornal [CR] - TotallyCoolPix.com [CR] - Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="sv">Detta tillägg ger tillgång till vackra album och foton från några trevliga fotojournalism webbplatser.[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>
         <description lang="zh">本插件提供优秀新闻摄影网站的漂亮相册和照片。[CR]- Boston.com: The Big Picture[CR]- The Atlantic: In Focus[CR]- Sacramento Bee: The Frame[CR]- Wallstreetjournal: The Photo Journal[CR]- TotallyCoolPix.com[CR]- Time.com: LightBox - Closeup[CR]- NewYorkTimes.com: Lens Blog</description>

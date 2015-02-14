@@ -35,6 +35,7 @@
     <string id="32302">Item %d/%d</string>
     <string id="32303">Current item: %s %d%%</string>
     <string id="32304">Downloading to: %s</string>
+
     <!-- Scrapers -->
     <string id="32400">The Big Picture - Boston.com</string>
     <string id="32401">In Focus - The Atlantic</string>

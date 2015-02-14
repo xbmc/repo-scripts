@@ -16,21 +16,32 @@
 
     <!-- Settings -->
     <string id="32100">Non amosar máis esta axuda </string>
+    <string id="32101">Usar fondo negro (agochar imaxe)</string>
     <string id="32110">Taxa de aspecto predefinida</string>
     <string id="32111">escala</string>
     <string id="32112">manter</string>
     <string id="32120">Amosar Frechas</string>
     <string id="32130">Presentación ó chou</string>
-    <string id="32140">Camiño de descarga do álbum</string>
+    <string id="32140">Ruta de descarga do álbum</string>
 
     <!-- Settings categories -->
     <string id="32200">Axuda</string>
     <string id="32201">Configuracións</string>
+    <string id="32202">Fontes</string>
 
     <!-- Script strings -->
-    <string id="32300">Seleccionar o camiño predefinido para as descargas</string>
+    <string id="32300">Seleccionar a ruta predefinida para as descargas</string>
     <string id="32301">Recollendo datos...</string>
     <string id="32302">Elemento %d/%d</string>
     <string id="32303">Elemento actual: %s %d%%</string>
     <string id="32304">Descargando en: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Jounal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - Dos editores do TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

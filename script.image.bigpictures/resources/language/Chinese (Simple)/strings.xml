@@ -16,6 +16,7 @@
 
     <!-- Settings -->
     <string id="32100">不再显示本帮助信息</string>
+    <string id="32101">使用黑背景（隐藏图片）</string>
     <string id="32110">默认宽高比</string>
     <string id="32111">尺寸</string>
     <string id="32112">保留</string>
@@ -26,6 +27,7 @@
     <!-- Settings categories -->
     <string id="32200">帮助</string>
     <string id="32201">设置</string>
+    <string id="32202">来源</string>
 
     <!-- Script strings -->
     <string id="32300">选择默认下载目录</string>
@@ -33,4 +35,13 @@
     <string id="32302">项 %d/%d</string>
     <string id="32303">当前项目：%s %d%%</string>
     <string id="32304">下载到：%s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">焦点 - 大西洋</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">照片日刊 - 华尔街日报</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - 来自时代周刊图片编辑</string>
+    <string id="32406">镜头博客 - 纽约时报</string>
 </strings>

@@ -16,6 +16,7 @@
 
     <!-- Settings -->
     <string id="32100">Nie pokazuj tej pomocy ponownie</string>
+    <string id="32101">Użyj czrnego tła (ukryj zdjęcie)</string>
     <string id="32110">Domyślne proporcje</string>
     <string id="32111">skala</string>
     <string id="32112">trzymać</string>
@@ -26,6 +27,7 @@
     <!-- Settings categories -->
     <string id="32200">Pomoc</string>
     <string id="32201">Ustawienia</string>
+    <string id="32202">Źródła</string>
 
     <!-- Script strings -->
     <string id="32300">Wybierz domyślną ścieżkę pobierania</string>
@@ -33,4 +35,13 @@
     <string id="32302">Pozycja %d/%d</string>
     <string id="32303">Aktualna pozycja: %s %d%%</string>
     <string id="32304">Pobieranie do: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - Od edytorów TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

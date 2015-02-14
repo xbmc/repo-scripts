@@ -4,5 +4,44 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Help -->
+    <string id="32001">Esquerra + Dreta = Canvia l'Àlbum/Fotografia</string>
+    <string id="32002">Amunt + Avall = Canvia la font</string>
+    <string id="32003">Select = Entra a l'àlbum</string>
+    <string id="32004">Back = torna a l'àlbum/surt del complement</string>
+    <string id="32005">Info = Activa la informació en pantalla</string>
+    <string id="32006">Context = Descarrega l'àlbum</string>
+    <string id="32007">Play = Comença la presentació de diapositives</string>
+    <string id="32008">0 = Canvia la relació d'aspecte</string>
+
+    <!-- Settings -->
+    <string id="32100">No tornis a mostrar aquest ajut</string>
+    <string id="32101">Utilitza un fons negre (amaga la imatge)</string>
+    <string id="32110">Relació d'aspecte per defecte</string>
+    <string id="32111">escala</string>
+    <string id="32112">mantenir</string>
+    <string id="32120">Mostra les fletxes</string>
+    <string id="32130">Presentació de diapositives aleatòria</string>
+    <string id="32140">Ruta de descarrega de l'àlbum</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Ajuda</string>
     <string id="32201">Configuració</string>
+    <string id="32202">Fonts</string>
+
+    <!-- Script strings -->
+    <string id="32300">Escull la ruta de descarrega per defecte</string>
+    <string id="32301">Recollint dades...</string>
+    <string id="32302">Element %d/%d</string>
+    <string id="32303">Element actual: %s %d%%</string>
+    <string id="32304">Descarregant a: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - De els editors de fotografia del TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

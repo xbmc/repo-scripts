@@ -5,18 +5,19 @@
 
 <strings>
     <!-- Help -->
-    <string id="32001">Kairė + Dešinė = Jungiklis Albumas/Foto</string>
-    <string id="32002">Aukštyn + Žemyn = Jungiklio šaltinis</string>
-    <string id="32003">Pasirinkite = Įveskite albumą</string>
-    <string id="32004">Atgal = Atgal į albumą/palikti priedą</string>
+    <string id="32001">Kairė + Dešinė = Perjungti Albumas/Foto</string>
+    <string id="32002">Aukštyn + Žemyn = Perjungti šaltinį</string>
+    <string id="32003">Pasirinkti = Įeiti į albumą</string>
+    <string id="32004">Atgal = Atgal į albumą/išeiti iš priedą</string>
     <string id="32005">Info = Perjungti ekrano informaciją</string>
     <string id="32006">Kontekstas = Atsisiųsti albumą</string>
     <string id="32007">Groti = Pradėti skaidrių peržiūrą</string>
-    <string id="32008">0 = Perjungti aspektų-santykį</string>
+    <string id="32008">0 = Perjungti kraštinių santykį</string>
 
     <!-- Settings -->
-    <string id="32100">Nerodyti šios pagalbos dar kartą</string>
-    <string id="32110">Numatytasis aspektų-santykis</string>
+    <string id="32100">Daugiau nerodyti šios pagalbos</string>
+    <string id="32101">Naudoti juodą foną (slėpti paveikslėlį)</string>
+    <string id="32110">Numatytasis kraštinių santykis</string>
     <string id="32111">skalė</string>
     <string id="32112">išlaikyti</string>
     <string id="32120">Rodyti rodykles</string>
@@ -26,11 +27,21 @@
     <!-- Settings categories -->
     <string id="32200">Pagalba</string>
     <string id="32201">Nustatymai</string>
+    <string id="32202">Šaltiniai</string>
 
     <!-- Script strings -->
-    <string id="32300">Pasirinkite numatytąjį atsisiuntimų maršrutą</string>
-    <string id="32301">Kaupiami/renkami duomenys ...</string>
+    <string id="32300">Pasirinkite numatytąjį atsiuntimų kelią</string>
+    <string id="32301">Renkami duomenys ...</string>
     <string id="32302">Elementas %d/%d</string>
     <string id="32303">Dabartinis elementas: %s %d%%</string>
-    <string id="32304">Atsisiųsti į: %s</string>
+    <string id="32304">Atsisiunčiama į: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - nuo TIME foto redaktorių</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

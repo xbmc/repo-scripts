@@ -4,5 +4,9 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <string id="32003">Pilih = Masuk album</string>
+
+    <!-- Settings categories -->
+    <string id="32200">Bantuan</string>
     <string id="32201">Setelan</string>
 </strings>

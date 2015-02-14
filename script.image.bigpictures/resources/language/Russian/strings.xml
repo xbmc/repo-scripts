@@ -4,7 +4,14 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Help -->
+    <string id="32001">Влево + Вправо = Переключение Альбом/Фото</string>
+    <string id="32002">Вверх + Вниз = Сменить источник</string>
+    <string id="32003">Выбор = Зайти в альбом</string>
+    <string id="32004">Назад = выйти из альбома/дополнения</string>
+
     <!-- Settings categories -->
     <string id="32200">Справка</string>
     <string id="32201">Настройка</string>
+    <string id="32304">Скачивание в: %s</string>
 </strings>

@@ -4,5 +4,7 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Settings categories -->
+    <string id="32200">Help</string>
     <string id="32201">Verstellings</string>
 </strings>

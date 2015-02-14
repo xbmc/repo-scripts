@@ -33,4 +33,13 @@
     <string id="32302">Položka %d/%d</string>
     <string id="32303">Aktuálna položka: %s %d%%</string>
     <string id="32304">Sťahujem do: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - Od editorov fotografií časopisu TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

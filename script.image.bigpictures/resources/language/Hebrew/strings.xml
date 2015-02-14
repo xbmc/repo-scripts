@@ -4,5 +4,44 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Help -->
+    <string id="32001">שמאל + ימין = החלף אלבום/תמונה</string>
+    <string id="32002">למעלה + למטה = החלף מקור</string>
+    <string id="32003">בחר = הזן אלבום</string>
+    <string id="32004">חזור = חזור לאלבום/יציאה מההרחבה</string>
+    <string id="32005">מידע = הצג/הסתר מידע</string>
+    <string id="32006">Context =  הורד אלבום</string>
+    <string id="32007">נגן = התחל מצגת</string>
+    <string id="32008">0 = שינוי יחס הצגה</string>
+
+    <!-- Settings -->
+    <string id="32100">אל תציג שוב עזרה זו</string>
+    <string id="32101">השתמש ברקע שחור (הסתר תמונה)</string>
+    <string id="32110">ברירת מחדל יחס תצוגה</string>
+    <string id="32111">התאם גודל</string>
+    <string id="32112">זהה</string>
+    <string id="32120">הצג חיצים</string>
+    <string id="32130">מצגת אקראית</string>
+    <string id="32140">נתיב הורדת אלבום</string>
+
+    <!-- Settings categories -->
+    <string id="32200">עזרה</string>
     <string id="32201">הגדרות</string>
+    <string id="32202">מקורות</string>
+
+    <!-- Script strings -->
+    <string id="32300">בחר ברירת מחדל לנתיב הורדה</string>
+    <string id="32301">אוסף נתונים...</string>
+    <string id="32302">פריט %d/%d</string>
+    <string id="32303">פריט נוכחי: %s %d%%</string>
+    <string id="32304">מוריד אל: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - From the photo editors of TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

@@ -16,6 +16,7 @@
 
     <!-- Settings -->
     <string id="32100">No mostrar más esta ayuda</string>
+    <string id="32101">Usar fondo negro (Ocultar la imagen)</string>
     <string id="32110">Aspecto-ratio por defecto</string>
     <string id="32111">escala</string>
     <string id="32112">mantener</string>
@@ -26,6 +27,7 @@
     <!-- Settings categories -->
     <string id="32200">Ayuda</string>
     <string id="32201">Ajustes</string>
+    <string id="32202">Fuentes</string>
 
     <!-- Script strings -->
     <string id="32300">Escoger ruta de descarga por defecto</string>
@@ -33,4 +35,13 @@
     <string id="32302">Objeto %d/%d</string>
     <string id="32303">Objeto actual: %s %d%% </string>
     <string id="32304">Descargando en:  %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - De los editores de fotografía de TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

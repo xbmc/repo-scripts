@@ -16,6 +16,7 @@
 
     <!-- Settings -->
     <string id="32100">Diese Hilfe nicht mehr anzeigen</string>
+    <string id="32101">Benutze schwarzen Hintergrund (Bild ausblenden)</string>
     <string id="32110">Standard Seitenverhältnis</string>
     <string id="32111">scale</string>
     <string id="32112">keep</string>
@@ -26,6 +27,7 @@
     <!-- Settings categories -->
     <string id="32200">Hilfe</string>
     <string id="32201">Einstellungen</string>
+    <string id="32202">Quellen</string>
 
     <!-- Script strings -->
     <string id="32300">Download-Verzeichnis wählen</string>
@@ -33,4 +35,13 @@
     <string id="32302">Datei %d/%d</string>
     <string id="32303">Aktuelle Datei: %s %d%%</string>
     <string id="32304">Verzeichnis: %s</string>
+
+    <!-- Scrapers -->
+    <string id="32400">The Big Picture - Boston.com</string>
+    <string id="32401">In Focus - The Atlantic</string>
+    <string id="32402">Sacramento Bee - The Frame</string>
+    <string id="32403">Photo Journal - Wall Street Journal</string>
+    <string id="32404">TotallyCoolPix.com</string>
+    <string id="32405">LightBox - Von den Foto-Editoren der TIME</string>
+    <string id="32406">Lens Blog - The New York Times</string>
 </strings>

@@ -1,3 +1,13 @@
+4.2.0 (14.02.2015)
+  fixed The Big Picture Scraper (thx to Tobias Kühne)
+  fixed AtlanticInFocus Scraper
+  fixed SacBeeFrame Scraper
+  fixed WallStreetJournal Scraper
+  fixed TotallyCoolPix Scraper
+  removed TimeLightbox Scraper
+  removed NewYorkTimesLens Scraper
+  improved performance on weak machines in The Big Picture and Atlantic in Focus
+
 4.1.2 (25.11.2013)
   fix error with outdated xml overriding skins like Aeon Nox
 

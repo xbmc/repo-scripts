@@ -4,5 +4,7 @@
 <!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
 
 <strings>
+    <!-- Settings categories -->
+    <string id="32200">Trợ giúp</string>
     <string id="32201">Cài Đặt</string>
 </strings>
