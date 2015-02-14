@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.screensaver.bigpictures" name="The Big Pictures Screensaver" version="0.1.2" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="script.screensaver.bigpictures" name="The Big Pictures Screensaver" version="0.2.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.bigpictures" version="1.1.4"/>
+        <import addon="script.module.bigpictures" version="1.2.0"/>
     </requires>
     <extension point="xbmc.ui.screensaver" library="screensaver.py" />
     <extension point="xbmc.addon.metadata">
@@ -12,29 +12,61 @@
         <source>https://github.com/dersphere/script.screensaver.bigpictures</source>
         <forum>http://forum.xbmc.org/showthread.php?tid=160347</forum>
         <email>sphere@dersphere.de</email>
+        <summary lang="ca">Estalvi de pantalla Photojournalism</summary>
+        <summary lang="cs">Šetřič obrazovky z fotoreportáží</summary>
+        <summary lang="da">Fotojournalisme Screensaver</summary>
         <summary lang="de">Fotojournalismus-Bildschirmschoner</summary>
         <summary lang="el">Προφύλαξη Οθόνης Φωτορεπορτάζ</summary>
         <summary lang="en">Photojournalism Screensaver</summary>
+        <summary lang="en_NZ">Photojournalism Screensaver</summary>
+        <summary lang="en_US">Photojournalism Screensaver</summary>
         <summary lang="es">Salvapantallas de fotoperiodismo</summary>
+        <summary lang="fi">Uutiskuvat-näytönsäästäjä</summary>
+        <summary lang="fr">Économiseur d'écran Photo Journalisme</summary>
+        <summary lang="fr_CA">Économiseur d'écran de photojournalisme</summary>
         <summary lang="gl">Protector de pantalla de Fotoperiodismo</summary>
+        <summary lang="he">שומר המסך Photojournalism</summary>
+        <summary lang="hr">Photojournalism čuvar zaslona</summary>
+        <summary lang="hu">Sajtófotók képernyőkímélő</summary>
         <summary lang="it">Salvaschermo Fotogiornalismo</summary>
+        <summary lang="ko">포토저널리즘 화면 보호기</summary>
+        <summary lang="lt">Photojournalism ekrano užskalnda</summary>
         <summary lang="nl">Fotojournalisme screensaver</summary>
+        <summary lang="no">Photojournalism skjermsparer</summary>
         <summary lang="pl">Wygaszacz z Fotoreportaży</summary>
         <summary lang="pt">Uma protecção de ecrã de fotojornalismo</summary>
         <summary lang="pt_BR">Proteção de tela de fotojornalismo</summary>
+        <summary lang="sk">Šetrič obrazovky Fotožurnalistika</summary>
         <summary lang="sv">Fotojournalism-skärmsläckare</summary>
+        <summary lang="tr">Photojournalism Ekran Koruyucusu</summary>
         <summary lang="zh">新闻摄影屏幕保护</summary>
+        <description lang="bg">Скрипт изображение "The Big Pictures" като скрийнсейвър.</description>
+        <description lang="ca">El script d'imatge "The Big Pictures" com a estalvi de pantalla.</description>
+        <description lang="cs">Obrázkový Script "The Big Pictures" jako šetřič obrazovky.</description>
+        <description lang="da">Billedscript "The Big Pictures" som Screensaver.</description>
         <description lang="de">Das Bildscript "The Big Pictures" als Bildschirmschoner.</description>
         <description lang="el">Χρήση του script "The Big Pictures" σαν Προφύλαξη Οθόνης</description>
         <description lang="en">The Image Script "The Big Pictures" as Screensaver.</description>
+        <description lang="en_NZ">The Image Script "The Big Pictures" as Screensaver.</description>
+        <description lang="en_US">The Image Script "The Big Pictures" as Screensaver.</description>
         <description lang="es">Salvapantallas del Script de imágenes "The Big Pictures"</description>
+        <description lang="fr">L'image script "The Big Pictures" en économiseur d'écran.</description>
+        <description lang="fr_CA">Le script d'images de « The Big Pictures » comme économiseur d'écran.</description>
         <description lang="gl">O Script de Imaxe "The Big Pictures" como Protector de pantalla.</description>
+        <description lang="he">סקריפט תמונות "The Big Pictures" כשומר מסך.</description>
+        <description lang="hr">Skripta slike"The Big Pictures" kao čuvar zaslona.</description>
+        <description lang="hu">A képekezelő szkript "The Big Pictures" használata Képernyővédőként.</description>
         <description lang="it">Lo Script "The Big Pictures" come Salvaschermo</description>
+        <description lang="ko">화면 보호기로 동작하는 "The Big Pictures" 사진 애드온</description>
+        <description lang="lt">Paveikslėlio skriptas "The Big Picture" kaip ekrano užsklanda</description>
         <description lang="nl">Het afbeelding script "The Big Pictures" als screensaver.</description>
+        <description lang="no">Skriptet "The Big Pictures" som skjermsparer.</description>
         <description lang="pl">Skrypt zdjęciowy "The Big Pictures" jako wygaszacz.</description>
         <description lang="pt">Usar o addon de imagem "The Big Pictures" como protecção de ecrã</description>
         <description lang="pt_BR">O script de imagens "The Big Pictures" como proteção de tela</description>
+        <description lang="sk">Použiť ako šetrič obrazovky obrazový skript "The Big Pictures".</description>
         <description lang="sv">The Image Script "The Big Pictures" som skärmsläckare.</description>
+        <description lang="tr">Ekran Koruyucusu olarak "Büyük Resimler" Resim Betiği</description>
         <description lang="zh">用“The Big Pictures”做屏幕保护的图片脚本。</description>
     </extension>
 </addon>

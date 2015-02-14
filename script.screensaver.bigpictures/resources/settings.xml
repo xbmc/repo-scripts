@@ -6,6 +6,4 @@
     <setting id="enable_SacBeeFrame" type="bool" label="32402" default="true"/>
     <setting id="enable_WallStreetJournal" type="bool" label="32403" default="true"/>
     <setting id="enable_TotallyCoolPix" type="bool" label="32404" default="true"/>
-    <setting id="enable_TimeLightbox" type="bool" label="32405" default="true"/>
-    <setting id="enable_NewYorkTimesLens" type="bool" label="32406" default="true"/>
 </settings>
