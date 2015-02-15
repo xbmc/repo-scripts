@@ -26,15 +26,39 @@ msgstr "调试"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr "显示除错信息"
+msgstr "显示调试信息"
 
 msgctxt "#32004"
 msgid "Video Selection"
 msgstr "视频选择"
 
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "视频屏幕保护"
+
 msgctxt "#32006"
 msgid "Configuration"
-msgstr "系统设置"
+msgstr "设置"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "预置视频"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "用户定义"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "选择屏幕保护"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "使用文件夹中所有文件"
+
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "重复输入多个文件"
 
 msgctxt "#32025"
 msgid "Repeat All"
@@ -42,4 +66,112 @@ msgstr "重复全部"
 
 msgctxt "#32026"
 msgid "Repeat One"
-msgstr "重复单首"
+msgstr "重复单个"
+
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr "设置/下载预置视频文件"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "选择视频文件"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "显示时间"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "随机位置开始视频"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "选择视频文件夹"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "媒体播放时阻止屏幕保护启动"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "屏幕保护启动时改变音量"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "设置音量为"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "变暗级别"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "自动停止屏幕保护"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "延时停止屏幕保护（分）"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** 所有已下载视频 ***"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "水族馆 1 - [846MB] - 400p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "水族馆 2 - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "壁炉 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "壁炉 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "壁炉 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "水族馆 3 - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "壁炉 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "太空 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "海滩 1 - [2.5GB] - 720p"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "屏幕保护文件无效"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "下面的默认视频已经存在"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "重复使用此文件？"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "下载屏幕保护视频文件"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "此选项将使用所有已下载视频"
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "需要的每个视频需要先单独下载"

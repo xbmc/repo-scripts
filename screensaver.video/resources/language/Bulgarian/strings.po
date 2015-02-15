@@ -132,6 +132,22 @@ msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
 msgstr "Камина 3 - [2.1GB] - 1080p"
 
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Аквариум 3 - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Кмина 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Космос 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Плаж 1 - [2.5GB] - 720p"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Избраният файл е невалиден"

@@ -56,6 +56,10 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Använd alla filer i mapp"
 
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Repetera typ för flera filer"
+
 msgctxt "#32025"
 msgid "Repeat All"
 msgstr "Repetera alla"
@@ -131,6 +135,22 @@ msgstr "Fireplace 2 - [827MB] - 480p"
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
 msgstr "Fireplace 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Aquarium 3  - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Fireplace 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Space 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Beach 1 - [2.5GB] - 720p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

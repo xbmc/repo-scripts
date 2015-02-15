@@ -94,11 +94,11 @@ msgstr "흐림 수준"
 
 msgctxt "#32059"
 msgid "Stop Screensaver Automatically"
-msgstr "자동으로 화면 보호기 정지"
+msgstr "자동으로 화면 보호기 중지"
 
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
-msgstr "지정된 시간 후 화면 보호기 정지 (분)"
+msgstr "지정된 시간 후 화면 보호기 중지 (분)"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

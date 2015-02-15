@@ -22,11 +22,11 @@ msgstr "Wygaszacz ekranu"
 
 msgctxt "#32002"
 msgid "Debugging"
-msgstr "Diagnozowanie błędów"
+msgstr "Diagnostyka"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr "Rejestruj komunikaty diagnostyczne w dzienniku"
+msgstr "Rejestruj komunikaty diagnostyczne"
 
 msgctxt "#32004"
 msgid "Video Selection"
@@ -118,23 +118,39 @@ msgstr "*** Wszystkie pobrane wideo ***"
 
 msgctxt "#32101"
 msgid "Aquarium 1  - [846MB] - 400p"
-msgstr "Akwarium 1 400p [846MB] "
+msgstr "Akwarium 1 [846MB] 400p"
 
 msgctxt "#32102"
 msgid "Aquarium 2  - [2.7GB] - 720p"
-msgstr "Akwarium 2 720p [2.7GB]"
+msgstr "Akwarium 2 [2.7GB] 720p"
 
 msgctxt "#32103"
 msgid "Fireplace 1 - [965MB] - 720p"
-msgstr "Kominek 1 720p [965MB]"
+msgstr "Kominek 1 [965MB] 720p"
 
 msgctxt "#32104"
 msgid "Fireplace 2 - [827MB] - 480p"
-msgstr "Kominek 2 480p [827MB]"
+msgstr "Kominek 2 [827MB] 480p"
 
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr "Kominek 3 1080p [2.1GB]"
+msgstr "Kominek 3 [2.1GB] 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Akwarium 3 [2.4GB] 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Kominek 4 [2.7GB] 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Kosmos 1 [970MB] 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Plaża 1 [2.5GB] 720p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

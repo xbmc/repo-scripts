@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.video" name="VideoScreensaver" version="1.0.7" provider-name="robwebset">
+<addon id="screensaver.video" name="VideoScreensaver" version="1.0.8" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -8,7 +8,7 @@
   	<extension point="xbmc.python.script" library="screensaver.py" />
 	<extension point="xbmc.addon.metadata">
 		<summary lang="bg">Скрийнсейвър, който възпроизвежда видео файлове</summary>
-		<summary lang="de">Bildschirmschoner, die eine Videodatei abspielen</summary>
+		<summary lang="de">Bildschirmschoner, der eine Videodatei abspielt</summary>
 		<summary lang="el">Προφύλαξη οθόνης αναπαράγει βίντεο</summary>
 		<summary lang="en">Screensaver that plays a video file</summary>
 		<summary lang="en_US">Screensaver that plays a video file</summary>
@@ -22,6 +22,7 @@
 		<summary lang="pl">Wygaszacza ekranu odtwarzający plik wideo</summary>
 		<summary lang="pt_BR">Protetor de Tela que reproduz arquivos de vídeos.</summary>
 		<summary lang="sv">Skärmsläckare som spelar upp en film</summary>
+		<summary lang="zh">播放视频文件的屏幕保护</summary>
 		<description lang="bg">Възпроизвежда видео файлове при стартиране на скрийнсейвър. Можете да изберете даден видео файл или да ползвате някой от вградените.</description>
 		<description lang="de">Spielt beim Start des Bildschirmschoners ein Video ab. Dies kann ein benutzerdefiniertes oder eines der eingebauten Videos sein</description>
 		<description lang="el">Αναπαράγει ένα βίντεο όταν ξεκινάει η προφύλαξη οθόνης. Αυτό μπορεί να είναι ένα δικό σας βίντεο, ή ένα από τα ενσωματωμένα.</description>
@@ -36,6 +37,7 @@
 		<description lang="pl">Wygaszacza ekranu, który po uruchomieniu odtwarza wbudowany bądź niestandardowy plik wideo.</description>
 		<description lang="pt_BR">Reproduza um vídeo quando iniciar a proteção de tela, podes setar uma vídeo customizado ou um dos vídeos pré-existentes que podem ser transferidos via ajustes do addon.</description>
 		<description lang="sv">Spelar en film när skärmsläckaren startar, det kan vara en egen film eller någon av de inbyggda filmerna</description>
+		<description lang="zh">屏幕保护时播放视频，可以是自定义视频或内建视频</description>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>

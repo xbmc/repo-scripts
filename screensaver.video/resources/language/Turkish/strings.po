@@ -28,6 +28,98 @@ msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "Hata ayıklama günlüğünü etkinleştir"
 
+msgctxt "#32004"
+msgid "Video Selection"
+msgstr "Video Seçimi"
+
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "Video Ekranı Kaydedici"
+
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Yapılandırma"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "Video Ön Ayarı"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "Kullanıcı Tanımlı"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Seçilmiş Ekran Koruyucu"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "Bir Klasördeki Tüm Dosyaları Kullan"
+
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Çoklu Dosya Türleri İçin Tekrar Et"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "Hepsini Tekrarla"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "Tekini Tekrarla"
+
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr "Video Dosyasının Ön Ayarını İndir / Ayarla"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Video Dosyasını Seç"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Şov Zamanı"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "Videoyu Rastgele Bir Noktadan Başlat"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "Videolar Klasörünü Seç"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Medya Oynatırken Ekran Koruyucunun Başlamasını Önle"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Ekran Koruyucu Başladığında Ses Ayarlanabilsin"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Ses Seviyesi"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Ayarlama Seviyesi"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Ekran Koruyucuyu Kendiliğinden Durdur"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Ekran Koruyucuyu Önceden Durdur (Dakika)"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "İndirilen Tüm Videolar"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Akvaryum 1 [846MB]-400P"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Akvaryum 2- [2.7GB] - 720P"

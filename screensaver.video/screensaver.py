@@ -117,7 +117,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
             xbmc.executebuiltin("PlayerControl(Stop)")
 
         # Reset the Player Repeat
-        xbmc.executebuiltin("PlayerControl(RepeatOff)")
+        xbmc.executebuiltin("PlayerControl(RepeatOff)", True)
 
         if self.volumeCtrl is not None:
             # Restore the volume
