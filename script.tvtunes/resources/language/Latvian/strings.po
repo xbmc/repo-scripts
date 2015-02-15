@@ -40,6 +40,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Ekrānsaudzētājs"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanu māksla"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Sīktēls"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Lomās"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmas"

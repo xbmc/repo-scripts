@@ -36,6 +36,26 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Cast"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Top"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Bottom"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Movies"

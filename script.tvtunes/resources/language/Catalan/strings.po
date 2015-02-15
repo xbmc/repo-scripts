@@ -136,6 +136,18 @@ msgctxt "#32046"
 msgid "Random"
 msgstr "A l'atzar"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Repartiment"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERROR"

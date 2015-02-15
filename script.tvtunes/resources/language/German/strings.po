@@ -256,6 +256,10 @@ msgctxt "#32060"
 msgid "Movies, TV Shows"
 msgstr "Filme, Fernsehsendungen"
 
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Spiele Thema vor Bildschirmschoner"
+
 msgctxt "#32062"
 msgid "Fanart,Thumbnail,Cast"
 msgstr "Fankunst,Vorschaubild,Besetzung"
@@ -295,6 +299,14 @@ msgstr "Unten"
 msgctxt "#32072"
 msgid "Crossfade"
 msgstr "Überblendung"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Beinhaltet Artwork Downloader Cover"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Zeige alle Bilder, Wiederhole Thema"
 
 msgctxt "#32078"
 msgid "Repeat Rules"

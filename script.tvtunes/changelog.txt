@@ -1,3 +1,6 @@
+v4.6.7
+- Only flag TvTunes as stopped after resetting the volume
+
 v4.6.6
 - Wait longer for audio to stop before increasing the volume
 

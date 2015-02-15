@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Refrescapantalla"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Reparto"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Obteniendo información..."

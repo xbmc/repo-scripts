@@ -252,6 +252,14 @@ msgctxt "#32065"
 msgid "Thumbnail,Cast"
 msgstr "썸네일, 배우"
 
+msgctxt "#32070"
+msgid "Top"
+msgstr "상단"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "하단"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "자동 선택이 실패한 경우 선택 창 보기"

@@ -32,6 +32,14 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Trình bảo vệ màn hình"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Diễn viên"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Phim"

@@ -28,6 +28,14 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Skrinsejver"
 
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Tambnejl"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Kast"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmati"

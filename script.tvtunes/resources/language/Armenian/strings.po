@@ -16,6 +16,10 @@ msgstr ""
 "Language: hy\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Նկարահավել են"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Ֆիլմեր"

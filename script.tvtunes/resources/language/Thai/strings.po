@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "พักหน้าจอ"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "แฟนอาร์ต"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "รูปย่อ"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "นักแสดง"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "ภาพยนตร์"

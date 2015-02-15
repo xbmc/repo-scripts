@@ -98,11 +98,11 @@ msgstr "Odtwarzaj motywy podczas przeglądania listy seriali"
 
 msgctxt "#32018"
 msgid "Debugging"
-msgstr "Diagnozowanie błędów"
+msgstr "Diagnostyka"
 
 msgctxt "#32019"
 msgid "Enable debug logging"
-msgstr "Rejestruj komunikaty diagnostyczne w dzienniku"
+msgstr "Rejestruj komunikaty diagnostyczne"
 
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
@@ -442,7 +442,7 @@ msgstr "[Filtr]: Pokazuj tylko brakujące motywy"
 
 msgctxt "#32205"
 msgid "[Action]: Retrieve Missing Themes"
-msgstr "[Akcja]: Wyszukaj brakujących motywów"
+msgstr "[Operacja]: Wyszukaj brakujące motywy"
 
 msgctxt "#32206"
 msgid "You have themes that are not in themes folders."
@@ -454,7 +454,7 @@ msgstr "Przenieść motywy do folderu motywów?"
 
 msgctxt "#32208"
 msgid "[Action]: Start Screensaver"
-msgstr "[Akcja]: Uruchom wygaszacz ekranu"
+msgstr "[Operacja]: Uruchom wygaszacz ekranu"
 
 msgctxt "#32991"
 msgid "Playback"

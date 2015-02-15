@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Šetrič obrazovky"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Náhľady"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Obsadenie"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmy"

@@ -32,6 +32,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Paususkermur"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fjepparatilfar"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Mynd"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Luttakandi"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmar"

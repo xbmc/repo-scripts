@@ -28,6 +28,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "መመልከቻ ማዳኛ"
 
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "የ አውራ ጥፍር"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "ሙቪዎች"

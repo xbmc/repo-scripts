@@ -48,6 +48,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Skjávari"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Aðdáendamyndir"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Smámynd"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Leikarar"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "VILLA"

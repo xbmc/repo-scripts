@@ -28,6 +28,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "स्क्रीनसेवर"
 
+msgctxt "#32059"
+msgid "Cast"
+msgstr "फिल्म की नादानोंं"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "सिनेमा"

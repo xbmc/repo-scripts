@@ -108,6 +108,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Pauseskærm"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fankunst"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniaturebillede"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Skuespillere"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "FEJL"

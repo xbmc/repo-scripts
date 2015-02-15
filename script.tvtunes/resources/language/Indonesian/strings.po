@@ -48,6 +48,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Para Pelaku"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "KESALAHAN"

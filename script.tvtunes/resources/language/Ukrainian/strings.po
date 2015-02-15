@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Заставка"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Фанарт"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Ескізи"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "У ролях"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Фільми"

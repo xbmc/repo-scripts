@@ -40,6 +40,14 @@ msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fan-арт"
 
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Сликичка"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Улоги"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Филмови"

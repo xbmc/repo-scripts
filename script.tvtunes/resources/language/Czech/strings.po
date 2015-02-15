@@ -40,6 +40,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Spořič obrazovky"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Náhled"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Obsazení"
+
 msgctxt "#32068"
 msgid "Left"
 msgstr "vlevo"
@@ -47,6 +59,14 @@ msgstr "vlevo"
 msgctxt "#32069"
 msgid "Right"
 msgstr "vpravo"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Vršek"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Spodek"
 
 msgctxt "#32201"
 msgid "Movies"

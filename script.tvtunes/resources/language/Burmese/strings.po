@@ -28,6 +28,14 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "ရုပ်ရှင်များ"

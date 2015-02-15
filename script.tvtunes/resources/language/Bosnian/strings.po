@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Čuvar ekrana"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Zanimljiva slika"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Sličica"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Uloge"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmovi"

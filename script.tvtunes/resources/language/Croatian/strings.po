@@ -144,6 +144,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Čuvar zaslona"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Slika omota"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Minijature"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Uloge"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "GREŠKA"

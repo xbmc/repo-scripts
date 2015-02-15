@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "مؤقت الشاشة"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "المصغرة"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "طرح"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "أفلام"

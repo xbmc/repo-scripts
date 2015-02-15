@@ -52,6 +52,26 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Заставка"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Фанарт"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Эскизы"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "В ролях"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Вверху"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Внизу"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ОШИБКА"

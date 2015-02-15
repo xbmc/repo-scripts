@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Pantaila babeslea"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart-a"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Iruditxoa"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Antzezleak"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmak"

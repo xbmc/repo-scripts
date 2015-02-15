@@ -22,7 +22,7 @@ msgstr "Récupérez et lisez vos thèmes de bandes sonores en parcourant votre v
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "TVTunes est équipé de fonctions puissantes qui permettent l'obtention, l'organisation et la lecture de thèmes tout en parcourant votre vidéothèque, lorsque utilisé en conjonction avec un habillage compatible."
+msgstr "TVTunes est équipé de fonctions puissantes qui permettent l'obtention, l'organisation et la lecture de thèmes tout en parcourant votre vidéothèque, lorsque utilisé en conjonction avec un habillage compatible (remerciements particuliers à Ppic, Frost et ronie pour leur travail de développement original de TvTunes)."
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"

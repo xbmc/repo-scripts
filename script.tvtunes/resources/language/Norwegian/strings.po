@@ -140,6 +140,26 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Skjermsparer"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniatyr"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Rolleliste"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Topp"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Bunn"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "FEIL"

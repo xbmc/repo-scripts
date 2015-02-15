@@ -164,9 +164,29 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Salvaschermo"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Icone"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Cast"
+
 msgctxt "#32064"
 msgid "Dim Level"
 msgstr "Livello Opacità"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Superiore"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Inferiore"
 
 msgctxt "#32101"
 msgid "ERROR"

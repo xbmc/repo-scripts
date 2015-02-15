@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Protector ecran"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Miniaturi"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Distribuție"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Caut informaţii..."

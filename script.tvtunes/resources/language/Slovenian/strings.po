@@ -16,6 +16,14 @@ msgstr ""
 "Language: sl\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Up. ime:"
+
+msgctxt "#32005"
+msgid "Password:"
+msgstr "Geslo:"
+
 msgctxt "#32007"
 msgid "Path:"
 msgstr "Pot:"
@@ -28,6 +36,14 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Vključi zapisovanje razhroščevanja"
 
+msgctxt "#32026"
+msgid "Directory Name"
+msgstr "Ime mape"
+
+msgctxt "#32030"
+msgid "All"
+msgstr "Vse"
+
 msgctxt "#32036"
 msgid "Never"
 msgstr "Nikoli"
@@ -36,6 +52,46 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Ohranjevalnik zaslona"
 
+msgctxt "#32046"
+msgid "Random"
+msgstr "Naključno"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Stolpci"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Hitrost"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Naključno zaporedje"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Vir slike"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Vrsta slike"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Mapa"
+
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Ozadja"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Sličica"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Zasedba"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Pridobivam podatke ..."
@@ -43,6 +99,14 @@ msgstr "Pridobivam podatke ..."
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmi"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV oddaje"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Glasbeni videi"
 
 msgctxt "#32991"
 msgid "Playback"

@@ -13,6 +13,8 @@ class Resource(object):
     """
     def __init__(self, obj):
         self.obj = obj
+        if hasattr(self, 'origin'):
+            self.origin = Resource(self.origin)
 
     def __getstate__(self):
         return self.obj.items()
@@ -48,8 +50,8 @@ def wrapped_resource(response):
     Lists will be returned as a ```ResourceList``` instance,
     dicts will be returned as a ```Resource``` instance.
     """
-    # decode response text
-    response_content = response.content.decode(response.encoding)
+    # decode response text, assuming utf-8 if unset
+    response_content = response.content.decode(response.encoding or 'utf-8')
 
     try:
         content = json.loads(response_content)
@@ -60,6 +62,8 @@ def wrapped_resource(response):
         result = ResourceList(content)
     else:
         result = Resource(content)
+        if hasattr(result, 'collection'):
+            result.collection = ResourceList(result.collection)
     result.raw_data = response_content
 
     for attr in ('encoding', 'url', 'status_code', 'reason'):

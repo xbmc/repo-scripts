@@ -36,6 +36,18 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Ekran-Ruajtësi"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanart"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Thumbnail"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Artistët"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filma"

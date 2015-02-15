@@ -752,12 +752,14 @@ class TunesBackend():
             while self.themePlayer.isPlayingAudio():
                 xbmc.sleep(50)
         TvTunesStatus.setAliveState(False)
-        TvTunesStatus.clearRunningState()
 
         # If currently playing a video file, then we have been overridden,
         # and we need to restore all the settings, the player callbacks
         # will not be called, so just force it on stop
         self.themePlayer.restoreSettings()
+
+        # Now that everything has been reset, we can record TvTunes as Stopped
+        TvTunesStatus.clearRunningState()
 
         log("TunesBackend: ### Stopped TvTunes Backend ###")
         self._stop = True

@@ -36,6 +36,14 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "محافظ صفحه"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "فن آرت"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "پیش بینی"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "فیلم ها"

@@ -36,6 +36,26 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Näytönsäästäjä"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Fanitaide"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Pienoiskuva"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Näyttelijät"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Ylös"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Alas"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Elokuvat"

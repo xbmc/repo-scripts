@@ -20,6 +20,26 @@ msgctxt "#32036"
 msgid "Never"
 msgstr "Tidak sesekali"
 
+msgctxt "#32057"
+msgid "Fanart"
+msgstr "Seni Peminat"
+
+msgctxt "#32058"
+msgid "Thumbnail"
+msgstr "Lakaran Kenit"
+
+msgctxt "#32059"
+msgid "Cast"
+msgstr "Barisan Pelakon"
+
+msgctxt "#32070"
+msgid "Top"
+msgstr "Atas"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Bawah"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Cereka"
