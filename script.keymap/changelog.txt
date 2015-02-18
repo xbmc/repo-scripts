@@ -1,3 +1,6 @@
+[B]v1.0.9[/B]
+- Fixed error in XML writer causing no keys to work
+
 [B]v1.0.8[/B]
 - Added new Helix PVR Window IDs
 - Added ability to remove key mappings
