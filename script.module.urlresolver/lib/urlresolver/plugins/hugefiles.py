@@ -20,7 +20,7 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, urllib2, urllib
+import re, urllib2
 from urlresolver import common
 from lib import captcha_lib
 
@@ -29,6 +29,7 @@ net = Net()
 class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "hugefiles"
+    domains = ["hugefiles.net"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -40,9 +41,9 @@ class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
             url = self.get_url(host, media_id)
             common.addon.log('HugeFiles - Requesting GET URL: %s' % url)
             html = self.net.http_GET(url).content
-            r = re.findall('File Not Found',html)
+            r = re.findall('File Not Found', html)
             if r:
-                raise Exception ('File Not Found or removed')
+                raise Exception('File Not Found or removed')
                             
             #Check page for any error msgs
             if re.search('<b>File Not Found</b>', html):
@@ -61,7 +62,6 @@ class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
                 raise Exception('Unable to resolve HugeFiles Link')
             
             data['method_free'] = 'Free Download'
-            file_name = data['fname']
     
             #Check for SolveMedia Captcha image
             solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
@@ -74,45 +74,28 @@ class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
             else:
                 captcha = re.compile("left:(\d+)px;padding-top:\d+px;'>&#(.+?);<").findall(html)
                 result = sorted(captcha, key=lambda ltr: int(ltr[0]))
-                solution = ''.join(str(int(num[1])-48) for num in result)
-                data.update({'code':solution})
+                solution = ''.join(str(int(num[1]) - 48) for num in result)
+                data.update({'code': solution})
 
             common.addon.log('HugeFiles - Requesting POST URL: %s DATA: %s' % (url, data))
             html = net.http_POST(url, data).content
-            # issue one more time for download link
-            #Set POST data values
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
-            
+            r = re.search('fileUrl\s*=\s*"([^"]+)', html)
             if r:
-                for name, value in r:
-                    data[name] = value
-            else:
-                common.addon.log('***** HugeFiles - Cannot find data values')
-                raise Exception('Unable to resolve HugeFiles Link')
-            data['method_free'] = 'Free Download'
+                return r.group(1)
 
-            # can't use t0mm0 net because the post doesn't return until the file is downloaded
-            request = urllib2.Request(url, urllib.urlencode(data))
-            response = urllib2.urlopen(request)
-            stream_url = response.geturl()
-            
-            # assume that if the final url matches the original url that the process failed
-            if stream_url == url:
-                raise Exception('Unable to find stream url')
-            return stream_url
+            raise Exception('Unable to resolve HugeFiles Link')
         except urllib2.HTTPError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %(e.code, url))
+            common.addon.log_error(self.name + ': got http error %d fetching %s' % (e.code, url))
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log_error('**** Hugefiles Error occured: %s' % e)
             return self.unresolvable(code=0, msg=e)
         
     def get_url(self, host, media_id):
-        return 'http://hugefiles.net/%s' % media_id 
+        return 'http://hugefiles.net/%s' % media_id
 
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/([0-9a-zA-Z]+)',url)
+        r = re.search('//(.+?)/([0-9a-zA-Z]+)', url)
         if r:
             return r.groups()
         else:

@@ -1,6 +1,6 @@
 """
-    urlresolver XBMC Addon
-    Copyright (C) 2011 t0mm0
+    Kodi urlresolver plugin
+    Copyright (C) 2014  smokdpi
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,93 +17,91 @@
 """
 
 from t0mm0.common.net import Net
+from urlresolver import common
+from urlresolver.plugnplay import Plugin
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
-from urlresolver.plugnplay import Plugin
-import urllib2, urllib
-from time import sleep
-from urlresolver import common
-import os
-
-# Custom imports
 import re
+import urllib2
+import xbmcgui
 
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class FlashxResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "flashx"
+    domains = ["flashx.tv"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
-        #e.g. http://flashx.tv/player/embed_player.php?vid=1503&width=600&height=370&autoplay=no
         self.pattern = 'http://((?:www.|play.)?flashx.tv)/(?:embed-)?([0-9a-zA-Z/-]+)(?:.html)?'
 
-
     def get_media_url(self, host, media_id):
+        web_url = self.get_url(host, media_id)
+        headers = {'Referer': web_url}
+        smil = ''
         try:
-            web_url = self.get_url(host, media_id)
-            html = self.net.http_GET(web_url).content
-            headers = {
-                'Referer': web_url
-            }
-
-            match = re.search("method=\"POST\" action='([^']+)", html)
-            if match:
-                form_url = match.group(1)
+            html = self.net.http_GET(web_url, headers=headers).content
+            swfurl = 'http://static.flashx.tv/player6/jwplayer.flash.swf'
+            r = re.search('"(http://.+?\.smil)"', html)
+            if r: smil = r.group(1)
             else:
-                raise Exception("Form Link Not Found")
-                
-            data = {}
-            r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
-            for name, value in r: data[name] = value
-            data.update({'referer': web_url})
-            data.update({'imhuman': 'Proceed to video'})
+                r = re.search('\|smil\|(.+?)\|sources\|', html)
+                if r: smil = 'http://flashx.tv/' + r.group(1) + '.smil'
+            if smil:
+                html = self.net.http_GET(smil, headers=headers).content
+                r = re.search('<meta base="(rtmp://.*?flashx\.tv:[0-9]+/)(.+/)".*/>', html, re.DOTALL)
+                if r:
+                    rtmp = r.group(1)
+                    app = r.group(2)
+                    sources = re.compile('<video src="(.+?)" height="(.+?)" system-bitrate="(.+?)" width="(.+?)".*/>').findall(html)
+                    vid_list = []
+                    url_list = []
+                    best = 0
+                    quality = 0
+                    if sources:
+                        if len(sources) > 1:
+                            for index, video in enumerate(sources):
+                                if int(video[1]) > quality: best = index
+                                quality = int(video[1])
+                                vid_list.extend(['FlashX - %sp' % quality])
+                                url_list.extend([video[0]])
+                    if len(sources) == 1: vid_sel = sources[0][0]
+                    else:
+                        if self.get_setting('auto_pick') == 'true': vid_sel = url_list[best]
+                        else:
+                            result = xbmcgui.Dialog().select('Choose a link', vid_list)
+                            if result != -1: vid_sel = url_list[result]
+                            else: return self.unresolvable(code=0, msg='No link selected')
 
-            # parse cookies from file as they are only useful for this interaction
-            cookies={}
-            for match in re.finditer("\$\.cookie\('([^']+)',\s*'([^']+)",html):
-                key,value = match.groups()
-                cookies[key]=value
-            headers['Cookie']=urllib.urlencode(cookies)
-            
-            # POST seems to fail is submitted too soon after GET. Page Timeout?
-            common.addon.show_countdown(10, title='FlashX.tv', text='Waiting for countdown...')
-            
-            html = self.net.http_POST(form_url, data, headers=headers).content
+                    if vid_sel: return '%s app=%s playpath=%s swfUrl=%s pageUrl=%s swfVfy=true' % (rtmp, app, vid_sel, swfurl, web_url)
 
-            #{file: "http://u01.flashx.tv/luq4qurpehixexzw6v63f6mjtazgxcbn6qnvcvz5yvr7ff5acb2zmvmswa6q/v.mp4"}]
-            r = re.search('file\s*:\s*"(http://[^"]+mp4)', html)
-            if r:
-                return r.group(1)
-            else:
-                raise Exception("File Link Not Found")
+            raise Exception('File not found')
 
         except urllib2.URLError, e:
-            common.addon.log_error('flashx.tv: got http error %d fetching %s' %
-                                  (e.code, web_url))
-            common.addon.show_small_popup('Error','flashx.tv: HTTP error: '+str(e), 5000, error_logo)
+            common.addon.log_error(self.name + ': got http error %d fetching %s' % (e.reason, web_url))
             return self.unresolvable(code=3, msg=e)
         
         except Exception, e:
-            common.addon.log_error('flashx.tv: general error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]FLASHX.TV[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
+            common.addon.log_error(self.name + ': general error occured: %s' % e)
             return self.unresolvable(code=0, msg=e)
 
-        return False
-
     def get_url(self, host, media_id):
-            return 'http://flashx.tv/%s.html' % (media_id)
+        urlhash = re.search('([a-zA-Z0-9]+)(?:-+[0-9]+[xX]+[0-9]+)', media_id)
+        if urlhash: media_id = urlhash.group(1)
+        return 'http://flashx.tv/embed-%s.html' % media_id
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
+        if r: return r.groups()
+        else: return False
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match(self.pattern, url) or self.name in host
+
+    def get_settings_xml(self):
+        xml = PluginSettings.get_settings_xml(self)
+        xml += '<setting id="%s_auto_pick" type="bool" label="Automatically pick best quality" default="false" visible="true"/>' % (self.__class__.__name__)
+        return xml

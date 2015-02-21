@@ -27,6 +27,7 @@ from urlresolver.plugnplay import Plugin
 class VeohResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "veoh"
+    domains = [ "veoh.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

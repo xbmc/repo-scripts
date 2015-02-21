@@ -29,6 +29,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class UploadcResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "uploadc"
+    domains = [ "uploadc.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -44,34 +45,31 @@ class UploadcResolver(Plugin, UrlResolver, PluginSettings):
         try:
             html = self.net.http_GET(web_url).content
 
-            #send all form values
-            sPattern = '<input.*?name="([^"]+)".*?value=([^>]+)>'
-            r = re.findall(sPattern, html)
             data = {}
+            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)"', html)
             if r:
-                for match in r:
-                    name = match[0]
-                    value = match[1].replace('"','')
+                for name, value in r:
                     data[name] = value
-
-                html = self.net.http_POST(web_url, data).content
+                data['referer'] = web_url 
             else:
-                raise Exception ('File Not Found or removed')
+                raise Exception('Cannot find data values')
+
+            html = self.net.http_POST(web_url, data).content
             
-            # modified by mscreations. get the file url from the returned javascript
-            match = re.search("addVariable[(]'file','(.+?)'[)]", html, re.DOTALL + re.IGNORECASE)
-            if match:
-                return match.group(1)+'|Referer=http%3A%2F%2Fwww.uploadc.com%2Fplayer%2Fplayer-embed.swf'
-        
+            for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
+                js_data =  jsunpack.unpack(match.group(1))
+                r = re.search('src="([^"]+)', js_data)
+                if r:
+                    stream_url = r.group(1) + '|referer=' + web_url
+                    return stream_url
+                    
             raise Exception ('File Not Found or removed')
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log('**** Uploadc Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]UPLOADC[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
@@ -83,7 +81,6 @@ class UploadcResolver(Plugin, UrlResolver, PluginSettings):
             return r.groups()
         else:
             return False
-
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False

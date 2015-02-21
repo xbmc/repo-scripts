@@ -32,6 +32,7 @@ net = Net()
 class AllmyvideosResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "sharevid"
+    domains = [ "sharevid.org" ]
 
 
     def __init__(self):

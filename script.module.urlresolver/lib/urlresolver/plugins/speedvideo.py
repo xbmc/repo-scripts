@@ -32,6 +32,7 @@ ok_logo=os.path.join(common.addon_path,'resources','images','greeninch.png')
 class SpeedVideoResolver(Plugin,UrlResolver,PluginSettings):
     implements=[UrlResolver,PluginSettings]
     name="speedvideo"
+    domains = [ "speedvideo.net" ]
     domain="speedvideo.net"
     USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
     

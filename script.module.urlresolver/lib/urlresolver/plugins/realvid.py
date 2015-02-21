@@ -30,6 +30,7 @@ logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class RealvidResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "Realvid"
+    domains = ["realvid.net"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

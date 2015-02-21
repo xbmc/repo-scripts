@@ -42,6 +42,7 @@ logo='http://googlechromesupportnow.com/wp-content/uploads/2012/06/Installation-
 class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vidxden"
+    domains = ['vidxden.com', 'vidxden.to', 'divxden.com', 'vidbux.com', 'vidbux.to']
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -74,12 +75,12 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
             else:
                 common.addon.log_error('vidxden: packed javascript embed code not found')
                 raise Exception('packed javascript embed code not found')
-                
+
             try: decrypted_data = jsunpack.unpack(packed_data)
             except: pass
-        
+            decrypted_data = decrypted_data.replace('\\','')
             #First checks for a flv url, then the if statement is for the avi url
-            r = re.search('file.\',.\'(.+?).\'', decrypted_data)
+            r = re.search('[\'"]file[\'"]\s*,\s*[\'"]([^\'"]+)', decrypted_data)
             if not r:
                 r = re.search('src="(.+?)"', decrypted_data)
             if r:
@@ -88,7 +89,7 @@ class VidxdenResolver(Plugin, UrlResolver, PluginSettings):
                 raise Exception ('vidxden: stream url not found')
 
             return "%s" % (stream_url)
-            
+
         except urllib2.HTTPError, e:
             common.addon.log_error('Vidxden: got http error %d fetching %s' %
                                   (e.code, web_url))

@@ -30,6 +30,7 @@ USER_AGENT = 'Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/BuildID) AppleWebKi
 class VidbullResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vidbull"
+    domains = [ "vidbull.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

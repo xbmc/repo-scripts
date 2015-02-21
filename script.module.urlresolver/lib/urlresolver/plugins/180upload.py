@@ -27,59 +27,27 @@ from lib import captcha_lib
 
 net = Net()
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
 class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "180upload"
+    domains = ["180upload.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
 
-
     def get_media_url(self, host, media_id):
-        common.addon.log('180upload: in get_media_url %s %s' % (host, media_id))
-        web_url = 'http://180upload.com/embed-%s.html' % media_id
-        try:
-            common.addon.log('180Upload - Requesting GET URL: %s' % web_url)
-            html = net.http_GET(web_url).content
+        # try embedded link first to avoid captcha, try direct link if it doesn't work
+            stream_url = self.__get_link('http://180upload.com/embed-%s.html' % media_id)
+            if not stream_url:
+                stream_url = self.__get_link(self.get_url(host, media_id))
+            return stream_url
 
-            # Check for file not found
-            if re.search('File Not Found', html):
-                common.addon.log_error(self.name + ' - File Not Found')
-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]180Upload[/COLOR][/B],[COLOR red]File has been deleted[/COLOR],8000,'+error_logo+')')
-                return self.unresolvable(code=1, msg='File Not Found') 
-                
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)"', html)
-            if r:
-                for name, value in r:
-                    data[name] = value
-                data['referer'] = web_url 
-            else:
-                raise Exception('Cannot find data values')
-            # 1st attempt, probably no captcha
-            common.addon.log('180Upload - Requesting POST URL: %s' % web_url)
-            html = net.http_POST(web_url, data).content
- 
-            packed = re.search('id="player_code".*?(eval.*?\)\)\))', html,re.DOTALL)
-            if packed:
-                js = jsunpack.unpack(packed.group(1))
-                link = re.search('name="src"*0="([^"]+)"/>', js.replace('\\',''))
-                if link:
-                    common.addon.log('180Upload Link Found: %s' % link.group(1))
-                    return link.group(1)
-                else:
-                    link = re.search("'file','(.+?)'", js.replace('\\',''))
-                    if link:
-                        common.addon.log('180Upload Link Found: %s' % link.group(1))
-                        return link.group(1)
-                    
-            web_url = self.get_url(host, media_id)
-            html = net.http_GET(web_url).content
+    def __get_link(self, url):
+        try:
+            common.addon.log_debug('180upload: get_link: %s' % (url))
+            html = net.http_GET(url).content
 
             #Re-grab data values
             data = {}
@@ -89,42 +57,54 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
                 for name, value in r:
                     data[name] = value
             else:
-                raise Exception('Unable to resolve 180Upload Link')            
-            
-            #Check for SolveMedia Captcha image
-            solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
-            recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
-
-            if solvemedia:
-                data.update(captcha_lib.do_solvemedia_captcha(solvemedia.group(1)))
-            elif recaptcha:
-                data.update(captcha_lib.do_recaptcha(recaptcha.group(1)))
-            
-            common.addon.log('180Upload - Requesting POST URL: %s with data: %s' % (web_url, data))
-            html = net.http_POST(web_url, data).content
-        
-            link = re.search('id="lnk_download" href="([^"]+)', html)
-            if link:
-                common.addon.log('180Upload Link Found: %s' % link.group(1))
-                return link.group(1)
-            else:
                 raise Exception('Unable to resolve 180Upload Link')
 
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                   (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
+            # ignore captchas in embedded pages
+            if 'embed' not in url:
+                #Check for SolveMedia Captcha image
+                solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
+                recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
+
+                if solvemedia:
+                    data.update(captcha_lib.do_solvemedia_captcha(solvemedia.group(1)))
+                elif recaptcha:
+                    data.update(captcha_lib.do_recaptcha(recaptcha.group(1)))
+
+            common.addon.log_debug('180Upload - Requesting POST URL: %s with data: %s' % (url, data))
+            data['referer'] = url
+            html = net.http_POST(url, data).content
+
+            # try download link
+            link = re.search('id="lnk_download[^"]*" href="([^"]+)', html)
+            if link:
+                common.addon.log_debug('180Upload Download Found: %s' % link.group(1))
+                return link.group(1)
+            else:
+                # try flash player link
+                packed = re.search('id="player_code".*?(eval.*?)</script>', html, re.DOTALL)
+                if packed:
+                    js = jsunpack.unpack(packed.group(1))
+                    link = re.search('name="src"\s*value="([^"]+)', js.replace('\\', ''))
+                    if link:
+                        common.addon.log_debug('180Upload Src Found: %s' % link.group(1))
+                        return link.group(1)
+                    else:
+                        link = re.search("'file'\s*,\s*'([^']+)", js.replace('\\', ''))
+                        if link:
+                            common.addon.log_debug('180Upload Link Found: %s' % link.group(1))
+                            return link.group(1)
+
+                raise Exception('Unable to resolve 180Upload Link')
+        except urllib2.URLError as e:
+            common.addon.log_error(self.name + ': got http error %d fetching %s' % (e.code, url))
             return self.unresolvable(code=3, msg=e)
-        except Exception, e:
+        except Exception as e:
             common.addon.log_error('**** 180upload Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]180UPLOAD[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
-        
     def get_url(self, host, media_id):
-        return 'http://www.180upload.com/%s' % media_id 
-        
-        
+        return 'http://www.180upload.com/%s' % media_id
+
     def get_host_and_id(self, url):
         r = re.search('http://(.+?)/embed-([\w]+)-', url)
         if r:
@@ -135,7 +115,6 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
                 return r.groups()
             else:
                 return False
-
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False

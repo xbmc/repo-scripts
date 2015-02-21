@@ -32,6 +32,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class EcostreamResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "ecostream"
+    domains = [ "ecostream.tv" ]
     profile_path = common.profile_path
     cookie_file = os.path.join(profile_path, 'ecostream.cookies')
 

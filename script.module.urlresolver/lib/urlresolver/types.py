@@ -16,10 +16,12 @@
 
 import urlresolver
 import urllib2
-import urlparse
+from urlparse import urlparse
 from urlresolver import common
 from plugnplay.interfaces import UrlResolver
 from plugnplay.interfaces import SiteAuth
+import re, sys
+import traceback
 
 class HostedMediaFile:
     '''
@@ -72,26 +74,40 @@ class HostedMediaFile:
         self._url = url
         self._host = host
         self._media_id = media_id
-        
-        self._resolvers = self._find_resolvers()
-        if url and self._resolvers and self._resolvers[0].get_host_and_id(url):
-            self._host, self._media_id = self._resolvers[0].get_host_and_id(url)
-        elif self._resolvers:
-            if self._resolvers[0].isUniversal():
-                if len(self._resolvers) > 1:
-                    self._url = self._resolvers[1].get_url(host, media_id)
-                    result = self._resolvers[0].get_host_and_id(self._url)
-                    if result:
-                        self._host, self._media_id = result
-                    else:
-                        self._resolvers = []
-            else:    
-                self._url = self._resolvers[0].get_url(host, media_id)
+        self._valid_url = None
+
+        if self._url:
+            self._domain = self.__top_domain(self._url)
+        else:
+            self._domain = self.__top_domain(self._host)
+
+        self.__resolvers = self.__find_resolvers(
+            common.addon.get_setting('allow_universal') == "true")
+
+        if not url:
+            for resolver in self.__resolvers:  # Find a valid URL
+                try:
+                    if not resolver.isUniversal() and resolver.get_url(host, media_id):
+                        self._url = resolver.get_url(host, media_id)
+                        break
+                except:
+                    # Shity resolver. Ignore
+                    continue
+
         if title:
             self.title = title
         else:
             self.title = self._host
-            
+
+    def __top_domain(self, url):
+        regex = "(\w{2,}\.\w{2,3}\.\w{2}|\w{2,}\.\w{2,3})$"
+        elements = urlparse(url)
+        domain = elements.netloc or elements.path
+        domain = domain.split('@')[-1].split(':')[0]
+        res = re.search(regex, domain)
+        if res:
+            return res.group(1)
+        return domain
 
     def get_url(self):
         '''
@@ -131,23 +147,34 @@ class HostedMediaFile:
             A direct URL to the media file that is playable by XBMC, or False
             if this was not possible. 
         '''
-        if self._resolvers:
-            # universal resolvers aren't resolvable without a url
-            if len(self._resolvers)==1 and self._resolvers[0].isUniversal() and not self._url:
-                return False
-            
-            resolver = self._resolvers[0]
-            common.addon.log_debug('resolving using %s plugin' % resolver.name)
-            if SiteAuth in resolver.implements:
-                common.addon.log_debug('logging in')
-                resolver.login()
-
-            stream_url = resolver.get_media_url(self._host, self._media_id)
-            if stream_url and self.__test_stream(stream_url):
-                    return stream_url
-
+        for resolver in self.__resolvers:
+            try:
+                common.addon.log_debug('resolving using %s plugin' % resolver.name)
+                if resolver.valid_url(self._url, self._host):
+                    if SiteAuth in resolver.implements:
+                        common.addon.log_debug('logging in')
+                        resolver.login()
+                    self._host, self._media_id = resolver.get_host_and_id(self._url)
+                    stream_url = resolver.get_media_url(self._host, self._media_id)
+                    # this logic is weird because get_media_url returns an object of class unresolvable that evals to False when resolve fails
+                    if stream_url:
+                        # if we got a valid url back, then test it and only return the valid stream_url if the test succeeds
+                        if self.__test_stream(stream_url):
+                            self.__resolvers = [ resolver ] # Found a valid resolver, ignore the others
+                            self._valid_url = True
+                            return stream_url
+                        else:
+                            return False
+                    # return the unresolvable if there's not a True stream_url
+                    else:
+                        return stream_url
+            except Exception as e:
+                common.addon.log_notice("Resolver '%s' crashed: %s. Ignoring" % (resolver.name, e))
+                common.addon.log_debug(traceback.format_exc())
+                continue
+        self.__resolvers = []  # No resolvers.
         return False
-        
+
     def valid_url(self):
         '''
         Returns True if the ``HostedMediaFile`` can be resolved.
@@ -163,8 +190,17 @@ class HostedMediaFile:
                     print 'resolvable!'
             
         '''
-        if self._resolvers:
-            return True
+        if self._valid_url is not None: return self._valid_url
+        for resolver in self.__resolvers:
+            try:
+                if resolver.valid_url(self._url, self._domain):
+                    self._valid_url = True
+                    return True
+            except:
+                # print sys.exc_info()
+                continue
+        self._valid_url = False
+        self.__resolvers = []
         return False
         
     def __test_stream(self, stream_url):
@@ -188,27 +224,38 @@ class HostedMediaFile:
             if 'unknown url type' in str(e.reason).lower():
                 return True
             else:
-                http_code = 600
+                if isinstance(e, urllib2.HTTPError):
+                    http_code = e.code
+                else:
+                    http_code = 600
         except: http_code = 601
     
         # added this log line for now so that we can catch any logs on streams that are rejected due to test_stream failures
         # we can remove it once we are sure this works reliably
         if int(http_code)>=400: common.addon.log('Stream UrlOpen Failed: Url: %s HTTP Code: %s' % (stream_url, http_code))
-        
-        return int(http_code) < 400
-    
-    def _find_resolvers(self):
-        urlresolver.lazy_plugin_scan()
-        imps = []
-        for imp in UrlResolver.implementors():
-            if imp.valid_url(self.get_url(), self.get_host()):
-                imps.append(imp)
-        return imps
 
-        
+        return int(http_code) < 400
+
+    def __find_resolvers(self, universal=False):
+        urlresolver.lazy_plugin_scan()
+        resolvers = []
+        found = False
+        for resolver in UrlResolver.implementors():
+            if (self._domain in resolver.domains) or any(self._domain in domain for domain in resolver.domains):
+                found = True
+                resolvers.append(resolver)
+            elif (universal and ('*' in resolver.domains)):
+                resolvers.append(resolver)
+
+        if not found: common.addon.log_debug('no resolver found for: %s' % (self._domain))
+        else: common.addon.log_debug('resolvers for %s are %s' % (self._domain, [r.name for r in resolvers]))
+
+        return resolvers
+
     def __nonzero__(self):
-        return self.valid_url() 
-        
+        if self._valid_url is None: return self.valid_url()
+        return self._valid_url
+
     def __str__(self):
         return '{\'url\': \'%s\', \'host\': \'%s\', \'media_id\': \'%s\'}' % (
                     self._url, self._host, self._media_id)

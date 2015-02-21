@@ -26,6 +26,7 @@ from urlresolver import common
 class VidSpotResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vidspot"
+    domains = [ "vidspot.net" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

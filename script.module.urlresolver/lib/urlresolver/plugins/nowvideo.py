@@ -30,6 +30,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class NowvideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "nowvideo"
+    domains = [ "nowvideo.eu","nowvideo.ch","nowvideo.sx" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -62,6 +63,17 @@ class NowvideoResolver(Plugin, UrlResolver, PluginSettings):
                 if r:
                     raise Exception ('File Not Found or removed')
                 raise Exception ('Failed to parse url')
+            
+            try:
+                # test the url, should throw 404
+                nv_header = self.net.http_HEAD(stream_url)
+            except urllib2.HTTPError, e:
+                # if error 404, redirect it back (two pass authentification)
+                api = 'http://www.nowvideo.sx/api/player.api.php?pass=undefined&cid3=undefined&key=%s&user=undefined&numOfErrors=1&errorUrl=%s&cid=1&file=%s&cid2=undefined&errorCode=404' % (filekey, urllib.quote_plus(stream_url), filename)
+                html = self.net.http_GET(api).content
+                r = re.search('url=(.+?)&title', html)
+                if r:
+                    stream_url = urllib.unquote(r.group(1))
                 
             return stream_url
         except urllib2.HTTPError, e:

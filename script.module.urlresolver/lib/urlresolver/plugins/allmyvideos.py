@@ -29,6 +29,9 @@ USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefo
 class AllmyvideosResolver(Plugin,UrlResolver,PluginSettings):
     implements=[UrlResolver,PluginSettings]
     name="allmyvideos"
+    domains=[ "allmyvideos.net" ]
+
+
     def __init__(self):
         p=self.get_setting('priority') or 100
         self.priority=int(p)

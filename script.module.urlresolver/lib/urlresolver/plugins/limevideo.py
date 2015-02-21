@@ -29,6 +29,7 @@ net = Net()
 class LimevideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "limevideo"
+    domains = [ "limevideo.net" ]
 
 
     def __init__(self):

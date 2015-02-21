@@ -29,6 +29,7 @@ net = Net()
 class DonevideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "donevideo"
+    domains = [ "donevideo.com" ]
 
 
     def __init__(self):

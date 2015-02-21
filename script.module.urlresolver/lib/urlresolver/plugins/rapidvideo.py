@@ -30,6 +30,7 @@ import re
 class RapidvideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "rapidvideo"
+    domains = [ "rapidvideo.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

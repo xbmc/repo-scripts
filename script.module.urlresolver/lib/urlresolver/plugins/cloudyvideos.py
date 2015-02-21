@@ -31,6 +31,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class CloudyvideosResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "cloudyvideos"
+    domains = [ "cloudyvideos.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

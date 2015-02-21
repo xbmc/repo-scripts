@@ -29,6 +29,7 @@ import xbmcgui
 class Mp4uploadResolver(Plugin, UrlResolver, PluginSettings):
 	implements = [UrlResolver, PluginSettings]
 	name = "mp4upload"
+	domains = [ "mp4upload.com" ]
 
 	def __init__(self):
 		p = self.get_setting('priority') or 100

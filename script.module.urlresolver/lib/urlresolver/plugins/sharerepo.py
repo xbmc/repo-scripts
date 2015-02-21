@@ -23,85 +23,66 @@ from urlresolver.plugnplay import Plugin
 from urlresolver import common
 import re
 import urllib2
-import os
-import urllib
-
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 net = Net()
+USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
 
 class SharerepoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "sharerepo"
-
+    domains = ["sharerepo.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
 
-
     def get_media_url(self, host, media_id):
         try:
             web_url = self.get_url(host, media_id)
             headers = {
-                'Referer':web_url
+                'User-Agent': USER_AGENT,
+                'Referer': web_url
             }
-            
-            # Get the landing page
-            html = self.net.http_GET(web_url).content
-            
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
-            for name, value in r: data[name] = value
-            data.update({'referer':web_url})
-            data.update({'method_free':'Free Download'})
-            
-            # get the video page
-            html = self.net.http_POST(web_url, data, headers=headers).content
-            
-            r = re.search(r'type="submit"\s*id="btn_download"',html)
-            if not r:
-                raise Exception("Video Not Found")
-            
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
-            for name, value in r: data[name] = value
-            data.update({'referer':web_url})
-            data.update({'method_free':'Free Download'})
-            data.update({'btn_download':'download'})
 
-            # click download button
-            # using standard urlopen because t0mm0's wrappers don't seem to return until content download is complete
-            request = urllib2.Request(web_url,urllib.urlencode(data),headers=headers)            
-            response = urllib2.urlopen(request)
-            return response.geturl()
+            try:
+                html = self.net.http_GET(web_url, headers=headers).content
+            except urllib2.HTTPError as e:
+                if e.code == 404:
+                    # sharerepo supports two different styles of links/media_ids
+                    # if the first fails, try the second kind
+                    web_url = 'http://sharerepo.com/%s' % media_id
+                    html = self.net.http_GET(web_url, headers=headers).content
+                else:
+                    raise
+                
+            link = re.search("file\s*:\s*'([^']+)", html)
+            if link:
+                common.addon.log('ShareRepo Link Found: %s' % link.group(1))
+                return link.group(1) + '|User-Agent=%s' % (USER_AGENT)
+            else:
+                raise Exception('Unable to resolve ShareRepo Link')
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log('sharerepo: general error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]SHAREREPO[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
-            
+
     def get_url(self, host, media_id):
-        return 'http://sharerepo.com/%s' % media_id 
-        
+        return 'http://sharerepo.com/f/%s' % media_id
 
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/([0-9a-zA-Z]+)',url)
+        r = re.search('//(.+?)(?:/f)?/([0-9a-zA-Z]+)', url)
         if r:
             return r.groups()
         else:
             return False
         return('host', 'media_id')
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?sharerepo.com/' +
+        return (re.match('http://(www.)?sharerepo.com/(f/)?' +
                          '[0-9A-Za-z]+', url) or
                          'sharerepo' in host)

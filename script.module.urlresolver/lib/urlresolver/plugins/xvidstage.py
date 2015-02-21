@@ -27,6 +27,7 @@ from lib import jsunpack
 class XvidstageResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "xvidstage"
+    domains = [ "xvidstage.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

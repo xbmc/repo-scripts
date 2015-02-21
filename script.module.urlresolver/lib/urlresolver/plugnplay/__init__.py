@@ -58,12 +58,15 @@ def attr_set_property(attr_name):
 '''
 def method_name_and_load(method_name):
     def _auto_caller_template(impl, *args, **kwargs):
+        method = getattr(impl._ref, method_name)
         try:
-            method = getattr(impl._ref, method_name)
             return method(*args, **kwargs)
-        except ImportError:
+        except ImportError: # Module not in memory yet
+            orig_method = method
             load_plugin(impl)
-            method = getattr(impl, method_name)
+            method = getattr(impl._ref, method_name)
+            if (method == orig_method):
+                common.addon.log_error('Unusable module %s in %s.py' % (impl.name, impl.fname))
             return method(*args, **kwargs)
 
     return _auto_caller_template
@@ -162,24 +165,30 @@ def set_plugin_dirs(*dirs):
 
 def load_plugin(mod):
     common.addon.log_debug('loading plugin: %s from %s' % (mod.name, mod.fname))
-    imported_module = __import__(mod.fname, globals(), locals())
-    sys.modules[mod.fname] = imported_module
+    try:
+        imported_module = __import__(mod.fname, globals(), locals())
+        sys.modules[mod.fname] = imported_module
+    except:
+        common.addon.log_error('Unable to load plugin %s from %s.py' % (mod.name, mod.fname))
 
 def load_plugins():
     for d in plugin_dirs:
-        sys.path.append(d)
+        sys.path.insert(0, d)
         py_files = glob(join(d, '*.py'))
 
         # Remove ".py" for proper importing
         modules = [basename(f[:-3]) for f in py_files]
         for mod_name in modules:
-            imported_module = __import__(mod_name, globals(), locals())
-            sys.modules[mod_name] = imported_module
+            try:
+                imported_module = __import__(mod_name, globals(), locals())
+                sys.modules[mod_name] = imported_module
+            except:
+                common.addon.log_error('Unable to load plugin %s' % (mod_name))
 
 def scan_plugins(wrappercls):
     re_class = re.compile('class\s+(\w+).*Plugin')
     for d in plugin_dirs:
-        sys.path.append(d)
+        sys.path.insert(0, d)
         py_files = glob(join(d, '*.py'))
         for f in py_files:
             found_plugin = None
@@ -202,6 +211,6 @@ def scan_plugins(wrappercls):
                         except ValueError:
                             found_plugin.priority = 100
                         for cls in found_plugin.implements:
-                            common.addon.log_debug("module %s supports %s" % (mod_name, cls))
+                            common.addon.log_debug("module %s supports %s in class %s" % (mod_name, cls, found_plugin.class_name))
                             man.add_implementor(cls, found_plugin)
                         break # Next file

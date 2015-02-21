@@ -27,6 +27,7 @@ from urlresolver.plugnplay import Plugin
 class VimeoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vimeo"
+    domains = [ "vimeo.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

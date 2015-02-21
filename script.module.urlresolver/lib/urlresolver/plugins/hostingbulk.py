@@ -32,6 +32,7 @@ logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class hostingbulkResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "hostingbulk"
+    domains = [ "hostingbulk.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

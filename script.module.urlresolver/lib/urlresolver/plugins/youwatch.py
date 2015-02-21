@@ -67,6 +67,7 @@ class Base36:
 class YouwatchResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
     name = "youwatch"
+    domains = [ "youwatch.org" ]
     profile_path = common.profile_path    
     cookie_file  = os.path.join(profile_path, '%s.cookies' % name)
 

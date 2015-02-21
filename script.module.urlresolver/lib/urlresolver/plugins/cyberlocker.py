@@ -33,6 +33,7 @@ net = Net()
 class CyberlockerResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "cyberlocker"
+    domains = [ "cyberlocker.ch" ]
 
 
     def __init__(self):

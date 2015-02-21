@@ -30,6 +30,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class streamintoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "streaminto"
+    domains = ["streamin.to"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -60,7 +61,7 @@ class streamintoResolver(Plugin, UrlResolver, PluginSettings):
             r = re.search(pattern, html)
             rr = re.search(file, html)
             if r:
-                return r.group(1).replace(':1935','') + ' swfUrl=http://streamin.to/player/player.swf live=true swfVfy=1 playpath=' + rr.group(1).replace('.flv','')
+                return r.group(1).replace(':1935','') + ' swfUrl=http://streamin.to/player/player.swf live=false swfVfy=1 playpath=' + rr.group(1).replace('.flv','')
 
             raise Exception ('File Not Found or removed')
         except urllib2.URLError, e:

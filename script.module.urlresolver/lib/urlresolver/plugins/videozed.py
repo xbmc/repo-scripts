@@ -29,6 +29,7 @@ net = Net()
 class VideozedResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "videozed"
+    domains = [ "videozed.net" ]
 
 
     def __init__(self):

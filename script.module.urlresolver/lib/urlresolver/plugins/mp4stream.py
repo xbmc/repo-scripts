@@ -29,6 +29,7 @@ import xbmcgui
 class Mp4streamResolver(Plugin, UrlResolver, PluginSettings):
 	implements = [UrlResolver, PluginSettings]
 	name = "mp4stream"
+	domains = [ "mp4stream.com" ]
 
 	def __init__(self):
 		p = self.get_setting('priority') or 100

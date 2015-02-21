@@ -30,6 +30,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class DaclipsResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "daclips"
+    domains = [ "daclips.in", "daclips.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

@@ -23,6 +23,8 @@ error_logo=os.path.join(common.addon_path,'resources','images','redx.png')
 class playedResolver(Plugin,UrlResolver,PluginSettings):
     implements=[UrlResolver,PluginSettings]
     name="played"
+    domains=[ "played.to" ]
+
     def __init__(self):
         p=self.get_setting('priority') or 100
         self.priority=int(p)

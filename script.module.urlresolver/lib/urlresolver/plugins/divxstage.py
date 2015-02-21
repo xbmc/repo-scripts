@@ -24,12 +24,10 @@ import re, urllib2, os
 from urlresolver import common
 from lib import unwise
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
 class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "divxstage"
+    domains = ["divxstage.eu", "divxstage.net", "divxstage.to", "cloudtime.to"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -47,7 +45,7 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
                 html = unwise.unwise_process(html)
                 filekey = unwise.resolve_var(html, "flashvars.filekey")
                 
-                player_url = 'http://www.divxstage.eu/api/player.api.php?user=undefined&key='+filekey+'&pass=undefined&codes=1&file='+media_id
+                player_url = 'http://www.cloudtime.to/api/player.api.php?user=undefined&key='+filekey+'&pass=undefined&codes=1&file='+media_id
                 html = self.net.http_GET(player_url).content
                 r = re.search('url=(.+?)&', html)
                 if r:
@@ -59,11 +57,9 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
                                    (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
             return self.unresolvable(code=3, msg=e)
         except Exception, e:
             common.addon.log_error('**** Divxstage Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]DIVXSTAGE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):
@@ -82,4 +78,4 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         #http://embed.divxstage.eu/embed.php?v=8da26363e05fd&width=746&height=388&c=000
-        return (re.match('http://(?:www.|embed.)?divxstage.(?:eu|net)/', url) or 'divxstage' in host)
+        return (re.match('http://(?:www.|embed.)?(?:divxstage\.(?:eu|net|to)|cloudtime\.to)/', url) or 'divxstage' in host)

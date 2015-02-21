@@ -28,6 +28,7 @@ import os
 class crunchyrollResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "crunchyroll"
+    domains = [ "crunchyroll.com" ]
 
 
     def __init__(self):
@@ -51,7 +52,6 @@ class crunchyrollResolver(Plugin, UrlResolver, PluginSettings):
             return mp4
         except Exception, e:
             common.addon.log_error('**** Crunchyroll Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]CRUNCHYROLL[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
 
     def get_url(self, host, media_id):

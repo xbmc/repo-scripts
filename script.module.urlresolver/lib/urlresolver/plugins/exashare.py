@@ -1,5 +1,3 @@
-#-*- coding: utf-8 -*-
-
 """
 Exashare.com urlresolver XBMC Addon
 Copyright (C) 2014 JUL1EN094 
@@ -26,14 +24,11 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo=os.path.join(common.addon_path,'resources','images','redx.png')
-#SET OK_LOGO# THANKS TO JUL1EN094
-ok_logo=os.path.join(common.addon_path,'resources','images','greeninch.png')
-
 class ExashareResolver(Plugin,UrlResolver,PluginSettings):
     implements=[UrlResolver,SiteAuth,PluginSettings]
     name="exashare"
+    domains = [ "exashare.com" ]
+    
     profile_path=common.profile_path    
     cookie_file=os.path.join(profile_path,'%s.cookies'%name)
     USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
@@ -64,26 +59,21 @@ class ExashareResolver(Plugin,UrlResolver,PluginSettings):
         except urllib2.HTTPError,e:
             e=e.code
             common.addon.log_error(self.name+': got Http error %s fetching %s'%(e,base_url))
-            common.addon.show_small_popup('Error','Http error: %s'%e,8000,image=error_logo)
             return self.unresolvable(code=3,msg=e)
         except urllib2.URLError,e:
             e=str(e.args)
             common.addon.log_error(self.name + ': got Url error %s fetching %s' % (e, base_url))
-            common.addon.show_small_popup('Error','URL error: %s'%e,8000,image=error_logo)
             return self.unresolvable(code=3, msg=e)
         except IndexError,e:
             if re.search("""File Not Found""",html):
                 e='File not found or removed'
                 common.addon.log('**** Exashare Error occured: %s'%e)
-                common.addon.show_small_popup(title='[B][COLOR white]EXASHARE[/COLOR][/B]',msg='[COLOR red]%s[/COLOR]'%e,delay=5000,image=error_logo)
                 return self.unresolvable(code=1,msg=e)
             else:
                 common.addon.log('**** Exashare Error occured: %s'%e)
-                common.addon.show_small_popup(title='[B][COLOR white]EXASHARE[/COLOR][/B]',msg='[COLOR red]%s[/COLOR]'%e,delay=5000,image=error_logo)
                 return self.unresolvable(code=0,msg=e) 
         except Exception,e:
             common.addon.log('**** Exashare Error occured: %s'%e)
-            common.addon.show_small_popup(title='[B][COLOR white]EXASHARE[/COLOR][/B]',msg='[COLOR red]%s[/COLOR]'%e,delay=5000,image=error_logo)
             return self.unresolvable(code=0,msg=e)
 
     def get_url(self,host,media_id):
@@ -131,16 +121,12 @@ class ExashareResolver(Plugin,UrlResolver,PluginSettings):
                 except: source=self.net.http_POST(url,data,headers=headers).content
                 if re.search('Your username is for logging in and cannot be changed',source):
                     common.addon.log('logged in exashare')
-                    common.addon.show_small_popup(title='[B][COLOR white]EXASHARE LOGIN [/COLOR][/B]',msg='[COLOR green]Logged[/COLOR]',delay=2000,image=ok_logo)
                     self.net.save_cookies(self.cookie_file)
                     self.net.set_cookies(self.cookie_file)
                     return True
                 else:
                     common.addon.log('error logging in exashare')
-                    common.addon.show_small_popup(title='[B][COLOR white]EXASHARE LOGIN ERROR [/COLOR][/B]',msg='[COLOR red]Not logged[/COLOR]',delay=2000,image=error_logo)
                     return False
-            else:
-                common.addon.show_small_popup(title='[B][COLOR white]EXASHARE LOGIN [/COLOR][/B]',msg='[COLOR green]Logged[/COLOR]',delay=2000,image=ok_logo)
         else:
             if os.path.exists(self.cookie_file): os.remove(self.cookie_file)
             return True

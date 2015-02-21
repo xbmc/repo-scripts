@@ -31,6 +31,7 @@ logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class FacebookResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "facebook"
+    domains = [ "facebook.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

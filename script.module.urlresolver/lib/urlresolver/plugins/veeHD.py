@@ -29,6 +29,7 @@ net = Net()
 class veeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
     name = "veeHD"
+    domains = [ "veehd.com" ]
     profile_path = common.profile_path
     cookie_file = os.path.join(profile_path, '%s.cookies' % name)
     

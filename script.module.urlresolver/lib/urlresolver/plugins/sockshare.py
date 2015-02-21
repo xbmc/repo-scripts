@@ -36,6 +36,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class sockshareResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "sockshare"
+    domains = [ "sockshare.com" ]
     profile_path = common.profile_path
     cookie_file = os.path.join(profile_path, 'sockshare.cookies')
 

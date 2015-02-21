@@ -33,6 +33,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class VideoHutResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "videohut.to"
+    domains = [ "videohut.to" ]
     
     def __init__(self):
         p = self.get_setting('priority') or 100

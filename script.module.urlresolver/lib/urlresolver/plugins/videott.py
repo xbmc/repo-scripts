@@ -1,6 +1,6 @@
 '''
-tunepk urlresolver plugin
-Copyright (C) 2013 icharania
+videott urlresolver plugin
+Copyright (C) 2015 icharania
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,58 +26,56 @@ import re
 import urllib2, urllib
 from urlresolver import common
 
-logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+# Custom imports
+try:
+    from json import loads
+except ImportError:
+    from simplejson import loads
 
-class TunePkResolver(Plugin, UrlResolver, PluginSettings):
+class VideoTTResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "tune.pk"
-    domains = [ "tune.pk" ]
+    name = "videott"
+    domains = ["video.tt"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
-        self.pattern = '(.+tune.pk)/(?:player|video|play)/(?:[\w\.\?]+=)?(\d+)'
+        self.pattern = 'http://(?:www\.)?(video\.tt)/(?:video\/|embed\/|watch_video\.php\?v=)(\w+)'
 
     def get_media_url(self, host, media_id):
-        try:
-            web_url = self.get_url(host, media_id)
-            link = repr(self.net.http_GET(web_url).content)
+        json_url = 'http://www.video.tt/player_control/settings.php?v=%s' % media_id
 
-            if link.find('404 Not Found') >= 0:
+        try:
+            json = self.net.http_GET(json_url).content
+            data = loads(json)
+
+            vids = data['settings']['res']
+
+            if not vids:
                 err_title = 'Content not available.'
                 err_message = 'The requested video was not found.'
-                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
+                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (json_url, err_title, err_message))
                 return self.unresolvable(1, err_message)
 
-            videoUrl = []
-            # borrowed from AJ's turtle-x
-            html = link.replace('\n\r', '').replace('\r', '').replace('\n', '').replace('\\', '')
-            sources = re.compile("{(.+?)}").findall(re.compile("sources (.+?)]").findall(html)[0])
-            for source in sources:
-                video_link = str(re.compile('"file":"(.*?)"').findall(source)[0])
-                videoUrl.append(video_link)
-
-
-            vUrl = ''
-            vUrlsCount = len(videoUrl)
-            if vUrlsCount > 0:
-                q = self.get_setting('quality')
-                if q == '0':
-                    # Highest Quality
-                    vUrl = videoUrl[0]
-                elif q == '1':
-                    # Medium Quality
-                    vUrl = videoUrl[(int)(vUrlsCount / 2)]
-                elif q == '2':
-                    # Lowest Quality
-                    vUrl = videoUrl[vUrlsCount - 1]
-
-                return vUrl
-
             else:
-                return self.unresolvable(0, 'No playable video found.')
+                vUrlsCount = len(vids)
+
+                if (vUrlsCount > 0):
+                    q = self.get_setting('quality')
+                    # Lowest Quality
+                    li = 0
+
+                    if q == '1':
+                        # Medium Quality
+                        li = (int)(vUrlsCount / 2)
+                    elif q == '2':
+                        # Highest Quality
+                        li = vUrlsCount - 1
+
+                    vUrl = vids[li]['u'].decode('base-64')
+                    return vUrl
+
         except urllib2.URLError, e:
             return self.unresolvable(3, str(e))
         except Exception, e:
@@ -85,7 +83,7 @@ class TunePkResolver(Plugin, UrlResolver, PluginSettings):
 
 
     def get_url(self, host, media_id):
-        return 'http://embed.tune.pk/play/%s' % media_id
+        return 'http://www.video.tt/watch_video.php?v=%s' % media_id
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
@@ -99,5 +97,5 @@ class TunePkResolver(Plugin, UrlResolver, PluginSettings):
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
         xml += '<setting label="Video Quality" id="%s_quality" ' % self.__class__.__name__
-        xml += 'type="enum" values="High|Medium|Low" default="0" />\n'
+        xml += 'type="enum" values="Low|Medium|High" default="2" />\n'
         return xml

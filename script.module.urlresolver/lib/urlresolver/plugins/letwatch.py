@@ -13,21 +13,19 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import os
-import xbmc
+import re
+import urllib2
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2, urllib
 from urlresolver import common
-
-logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+from lib import jsunpack
 
 class LetwatchResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "letwatch.us"
+    domains = ["letwatch.us"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -37,21 +35,23 @@ class LetwatchResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         try:
             web_url = self.get_url(host, media_id)
-            link = self.net.http_GET(web_url).content
+            html = self.net.http_GET(web_url).content
 
-            if link.find('404 Not Found') >= 0:
-                err_title = 'Content not available.'
-                err_message = 'The requested video was not found.'
-                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+self.name+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
-                return self.unresolvable(1, err_message)
+            if html.find('404 Not Found') >= 0:
+                raise Exception('File Removed')
 
-            video_link = str(re.compile('file[: ]*"(.+?)"').findall(link)[1])
-
-            if video_link:
-                return video_link
+            packed = re.search('(eval\(function.*?)\s*</script>', html, re.DOTALL)
+            if packed:
+                js = jsunpack.unpack(packed.group(1))
             else:
-                return self.unresolvable(0, 'No playable video found.')
+                js = html
+
+            link = re.search('file\s*:\s*"([^"]+)', js)
+            if link:
+                common.addon.log_debug('letwatch.us Link Found: %s' % link.group(1))
+                return link.group(1)
+
+            raise Exception('Unable to find letwatch.us video')
 
         except urllib2.URLError, e:
             return self.unresolvable(3, str(e))

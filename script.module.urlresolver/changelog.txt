@@ -1,3 +1,19 @@
+[B]Version 2.8.0[/B]
+- Code Base Changes:
+    - Speed enhancements - Further to changes made in 2.7.0 
+        - New routine to select appropriate host for given url
+    - Compile resolver settings into reduced number of tabs to avoid Helix 100 settings tab limit
+- Resolvers Added:
+- Resolvers Fixed/Updated:
+    - HugeFiles
+    - Bestreams
+    - VideoMega
+    - Vidplay
+    - Vidxden
+    - Letwatchus
+    - 180Upload
+
+   
 [B]Version 2.7.0[/B]
 - Code Base Changes:
     - Speed enhancements:

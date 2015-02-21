@@ -23,40 +23,47 @@ from urlresolver.plugnplay import Plugin
 from urlresolver import common
 from lib import jsunpack
 from lib import captcha_lib
-import re, urllib2
+import re, urllib2, urllib
 
 net = Net()
+USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
 
 class VidplayResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vidplay"
-    
+    domains = ["vidplay.net"]
+
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
 
     def get_media_url(self, host, media_id):
+        embed_url = 'http://vidplay.net/vidembed-%s' % (media_id)
+        response = urllib2.urlopen(embed_url)
+        if response.getcode() == 200 and response.geturl() != embed_url and response.geturl()[-3:].lower() in ['mp4', 'avi', 'mkv']:
+            return response.geturl()
+
         web_url = self.get_url(host, media_id)
         try:
             html = net.http_GET(web_url).content
-            
-            if re.search('File Not Found ',html):
-                msg = 'File Not Found or removed'
-                return self.unresolvable(code = 1, msg = msg)
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
 
+            if re.search('File Not Found ', html):
+                msg = 'File Not Found or removed'
+                return self.unresolvable(code=1, msg=msg)
+
+            data = {}
+            r = re.findall(r'type="hidden".*?name="([^"]+)".*?value="([^"]+)', html)
             if r:
                 for name, value in r:
                     data[name] = value
             else:
                 raise Exception('Unable to resolve vidplay Link')
-        
+
             #Check for SolveMedia Captcha image
             solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
             recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
-    
+
             if solvemedia:
                 data.update(captcha_lib.do_solvemedia_captcha(solvemedia.group(1)))
             elif recaptcha:
@@ -64,25 +71,21 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
             else:
                 captcha = re.compile("left:(\d+)px;padding-top:\d+px;'>&#(.+?);<").findall(html)
                 result = sorted(captcha, key=lambda ltr: int(ltr[0]))
-                solution = ''.join(str(int(num[1])-48) for num in result)
-                data.update({'code':solution})
+                solution = ''.join(str(int(num[1]) - 48) for num in result)
+                data.update({'code': solution})
 
-            common.addon.log('VIDPLAY - Requesting POST URL: %s with data: %s' % (web_url, data))
+            common.addon.log_debug('VIDPLAY - Requesting POST URL: %s with data: %s' % (web_url, data))
             html = net.http_POST(web_url, data).content
-            sPattern = '''<div id="player_code">.*?<script type='text/javascript'>(eval.+?)</script>'''
-            r = re.findall(sPattern, html, re.DOTALL|re.I)
+            r = re.search('id="downloadbutton".*?href="([^"]+)', html)
             if r:
-                sUnpacked = jsunpack.unpack(r[0])
-                sUnpacked = sUnpacked.replace("\\'","")
-                r = re.findall('file,(.+?)\)\;s1',sUnpacked)
-                if not r:
-                    r = re.findall('name="src"[0-9]*="(.+?)"/><embed',sUnpacked)
-                if not r:
-                    r = re.findall('<param name="src"value="(.+?)"/>', sUnpacked)
-                return r[0]
+                return r.group(1)
             else:
-                common.addon.log('***** VidPlay - Cannot find final link')
-                raise Exception('Unable to resolve VidPlay Link')
+                r = re.search("file\s*:\s*'([^']+)", html)
+                if r:
+                    return r.group(1)
+                else:
+                    common.addon.log('***** VidPlay - Cannot find final link')
+                    raise Exception('Unable to resolve VidPlay Link')
 
         except urllib2.URLError, e:
             common.addon.log_error(self.name + ': got http error %d fetching %s' %
@@ -92,11 +95,9 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
             common.addon.log_error('**** Vidplay Error occured: %s' % e)
             return self.unresolvable(code=0, msg=e)
 
-        
     def get_url(self, host, media_id):
         return 'http://vidplay.net/%s' % media_id 
-        
-        
+
     def get_host_and_id(self, url):
         r = re.search('http://(.+?)/embed-([\w]+)-', url)
         if r:
@@ -107,7 +108,6 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
                 return r.groups()
             else:
                 return False
-
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False

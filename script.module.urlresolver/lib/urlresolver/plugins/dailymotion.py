@@ -30,6 +30,7 @@ logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class DailymotionResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "dailymotion"
+    domains = [ "dailymotion.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

@@ -29,6 +29,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class watchfreeResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "watchfreeinhd"
+    domains = [ "watchfreeinhd.com" ]
 
 
     def __init__(self):

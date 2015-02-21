@@ -21,8 +21,8 @@ For most cases you probably want to use :func:`urlresolver.resolve` or
 :func:`urlresolver.choose_source`.
 
 .. seealso::
-	
-	:class:`HostedMediaFile`
+    
+    :class:`HostedMediaFile`
 
 
 '''
@@ -39,6 +39,8 @@ import xbmcgui
 #load all available plugins
 common.addon.log('Initializing URLResolver version: %s' % common.addon_version)
 plugnplay.set_plugin_dirs(common.plugins_path)
+
+MAX_SETTINGS = 75
 
 def lazy_plugin_scan():
     if not UrlResolver.implementors():
@@ -62,9 +64,9 @@ def resolve(web_url):
     the URL, it passes the ``web_url`` to the plugin and returns the direct URL 
     to the media file, or ``False`` if it was not possible to resolve.
     
-	.. seealso::
-		
-		:class:`HostedMediaFile`
+    .. seealso::
+        
+        :class:`HostedMediaFile`
 
     Args:
         web_url (str): A URL to a web page associated with a piece of media
@@ -110,12 +112,12 @@ def choose_source(sources):
     
         sources = [HostedMediaFile(url='http://youtu.be/VIDEOID', title='Youtube [verified] (20 views)'),
                    HostedMediaFile(url='http://putlocker.com/file/VIDEOID', title='Putlocker (3 views)')]
-		source = urlresolver.choose_source(sources)
-		if source:
-			stream_url = source.resolve()
-			addon.resolve_url(stream_url)
-		else:
-			addon.resolve_url(False)
+        source = urlresolver.choose_source(sources)
+        if source:
+            stream_url = source.resolve()
+            addon.resolve_url(stream_url)
+        else:
+            addon.resolve_url(False)
 
     Args:
         sources (list): A list of :class:`HostedMediaFile` representing web 
@@ -175,26 +177,22 @@ def _update_settings_xml():
     This function writes a new ``resources/settings.xml`` file which contains
     all settings for this addon and its plugins.
     '''
-
-    pretty_print = lambda f: '\n'.join([line for line in f.split('\n') if line.strip()])
-    
     lazy_plugin_scan()
     plugnplay.load_plugins()
     
     try:
-        try:
-            os.makedirs(os.path.dirname(common.settings_file))
-        except OSError:
-            pass
+        os.makedirs(os.path.dirname(common.settings_file))
+    except OSError:
+        pass
 
-        f = open(common.settings_file, 'w')
-        xml_text = "<settings>"
-        for imp in PluginSettings.implementors():
-            xml_text += "<category label=\""+imp.name+"\">"
-            xml_text += imp.get_settings_xml()
-            xml_text += "</category>"
-        xml_text += "</settings>"
-        try:
+    xml_text = "<settings>"
+    for imp in sorted(PluginSettings.implementors(),key=lambda x:x.name.upper()):
+        xml_text += '<setting label="' + imp.name + '" type="lsep"/>'
+        xml_text += imp.get_settings_xml()
+    xml_text += "</settings>"
+    
+    try:
+        with open(common.settings_file, 'w') as f:
             f.write('<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n')
             f.write("<settings>\n")
             f.write("<category label=\"URLResolver\">\n")
@@ -205,15 +203,23 @@ def _update_settings_xml():
             f.write("id=\"addon_version\" visible=\"false\" ")
             f.write("label=\"URLResolver version\" type=\"text\"/>\n")
             f.write("</category>\n")
+            f.write('<category label="Resolvers 1">\n')
+
+            i=0
+            cat_count = 2
             settings_xml = xml.dom.minidom.parseString(xml_text)
-            elements = settings_xml.getElementsByTagName('category')
-            elements.sort(key=lambda x: x.getAttribute('label'))
-            for i in elements:
-                xml_text = i.toprettyxml()
-                f.write(pretty_print(xml_text))
-            f.write('</settings>')
-        finally:
-            f.close
+            elements = settings_xml.getElementsByTagName('setting')
+            for element in elements:
+                if i>MAX_SETTINGS and element.getAttribute('type')=='lsep':
+                    f.write('</category>\n')
+                    f.write('<category label="Resolvers %s">\n' % (cat_count))
+                    cat_count += 1
+                    i=0
+                    
+                element.writexml(f, indent='\t', newl='\n')
+                i += 1
+            f.write('</category>\n')
+            f.write('</settings>\n')
     except IOError:
         common.addon.log_error('error writing ' + common.settings_file)
 

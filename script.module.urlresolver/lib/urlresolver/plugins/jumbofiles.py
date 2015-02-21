@@ -27,6 +27,7 @@ from urlresolver import common
 class JumbofilesResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "jumbofiles"
+    domains = [ "jumbofiles.com" ]
 
 
     def __init__(self):

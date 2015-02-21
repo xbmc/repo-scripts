@@ -28,6 +28,7 @@ net = Net()
 class MuchshareResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "muchshare"
+    domains = [ "muchshare.net" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

@@ -33,6 +33,7 @@ error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 class VideorajResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "videoraj.ch"
+    domains = [ "videoraj.ec", "videoraj.eu", "videoraj.sx", "videoraj.ch", "videoraj.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100

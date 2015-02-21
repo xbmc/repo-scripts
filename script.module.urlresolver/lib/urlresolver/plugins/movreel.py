@@ -32,6 +32,7 @@ net = Net()
 class movreelResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
     name = "movreel"
+    domains = [ "movreel.com" ]
     profile_path = common.profile_path
     cookie_file = os.path.join(profile_path, '%s.cookies' % name)
 

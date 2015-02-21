@@ -27,6 +27,7 @@ from time import time as wait
 class bayfilesResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "bayfiles"
+    domains = [ "bayfiles.com" ]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -46,7 +47,6 @@ class bayfilesResolver(Plugin, UrlResolver, PluginSettings):
             return final_link.group(1)
         except Exception, e:
             common.addon.log_error('**** Bayfiles Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]BAYFILES[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
             return self.unresolvable(code=0, msg=e)
        
     def get_url(self, host, media_id):
