@@ -1,4 +1,4 @@
-import os, sys, time, socket, urllib, urllib2, urlparse, httplib, hashlib
+import os, sys, time, socket, urllib, urllib2, urlparse, httplib, base64, hashlib
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon, xbmcvfs
 if sys.version_info < (2, 7):
     import simplejson
@@ -8,14 +8,13 @@ else:
 __addon__        = xbmcaddon.Addon()
 __addonid__      = __addon__.getAddonInfo('id')
 
-APIKEY       = 'c5f4a7573343137ac1559a86b3a051ec'
-APISECRET    = '4fa04cd85a9c9d5b08a931cfb77b40ed'
 APIURL       = 'http://ws.audioscrobbler.com/2.0/'
 AUTHURL      = 'https://ws.audioscrobbler.com/2.0/'
-HEADERS      = {'User-Agent': 'XBMC Media center', 'Accept-Charset': 'utf-8'}
+HEADERS      = {'User-Agent': 'Kodi Media center', 'Accept-Charset': 'utf-8'}
 LANGUAGE     = __addon__.getLocalizedString
 ADDONVERSION = __addon__.getAddonInfo('version')
 CWD          = __addon__.getAddonInfo('path').decode("utf-8")
+STATUS       = __addon__.getSetting('lastfmstatus')
 DATAPATH     = xbmc.translatePath( 'special://profile/addon_data/%s' % __addonid__ ).decode("utf-8")
 WINDOW       = xbmcgui.Window(10000)
 
@@ -40,7 +39,7 @@ def read_settings(session, puser=False, ppwd=False):
     songs     = __addon__.getSetting('lastfmsubmitsongs') == 'true'
     radio     = __addon__.getSetting('lastfmsubmitradio') == 'true'
     confirm   = __addon__.getSetting('lastfmconfirm') == 'true'
-    sesskey   = __addon__.getSetting('sessionkey')
+    sesskey   = __addon__.getSetting('lastfmkey')
     # if puser or ppwd is true, we were called by onSettingsChanged
     if puser or ppwd:
         # check if user has changed it's username or password
@@ -71,7 +70,7 @@ def read_settings(session, puser=False, ppwd=False):
             log('Last.fm an unknown authentication response', session)
             sesskey = ''
         if sesskey:
-            __addon__.setSetting('sessionkey', sesskey)
+            __addon__.setSetting('lastfmkey', sesskey)
     elif not (user and pwd):
         # no username or password
         xbmc.executebuiltin('Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32027), 7000))
@@ -127,6 +126,8 @@ def md5sum(txt):
     return md5hash.hexdigest()
 
 def getsig( params ):
+    app = base64.b64decode(STATUS)[::-1]
+    params['api_key'] = ''.join([app[48:64], app[16:32]])
     # dict to list
     siglist = params.items()
     # signature params need to be sorted
@@ -134,7 +135,7 @@ def getsig( params ):
     # create signature string
     sigstring = ''.join(map(''.join,siglist))
     # add api secret and create a request signature
-    sig = md5sum(sigstring + APISECRET)
+    sig = md5sum(sigstring + ''.join([app[32:48], app[0:16]]))
     return sig
 
 def jsonparse( response ):
@@ -144,15 +145,13 @@ def jsonparse( response ):
 
 def drop_sesskey():
     # drop our key, this will trigger onsettingschanged to fetch a new key
-    __addon__.setSetting('sessionkey', '')
+    __addon__.setSetting('lastfmkey', '')
 
 class LastFM:
     def __init__( self ):
         pass
 
     def post( self, params, session, auth=False ):
-        # add our api key
-        params['api_key'] = APIKEY
         # create a signature
         apisig = getsig(params)
         # add response format
@@ -174,8 +173,9 @@ class LastFM:
         return self.connect(url, session)
 
     def get( self, params, session ):
+        app = base64.b64decode(STATUS)[::-1]
         # create request url
-        url = APIURL + '?method=' + params[0] + '&' + params[2] + '=' + params[1].replace(' ', '%20') + '&api_key=' + APIKEY + '&format=json'
+        url = APIURL + '?method=' + params[0] + '&' + params[2] + '=' + params[1].replace(' ', '%20') + '&api_key=' + ''.join([app[48:64], app[16:32]]) + '&format=json'
         log('list url %s' % url, session)
         return self.connect(url, session)
 

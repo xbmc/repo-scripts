@@ -9,12 +9,13 @@
 # *  GNU General Public License for more details.
 # *
 # *  You should have received a copy of the GNU General Public License
-# *  along with XBMC; see the file COPYING.  If not, write to
+# *  along with Kodi; see the file COPYING.  If not, write to
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
 
 from loveban import LoveBan
 from utils import *
+from helpers import *
 
 SESSION = 'scrobbler'
 
@@ -110,7 +111,7 @@ class Main:
             # evaluate error response
             if code == 9:
                 # inavlid session key response, drop the key
-                log('drop session key')
+                log('drop session key', SESSION)
                 drop_sesskey()
             return
         else:
@@ -121,10 +122,10 @@ class Main:
         # scrobble track
         log('scrobbling', SESSION)
         # check the backlog
-        if len(self.queue) > 500:
+        if len(self.queue) > 250:
             # something is wrong, reset the queue
             self.queue = []
-            log('error: queue exceeded 1000 items', SESSION)
+            log('error: queue exceeded 250 items', SESSION)
             return
         # we are allowed to submit max 50 tracks in one go
         submitlist = self.queue[:50]
@@ -148,10 +149,10 @@ class Main:
                 # item does not qualify for a scrobble
                 unqualified.append(item)
             count += 1
+        # remove tracks from the queue that don't qualify
+        self._remove_invalid(unqualified)
         # check if we have any valid tracks to submit
         if not data:
-            # remove tracks from the queue that don't qualify
-            self._remove_invalid(unqualified)
             # sync queue to disk
             log('save file to disk', SESSION)
             write_file(self.file, self.queue)
@@ -160,9 +161,8 @@ class Main:
         data['sk'] = self.sesskey
         # connect to last.fm
         result = lastfm.post(data, SESSION)
+        # in case we don't get a response
         if not result:
-            # remove tracks from the queue that don't qualify
-            self._remove_invalid(unqualified)
             # sync queue to disk
             log('save file to disk', SESSION)
             write_file(self.file, self.queue)
@@ -181,22 +181,13 @@ class Main:
                 # inavlid session key response, drop the new key
                 log('drop session key', SESSION)               
                 drop_sesskey()
-                # remove tracks from the queue that don't qualify
-                self._remove_invalid(unqualified)
             # flush the queue unless it's a temp error on last.fm side
             elif not (code == 11 or code == 16):
                 self.queue = []
-            else:
-                # remove tracks from the queue that don't qualify
-                self._remove_invalid(unqualified)
         else:
             log('Last.fm returned an unknown scrobble response', SESSION)
             # unknown error. flush the queue
             self.queue = []
-        # check if there's anything left in the queue to scrobble (if we started with more than 50 tracks)
-        if self.queue:
-            log('tracks left to scrobble', SESSION)
-            self._lastfm_scrobble( tstamp )
         # sync queue to disk
         log('save file to disk', SESSION)
         write_file(self.file, self.queue)
@@ -218,33 +209,23 @@ class MyPlayer(xbmc.Player):
         self.songs   = kwargs['songs']
         self.radio   = kwargs['radio']
         self.Audio   = False
-        self.Count   = 0
 
     def onPlayBackStarted( self ):
         # only do something if we're playing audio and user has enabled it in settings
         if self.isPlayingAudio() and self.sesskey and self.user and self.pwd and (self.radio or self.songs):
             # we need to keep track of this bool for stopped/ended notifications
             self.Audio = True
-            # keep track of onPlayBackStarted events http://trac.xbmc.org/ticket/13064
-            self.Count += 1
-            log('onPlayBackStarted: %i' % self.Count, SESSION)
+            log('onPlayBackStarted', SESSION)
             # tags are not available instantly and we don't what to announce right away as the user might be skipping through the songs
             xbmc.sleep(500)
             # don't announce if the user already skipped to the next track or stopped playing audio
-            if self.Count == 1 and self.isPlayingAudio():
-                # reset counter
-                self.Count = 0
+            if self.isPlayingAudio():
                 # get tags
                 tags = self._get_tags()
-
                 # check if we have anything to submit
                 if tags:
                     # announce song
                      self.action(tags)
-            elif self.Count != 1:
-                # multiple onPlayBackStarted events occurred, only act on the last one
-                log('ignoring onPlayBackStarted %i event' % self.Count, SESSION)
-                self.Count -= 1
 
     def onPlayBackEnded( self ):
         # ignore onPlayBackEnded notifications from the video player
@@ -278,25 +259,45 @@ class MyPlayer(xbmc.Player):
         streamid = '' # deprecated
         path      = self.getPlayingFile().decode("utf-8")
         timestamp = int(time.time())
-        # check if user is listening to online radio
-        if path.startswith('http://') or path.startswith('rtmp://'):
-            user = '0'
-        else:
+        if is_local(path):
             user = '1'
+        else:
+            user = '0'
+        log('song scrobbling enabled: ' + str(self.songs), SESSION)
+        log('radio scrobbling enabled: ' + str(self.radio), SESSION)
+        log('artist: ' + artist, SESSION)
+        log('title: ' + title, SESSION)
+        log('path: ' + path, SESSION)
+        log('user flag: ' + user, SESSION)
         # streaming radio of provides both artistname and songtitle as one label
         if title and not artist:
             try:
                 artist = title.split(' - ')[0]
                 title = title.split(' - ')[1]
+                log('extracted artist: ' + artist, SESSION)
+                log('extracted title: ' + title, SESSION)
             except:
+                log('failed to extract artist from title', SESSION)
                 pass
-        # make sure we have artist and trackname, check user settings if we should submit this track
-        if artist and title and ((user == '0' and self.radio) or (user == '1' and self.songs)):
+        # make sure we have artist and trackname
+        if artist and title:
+            # check user settings to determine if we should submit this track
+            if user == '1' and not self.songs:
+                # user is listening to local source, but songs setting is disabled
+                log('user settings prohibit us from scrobbling local tracks', SESSION)
+                return None
+            elif user == '0' and not self.radio:
+                # user is listening to remote source, but the radio setting is disabled
+                log('user settings prohibit us from scrobbling online streaming radio', SESSION)
+                return None
+            # previous clauses did not return, so we have either a local play with the songs setting enabled, or a remote play with the radio setting enabled,
+            # and therefore can scrobble
             tracktags = dict(artist=artist, album=album, title=title, duration=duration, track=track, mbid=mbid, path=path, timestamp=timestamp, streamid=streamid, user=user)
             log('tracktags: %s' % tracktags, SESSION)
             return tracktags
+
         else:
-            log('user settings prohibits us from submission', SESSION)
+            log('cannot scrobble track with no artist and track information', SESSION)
             return None
 
 class MyMonitor(xbmc.Monitor):

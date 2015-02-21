@@ -1,3 +1,15 @@
+v0.1.0
+- new release
+- fixed potential loop
+- only analyze http(s)/rtmp streams
+- fixes for local path detection
+- remove old workaround
+- add more logging
+- update language files from Transifex
+- add better support for streaming radio
+- add missing dependency
+- kodi name change
+
 v0.0.4
 - better support for online radio
 
