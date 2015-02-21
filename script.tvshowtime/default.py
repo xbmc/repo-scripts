@@ -6,8 +6,11 @@ import re
 import sys
 import threading
 import xbmc
+import xbmcvfs
+import xbmcgui
 import xbmcaddon
 import unicodedata
+import json
 
 __addon__         = xbmcaddon.Addon()
 __cwd__           = __addon__.getAddonInfo('path')
@@ -20,6 +23,7 @@ __resource__      = xbmc.translatePath(__resource_path__).decode('utf-8')
 
 from resources.lib.tvshowtime import FindEpisode
 from resources.lib.tvshowtime import MarkAsWatched
+from resources.lib.tvshowtime import MarkAsUnWatched
 from resources.lib.tvshowtime import GetUserInformations
 
 class Monitor(xbmc.Monitor):
@@ -28,9 +32,98 @@ class Monitor(xbmc.Monitor):
         self.action = kwargs['action']
 
     def onSettingsChanged( self ):
-        log('#DEBUG# onSettingsChanged')
-        Player()._reset()
+        log('onSettingsChanged')
         self.action()
+        
+    def onNotification(self, sender, method, data):
+        log('onNotification')
+        log('method=%s' % method)
+        if (method == 'Player.OnPlay'):
+            log('Player.OnPlay')
+            response = json.loads(data) 
+            log('%s' % response)
+            if response.get('item').get('type') == 'episode':
+                xbmc_id = response.get('item').get('id')
+                item = self.getEpisodeTVDB(xbmc_id)    
+                log('showtitle=%s' % item['showtitle'])
+                log('season=%s' % item['season'])
+                log('episode=%s' % item['episode'])
+                if len(item['showtitle']) > 0 and item['season'] > 0 and item['episode'] > 0:                   
+                    player.filename = '%s.S%sE%s' % (formatName(item['showtitle']), item['season'], item['episode'])
+                    log('tvshowtitle=%s' % player.filename)
+                    player.episode = FindEpisode(player.token, player.filename)
+                    log('episode.is_found=%s' % player.episode.is_found)
+                    if player.episode.is_found:
+                        if player.notifications:            
+                            notif('%s %s %sx%s' % (__language__(32904), player.episode.showname, player.episode.season_number, player.episode.number), time=2500)
+                    else:
+                        if player.notifications:
+                            notif(__language__(32905), time=2500)
+                else:
+                    if player.notifications:
+                        notif(__language__(32905), time=2500)
+        if (method == 'VideoLibrary.OnUpdate'):
+            log('VideoLibrary.OnUpdate')
+            response = json.loads(data) 
+            log('%s' % response)
+            if response.get('item').get('type') == 'episode':
+                xbmc_id = response.get('item').get('id')
+                playcount = response.get('playcount') 
+                log('playcount=%s' % playcount)
+                item = self.getEpisodeTVDB(xbmc_id)    
+                log('showtitle=%s' % item['showtitle'])
+                log('season=%s' % item['season'])
+                log('episode=%s' % item['episode'])
+                log('playcount=%s' % playcount)
+                if len(item['showtitle']) > 0 and item['season'] > 0 and item['episode'] > 0:
+                    self.filename = '%s.S%sE%s' % (formatName(item['showtitle']), item['season'], item['episode'])
+                    log('tvshowtitle=%s' % self.filename)
+                    self.episode = FindEpisode(player.token, self.filename)
+                    log('episode.is_found=%s' % self.episode.is_found)
+                    if self.episode.is_found:
+                        if playcount is 1:
+                            log('MarkAsWatched(*, %s, %s, %s)' % (self.filename, player.facebook, player.twitter))
+                            checkin = MarkAsWatched(player.token, self.filename, player.facebook, player.twitter)
+                            log('checkin.is_marked:=%s' % checkin.is_marked)
+                            if checkin.is_marked:
+                                if player.notifications:
+                                    notif('%s %s %sx%s' % (__language__(32906), self.episode.showname, self.episode.season_number, self.episode.number), time=2500)
+                                else:
+                                    if player.notifications:
+                                        notif(__language__(32907), time=2500)
+                        if playcount is 0:
+                            log('MarkAsUnWatched(*, %s)' % (self.filename))
+                            checkin = MarkAsUnWatched(player.token, self.filename)
+                            log('checkin.is_unmarked:=%s' % checkin.is_unmarked)
+                            if checkin.is_unmarked:
+                                if player.notifications:
+                                    notif('%s %s %sx%s' % (__language__(32908), self.episode.showname, self.episode.season_number, self.episode.number), time=2500)
+                                else:
+                                    if player.notifications:
+                                        notif(__language__(32907), time=2500)
+
+    def getEpisodeTVDB(self, xbmc_id):
+        rpccmd = {'jsonrpc': '2.0', 'method': 'VideoLibrary.GetEpisodeDetails', 'params': {"episodeid": int(xbmc_id), 'properties': ['season', 'episode', 'tvshowid', 'showtitle']}, 'id': 1}
+        rpccmd = json.dumps(rpccmd)
+        result = xbmc.executeJSONRPC(rpccmd)
+        result = json.loads(result)
+        
+        try:
+            item = {}
+            item['season'] = result['result']['episodedetails']['season']
+            item['tvshowid'] = result['result']['episodedetails']['tvshowid']
+            item['episode'] = result['result']['episodedetails']['episode']
+            item['showtitle'] = result['result']['episodedetails']['showtitle']
+            return item
+        except:
+            return False
+            
+    def getAllEpisodes(self, xbmc_id):
+        rpccmd = {'jsonrpc': '2.0', 'method': 'VideoLibrary.GetEpisodes', 'params': {"tvshowid": int(xbmc_id), 'properties': ['season', 'episode', 'showtitle', 'playcount']}, 'id': 1}
+        rpccmd = json.dumps(rpccmd)
+        result = xbmc.executeJSONRPC(rpccmd)
+        result = json.loads(result)
+        return result
 
 class Player(xbmc.Player):
 
@@ -41,122 +134,28 @@ class Player(xbmc.Player):
         self.facebook = __addon__.getSetting('facebook')
         self.twitter = __addon__.getSetting('twitter')
         self.notifications = __addon__.getSetting('notifications')
-        self.tvst = self._loginTVST()
-        if not self.tvst.is_connected:
+        if self.token is '':
+            log(__language__(32901))
+            notif(__language__(32901), time=2500)
             return
-        self.showid = self.episode = self.title = self.season = None
-        self._totalTime = 999999
-        self._lastPos = 0
-        self._min_percent = int(__addon__.getSetting('watched-percent'))
-        self._tracker = None
-        self._playbackLock = threading.Event()
+        self.user = self._GetUser()
+        if not self.user.is_authenticated:
+            return
         self._monitor = Monitor(action = self._reset)
+        log('Player - monitor')
         
     def _reset(self):
-        self._tearDown()
         self.__init__()
-        
-    def _trackPosition(self):
-        while self._playbackLock.isSet() and not xbmc.abortRequested:
-            try:
-                self._lastPos = self.getTime()
-            except:
-                self._playbackLock.clear()
-            if self._totalTime > 0:
-                actual_percent = (self._lastPos/self._totalTime)*100
-                log('#DEBUG# actual_percent=%s' % actual_percent)
-                if (actual_percent >= self._min_percent):
-                    log('#DEBUG# episode.is_found=%s' % self.episode.is_found)
-                    if self.episode.is_found:        
-                        checkin = MarkAsWatched(self.token, self.filename, __addon__.getSetting('facebook'), __addon__.getSetting('twitter'))
-                        log('#DEBUG# checkin.is_marked:=%s' % checkin.is_marked)
-                        if checkin.is_marked:
-                            if self.notifications:
-                                notif('%s %s S%sE%s' % (__language__(32906), self.episode.showname, formatNumber(self.episode.season_number), formatNumber(self.episode.number)), time=2500)
-                        else:
-                            if self.notifications:
-                                notif(__language__(32907), time=2500)
-            
-                    self._tearDown()
-            xbmc.sleep(250)
 
-    def _setUp(self):
-        self._playbackLock.set()
-        self._tracker = threading.Thread(target=self._trackPosition)
-
-    def _tearDown(self):
-        if hasattr(self, '_playbackLock'):
-            self._playbackLock.clear()
-        self._monitor = None
-        if not hasattr(self, '_tracker'):
-            return
-        if self._tracker is None:
-            return
-        #if self._tracker.isAlive():
-        #    self._tracker.join()
-        self._tracker = None
-
-    def _loginTVST(self):
-        log('#DEBUG# _loginTVST')
-        if self.token is '':
-            notif(__language__(32901), time=2500)
-            return None
-        tvst = GetUserInformations(self.token)
-        log('#DEBUG# tvst.is_connected=%s' % tvst.is_connected)
-        if tvst.is_connected:
+    def _GetUser(self):
+        log('_GetUser')
+        user = GetUserInformations(self.token)
+        if user.is_authenticated:
             if self.notifications:
-                notif('%s %s' % (__language__(32902), tvst.username), time=2500)
+                notif('%s %s' % (__language__(32902), user.username), time=2500)
         else:
             notif(__language__(32903), time=2500)
-            self._tearDown()
-        return tvst
-
-    def onPlayBackStarted(self):
-        log('#DEBUG# onPlayBackStarted')
-        self._setUp()
-        self._totalTime = self.getTotalTime()
-        self._tracker.start()
-    	  
-        filename_full_path = self.getPlayingFile().decode('utf-8')
-    	  
-        if _is_excluded(filename_full_path):
-            self._tearDown()
-            return
-        	   
-        self.filename = os.path.basename(filename_full_path)
-        log('#DEBUG# episode=%s' % self.filename)
-        self.episode = FindEpisode(self.token, self.filename)
-        log('#DEBUG# episode.is_found=%s' % self.episode.is_found)
-        if not self.episode.is_found:
-            tvshowtitle = xbmc.getInfoLabel("VideoPlayer.TVshowtitle")
-            season = str(xbmc.getInfoLabel("VideoPlayer.Season"))
-            episode = str(xbmc.getInfoLabel("VideoPlayer.Episode"))
-            if len(tvshowtitle) > 0 and len(season) >0 and len(episode) > 0:
-                self.filename = '%s.S%sE%s' % (formatName(tvshowtitle), season, episode)
-                log('#DEBUG# episode=%s' % self.filename)
-                self.episode = FindEpisode(self.token, self.filename)
-                log('#DEBUG# episode.is_found=%s' % self.episode.is_found)
-    
-        if self.episode.is_found:
-            if self.notifications:            
-                notif('%s %s S%sE%s' % (__language__(32904), self.episode.showname, formatNumber(self.episode.season_number), formatNumber(self.episode.number)), time=2500)
-        else:
-            if self.notifications:
-                notif(__language__(32905), time=2500)
-            self._tearDown()
-            return
-
-    def onPlayBackStopped(self):
-        log('#DEBUG# onPlayBackStopped')
-        self.onPlayBackEnded()
-
-    def onQueueNextItem(self):
-        log('#DEBUG# onQueueNextItem')
-        self.onPlayBackEnded()
-
-    def onPlayBackEnded(self):
-        log('#DEBUG# onPlayBackEnded')
-        self._tearDown()
+        return user
 
 def formatNumber(number):
     if len(number) < 2:
@@ -169,25 +168,26 @@ def formatName(filename):
     return filename	 
     
 def notif(msg, time=5000):
-    notif_msg = "%s, %s, %i, %s" % ('TVShow Time', msg, time, __icon__)
-    xbmc.executebuiltin("XBMC.Notification(%s)" % notif_msg.encode('utf-8'))
+    xbmcgui.Dialog().notification(encode(__scriptname__), encode(msg), time=time, icon=__icon__)
 
 def log(msg):
-    xbmc.log("### [%s] - %s" % (__scriptname__, msg.encode('utf-8'), ),
-            level=xbmc.LOGDEBUG)
+    xbmc.log("### [%s] - %s" % (__scriptname__, encode(msg), ),
+            level=xbmc.LOGDEBUG) #100 #xbmc.LOGDEBUG
 
-def _is_excluded(filename):
-    log("_is_excluded(): Check if '%s' is a URL." % filename)
-    excluded_protocols = ["pvr://", "http://", "https://"]
-    return any(protocol in filename for protocol in excluded_protocols)
+def encode(string):
+    result = ''
+    try:
+        result = string.encode('UTF-8','replace')
+    except UnicodeDecodeError:
+        result = 'Unicode Error'
+    return result
 
 if ( __name__ == "__main__" ):
     player = Player()
-    log( "[%s] - Version: %s Started" % (__scriptname__, __version__))
-
+    log("[%s] - Version: %s Started" % (__scriptname__, __version__))
     while not xbmc.abortRequested:
         xbmc.sleep(100)
-
-    player._tearDown()
+    player._monitor = None
+    log("sys.exit(0)")
     sys.exit(0)
-
+    

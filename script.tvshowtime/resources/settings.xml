@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
    <category label="32001">
-	   <setting type="lsep" label="32101" />
-	   <setting id="token" type="text" label="32102" default="" />
-	   <setting id="watched-percent" type="labelenum" label="32103" default="3" values="85|90|95|100" />
-	   <setting id="facebook" type="bool" label="32104" default="true" />
-	   <setting id="twitter" type="bool" label="32105" default="true" />
+	   <setting id="token" type="text" label="token" default="" visible="false" />
+	   <setting type="lsep" label="32301" />
+	   <setting id="facebook" type="bool" label="32302" default="true" />
+	   <setting id="twitter" type="bool" label="32303" default="true" />
+	   <setting type="lsep" label="32401" />
+	   <setting id="notifications" type="bool" label="32402" default="true" />
 	</category>
-   <category label="32002">
-	   <setting id="notifications" type="bool" label="32201" default="true" />
-   </category>
 </settings>

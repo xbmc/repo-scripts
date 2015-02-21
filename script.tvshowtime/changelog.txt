@@ -1,5 +1,33 @@
+1.0.14
+change the way to authenticate due to api changes
+enhancements
+
+1.0.13
+add a program to manual sync whole/part of the library 
+
+1.0.12
+clean the code
+add compile.sh
+
+1.0.11
+revert the way to authenticate due to api changes
+
+1.0.10
+put the log to xbmc.LOGDEBUG
+
+1.0.9
+clean the code
+
+1.0.8
+bug fixes
+change the way of checking an episode
+
+1.0.7
+add the function to mark and unmark from the contextual menu of an episode
+change the way to authenticate
+
 1.0.6
-Cleaned code
+clean the code
 
 1.0.5
 add a second way to find the episode on TVST
@@ -10,7 +38,7 @@ add debug log
 bug fixes
 
 1.0.3
-changed the way of checking episode
+change the way of checking an episode
 
 1.0.2
 fix error when episode not found
@@ -20,4 +48,4 @@ add onQueueNextItem function
 add format number function to SXXEYY
 
 1.0.0
-First version
+first version

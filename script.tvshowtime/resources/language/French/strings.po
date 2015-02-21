@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TVShow Time
 # Addon id: script.tvshowtime
-# Addon version: 1.0.0
+# Addon version: 1.0.7
 # Addon Provider: CXII
 msgid ""
 msgstr ""
@@ -19,55 +19,51 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "TVShow Time"
-msgstr ""
+msgstr "TVShow Time"
 
 msgctxt "Addon Description"
 msgid "Automatically set episodes as watched on TVShowTime.com"
-msgstr "Marque automatiquement les épisodes comme lu sur TVShowTime.com"
+msgstr "Marque automatiquement les épisodes comme lus sur TVShowTime.com"
 
 msgctxt "#32001"
 msgid "General"
 msgstr "Général"
 
-msgctxt "#32002"
-msgid "Notifications"
-msgstr "Notifications"
-
-msgctxt "#32101"
-msgid "Get Your token at bit.ly/TVShowTime"
-msgstr "Récupérez votre jeton sur bit.ly/TVShowTime"
-
 msgctxt "#32102"
 msgid "Token"
 msgstr "Jeton"
 
-msgctxt "#32103"
-msgid "Mark as watched from"
-msgstr "Marquez comme lu à partir de"
+msgctxt "#32301"
+msgid "Social networks"
+msgstr "Réseaux sociaux"
 
-msgctxt "#32104"
+msgctxt "#32302"
 msgid "Publish on Facebook"
-msgstr "Plublier sur Facebook"
+msgstr "Publier sur Facebook"
 
-msgctxt "#32105"
+msgctxt "#32303"
 msgid "Publish on Twitter"
 msgstr "Publier sur Twitter"
 
-msgctxt "#32201"
+msgctxt "#32401"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32402"
 msgid "Show notifications"
 msgstr "Afficher les notifications"
 
 msgctxt "#32901"
-msgid "Please set your Token"
-msgstr "veuillez configurer votre jeton"
+msgid "Please login"
+msgstr "Veuillez vous connecter"
 
 msgctxt "#32902"
 msgid "Welcome"
 msgstr "Bienvenue"
 
 msgctxt "#32903"
-msgid "Token error - Please try again"
-msgstr "Erreur de jeton - Veuillez réessayer"
+msgid "Error - Please check your authentication informations"
+msgstr "Erreur - Veuillez vérifier vos données d'authentification"
 
 msgctxt "#32904"
 msgid "Watching"
@@ -79,8 +75,80 @@ msgstr "Épisode non trouvé"
 
 msgctxt "#32906"
 msgid "Watched"
-msgstr "Regardé"
+msgstr "Vu"
 
 msgctxt "#32907"
-msgid "Error 325324"
-msgstr "Erreur 325324"
+msgid "Error 32907"
+msgstr "Erreur 32907"
+
+msgctxt "#32908"
+msgid "Unwatched"
+msgstr "Non vu"
+
+msgctxt "#33801"
+msgid "Login"
+msgstr "Se connecter"
+
+msgctxt "#33802"
+msgid "Logout"
+msgstr "Se déconnecter"
+
+msgctxt "#33803"
+msgid "Synchronization"
+msgstr "Synchronisation"
+
+msgctxt "#33804"
+msgid "Error 33804"
+msgstr "Erreur 33804"
+
+msgctxt "#33805"
+msgid "Logout ?"
+msgstr "Se déconnecter ?"
+
+msgctxt "#33806"
+msgid "Go to"
+msgstr "Allez à"
+
+msgctxt "#33807"
+msgid "Enter the code"
+msgstr "Entrez le code"
+
+msgctxt "#33808"
+msgid "You can now use TVShow Time Add-on"
+msgstr "Vous pouvez dès à présent utiliser le plugin TVShow Time"
+
+msgctxt "#33809"
+msgid "Awaiting authorization"
+msgstr "Dans l'attente de l'autorisation"
+
+msgctxt "#33901"
+msgid "In which way ?"
+msgstr "Dans quel sens ?"
+
+msgctxt "#33902"
+msgid "Whole TVShows"
+msgstr "Toutes les séries"
+
+msgctxt "#33903"
+msgid "What sync ?"
+msgstr "Que synchroniser ?"
+
+msgctxt "#33904"
+msgid "Whole Seasons"
+msgstr "Toutes les saisons"
+
+msgctxt "#33905"
+msgid "What season ?"
+msgstr "Quelle saison ?"
+
+msgctxt "#33906"
+msgid "Initialising"
+msgstr "Initialisation"
+
+msgctxt "#33907"
+msgid "Finished"
+msgstr "Terminé"
+
+msgctxt "#33908"
+msgid "Sleep 60 secs."
+msgstr "Pause de 60 secs."

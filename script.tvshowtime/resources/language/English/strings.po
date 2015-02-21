@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: TVShow Time
 # Addon id: script.tvshowtime
-# Addon version: 1.0.0
+# Addon version: 1.0.7
 # Addon Provider: CXII
 msgid ""
 msgstr ""
@@ -29,36 +29,32 @@ msgctxt "#32001"
 msgid "General"
 msgstr ""
 
-msgctxt "#32002"
-msgid "Notifications"
-msgstr ""
-
-msgctxt "#32101"
-msgid "Get Your token at bit.ly/TVShowTime"
-msgstr ""
-
 msgctxt "#32102"
 msgid "Token"
 msgstr ""
 
-msgctxt "#32103"
-msgid "Mark as watched from"
+msgctxt "#32301"
+msgid "Social networks"
 msgstr ""
 
-msgctxt "#32104"
+msgctxt "#32302"
 msgid "Publish on Facebook"
 msgstr ""
 
-msgctxt "#32105"
+msgctxt "#32303"
 msgid "Publish on Twitter"
 msgstr ""
 
-msgctxt "#32201"
+msgctxt "#32401"
+msgid "Notifications"
+msgstr ""
+
+msgctxt "#32402"
 msgid "Show notifications"
 msgstr ""
 
 msgctxt "#32901"
-msgid "Please set your Token"
+msgid "Please login"
 msgstr ""
 
 msgctxt "#32902"
@@ -66,7 +62,7 @@ msgid "Welcome"
 msgstr ""
 
 msgctxt "#32903"
-msgid "Token error - Please try again"
+msgid "Error - Please check your authentication informations"
 msgstr ""
 
 msgctxt "#32904"
@@ -82,5 +78,77 @@ msgid "Watched"
 msgstr ""
 
 msgctxt "#32907"
-msgid "Error 325324"
+msgid "Error 32907"
+msgstr ""
+
+msgctxt "#32908"
+msgid "Unwatched"
+msgstr ""
+
+msgctxt "#33801"
+msgid "Login"
+msgstr ""
+
+msgctxt "#33802"
+msgid "Logout"
+msgstr ""
+
+msgctxt "#33803"
+msgid "Synchronization"
+msgstr ""
+
+msgctxt "#33804"
+msgid "Error 33804"
+msgstr ""
+
+msgctxt "#33805"
+msgid "Logout ?"
+msgstr ""
+
+msgctxt "#33806"
+msgid "Go to"
+msgstr ""
+
+msgctxt "#33807"
+msgid "Enter the code"
+msgstr ""
+
+msgctxt "#33808"
+msgid "You can now use TVShow Time Add-on"
+msgstr ""
+
+msgctxt "#33809"
+msgid "Awaiting authorization"
+msgstr ""
+
+msgctxt "#33901"
+msgid "In which way ?"
+msgstr ""
+
+msgctxt "#33902"
+msgid "Whole TVShows"
+msgstr ""
+
+msgctxt "#33903"
+msgid "What sync ?"
+msgstr ""
+
+msgctxt "#33904"
+msgid "Whole Seasons"
+msgstr ""
+
+msgctxt "#33905"
+msgid "What season ?"
+msgstr ""
+
+msgctxt "#33906"
+msgid "Initialising"
+msgstr ""
+
+msgctxt "#33907"
+msgid "Finished"
+msgstr ""
+
+msgctxt "#33908"
+msgid "Sleep 60 secs."
 msgstr ""
