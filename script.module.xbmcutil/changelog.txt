@@ -1,0 +1,63 @@
+[B]Version 3.0.0[/B] 2015-02-20
+- Disabled VeeHD Video Resolver
+- Fixed bug with dailymotion Resolver
+- Fixed small bug with video been set to true even if the listitem is a folder
+- Fixed a long lasting bug with urlhandler not passing the User-Agent to the server. (More of a work arround)
+- Fixed a possibility of a crash when passing a non str object to plugin.log
+- Fixed bug with youtube api not piacking up duration
+- Fixed some small comment typos
+- Added the support for the possibility for each addon to return a generator instead of a list
+- Added code to auto select sort methods when no sort methods are specified
+- Added code to guess content type when no content type is specified
+- Added a fallback to use json instead of simplejson if simplejson is not found
+- Added icon.png image of "python module"
+- Added support to use setArt api method from gothom
+- Added some new shortcut methods like setPlot and setGenre
+- Added the option to tell the source scraper to skip searching a page for urls and just work with the passed in url
+- Added try catch to view mode setting
+- Changed Youtube code to use the new V3 API
+- Changed some name of methods to make more sense
+- Changed the auto listitem folders to add itself to the extra items. e.g. Next_Page
+- Changed notifications dialog to use the new api method from gothom
+- Changed notifications dialog to use icon of the current addon
+- Changed youtube scraper to return a generator instead of a list
+- Changed urlresolver to be optional
+- Changed log output to print the current addon id as well
+- Changed how setting of the view mode is done. Way more usefull and far more dynamic
+- Removed unneeded vimeo.png and added recent.png
+- Removed download support, Not realy needed anymore
+- Restructured how cleanup of objects is handled
+- Restructured PlayMedia class to be more flexable
+- Update search.png
+
+[B]Version 2.1.0[/B] 2014-06-30
+- Update Strings to strings.po
+- Added UnitTests
+- Added stripEnity to urlopeners
+- Added with steatment support to urlhandler
+- Added cleanup method that runs ones every 28 Days to cleanup stail url cache
+- Added a option to enable debug output when testing addons
+- Added unittest cases for all methods and function
+- Removed unnecessary cache validation checks
+- Reworked debug messages and methods
+- Reworked the vimeo url scraper
+- Fix bug with youtube video id parser
+- And a lot more small improvements
+
+[B]Version 2.0.4[/B]
+- Changed the Video Context menu to not replace items
+- Fixed bug with XBMC unexpectedly returning unicode instead of a string
+- General unicode fixes
+
+[B]Version 2.0.3[/B]
+- Added getLabel method to custom listitem that returns unicode Label
+- Fixed very small bug with youtube channel video scraper sudio name
+- Fixed small bug where addons whould crash if profile path don't exist
+
+[B]Version 2.0.2[/B]
+- Added Full Unicode Support
+- Added Search with Save Searches Support
+- Replace all print steatment with xbmc.log
+
+[B]Version 2.0.1[/B]
+- Initial Version

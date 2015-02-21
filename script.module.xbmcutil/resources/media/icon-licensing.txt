@@ -1,0 +1,29 @@
+youtube.png | youtubeplaylist.png
+Author: Dakirby309
+License: Free for non commercial use
+https://www.iconfinder.com/icons/100115/alt_youtube_icon#size=256
+
+vimeo.png
+Author: suraj vibhute
+License: Creative Commons Attribution
+http://findicons.com/icon/450573/vimeo#
+
+downloads.png
+Author: Oliver Scholtz
+License: Free for non commercial use
+https://www.iconfinder.com/icons/23493/arrow_down_download_orange_icon#size=128
+
+next.png
+Oliver Scholtz
+License: Free for non commercial use
+https://www.iconfinder.com/icons/23498/go_next_old_icon#size=256
+
+search.png
+Frank Souza
+License: Free for non commercial use
+https://www.iconfinder.com/icons/79859/find_gtk_icon#size=256
+
+recent.png
+Oliver Frank Souza
+License: Free for non commercial use 
+https://www.iconfinder.com/icons/79728/folder_recent_icon#size=128

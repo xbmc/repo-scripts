@@ -1,0 +1,139 @@
+# Kodi Media Center language file
+# Addon Name: Kodiutil
+# Addon id: script.module.xbmcutil
+# Addon Provider: willforde
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-05-28 21:10+0000\n"
+"PO-Revision-Date: 2014-05-28 21:10+0000\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+###################################
+# Error Codes: 32800 - 32899 #
+###################################
+
+# URLHandler Errors
+
+msgctxt "#32801"
+msgid "Request Timed Out"
+msgstr ""
+
+msgctxt "#32802"
+msgid "Redirect Failed"
+msgstr ""
+
+msgctxt "#32803"
+msgid "Cache Failure"
+msgstr ""
+
+msgctxt "#32804"
+msgid "Decompression Error"
+msgstr ""
+
+msgctxt "#32805"
+msgid "Unicode Decoding Failed"
+msgstr ""
+
+msgctxt "#32806"
+msgid "Login Failed"
+msgstr ""
+
+msgctxt "#32807"
+msgid "URLError"
+msgstr ""
+
+msgctxt "#32808"
+msgid "Cache Error"
+msgstr ""
+
+# VideoResolver Errors
+
+msgctxt "#32821"
+msgid "Parser Error"
+msgstr ""
+
+msgctxt "#32822"
+msgid "Youtube Error"
+msgstr ""
+
+msgctxt "#32823"
+msgid "Resolver Error"
+msgstr ""
+
+msgctxt "#32824"
+msgid "ScraperError"
+msgstr ""
+
+msgctxt "#32825"
+msgid "No Supported Source Found"
+msgstr ""
+
+msgctxt "#32826"
+msgid "HTMLParser Failed"
+msgstr ""
+
+msgctxt "#32827"
+msgid "No Video Source Found"
+msgstr ""
+
+# Common Errors
+
+msgctxt "#32851"
+msgid "Unexpected Error"
+msgstr ""
+
+msgctxt "#32852"
+msgid "Unicode Error"
+msgstr ""
+
+msgctxt "#32853"
+msgid "An Unexpected Error Occurred"
+msgstr ""
+
+msgctxt "#32854"
+msgid "Invalid Media"
+msgstr ""
+
+
+#####################################
+# Context Menu Codes: 32900 - 32919 #
+#####################################
+
+msgctxt "#32901"
+msgid "Youtube Channel"
+msgstr ""
+
+msgctxt "#32904"
+msgid "Related Videos"
+msgstr ""
+
+
+#######################################
+# Common Setting Codes: 32920 - 32939 #
+#######################################
+
+msgctxt "#32921"
+msgid "Set Folder View Mode"
+msgstr ""
+
+msgctxt "#32922"
+msgid "Set Video View Mode"
+msgstr ""
+
+
+#####################################
+# Common Addon Codes: 32940 - 32969 #
+#####################################
+
+msgctxt "#32941"
+msgid "Most Recent"
+msgstr ""
