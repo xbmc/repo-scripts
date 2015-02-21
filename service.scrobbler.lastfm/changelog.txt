@@ -1,3 +1,9 @@
+v1.1.0
+- new release
+
+v1.0.6
+- fixed potential loop
+
 v1.0.5
 - only analyze http(s)/rtmp streams
 

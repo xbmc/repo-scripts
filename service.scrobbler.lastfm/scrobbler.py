@@ -110,7 +110,7 @@ class Main:
             # evaluate error response
             if code == 9:
                 # inavlid session key response, drop the key
-                log('drop session key')
+                log('drop session key', SESSION)
                 drop_sesskey()
             return
         else:
@@ -121,10 +121,10 @@ class Main:
         # scrobble track
         log('scrobbling', SESSION)
         # check the backlog
-        if len(self.queue) > 500:
+        if len(self.queue) > 250:
             # something is wrong, reset the queue
             self.queue = []
-            log('error: queue exceeded 1000 items', SESSION)
+            log('error: queue exceeded 250 items', SESSION)
             return
         # we are allowed to submit max 50 tracks in one go
         submitlist = self.queue[:50]
@@ -148,10 +148,10 @@ class Main:
                 # item does not qualify for a scrobble
                 unqualified.append(item)
             count += 1
+        # remove tracks from the queue that don't qualify
+        self._remove_invalid(unqualified)
         # check if we have any valid tracks to submit
         if not data:
-            # remove tracks from the queue that don't qualify
-            self._remove_invalid(unqualified)
             # sync queue to disk
             log('save file to disk', SESSION)
             write_file(self.file, self.queue)
@@ -160,9 +160,8 @@ class Main:
         data['sk'] = self.sesskey
         # connect to last.fm
         result = lastfm.post(data, SESSION)
+        # in case we don't get a response
         if not result:
-            # remove tracks from the queue that don't qualify
-            self._remove_invalid(unqualified)
             # sync queue to disk
             log('save file to disk', SESSION)
             write_file(self.file, self.queue)
@@ -181,22 +180,13 @@ class Main:
                 # inavlid session key response, drop the new key
                 log('drop session key', SESSION)               
                 drop_sesskey()
-                # remove tracks from the queue that don't qualify
-                self._remove_invalid(unqualified)
             # flush the queue unless it's a temp error on last.fm side
             elif not (code == 11 or code == 16):
                 self.queue = []
-            else:
-                # remove tracks from the queue that don't qualify
-                self._remove_invalid(unqualified)
         else:
             log('Last.fm returned an unknown scrobble response', SESSION)
             # unknown error. flush the queue
             self.queue = []
-        # check if there's anything left in the queue to scrobble (if we started with more than 50 tracks)
-        if self.queue:
-            log('tracks left to scrobble', SESSION)
-            self._lastfm_scrobble( tstamp )
         # sync queue to disk
         log('save file to disk', SESSION)
         write_file(self.file, self.queue)
@@ -268,12 +258,10 @@ class MyPlayer(xbmc.Player):
         streamid = '' # deprecated
         path      = self.getPlayingFile().decode("utf-8")
         timestamp = int(time.time())
-
         if is_local(path):
             user = '1'
         else:
             user = '0'
-
         log('song scrobbling enabled: ' + str(self.songs), SESSION)
         log('radio scrobbling enabled: ' + str(self.radio), SESSION)
         log('artist: ' + artist, SESSION)
@@ -301,7 +289,6 @@ class MyPlayer(xbmc.Player):
                 # user is listening to remote source, but the radio setting is disabled
                 log('user settings prohibit us from scrobbling online streaming radio', SESSION)
                 return None
-
             # previous clauses did not return, so we have either a local play with the songs setting enabled, or a remote play with the radio setting enabled,
             # and therefore can scrobble
             tracktags = dict(artist=artist, album=album, title=title, duration=duration, track=track, mbid=mbid, path=path, timestamp=timestamp, streamid=streamid, user=user)
