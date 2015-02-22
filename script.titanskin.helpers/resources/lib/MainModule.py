@@ -14,6 +14,8 @@ import random
 
 doDebugLog = False
 
+__language__ = xbmc.getLocalizedString
+
 def logMsg(msg, level = 1):
     if doDebugLog == True:
         xbmc.log(msg)
@@ -87,7 +89,47 @@ def setWidget(containerID):
 
     else:
         win.clearProperty("activewidget")
+    
+    #also set spotlightwidget for enhancedhomescreen
+    if xbmc.getCondVisibility("Skin.String(GadgetRows, enhanced)"):
+        setSpotlightWidget(containerID)
 
+def setSpotlightWidget(containerID):
+    win = xbmcgui.Window( 10000 )
+    win.clearProperty("spotlightwidgetcontent")
+    skinStringContent = ""
+    customWidget = False
+    
+    # workaround for numeric labels (get translated by xbmc)
+    skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(submenuVisibility)")
+    skinString = skinString.replace("num-","")
+    if xbmc.getCondVisibility("Skin.String(spotlightwidget-" + skinString + ')'):
+        skinStringContent = xbmc.getInfoLabel("Skin.String(spotlightwidget-" + skinString + ')')
+    
+    # normal method by getting the defaultID
+    if skinStringContent == "":
+        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
+        if xbmc.getCondVisibility("Skin.String(spotlightwidget-" + skinString + ')'):
+            skinStringContent = xbmc.getInfoLabel("Skin.String(spotlightwidget-" + skinString + ')')
+       
+    if skinStringContent != "":
+ 
+        if "$INFO" in skinStringContent:
+            skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
+            skinStringContent = skinStringContent.replace(")]", "")
+            skinStringContent = win.getProperty(skinStringContent)
+        if "Activate" in skinStringContent:
+            skinStringContent = skinStringContent.split(",",1)[1]
+            skinStringContent = skinStringContent.replace(",return","")
+            skinStringContent = skinStringContent.replace(")","")
+            skinStringContent = skinStringContent.replace("\"","")
+
+        win.setProperty("spotlightwidgetcontent", skinStringContent)
+
+    else:
+        win.clearProperty("spotlightwidgetcontent")        
+        
+        
 def setCustomContent(skinString):
     #legacy
     win = xbmcgui.Window( 10000 )
@@ -201,100 +243,34 @@ def addShortcutWorkAround():
     win = xbmcgui.Window( 10000 )
     xbmc.executebuiltin('SendClick(301)')
     if xbmc.getCondVisibility("System.Platform.Windows"):
-        time.sleep(1)
+        xbmc.sleep(1000)
     else:
-        time.sleep(2)
+        xbmc.sleep(2000)
     xbmc.executebuiltin('SendClick(401)')
 
-
-def UpdateBackgrounds():
-    win = xbmcgui.Window( 10000 )
-    #get in progress movies
-    try:
-        media_array = getJSON('VideoLibrary.GetMovies','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
-        if(media_array != None and media_array.has_key('movies')):
-            inprogressMovies = list()
-            for aMovie in media_array['movies']:
-                if aMovie.has_key('art'):
-                    if aMovie['art'].has_key('fanart'):
-                        inprogressMovies.append(aMovie['art']['fanart'])
-            
-            random.shuffle(inprogressMovies)
-            win.setProperty("InProgressMovieBackground",inprogressMovies[0])
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning inprogress movies background")
-
-    #get recent and unwatched movies
-    try:
-        media_array = getJSON('VideoLibrary.GetRecentlyAddedMovies','{"properties":["title","art","playcount"], "limits": {"end":50} }')
-        if(media_array != None and media_array.has_key('movies')):
-            recentMovies = list()
-            unwatchedMovies = list()
-            for aMovie in media_array['movies']:
-               
-                if aMovie.has_key('art'): 
-                    if aMovie['art'].has_key('fanart'):
-                        recentMovies.append(aMovie['art']['fanart'])
-                        if aMovie['playcount'] == 0:
-                            unwatchedMovies.append(aMovie['art']['fanart'])
-
-            random.shuffle(recentMovies)
-            win.setProperty("RecentMovieBackground",recentMovies[0])
-            random.shuffle(unwatchedMovies)
-            win.setProperty("UnwatchedMovieBackground",unwatchedMovies[0])
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning recent movies background")
-
-        
-    #get in progress tvshows
-    try:
-        media_array = getJSON('VideoLibrary.GetTVShows','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
-        if(media_array != None and media_array.has_key('tvshows')):
-            inprogressShows = list()    
-            for aShow in media_array['tvshows']:
-                if aShow.has_key('art'):
-                    if aShow['art'].has_key('fanart'):
-                        inprogressShows.append(aShow['art']['fanart'])
-        
-            random.shuffle(inprogressShows)
-            win.setProperty("InProgressShowsBackground",inprogressShows[0])
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning inprogress tvshows background")
-
-
-    #get recent episodes
-    try:
-        media_array = getJSON('VideoLibrary.GetRecentlyAddedEpisodes','{"properties":["showtitle","art","file","plot","season","episode"], "limits": {"end":10} }')
-        if(media_array != None and media_array.has_key('episodes')):
-            recentEpisodes = list()
-            for aShow in media_array['episodes']:
-               
-                if aShow.has_key('art'):
-                    if aShow['art'].has_key('tvshow.fanart'):
-                        recentEpisodes.append(aMovie['art']['fanart'])
-
-            random.shuffle(recentEpisodes)
-            win.setProperty("RecentEpisodesBackground",recentEpisodes[0])
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning recent episodes background")
-
 def checkExtraFanArt():
-    from datetime import datetime, timedelta, time
-    win = xbmcgui.Window( 10000 )
+        
     lastPath = None
-                
-    while (xbmc.abortRequested == False and xbmc.getCondVisibility("Window.IsActive(myvideonav.xml)") and not xbmc.Player().isPlaying()):
-
-        try:
-            efaPath = None
-            efaFound = False
-            liArt = None
-            
-            liPath = xbmc.getInfoLabel("ListItem.Path")
-            liArt = xbmc.getInfoLabel("ListItem.Art(fanart)")
-            if liArt == None:
+    win = xbmcgui.Window( 10000 )
+    
+    try:
+        efaPath = None
+        efaFound = False
+        liArt = None
+        liPath = xbmc.getInfoLabel("ListItem.Path")
+        containerPath = xbmc.getInfoLabel("Container.FolderPath")
+        
+        if (liPath != None and (xbmc.getCondVisibility("Container.Content(movies)") or xbmc.getCondVisibility("Container.Content(seasons)") or xbmc.getCondVisibility("Container.Content(episodes)") or xbmc.getCondVisibility("Container.Content(tvshows)")) and not "videodb:" in liPath):
+                           
+            if xbmc.getCondVisibility("Container.Content(episodes)"):
                 liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
-            if ((not "plugin" in liPath) and (liArt != None) and (not "plugin" in xbmc.getInfoLabel("Container.FolderPath")) and (not "addons:" in xbmc.getInfoLabel("Container.FolderPath")) and (not "addons:" in liPath)):
+            
+            # do not set extra fanart for virtuals
+            if (("plugin://" in liPath) or ("addon://" in liPath) or ("sources" in liPath) or ("plugin://" in containerPath) or ("sources://" in containerPath) or ("plugin://" in containerPath)):
+                win.clearProperty("ExtraFanArtPath")
+                lastPath = None
+            else:
+
                 if xbmcvfs.exists(liPath + "extrafanart/"):
                     efaPath = liPath + "extrafanart/"
                 else:
@@ -316,21 +292,135 @@ def checkExtraFanArt():
                 else:
                     win.clearProperty("ExtraFanArtPath")
                     lastPath = None
+        else:
+            win.clearProperty("ExtraFanArtPath")
+            lastPath = None
+    
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
+          
+def focusEpisode():
+    
+    totalItems = 0
+    curView = xbmc.getInfoLabel("Container.Viewmode") 
+    viewId = int(getViewId(curView))
+    
+    wid = xbmcgui.getCurrentWindowId()
+    window = xbmcgui.Window( wid )        
+    control = window.getControl(int(viewId))
+    totalItems = int(xbmc.getInfoLabel("Container.NumItems"))
+        
+    if (xbmc.getCondVisibility("Container.SortDirection(ascending)")):
+        curItem = 1
+        control.selectItem(0)
+        xbmc.sleep(250)
+        while (xbmc.getCondVisibility("Container.Content(episodes)") and totalItems >= curItem):
+            if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png" and xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label") != ".."):
+                if curItem != 0:
+                    control.selectItem(curItem)
+                break
             else:
-                win.clearProperty("ExtraFanArtPath")
-                lastPath = None
-        
-        except:
-            xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
+                curItem += 1
+    
+    elif (xbmc.getCondVisibility("Container.SortDirection(descending)")):
+        curItem = totalItems
+        control.selectItem(totalItems)
+        xbmc.sleep(250)
+        while (xbmc.getCondVisibility("Container.Content(episodes)") and curItem != 0):
             
-        xbmc.sleep(1000)
-    
-    win.clearProperty("ExtraFanArtPath")    
+            if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png"):
+                control.selectItem(curItem-1)
+                break
+            else:    
+                curItem -= 1
+            
 
+def getViewId(viewString):
+    # get all views from views-file
+    viewId = None
+    skin_view_file = os.path.join(xbmc.translatePath('special://skin/extras'), "views.xml")
+    tree = etree.parse(skin_view_file)
+    root = tree.getroot()
+    for view in root.findall('view'):
+        if viewString == __language__(int(view.attrib['languageid'])):
+            viewId=view.attrib['value']
     
+    return viewId
     
+
+def UpdateBackgrounds():
+    win = xbmcgui.Window( 10000 )
+    media_array = None
+    #get in progress movies
+    try:
+        media_array = getJSON('VideoLibrary.GetMovies','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
+        if(media_array != None and media_array.has_key('movies')):
+            inprogressMovies = list()
+            for aMovie in media_array['movies']:
+                if aMovie.has_key('art'):
+                    if aMovie['art'].has_key('fanart'):
+                        inprogressMovies.append(aMovie['art']['fanart'])
+            
+            random.shuffle(inprogressMovies)
+            win.setProperty("InProgressMovieBackground",inprogressMovies[0])
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning inprogress movies background")
     
+    media_array = None
+    #get recent and unwatched movies
+    try:
+        media_array = getJSON('VideoLibrary.GetRecentlyAddedMovies','{"properties":["title","art","playcount"], "limits": {"end":50} }')
+        if(media_array != None and media_array.has_key('movies')):
+            recentMovies = list()
+            unwatchedMovies = list()
+            for aMovie in media_array['movies']:
+               
+                if aMovie.has_key('art'): 
+                    if aMovie['art'].has_key('fanart'):
+                        recentMovies.append(aMovie['art']['fanart'])
+                        if aMovie['playcount'] == 0:
+                            unwatchedMovies.append(aMovie['art']['fanart'])
+
+            random.shuffle(recentMovies)
+            win.setProperty("RecentMovieBackground",recentMovies[0])
+            random.shuffle(unwatchedMovies)
+            win.setProperty("UnwatchedMovieBackground",unwatchedMovies[0])
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning recent movies background")
+
+    media_array = None    
+    #get in progress tvshows
+    try:
+        media_array = getJSON('VideoLibrary.GetTVShows','{"properties":["title","art"],"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}}')
+        if(media_array != None and media_array.has_key('tvshows')):
+            inprogressShows = list()    
+            for aShow in media_array['tvshows']:
+                if aShow.has_key('art'):
+                    if aShow['art'].has_key('fanart'):
+                        inprogressShows.append(aShow['art']['fanart'])
         
+            random.shuffle(inprogressShows)
+            win.setProperty("InProgressShowsBackground",inprogressShows[0])
+    except:
+        xbmc.log("Titan skin helper: error occurred in assigning inprogress tvshows background")
+
+    media_array = None
+    #get recent episodes
+    try:
+        media_array = getJSON('VideoLibrary.GetRecentlyAddedEpisodes','{"properties":["showtitle","art","file","plot","season","episode"], "limits": {"end":10} }')
+        if(media_array != None and media_array.has_key('episodes')):
+            recentEpisodes = list()
+            for aShow in media_array['episodes']:
+                if aShow.has_key('art'):
+                    if aShow['art'].has_key('tvshow.fanart'):
+                        recentEpisodes.append(aShow['art']['tvshow.fanart'])
+
+            random.shuffle(recentEpisodes)
+            win.setProperty("RecentEpisodesBackground",recentEpisodes[0])
+    except Exception, msg:
+        xbmc.log("Titan skin helper: error occurred in assigning recent episodes background")
+        xbmc.log(str(msg))
+
                 
 def getJSON(method,params):
     json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')
@@ -343,7 +433,6 @@ def getJSON(method,params):
         utils.log("no result " + str(jsonobject),xbmc.LOGDEBUG)
         return None
 
-
     
 def setView(containerType,viewId):
 
@@ -351,22 +440,8 @@ def setView(containerType,viewId):
         win = xbmcgui.Window( 10000 )
 
         curView = xbmc.getInfoLabel("Container.Viewmode")
+        viewId = getViewId(curView)
         
-        # get all views from views-file
-        skin_view_file = os.path.join(xbmc.translatePath('special://skin'), "views.xml")
-        skin_view_file_alt = os.path.join(xbmc.translatePath('special://skin/extras'), "views.xml")
-        if xbmcvfs.exists(skin_view_file_alt):
-            skin_view_file = skin_view_file_alt
-        try:
-            tree = etree.parse(skin_view_file)
-        except:           
-            sys.exit()
-        
-        root = tree.getroot()
-        
-        for view in root.findall('view'):
-            if curView == view.attrib['id']:
-                viewId=view.attrib['value']
     else:
         viewId=viewId    
 
@@ -382,9 +457,28 @@ def setView(containerType,viewId):
         elif containerType=="EPISODES":
             __settings__.setSetting('viewIdEpisodesNew', viewId)
         else:
-            __settings__.setSetting('viewIdActivity', viewId) 
+            __settings__.setSetting('viewIdActivity', viewId)
+            
+    if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
+        __settings__ = xbmcaddon.Addon(id='plugin.video.xbmb3c')
+        if __settings__.getSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType) != "disabled":
+            __settings__.setSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType, viewId)
 
-
+def checkNotifications(notificationType):
+    
+    if notificationType == "weather":
+        win = xbmcgui.Window(12600)
+        if (win.getProperty("Alerts.RSS") != "" and win.getProperty("Current.Condition") != ""):
+            dialog = xbmcgui.Dialog()
+            dialog.notification(xbmc.getLocalizedString(31294), win.getProperty("Alerts"), xbmcgui.NOTIFICATION_WARNING, 8000)
+    
+    if notificationType == "nextaired":
+        win = xbmcgui.Window(10000)
+        if (win.getProperty("NextAired.TodayShow") != ""):
+            dialog = xbmcgui.Dialog()
+            dialog.notification(xbmc.getLocalizedString(31295), win.getProperty("NextAired.TodayShow"), xbmcgui.NOTIFICATION_WARNING, 8000)    
+            
+            
 def showSubmenu(showOrHide,doFocus):
 
     win = xbmcgui.Window( 10000 )

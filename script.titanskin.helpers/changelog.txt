@@ -1,3 +1,7 @@
+1.6.7
+- added support for weather and nextaired alerts
+- added support to focus next unwatched episodes
+- moved some of the code to service
 1.6.0
 - speed optimizations
 - custom method for extrafanart detection

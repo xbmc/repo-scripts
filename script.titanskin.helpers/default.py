@@ -7,7 +7,7 @@ BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'li
 sys.path.append(BASE_RESOURCE_PATH)
 
 import MainModule
-
+import BackupRestore
 
 #script init
 action = ""
@@ -51,8 +51,6 @@ elif action == "SETWIDGET":
     MainModule.setWidget(argument1)
 elif action == "UPDATEPLEXLINKS":   
     MainModule.updatePlexlinks()
-elif action == "UPDATEPLEXBACKGROUNDS":     
-    MainModule.updatePlexBackgrounds()
 elif action == "SHOWWIDGET":   
     MainModule.showWidget()
 elif action == "SETCUSTOM":
@@ -61,7 +59,11 @@ elif action == "DEFAULTSETTINGS":
     MainModule.defaultSettings()
 elif action == "MUSICSEARCH":
     MainModule.musicSearch()
-elif action == "UPDATEBACKGROUNDS":
-    MainModule.UpdateBackgrounds()
-elif action == "CHECKEXTRAFANART":
-    MainModule.checkExtraFanArt()
+elif action == "BACKUP":
+    BackupRestore.backup()
+elif action == "RESTORE":
+    BackupRestore.restore()
+elif action == "RESET":
+    BackupRestore.reset()
+elif action == "CHECKNOTIFICATIONS":
+    MainModule.checkNotifications(argument1)

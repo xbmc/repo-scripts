@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-	<addon id="script.titanskin.helpers" name="Titan MediaBrowser helper script" version="1.6.0" provider-name="marcelveldt">
+	<addon id="script.titanskin.helpers" name="Titan MediaBrowser helper script" version="1.6.7" provider-name="marcelveldt">
+	
 	<requires>
-	<import addon="xbmc.python" version="2.13.0"/>
+		<import addon="xbmc.python" version="2.13.0"/>
+		<import addon="xbmc.addon" version="12.0.0"/>
 	</requires>
-	<extension point="xbmc.python.library" library="default.py">
-	<provides></provides>
-	</extension>
+	
+	<extension point="xbmc.python.library" library="default.py" />
+	<extension library="service.py" point="xbmc.service" start="login" />
+	
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Titan skin helper script</summary>
 		<description lang="en">Helper script for the Titan MediaBrowser skin</description>
