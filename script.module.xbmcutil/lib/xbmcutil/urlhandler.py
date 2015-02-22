@@ -489,6 +489,7 @@ class CachedResponse(StringIO.StringIO):
 		# Save Headers to Cache
 		outputFile = open(cachePath % u"headers", "wb")
 		headers = response.info()
+		if "Content-Encoding" in headers: del headers["Content-Encoding"]
 		headers["X-Local-Cache"] = "HIT"
 		headers["X-Location"] = response.url
 		try: outputFile.write(str(headers))
@@ -508,6 +509,12 @@ class CachedResponse(StringIO.StringIO):
 		# Read in Both Body and Header Responses
 		StringIO.StringIO.__init__(self, self.readFile(cachePath % u"body"))
 		self.headers = self.loadHeaders(cachePath)
+		
+		# Fix Bug for Now. Can be Removed after 2015-03-24
+		if "X-Cache" in self.headers:
+			del self.headers["X-Cache"]
+			self.headers["X-Local-Cache"] = "HIT"
+			plugin.debug("Replaceing X-Cache with X-Local-Cache")
 		
 		# Set Response Codes
 		self.url = self.headers["X-Location"]

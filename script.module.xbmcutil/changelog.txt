@@ -1,3 +1,6 @@
+[B]Version 3.0.1[/B] 2015-02-22
+- Fix bug with old cache that is still valid causing a decompression error
+
 [B]Version 3.0.0[/B] 2015-02-20
 - Disabled VeeHD Video Resolver
 - Fixed bug with dailymotion Resolver

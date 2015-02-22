@@ -195,7 +195,7 @@ class Info(Addon, Dialog):
 	_suppressErrors = False
 	_traceback = None
 	_xbmcvfs = None
-	_devmode = True
+	_devmode = False
 	_profile = None
 	_gprofile = None
 	
