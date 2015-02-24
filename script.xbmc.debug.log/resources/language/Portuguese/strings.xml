@@ -5,18 +5,19 @@
 
 <strings>
     <!-- Dialog strings -->
-    <string id="30001">Enviado com o ID: %s</string>
-    <string id="30002">URL: %s</string>
-    <string id="30003">Não será enviado email (nenhum email introduzido)</string>
-    <string id="30004">O email será enviado para: %s</string>
+    <string id="30000">Quer enviar "%s"?</string>
+    <string id="30001">Enviado com a ID: [B]%s[/B]</string>
+    <string id="30002">URL: [B]%s[/B]</string>
+    <string id="30003">Não será enviado nenhum e-mail (não está configurado nenhum e-mail)</string>
+    <string id="30004">O e-mail será enviado para: %s</string>
 
     <!-- Settings -->
-    <string id="31000">Endereço de email</string>
-    <string id="31001">Ignorar sempre xbmc.old.log (logs do acesso anterior)</string>
+    <string id="31000">Endereço de e-mail</string>
+    <string id="31001">Ignorar sempre Kodi.old.log (registos do acesso anterior)</string>
 
     <!-- Usage help strings in settings dialog -->
-    <string id="32000">Este addon envia os seus logs para xbmclogs.com</string>
-    <string id="32001">Se pretende receber um email contendo ligações</string>
-    <string id="32002">para os logs que enviou, tem de introduzir um endereço email.</string>
-    <string id="32004">Logs de depuração podem conter nomes de utilizador e palavras-passe!</string>
+    <string id="32000">Este add-on envia os seus registos para Kodilogs.com</string>
+    <string id="32001">Se pretender receber um e-mail com os endereços directos</string>
+    <string id="32002">para os registos que enviou, tem de introduzir um endereço de e-mail</string>
+    <string id="32004">Os registos de depuração poderão conter nomes de utilizador e palavras-passe!</string>
 </strings>

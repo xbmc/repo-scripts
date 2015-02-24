@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import urllib
@@ -19,8 +20,10 @@ STRINGS = {
     'no_email_set': 30003,
     'email_sent': 30004
 }
-UPLOAD_LINK = 'http://xbmclogs.com/show.php?id=%s'
-UPLOAD_URL = 'http://xbmclogs.com/'
+BASE_URL = 'http://xbmclogs.com'
+UPLOAD_LINK = BASE_URL + '/%s'
+UPLOAD_URL = BASE_URL + '/api/json/create'
+EMAIL_URL = BASE_URL + '/xbmc-addon.php'
 
 REPLACES = (
     ('//.+?:.+?@', '//USER:PASSWORD@'),
@@ -68,20 +71,25 @@ class LogUploader(object):
             file_content = re.sub(pattern, repl, file_content)
         self.__log('starting upload "%s"...' % filepath)
         post_dict = {
-            'paste_data': file_content,
-            'api_submit': True,
-            'mode': 'xml',
-            'paste_lang': 'xbmc'
+            'data': file_content,
+            'project': 'www',
+            'language': 'text',
+            'expire': 1209600,
         }
-        post_data = urllib.urlencode(post_dict)
-        headers = {'User-Agent': '%s-%s' % (ADDON_TITLE, ADDON_VERSION)}
+        post_data = json.dumps(post_dict)
+        headers = {
+            'User-Agent': '%s-%s' % (ADDON_TITLE, ADDON_VERSION),
+            'Content-Type': 'application/json',
+        }
         req = urllib2.Request(UPLOAD_URL, post_data, headers)
         response = urllib2.urlopen(req).read()
         self.__log('upload done.')
-        r_id = re.compile('<id>([0-9]+)</id>', re.DOTALL)
-        m_id = re.search(r_id, response)
-        if m_id:
-            paste_id = m_id.group(1)
+        try:
+            response_data = json.loads(response)
+        except:
+            response_data = None
+        if response_data and response_data.get('result', {}).get('id'):
+            paste_id = response_data['result']['id']
             self.__log('paste_id=%s' % paste_id)
             return paste_id
         else:
@@ -104,7 +112,6 @@ class LogUploader(object):
         return Dialog.ok(ADDON_TITLE, msg1, '', msg2)
 
     def report_mail(self, mail_address, uploaded_logs):
-        url = 'http://xbmclogs.com/xbmc-addon.php'
         if not mail_address:
             raise Exception('No Email set!')
         post_dict = {'email': mail_address}
@@ -118,7 +125,7 @@ class LogUploader(object):
         post_data = urllib.urlencode(post_dict)
         if DEBUG:
             print post_data
-        req = urllib2.Request(url, post_data)
+        req = urllib2.Request(EMAIL_URL, post_data)
         response = urllib2.urlopen(req).read()
         if DEBUG:
             print response

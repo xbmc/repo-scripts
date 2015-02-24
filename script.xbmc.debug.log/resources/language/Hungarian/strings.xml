@@ -5,6 +5,7 @@
 
 <strings>
     <!-- Dialog strings -->
+    <string id="30000">Fel akarja tölteni a "%s" fájlt?</string>
     <string id="30001">Feltöltve %s azonosítóval.</string>
     <string id="30002">Webcím: %s</string>
     <string id="30003">Nem fogunk e-mailt küldeni. (Nem adott meg e-mail címet)</string>
@@ -12,10 +13,10 @@
 
     <!-- Settings -->
     <string id="31000">E-mail cím</string>
-    <string id="31001">Mindig ugorja át az xbmc.old.log-ot (az előző futás naplóját)</string>
+    <string id="31001">Mindig ugorja át az Kodi.old.log-ot (az előző futás naplóját)</string>
 
     <!-- Usage help strings in settings dialog -->
-    <string id="32000">Ez a kiegészítő feltölti a naplófájljait az xbmclogs.com-ra</string>
+    <string id="32000">Ez a kiegészítő feltölti a naplófájljait az Kodilogs.com-ra</string>
     <string id="32001">Amennyiben szeretne e-mailt kapni a feltöltött naplóira mutató linkekkel,</string>
     <string id="32002">be kell állítania egy e-mail címet.</string>
     <string id="32004">A hibakereső (debug) naplók felhasználóneveket illetve jelszavakat is tartalmazhatnak!</string>

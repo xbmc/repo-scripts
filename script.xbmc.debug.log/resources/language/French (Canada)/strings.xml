@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- French (Canada) language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Dialog strings -->
+    <string id="30000">Voulez-vous téléverser « %s »?</string>
+    <string id="30001">Téléversé avec l'ID : [B]%S[/B]</string>
+    <string id="30002">URL : [B]%s[/B]</string>
+    <string id="30003">Aucun courriel ne sera envoyé (aucun courriel n'est configuré)</string>
+    <string id="30004">Un courriel sera envoyé à : %s</string>
+
+    <!-- Settings -->
+    <string id="31000">Adresse courriel</string>
+    <string id="31001">Toujours ignorer Kodi.old.log (journal d'une exécution précédente)</string>
+
+    <!-- Usage help strings in settings dialog -->
+    <string id="32000">Cet addiciel téléverse vos journaux vers Kodilogs.com</string>
+    <string id="32001">Si vous voulez recevoir un courriel contenant des liens directs</string>
+    <string id="32002">vers vos journaux téléversés, vous devez définir votre adresse courriel</string>
+    <string id="32004">Les journaux de débogage peuvent contenir des noms d'utilisateur et des mots de passe!</string>
+</strings>
