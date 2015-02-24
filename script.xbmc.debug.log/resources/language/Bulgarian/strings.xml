@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Bulgarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/bg/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Dialog strings -->
+    <string id="30000">Желаете ли да качите "%s"?</string>
+    <string id="30001">Качен е с ID: [B]%s[/B]</string>
+    <string id="30002">URL адрес: [B]%s[/B]</string>
+    <string id="30003">Няма да се праща имейл (не е настроен)</string>
+    <string id="30004">Ще бъде изпращан имейл до: %s</string>
+
+    <!-- Settings -->
+    <string id="31000">Имейл адрес</string>
+    <string id="31001">Винаги пропускай "Kodi.old.log" (дневника от предходното стартиране)</string>
+
+    <!-- Usage help strings in settings dialog -->
+    <string id="32000">Добавката качва вашите дневници в www.Kodilogs.com</string>
+    <string id="32001">Ако желаете да получавате имейл с директни препратки</string>
+    <string id="32002">към качените си дневници трябва да въведете имейл адреса си.</string>
+    <string id="32004">Дебъг дневниците може да съдържат вашите потребителски имена и пароли!</string>
+</strings>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Czech language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/cs/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <!-- Dialog strings -->
+    <string id="30000">Chcete nahrát "%s"?</string>
+    <string id="30001">Nahráho s ID: [B]%s[/B]</string>
+    <string id="30002">URL: [B]%s[/B]</string>
+    <string id="30003">Nebude poslán žádný mail (žádný email v konfiguraci)</string>
+    <string id="30004">Email bude zaslán na: %s</string>
+
+    <!-- Settings -->
+    <string id="31000">Emailová adresa</string>
+    <string id="31001">Vždy přeskoč starý log (log z minulého spuštění)</string>
+
+    <!-- Usage help strings in settings dialog -->
+    <string id="32000">Tento dopněk nahraje vaše logy na </string>
+    <string id="32001">Jestliže chcete obdržet email s přímými odkazy na</string>
+    <string id="32002">vámi nahrané logy musíte zadat svoji emailovou adresu</string>
+    <string id="32004">Ladící logy mohou obsahovat uživatelská jména a hesla!</string>
+</strings>

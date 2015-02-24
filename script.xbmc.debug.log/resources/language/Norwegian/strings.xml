@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Norwegian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/no/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30001">Lastet opp med ID: [B]%s[/B]</string>
+    <string id="30002">URL: [B]%s[/B]</string>
+    <string id="30003">Ingen epost vil bli sent (Ingen epost er oppgitt)</string>
+    <string id="30004">Epost vil bli sent til: %s</string>
+
+    <!-- Settings -->
+    <string id="31000">Epostadresse</string>
+    <string id="31001">Hopp alltid over Kodilogs.com (logg fra sist kjøring)</string>
+
+    <!-- Usage help strings in settings dialog -->
+    <string id="32000">Dette tillegget laster opp dine logger til Kodilogs.com</string>
+    <string id="32001">Hvis du ønsker å motta en epost som inneholder direktelenker</string>
+    <string id="32002">for å laste opp logger på du oppgi din epostadresse</string>
+    <string id="32004">Feilrettingslogger kan inneholde brukernavn og passord!</string>
+</strings>

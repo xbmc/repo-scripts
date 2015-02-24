@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hebrew language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/he/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30001">הועלה עם קוד זיהוי: [B]%s[/B]</string>
+    <string id="30002">כתובת: [B]%s[/B]</string>
+    <string id="30003">לא ישלח דואר (כתובת הדואר אינה מוגדרת)</string>
+    <string id="30004">דואר ישלח אל: %s</string>
+
+    <!-- Settings -->
+    <string id="31000">כתובת דואר</string>
+    <string id="31001">תמיד דלג על Kodi.old.log (יומן רישום מהפעלה קודמת)</string>
+
+    <!-- Usage help strings in settings dialog -->
+    <string id="32000">הרחבה זו תעלה את יומני הרישום שלך אל Kodilogs.com</string>
+    <string id="32001">אם ברצונך לקבל דואר עם קישורים</string>
+    <string id="32002">אל יומני הרישום שלך שהועלו עליך להגדיר כתובת דואר אלקטרוני</string>
+    <string id="32004">יתכן שיומני ניפוי שגיאות יכילו שמות משתמש וסיסמאות!</string>
+</strings>

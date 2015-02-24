@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Indonesian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/id/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30001">Diunggah dengan ID: [B]%s[/B]</string>
+    <string id="30002">URL: [B]%s[/B]</string>
+    <string id="30003">Tidak ada surel yang akan dikirim (Surel tidak dikonfigurasi)</string>
+    <string id="30004">Surel akan dikirim ke: %s</string>
+
+    <!-- Settings -->
+    <string id="31000">Alamat surel</string>
+    <string id="31001">Selalu lewati Kodi.old.log (log dari putaran sebelumnya)</string>
+
+    <!-- Usage help strings in settings dialog -->
+    <string id="32000">Addon ini mengunggah log Anda ke Kodilogs.com</string>
+    <string id="32001">Jika Anda ingin menerima surel berisi tautan langsung</string>
+    <string id="32002">menuju log yang Anda unggah maka Anda perlu mengatur alamat surel</string>
+    <string id="32004">Log Debug mungkin berisi nama pengguna atau kata sandi!</string>
+</strings>
