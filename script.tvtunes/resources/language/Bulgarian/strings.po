@@ -102,7 +102,7 @@ msgstr "Дебъгване"
 
 msgctxt "#32019"
 msgid "Enable debug logging"
-msgstr "Включи дебъг дневника"
+msgstr "Включи дебъг журнала"
 
 msgctxt "#32020"
 msgid "Show the TvTunes button on the Video Info screen"
@@ -218,7 +218,7 @@ msgstr "Папка"
 
 msgctxt "#32057"
 msgid "Fanart"
-msgstr "Фанарт"
+msgstr "Фен-арт"
 
 msgctxt "#32058"
 msgid "Thumbnail"
@@ -238,11 +238,11 @@ msgstr "Възпроизвеждай мелодии по време на скр�
 
 msgctxt "#32062"
 msgid "Fanart,Thumbnail,Cast"
-msgstr "Фанарт, Миниатюра, Участници"
+msgstr "Фен-арт, Миниатюра, Участници"
 
 msgctxt "#32063"
 msgid "Fanart,Thumbnail"
-msgstr "Фанарт, Миниатюра"
+msgstr "Фен-арт, Миниатюра"
 
 msgctxt "#32064"
 msgid "Dim Level"

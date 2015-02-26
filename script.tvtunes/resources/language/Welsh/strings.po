@@ -67,3 +67,7 @@ msgstr "Croes bylu"
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Ffilmiau"
+
+msgctxt "#32991"
+msgid "Playback"
+msgstr "Chwarae"
