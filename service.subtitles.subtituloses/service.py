@@ -156,6 +156,28 @@ if params['action'] == 'search':
   elif ( item['file_original_path'].find("stack://") > -1 ):
     stackPath = item['file_original_path'].split(" , ")
     item['file_original_path'] = stackPath[0][8:]
+
+  # required if tvshow is not indexed/recognized in library
+  if item['tvshow'] == "":  
+    log(__name__, "item %s" % item)
+    # replace dots with spaces in title
+    titulo = re.sub(r'\.', ' ', item['title'])
+    log(__name__, "title no dots: %s" % titulo)
+    mo = re.search(r'(.*)[sS](\d+)[eE](\d+)', titulo) #S01E02 like
+    if not mo:
+      mo = re.search(r'(.*)(\d\d)[xX](\d+)', titulo) # old 10x02 style
+    if not mo:
+      mo = re.search(r'(.*)(\d)[xX](\d+)', titulo) # old 1x02 style
+    if not mo:
+      mo = re.search(r'(.*) (\d+)(\d\d)', titulo) # 102 style 
+    # split title in tvshow, season and episode
+    if mo:
+      item['tvshow'] = mo.group(1)
+      item['season'] = mo.group(2)
+      item['episode'] = mo.group(3)
+      log(__name__, "item %s" % item)
+    else:
+      log(__name__, "could not parse tvshow name and episode number")
   
   Search(item)  
 

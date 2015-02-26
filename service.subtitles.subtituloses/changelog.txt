@@ -1,3 +1,8 @@
+0.0.5- Addon now maintained by m0r3 due to one year without fixing bugs
+     - Updated addon.xml
+     - Fixed an issue that prevent the plugin for working if tvshow is not listed properly in library.
+Now the plugin will detect this situation and parse filename to get the proper values. Suported formats are: S01e10 110 1x10
+
 0.0.4
 - Fixed problem that prevented spanish subtitles to be shown when latino subs were present
 

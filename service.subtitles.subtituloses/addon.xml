@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.subtitles.subtituloses"
        name="Subtitulos.es"
-       version="0.0.4"
-       provider-name="infinito">
+       version="0.0.5"
+       provider-name="m0r3">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
   </requires>
@@ -18,6 +18,6 @@
     <forum>http://forum.xbmc.org/showthread.php?tid=185685</forum>
     <website></website>
     <email></email>
-    <source>https://github.com/infinicode/service.subtitles.subtituloses</source> 
+    <source>https://github.com/m0r3/service.subtitles.subtituloses</source> 
   </extension>
 </addon>
