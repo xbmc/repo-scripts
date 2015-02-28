@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="resource.language.en_us"
-  version="1.0.1"
+  version="1.0.2"
   name="English (US)"
   provider-name="Team Kodi">
   <requires>
-    <import addon="xbmc.resource" version="1.0.0"/>
+    <import addon="kodi.resource" version="1.0.0"/>
   </requires>
   <extension
-    point="xbmc.resource.language"
+    point="kodi.resource.language"
     locale="en_US">
     <charsets>
       <gui>CP1252</gui>
