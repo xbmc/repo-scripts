@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<category label="30001">
-		<setting id="hostname"			type="text"		label="30011"	default=""		/>
-		<setting id="port"				type="number"	label="30012"	default="7072"	/>
-		<setting						type="lsep"		label="30013"					/>
-		<setting id="onstartup"			type="text"		label="30031"	default=""		/>
-		<setting id="onshutdown"		type="text"		label="30032"	default=""		/>
-		<setting id="onvideoplay"		type="text"		label="30033"	default=""		/>
-		<setting id="onvideopause"		type="text"		label="30034"	default=""		/>
-		<setting id="onvideostop"		type="text"		label="30035"	default=""		/>
-		<setting id="onaudioplay"		type="text"		label="30036"	default=""		/>
-		<setting id="onaudiopause"		type="text"		label="30037"	default=""		/>
-		<setting id="onaudiostop"		type="text"		label="30038"	default=""		/>
+		<setting id="endpointtype"		type="labelenum"	label="30010"	default="FHEM"	values="FHEM|CCU"	/>
+		<setting id="hostname"			type="text"			label="30011"	default=""							/>
+		<setting id="port"				type="number"		label="30012"	default="7072"	visible="eq(-2,0)"	/>
+		<setting						type="lsep"			label="30013"										/>
+		<setting id="onstartup"			type="text"			label="30031"	default=""		visible="eq(-4,0)"	/>
+		<setting id="onshutdown"		type="text"			label="30032"	default=""		visible="eq(-5,0)"	/>
+		<setting id="onvideoplay"		type="text"			label="30033"	default=""		visible="eq(-6,0)"	/>
+		<setting id="onvideopause"		type="text"			label="30034"	default=""		visible="eq(-7,0)"	/>
+		<setting id="onvideostop"		type="text"			label="30035"	default=""		visible="eq(-8,0)"	/>
+		<setting id="onaudioplay"		type="text"			label="30036"	default=""		visible="eq(-9,0)"	/>
+		<setting id="onaudiopause"		type="text"			label="30037"	default=""		visible="eq(-10,0)"	/>
+		<setting id="onaudiostop"		type="text"			label="30038"	default=""		visible="eq(-11,0)"	/>
+		<setting id="ccusystemvar"		type="text"			label="30039"	default=""		visible="eq(-12,1)"	/>
 	</category>
 	<category label="30002">
 		<setting id="daytimeenable"		type="bool"		label="30021"	default="false"	/>

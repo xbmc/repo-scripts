@@ -2,10 +2,10 @@
 <strings>
 	<string id="30001">Allgemein</string>
 	<string id="30002">Tagsüber</string>
-	<string id="30011">FHEM Host</string>
-	<string id="30012">FHEM Port</string>
+	<string id="30011">Host</string>
+	<string id="30012">Port</string>
 	<string id="30013">Aktionen</string>
-	<string id="30021">Tagesvariante aktivieren</string>
+	<string id="30021">Tagesvariante aktivieren (nur mit FHEM)</string>
 	<string id="30022">Von</string>
 	<string id="30023">Bis</string>
 	<string id="30031">XBMC gestartet</string>
@@ -16,4 +16,5 @@
 	<string id="30036">Audio gestartet</string>
 	<string id="30037">Audio in Pause</string>
 	<string id="30038">Audio gestoppt</string>
+	<string id="30039">Systemvariable</string>
 </strings>

@@ -18,6 +18,7 @@
 # -- Imports ------------------------------------------------
 import datetime,socket,subprocess,os
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon
+import httplib
 
 # -- Constants ----------------------------------------------
 ADDON_ID = 'service.fhemcinema'
@@ -53,7 +54,7 @@ class FhemHandler(xbmc.Player):
 				return nowTime >= t2 or nowTime <= t1
 		except Exception as e:
 			# this should not really happen...
-			xbmc.log('FHEM Cinema: Exception in isDayTime: '+str(e),xbmc.LOGERROR)
+			xbmc.log('Cinema: Exception in isDayTime: '+str(e),xbmc.LOGERROR)
 			return False
 
 	def getCommand(self,command):
@@ -62,6 +63,16 @@ class FhemHandler(xbmc.Player):
 				return settings.getSetting(command+'dt')
 		return settings.getSetting(command)
 
+	def SendCommand(self,command):
+		endpointtype=settings.getSetting('endpointtype')
+		if type(endpointtype) is str and endpointtype == "FHEM":
+			self.SendFHEM(self.getCommand(command))
+		elif type(endpointtype) is str and endpointtype == "CCU":
+			self.SendCCU(command)
+		else:
+			xbmc.log ('Endpoint type not supported!')
+
+
 	def SendFHEM(self,command=''):
 		if type(command) is str and len(command) > 0:
 			xbmc.log ('Sending command to FHEM: '+command)
@@ -69,6 +80,41 @@ class FhemHandler(xbmc.Player):
 			s.connect((settings.getSetting('hostname'), int(settings.getSetting('port'))))
 			s.send('\n{0}\nexit\n'.format(command))
 			s.close()
+
+	def SendCCU(self,command):
+		ccusystemvar=settings.getSetting('ccusystemvar')
+		if type(ccusystemvar) is str and len(ccusystemvar) > 0:
+			hostname = settings.getSetting('hostname')
+			xbmc.log ('Sending command to CCU '+hostname+': '+command)
+
+			if command == "onstartup":
+				state = 1
+			elif command == "onshutdown":
+				state = 2
+			elif command == "onaudioplay":
+				state = 3
+			elif command == "onvideoplay":
+				state = 4
+			elif command == "onaudiostop":
+				state = 5
+			elif command == "onvideostop":
+				state = 6
+			elif command == "onaudiopause":
+				state = 7
+			elif command == "onvideopause":
+				state = 8
+			else:
+				state = 0
+			connection = httplib.HTTPConnection(hostname,8181,timeout=10)
+			connection.connect();
+			connection.set_debuglevel(9);
+			params = 'v1=dom.GetObject(\"'+ccusystemvar+'\").State(\"' + str(state) + '\");';
+			connection.request("POST", "/test.exe", params);
+			response = connection.getresponse()
+			connection.close();
+			xbmc.log ( "CCU response code: "+str(response.status))
+		else:
+			xbmc.log ('No CCU Object configured')
 
 	def Run(self):
 		while(not xbmc.abortRequested):
@@ -80,44 +126,44 @@ class FhemHandler(xbmc.Player):
 			xbmc.sleep(1000)
 
 	def StartUp(self):
-		xbmc.log('Starting up FHEM Cinema...')
-		self.SendFHEM(self.getCommand('onstartup'))
+		xbmc.log('Starting up Cinema...')
+		self.SendCommand('onstartup')
 
 	def ShutDown(self):
-		self.SendFHEM(self.getCommand('onshutdown'))
-		xbmc.log('FHEM Cinema shut down')
+		self.SendCommand('onshutdown')
+		xbmc.log('Cinema shut down')
 
 	def onPlayBackStarted(self):
 		if xbmc.Player().isPlayingAudio():
-			self.SendFHEM(self.getCommand('onaudioplay'))
+			self.SendCommand('onaudioplay')
 		else:
 			self.isplayingvideo = True;
-			self.SendFHEM(self.getCommand('onvideoplay'))
+			self.SendCommand('onvideoplay')
 
 	def onPlayBackEnded(self):
 		if self.isplayingvideo:
-			self.SendFHEM(self.getCommand('onvideostop'))
+			self.SendCommand('onvideostop')
 		else:
-			self.SendFHEM(self.getCommand('onaudiostop'))
+			self.SendCommand('onaudiostop')
 
 	def onPlayBackStopped(self):
 		if self.isplayingvideo:
-			self.SendFHEM(self.getCommand('onvideostop'))
+			self.SendCommand('onvideostop')
 		else:
-			self.SendFHEM(self.getCommand('onaudiostop'))
+			self.SendCommand('onaudiostop')
 
 	def onPlayBackPaused(self):
 		if xbmc.Player().isPlayingAudio():
-			self.SendFHEM(self.getCommand('onaudiopause'))
+			self.SendCommand('onaudiopause')
 		else:
-			self.SendFHEM(self.getCommand('onvideopause'))
+			self.SendCommand('onvideopause')
 
 	def onPlayBackResumed(self):
 		if xbmc.Player().isPlayingAudio():
-			self.SendFHEM(self.getCommand('onaudioplay'))
+			self.SendCommand('onaudioplay')
 		else:
 			self.isplayingvideo = True;
-			self.SendFHEM(self.getCommand('onvideoplay'))
+			self.SendCommand('onvideoplay')
 
 # -- Main Code ----------------------------------------------
 handler=FhemHandler()
