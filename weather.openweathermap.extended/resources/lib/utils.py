@@ -1,4 +1,24 @@
 import math
+import xbmc, xbmcgui, xbmcaddon
+
+__addon__      = xbmcaddon.Addon('weather.openweathermap.extended')
+__addonid__    = __addon__.getAddonInfo('id')
+
+WEATHER_WINDOW = xbmcgui.Window(12600)
+DEBUG          = __addon__.getSetting('Debug')
+TEMPUNIT       = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
+SPEEDUNIT      = xbmc.getRegion('speedunit')
+
+
+def log(txt):
+    if DEBUG == 'true':
+        if isinstance (txt,str):
+            txt = txt.decode("utf-8")
+        message = u'%s: %s' % (__addonid__, txt)
+        xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+
+def set_property(name, value):
+    WEATHER_WINDOW.setProperty(name, value)
 
 #http://openweathermap.org/current#multi
         # xbmc lang name         # openweathermap code

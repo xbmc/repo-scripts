@@ -105,3 +105,7 @@ msgstr ""
 msgctxt "#32129"
 msgid "Enable logging"
 msgstr ""
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr ""

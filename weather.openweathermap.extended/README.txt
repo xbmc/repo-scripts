@@ -49,6 +49,8 @@ FORECAST
 Forecast.IsFetched
 Forecast.City
 Forecast.Country
+Forecast.Latitude
+Forecast.Longitude
 Forecast.Updated           (date and time the forecast was retrieved by openweathermap)
 
 
