@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="resource.language.sr_rs"
-  version="1.0.2"
+  version="1.0.3"
   name="Serbian (Cyrillic)"
   provider-name="Team Kodi">
   <requires>
@@ -15,7 +15,7 @@
       <subtitle>CP1250</subtitle>
     </charsets>
   </extension>
-  <extension point="xbmc.addon.metadata">
+  <extension point="kodi.addon.metadata">
     <summary lang="en">Serbian (Cyrillic) language pack</summary>
     <description lang="en">Serbian (Cyrillic) version of all texts used in Kodi.</description>
     <platform>all</platform>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="resource.language.en_gb"
-  version="1.0.2"
+  version="1.0.3"
   name="English"
   provider-name="Team Kodi">
   <requires>
@@ -18,7 +18,7 @@
       <token>The</token>
     </sorttokens>
   </extension>
-  <extension point="xbmc.addon.metadata">
+  <extension point="kodi.addon.metadata">
     <summary lang="en">English language pack</summary>
     <description lang="en">English version of all texts used in Kodi.</description>
     <disclaimer lang="en">English is the default language for Kodi, removing it may cause issues</disclaimer>
