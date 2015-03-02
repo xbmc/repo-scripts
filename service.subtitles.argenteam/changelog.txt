@@ -1,3 +1,8 @@
+0.9
+- Migrated to use the Argenteam API
+- Make the hearing impared flag to appear on subtitles that are CC
+- Fixed error when decompressing zip file
+
 0.6
 - Added language on addon.xml
 
