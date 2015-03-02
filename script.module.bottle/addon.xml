@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.bottle" name="Bottle" version="0.12.8" provider-name="Team Kodi">
+  <requires>
+    <import addon="xbmc.python" version="2.19.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="kodi.addon.metadata">
+    <summary>Bottle module</summary>
+    <description>Fast and simple WSGI-framework for small web-applications</description>
+    <license>MIT</license>
+    <platform>all</platform>
+    <website>http://bottlepy.org</website>
+  </extension>
+</addon>
