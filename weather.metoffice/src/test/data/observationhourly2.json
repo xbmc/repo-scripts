@@ -1,0 +1,87 @@
+{
+  "SiteRep": {
+    "DV": {
+      "type": "Obs", 
+      "dataDate": "2014-03-06T17:00:00Z", 
+      "Location": {
+        "elevation": "85.0", 
+        "name": "BEDFORD", 
+        "i": "3560", 
+        "country": "ENGLAND", 
+        "lon": "-0.464", 
+        "Period": {
+            "Rep": {
+                "D": "WSW", 
+                "Pt": "R", 
+                "H": "66.0", 
+                "P": "1021", 
+                "S": "10", 
+                "T": "9.7", 
+                "W": "1", 
+                "V": "45000", 
+                "Dp": "3.7", 
+                "$": "1020"
+              }, 
+            "type": "Day", 
+            "value": "2014-03-05Z"
+          },
+        "lat": "52.225", 
+        "continent": "EUROPE"
+      }
+    }, 
+    "Wx": {
+      "Param": [
+        {
+          "units": "mph", 
+          "name": "G", 
+          "$": "Wind Gust"
+        }, 
+        {
+          "units": "C", 
+          "name": "T", 
+          "$": "Temperature"
+        }, 
+        {
+          "units": "m", 
+          "name": "V", 
+          "$": "Visibility"
+        }, 
+        {
+          "units": "compass", 
+          "name": "D", 
+          "$": "Wind Direction"
+        }, 
+        {
+          "units": "mph", 
+          "name": "S", 
+          "$": "Wind Speed"
+        }, 
+        {
+          "units": "", 
+          "name": "W", 
+          "$": "Weather Type"
+        }, 
+        {
+          "units": "hpa", 
+          "name": "P", 
+          "$": "Pressure"
+        }, 
+        {
+          "units": "Pa/s", 
+          "name": "Pt", 
+          "$": "Pressure Tendency"
+        }, 
+        {
+          "units": "C", 
+          "name": "Dp", 
+          "$": "Dew Point"
+        }, 
+        {
+          "units": "%", 
+          "name": "H", 
+          "$": "Screen Relative Humidity"
+        }
+      ]
+    }
+  }
+}
