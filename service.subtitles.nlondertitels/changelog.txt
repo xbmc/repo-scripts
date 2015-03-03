@@ -5,3 +5,6 @@ Initial commit.
 Fixed manual search
 Cleanup
 
+1.0.2
+Update rmdirRecursive
+Fix for subfolder in temp

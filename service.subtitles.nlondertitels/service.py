@@ -48,8 +48,8 @@ def rmdirRecursive(dir):
     if not os.path.exists(dir):
         return
 
-    if os.path.islink(dir):
-        os.remove(dir)
+    if os.path.islink(dir.encode('utf8')):
+        os.remove(dir.encode('utf8'))
         return
 
     # Verify the directory is read/write/execute for the current user
@@ -59,11 +59,17 @@ def rmdirRecursive(dir):
     # Thus, if a non-unicode-named dir contains a unicode filename, that filename will get garbled.
     # So force dir to be unicode.
     try:
-        dir = unicode(dir, "utf-8")
+        dir = dir.decode('utf8','ignore')
     except:
-        log(__name__, "rmdirRecursive: decoding from UTF-8 failed")
+        log(__name__, "rmdirRecursive: decoding from UTF-8 failed: %s" % dir)
+        return
 
     for name in os.listdir(dir):
+        try:
+            name = name.decode('utf8','ignore')
+        except:
+            log(__name__, "rmdirRecursive: decoding from UTF-8 failed: %s" % name)
+            continue
         full_name = os.path.join(dir, name)
         # on Windows, if we don't have write permission we can't remove
         # the file/directory either, so turn that on
@@ -180,7 +186,7 @@ def Search(item):
 
 # from https://github.com/djay/service.subtitles.thaisubtitle
 def download(link, search_string=""):
-  exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass"]
+  exts = [".srt", ".sub", ".smi", ".ssa", ".ass"]
   subtitle_list = []
   response = urllib2.urlopen(link)
 
@@ -224,8 +230,15 @@ def download(link, search_string=""):
   if packed:
       xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (local_tmp_file, __temp__,)).encode('utf-8'), True)
 
-  for file in xbmcvfs.listdir(__temp__)[1]:
-      file = os.path.join(__temp__, file)
+  dirs, files = xbmcvfs.listdir(__temp__)
+  
+  if dirs:
+    path = os.path.join(__temp__, dirs[0].decode('utf-8'))
+  else:
+    path= __temp__
+
+  for file in xbmcvfs.listdir(path)[1]:
+      file = os.path.join(path, file)
       if os.path.splitext(file)[1] in exts:
           if search_string and string.find(string.lower(file), string.lower(search_string)) == -1:
               continue
