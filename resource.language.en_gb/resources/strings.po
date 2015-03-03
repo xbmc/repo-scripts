@@ -13,7 +13,7 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 #: system/settings/settings.xml
 msgctxt "#0"
 msgid "Programs"
@@ -413,12 +413,12 @@ msgctxt "#112"
 msgid "Paused"
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#113"
 msgid "Update failed"
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#114"
 msgid "Installation failed"
 msgstr ""
@@ -551,7 +551,7 @@ msgctxt "#136"
 msgid "Playlists"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 msgctxt "#137"
 msgid "Search"
 msgstr ""
@@ -671,7 +671,7 @@ msgctxt "#165"
 msgid "Disc present"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 #: system/settings/settings.xml
 msgctxt "#166"
 msgid "Skin"
@@ -762,7 +762,7 @@ msgctxt "#185"
 msgid "Searching album"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 #: xbmc/dialogs/GUIDialogSelect.cpp
 msgctxt "#186"
 msgid "OK"
@@ -818,7 +818,7 @@ msgctxt "#198"
 msgid "Loading movie details"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 #: system/settings/settings.xml
 msgctxt "#199"
 msgid "Web interface"
@@ -872,7 +872,15 @@ msgctxt "#210"
 msgid "Previous"
 msgstr ""
 
-#empty strings from id 211 to 212
+#: system/settings/settings.xml
+msgctxt "#211"
+msgid "50 Hz"
+msgstr ""
+
+#: system/settings/settings.xml
+msgctxt "#212"
+msgid "59.94 Hz"
+msgstr ""
 
 msgctxt "#213"
 msgid "Calibrate user interface..."
@@ -965,7 +973,7 @@ msgid "Video filters"
 msgstr ""
 
 #: system/peripherals.xml
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 #: xbmc/dialogs/GUIDialogMediaSource.cpp
 #: xbmc/playlists/SmartPlaylist.cpp
 #: system/settings/settings.xml
@@ -1082,6 +1090,7 @@ msgid "Fetching CD information"
 msgstr ""
 
 #: xbmc/dialogs/GUIDialogFileBrowser.cpp
+#: xbmc/video/windows/GUIWindowVideoNav.cpp
 msgctxt "#257"
 msgid "Error"
 msgstr ""
@@ -2798,6 +2807,7 @@ msgctxt "#661"
 msgid "Choose export folder"
 msgstr ""
 
+#: xbmc/video/windows/GUIWindowVideoNav.cpp
 msgctxt "#662"
 msgid "This file is no longer available."
 msgstr ""
@@ -3517,17 +3527,17 @@ msgctxt "#1036"
 msgid "Favourites"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#1037"
 msgid "Video Add-ons"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#1038"
 msgid "Music Add-ons"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#1039"
 msgid "Picture Add-ons"
 msgstr ""
@@ -3545,7 +3555,7 @@ msgctxt "#1042"
 msgid "Retrieved %i of %i items"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#1043"
 msgid "Program Add-ons"
 msgstr ""
@@ -4350,7 +4360,7 @@ msgid "Scripts"
 msgstr ""
 
 msgctxt "#10021"
-msgid "Web Browser"
+msgid "Settings - TV"
 msgstr ""
 
 #empty strings from id 10022 to 10024
@@ -5376,10 +5386,7 @@ msgctxt "#13120"
 msgid "VDPAU"
 msgstr ""
 
-#: system/settings/settings.xml
-msgctxt "#13121"
-msgid "VDPAU HQ Upscaling level"
-msgstr ""
+#empty string with id 13121
 
 #: system/settings/settings.xml
 msgctxt "#13122"
@@ -6152,10 +6159,7 @@ msgctxt "#13423"
 msgid "Remember for this path"
 msgstr ""
 
-#: system/settings/settings.xml
-msgctxt "#13424"
-msgid "Use pixel buffer objects"
-msgstr ""
+#empty string with id 13424
 
 #: system/settings/settings.xml
 msgctxt "#13425"
@@ -6339,12 +6343,7 @@ msgctxt "#13459"
 msgid "Use OMXPlayer for decoding of video files."
 msgstr ""
 
-#empty strings from id 13460 to 13503
-
-#: system/settings/settings.xml
-msgctxt "#13504"
-msgid "Maximum speedup/slowdown amount (%)"
-msgstr ""
+#empty strings from id 13460 to 13504
 
 #: system/settings/settings.xml
 msgctxt "#13505"
@@ -6432,7 +6431,19 @@ msgctxt "#13555"
 msgid "%d Minutes"
 msgstr ""
 
-#empty strings from id 13556 to 13599
+#. Label of a setting that allows to select the skip step sizes to use for skipping
+#: system/settings/settings.xml
+msgctxt "#13556"
+msgid "Skip steps"
+msgstr ""
+
+#. Name of a setting to configure the time to wait for subsequent keypresses in order to apply additive skipping
+#: system/settings/settings.xml
+msgctxt "#13557"
+msgid "Skip delay"
+msgstr ""
+
+#empty strings from id 13557 to 13599
 
 #: system/settings/darwin.xml
 msgctxt "#13600"
@@ -7542,7 +7553,19 @@ msgctxt "#16333"
 msgid "MMAL - Bob (Half)"
 msgstr ""
 
-#empty strings from id 16334 to 16399
+#. Description of OSD video settings for deinterlace method with label #16334
+#: xbmc/video/dialogs/GUIDialogVideoSettings.cpp
+msgctxt "#16334"
+msgid "IMX - Fast motion"
+msgstr ""
+
+#. Description of OSD video settings for deinterlace method with label #16335
+#: xbmc/video/dialogs/GUIDialogVideoSettings.cpp
+msgctxt "#16335"
+msgid "IMX - Fast motion (Double)"
+msgstr ""
+
+#empty strings from id 16336 to 16399
 
 #: xbmc/video/dialogs/GUIDialogVideoSettings.cpp
 msgctxt "#16400"
@@ -8035,7 +8058,10 @@ msgctxt "#19107"
 msgid "at"
 msgstr ""
 
-#empty string with id 19108
+#: system/settings/settings.xml
+msgctxt "#19108"
+msgid "Framerate (fallback)"
+msgstr ""
 
 msgctxt "#19109"
 msgid "Couldn't save timer. Check the log for details."
@@ -8280,7 +8306,11 @@ msgctxt "#19167"
 msgid "Scan for missing icons"
 msgstr ""
 
-#empty string with id 19168
+#. Used in system info to show amount of it
+#: xbmc/windows/GUIWindowSystemInfo.cpp
+msgctxt "#19168"
+msgid "Deleted and recoverable recordings"
+msgstr ""
 
 msgctxt "#19169"
 msgid "Hide video information box"
@@ -8331,7 +8361,11 @@ msgctxt "#19178"
 msgid "Show channel information when switching channels"
 msgstr ""
 
-#empty string with id 19179
+#. Used as extension header on recordings window
+#: xbmc/pvr/windows/GUIWindowPVRRecordings.cpp
+msgctxt "#19179"
+msgid "Deleted"
+msgstr ""
 
 #: system/settings/settings.xml
 msgctxt "#19180"
@@ -8353,7 +8387,11 @@ msgctxt "#19183"
 msgid "Radio"
 msgstr ""
 
-#empty string with id 19184
+#. Used on pvr recordings as button to show of them
+#: skin.confluence
+msgctxt "#19184"
+msgid "Deleted recordings"
+msgstr ""
 
 #: system/settings/settings.xml
 msgctxt "#19185"
@@ -8827,7 +8865,37 @@ msgctxt "#19289"
 msgid "Hide group"
 msgstr ""
 
-#empty strings from id 19290 to 19498
+#. Used on recordings context menu
+#: xbmc/pvr/windows/GUIWindowPVRRecordings.cpp
+msgctxt "#19290"
+msgid "Undelete"
+msgstr ""
+
+#. Used on recordings context menu
+#: xbmc/pvr/windows/GUIWindowPVRRecordings.cpp
+msgctxt "#19291"
+msgid "Delete permanently"
+msgstr ""
+
+#. Used on recordings context menu
+#: xbmc/pvr/windows/GUIWindowPVRRecordings.cpp
+msgctxt "#19292"
+msgid "Delete all permanently"
+msgstr ""
+
+#. Used on yes no dialog
+#: xbmc/pvr/windows/GUIWindowPVRRecordings.cpp
+msgctxt "#19293"
+msgid "Delete all recordings permanently?"
+msgstr ""
+
+#. Used on yes no dialog
+#: xbmc/pvr/windows/GUIWindowPVRRecordings.cpp
+msgctxt "#19294"
+msgid "Delete this recording permanently?"
+msgstr ""
+
+#empty strings from id 19295 to 19498
 
 #: xbmc/epg/Epg.cpp
 msgctxt "#19499"
@@ -11268,7 +11336,10 @@ msgctxt "#21415"
 msgid "Default music video scraper"
 msgstr ""
 
-#empty string with id 21416
+#: system/settings/settings.xml
+msgctxt "#21416"
+msgid "Jump to first unwatched TV show season/episode"
+msgstr ""
 
 #: system/settings/settings.xml
 msgctxt "#21417"
@@ -11425,7 +11496,7 @@ msgctxt "#21451"
 msgid "Internet connection required."
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 #: xbmc/filesystem/AddonsDirectory.cpp
 msgctxt "#21452"
 msgid "Get More..."
@@ -11491,7 +11562,11 @@ msgctxt "#21465"
 msgid "Above video"
 msgstr ""
 
-#empty string with id 21466
+#. Description of setting "Videos -> Library -> Jump to first unwatched TV show season/episode" with label #21416
+#: system/settings/settings.xml
+msgctxt "#21466"
+msgid "When entering a TV show season or episode view automatically jump to the first unwatched season or episode."
+msgstr ""
 
 #. Filter (media data) from float value to float value
 #: xbmc/dialogs/GUIDialogMediaFilter.cpp
@@ -12116,7 +12191,7 @@ msgstr ""
 #empty strings from id 23105 to 23999
 #strings 24000 thru 24299 reserved for the Add-ons framework
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 msgctxt "#24000"
 msgid "Add-on"
 msgstr ""
@@ -12136,74 +12211,74 @@ msgstr ""
 
 #empty string with id 24004
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24005"
 msgid "Media sources"
 msgstr ""
 
 #empty string with id 24006
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24007"
 msgid "Movie information"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24008"
 msgid "Screensaver"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24009"
 msgid "Script"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24010"
 msgid "Visualisation"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24011"
 msgid "Add-on repository"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24012"
 msgid "Subtitles"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24013"
 msgid "Lyrics"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24014"
 msgid "TV information"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24015"
 msgid "Music video information"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24016"
 msgid "Album information"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24017"
 msgid "Artist information"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24018"
 msgid "Services"
 msgstr ""
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24019"
 msgid "PVR clients"
 msgstr ""
@@ -12239,7 +12314,7 @@ msgstr ""
 
 #empty string with id 24026
 
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24027"
 msgid "Weather"
 msgstr ""
@@ -12266,7 +12341,7 @@ msgctxt "#24032"
 msgid "All Add-ons"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 #: xbmc/filesystem/AddonsDirectory.cpp
 msgctxt "#24033"
 msgid "Get Add-ons"
@@ -12292,28 +12367,28 @@ msgctxt "#24038"
 msgid "Install"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 #: xbmc/filesystem/AddonsDirectory.cpp
 msgctxt "#24039"
 msgid "Disabled Add-ons"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 msgctxt "#24040"
 msgid "(Clear the current setting)"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 msgctxt "#24041"
 msgid "Install from zip file"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 msgctxt "#24042"
 msgid "Downloading %i%%"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 #: xbmc/filesystem/AddonsDirectory.cpp
 msgctxt "#24043"
 msgid "Available Updates"
@@ -12325,12 +12400,12 @@ msgctxt "#24044"
 msgid "Dependencies not met. Please contact Add-on author."
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#24045"
 msgid "Add-on does not have the correct structure"
 msgstr ""
 
-#: xbmc/addons/guidialogaddoninfo.cpp
+#: xbmc/addons/GUIDialogAddonInfo.cpp
 msgctxt "#24046"
 msgid "%s is used by the following installed Add-on(s)"
 msgstr ""
@@ -12355,7 +12430,7 @@ msgctxt "#24050"
 msgid "Available Add-ons"
 msgstr ""
 
-#: xbmc/addons/addonversion.cpp
+#: xbmc/addons/AddonVersion.cpp
 msgctxt "#24051"
 msgid "Version:"
 msgstr ""
@@ -12371,7 +12446,7 @@ msgctxt "#24053"
 msgid "License:"
 msgstr ""
 
-#: xbmc/addons/guidialogaddoninfo.cpp
+#: xbmc/addons/GUIDialogAddonInfo.cpp
 msgctxt "#24054"
 msgid "Changelog"
 msgstr ""
@@ -12388,7 +12463,17 @@ msgctxt "#24056"
 msgid "Last updated %s"
 msgstr ""
 
-#empty strings from id 24057 to 24058
+#. Used as a title in the progress dialog when installing an add-on
+#: xbmc/addons/AddonInstaller.cpp
+msgctxt "#24057"
+msgid "Installing %s..."
+msgstr ""
+
+#. Used as a text in the progress dialog when installing an add-on
+#: xbmc/addons/AddonInstaller.cpp
+msgctxt "#24058"
+msgid "Checking dependencies..."
+msgstr ""
 
 msgctxt "#24059"
 msgid "Would you like to enable this Add-on?"
@@ -12403,7 +12488,7 @@ msgctxt "#24061"
 msgid "Add-on update available!"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 #: xbmc/filesystem/AddonsDirectory.cpp
 #: xbmc/filesystem/AndroidAppDirectory.cpp
 msgctxt "#24062"
@@ -12414,22 +12499,22 @@ msgctxt "#24063"
 msgid "Auto update"
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#24064"
 msgid "Add-on enabled"
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#24065"
 msgid "Add-on updated"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 msgctxt "#24066"
 msgid "Cancel Add-on download?"
 msgstr ""
 
-#: xbmc/addons/guiviewstateaddonbrowser.cpp
+#: xbmc/addons/GUIViewStateAddonBrowser.cpp
 msgctxt "#24067"
 msgid "Currently downloading Add-ons"
 msgstr ""
@@ -12467,42 +12552,70 @@ msgctxt "#24075"
 msgid "Disable"
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#24076"
 msgid "Add-on Required"
 msgstr ""
 
-#empty strings from id 24077 to 24079
+#. Used as a text in the progress dialog when installing an add-on
+#: xbmc/addons/AddonInstaller.cpp
+msgctxt "#24077"
+msgid "Verifying downloaded add-on..."
+msgstr ""
+
+#. Used as a text in the progress dialog when installing an add-on
+#: xbmc/addons/AddonInstaller.cpp
+msgctxt "#24078"
+msgid "Downloading add-on..."
+msgstr ""
+
+#. Used as a text in the progress dialog when installing an add-on
+#: xbmc/addons/AddonInstaller.cpp
+msgctxt "#24079"
+msgid "Installing add-on dependencies..."
+msgstr ""
 
 msgctxt "#24080"
 msgid "Try to reconnect?"
 msgstr ""
 
 #. The label in the add-ons manager for helper add-ons
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24081"
 msgid "Helper Add-ons"
 msgstr ""
 
 #. The label in the add-ons manager for add-on libraries
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24082"
 msgid "Add-on libraries"
 msgstr ""
 
 #. The label in the add-ons manager for information libraries
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24083"
 msgid "Information libraries"
 msgstr ""
 
 #. The label in the add-ons manager for visualisation libraries
-#: xbmc/addons/addon.cpp
+#: xbmc/addons/Addon.cpp
 msgctxt "#24084"
 msgid "Visualisation libraries"
 msgstr ""
 
-#empty strings from id 24085 to 24088
+#. Used as a text in the progress dialog when installing an add-on
+#: xbmc/addons/AddonInstaller.cpp
+msgctxt "#24085"
+msgid "Failed to install a dependency"
+msgstr ""
+
+#. Used as a text in the progress dialog when installing an add-on
+#: xbmc/addons/AddonInstaller.cpp
+msgctxt "#24086"
+msgid "Installing add-on..."
+msgstr ""
+
+#empty strings from id 24087 to 24088
 
 msgctxt "#24089"
 msgid "Add-on restarts"
@@ -12544,17 +12657,17 @@ msgctxt "#24098"
 msgid "Broken"
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#24099"
 msgid "Would you like to switch to this skin?"
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#24100"
 msgid "To use this feature you must download an Add-on:"
 msgstr ""
 
-#: xbmc/addons/addoninstaller.cpp
+#: xbmc/addons/AddonInstaller.cpp
 msgctxt "#24101"
 msgid "Would you like to download this Add-on?"
 msgstr ""
@@ -12723,7 +12836,17 @@ msgctxt "#24132"
 msgid "Would you like to switch to this language?"
 msgstr ""
 
-#empty strings from id 24133 to 24998
+#: xbmc/Application.cpp
+msgctxt "#24133"
+msgid "Failed to load language"
+msgstr ""
+
+#: xbmc/Application.cpp
+msgctxt "#24134"
+msgid "We were unable to load your configured language. Please check your language settings."
+msgstr ""
+
+#empty strings from id 24135 to 24998
 
 msgctxt "#24999"
 msgid "Hide incompatible"
@@ -13973,11 +14096,7 @@ msgctxt "#36139"
 msgid "Category containing the settings for how the video library is handled."
 msgstr ""
 
-#. Description of setting "Videos -> Library -> Enable" with label #24022
-#: system/settings/settings.xml
-msgctxt "#36140"
-msgid "Enable the video library."
-msgstr ""
+#empty string with id 36140
 
 #. Description of setting "Videos -> Library -> Show plot for unwatched items" with label #20369
 #: system/settings/settings.xml
@@ -14105,11 +14224,7 @@ msgctxt "#36162"
 msgid "Enable VideoToolbox hardware decoding of video files."
 msgstr ""
 
-#. Description of setting "Videos -> Playback -> Use pixel buffer objects" with label #13424
-#: system/settings/settings.xml
-msgctxt "#36163"
-msgid "Enable decoding of video files using pixel buffer objects."
-msgstr ""
+#empty string with id 36163
 
 #. Description of setting "Videos -> Playback -> Adjust display refresh rate to match video" with label #170
 #: system/settings/settings.xml
@@ -14129,13 +14244,7 @@ msgctxt "#36166"
 msgid "Synchronise the video to the refresh rate of the monitor."
 msgstr ""
 
-#empty string with id 36167
-
-#. Description of setting "Videos -> Playback -> Maximum speedup/slowdown amount (%)" with label #13504
-#: system/settings/settings.xml
-msgctxt "#36168"
-msgid "Maximum video speed adjust to match actual screen refresh rate."
-msgstr ""
+#empty strings from id 36167 to 36168
 
 #. Description of setting "System -> Audio output -> Resample quality" with label #13505
 #: system/settings/settings.xml
@@ -14161,11 +14270,7 @@ msgctxt "#36172"
 msgid "VDPAU studio level conversion provides a way for advanced applications like Kodi to influence the colour space conversion."
 msgstr ""
 
-#. Description of setting "Videos -> Playback -> VDPAU HQ Upscaling level" with label #13121
-#: system/settings/settings.xml
-msgctxt "#36173"
-msgid "Enable upscaling using VDPAU."
-msgstr ""
+#empty string with id 36173
 
 #. Description of setting "Videos -> Playback -> Activate Teletext" with label #23050
 #: system/settings/settings.xml
@@ -14584,11 +14689,7 @@ msgctxt "#36253"
 msgid "Section that contains settings related to music files and how they are handled."
 msgstr ""
 
-#. Description of setting "Music -> Library -> Enable" with label #24022
-#: system/settings/settings.xml
-msgctxt "#36254"
-msgid "Enable the music library."
-msgstr ""
+#empty string with id 36254
 
 #. Description of setting "Music -> Library -> Include artists who appear only on compilations" with label #13414
 #: system/settings/settings.xml
@@ -14625,7 +14726,11 @@ msgctxt "#36260"
 msgid "No info available yet."
 msgstr ""
 
-#empty string with id 36261
+#. Description of setting "LiveTV -> Playback -> Refreshrate" with label #19108
+#: system/settings/settings.xml
+msgctxt "#36261"
+msgid "If enabled, this framerate is used for streams we were not able to detect fps."
+msgstr ""
 
 #. Description of setting "Music -> Library -> Export music library" with label #20196
 #: system/settings/settings.xml
@@ -14951,7 +15056,7 @@ msgstr ""
 #. Description of settings category "Weather -> General" with label #16000
 #: system/settings/settings.xml
 msgctxt "#36316"
-msgid "Category containing settings for how weather addons are handled."
+msgid "Category containing settings for how weather add-ons are handled."
 msgstr ""
 
 #. Description of settings category "Weather -> General -> Locations with label #0
@@ -15714,7 +15819,13 @@ msgctxt "#36509"
 msgid "Monoscopic (2D)"
 msgstr ""
 
-#empty strings from id 36510 to 36519
+#. name of a stereoscopic mode
+#: system/settings/settings.xml
+msgctxt "#36510"
+msgid "Anaglyph Yellow/Blue"
+msgstr ""
+
+#empty strings from id 36511 to 36519
 #end of reserved strings for 3d modes
 
 #. Name of a setting, asking the user for the default playback mode (2D, 3D, ask) of stereoscopic videos
@@ -15817,7 +15928,7 @@ msgstr ""
 #. Description of setting "Videos -> Playback -> Disable stereoscopic mode when playback is stopped" with label #36526
 #: system/settings/settings.xml
 msgctxt "#36538"
-msgid "[Enabled] Switch GUI (and some TVs) back to 2D mode when playback ended. [Disabled] GUI and TV will stay in stereoscopic 3D mode. For video playlists the stereoscopic 3D mode won't change between videos, not even for non stereoscopic ones."
+msgid "[Enabled] Switch GUI (and some TVs) back to 2D mode when playback ended - also between videos in a playlist if necessary. [Disabled] GUI and TV will stay in stereoscopic 3D mode. For video playlists the stereoscopic 3D mode won't change between videos, not even for non stereoscopic ones."
 msgstr ""
 
 #. Description of setting "System -> Video output -> Stereoscopic mode (current)" with label #36500
@@ -16203,7 +16314,19 @@ msgctxt "#37041"
 msgid "Use audio streams that are flagged as "default" (and match the preferred language) regardless of the number of channels or the used codec."
 msgstr ""
 
-#empty strings from id 37042 to 38009
+#. Description of setting "Videos -> Playback -> Skip steps"
+#: system/settings/settings.xml
+msgctxt "#37042"
+msgid "Defines which step sizes to use when pressing the skip buttons. If more steps are selected for a skip direction, these can be applied by subsequent presses on the skip button within the defined skip delay. Forward (positive) and backward (negative) steps can be defined independently."
+msgstr ""
+
+#. Description of setting "Videos -> Playback -> Skip delay"
+#: system/settings/settings.xml
+msgctxt "#37043"
+msgid "Defines the time to wait for subsequent key presses before performing the skip. Only applies when using smart skipping (when using more than one skip step for a direction)."
+msgstr ""
+
+#empty strings from id 37044 to 38009
 
 #: system/settings/rbp.xml
 msgctxt "#38010"
