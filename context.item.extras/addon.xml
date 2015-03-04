@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.item.extras" name="Extras" version="0.1.0" provider-name="takoi">
+  <requires>
+    <import addon="xbmc.python" version="2.20.0"/>
+  </requires>
+  <extension point="kodi.context.item" library="addon.py">
+    <item>
+      <label>30000</label>
+      <visible>StringCompare(ListItem.dbtype,movie) | StringCompare(ListItem.dbtype,tvshow) |
+        StringCompare(ListItem.dbtype,season)
+      </visible>
+    </item>
+  </extension>
+  <extension point="kodi.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Browse extras from context menu in library</summary>
+    <description lang="en">Demo addon for new context item type</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <forum></forum>
+    <source></source>
+  </extension>
+</addon>
