@@ -1,0 +1,3 @@
+Version 2.1.1-beta
+
+- trakt.py 0edc50575e3764950660e3426e6981b5a9a33f72
