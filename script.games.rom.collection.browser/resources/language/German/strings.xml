@@ -185,6 +185,7 @@
 	<string id="45025">Ungefilterte Suche verhindern</string>
 	<string id="45026">Spiele starten</string>
 	<string id="45027">Emulator Kommando maskieren</string>
+	<string id="45028">Maximale Anzahl an Spielen zur Anzeige</string>
 	
 	<!-- GUI controls -->
 	<!-- main window-->
@@ -256,6 +257,7 @@
 	<string id="52036">Videos automatisch (Infofenster)</string>
 	<string id="52037">RetroPlayer verwenden</string>
 	<string id="52038">Gameclient</string>
+	<string id="52039">Lokale Kopie erzeugen</string>
 	
 	<string id="52034">Speichern</string>
 	<string id="52035">Abbrechen</string>

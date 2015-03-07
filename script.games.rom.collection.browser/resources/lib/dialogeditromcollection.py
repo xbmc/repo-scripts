@@ -60,6 +60,7 @@ CONTROL_BUTTON_SAVESTATEMASK = 5470
 CONTROL_BUTTON_SAVESTATEPARAMS = 5480
 CONTROL_BUTTON_PRECMD = 5510
 CONTROL_BUTTON_POSTCMD = 5520
+CONTROL_BUTTON_MAKELOCALCOPY = 5560
 
 
 class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
@@ -429,6 +430,9 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		control = self.getControlById(CONTROL_BUTTON_DONTEXTRACTZIP)
 		control.setSelected(self.selectedRomCollection.doNotExtractZipFiles)
 		
+		control = self.getControlById(CONTROL_BUTTON_MAKELOCALCOPY)
+		control.setSelected(self.selectedRomCollection.makeLocalCopy)
+		
 		control = self.getControlById(CONTROL_BUTTON_PRECMD)
 		util.setLabel(self.selectedRomCollection.preCmd, control)		
 		
@@ -510,8 +514,8 @@ class EditRomCollectionDialog(dialogbase.DialogBaseEdit):
 		self.selectedRomCollection.usePopen = bool(control.isSelected())
 		control = self.getControlById(CONTROL_BUTTON_DONTEXTRACTZIP)
 		self.selectedRomCollection.doNotExtractZipFiles = bool(control.isSelected())
-		
-		Logutil.log('updateSelectedRomCollection: precmd = ' +self.selectedRomCollection.preCmd, util.LOG_LEVEL_INFO)
+		control = self.getControlById(CONTROL_BUTTON_MAKELOCALCOPY)
+		self.selectedRomCollection.makeLocalCopy = bool(control.isSelected())
 	
 	
 	def editRomPath(self):

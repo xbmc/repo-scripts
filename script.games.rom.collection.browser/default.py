@@ -69,7 +69,7 @@ class Main():
 		for arg in sys.argv:
 			param = str(arg)
 			print 'RCB: param = ' +param
-			if param == '' or param == 'script.games.rom.collection.browser':
+			if param == '' or param == 'script.games.rom.collection.browser' or param == 'default.py':
 				print 'RCB: setting launchRCB = True'
 				launchRCB = True
 					

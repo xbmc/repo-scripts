@@ -64,17 +64,22 @@ def launchEmu(gdb, gui, gameId, config, settings, listitem):
 				settings.setSetting(util.SETTING_RCB_LAUNCHONSTARTUP, 'true')
 			
 			#invoke script file that kills xbmc before launching the emulator
-			basePath = os.path.join(util.getAddonDataPath(), 'scriptfiles')			
+			basePath = os.path.join(util.getAddonDataPath(), 'scriptfiles')
+			#xbmc needs other script files than kodi
+			xbmcFilenameSuffix = "_xbmc"
+			if(int(gui.xbmcversionNo) >= util.XBMC_VERSION_HELIX):
+				xbmcFilenameSuffix = ""
+						
 			if(env == "win32"):
 				if(settings.getSetting(util.SETTING_RCB_USEVBINSOLOMODE).lower() == 'true'):
 					#There is a problem with quotes passed as argument to windows command shell. This only works with "call"
 					#use vb script to restart xbmc
-					cmd = 'call \"' +os.path.join(basePath, 'applaunch-vbs.bat') +'\" ' +cmd
-				else:
+					cmd = 'call \"' +os.path.join(basePath, 'applaunch-vbs%s.bat' %xbmcFilenameSuffix) +'\" ' +cmd
+				else:					
 					#There is a problem with quotes passed as argument to windows command shell. This only works with "call"
-					cmd = 'call \"' +os.path.join(basePath, 'applaunch.bat') +'\" ' +cmd						
+					cmd = 'call \"' +os.path.join(basePath, 'applaunch%s.bat' %xbmcFilenameSuffix) +'\" ' +cmd						
 			else:
-				cmd = os.path.join(basePath, 'applaunch.sh ') +cmd
+				cmd = os.path.join(basePath, 'applaunch%s.sh ' %xbmcFilenameSuffix) +cmd
 		else:
 			#use call to support paths with whitespaces
 			if(env == "win32" and not (os.environ.get( "OS", "xbox" ) == "xbox")):
@@ -177,6 +182,19 @@ def buildCmd(filenameRows, romCollection, gameRow, escapeCmd, calledFromSkin):
 	for fileNameRow in filenameRows:
 		rom = fileNameRow[0]
 		Logutil.log('rom: ' +str(rom), util.LOG_LEVEL_INFO)
+		
+		if romCollection.makeLocalCopy:
+			localDir = os.path.join(util.getTempDir(), romCollection.name)
+			if os.path.exists(localDir):
+				Logutil.log("Trying to delete local rom files", util.LOG_LEVEL_INFO)    
+				files = os.listdir(localDir)
+				for file in files:
+					os.remove(os.path.join(localDir, file))
+			localRom = os.path.join(localDir, os.path.basename(str(rom)))
+			Logutil.log('Creating local copy: ' + str(localRom), util.LOG_LEVEL_INFO)
+			if xbmcvfs.copy(rom, localRom):
+				Logutil.log('Local copy created', util.LOG_LEVEL_INFO)
+			rom = localRom
 
 		# If it's a .7z file
 		# Don't extract zip files in case of savestate handling and when called From skin
@@ -288,12 +306,17 @@ def handleCompressedFile(filext, rom, romCollection, emuParams):
 	
 	#Note: Trying to delete temporary files (from zip or 7z extraction) from last run
 	#Do this before launching a new game. Otherwise game could be deleted before launch
-	try:
-		Logutil.log("Trying to delete temporary rom files", util.LOG_LEVEL_INFO)	
-		tempDir = util.getTempDir()
-		files = os.listdir(tempDir)
-		for file in files:
-			os.remove(os.path.join(tempDir, file))
+	tempDir = os.path.join(util.getTempDir(), 'extracted')
+	#check if folder exists
+	if(not os.path.isdir(tempDir)):
+		os.mkdir(tempDir)
+	
+	try:		
+		if os.path.exists(tempDir):
+			Logutil.log("Trying to delete temporary rom files", util.LOG_LEVEL_INFO)
+			files = os.listdir(tempDir)
+			for file in files:
+				os.remove(os.path.join(tempDir, file))
 	except Exception, (exc):
 		Logutil.log("Error deleting files after launch emu: " +str(exc), util.LOG_LEVEL_ERROR)
 		gui.writeMsg(util.localize(32036) +": " +str(exc))
@@ -334,7 +357,7 @@ def handleCompressedFile(filext, rom, romCollection, emuParams):
 			Logutil.log('Error handling compressed file', util.LOG_LEVEL_WARNING)
 			return []
 		for archive in archives:					
-			newPath = os.path.join(util.getTempDir(), archive[0])
+			newPath = os.path.join(tempDir, archive[0])
 			fp = open(newPath, 'wb')
 			fp.write(archive[1])
 			fp.close()
@@ -351,22 +374,20 @@ def handleCompressedFile(filext, rom, romCollection, emuParams):
 		return []
 
 	if chosenROM != -1:
-		# Extract the chosen file to %TMP%
-		newPath = os.path.join(util.getTempDir(), names[chosenROM])
-		
-		Logutil.log("Putting extracted file in %s" % newPath, util.LOG_LEVEL_INFO)
-		
-		data = getArchives(filext, rom, [names[chosenROM]])
-		if(data == None):
+		# Extract all files to %TMP%
+		archives = getArchives(filext, rom, names)
+		if(archives == None):
 			Logutil.log('Error handling compressed file', util.LOG_LEVEL_WARNING)
 			return []
-		fo = open(str(newPath), 'wb')
-		fo.write(data[0][1])
-		fo.close()
+		for archive in archives:
+			newPath = os.path.join(tempDir, archive[0])
+			Logutil.log("Putting extracted file in %s" % newPath, util.LOG_LEVEL_INFO)			
+			fo = open(str(newPath), 'wb')
+			fo.write(archive[1])
+			fo.close()
 		
-		# Point file name to the newly extracted file and continue
-		# as usual
-		roms = [newPath]
+		# Point file name to the chosen file and continue as usual
+		roms = [os.path.join(tempDir, names[chosenROM])]
 		
 	return roms
 

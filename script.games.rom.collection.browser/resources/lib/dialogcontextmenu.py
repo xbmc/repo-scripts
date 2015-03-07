@@ -201,6 +201,10 @@ class ContextMenuDialog(xbmcgui.WindowXMLDialog):
 				selectedGame.setProperty('isfavorite', str(isFavorite))
 			self.gui.gdb.commit()
 			
+			#HACK: removing favorites does not update the UI. So do it manually.
+			if(isFavorite == 0):
+				self.gui.loadViewState()			
+			
 		elif (controlID == 5120): #Export nfo files
 			self.close()
 			nfowriter.NfoWriter().exportLibrary(self.gui)

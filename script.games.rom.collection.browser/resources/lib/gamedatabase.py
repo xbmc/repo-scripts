@@ -260,7 +260,8 @@ class Game(DataBaseObject):
 					(PublisherId = ? OR (0 = ?)) AND \
 					(isFavorite = ? OR (0 = ?)) \
 					AND %s \
-					ORDER BY name COLLATE NOCASE"
+					ORDER BY name COLLATE NOCASE \
+					%s"
 					
 	filterByNameAndRomCollectionId = "SELECT * FROM Game WHERE name = ? and romCollectionId = ?"
 	
@@ -272,11 +273,14 @@ class Game(DataBaseObject):
 		self.gdb = gdb
 		self.tableName = "Game"
 		
-	def getFilteredGames(self, romCollectionId, genreId, yearId, publisherId, isFavorite, likeStatement):
+	def getFilteredGames(self, romCollectionId, genreId, yearId, publisherId, isFavorite, likeStatement, maxNumGames=0):
 		args = (romCollectionId, genreId, yearId, publisherId, isFavorite)
-		filterQuery = self.filterQuery %likeStatement
+		limit = ""
+		if(int(maxNumGames) > 0):
+			limit = "LIMIT %s" %str(maxNumGames)
+		filterQuery = self.filterQuery %(likeStatement, limit)
 		util.Logutil.log('searching games with query: ' +filterQuery, util.LOG_LEVEL_DEBUG)
-		util.Logutil.log('searching games with args: romCollectionId = %s, genreId = %s, yearId = %s, publisherId = %s, isFavorite = %s, characterFilter = %s' %(str(romCollectionId), str(genreId), str(yearId), str(publisherId), str(isFavorite), likeStatement), util.LOG_LEVEL_DEBUG)
+		util.Logutil.log('searching games with args: romCollectionId = %s, genreId = %s, yearId = %s, publisherId = %s, isFavorite = %s, likeStatement = %s, limit = %s' %(str(romCollectionId), str(genreId), str(yearId), str(publisherId), str(isFavorite), likeStatement, limit), util.LOG_LEVEL_DEBUG)
 		games = self.getObjectsByWildcardQuery(filterQuery, args)
 		newList = self.encodeUtf8(games)
 		return newList

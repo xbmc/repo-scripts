@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <parserConfig>
 	<GameGrammar type="multiline">
-		<SkippableContent closeStmnt="true" skipTo="&lt;div class=&quot;thumbnailContainer&quot;&gt;" ></SkippableContent>
-		<SkippableContent closeStmnt="true">&lt;div class=&quot;thumbnailContainer&quot;&gt;</SkippableContent>
+		<SkippableContent closeStmnt="true" skipTo="&lt;div class=&quot;mobythumbnail&quot;&gt;" ></SkippableContent>
+		<SkippableContent closeStmnt="true">&lt;div class=&quot;mobythumbnail&quot;&gt;</SkippableContent>
 		<SkippableContent closeStmnt="true" skipTo="&lt;a href=&quot;" ></SkippableContent>
 		<SkippableContent closeStmnt="true">&lt;a href=&quot;</SkippableContent>
 		<url closeStmnt="true" skipTo="&quot;" appendResultTo="http://www.mobygames.com"></url>

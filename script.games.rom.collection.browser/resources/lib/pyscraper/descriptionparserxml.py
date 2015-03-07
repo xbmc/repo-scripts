@@ -16,19 +16,24 @@ class DescriptionParserXml:
 		pass
 	
 	
-	def parseDescription(self, descFile, encoding):		
-		results = None						
+	def parseDescription(self, descFile, encoding):
+		Logutil.log('parseDescription: %s' % descFile, util.LOG_LEVEL_INFO)
+		
+		results = None
 						
 		if(descFile.startswith('http://')):
 			req = urllib2.Request(descFile)
 			req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
 			descFile = urllib2.urlopen(req).read()
+			del req
 		else:
 			fh = open(str(descFile), 'r')
 			descFile = fh.read()
+			del fh
 				
 		#load xmlDoc as elementtree to check with xpaths
 		tree = fromstring(descFile)
+		del descFile
 		if(tree == None):
 			return None				
 						
@@ -36,6 +41,7 @@ class DescriptionParserXml:
 		if(not rootElementXPath):
 			rootElementXPath = "."
 		rootElements = tree.findall(rootElementXPath)
+		del tree, rootElementXPath
 		if(rootElements == None):
 			return None
 		
@@ -45,15 +51,14 @@ class DescriptionParserXml:
 			tempResults = self.parseElement(rootElement)			
 			if tempResults != None:				
 				results = tempResults
+				del tempResults
 				results = self.replaceResultTokens(results)
-				resultList.append(results)		
-				
-		#Logutil.log('parseDescription: %s' % resultList, util.LOG_LEVEL_INFO)
+				resultList.append(results)
 		
 		return resultList
 	
 	
-	def scanDescription(self, descFile, descParseInstruction, encoding):		
+	def scanDescription(self, descFile, descParseInstruction, encoding):
 		
 		Logutil.log('scanDescription: %s' % descFile, util.LOG_LEVEL_INFO)
 		
@@ -61,18 +66,20 @@ class DescriptionParserXml:
 			req = urllib2.Request(descFile)
 			req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
 			descFile = urllib2.urlopen(req).read()
+			del req
 		else:
 			fh = open(str(descFile), 'r')
 			descFile = fh.read()
+			del fh
 		
 		#load xmlDoc as elementtree to check with xpaths
 		tree = fromstring(descFile)
-		
+		del descFile
 		
 		#single result as dictionary
 		result = {}
 					
-		rootElement = self.grammarNode.attrib.get('root')		
+		rootElement = self.grammarNode.attrib.get('root')
 				
 		for node in tree.findall(rootElement):
 			result = self.parseElement(node)
@@ -82,6 +89,7 @@ class DescriptionParserXml:
 	
 	#TODO: make a base class and make this a base method
 	def replaceResultTokens(self, resultAsDict):
+				
 		for key in resultAsDict.keys():
 			grammarElement = self.grammarNode.find(key)
 			if(grammarElement != None):
@@ -90,6 +98,7 @@ class DescriptionParserXml:
 				replaceKeyString = grammarElement.attrib.get('replaceInResultKey')
 				replaceValueString = grammarElement.attrib.get('replaceInResultValue')
 				dateFormat = grammarElement.attrib.get('dateFormat')
+				del grammarElement
 														
 				#TODO: avoid multiple loops
 				if(appendResultTo != None or appendResultWith != None or dateFormat != None):									
@@ -97,7 +106,8 @@ class DescriptionParserXml:
 					for i in range(0, len(itemList)):
 						try:
 							item = itemList[i]
-							newValue = item							
+							newValue = item
+							del item
 							if(appendResultTo != None):								
 								newValue = appendResultTo +newValue
 							if(appendResultWith != None):
@@ -115,6 +125,7 @@ class DescriptionParserXml:
 							print "Error while handling appendResultTo: " +str(exc)
 							
 					resultAsDict[key] = itemList
+					del itemList
 					
 				if(replaceKeyString != None and replaceValueString != None):												
 					replaceKeys = replaceKeyString.split(',')
@@ -132,13 +143,15 @@ class DescriptionParserXml:
 								replaceKey = replaceKeys[j]
 								replaceValue = replaceValues[j]
 															
-								newValue = item.replace(replaceKey, replaceValue)							
+								newValue = item.replace(replaceKey, replaceValue)
+								del item							
 								itemList[i] = newValue
 						except:
 							print "Error while handling appendResultTo"
 							
 					resultAsDict[key] = itemList
-				
+					del itemList
+		
 		return resultAsDict			
 
 			
@@ -147,7 +160,7 @@ class DescriptionParserXml:
 		result = {}
 		
 		for parserNode in self.grammarNode:
-			
+					
 			resultKey = parserNode.tag
 			xpath = parserNode.text
 			sourceRoot = sourceTree

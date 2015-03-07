@@ -1,9 +1,9 @@
 #!/bin/bash
-# App Launch script - Quit XBMC to launch another program
+# App Launch script - Quit Kodi to launch another program
 # Thanks to rodalpho @ # http://xbmc.org/forum/showthread.php?t=34635
 # By Redsandro 	2008-07-07
 # By ryosaeba87	2010-08-24 (Added support for MacOSX)
-# 
+# By malte 2015-01-22 (change from XBMC to Kodi)
 
 
 # Check for agruments
@@ -17,12 +17,12 @@ fi
 
 case "$(uname -s)" in
 	Darwin)
-		XBMC_PID=$(ps -A | grep XBMC.app | grep -v Helper | grep -v grep | awk '{print $1}')
-		XBMC_BIN=$(ps -A | grep XBMC.app | grep -v Helper | grep -v grep | awk '{print $5}')
+		Kodi_PID=$(ps -A | grep Kodi.app | grep -v Helper | grep -v grep | awk '{print $1}')
+		Kodi_BIN=$(ps -A | grep Kodi.app | grep -v Helper | grep -v grep | awk '{print $5}')
 		;;
 	Linux)
-		XBMC_PID=$(pidof xbmc.bin)
-		XBMC_BIN="xbmc"
+		Kodi_PID=$(pidof kodi.bin)
+		Kodi_BIN="kodi"
 		;;	
 	*)
 		echo "I don't support this OS!"
@@ -31,13 +31,13 @@ case "$(uname -s)" in
 esac
 
 
-# Is XBMC running?
-if [ -n $XBMC_PID ]
+# Is Kodi running?
+if [ -n $Kodi_PID ]
 then
-	kill $XBMC_PID # Shutdown nice
+	kill $Kodi_PID # Shutdown nice
 	echo "Shutdown nice"
 else
-	echo "This script should only be run from within XBMC."
+	echo "This script should only be run from within Kodi."
 	exit
 fi
 
@@ -45,10 +45,10 @@ fi
 # sleep 
 
 
-# Is XBMC still running?
-if [ -n $XBMC_PID ]
+# Is Kodi still running?
+if [ -n $Kodi_PID ]
 then
-    kill -9 $XBMC_PID # Force immediate kill
+    kill -9 $Kodi_PID # Force immediate kill
 	echo "Shutdown hard"	
 fi
 
@@ -58,9 +58,9 @@ echo "$@"
 "$@"
 
 
-# SOMETIMES xbmc starts too fast, and on some hardware if there is still a millisecond of sound being used, XBMC starts witout sound and some emulators say there is a problem with the sound hardware. If so, remove comment:
+# SOMETIMES Kodi starts too fast, and on some hardware if there is still a millisecond of sound being used, Kodi starts witout sound and some emulators say there is a problem with the sound hardware. If so, remove comment:
 #sleep 1
 
 
-# Done? Restart XBMC
-$XBMC_BIN &
+# Done? Restart Kodi
+$Kodi_BIN &

@@ -74,6 +74,7 @@ class ConfigXmlWriter:
 			SubElement(romCollectionXml, 'useFoldernameAsGamename').text = str(romCollection.useFoldernameAsGamename)
 			SubElement(romCollectionXml, 'maxFolderDepth').text = str(romCollection.maxFolderDepth)
 			SubElement(romCollectionXml, 'doNotExtractZipFiles').text = str(romCollection.doNotExtractZipFiles)
+			SubElement(romCollectionXml, 'makeLocalCopy').text = str(romCollection.makeLocalCopy)
 			SubElement(romCollectionXml, 'diskPrefix').text = str(romCollection.diskPrefix)
 			
 			if (os.environ.get( "OS", "xbox" ) == "xbox"):
@@ -370,4 +371,3 @@ class ConfigXmlWriter:
 		except Exception, (exc):
 			print("Error: Cannot write config.xml: " +str(exc))
 			return False, util.localize(32008) +": " +str(exc)
-		

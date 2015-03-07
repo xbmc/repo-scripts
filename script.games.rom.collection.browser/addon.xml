@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="script.games.rom.collection.browser"
-  version="2.0.17"
+  version="2.1.2"
   name="Rom Collection Browser"
-  provider-name="carabalb, jimyx17, malte, redkiller">
+  provider-name="malte">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="service.rom.collection.browser" version="1.0.0"/>

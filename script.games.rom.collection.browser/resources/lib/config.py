@@ -235,7 +235,8 @@ class RomCollection:
 	maxFolderDepth = 99
 	useFoldernameAsGamename = False
 	doNotExtractZipFiles = False
-	diskPrefix = '_Disk'
+	makeLocalCopy = False
+	diskPrefix = '_Disk.*'
 	xboxCreateShortcut = False
 	xboxCreateShortcutAddRomfile = False
 	xboxCreateShortcutUseShortGamename = False
@@ -492,7 +493,11 @@ class Config:
 				
 			doNotExtractZipFiles = self.readTextElement(romCollectionRow, 'doNotExtractZipFiles') 			
 			if(doNotExtractZipFiles != ''):
-				romCollection.doNotExtractZipFiles = doNotExtractZipFiles.upper() == 'TRUE'		
+				romCollection.doNotExtractZipFiles = doNotExtractZipFiles.upper() == 'TRUE'
+				
+			makeLocalCopy = self.readTextElement(romCollectionRow, 'makeLocalCopy')
+			if(makeLocalCopy != ''):
+				romCollection.makeLocalCopy = makeLocalCopy.upper() == 'TRUE'		
 				
 			romCollection.diskPrefix = self.readTextElement(romCollectionRow, 'diskPrefix')
 				
@@ -741,5 +746,3 @@ class Config:
 			return element.text
 		else:
 			return ''
-	
-			

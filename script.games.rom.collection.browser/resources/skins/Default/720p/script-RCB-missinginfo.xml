@@ -134,8 +134,21 @@
 					<align>right</align>
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
-					<visible>![Control.HasFocus(5201) | Control.HasFocus(5202)]</visible>
+					<visible>![Control.HasFocus(5201) | Control.HasFocus(5202)] + Skin.HasSetting(rcb_useOldAlignment)</visible>
 				</control>
+				<control type="label">
+					<posx>210</posx>
+					<posy>5</posy>
+					<width>370</width>
+					<height>20</height>
+					<font>font13</font>
+					<textcolor>88FFFFFF</textcolor>
+					<align>right</align>
+					<aligny>center</aligny>
+					<label>$INFO[ListItem.Label]</label>
+					<visible>![Control.HasFocus(5201) | Control.HasFocus(5202)] + !Skin.HasSetting(rcb_useOldAlignment)</visible>
+				</control>
+				
 				<control type="label">
 					<posx>570</posx>
 					<posy>5</posy>
@@ -146,7 +159,19 @@
 					<align>right</align>
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
-					<visible>[Control.HasFocus(5201) | Control.HasFocus(5202)]</visible>
+					<visible>[Control.HasFocus(5201) | Control.HasFocus(5202)] + Skin.HasSetting(rcb_useOldAlignment)</visible>
+				</control>
+				<control type="label">
+					<posx>210</posx>
+					<posy>5</posy>
+					<width>370</width>
+					<height>20</height>
+					<font>font13</font>
+					<textcolor>FFFFFFFF</textcolor>
+					<align>right</align>
+					<aligny>center</aligny>
+					<label>$INFO[ListItem.Label]</label>
+					<visible>[Control.HasFocus(5201) | Control.HasFocus(5202)] + !Skin.HasSetting(rcb_useOldAlignment)</visible>
 				</control>
 			</focusedlayout>
 		</control>

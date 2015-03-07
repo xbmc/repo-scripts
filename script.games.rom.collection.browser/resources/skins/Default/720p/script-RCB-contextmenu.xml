@@ -37,15 +37,15 @@
 			<posx>0</posx>
 			<posy>-100</posy>
 			<width>400</width>
-			<height>550</height>
-			<texture border="45,0,45,0">rcb-DialogContextMiddle.png</texture>
+			<height>530</height>
+			<texture border="60,60,60,0">rcb-DialogContextMiddle.png</texture>
 		</control>
 		<control type="image">
 			<description>background bottom image</description>
 			<posx>0</posx>
-			<posy>450</posy>
+			<posy>410</posy>
 			<width>400</width>
-			<texture border="45,0,45,49">rcb-DialogContextBottom.png</texture>
+			<texture border="60,60,60,60">rcb-DialogContextBottom.png</texture>
 		</control>
 		<control type="button" id="5110">
 			<description>button import games</description>

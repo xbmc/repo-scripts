@@ -184,6 +184,7 @@
 	<string id="45025">Prevent unfiltered search</string>
 	<string id="45026">Launch Games</string>
 	<string id="45027">Escape emulator cmd</string>
+	<string id="45028">Max number of games to display</string>
 	
 	<!-- GUI controls -->
 	<!-- main window -->
@@ -255,6 +256,7 @@
 	<string id="52036">Autoplay Video (Info Window)</string>
 	<string id="52037">Use RetroPlayer</string>
 	<string id="52038">Gameclient</string>
+	<string id="52039">Make Local Copy</string>
 	
 	<string id="52034">Save Config</string>
 	<string id="52035">Cancel</string>

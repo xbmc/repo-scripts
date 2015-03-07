@@ -1,3 +1,38 @@
+2.1.2 (02/2015)
+~~~~~~~~~~~~~
+General:
+  * kodi compatibility: fix label positions in remove rom collection dialog
+  * kodi compatibility: fix label positions in edit offline scraper dialog
+  * label positioning backward compatible to gotham
+
+2.1.1 (02/2015)
+~~~~~~~~~~~~~
+General:
+  * kodi compatibility: fix label positions in missing info filter dialog
+
+Browse Games:
+  * new option: max number of games to display
+
+Launch Games:  
+  * new option: make local copy (thanks to sklick)
+
+2.1.0 (02/2015)
+~~~~~~~~~~~~~
+General:
+  * kodi compatibility launch RCB from home menu shortcuts (thanks to acandido)
+  * kodi compatibility: fix label positions in dialogs (thanks to trimalchio)
+  * bugfix: developer with non-ascii characters in name was crashing the list
+  * bugfix: un-favorited games still appeared with a star on the list
+
+Import Games:
+  * bugfix: fix mobygames screenshot scraper (thanks to diedel)
+  * bugfix: offline descriptions have not been scanned if folders were empty
+
+Launch Games:
+  * kodi compatibility: update solo mode scripts to new kodi paths
+  * extract all files inside an archive (not only the game file)
+  * change default disk indicator to "_Disk.*"
+
 2.0.17 (06/2014)
 ~~~~~~~~~~~~~
 Import Games:

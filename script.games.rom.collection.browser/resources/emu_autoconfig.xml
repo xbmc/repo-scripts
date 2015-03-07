@@ -449,7 +449,7 @@
 				</configuration>
 			</emulator>
 		</platform>
-		<platform name="Playstation">
+		<platform name="PlayStation">
 			<alias>PS</alias>
 			<alias>PS1</alias>
 			<emulator name="Mednafen PSX (RetroArch)">

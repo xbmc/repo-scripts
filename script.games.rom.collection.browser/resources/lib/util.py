@@ -20,6 +20,9 @@ __addon__ = xbmcaddon.Addon(id='%s' %SCRIPTID)
 __language__ = __addon__.getLocalizedString
 
 
+#compatibility checks
+XBMC_VERSION_HELIX = 14
+
 #time to wait before automatic playback starts
 WAITTIME_PLAYERSTART = 500
 #time that xbmc needs to close the player (before we can load the list again)
@@ -46,6 +49,7 @@ API_KEYS = {'%VGDBAPIKey%' : 'Zx5m2Y9Ndj6B4XwTf83JyKz7r8WHt3i4',
 			'%ARCHIVEAPIKEY%' : 'VT7RJ960FWD4CC71L0Z0K4KQYR4PJNW8'}
 
 FUZZY_FACTOR_ENUM = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+MAXNUMGAMES_ENUM = [0,100,250,500,1000,2500,5000,10000]
 
 SETTING_RCB_VIEW_MODE = 'rcb_view_mode'
 SETTING_RCB_SKIN = 'rcb_skin'
@@ -86,6 +90,7 @@ SETTING_RCB_USEVBINSOLOMODE = 'rcb_useVBInSoloMode'
 SETTING_RCB_SUSPENDAUDIO = 'rcb_suspendAudio'
 SETTING_RCB_TOGGLESCREENMODE = 'rcb_toggleScreenMode'
 SETTING_RCB_EMUAUTOCONFIGPATH = 'rcb_pathToEmuAutoConfig'
+SETTING_RCB_MAXNUMGAMESTODISPLAY = 'rcb_maxNumGames'
 
 
 SCRAPING_OPTION_AUTO_ACCURATE = 0

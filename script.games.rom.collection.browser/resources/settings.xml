@@ -31,6 +31,7 @@
 		<setting id="rcb_showEntryAllPublisher" label="45023" type="bool" default="true"/>
 		<setting id="rcb_showEntryAllChars" label="45024" type="bool" default="true"/>
 		<setting id="rcb_preventUnfilteredSearch" label="45025" type="bool" default="false"/>
+		<setting id="rcb_maxNumGames" label="45028" type="enum" values="max|100|250|500|1000|2500|5000|10000" default="0"/>
 	</category>
 	
 	<category label="45026">

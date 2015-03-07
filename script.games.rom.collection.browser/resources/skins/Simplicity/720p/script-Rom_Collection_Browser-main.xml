@@ -1546,7 +1546,7 @@
 		<!-- Button group -->
 		<control type="group" id="400">
 			<animation effect="slide" start="0,650" end="0,650" delay="0" time="400" tween="quadratic" easing="out" condition="ControlGroup(400).HasFocus">Conditional</animation>
-			<animation effect="slide" start="0,0" end="0,800" delay="0"time="400" tween="quadratic" easing="out" condition="!ControlGroup(400).HasFocus">Conditional</animation>
+			<animation effect="slide" start="0,0" end="0,800" delay="0" time="400" tween="quadratic" easing="out" condition="!ControlGroup(400).HasFocus">Conditional</animation>
 			<control type="image">
 				<animation effect="zoom" start="0,650,1280,1" end="0,650,1280,260" time="300" tween="quadratic" easing="out" condition="ControlGroup(400).HasFocus">Conditional</animation>
 				<description>filter background image</description>

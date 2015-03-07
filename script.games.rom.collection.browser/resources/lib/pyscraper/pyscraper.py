@@ -45,7 +45,7 @@ class PyScraper:
 			scraperSource = nfoFile
 								
 				
-		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc)		
+		tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc)
 		tempResults = self.getBestResults(tempResults, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection)
 		
 		if(tempResults == None):
@@ -53,7 +53,7 @@ class PyScraper:
 			gamenameFromFile = re.sub('\s\(.*\)|\s\[.*\]|\(.*\)|\[.*\]', '', gamenameFromFile)
 			tempResults = self.parseDescriptionFile(scraper, scraperSource, gamenameFromFile, foldername, filecrc)
 			tempResults = self.getBestResults(tempResults, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection)						
-		
+				
 		if(tempResults == None):
 			if(scraper.returnUrl):
 				urlsFromPreviousScrapers.append('')
@@ -68,7 +68,7 @@ class PyScraper:
 			except:
 				Logutil.log("Should pass url to next scraper, but url is empty.", util.LOG_LEVEL_WARNING)
 				return results, urlsFromPreviousScrapers, True
-			
+					
 		if(tempResults != None):
 			for resultKey in tempResults.keys():
 				Logutil.log("resultKey: " +resultKey, util.LOG_LEVEL_INFO)
@@ -82,12 +82,13 @@ class PyScraper:
 				else:
 					resultValue = resultValueOld
 				Logutil.log("resultValue: " +str(resultValue), util.LOG_LEVEL_INFO)
+			del tempResults
 					
 		return results, urlsFromPreviousScrapers, False
 	
 	
 	def getNfoFile(self, settings, romCollection, gamenameFromFile, romFile):
-		Logutil.log("Begin getNfoFile", util.LOG_LEVEL_INFO)
+		Logutil.log("getNfoFile", util.LOG_LEVEL_INFO)
 		nfoFile = ''
 		nfoFolder = settings.getSetting(util.SETTING_RCB_NFOFOLDER)
 		splittedname = os.path.splitext(os.path.basename(romFile))
@@ -119,6 +120,7 @@ class PyScraper:
 	
 	
 	def parseDescriptionFile(self, scraper, scraperSource, gamenameFromFile, foldername, crc):
+		Logutil.log("parseDescriptionFile", util.LOG_LEVEL_INFO)
 			
 		scraperSource = self.prepareScraperSource(scraper, scraperSource, gamenameFromFile, foldername, crc)
 		if(scraperSource == ""):
@@ -127,6 +129,7 @@ class PyScraper:
 		try:
 			parser = DescriptionParserFactory.getParser(str(scraper.parseInstruction))
 			results = parser.parseDescription(scraperSource, scraper.encoding)
+			del parser
 		except Exception, (exc):
 			Logutil.log("an error occured while parsing game description: " +scraperSource, util.LOG_LEVEL_WARNING)
 			Logutil.log("Parser complains about: " +str(exc), util.LOG_LEVEL_WARNING)
@@ -183,6 +186,7 @@ class PyScraper:
 	
 	
 	def getBestResults(self, results, gamenameFromFile, fuzzyFactor, updateOption, scraperSource, romCollection):
+		Logutil.log("getBestResults", util.LOG_LEVEL_INFO)
 		
 		digits = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1']
 		romes = ['X', 'IX', 'VIII', 'VII', 'VI', 'V', 'IV', 'III', 'II', 'I']

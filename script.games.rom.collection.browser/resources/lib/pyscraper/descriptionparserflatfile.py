@@ -26,7 +26,8 @@ class DescriptionParserFlatFile:
 		
 		grammar = self.buildGameGrammar(self.grammarNode)
 				
-		gameGrammar = Group(grammar)		
+		gameGrammar = Group(grammar)
+		del grammar		
 		
 		all = OneOrMore(gameGrammar)				
 						
@@ -36,6 +37,7 @@ class DescriptionParserFlatFile:
 		
 		
 		results = all.parseString(fileAsString)
+		del all, fileAsString
 		# Logutil.log('parseDescription Results!: %s' % results, util.LOG_LEVEL_INFO)	
 		
 		if(len(results) == 0 or results == Empty()):
@@ -47,7 +49,7 @@ class DescriptionParserFlatFile:
 			if (result != Empty() and result != None):
 				resultAsDict = result.asDict()
 				resultAsDict = self.replaceResultTokens(resultAsDict)
-				resultList.append(resultAsDict)				
+				resultList.append(resultAsDict)
 		return resultList
 			
 	
@@ -69,6 +71,7 @@ class DescriptionParserFlatFile:
 			
 			
 	def replaceResultTokens(self, resultAsDict):
+		
 		for key in resultAsDict.keys():
 			
 			grammarElement = self.grammarNode.find(key)
@@ -80,6 +83,7 @@ class DescriptionParserFlatFile:
 				replaceKeyString = grammarElement.attrib.get('replaceInResultKey')
 				replaceValueString = grammarElement.attrib.get('replaceInResultValue')
 				dateFormat = grammarElement.attrib.get('dateFormat')
+				del grammarElement
 														
 				#TODO: avoid multiple loops
 				if(appendResultTo != None or appendResultWith != None or dateFormat != None):									
@@ -123,7 +127,7 @@ class DescriptionParserFlatFile:
 							print "Error while handling appendResultTo"
 							
 					resultAsDict[key] = itemList
-				
+		
 		return resultAsDict
 			
 	
@@ -135,9 +139,11 @@ class DescriptionParserFlatFile:
 			req = urllib2.Request(descFile)
 			req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
 			fileAsString = urllib2.urlopen(req).read()
+			del req
 		else:
 			fh = open(str(descFile), 'r')
 			fileAsString = fh.read()
+			del fh
 			
 		return fileAsString
 	
@@ -149,6 +155,7 @@ class DescriptionParserFlatFile:
 		fp = open(descParseInstruction, 'r')
 		tree = fromstring(fp.read())
 		fp.close()
+		del fp
 		
 		grammarNode = tree.find('GameGrammar')
 		if(grammarNode == None):
@@ -253,7 +260,7 @@ class DescriptionParserFlatFile:
 		
 		for grammarItem in grammarList:			
 			grammar += grammarItem
-		
+				
 		return grammar		
 		
 		

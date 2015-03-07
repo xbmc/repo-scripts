@@ -107,15 +107,14 @@ class UIGameDB(xbmcgui.WindowXML):
 	useRCBService = False
 	searchTerm = ''
 	
-	#HACK: just used to determine if we are on Dharma or Eden.
-	xbmcVersionEden = False
-	try:
-		from sqlite3 import dbapi2 as sqlite
-		xbmcVersionEden = True
-		Logutil.log("XBMC version: Assuming we are on Eden", util.LOG_LEVEL_INFO)
-	except:		
-		Logutil.log("XBMC version: Assuming we are on Dharma", util.LOG_LEVEL_INFO)
+	xbmcversion = xbmcaddon.Addon('xbmc.addon').getAddonInfo('version')
+	Logutil.log("XBMC version = " +xbmcversion, util.LOG_LEVEL_INFO)
 	
+	xbmcversionNo = xbmcversion[0:2]
+	Logutil.log("XBMC major version no = " +xbmcversionNo, util.LOG_LEVEL_INFO)
+	
+	if(int(xbmcversionNo) < util.XBMC_VERSION_HELIX):
+		xbmc.executebuiltin('Skin.SetBool(rcb_useOldAlignment)')
 	
 	def __init__(self, strXMLname, strFallbackPath, strDefaultName, forceFallback):
 		Logutil.log("Init Rom Collection Browser: " + util.RCBHOME, util.LOG_LEVEL_INFO)
@@ -384,13 +383,8 @@ class UIGameDB(xbmcgui.WindowXML):
 				
 				Logutil.log('onAction: ACTION_CONTEXT', util.LOG_LEVEL_INFO)								
 			elif (action.getId() in ACTION_PLAYFULLSCREEN):
-				#HACK: check if we are in Eden mode
-				if(self.xbmcVersionEden):
-					Logutil.log('onAction: ACTION_PLAYFULLSCREEN', util.LOG_LEVEL_INFO)
-					self.startFullscreenVideo()
-				else:
-					Logutil.log('fullscreen video in Dharma is not supported.', util.LOG_LEVEL_WARNING)
-				
+				Logutil.log('onAction: ACTION_PLAYFULLSCREEN', util.LOG_LEVEL_INFO)
+				self.startFullscreenVideo()
 		except Exception, (exc):
 			Logutil.log("RCB_ERROR: unhandled Error in onAction: " +str(exc), util.LOG_LEVEL_ERROR)
 			
@@ -556,7 +550,7 @@ class UIGameDB(xbmcgui.WindowXML):
 			items.append(xbmcgui.ListItem(util.localize(32120), "0", "", ""))
 		
 		for row in rows:
-			items.append(xbmcgui.ListItem(row[util.ROW_NAME], str(row[util.ROW_ID]), "", ""))
+			items.append(xbmcgui.ListItem(helper.saveReadString(row[util.ROW_NAME]), str(row[util.ROW_ID]), "", ""))
 			
 		control.addItems(items)
 			
@@ -600,7 +594,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 		self.lastPosition = -1
 		
-		preventUnfilteredSearch = self.Settings.getSetting(util.SETTING_RCB_PREVENTUNFILTEREDSEARCH).upper() == 'TRUE'			
+		preventUnfilteredSearch = self.Settings.getSetting(util.SETTING_RCB_PREVENTUNFILTEREDSEARCH).upper() == 'TRUE'
 		
 		if(preventUnfilteredSearch):			
 			if(self.selectedCharacter == util.localize(32120) and self.selectedConsoleId == 0 and self.selectedGenreId == 0 and self.selectedYearId == 0 and self.selectedPublisherId == 0):
@@ -622,8 +616,11 @@ class UIGameDB(xbmcgui.WindowXML):
 		missingFilterStatement = helper.builMissingFilterStatement(self.config)
 		if(missingFilterStatement != ''):
 			likeStatement = likeStatement + ' AND ' +missingFilterStatement
+		#set a limit of games to show
+		maxNumGamesIndex = self.Settings.getSetting(util.SETTING_RCB_MAXNUMGAMESTODISPLAY)
+		maxNumGames = util.MAXNUMGAMES_ENUM[int(maxNumGamesIndex)]
 		
-		games = Game(self.gdb).getFilteredGames(self.selectedConsoleId, self.selectedGenreId, self.selectedYearId, self.selectedPublisherId, isFavorite, likeStatement)
+		games = Game(self.gdb).getFilteredGames(self.selectedConsoleId, self.selectedGenreId, self.selectedYearId, self.selectedPublisherId, isFavorite, likeStatement, maxNumGames)
 		
 		if(games == None):
 			Logutil.log("games == None in showGames", util.LOG_LEVEL_WARNING)
@@ -637,11 +634,8 @@ class UIGameDB(xbmcgui.WindowXML):
 	
 		self.writeMsg(util.localize(32121))
 		
-		if(not self.xbmcVersionEden):
-			xbmcgui.lock()
-		
 		self.clearList()
-		self.rcb_playList.clear()		
+		self.rcb_playList.clear()
 		
 		count = 0
 		for gameRow in games:
@@ -659,7 +653,7 @@ class UIGameDB(xbmcgui.WindowXML):
 				
 				#create ListItem
 				item = xbmcgui.ListItem(gameRow[util.ROW_NAME], str(gameRow[util.ROW_ID]), imageGameList, imageGameListSelected)			
-				item.setProperty('gameId', str(gameRow[util.ROW_ID]))
+				item.setProperty('gameId', helper.saveReadString(gameRow[util.ROW_ID]))
 				
 				#favorite handling
 				showFavoriteStars = self.Settings.getSetting(util.SETTING_RCB_SHOWFAVORITESTARS).upper() == 'TRUE'
@@ -681,10 +675,8 @@ class UIGameDB(xbmcgui.WindowXML):
 				count = count + 1
 			except Exception, (exc):
 				Logutil.log('Error loading game: %s' % str(exc), util.LOG_LEVEL_ERROR)
-			
+		
 		xbmc.executebuiltin("Container.SortDirection")
-		if(not self.xbmcVersionEden):
-			xbmcgui.unlock()
 		
 		self.writeMsg("")
 		
@@ -1197,7 +1189,7 @@ class UIGameDB(xbmcgui.WindowXML):
 		
 		
 		#set additional properties
-		description = gameRow[util.GAME_description]
+		description = helper.saveReadString(gameRow[util.GAME_description])
 		if(description == None):
 			description = ""			
 		item.setProperty('plot', description)
@@ -1208,10 +1200,10 @@ class UIGameDB(xbmcgui.WindowXML):
 		except:
 			pass									
 		
-		item.setProperty('year', helper.getPropertyFromCache(gameRow, self.yearDict, util.GAME_yearId, util.ROW_NAME))
-		item.setProperty('publisher', helper.getPropertyFromCache(gameRow, self.publisherDict, util.GAME_publisherId, util.ROW_NAME))
-		item.setProperty('developer', helper.getPropertyFromCache(gameRow, self.developerDict, util.GAME_developerId, util.ROW_NAME))
-		item.setProperty('reviewer', helper.getPropertyFromCache(gameRow, self.reviewerDict, util.GAME_reviewerId, util.ROW_NAME))
+		item.setProperty('year', helper.saveReadString(helper.getPropertyFromCache(gameRow, self.yearDict, util.GAME_yearId, util.ROW_NAME)))
+		item.setProperty('publisher', helper.saveReadString(helper.getPropertyFromCache(gameRow, self.publisherDict, util.GAME_publisherId, util.ROW_NAME)))
+		item.setProperty('developer', helper.saveReadString(helper.getPropertyFromCache(gameRow, self.developerDict, util.GAME_developerId, util.ROW_NAME)))
+		item.setProperty('reviewer', helper.saveReadString(helper.getPropertyFromCache(gameRow, self.reviewerDict, util.GAME_reviewerId, util.ROW_NAME)))
 		
 		genre = ""			
 		try:
