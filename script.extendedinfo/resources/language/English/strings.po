@@ -101,6 +101,14 @@ msgctxt "#32034"
 msgid "Person results for "%s"
 msgstr ""
 
+msgctxt "#32035"
+msgid "Remove from list"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Movie list"
+msgstr ""
+
 msgctxt "#32050"
 msgid "Online information"
 msgstr ""
@@ -391,4 +399,8 @@ msgstr ""
 
 msgctxt "#32168"
 msgid "Releases"
+msgstr ""
+
+msgctxt "#32169"
+msgid "Rate TV Show"
 msgstr ""

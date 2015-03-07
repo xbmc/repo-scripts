@@ -106,7 +106,11 @@ def ChangeListStatus(list_id, movie_id, status):
     log(url)
     values = {'media_id': movie_id}
     request = Request(url, data=simplejson.dumps(values), headers=headers)
-    response = urlopen(request).read()
+    try:
+        response = urlopen(request).read()
+    except urllib2.HTTPError, err:
+       if err.code == 401:
+           Notify("Error", "Not authorized to modify list")
     results = simplejson.loads(response)
     Notify(addon_name, results["status_message"])
 
@@ -204,7 +208,7 @@ def HandleTMDBMovieResult(results=[], local_first=True, sortkey="Year"):
             year = ""
             time_comparer = ""
         trailer = "plugin://script.extendedinfo/?info=playtrailer&&id=" + tmdb_id
-        if addon.getSetting("infodialog_onclick"):
+        if addon.getSetting("infodialog_onclick") != "false":
             path = 'plugin://script.extendedinfo/?info=extendedinfo&&id=%s' % tmdb_id
         else:
             path = trailer
@@ -520,7 +524,7 @@ def GetPersonID(person):
             selection = xbmcgui.Dialog().select(addon.getLocalizedString(32151), names)
             if selection > -1:
                 return response["results"][selection]
-        else:
+        elif response["results"]:
             return response["results"][0]
     else:
         log("could not find Person ID")
@@ -537,7 +541,7 @@ def GetKeywordID(keyword):
             selection = xbmcgui.Dialog().select(addon.getLocalizedString(32114), names)
             if selection > -1:
                 return response["results"][selection]
-        else:
+        elif response["results"]:
             return response["results"][0]
     else:
         log("could not find Keyword ID")
@@ -547,9 +551,9 @@ def GetKeywordID(keyword):
 def SearchForSet(setname):
     setname = setname.replace("[", "").replace("]", "").replace("Kollektion", "Collection")
     response = GetMovieDBData("search/collection?query=%s&language=%s&" % (urllib.quote_plus(setname.encode("utf-8")), addon.getSetting("LanguageID")), 14)
-    try:
+    if "results" in response and response["results"]:
         return response["results"][0]["id"]
-    except:
+    else:
         return ""
 
 
@@ -1014,6 +1018,19 @@ def GetSimilarMovies(movie_id):
         log("No JSON Data available")
 
 
+def GetSimilarTVShows(tvshow_id):
+    session_string = ""
+    if checkLogin():
+        session_string = "session_id=%s&" % (get_session_id())
+    response = GetMovieDBData("tv/%s?append_to_response=account_states,alternative_titles,content_ratings,credits,external_ids,images,keywords,rating,similar,translations,videos&language=%s&include_image_language=en,null,%s&%s" %
+                              (str(tvshow_id), addon.getSetting("LanguageID"), addon.getSetting("LanguageID"), session_string), 10)
+    if "similar" in response:
+        return HandleTMDBTVShowResult(response["similar"]["results"])
+    else:
+        log("No JSON Data available")
+
+
+
 def GetMovieDBTVShows(tvshowtype):
     response = GetMovieDBData("tv/%s?language=%s&" % (tvshowtype, addon.getSetting("LanguageID")), 0.3)
     if "results" in response:
@@ -1070,7 +1087,10 @@ def GetDirectorMovies(person_id):
 
 def search_media(media_name=None, year='', media_type="movie"):
     log('TMDB API search criteria: Title[''%s''] | Year[''%s'']' % (media_name, year))
-    media_name = urllib.quote_plus(media_name.encode('utf8', 'ignore'))
+    try:
+        media_name = urllib.quote_plus(media_name.encode('utf8', 'ignore'))
+    except:
+        media_name = urllib.quote_plus(unicode(media_name, "utf-8").encode("utf-8"))
     tmdb_id = ''
     if media_name:
         response = GetMovieDBData("search/%s?query=%s+%s&language=%s&include_adult=%s&" % (media_type, media_name, year, addon.getSetting("LanguageID"), include_adult), 1)

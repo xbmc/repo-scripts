@@ -7,7 +7,10 @@ from YouTube import *
 import DialogActorInfo
 import DialogEpisodeInfo
 import DialogVideoList
-from ImageTools import *
+try:
+    from ImageTools import *
+except:
+    pass
 homewindow = xbmcgui.Window(10000)
 
 addon = xbmcaddon.Addon()

@@ -1,3 +1,18 @@
+v2.0.5
+- added "Remove from list" context menu entry
+
+v2.0.4
+- fixed infodialog option
+- better matching for movie info dialog
+- fixed iconpanel call
+- fixed Android - Helix errors
+- de-activated Buggalo Script for now
+- fixed RottenTomatoes low-quality thumbs
+- added similartvshows call (TheMovieDB)
+- also clear prop cache when clearing cache
+- allow missing containers for movieinfo dialog
+- some more bugfixes
+
 v2.0.3
 - fixed auth token caching
 - skin compatibility

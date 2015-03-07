@@ -14,8 +14,8 @@ def GetRottenTomatoesMovies(movietype):
                 imdbid = str(item["alternate_ids"]["imdb"])
             else:
                 imdbid = ""
-            poster = item["posters"]["original"].replace("tmb", "ori")
-            if addon.getSetting("infodialog_onclick"):
+            poster = "http://" + item["posters"]["original"].replace("tmb", "ori")[64:]
+            if addon.getSetting("infodialog_onclick") != "false":
                 path = 'plugin://script.extendedinfo/?info=extendedinfo&&imdbid=%s' % imdbid
             else:
                 path = "plugin://script.extendedinfo/?info=playtrailer&&imdbid=" + imdbid

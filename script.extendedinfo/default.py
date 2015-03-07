@@ -3,11 +3,11 @@ import os
 import xbmc
 import xbmcaddon
 import xbmcplugin
-try:
-    import buggalo
-    buggalo.GMAIL_RECIPIENT = "phil65@kodi.tv"
-except:
-    pass
+# try:
+#     import buggalo
+#     buggalo.GMAIL_RECIPIENT = "phil65@kodi.tv"
+# except:
+#     pass
 addon = xbmcaddon.Addon()
 addon_version = addon.getAddonInfo('version')
 addon_name = addon.getAddonInfo('name')
@@ -21,21 +21,21 @@ class Main:
     def __init__(self):
         xbmc.log("version %s started" % addon_version)
         xbmc.executebuiltin('SetProperty(extendedinfo_running,True,home)')
-        try:
-            self._parse_argv()
-            if self.infos:
-                self.control = StartInfoActions(self.infos, self.params)
-            elif not self.handle:
-                import DialogVideoList
-                dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % addon_name, addon_path)
-                dialog.doModal()
-            if self.control == "plugin":
-                xbmcplugin.endOfDirectory(self.handle)
-            xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
-        except Exception:
-            xbmc.executebuiltin('Dialog.Close(busydialog)')
-            buggalo.onExceptionRaised()
-            xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
+        # try:
+        self._parse_argv()
+        if self.infos:
+            self.control = StartInfoActions(self.infos, self.params)
+        elif not self.handle:
+            import DialogVideoList
+            dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % addon_name, addon_path)
+            dialog.doModal()
+        if self.control == "plugin":
+            xbmcplugin.endOfDirectory(self.handle)
+        xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
+        # except Exception:
+        #     xbmc.executebuiltin('Dialog.Close(busydialog)')
+        #     buggalo.onExceptionRaised()
+        #     xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
 
     def _parse_argv(self):
         if sys.argv[0] == 'plugin://script.extendedinfo/':

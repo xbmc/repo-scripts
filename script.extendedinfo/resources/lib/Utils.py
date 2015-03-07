@@ -482,6 +482,7 @@ def CompareWithLibrary(onlinelist=[], library_first=True, sortkey=False):
     global id_list
     global originaltitle_list
     global title_list
+    global imdb_list
     if not title_list:
         now = time.time()
         id_list = xbmc.getInfoLabel("Window(home).Property(id_list.JSON)")
@@ -489,27 +490,34 @@ def CompareWithLibrary(onlinelist=[], library_first=True, sortkey=False):
             id_list = simplejson.loads(id_list)
             originaltitle_list = simplejson.loads(xbmc.getInfoLabel("Window(home).Property(originaltitle_list.JSON)"))
             title_list = simplejson.loads(xbmc.getInfoLabel("Window(home).Property(title_list.JSON)"))
+            imdb_list = simplejson.loads(xbmc.getInfoLabel("Window(home).Property(imdb_list.JSON)"))
         else:
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["originaltitle", "imdbnumber", "file"], "sort": { "method": "none" } }, "id": 1}')
             json_query = simplejson.loads(unicode(json_query, 'utf-8', errors='ignore'))
             id_list = []
+            imdb_list = []
             originaltitle_list = []
             title_list = []
-            if "movies" in json_query["result"]:
+            if "result" in json_query and "movies" in json_query["result"]:
                 for item in json_query["result"]["movies"]:
                     id_list.append(item["movieid"])
+                    imdb_list.append(item["imdbnumber"])
                     originaltitle_list.append(item["originaltitle"].lower())
                     title_list.append(item["label"].lower())
             homewindow.setProperty("id_list.JSON", simplejson.dumps(id_list))
             homewindow.setProperty("originaltitle_list.JSON", simplejson.dumps(originaltitle_list))
             homewindow.setProperty("title_list.JSON", simplejson.dumps(title_list))
+            homewindow.setProperty("imdb_list.JSON", simplejson.dumps(imdb_list))
         log("create_light_movielist: " + str(now - time.time()))
     now = time.time()
     local_items = []
     remote_items = []
     for online_item in onlinelist:
         found = False
-        if online_item["Title"].lower() in title_list:
+        if "imdb_id" in online_item and online_item["imdb_id"] in imdb_list:
+            index = imdb_list.index(online_item["imdb_id"])
+            found = True
+        elif online_item["Title"].lower() in title_list:
             index = title_list.index(online_item["Title"].lower())
             found = True
             # Notify("found title " + online_item["Title"])
@@ -524,7 +532,7 @@ def CompareWithLibrary(onlinelist=[], library_first=True, sortkey=False):
             json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": {"properties": ["streamdetails", "resume", "year", "art", "writer", "file"], "movieid":%s }, "id": 1}' % dbid)
             json_query = unicode(json_query, 'utf-8', errors='ignore')
             json_response = simplejson.loads(json_query)
-            if "moviedetails" in json_response["result"]:
+            if "result" in json_response and "moviedetails" in json_response["result"]:
                 local_item = json_response['result']['moviedetails']
                 try:
                     diff = abs(local_item["year"] - int(online_item["Year"]))
@@ -594,6 +602,14 @@ def CompareWithLibrary(onlinelist=[], library_first=True, sortkey=False):
         return local_items + remote_items
 
 
+def GetMovieFromLocalDB(dbid):
+    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": {"properties": ["streamdetails", "resume", "year", "art", "writer", "file"], "movieid":%s }, "id": 1}' % dbid)
+    json_query = unicode(json_query, 'utf-8', errors='ignore')
+    json_response = simplejson.loads(json_query)
+    if "moviedetails" in json_response["result"]:
+        local_item = json_response['result']['moviedetails']
+
+
 def GetMusicBrainzIdFromNet(artist, xbmc_artist_id=-1):
     base_url = "http://musicbrainz.org/ws/2/artist/?fmt=json"
     url = '&query=artist:%s' % urllib.quote_plus(artist)
@@ -625,12 +641,16 @@ def CompareAlbumWithLibrary(onlinelist):
     return onlinelist
 
 
-def GetStringFromUrl(url):
+def GetStringFromUrl(url=None, headers=False):
     succeed = 0
+    if not headers:
+        headers = {'User-agent': 'XBMC/14.0 ( phil65@kodi.tv )'}
+    # prettyprint(headers)
+    request = urllib2.Request(url)
+    for (key, value) in headers.iteritems():
+        request.add_header(key, value)
     while (succeed < 5) and (not xbmc.abortRequested):
         try:
-            request = urllib2.Request(url)
-            request.add_header('User-agent', 'XBMC/14.0 ( phil65@kodi.tv )')
             response = urllib2.urlopen(request)
             data = response.read()
             return data
@@ -640,8 +660,25 @@ def GetStringFromUrl(url):
             succeed += 1
     return None
 
+# def GetStringFromUrl(url=None, headers=False):
+#     succeed = 0
+#     if not headers:
+#         headers = {'User-agent': 'XBMC/14.0 ( phil65@kodi.tv )'}
+#     prettyprint(headers)
+#     request = urllib2.Request(url, headers)
+#     while (succeed < 5) and (not xbmc.abortRequested):
+#         if True:
+#             response = urllib2.urlopen(request)
+#             data = response.read()
+#             return data
+#         else:
+#             log("GetStringFromURL: could not get data from %s" % url)
+#             xbmc.sleep(1000)
+#             succeed += 1
+#     return None
 
-def Get_JSON_response(url="", cache_days=7.0, folder=False):
+
+def Get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
     now = time.time()
     hashed_url = hashlib.md5(url).hexdigest()
     path = xbmc.translatePath(os.path.join(Addon_Data_Path, hashed_url + ".txt"))
@@ -658,7 +695,7 @@ def Get_JSON_response(url="", cache_days=7.0, folder=False):
         results = read_from_file(path)
         log("loaded file for %s. time: %f" % (url, time.time() - now))
     else:
-        response = GetStringFromUrl(url)
+        response = GetStringFromUrl(url, headers)
         try:
             results = simplejson.loads(response)
             log("download %s. time: %f" % (url, time.time() - now))
@@ -832,14 +869,17 @@ def save_to_file(content, filename, path=""):
 def read_from_file(path=""):
     if path == "":
         path = get_browse_dialog(dlg_type=1)
-    if xbmcvfs.exists(path):
-        now = time.time()
+    if not xbmcvfs.exists(path):
+        return False
+    now = time.time()
+    try:
         f = open(path)
         fc = simplejson.load(f)
         log("loaded textfile %s. Time: %f" % (path, time.time() - now))
         return fc
-    else:
+    except:
         return False
+        log("failed to load JSON textfile: " + path)
 
 
 def ConvertYoutubeURL(string):
@@ -895,14 +935,14 @@ def prettyprint(string):
 
 
 def GetImdbIDFromDatabase(type, dbid):
+    if not dbid:
+        return []
     if type == "movie":
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovieDetails", "params": {"properties": ["imdbnumber","title", "year"], "movieid":%s }, "id": 1}' % dbid)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if "moviedetails" in json_response["result"]:
             return json_response['result']['moviedetails']['imdbnumber']
-        else:
-            return []
     elif type == "tvshow":
         json_query = xbmc.executeJSONRPC(
             '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShowDetails", "params": {"properties": ["imdbnumber","title", "year"], "tvshowid":%s }, "id": 1}' % dbid)
@@ -910,8 +950,7 @@ def GetImdbIDFromDatabase(type, dbid):
         json_response = simplejson.loads(json_query)
         if "result" in json_response and "tvshowdetails" in json_response["result"]:
             return json_response['result']['tvshowdetails']['imdbnumber']
-        else:
-            return []
+    return []
 
 
 def GetImdbIDFromDatabasefromEpisode(dbid):
@@ -959,7 +998,7 @@ def passListToSkin(name="", data=None, prefix="", controlwindow=None, handle=Non
             itemlist = list()
             for item in items:
                 itemlist.append((item.getProperty("path"), item, False))
-            xbmcplugin.addDirectoryItems(handle, itemlist, False)
+            xbmcplugin.addDirectoryItems(handle, itemlist, len(itemlist))
     else:
         SetWindowProperties(name, data, prefix, debug)
 
