@@ -1,3 +1,9 @@
+0.0.7
+- Remove code added for 0.0.5 which isn't needed, had been added to workarond
+  a Kodi Helix bug with handling of temp dir.
+- Implement manual search. Issue #2. Thanks Diego Garber.
+- Minor cleanups
+
 0.0.6
 - When the new option to show nicks was set, the subtitle file written ended
   in '..srt' instead of '.es.srt'. Workaround this with a hack.
