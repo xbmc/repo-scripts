@@ -1,3 +1,8 @@
+v1.0.9
+- Fix issue where existing screensaver file is never over-written
+- Add message if sceeensaver video failed to download correctly
+- Add Snow and Watermill screensavers
+
 v1.0.8
 - Add additional beach, matrix, sci-fi, space, waterfall and woodland screensavers
 - Add special check to see if TvTunes is still running

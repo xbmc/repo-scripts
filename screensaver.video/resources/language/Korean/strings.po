@@ -56,6 +56,18 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "폴더의 모드 파일 사용"
 
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "복수 파일의 반복 형식"
+
+msgctxt "#32025"
+msgid "Repeat All"
+msgstr "모두 반복"
+
+msgctxt "#32026"
+msgid "Repeat One"
+msgstr "한 개 반복"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "프리셋 비디오 파일 설정/다운로드"
@@ -123,6 +135,62 @@ msgstr "벽난로 2 - [827MB] - 480p"
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
 msgstr "벽난로 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "수족관 3  - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "벽난로 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "우주 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "바닷가 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "바닷가 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "매트릭스 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "우주 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "숲 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "레트로 SF 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "폭포 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "폭포 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "폭포 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "바닷가 3 - [3.4GB] - 720p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

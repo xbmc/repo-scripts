@@ -26,7 +26,7 @@ msgstr "Дебъгване"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr "Включи дебъг дневника"
+msgstr "Включи дебъг журнала"
 
 msgctxt "#32004"
 msgid "Video Selection"
@@ -55,6 +55,10 @@ msgstr "Избран скрийсейвър"
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Ползвай всички файлове от папка"
+
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Тип повторение при множесво файлове"
 
 msgctxt "#32025"
 msgid "Repeat All"
@@ -147,6 +151,46 @@ msgstr "Космос 1 - [970MB] - 720p"
 msgctxt "#32109"
 msgid "Beach 1 - [2.5GB] - 720p"
 msgstr "Плаж 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Плаж 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Матрицата 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Космос 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Гора 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Стар Трек TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Ретро фантастика 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Водопад 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Водопад 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Водопад 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Плаж 3 - [3.4GB] - 720p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

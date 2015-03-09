@@ -32,17 +32,33 @@ msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Sélection de vidéo"
 
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "Économiseur d'écran vidéo"
+
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuration"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "Préréglage Vidéo"
 
 msgctxt "#32021"
 msgid "User Defined"
 msgstr "Défini par l'utilisateur"
 
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Économiseur d'écran choisi"
+
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Utiliser tous les fichiers dans un dossier"
+
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Répéter le Type pour plusieurs fichiers"
 
 msgctxt "#32025"
 msgid "Repeat All"
@@ -56,21 +72,125 @@ msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Rétablir / Télécharger les fichiers vidéos prédéfini"
 
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Choisir un fichier Vidéo"
+
 msgctxt "#32052"
 msgid "Show Time"
 msgstr "Afficher l'heure"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "Commencer la lecture à un moment aléatoire"
 
 msgctxt "#32054"
 msgid "Select Videos Folder"
 msgstr "Choix du dossier vidéo"
 
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Empêcher l'Économiseur d'écran de se lancer lors de la lecture d'un média"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Changer le volume quand l'Économiseur d'écran démarre"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Volume à"
+
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Niveau d'assombrissement"
 
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Arrêt automatique de l'Économiseur d'écran"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Arrêter l'Économiseur d'écran après (en minutes)"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Toutes les vidéos téléchargées ***"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Aquarium 1  - [846MB] - 400p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Aquarium 2  - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Fireplace 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Fireplace 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Fireplace 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Aquarium 3  - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Fireplace 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Space 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Beach 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Beach 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Space 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Woodland 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Sci-Fi 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Waterfall 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Waterfall 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Waterfall 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Beach 3 - [3.4GB] - 720p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
@@ -79,3 +199,19 @@ msgstr "Fichier d'économiseur d'écran invalide"
 msgctxt "#32301"
 msgid "The following default video already exists"
 msgstr "La vidéo par défaut suivante existes déjà"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Réutiliser ce fichier ?"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "Téléchargement du fichier vidéo de l'Économiseur d'écran"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "Cette option utilisera toutes les vidéos déjà téléchargées"
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "Chaque vidéo demandée doit d'abord être téléchargée individuellement "

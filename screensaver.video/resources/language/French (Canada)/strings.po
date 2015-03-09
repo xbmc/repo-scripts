@@ -146,11 +146,51 @@ msgstr "Foyer 4 - [2,7 Go] - 720p"
 
 msgctxt "#32108"
 msgid "Space 1 - [970MB] - 720p"
-msgstr "Espace 1 - [970 Mo] - 720p"
+msgstr "Cosmos 1 - [970 Mo] - 720p"
 
 msgctxt "#32109"
 msgid "Beach 1 - [2.5GB] - 720p"
 msgstr "Plage 1 - [2,5 Go] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Plage 2 - [838 Mo] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrice 1 - [909 Mo] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Cosmos 2 - [563 Mo] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Boisé 1 - [1,3 Go] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek LNG 1 - [54 Mo] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "SF rétro 1 - [200 Mo] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Chute d'eau 1 - [1,3 Go] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Chute d'eau 2 - [1,3 Go] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Chute d'eau 3 - [2,4 Go] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Plage 3 - [3,4 Go] - 720p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

@@ -65,13 +65,14 @@ class Downloader:
 
         # Check to see if there is already a file present
         if xbmcvfs.exists(destination):
-            overwrite = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32005), __addon__.getLocalizedString(32301), displayName, __addon__.getLocalizedString(32302))
-            if overwrite is False:
-                xbmcvfs.delete(destination)
-            else:
+            useExisting = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32005), __addon__.getLocalizedString(32301), displayName, __addon__.getLocalizedString(32302))
+            if useExisting:
                 # Don't want to overwrite, so nothing to do
                 log("Download: Reusing existing video file %s" % destination)
                 return destination
+            else:
+                log("Download: Removing existing file %s ready for fresh download" % destination)
+                xbmcvfs.delete(destination)
 
         # Create a progress dialog for the  download
         downloadProgressDialog = xbmcgui.DialogProgress()
@@ -86,12 +87,24 @@ class Downloader:
             # Now retrieve the actual file
             fp, h = urllib.urlretrieve(fileUrl, tmpdestination, _report_hook)
             log(h)
-            log("Download: Copy from %s to %s" % (tmpdestination, destination))
-            copy = xbmcvfs.copy(tmpdestination, destination)
-            if copy:
-                log("Download: Copy Successful")
+
+            # Check to make sure that the file created downloaded correctly
+            st = xbmcvfs.Stat(tmpdestination)
+            fileSize = st.st_size()
+            log("Download: Size of file %s is %d" % (tmpdestination, fileSize))
+            # Check for something that has a size greater than zero (in case some OSs do not
+            # support looking at the size), but less that 1,000,000 (As all our files are
+            # larger than that
+            if (fileSize > 0) and (fileSize < 1000000):
+                log("Download: Detected that file %s did not download correctly as file size is only %d" % (fileUrl, fileSize))
+                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32005), __addon__.getLocalizedString(32306), __addon__.getLocalizedString(32307))
             else:
-                log("Download: Copy Failed")
+                log("Download: Copy from %s to %s" % (tmpdestination, destination))
+                copy = xbmcvfs.copy(tmpdestination, destination)
+                if copy:
+                    log("Download: Copy Successful")
+                else:
+                    log("Download: Copy Failed")
             xbmcvfs.delete(tmpdestination)
         except:
             log("Download: Theme download Failed!!!")

@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32001"
 msgid "Screensaver"
-msgstr "Protecção ecrã"
+msgstr "Protetor ecrã"
 
 msgctxt "#32002"
 msgid "Debugging"
@@ -32,9 +32,33 @@ msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Selecção de Vídeo"
 
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "Protetor de Ecrã Vídeo"
+
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuração"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "Vídeo Pré-selecionado"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "Definido pelo Utilizador"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Protetor de Ecrã Selecionado"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "Usar Todos Os Ficheiros Numa Pasta "
+
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Tipo de Repetição Para Ficheiros Múltiplos"
 
 msgctxt "#32025"
 msgid "Repeat All"
@@ -43,6 +67,30 @@ msgstr "Repetir Todos"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repetir Um"
+
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr "Definir/Descarregar Ficheiro Vídeo Pré-selecionado"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Selecionar Ficheiro de Vídeo"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Mostrar Duração"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "Iniciar Vídeo Num Ponto Ao Acaso"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "Selecionar Pasta de Vídeos"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Impedir Início Do Protetor de Ecrã Se Estiver a Reproduzir Mídia"
 
 msgctxt "#32058"
 msgid "Dim Level"

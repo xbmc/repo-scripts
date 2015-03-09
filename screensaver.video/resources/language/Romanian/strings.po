@@ -31,3 +31,7 @@ msgstr "Activează jurnalizare depanare"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configurație"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Nivel de întunecare"

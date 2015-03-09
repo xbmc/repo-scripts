@@ -32,9 +32,33 @@ msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Selección de vídeo"
 
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "Vídeo Protector de pantalla"
+
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuración"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "Vídeo pre-cargado"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "Usuario definido"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Salva pantalla seleccionado"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "Usar todos los archivos en un folder"
+
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Repetir tipo para archivos multiples"
 
 msgctxt "#32025"
 msgid "Repeat All"
@@ -44,6 +68,150 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repetir Uno"
 
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr "Colocar/Descargar archivo de vídeo precargado"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Seleccionar archivo de video"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Tiempo transcurrido"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "Iniciar vídeo en un punto aleatorio."
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "Seleccione directorio de videos"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Prevenir iniciar Salva pantallas si esta reproduciendo "
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Cambiar volumen cuando inicia salva pantallas"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Volumen a"
+
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nivel de atenuación"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Detener salva pantallas automaticamente"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Detener salva pantallas después de (Minutos)"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "Todos los vídeos descargados"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Acuario 1 - [846MB] - 400p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Acuario 2 - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Fogata 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Fogata 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Fogata 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Acuario 3 - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Fogata 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Espacio 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Playa 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Playa 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matriz 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Espacio 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Bosque 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Viaje a las estrellas TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Ciencia Ficción 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Cascada 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Cascada 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Cascada 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Playa 3 - [3.4GB] - 720p"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "Archivo de salva pantalla no es valido"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "El siguiente vídeo por defecto ya existe"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Re utilizar este archivo?"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "Descargando archivo de vídeo de Salva pantallas"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "Esta opción usará todos los vídeos ya descargados "
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "Cada vídeo requiere que sea descargado primero individualmente "

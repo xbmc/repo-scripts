@@ -136,6 +136,62 @@ msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
 msgstr "Τζάκι 3 - [2.1GB] - 1080p"
 
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Ενυδρείο 3  - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Τζάκι 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Διάστημα 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Παραλία 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Παραλία 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Διάστημα 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Δάσος 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Κλασική Ε.Φ. 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Καταρράκτης 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Καταρράκτης 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Καταρράκτης 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Παραλία 3 - [3.4GB] - 720p"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Το Αρχείο Προφύλαξης Οθόνης Δεν Είναι Έγκυρο"

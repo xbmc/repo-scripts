@@ -82,7 +82,7 @@ msgstr "Pokazuj datę i zegar"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
-msgstr "Odtwarzaj wideo w dowolnym momencie"
+msgstr "Odtwarzaj wideo od dowolnej pozycji"
 
 msgctxt "#32054"
 msgid "Select Videos Folder"
@@ -94,7 +94,7 @@ msgstr "Zapobiegaj uruchomieniu wygaszacza podczas odtwarzania"
 
 msgctxt "#32056"
 msgid "Change Volume When Screensaver Starts"
-msgstr "Zmieniaj głośność uruchamiając wygaszacz ekranu"
+msgstr "Zmieniaj głośność po uruchomieniu wygaszacza ekranu"
 
 msgctxt "#32057"
 msgid "Set Volume To"
@@ -118,39 +118,79 @@ msgstr "*** Wszystkie pobrane wideo ***"
 
 msgctxt "#32101"
 msgid "Aquarium 1  - [846MB] - 400p"
-msgstr "Akwarium 1 [846MB] 400p"
+msgstr "Akwarium 1 - [846MB] - 400p"
 
 msgctxt "#32102"
 msgid "Aquarium 2  - [2.7GB] - 720p"
-msgstr "Akwarium 2 [2.7GB] 720p"
+msgstr "Akwarium 2 - [2.7GB] - 720p"
 
 msgctxt "#32103"
 msgid "Fireplace 1 - [965MB] - 720p"
-msgstr "Kominek 1 [965MB] 720p"
+msgstr "Kominek 1 - [965MB] - 720p"
 
 msgctxt "#32104"
 msgid "Fireplace 2 - [827MB] - 480p"
-msgstr "Kominek 2 [827MB] 480p"
+msgstr "Kominek 2 - [827MB] - 480p"
 
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr "Kominek 3 [2.1GB] 1080p"
+msgstr "Kominek 3 - [2.1GB] - 1080p"
 
 msgctxt "#32106"
 msgid "Aquarium 3  - [2.4GB] - 720p"
-msgstr "Akwarium 3 [2.4GB] 720p"
+msgstr "Akwarium 3 - [2.4GB] - 720p"
 
 msgctxt "#32107"
 msgid "Fireplace 4 - [2.7GB] - 720p"
-msgstr "Kominek 4 [2.7GB] 720p"
+msgstr "Kominek 4 - [2.7GB] - 720p"
 
 msgctxt "#32108"
 msgid "Space 1 - [970MB] - 720p"
-msgstr "Kosmos 1 [970MB] 720p"
+msgstr "Kosmos 1 - [970MB] - 720p"
 
 msgctxt "#32109"
 msgid "Beach 1 - [2.5GB] - 720p"
-msgstr "Plaża 1 [2.5GB] 720p"
+msgstr "Plaża 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Plaża 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Kosmos 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Las 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Sci-Fi 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Wodospad 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Wodospad 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Wodospad 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Plaża 3 - [3.4GB] - 720p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

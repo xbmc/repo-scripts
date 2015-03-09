@@ -142,15 +142,55 @@ msgstr "Aquarium 3 - [2.4GB] - 720p"
 
 msgctxt "#32107"
 msgid "Fireplace 4 - [2.7GB] - 720p"
-msgstr "Feuerstelle 4 - [2.7GB] - 720p"
+msgstr "Kamin 4 - [2.7GB] - 720p"
 
 msgctxt "#32108"
 msgid "Space 1 - [970MB] - 720p"
-msgstr "Das All 1 - [970MB] - 720p"
+msgstr "Weltraum 1 - [970MB] - 720p"
 
 msgctxt "#32109"
 msgid "Beach 1 - [2.5GB] - 720p"
 msgstr "Strand 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Strand 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Weltraum 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Wald 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Sci-Fi 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Wasserfall 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Wasserfall 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Wasserfall 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Strand 3 - [3.4GB] - 720p"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
