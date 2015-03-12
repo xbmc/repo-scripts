@@ -3,6 +3,109 @@
 Release History
 ---------------
 
+2.5.3 (2015-02-24)
+++++++++++++++++++
+
+**Bugfixes**
+
+- Revert changes to our vendored certificate bundle. For more context see
+  (#2455, #2456, and http://bugs.python.org/issue23476)
+
+2.5.2 (2015-02-23)
+++++++++++++++++++
+
+**Features and Improvements**
+
+- Add sha256 fingerprint support. (`shazow/urllib3#540`_)
+
+- Improve the performance of headers. (`shazow/urllib3#544`_)
+
+**Bugfixes**
+
+- Copy pip's import machinery. When downstream redistributors remove
+  requests.packages.urllib3 the import machinery will continue to let those
+  same symbols work. Example usage in requests' documentation and 3rd-party
+  libraries relying on the vendored copies of urllib3 will work without having
+  to fallback to the system urllib3.
+
+- Attempt to quote parts of the URL on redirect if unquoting and then quoting
+  fails. (#2356)
+
+- Fix filename type check for multipart form-data uploads. (#2411)
+
+- Properly handle the case where a server issuing digest authentication
+  challenges provides both auth and auth-int qop-values. (#2408)
+
+- Fix a socket leak. (`shazow/urllib3#549`_)
+
+- Fix multiple ``Set-Cookie`` headers properly. (`shazow/urllib3#534`_)
+
+- Disable the built-in hostname verification. (`shazow/urllib3#526`_)
+
+- Fix the behaviour of decoding an exhausted stream. (`shazow/urllib3#535`_)
+
+**Security**
+
+- Pulled in an updated ``cacert.pem``.
+
+- Drop RC4 from the default cipher list. (`shazow/urllib3#551`_)
+
+.. _shazow/urllib3#551: https://github.com/shazow/urllib3/pull/551
+.. _shazow/urllib3#549: https://github.com/shazow/urllib3/pull/549
+.. _shazow/urllib3#544: https://github.com/shazow/urllib3/pull/544
+.. _shazow/urllib3#540: https://github.com/shazow/urllib3/pull/540
+.. _shazow/urllib3#535: https://github.com/shazow/urllib3/pull/535
+.. _shazow/urllib3#534: https://github.com/shazow/urllib3/pull/534
+.. _shazow/urllib3#526: https://github.com/shazow/urllib3/pull/526
+
+2.5.1 (2014-12-23)
+++++++++++++++++++
+
+**Behavioural Changes**
+
+- Only catch HTTPErrors in raise_for_status (#2382)
+
+**Bugfixes**
+
+- Handle LocationParseError from urllib3 (#2344)
+- Handle file-like object filenames that are not strings (#2379)
+- Unbreak HTTPDigestAuth handler. Allow new nonces to be negotiated (#2389)
+
+2.5.0 (2014-12-01)
+++++++++++++++++++
+
+**Improvements**
+
+- Allow usage of urllib3's Retry object with HTTPAdapters (#2216)
+- The ``iter_lines`` method on a response now accepts a delimiter with which
+  to split the content (#2295)
+
+**Behavioural Changes**
+
+- Add deprecation warnings to functions in requests.utils that will be removed
+  in 3.0 (#2309)
+- Sessions used by the functional API are always closed (#2326)
+- Restrict requests to HTTP/1.1 and HTTP/1.0 (stop accepting HTTP/0.9) (#2323)
+
+**Bugfixes**
+
+- Only parse the URL once (#2353)
+- Allow Content-Length header to always be overriden (#2332)
+- Properly handle files in HTTPDigestAuth (#2333)
+- Cap redirect_cache size to prevent memory abuse (#2299)
+- Fix HTTPDigestAuth handling of redirects after authenticating successfully
+  (#2253)
+- Fix crash with custom method parameter to Session.request (#2317)
+- Fix how Link headers are parsed using the regular expression library (#2271)
+
+**Documentation**
+
+- Add more references for interlinking (#2348)
+- Update CSS for theme (#2290)
+- Update width of buttons and sidebar (#2289)
+- Replace references of Gittip with Gratipay (#2282)
+- Add link to changelog in sidebar (#2273)
+
 2.4.3 (2014-10-06)
 ++++++++++++++++++
 
@@ -55,7 +158,7 @@ Release History
 - Support for connect timeouts! Timeout now accepts a tuple (connect, read) which is used to set individual connect and read timeouts.
 - Allow copying of PreparedRequests without headers/cookies.
 - Updated bundled urllib3 version.
-- Refactored settings loading from environment — new `Session.merge_environment_settings`.
+- Refactored settings loading from environment -- new `Session.merge_environment_settings`.
 - Handle socket errors in iter_content.
 
 

@@ -17,6 +17,7 @@ from base64 import b64encode
 from .compat import urlparse, str
 from .cookies import extract_cookies_to_jar
 from .utils import parse_dict_header, to_native_string
+from .status_codes import codes
 
 CONTENT_TYPE_FORM_URLENCODED = 'application/x-www-form-urlencoded'
 CONTENT_TYPE_MULTI_PART = 'multipart/form-data'
@@ -66,6 +67,7 @@ class HTTPDigestAuth(AuthBase):
         self.nonce_count = 0
         self.chal = {}
         self.pos = None
+        self.num_401_calls = 1
 
     def build_digest_header(self, method, url):
 
@@ -122,13 +124,15 @@ class HTTPDigestAuth(AuthBase):
         s += os.urandom(8)
 
         cnonce = (hashlib.sha1(s).hexdigest()[:16])
-        noncebit = "%s:%s:%s:%s:%s" % (nonce, ncvalue, cnonce, qop, HA2)
         if _algorithm == 'MD5-SESS':
             HA1 = hash_utf8('%s:%s:%s' % (HA1, nonce, cnonce))
 
         if qop is None:
             respdig = KD(HA1, "%s:%s" % (nonce, HA2))
         elif qop == 'auth' or 'auth' in qop.split(','):
+            noncebit = "%s:%s:%s:%s:%s" % (
+                nonce, ncvalue, cnonce, 'auth', HA2
+                )
             respdig = KD(HA1, noncebit)
         else:
             # XXX handle auth-int.
@@ -150,6 +154,11 @@ class HTTPDigestAuth(AuthBase):
 
         return 'Digest %s' % (base)
 
+    def handle_redirect(self, r, **kwargs):
+        """Reset num_401_calls counter on redirects."""
+        if r.is_redirect:
+            self.num_401_calls = 1
+
     def handle_401(self, r, **kwargs):
         """Takes the given response and tries digest-auth, if needed."""
 
@@ -162,7 +171,7 @@ class HTTPDigestAuth(AuthBase):
 
         if 'digest' in s_auth.lower() and num_401_calls < 2:
 
-            setattr(self, 'num_401_calls', num_401_calls + 1)
+            self.num_401_calls += 1
             pat = re.compile(r'digest ', flags=re.IGNORECASE)
             self.chal = parse_dict_header(pat.sub('', s_auth, count=1))
 
@@ -182,7 +191,7 @@ class HTTPDigestAuth(AuthBase):
 
             return _r
 
-        setattr(self, 'num_401_calls', 1)
+        self.num_401_calls = 1
         return r
 
     def __call__(self, r):
@@ -192,6 +201,11 @@ class HTTPDigestAuth(AuthBase):
         try:
             self.pos = r.body.tell()
         except AttributeError:
-            pass
+            # In the case of HTTPDigestAuth being reused and the body of
+            # the previous request was a file-like object, pos has the
+            # file position of the previous body. Ensure it's set to
+            # None.
+            self.pos = None
         r.register_hook('response', self.handle_401)
+        r.register_hook('response', self.handle_redirect)
         return r
