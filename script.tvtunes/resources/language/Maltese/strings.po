@@ -36,6 +36,14 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Kast"
 
+msgctxt "#32070"
+msgid "Top"
+msgstr "L-ewwel 250:"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Qiegħ"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmati"

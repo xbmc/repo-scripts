@@ -16,6 +16,10 @@ msgstr ""
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32018"
+msgid "Debugging"
+msgstr "Penyahpepijatan"
+
 msgctxt "#32036"
 msgid "Never"
 msgstr "Tidak sesekali"

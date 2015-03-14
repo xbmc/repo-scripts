@@ -120,6 +120,14 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Skuespillere"
 
+msgctxt "#32070"
+msgid "Top"
+msgstr "Top"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Bund"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "FEJL"

@@ -357,7 +357,7 @@ class MenuNavigator():
                     try:
                         xbmcvfs.mkdir(targetpath)
                     except:
-                        log("fetchAllMissingThemes: Failed to create directory: %s" % targetpath)
+                        log("fetchAllMissingThemes: Failed to create directory: %s" % targetpath, True, xbmc.LOGERROR)
                         break
                 else:
                     log("moveToThemeFolder: directory already exists %s" % targetpath)

@@ -199,7 +199,7 @@ class Player(xbmc.Player):
             else:
                 log("Player: No reduced volume option set")
         except:
-            log("Player: %s" % traceback.format_exc())
+            log("Player: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
 
     # Graceful end of the playing, will fade if set to do so
     def endPlaying(self, fastFade=False, slowFade=False):
@@ -595,7 +595,7 @@ class TunesBackend():
                 # Wait a little before starting the check again
                 xbmc.sleep(200)
         except:
-            log("TunesBackend: %s" % traceback.format_exc())
+            log("TunesBackend: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
             self.stop()
 
     # Works out if the currently displayed area on the screen is something

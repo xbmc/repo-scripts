@@ -122,8 +122,8 @@ class NfoReader():
 
             del nfoXml
         except:
-            log("NfoReader: Failed to process NFO: %s" % nfoFileName)
-            log("NfoReader: %s" % traceback.format_exc())
+            log("NfoReader: Failed to process NFO: %s" % nfoFileName, True, xbmc.LOGERROR)
+            log("NfoReader: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
             returnValue = False
 
         return returnValue
@@ -173,7 +173,7 @@ class NfoReader():
                         log("NfoReader: file from playlist = %s" % file, self.debug_logging_enabled)
                         self.themeFiles.append(file)
             except:
-                log("NfoReader: playlist file processing error = %s" % playlistFile)
+                log("NfoReader: playlist file processing error = %s" % playlistFile, True, xbmc.LOGERROR)
         else:
             log("NfoReader: playlist file not found = %s" % playlistFile, self.debug_logging_enabled)
 

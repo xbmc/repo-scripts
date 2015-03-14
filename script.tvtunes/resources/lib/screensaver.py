@@ -131,14 +131,14 @@ class VolumeDrop(object):
             else:
                 log("Player: No reduced volume option set")
         except:
-            log("VolumeDrop: %s" % traceback.format_exc())
+            log("VolumeDrop: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
 
     def restoreVolume(self):
         try:
             if self.reduceVolume != 0:
                 self._setVolume(self.original_volume)
         except:
-            log("VolumeDrop: %s" % traceback.format_exc())
+            log("VolumeDrop: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
 
 
 # Class to collect all the extra images provided by Artwork Downloader
@@ -389,7 +389,7 @@ class BackgroundUpdater(object):
                 try:
                     self.athread.join(3)
                 except:
-                    log("BackgroundUpdater: Thread join error: %s" % traceback.format_exc())
+                    log("BackgroundUpdater: Thread join error: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
 
     def loadExtraData(self):
         log("BackgroundUpdater: Loading data")

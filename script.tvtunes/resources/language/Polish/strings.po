@@ -122,7 +122,7 @@ msgstr "Przeglądaj motywy"
 
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
-msgstr "Opóźniaj start motywu o (sekund)"
+msgstr "Opóźniaj odtwarzanie motywu o (sekund)"
 
 msgctxt "#32025"
 msgid "Support themes in sub directories"
@@ -254,7 +254,7 @@ msgstr "Z uwzględnieniem podfolderów"
 
 msgctxt "#32057"
 msgid "Fanart"
-msgstr "Tapeta"
+msgstr "Fototapeta"
 
 msgctxt "#32058"
 msgid "Thumbnail"
@@ -274,11 +274,11 @@ msgstr "Odtwarzaj motywy w trakcie wygaszacza"
 
 msgctxt "#32062"
 msgid "Fanart,Thumbnail,Cast"
-msgstr "Tapeta, Miniatura, Obsada"
+msgstr "Fototapeta, Miniatura, Obsada"
 
 msgctxt "#32063"
 msgid "Fanart,Thumbnail"
-msgstr "Tapeta, Miniatura"
+msgstr "Fototapeta, Miniatura"
 
 msgctxt "#32064"
 msgid "Dim Level"

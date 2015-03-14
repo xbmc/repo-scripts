@@ -48,6 +48,10 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Distribuție"
 
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Nivel de întunecare"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Caut informaţii..."
