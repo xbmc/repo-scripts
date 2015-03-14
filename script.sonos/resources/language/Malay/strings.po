@@ -20,6 +20,14 @@ msgctxt "#32002"
 msgid "IP Address"
 msgstr "Alamat IP"
 
+msgctxt "#32008"
+msgid "Debugging"
+msgstr "Penyahpepijatan"
+
+msgctxt "#32012"
+msgid "Debugging"
+msgstr "Penyahpepijatan"
+
 msgctxt "#32015"
 msgid "Controller"
 msgstr "Pengawal"

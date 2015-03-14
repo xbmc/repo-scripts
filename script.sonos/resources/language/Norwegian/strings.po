@@ -132,9 +132,61 @@ msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Automatisk oppdater IP adresse ved oppstart"
 
+msgctxt "#32030"
+msgid "Switch Sonos To Line-In On Media Start"
+msgstr "Bytt Sonos til line-in ved media start"
+
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Koordinator"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "er ikke grupperkoordinatoren for sone"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Noen funksjoner vil kanskje ikke virke som de skal hvis høyttaleren ikke er en koordinator"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automasjon"
+
 msgctxt "#32035"
 msgid "Layout"
 msgstr "Utforming"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Kontroller,Bildefremvisning,Bio,Album"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Kontroller,Bildefremvisning"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Bruk skin-ikoner i stedet for sonos-ikoner"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Kun bildefremvisning"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Ikke vis varsler hvis kontroller vises"
+
+msgctxt "#32041"
+msgid "Controller,Slideshow,Lyrics"
+msgstr "Kontroller,Bildefremvisning,Sangtekster"
+
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Gjem Sonos-logoen"
+
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr "Gjør artistbildefremvisning til fullskjerm"
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
@@ -147,6 +199,10 @@ msgstr "Vil du at dette skal være automatisk aktivert?"
 msgctxt "#32062"
 msgid "Next"
 msgstr "Neste"
+
+msgctxt "#32063"
+msgid "Failed To Process Sonos Update Event"
+msgstr "Kunne ikke behandle Sonos oppdateringsevent"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -163,6 +219,14 @@ msgstr "Radiostasjoner"
 msgctxt "#32103"
 msgid "Launch Sonos Controller"
 msgstr "Åpne Sonos Kontroller"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Sonos spilleliste"
+
+msgctxt "#32105"
+msgid "Speech"
+msgstr "Tale"
 
 msgctxt "#32110"
 msgid "Artists"
@@ -183,6 +247,10 @@ msgstr "Sjanger"
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Spor"
+
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Importerte spillelister"
 
 msgctxt "#32150"
 msgid "Open Sonos Player"
@@ -211,3 +279,51 @@ msgstr "Legg til i kø"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Erstatt kø"
+
+msgctxt "#32200"
+msgid "Enter Speech Text To Play ..."
+msgstr "Legg inn taletekst til avspilling ..."
+
+msgctxt "#32201"
+msgid "Speech messages are limited to 100 characters"
+msgstr "Taletekst-meldinger er begrenset til 100 tegn"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Ingen melding angitt"
+
+msgctxt "#32203"
+msgid "Enter Speech Text To Save ..."
+msgstr "Legg til taletekst til lagring"
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Fjern lagret tekst"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Klokka er %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "I dag er det %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Datoen i dag er %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "God morgen"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "God ettermiddag"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "God kveld"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Klokka er %time"

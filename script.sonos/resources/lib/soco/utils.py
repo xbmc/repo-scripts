@@ -18,6 +18,9 @@ def really_unicode(in_string):
     a series of progressively relaxed decodings
 
     """
+    # Fix for issue #294
+    if not in_string:
+        return
     if type(in_string) is StringType:
         for args in (('utf-8',), ('latin-1',), ('ascii', 'replace')):
             try:

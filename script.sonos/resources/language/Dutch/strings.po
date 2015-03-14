@@ -184,6 +184,10 @@ msgctxt "#32042"
 msgid "Hide Sonos Logo"
 msgstr "Verberg Sonoslogo"
 
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr "Maak artiesten diavoorstelling afbeelding volledig scherm"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "De volgende instelling in Artiestendiashow moet zijn geactiveerd"

@@ -44,8 +44,8 @@ if __name__ == '__main__':
     try:
         sonos_devices = soco.discover(timeout=5)
     except:
-        log("SonosDiscovery: Exception when getting devices")
-        log("SonosDiscovery: %s" % traceback.format_exc())
+        log("SonosDiscovery: Exception when getting devices", xbmc.LOGERROR)
+        log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
         sonos_devices = []
 
     # If there are multiple network devices, then this may not have picked up
@@ -58,8 +58,8 @@ if __name__ == '__main__':
             if interfaceAddr not in [None, '']:
                 sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
         except:
-            log("SonosDiscovery: Exception when getting devices")
-            log("SonosDiscovery: %s" % traceback.format_exc())
+            log("SonosDiscovery: Exception when getting devices", xbmc.LOGERROR)
+            log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
             sonos_devices = []
 
     # If still not found, try yet another method
@@ -71,8 +71,8 @@ if __name__ == '__main__':
             if interfaceAddr not in [None, '']:
                 sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
         except:
-            log("SonosDiscovery: Exception when getting devices")
-            log("SonosDiscovery: %s" % traceback.format_exc())
+            log("SonosDiscovery: Exception when getting devices", xbmc.LOGERROR)
+            log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
             sonos_devices = []
 
     # If still not found, try the last option
@@ -87,8 +87,8 @@ if __name__ == '__main__':
             if interfaceAddr not in [None, '']:
                 sonos_devices = soco.discover(timeout=5, interface_addr=interfaceAddr)
         except:
-            log("SonosDiscovery: Exception when getting devices")
-            log("SonosDiscovery: %s" % traceback.format_exc())
+            log("SonosDiscovery: Exception when getting devices", xbmc.LOGERROR)
+            log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
             sonos_devices = []
 
     speakers = {}
@@ -109,8 +109,8 @@ if __name__ == '__main__':
         try:
             playerInfo = device.get_speaker_info()
         except:
-            log("SonosDiscovery: IP address %s is not a valid player" % ip)
-            log("SonosDiscovery: %s" % traceback.format_exc())
+            log("SonosDiscovery: IP address %s is not a valid player" % ip, xbmc.LOGERROR)
+            log("SonosDiscovery: %s" % traceback.format_exc(), xbmc.LOGERROR)
             continue
 
         # If player  info was found, then print it out

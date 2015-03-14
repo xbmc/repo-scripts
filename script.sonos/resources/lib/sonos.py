@@ -98,13 +98,13 @@ class Sonos(SoCo):
                     # if there is not already one there
                     queueItem = sub.events.get(False)
                 except:
-                    log("Sonos: Queue get failed: %s" % traceback.format_exc())
+                    log("Sonos: Queue get failed: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
             # Now log the details of an event if there is one there
             if queueItem is not None:
                 log("Event details: %s" % queueItem)
         except:
-            log("Sonos: Failed to get latest event details: %s" % traceback.format_exc())
+            log("Sonos: Failed to get latest event details: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
         return queueItem
 
@@ -209,7 +209,7 @@ class Sonos(SoCo):
                     if not hasattr(track, 'next_art_uri') or (track['next_art_uri'] is None) or (track['next_art_uri'] == ""):
                         track['next_art_uri'] = next_track.album_art_uri
         except:
-            log("Sonos: Failed to update using event details: %s" % traceback.format_exc())
+            log("Sonos: Failed to update using event details: %s" % traceback.format_exc(), xbmc.LOGERROR)
             # Should really display on the screen that some of the display information
             # might not be complete of upto date, only show the error once
             if Sonos.SHOWN_ERROR is not True:

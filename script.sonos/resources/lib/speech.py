@@ -159,17 +159,17 @@ class Speech():
                 # We no longer want to  receive messages
                 sub.unsubscribe()
             except:
-                log("Sonos: Failed to unsubscribe: %s" % traceback.format_exc())
+                log("Sonos: Failed to unsubscribe: %s" % traceback.format_exc(), xbmc.LOGERROR)
             try:
                 # Make sure the thread is stopped even if unsubscribe failed
                 event_listener.stop()
             except:
-                log("Sonos: Failed to stop event listener: %s" % traceback.format_exc())
+                log("Sonos: Failed to stop event listener: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
             # Restore the sonos device back to it's previous state
             snap.restore()
         except:
-            log("Speech: %s" % traceback.format_exc())
+            log("Speech: %s" % traceback.format_exc(), xbmc.LOGERROR)
             xbmc.executebuiltin("Dialog.Close(busydialog)")
             raise
 
@@ -283,8 +283,8 @@ class Speech():
                 phrases = file_in.readlines()
                 file_in.close()
             except:
-                log("Speech: Failed to read lines from file %s" % speechfile)
-                log("Speech: %s" % traceback.format_exc())
+                log("Speech: Failed to read lines from file %s" % speechfile, xbmc.LOGERROR)
+                log("Speech: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
         return phrases
 
@@ -301,8 +301,8 @@ class Speech():
             file_out.writelines(("%s\n" % l.rstrip() for l in phrases))
             file_out.close()
         except:
-            log("Speech: Failed to write lines to file %s" % speechfile)
-            log("Speech: %s" % traceback.format_exc())
+            log("Speech: Failed to write lines to file %s" % speechfile, xbmc.LOGERROR)
+            log("Speech: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
     # Prompt the user for a phrase and save it for future use
     def addPhrase(self):

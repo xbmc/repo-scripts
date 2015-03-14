@@ -212,7 +212,47 @@ msgctxt "#32063"
 msgid "Failed To Process Sonos Update Event"
 msgstr ""
 
-#empty strings from id 32064 to 32099
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Error From Speaker %s"
+msgstr ""
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Failed to perform lookup %s (%s)"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Failed to perform queue lookup"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Failed to perform radio station lookup"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Failed to perform radio shows lookup"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Failed to perform action %s"
+msgstr ""
+
+#empty strings from id 32074 to 32099
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -294,7 +334,11 @@ msgctxt "#32156"
 msgid "Replace Queue"
 msgstr ""
 
-#empty strings from id 32157 to 32199
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr ""
+
+#empty strings from id 32158 to 32199
 
 msgctxt "#32200"
 msgid "Enter Speech Text To Play ..."

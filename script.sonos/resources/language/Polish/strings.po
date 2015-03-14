@@ -134,7 +134,7 @@ msgstr "Aktualizuj adres IP przy uruchomieniu"
 
 msgctxt "#32030"
 msgid "Switch Sonos To Line-In On Media Start"
-msgstr "Przełączaj Sonos na wyjście liniowe uruchamiając odtwarzanie"
+msgstr "Przełączaj Sonos na wyjście liniowe po uruchomieniu odtwarzania"
 
 msgctxt "#32031"
 msgid "Coordinator"
@@ -183,6 +183,10 @@ msgstr "Kontroler, Pokaz slajdów, Tekst utworu"
 msgctxt "#32042"
 msgid "Hide Sonos Logo"
 msgstr "Ukrywaj logo systemu Sonos"
+
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr "Uruchamiaj pokaz slajdów wykonawcy na pełnym ekranie"
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

@@ -126,7 +126,6 @@ class Lyrics():
                     x = x[y:]
                     match1 = tag.match(x)
                 for time in times:
-                    log("*** ROB ***: Adding time: %d line %s" % (time, x))
                     # Skip any empty/blank lines
                     if len(x.strip()) > 0:
                         timeLines.append((time, x))

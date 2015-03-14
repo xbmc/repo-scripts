@@ -110,7 +110,7 @@ class MenuNavigator():
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_MUSIC_LIBRARY})
         li = xbmcgui.ListItem(__addon__.getLocalizedString(32100), iconImage=MediaFiles.MusicLibraryIcon)
         li.addContextMenuItems([], replaceItems=True)  # Clear the Context Menu
-        self._addPlayerToContextMenu(li)  # Add the Sonos player to the menu
+        self._addMusicLibraryContextMenu(li)  # Add the Sonos player to the menu
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.ROOT_MENU_RADIO_STATIONS})
@@ -212,8 +212,8 @@ class MenuNavigator():
                 try:
                     list = sonosDevice.get_queue(totalCollected, Settings.getBatchSize(), True)
                 except:
-                    log("SonosPlugin: %s" % traceback.format_exc())
-                    xbmcgui.Dialog().ok("Error", "Failed to perform queue lookup")
+                    log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
+                    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32070))
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
@@ -281,8 +281,8 @@ class MenuNavigator():
                         # Call the browse version
                         list = sonosDevice.browse_by_idstring(folderName, subCategory, totalCollected, Settings.getBatchSize(), True)
                 except:
-                    log("SonosPlugin: %s" % traceback.format_exc())
-                    xbmcgui.Dialog().ok("Error", "Failed to perform lookup %s (%s)" % (folderName, subCategory))
+                    log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
+                    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32069) % (folderName, subCategory))
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
@@ -342,8 +342,8 @@ class MenuNavigator():
                 try:
                     list = sonosDevice.get_favorite_radio_stations(start=totalCollected, max_items=Settings.getBatchSize())
                 except:
-                    log("SonosPlugin: %s" % traceback.format_exc())
-                    xbmcgui.Dialog().ok("Error", "Failed to perform radio station lookup")
+                    log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
+                    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32071))
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
@@ -391,8 +391,8 @@ class MenuNavigator():
                 try:
                     list = sonosDevice.get_favorite_radio_shows(start=totalCollected, max_items=Settings.getBatchSize())
                 except:
-                    log("SonosPlugin: %s" % traceback.format_exc())
-                    xbmcgui.Dialog().ok("Error", "Failed to perform radio shows lookup")
+                    log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
+                    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32072))
                     return
 
                 # Processes the list returned from Sonos, creating the list display on the screen
@@ -583,7 +583,8 @@ class MenuNavigator():
 #        ctxtMenu.append(('Add To Sonos Playlist', 'XBMC.RunPlugin(%s)' % cmd))
 
         # Add a link to the player from the context menu
-        self._addPlayerToContextMenu(list_item)
+        playerList = self._addPlayerToContextMenu(list_item)
+        ctxtMenu.append(playerList.pop())
 
         list_item.addContextMenuItems(ctxtMenu, replaceItems=True)
 
@@ -600,7 +601,8 @@ class MenuNavigator():
         ctxtMenu.append((__addon__.getLocalizedString(32153), 'XBMC.RunPlugin(%s)' % cmd))
 
         # Add a link to the player from the context menu
-        self._addPlayerToContextMenu(list_item)
+        playerList = self._addPlayerToContextMenu(list_item)
+        ctxtMenu.append(playerList.pop())
 
         list_item.addContextMenuItems(ctxtMenu, replaceItems=True)
 
@@ -610,6 +612,19 @@ class MenuNavigator():
         # Open Sonos Player
         ctxtMenu.append((__addon__.getLocalizedString(32150), 'XBMC.RunScript(%s)' % os.path.join(__cwd__, "default.py")))
         list_item.addContextMenuItems(ctxtMenu, replaceItems=False)
+        return ctxtMenu
+
+    # Add items required for the Music Library
+    def _addMusicLibraryContextMenu(self, list_item):
+        # Action to update the music library (re-scan)
+        # Use a dummy itemid, as it is not really required
+        cmd = self._build_url({'mode': 'action', 'action': ActionManager.ACTION_UPDATE_LIBRARY, 'itemId': -1})
+
+        # Add a link to the player from the context menu
+        fullMenu = self._addPlayerToContextMenu(list_item)
+        fullMenu.append((__addon__.getLocalizedString(32157), 'XBMC.RunPlugin(%s)' % cmd))
+
+        list_item.addContextMenuItems(fullMenu, replaceItems=True)
 
 
 ##################################################
@@ -623,6 +638,8 @@ class ActionManager():
     ACTION_REPLACE_QUEUE = 'replaceQueue'
 #    ACTION_ADD_TO_SONOS_FAVOURITES = 'addToSonosFavourites'
 #    ACTION_ADD_TO_SONOS_PLAYLIST = 'addToSonosPlaylist'
+
+    ACTION_UPDATE_LIBRARY = 'updateLibrary'
 
     ACTION_QUEUE_PLAY_ITEM = 'playQueueItem'
     ACTION_QUEUE_REMOVE_ITEM = 'removeQueueItem'
@@ -659,12 +676,14 @@ class ActionManager():
                 self.sayPhrase(itemId)
             elif actionType == ActionManager.ACTION_SPEECH_REMOVE_PHRASE:
                 self.removePhrase(itemId)
+            elif actionType == ActionManager.ACTION_UPDATE_LIBRARY:
+                self.updateLibrary()
             else:
                 # This should never be shown, so no need to translate, enabled for debug
-                xbmcgui.Dialog().ok("Error", "Operation %s not currently supported" % actionType)
+                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), "Operation %s not currently supported" % actionType)
         except:
-            log("SonosPlugin: %s" % traceback.format_exc())
-            xbmcgui.Dialog().ok("Error", "Failed to perform action %s" % actionType)
+            log("SonosPlugin: %s" % traceback.format_exc(), xbmc.LOGERROR)
+            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32068), __addon__.getLocalizedString(32073) % actionType)
 
     # The default play command for Sonos is to add it to the queue and play that item
     def performPlay(self, itemId):
@@ -715,6 +734,19 @@ class ActionManager():
             # Refresh the screen now that we have removed all the items
             xbmc.executebuiltin('Container.Refresh')
 
+    # Trigger an update of the Library
+    def updateLibrary(self):
+        # Make sure a Sonos speaker was found
+        if self.sonosDevice is not None:
+            # First check to see if the library is already being updated
+            if self.sonosDevice.library_updating is True:
+                # Tell the user that an update is already in progress
+                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32065))
+            else:
+                # Perform the update
+                self.sonosDevice.start_library_update()
+                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32064))
+
     # SPEECH OPERATIONS
     def sayPhrase(self, phrase):
         # Make sure a Sonos speaker was found
@@ -729,6 +761,7 @@ class ActionManager():
         speech.removePhrase(phrase)
         # Refresh the screen now that an item has been removed
         xbmc.executebuiltin('Container.Refresh')
+
 
 ################################
 # Main of the Sonos Plugin

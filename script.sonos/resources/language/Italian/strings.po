@@ -116,13 +116,73 @@ msgctxt "#32025"
 msgid "Volume Change Increments"
 msgstr "Incremento cambiamento volume"
 
+msgctxt "#32026"
+msgid "Automatically Pause Sonos When Kodi Plays Media (Restart Required)"
+msgstr "Interrompi automaticamente Sonos quanto Kodi riproduzione un media (Riavvio richiesto)"
+
+msgctxt "#32027"
+msgid "Automatically Resume Sonos (Seconds) [0 = Off]"
+msgstr "Riprendi automaticamente Sonos (Secondi) [0=Off]"
+
+msgctxt "#32028"
+msgid "Zone Name (Optional)"
+msgstr "Nome zona (opzionale)"
+
 msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Aggiorna Automaticamente l'indirizzo IP all'avvio"
 
+msgctxt "#32031"
+msgid "Coordinator"
+msgstr "Coordinatore"
+
+msgctxt "#32032"
+msgid "is not the group coordinator for zone"
+msgstr "non è il coordinatore di gruppo per la zona"
+
+msgctxt "#32033"
+msgid "Some functions may not work correctly if the speaker is not a coordinator"
+msgstr "Alcuni funziona potrebbero non funzionare correttamente se lo speaker non è un coordinatore"
+
+msgctxt "#32034"
+msgid "Automation"
+msgstr "Automazione"
+
 msgctxt "#32035"
 msgid "Layout"
 msgstr "Impaginazione"
+
+msgctxt "#32036"
+msgid "Controller,Slideshow,Bio,Albums"
+msgstr "Controller,Slideshow,Bio,Albums"
+
+msgctxt "#32037"
+msgid "Controller,Slideshow"
+msgstr "Controller,Slideshow"
+
+msgctxt "#32038"
+msgid "Use Skin Icons Instead Of Sonos Icons"
+msgstr "Usa le icone della skin invece di quelle di Sonos"
+
+msgctxt "#32039"
+msgid "Slideshow Only"
+msgstr "Solo slideshow"
+
+msgctxt "#32040"
+msgid "Do Not Display Notification If Controller Is Showing"
+msgstr "Non mostra la notifica se il controller è in mostra"
+
+msgctxt "#32041"
+msgid "Controller,Slideshow,Lyrics"
+msgstr "Controller,Slideshow,Lyrics"
+
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Nascondi logo Sonos"
+
+msgctxt "#32043"
+msgid "Make Artist Slideshow Image Full Screen"
+msgstr "Imposta l'immagine dell'artista a schermo intero"
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
@@ -147,6 +207,14 @@ msgstr "Coda"
 msgctxt "#32102"
 msgid "Radio Stations"
 msgstr "Stazioni radio"
+
+msgctxt "#32103"
+msgid "Launch Sonos Controller"
+msgstr "Lancia il controller Sonos"
+
+msgctxt "#32104"
+msgid "Sonos Playlists"
+msgstr "Playlist Sonos"
 
 msgctxt "#32110"
 msgid "Artists"

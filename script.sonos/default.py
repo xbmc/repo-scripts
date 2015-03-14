@@ -671,7 +671,7 @@ class SonosArtistSlideshow(SonosControllerWindow):
                                           __addon__.getLocalizedString(32061)):
                     artistslideshow.setSetting('transparent', 'true')
         except:
-            log("SonosArtistSlideshow: Exception Details: %s" % traceback.format_exc())
+            log("SonosArtistSlideshow: Exception Details: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
         return SonosArtistSlideshow(Settings.getArtistInfoLayout(), __cwd__, sonosDevice=sonosDevice)
 
@@ -741,7 +741,7 @@ class SonosArtistSlideshow(SonosControllerWindow):
         try:
             self.athread.join(3)
         except:
-            log("Thread join error: %s" % traceback.format_exc())
+            log("Thread join error: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
         # Now close the window (needs to be last as ArtistSlideshow is reading from it)
         SonosControllerWindow.close(self)
@@ -893,7 +893,7 @@ if __name__ == '__main__':
             except:
                 # Failed to connect to the Sonos Speaker
                 log("Sonos: Exception Details: %s" % traceback.format_exc(), xbmc.LOGERROR)
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), ("Error from speaker %s" % Settings.getIPAddress()))
+                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), (__addon__.getLocalizedString(32066) % Settings.getIPAddress()))
 
             # Need to check to see if we can stop any subscriptsions
             if sub is not None:
@@ -919,4 +919,4 @@ if __name__ == '__main__':
         keyMapCtrl.cleanup()
         del keyMapCtrl
     else:
-        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), "IP Address Not Set")
+        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32067))

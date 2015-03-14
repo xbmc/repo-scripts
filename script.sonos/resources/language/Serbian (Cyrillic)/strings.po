@@ -24,6 +24,10 @@ msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "Омогући бележење грешака"
 
+msgctxt "#32011"
+msgid "Notifications"
+msgstr "Обавештења"
+
 msgctxt "#32012"
 msgid "Debugging"
 msgstr "Тражење грешака"
