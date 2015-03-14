@@ -141,6 +141,13 @@ class Settings():
         'RepeatOne'
     )
 
+    OVERLAY_IMAGES = (
+        None,
+        'PictureFrame1.png',
+        'WindowFrame1.png',
+        'WindowFrame2.png',
+    )
+
     @staticmethod
     def getScreensaverVideo():
         return __addon__.getSetting("screensaverFile").decode("utf-8")
@@ -230,3 +237,15 @@ class Settings():
             if Settings.isFolderSelection() and __addon__.getSetting("folderRepeatType"):
                 repeatType = Settings.REPEAT_TYPE[int(__addon__.getSetting("folderRepeatType"))]
         return repeatType
+
+    @staticmethod
+    def getOverlayImage():
+        if __addon__.getSetting("overlayImage"):
+            overlayId = int(__addon__.getSetting("overlayImage"))
+            # Check if this is is the manual defined option, so the last in the selection
+            if overlayId >= len(Settings.OVERLAY_IMAGES):
+                return __addon__.getSetting("overlayImageFile").decode("utf-8")
+            else:
+                return Settings.OVERLAY_IMAGES[overlayId]
+        else:
+            return None

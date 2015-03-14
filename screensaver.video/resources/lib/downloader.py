@@ -107,8 +107,8 @@ class Downloader:
                     log("Download: Copy Failed")
             xbmcvfs.delete(tmpdestination)
         except:
-            log("Download: Theme download Failed!!!")
-            log("Download: %s" % traceback.format_exc())
+            log("Download: Theme download Failed!!!", xbmc.LOGERROR)
+            log("Download: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
         # Make sure the progress dialog has been closed
         downloadProgressDialog.close()

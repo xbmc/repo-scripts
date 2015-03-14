@@ -8,6 +8,8 @@
 		<setting id="screensaverFile" label="32051" subsetting="true" visible="eq(-4,1) + eq(-1,false)" type="video"/>
 		<setting id="screensaverFolder" label="32054" subsetting="true" visible="eq(-5,1) + eq(-2,true)" type="folder"/>
 		<setting id="folderRepeatType" subsetting="true" visible="eq(-6,1) + eq(-3,true)" type="enum" label="32024" lvalues="32025|32026" default="0"/>
+		<setting id="overlayImage" type="enum" label="32200" lvalues="32202|32204|32205|32206|32203" default="0"/>
+		<setting id="overlayImageFile" label="32201" subsetting="true" visible="eq(-1,4)" type="image"/>
     	<setting label="32002" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32003" default="false"/>
 	</category>

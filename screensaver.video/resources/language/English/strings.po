@@ -222,7 +222,37 @@ msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
 msgstr ""
 
-#empty strings from id 32124 to 32299
+#empty strings from id 32124 to 32199
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr ""
+
+msgctxt "#32202"
+msgid "None"
+msgstr ""
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr ""
+
+#empty strings from id 32207 to 32299
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

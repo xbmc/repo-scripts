@@ -36,6 +36,7 @@ from VideoParser import VideoParser
 class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     TIME_CONTROL = 3002
     DIM_CONTROL = 3003
+    OVERLAY_CONTROL = 3004
 
     def __init__(self, *args, **kwargs):
         self.isClosed = False
@@ -81,10 +82,17 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
 
         # Set the value of the dimming for the video
         dimLevel = Settings.getDimValue()
-        if Settings.getDimValue() is not None:
+        if dimLevel is not None:
             log("Setting Dim Level to: %s" % dimLevel)
             dimControl = self.getControl(ScreensaverWindow.DIM_CONTROL)
             dimControl.setColorDiffuse(dimLevel)
+
+        # Set the overlay image
+        overlayImage = Settings.getOverlayImage()
+        if overlayImage is not None:
+            log("Setting Overlay Image to: %s" % overlayImage)
+            overlayControl = self.getControl(ScreensaverWindow.OVERLAY_CONTROL)
+            overlayControl.setImage(overlayImage)
 
         # Update any settings that need to be done after the video is playing
         self._updatePostPlayingForSettings(playlist)
@@ -213,8 +221,8 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
             # Parse the video file for the duration
             duration = VideoParser().getVideoLength(filename)
         except:
-            log("Failed to get duration from %s" % filename)
-            log("Error: %s" % traceback.format_exc())
+            log("Failed to get duration from %s" % filename, xbmc.LOGERROR)
+            log("Error: %s" % traceback.format_exc(), xbmc.LOGERROR)
             duration = 0
 
         log("Duration retrieved is = %d" % duration)
@@ -259,7 +267,7 @@ class VolumeDrop(object):
             else:
                 log("Player: No reduced volume option set")
         except:
-            log("VolumeDrop: %s" % traceback.format_exc())
+            log("VolumeDrop: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
     def restoreVolume(self):
         try:
@@ -267,7 +275,7 @@ class VolumeDrop(object):
             if self.screensaverVolume > -1:
                 self._setVolume(self.original_volume)
         except:
-            log("VolumeDrop: %s" % traceback.format_exc())
+            log("VolumeDrop: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
 
 ##################################
