@@ -209,7 +209,8 @@ def HandleTMDBMovieResult(results=[], local_first=True, sortkey="Year"):
             time_comparer = ""
         trailer = "plugin://script.extendedinfo/?info=playtrailer&&id=" + tmdb_id
         if addon.getSetting("infodialog_onclick") != "false":
-            path = 'plugin://script.extendedinfo/?info=extendedinfo&&id=%s' % tmdb_id
+            # path = 'plugin://script.extendedinfo/?info=extendedinfo&&id=%s' % tmdb_id
+            path = 'plugin://script.extendedinfo/?info=action&&id=RunScript(script.extendedinfo,info=extendedinfo,id=%s)' % tmdb_id
         else:
             path = trailer
         newmovie = {'Art(fanart)': backdrop_path,
@@ -279,7 +280,8 @@ def HandleTMDBTVShowResult(results, local_first=True, sortkey="year"):
                  'Plot': fetch(tv, "overview"),
                  'year': year,
                  'media_type': "tv",
-                 'Path': 'plugin://script.extendedinfo/?info=extendedtvinfo&&id=%s' % tmdb_id,
+                 'Path': 'plugin://script.extendedinfo/?info=action&&id=RunScript(script.extendedinfo,info=extendedtvinfo,id=%s)' % tmdb_id,
+                 # 'Path': 'plugin://script.extendedinfo/?info=extendedtvinfo&&id=%s' % tmdb_id,
                  'Rating': fetch(tv, 'vote_average'),
                  'User_Rating': str(fetch(tv, 'rating')),
                  'Votes': fetch(tv, 'vote_count'),
@@ -960,6 +962,8 @@ def GetRatedMedia(media_type):
     else:
         session_id = get_guest_session_id()
         response = GetMovieDBData("guest_session/%s/rated_movies?language=%s&" % (str(session_id), addon.getSetting("LanguageID")), 0)
+    if media_type == "tv/episodes":
+        return HandleTMDBEpisodesResult(response["results"])
     if media_type == "tv":
         return HandleTMDBTVShowResult(response["results"], False, None)
     else:

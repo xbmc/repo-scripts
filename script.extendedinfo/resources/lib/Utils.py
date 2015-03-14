@@ -994,11 +994,12 @@ def passListToSkin(name="", data=None, prefix="", controlwindow=None, handle=Non
         if data is not None:
             homewindow.setProperty(name + ".Count", str(len(data)))
             items = CreateListItems(data)
-            xbmcplugin.setContent(handle, 'url')
+            xbmcplugin.setContent(handle, 'files')
             itemlist = list()
             for item in items:
                 itemlist.append((item.getProperty("path"), item, False))
             xbmcplugin.addDirectoryItems(handle, itemlist, len(itemlist))
+            xbmcplugin.endOfDirectory(handle)
     else:
         SetWindowProperties(name, data, prefix, debug)
 
@@ -1046,14 +1047,14 @@ def CreateListItems(data=None, preload_images=0):
                             image_requests.append(value)
                 if key.lower() in ["name", "label", "title"]:
                     listitem.setLabel(value)
-                if key.lower() in ["thumb"]:
+                elif key.lower() in ["thumb"]:
                     listitem.setThumbnailImage(value)
-                if key.lower() in ["icon"]:
+                elif key.lower() in ["icon"]:
                     listitem.setIconImage(value)
+                elif key.lower() in ["path"]:
+                    itempath = value
                 if key.lower() in ["thumb", "poster", "banner", "fanart", "clearart", "clearlogo", "landscape", "discart", "characterart", "tvshow.fanart", "tvshow.poster", "tvshow.banner", "tvshow.clearart", "tvshow.characterart"]:
                     listitem.setArt({key.lower(): value})
-                if key.lower() in ["path"]:
-                    itempath = value
            #     log("key: " + unicode(key) + "  value: " + unicode(value))
                 if key.lower() in Int_InfoLabels:
                     try:

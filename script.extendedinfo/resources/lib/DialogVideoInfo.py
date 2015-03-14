@@ -10,7 +10,7 @@ import DialogVideoList
 try:
     from ImageTools import *
 except:
-    pass
+    log("Exception when importing ImageTools")
 import threading
 homewindow = xbmcgui.Window(10000)
 selectdialog = xbmcgui.Window(12000)

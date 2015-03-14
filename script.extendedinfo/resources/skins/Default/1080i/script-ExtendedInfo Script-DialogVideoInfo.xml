@@ -1225,19 +1225,61 @@
                             </focusedlayout>
                         </control>
                     </control>
-                    <control type="group" id="50113">
-                        <height>500</height>
-                        <visible>IntegerGreaterThan(Container(250).NumItems,0)</visible>
+                    <control type="group">
+                        <visible>!IsEmpty(Window.Property(movie.set.label))</visible>
+                        <posy>400</posy>
+                        <height>350</height>
+                        <control type="image">
+                            <posy>45</posy>
+                            <posx>0</posx>
+                            <width>1920</width>
+                            <height>325</height>
+                            <texture>$INFO[Window.Property(movie.set.fanart)]</texture>
+                            <aspectratio aligny="center">scale</aspectratio>
+                            <fadetime>0</fadetime>
+                        </control>
+                        <control type="image">
+                            <posy>45</posy>
+                            <posx>0</posx>
+                            <width>980</width>
+                            <height>325</height>
+                            <visible>!IsEmpty(Window.Property(movie.set.fanart)) + !IsEmpty(Window.Property(movie.set.overview))</visible>
+                            <texture colordiffuse="66FFFFFF">common/black.png</texture>
+                            <aspectratio>scale</aspectratio>
+                        </control>
                         <control type="label">
                             <posx>25</posx>
-                            <posy>6</posy>
+                            <posy>0</posy>
                             <width>1900</width>
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
                             <label>$INFO[Window.Property(movie.set.label)]$INFO[Container(250).NumItems, (,)]</label>
-                            <visible>!IsEmpty(Window.Property(movie.set.label))</visible>
                         </control>
+                        <control type="textbox">
+                            <posx>280</posx>
+                            <posy>45</posy>
+                            <width>700</width>
+                            <height>300</height>
+                            <label fallback="N / A">$INFO[Window.Property(movie.set.overview)]</label>
+                            <font>font12</font>
+                            <textcolor>FFFAFAFA</textcolor>
+                            <scroll>true</scroll>
+                            <visible>!StringCompare(Window.Property(movie.set.overview),Window.Property(movie.set.label))</visible>
+                        </control>
+                        <control type="image">
+                            <posy>45</posy>
+                            <posx>30</posx>
+                            <width>224</width>
+                            <height>325</height>
+                            <texture>$INFO[Window.Property(movie.set.thumb)]</texture>
+                            <aspectratio aligny="center">scale</aspectratio>
+                            <fadetime>0</fadetime>
+                        </control>
+                    </control>
+                    <control type="group" id="50113">
+                        <height>500</height>
+                        <visible>IntegerGreaterThan(Container(250).NumItems,0)</visible>
                         <control type="label">
                             <posx>25</posx>
                             <posy>6</posy>
@@ -1420,40 +1462,6 @@
                                     </control>
                                 </control>
                             </focusedlayout>
-                        </control>
-                        <control type="group">
-                            <posx>1100</posx>
-                            <visible>!Container(250).Column(4) + !Container(250).Column(5) + !Container(250).Column(6)</visible>
-                            <animation effect="fade" time="250">VisibleChange</animation>
-                            <control type="image">
-                                <posy>60</posy>
-                                <posx>0</posx>
-                                <width>577</width>
-                                <height>325</height>
-                                <texture colordiffuse="FF666666">$INFO[Window.Property(movie.set.fanart)]</texture>
-                                <aspectratio aligny="center">scale</aspectratio>
-                                <fadetime>0</fadetime>
-                            </control>
-                            <control type="textbox">
-                                <posx>20</posx>
-                                <posy>60</posy>
-                                <width>537</width>
-                                <height>300</height>
-                                <label>$INFO[Window.Property(movie.set.overview)]</label>
-                                <font>font12</font>
-                                <textcolor>FFFAFAFA</textcolor>
-                                <scroll>true</scroll>
-                                <visible>!StringCompare(Window.Property(movie.set.overview),Window.Property(movie.set.label))</visible>
-                            </control>
-                            <control type="image">
-                                <posy>60</posy>
-                                <posx>577</posx>
-                                <width>224</width>
-                                <height>325</height>
-                                <texture>$INFO[Window.Property(movie.set.thumb)]</texture>
-                                <aspectratio aligny="center">scale</aspectratio>
-                                <fadetime>0</fadetime>
-                            </control>
                         </control>
                     </control>
                     <control type="group">

@@ -10,7 +10,7 @@ import DialogVideoList
 try:
     from ImageTools import *
 except:
-    pass
+    log("Exception when importing ImageTools")
 homewindow = xbmcgui.Window(10000)
 
 addon = xbmcaddon.Addon()

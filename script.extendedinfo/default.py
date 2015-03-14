@@ -2,7 +2,6 @@ import sys
 import os
 import xbmc
 import xbmcaddon
-import xbmcplugin
 # try:
 #     import buggalo
 #     buggalo.GMAIL_RECIPIENT = "phil65@kodi.tv"
@@ -24,13 +23,11 @@ class Main:
         # try:
         self._parse_argv()
         if self.infos:
-            self.control = StartInfoActions(self.infos, self.params)
+            StartInfoActions(self.infos, self.params)
         elif not self.handle:
             import DialogVideoList
             dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % addon_name, addon_path)
             dialog.doModal()
-        if self.control == "plugin":
-            xbmcplugin.endOfDirectory(self.handle)
         xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
         # except Exception:
         #     xbmc.executebuiltin('Dialog.Close(busydialog)')

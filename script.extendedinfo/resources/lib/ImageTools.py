@@ -8,7 +8,7 @@ from Utils import *
 try:
     from PIL import Image, ImageFilter, ImageOps
 except:
-    pass
+    log("Exception when importing PIL")
 
 addon = xbmcaddon.Addon()
 addon_id = addon.getAddonInfo('id')

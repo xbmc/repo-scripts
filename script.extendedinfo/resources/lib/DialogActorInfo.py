@@ -5,7 +5,7 @@ from Utils import *
 try:
     from ImageTools import *
 except:
-    pass
+    log("Exception when importing ImageTools")
 from TheMovieDB import *
 from YouTube import *
 import DialogVideoInfo

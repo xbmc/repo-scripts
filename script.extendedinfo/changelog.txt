@@ -1,3 +1,12 @@
+v2.0.6
+- fixes concerning plugin handling
+- new look for movie set part from movie info dialog
+- fixes for movie lists (also for removing / refreshing list items)
+- some more fixes for filter window
+- fixed 0.0 rating (not allowed)
+- context menu fixes
+- some more small stuff
+
 v2.0.5
 - added "Remove from list" context menu entry
 

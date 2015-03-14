@@ -9,7 +9,7 @@ import DialogVideoList
 try:
     from ImageTools import *
 except:
-    pass
+    log("Exception when importing ImageTools")
 homewindow = xbmcgui.Window(10000)
 
 addon = xbmcaddon.Addon()
@@ -111,8 +111,8 @@ class DialogEpisodeInfo(xbmcgui.WindowXMLDialog):
                 ids = [self.tmdb_id, self.season, self.episode["general"]["episode"]]
                 RateMedia("episode", ids, rating)
                 self.UpdateStates()
-        # elif controlID == 6006:
-        #     self.ShowRatedEpisodes()
+        elif controlID == 6006:
+            self.ShowRatedEpisodes()
 
 
     def onFocus(self, controlID):
@@ -139,10 +139,10 @@ class DialogEpisodeInfo(xbmcgui.WindowXMLDialog):
 
     def ShowRatedEpisodes(self):
         xbmc.executebuiltin("ActivateWindow(busydialog)")
-        list_items = GetRatedMedia("episode")
+        list_items = GetRatedMedia("tv/episodes")
         AddToWindowStack(self)
         self.close()
-        dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % addon_name, addon_path, listitems=list_items, color=self.tvshow["general"]['ImageColor'])
+        dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % addon_name, addon_path, listitems=list_items, color=self.episode["general"]['ImageColor'])
         xbmc.executebuiltin("Dialog.Close(busydialog)")
         dialog.doModal()
 

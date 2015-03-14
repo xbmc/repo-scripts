@@ -105,7 +105,7 @@ def StartInfoActions(infos, params):
             if params.get("id", False):
                 movie_id = params["id"]
             elif dbid and int(dbid) > 0:
-                movie_id = GetImdbIDFromDatabase("movie", params["dbid"])
+                movie_id = GetImdbIDFromDatabase("movie", dbid)
                 log("IMDBId from local DB:" + str(movie_id))
             else:
                 movie_id = ""
@@ -114,23 +114,27 @@ def StartInfoActions(infos, params):
         elif info == 'similartvshows':
             tvshow_id = None
             dbid = params.get("dbid", False)
-            if params.get("tmdb_id", False):
-                tvshow_id = params.get("tmdb_id", False)
+            name = params.get("name", False)
+            tmdb_id = params.get("tmdb_id", False)
+            tvdb_id = params.get("tvdb_id", False)
+            imdb_id = params.get("imdb_id", False)
+            if tmdb_id:
+                tvshow_id = tmdb_id
             elif dbid and int(dbid) > 0:
-                tvdb_id = GetImdbIDFromDatabase("tvshow", params["dbid"])
+                tvdb_id = GetImdbIDFromDatabase("tvshow", dbid)
                 log("IMDBId from local DB:" + str(tvdb_id))
                 if tvdb_id:
                     tvshow_id = Get_Show_TMDB_ID(tvdb_id)
                     log("tvdb_id to tmdb_id: %s --> %s" % (str(tvdb_id), str(tvshow_id)))
-            elif params.get("tvdb_id", False):
-                tvshow_id = Get_Show_TMDB_ID(params["tvdb_id"])
-                log("tvdb_id to tmdb_id: %s --> %s" % (str(params["tvdb_id"]), str(tvshow_id)))
-            elif params.get("imdb_id", False):
-                tvshow_id = Get_Show_TMDB_ID(params["imdb_id"], "imdb_id")
-                log("imdb_id to tmdb_id: %s --> %s" % (str(params["imdb_id"]), str(tvshow_id)))
-            elif params.get("name", False):
-                tvshow_id = search_media(params["name"], "", "tv")
-                log("search string to tmdb_id: %s --> %s" % (str(params["name"]), str(tvshow_id)))
+            elif tvdb_id:
+                tvshow_id = Get_Show_TMDB_ID(tvdb_id)
+                log("tvdb_id to tmdb_id: %s --> %s" % (tvdb_id, str(tvshow_id)))
+            elif imdb_id:
+                tvshow_id = Get_Show_TMDB_ID(imdb_id, "imdb_id")
+                log("imdb_id to tmdb_id: %s --> %s" % (imdb_id, str(tvshow_id)))
+            elif name:
+                tvshow_id = search_media(name, "", "tv")
+                log("search string to tmdb_id: %s --> %s" % (name, str(tvshow_id)))
             if tvshow_id:
                 data = GetSimilarTVShows(tvshow_id), "SimilarTVShows"
         elif info == 'studio':
@@ -162,8 +166,6 @@ def StartInfoActions(infos, params):
             data = GetPopularActorList(), "PopularPeople"
         elif info == 'extendedinfo':
             from DialogVideoInfo import DialogVideoInfo
-            if params.get("handle", ""):
-                xbmcplugin.endOfDirectory(params.get("handle", ""))
             dialog = DialogVideoInfo(u'script-%s-DialogVideoInfo.xml' % addon_name, addon_path, id=params.get("id", ""), dbid=params.get("dbid", None), imdbid=params.get("imdbid", ""), name=params.get("name", ""))
             dialog.doModal()
         elif info == 'extendedactorinfo':
@@ -173,8 +175,6 @@ def StartInfoActions(infos, params):
 
         elif info == 'extendedtvinfo':
             from DialogTVShowInfo import DialogTVShowInfo
-            if params.get("handle", ""):
-                xbmcplugin.endOfDirectory(params.get("handle", ""))
             dialog = DialogTVShowInfo(u'script-%s-DialogVideoInfo.xml' % addon_name, addon_path, id=params.get("id", ""), dbid=params.get("dbid", None), imdbid=params.get("imdbid", ""), name=params.get("name", ""))
             dialog.doModal()
         elif info == 'seasoninfo':
@@ -275,7 +275,6 @@ def StartInfoActions(infos, params):
         elif info == 'updatexbmcdatabasewithartistmbidbg':
             SetMusicBrainzIDsForAllArtists(False, False)
         elif info == 'setfocus':
-            params["control"] = ""  # workaround to avoid breaking PlayMedia
             xbmc.executebuiltin("SetFocus(22222)")
         elif info == 'playliststats':
             GetPlaylistStats(params.get("id", ""))
@@ -298,7 +297,6 @@ def StartInfoActions(infos, params):
             homewindow.clearProperty(params.get("name", ""))
         elif info == "youtubevideo":
             if params.get("id", ""):
-                params["control"] = ""  # workaround to avoid breaking PlayMedia
                 xbmc.executebuiltin("Dialog.Close(all,true)")
                 PlayTrailer(params.get("id", ""))
         elif info == 'playtrailer':
@@ -318,7 +316,6 @@ def StartInfoActions(infos, params):
                 xbmc.executebuiltin("Dialog.Close(busydialog)")
                 if trailer:
                     PlayTrailer(trailer)
-                    params["control"] = ""  # workaround to avoid breaking PlayMedia
                 else:
                     Notify("Error", "No Trailer available")
         elif info == 'updatexbmcdatabasewithartistmbid':
@@ -338,4 +335,3 @@ def StartInfoActions(infos, params):
         if data:
             data, prefix = data
             passListToSkin(prefix, data, params.get("prefix", ""), params.get("window", ""), params.get("handle", ""), params.get("limit", 20))
-    return params["control"]
