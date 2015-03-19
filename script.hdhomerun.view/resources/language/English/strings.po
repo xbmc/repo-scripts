@@ -1,0 +1,169 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "General"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Confirm exit"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Next"
+msgstr ""
+
+msgctxt "#32005"
+msgid "(No Data)"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Exit"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Are you sure you want to exit?"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Fetching Guide"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Finishing Up"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Finding Devices"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Could not find any compatible devices."
+msgstr ""
+
+msgctxt "#32012"
+msgid "Click OK to exit."
+msgstr ""
+
+msgctxt "#32013"
+msgid "Unable to fetch guide data"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Could not find any devices."
+msgstr ""
+
+msgctxt "#32015"
+msgid "Error while searching for devices:"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32017"
+msgid "No channels found!"
+msgstr ""
+
+msgctxt "#32018"
+msgid "No Channels"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Transcoding profile"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Stop video on exit"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Failed"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Failed to play channel"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Maybe all tuners are in use?"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Enter search terms:"
+msgstr ""
+
+msgctxt "#32025"
+msgid "No Results"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Your search returned no results"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Enable enhancements for touch devices"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Show DRM channels"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Guide auto-hide delay seconds (0 = never hide)"
+msgstr ""
+
+msgctxt "#32030"
+msgid "No device authorization available"
+msgstr ""
+
+
+#Transcoding
+msgctxt "#32500"
+msgid "None"
+msgstr ""
+
+msgctxt "#32501"
+msgid "Heavy"
+msgstr ""
+
+msgctxt "#32502"
+msgid "Mobile"
+msgstr ""
+
+msgctxt "#32503"
+msgid "Internet 540"
+msgstr ""
+
+msgctxt "#32504"
+msgid "Internet 480"
+msgstr ""
+
+msgctxt "#32505"
+msgid "Internet 360"
+msgstr ""
+
+msgctxt "#32506"
+msgid "Internet 240"
+msgstr ""
+
+msgctxt "#32507"
+msgid "Default"
+msgstr ""
+

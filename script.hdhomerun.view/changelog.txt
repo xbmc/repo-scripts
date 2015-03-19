@@ -1,0 +1,79 @@
+***************
+** 2015.3.19 **
+***************
+Initial public release
+Retry fetching guide data if it fails on first attempt
+
+** 2015.3.19a1 **
+
+Fix for un-escaped URLs
+Change name to 'HDHomeRun Live TV'
+Get guide via https
+Slightly darken currently playing background
+
+** 2015.3.18 **
+
+Use public guide data URL and DeviceAuth
+Change 'Guide auto-hide delay seconds' default to 0
+Add font conversion for skins other than Confluence
+Added Gotham skin
+
+** 0.0.10b **
+
+Added setting 'Guide auto-hide delay seconds (0 = never hide)' default: 10
+Context button now displays search input, allowing the user to set a channel filter
+Some focus fixes
+
+** 0.0.9b **
+
+Added 'Enable enhancements for touch devices' to settings. Currently allows "flinging" the guide
+Now hides DRM channels by default - enable with setting 'Show DRM channels'
+Now detects whether lineup has any subchannels and simplifies channel entry (ie select always submits)
+Channel entry now "backspaces" on nav back
+Channel entry now limits to 4 digits before a '.'
+
+** 0.0.8b **
+
+Video now closes when the addon exits with a settings option to disable this behavior
+Now, when entering channel numbers, select now inserts a period with a second select sumbitting the entry
+Now when a channel is entered via channel entry, the guide jumps to that channel
+Improved control focus when using mouse and keyboard
+Transcoding profile setting now has [Default = use tuner profile] and [None = no transcoding]
+Now displays an error notification on failure to load a channel
+Add WIP search which returns matches for currently playing channels
+
+** 0.0.7b **
+
+Disable showing Kodi OSD on click
+Clicking on video with mouse now shows/hides channel guide
+Hitting select will now show the channel guide
+Now uses more mouse/touch friendly scrolling on channel guide
+Now fetches guide data for all devices
+Added channel entry via remote numbers or keyboard numpad
+Added the ability to select transcode profiles in settings
+Added stream metadata to the currently playing OSD
+
+** 0.0.6b **
+
+Fix for error when parsing empty lineups causing no channels to be added
+
+** 0.0.5b **
+
+Improved error handling for case where no channels are found
+
+** 0.0.4b **
+
+Fix for errors on channel numbers without sub channel
+
+** 0.0.3b **
+
+Fix for startup failure if any devices did not respond correctly
+Added error handling for no devices, no compatible devices and other errors
+
+** 0.0.2b **
+
+Internal release
+
+** 0.0.1b **
+
+Initial creation
