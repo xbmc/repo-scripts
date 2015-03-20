@@ -1,3 +1,7 @@
+** 2015.3.20b1 **
+
+Fix for error causing the addon to fail on startup when there is no guide data
+
 ***************
 ** 2015.3.19 **
 ***************

@@ -133,6 +133,10 @@ msgctxt "#32030"
 msgid "No device authorization available"
 msgstr ""
 
+msgctxt "#32031"
+msgid "No guide data available"
+msgstr ""
+
 
 #Transcoding
 msgctxt "#32500"

@@ -331,10 +331,13 @@ class GuideOverlay(util.CronReceiver):
             self.updateLineup(quiet=True)
 
         err = None
+        guide = None
         try:
             guide = hdhr.Guide(self.lineUp)
         except hdhr.NoDeviceAuthException:
             err = util.T(32030)
+        except hdhr.NoGuideDataException:
+            err = util.T(32031)
         except:
             err = util.ERROR()
 
@@ -345,7 +348,8 @@ class GuideOverlay(util.CronReceiver):
             self.nextGuideUpdate = time.time() + 300 #Could not get guide data. Check again in 5 minutes
             self.setWinProperties()
             if self.lineUp.hasGuideData: return
-            guide = hdhr.Guide()
+
+        guide = guide or hdhr.Guide()
 
         self.guideFetchPreviouslyFailed = False
 
