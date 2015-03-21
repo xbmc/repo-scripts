@@ -1,0 +1,16 @@
+<includes>
+
+      	<control type="button" id="101333">
+			<posx>390</posx>
+			<posy>0</posy>
+			<width>120</width>
+			<height>48</height>
+			<align>center</align>
+			<visible>true</visible>
+			<label>SCRIPT112</label>
+			<onup>120</onup>
+			<texturenofocus>button-nofocus.png</texturenofocus>
+			<texturefocus>button-focus.png</texturefocus>		
+		</control>
+
+</includes>

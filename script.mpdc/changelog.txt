@@ -1,0 +1,90 @@
+[B]2.0.8[/B]
+- addon.xml added german translations
+- added German translations (by remschneid)
+- fixed translations for labels in Confluence skin
+[B]2.0.7[/B]
+- addon.xml fixes for frodo
+- fix control resets (by slevit)
+- fixed utf coding issue
+[B]2.0.6[/B]
+- fixed: queue does not get updated on MPD 16.x
+- added: simple caching of artist list
+- fixed: sorting of playlists,artists,files
+[B]2.0.5[/B]
+- fixed: unable to start/connect on appletv boxes
+- fixed: handling backspace keys
+- added: server outputs are listed, can be enabled/disabled
+- added: volume control buttons - for cases when volUP/volDOWN do not work (appletv)
+[B]2.0.4[/B]
+- released for eden
+[B]1.0.4[/B]
+- added: Polish translation thanks to Marek Lawicki
+- fixed: items were queued twice when replacing queue
+- improved allmusic.com album art fetcher - do not search for image when searching did not succeed previously
+[B]1.0.3[/B]
+- added: per-profile option to start playing MPD right after an item was queued
+- fixed: MPD did not resume playing when queue was replaced
+- external python compatibility: needed to rename/move mpd.py and mopidy.py
+[B]1.0.2[/B]
+- added: any track, dir, artist, album can be added to any (or new) playlist
+- added: playlist details - we are displaying tracks, contained in selected playlist, tracks can be queued directly or removed from playlist
+- added: per-profile option to stop MPD on client exit
+- improved navigation (using backspace) thanks to sandos
+[B]1.0.1[/B]
+- changed consume radiobutton to an icon button
+- fixed: navigation using arrows between player control buttons was not always working
+- fixed: display song info properly when MPD is listening to stream
+- added: single mode setting
+- added: server settings (consume,single,repeat,random) can be forced to server when connecting
+- removed: support for skins other than Confluence ('till I'll create icons for single, consume)
+- removed: displaying server stats
+[B]1.0.0[/B]
+- added: album art fetching using allmusic.com (images can be optionaly stored/cached for further reuse)
+- added: album art fetching using local folder (together with per-profile setting 'MPD Media root' album arts are retrieved from folder of played media)
+- added: setting 'Use IDLE command' (enabled by default). Having this disabled client is compatible with mopidy.com which does not implement IDLE on server side.
+- added: in artist browser albums are displayed including release year and are sorted (latest on top)
+- added: when MPD is playing and queue gets replaced playback is resumed
+- changed: completely redesigned Confluence appearance (using Tabs now, more space for displaying current playlist info)
+- changed: notification is now done via XBMC.Notification pop-up and can be disabled
+- fixed: possible divByZero thanks to sl33nyc
+[B]0.9.9[/B]
+- changed appearance slightly, according to forum requests
+- added volume control
+- displaying server stats in left panel
+- added per-profile option, profile can be enabled/disabled to prevent displaying in 'Select profile' dialog
+[B]0.9.8[/B]
+- fixed deadlocks/hangs when autoplaying stream
+- added context menu in current queue to be able to remove single tracks from queue
+- added: showing song progress when playing - can be disabled in settings (for low bandwidth connections)
+- changed background to fanart in Transparency! skin
+[B]0.9.7[/B]
+- added Transparency! skin support
+- fixed non-working STOP action (from remotes)
+- added context menu for queuing items in artist browser
+- added navigations 'onright' from lists to scrollbars
+[B]0.9.6[/B]
+- added support for password protected servers
+- fixed: broken playlist renaming
+- fixed: changes in settings made via 'Select Profile' dialog were not taken into account
+- better exception and error handling
+- improved file/artist browser navigation: both now remember recent item positions
+[B]0.9.5[/B]
+- added consume mode support
+- new icon and updated fanart
+[B]0.9.4[/B]
+- added PM3.HD skin support
+- added new setting option 'Stream URL' per profile and global one, if enabled, script will play associated stream when MPD server is currently playing/streaming
+[B]0.9.3[/B]
+- added artist browser
+- improoved Confluence skin to better fit
+- added context menu to file browser (can Queue Add,Queue Replace and Update DB)
+- fixed UTF decoding error 
+[B]0.9.2[/B]
+- added browsing in MPD server's filesystem
+- added 'Save as' and 'Clean' buttons on current queue
+- added work with playlists (save/load/delete)
+[B]0.9.1[/B]
+- added progress dialogs when connecting/disconnecting
+- fixed bug when attempted to disconnect when not connected (ended in deadlock)
+[B]0.9.0[/B]
+- Initial version

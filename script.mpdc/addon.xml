@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.mpdc"
+       name="MPD Client"
+       version="2.0.8"
+       provider-name="Libor Zoubek">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py">
+	<provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">An MPD client</summary>
+    <summary lang="cs">MPD klient</summary>
+    <summary lang="de">Ein MPD Client</summary>    
+    <summary lang="pl">Klient MPD</summary>
+    <description lang="en">MPDClient allows you to drive your MPD server directly from XBMC. Currently supports 3 server profiles, player commands, queue navigation, file browser, artist browser, playlist browser. Please visit http://github.com/lzoubek/xbmc-plugin-mpdc for any issues or suggestions</description>
+    <description lang="cs">MPD klient umožňuje ovládat MPD server přímo z XBMC. Momentálně podporuje 3 profily, ovládání přehrávání, navigaci ve frontě, procházení souborů, umělců a playlistů. Pokud máte jakékoliv náměty nebo potíže, navštivte http://github.com/lzoubek/xbmc-plugin-mpdc</description>
+    <description lang="de">MPDClient erlaubt die Steuerung Ihres MPD Servers aus XBMC heraus. Aktuell werden 3 Serverprofile, Abspielkommandos, Playlistennavigation, Dateibrowser, Künstlerbrowser und Playlistenbrowser unterstützt. Bitte besuchen Sie http://github.com/lzoubek/xbmc-plugin-mpdc wegen Problemen fnd Vorschlägen</description>
+    <description lang="pl">MPDClient umożliwia sterowanie serwerem MPD bezpośrednio z XBMC. Obecnie udostępnia 3 profile serwera, polecenia odtwarzania, nawigację kolejki, przeglądarkę plików, przeglądarkę wykonawców, przeglądarkę list odtwarzania. W celu zgłaszania problemów lub sugestii odwiedź : http://github.com/lzoubek/xbmc-plugin-mpdc</description>
+  </extension>
+</addon>

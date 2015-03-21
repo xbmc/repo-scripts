@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<category label="30014">
+		<setting label="30013" type="bool" id="skip-selector" default="false" />
+		<setting label="30040" type="bool" id="time-polling" default="true" />
+		<setting label="30050" type="bool" id="use-idle" default="true" />
+		<setting label="30051" type="bool" id="notify" default="true" />
+		<setting label="30043" type="enum" id="fetch-albums" lvalues="30045|30046|30047" default="0" />
+		<setting label="30044" type="bool" id="fetch-cache" visible="eq(-1,1)" default="false" />
+		<setting label="30049" type="text" id="fetch-search-image" visible="eq(-2,2)" default="*.jpg" />
+	</category>
+    <category label="30110">
+		<setting label="30041" type="bool" id="0_enabled" default="true" />
+		<setting label="30002" type="text" id="0_name" default="Profile 1"/>
+		<setting label="30000" type="text" id="0_mpd_host" default="localhost"/>
+		<setting label="30001" type="text" id="0_mpd_port" default="6600"/>
+		<setting label="30035" type="text" id="0_mpd_pass" option="hidden" default="" />
+		<setting label="30048" type="folder" id="0_media_root"  source="\"  default="" />
+		<setting label="30034" type="bool" id="0_play_stream" default="false" />
+		<setting label="30033" type="text" id="0_stream_url" default="" visible="eq(-1,true)" />
+		<setting label="30058" type="bool" id="0_stop_on_exit" default="false" />
+		<setting label="30064" type="bool" id="0_play_on_queued" default="false" />
+		<setting label="30052" type="bool" id="0_force_settings" default="false" />
+		<setting label="30053" type="bool" id="0_force_random" default="false" visible="eq(-1,true)" />
+		<setting label="30054" type="bool" id="0_force_repeat" default="false" visible="eq(-2,true)" />
+		<setting label="30055" type="bool" id="0_force_single" default="false" visible="eq(-3,true)" />
+		<setting label="30056" type="bool" id="0_force_consume" default="false" visible="eq(-4,true)" />
+    </category>
+    <category label="30111">
+		<setting label="30041" type="bool" id="1_enabled" default="true" />
+		<setting label="30002" type="text" id="1_name" default="Profile 2"/>
+		<setting label="30000" type="text" id="1_mpd_host" default="localhost"/>
+		<setting label="30001" type="text" id="1_mpd_port" default="6600"/>
+		<setting label="30035" type="text" id="1_mpd_pass" option="hidden" default="" />
+		<setting label="30048" type="folder" id="1_media_root"  source="\"  default="" />
+		<setting label="30034" type="bool" id="1_play_stream" default="false" />
+		<setting label="30033" type="text" id="1_stream_url" default="" visible="eq(-1,true)" />
+		<setting label="30058" type="bool" id="1_stop_on_exit" default="false" />
+		<setting label="30064" type="bool" id="1_play_on_queued" default="false" />
+		<setting label="30052" type="bool" id="1_force_settings" default="false" />
+		<setting label="30053" type="bool" id="1_force_random" default="false" visible="eq(-1,true)" />
+		<setting label="30054" type="bool" id="1_force_repeat" default="false" visible="eq(-2,true)" />
+		<setting label="30055" type="bool" id="1_force_single" default="false" visible="eq(-3,true)" />
+		<setting label="30056" type="bool" id="1_force_consume" default="false" visible="eq(-4,true)" />
+    </category>
+    <category label="30112">
+		<setting label="30041" type="bool" id="2_enabled" default="true" />
+        <setting label="30002" type="text" id="2_name" default="Profile 3"/>
+		<setting label="30000" type="text" id="2_mpd_host" default="localhost"/>
+		<setting label="30001" type="text" id="2_mpd_port" default="6600"/>
+		<setting label="30035" type="text" id="2_mpd_pass" option="hidden" default="" />
+		<setting label="30048" type="folder" id="2_media_root"  source="\"  default="" />
+		<setting label="30034" type="bool" id="2_play_stream" default="false" />
+		<setting label="30033" type="text" id="2_stream_url" default="" visible="eq(-1,true)" />
+		<setting label="30058" type="bool" id="2_stop_on_exit" default="false" />
+		<setting label="30064" type="bool" id="2_play_on_queued" default="false" />
+		<setting label="30052" type="bool" id="2_force_settings" default="false" />
+		<setting label="30053" type="bool" id="2_force_random" default="false" visible="eq(-1,true)" />
+		<setting label="30054" type="bool" id="2_force_repeat" default="false" visible="eq(-2,true)" />
+		<setting label="30055" type="bool" id="2_force_single" default="false" visible="eq(-3,true)" />
+		<setting label="30056" type="bool" id="2_force_consume" default="false" visible="eq(-4,true)" />
+    </category>
+</settings>
