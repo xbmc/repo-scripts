@@ -37,6 +37,7 @@ import re
 import urllib
 import HTMLParser #alternative: http://fredericiana.com/2010/10/08/decoding-html-entities-to-text-in-python/
 import time
+import datetime
 import requests
 import urlparse
 import traceback
@@ -70,10 +71,15 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.exit_monitor = self.ExitMonitor(self.exit)
         self.handle_settings()
 
+    def reportError(self):
+        if addon.getSetting('DebugModeß') == 'true':
+            #self.getControl(CONTROL_DEBUG).setText(traceback.format_exception(sys.exc_info()[2]))
+            self.getControl(CONTROL_DEBUG).setText(repr(traceback.format_exc()))
+
 
     def displayNext(self):
         try:
-            self.lastDisplayTime = time.time()
+            self.lastDisplayTime = datetime.datetime.now() 
             self.curitem=(self.curitem + 1) % len(self.entries);
             item = self.entries[self.curitem]
             self.getControl(CONTROL_HEADLINE).setLabel(item.title)
@@ -87,6 +93,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             imgsrc = re.search('img[^<>\\n]+src=[\'"]([^"\']+)[\'"]',desc)
             if imgsrc:
                 cimg=imgsrc.group(1)
+            #convert news text into plain text
             desc = re.sub('<p[^>\\n]*>','\n\n',desc)
             desc = re.sub('<br[^>\\n]*>','\n',desc)
             desc = re.sub('<[^>\\n]+>','',desc)
@@ -126,8 +133,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 self.getControl(CONTROL_IMAGE).setImage(cimg)
                 #self.getControl(CONTROL_DEBUG).setText('test: %s' % cimg)
         except:
-            self.getControl(CONTROL_DEBUG).setText('dn Err: %s' % traceback.format_tb(sys.exc_info()[2]))
-
+            self.reportError()
         #self.getControl(CONTROL_DEBUG).setText('%d' % len(desc))
         #self.itemtimer = Timer(float(addon.getSetting('Time')), self.displayNext)
         #self.itemtimer.start()
@@ -140,11 +146,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             else:
                 self.getControl(CONTROL_CLOCK).setText(time.strftime('%d %b %H %M'))
             if self.abort_requested: return
-            if abs(time.time()-self.lastDisplayTime) >= self.delayTime:
+            #if abs(time.time()-self.lastDisplayTime) >= self.delayTime:
+            if datetime.datetime.now() >= self.lastDisplayTime + datetime.timedelta(seconds=self.delayTime):
                 self.displayNext()
         except:
-            self.getControl(CONTROL_DEBUG).setText('pe Err: %s' % traceback.format_tb(sys.exc_info()[2]))
-
+            self.reportError()
 
     def addFeed(self,url):
         try:
@@ -166,6 +172,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     self.entries = self.entries + feed.entries
                     for ii, item in enumerate(self.entries):
                         item.globalitemno = ii #re-label them all for sorting (used in interleave mode)
+                        if not 'published_parsed' in item:
+                            item.published_parsed = (datetime.datetime.now() - datetime.timedelta(hours=item.itemno*2)).timetuple()
                     sorting = addon.getSetting('Sorting')
                     if sorting=='Time':
                         self.entries.sort(key=lambda item: (item.globalitemno>self.curitem, -time.mktime(item.published_parsed)))
@@ -175,11 +183,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     self.entries = feed.entries
                     self.displayNext()
         except:
-            self.getControl(CONTROL_DEBUG).setText('Err: %s' % sys.exc_info()[0])
+            self.reportError()
 
 
     def handle_settings(self):
-        self.lastDisplayTime = time.time()-100000.0
+        self.lastDisplayTime = datetime.datetime.now() - datetime.timedelta(hours=24)
         self.clockblink = True
         self.abort_requested = False
         self.curitem = -1

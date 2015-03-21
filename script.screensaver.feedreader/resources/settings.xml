@@ -2,6 +2,7 @@
 <settings>
 	<setting label="32001" type="slider" id="Time" default="24" range="2,2,100" option="int" />
     <setting label="32002" type="labelenum" id="Sorting" values="None|Time|Interleave" default="Interleave"/>	
+    <setting label="32003" type="bool" id="DebugMode" default="false"/>
 	<setting label="32101" type="text" id="Feed1" default="http://www.newsweek.com/emea-rss"/>
 	<setting label="32102" type="text" id="Feed2" default="http://www.nasa.gov/rss/dyn/image_of_the_day.rss"/>
 	<setting label="32103" type="text" id="Feed3" default="http://feeds.feedburner.com/motherjones/main"/>

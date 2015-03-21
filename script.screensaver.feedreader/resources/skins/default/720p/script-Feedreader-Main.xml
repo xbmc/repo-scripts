@@ -94,10 +94,10 @@
 
         <control type="textbox" id="30005">
          <description>Debug</description>
-         <posx>0</posx>
-         <posy>520</posy>
-         <width>1280</width>
-         <height>200</height>
+         <posx>840</posx>
+         <posy>40</posy>
+         <width>420</width>
+         <height>640</height>
          <visible>true</visible>
          <align>left</align>
          <aligny>bottom</aligny>
