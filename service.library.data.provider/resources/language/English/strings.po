@@ -91,3 +91,8 @@ msgstr ""
 msgctxt "#32019"
 msgid "Recent Videos"
 msgstr ""
+
+msgctxt "#32020"
+msgid "Favourite Episodes"
+msgstr ""
+

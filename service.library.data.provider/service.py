@@ -61,6 +61,7 @@ class Main:
         self._fetch_random()
         self._fetch_recent()
         self._fetch_recommended()
+        self._fetch_favourite()
         b_total = datetime.datetime.now()
         c_total = b_total - a_total
         log('Total time needed for all queries: %s' % c_total)
@@ -92,6 +93,9 @@ class Main:
         LIBRARY._fetch_recommended_movies()
         LIBRARY._fetch_recommended_episodes()
         LIBRARY._fetch_recommended_albums()
+
+    def _fetch_favourite( self ):
+        LIBRARY._fetch_favourite_episodes()
         
         
     def _daemon(self):
@@ -115,6 +119,7 @@ class Main:
         elif type == 'episode':
             LIBRARY._fetch_recommended_episodes()
             LIBRARY._fetch_recent_episodes()
+            LIBRARY._fetch_favourite_episodes()
         elif type == 'video':
             #only on db update
             LIBRARY._fetch_recommended_movies()

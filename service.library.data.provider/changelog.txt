@@ -1,3 +1,6 @@
+[B]0.0.8[/B]
+- Add favorite episodes - thx SumnerH.
+
 [B]0.0.7[/B]
 - Add support to return multiple types in single list
 
