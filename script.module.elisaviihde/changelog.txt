@@ -1,0 +1,15 @@
+1.2
+-----
+Added KODI addon packaging
+- Added script to create KODI/XBMC compatible zip addon package file.
+
+1.1
+-----
+Deep folder structures and full list of recordings per folder
+- Added support for deep folder structures and retrieves now a full list of recordings per folder
+
+1.0
+-----
+First release using beta.elisaviihde.fi
+- Supported functions: login, logout, folders, recordings, program, streamuri
+

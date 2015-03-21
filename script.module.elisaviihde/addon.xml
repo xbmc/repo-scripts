@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.elisaviihde"
+    name="Elisa Viihde Python library"
+    version="1.2.0"
+    provider-name="enyone">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests" version="2.4.3"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Elisa Viihde Python library</summary>
+    <description lang="en">This plugin provides Python implementation of Elisa Viihde API. Elisa Viihde is a registered trademark of ©Elisa Oyj http://corporate.elisa.fi</description>
+    <license>GPLv3</license>
+    <platform>all</platform>
+    <source>https://github.com/enyone/elisaviihde</source>
+  </extension>
+</addon>
