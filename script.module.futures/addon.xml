@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.futures"
+       name="futures"
+       version="2.2.0"
+       provider-name="Brian Quinlan">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary>A futures implementation for Python</summary>
+    <description>Backport of the concurrent.futures package from Python 3.2</description>
+    <platform>all</platform>
+    <license>BSD</license>
+    <source>https://code.google.com/p/pythonfutures/source/browse</source>
+    <website>https://code.google.com/p/pythonfutures</website>
+  </extension>
+</addon>
