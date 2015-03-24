@@ -71,7 +71,7 @@
                             <width>193</width>
                             <height>290</height>
                             <aspectratio scalediffuse="false">scale</aspectratio>
-                            <texture diffuse="thumbs/movieposter_mask.png" background="true" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
+                            <texture diffuse="thumbs/movieposter_mask.png" background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                             <fadetime>IconCrossfadeTime</fadetime>
                         </control>
                         <control type="image">
@@ -136,7 +136,7 @@
                             <width>193</width>
                             <height>290</height>
                             <aspectratio scalediffuse="false">scale</aspectratio>
-                            <texture diffuse="thumbs/movieposter_mask.png" background="true" fallback="DefaultVideo.png">$INFO[ListItem.Art(poster)]</texture>
+                            <texture diffuse="thumbs/movieposter_mask.png" background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
                             <fadetime>IconCrossfadeTime</fadetime>
                         </control>
                         <control type="image">

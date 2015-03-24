@@ -6,7 +6,6 @@ from TheMovieDB import *
 from YouTube import *
 import DialogActorInfo
 import DialogEpisodeInfo
-import DialogVideoList
 try:
     from ImageTools import *
 except:
@@ -36,7 +35,8 @@ class DialogSeasonInfo(xbmcgui.WindowXMLDialog):
         if self.tmdb_id or (self.season and self.showname):
             self.season = GetSeasonInfo(self.tmdb_id, self.showname, self.season)
             if not self.season:
-                self.close()
+                xbmc.executebuiltin("Dialog.Close(busydialog)")
+                return
             xbmc.executebuiltin("ActivateWindow(busydialog)")
             search_string = "%s %s tv" % (self.season["general"]["TVShowTitle"], self.season["general"]["Title"])
             youtube_thread = Get_Youtube_Vids_Thread(search_string, "", "relevance", 15)
@@ -60,19 +60,22 @@ class DialogSeasonInfo(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     def onInit(self):
+        if not self.season:
+            self.close()
+            return
         homewindow.setProperty("movie.ImageColor", self.season["general"]["ImageColor"])
         windowid = xbmcgui.getCurrentWindowDialogId()
         self.window = xbmcgui.Window(windowid)
         self.window.setProperty("tmdb_logged_in", self.logged_in)
         self.window.setProperty("type", "season")
         passDictToSkin(self.season["general"], "movie.", False, False, windowid)
-        self.getControl(1000).addItems(CreateListItems(self.season["actors"], 0))
-        self.getControl(750).addItems(CreateListItems(self.season["crew"], 0))
-        self.getControl(1150).addItems(CreateListItems(self.season["videos"], 0))
-        self.getControl(350).addItems(CreateListItems(self.youtube_vids, 0))
-        self.getControl(1250).addItems(CreateListItems(self.season["images"], 0))
-        self.getControl(1350).addItems(CreateListItems(self.season["backdrops"], 0))
-        self.getControl(2000).addItems(CreateListItems(self.season["episodes"], 0))
+        self.getControl(1000).addItems(create_listitems(self.season["actors"], 0))
+        self.getControl(750).addItems(create_listitems(self.season["crew"], 0))
+        self.getControl(1150).addItems(create_listitems(self.season["videos"], 0))
+        self.getControl(350).addItems(create_listitems(self.youtube_vids, 0))
+        self.getControl(1250).addItems(create_listitems(self.season["images"], 0))
+        self.getControl(1350).addItems(create_listitems(self.season["backdrops"], 0))
+        self.getControl(2000).addItems(create_listitems(self.season["episodes"], 0))
 
 
     def onAction(self, action):
@@ -106,22 +109,16 @@ class DialogSeasonInfo(xbmcgui.WindowXMLDialog):
             AddToWindowStack(self)
             self.close()
             self.movieplayer.playYoutubeVideo(listitem.getProperty("youtube_id"), listitem, True)
-            self.movieplayer.WaitForVideoEnd()
+            self.movieplayer.wait_for_video_end()
             PopWindowStack()
         elif controlID in [1250, 1350]:
             image = self.getControl(controlID).getSelectedItem().getProperty("original")
             dialog = SlideShow(u'script-%s-SlideShow.xml' % addon_name, addon_path, image=image)
             dialog.doModal()
         elif controlID == 132:
-            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header="Overview", text=self.season["general"]["Plot"], color=self.season["general"]['ImageColor'])
+            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header=addon.getLocalizedString(32037), text=self.season["general"]["Plot"], color=self.season["general"]['ImageColor'])
             w.doModal()
 
 
     def onFocus(self, controlID):
         pass
-
-    def OpenVideoList(self, listitems):
-        AddToWindowStack(self)
-        self.close()
-        dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % addon_name, addon_path, listitems=listitems)
-        dialog.doModal()

@@ -2,7 +2,6 @@ import xbmcaddon
 import os
 import xbmc
 from Utils import *
-import urllib
 
 AudioDB_apikey = '58353d43204d68753987fl'
 Addon_Data_Path = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % xbmcaddon.Addon().getAddonInfo('id')).decode("utf-8"))
@@ -156,13 +155,13 @@ def GetExtendedAudioDBInfo(results):
 
 
 def GetDiscography(search_string):
-    url = 'searchalbum.php?s=%s' % (urllib.quote_plus(search_string.encode("utf-8")))
+    url = 'searchalbum.php?s=%s' % (url_quote(search_string))
     results = Get_JSON_response(base_url + url)
     return HandleAudioDBAlbumResult(results)
 
 
 def GetArtistDetails(search_string):
-    url = 'search.php?s=%s' % (urllib.quote_plus(search_string.encode("utf-8")))
+    url = 'search.php?s=%s' % (url_quote(search_string))
     results = Get_JSON_response(base_url + url)
    # prettyprint(results)
     return GetExtendedAudioDBInfo(results)
@@ -172,7 +171,7 @@ def GetMostLovedTracks(search_string="", mbid=""):
     if mbid:
         pass
     else:
-        url = 'track-top10.php?s=%s' % (urllib.quote_plus(search_string.encode("utf-8")))
+        url = 'track-top10.php?s=%s' % (url_quote(search_string))
     log("GetMostLoveTracks URL:" + url)
     results = Get_JSON_response(base_url + url)
     return HandleAudioDBTrackResult(results)

@@ -33,15 +33,17 @@ class DialogEpisodeInfo(xbmcgui.WindowXMLDialog):
         self.showname = kwargs.get('tvshow')
         self.episodenumber = kwargs.get('episode')
         self.logged_in = checkLogin()
+        self.episode = False
         if self.tmdb_id or self.showname:
             self.episode = GetExtendedEpisodeInfo(self.tmdb_id, self.season, self.episodenumber)
             if not self.episode:
-                self.close()
+                xbmc.executebuiltin("Dialog.Close(busydialog)")
+                return
             xbmc.executebuiltin("ActivateWindow(busydialog)")
             search_string = "%s tv" % (self.episode["general"]["Title"])
             youtube_thread = Get_Youtube_Vids_Thread(search_string, "", "relevance", 15)
             youtube_thread.start()
-            if not "DBID" in self.episode["general"]: # need to add comparing for episodes
+            if not "DBID" in self.episode["general"]:  # need to add comparing for episodes
                 poster_thread = Get_ListItems_Thread(Get_File, self.episode["general"]["Poster"])
                 poster_thread.start()
             if not "DBID" in self.episode["general"]:
@@ -59,16 +61,20 @@ class DialogEpisodeInfo(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     def onInit(self):
+        if not self.episode:
+            xbmc.executebuiltin("Dialog.Close(busydialog)")
+            self.close()
+            return
         homewindow.setProperty("movie.ImageColor", self.episode["general"]["ImageColor"])
         windowid = xbmcgui.getCurrentWindowDialogId()
         self.window = xbmcgui.Window(windowid)
         self.window.setProperty("type", "episode")
         passDictToSkin(self.episode["general"], "movie.", False, False, windowid)
-        self.getControl(1000).addItems(CreateListItems(self.episode["actors"], 0))
-        self.getControl(750).addItems(CreateListItems(self.episode["crew"], 0))
-        self.getControl(1150).addItems(CreateListItems(self.episode["videos"], 0))
-        self.getControl(350).addItems(CreateListItems(self.youtube_vids, 0))
-        self.getControl(1350).addItems(CreateListItems(self.episode["images"], 0))
+        self.getControl(1000).addItems(create_listitems(self.episode["actors"], 0))
+        self.getControl(750).addItems(create_listitems(self.episode["crew"], 0))
+        self.getControl(1150).addItems(create_listitems(self.episode["videos"], 0))
+        self.getControl(350).addItems(create_listitems(self.youtube_vids, 0))
+        self.getControl(1350).addItems(create_listitems(self.episode["images"], 0))
 
 
     def onAction(self, action):
@@ -92,24 +98,20 @@ class DialogEpisodeInfo(xbmcgui.WindowXMLDialog):
             AddToWindowStack(self)
             self.close()
             self.movieplayer.playYoutubeVideo(listitem.getProperty("youtube_id"), listitem, True)
-            self.movieplayer.WaitForVideoEnd()
+            self.movieplayer.wait_for_video_end()
             PopWindowStack()
         elif controlID in [1250, 1350]:
             image = self.getControl(controlID).getSelectedItem().getProperty("original")
             dialog = SlideShow(u'script-%s-SlideShow.xml' % addon_name, addon_path, image=image)
             dialog.doModal()
         elif controlID == 132:
-            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header="Overview", text=self.season["general"]["Plot"], color=self.season["general"]['ImageColor'])
+            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header=addon.getLocalizedString(32037), text=self.season["general"]["Plot"], color=self.season["general"]['ImageColor'])
             w.doModal()
         elif controlID == 6001:
-            ratings = []
-            for i in range(1, 21):
-                ratings.append(str(float(i * 0.5)))
-            rating = xbmcgui.Dialog().select(addon.getLocalizedString(32129), ratings)
-            if rating > -1:
-                rating = (float(rating) * 0.5) + 0.5
-                ids = [self.tmdb_id, self.season, self.episode["general"]["episode"]]
-                RateMedia("episode", ids, rating)
+            rating = get_rating_from_user()
+            if rating:
+                identifier = [self.tmdb_id, self.season, self.episode["general"]["episode"]]
+                send_rating_for_media_item("episode", identifier, rating)
                 self.UpdateStates()
         elif controlID == 6006:
             self.ShowRatedEpisodes()

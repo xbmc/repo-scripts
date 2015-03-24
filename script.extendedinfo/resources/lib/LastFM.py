@@ -2,7 +2,6 @@ import xbmcaddon
 import os
 import xbmc
 from Utils import *
-import urllib
 
 lastfm_apikey = 'd942dd5ca4c9ee5bd821df58cf8130d4'
 googlemaps_key_old = 'AIzaSyBESfDvQgWtWLkNiOYXdrA9aU-2hv_eprY'
@@ -32,11 +31,11 @@ def HandleLastFMEventResult(results):
                         lat = event['venue']['location']['geo:point']['geo:lat']
                         search_string = lat + "," + lon
                     elif event['venue']['location']['street']:
-                        search_string = urllib.quote_plus(event['venue']['location']['city'] + " " + event['venue']['location']['street'])
+                        search_string = url_quote(event['venue']['location']['city'] + " " + event['venue']['location']['street'])
                     elif event['venue']['location']['city']:
-                        search_string = urllib.quote_plus(event['venue']['location']['city'] + " " + event['venue']['name'])
+                        search_string = url_quote(event['venue']['location']['city'] + " " + event['venue']['name'])
                     else:
-                        search_string = urllib.quote_plus(event['venue']['name'])
+                        search_string = url_quote(event['venue']['name'])
                 except:
                     search_string = ""
                 builtin = 'RunScript(script.maps.browser,eventid=%s)' % (str(event['id']))
@@ -158,13 +157,13 @@ def GetTopArtists():
 
 
 def GetAlbumShouts(artistname, albumtitle):
-    url = 'method=album.GetAlbumShouts&artist=%s&album=%s' % (urllib.quote_plus(artistname), urllib.quote_plus(albumtitle))
+    url = 'method=album.GetAlbumShouts&artist=%s&album=%s' % (url_quote(artistname), url_quote(albumtitle))
     results = Get_JSON_response(base_url + url)
     return HandleLastFMShoutResult(results)
 
 
 def GetArtistShouts(artistname):
-    url = 'method=artist.GetShouts&artist=%s' % (urllib.quote_plus(artistname))
+    url = 'method=artist.GetShouts&artist=%s' % (url_quote(artistname))
     results = Get_JSON_response(base_url + url)
     return HandleLastFMShoutResult(results)
 
@@ -177,7 +176,7 @@ def GetImages(mbid):
 
 
 def GetTrackShouts(artistname, tracktitle):
-    url = 'method=album.GetAlbumShouts&artist=%s&track=%s' % (urllib.quote_plus(artistname), urllib.quote_plus(tracktitle))
+    url = 'method=album.GetAlbumShouts&artist=%s&track=%s' % (url_quote(artistname), url_quote(tracktitle))
     results = Get_JSON_response(base_url + url)
     return HandleLastFMShoutResult(results)
 
@@ -189,7 +188,7 @@ def GetEventShouts(eventid):
 
 
 def GetVenueID(venuename=""):
-    url = '&method=venue.search&venue=%s' % (urllib.quote_plus(venuename))
+    url = '&method=venue.search&venue=%s' % (url_quote(venuename))
     results = Get_JSON_response(base_url + url)
     if "results" in results:
         venuematches = results["results"]["venuematches"]
@@ -221,11 +220,11 @@ def GetNearEvents(tag=False, festivalsonly=False, lat="", lon="", location="", d
         festivalsonly = "0"
     url = 'method=geo.getevents&festivalsonly=%s&limit=40' % (festivalsonly)
     if tag:
-        url = url + '&tag=%s' % (urllib.quote_plus(tag))
+        url = url + '&tag=%s' % (url_quote(tag))
     if lat:
         url = url + '&lat=%s&long=%s' % (str(lat), str(lon))  # &distance=60
     if location:
-        url = url + '&location=%s' % (urllib.quote_plus(location))
+        url = url + '&location=%s' % (url_quote(location))
     if distance:
         url = url + '&distance=%s' % (distance)
     results = Get_JSON_response(base_url + url, 0.5)
@@ -239,7 +238,7 @@ def GetVenueEvents(venueid=""):
 
 
 def GetTrackInfo(artist="", track=""):
-    url = 'method=track.getInfo&artist=%s&track=%s' % (urllib.quote_plus(artist), urllib.quote_plus(track))
+    url = 'method=track.getInfo&artist=%s&track=%s' % (url_quote(artist), url_quote(track))
     results = Get_JSON_response(base_url + url)
     return HandleLastFMTrackResult(results)
 

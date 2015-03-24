@@ -85,6 +85,14 @@ msgctxt "#32024"
 msgid "My account"
 msgstr ""
 
+msgctxt "#32025"
+msgid "Episode index"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Related TheMovieDB lists"
+msgstr ""
+
 msgctxt "#32030"
 msgid "Movie appearances"
 msgstr ""
@@ -107,6 +115,10 @@ msgstr ""
 
 msgctxt "#32036"
 msgid "Movie list"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Overview"
 msgstr ""
 
 msgctxt "#32050"

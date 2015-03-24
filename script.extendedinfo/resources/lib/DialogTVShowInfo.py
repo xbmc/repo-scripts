@@ -35,19 +35,20 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
         imdb_id = kwargs.get('imdbid')
         tvdb_id = kwargs.get('tvdb_id')
         self.name = kwargs.get('name')
+        self.tvshow = False
         if tmdb_id:
             self.tmdb_id = tmdb_id
         elif dbid and (int(dbid) > 0):
             tvdb_id = GetImdbIDFromDatabase("tvshow", dbid)
             log("IMDBId from local DB:" + str(tvdb_id))
             if tvdb_id:
-                self.tmdb_id = Get_Show_TMDB_ID(tvdb_id)
+                self.tmdb_id = get_show_tmdb_id(tvdb_id)
                 log("tvdb_id to tmdb_id: %s --> %s" % (str(tvdb_id), str(self.tmdb_id)))
         elif tvdb_id:
-            self.tmdb_id = Get_Show_TMDB_ID(tvdb_id)
+            self.tmdb_id = get_show_tmdb_id(tvdb_id)
             log("tvdb_id to tmdb_id: %s --> %s" % (str(tvdb_id), str(self.tmdb_id)))
         elif imdb_id:
-            self.tmdb_id = Get_Show_TMDB_ID(imdb_id, "imdb_id")
+            self.tmdb_id = get_show_tmdb_id(imdb_id, "imdb_id")
             log("imdb_id to tmdb_id: %s --> %s" % (str(imdb_id), str(self.tmdb_id)))
         elif self.name:
             self.tmdb_id = search_media(kwargs.get('name'), "", "tv")
@@ -87,27 +88,30 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     def onInit(self):
+        if not self.tvshow:
+            self.close()
+            return
         homewindow.setProperty("movie.ImageColor", self.tvshow["general"]["ImageColor"])
         self.windowid = xbmcgui.getCurrentWindowDialogId()
         self.window = xbmcgui.Window(self.windowid)
         passDictToSkin(self.tvshow["general"], "movie.", False, False, self.windowid)
         self.window.setProperty("tmdb_logged_in", checkLogin())
         self.window.setProperty("type", "tvshow")
-        self.getControl(1000).addItems(CreateListItems(self.tvshow["actors"], 0))
+        self.getControl(1000).addItems(create_listitems(self.tvshow["actors"], 0))
         xbmc.sleep(200)
         prettyprint(self.tvshow["certifications"])
-        self.getControl(150).addItems(CreateListItems(self.tvshow["similar"], 0))
-        self.getControl(250).addItems(CreateListItems(self.tvshow["seasons"], 0))
-        self.getControl(550).addItems(CreateListItems(self.tvshow["studios"], 0))
-        self.getControl(1450).addItems(CreateListItems(self.tvshow["networks"], 0))
-        self.getControl(650).addItems(CreateListItems(self.tvshow["certifications"], 0))
-        self.getControl(750).addItems(CreateListItems(self.tvshow["crew"], 0))
-        self.getControl(850).addItems(CreateListItems(self.tvshow["genres"], 0))
-        self.getControl(950).addItems(CreateListItems(self.tvshow["keywords"], 0))
-        self.getControl(1150).addItems(CreateListItems(self.tvshow["videos"], 0))
-        self.getControl(350).addItems(CreateListItems(self.youtube_vids, 0))
-        self.getControl(1250).addItems(CreateListItems(self.tvshow["images"], 0))
-        self.getControl(1350).addItems(CreateListItems(self.tvshow["backdrops"], 0))
+        self.getControl(150).addItems(create_listitems(self.tvshow["similar"], 0))
+        self.getControl(250).addItems(create_listitems(self.tvshow["seasons"], 0))
+        self.getControl(550).addItems(create_listitems(self.tvshow["studios"], 0))
+        self.getControl(1450).addItems(create_listitems(self.tvshow["networks"], 0))
+        self.getControl(650).addItems(create_listitems(self.tvshow["certifications"], 0))
+        self.getControl(750).addItems(create_listitems(self.tvshow["crew"], 0))
+        self.getControl(850).addItems(create_listitems(self.tvshow["genres"], 0))
+        self.getControl(950).addItems(create_listitems(self.tvshow["keywords"], 0))
+        self.getControl(1150).addItems(create_listitems(self.tvshow["videos"], 0))
+        self.getControl(350).addItems(create_listitems(self.youtube_vids, 0))
+        self.getControl(1250).addItems(create_listitems(self.tvshow["images"], 0))
+        self.getControl(1350).addItems(create_listitems(self.tvshow["backdrops"], 0))
         self.UpdateStates(False)
 
     def onAction(self, action):
@@ -143,7 +147,7 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
             AddToWindowStack(self)
             self.close()
             self.movieplayer.playYoutubeVideo(listitem.getProperty("youtube_id"), listitem, True)
-            self.movieplayer.WaitForVideoEnd()
+            self.movieplayer.wait_for_video_end()
             PopWindowStack()
         elif controlID == 550:
             xbmc.executebuiltin("ActivateWindow(busydialog)")
@@ -191,13 +195,9 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
         elif controlID == 445:
             self.ShowManageDialog()
         elif controlID == 6001:
-            ratings = []
-            for i in range(1, 21):
-                ratings.append(str(float(i * 0.5)))
-            rating = xbmcgui.Dialog().select(addon.getLocalizedString(32129), ratings)
-            if rating > -1:
-                rating = (float(rating) * 0.5) + 0.5
-                RateMedia("tv", self.tmdb_id, rating)
+            rating = get_rating_from_user()
+            if rating:
+                send_rating_for_media_item("tv", self.tmdb_id, rating)
                 self.UpdateStates()
         elif controlID == 6002:
             listitems = [addon.getLocalizedString(32144), addon.getLocalizedString(32145)]
@@ -214,7 +214,7 @@ class DialogTVShowInfo(xbmcgui.WindowXMLDialog):
         elif controlID == 6006:
             self.ShowRatedTVShows()
         elif controlID == 132:
-            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header="Overview", text=self.tvshow["general"]["Plot"], color=self.tvshow["general"]['ImageColor'])
+            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header=addon.getLocalizedString(32037), text=self.tvshow["general"]["Plot"], color=self.tvshow["general"]['ImageColor'])
             w.doModal()
         # elif controlID == 650:
         #     xbmc.executebuiltin("ActivateWindow(busydialog)")

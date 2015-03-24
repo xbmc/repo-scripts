@@ -117,7 +117,7 @@ def HandleTraktTVShowResult(results):
                 'tvdb_id': tvshow["tvdb_id"],
                 'imdb_id': tvshow["imdb_id"],
                 'imdbid': tvshow["imdb_id"],
-                'Path': 'plugin://script.extendedinfo/?info=extendedtvinfo&&imdbid=%s' % tvshow["imdb_id"],
+                'Path': 'plugin://script.extendedinfo/?info=action&&id=RunScript(script.extendedinfo,info=extendedtvinfo,imdbid=%s)' % tvshow["imdb_id"],
                 'AirDay': air_day,
                 'AirShortTime': air_time,
                 'Label2': air_day + " " + air_time,

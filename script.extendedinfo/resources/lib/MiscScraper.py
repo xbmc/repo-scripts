@@ -42,7 +42,6 @@ def GetXKCDInfo():
 
 
 def GetCandHInfo():
-    count = 1
     now = datetime.datetime.now()
     filename = "cyanide" + str(now.month) + "x" + str(now.day) + "x" + str(now.year)
     path = xbmc.translatePath(Addon_Data_Path + "/" + filename + ".txt")
@@ -52,11 +51,11 @@ def GetCandHInfo():
     else:
         items = []
         for i in range(1, 10):
+            url = 'http://www.explosm.net/comics/%i/' % random.randrange(1, 3868)
             try:
-                url = 'http://www.explosm.net/comics/%i/' % random.randrange(1, 3128)
                 response = GetStringFromUrl(url)
             except:
-                log("Error when fetching CandH data from net")
+                log("Error when fetching CandH data from net. URL: " + url)
             if response:
                 regex = ur'src="([^"]+)"'
                 matches = re.findall(regex, response)
@@ -71,9 +70,7 @@ def GetCandHInfo():
                                        'Poster': item,
                                        'Title': datematches[0]}
                             items.append(newitem)
-                            count += 1
-                    if count > 10:
-                        break
+                            break
         save_to_file(items, filename, Addon_Data_Path)
         return items
 
@@ -91,7 +88,6 @@ def GetDailyBabes(single=False):
     else:
         items = []
         for i in range(1, 10):
-
             if single is True:
                 month = now.month
                 day = now.day
@@ -101,35 +97,12 @@ def GetDailyBabes(single=False):
                 day = random.randrange(1, 28)
                 image = random.randrange(1, 8)
             url = 'http://img1.demo.jsxbabeotd.dellsports.com/static/models/2014/%s/%s/%i.jpg' % (str(month).zfill(2), str(day).zfill(2), image)
-            log(url)
             newitem = {'Thumb': url,
                        'Path': "plugin://script.extendedinfo?info=setfocus",
                        'Title': "2014/" + str(month) + "/" + str(day) + " (Nr. " + str(image) + ")"}
             items.append(newitem)
         save_to_file(items, filename, Addon_Data_Path)
         return items
-
-
-def GetFlickrImages():
-    images = []
-    results = ""
-    log("GetFlickrImages")
-    try:
-        base_url = 'http://pipes.yahoo.com/pipes/pipe.run?'
-        url = '_id=241a9dca1f655c6fa0616ad98288a5b2&_render=json'
-        results = Get_JSON_response(base_url + url, 0)
-#        prettyprint(results)
-    except:
-        log("Error when fetching Flickr data from net")
-    count = 1
-    if results:
-        for item in results["value"]["items"]:
-            image = {'Fanart': item["link"],
-                     'Path': "plugin://script.extendedinfo?info=setfocus"}
-            images.append(image)
-            log(image)
-            count += 1
-    return images
 
 
 def HandleBandsInTownResult(results):
@@ -139,8 +112,7 @@ def HandleBandsInTownResult(results):
             venue = event['venue']
             artists = ''
             for art in event["artists"]:
-                artists += ' / '
-                artists += art['name']
+                artists = artists + ' / ' + art['name']
                 artists = artists.replace(" / ", "", 1)
             event = {'date': event['datetime'].replace("T", " - ").replace(":00", "", 1),
                      'city': venue['city'],

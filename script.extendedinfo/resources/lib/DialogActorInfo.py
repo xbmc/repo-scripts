@@ -11,7 +11,6 @@ from YouTube import *
 import DialogVideoInfo
 import DialogTVShowInfo
 homewindow = xbmcgui.Window(10000)
-from unidecode import unidecode
 
 addon = xbmcaddon.Addon()
 addon_id = addon.getAddonInfo('id')
@@ -27,8 +26,10 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
 
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
+        xbmc.executebuiltin("ActivateWindow(busydialog)")
         self.movieplayer = VideoPlayer(popstack=True)
         self.id = kwargs.get('id', False)
+        self.person = False
         if not self.id:
             name = kwargs.get('name').decode("utf-8").split(" " + xbmc.getLocalizedString(20347) + " ")
             name = name[0].strip()
@@ -38,7 +39,7 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
                 if ret == -1:
                     return None
                 name = names[ret]
-            self.id = GetPersonID(unidecode(name))
+            self.id = GetPersonID(name)
             if self.id:
                 self.id = self.id["id"]
             else:
@@ -64,18 +65,20 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     def onInit(self):
-        if not self.id:
+        if not self.person:
+            xbmc.executebuiltin("Dialog.Close(busydialog)")
             self.close()
+            return
         homewindow.setProperty("actor.ImageColor", self.person["general"]["ImageColor"])
         windowid = xbmcgui.getCurrentWindowDialogId()
         passDictToSkin(self.person["general"], "actor.", False, False, windowid)
-        self.getControl(150).addItems(CreateListItems(self.person["movie_roles"], 0))
-        self.getControl(250).addItems(CreateListItems(self.person["tvshow_roles"], 0))
-        self.getControl(350).addItems(CreateListItems(self.youtube_vids, 0))
-        self.getControl(450).addItems(CreateListItems(self.person["images"], 0))
-        self.getControl(550).addItems(CreateListItems(self.person["movie_crew_roles"], 0))
-        self.getControl(650).addItems(CreateListItems(self.person["tvshow_crew_roles"], 0))
-        self.getControl(750).addItems(CreateListItems(self.person["tagged_images"], 0))
+        self.getControl(150).addItems(create_listitems(self.person["movie_roles"], 0))
+        self.getControl(250).addItems(create_listitems(self.person["tvshow_roles"], 0))
+        self.getControl(350).addItems(create_listitems(self.youtube_vids, 0))
+        self.getControl(450).addItems(create_listitems(self.person["images"], 0))
+        self.getControl(550).addItems(create_listitems(self.person["movie_crew_roles"], 0))
+        self.getControl(650).addItems(create_listitems(self.person["tvshow_crew_roles"], 0))
+        self.getControl(750).addItems(create_listitems(self.person["tagged_images"], 0))
     #    self.getControl(150).addItems(tvshow_listitems)
 
     def setControls(self):
@@ -116,11 +119,11 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
             AddToWindowStack(self)
             self.close()
             self.movieplayer.playYoutubeVideo(listitem.getProperty("youtube_id"), listitem, True)
-            self.movieplayer.WaitForVideoEnd()
+            self.movieplayer.wait_for_video_end()
             PopWindowStack()
         elif controlID == 132:
             text = self.person["general"]["description"] + "[CR]" + self.person["general"]["biography"]
-            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header="Overview", text=text, color=self.person["general"]['ImageColor'])
+            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header=addon.getLocalizedString(32037), text=text, color=self.person["general"]['ImageColor'])
             w.doModal()
 
     def onFocus(self, controlID):

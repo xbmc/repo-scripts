@@ -23,7 +23,7 @@
                 <posx>729</posx>
                 <width>1950</width>
                 <height>1080</height>
-                <texture fallback="common/black.png" background="true">$INFO[Window.Property(movie.ImageFilter)]</texture>
+                <texture fallback="common/black.png">$INFO[Window.Property(movie.ImageFilter)]</texture>
             </control>
             <control type="image">
                 <posx>729</posx>
@@ -2527,7 +2527,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>Related TMDB Lists$INFO[Container(450).NumItems, (,)]</label>
+                            <label>$ADDON[script.extendedinfo 32026]$INFO[Container(450).NumItems, (,)]</label>
                         </control>
                         <control type="image">
                             <posx>0</posx>
@@ -2695,7 +2695,7 @@
                             <height>25</height>
                             <aligny>center</aligny>
                             <font>font14</font>
-                            <label>Episode Index</label>
+                            <label>$ADDON[script.extendedinfo 32025] $INFO[Container(2000).NumItems,(,)]</label>
                         </control>
                         <control type="panel" id="2000">
                             <animation type="WindowOpen" reversible="false">
