@@ -114,51 +114,51 @@ class Main:
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
             elif type == 'playliststats':
                 lo = self.id.lower()
-                if ("activatewindow" in lo) and ("," in lo):
-                    startindex = lo.find(",")
-                    endindex = lo.find(",",startindex+1)
-                    if (endindex > 0):
+                if ("activatewindow" in lo) and ("://" in lo) and ("," in lo):
+                    if ("\"" in lo):
                         # remove &quot; from path (gets added by favorites)
                         path = self.id.translate(None, '\"')
-                        playlistpath = path[startindex+1:endindex].strip()
-                        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["playcount", "resume", "episode", "watchedepisodes", "tvshowid"]}, "id": 1}' % (playlistpath))
-                        json_query = unicode(json_query, 'utf-8', errors='ignore')
-                        json_response = simplejson.loads(json_query)
-                        if (json_response.has_key("result")):
-                            played = 0
-                            numitems = 0
-                            inprogress = 0
-                            episodes = 0
-                            watchedepisodes = 0
-                            tvshows = []
-                            tvshowscount = 0
-                            for item in json_response["result"]["files"]:
-                                if item.has_key('type'):
-                                    if item["type"] == "episode":
-                                        episodes += 1
-                                        if item["playcount"] > 0:
-                                            watchedepisodes += 1
-                                        if item["tvshowid"] not in tvshows:
-                                            tvshows.append(item["tvshowid"])
-                                            tvshowscount += 1
-                                    elif item["type"] == "tvshow":
-                                        episodes += item["episode"]
-                                        watchedepisodes += item["watchedepisodes"]
+                    else:
+                        path = self.id
+                    playlistpath = path.split(",")[1]
+                    json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "video", "properties": ["playcount", "resume", "episode", "watchedepisodes", "tvshowid"]}, "id": 1}' % (playlistpath))
+                    json_query = unicode(json_query, 'utf-8', errors='ignore')
+                    json_response = simplejson.loads(json_query)
+                    if (json_response.has_key("result")):
+                        played = 0
+                        numitems = 0
+                        inprogress = 0
+                        episodes = 0
+                        watchedepisodes = 0
+                        tvshows = []
+                        tvshowscount = 0
+                        for item in json_response["result"]["files"]:
+                            if item.has_key('type'):
+                                if item["type"] == "episode":
+                                    episodes += 1
+                                    if item["playcount"] > 0:
+                                        watchedepisodes += 1
+                                    if item["tvshowid"] not in tvshows:
+                                        tvshows.append(item["tvshowid"])
                                         tvshowscount += 1
-                                    else:
-                                        numitems += 1
-                                        if "playcount" in item.keys():
-                                            if item["playcount"] > 0:
-                                                played += 1
-                                            if item["resume"]["position"] > 0:
-                                                inprogress += 1
-                            self.WINDOW.setProperty('PlaylistWatched', str(played))
-                            self.WINDOW.setProperty('PlaylistCount', str(numitems))
-                            self.WINDOW.setProperty('PlaylistTVShowCount', str(tvshowscount))
-                            self.WINDOW.setProperty('PlaylistInProgress', str(inprogress))
-                            self.WINDOW.setProperty('PlaylistUnWatched', str(numitems - played))
-                            self.WINDOW.setProperty('PlaylistEpisodes', str(episodes))
-                            self.WINDOW.setProperty('PlaylistEpisodesUnWatched', str(episodes - watchedepisodes))
+                                elif item["type"] == "tvshow":
+                                    episodes += item["episode"]
+                                    watchedepisodes += item["watchedepisodes"]
+                                    tvshowscount += 1
+                                else:
+                                    numitems += 1
+                                    if "playcount" in item.keys():
+                                        if item["playcount"] > 0:
+                                            played += 1
+                                        if item["resume"]["position"] > 0:
+                                            inprogress += 1
+                        self.WINDOW.setProperty('PlaylistWatched', str(played))
+                        self.WINDOW.setProperty('PlaylistCount', str(numitems))
+                        self.WINDOW.setProperty('PlaylistTVShowCount', str(tvshowscount))
+                        self.WINDOW.setProperty('PlaylistInProgress', str(inprogress))
+                        self.WINDOW.setProperty('PlaylistUnWatched', str(numitems - played))
+                        self.WINDOW.setProperty('PlaylistEpisodes', str(episodes))
+                        self.WINDOW.setProperty('PlaylistEpisodesUnWatched', str(episodes - watchedepisodes))
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]),full_liz)
                 
             # Play an albums
@@ -274,7 +274,7 @@ class Main:
                     if xbmc.abortRequested:
                         break
                     json_query2 = self.WINDOW.getProperty( prefix + "-data-" + str( item['tvshowid'] ) )
-                    if json_query:
+                    if json_query2:
                         json_query2 = simplejson.loads(json_query2)
                         if json_query2.has_key('result') and json_query2['result'] != None and json_query2['result'].has_key('episodes'):
                             for item2 in json_query2['result']['episodes']:

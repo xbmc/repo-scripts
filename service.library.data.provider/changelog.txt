@@ -1,3 +1,7 @@
+[B]0.0.9[/B]
+- Fix error when no tvshow library present.
+- Fix playlist statistics when playlist are used that have been added by favourites.
+
 [B]0.0.8[/B]
 - Add favorite episodes - thx SumnerH.
 

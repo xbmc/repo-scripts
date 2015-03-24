@@ -47,11 +47,12 @@ class LibraryFunctions():
         
     def _get_data(self, query_type, useCache):
         # Check if data is being refreshed elsewhere
-        for count in range(31):
-            data = self.WINDOW.getProperty(query_type+"-data")
-            if data != "LOADING":
-                return data if (data or count) else None
-            xbmc.sleep(100)
+        if self.WINDOW.getProperty(query_type+"-data") == "LOADING":
+            for count in range(30):
+                xbmc.sleep(100)
+                data = self.WINDOW.getProperty(query_type+"-data")
+                if data != "LOADING":
+                    return data
         
         if useCache:
             # Check whether there is saved data
@@ -161,8 +162,7 @@ class LibraryFunctions():
     def _fetch_recommended_episodes(self, useCache = False):
         def query_recommended_episodes():
             # First we get a list of all the in-progress TV shows.
-            json_query_string = self.json_query("VideoLibrary.GetTVShows", unplayed=True, properties=self.tvshow_properties, 
-                                         query_filter=self.inprogress_filter)
+            json_query_string = self.json_query("VideoLibrary.GetTVShows", unplayed=True, properties=self.tvshow_properties, sort={"order":"descending", "method":"lastplayed"}, query_filter=self.inprogress_filter)
             json_query = json.loads(json_query_string)
 
             # If we found any, find the oldest unwatched show for each one.
@@ -191,6 +191,8 @@ class LibraryFunctions():
             if favs['result']['favourites'] is None:
                 return None
             shows = json.loads(self.json_query("VideoLibrary.GetTVShows", unplayed=True, properties=self.tvshow_properties, limit=None))
+            if not shows.has_key('result') or not shows['result'].has_key('tvshows'):
+                return None
             fav_unwatched = [ show for show in shows['result']['tvshows'] if show['title'] in 
                               set([ fav['title'] for fav in favs['result']['favourites'] if fav['type'] == 'window']) ]
 
