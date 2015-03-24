@@ -1,3 +1,7 @@
+Version 0.14.1
+
+fix for if bad refresh time is given
+
 Version 0.14.0
 
 updated addon.xml for Helix, no longer backwards compatible with Gotham and below. 

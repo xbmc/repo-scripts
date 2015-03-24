@@ -34,7 +34,7 @@ class GrabFanartService:
         self.WINDOW.setProperty('script.grab.fanart.Ready',"")
 
         #start populating the arrays right away - don't use threads here
-        if(utils.getSetting('mode') == 'random'):
+        if(utils.getSetting('mode') == '' or utils.getSetting('mode') == 'random'):
             self.grabRandom()
         else:
             self.grabRecent()
@@ -136,15 +136,19 @@ class GrabFanartService:
                     self.WINDOW.setProperty('script.grab.fanart.Global.Title',globalArt.title)
                     self.WINDOW.setProperty('script.grab.fanart.Global.FanArt',globalArt.fan_art)
                     self.WINDOW.setProperty('script.grab.fanart.Global.Logo',globalArt.logo)
-                    
-                self.refresh_prop = time() + float(utils.getSetting("refresh"))
+
+                refresh_interval = 10
+                if(utils.getSetting('refresh') != ''):
+                    refresh_interval = float(utils.getSetting("refresh"))
+                
+                self.refresh_prop = time() + refresh_interval
 
                 #let xbmc know the images are ready
                 self.WINDOW.setProperty('script.grab.fanart.Ready',"true")
 
             #check if the media list should be updated
             if(time() >= self.refresh_media):
-                if(utils.getSetting('mode') == 'random'):
+                if(utils.getSetting('mode') == '' or utils.getSetting('mode') == 'random'):
                     thread.start_new_thread(self.grabRandom,())
                 else:
                     thread.start_new_thread(self.grabRecent,())
