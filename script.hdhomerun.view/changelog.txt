@@ -1,3 +1,11 @@
+** 2015.3.25 **
+
+Use more stable guide update method
+Update guide every 55 to 65 minutes
+On guide update failure, wait 5 minutes and try again - then return to normal interval
+Fix for DeviceAuth being encoded with a trailing newline
+Now logs addon version on startup
+
 ** 2015.3.20b1 **
 
 Fix for error causing the addon to fail on startup when there is no guide data

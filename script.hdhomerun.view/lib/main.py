@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import time
+import time, random
 import xbmc, xbmcgui
 
 import hdhr
@@ -8,9 +8,9 @@ import util
 import player
 import skin
 
-MAX_TIME_INT = 31536000000 #1000 years from Epoch
-
 CHANNEL_DISPLAY = u'[COLOR FF99CCFF]{0}[/COLOR] {1}'
+GUIDE_UPDATE_INTERVAL = 3300 #55 mins
+GUIDE_UPDATE_VARIANT = 600 #10 mins
 
 class BaseWindow(xbmcgui.WindowXML):
     def __init__(self,*args,**kwargs):
@@ -137,7 +137,7 @@ class GuideOverlay(util.CronReceiver):
         self.fallbackChannel = None
         self.cron = None
         self.guideFetchPreviouslyFailed = False
-        self.nextGuideUpdate = MAX_TIME_INT
+        self.resetNextGuideUpdate()
         self.lastDiscovery = time.time()
         self.filter = None
 
@@ -223,6 +223,7 @@ class GuideOverlay(util.CronReceiver):
 
     def tick(self):
         if time.time() > self.nextGuideUpdate:
+            self.resetNextGuideUpdate()
             self.updateChannels()
         else:
             self.updateProgressBars()
@@ -246,31 +247,6 @@ class GuideOverlay(util.CronReceiver):
             if prog == None:
                 mli.setProperty('show.progress','')
             else:
-                prog = int(prog - (prog % 5))
-                mli.setProperty('show.progress','progress/script-hdhomerun-view-progress_{0}.png'.format(prog))
-
-    def updateChannels(self):
-        util.DEBUG_LOG('Updating channels')
-        self.updateGuide()
-        for mli in self.channelList:
-            guideChan = mli.dataSource.guide
-            currentShow = guideChan.currentShow()
-            nextShow = guideChan.nextShow()
-            title = mli.dataSource.name
-            thumb = currentShow.icon
-            icon = guideChan.icon
-            if icon: title = CHANNEL_DISPLAY.format(mli.dataSource.number,title)
-            mli.setLabel(title)
-            mli.setThumbnailImage(thumb)
-            mli.setProperty('show.title',currentShow.title)
-            mli.setProperty('show.synopsis',currentShow.synopsis)
-            mli.setProperty('next.title',u'{0}: {1}'.format(util.T(32004),nextShow.title or util.T(32005)))
-            mli.setProperty('next.icon',nextShow.icon)
-            start = nextShow.start
-            if start:
-                mli.setProperty('next.start',time.strftime('%I:%M %p',time.localtime(start)))
-            prog = currentShow.progress()
-            if prog != None:
                 prog = int(prog - (prog % 5))
                 mli.setProperty('show.progress','progress/script-hdhomerun-view-progress_{0}.png'.format(prog))
 
@@ -303,6 +279,11 @@ class GuideOverlay(util.CronReceiver):
         if not self.touchMode and util.videoIsPlaying():
             xbmc.executebuiltin('ActivateWindow(fullscreenvideo)')
 
+    def resetNextGuideUpdate(self,interval=None):
+        if not interval:
+            interval = GUIDE_UPDATE_INTERVAL + random.SystemRandom().randrange(GUIDE_UPDATE_VARIANT)
+        self.nextGuideUpdate = time.time() + interval
+
     def getLineUpAndGuide(self):
         self.lastDiscovery = time.time()
         self.updateLineup()
@@ -310,6 +291,7 @@ class GuideOverlay(util.CronReceiver):
 
         self.updateGuide()
         self.showProgress(75,util.T(32009))
+
         return True
 
     def updateLineup(self,quiet=False):
@@ -344,23 +326,21 @@ class GuideOverlay(util.CronReceiver):
         if err:
             if not self.guideFetchPreviouslyFailed: #Only show notification the first time. Don't need this every 5 mins if internet is down
                 util.showNotification(err,header=util.T(32013))
+                self.resetNextGuideUpdate(300) #Could not get guide data. Check again in 5 minutes
             self.guideFetchPreviouslyFailed = True
-            self.nextGuideUpdate = time.time() + 300 #Could not get guide data. Check again in 5 minutes
             self.setWinProperties()
-            if self.lineUp.hasGuideData: return
+            if self.lineUp.hasGuideData:
+                util.DEBUG_LOG('Next guide update: {0} minutes'.format(int((self.nextGuideUpdate - time.time())/60)))
+                return
 
         guide = guide or hdhr.Guide()
 
         self.guideFetchPreviouslyFailed = False
 
-        self.nextGuideUpdate = MAX_TIME_INT
+        #Set guide data for each channel
         for channel in self.lineUp.channels.values():
             guideChan = guide.getChannel(channel.number)
             channel.setGuide(guideChan)
-            if channel.guide:
-                end = channel.guide.currentShow().end
-                if end and end < self.nextGuideUpdate:
-                    self.nextGuideUpdate = end
 
         self.lineUp.hasGuideData = True
 
@@ -393,6 +373,31 @@ class GuideOverlay(util.CronReceiver):
         else:
             self.currentProgress.setPercent(0)
             self.currentProgress.setVisible(False)
+
+    def updateChannels(self):
+        util.DEBUG_LOG('Updating channels')
+        self.updateGuide()
+        for mli in self.channelList:
+            guideChan = mli.dataSource.guide
+            currentShow = guideChan.currentShow()
+            nextShow = guideChan.nextShow()
+            title = mli.dataSource.name
+            thumb = currentShow.icon
+            icon = guideChan.icon
+            if icon: title = CHANNEL_DISPLAY.format(mli.dataSource.number,title)
+            mli.setLabel(title)
+            mli.setThumbnailImage(thumb)
+            mli.setProperty('show.title',currentShow.title)
+            mli.setProperty('show.synopsis',currentShow.synopsis)
+            mli.setProperty('next.title',u'{0}: {1}'.format(util.T(32004),nextShow.title or util.T(32005)))
+            mli.setProperty('next.icon',nextShow.icon)
+            start = nextShow.start
+            if start:
+                mli.setProperty('next.start',time.strftime('%I:%M %p',time.localtime(start)))
+            prog = currentShow.progress()
+            if prog != None:
+                prog = int(prog - (prog % 5))
+                mli.setProperty('show.progress','progress/script-hdhomerun-view-progress_{0}.png'.format(prog))
 
     def fillChannelList(self):
         last = util.getSetting('last.channel')
@@ -561,8 +566,7 @@ class GuideOverlayDialog(GuideOverlay,BaseDialog):
     _BASE = BaseDialog
 
 def start():
-    #import os
-    #path = os.path.join(util.ADDON.getAddonInfo('profile').decode('utf-8'),'skin')
+    util.LOG('Version: {0}'.format(util.ADDON.getAddonInfo('version')))
     util.DEBUG_LOG('Current Kodi skin: {0}'.format(skin.currentKodiSkin()))
     path = skin.getSkinPath()
     if util.getSetting('touch.mode',False):
