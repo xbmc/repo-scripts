@@ -2,7 +2,7 @@
 <window>
     <onload>SetProperty(loading.progress,25)</onload>
     <onload>SetProperty(loading.status,$ADDON[script.hdhomerun.view 32010])</onload>
-    <defaultcontrol>209</defaultcontrol>
+    <defaultcontrol>200</defaultcontrol>
     <coordinates>
         <system>1</system>
         <posx>0</posx>
@@ -29,12 +29,14 @@
             <height>1080</height>
         </control>
 
-        <control type="group" id="209">
+        <control type="group" id="200">
+            <animation effect="slide" start="0,0" end="-820,0" time="500" condition="!IsEmpty(Window.Property(show.overlay))">Conditional</animation>
+            <posx>1920</posx>
+            <posy>0</posy>
             <defaultcontrol>210</defaultcontrol>
+
             <control type="list" id="210">
-                <visible allowhiddenfocus="true">false</visible>
-                <animation effect="slide" start="0,0" end="-820,0" time="0" condition="!IsEmpty(Window.Property(show.overlay))">Conditional</animation>
-                <posx>0</posx>
+                <posx>-1920</posx>
                 <posy>0</posy>
                 <width>1920</width>
                 <height>1080</height>
@@ -44,14 +46,7 @@
                 <focusedlayout width="1920" height="1080">
                 </focusedlayout>
             </control>
-        </control>
 
-        <control type="group" id="200">
-            <visible>!IsEmpty(Window.Property(show.overlay))</visible>
-            <animation effect="slide" start="1920,0" end="-820,0" time="500">VisibleChange</animation>
-            <posx>1920</posx>
-            <posy>0</posy>
-            <defaultcontrol>201</defaultcontrol>
             <control type="list" id="201">
                 <posx>0</posx>
                 <posy>0</posy>
@@ -62,7 +57,138 @@
 
                 <!-- ITEM LAYOUT ########################################## -->
                 <itemlayout height="270">
+
                     <control type="group">
+                        <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) | !IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>820</width>
+                            <height>268</height>
+                            <texture>script-hdhomerun-view-white_square.png</texture>
+                            <colordiffuse>DD333333</colordiffuse>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                        <control type="image">
+                            <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>820</width>
+                            <height>268</height>
+                            <texture>script-hdhomerun-view-white_square.png</texture>
+                            <colordiffuse>2000FF00</colordiffuse>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                        <control type="image">
+                            <posx>180</posx>
+                            <posy>188</posy>
+                            <width>640</width>
+                            <height>81</height>
+                            <texture>script-hdhomerun-view-white_square.png</texture>
+                            <colordiffuse>22FFFFFF</colordiffuse>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                        <control type="label">
+                            <visible>IsEmpty(ListItem.Property(channel.icon))</visible>
+                            <posx>10</posx>
+                            <posy>10</posy>
+                            <width>160</width>
+                            <height>160</height>
+                            <font>font30</font>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>[B][COLOR FF99CCFF]$INFO[ListItem.Property(channel.number)][/COLOR][/B]</label>
+                        </control>
+                        <control type="image">
+                            <posx>10</posx>
+                            <posy>10</posy>
+                            <width>160</width>
+                            <height>160</height>
+                            <texture>$INFO[ListItem.Property(channel.icon)]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="image">
+                            <posx>180</posx>
+                            <posy>0</posy>
+                            <width>240</width>
+                            <height>180</height>
+                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Thumb]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="image">
+                            <posx>190</posx>
+                            <posy>193</posy>
+                            <width>88</width>
+                            <height>66</height>
+                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Property(next.icon)]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>193</posy>
+                            <width>500</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.title)]</label>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>223</posy>
+                            <width>150</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.start)]</label>
+                        </control>
+                        <control type="textbox">
+                            <posx>10</posx>
+                            <posy>180</posy>
+                            <width>160</width>
+                            <height>80</height>
+                            <font>font13</font>
+                            <align>center</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>[B]$INFO[ListItem.Label][/B]</label>
+                        </control>
+                        <control type="label">
+                            <posx>430</posx>
+                            <posy>10</posy>
+                            <width>380</width>
+                            <height>30</height>
+                            <font>font13</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>[B]$INFO[ListItem.Property(show.title)][/B]</label>
+                        </control>
+                        <control type="textbox">
+                            <posx>430</posx>
+                            <posy>60</posy>
+                            <width>380</width>
+                            <height>128</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(show.synopsis)]</label>
+                        </control>
+                        <control type="image">
+                            <posx>180</posx>
+                            <posy>180</posy>
+                            <width>240</width>
+                            <height>8</height>
+                            <texture>$INFO[ListItem.Property(show.progress)]</texture>
+                            <colordiffuse>FF00FF00</colordiffuse>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                    </control>
+
+                    <control type="group">
+                        <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) + IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
                         <posx>400</posx>
                         <posy>0</posy>
 
@@ -169,6 +295,144 @@
                 <!-- FOCUSED LAYOUT ####################################### -->
                 <focusedlayout height="270">
                     <control type="group">
+                        <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) | !IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>820</width>
+                            <height>268</height>
+                            <texture>script-hdhomerun-view-white_square.png</texture>
+                            <colordiffuse>DD555555</colordiffuse>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                        <control type="image">
+                            <visible>!IsEmpty(ListItem.Property(is.current))</visible>
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>820</width>
+                            <height>268</height>
+                            <texture>script-hdhomerun-view-white_square.png</texture>
+                            <colordiffuse>2000FF00</colordiffuse>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                        <control type="image">
+                            <posx>180</posx>
+                            <posy>188</posy>
+                            <width>640</width>
+                            <height>81</height>
+                            <texture>script-hdhomerun-view-white_square.png</texture>
+                            <colordiffuse>22FFFFFF</colordiffuse>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                        <control type="label">
+                            <visible>IsEmpty(ListItem.Property(channel.icon))</visible>
+                            <posx>10</posx>
+                            <posy>10</posy>
+                            <width>160</width>
+                            <height>160</height>
+                            <font>font30</font>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>[B][COLOR FF99CCFF]$INFO[ListItem.Property(channel.number)][/COLOR][/B]</label>
+                        </control>
+                        <control type="image">
+                            <posx>10</posx>
+                            <posy>10</posy>
+                            <width>160</width>
+                            <height>160</height>
+                            <texture>$INFO[ListItem.Property(channel.icon)]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="image">
+                            <posx>180</posx>
+                            <posy>0</posy>
+                            <width>240</width>
+                            <height>180</height>
+                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Thumb]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="image">
+                            <posx>190</posx>
+                            <posy>193</posy>
+                            <width>88</width>
+                            <height>66</height>
+                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Property(next.icon)]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>193</posy>
+                            <width>500</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.title)]</label>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>223</posy>
+                            <width>150</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.start)]</label>
+                        </control>
+                        <control type="textbox">
+                            <posx>10</posx>
+                            <posy>180</posy>
+                            <width>160</width>
+                            <height>80</height>
+                            <font>font13</font>
+                            <align>center</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>[B]$INFO[ListItem.Label][/B]</label>
+                        </control>
+                        <control type="label">
+                            <posx>430</posx>
+                            <posy>10</posy>
+                            <width>380</width>
+                            <height>30</height>
+                            <font>font13</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>[B]$INFO[ListItem.Property(show.title)][/B]</label>
+                        </control>
+                        <control type="textbox">
+                            <posx>430</posx>
+                            <posy>60</posy>
+                            <width>380</width>
+                            <height>128</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(show.synopsis)]</label>
+                        </control>
+                        <control type="image">
+                            <posx>180</posx>
+                            <posy>180</posy>
+                            <width>240</width>
+                            <height>8</height>
+                            <texture>$INFO[ListItem.Property(show.progress)]</texture>
+                            <colordiffuse>FF00FF00</colordiffuse>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                        <control type="image">
+                            <posx>0</posx>
+                            <posy>0</posy>
+                            <width>822</width>
+                            <height>268</height>
+                            <texture border="5">script-hdhomerun-view-white_outline.png</texture>
+                            <aspectratio>stretch</aspectratio>
+                        </control>
+                    </control>
+
+                    <control type="group">
+                        <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.touch.mode)) + IsEmpty(Window(10000).Property(script.hdhomerun.view.guide.full.detail))</visible>
                         <animation effect="slide" start="400,0" end="0,0" time="200" delay="500">Focus</animation>
                         <posx>0</posx>
                         <posy>0</posy>
@@ -308,8 +572,8 @@
             </control>
         </control>
 
-        <control type="group" id="200">
-            <visible>!IsEmpty(Window.Property(show.overlay)) + !IsEmpty(Window.Property(channel.name))</visible>
+        <control type="group">
+            <visible>[!IsEmpty(Window.Property(show.overlay)) | !IsEmpty(Window.Property(show.current))] + !IsEmpty(Window.Property(channel.name))</visible>
             <animation effect="slide" start="0,1080" end="0,-150" time="500">VisibleChange</animation>
             <posx>0</posx>
             <posy>1080</posy>

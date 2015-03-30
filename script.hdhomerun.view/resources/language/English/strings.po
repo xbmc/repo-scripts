@@ -137,6 +137,24 @@ msgctxt "#32031"
 msgid "No guide data available"
 msgstr ""
 
+msgctxt "#32032"
+msgid "Press down for \".\""
+msgstr ""
+
+msgctxt "#32033"
+msgid "Show full detail on all guide items"
+msgstr ""
+
+msgctxt "#32034"
+msgid "No channels found on any device"
+msgstr ""
+
+
+#First run text
+msgctxt "#32100"
+msgid "[B]Controls:[/B][CR][CR]   Remote/Controller:[CR]      Show Guide: Select or move right[CR]      Show Options: Context menu button or (when guide is visible) move right[CR]      Channel Entry (Remote): Press buttons 0-9 - select when finished[CR][CR]   Touch:[CR]      Show Guide: Tap or swipe left[CR]      Show Options: Swipe left when guide is visible[CR][CR]   Keyboard/Mouse:[CR]      Show Guide: Keyboard: Enter, right or left click[CR]      Show Options: C, right mouse click or (when guide is visible) move right[CR]      Channel Entry: Press keys 0-9 - enter when finished[CR][CR]      *For sub-channels, down will insert a [B].[/B]"
+msgstr ""
+
 
 #Transcoding
 msgctxt "#32500"

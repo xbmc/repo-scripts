@@ -24,6 +24,7 @@ class NoDeviceAuthException(Exception): pass
 
 class NoGuideDataException(Exception): pass
 
+class EmptyLineupException(Exception): pass
 
 def chanTuple(guide_number,chanCount):
     major, minor = (guide_number + '.0').split('.',2)[:2]
@@ -60,11 +61,14 @@ class Channel(object):
             return filter_ in self.name.lower() or filter_ in self.guide.affiliate.lower() or filter_ == self.number
 
 class LineUp(object):
+    MAX_AGE = 3600
+
     def __init__(self):
         self.channels = OrderedDict()
         self.devices = {}
         self.hasGuideData = False
         self.hasSubChannels = False
+        self._discoveryTimestamp = 0
         self.collectLineUp()
 
     def __getitem__(self,key):
@@ -76,11 +80,16 @@ class LineUp(object):
     def __len__(self):
         return len(self.channels.keys())
 
+    def isOld(self):
+        return (time.time() - self._discoveryTimestamp) > self.MAX_AGE
+
     def index(self,key):
         if not key in self.channels: return -1
         return self.channels.keys().index(key)
 
     def indexed(self,index):
+        if index < 0 or index >= len(self):
+            return None
         return self.channels[ [k for k in self.channels.keys()][index] ]
 
     def getDeviceByIP(self,ip):
@@ -98,24 +107,41 @@ class LineUp(object):
         return highest
 
     def collectLineUp(self):
+        try:
+            self._collectLineUp()
+            self._discoveryTimestamp = time.time()
+        except:
+            self.devices = {}
+            raise
+
+    def _collectLineUp(self):
         responses = discovery.discover(discovery.TUNER_DEVICE)
 
-        if not responses: raise NoDevicesException()
+        if not responses:
+            util.DEBUG_LOG('ERROR: No discovery responses!')
+            raise NoDevicesException()
 
         lineUps = []
 
+        err = None
         for r in responses:
             self.devices[r.ID] = r
             try:
                 lineup = requests.get(r.url).json()
             except:
-                util.ERROR()
+                err = util.ERROR()
                 continue
 
-            r.channelCount = len(lineup)
-            lineUps.append((r,lineup))
+            if lineup:
+                r.channelCount = len(lineup)
+                lineUps.append((r,lineup))
 
-        if not lineUps: raise NoCompatibleDevicesException()
+        if not lineUps:
+            if err:
+                raise NoCompatibleDevicesException()
+            else:
+                util.DEBUG_LOG('ERROR: Empty lineup!')
+                raise EmptyLineupException()
 
         hideDRM = not util.getSetting('show.DRM',False)
 

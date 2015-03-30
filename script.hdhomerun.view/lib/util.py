@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys, binascii, json, threading, time, datetime
-import xbmc, xbmcaddon, xbmcvfs
+import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 import verlib
 
 DEBUG = True
@@ -66,6 +66,9 @@ def _processSettingForWrite(value):
         value = value and 'true' or 'false'
     return str(value)
 
+def setGlobalProperty(key,val):
+    xbmcgui.Window(10000).setProperty('script.hdhomerun.view.{0}'.format(key),val)
+
 def showNotification(message,time_ms=3000,icon_path=None,header=ADDON.getAddonInfo('name')):
     try:
         icon_path = icon_path or xbmc.translatePath(ADDON.getAddonInfo('icon')).decode('utf-8')
@@ -87,6 +90,30 @@ def xbmcvfsGet(url):
     data = f.read()
     f.close()
     return data
+
+def showTextDialog(heading,text):
+    t = TextBox()
+    t.setControls(heading,text)
+
+class TextBox:
+    # constants
+    WINDOW = 10147
+    CONTROL_LABEL = 1
+    CONTROL_TEXTBOX = 5
+
+    def __init__(self, *args, **kwargs):
+        # activate the text viewer window
+        xbmc.executebuiltin("ActivateWindow(%d)" % ( self.WINDOW, ))
+        # get window
+        self.win = xbmcgui.Window(self.WINDOW)
+        # give window time to initialize
+        xbmc.sleep(1000)
+
+    def setControls(self,heading,text):
+        # set heading
+        self.win.getControl(self.CONTROL_LABEL).setLabel(heading)
+        # set text
+        self.win.getControl(self.CONTROL_TEXTBOX).setText(text)
 
 class CronReceiver():
     def tick(self): pass

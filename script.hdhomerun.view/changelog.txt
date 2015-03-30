@@ -1,3 +1,24 @@
+** 2015.3.30 **
+
+Channel entry now accepts 'down' for '.' instead of 'select' and includes instructions to this effect
+Added setting 'Show full detail on all guide items'
+Fix for errors when no devices are found
+Add handling for empty lineup
+Improved icons on options dialog
+Options dialog now auto-hides
+After selecting a channel from a filtered list, focus is maintained on the channel when the list resets
+Added channel changing via channel up/down buttons on remote (may not work - needs testing)
+Organized first run control info by control type and removed some text
+
+2015.3.26a1
+
+Added options dialog with buttons for search, video settings, audio settings and volume control
+Options dialog opens on context menu button or mouse right click
+Options dialog also opens on move right or swipe left when the guide overlay is visible
+Guide overlay now also opens/closes on swipe left/right
+When 'Enable enhancements for touch devices' is enabled, all guide overlay items are now full detail even when not selected
+Added first run dialog with basic control description
+
 ** 2015.3.25 **
 
 Use more stable guide update method

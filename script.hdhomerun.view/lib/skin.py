@@ -52,6 +52,8 @@ else:
     OVERLAY = 'script-hdhomerun-view-overlay.xml'
     CHANNEL_ENTRY = 'script-hdhomerun-view-channel_entry.xml'
 
+OPTIONS_DIALOG = "script-hdhomerun-view-options.xml"
+
 SKINS_XMLS = (OVERLAY,CHANNEL_ENTRY)
 
 def copyTree(source,target):

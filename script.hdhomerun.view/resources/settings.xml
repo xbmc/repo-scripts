@@ -6,6 +6,7 @@
     <setting id="confirm.exit" type="bool" label="32002" default="true" />
     <setting id="exit.stops.player" type="bool" label="32020" default="true" />
     <setting id="touch.mode" type="bool" label="32027" default="false" />
+    <setting id="guide.full.detail" type="bool" label="32033" default="false" />
     <setting id="overlay.timeout" label="32029" type="slider" option="int" default="0" range="0,60" />
     <setting id="transcode" type="enum" label="32019" lvalues="32507|32500|32501|32502|32503|32504|32505|32506" default="0" />
     <setting id="show.DRM" type="bool" label="32028" default="false" />

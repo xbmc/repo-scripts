@@ -8,6 +8,8 @@ import util
 import player
 import skin
 
+API_LEVEL = 1
+
 CHANNEL_DISPLAY = u'[COLOR FF99CCFF]{0}[/COLOR] {1}'
 GUIDE_UPDATE_INTERVAL = 3300 #55 mins
 GUIDE_UPDATE_VARIANT = 600 #10 mins
@@ -23,7 +25,7 @@ class BaseWindow(xbmcgui.WindowXML):
     def setProperty(self,key,value):
         if self._closing: return
         xbmcgui.Window(self._winID).setProperty(key,value)
-        xbmcgui.WindowXMLDialog.setProperty(self,key,value)
+        xbmcgui.WindowXML.setProperty(self,key,value)
 
     def doClose(self):
         self._closing = True
@@ -80,9 +82,10 @@ class KodiChannelEntry(BaseDialog):
 
             elif action == xbmcgui.ACTION_NAV_BACK:
                 return self.backspace()
+            elif action == xbmcgui.ACTION_MOVE_DOWN:
+                return self.addDecimal()
             elif action == xbmcgui.ACTION_SELECT_ITEM:
-                if not self.hasSubChannels or not self.addDecimal():
-                    return self.submit()
+                return self.submit()
         except:
             util.ERROR()
             BaseDialog.onAction(self,action)
@@ -103,8 +106,6 @@ class KodiChannelEntry(BaseDialog):
 
     def addDecimal(self):
         if '.' in self.digits:
-            self.channel = self.channel[:-1]
-            self.showChannel()
             return False
         self.digits += '.'
         self.showChannel()
@@ -124,6 +125,37 @@ class KodiChannelEntry(BaseDialog):
             return self.channel[:-1]
         return self.channel
 
+class OptionsDialog(BaseDialog):
+    def __init__(self,*args,**kwargs):
+        self.main = kwargs.get('main')
+        self.touchMode = kwargs.get('touch_mode',False)
+        BaseDialog.__init__(self,*args,**kwargs)
+
+    def onInit(self):
+        BaseDialog.onInit(self)
+        self.searchClicked = False
+        self.setFocusId(240)
+        self.main.propertyTimer.reset(self)
+
+    def onAction(self,action):
+        try:
+            if action == xbmcgui.ACTION_GESTURE_SWIPE_RIGHT or  action == xbmcgui.ACTION_MOVE_LEFT:
+                return self.doClose()
+            elif action == xbmcgui.ACTION_PREVIOUS_MENU or action == xbmcgui.ACTION_NAV_BACK:
+                print 'TEST'
+                return self.doClose()
+
+            self.main.propertyTimer.reset(self)
+        except:
+            return BaseDialog.onAction(self,action)
+
+        BaseDialog.onAction(self,action)
+
+    def onClick(self,controlID):
+        if controlID in (238,244,245): return
+        if controlID == 241: self.searchClicked = True
+        self.doClose()
+
 
 class GuideOverlay(util.CronReceiver):
     _BASE = None
@@ -140,6 +172,7 @@ class GuideOverlay(util.CronReceiver):
         self.resetNextGuideUpdate()
         self.lastDiscovery = time.time()
         self.filter = None
+        self.optionsDialog = None
 
     #==========================================================================
     # EVENT HANDLERS
@@ -155,6 +188,7 @@ class GuideOverlay(util.CronReceiver):
         self.started = True
 
         self.propertyTimer = kodigui.PropertyTimer(self._winID,util.getSetting('overlay.timeout',0),'show.overlay','')
+        self.currentDetailsTimer = kodigui.PropertyTimer(self._winID,5,'show.current','')
 
         self.channelList = kodigui.ManagedControlList(self,201,3)
         self.currentProgress = self.getControl(250)
@@ -166,14 +200,20 @@ class GuideOverlay(util.CronReceiver):
 
     def onAction(self,action):
         try:
+            #'{"jsonrpc": "2.0", "method": "Input.ShowCodec", "id": 1}'
             if self.overlayVisible(): self.propertyTimer.reset()
-            if action == xbmcgui.ACTION_MOVE_RIGHT or action == xbmcgui.ACTION_MOVE_UP or action == xbmcgui.ACTION_MOVE_DOWN:
+            if action == xbmcgui.ACTION_MOVE_RIGHT or action == xbmcgui.ACTION_GESTURE_SWIPE_LEFT:
+                if self.overlayVisible():
+                    return self.showOptions()
+                else:
+                    return self.showOverlay()
+            elif action == xbmcgui.ACTION_MOVE_UP or action == xbmcgui.ACTION_MOVE_DOWN:
                 return self.showOverlay()
             elif action == xbmcgui.ACTION_CONTEXT_MENU:
-                return self.setFilter()
+                return self.showOptions()
 #            elif action == xbmcgui.ACTION_SELECT_ITEM:
 #                if self.clickShowOverlay(): return
-            elif action == xbmcgui.ACTION_MOVE_LEFT:
+            elif action == xbmcgui.ACTION_MOVE_LEFT or action == xbmcgui.ACTION_GESTURE_SWIPE_RIGHT:
                 return self.showOverlay(False)
             elif action == xbmcgui.ACTION_PREVIOUS_MENU or action == xbmcgui.ACTION_NAV_BACK:
                 if self.closeHandler(): return
@@ -181,6 +221,10 @@ class GuideOverlay(util.CronReceiver):
                 if self.clickShowOverlay(): return
             elif self.checkChannelEntry(action):
                 return
+            elif action == xbmcgui.ACTION_CHANNEL_UP: #or action == xbmcgui.ACTION_PAGE_UP: #For testing
+                self.channelUp()
+            elif action == xbmcgui.ACTION_CHANNEL_DOWN: #or action == xbmcgui.ACTION_PAGE_DOWN: #For testing
+                self.channelDown()
         except:
             util.ERROR()
             self._BASE.onAction(self,action)
@@ -215,13 +259,20 @@ class GuideOverlay(util.CronReceiver):
             self.fallbackChannel = None
             self.playChannel(channel)
         util.showNotification(util.T(32023),time_ms=5000,header=util.T(32022))
-    # END - EVENT HANDLERS ####################################################
 
     def onPlayBackEnded(self):
         self.setCurrent()
         util.DEBUG_LOG('ON PLAYBACK ENDED')
+    # END - EVENT HANDLERS ####################################################
+
+    def setProperty(self,key,val):
+        self._BASE.setProperty(self,key,val)
 
     def tick(self):
+        if xbmc.abortRequested:
+            self.doClose()
+            util.DEBUG_LOG('Abort requested - closing...')
+            return
         if time.time() > self.nextGuideUpdate:
             self.resetNextGuideUpdate()
             self.updateChannels()
@@ -230,7 +281,6 @@ class GuideOverlay(util.CronReceiver):
 
     def doClose(self):
         self._BASE.doClose(self)
-        self.propertyTimer.stop()
         if util.getSetting('exit.stops.player',True):
             xbmc.executebuiltin('PlayerControl(Stop)') #self.player.stop() will crash kodi (after a guide list reset at least)
         else:
@@ -286,7 +336,7 @@ class GuideOverlay(util.CronReceiver):
 
     def getLineUpAndGuide(self):
         self.lastDiscovery = time.time()
-        self.updateLineup()
+        if not self.updateLineup(): return False
         self.showProgress(50,util.T(32008))
 
         self.updateGuide()
@@ -297,11 +347,15 @@ class GuideOverlay(util.CronReceiver):
     def updateLineup(self,quiet=False):
         try:
             self.lineUp = hdhr.LineUp()
+            return True
         except hdhr.NoCompatibleDevicesException:
             if not quiet: xbmcgui.Dialog().ok(util.T(32016),util.T(32011),'',util.T(32012))
             return False
         except hdhr.NoDevicesException:
             if not quiet: xbmcgui.Dialog().ok(util.T(32016),util.T(32014),'',util.T(32012))
+            return False
+        except hdhr.EmptyLineupException:
+            if not quiet: xbmcgui.Dialog().ok(util.T(32016),util.T(32034),'',util.T(32012))
             return False
         except:
             e = util.ERROR()
@@ -309,8 +363,11 @@ class GuideOverlay(util.CronReceiver):
             return False
 
     def updateGuide(self):
-        if time.time() - self.lastDiscovery > 3600: #1 hour
-            self.updateLineup(quiet=True)
+        if self.lineUp.isOld(): #1 hour
+            if not self.updateLineup(quiet=True):
+                util.DEBUG_LOG('Discovery failed!')
+                self.resetNextGuideUpdate(300) #Discovery failed, try again in 5 mins
+                return False
 
         err = None
         guide = None
@@ -331,7 +388,7 @@ class GuideOverlay(util.CronReceiver):
             self.setWinProperties()
             if self.lineUp.hasGuideData:
                 util.DEBUG_LOG('Next guide update: {0} minutes'.format(int((self.nextGuideUpdate - time.time())/60)))
-                return
+                return False
 
         guide = guide or hdhr.Guide()
 
@@ -346,6 +403,7 @@ class GuideOverlay(util.CronReceiver):
 
         self.setWinProperties()
         util.DEBUG_LOG('Next guide update: {0} minutes'.format(int((self.nextGuideUpdate - time.time())/60)))
+        return True
 
     def setWinProperties(self):
         title = ''
@@ -478,6 +536,8 @@ class GuideOverlay(util.CronReceiver):
 
         self.setFocusId(210) #Set focus now that dummy list is ready
 
+        self.checkIfUpdated()
+
     def selectChannel(self,channel):
         pos = self.lineUp.index(channel.number)
         if pos > -1:
@@ -505,12 +565,22 @@ class GuideOverlay(util.CronReceiver):
             else:
                 self.cron.forceTick()
 
+        self.setProperty('show.current','')
         self.setProperty('show.overlay',show and 'SHOW' or '')
         self.propertyTimer.reset()
         if show and self.getFocusId() != 201: self.setFocusId(201)
 
     def overlayVisible(self):
         return bool(self.getProperty('show.overlay'))
+
+    def showOptions(self):
+        if self.optionsDialog: return
+        path = util.ADDON.getAddonInfo('path')
+        self.optionsDialog = OptionsDialog(skin.OPTIONS_DIALOG,path,'Main','1080i',main=self)
+        self.optionsDialog.doModal()
+        search = self.optionsDialog.searchClicked
+        self.optionsDialog = None
+        if search: self.setFilter()
 
     def playChannel(self,channel):
         self.setCurrent(self.channelList.getListItemByDataSource(channel))
@@ -542,11 +612,30 @@ class GuideOverlay(util.CronReceiver):
         self.playChannel(channel)
         self.selectChannel(channel)
 
+    def channelUp(self):
+        self.channelChange(1)
+
+    def channelDown(self):
+        self.channelChange(-1)
+
+    def channelChange(self,offset):
+        currentChannel = self.current.dataSource.number
+        pos = self.lineUp.index(currentChannel)
+        pos += offset
+        channel = self.lineUp.indexed(pos)
+        if not channel: return
+        self.setProperty('show.current','true')
+        self.currentDetailsTimer.reset()
+        self.playChannel(channel)
+        self.selectChannel(channel)
+
     def clearFilter(self):
         if not self.filter: return False
         self.filter = None
         self.current = None
         self.fillChannelList()
+        channel = self.getStartChannel()
+        self.selectChannel(channel)
         return True
 
     def setFilter(self):
@@ -558,6 +647,15 @@ class GuideOverlay(util.CronReceiver):
         self.showOverlay(from_filter=True)
         self.setFocusId(201)
 
+    def checkIfUpdated(self):
+        lastAPILevel = util.getSetting('API.LEVEL')
+        util.setSetting('API.LEVEL',API_LEVEL)
+
+        if not lastAPILevel:
+            return self.firstRun()
+
+    def firstRun(self):
+        util.showTextDialog('Info',util.T(32100))
 
 class GuideOverlayWindow(GuideOverlay,BaseWindow):
     _BASE = BaseWindow
@@ -568,13 +666,24 @@ class GuideOverlayDialog(GuideOverlay,BaseDialog):
 def start():
     util.LOG('Version: {0}'.format(util.ADDON.getAddonInfo('version')))
     util.DEBUG_LOG('Current Kodi skin: {0}'.format(skin.currentKodiSkin()))
+
+    util.setGlobalProperty('guide.full.detail',util.getSetting('guide.full.detail',False) and 'true' or '')
+
     path = skin.getSkinPath()
     if util.getSetting('touch.mode',False):
+        util.setGlobalProperty('touch.mode','true')
         window = GuideOverlayWindow(skin.OVERLAY,path,'Main','1080i')
         window.touchMode = True
     else:
+        util.setGlobalProperty('touch.mode','')
         window = GuideOverlayDialog(skin.OVERLAY,path,'Main','1080i')
 
     with util.Cron(5) as window.cron:
         window.doModal()
+        util.DEBUG_LOG('Shutting down...')
+        window.propertyTimer.close()
+        util.DEBUG_LOG('Overlay timer done')
+        window.currentDetailsTimer.close()
+        util.DEBUG_LOG('Details timer done')
         del window
+    util.DEBUG_LOG('Finished')

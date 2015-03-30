@@ -276,21 +276,27 @@ class ManagedControlList(object):
         return self.control.getListItem(pos)
 
 class PropertyTimer():
-    def __init__(self,window_id,timeout,property_,value):
+    def __init__(self,window_id,timeout,property_,value,addon_id=None):
         self._winID = window_id
         self._timeout = timeout
         self._property = property_
         self._value = value
         self._endTime = 0
         self._thread = None
+        self._addonID = addon_id
+        self._closeWin = None
+        self._closed = False
 
     def _onTimeout(self):
         self._endTime = 0
         xbmcgui.Window(self._winID).setProperty(self._property,self._value)
+        if self._addonID: xbmcgui.Window(10000).setProperty('{0}.{1}'.format(self._addonID,self._property),self._value)
+        if self._closeWin: self._closeWin.doClose()
 
     def _wait(self):
         while not xbmc.abortRequested and time.time() < self._endTime:
             xbmc.sleep(100)
+        if xbmc.abortRequested: return
         if self._endTime == 0: return
         self._onTimeout()
 
@@ -309,8 +315,14 @@ class PropertyTimer():
         if not self._stopped():
             self._thread.join()
 
-    def reset(self):
+    def close(self):
+        self._closed = True
+        self.stop()
+
+    def reset(self,close_win=None):
+        if self._closed: return
         if not self._timeout: return
+        self._closeWin = close_win
         self._reset()
         if self._stopped:
             self._start()

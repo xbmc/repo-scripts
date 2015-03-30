@@ -12,26 +12,37 @@
     <controls>
 
         <control type="group">
-            <posx>860</posx>
+            <posx>810</posx>
             <posy>490</posy>
             <control type="image">
                 <posx>0</posx>
                 <posy>0</posy>
-                <width>200</width>
-                <height>100</height>
+                <width>300</width>
+                <height>140</height>
                 <texture>script-hdhomerun-view-white_square.png</texture>
                 <colordiffuse>FF000000</colordiffuse>
             </control>
             <control type="label">
                 <posx>10</posx>
                 <posy>10</posy>
-                <width>180</width>
+                <width>280</width>
                 <height>80</height>
                 <font>font30</font>
                 <align>center</align>
                 <aligny>center</aligny>
                 <textcolor>FFFFFFFF</textcolor>
                 <label>[B][COLOR FF99CCFF]$INFO[Window.Property(channel)][/COLOR][/B]</label>
+            </control>
+            <control type="label">
+                <posx>10</posx>
+                <posy>100</posy>
+                <width>280</width>
+                <height>30</height>
+                <font>font10</font>
+                <align>center</align>
+                <aligny>center</aligny>
+                <textcolor>FFAAAAAA</textcolor>
+                <label>$ADDON[script.hdhomerun.view 32032]</label>
             </control>
         </control>
 
