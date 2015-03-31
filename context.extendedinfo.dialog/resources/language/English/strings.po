@@ -1,0 +1,10 @@
+# XBMC Media Center language file
+# Addon Name: ExtendedInfo Script - Open dialog
+# Addon id: context.extendedinfo.dialog
+msgid ""
+msgstr ""
+
+msgctxt "#30000"
+msgid "Open ExtendedInfo dialog"
+msgstr ""
+
