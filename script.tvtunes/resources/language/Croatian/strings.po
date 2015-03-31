@@ -156,6 +156,14 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Uloge"
 
+msgctxt "#32070"
+msgid "Top"
+msgstr "Gore"
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "Dolje"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "GREŠKA"

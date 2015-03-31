@@ -32,6 +32,7 @@ class NfoReader():
         self.debug_logging_enabled = debug_logging_enabled
         self.themeFiles = []
         self.themeDirs = []
+        self.excludeFromScreensaver = False
         self._loadNfoInfo(directory)
 
     # Get any themes that were in the NFO file
@@ -41,6 +42,10 @@ class NfoReader():
     # Get any theme directories that were in the NFO file
     def getThemeDirs(self):
         return self.themeDirs
+
+    # Check if this theme directory should be excluded from the screensaver
+    def getExcludeFromScreensaver(self):
+        return self.excludeFromScreensaver
 
     # Check for an NFO file for this show and reads details out of it
     # if it exists
@@ -78,6 +83,7 @@ class NfoReader():
                 #        <file>theme.mp3</file>
                 #        <directory>c:\my\themes</directory>
                 #        <playlistfile>playlist.m3u</playlistfile>
+                #        <excludeFromScreensaver/>
                 #    </tvtunes>
 
                 # There could be multiple file entries, so loop through all of them
@@ -113,6 +119,10 @@ class NfoReader():
                         playlistFile = playlistFileElem.text
 
                     self._addFilesFromPlaylist(playlistFile, directory)
+
+                # Check if this directory should be excluded from the screensaver
+                for playlistFileElem in nfoXml.findall('excludeFromScreensaver'):
+                    self.excludeFromScreensaver = True
 
                 returnValue = True
             else:
@@ -395,6 +405,14 @@ class ThemeFiles():
         log("ThemeFiles: Working Path = %s" % workingPath, self.debug_logging_enabled)
 
         return themeList
+
+    # Check if the given directory should be excluded from the screensaver
+    def shouldExcludeFromScreensaver(self, rawPath):
+        # Get the full path with any network alterations
+        workingPath = self._getUsablePath(rawPath)
+
+        nfoRead = NfoReader(workingPath)
+        return nfoRead.getExcludeFromScreensaver()
 
     # Search for theme files in the given directory
     def _getThemeFiles(self, directory, extensionOnly=False):

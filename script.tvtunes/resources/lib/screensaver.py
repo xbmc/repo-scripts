@@ -228,6 +228,15 @@ class MediaGroup(object):
 
         self.loadLock = threading.Lock()
 
+    # Check if this media group should be excluded
+    def shouldExclude(self):
+        if (self.path is None) or (self.path == ""):
+            return False
+        shouldSkip = self.themeFiles.shouldExcludeFromScreensaver(self.path)
+        if shouldSkip:
+            log("MediaGroup: Skipping %s" % self.path)
+        return shouldSkip
+
     # Add an image to the group, giving it's aspect radio
     def addImage(self, imageURL, aspectRatio):
         try:
@@ -584,23 +593,26 @@ class ScreensaverBase(object):
                 # Check to see if we can get the path or file for the video
                 if ('file' in item) and not self.exit_requested:
                     mediaGroup = MediaGroup(item['file'])
-                    # Now get all the image information
-                    for prop in imageTypes:
-                        if prop in item:
-                            # If we are dealing with fanart or thumbnail, then we can just store this value
-                            if prop in ['fanart']:
-                                # Set the aspect radio based on the type of image being shown
-                                mediaGroup.addImage(item[prop], 16.0 / 9.0)
-                            elif prop in ['thumbnail']:
-                                mediaGroup.addImage(item[prop], 2.0 / 3.0)
-                            elif prop in ['cast']:
-                                # If this cast member has an image, add it to the array
-                                for castItem in item['cast']:
-                                    if 'thumbnail' in castItem:
-                                        mediaGroup.addImage(castItem['thumbnail'], 2.0 / 3.0)
-                    # Don't return an empty image list if there are no images
-                    if mediaGroup.imageCount() > 0:
-                        mediaGroups.append(mediaGroup)
+
+                    # Check if we want to include this media group
+                    if not mediaGroup.shouldExclude():
+                        # Now get all the image information
+                        for prop in imageTypes:
+                            if prop in item:
+                                # If we are dealing with fanart or thumbnail, then we can just store this value
+                                if prop in ['fanart']:
+                                    # Set the aspect radio based on the type of image being shown
+                                    mediaGroup.addImage(item[prop], 16.0 / 9.0)
+                                elif prop in ['thumbnail']:
+                                    mediaGroup.addImage(item[prop], 2.0 / 3.0)
+                                elif prop in ['cast']:
+                                    # If this cast member has an image, add it to the array
+                                    for castItem in item['cast']:
+                                        if 'thumbnail' in castItem:
+                                            mediaGroup.addImage(castItem['thumbnail'], 2.0 / 3.0)
+                        # Don't return an empty image list if there are no images
+                        if mediaGroup.imageCount() > 0:
+                            mediaGroups.append(mediaGroup)
                 else:
                     log("Screensaver: No file specified when searching")
         log("Screensaver: Found %d image sets for %s" % (len(mediaGroups), key))

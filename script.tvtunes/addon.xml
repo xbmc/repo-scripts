@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="4.6.9" provider-name="robwebset">
+<addon id="script.tvtunes" name="TvTunes" version="4.7.0" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -21,7 +21,7 @@
 	
 		<summary lang="da">Hent og afspil dine Film og TV-show Temaer.</summary>
 	
-		<summary lang="de">Hole und spiele dein TV-Sendungs-Titelsong</summary>
+		<summary lang="de">Hole und spiele die Titelmelodie beim Browsen der TV-Shows</summary>
 	
 		<summary lang="el">Λήψη και αναπαραγωγή μουσικών θεμάτων (TvTunes) των τηλεοπτικών σας σειρών</summary>
 	
@@ -67,7 +67,7 @@
 	
 		<description lang="da">Scriptet vil hjælpe dig med at hente temaer til dit film og serie bibliotek fra www.televisiontunes.com. Den gemmer dem som theme[0-9].mp3 i hver af dine videomapper, så de vil blive spillet mens du gennemser dit videobibliotek når du går ind i seriemappen eller Video Information (Dit skin skal være kompatibel med denne feature)</description>
 	
-		<description lang="de">Dieses Skript wird dir helfen, die Titelsongs deiner Filme und TV-Sendungen von www.televisiontunes.com zu holen und diese in als theme[0-9].mp3 in deinen Video Ordnern zu speichern. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)</description>
+		<description lang="de">Dieses Skript unterstützt das Laden, Organisieren und Abspielen von Titelmelodien deiner Filme und TV-Serien. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)</description>
 	
 		<description lang="el">Αυτό το script θα σας βοηθήσει να κατεβάσετε μουσικά θέματα των τηλεοπτικών σας σειρών από το www.televisiontunes.com, θα τα αποθηκεύει σε αρχεία μορφής theme.mp3 στο φάκελο της εκάστοτε σειράς, και θα τα αναπαράγει κατά την περιήγησή σας στη συλλογή τηλ. σειρών σας (απαιτείται να υποστηρίζεται από το κέλυφός σας)</description>
 	

@@ -60,7 +60,7 @@ class Song(object):
     @classmethod
     def from_response(cls, song, connection):
         return cls(song['SongID'], song['Name'] if 'Name' in song else song['SongName'], song['ArtistID'], song['ArtistName'], song['AlbumID'], song['AlbumName'],
-                   ALBUM_COVER_URL + song['CoverArtFilename'] if song['CoverArtFilename'] else None, song['TrackNum'], song['EstimateDuration'], song['Popularity'], connection)
+                   ALBUM_COVER_URL + song['CoverArtFilename'] if song['CoverArtFilename'] else None, song.get('TackNum', None), song['EstimateDuration'], song.get('Popularity', None), connection)
 
     @classmethod
     def from_export(cls, export, connection):
@@ -161,7 +161,7 @@ class Song(object):
         pattern = pattern.replace('%a', self.artist.name)
         pattern = pattern.replace('%s', self.name)
         pattern = pattern.replace('%A', self.album.name)
-        return pattern.replace('/', '').replace('\\', '')
+        return pattern.replace('/', '').replace('\\', '').replace(":","").replace("*","").replace("?","").replace('"',"").replace("|","").replace("<","").replace(">","")
 
     def download(self, directory='~/Music', song_name='%a - %s - %A'):
         """

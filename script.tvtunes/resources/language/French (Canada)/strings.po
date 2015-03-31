@@ -294,7 +294,7 @@ msgstr "Curseur"
 
 msgctxt "#32067"
 msgid "Slide In From"
-msgstr "Glisser à partir de"
+msgstr "Glisser de"
 
 msgctxt "#32068"
 msgid "Left"

@@ -358,7 +358,7 @@ msgstr "Да бъде ли свалена?"
 
 msgctxt "#32115"
 msgid "Search results will be incomplete"
-msgstr "Не са намерени всички съвпадащи мелодии."
+msgstr "Резултатите от търсенето ще са непълни"
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"

@@ -18,11 +18,11 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Hole und spiele dein TV-Sendungs-Titelsong"
+msgstr "Hole und spiele die Titelmelodie beim Browsen der TV-Shows"
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Dieses Skript wird dir helfen, die Titelsongs deiner Filme und TV-Sendungen von www.televisiontunes.com zu holen und diese in als theme[0-9].mp3 in deinen Video Ordnern zu speichern. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)"
+msgstr "Dieses Skript unterstützt das Laden, Organisieren und Abspielen von Titelmelodien deiner Filme und TV-Serien. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)"
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
@@ -30,7 +30,7 @@ msgstr "Skin-Ersteller, bitte schaut ins wiki um zu wissen, wie ihr es in euren 
 
 msgctxt "#32001"
 msgid "Play theme in loop"
-msgstr "Spiele Titelsong in einer Schleife"
+msgstr "Spiele Titelmelodie in einer Schleife"
 
 msgctxt "#32002"
 msgid "Lower sound value"
@@ -58,15 +58,15 @@ msgstr "Pfad:"
 
 msgctxt "#32008"
 msgid "Fade tune out when exiting"
-msgstr "Ton beim verlassen ausblenden"
+msgstr "Ton beim Verlassen abblenden"
 
 msgctxt "#32009"
 msgid "Automatically Download Theme If"
-msgstr "Automatisch Thema downloaden, wenn"
+msgstr "Automatisch Titelmelodie herunterladen, wenn"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
-msgstr "mehrere Songs mischen"
+msgstr "Mehrere Songs mischen"
 
 msgctxt "#32011"
 msgid "Random start time"
@@ -78,23 +78,23 @@ msgstr "Dateitypen ändern"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
-msgstr "Den Ton beim starten einblenden"
+msgstr "Den Ton beim Starten einblenden"
 
 msgctxt "#32014"
 msgid "Always add additional themes (no overwrite)"
-msgstr "Immer zusätzliche Titelsongs hinzufügen (nicht überschreiben)"
+msgstr "Immer zusätzliche Titelmelodien hinzufügen (nicht überschreiben)"
 
 msgctxt "#32015"
 msgid "Search for movie themes"
-msgstr "Suche nach Titelsongs von Filmen"
+msgstr "Suche nach Titelmelodien von Filmen"
 
 msgctxt "#32016"
 msgid "Play themes when browsing Movie list"
-msgstr "Spiele Titelsong beim Durchsuchen der Film Liste"
+msgstr "Spiele Titelmelodie beim Durchsuchen der Film Liste"
 
 msgctxt "#32017"
 msgid "Play themes when browsing TV Show list"
-msgstr "Spiele Titelsong beim Durchsuchen der TV-Sendungs Liste"
+msgstr "Spiele Titelmelodie beim Durchsuchen der TV-Sendungs Liste"
 
 msgctxt "#32018"
 msgid "Debugging"
@@ -118,11 +118,11 @@ msgstr "Operationen"
 
 msgctxt "#32023"
 msgid "Browse Themes"
-msgstr "Themes durchsuchen"
+msgstr "Titelmelodien durchsuchen"
 
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
-msgstr "Verzögere Theme Start(Sekunden)"
+msgstr "Verzögere Abspielen der Titelmelodie (Sekunden)"
 
 msgctxt "#32025"
 msgid "Support themes in sub directories"
@@ -138,11 +138,11 @@ msgstr "Songlänge auf X (Sekunden) begrenzen wenn mehrere vorhanden sind"
 
 msgctxt "#32028"
 msgid "Default Theme Search Source"
-msgstr "Standardschema Suchquelle"
+msgstr "Quelle für Suche nach Titelmelodien"
 
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
-msgstr "Spiele Thema beim Durchsuchen der Musikvideo Liste"
+msgstr "Spiele Titelmelodien beim Durchsuchen der Musikvideo Liste"
 
 msgctxt "#32030"
 msgid "All"
@@ -188,17 +188,25 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Bildschirmschoner"
 
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
 msgctxt "#32042"
 msgid "StarWars"
 msgstr "StarWars"
 
 msgctxt "#32043"
 msgid "RandomZoomIn"
-msgstr "ZufälligesHineinzoomen"
+msgstr "Zufälliges Hineinzoomen"
 
 msgctxt "#32044"
 msgid "AppleTVLike"
-msgstr "WieAppleTV"
+msgstr "Wie beim AppleTV"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "Tauschen im Gitter"
 
 msgctxt "#32046"
 msgid "Random"
@@ -219,6 +227,10 @@ msgstr "Spalten"
 msgctxt "#32050"
 msgid "Speed"
 msgstr "Geschwindigkeit"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Gleichzeitige Bilder"
 
 msgctxt "#32052"
 msgid "Random Order"
@@ -258,7 +270,7 @@ msgstr "Filme, Fernsehsendungen"
 
 msgctxt "#32061"
 msgid "Play Themes During Screensaver"
-msgstr "Spiele Thema vor Bildschirmschoner"
+msgstr "Spiele Titelmelodie bei aktivem Bildschirmschoner"
 
 msgctxt "#32062"
 msgid "Fanart,Thumbnail,Cast"
@@ -279,6 +291,10 @@ msgstr "Vorschaubild,Besetzung"
 msgctxt "#32066"
 msgid "Slider"
 msgstr "Schieber"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Einblenden von"
 
 msgctxt "#32068"
 msgid "Left"
@@ -304,13 +320,29 @@ msgctxt "#32073"
 msgid "Include Artwork Downloader Images"
 msgstr "Beinhaltet Artwork Downloader Cover"
 
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Bilder nur anzeigen wenn Titelmelodie vorhanden"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Titelmelodie einmal spielen, alle Bilder zeigen"
+
 msgctxt "#32076"
 msgid "Show All Images, Repeat Theme"
-msgstr "Zeige alle Bilder, Wiederhole Thema"
+msgstr "Zeige alle Bilder, wiederhole Titelmelodie"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Tielmelodie 1x spielen, restliche Bilder überspringen"
 
 msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Regeln wiederholen"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Blende Auswahldialog ein, falls AutoMatch fehlschlägt"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -374,7 +406,7 @@ msgstr "Suchergebnisse werden unvollständig sein"
 
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
-msgstr "Du kannst helfen, mehr Titelsongs zu bekommen auf:"
+msgstr "Du kannst dabei helfen, hier mehr Titelmelodien zu finden:"
 
 msgctxt "#32118"
 msgid "Manual Search..."
@@ -406,19 +438,19 @@ msgstr "Musik Videos"
 
 msgctxt "#32204"
 msgid "[Filter]: Show Only Missing Themes"
-msgstr "[Filter]: Zeige nur fehlende Themes"
+msgstr "[Filter]: Zeige nur fehlende Titelmelodien"
 
 msgctxt "#32205"
 msgid "[Action]: Retrieve Missing Themes"
-msgstr "[Aktion]: Hole fehlende Themes"
+msgstr "[Aktion]: Hole fehlende Titelmelodien"
 
 msgctxt "#32206"
 msgid "You have themes that are not in themes folders."
-msgstr "Du hast Themes außerhalb des Themes-Ordners."
+msgstr "Du hast Einträge außerhalb des Ordners für Titelmelodien."
 
 msgctxt "#32207"
 msgid "Move themes into themes folder?"
-msgstr "Verschiebe Themes in den Themes-Ordner?"
+msgstr "Melodie in den Standard-Ordner verschieben?"
 
 msgctxt "#32208"
 msgid "[Action]: Start Screensaver"

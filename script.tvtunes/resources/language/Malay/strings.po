@@ -24,6 +24,14 @@ msgctxt "#32036"
 msgid "Never"
 msgstr "Tidak sesekali"
 
+msgctxt "#32040"
+msgid "Screensaver"
+msgstr "Penyelamat skrin"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Lajur"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Seni Peminat"

@@ -1,3 +1,6 @@
+v4.7.0
+- Add option to exclude items from the Screensaver
+
 v4.6.9
 - Update theme scraper for Goear changes
 

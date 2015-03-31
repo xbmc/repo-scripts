@@ -15,9 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-# https://github.com/koehlma/pygrooveshark
-
-
 import sys
 
 import contextlib
@@ -51,7 +48,7 @@ class Session():
         self.country = grooveshark.const.COUNTRY
         self.queue = None
         self.token = None
-        self.time = None
+        self.time = 0
 
     def __repr__(self):
         return '<Session user="{}", sessions="{}", secret="{}", country="{}">'.format(self.user, self.session, self.secret, self.country)
@@ -370,3 +367,19 @@ class Client(object):
         result = self.connection.request(r, dct, self.connection.header(r))
         songs = result[1]
         return [Song.from_response(song, self.connection) for song in songs]
+    
+    def get_song_by_id(self, song_id):
+        parameters =  {'songID': song_id,
+                       'country': self.connection.session.country}
+        header = self.connection.header('getTokenForSong')
+        result = self.connection.request('getTokenForSong', parameters,
+                                         header)
+        return self.get_song_by_token(result[1]['Token'])
+    
+    def get_song_by_token(self, song_token):
+        parameters = {'token': song_token,
+                      'country': self.connection.session.country}
+        header = self.connection.header('getSongFromToken')
+        result = self.connection.request('getSongFromToken',
+                                         parameters, header)
+        return Song.from_response(result[1], self.connection)
