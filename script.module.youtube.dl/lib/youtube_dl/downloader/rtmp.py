@@ -11,7 +11,6 @@ from ..compat import compat_str
 from ..utils import (
     check_executable,
     encodeFilename,
-    format_bytes,
     get_exe_version,
 )
 
@@ -51,23 +50,23 @@ class RtmpFD(FileDownloader):
                     if not resume_percent:
                         resume_percent = percent
                         resume_downloaded_data_len = downloaded_data_len
-                    eta = self.calc_eta(start, time.time(), 100 - resume_percent, percent - resume_percent)
-                    speed = self.calc_speed(start, time.time(), downloaded_data_len - resume_downloaded_data_len)
+                    time_now = time.time()
+                    eta = self.calc_eta(start, time_now, 100 - resume_percent, percent - resume_percent)
+                    speed = self.calc_speed(start, time_now, downloaded_data_len - resume_downloaded_data_len)
                     data_len = None
                     if percent > 0:
                         data_len = int(downloaded_data_len * 100 / percent)
-                    data_len_str = '~' + format_bytes(data_len)
-                    self.report_progress(percent, data_len_str, speed, eta)
-                    cursor_in_new_line = False
                     self._hook_progress({
+                        'status': 'downloading',
                         'downloaded_bytes': downloaded_data_len,
-                        'total_bytes': data_len,
+                        'total_bytes_estimate': data_len,
                         'tmpfilename': tmpfilename,
                         'filename': filename,
-                        'status': 'downloading',
                         'eta': eta,
+                        'elapsed': time_now - start,
                         'speed': speed,
                     })
+                    cursor_in_new_line = False
                 else:
                     # no percent for live streams
                     mobj = re.search(r'([0-9]+\.[0-9]{3}) kB / [0-9]+\.[0-9]{2} sec', line)
@@ -75,15 +74,15 @@ class RtmpFD(FileDownloader):
                         downloaded_data_len = int(float(mobj.group(1)) * 1024)
                         time_now = time.time()
                         speed = self.calc_speed(start, time_now, downloaded_data_len)
-                        self.report_progress_live_stream(downloaded_data_len, speed, time_now - start)
-                        cursor_in_new_line = False
                         self._hook_progress({
                             'downloaded_bytes': downloaded_data_len,
                             'tmpfilename': tmpfilename,
                             'filename': filename,
                             'status': 'downloading',
+                            'elapsed': time_now - start,
                             'speed': speed,
                         })
+                        cursor_in_new_line = False
                     elif self.params.get('verbose', False):
                         if not cursor_in_new_line:
                             self.to_screen('')
@@ -104,6 +103,9 @@ class RtmpFD(FileDownloader):
         live = info_dict.get('rtmp_live', False)
         conn = info_dict.get('rtmp_conn', None)
         protocol = info_dict.get('rtmp_protocol', None)
+        real_time = info_dict.get('rtmp_real_time', False)
+        no_resume = info_dict.get('no_resume', False)
+        continue_dl = info_dict.get('continuedl', False)
 
         self.report_destination(filename)
         tmpfilename = self.temp_name(filename)
@@ -117,7 +119,9 @@ class RtmpFD(FileDownloader):
         # Download using rtmpdump. rtmpdump returns exit code 2 when
         # the connection was interrumpted and resuming appears to be
         # possible. This is part of rtmpdump's normal usage, AFAIK.
-        basic_args = ['rtmpdump', '--verbose', '-r', url, '-o', tmpfilename]
+        basic_args = [
+            'rtmpdump', '--verbose', '-r', url,
+            '-o', encodeFilename(tmpfilename, True)]
         if player_url is not None:
             basic_args += ['--swfVfy', player_url]
         if page_url is not None:
@@ -141,7 +145,14 @@ class RtmpFD(FileDownloader):
             basic_args += ['--conn', conn]
         if protocol is not None:
             basic_args += ['--protocol', protocol]
-        args = basic_args + [[], ['--resume', '--skip', '1']][not live and self.params.get('continuedl', False)]
+        if real_time:
+            basic_args += ['--realtime']
+
+        args = basic_args
+        if not no_resume and continue_dl and not live:
+            args += ['--resume']
+        if not live and continue_dl:
+            args += ['--skip', '1']
 
         if sys.platform == 'win32' and sys.version_info < (3, 0):
             # Windows subprocess module does not actually support Unicode
@@ -152,19 +163,7 @@ class RtmpFD(FileDownloader):
         else:
             subprocess_encoding = None
 
-        if self.params.get('verbose', False):
-            if subprocess_encoding:
-                str_args = [
-                    a.decode(subprocess_encoding) if isinstance(a, bytes) else a
-                    for a in args]
-            else:
-                str_args = args
-            try:
-                import pipes
-                shell_quote = lambda args: ' '.join(map(pipes.quote, str_args))
-            except ImportError:
-                shell_quote = repr
-            self.to_screen('[debug] rtmpdump command line: ' + shell_quote(str_args))
+        self._debug_cmd(args, subprocess_encoding, exe='rtmpdump')
 
         RD_SUCCESS = 0
         RD_FAILED = 1

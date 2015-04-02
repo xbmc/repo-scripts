@@ -75,7 +75,7 @@ class main():
 
         util.LOG(repr(info),debug=True)
 
-        import YDStreamExtractor
+        from lib import YDStreamExtractor
         YDStreamExtractor.handleDownload(info,bg=True)
 
     def stopDownload(self):

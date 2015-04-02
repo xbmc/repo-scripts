@@ -2,15 +2,15 @@ from __future__ import unicode_literals
 
 import xml.etree.ElementTree
 
-from .subtitles import SubtitlesInfoExtractor
+from .common import InfoExtractor
 from ..utils import ExtractorError
 from ..compat import compat_HTTPError
 
 
-class BBCCoUkIE(SubtitlesInfoExtractor):
+class BBCCoUkIE(InfoExtractor):
     IE_NAME = 'bbc.co.uk'
     IE_DESC = 'BBC iPlayer'
-    _VALID_URL = r'https?://(?:www\.)?bbc\.co\.uk/(?:programmes|iplayer/episode)/(?P<id>[\da-z]{8})'
+    _VALID_URL = r'https?://(?:www\.)?bbc\.co\.uk/(?:(?:(?:programmes|iplayer(?:/[^/]+)?/(?:episode|playlist))/)|music/clips[/#])(?P<id>[\da-z]{8})'
 
     _TESTS = [
         {
@@ -18,8 +18,8 @@ class BBCCoUkIE(SubtitlesInfoExtractor):
             'info_dict': {
                 'id': 'b039d07m',
                 'ext': 'flv',
-                'title': 'Kaleidoscope: Leonard Cohen',
-                'description': 'md5:db4755d7a665ae72343779f7dacb402c',
+                'title': 'Kaleidoscope, Leonard Cohen',
+                'description': 'The Canadian poet and songwriter reflects on his musical career.',
                 'duration': 1740,
             },
             'params': {
@@ -71,7 +71,57 @@ class BBCCoUkIE(SubtitlesInfoExtractor):
                 'skip_download': True,
             },
             'skip': 'Currently BBC iPlayer TV programmes are available to play in the UK only',
-        },
+        }, {
+            'url': 'http://www.bbc.co.uk/programmes/b04v20dw',
+            'info_dict': {
+                'id': 'b04v209v',
+                'ext': 'flv',
+                'title': 'Pete Tong, The Essential New Tune Special',
+                'description': "Pete has a very special mix - all of 2014's Essential New Tunes!",
+                'duration': 10800,
+            },
+            'params': {
+                # rtmp download
+                'skip_download': True,
+            }
+        }, {
+            'url': 'http://www.bbc.co.uk/music/clips/p02frcc3',
+            'note': 'Audio',
+            'info_dict': {
+                'id': 'p02frcch',
+                'ext': 'flv',
+                'title': 'Pete Tong, Past, Present and Future Special, Madeon - After Hours mix',
+                'description': 'French house superstar Madeon takes us out of the club and onto the after party.',
+                'duration': 3507,
+            },
+            'params': {
+                # rtmp download
+                'skip_download': True,
+            }
+        }, {
+            'url': 'http://www.bbc.co.uk/music/clips/p025c0zz',
+            'note': 'Video',
+            'info_dict': {
+                'id': 'p025c103',
+                'ext': 'flv',
+                'title': 'Reading and Leeds Festival, 2014, Rae Morris - Closer (Live on BBC Three)',
+                'description': 'Rae Morris performs Closer for BBC Three at Reading 2014',
+                'duration': 226,
+            },
+            'params': {
+                # rtmp download
+                'skip_download': True,
+            }
+        }, {
+            'url': 'http://www.bbc.co.uk/iplayer/playlist/p01dvks4',
+            'only_matching': True,
+        }, {
+            'url': 'http://www.bbc.co.uk/music/clips#p02frcc3',
+            'only_matching': True,
+        }, {
+            'url': 'http://www.bbc.co.uk/iplayer/cbeebies/episode/b0480276/bing-14-atchoo',
+            'only_matching': True,
+        }
     ]
 
     def _extract_asx_playlist(self, connection, programme_id):
@@ -165,17 +215,32 @@ class BBCCoUkIE(SubtitlesInfoExtractor):
             formats.extend(conn_formats)
         return formats
 
-    def _extract_captions(self, media, programme_id):
+    def _get_subtitles(self, media, programme_id):
         subtitles = {}
         for connection in self._extract_connections(media):
             captions = self._download_xml(connection.get('href'), programme_id, 'Downloading captions')
             lang = captions.get('{http://www.w3.org/XML/1998/namespace}lang', 'en')
             ps = captions.findall('./{0}body/{0}div/{0}p'.format('{http://www.w3.org/2006/10/ttaf1}'))
             srt = ''
+
+            def _extract_text(p):
+                if p.text is not None:
+                    stripped_text = p.text.strip()
+                    if stripped_text:
+                        return stripped_text
+                return ' '.join(span.text.strip() for span in p.findall('{http://www.w3.org/2006/10/ttaf1}span'))
             for pos, p in enumerate(ps):
-                srt += '%s\r\n%s --> %s\r\n%s\r\n\r\n' % (str(pos), p.get('begin'), p.get('end'),
-                                                          p.text.strip() if p.text is not None else '')
-            subtitles[lang] = srt
+                srt += '%s\r\n%s --> %s\r\n%s\r\n\r\n' % (str(pos), p.get('begin'), p.get('end'), _extract_text(p))
+            subtitles[lang] = [
+                {
+                    'url': connection.get('href'),
+                    'ext': 'ttml',
+                },
+                {
+                    'data': srt,
+                    'ext': 'srt',
+                },
+            ]
         return subtitles
 
     def _download_media_selector(self, programme_id):
@@ -199,9 +264,62 @@ class BBCCoUkIE(SubtitlesInfoExtractor):
             elif kind == 'video':
                 formats.extend(self._extract_video(media, programme_id))
             elif kind == 'captions':
-                subtitles = self._extract_captions(media, programme_id)
+                subtitles = self.extract_subtitles(media, programme_id)
 
         return formats, subtitles
+
+    def _download_playlist(self, playlist_id):
+        try:
+            playlist = self._download_json(
+                'http://www.bbc.co.uk/programmes/%s/playlist.json' % playlist_id,
+                playlist_id, 'Downloading playlist JSON')
+
+            version = playlist.get('defaultAvailableVersion')
+            if version:
+                smp_config = version['smpConfig']
+                title = smp_config['title']
+                description = smp_config['summary']
+                for item in smp_config['items']:
+                    kind = item['kind']
+                    if kind != 'programme' and kind != 'radioProgramme':
+                        continue
+                    programme_id = item.get('vpid')
+                    duration = int(item.get('duration'))
+                    formats, subtitles = self._download_media_selector(programme_id)
+                return programme_id, title, description, duration, formats, subtitles
+        except ExtractorError as ee:
+            if not (isinstance(ee.cause, compat_HTTPError) and ee.cause.code == 404):
+                raise
+
+        # fallback to legacy playlist
+        playlist = self._download_xml(
+            'http://www.bbc.co.uk/iplayer/playlist/%s' % playlist_id,
+            playlist_id, 'Downloading legacy playlist XML')
+
+        no_items = playlist.find('./{http://bbc.co.uk/2008/emp/playlist}noItems')
+        if no_items is not None:
+            reason = no_items.get('reason')
+            if reason == 'preAvailability':
+                msg = 'Episode %s is not yet available' % playlist_id
+            elif reason == 'postAvailability':
+                msg = 'Episode %s is no longer available' % playlist_id
+            elif reason == 'noMedia':
+                msg = 'Episode %s is not currently available' % playlist_id
+            else:
+                msg = 'Episode %s is not available: %s' % (playlist_id, reason)
+            raise ExtractorError(msg, expected=True)
+
+        for item in self._extract_items(playlist):
+            kind = item.get('kind')
+            if kind != 'programme' and kind != 'radioProgramme':
+                continue
+            title = playlist.find('./{http://bbc.co.uk/2008/emp/playlist}title').text
+            description = playlist.find('./{http://bbc.co.uk/2008/emp/playlist}summary').text
+            programme_id = item.get('identifier')
+            duration = int(item.get('duration'))
+            formats, subtitles = self._download_media_selector(programme_id)
+
+        return programme_id, title, description, duration, formats, subtitles
 
     def _real_extract(self, url):
         group_id = self._match_id(url)
@@ -219,36 +337,7 @@ class BBCCoUkIE(SubtitlesInfoExtractor):
             duration = player['duration']
             formats, subtitles = self._download_media_selector(programme_id)
         else:
-            playlist = self._download_xml(
-                'http://www.bbc.co.uk/iplayer/playlist/%s' % group_id,
-                group_id, 'Downloading playlist XML')
-
-            no_items = playlist.find('./{http://bbc.co.uk/2008/emp/playlist}noItems')
-            if no_items is not None:
-                reason = no_items.get('reason')
-                if reason == 'preAvailability':
-                    msg = 'Episode %s is not yet available' % group_id
-                elif reason == 'postAvailability':
-                    msg = 'Episode %s is no longer available' % group_id
-                elif reason == 'noMedia':
-                    msg = 'Episode %s is not currently available' % group_id
-                else:
-                    msg = 'Episode %s is not available: %s' % (group_id, reason)
-                raise ExtractorError(msg, expected=True)
-
-            for item in self._extract_items(playlist):
-                kind = item.get('kind')
-                if kind != 'programme' and kind != 'radioProgramme':
-                    continue
-                title = playlist.find('./{http://bbc.co.uk/2008/emp/playlist}title').text
-                description = playlist.find('./{http://bbc.co.uk/2008/emp/playlist}summary').text
-                programme_id = item.get('identifier')
-                duration = int(item.get('duration'))
-                formats, subtitles = self._download_media_selector(programme_id)
-
-        if self._downloader.params.get('listsubtitles', False):
-            self._list_available_subtitles(programme_id, subtitles)
-            return
+            programme_id, title, description, duration, formats, subtitles = self._download_playlist(group_id)
 
         self._sort_formats(formats)
 

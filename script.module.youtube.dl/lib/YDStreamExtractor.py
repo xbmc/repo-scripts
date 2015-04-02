@@ -137,7 +137,10 @@ def _getYoutubeDLVideo(url,quality=None,resolve_redirects=False):
             return None
     ytdl = YoutubeDLWrapper._getYTDL()
     ytdl.clearDownloadParams()
-    r = ytdl.extract_info(url,download=False)
+    try:
+        r = ytdl.extract_info(url,download=False)
+    except YoutubeDLWrapper.DownloadError:
+        return None
     urls =  _selectVideoQuality(r, quality)
     if not urls: return None
     info = YoutubeDLWrapper.VideoInfo(r.get('id',''))
@@ -153,9 +156,11 @@ def _convertInfo(info):
     import xbmcgui
     #If we have a VidInfo object or ListItem exctract or create info
     if isinstance(info,YoutubeDLWrapper.VideoInfo):
+        dlID = info.downloadID
         info = info.selectedStream()['ytdl_format']
         if 'formats' in info: del info['formats'] #Remove possible circular reference
         info['media_type'] = 'video'
+        info['download.ID'] = dlID
     elif isinstance(info,xbmcgui.ListItem):
         info = _infoFromListItem(info)
     return info
@@ -163,6 +168,7 @@ def _convertInfo(info):
 def _completeInfo(info):
     if not 'ext' in info: info['ext'] = _getExtension(info)
     if not 'title' in info: info['title'] = 'Unknown'
+    if not 'download.ID' in info: info['download.ID'] = str(time.time())
 
 def _getExtension(info):
     url = info['url']
@@ -267,6 +273,12 @@ def _handleDownload(info,path=None,duration=None,bg=False):
     StreamUtils.moveFile(filePath,path,filename=info.get('filename'))
     return result
 
+def downloadVideo(info,path):
+    """
+    Deprecated
+    """
+    return handleDownload(info,path=path)
+
 ###############################################################################
 # Public Methods
 ###############################################################################
@@ -294,7 +306,7 @@ def getVideoInfo(url,quality=None,resolve_redirects=False):
         return None
     return info
 
-def handleDownload(info,duration=None,bg=False):
+def handleDownload(info,duration=None,bg=False,path=None):
     """
     Download the selected video in vidinfo to a path the user chooses.
     Displays a progress dialog and ok/error message when finished.
@@ -306,7 +318,7 @@ def handleDownload(info,duration=None,bg=False):
     if bg:
         servicecontrol.ServiceControl().download(info,path,duration)
     else:
-        return _handleDownload(info,path,False,duration=duration)
+        return _handleDownload(info,path,duration=duration,bg=False)
 
 def download(info,path,template='%(title)s-%(id)s.%(ext)s'):
     """
@@ -323,8 +335,10 @@ def download(info,path,template='%(title)s-%(id)s.%(ext)s'):
     ytdl._lastDownloadedFilePath = ''
     ytdl.params['quiet'] = True
     ytdl.params['outtmpl'] = path_template
-
+    import AddonSignals
+    signalPayload = {'title':info.get('title'),'url':info.get('url'),'download.ID':info.get('download.ID')}
     try:
+        AddonSignals.sendSignal('download.started',signalPayload,sourceID='script.module.youtube.dl')
         YoutubeDLWrapper.download(info)
     except YoutubeDLWrapper.youtube_dl.DownloadError, e:
         return DownloadResult(False,e.message,filepath=ytdl._lastDownloadedFilePath)
@@ -332,6 +346,8 @@ def download(info,path,template='%(title)s-%(id)s.%(ext)s'):
         return DownloadResult(False,status='canceled',filepath=ytdl._lastDownloadedFilePath)
     finally:
         ytdl.clearDownloadParams()
+        signalPayload['path'] = ytdl._lastDownloadedFilePath
+        AddonSignals.sendSignal('download.finished',signalPayload,sourceID='script.module.youtube.dl')
 
     return DownloadResult(True,filepath=ytdl._lastDownloadedFilePath)
 

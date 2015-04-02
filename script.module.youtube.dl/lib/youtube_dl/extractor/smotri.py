@@ -69,6 +69,7 @@ class SmotriIE(InfoExtractor):
             'params': {
                 'videopassword': 'qwerty',
             },
+            'skip': 'Video is not approved by moderator',
         },
         # age limit + video-password
         {
@@ -86,12 +87,28 @@ class SmotriIE(InfoExtractor):
             },
             'params': {
                 'videopassword': '333'
-            }
+            },
+            'skip': 'Video is not approved by moderator',
+        },
+        # not approved by moderator, but available
+        {
+            'url': 'http://smotri.com/video/view/?id=v28888533b73',
+            'md5': 'f44bc7adac90af518ef1ecf04893bb34',
+            'info_dict': {
+                'id': 'v28888533b73',
+                'ext': 'mp4',
+                'title': 'Russian Spies Killed By ISIL Child Soldier',
+                'uploader': 'Mopeder',
+                'uploader_id': 'mopeder',
+                'duration': 71,
+                'thumbnail': 'http://frame9.loadup.ru/d7/32/2888853.2.3.jpg',
+                'upload_date': '20150114',
+            },
         },
         # swf player
         {
             'url': 'http://pics.smotri.com/scrubber_custom8.swf?file=v9188090500',
-            'md5': '4d47034979d9390d14acdf59c4935bc2',
+            'md5': '31099eeb4bc906712c5f40092045108d',
             'info_dict': {
                 'id': 'v9188090500',
                 'ext': 'mp4',
@@ -122,9 +139,6 @@ class SmotriIE(InfoExtractor):
     def _search_meta(self, name, html, display_name=None):
         if display_name is None:
             display_name = name
-        return self._html_search_regex(
-            r'<meta itemprop="%s" content="([^"]+)" />' % re.escape(name),
-            html, display_name, fatal=False)
         return self._html_search_meta(name, html, display_name)
 
     def _real_extract(self, url):
@@ -144,13 +158,16 @@ class SmotriIE(InfoExtractor):
 
         video = self._download_json(request, video_id, 'Downloading video JSON')
 
-        if video.get('_moderate_no') or not video.get('moderated'):
-            raise ExtractorError('Video %s has not been approved by moderator' % video_id, expected=True)
-
-        if video.get('error'):
-            raise ExtractorError('Video %s does not exist' % video_id, expected=True)
-
         video_url = video.get('_vidURL') or video.get('_vidURL_mp4')
+
+        if not video_url:
+            if video.get('_moderate_no') or not video.get('moderated'):
+                raise ExtractorError(
+                    'Video %s has not been approved by moderator' % video_id, expected=True)
+
+            if video.get('error'):
+                raise ExtractorError('Video %s does not exist' % video_id, expected=True)
+
         title = video['title']
         thumbnail = video['_imgURL']
         upload_date = unified_strdate(video['added'])

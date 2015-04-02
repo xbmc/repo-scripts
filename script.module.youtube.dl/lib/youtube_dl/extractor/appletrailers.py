@@ -11,9 +11,12 @@ from ..utils import (
 
 
 class AppleTrailersIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?trailers\.apple\.com/trailers/(?P<company>[^/]+)/(?P<movie>[^/]+)'
-    _TEST = {
+    _VALID_URL = r'https?://(?:www\.)?trailers\.apple\.com/(?:trailers|ca)/(?P<company>[^/]+)/(?P<movie>[^/]+)'
+    _TESTS = [{
         "url": "http://trailers.apple.com/trailers/wb/manofsteel/",
+        'info_dict': {
+            'id': 'manofsteel',
+        },
         "playlist": [
             {
                 "md5": "d97a8e575432dbcb81b7c3acb741f8a8",
@@ -60,7 +63,10 @@ class AppleTrailersIE(InfoExtractor):
                 },
             },
         ]
-    }
+    }, {
+        'url': 'http://trailers.apple.com/ca/metropole/autrui/',
+        'only_matching': True,
+    }]
 
     _JSON_RE = r'iTunes.playURL\((.*?)\);'
 
@@ -122,14 +128,15 @@ class AppleTrailersIE(InfoExtractor):
             playlist.append({
                 '_type': 'video',
                 'id': video_id,
-                'title': title,
                 'formats': formats,
                 'title': title,
                 'duration': duration,
                 'thumbnail': thumbnail,
                 'upload_date': upload_date,
                 'uploader_id': uploader_id,
-                'user_agent': 'QuickTime compatible (youtube-dl)',
+                'http_headers': {
+                    'User-Agent': 'QuickTime compatible (youtube-dl)',
+                },
             })
 
         return {

@@ -31,7 +31,7 @@ class VKIE(InfoExtractor):
                 'id': '162222515',
                 'ext': 'flv',
                 'title': 'ProtivoGunz - Хуёвая песня',
-                'uploader': 're:Noize MC.*',
+                'uploader': 're:(?:Noize MC|Alexander Ilyashenko).*',
                 'duration': 195,
                 'upload_date': '20120212',
             },
@@ -140,7 +140,7 @@ class VKIE(InfoExtractor):
         if not video_id:
             video_id = '%s_%s' % (mobj.group('oid'), mobj.group('id'))
 
-        info_url = 'http://vk.com/al_video.php?act=show&al=1&video=%s' % video_id
+        info_url = 'http://vk.com/al_video.php?act=show&al=1&module=video&video=%s' % video_id
         info_page = self._download_webpage(info_url, video_id)
 
         ERRORS = {
@@ -152,7 +152,10 @@ class VKIE(InfoExtractor):
             'use --username and --password options to provide account credentials.',
 
             r'<!>Unknown error':
-            'Video %s does not exist.'
+            'Video %s does not exist.',
+
+            r'<!>Видео временно недоступно':
+            'Video %s is temporarily unavailable.',
         }
 
         for error_re, error_msg in ERRORS.items():
@@ -163,6 +166,14 @@ class VKIE(InfoExtractor):
         if m_yt is not None:
             self.to_screen('Youtube video detected')
             return self.url_result(m_yt.group(1), 'Youtube')
+
+        m_rutube = re.search(
+            r'\ssrc="((?:https?:)?//rutube\.ru\\?/video\\?/embed(?:.*?))\\?"', info_page)
+        if m_rutube is not None:
+            self.to_screen('rutube video detected')
+            rutube_url = self._proto_relative_url(
+                m_rutube.group(1).replace('\\', ''))
+            return self.url_result(rutube_url)
 
         m_opts = re.search(r'(?s)var\s+opts\s*=\s*({.*?});', info_page)
         if m_opts:
@@ -209,6 +220,9 @@ class VKUserVideosIE(InfoExtractor):
     _TEMPLATE_URL = 'https://vk.com/videos'
     _TEST = {
         'url': 'http://vk.com/videos205387401',
+        'info_dict': {
+            'id': '205387401',
+        },
         'playlist_mincount': 4,
     }
 

@@ -231,7 +231,10 @@ def current():
     """
     Returns the currently playing file.
     """
-    return xbmc.Player().getPlayingFile()
+    try:
+        return xbmc.Player().getPlayingFile()
+    except RuntimeError:
+        return None
 
 def control(command):
     """

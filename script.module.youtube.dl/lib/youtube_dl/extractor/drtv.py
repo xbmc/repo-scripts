@@ -1,12 +1,11 @@
 from __future__ import unicode_literals
 
-from .subtitles import SubtitlesInfoExtractor
-from .common import ExtractorError
+from .common import InfoExtractor, ExtractorError
 from ..utils import parse_iso8601
 
 
-class DRTVIE(SubtitlesInfoExtractor):
-    _VALID_URL = r'http://(?:www\.)?dr\.dk/tv/se/(?:[^/]+/)+(?P<id>[\da-z-]+)(?:[/#?]|$)'
+class DRTVIE(InfoExtractor):
+    _VALID_URL = r'https?://(?:www\.)?dr\.dk/tv/se/(?:[^/]+/)*(?P<id>[\da-z-]+)(?:[/#?]|$)'
 
     _TEST = {
         'url': 'http://www.dr.dk/tv/se/partiets-mand/partiets-mand-7-8',
@@ -25,9 +24,15 @@ class DRTVIE(SubtitlesInfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
-        programcard = self._download_json(
-            'http://www.dr.dk/mu/programcard/expanded/%s' % video_id, video_id, 'Downloading video JSON')
+        webpage = self._download_webpage(url, video_id)
 
+        video_id = self._search_regex(
+            r'data-(?:material-identifier|episode-slug)="([^"]+)"',
+            webpage, 'video id')
+
+        programcard = self._download_json(
+            'http://www.dr.dk/mu/programcard/expanded/%s' % video_id,
+            video_id, 'Downloading video JSON')
         data = programcard['Data'][0]
 
         title = data['Title']
@@ -48,14 +53,20 @@ class DRTVIE(SubtitlesInfoExtractor):
             elif asset['Kind'] == 'VideoResource':
                 duration = asset['DurationInMilliseconds'] / 1000.0
                 restricted_to_denmark = asset['RestrictedToDenmark']
+                spoken_subtitles = asset['Target'] == 'SpokenSubtitles'
                 for link in asset['Links']:
                     target = link['Target']
                     uri = link['Uri']
+                    format_id = target
+                    preference = -1 if target == 'HDS' else -2
+                    if spoken_subtitles:
+                        preference -= 2
+                        format_id += '-spoken-subtitles'
                     formats.append({
                         'url': uri + '?hdcore=3.3.0&plugin=aasp-3.3.0.99.43' if target == 'HDS' else uri,
-                        'format_id': target,
+                        'format_id': format_id,
                         'ext': link['FileFormat'],
-                        'preference': -1 if target == 'HDS' else -2,
+                        'preference': preference,
                     })
                 subtitles_list = asset.get('SubtitlesList')
                 if isinstance(subtitles_list, list):
@@ -64,17 +75,13 @@ class DRTVIE(SubtitlesInfoExtractor):
                     }
                     for subs in subtitles_list:
                         lang = subs['Language']
-                        subtitles[LANGS.get(lang, lang)] = subs['Uri']
+                        subtitles[LANGS.get(lang, lang)] = [{'url': subs['Uri'], 'ext': 'vtt'}]
 
         if not formats and restricted_to_denmark:
             raise ExtractorError(
                 'Unfortunately, DR is not allowed to show this program outside Denmark.', expected=True)
 
         self._sort_formats(formats)
-
-        if self._downloader.params.get('listsubtitles', False):
-            self._list_available_subtitles(video_id, subtitles)
-            return
 
         return {
             'id': video_id,
@@ -84,5 +91,5 @@ class DRTVIE(SubtitlesInfoExtractor):
             'timestamp': timestamp,
             'duration': duration,
             'formats': formats,
-            'subtitles': self.extract_subtitles(video_id, subtitles),
+            'subtitles': subtitles,
         }

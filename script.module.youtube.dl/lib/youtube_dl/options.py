@@ -5,13 +5,14 @@ import optparse
 import shlex
 import sys
 
+from .downloader.external import list_external_downloaders
 from .compat import (
     compat_expanduser,
+    compat_get_terminal_size,
     compat_getenv,
     compat_kwargs,
 )
 from .utils import (
-    get_term_width,
     write_string,
 )
 from .version import __version__
@@ -99,7 +100,7 @@ def parseOpts(overrideArguments=None):
         return opts
 
     # No need to wrap help messages if we're on a wide console
-    columns = get_term_width()
+    columns = compat_get_terminal_size().columns
     max_width = columns if columns else 80
     max_help_position = 80
 
@@ -109,7 +110,7 @@ def parseOpts(overrideArguments=None):
     kw = {
         'version': __version__,
         'formatter': fmt,
-        'usage': '%prog [options] url [url...]',
+        'usage': '%prog [OPTIONS] URL [URL...]',
         'conflict_handler': 'resolve',
     }
 
@@ -149,14 +150,6 @@ def parseOpts(overrideArguments=None):
         action='store_true', dest='list_extractor_descriptions', default=False,
         help='Output descriptions of all supported extractors')
     general.add_option(
-        '--proxy', dest='proxy',
-        default=None, metavar='URL',
-        help='Use the specified HTTP/HTTPS proxy. Pass in an empty string (--proxy "") for direct connection')
-    general.add_option(
-        '--socket-timeout',
-        dest='socket_timeout', type=float, default=None,
-        help='Time to wait before giving up, in seconds')
-    general.add_option(
         '--default-search',
         dest='default_search', metavar='PREFIX',
         help='Use this prefix for unqualified URLs. For example "gvsearch2:" downloads two videos from google videos for  youtube-dl "large apple". Use the value "auto" to let youtube-dl guess ("auto_warning" to emit a warning when guessing). "error" just throws an error. The default value "fixup_error" repairs broken URLs, but emits an error if this is not possible instead of searching.')
@@ -172,6 +165,42 @@ def parseOpts(overrideArguments=None):
         action='store_const', dest='extract_flat', const='in_playlist',
         default=False,
         help='Do not extract the videos of a playlist, only list them.')
+    general.add_option(
+        '--no-color', '--no-colors',
+        action='store_true', dest='no_color',
+        default=False,
+        help='Do not emit color codes in output.')
+
+    network = optparse.OptionGroup(parser, 'Network Options')
+    network.add_option(
+        '--proxy', dest='proxy',
+        default=None, metavar='URL',
+        help='Use the specified HTTP/HTTPS proxy. Pass in an empty string (--proxy "") for direct connection')
+    network.add_option(
+        '--socket-timeout',
+        dest='socket_timeout', type=float, default=None, metavar='SECONDS',
+        help='Time to wait before giving up, in seconds')
+    network.add_option(
+        '--source-address',
+        metavar='IP', dest='source_address', default=None,
+        help='Client-side IP address to bind to (experimental)',
+    )
+    network.add_option(
+        '-4', '--force-ipv4',
+        action='store_const', const='0.0.0.0', dest='source_address',
+        help='Make all connections via IPv4 (experimental)',
+    )
+    network.add_option(
+        '-6', '--force-ipv6',
+        action='store_const', const='::', dest='source_address',
+        help='Make all connections via IPv6 (experimental)',
+    )
+    network.add_option(
+        '--cn-verification-proxy',
+        dest='cn_verification_proxy', default=None, metavar='URL',
+        help='Use this proxy to verify the IP address for some Chinese sites. '
+        'The default proxy specified by --proxy (or none, if the options is not present) is used for the actual downloading. (experimental)'
+    )
 
     selection = optparse.OptionGroup(parser, 'Video Selection')
     selection.add_option(
@@ -182,6 +211,10 @@ def parseOpts(overrideArguments=None):
         '--playlist-end',
         dest='playlistend', metavar='NUMBER', default=None, type=int,
         help='playlist video to end at (default is last)')
+    selection.add_option(
+        '--playlist-items',
+        dest='playlist_items', metavar='ITEM_SPEC', default=None,
+        help='playlist video items to download. Specify indices of the videos in the playlist seperated by commas like: "--playlist-items 1,2,5,8" if you want to download videos indexed 1, 2, 5, 8 in the playlist. You can specify range: "--playlist-items 1-3,7,10-13", it will download the videos at index 1, 2, 3, 7, 10, 11, 12 and 13.')
     selection.add_option(
         '--match-title',
         dest='matchtitle', metavar='REGEX',
@@ -223,9 +256,32 @@ def parseOpts(overrideArguments=None):
         metavar='COUNT', dest='max_views', default=None, type=int,
         help='Do not download any videos with more than COUNT views')
     selection.add_option(
+        '--match-filter',
+        metavar='FILTER', dest='match_filter', default=None,
+        help=(
+            '(Experimental) Generic video filter. '
+            'Specify any key (see help for -o for a list of available keys) to'
+            ' match if the key is present, '
+            '!key to check if the key is not present,'
+            'key > NUMBER (like "comment_count > 12", also works with '
+            '>=, <, <=, !=, =) to compare against a number, and '
+            '& to require multiple matches. '
+            'Values which are not known are excluded unless you'
+            ' put a question mark (?) after the operator.'
+            'For example, to only match videos that have been liked more than '
+            '100 times and disliked less than 50 times (or the dislike '
+            'functionality is not available at the given service), but who '
+            'also have a description, use  --match-filter '
+            '"like_count > 100 & dislike_count <? 50 & description" .'
+        ))
+    selection.add_option(
         '--no-playlist',
         action='store_true', dest='noplaylist', default=False,
         help='If the URL refers to a video and a playlist, download only the video.')
+    selection.add_option(
+        '--yes-playlist',
+        action='store_false', dest='noplaylist', default=False,
+        help='If the URL refers to a video and a playlist, download the playlist.')
     selection.add_option(
         '--age-limit',
         metavar='YEARS', dest='age_limit', default=None, type=int,
@@ -247,7 +303,7 @@ def parseOpts(overrideArguments=None):
     authentication.add_option(
         '-p', '--password',
         dest='password', metavar='PASSWORD',
-        help='account password')
+        help='account password. If this option is left out, youtube-dl will ask interactively.')
     authentication.add_option(
         '-2', '--twofactor',
         dest='twofactor', metavar='TWOFACTOR',
@@ -267,10 +323,25 @@ def parseOpts(overrideArguments=None):
         action='store', dest='format', metavar='FORMAT', default=None,
         help=(
             'video format code, specify the order of preference using'
-            ' slashes: -f 22/17/18 .  -f mp4 , -f m4a and  -f flv  are also'
-            ' supported. You can also use the special names "best",'
-            ' "bestvideo", "bestaudio", "worst", "worstvideo" and'
-            ' "worstaudio". By default, youtube-dl will pick the best quality.'
+            ' slashes, as in -f 22/17/18 . '
+            ' Instead of format codes, you can select by extension for the '
+            'extensions aac, m4a, mp3, mp4, ogg, wav, webm. '
+            'You can also use the special names "best",'
+            ' "bestvideo", "bestaudio", "worst". '
+            ' You can filter the video results by putting a condition in'
+            ' brackets, as in -f "best[height=720]"'
+            ' (or -f "[filesize>10M]"). '
+            ' This works for filesize, height, width, tbr, abr, vbr, asr, and fps'
+            ' and the comparisons <, <=, >, >=, =, !='
+            ' and for ext, acodec, vcodec, container, and protocol'
+            ' and the comparisons =, != .'
+            ' Formats for which the value is not known are excluded unless you'
+            ' put a question mark (?) after the operator.'
+            ' You can combine format filters, so  '
+            '-f "[height <=? 720][tbr>500]" '
+            'selects up to 720p videos (or videos where the height is not '
+            'known) with a bitrate of at least 500 KBit/s.'
+            ' By default, youtube-dl will pick the best quality.'
             ' Use commas to download multiple audio formats, such as'
             ' -f  136/137/mp4/bestvideo,140/m4a/bestaudio.'
             ' You can merge the video and audio of two formats into a single'
@@ -300,6 +371,12 @@ def parseOpts(overrideArguments=None):
         '--youtube-skip-dash-manifest',
         action='store_false', dest='youtube_include_dash_manifest',
         help='Do not download the DASH manifest on YouTube videos')
+    video_format.add_option(
+        '--merge-output-format',
+        action='store', dest='merge_output_format', metavar='FORMAT', default=None,
+        help=(
+            'If a merge is required (e.g. bestvideo+bestaudio), output to given container format. One of mkv, mp4, ogg, webm, flv.'
+            'Ignored if no merge is required'))
 
     subtitles = optparse.OptionGroup(parser, 'Subtitle Options')
     subtitles.add_option(
@@ -320,8 +397,8 @@ def parseOpts(overrideArguments=None):
         help='lists all available subtitles for the video')
     subtitles.add_option(
         '--sub-format',
-        action='store', dest='subtitlesformat', metavar='FORMAT', default='srt',
-        help='subtitle format (default=srt) ([sbv/vtt] youtube only)')
+        action='store', dest='subtitlesformat', metavar='FORMAT', default='best',
+        help='subtitle format, accepts formats preference, for example: "ass/srt/best"')
     subtitles.add_option(
         '--sub-lang', '--sub-langs', '--srt-lang',
         action='callback', dest='subtitleslangs', metavar='LANGS', type='str',
@@ -336,7 +413,7 @@ def parseOpts(overrideArguments=None):
     downloader.add_option(
         '-R', '--retries',
         dest='retries', metavar='RETRIES', default=10,
-        help='number of retries (default is %default)')
+        help='number of retries (default is %default), or "infinite".')
     downloader.add_option(
         '--buffer-size',
         dest='buffersize', metavar='SIZE', default='1024',
@@ -353,6 +430,23 @@ def parseOpts(overrideArguments=None):
         '--playlist-reverse',
         action='store_true',
         help='Download playlist videos in reverse order')
+    downloader.add_option(
+        '--xattr-set-filesize',
+        dest='xattr_set_filesize', action='store_true',
+        help='(experimental) set file xattribute ytdl.filesize with expected filesize')
+    downloader.add_option(
+        '--hls-prefer-native',
+        dest='hls_prefer_native', action='store_true',
+        help='(experimental) Use the native HLS downloader instead of ffmpeg.')
+    downloader.add_option(
+        '--external-downloader',
+        dest='external_downloader', metavar='COMMAND',
+        help='Use the specified external downloader. '
+             'Currently supports %s' % ','.join(list_external_downloaders()))
+    downloader.add_option(
+        '--external-downloader-args',
+        dest='external_downloader_args', metavar='ARGS',
+        help='Give these arguments to the external downloader.')
 
     workarounds = optparse.OptionGroup(parser, 'Workarounds')
     workarounds.add_option(
@@ -385,6 +479,10 @@ def parseOpts(overrideArguments=None):
         '--bidi-workaround',
         dest='bidi_workaround', action='store_true',
         help='Work around terminals that lack bidirectional text support. Requires bidiv or fribidi executable in PATH')
+    workarounds.add_option(
+        '--sleep-interval', metavar='SECONDS',
+        dest='sleep_interval', type=float,
+        help='Number of seconds to sleep before each download.')
 
     verbosity = optparse.OptionGroup(parser, 'Verbosity / Simulation Options')
     verbosity.add_option(
@@ -444,6 +542,11 @@ def parseOpts(overrideArguments=None):
         action='store_true', dest='dump_single_json', default=False,
         help='simulate, quiet but print JSON information for each command-line argument. If the URL refers to a playlist, dump the whole playlist information in a single line.')
     verbosity.add_option(
+        '--print-json',
+        action='store_true', dest='print_json', default=False,
+        help='Be quiet and print the video information as JSON (video is still being downloaded).',
+    )
+    verbosity.add_option(
         '--newline',
         action='store_true', dest='progress_with_newline', default=False,
         help='output progress bar as new lines')
@@ -460,7 +563,7 @@ def parseOpts(overrideArguments=None):
         action='store_true', dest='verbose', default=False,
         help='print various debugging information')
     verbosity.add_option(
-        '--dump-intermediate-pages',
+        '--dump-pages', '--dump-intermediate-pages',
         action='store_true', dest='dump_intermediate_pages', default=False,
         help='print downloaded pages to debug problems (very verbose)')
     verbosity.add_option(
@@ -472,9 +575,17 @@ def parseOpts(overrideArguments=None):
         action='store_true', dest='youtube_print_sig_code', default=False,
         help=optparse.SUPPRESS_HELP)
     verbosity.add_option(
-        '--print-traffic',
+        '--print-traffic', '--dump-headers',
         dest='debug_printtraffic', action='store_true', default=False,
         help='Display sent and read HTTP traffic')
+    verbosity.add_option(
+        '-C', '--call-home',
+        dest='call_home', action='store_true', default=False,
+        help='Contact the youtube-dl server for debugging.')
+    verbosity.add_option(
+        '--no-call-home',
+        dest='call_home', action='store_false', default=False,
+        help='Do NOT contact the youtube-dl server for debugging.')
 
     filesystem = optparse.OptionGroup(parser, 'Filesystem Options')
     filesystem.add_option(
@@ -556,10 +667,6 @@ def parseOpts(overrideArguments=None):
         action='store_true', dest='writeannotations', default=False,
         help='write video annotations to a .annotation file')
     filesystem.add_option(
-        '--write-thumbnail',
-        action='store_true', dest='writethumbnail', default=False,
-        help='write thumbnail image to disk')
-    filesystem.add_option(
         '--load-info',
         dest='load_info_filename', metavar='FILE',
         help='json file containing the video information (created with the "--write-json" option)')
@@ -577,6 +684,20 @@ def parseOpts(overrideArguments=None):
         '--rm-cache-dir',
         action='store_true', dest='rm_cachedir',
         help='Delete all filesystem cache files')
+
+    thumbnail = optparse.OptionGroup(parser, 'Thumbnail images')
+    thumbnail.add_option(
+        '--write-thumbnail',
+        action='store_true', dest='writethumbnail', default=False,
+        help='write thumbnail image to disk')
+    thumbnail.add_option(
+        '--write-all-thumbnails',
+        action='store_true', dest='write_all_thumbnails', default=False,
+        help='write all thumbnail image formats to disk')
+    thumbnail.add_option(
+        '--list-thumbnails',
+        action='store_true', dest='list_thumbnails', default=False,
+        help='Simulate and list all available thumbnail formats')
 
     postproc = optparse.OptionGroup(parser, 'Post-processing Options')
     postproc.add_option(
@@ -615,9 +736,24 @@ def parseOpts(overrideArguments=None):
         action='store_true', dest='addmetadata', default=False,
         help='write metadata to the video file')
     postproc.add_option(
+        '--metadata-from-title',
+        metavar='FORMAT', dest='metafromtitle',
+        help='parse additional metadata like song title / artist from the video title. '
+             'The format syntax is the same as --output, '
+             'the parsed parameters replace existing values. '
+             'Additional templates: %(album), %(artist). '
+             'Example: --metadata-from-title "%(artist)s - %(title)s" matches a title like '
+             '"Coldplay - Paradise"')
+    postproc.add_option(
         '--xattrs',
         action='store_true', dest='xattrs', default=False,
         help='write metadata to the video file\'s xattrs (using dublin core and xdg standards)')
+    postproc.add_option(
+        '--fixup',
+        metavar='POLICY', dest='fixup', default='detect_or_warn',
+        help='Automatically correct known faults of the file. '
+             'One of never (do nothing), warn (only emit a warning), '
+             'detect_or_warn(the default; fix file if we can, warn otherwise)')
     postproc.add_option(
         '--prefer-avconv',
         action='store_false', dest='prefer_ffmpeg',
@@ -627,14 +763,24 @@ def parseOpts(overrideArguments=None):
         action='store_true', dest='prefer_ffmpeg',
         help='Prefer ffmpeg over avconv for running the postprocessors')
     postproc.add_option(
+        '--ffmpeg-location', '--avconv-location', metavar='PATH',
+        dest='ffmpeg_location',
+        help='Location of the ffmpeg/avconv binary; either the path to the binary or its containing directory.')
+    postproc.add_option(
         '--exec',
         metavar='CMD', dest='exec_cmd',
         help='Execute a command on the file after downloading, similar to find\'s -exec syntax. Example: --exec \'adb push {} /sdcard/Music/ && rm {}\'')
+    postproc.add_option(
+        '--convert-subtitles', '--convert-subs',
+        metavar='FORMAT', dest='convertsubtitles', default=None,
+        help='Convert the subtitles to other format (currently supported: srt|ass|vtt)')
 
     parser.add_option_group(general)
+    parser.add_option_group(network)
     parser.add_option_group(selection)
     parser.add_option_group(downloader)
     parser.add_option_group(filesystem)
+    parser.add_option_group(thumbnail)
     parser.add_option_group(verbosity)
     parser.add_option_group(workarounds)
     parser.add_option_group(video_format)
@@ -647,22 +793,22 @@ def parseOpts(overrideArguments=None):
         if opts.verbose:
             write_string('[debug] Override config: ' + repr(overrideArguments) + '\n')
     else:
-        commandLineConf = sys.argv[1:]
-        if '--ignore-config' in commandLineConf:
-            systemConf = []
-            userConf = []
+        command_line_conf = sys.argv[1:]
+        if '--ignore-config' in command_line_conf:
+            system_conf = []
+            user_conf = []
         else:
-            systemConf = _readOptions('/etc/youtube-dl.conf')
-            if '--ignore-config' in systemConf:
-                userConf = []
+            system_conf = _readOptions('/etc/youtube-dl.conf')
+            if '--ignore-config' in system_conf:
+                user_conf = []
             else:
-                userConf = _readUserConf()
-        argv = systemConf + userConf + commandLineConf
+                user_conf = _readUserConf()
+        argv = system_conf + user_conf + command_line_conf
 
         opts, args = parser.parse_args(argv)
         if opts.verbose:
-            write_string('[debug] System config: ' + repr(_hide_login_info(systemConf)) + '\n')
-            write_string('[debug] User config: ' + repr(_hide_login_info(userConf)) + '\n')
-            write_string('[debug] Command-line args: ' + repr(_hide_login_info(commandLineConf)) + '\n')
+            write_string('[debug] System config: ' + repr(_hide_login_info(system_conf)) + '\n')
+            write_string('[debug] User config: ' + repr(_hide_login_info(user_conf)) + '\n')
+            write_string('[debug] Command-line args: ' + repr(_hide_login_info(command_line_conf)) + '\n')
 
     return parser, opts, args

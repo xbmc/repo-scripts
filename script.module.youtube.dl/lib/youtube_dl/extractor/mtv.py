@@ -6,6 +6,7 @@ from .common import InfoExtractor
 from ..compat import (
     compat_urllib_parse,
     compat_urllib_request,
+    compat_str,
 )
 from ..utils import (
     ExtractorError,
@@ -53,7 +54,7 @@ class MTVServicesInfoExtractor(InfoExtractor):
         webpage_url = self._MOBILE_TEMPLATE % mtvn_id
         req = compat_urllib_request.Request(webpage_url)
         # Otherwise we get a webpage that would execute some javascript
-        req.add_header('Youtubedl-user-agent', 'curl/7')
+        req.add_header('User-Agent', 'curl/7')
         webpage = self._download_webpage(req, mtvn_id,
                                          'Downloading mobile page')
         metrics_url = unescapeHTML(self._search_regex(r'<a href="(http://metrics.+?)"', webpage, 'url'))
@@ -78,16 +79,31 @@ class MTVServicesInfoExtractor(InfoExtractor):
             try:
                 _, _, ext = rendition.attrib['type'].partition('/')
                 rtmp_video_url = rendition.find('./src').text
-                formats.append({'ext': ext,
-                                'url': self._transform_rtmp_url(rtmp_video_url),
-                                'format_id': rendition.get('bitrate'),
-                                'width': int(rendition.get('width')),
-                                'height': int(rendition.get('height')),
-                                })
+                if rtmp_video_url.endswith('siteunavail.png'):
+                    continue
+                formats.append({
+                    'ext': ext,
+                    'url': self._transform_rtmp_url(rtmp_video_url),
+                    'format_id': rendition.get('bitrate'),
+                    'width': int(rendition.get('width')),
+                    'height': int(rendition.get('height')),
+                })
             except (KeyError, TypeError):
                 raise ExtractorError('Invalid rendition field.')
         self._sort_formats(formats)
         return formats
+
+    def _extract_subtitles(self, mdoc, mtvn_id):
+        subtitles = {}
+        for transcript in mdoc.findall('.//transcript'):
+            if transcript.get('kind') != 'captions':
+                continue
+            lang = transcript.get('srclang')
+            subtitles[lang] = [{
+                'url': compat_str(typographic.get('src')),
+                'ext': typographic.get('format')
+            } for typographic in transcript.findall('./typographic')]
+        return subtitles
 
     def _get_video_info(self, itemdoc):
         uri = itemdoc.find('guid').text
@@ -135,6 +151,7 @@ class MTVServicesInfoExtractor(InfoExtractor):
         return {
             'title': title,
             'formats': self._extract_video_formats(mediagen_doc, mtvn_id),
+            'subtitles': self._extract_subtitles(mediagen_doc, mtvn_id),
             'id': video_id,
             'thumbnail': self._get_thumbnail_url(uri, itemdoc),
             'description': description,
@@ -167,7 +184,9 @@ class MTVServicesInfoExtractor(InfoExtractor):
             mgid = self._search_regex(
                 [r'data-mgid="(.*?)"', r'swfobject.embedSWF\(".*?(mgid:.*?)"'],
                 webpage, 'mgid')
-        return self._get_videos_info(mgid)
+
+        videos_info = self._get_videos_info(mgid)
+        return videos_info
 
 
 class MTVServicesEmbeddedIE(MTVServicesInfoExtractor):
@@ -212,24 +231,13 @@ class MTVIE(MTVServicesInfoExtractor):
     _TESTS = [
         {
             'url': 'http://www.mtv.com/videos/misc/853555/ours-vh1-storytellers.jhtml',
-            'file': '853555.mp4',
             'md5': '850f3f143316b1e71fa56a4edfd6e0f8',
             'info_dict': {
+                'id': '853555',
+                'ext': 'mp4',
                 'title': 'Taylor Swift - "Ours (VH1 Storytellers)"',
                 'description': 'Album: Taylor Swift performs "Ours" for VH1 Storytellers at Harvey Mudd College.',
             },
-        },
-        {
-            'add_ie': ['Vevo'],
-            'url': 'http://www.mtv.com/videos/taylor-swift/916187/everything-has-changed-ft-ed-sheeran.jhtml',
-            'file': 'USCJY1331283.mp4',
-            'md5': '73b4e7fcadd88929292fe52c3ced8caf',
-            'info_dict': {
-                'title': 'Everything Has Changed',
-                'upload_date': '20130606',
-                'uploader': 'Taylor Swift',
-            },
-            'skip': 'VEVO is only available in some countries',
         },
     ]
 
@@ -244,8 +252,8 @@ class MTVIE(MTVServicesInfoExtractor):
             webpage = self._download_webpage(url, video_id)
 
             # Some videos come from Vevo.com
-            m_vevo = re.search(r'isVevoVideo = true;.*?vevoVideoId = "(.*?)";',
-                               webpage, re.DOTALL)
+            m_vevo = re.search(
+                r'(?s)isVevoVideo = true;.*?vevoVideoId = "(.*?)";', webpage)
             if m_vevo:
                 vevo_id = m_vevo.group(1)
                 self.to_screen('Vevo video detected: %s' % vevo_id)

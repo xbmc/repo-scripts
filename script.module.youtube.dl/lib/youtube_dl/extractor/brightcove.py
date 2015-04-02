@@ -95,6 +95,7 @@ class BrightcoveIE(InfoExtractor):
             'url': 'http://c.brightcove.com/services/viewer/htmlFederated?playerID=3550052898001&playerKey=AQ%7E%7E%2CAAABmA9XpXk%7E%2C-Kp7jNgisre1fG5OdqpAFUTcs0lP_ZoL',
             'info_dict': {
                 'title': 'Sealife',
+                'id': '3550319591001',
             },
             'playlist_mincount': 7,
         },
@@ -108,7 +109,7 @@ class BrightcoveIE(InfoExtractor):
         """
 
         # Fix up some stupid HTML, see https://github.com/rg3/youtube-dl/issues/1553
-        object_str = re.sub(r'(<param name="[^"]+" value="[^"]+")>',
+        object_str = re.sub(r'(<param(?:\s+[a-zA-Z0-9_]+="[^"]*")*)>',
                             lambda m: m.group(1) + '/>', object_str)
         # Fix up some stupid XML, see https://github.com/rg3/youtube-dl/issues/1608
         object_str = object_str.replace('<--', '<!--')
@@ -247,7 +248,7 @@ class BrightcoveIE(InfoExtractor):
         playlist_info = json_data['videoList']
         videos = [self._extract_video_info(video_info) for video_info in playlist_info['mediaCollectionDTO']['videoDTOs']]
 
-        return self.playlist_result(videos, playlist_id=playlist_info['id'],
+        return self.playlist_result(videos, playlist_id='%s' % playlist_info['id'],
                                     playlist_title=playlist_info['mediaCollectionDTO']['displayName'])
 
     def _extract_video_info(self, video_info):

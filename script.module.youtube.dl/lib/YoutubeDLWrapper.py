@@ -8,7 +8,7 @@ updater.updateCore()
 
 updater.set_youtube_dl_importPath()
 
-from youtube_dl.utils import std_headers #analysis:ignore
+from youtube_dl.utils import std_headers, DownloadError #analysis:ignore
 
 ###############################################################################
 # FIX: xbmcout instance in sys.stderr does not have isatty(), so we add it
@@ -75,6 +75,7 @@ class VideoInfo:
         self.sourceName = ''
         self.info = None
         self._selection = None
+        self.downloadID = str(time.time())
 
     def __len__(self):
         return len(self._streams)

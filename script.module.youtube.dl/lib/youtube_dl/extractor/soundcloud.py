@@ -180,7 +180,7 @@ class SoundcloudIE(InfoExtractor):
                     'format_id': key,
                     'url': url,
                     'play_path': 'mp3:' + path,
-                    'ext': ext,
+                    'ext': 'flv',
                     'vcodec': 'none',
                 })
 
@@ -200,8 +200,9 @@ class SoundcloudIE(InfoExtractor):
                 if f['format_id'].startswith('rtmp'):
                     f['protocol'] = 'rtmp'
 
-            self._sort_formats(formats)
-            result['formats'] = formats
+        self._check_formats(formats, track_id)
+        self._sort_formats(formats)
+        result['formats'] = formats
 
         return result
 
@@ -246,6 +247,7 @@ class SoundcloudSetIE(SoundcloudIE):
     _TESTS = [{
         'url': 'https://soundcloud.com/the-concept-band/sets/the-royal-concept-ep',
         'info_dict': {
+            'id': '2284613',
             'title': 'The Royal Concept EP',
         },
         'playlist_mincount': 6,
@@ -279,7 +281,7 @@ class SoundcloudSetIE(SoundcloudIE):
         return {
             '_type': 'playlist',
             'entries': [self._extract_info_dict(track, secret_token=token) for track in info['tracks']],
-            'id': info['id'],
+            'id': '%s' % info['id'],
             'title': info['title'],
         }
 
