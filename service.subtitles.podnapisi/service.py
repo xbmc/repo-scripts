@@ -66,15 +66,15 @@ def Search( item ):
       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
 
 
-def Download(url,filename):
+def Download(params):
   if xbmcvfs.exists(__temp__):
     shutil.rmtree(__temp__)
   xbmcvfs.mkdirs(__temp__)
-  
-  pn_server = PNServer()
-  pod_session = pn_server.Create()
 
   subtitle_list = []
+  pn_server = PNServer()
+  pn_server.Create()
+  url = pn_server.Download(params)
 
   try:
     log( __scriptid__ ,"Extract using 'ZipFile' method")
@@ -178,16 +178,11 @@ if params['action'] == 'search':
   Search(item)  
 
 elif params['action'] == 'download':
-  pn_server = PNServer()
-  pn_server.Create()
-  pn_server.Login()
-  url = pn_server.Download(params)
-  if url:
-    subs = Download(url,params["filename"])
-    for sub in subs:
-      listitem = xbmcgui.ListItem(label=sub)
-      xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
-  
+  subs = Download(params)
+  for sub in subs:
+    listitem = xbmcgui.ListItem(label=sub)
+    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
+
 elif params['action'] == 'manualsearch':
   xbmc.executebuiltin(u'Notification(%s,%s,2000,%s)' %(__scriptname__,
                                                        __language__(32004),

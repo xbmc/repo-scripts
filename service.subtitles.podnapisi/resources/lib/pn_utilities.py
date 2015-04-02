@@ -29,7 +29,7 @@ USER_AGENT        = "%s_v%s" % (__scriptname__.replace(" ","_"),__version__ )
 SEARCH_URL        = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sXML=1&lang=0"
 SEARCH_URL_HASH   = "http://www.podnapisi.net/ppodnapisi/search?tbsl=1&sK=%s&sJ=%s&sY=%s&sTS=%s&sTE=%s&sMH=%s&sXML=1&lang=0"
 
-DOWNLOAD_URL      = "http://www.podnapisi.net/static/podnapisi/%s"
+DOWNLOAD_URL      = "http://www.podnapisi.net/subtitles/%s/download"
 
 LANGUAGES      = (
 
@@ -296,13 +296,13 @@ class PNServer:
           hashMatch = True
 
         self.subtitles_list.append({'filename'      : filename,
-                                    'link'          : self.get_element(subtitle, "id"),
+                                    'link'          : self.get_element(subtitle, "pid"),
                                     'movie_id'      : self.get_element(subtitle, "movieId"),
                                     'season'        : self.get_element(subtitle, "tvSeason"),
                                     'episode'       : self.get_element(subtitle, "tvEpisode"),
-                                    'language_name' : languageTranslate(self.get_element(subtitle, "languageId"),1,0),
-                                    'language_flag' : languageTranslate(self.get_element(subtitle, "languageId"),1,2),
-                                    'rating'        : str(int(self.get_element(subtitle, "rating"))*2),
+                                    'language_name' : self.get_element(subtitle, "languageName"),
+                                    'language_flag' : self.get_element(subtitle, "language"),
+                                    'rating'        : str(int(float(self.get_element(subtitle, "rating")))*2),
                                     'sync'          : hashMatch,
                                     'hearing_imp'   : "n" in self.get_element(subtitle, "flags")
                                     })
@@ -312,24 +312,17 @@ class PNServer:
   def Download(self,params):
     print params
     subtitle_ids = []
-    if (self.connected):
-      if (__addon__.getSetting("PNmatch") == 'true' and params["hash"] != "000000000000"):
-        if params["match"] == "True":
-          subtitle_ids.append(str(params["link"]))
+    if (__addon__.getSetting("PNmatch") == 'true' and params["hash"] != "000000000000"):
+      self.Login()
+      if params["match"] == "True":
+        subtitle_ids.append(str(params["link"]))
 
-        log( __scriptid__ ,"Sending match to Podnapisi server")
-        result = self.podserver.match(self.pod_session, params["hash"], int(params["movie_id"]), int(params["season"]), int(params["episode"]), subtitle_ids)
-        print result
-        if result['status'] == 200:
-          log( __scriptid__ ,"Match successfuly sent")
+      log( __scriptid__ ,"Sending match to Podnapisi server")
+      result = self.podserver.match(self.pod_session, params["hash"], params["movie_id"], int(params["season"]), int(params["episode"]), subtitle_ids)
+      if result['status'] == 200:
+        log( __scriptid__ ,"Match successfuly sent")
 
-      download = self.podserver.download(self.pod_session , [str(params["link"])])
-      if str(download['status']) == "200" and len(download['names']) > 0 :
-        download_item = download["names"][0]
-        if str(download["names"][0]['id']) == str(params["link"]):
-          return DOWNLOAD_URL % download["names"][0]['filename']
-          
-    return None
+    return DOWNLOAD_URL % str(params["link"])
 
   def get_element(self, element, tag):
     if element.getElementsByTagName(tag)[0].firstChild:
