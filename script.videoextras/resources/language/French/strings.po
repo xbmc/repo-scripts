@@ -16,9 +16,41 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Ajouter des Extras Video à vos Films et Emissions TV"
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Fourni une solution pour ajouter des Extras Video à votre bibliothèque Video. Cherchez dans le Wiki les instructions de paramétrage."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skinneurs, lisez le Wiki afin d'obtenir les informations pour l'intégrer à votre skin: : http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
 msgctxt "#32001"
 msgid "Extras"
 msgstr "Extras"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Nom de répertoire Extras"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Rechercher dans les Répertoires Imbriqués"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Permettre des Extras avec des Etiquettes de Fichier"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Etiquette de Nom de Fichier Extras"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Menu a afficher après avoir joué un Extra"
 
 msgctxt "#32007"
 msgid "Video Selection"
@@ -32,13 +64,41 @@ msgctxt "#32009"
 msgid "Home"
 msgstr "Accueil"
 
+msgctxt "#32010"
+msgid "File System"
+msgstr "Système de fichiers"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Emplacement distant des Extras "
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Utiliser un Emplacement distant Personalisé des Extras"
+
 msgctxt "#32013"
 msgid "Path"
 msgstr "Chemin"
 
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Sous-dossier Films personalisé"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Sous-dossier Show TV personalisé "
+
 msgctxt "#32016"
 msgid "Advanced"
 msgstr "Avancé"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Forcer l'Affichage du Bouton Extras"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Exclure les Fichiers d' Expression Rationnelle"
 
 msgctxt "#32019"
 msgid "Debugging"
@@ -52,9 +112,57 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "Base de donnée"
 
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Permettre le Support de Base de donnée"
+
 msgctxt "#32023"
 msgid "Operations"
 msgstr "Opérations"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Vider la Base De Données et le Cache"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Utiliser l'Affichage en Liste Détaillée"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Fenetre a afficher après la sortie de la vue détaillée en liste"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Permettre la mise en cache des Extras au demarrage "
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Naviguer dans les Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Sous-dossier Video Musicale Personnalisé"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Mettre à jour le fichier advancedsettings.xml"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Mettre à jour la skin Confluence"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Utiliser des Images personnalisées"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Image en Overlay"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Lister Image"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -63,6 +171,14 @@ msgstr "Tout lire"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Info"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Pas d'Extras trouvé"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Reprendre depuis"
 
 msgctxt "#32105"
 msgid "Start from beginning"
@@ -80,6 +196,10 @@ msgctxt "#32108"
 msgid "Edit title"
 msgstr "Éditer le titre"
 
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Échec de la mise à jour du titre"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Films"
@@ -95,3 +215,59 @@ msgstr "Music Vidéos"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Résumé"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Editer le Résumé"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Échec de la mise à jour du Résumé"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Cette action mettra à jour le fichier advancedsettings.xml pour s'assurer que les fichiers Extras soient correctement pris en charge. Assurez-vous que vos modifications aient bien été sauvé avant de continuer. Continuer ?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Impossible de mettre à jour advancedsettings.xm"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Vérifier votre fichier Log pour plus de détails"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "advancedsettings.xml invalide, impossible de mettre à jour"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "Mise à jour d' advancedsettings.xml terminé"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Cela mettra à jour votre skin Confluence afin qu'elle inclue les fonctionnalités des Extras Video"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Impossible de mettre à jour la skin Confluence"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Certains fichiers n'ont pas été mis à jour"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Skin Confluence mise à jour"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Il est recommendé que vous redemarriez Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Impossible de créer les fichiers dans le répertoire de la skin Confluence"
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Veuillez vérifier que le répertoire soit bien accessible en écriture par l'utilisateur utilisant Kodi."

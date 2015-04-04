@@ -16,6 +16,10 @@ msgstr ""
 "Language: ro\n"
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extra"
+
 msgctxt "#32008"
 msgid "Information"
 msgstr "Informaţii"
@@ -71,6 +75,10 @@ msgstr "Modifică numele"
 msgctxt "#32110"
 msgid "Movies"
 msgstr "Filme"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Seriale"
 
 msgctxt "#32113"
 msgid "Plot"

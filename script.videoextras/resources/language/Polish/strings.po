@@ -98,7 +98,7 @@ msgstr "Wymuszaj wyświetlanie przycisku dodatku"
 
 msgctxt "#32018"
 msgid "Exclude Files Regular Expression"
-msgstr "Wyrażenie regularne wykluczające pliki"
+msgstr "Ignoruj pliki pasujące do wyrażenia regularnego"
 
 msgctxt "#32019"
 msgid "Debugging"
@@ -263,3 +263,11 @@ msgstr "Zaktualizowano skórę Confluence"
 msgctxt "#32159"
 msgid "It is recommended that you now restart Kodi"
 msgstr "Zaleca się ponowne uruchomienie Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Utworzenie plików w folderze skóry Confluence jest niemożliwe."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Upewnij się, że użytkownik uruchamiający Kodi ma uprawnienia do zapisu w tym folderze."

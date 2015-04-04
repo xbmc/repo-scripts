@@ -46,15 +46,19 @@ msgstr "Дебъгване"
 
 msgctxt "#32020"
 msgid "Enable debug logging"
-msgstr "Включи дебъг дневника"
+msgstr "Включи дебъг журнала"
 
 msgctxt "#32021"
 msgid "Database"
-msgstr "База от данни"
+msgstr "База данни"
 
 msgctxt "#32023"
 msgid "Operations"
 msgstr "Операции"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Обнови файлът advancedsettings.xml"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -99,3 +103,15 @@ msgstr "Музикални клипове"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Сюжет"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "advancedsettings.xml не може да бъде обновен"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Невалиден advancedsettings.xml файл - не е обновен"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "Обновяването на advancedsettings.xml завърши"

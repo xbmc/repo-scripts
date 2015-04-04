@@ -114,8 +114,8 @@ class VideoExtrasService():
                 fileHandle.write(self.skinExtrasOverlay.encode("UTF-8"))
                 fileHandle.close()
         except:
-            log("VideoExtrasService: Failed to write: %s" % filename)
-            log("VideoExtrasService: %s" % traceback.format_exc())
+            log("VideoExtrasService: Failed to write: %s" % filename, xbmc.LOGERROR)
+            log("VideoExtrasService: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
     # Regenerates all of the cached extras
     def cacheAllExtras(self):
@@ -186,8 +186,8 @@ class VideoExtrasService():
             # Now the path exists, need to copy the file over to it, giving it the name of the DBID
             xbmcvfs.copy(srcfile, targetFile)
         except:
-            log("VideoExtrasService: Failed to create file: %s" % targetFile)
-            log("VideoExtrasService: %s" % traceback.format_exc())
+            log("VideoExtrasService: Failed to create file: %s" % targetFile, xbmc.LOGERROR)
+            log("VideoExtrasService: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
     # Removes an overlay
     def _removeOverlayFile(self, target, dbid, postfix=''):
@@ -199,8 +199,8 @@ class VideoExtrasService():
                 # Now the path exists, need to copy the file over to it, giving it the name of the DBID
                 xbmcvfs.delete(targetFile)
             except:
-                log("VideoExtrasService: Failed to delete file: %s" % targetFile)
-                log("VideoExtrasService: %s" % traceback.format_exc())
+                log("VideoExtrasService: Failed to delete file: %s" % targetFile, xbmc.LOGERROR)
+                log("VideoExtrasService: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
 
 ###################################

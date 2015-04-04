@@ -18,6 +18,7 @@ import os
 import re
 import traceback
 import xml.etree.ElementTree as ET
+import xbmc
 import xbmcgui
 import xbmcvfs
 
@@ -396,8 +397,8 @@ class BaseExtrasItem():
                     self.orderKey = self.displayName
                 log("BaseExtrasItem: Using sort key %s for %s" % (self.orderKey, self.displayName))
         except:
-            log("BaseExtrasItem: Failed to process NFO: %s" % nfoFileName)
-            log("BaseExtrasItem: %s" % traceback.format_exc())
+            log("BaseExtrasItem: Failed to process NFO: %s" % nfoFileName, xbmc.LOGERROR)
+            log("BaseExtrasItem: %s" % traceback.format_exc(), xbmc.LOGERROR)
             returnValue = False
 
         return returnValue
@@ -467,8 +468,8 @@ class BaseExtrasItem():
             try:
                 nfoFile.write(newNfoContent)
             except:
-                log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
-                log("BaseExtrasItem: %s" % traceback.format_exc())
+                log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName, xbmc.LOGERROR)
+                log("BaseExtrasItem: %s" % traceback.format_exc(), xbmc.LOGERROR)
                 # Make sure we close the file handle
                 nfoFile.close()
                 # If there was no file before, make sure we delete and partial file
@@ -478,8 +479,8 @@ class BaseExtrasItem():
             nfoFile.close()
 
         except:
-            log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
-            log("BaseExtrasItem: %s" % traceback.format_exc())
+            log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName, xbmc.LOGERROR)
+            log("BaseExtrasItem: %s" % traceback.format_exc(), xbmc.LOGERROR)
             return False
 
         return True
@@ -544,8 +545,8 @@ class BaseExtrasItem():
             try:
                 nfoFile.write(newNfoContent)
             except:
-                log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
-                log("BaseExtrasItem: %s" % traceback.format_exc())
+                log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName, xbmc.LOGERROR)
+                log("BaseExtrasItem: %s" % traceback.format_exc(), xbmc.LOGERROR)
                 # Make sure we close the file handle
                 nfoFile.close()
                 # If there was no file before, make sure we delete and partial file
@@ -555,8 +556,8 @@ class BaseExtrasItem():
             nfoFile.close()
 
         except:
-            log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName)
-            log("BaseExtrasItem: %s" % traceback.format_exc())
+            log("BaseExtrasItem: Failed to write NFO: %s" % nfoFileName, xbmc.LOGERROR)
+            log("BaseExtrasItem: %s" % traceback.format_exc(), xbmc.LOGERROR)
             return False
 
         return True

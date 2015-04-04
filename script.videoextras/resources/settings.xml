@@ -29,7 +29,7 @@
 	</category>
 	<category label="32016">
 		<setting id="forceButtonDisplay" type="bool" label="32017" default="false"/>
-		<setting id="excludeFiles" type="text" label="32018" default="([A-Za-z0-9]*.(jpg|idx|srt|nfo|sub|db|txt))"/>
+		<setting id="excludeFilesRegex" type="text" label="32018" default="\.(jpg|idx|srt|nfo|sub|db|txt)$"/>
 		<setting id="serviceEnabled" type="bool" label="32027" default="true"/>
 		<setting id="useCustomImages" enable="eq(-1,true)" type="bool" label="32032" default="false"/>
 		<setting id="overlayImage" label="32033" subsetting="true" visible="eq(-1,true)" type="image"/>

@@ -36,6 +36,10 @@ msgctxt "#32016"
 msgid "Advanced"
 msgstr "Lanjutan"
 
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Penyahpepijatan"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Main Semua"
@@ -43,6 +47,10 @@ msgstr "Main Semua"
 msgctxt "#32102"
 msgid "Info"
 msgstr "Maklumat"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Mula dari permulaan"
 
 msgctxt "#32110"
 msgid "Movies"

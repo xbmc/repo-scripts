@@ -263,3 +263,11 @@ msgstr "Confluence 스킨 수정 완료"
 msgctxt "#32159"
 msgid "It is recommended that you now restart Kodi"
 msgstr "지금 Kodi를 다시 시작하세요"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Confluence 스킨 디렉터리에 파일을 생성할 수 없음"
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Kodi를 실행 중인 사용자의 디렉터리 쓰기 권한을 확인하세요."

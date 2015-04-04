@@ -263,3 +263,11 @@ msgstr "Confluence teminė išvaizda atnaujinta"
 msgctxt "#32159"
 msgid "It is recommended that you now restart Kodi"
 msgstr "Rekomenduojama iš naujo paleisti Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Neįmanoma sukurti failų Confluence teminės išvaizdos kataloge."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Įsitikinkite, kad vartotojas, kuris paleido Kodi, turi teisę rašyti į šį katalogą."

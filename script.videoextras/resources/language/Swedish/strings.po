@@ -263,3 +263,11 @@ msgstr "Confluence-skalet uppdaterat"
 msgctxt "#32159"
 msgid "It is recommended that you now restart Kodi"
 msgstr "Det är rekommenderat att du nu startar om Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Kunde inte skapa filer i katalogen för Confluence-skalet."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Vänligen se till att katalogen är skrivbar av aktuell Kodi användare."

@@ -263,3 +263,11 @@ msgstr "Το κέλυφος Confluence ενημερώθηκε"
 msgctxt "#32159"
 msgid "It is recommended that you now restart Kodi"
 msgstr "Προτείνεται να επανεκκινήσετε το Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Αδυναμία δημιουργίας αρχείων στο φάκελο του Confluence."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Σιγουρευτείτε ότι ο φάκελος είναι εγγράψιμος από το χρήστη του Kodi."

@@ -24,6 +24,10 @@ msgctxt "#32013"
 msgid "Path"
 msgstr "Путања"
 
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Напредни"
+
 msgctxt "#32019"
 msgid "Debugging"
 msgstr "Тражење грешака"

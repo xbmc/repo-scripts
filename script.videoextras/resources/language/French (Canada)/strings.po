@@ -178,11 +178,11 @@ msgstr "Aucun bonus trouvé"
 
 msgctxt "#32104"
 msgid "Resume from"
-msgstr "Reprendre à partir de"
+msgstr "Reprendre de"
 
 msgctxt "#32105"
 msgid "Start from beginning"
-msgstr "Jouer à partir du début"
+msgstr "Jouer du début"
 
 msgctxt "#32106"
 msgid "Mark as watched"
@@ -263,3 +263,11 @@ msgstr "L'habillage Confluence a été mis à jour"
 msgctxt "#32159"
 msgid "It is recommended that you now restart Kodi"
 msgstr "Il vous est recommandé de redémarrer Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Impossible de créer des fichiers dans le répertoire de l'habillage Confluence."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Veuillez vous assurer que le répertoire est accessible en écriture par l'utilisateur exécutant Kodi."

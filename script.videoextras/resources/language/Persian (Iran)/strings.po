@@ -16,6 +16,10 @@ msgstr ""
 "Language: fa_IR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32008"
+msgid "Information"
+msgstr "اطلاعات"
+
 msgctxt "#32009"
 msgid "Home"
 msgstr "خانه"

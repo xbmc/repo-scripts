@@ -91,8 +91,8 @@ class ExtrasPlayer(xbmc.Player):
                 if extrasPlayer.isPlayingVideo():
                     currentTime = int(extrasPlayer.getTime())
             except:
-                log("ExtrasPlayer: Failed to follow progress %s" % currentlyPlayingFile)
-                log("ExtrasPlayer: %s" % traceback.format_exc())
+                log("ExtrasPlayer: Failed to follow progress %s" % currentlyPlayingFile, xbmc.LOGERROR)
+                log("ExtrasPlayer: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
             xbmc.sleep(100)
 

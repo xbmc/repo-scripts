@@ -82,7 +82,7 @@ class Settings():
 
     @staticmethod
     def getExcludeFiles():
-        return __addon__.getSetting("excludeFiles")
+        return __addon__.getSetting("excludeFilesRegex")
 
     @staticmethod
     def getExtrasDirName():
