@@ -1,0 +1,615 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "Engine"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Default TTS Engine"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Voice"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Rate"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Pitch"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Speed"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Player"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Play Speech Directly Via Flite"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Speed % (Needs SOX or MPlayer)"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Volume dB"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Rate (WPM)"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Play Speech Directly Via eSpeak"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Pipe Audio To Player"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Volume"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Play Speech Via XBMC"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Language"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Use aoss"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Module"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Server"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Perl Server"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Speak On Server"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Server Speed (If Supported)"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Server Pitch (If Supported)"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Server Volume dB (If Supported)"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Player Speed (If Supported)"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Player Volume dB (If Supported)"
+msgstr ""
+
+msgctxt "#32027"
+msgid "IP Address"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Port"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Options"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Keymap"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Disable Interface Reader"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Speak Extra Item Information Automatically"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Delay (seconds)"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Speak Number Of Items For Lists"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Speak Background Progress Updates"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Minimum Progress Update Interval (Seconds)"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Speak When Media Playing"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Install Default Keymap"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Install Custom Keymap"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Edit Custom Keymap"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Reset Custom Keymap To Defaults"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Remove Installed Keymap"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Output .wav Files To tmpfs"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Disable Broken TTS Engines"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Enable Debug Logging"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Override Poll Interval"
+msgstr ""
+
+msgctxt "#32048"
+msgid "Poll Interval (ms)"
+msgstr ""
+
+
+msgctxt "#32100"
+msgid "Database scan started."
+msgstr ""
+
+msgctxt "#32101"
+msgid "Database scan finished."
+msgstr ""
+
+msgctxt "#32102"
+msgid "Notice... Speech engine falling back to {0}"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Reason"
+msgstr ""
+
+msgctxt "#32104"
+msgid "New T T S Version"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Window"
+msgstr ""
+
+msgctxt "#32106"
+msgid "item"
+msgstr ""
+
+msgctxt "#32107"
+msgid "items"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Season"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Episode"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Parent Directory"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Installed"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Updated"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Default keymap installed successfully!"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Custom keymap installed or updated successfully!"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Custom keymap reset to defaults."
+msgstr ""
+
+msgctxt "#32116"
+msgid "Removed"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Keymap removed."
+msgstr ""
+
+msgctxt "#32118"
+msgid "Press the key you want to assign now."
+msgstr ""
+
+msgctxt "#32119"
+msgid "Timeout in {0} seconds"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Importing P.V.R. E.P.G."
+msgstr ""
+
+msgctxt "#32121"
+msgid "Loading P.V.R. E.P.G."
+msgstr ""
+
+msgctxt "#32122"
+msgid "Background Progress Started"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Background Progress Done"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Press the key you want to assign now."
+msgstr ""
+
+msgctxt "#32125"
+msgid "Live TV Settings"
+msgstr ""
+
+msgctxt "#32126"
+msgid "virtual keyboard"
+msgstr ""
+
+msgctxt "#32127"
+msgid "volume bar"
+msgstr ""
+
+msgctxt "#32128"
+msgid "context menu"
+msgstr ""
+
+msgctxt "#32129"
+msgid "info dialog"
+msgstr ""
+
+msgctxt "#32130"
+msgid "numeric input"
+msgstr ""
+
+msgctxt "#32131"
+msgid "shutdown menu"
+msgstr ""
+
+msgctxt "#32132"
+msgid "player controls"
+msgstr ""
+
+msgctxt "#32133"
+msgid "seek bar"
+msgstr ""
+
+msgctxt "#32134"
+msgid "music OSD"
+msgstr ""
+
+msgctxt "#32135"
+msgid "visualisation preset list"
+msgstr ""
+
+msgctxt "#32136"
+msgid "OSD video settings"
+msgstr ""
+
+msgctxt "#32137"
+msgid "OSD audio settings"
+msgstr ""
+
+msgctxt "#32138"
+msgid "video bookmarks"
+msgstr ""
+
+msgctxt "#32139"
+msgid "file browser"
+msgstr ""
+
+msgctxt "#32140"
+msgid "network setup"
+msgstr ""
+
+msgctxt "#32141"
+msgid "media source"
+msgstr ""
+
+msgctxt "#32142"
+msgid "smart playlist editor"
+msgstr ""
+
+msgctxt "#32143"
+msgid "busy dialog"
+msgstr ""
+
+msgctxt "#32144"
+msgid "addon settings"
+msgstr ""
+
+msgctxt "#32145"
+msgid "fullscreen info"
+msgstr ""
+
+msgctxt "#32146"
+msgid "karaoke selector"
+msgstr ""
+
+msgctxt "#32147"
+msgid "karaoke large selector"
+msgstr ""
+
+msgctxt "#32148"
+msgid "slider dialog"
+msgstr ""
+
+msgctxt "#32149"
+msgid "addon information"
+msgstr ""
+
+msgctxt "#32150"
+msgid "text viewer"
+msgstr ""
+
+msgctxt "#32151"
+msgid "peripheral settings"
+msgstr ""
+
+msgctxt "#32152"
+msgid "media filter"
+msgstr ""
+
+msgctxt "#32153"
+msgid "pvr"
+msgstr ""
+
+msgctxt "#32154"
+msgid "pvr guide info"
+msgstr ""
+
+msgctxt "#32155"
+msgid "pvr recording info"
+msgstr ""
+
+msgctxt "#32156"
+msgid "pvr timer setting"
+msgstr ""
+
+msgctxt "#32157"
+msgid "pvr group manager"
+msgstr ""
+
+msgctxt "#32158"
+msgid "pvr channel manager"
+msgstr ""
+
+msgctxt "#32159"
+msgid "pvr guide search"
+msgstr ""
+
+msgctxt "#32160"
+msgid "pvr OSD channels"
+msgstr ""
+
+msgctxt "#32161"
+msgid "pvr OSD guide"
+msgstr ""
+
+msgctxt "#32162"
+msgid "virtual keyboard"
+msgstr ""
+
+msgctxt "#32163"
+msgid "video menu"
+msgstr ""
+
+msgctxt "#32164"
+msgid "PVR Client Specific Settings"
+msgstr ""
+
+msgctxt "#32165"
+msgid "unknown"
+msgstr ""
+
+msgctxt "#32166"
+msgid "Addons updated"
+msgstr ""
+
+msgctxt "#32167"
+msgid "version"
+msgstr ""
+
+msgctxt "#32168"
+msgid "Notice"
+msgstr ""
+
+msgctxt "#32169"
+msgid "Rewind"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Fast Forward"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Channel"
+msgstr ""
+
+msgctxt "#32172"
+msgid "Sub-setting"
+msgstr ""
+
+msgctxt "#32173"
+msgid "yes"
+msgstr ""
+
+msgctxt "#32174"
+msgid "no"
+msgstr ""
+
+msgctxt "#32175"
+msgid "section"
+msgstr ""
+
+msgctxt "#32176"
+msgid "area"
+msgstr ""
+
+msgctxt "#32177"
+msgid "space"
+msgstr ""
+
+msgctxt "#32178"
+msgid "No text"
+msgstr ""
+
+msgctxt "#32179"
+msgid "deleted"
+msgstr ""
+
+msgctxt "#32180"
+msgid "Cannot adjust volume"
+msgstr ""
+
+msgctxt "#32181"
+msgid "Choose Backend"
+msgstr ""
+
+msgctxt "#32182"
+msgid "Not Available"
+msgstr ""
+
+msgctxt "#32183"
+msgid "No players to select."
+msgstr ""
+
+msgctxt "#32184"
+msgid "Auto"
+msgstr ""
+
+msgctxt "#32185"
+msgid "Choose Player"
+msgstr ""
+
+msgctxt "#32186"
+msgid "No options to select."
+msgstr ""
+
+msgctxt "#32187"
+msgid "Choose Option"
+msgstr ""
+
+msgctxt "#32188"
+msgid "PVR TV Channels"
+msgstr ""
+
+msgctxt "#32189"
+msgid "PVR TV Recordings"
+msgstr ""
+
+msgctxt "#32190"
+msgid "PVR TV Guide"
+msgstr ""
+
+msgctxt "#32191"
+msgid "PVR TV Timers"
+msgstr ""
+
+msgctxt "#32192"
+msgid "PVR TV Search"
+msgstr ""
+
+msgctxt "#32193"
+msgid "PVR Radio Channels"
+msgstr ""
+
+msgctxt "#32194"
+msgid "PVR Radio Recordings"
+msgstr ""
+
+msgctxt "#32195"
+msgid "PVR Radio Guide"
+msgstr ""
+
+msgctxt "#32196"
+msgid "PVR Radio Timers"
+msgstr ""
+
+msgctxt "#32197"
+msgid "PVR Radio Search"
+msgstr ""
+
+msgctxt "#32198"
+msgid "watched"
+msgstr ""
+
+msgctxt "#32199"
+msgid "resumable"
+msgstr ""
+
+msgctxt "#32200"
+msgid "selected"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Subtitles dialog"
+msgstr ""

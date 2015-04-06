@@ -1,0 +1,16 @@
+TODO:
+
+Traker1001:
+  Couple things that would be cool in the PVR Guide. Is if it read the date of the selection, even better if the reading was limited to day/month, Even cooler if it recognized the date of current selection and only read the date if it didn't = current date. And if it read the at least the Time and date even if extra info item wasn't selected.
+  Another neat item, would be ability to enable/disable the automatic read extra info via keystroke. I find there are some areas where it is handy and others where it isn't.
+
+
+IDEAS:
+
+Traker1001:
+  Then we take google translate, We allow for the creation of a cache mp3's for the common items, I.E. Typical nav  System, Addons, settings, Videos, so that those items don't need a request. Which is much of the menu system and only send the actual request to G.T. with variable menu items. This would be alot of work, however, with a tutorial and little help, maybe users would be willing to create there own cache packages and share them. This would skip alot of the need for network traffic.
+
+
+HELIX ISSUES:
+
+Would also be cool if it would read "Time to time" when moving around in the EPG, For example, Channel KCMO, Divorce court, 5pm to 5:30pm.

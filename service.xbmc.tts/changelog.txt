@@ -1,0 +1,514 @@
+Changelog for service.xbmc.tts
+==============================
+
+Authors: ruuk, pvagner
+
+TODO:
+-----
+ Use Container(id).CurrentItem for I* to detect list item changes
+ Format seek position to prevent engines (some) from speaking it as a clock time (ie blah past midnight)
+ OSX VoiceOver via AppleScript
+ Android backend
+ Speech for more window types that isn't automatically handled
+ Pageination for large texts?
+ Subtitle speech? Maybe only possible with something like pysrt and a subtitle file. https://pypi.python.org/pypi/pysrt
+ GwMicro Window Eyes backend?
+ Dolphin API backend?
+
+
+EXTERNAL TODO:
+--------------
+ OSX installer?
+ Android TTS app for android backend
+
+** 1.0.0 **
+
+Official repository release
+
+** 0.1.2b **
+
+Fix for the addon speaking '32166' instead of 'Addons updated'
+Now speaks selected status for items in multi-select dialogs
+Add handling for subtitles dialog
+Now speaks keyboard dialog again in nightlies and future 15.0 release
+
+** 0.1.1b **
+
+Improve reading of window extra texts, for example System Info now properly reads the Kodi build info
+Fix for slideout menu boolean settings not reading properly
+Fix for slideout menu not reading properly on all PVR windows
+
+** 0.1.0b **
+
+Changed name to "Kodi Screen Reader"
+Removed NVDA library. To enable NVDA, install "NVDA Controller Client DLL" from the "Add-on libraries" category on my repository
+Added Recite backend (it is awful - added for completeness plus it was easy)
+Added handling for the PVR Guide Search dialog (Not very useful until a future Kodi version)
+
+** 0.0.88b **
+
+Fix for versions with letter suffixes causing errors :)
+
+** 0.0.87b **
+
+Helix fixes for PVR
+Now handles all PVR views (Helix)
+Better item extra info of PVR items (Helix)
+Now reads item label instead of title in video/music views
+Now reads watched and resumable on videos
+Fix for left slideout menus not reading
+
+** 0.0.86 **
+
+Fix for video info window buttons not reading properly on Helix
+Enhancements to video info reading
+Added speaking of currently playing item on pause
+Fix for some settings not working
+
+** 0.0.85 **
+
+Localize strings
+
+** 0.0.84 **
+
+Fix for Yes/No dialogs not reading buttons and other issues
+Fix for Timeline: Now/Next extra info not reading
+Fix for fadelabels not being read in window info and some text ordering issues
+
+** 0.0.83 **
+
+Fix for errors on platforms with Python 2.6
+
+** 0.0.82 **
+
+Added 'Speak Background Progress Updates' to Settings:Options (Default: False)
+Added 'Minimum Progress Update Interval (Seconds)' as subsetting to 'Speak Background Progress Updates' (Default: 5)
+Added 'Speak When Media Playing' as subsetting to 'Speak Background Progress Updates' (Default: False)
+
+** 0.0.81 **
+
+Module: sayText() now requires unicode and is safe for all unicode characters
+
+** 0.0.80 **
+
+Added 'Disable Interface Reader' to Settings:Options (Default=False)
+Now provides a module for other addons to use
+
+** 0.0.79 **
+
+Better log error formatting
+SAPI: Add ability to retry initialization on errors
+SAPI: Improve error recovery
+SAPI: More improved logging
+Add ability to automatically reset the addon on SAPI failure
+
+** 0.0.78 **
+
+Added fix for select dialogs causing looping errors in skins other than Confluence
+Added fix for COMError issues when stopping speech in SAPI
+Added more informative SAPI COMError logging
+
+** 0.0.77 **
+
+Update comtypes to the latest dev version
+SAPI: Clear generated files on startup: possibly fixes issues with Win 7/8
+
+** 0.0.76 **
+
+Will now speak version updates for addons even if they were updated while the TTS addon was disabled or not yet started
+Added 'Keymap' category to settings and moved keymap options there
+Added 'Install Default Keymap', 'Install Custom Keymap', 'Edit Custom Keymap', 'Reset Custom Keymap To Defaults' and 'Remove Installed Keymap' to Keymap category
+XBMC no longer needs to be restarted on keymap install/update
+
+** 0.0.75 **
+
+Fix for speech-dispatcher eventually hanging on volume up/down
+Change speech-dispatcher volume range in settings to 0-200% (was 0-100%, but 50% actually represented the real 100%)
+Fix for sapi pitch, volume and rate not working on Windows 8
+
+** 0.0.74 **
+
+Fix for window xml parser failing on skins with non-standard folder paths
+Now speaks new versions for all addon updates
+Added the sub-setting 'Delay (seconds)' to the 'Speak Extra Item Information Automatically' setting
+Now says 'sub-setting' before speaking a sub-setting's name
+Now speaks the category description as extra info on the settings category selection window
+Added the ability to change backend speech volume with ctrl-plus and ctrl-minus
+
+** 0.0.73 **
+
+JAWS and NVDA will now fallback to SAPI if not running
+Added ability to speak text in the text viewer window using the future xbmc ability to get textbox text directly
+Fix for some multiline texts not having formatting codes removed before being spoken
+
+** 0.0.72 **
+
+Update Comtypes to dev version to remove NumPy dependency
+SAPI can now speak with XBMC audio which is now the default
+Added SAPI setting 'Play Speech Via XBMC'
+
+** 0.0.71 **
+
+Now shows the busy dialog when waiting for the engines, voices or players list to display (useful on the Raspberry Pi, which can be slow to display)
+Fixed a bug where changing from a player that could pipe to one that could not would cause speech to stop
+
+** 0.0.70 **
+
+Now speaks when video or music database scan has started or finished
+Improved speaking of window names including speaking the addon name for addon windows
+Added code to load snd-bcm2835 module for other Raspberry Pi distributions
+Will now check for and load snd-bcm2835 module for all players/engines if needed
+Fix for sound icons failing due to file paths with non-ascii characters
+
+** 0.0.69 **
+
+Startup beeps now happen before speech
+Now speaks the new version on update
+Fix for Flite player not changing when changed in settings
+Fix for aplay not interrupting properly
+Now enables alsa for aplay when aplay is selected as a player on on Raspberry Pi OpenElec
+Added ability to pipe audio directly from engine to player
+Added setting to eSpeak, Google and HTTP TTS Server: 'Pipe Audio To Player'
+Updated comtypes to 1.1.0
+
+** 0.0.68 **
+
+Playing status now speaks on all views when media is playing
+Playing status now speaks fast forward and rewind with 2x, 4x, 8x, 16x and 32x levels
+
+** 0.0.67 **
+
+Weather window now speaks automatically
+Now speaks full screen video player status including pause, buffering (with percent) and seeking (with position)
+HTTP speech server backend: fixed errors cause by connection issues
+HTTP speech server backend: now gives an error reason when falling back
+Fix for bug added in last version causing speech to not interrupt when changing controls
+
+** 0.0.66 **
+
+Added pitch to SAPI
+Added pitch to eSpeak
+Improvements to Festival that should improve responsiveness
+Festival now outputs wavs and can be used on the speech server
+Added pitch and player settings to Festival
+Changed Speed to Server Speed on HTTP TTS
+Added Server Pitch, Server Volume, Player Speed, Player Volume to HTTP TTS
+
+** 0.0.65 **
+
+Fix for PVR window being handled generically
+
+** 0.0.64 **
+
+Add afplay: wav and mp3 player for OSX
+Fix bug causing errors on some backends
+Modify Cepstral for slight performance improvement
+
+** 0.0.63 **
+
+Fixed context menu speaking extra texts for underlying window
+Fixed View Options menu speaking the view texts rather that the selected item text
+TV and Radio channel views now speak the number, channel name and then title for the selected item
+
+** 0.0.62 **
+
+Re-structure audio player backend in a more intelligent manner
+Fix Windows audio player
+Fix broken on and off sound effect wavs
+
+** 0.0.61 **
+
+Fix for error when using audio players without volume control
+Fix for Speech Dispatcher settings not being honored
+
+** 0.0.60 **
+
+Added sound to indicate busy dialog is showing
+
+** 0.0.59 **
+
+Added ability to set volume with paplay
+Added volume to pico2wave
+Added volume to eSpeak
+Added rate, pitch and volume to Cepstral
+Added speed and volume to Festival
+Added rate and volume to OSXSay
+Added module, voice, speed, pitch and volume to Speech-Dispatcher
+Added player, speed and volume to Flite
+
+** 0.0.58 **
+
+Fix for possible SAPI error on older windows versions
+
+** 0.0.57 **
+
+Fix error on Google backend on windows caused by speed and volume additions
+Fix error on Google backend when language not set
+Added volume on SAPI
+
+** 0.0.56 **
+
+Added support for playing MP3 based backends on windows internally
+Google backend now works on windows
+Added speechutil.com backend (Very slow but should work on all platforms)
+OSXSay backend now accesses speech library directly instead of via subprocess
+Added voice selection to OSXSay backend
+Added language selection to Google backend
+Added player selection to Google backend
+Added volume selection to Google backend
+Added player selection to pico2wave
+
+** 0.0.55 **
+
+Internal testing
+
+** 0.0.54 **
+
+Fix to allow addon changlogs to auto-read
+Added mpg321 to available players
+Fix for addon crashing on non-ascii characters for most backends on some platforms
+Made enabling/disabling addon safer and more reliable
+Added enable and disable sound effects
+Workaround Google tts limit of 100 characters by speaking separate portions
+
+** 0.0.53 **
+
+Now repeats entire text/IP/numeric input dialog text after a delay
+Fix for interface slowdown when automatically reading extra item info
+
+** 0.0.52 **
+
+Now speaks the PVR guide info that displays when clicking a show automatically
+Added 'Speak Extra Item Information Automatically' to 'Settings:Options' which defaults to false
+
+** 0.0.51 **
+
+Fix for SAPI errors on '<'
+PVR EPG now speaks each show when navigating grid
+F3 on PVR EPG now speaks the channel number, name, show start time, show end time and plot summary
+
+** 0.0.50 **
+
+Fixes for Cepstral showing a terminal on windows (again)
+Added some code to reset SAPI on error and LOG the occurrence
+Disable speed setting on ttsd for engines that don't use it
+
+** 0.0.49 **
+
+Added mpg123 player support
+Make Google backend require an mp3 player
+
+** 0.0.48 **
+
+Fixes to HTTP server backend to make it work again with the Perl server
+Added version check to HTTP server and switch between Perl/Python servers where appropriate
+
+** 0.0.47 **
+
+Changes to speech server backend
+
+** 0.0.46 **
+
+Fix for aoss usage
+Google now only shows available when mplayer is available
+
+** 0.0.45 **
+
+Add setting 'Use aoss' to Cepstral
+Fix for Cepstral showing terminal on windows
+Add google HTTP speech server backend
+Add setting 'Speak On Server' to SJHtts
+Add remote speaking to sjhttsd backend
+
+** 0.0.44 **
+
+Added Cepstral backend
+Added speaking number of items for lists
+Divided settings into 'Engine', 'Options' and 'Advanced' sections
+Added 'Speak Number Of Items For Lists' to Settings::Options
+Fix HTTP wav server backend to work properly with perl server again
+
+** 0.0.43 **
+
+Finish new xml parsing for F2 and F3
+Include comtypes and remove script.module.comtypes dependency
+Change F12 enable/disable method and removed script.library.xbmc.tts dependency
+
+** 0.0.42 **
+
+Change XML parsing to remove module and parser dependencies
+Remove bs4 import
+
+** 0.0.41 **
+
+Better detection for playSFX() memory fix
+
+** 0.0.40 **
+
+Fix for XBMC version detection
+
+** 0.0.39 **
+
+HTTP Speech Wav Server backend will no longer crash XBMC on server errors
+HTTP Speech Wav Server backend will now drop to a fallback backend on errors
+Using F12 key now requires Gotham or greater for disabling/enabling
+Removed the memory fix setting from Advanced - addon now checks XBMC version
+
+** 0.0.38 **
+
+Added the ability to disable/enable the addon with F12 (you'll need to update the keymap from settings)
+Added addon module dependency for script.library.xbmc.tts (for the enable/disable handling)
+Fix for encoiding errors with non-ascii characters in HTTP speech wav server backend
+
+** 0.0.37 **
+
+Added support for playSFX without caching (xbmc git: 5579740e9881717c65518b81a9a2b4d9526c3307)
+-Enable in Settings::Advanced (temporary setting until relevant change is in an XBMC release)
+Added the ability to output wavs to a tmpfs (/run/shm or /dev/shm with fallback to /tmp)
+Added speaking for typing in the numeric and IP address inputs
+Added backend for eckythump's HTTP speech wav server
+
+** 0.0.36 **
+
+Improvements to speaking of list item text on F3
+
+** 0.0.35 **
+
+Added the ability to select player in eSpeak
+Added support for playing via paplayer and MPlayer
+Fix for encoding error in Pico2Wave
+Added generic speaking of window text on F2
+Added generic speaking of list item text on F3
+
+** 0.0.34 **
+
+Enable wave output in Flite
+Merge Flite backend for ATV2 into main Flite backend
+Fix for speech dispatcher always showing available
+
+** 0.0.33 **
+
+Fix for a bug with several backends causing XBMC to hang on shutdown
+Added the settings option for espeak 'Play Speech Directly Via eSpeak' which bypasses writing to wav
+Fix for speech-dispatcher not being available/working on some platforms (Ubuntu?)
+
+** 0.0.32 **
+
+Added setting to Advanced 'Override Poll Interval' and subsetting 'Poll Interval (ms)'
+Various internal changes to eSpeak and pico2wave
+
+** 0.0.31 **
+
+Added a settings section 'Advanced'
+Added setting 'Advanced::Enable Debug Logging' - currently defaults to True
+Added setting 'Advanced::Disable Broken TTS Engines' defaults to True
+Changed name of ctypes eSpeak to eSpeak (ctypes) and marked as broken
+Changed name of 'eSpeak (XBMC Audio)' to eSpeak, and it now works both via internal and external sound output
+
+** 0.0.30 **
+
+Added speaking of addon status including addon download progress
+Change to prevent errors from killing the addon, thereby stopping speech and possibly hanging XBMC on exit
+
+** 0.0.29 **
+
+Added speaking of virtual keyboard typing
+Added speaking of progress dialog and speaking of progress percent
+
+** 0.0.28 **
+
+JAWS backend now properly shows availability
+
+** 0.0.27 **
+
+Added JAWS backend
+
+** 0.0.26 **
+
+Added 'Use SOX If Available' setting to pico2wav
+Added 'Speed (Requires SOX)' setting to pico2wav
+Added fix for text starting with - not speaking on some speech engines
+
+** 0.0.25 **
+
+NVDA: Unload nvdaController library on close (prevented addon from updating)
+SAPI: Delete comtypes object on close (maybe? caused XBMC to hang on shutdown)
+Fix for OSXSay hanging XBMC on quit
+Some backend restructuring/improvement
+
+** 0.0.24 **
+
+Change SAPI to threaded to enable interruption of speech lists
+
+** 0.0.23 **
+
+Fix for espeak available causing error in windows
+
+** 0.0.22 **
+
+Fix Flite subclass
+
+** 0.0.21 **
+
+Added changelog.txt
+Added documentation for items in guitables.py Removed giutables.py items that were removed in frodo
+Added speaking of changelog dialog
+Changed voice and speed settings to appear as subsettings
+Add class and method documentation to the backend base classes
+Some restructuring to the backend base classes and backends to make more sense and fix some threading issues
+Change XBMCAudioTTSBackendBase to WaveFileTTSBackendBase and allow it to work with XBMC audio with stopSFX (if available) or external audio
+Re-implement pico2wav using WaveFileTTSBackendBase
+
+** 0.0.20 and before **
+
+Fix for Flite hanging XBMC on shutdown F6 key now opens the addon settings when the keymap is installed The backend currentSpeed() now returns 0 if none is set
+Backend select dialog now handled manually Added displayName to backends - used for selection dialog Backend selection now saved with provider name Added currentSpeed() to TTSBackendBase, works like currentVoice() Added XBMCAudioTTSBackendBase backend base Added ESpeak_XA_TTSBackend which uses subprocess and XBMC audio and implements currentSpeed() Added a fix for OK speaking as Oklahoma Settings now only shows 'Voices' option for the currently displayed speech engine
+Merge branch 'master' of https://github.com/ruuk/service.xbmc.tts
+Handle stopSFX in flite for ATV2
+Forgot to remove UTF8 decoding from SpeechDispatcherBackend.
+SapiTTSBackend: Added support for setting voices. Also reverted utf8 decoding for NVDA and Sapi TTSBackends as it is no longer needed after the latest refactor.
+ESpeakTTSBackend: prevent double speaking. I don't know when this did crep in.
+Merge branch 'master' of https://github.com/ruuk/service.xbmc.tts
+SpeechDispatcherTTSBackend: handle connection lost errors e.g. while speech-dispatcher daemon is restarted.
+Addon addon description to spoken info when pressing F3 in the addon browser
+Added assert to SayText to ensure unicode text Made changes to ensure all text passed to SayText is unicode Changed formatText to cleanText and fixed it to properly remove text formatting All text passed to a backend is now run through cleanText
+fix from phone
+Added stop method to more TTSBackends NVDA, Sapi and SpeechDispatcher
+Merge branch 'master' of https://github.com/ruuk/service.xbmc.tts
+ESpeakTTSBackend: Added voices selection.
+Added keys to keymap. F3 for extra selected item information and F to stop. Stop only works in espeak and flite so far. speech. Changed F1 to repeat Window:Section:Item instead of just Item text. F2 now speaks time and weather on the home screen. F3 currently speaks TV show plots, episode plots, probably Movie plots, and song title,genre,duration.
+Added SpeechDispatcherTTSBackend with some default values attempting to load a voice coresponding with the user's locale if it exists.
+Merge branch 'master' of https://github.com/ruuk/service.xbmc.tts
+Added a custom keymap installable from settings:Install Keymap Keymap adds F1 repeat item text, F2 say extra text Currently F2 only works in the addon information window Fix eSpeak to encode to unicode to UTF-8 string before speaking Changed lib file in addon.xml to main.py which starts the service or other functions depending on the calling args
+Fixed inability to start service without "enabled" setting which has been removed
+Quick fix for UnicodeDecode errors occuring while presenting some non english window and control names. This should be properly addressed later.
+Added basic .gitignore
+Removed 64 bit NVDA controller client library as this is not needed at this point
+Now speaks titles of dialogs Now speaks text in OK and YES/NO dialogs
+Version bump
+Restructure backends Add nvda controller dlls and license
+Fix for new window not interrupting speech
+Added pvagner to the authors in addon.xml
+Version bump
+Merge branch 'master' of git://github.com/pvagner/service.xbmc.tts into pvagner-master
+Localize window names via XBMC strings Localize quartz control table labels via XBMC strings Removed 'Enable' setting to use XBMC enable/disable button instead Added pausing to threaded backend base Some tweaks to Flite to prevent crashing XBMC Fixes for proper interruption when changing button controls Now falls back to System.CurrentControl when getting control label, which works with settings items
+Added NVDATTSBackend. This only works on windows. NVDA has to be running. NVDA controller client library needs to be copied into the lib folder.
+SAPITTSBackend: convert text to unicode before sending for TTS. Fixes issues speaking non ascii characters.
+Do not init backend unless enabled
+Fixes for backend change check
+Finish adding stuff for osx say Log version and platform
+Version bump
+Added eSpeak tts backend Added code for OSX say backend (untested)
+version bump
+Implemented a threaded tts backend base class Implemented Flite backend using threaded base class Added auto option to setting 'Default TTS Engine'
+Added Flite via ctypes and commented it out
+Fix Speak() flag in SAPI say() Service now uses tts backend specific sleep interval
+Finish interruptable speech interface
+Add import for comtypes module Rename WindowsInternalTTS to SAPITTS Use comtypes instead of subprocess to access SAPI
+Added voice selection
+Version bump
+Changed addon file structure Added support for flite tts (should work on ATV2) Added 'Enable' setting Added 'Default TTS Engine' setting
+Fix windows TTS Auto select TTS provider Some cleanup
+Various Windows TTS
+Add license and icon
+Initial commit

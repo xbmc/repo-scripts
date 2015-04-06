@@ -1,0 +1,411 @@
+STG_E_INVALIDFUNCTION
+0x80030001
+Unable to perform requested operation.
+STG_E_FILENOTFOUND
+0x80030002
+could not be found.
+STG_E_PATHNOTFOUND
+0x80030003
+The path %1 could not be found.
+STG_E_TOOMANYOPENFILES
+0x80030004
+There are insufficient resources to open another file.
+STG_E_ACCESSDENIED
+0x80030005
+Access Denied.
+STG_E_INVALIDHANDLE
+0x80030006
+Attempted an operation on an invalid object.
+STG_E_INSUFFICIENTMEMORY
+0x80030008
+There is insufficient memory available to complete operation.
+STG_E_INVALIDPOINTER
+0x80030009
+Invalid pointer error.
+STG_E_NOMOREFILES
+0x80030012
+There are no more entries to return.
+STG_E_DISKISWRITEPROTECTED
+0x80030013
+Disk is write-protected.
+STG_E_SEEKERROR
+0x80030019
+An error occurred during a seek operation.
+STG_E_WRITEFAULT
+0x8003001D
+A disk error occurred during a write operation.
+STG_E_READFAULT
+0x8003001E
+A disk error occurred during a read operation.
+STG_E_SHAREVIOLATION
+0x80030020
+A share violation has occurred.
+STG_E_LOCKVIOLATION
+0x80030021
+A lock violation has occurred.
+STG_E_FILEALREADYEXISTS
+0x80030050
+already exists.
+STG_E_INVALIDPARAMETER
+0x80030057
+Invalid parameter error.
+STG_E_MEDIUMFULL
+0x80030070
+There is insufficient disk space to complete operation.
+STG_E_PROPSETMISMATCHED
+0x800300F0
+Illegal write of non-simple property to simple property set.
+STG_E_ABNORMALAPIEXIT
+0x800300FA
+An API call exited abnormally.
+STG_E_INVALIDHEADER
+0x800300FB
+The file %1 is not a valid compound file.
+STG_E_INVALIDNAME
+0x800300FC
+The name %1 is not valid.
+STG_E_UNKNOWN
+0x800300FD
+An unexpected error occurred.
+STG_E_UNIMPLEMENTEDFUNCTION
+0x800300FE
+That function is not implemented.
+STG_E_INVALIDFLAG
+0x800300FF
+Invalid flag error.
+STG_E_INUSE
+0x80030100
+Attempted to use an object that is busy.
+STG_E_NOTCURRENT
+0x80030101
+The storage has been changed since the last commit.
+STG_E_REVERTED
+0x80030102
+Attempted to use an object that has ceased to exist.
+STG_E_CANTSAVE
+0x80030103
+Can't save.
+STG_E_OLDFORMAT
+0x80030104
+The compound file %1 was produced with an incompatible version of storage.
+STG_E_OLDDLL
+0x80030105
+The compound file %1 was produced with a newer version of storage.
+STG_E_SHAREREQUIRED
+0x80030106
+Share.exe or equivalent is required for operation.
+STG_E_NOTFILEBASEDSTORAGE
+0x80030107
+Illegal operation called on non-file based storage.
+STG_E_EXTANTMARSHALLINGS
+0x80030108
+Illegal operation called on object with extant marshallings.
+STG_E_DOCFILECORRUPT
+0x80030109
+The docfile has been corrupted.
+STG_E_BADBASEADDRESS
+0x80030110
+OLE32.DLL has been loaded at the wrong address.
+STG_E_DOCFILETOOLARGE
+0x80030111
+The compound file is too large for the current implementation
+STG_E_NOTSIMPLEFORMAT
+0x80030112
+The compound file was not created with the STGM_SIMPLE flag
+STG_E_INCOMPLETE
+0x80030201
+The file download was aborted abnormally. The file is incomplete.
+STG_E_TERMINATED
+0x80030202
+The file download has been terminated.
+STG_S_CONVERTED
+0x00030200
+The underlying file was converted to compound file format.
+STG_S_BLOCK
+0x00030201
+The storage operation should block until more data is available.
+STG_S_RETRYNOW
+0x00030202
+The storage operation should retry immediately.
+STG_S_MONITORING
+0x00030203
+The notified event sink will not influence the storage operation.
+STG_S_MULTIPLEOPENS
+0x00030204
+Multiple opens prevent consolidated. (commit succeeded).
+STG_S_CONSOLIDATIONFAILED
+0x00030205
+Consolidation of the storage file failed. (commit succeeded).
+STG_S_CANNOTCONSOLIDATE
+0x00030206
+Consolidation of the storage file is inappropriate. (commit succeeded).
+STG_E_STATUS_COPY_PROTECTION_FAILURE
+0x80030305
+Generic Copy Protection Error.
+STG_E_CSS_AUTHENTICATION_FAILURE
+0x80030306
+Copy Protection Error - DVD CSS Authentication failed.
+STG_E_CSS_KEY_NOT_PRESENT
+0x80030307
+Copy Protection Error - The given sector does not have a valid CSS key.
+STG_E_CSS_KEY_NOT_ESTABLISHED
+0x80030308
+Copy Protection Error - DVD session key not established.
+STG_E_CSS_SCRAMBLED_SECTOR
+0x80030309
+Copy Protection Error - The read failed because the sector is encrypted.
+STG_E_CSS_REGION_MISMATCH
+0x8003030A
+Copy Protection Error - The current DVD's region does not correspond to the region setting of the drive.
+STG_E_RESETS_EXHAUSTED
+0x8003030B
+Copy Protection Error - The drive's region setting may be permanent or the number of user resets has been exhausted.
+RPC_E_CALL_REJECTED
+0x80010001
+Call was rejected by callee.
+RPC_E_CALL_CANCELED
+0x80010002
+Call was canceled by the message filter.
+RPC_E_CANTPOST_INSENDCALL
+0x80010003
+The caller is dispatching an intertask SendMessage call and cannot call out via PostMessage.
+RPC_E_CANTCALLOUT_INASYNCCALL
+0x80010004
+The caller is dispatching an asynchronous call and cannot make an outgoing call on behalf of this call.
+RPC_E_CANTCALLOUT_INEXTERNALCALL
+0x80010005
+It is illegal to call out while inside message filter.
+RPC_E_CONNECTION_TERMINATED
+0x80010006
+The connection terminated or is in a bogus state and cannot be used any more. Other connections are still valid.
+RPC_E_SERVER_DIED
+0x80010007
+The callee (server [not server application]) is not available and disappeared; all connections are invalid. The call may have executed.
+RPC_E_CLIENT_DIED
+0x80010008
+The caller (client) disappeared while the callee (server) was processing a call.
+RPC_E_INVALID_DATAPACKET
+0x80010009
+The data packet with the marshalled parameter data is incorrect.
+RPC_E_CANTTRANSMIT_CALL
+0x8001000A
+The call was not transmitted properly; the message queue was full and was not emptied after yielding.
+RPC_E_CLIENT_CANTMARSHAL_DATA
+0x8001000B
+The client (caller) cannot marshal the parameter data - low memory, etc.
+RPC_E_CLIENT_CANTUNMARSHAL_DATA
+0x8001000C
+The client (caller) cannot unmarshal the return data - low memory, etc.
+RPC_E_SERVER_CANTMARSHAL_DATA
+0x8001000D
+The server (callee) cannot marshal the return data - low memory, etc.
+RPC_E_SERVER_CANTUNMARSHAL_DATA
+0x8001000E
+The server (callee) cannot unmarshal the parameter data - low memory, etc.
+RPC_E_INVALID_DATA
+0x8001000F
+Received data is invalid; could be server or client data.
+RPC_E_INVALID_PARAMETER
+0x80010010
+A particular parameter is invalid and cannot be (un)marshalled.
+RPC_E_CANTCALLOUT_AGAIN
+0x80010011
+There is no second outgoing call on same channel in DDE conversation.
+RPC_E_SERVER_DIED_DNE
+0x80010012
+The callee (server [not server application]) is not available and disappeared; all connections are invalid. The call did not execute.
+RPC_E_SYS_CALL_FAILED
+0x80010100
+System call failed.
+RPC_E_OUT_OF_RESOURCES
+0x80010101
+Could not allocate some required resource (memory, events, ...)
+RPC_E_ATTEMPTED_MULTITHREAD
+0x80010102
+Attempted to make calls on more than one thread in single threaded mode.
+RPC_E_NOT_REGISTERED
+0x80010103
+The requested interface is not registered on the server object.
+RPC_E_FAULT
+0x80010104
+RPC could not call the server or could not return the results of calling the server.
+RPC_E_SERVERFAULT
+0x80010105
+The server threw an exception.
+RPC_E_CHANGED_MODE
+0x80010106
+Cannot change thread mode after it is set.
+RPC_E_INVALIDMETHOD
+0x80010107
+The method called does not exist on the server.
+RPC_E_DISCONNECTED
+0x80010108
+The object invoked has disconnected from its clients.
+RPC_E_RETRY
+0x80010109
+The object invoked chose not to process the call now. Try again later.
+RPC_E_SERVERCALL_RETRYLATER
+0x8001010A
+The message filter indicated that the application is busy.
+RPC_E_SERVERCALL_REJECTED
+0x8001010B
+The message filter rejected the call.
+RPC_E_INVALID_CALLDATA
+0x8001010C
+A call control interfaces was called with invalid data.
+RPC_E_CANTCALLOUT_ININPUTSYNCCALL
+0x8001010D
+An outgoing call cannot be made since the application is dispatching an input-synchronous call.
+RPC_E_WRONG_THREAD
+0x8001010E
+The application called an interface that was marshalled for a different thread.
+RPC_E_THREAD_NOT_INIT
+0x8001010F
+CoInitialize has not been called on the current thread.
+RPC_E_VERSION_MISMATCH
+0x80010110
+The version of OLE on the client and server machines does not match.
+RPC_E_INVALID_HEADER
+0x80010111
+OLE received a packet with an invalid header.
+RPC_E_INVALID_EXTENSION
+0x80010112
+OLE received a packet with an invalid extension.
+RPC_E_INVALID_IPID
+0x80010113
+The requested object or interface does not exist.
+RPC_E_INVALID_OBJECT
+0x80010114
+The requested object does not exist.
+RPC_S_CALLPENDING
+0x80010115
+OLE has sent a request and is waiting for a reply.
+RPC_S_WAITONTIMER
+0x80010116
+OLE is waiting before retrying a request.
+RPC_E_CALL_COMPLETE
+0x80010117
+Call context cannot be accessed after call completed.
+RPC_E_UNSECURE_CALL
+0x80010118
+Impersonate on unsecure calls is not supported.
+RPC_E_TOO_LATE
+0x80010119
+Security must be initialized before any interfaces are marshalled or unmarshalled. It cannot be changed once initialized.
+RPC_E_NO_GOOD_SECURITY_PACKAGES
+0x8001011A
+No security packages are installed on this machine or the user is not logged on or there are no compatible security packages between the client and server.
+RPC_E_ACCESS_DENIED
+0x8001011B
+Access is denied.
+RPC_E_REMOTE_DISABLED
+0x8001011C
+Remote calls are not allowed for this process.
+RPC_E_INVALID_OBJREF
+0x8001011D
+The marshaled interface data packet (OBJREF) has an invalid or unknown format.
+RPC_E_NO_CONTEXT
+0x8001011E
+No context is associated with this call. This happens for some custom marshalled calls and on the client side of the call.
+RPC_E_TIMEOUT
+0x8001011F
+This operation returned because the timeout period expired.
+RPC_E_NO_SYNC
+0x80010120
+There are no synchronize objects to wait on.
+RPC_E_FULLSIC_REQUIRED
+0x80010121
+Full subject issuer chain SSL principal name expected from the server.
+RPC_E_INVALID_STD_NAME
+0x80010122
+Principal name is not a valid MSSTD name.
+CO_E_FAILEDTOIMPERSONATE
+0x80010123
+Unable to impersonate DCOM client
+CO_E_FAILEDTOGETSECCTX
+0x80010124
+Unable to obtain server's security context
+CO_E_FAILEDTOOPENTHREADTOKEN
+0x80010125
+Unable to open the access token of the current thread
+CO_E_FAILEDTOGETTOKENINFO
+0x80010126
+Unable to obtain user info from an access token
+CO_E_TRUSTEEDOESNTMATCHCLIENT
+0x80010127
+The client who called IAccessControl::IsAccessPermitted was not the trustee provided to the method
+CO_E_FAILEDTOQUERYCLIENTBLANKET
+0x80010128
+Unable to obtain the client's security blanket
+CO_E_FAILEDTOSETDACL
+0x80010129
+Unable to set a discretionary ACL into a security descriptor
+CO_E_ACCESSCHECKFAILED
+0x8001012A
+The system function, AccessCheck, returned false
+CO_E_NETACCESSAPIFAILED
+0x8001012B
+Either NetAccessDel or NetAccessAdd returned an error code.
+CO_E_WRONGTRUSTEENAMESYNTAX
+0x8001012C
+One of the trustee strings provided by the user did not conform to the <Domain>\<Name> syntax and it was not the "*" string
+CO_E_INVALIDSID
+0x8001012D
+One of the security identifiers provided by the user was invalid
+CO_E_CONVERSIONFAILED
+0x8001012E
+Unable to convert a wide character trustee string to a multibyte trustee string
+CO_E_NOMATCHINGSIDFOUND
+0x8001012F
+Unable to find a security identifier that corresponds to a trustee string provided by the user
+CO_E_LOOKUPACCSIDFAILED
+0x80010130
+The system function, LookupAccountSID, failed
+CO_E_NOMATCHINGNAMEFOUND
+0x80010131
+Unable to find a trustee name that corresponds to a security identifier provided by the user
+CO_E_LOOKUPACCNAMEFAILED
+0x80010132
+The system function, LookupAccountName, failed
+CO_E_SETSERLHNDLFAILED
+0x80010133
+Unable to set or reset a serialization handle
+CO_E_FAILEDTOGETWINDIR
+0x80010134
+Unable to obtain the Windows directory
+CO_E_PATHTOOLONG
+0x80010135
+Path too long
+CO_E_FAILEDTOGENUUID
+0x80010136
+Unable to generate a uuid.
+CO_E_FAILEDTOCREATEFILE
+0x80010137
+Unable to create file
+CO_E_FAILEDTOCLOSEHANDLE
+0x80010138
+Unable to close a serialization handle or a file handle.
+CO_E_EXCEEDSYSACLLIMIT
+0x80010139
+The number of ACEs in an ACL exceeds the system limit.
+CO_E_ACESINWRONGORDER
+0x8001013A
+Not all the DENY_ACCESS ACEs are arranged in front of the GRANT_ACCESS ACEs in the stream.
+CO_E_INCOMPATIBLESTREAMVERSION
+0x8001013B
+The version of ACL format in the stream is not supported by this implementation of IAccessControl
+CO_E_FAILEDTOOPENPROCESSTOKEN
+0x8001013C
+Unable to open the access token of the server process
+CO_E_DECODEFAILED
+0x8001013D
+Unable to decode the ACL in the stream provided by the user
+CO_E_ACNOTINITIALIZED
+0x8001013F
+The COM IAccessControl object is not initialized
+CO_E_CANCEL_DISABLED
+0x80010140
+Call Cancellation is disabled
+RPC_E_UNEXPECTED
+0x8001FFFF
+An internal error occurred.

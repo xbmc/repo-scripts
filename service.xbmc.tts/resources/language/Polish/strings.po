@@ -1,0 +1,614 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: 2015-01-18 17:32+0100\n"
+"Last-Translator: Paweł Masarczyk <pawelmasarczyk@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "Engine"
+msgstr "Silnik"
+
+msgctxt "#32002"
+msgid "Default TTS Engine"
+msgstr "Domyślny Silnik TTS"
+
+msgctxt "#32003"
+msgid "Voice"
+msgstr "Głos"
+
+msgctxt "#32004"
+msgid "Rate"
+msgstr "Prędkość"
+
+msgctxt "#32005"
+msgid "Pitch"
+msgstr "Wysokość"
+
+msgctxt "#32006"
+msgid "Speed"
+msgstr "Szybkość"
+
+msgctxt "#32007"
+msgid "Player"
+msgstr "Odtwarzacz"
+
+msgctxt "#32008"
+msgid "Play Speech Directly Via Flite"
+msgstr "Odtwarzaj Mowę Bezpośrednio za Pomocą Flite"
+
+msgctxt "#32009"
+msgid "Speed % (Needs SOX or MPlayer)"
+msgstr "Szybkość % (Wymaga SOX Lub MPlayer)"
+
+msgctxt "#32010"
+msgid "Volume dB"
+msgstr "Głośność dB"
+
+msgctxt "#32011"
+msgid "Rate (WPM)"
+msgstr "Prędkość (WPM)"
+
+msgctxt "#32012"
+msgid "Play Speech Directly Via eSpeak"
+msgstr "Odtwarzaj Mowę Bezpośrednio za Pomocą eSpeak"
+
+msgctxt "#32013"
+msgid "Pipe Audio To Player"
+msgstr "Kieruj Audio Do Odtwarzacza"
+
+msgctxt "#32014"
+msgid "Volume"
+msgstr "Głośność"
+
+msgctxt "#32015"
+msgid "Play Speech Via XBMC"
+msgstr "Odtwarzaj Mowę Za Pomocą XBMC"
+
+msgctxt "#32016"
+msgid "Language"
+msgstr "Język"
+
+msgctxt "#32017"
+msgid "Use aoss"
+msgstr "Używaj aoss"
+
+msgctxt "#32018"
+msgid "Module"
+msgstr "Moduł"
+
+msgctxt "#32019"
+msgid "Server"
+msgstr "Serwer"
+
+msgctxt "#32020"
+msgid "Perl Server"
+msgstr "Serwer Perl"
+
+msgctxt "#32021"
+msgid "Speak On Server"
+msgstr "Mów Na Serwerze"
+
+msgctxt "#32022"
+msgid "Server Speed (If Supported)"
+msgstr "Szybkość Serwera (Jeśli Wspierana)"
+
+msgctxt "#32023"
+msgid "Server Pitch (If Supported)"
+msgstr "Wysokość Serwera (Jeśli Wspierana)"
+
+msgctxt "#32024"
+msgid "Server Volume dB (If Supported)"
+msgstr "Głośność Serwera dB (Jeśli Wspierana)"
+
+msgctxt "#32025"
+msgid "Player Speed (If Supported)"
+msgstr "Szybkość Odtwarzacza (Jeśli Wspierana)"
+
+msgctxt "#32026"
+msgid "Player Volume dB (If Supported)"
+msgstr "Głośność Odtwarzacza dB (Jeśli Wspierana)"
+
+msgctxt "#32027"
+msgid "IP Address"
+msgstr "Adres IP"
+
+msgctxt "#32028"
+msgid "Port"
+msgstr "Port"
+
+msgctxt "#32029"
+msgid "Options"
+msgstr "Opcje"
+
+msgctxt "#32030"
+msgid "Keymap"
+msgstr "Przypisanie klawiszy"
+
+msgctxt "#32031"
+msgid "Advanced"
+msgstr "Zaawansowane"
+
+msgctxt "#32032"
+msgid "Disable Interface Reader"
+msgstr "Wyłącz Czytnik Interfejsu"
+
+msgctxt "#32033"
+msgid "Speak Extra Item Information Automatically"
+msgstr "Automatycznie Odczytuj Dodatkowe Informacje O Elemencie"
+
+msgctxt "#32034"
+msgid "Delay (seconds)"
+msgstr "Opóźnienie (Sekundy)"
+
+msgctxt "#32035"
+msgid "Speak Number Of Items For Lists"
+msgstr "Odczytuj Liczbę Elementów Na Listach"
+
+msgctxt "#32036"
+msgid "Speak Background Progress Updates"
+msgstr "Odczytuj Aktualizacje Postępu W Tle"
+
+msgctxt "#32037"
+msgid "Minimum Progress Update Interval (Seconds)"
+msgstr "Minimalny Odstęp Pomiędzy Odczytaniami Aktualizacji Postępu"
+
+msgctxt "#32038"
+msgid "Speak When Media Playing"
+msgstr "Mów Gdy Media Są Odtwarzane"
+
+msgctxt "#32039"
+msgid "Install Default Keymap"
+msgstr "Zainstaluj Domyślne Przypisanie Klawiszy"
+
+msgctxt "#32040"
+msgid "Install Custom Keymap"
+msgstr "Zainstaluj Własne Przypisanie Klawiszy"
+
+msgctxt "#32041"
+msgid "Edit Custom Keymap"
+msgstr "Edytuj Własne Przypisanie Klawiszy"
+
+msgctxt "#32042"
+msgid "Reset Custom Keymap To Defaults"
+msgstr "Przywróć Własne Przypisanie Klawiszy Do Ustawień Domyślnych"
+
+msgctxt "#32043"
+msgid "Remove Installed Keymap"
+msgstr "Usuń Zainstalowane Przypisanie Klawiszy"
+
+msgctxt "#32044"
+msgid "Output .wav Files To tmpfs"
+msgstr "Generuj pliki .wav do tmpfs"
+
+msgctxt "#32045"
+msgid "Disable Broken TTS Engines"
+msgstr "Wyłącz Uszkodzone Silniki TTS"
+
+msgctxt "#32046"
+msgid "Enable Debug Logging"
+msgstr "Włącz Debugowanie"
+
+msgctxt "#32047"
+msgid "Override Poll Interval"
+msgstr "Nadpisz Częstotliwość Odświeżania"
+
+msgctxt "#32048"
+msgid "Poll Interval (ms)"
+msgstr "Częstotliwość Odświeżania (ms)"
+
+msgctxt "#32100"
+msgid "Database scan started."
+msgstr "Skanowanie Bazy Danych Rozpoczęte."
+
+msgctxt "#32101"
+msgid "Database scan finished."
+msgstr "Skanowanie Bazy Danych Zakończone."
+
+msgctxt "#32102"
+msgid "Notice... Speech engine falling back to {0}"
+msgstr "Uwaga... Przełączanie Silnika Mowy Z Powrotem Na {0}"
+
+msgctxt "#32103"
+msgid "Reason"
+msgstr "Powód"
+
+msgctxt "#32104"
+msgid "New T T S Version"
+msgstr "Nowa wersja T T S"
+
+msgctxt "#32105"
+msgid "Window"
+msgstr "Okno"
+
+msgctxt "#32106"
+msgid "item"
+msgstr "Element"
+
+msgctxt "#32107"
+msgid "items"
+msgstr "Elementów"
+
+msgctxt "#32108"
+msgid "Season"
+msgstr "Sezon"
+
+msgctxt "#32109"
+msgid "Episode"
+msgstr "Odcinek"
+
+msgctxt "#32110"
+msgid "Parent Directory"
+msgstr "Katalog Nadrzędny"
+
+msgctxt "#32111"
+msgid "Installed"
+msgstr "Zainstalowano"
+
+msgctxt "#32112"
+msgid "Updated"
+msgstr "Zaktualizowano"
+
+msgctxt "#32113"
+msgid "Default keymap installed successfully!"
+msgstr "Domyślne Przypisanie Klawiszy Zainstalowane Pomyślnie!"
+
+msgctxt "#32114"
+msgid "Custom keymap installed or updated successfully!"
+msgstr "Własne Przypisanie Klawiszy Zainstalowane Lub Uaktualnione Pomyślnie!"
+
+msgctxt "#32115"
+msgid "Custom keymap reset to defaults."
+msgstr "Przywrócono Własne Przypisanie Klawiszy Do Ustawień Domyślnych."
+
+msgctxt "#32116"
+msgid "Removed"
+msgstr "Usunięto"
+
+msgctxt "#32117"
+msgid "Keymap removed."
+msgstr "Przypisanie Klawiszy Usunięte."
+
+msgctxt "#32118"
+msgid "Press the key you want to assign now."
+msgstr "Teraz Naciśnij Klawisz, Który Chcesz Przypisać."
+
+msgctxt "#32119"
+msgid "Timeout in {0} seconds"
+msgstr "Czas Upłynie za {0} sekund"
+
+msgctxt "#32120"
+msgid "Importing P.V.R. E.P.G."
+msgstr "Importowanie P.V.R. E.P.G."
+
+msgctxt "#32121"
+msgid "Loading P.V.R. E.P.G."
+msgstr "Ładowanie P.V.R. E.P.G."
+
+msgctxt "#32122"
+msgid "Background Progress Started"
+msgstr "Postęp w Tle Rozpoczęty"
+
+msgctxt "#32123"
+msgid "Background Progress Done"
+msgstr "Postęp w Tle Ukończony"
+
+msgctxt "#32124"
+msgid "Press the key you want to assign now."
+msgstr "Teraz Naciśnij Klawisz, Który Chcesz Przypisać."
+
+msgctxt "#32125"
+msgid "Live TV Settings"
+msgstr "Ustawienia Telewizji na Żywo"
+
+msgctxt "#32126"
+msgid "virtual keyboard"
+msgstr "klawiatura wirtualna"
+
+msgctxt "#32127"
+msgid "volume bar"
+msgstr "pasek głośności"
+
+msgctxt "#32128"
+msgid "context menu"
+msgstr "menu kontekstowe"
+
+msgctxt "#32129"
+msgid "info dialog"
+msgstr "okno informacji"
+
+msgctxt "#32130"
+msgid "numeric input"
+msgstr "pole wprowadzania cyfr"
+
+msgctxt "#32131"
+msgid "shutdown menu"
+msgstr "menu zamykania"
+
+msgctxt "#32132"
+msgid "player controls"
+msgstr "kontrolki odtwarzacza"
+
+msgctxt "#32133"
+msgid "seek bar"
+msgstr "pasek przewijania"
+
+msgctxt "#32134"
+msgid "music OSD"
+msgstr "Wizualizacja"
+
+msgctxt "#32135"
+msgid "visualisation preset list"
+msgstr "lista presetów wizualizacji"
+
+msgctxt "#32136"
+msgid "OSD video settings"
+msgstr "Ustawienia wizualizacji video"
+
+msgctxt "#32137"
+msgid "OSD audio settings"
+msgstr "ustawienia wizualizacji audio"
+
+msgctxt "#32138"
+msgid "video bookmarks"
+msgstr "zakładki video"
+
+msgctxt "#32139"
+msgid "file browser"
+msgstr "przeglądarka plików"
+
+msgctxt "#32140"
+msgid "network setup"
+msgstr "kreator sieciowy"
+
+msgctxt "#32141"
+msgid "media source"
+msgstr "źródło mediów"
+
+msgctxt "#32142"
+msgid "smart playlist editor"
+msgstr "edytor inteligentnych list odtwarzania"
+
+msgctxt "#32143"
+msgid "busy dialog"
+msgstr "okno zajęte"
+
+msgctxt "#32144"
+msgid "addon settings"
+msgstr "ustawienia dodatku"
+
+msgctxt "#32145"
+msgid "fullscreen info"
+msgstr "informacje pełno-ekranowe"
+
+msgctxt "#32146"
+msgid "karaoke selector"
+msgstr "lista wyboru karaoke"
+
+msgctxt "#32147"
+msgid "karaoke large selector"
+msgstr "duża lista wyboru karaoke"
+
+msgctxt "#32148"
+msgid "slider dialog"
+msgstr "okno suwaka"
+
+msgctxt "#32149"
+msgid "addon information"
+msgstr "informacje o dodatku"
+
+msgctxt "#32150"
+msgid "text viewer"
+msgstr "podgląd tekstu"
+
+msgctxt "#32151"
+msgid "peripheral settings"
+msgstr "pozostałe ustawienia"
+
+msgctxt "#32152"
+msgid "media filter"
+msgstr "filtr mediów"
+
+msgctxt "#32153"
+msgid "pvr"
+msgstr "pvr"
+
+msgctxt "#32154"
+msgid "pvr guide info"
+msgstr "informacje programu telewizyjnego pvr"
+
+msgctxt "#32155"
+msgid "pvr recording info"
+msgstr "informacje nagrywania pvr"
+
+msgctxt "#32156"
+msgid "pvr timer setting"
+msgstr "ustawienie timera pvr"
+
+msgctxt "#32157"
+msgid "pvr group manager"
+msgstr "menedżer grup pvr"
+
+msgctxt "#32158"
+msgid "pvr channel manager"
+msgstr "menedżer kanałów pvr"
+
+msgctxt "#32159"
+msgid "pvr guide search"
+msgstr "wyszukiwanie programu telewizyjnego pvr"
+
+msgctxt "#32160"
+msgid "pvr OSD channels"
+msgstr "kanały OSD pvr"
+
+msgctxt "#32161"
+msgid "pvr OSD guide"
+msgstr "program telewizyjny OSD pvr"
+
+msgctxt "#32162"
+msgid "virtual keyboard"
+msgstr "wirtualna klawiatura"
+
+msgctxt "#32163"
+msgid "video menu"
+msgstr "menu video"
+
+msgctxt "#32164"
+msgid "PVR Client Specific Settings"
+msgstr "Indywidualne Ustawienia Klienta PVR"
+
+msgctxt "#32165"
+msgid "unknown"
+msgstr "nieznane"
+
+msgctxt "#32166"
+msgid "Addons updated"
+msgstr "Zaktualizowane dodatki"
+
+msgctxt "#32167"
+msgid "version"
+msgstr "wersja"
+
+msgctxt "#32168"
+msgid "Notice"
+msgstr "Uwaga"
+
+msgctxt "#32169"
+msgid "Rewind"
+msgstr "Przewijanie do tyłu"
+
+msgctxt "#32170"
+msgid "Fast Forward"
+msgstr "przewijanie do przodu"
+
+msgctxt "#32171"
+msgid "Channel"
+msgstr "Kanał"
+
+msgctxt "#32172"
+msgid "Sub-setting"
+msgstr "Ustawienie Podrzędne"
+
+msgctxt "#32173"
+msgid "yes"
+msgstr "tak"
+
+msgctxt "#32174"
+msgid "no"
+msgstr "nie"
+
+msgctxt "#32175"
+msgid "section"
+msgstr "sekcja"
+
+msgctxt "#32176"
+msgid "area"
+msgstr "obszar"
+
+msgctxt "#32177"
+msgid "space"
+msgstr "przestrzeń"
+
+msgctxt "#32178"
+msgid "No text"
+msgstr "Brak tekstu"
+
+msgctxt "#32179"
+msgid "deleted"
+msgstr "usunięto"
+
+msgctxt "#32180"
+msgid "Cannot adjust volume"
+msgstr "Nie można dostosować głośności"
+
+msgctxt "#32181"
+msgid "Choose Backend"
+msgstr "Wybierz Backend"
+
+msgctxt "#32182"
+msgid "Not Available"
+msgstr "Niedostępny"
+
+msgctxt "#32183"
+msgid "No players to select."
+msgstr "Brak odtwarzaczy do wybrania"
+
+msgctxt "#32184"
+msgid "Auto"
+msgstr "Automatycznie"
+
+msgctxt "#32185"
+msgid "Choose Player"
+msgstr "Wybierz Odtwarzacz"
+
+msgctxt "#32186"
+msgid "No options to select."
+msgstr "Brak opcji do wybrania"
+
+msgctxt "#32187"
+msgid "Choose Option"
+msgstr "Wybierz Opcję"
+
+msgctxt "#32188"
+msgid "PVR TV Channels"
+msgstr "Kanały TV PVR"
+
+msgctxt "#32189"
+msgid "PVR TV Recordings"
+msgstr "Nagrania PVR TV"
+
+msgctxt "#32190"
+msgid "PVR TV Guide"
+msgstr "Program Telewizyjny PVR"
+
+msgctxt "#32191"
+msgid "PVR TV Timers"
+msgstr "Timery PVR TV"
+
+msgctxt "#32192"
+msgid "PVR TV Search"
+msgstr "Wyszukiwanie PVR TV"
+
+msgctxt "#32193"
+msgid "PVR Radio Channels"
+msgstr "Stacje Radiowe PVR"
+
+msgctxt "#32194"
+msgid "PVR Radio Recordings"
+msgstr "Nagrania Radiowe PVR"
+
+msgctxt "#32195"
+msgid "PVR Radio Guide"
+msgstr "Program Radiowy PVR"
+
+msgctxt "#32196"
+msgid "PVR Radio Timers"
+msgstr "Timery PVR Dla Radia"
+
+msgctxt "#32197"
+msgid "PVR Radio Search"
+msgstr "Wyszukiwanie Radia PVR"
+
+msgctxt "#32198"
+msgid "watched"
+msgstr "obejrzane"
+
+msgctxt "#32199"
+msgid "resumable"
+msgstr "wznawialne"
+
+msgctxt "#32200"
+msgid "selected"
+msgstr "zaznaczone"
+
+msgctxt "#32201"
+msgid "Subtitles dialog"
+msgstr "Okno napisów"
+
