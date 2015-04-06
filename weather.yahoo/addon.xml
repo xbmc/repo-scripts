@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.yahoo" name="Yahoo! Weather" version="3.0.5" provider-name="ronie">
+<addon id="weather.yahoo" name="Yahoo! Weather" version="3.0.6" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -7,6 +7,7 @@
 	<extension point="xbmc.python.weather" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="af">Weervoorspelling van yahoo.com</summary>
+		<summary lang="am">የ አየር ንብረት ከ ያሁ.ኮም</summary>
 		<summary lang="ar">تنبؤات الطقس من موقع yahoo.com</summary>
 		<summary lang="bg">Синоптична прогноза от www.yahoo.com</summary>
 		<summary lang="ca">Previsió del temps des de yahoo.com</summary>
@@ -19,27 +20,30 @@
 		<summary lang="en_US">Weather forecast from yahoo.com</summary>
 		<summary lang="es">Predicción meteorológica de yahoo.com</summary>
 		<summary lang="et">yahoo.com ilmaennustus</summary>
-		<summary lang="fi">yahoo.com sääennuste</summary>
+		<summary lang="fi">Yahoo.com sääennuste</summary>
 		<summary lang="fr">Prévisions météo fournies par yahoo.com</summary>
 		<summary lang="fr_CA">Prévisions météorologiques de yahoo.com</summary>
 		<summary lang="gl">Predición meteorolóxica de yahoo.com</summary>
 		<summary lang="he">תחזית מזג אוויר מ-yahoo.com</summary>
 		<summary lang="hr">Prognoza vremena sa yahoo.com</summary>
 		<summary lang="hu">Időjárás előrejelzés a yahoo.com oldalról</summary>
+		<summary lang="id">Ramalan Cuaca dari yahoo.com</summary>
 		<summary lang="is">Veðurspá frá yahoo.com</summary>
 		<summary lang="it">Servizio meteo di yahoo.com</summary>
 		<summary lang="ja">yahoo.com 天気予報</summary>
 		<summary lang="ko">yahoo.com 일기예보</summary>
 		<summary lang="lt">Orų prognozė iš yahoo.com</summary>
 		<summary lang="lv">Laikapstākļu prognoze no yahoo.com</summary>
-		<summary lang="nl">Weersvoorspelling van yahoo.com</summary>
+		<summary lang="nl">Weerbericht van yahoo.com</summary>
 		<summary lang="no">Værvarsel fra yahoo.com</summary>
 		<summary lang="pl">Prognoza pogody z serwisu yahoo.com</summary>
 		<summary lang="pt">Previsão do tempo a partir de yahoo.com</summary>
 		<summary lang="pt_BR">Previsão Climática de yahoo.com</summary>
+		<summary lang="ro">Previziuni meteo de la yahoo.com</summary>
 		<summary lang="ru">Прогноз погоды от yahoo.com</summary>
 		<summary lang="sk">Predpoveď počasia z yahoo.com</summary>
 		<summary lang="sl">Vremenska napoved iz yahoo.com</summary>
+		<summary lang="sr_RS">Прогноза времена са yahoo.com</summary>
 		<summary lang="sv">Väderprognos från yahoo.com</summary>
 		<summary lang="tr">Hava durumu - yahoo.com</summary>
 		<summary lang="uk">Прогноз погоди з </summary>
@@ -70,14 +74,16 @@
 		<description lang="ko">Yahoo! Weather (http://weather.yahoo.com/) 에서 제공하는 일기예보</description>
 		<description lang="lt">Yahoo! Weather pateikta orų prognozė (http://weather.yahoo.com/)</description>
 		<description lang="lv">Laikapstākļu prognoze pēc Yahoo! laika ar nosacījumu (http://weather.yahoo.com/)</description>
-		<description lang="nl">Weersvoorspelling voorzien door Yahoo! (http://weather/yahoo.com)</description>
+		<description lang="nl">Weersverwachting geleverd door Yahoo! (http://weather/yahoo.com)</description>
 		<description lang="no">Værvarsel levert av Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="pl">Prognoza pogody jest dostarczona dzięki uprzejmości serwisu Yahoo! (http://weather.yahoo.com/)</description>
 		<description lang="pt">Previsão metereológica fornecida por Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="pt_BR">Previsão climática fornecida por Yahoo! Weather (http://weather.yahoo.com)</description>
+		<description lang="ro">Previziune meteo oferite de Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="ru">Прогноз погоды предоставлен Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="sk">Predpoveď počasia poskytovaná službou Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="sl">Vremenska napoved od Yahoo! Weather (http://weather.yahoo.com/)</description>
+		<description lang="sr_RS">Прогноза времена коју је омогућио Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="sv">Väderprognos tillhandahållen av Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="tr">Hava Durumu Yahoo! Weather tarafından sağlanır (http://weather.yahoo.com/)</description>
 		<description lang="uk">Прогноз погоди надано Yahoo! Weather (http://weather.yahoo.com/)</description>
@@ -116,6 +122,7 @@
 		<disclaimer lang="ru">Используя это дополнение, вы соглашаетесь с условиями предоставления услуг, &#10;доступными по адресу: http://developer.yahoo.com/weather/#terms</disclaimer>
 		<disclaimer lang="sk">Používaním tohto doplnku súhlasíte s podmienkami používania služby umiestnenými na http://developer.yahoo.com/weather/#terms</disclaimer>
 		<disclaimer lang="sl">Uporaba tega dodatka pomeni, da ste se strinjali s pogoji storitve, ki se nahajajo na http://developer.yahoo.com/weather/#terms</disclaimer>
+		<disclaimer lang="sr_RS">Употреба овог додатка подразумева да сте сагласни са Условима Коришћења који се налазе на http://developer.yahoo.com/weather/#terms</disclaimer>
 		<disclaimer lang="sv">Användning av detta tillägg innebär att du har accepterat användarvillkoren som hittas på http://developer.yahoo.com/weather/#terms</disclaimer>
 		<disclaimer lang="tr">Bu eklentinin kullanımı aynı zamanda http://developer.yahoo.com/weather/#terms adresindeki Kullanım Koşullarını da kabul ettiğiniz anlamına gelir.</disclaimer>
 		<disclaimer lang="uk">Скориставшись цією надбудовою, ви тим самим погоджуєтеся з умовами використання: </disclaimer>

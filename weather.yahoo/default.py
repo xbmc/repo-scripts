@@ -55,7 +55,7 @@ def location(loc):
     if data != '' and data.has_key('query') and data['query'].has_key('results') and data['query']['results'].has_key('place'):
         if isinstance (data['query']['results']['place'],list):
             for item in data['query']['results']['place']:
-                listitem   = item['name'] + ' (' + item['admin1']['content'] + ' - ' + item['country']['code'] + ')'
+                listitem = item['name'] + ' (' + (item['admin1']['content'] + ' - ' if item['admin1'] is not None else '') + item['country']['code'] + ')'
                 location   = item['name'] + ' (' + item['country']['code'] + ')'
                 locationid = item['woeid']
                 items.append(listitem)
@@ -158,7 +158,10 @@ def properties(data,loc):
         set_property('Current.FeelsLike'     , feelslike(int(condition[0].attributes['temp'].value), int(round(float(wind[0].attributes['speed'].value) + 0.5))))
     else:
         set_property('Current.FeelsLike' , '')
-    set_property('Current.DewPoint'      , dewpoint(int(condition[0].attributes['temp'].value), int(atmosphere[0].attributes['humidity'].value)))
+    if (condition[0].attributes['temp'].value != '') and (atmosphere[0].attributes['humidity'].value != ''):
+        set_property('Current.DewPoint'      , dewpoint(int(condition[0].attributes['temp'].value), int(atmosphere[0].attributes['humidity'].value)))
+    else:
+        set_property('Current.DewPoint' , '')
     set_property('Current.UVIndex'       , '')
     set_property('Current.OutlookIcon'   , '%s.png' % condition[0].attributes['code'].value) # Kodi translates it to Current.ConditionIcon
     set_property('Current.FanartCode'    , condition[0].attributes['code'].value)
