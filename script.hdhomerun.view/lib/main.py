@@ -339,6 +339,9 @@ class GuideOverlay(util.CronReceiver):
         if not self.updateLineup(): return False
         self.showProgress(50,util.T(32008))
 
+        for d in self.lineUp.devices.values():
+            util.DEBUG_LOG(d.display())
+
         self.updateGuide()
         self.showProgress(75,util.T(32009))
 
@@ -506,9 +509,6 @@ class GuideOverlay(util.CronReceiver):
         if not self.getLineUpAndGuide(): #If we fail to get lineUp, just exit
             self.doClose()
             return
-
-        for d in self.lineUp.devices.values():
-            util.DEBUG_LOG('Device: {0} at {1} with {2} channels'.format(d.ID,d.ip,d.channelCount))
 
         self.fillChannelList()
 

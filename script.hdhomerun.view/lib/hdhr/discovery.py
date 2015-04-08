@@ -6,6 +6,7 @@ import traceback
 import struct
 import StringIO
 import time
+import base64
 
 from lib import util
 
@@ -111,11 +112,34 @@ class DiscoveryResponse(object):
             else:
                 dataIO.read(length)
 
+    def typeName(self):
+        if self.device == TUNER_DEVICE:
+            return 'Tuner'
+        elif self.device == STORAGE_SERVER:
+            return 'Storage Server'
+        return 'Unknown'
+
+    def display(self):
+        out = '\nDevice at {ip}:\n    ID: {ID}\n    Type: {dtype}\n    DeviceAuth: {auth}\n    URL: {url}\n    Channels: {chancount}'
+        try:
+            return out.format(ip=self.ip,dtype=self.typeName(),ID=self.ID,auth=base64.standard_b64encode(self.deviceAuth),url=self.url,chancount=self.channelCount)
+        except:
+            util.ERROR('Failed to format device info',hide_tb=True)
+            return repr(self)
+
+
 def discover(device=None):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.settimeout(0.01) #10ms
-    s.bind(('', 0))
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    import netif
+    ifaces = netif.getInterfaces()
+    sockets = []
+    for i in ifaces:
+        if not i.broadcast: continue
+        if i.ip.startswith('127.'): continue
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.settimeout(0.01) #10ms
+        s.bind((i.ip, 0))
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        sockets.append((s,i))
     payload = struct.pack('>BBI',0x01,0x04,0x00000001) #Device Type Filter (tuner)
     payload += struct.pack('>BBI',0x02,0x04,0xFFFFFFFF) #Device ID Filter (any)
     header = struct.pack('>HH',0x0002,len(payload))
@@ -125,23 +149,28 @@ def discover(device=None):
     util.DEBUG_LOG('  o-> Broadcast Packet({0})'.format(binascii.hexlify(packet)))
     responses = []
     for attempt in (0,1):
-        s.sendto(packet, ('<broadcast>', DEVICE_DISCOVERY_PORT))
+        for s,i in sockets:
+            util.DEBUG_LOG('  o-> Broadcasting to {0}: {1}'.format(i.name,i.broadcast))
+            s.sendto(packet, (i.broadcast, DEVICE_DISCOVERY_PORT))
 
         end = time.time() + 0.25 #250ms
 
         while time.time() < end:
-            try:
-                message, address = s.recvfrom(8096)
-                response = DiscoveryResponse(message,address)
-                if (not device or device == response.device) and response.valid and not response in responses:
-                    responses.append(response)
-                    util.DEBUG_LOG('<-o   Response Packet({0})'.format(binascii.hexlify(message)))
-            except (KeyboardInterrupt, SystemExit):
-                raise
-            except socket.timeout:
-                pass
-            except:
-                traceback.print_exc()
+            for s,i in sockets:
+                try:
+                    message, address = s.recvfrom(8096)
+                    response = DiscoveryResponse(message,address)
+                    if (not device or device == response.device) and response.valid and not response in responses:
+                        responses.append(response)
+                        util.DEBUG_LOG('<-o   Response Packet[{0}]({1})'.format(i.name,binascii.hexlify(message)))
+                    elif response.valid:
+                        util.DEBUG_LOG('<-o   Response Packet[{0}](Duplicate)'.format(i.name))
+                    else:
+                        util.DEBUG_LOG('<-o   INVALID RESPONSE[{0}]({1})'.format(i.name,binascii.hexlify(message)))
+                except socket.timeout:
+                    pass
+                except:
+                    traceback.print_exc()
 
     return responses
 

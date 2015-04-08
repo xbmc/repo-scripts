@@ -1,3 +1,13 @@
+** 2015.4.8 **
+
+Fix error causing issues with multiple devices
+Log lineup JSON decoding errors without traceback
+
+2015.4.1a15
+
+Do subnet broadcast to individual interfaces - fixes issues for devices with multiple interfaces
+Improved logging
+
 ** 2015.3.30 **
 
 Channel entry now accepts 'down' for '.' instead of 'select' and includes instructions to this effect
