@@ -100,6 +100,10 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Regular lyrics scrapers"
 
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
 msgstr "CU LRC Lyrics"

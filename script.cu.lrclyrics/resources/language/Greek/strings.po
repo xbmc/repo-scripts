@@ -120,6 +120,10 @@ msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "Το script ήδη εκτελείται!"
 
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Καταγραφή σφαλμάτων"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
 msgstr "Στίχοι CU LRC"

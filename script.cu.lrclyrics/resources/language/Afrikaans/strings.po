@@ -27,3 +27,7 @@ msgstr "Skrapers"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Opsies"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Stel ontfout log in staat"

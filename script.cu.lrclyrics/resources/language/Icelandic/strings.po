@@ -31,3 +31,7 @@ msgstr "Sköfur"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Valkostir"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Virkja kembi viðburðaskráningu"

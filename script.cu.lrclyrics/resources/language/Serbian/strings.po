@@ -27,3 +27,7 @@ msgstr "Dobavljači podat."
 msgctxt "#32151"
 msgid "Options"
 msgstr "Opcije"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Omogući beleženje grešaka"

@@ -20,6 +20,30 @@ msgctxt "#32000"
 msgid "File"
 msgstr "Fișier"
 
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Nu au fost găsite versuri!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Încorporat"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Se caută versuri..."
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Salvează versuri în dosarul de versuri"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "- Dosar versuri"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Format nume fișier"
+
 msgctxt "#32150"
 msgid "Scrapers"
 msgstr "Cataloage"
@@ -27,3 +51,15 @@ msgstr "Cataloage"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Opțiuni"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Arată versuri automat"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Activează jurnalizare depanare"
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr "Versuri CU LRC"

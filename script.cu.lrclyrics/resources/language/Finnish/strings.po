@@ -59,3 +59,7 @@ msgstr "Hakupaikat"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Asetukset"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Suorituslokin tallennus (debug log)"

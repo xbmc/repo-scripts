@@ -27,3 +27,7 @@ msgstr "Skrapere"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Alternativer"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Aktiver feilsøkingslogg"

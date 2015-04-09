@@ -16,6 +16,10 @@ msgstr ""
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32000"
+msgid "File"
+msgstr "Fail"
+
 msgctxt "#32151"
 msgid "Options"
 msgstr "Pilihan"

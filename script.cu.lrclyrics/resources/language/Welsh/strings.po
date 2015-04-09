@@ -27,3 +27,7 @@ msgstr "Crafwyr"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Dewisiadau"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Galluogi cofnodi dadfygio"

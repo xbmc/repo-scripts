@@ -27,3 +27,7 @@ msgstr "網路站台"
 msgctxt "#32151"
 msgid "Options"
 msgstr "選項"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "啟用除錯記錄"

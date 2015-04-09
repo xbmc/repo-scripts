@@ -120,6 +120,10 @@ msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "Scenarijus jau paleistas!"
 
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Įjungti derinimo žurnalą"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
 msgstr "CU LRC dainų žodžiai"

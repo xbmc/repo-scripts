@@ -120,6 +120,10 @@ msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "Script ya se esta ejecutando!"
 
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Habilitar trazas de depuración"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
 msgstr "CU LRC Letras"

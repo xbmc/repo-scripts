@@ -28,6 +28,10 @@ msgctxt "#32002"
 msgid "Embedded"
 msgstr "Intégré"
 
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Recherche des paroles..."
+
 msgctxt "#32101"
 msgid "Save lyrics to lyrics folder"
 msgstr "Sauvegarder les paroles"
@@ -39,6 +43,10 @@ msgstr "Dossier de Sauvegardes"
 msgctxt "#32103"
 msgid "- Save format"
 msgstr "- Sauver le format"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
 
 msgctxt "#32105"
 msgid "%A\\%T"
@@ -99,6 +107,22 @@ msgstr "Scrapers pour paroles synchronisées"
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Scrapers pour paroles habituelles"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Afficher les paroles automatiquement"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Nettoyer le titre de la chanson (enlever la partie entre parenthèses)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "Le script fonctionne déjà!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Activer le mode debug"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

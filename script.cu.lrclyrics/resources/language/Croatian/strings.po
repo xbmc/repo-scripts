@@ -44,6 +44,10 @@ msgctxt "#32103"
 msgid "- Save format"
 msgstr "- Spremi format"
 
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
 msgctxt "#32105"
 msgid "%A\\%T"
 msgstr "%A\\%T"
@@ -104,6 +108,10 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Redovni sakupljači tekstova pjesama"
 
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Prikaži tekst pjesme automatski"
+
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
 msgstr "Obriši naslove pjesama (ukloni dio u zagradama)"
@@ -111,6 +119,10 @@ msgstr "Obriši naslove pjesama (ukloni dio u zagradama)"
 msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "Skripta je već pokrenuta!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Omogući zapisivanje otklanjanja grešaka"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

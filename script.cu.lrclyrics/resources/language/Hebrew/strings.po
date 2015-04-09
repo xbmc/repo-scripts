@@ -22,11 +22,15 @@ msgstr "קובץ"
 
 msgctxt "#32001"
 msgid "No lyrics found!"
-msgstr "לא נמצאו מילים לשיר!"
+msgstr "לא נמצאו מילות שיר!"
 
 msgctxt "#32002"
 msgid "Embedded"
 msgstr "מוטמע"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "מחפש מילות שיר..."
 
 msgctxt "#32101"
 msgid "Save lyrics to lyrics folder"
@@ -34,11 +38,15 @@ msgstr "שמור מילות השיר לתיקיית מילות השירים"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
-msgstr "- תיקיית מילות השירים"
+msgstr "- תיקיית מילות שיר"
 
 msgctxt "#32103"
 msgid "- Save format"
 msgstr "- פורמט שמירה"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
 
 msgctxt "#32105"
 msgid "%A\\%T"
@@ -99,6 +107,22 @@ msgstr "סקרייפרי מילות שירים מסונכרנות"
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "סקרייפרי מילות שירים לא מסונכרנות"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "הצג מילות שיר אוטומטית"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "נקה כותרת שיר (הסר חלק שבסוגריים)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "הסקריפט כבר פועל!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "הפעל יומן רישום מורחב"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

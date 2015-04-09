@@ -27,3 +27,7 @@ msgstr "الكاشطات"
 msgctxt "#32151"
 msgid "Options"
 msgstr "خيارات"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "تمكين تسجيل التصحيح"

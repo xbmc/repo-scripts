@@ -44,6 +44,10 @@ msgctxt "#32103"
 msgid "- Save format"
 msgstr "- 保存格式"
 
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
 msgctxt "#32105"
 msgid "%A\\%T"
 msgstr "%A\\%T"
@@ -104,6 +108,10 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "非同步歌词刮削器"
 
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "自动显示歌词"
+
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
 msgstr "清理歌曲标题（移除括号内的部分）"
@@ -111,6 +119,10 @@ msgstr "清理歌曲标题（移除括号内的部分）"
 msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "脚本已经在运行!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "显示调试信息"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

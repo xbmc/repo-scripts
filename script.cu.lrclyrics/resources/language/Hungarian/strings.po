@@ -120,6 +120,10 @@ msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "A szkript már fut!"
 
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Naplózás engedélyezése"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
 msgstr "CU LRC Dalszöveg"

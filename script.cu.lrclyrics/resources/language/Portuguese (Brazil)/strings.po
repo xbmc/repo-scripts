@@ -34,7 +34,7 @@ msgstr "Procurando letras da música..."
 
 msgctxt "#32101"
 msgid "Save lyrics to lyrics folder"
-msgstr "Salvar letras para pasta de letras"
+msgstr "Salvar letras para diretório de letras"
 
 msgctxt "#32102"
 msgid "- Lyrics folder"
@@ -102,7 +102,7 @@ msgstr "Procurar por arquivos locais de letras"
 
 msgctxt "#32154"
 msgid "Synchronised lyrics scrapers"
-msgstr "Scrapers de letras sincronizados"
+msgstr "Scrapers de letras sincronizadas"
 
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
@@ -120,6 +120,10 @@ msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "Script já se encontra em execução!"
 
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Ativar log de depuração"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
-msgstr "CU LRC Letras"
+msgstr "CU LRC Lyrics"

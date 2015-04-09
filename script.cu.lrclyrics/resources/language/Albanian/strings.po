@@ -27,3 +27,7 @@ msgstr "Scrapers"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Opcionet"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Aktivoni debug logging"

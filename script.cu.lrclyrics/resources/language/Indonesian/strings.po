@@ -28,6 +28,10 @@ msgctxt "#32002"
 msgid "Embedded"
 msgstr "Tercantum"
 
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Mencari lirik"
+
 msgctxt "#32101"
 msgid "Save lyrics to lyrics folder"
 msgstr "Simpan lirik ke folder lirik"
@@ -99,6 +103,10 @@ msgstr "Penyalin lirik tersingkronisasi"
 msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Penyalin lirik regular"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Mendeteksi  Nilai HDD"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

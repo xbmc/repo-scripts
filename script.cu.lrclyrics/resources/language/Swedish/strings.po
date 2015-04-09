@@ -108,6 +108,10 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Vanliga textskrapor"
 
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Visa låttexter automatiskt"
+
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
 msgstr "Rensa låttitel (radera text inom parentes)"
@@ -115,6 +119,10 @@ msgstr "Rensa låttitel (radera text inom parentes)"
 msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "Skriptet används redan!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Aktivera debugloggning"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

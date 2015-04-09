@@ -27,3 +27,7 @@ msgstr "Scraper-ak"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Aukera"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Gaitu debug saioa"

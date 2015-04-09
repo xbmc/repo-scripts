@@ -88,6 +88,10 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Sťahovače bežných textov skladieb"
 
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Začať ukladať informácie / debug log"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
 msgstr "CU LRC Lyrics"

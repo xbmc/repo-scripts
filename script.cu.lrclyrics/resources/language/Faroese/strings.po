@@ -23,3 +23,7 @@ msgstr "Fíl"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Stillingar"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Tendra skráseting av handlingum"

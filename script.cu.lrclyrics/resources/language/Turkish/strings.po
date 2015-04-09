@@ -20,6 +20,38 @@ msgctxt "#32000"
 msgid "File"
 msgstr "Dosya"
 
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Sözler Bulunamadı!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Gömülü"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "Sözler Aranıyor"
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Sözleri \"lyrics\" klasörüne kaydet"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "Sözler Klasörü"
+
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "Formatı kaydet"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Dosya adına göre ara"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Dosya adı formatı"
+
 msgctxt "#32150"
 msgid "Scrapers"
 msgstr "Scraperlar"
@@ -27,3 +59,31 @@ msgstr "Scraperlar"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Seçenekler"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Gömülü sözler içinde ara"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "Yerel söz dosyaları içinde ara"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Eşitlenmiş söz kazıyıcılar"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Sözleri kendiliğinden görüntüle"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "Şarkı başlığını temizle ( parantez içindeki parçayı kaldır)"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "Script zaten çalışıyor!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Hata ayıklama günlüğünü etkinleştir"

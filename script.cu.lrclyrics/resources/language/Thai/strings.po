@@ -27,3 +27,7 @@ msgstr "ตัวดึงข้อมูล"
 msgctxt "#32151"
 msgid "Options"
 msgstr "ตัวเลือก"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"

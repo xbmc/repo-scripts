@@ -31,3 +31,7 @@ msgstr "Инфоресурсы"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Параметры"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Включить журнал отладки"

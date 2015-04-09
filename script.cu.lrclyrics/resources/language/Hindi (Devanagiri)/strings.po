@@ -19,3 +19,7 @@ msgstr ""
 msgctxt "#32000"
 msgid "File"
 msgstr "फ़ाइल"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "लॉगिंग डिबग सक्षम"

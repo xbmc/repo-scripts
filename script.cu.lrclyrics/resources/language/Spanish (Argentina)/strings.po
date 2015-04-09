@@ -27,3 +27,7 @@ msgstr "Scrapers"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Opciones"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Habilitar trazas de depuración"

@@ -27,3 +27,7 @@ msgstr "Skrāpji"
 msgctxt "#32151"
 msgid "Options"
 msgstr "Iespējas"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Ieslēgt atkļūdošanas reģistrēšanu"

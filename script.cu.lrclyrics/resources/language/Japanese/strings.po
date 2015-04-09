@@ -27,3 +27,7 @@ msgstr "スクレーパー"
 msgctxt "#32151"
 msgid "Options"
 msgstr "オプション"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "デバッグログ出力を有効にする"

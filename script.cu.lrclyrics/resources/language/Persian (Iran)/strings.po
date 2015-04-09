@@ -19,3 +19,11 @@ msgstr ""
 msgctxt "#32000"
 msgid "File"
 msgstr "فایل"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "گزینه ها"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "فعال‌کردن گزارش‌گیری اشکال‌زدایی"

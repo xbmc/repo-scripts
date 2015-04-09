@@ -120,6 +120,10 @@ msgctxt "#32158"
 msgid "Script is already running!"
 msgstr "스크립트가 이미 실행 중입니다!"
 
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "디버그 로그 사용"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
 msgstr "CU LRC Lyrics"
