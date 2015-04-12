@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+	<string id="30000">Log Viewer for Kodi</string>
+	<string id="30001">Show Log</string>
+	<string id="30002">Show Old Full Log</string>
+	<string id="30003">Invalid number of lines. Showing full log</string>
+	<string id="30004">Failed to open:</string>
+	<string id="30005">Invert Log (most recent first)</string>
+	<string id="30006">All</string>
+	<string id="30007">100</string>
+	<string id="30008">50</string>
+	<string id="30009">20</string>
+	<string id="30010">Number of lines to show</string>
+</strings>

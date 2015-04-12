@@ -1,0 +1,21 @@
+[B]v1.0.0 (5 April 2015):[/B]
+- Full addon change and recode.
+- Check forum.kodi topic to know how to use addon API.
+
+[B]v0.1.01 (30 de Janeiro de 2015):[/B]
+- Alteracao do nome do addon.
+- Adicionada funcao para obter conteudo do log (plugin://plugin.video.xbmclogviewer/getlog/)
+- Suporte ao Kodi.
+- Pequenas correccoes e melhorias.
+
+[B]v0.1.00 (13 de Novembro de 2014):[/B]
+- Adicionada opcao para inverter log (linhas mais recentes primeiro).
+- Adicionada opcao para mostrar apenas as ultimas 20/50/100 linhas do log (util para despiste de erros).
+- Perfomance melhorada.
+- Adicionada opcao para mostrar a janela em qualquer lugar atraves do comando xbmc.executebuiltin("RunPlugin(plugin://plugin.video.xbmclogviewer/showlog/)")
+
+[B]v0.0.02 (21 de Dezembro de 2013):[/B]
+- Logo added.
+
+[B]v0.0.01 (17 de Dezembro de 2013):[/B]
+- Release inicial.

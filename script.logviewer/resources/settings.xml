@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+   <category label="Geral">
+      <setting id="inverter" type="bool" label="30005" default="true"/>
+      <setting id="nrlinhas" type="enum" label="30010" lvalues="30006|30007|30008|30009" default="0" enable="!eq(-1,false)"/>
+   </category>
+</settings>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.logviewer"
+       name="Log Viewer for Kodi"
+       version="1.0.0"
+       provider-name="fightnight">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/> 
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>executable</provides>
+    </extension>
+	<extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+	    <platform>all</platform>
+		<forum>http://forum.kodi.tv/showthread.php?tid=223490</forum>
+		<source>https://github.com/fightnight/fightnight-addons/tree/master/script.logviewer</source>
+		<summary lang="en">View Kodi Log directly on Kodi</summary>
+		<summary lang="pt">Veja o Log do Kodi directamente no Kodi</summary>
+		<description lang="en">Tools to easily check and analyse Kodi log.</description>
+		<description lang="pt">Ferramenta para verificar e ler facilmente o log do Kodi.</description>
+		<disclaimer lang="en">Opensource addon not endorsed with Team Kodi.</disclaimer>
+		<disclaimer lang="pt">Addon opensource não afliado com a Equipa Kodi.</disclaimer>
+        <platform>all</platform>
+    </extension>
+</addon>
