@@ -1,3 +1,6 @@
+v4.0.1
+- fix channel id
+
 v4.0.0
 - add support for epg search
 - fix fanart in infodialog

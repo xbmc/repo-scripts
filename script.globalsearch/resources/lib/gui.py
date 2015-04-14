@@ -806,13 +806,15 @@ class GUI( xbmcgui.WindowXMLDialog ):
         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "PVR.GetChannels", "params": {"channelgroupid": 2, "properties": ["thumbnail"]}, "id": 1}')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
+
         if (json_response.has_key('result')) and (json_response['result'] != None) and (json_response['result'].has_key('channels')):
-            gotnumber = False
+            channelids = []
+            for item in json_response['result']['channels']:
+                channelids.append(item['channelid'])
+            channelids.sort()
+            offset = channelids[0] - 1
             for item in json_response['result']['channels']:
                 channelid = item['channelid']
-                if not gotnumber:
-                    offset = item['channelid'] - 1
-                    gotnumber = True
                 channelname = item['label']
                 channelthumb = item['thumbnail']
                 channelnumber = channelid - offset
