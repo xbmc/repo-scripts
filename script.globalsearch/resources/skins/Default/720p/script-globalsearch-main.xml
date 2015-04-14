@@ -1,0 +1,1984 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<allowoverlay>no</allowoverlay>
+	<coordinates>
+		<system>1</system>
+		<posx>0</posx>
+		<posy>0</posy>
+	</coordinates>
+	<animation type="WindowOpen" reversible="false">
+		<effect type="zoom" start="80" end="100" center="640,360" easing="out" tween="back" time="300" />
+		<effect type="fade" start="0" end="100" time="300" />
+	</animation>
+	<animation type="WindowClose" reversible="false">
+		<effect type="zoom" start="100" end="80" center="640,360" easing="in" tween="back" time="300" />
+		<effect type="fade" start="100" end="0" time="300" />
+	</animation>
+	<controls>
+		<control type="group" id="100">
+			<control type="image">
+				<posx>12</posx>
+				<posy>40</posy>
+				<width>1256</width>
+				<height>639</height>
+				<texture border="12">DialogBack.png</texture>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture>black.png</texture>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(111).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(111)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(211).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(211)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(121).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(121)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(131).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(131)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(141).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(141)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(151).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(151)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(161).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(161)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(171).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(171)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture background="true" fallback="background.jpg">$INFO[Container(181).ListItem.Property(Fanart)]</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(181)</visible>
+			</control>
+			<control type="image">
+				<posx>20</posx>
+				<posy>48</posy>
+				<width>1240</width>
+				<height>623</height>
+				<texture>background.jpg</texture>
+				<aspectratio>scale</aspectratio>
+				<fadetime>200</fadetime>
+				<colordiffuse>4FFFFFFF</colordiffuse>
+				<animation effect="fade" time="200">Visible</animation>
+				<animation effect="fade" time="200">Hidden</animation>
+				<visible>Control.HasFocus(221) | !ControlGroup(101).HasFocus</visible>
+			</control>
+			<control type="label" id="190">
+				<posx>640</posx>
+				<posy>56</posy>
+				<width>400</width>
+				<height>25</height>
+				<label>-</label>
+				<font>font12caps</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>right</align>
+				<aligny>center</aligny>
+			</control>
+			<control type="label" id="191">
+				<posx>640</posx>
+				<posy>56</posy>
+				<width>400</width>
+				<height>25</height>
+				<label>-</label>
+				<font>font12caps</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+			</control>
+			<control type="label" id="199">
+				<posx>40</posx>
+				<posy>358</posy>
+				<width>1200</width>
+				<height>20</height>
+				<label>[B]$LOCALIZE[284][/B]</label>
+				<font>font16caps</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+			</control>
+			<control type="button" id="198">
+				<posx>1100</posx>
+				<posy>53</posy>
+				<width>150</width>
+				<height>20</height>
+				<label>-</label>
+				<font>font10</font>
+				<textcolor>FFFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<texturefocus border="5">button-focus.png</texturefocus>
+				<texturenofocus border="5">button-nofocus.png</texturenofocus>
+				<onup>101</onup>
+				<ondown>101</ondown>
+				<onleft>101</onleft>
+				<onright>101</onright>
+			</control>
+			<control type="grouplist" id="101">
+				<posx>30</posx>
+				<posy>56</posy>
+				<width>1220</width>
+				<height>620</height>
+				<orientation>vertical</orientation>
+				<itemgap>0</itemgap>
+				<control type="group" id="229">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$ADDON[script.globalsearch 19069] $INFO[Window.Property(GlobalSearch.SearchString)]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="220">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(221)</visible>
+					</control>
+					<control type="list" id="221">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>221</onleft>
+						<onright>221</onright>
+						<onup>198</onup>
+						<ondown>111</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Duration),, $LOCALIZE[12391]]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(221)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Duration),, $LOCALIZE[12391]]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine)) + IsEmpty(ListItem.Property(PlotOutline))</visible>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="119">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$LOCALIZE[342]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="110">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(111)</visible>
+					</control>
+					<control type="list" id="111">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>111</onleft>
+						<onright>111</onright>
+						<onup>221</onup>
+						<ondown>211</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year),, - ]$INFO[ListItem.Property(Duration),, $LOCALIZE[12391]]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+								<visible>!SubString(ListItem.Property(Duration),min)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year),, - ]$INFO[ListItem.Property(Duration)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+								<visible>SubString(ListItem.Property(Duration),min)</visible>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Tagline)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(PlotOutline)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine))</visible>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine)) + IsEmpty(ListItem.Property(PlotOutline))</visible>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(111)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year),, - ]$INFO[ListItem.Property(Duration),, $LOCALIZE[12391]]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+								<visible>!SubString(ListItem.Property(Duration),min)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year),, - ]$INFO[ListItem.Property(Duration)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+								<visible>SubString(ListItem.Property(Duration),min)</visible>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Tagline)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(PlotOutline)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine))</visible>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine)) + IsEmpty(ListItem.Property(PlotOutline))</visible>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="219">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$ADDON[script.globalsearch 32211] $INFO[Window.Property(GlobalSearch.SearchString)]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="210">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(211)</visible>
+					</control>
+					<control type="list" id="211">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>211</onleft>
+						<onright>211</onright>
+						<onup>111</onup>
+						<ondown>121</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year),, - ]$INFO[ListItem.Property(Duration),, $LOCALIZE[12391]]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+								<visible>!SubString(ListItem.Property(Duration),min)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year),, - ]$INFO[ListItem.Property(Duration)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+								<visible>SubString(ListItem.Property(Duration),min)</visible>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Tagline)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(PlotOutline)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine))</visible>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine)) + IsEmpty(ListItem.Property(PlotOutline))</visible>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(211)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year),, - ]$INFO[ListItem.Property(Duration),, $LOCALIZE[12391]]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+								<visible>!SubString(ListItem.Property(Duration),min)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year),, - ]$INFO[ListItem.Property(Duration)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+								<visible>SubString(ListItem.Property(Duration),min)</visible>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Tagline)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(PlotOutline)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine))</visible>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<visible>IsEmpty(ListItem.Property(TagLine)) + IsEmpty(ListItem.Property(PlotOutline))</visible>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="129">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$LOCALIZE[20343]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="120">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(121)</visible>
+					</control>
+					<control type="list" id="121">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>121</onleft>
+						<onright>121</onright>
+						<onup>211</onup>
+						<ondown>131</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Premiered)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(121)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Premiered)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="139">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$LOCALIZE[33054]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="130">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(131)</visible>
+					</control>
+					<control type="list" id="131">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>131</onleft>
+						<onright>131</onright>
+						<onup>121</onup>
+						<ondown>141</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(TvShowTitle)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(131)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(TvShowTitle)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="149">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1300</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1300</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$LOCALIZE[20360]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="140">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(141)</visible>
+					</control>
+					<control type="list" id="141">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>141</onleft>
+						<onright>141</onright>
+						<onup>131</onup>
+						<ondown>151</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(TvShowTitle)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(141)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(TvShowTitle)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Plot)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="159">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$LOCALIZE[20389]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="150">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(151)</visible>
+					</control>
+					<control type="list" id="151">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>151</onleft>
+						<onright>151</onright>
+						<onup>141</onup>
+						<ondown>161</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Artist)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>52</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>72</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Duration)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(151)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="image">
+								<posx>70</posx>
+								<posy>70</posy>
+								<width>30</width>
+								<height>30</height>
+								<texture>OverlayWatched.png</texture>
+								<visible>IntegerGreaterThan(ListItem.Property(PlayCount),0)</visible>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Artist)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>52</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Year)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>72</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Duration)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="169">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$LOCALIZE[133]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="160">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(161)</visible>
+					</control>
+					<control type="list" id="161">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>161</onleft>
+						<onright>161</onright>
+						<onup>151</onup>
+						<ondown>171</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Artist_Genre)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Artist_Description)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(161)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Artist_Genre)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Artist_Description)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="179">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$LOCALIZE[132]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="170">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(171)</visible>
+					</control>
+					<control type="list" id="171">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>171</onleft>
+						<onright>171</onright>
+						<onup>161</onup>
+						<ondown>181</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Artist)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Album_Description)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(171)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Artist)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="textbox">
+								<posx>110</posx>
+								<posy>42</posy>
+								<width>280</width>
+								<height>64</height>
+								<label>$INFO[ListItem.Property(Album_Description)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+				<control type="group" id="189">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1200</width>
+					<height>155</height>
+					<control type="grouplist">
+						<posx>10</posx>
+						<posy>0</posy>
+						<width>1200</width>
+						<height>25</height>
+						<orientation>horizontal</orientation>
+						<control type="label">
+							<width min="10" max="700">auto</width>
+							<height>25</height>
+							<label>[B]$LOCALIZE[134]: [/B]</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+						<control type="label" id="180">
+							<width min="10" max="280">auto</width>
+							<height>25</height>
+							<label>-</label>
+							<font>font12caps</font>
+							<textcolor>FFFFFFFF</textcolor>
+						</control>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>1</height>
+						<texture>white.png</texture>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">grey.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>22</posy>
+						<width>1220</width>
+						<height>118</height>
+						<texture border="2">blue.png</texture>
+						<colordiffuse>4FFFFFFF</colordiffuse>
+						<visible>Control.HasFocus(181)</visible>
+					</control>
+					<control type="list" id="181">
+						<posx>10</posx>
+						<posy>25</posy>
+						<width>1200</width>
+						<height>110</height>
+						<onleft>181</onleft>
+						<onright>181</onright>
+						<onup>171</onup>
+						<ondown>221</ondown>
+						<orientation>horizontal</orientation>
+						<viewtype label="535">list</viewtype>
+						<preloaditems>2</preloaditems>
+						<itemlayout width="400" height="110">
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Artist)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>52</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Genre)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>72</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Duration)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+						</itemlayout>
+						<focusedlayout width="400" height="110">
+							<control type="image">
+								<posx>0</posx>
+								<posy>2</posy>
+								<width>400</width>
+								<height>110</height>
+								<texture border="2">blue.png</texture>
+								<colordiffuse>9FFFFFFF</colordiffuse>
+								<visible>Control.HasFocus(181)</visible>
+							</control>
+							<control type="image">
+								<posx>4</posx>
+								<posy>7</posy>
+								<width>100</width>
+								<height>100</height>
+								<aspectratio>keep</aspectratio>
+								<texture background="true">$INFO[ListItem.Icon]</texture>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>10</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>[B]$INFO[ListItem.Label][/B]</label>
+								<font>font12</font>
+								<textcolor>FF4DBAFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>28</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Artist)]</label>
+								<font>font12</font>
+								<textcolor>FF99D8FF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>52</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Genre)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+							<control type="label">
+								<posx>110</posx>
+								<posy>72</posy>
+								<width>280</width>
+								<height>12</height>
+								<label>$INFO[ListItem.Property(Duration)]</label>
+								<font>font12</font>
+								<textcolor>FFFFFFFF</textcolor>
+								<aligny>center</aligny>
+							</control>
+						</focusedlayout>
+					</control>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>
