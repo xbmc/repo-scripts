@@ -156,7 +156,7 @@ def getID3Lyrics(filename, getlrc):
                 match1 = re.compile('\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
                 if (getlrc and match1) or ((not getlrc) and (not match1)):
                     return lyr
-        elif (not getlrc) and tag.fid == uslt:
+        elif tag.fid == uslt: # people also store synchronised lyrics in this tag
             """
             Frame data in rawdata[]:
             Text encoding        $xx

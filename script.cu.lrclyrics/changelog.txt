@@ -1,3 +1,6 @@
+v3.0.10
+- add support for lrc lyrics inside the uslt tag
+
 v3.0.9
 - fix detection od osd key
 
