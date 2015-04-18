@@ -1,3 +1,6 @@
+1.0.10 - by CaTz(14/04/2015)
+- Fix for rmtree function bug
+
 1.0.9 - by DaM 13/01/2014
 - Fix for parsing rating and video_file_size
 
