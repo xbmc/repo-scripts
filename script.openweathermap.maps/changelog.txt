@@ -1,0 +1,5 @@
+v0.0.2
+- handle newly added speed units
+
+v0.0.1
+- initial beta
