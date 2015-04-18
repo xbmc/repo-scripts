@@ -22,14 +22,17 @@ __scriptname__ = __addon__.getAddonInfo('name')
 __version__ = __addon__.getAddonInfo('version')
 __language__ = __addon__.getLocalizedString
 
-__cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode("utf-8")
-__temp__ = xbmc.translatePath( os.path.join( __profile__, 'temp', '') ).decode("utf-8")
+__cwd__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('path')), 'utf-8')
+__profile__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('profile')), 'utf-8')
+__resource__ = unicode(xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')), 'utf-8')
+__temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp')), 'utf-8')
+
+
 
 if xbmcvfs.exists(__temp__):
-  shutil.rmtree(__temp__)
+    shutil.rmtree(__temp__.encode(sys.getfilesystemencoding()))
 xbmcvfs.mkdirs(__temp__)
+
 
 sys.path.append(__resource__)
 
@@ -308,7 +311,7 @@ def download(link, search_string=""):
         response = my_urlopener.open(downloadlink, postparams)
 
         if xbmcvfs.exists(__temp__):
-            shutil.rmtree(__temp__)
+            shutil.rmtree(__temp__.encode(sys.getfilesystemencoding()))
         xbmcvfs.mkdirs(__temp__)
 
         local_tmp_file = os.path.join(__temp__, "subscene.xxx")
@@ -349,7 +352,10 @@ def download(link, search_string=""):
             xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (local_tmp_file, __temp__,)).encode('utf-8'), True)
 
         for file in xbmcvfs.listdir(__temp__)[1]:
-            file = os.path.join(__temp__, file)
+            if sys.platform.startswith('win'):
+                file = os.path.join(__temp__, file)
+            else:
+                file = os.path.join(__temp__.encode('utf-8'), file)
             if os.path.splitext(file)[1] in exts:
                 if search_string and string.find(string.lower(file), string.lower(search_string)) == -1:
                     continue
