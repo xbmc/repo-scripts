@@ -1,0 +1,197 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "TV 쇼 방송 일정을 가져옵니다."
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "TV 쇼 방송 일정을 가져옵니다. 놓치는 일은 절대 없을 것입니다."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "화면"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "썸네일 종류"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "배너 다운로드 (Artwork Downloader 애드온 필요)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "로고 다운로드 (Artwork Downloader 애드온 필요)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "팬아트 배경 사용"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "16:9 썸네일 사용"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "16:9 썸네일 다운로드 (Artwork Downloader 애드온 필요)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "지금 TV 정보 업데이트"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "TV 정보 다운로드:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "백그라운드에서 매 [N] 시간마다"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "데이터가 [N] 시간보다 오래된 경우에는 시작할 때"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "포스터 다운로드 (Artwork Downloader 애드온 필요)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**모든 데이터를 초기화** 하고 지금 TV 정보를 업데이트"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "홈 화면에 모든 TV 쇼를 표시 (스킨 지원 필요)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "날짜에 숫자 대신 요일과 월 이름을 사용 (스킨 지원 필요)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "TV 가이드에 포함할 일 수"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "주간 TV 가이드를 월요일 대신 오늘부터 표시"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "주간 TV 가이드에 어제 포함"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "어제"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV 가이드"
+
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "고급 옵션:"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "추가 TV 쇼 (TVDB ID 숫자)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "제외 TV 쇼 (TVDB ID 숫자)"
+
+msgctxt "#32023"
+msgid "Ignore \"Specials\" (requires a reset)"
+msgstr "\"Specials\" 에피소드 무시 (재실행 필요)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "TVDB 검색 언어"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "TV Show - Next Aired"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "정보 가져오는 중..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "취소됨"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "사용자가 동작을 취소하였습니다."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "가져오기를 실패하여 취소됨"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "업데이트 실패. (나중에 다시 시도합니다)."
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "시리즈 진행중"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "취소/종영"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "미정/불확실"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "기획/제작중"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "새 시리즈"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "방영 안됨"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "마지막 시즌"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "휴방중"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "파일럿 제작중"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "파일럿 취소"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "취소됨"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "종영"

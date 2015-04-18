@@ -1,0 +1,197 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "Λήψη πληροφοριών για την Επόμενη Προβολή των Τηλ. Σειρών"
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "Λήψη πληροφοριών για την Επόμενη Προβολή των Τηλ. Σειρών. Δε θα ξαναχάσετε επεισόδιο ποτέ."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "Απεικόνιση"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "Τύπος μικρογραφίας"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "Λήψη Πανό (απαιτείται το Artwork Downloader)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "Λήψη Λογότυπων (απαιτείται το Artwork Downloader)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Ενεργοποίηση fanart υποβάθρου"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "Ενεργοποίηση μικρογραφιών 16:9"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "Λήψη μικρογραφιών 16:9 (απαιτείται το Artwork Downloader)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Ενημέρωση των πληροφοριών Τηλεόρασης τώρα"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Λήψη πληροφοριών Τηλεόρασης"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "Στο υπόβαθρο κάθε [N] ώρες"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Κατά την είσοδο στον οδηγό αν τα δεδομένα είναι παλαιότερα από [N] ώρες"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "Λήψη Αφισών (απαιτείται το Artwork Downloader)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Επαναφορά όλων των δεδομένων** και ενημέρωση των πληροφοριών Τηλεόρασης τώρα"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "Εμφάνιση Όλων των Τηλ. Σειρών στην Αρχ. Οθόνη (απαιτείται υποστήριξη από το κέλυφος)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Χρήση ημερομηνίας ολογράφως αντί αριθμητικά (για όποιο κέλυφος χρειάζεται βοήθεια)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Πλήθος ημερών επόμενων προβολών που συμπεριληφθούν στον Οδηγό TV"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Ο Οδηγός TV να αρχίζει από Σήμερα, όχι από Δευτέρα"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Συμπερίληψη του Χθες στο Σημερινό Οδηγό TV"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Χθες"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "Οδηγός TV"
+
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "Επιλογές για Προχωρημένους:"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "Επιπλέον σειρές (αριθμοί ID του TVDB)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "Παράλειψη σειρών (αριθμοί ID του TVDB)"
+
+msgctxt "#32023"
+msgid "Ignore \"Specials\" (requires a reset)"
+msgstr "Να αγνοούνται τα \"Ειδικά Επεισόδια\" (απαιτεί επανεκκίνηση)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "Γλώσσα αναζήτησης στο TVDB"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "Τηλ. Σειρά - Επόμενη Προβολή"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "Γίνεται λήψη πληροφοριών..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "ΑΚΥΡΩΘΗΚΕ"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "Η διαδικασία ακυρώθηκε από το χρήστη."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "ΔΙΑΚΟΠΗ λόγω αποτυχίας λήψης"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Η ενημέρωση απέτυχε (δοκιμή ξανά αργότερα)."
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "Συνεχιζόμενη Σειρά"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "Ακυρώθηκε/Τελείωσε"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "Αβέβαιη/Υπό Συζήτηση"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "Σε Στάδιο Παραγωγής"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "Νέα Σειρά"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "Δεν Προβλήθηκε Ποτέ"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "Τελευταίος Κύκλος"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "Σε Παύση (Hiatus)"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "Παραγγέλθηκε Πιλοτικό"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "Απορρίφθηκε το Πιλοτικό"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "Ακυρώθηκε"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "Τελείωσε"

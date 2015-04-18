@@ -1,0 +1,197 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "Ophalen info voor komende TV afleveringen."
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "Ophalen info voor komende TV shows. Je zult ze nooit meer missen."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "Beeldscherm"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "Afbeeldingstype"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "Download banners (Artwork Downloader benodigd)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "Download logo's (Artwork Downloader benodigd)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Inschakelen fanart-achtergrond"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "Inschakelen 16:9 afbeeldingen"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "Download 16:9 afbeeldingen (Artwork Downloader benodigd)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Update de tv informatie nu"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Download tv informatie:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "in de achtergrond elke [N] uren"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Bij openen van de gids als data ouder is als [N] uur"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "Download posters (Artwork Downloader benodigd)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Reset alle data**en update de TV informatie nu"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "Toon alle TV shows via het homescherm (skinondersteuning benodigd)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Gebruik dag van de week en maand namen in datums in plaats van alleen nummers (voor een skin dat moet worden geholpen)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Aantal volgende-uitgezonden dagen op te nemen in de tv-gids."
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Start de TV-gids week op basis van vandaag in plaats van maandag"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Voeg gisteren toe in de vandaag-stijl TV-gids"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Gisteren"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV gids"
+
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "Geavanceerde opties:"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "Extra uitzendingen (TVDB ID nummers)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "Omit uitzendingen (TVDB ID nummers)"
+
+msgctxt "#32023"
+msgid "Ignore \"Specials\" (requires a reset)"
+msgstr "Negeer \"specials\" (vereist een herstart)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "Zoek taal op TVDB"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "TV Show - Volgende uitzending"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "Gegevens ophalen..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "GEANNULLEERD"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "Actie afgebroken door de gebruiker."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "Geannuleerd door verkregen fouten "
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "De update is mislukt (we proberen het later opnieuw)."
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "Terugkomende series"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "Geannuleerd/Beëindigd"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "Nader te bepalen"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "In ontwikkeling"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "Nieuwe serie"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "Nooit uitgezonden"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "Laatste seizoen"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "Er tussenuit"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "Pilot besteld"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "Pilot afgewezen"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "Geannuleerd"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "Beëindigd"

@@ -1,0 +1,319 @@
+-6.0.14 (2015-03-14)
+- Change some posx values for right aligned text.
+- Updated language files from Transifex.
+
+-6.0.13 (2014-11-26)
+- Another fix to avoid an error on really old years (e.g. 0193).
+- Use the "Ended" message instead of "Cancelled/Ended".
+- Updated language files from Transifex.
+
+-6.0.12 (2014-09-01)
+- Added additional runtime-override matching.
+- Removed the properties deprecated in 6.0.8.
+
+-6.0.11 (2014-07-27)
+- When fixing up missing artwork, we now also make use of thetvdb paths in the show data.
+- Added advanced options ExtraShows and OmitShows to the settings.
+- Some more tweaks to the adjunct data-viewing script, cal-server.
+- Updated language files from Transifex.
+
+-6.0.10 (2014-05-02)
+- Tweak service handling to avoid running the service on anything prior to 12.3.
+
+-6.0.9 (2014-05-01)
+- Reverted to 6.0.7 due to Frodo bug (12.0 failed, 12.3 was fine).
+
+-6.0.8 (2014-04-30)
+- Fixed a bug where the Yesterday list would omit any shows that didn't also have upcoming episodes.
+- Added the ability to override a show's "runtime" (in minutes) on per-show basis by including a string like "(30 minutes)" in the episode's comments on TheTVDB (e.g. a music show's result-show is usually shorter than the default runtime).
+- Fixed a bug that could cause an erroneous tuple value in the saved data if a show's time changes w/o any episode changes.
+- Improved the show-searching logic a bit more.
+- Support new "backend=-N N" command-arg to allow a skin to request more ListItem querying ("backend=True" is the same as "backend=0 0").
+- Added an xbmc.service that starts on login.  This supersedes the call that we've asked skins to run to start up the background update process.
+- Use a single next.aired.db file to hold all the different profile's shows.  This reduces duplicate scanning and downloading of the same info when switching profiles.
+- Fix a crash issue with the "nice dates" when the long-date string contains unicode characters.
+- Due to a potential conflict in property names, the *-TVGuide2.xml day-name properties (NextAired.Today, NextAired.Yesterday, NextAired.Tomorrow) are now deprecated.  Use NextAired.TodayText, NextAired.YesterdayText, NextAired.TomorrowText instead.
+- To avoid any backend conflict with the property "NextAired.Today", there is now a property of "NextAired.AirsToday" that a skin should query going forward (the older value will still be supported for quite some time, but the newer value is safer).
+- Added an adjunct python script that can be used to view the next-aired data more fully: it starts up a web server on port 9999 and can output a variety of day lengths, profile combos, etc.
+- Updated language files from Transifex.
+
+-6.0.7 (2014-03-25)
+- The zoneinfo tar file should now be back in the release zip (the new version in 6.0.5 apparently caused it to vanish from the release process).
+- A couple more update improvements (including improvements for really large collections).
+
+-6.0.6 (2014-03-24)
+- Fix a couple timezone issues that could cause the script to exit, including yet another bug in dateutil.
+- Fix an off-by-one error in the DB-upgrade code that could sometimes cause a failure.
+- Make the backend processing capable of bringing in updated data.
+- Tweak am/pm time format a bit.
+
+-6.0.5 (2014-03-22)
+- Added a new today-week TV Guide xml file and lots of new skinning values.  The new guide can also show yesterday's episodes, if desired.
+- Add a means for the user to request new info for a single show.
+- Restored the population of the Classification info.
+- Improved DST timezone support and computation of Airtime between timezones, including better handling of Airtime changes.
+- Improved the episode search when we're trying to find the show's website ID.  This includes multi-language searching and better handling of utf-8 characters.
+- Improve a month-period update: work around some (unexpectedly) missing episode-change data in the month-update file.
+- If the interactive update stops fetching data due to failures, mention it to the user in an "OK" dialog.
+- Added the "updateshow=TVShowTitle" option to re-grab the current data for a single show.
+- Make the background process auto-start a replacement if it notices a version change.
+- Don't put so much data into the debug log by default.  Lots of other logging tweaks.
+- Updated language files from Transifex.
+
+-6.0.4 (2014-03-05)
+- A few more tweaks to the missing-artwork grabber.
+- Improve error handling when refreshing the country.db file.
+- Updated language files from Transifex.
+
+-6.0.3 (2014-03-02)
+- Fix a potential script crash with a background query not triggering a DB update (if it is needed).
+- Make the new date format a setting boolean.
+- Help the user find missing artwork for their list-item icons.
+- A few more minor improvements to the error-handling logic.
+
+-6.0.2 (2014-02-28)
+- Fix timezone crash on systems that can't handle a date prior to the unix epoch in the tz computations.
+- Supply an image for a list-item entry in the Guide that would otherwise be a blank selection area.
+- Improve the auto-stopping of the background-update proc when the addon updates.
+- Localize the day names in AirTime and change " at " to a colon (": ").
+- Fix the day-name computation in AirTime for shows that have no episodes in the upcoming week.
+
+v6.0.1 (2014-02-25):
+- The first wider release of 6.0.x (after limited-release testing of 6.0.0).
+
+v6.0.0 (2014-02-12):
+- This version of Next Aired grabs its data from TheTVDB.com.  This provides quicker updates and more upcoming-episode information.
+- The GUI now includes separate episode info for each show that appears multiple times in the upcoming week. If a show is broadcast multiple times on a particular day, it will be listed multiple times on that day.
+- The settings have changed to specify how often (in hours) background updates occur (the default is every 8 hours).  There is also a setting for how old the data can be before interacting with the TV Guide will cause an update (also set to 8 hours).
+- The data presented to the user and to the skins is mostly the same, with a few minor differences.  For instance, the Classification field is now always empty (no such data available), the Status field has a more limited sete of possible values, and the NextDate and LatestDate fields have a tweaked date format.
+- Lots of bug fixes, performance improvements, and improved error handling.
+
+v5.0.7 (2013-04-21):
+- added manual mode
+
+v5.0.6 (2013-03-19):
+- add seperate entries for canceled and ended
+- added script option to set properties for all tvshows, not only today´s ones.
+
+v5.0.5 (2013-01-28):
+- added characterart property
+
+v5.0.4 (2012-12-26):
+- silently try to delete the old databases
+
+v5.0.3 (2012-12-02):
+- delete old databases and start fresh
+- change thumb to poster in skin
+
+v5.0.2
+- add new art stuff
+- add statusid
+
+v5.0.1
+- fix re-adding cancelled shows to the db
+- the rescan option now first deletes the db's before scanning
+- localize tv show status
+
+v5.0.0
+- bump version for frodo
+- don't rescan ended tv shows
+
+v4.1.25
+- fix encoding issues
+
+v4.1.24
+- use action.getId() instead of action
+
+v4.1.23
+- add scriptname to logging
+- fix update time logic
+
+v4.1.22
+- make update time user-configurable
+
+v4.1.21
+- added Portuguese (Brazil) language file
+
+v4.1.20
+- use title instead of label
+
+v4.1.19
+- fix unicode in path issue
+
+v4.1.18
+- revert previous airtime fixed and add check in next_aired_dialog.py instead
+
+v4.1.17
+- set empty airtime when we fail to parse it
+
+v4.1.16
+- fix for occasions where airtime contains no weekday
+- use json module on systems with python 2.7 or up
+
+v4.1.15
+- fix issue with single character day/month in dateshort
+
+v4.1.14
+- fixed index error while shifting airdays
+- added german summary & description
+- don't append Airtime when none was provided
+
+v4.1.13
+- ignore possible encoding errors
+
+v4.1.12
+- use artwork downloader instead of logo downloader
+
+v4.1.11
+- fixed error if latest date is before 1970
+
+v4.1.10
+- don't block xbmc on exit
+
+v4.1.9
+- localized latest date
+
+v4.1.8
+- use XBMC's getRegion method for localized date format
+
+v4.1.7
+- don't set the locale for all categories to OS-speficic setting
+
+v4.1.6
+- fix unicode issue
+- removed unnecessary closing of the dialog after click on a tv show
+
+v4.1.5
+- make items in the gui clickable
+
+v4.1.4
+- added library path property
+- use simplejson instead of regex
+
+v4.1.3
+- fixed issue when no airday is provided
+- added NextEpisodeNumber, NextSeasonNumber, LatestEpisodeNumber, LatestSeasonNumber
+
+v4.1.2
+- automatically update the database every day at midnight
+- NextAired.%d.Foo now only sets properties for shows airing today
+
+v4.1.1
+- update readme
+
+v4.1.0
+- added canceled show info
+- added localization for date formats
+- added date properties for each weekday
+- updated tv guide showing only shows running in the current week
+- bugfixes
+
+v4.0.2
+- fixed issue when shows aires on multiple days
+- fixed issue when certain info is unavailable on tvrage
+- fixed issue where 16:9 showthumb would stick if no landscape.jpg was found
+- fixed TodayTotal would return empty
+
+v4.0.1
+- added readme for skinners
+
+v4.0.0
+- changed script gui into a tv guide
+- provide infolabels for focussed item in tv-show library
+
+v3.0.3
+- adjusted to latest json-rpc changes
+- fixed tv show title in info dialog
+- fixed closing the script
+- fixed json query when compactoutput was set to false
+
+v3.0.2
+- code cleanup
+- use cached thumbnail
+
+v3.0.1
+- fixed deprecation warning
+
+v3.0.0
+- updated code for eden
+
+v2.1.2
+- correction for better handle when informations are missing
+
+v2.1.1
+- corrected TodayShow detection (to prevent that would have occured next year with month locale name)
+
+v2.1.0
+- added properties:
+"NextAired.TodayShow" contains a list of tvshow name aired to day, useful to do stringcompare to highlight show aired today when browsing library (example: "'The Big Bang Theory', "Grey's Anatomy", 'The Mentalist'" )
+"NextAired.%d.airday" contains day of airing (english day, example: "Friday")
+"NextAired.%d.shortime" contains time of airing (example: "08:00 pm")
+
+v2.0.1:
+- correct tvshow not found informations
+
+v2.0.0:
+- rewritted the code
+- now the script can be run silently ( option: silent=True )
+- script can be set as alarm and will relaunch automaticaly (silently) after XXX minutes (option: alarm=XXX )
+- example to launche the script silently with alarm :  XBMC.RunScript(script.tv.show.next.aired,silent=True&alarm=3600)
+- result are now ordered by next episode air date.
+- informations are stored for 6h, next launch after will automatically grab new info on TVrage.com
+- next aired data are pushed on skin properties (HOME window) and can be called from all views
+list of available property:
+totals:
+"NextAired.Total" -- number of next aired tvshow informations found
+"NextAired.TodayTotal" -- number of tvshow diffused today
+for each episode informations:
+%d is the number of the property (max is "NextAired.Total")
+"NextAired.%d.Today" -- True if the show is diffused today, False if not
+"NextAired.%d.ShowTitle"  -- Title of the tvshow (same as stored in db, useful for stringcompare)
+"NextAired.%d.NextDate"  -- Date of next episode ( example: "Jan/09/2011" )00:48:48 T:3768 M:710418432  NOTICE: ###04x01^Season 4, Episode 1^Jan/09/2011
+"NextAired.%d.NextTitle"  -- Title of the next episode, if not available, it show season/episode number like this: "Season 4, Episode 1"
+"NextAired.%d.NextNumber"  -- season/episode number (example: 04x01)
+"NextAired.%d.LatestDate"  -- same as next but for the latest
+"NextAired.%d.LatestTitle"  -- same as next but for the latest
+"NextAired.%d.LatestNumber"  -- same as next but for the latest
+"NextAired.%d.Airtime"  -- day and time the show is diffused
+"NextAired.%d.Showpath"  -- path parent tvshow folder, useful to use stuff like logo, cleareart ...
+"NextAired.%d.Status"  -- Show season/tvshow status (example: "Returning Serie" , "Final Season", "New Serie")
+"NextAired.%d.ep_img"  -- Tvshow default xbmc thumb
+"NextAired.%d.Network"  -- network that diffuse the show (to use network label icon!)
+"NextAired.%d.Started"  -- return the date the show started (example: 'Sep/19/2010')
+"NextAired.%d.Classification"  -- don't know what it is ... can be "Scripted", don't know much, if someone can tell me ...
+"NextAired.%d.Genres"  -- Tvshow genre (TVrage classification, not library) (example: 'Drama | Family')
+"NextAired.%d.Premiered"  -- return the year (4digit) the show started
+"NextAired.%d.Country"  -- original country
+"NextAired.%d.Runtime"  -- duration in minutes
+
+v1.1.0:
+- speed up the process
+
+v1.0.6:
+- submit to xbmc official repo
+- correction of parsing date error
+- add LICENSE.txt
+- change icon.png
+
+v1.0.5 (2010-07-21):
+- correct linux platform urllib bug
+
+v1.0.4 (2010-07-19):
+- change sql query, now use xbmchttp to get info.
+
+v1.0.3: (2010-07-17):
+- fixed: windowxml resolution default to "720p"
+- changed: platform_libraries for addon script.module.pysqlite, only xbox include platform_libraries/win32
+- added: provides -> video to append in video mediatheque
+
+v1.0.2 (2010-07-11):
+- compatibility with pre-merge version
+
+v1.0.0 (2010-07-06):
+- Initial commit
+
+
+
+
+
+

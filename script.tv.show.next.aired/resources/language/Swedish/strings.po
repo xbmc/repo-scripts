@@ -1,0 +1,197 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "Hämta info för nästa sändning av TV-serier."
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "Hämta info för nästa sändning av TV-Serie. Du kommer inte att missa en igen."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "Visa"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "Miniatyrtyp"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "Ladda ned banners (kräver Artwork Downloader)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "Ladda ned logotyper (kräver Artwork Downloader)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Aktivera bakgrundsfanart"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "Aktivera 16:9-miniatyrer"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "Ladda ned 16:9-miniatyrer (kräver Artwork Downloader)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Uppdatera TV-informationen nu"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Ladda ned TV-information:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "I bakgrunden var [N] timma"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "När guiden öppnas om datan är äldre än [N] timmar"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "Ladda ner posters (Artwork Downloader krävs)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Återställ all data** och uppdatera TV-informationen nu"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "Visa alla TV-serier på hemskärmen (kräver skalsupport)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "Använd dag-i-vecka och månadsnamn i datum istället för endast nummer (för skal som behöver hjälp)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Antal dagar att inkludera för kommande visningar i TV-guiden"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "Starta TV-guidens vecka baserad på \"Idag\" istället för Måndag"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Inkludera gårdagen i \"Idag\"-stilen för TV-guiden"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Igår"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV-Guide"
+
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "Advancerade Alternativ:"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "Extra serier (TVDB ID-nummer)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "Undvik serier (TVDB-nummer)"
+
+msgctxt "#32023"
+msgid "Ignore \"Specials\" (requires a reset)"
+msgstr "Ignorera \"Specialare\" (omstart krävs)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "Sök språk på TVDB"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "TV Show - Next Aired"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "Hämtar information..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "AVBRUTEN"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "Hämtning avbruten av användaren."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "AVBRUTEN pga hämtningsfel"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Uppdateringen misslyckades (vi försöker igen senare)."
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "Återkommande serier"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "Avbrutet/Avslutat"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "TBD/On The Bubble"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "Under utveckling"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "Nya serier"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "Aldrig sänt"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "Sista säsongen"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "På Hiatus"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "Pilotavsnitt sorterat"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "Pilotavsnitt avvisades"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "Avbruten"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "Slutade"

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting id="Update" type="action" label="32007" action="RunScript(script.tv.show.next.aired,force=True)"/>
+	<setting id="Reset" type="action" label="32012" action="RunScript(script.tv.show.next.aired,reset=True)"/>
+	<setting id="IgnoreSpecials" type="bool" label="32023" default="False"/>
+	<setting type="lsep" label="32000"/>
+	<setting id="ThumbType" type="enum" label="32001" default="0" values="Poster|Banner|Logo"/>
+	<setting id="DownloadPosters" type="action" subsetting="true" label="32011" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,poster)" visible="lt(-1,1)"/>
+	<setting id="DownloadBanners" type="action" subsetting="true" label="32002" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,banner)" visible="gt(-2,0) + lt(-2,2)"/>
+	<setting id="DownloadLogos" type="action" subsetting="true" label="32003" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,clearlogo)" visible="gt(-3,1) + lt(-3,3)"/>
+	<setting id="BackgroundFanart" type="bool" label="32004" default="False"/>
+	<setting id="TodayStyle" type="bool" label="32016" default="False"/>
+	<setting id="WantYesterday" type="bool" label="32017" subsetting="true" default="False" visible="eq(-1,true)"/>
+	<setting id="ScanDays" type="labelenum" label="32015" values="7|14" default="7" visible="eq(-2,false)"/>
+	<setting id="ScanDays2" type="labelenum" label="32015" values="7|8|9|10|11|12|13|14|15" default="15" visible="eq(-3,true)"/>
+	<setting id="PreviewThumbs" type="bool" label="32005" default="False"/>
+	<setting id="DownloadPreviewThumbs" type="action" subsetting="true" label="32006" action="RunScript(script.artwork.downloader,mediatype=tvshow,mode=custom,tvthumb)" visible="eq(-1,true)"/>
+	<setting id="ShowAllTVShowsOnHome" type="bool" label="32013" default="False"/>
+	<setting id="ImproveDates" type="bool" label="32014" default="False"/>
+	<setting type="lsep" label="32008"/>
+	<setting id="update_every" type="labelenum" label="32009" subsetting="true" values="off|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24" default="8"/>
+	<setting id="update_after" type="labelenum" label="32010" subsetting="true" values="off|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24" default="8"/>
+	<setting type="lsep" label="32020"/>
+	<setting id="SearchLang" type="labelenum" label="32024" values="cs (čeština)|da (Dansk)|de (Deutsch)|el (Ελληνικά)|en (English)|es (Español)|fi (Suomeksi)|fr (Français)|he (עברית)|hr (Hrvatski)|hu (Magyar)|it (Italiano)|ja (日本語)|ko (한국어)|nl (Nederlands)|no (Norsk)|pl (Polski)|pt (Português)|ru (русский язык)|sl (Slovenski)|sv (Svenska)|tr (Türkçe)|zh (中文)|all" default="en (English)"/>
+	<setting id="ExtraShows" type="text" label="32021" default=""/>
+	<setting id="OmitShows" type="text" label="32022" default=""/>
+</settings>

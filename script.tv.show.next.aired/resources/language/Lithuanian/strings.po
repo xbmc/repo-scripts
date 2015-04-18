@@ -1,0 +1,197 @@
+# Kodi Media Center language file
+# Addon Name: TV Show - Next Aired
+# Addon id: script.tv.show.next.aired
+# Addon Provider: Ppic|Frost|ronie|`Black|phil65|WayneD
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Lithuanian (http://www.transifex.com/projects/p/xbmc-addons/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "Addon Summary"
+msgid "Get info for TV Shows Next Aired."
+msgstr "Gauti TV laidos kitos transliacijos informaciją."
+
+msgctxt "Addon Description"
+msgid "Get info for TV Shows Next Aired. You'll never miss one again."
+msgstr "Gauti TV laidos kitos transliacijos informaciją. Jūs niekada daugiau jos nepraleisite."
+
+msgctxt "#32000"
+msgid "Display"
+msgstr "Ekranas"
+
+msgctxt "#32001"
+msgid "Thumbnail type"
+msgstr "Miniatiūros tipas"
+
+msgctxt "#32002"
+msgid "Download banners (Artwork Downloader required)"
+msgstr "Atsiųsti banerius (reikalingas Artwork Downloader)"
+
+msgctxt "#32003"
+msgid "Download logos (Artwork Downloader required)"
+msgstr "Atsiųsti logotipus (reikalingas Artwork Downloader)"
+
+msgctxt "#32004"
+msgid "Enable background fanart"
+msgstr "Įjungti fono Fanart"
+
+msgctxt "#32005"
+msgid "Enable 16:9 preview thumbs"
+msgstr "Įjungti 16:9 peržiūros miniatiūras"
+
+msgctxt "#32006"
+msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
+msgstr "Atsiųsti 16:9 peržiūros miniatiūras (reikalingas Artwork Downloader)"
+
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "Atnaujinti TV informaciją dabar"
+
+msgctxt "#32008"
+msgid "Download TV information:"
+msgstr "Atsiųsti TV informaciją:"
+
+msgctxt "#32009"
+msgid "In the background every [N] hours"
+msgstr "Fone kas [N] valandas"
+
+msgctxt "#32010"
+msgid "On entering the guide if data is over [N] hours old"
+msgstr "Atidarant gidą, jei duomenys senesni nei [N] valandos"
+
+msgctxt "#32011"
+msgid "Download posters (Artwork Downloader required)"
+msgstr "Atsiųsti plakatus (reikalingas Artwork Downloader)"
+
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "**Atstatyti visus duomenis** ir atnaujinti TV informaciją dabar"
+
+msgctxt "#32013"
+msgid "Show All TV Shows for home screen (needs skin Support)"
+msgstr "Rodyti visas TV laidas pradiniame ekrane (reikalingas teminės išvaizdos palaikymas)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "naudoti savaitės dienos ir mėnesių vardus datose vietoj skaičių(teminei išvaizdai, kuriai reikia pagalbos)"
+
+msgctxt "#32015"
+msgid "Number of next-aired days to include in the TV Guide"
+msgstr "Kitos transliacijos dienų skaičius TV gide"
+
+msgctxt "#32016"
+msgid "Start the TV Guide week based on Today instead of Monday"
+msgstr "TV gido savaitę pradėti šiandiena, o ne pirmadieniu"
+
+msgctxt "#32017"
+msgid "Include Yesterday in the Today-style TV Guide"
+msgstr "Įtraukti vakar dieną į šiandienos stiliaus TV gidą"
+
+msgctxt "#32018"
+msgid "Yesterday"
+msgstr "Vakar"
+
+msgctxt "#32019"
+msgid "TV Guide"
+msgstr "TV gidas"
+
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "Išplėstinės parinktys"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "Ekstra laidos (TVDB ID skaičiai)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "Praleisti laidas (TVDB ID skaičiai)"
+
+msgctxt "#32023"
+msgid "Ignore \"Specials\" (requires a reset)"
+msgstr "Ignoruoti \"Specialas\" serijas (reikia paleisti iš naujo)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "TVDB paieškos kalba"
+
+msgctxt "#32101"
+msgid "TV Show - Next Aired"
+msgstr "TV laida - kita transliacija"
+
+msgctxt "#32102"
+msgid "Getting information..."
+msgstr "Gaunam informacija..."
+
+msgctxt "#32103"
+msgid "CANCELLED"
+msgstr "NUTRAUKTA"
+
+msgctxt "#32104"
+msgid "Operation cancelled by user."
+msgstr "Operaciją nutraukė vartotojas."
+
+msgctxt "#32105"
+msgid "ABORTED due to fetch failures"
+msgstr "ATŠAUKTA dėl gavimo klaidų"
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "Atnaujinimas nepavyko (pamėginsime dar kartą vėliau)."
+
+msgctxt "#32201"
+msgid "Returning Series"
+msgstr "Atnaujinti serialai"
+
+msgctxt "#32202"
+msgid "Cancelled/Ended"
+msgstr "Nutraukti/Pasibaigę"
+
+msgctxt "#32203"
+msgid "TBD/On The Bubble"
+msgstr "Bus patikslinta"
+
+msgctxt "#32204"
+msgid "In Development"
+msgstr "Kuriamas"
+
+msgctxt "#32205"
+msgid "New Series"
+msgstr "Naujas serialas"
+
+msgctxt "#32206"
+msgid "Never Aired"
+msgstr "Niekada netransliuotas"
+
+msgctxt "#32207"
+msgid "Final Season"
+msgstr "Paskutinis sezonas"
+
+msgctxt "#32208"
+msgid "On Hiatus"
+msgstr "Pertrauka"
+
+msgctxt "#32209"
+msgid "Pilot Ordered"
+msgstr "Užsakyta bandomoji serija"
+
+msgctxt "#32210"
+msgid "Pilot Rejected"
+msgstr "Bandomoji serija atmesta"
+
+msgctxt "#32211"
+msgid "Cancelled"
+msgstr "Nutrauktas"
+
+msgctxt "#32212"
+msgid "Ended"
+msgstr "Pasibaigęs"
