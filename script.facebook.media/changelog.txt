@@ -1,13 +1,59 @@
 Facebook Media Changelog
 
-Current Version : 0.9.2
-
 Known Issues/TODO:
 	-Needs to handle mouse control better (ie no access to photo/video menu)
 	-Sometimes displaying photo/video options delays waiting on facebook. Should show progress/notify user to wait
 	-Album caching (and other caching)
 	-Exit photo/tags view with same photo selected (option?)
 	-Go to tagged friend when selecting tag from photo/tags view
+
+*** 0.9.14 ***
+
+Remove 'Friends' item from main menu to reduce app permissions
+Add option to 'Extend Authorization'
+No longer asks for email/pass when adding a user
+
+*** 0.9.13 ***
+
+Fix for skin customization not working with different versions of python
+Change Password Storage module requirement to 0.1.9
+Use OAuth Helper module for authentication
+
+*** 0.9.12 ***
+
+Minor change to work better with changes in password storage module
+
+*** 0.9.11 ***
+
+Added ability to change user password
+
+*** 0.9.10 ***
+
+Fix for error on password dialog during authentication
+
+*** 0.9.9 ***
+
+Small cosmetic fix for password dialog
+
+*** 0.9.8 ***
+
+Now specifies user when asking for password on startup
+
+*** 0.9.7 ***
+
+Now uses external password storage module
+
+*** 0.9.5 ***
+
+Fix for bug causing auth to fail on OpenElec (perhaps other platforms) - added password dialog to set keyring password when necessary
+
+*** 0.9.4 ***
+
+Fix for error caused when no password is in the keyring
+
+*** 0.9.3 ***
+
+Fix for errors when sharing with the ShareSocial addon
 
 *** 0.9.2 ***
 
@@ -58,11 +104,11 @@ Fixed a bug with login notifications forms and improved forms handling (fixes "n
 
 *** 0.8.2 ***
 
-Fixed some issues with unicode errors - hopefully. I hate encodings 
+Fixed some issues with unicode errors - hopefully. I hate encodings
 
 *** 0.8.1 ***
 
-Fixed some issues with unicode errors 
+Fixed some issues with unicode errors
 
 *** 0.8.0 ***
 
@@ -85,7 +131,7 @@ Fix for some FB errors being interpreted as a bad token issue
 Fixed issue causing XBMC to crash when backing up in the hierarchy
 Fixed issues with some changes to Facebook API causing errors with user images and similar
 Fixed authentication code not actually fetching token after 4 digit code was entered
-External: When going to xbmc.2ndmind.com/fb, it now forces the user to re-enter their password, thereby giving a chance to logout the user 
+External: When going to xbmc.2ndmind.com/fb, it now forces the user to re-enter their password, thereby giving a chance to logout the user
 
 *** 0.7.6 ***
 
@@ -183,11 +229,11 @@ Fixed infinite auth restart when no user is added on fresh install
 
 *** 0.5.6 ***
 
-Allow back/parent dir to exit app for those with limited remote function 
+Allow back/parent dir to exit app for those with limited remote function
 
 *** 0.5.5 ***
 
-Fixed - backspace/parent dir now works as expected and goes to the previous menu level 
+Fixed - backspace/parent dir now works as expected and goes to the previous menu level
 
 *** 0.5.4 ***
 

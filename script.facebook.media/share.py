@@ -45,7 +45,7 @@ class FacebookTargetFunctions(ShareSocial.TargetFunctions):
 		if not isinstance(user,FacebookUser): user = FacebookUser(user)
 		if self.graph and self.graph.uid == user.id: return self.graph
 		self.graph = newGraph(	user.email,
-								user.password,
+								user.password(),
 								user.id,
 								user.token,
 								user.updateToken)

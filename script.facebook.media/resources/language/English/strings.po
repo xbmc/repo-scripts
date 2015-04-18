@@ -268,3 +268,7 @@ msgstr ""
 msgctxt "#30063"
 msgid "Message"
 msgstr ""
+
+msgctxt "#30064"
+msgid "Change Password"
+msgstr ""
