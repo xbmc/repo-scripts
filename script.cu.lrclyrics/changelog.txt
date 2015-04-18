@@ -1,3 +1,6 @@
+v3.0.11
+- properly handle lyrics in the uslt tag
+
 v3.0.10
 - add support for lrc lyrics inside the uslt tag
 

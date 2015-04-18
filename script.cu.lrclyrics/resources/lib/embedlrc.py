@@ -175,7 +175,8 @@ def getID3Lyrics(filename, getlrc):
             lyrics = raw[pos+1:]
             if (enc == 'latin_1'):
                 enc = chardet.detect(lyrics)['encoding']
-            return lyrics.decode(enc)
+            if (getlrc and lyrics.decode(enc).startswith('[')) or (not getlrc):
+                return lyrics.decode(enc)
     return None
 
 def getFlacLyrics(filename, getlrc):
