@@ -152,6 +152,14 @@ msgctxt "#32109"
 msgid "Beach 1 - [2.5GB] - 720p"
 msgstr "海滩 1 - [2.5GB] - 720p"
 
+msgctxt "#32202"
+msgid "None"
+msgstr "无"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "用户定义"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "屏幕保护文件无效"

@@ -27,3 +27,7 @@ msgstr "Tendra skráseting av handlingum"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Uppseting"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Onki"

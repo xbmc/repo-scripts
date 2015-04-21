@@ -192,6 +192,50 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "Beach 3 - [3.4GB] - 720p"
 
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Snow 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Snow 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Snow 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Watermill 1 - [549MB] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Imagem Sobreposição"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Selecione o arquivo de imagem de sobreposição"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Nenhum"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Definido pelo Usuário"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Moldura da imagem 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Moldura da janela 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Moldura da janela 2"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Arquivo de proteção de tela não é válido"
@@ -215,3 +259,11 @@ msgstr "Esta opção irá usar todos os arquivos de vídeos transferidos"
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
 msgstr "Cada vídeo requer que seja efetuado download de forma individual primeiramente."
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "A transferência do arquivo falhou"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Isto pode ter ocorrido em decorrência de excesso no uso da banda no servidor. Por gentileza tente novamente amanhã"

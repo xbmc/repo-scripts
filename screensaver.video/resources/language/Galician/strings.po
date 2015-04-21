@@ -43,3 +43,11 @@ msgstr "Repetir Todos"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repetir Un"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Nivel de atenuación"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Ningún"

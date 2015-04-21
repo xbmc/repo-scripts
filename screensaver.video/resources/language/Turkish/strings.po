@@ -123,3 +123,11 @@ msgstr "Akvaryum 1 [846MB]-400P"
 msgctxt "#32102"
 msgid "Aquarium 2  - [2.7GB] - 720p"
 msgstr "Akvaryum 2- [2.7GB] - 720P"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Yok"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Kullanıcı Tanımlı"

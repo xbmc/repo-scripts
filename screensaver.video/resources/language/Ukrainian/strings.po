@@ -31,3 +31,7 @@ msgstr "Увімкнути журнал налагодження"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Налаштування"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Нічого"

@@ -31,3 +31,7 @@ msgstr "Enable debug logging"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "ปรับตั้งค่า"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "ไม่มี"

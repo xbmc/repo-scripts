@@ -1,3 +1,6 @@
+v1.1.1
+- Set variable when VideoScreensaver is running so other addons know about it
+
 v1.1.0
 - Add option to set an overlay image
 

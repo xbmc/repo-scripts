@@ -31,3 +31,7 @@ msgstr "Stel ontfout log in staat"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurasie"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Geen"

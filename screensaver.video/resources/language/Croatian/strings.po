@@ -112,6 +112,14 @@ msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
 msgstr "Kamin 3 - [2.1GB] - 1080p"
 
+msgctxt "#32202"
+msgid "None"
+msgstr "Nijedan"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Definiran korisnikom"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Datoteka čuvara zaslona nije valjana"

@@ -43,3 +43,7 @@ msgstr "Repeat All"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repeat One"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "None"

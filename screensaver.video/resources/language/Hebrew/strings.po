@@ -43,3 +43,7 @@ msgstr "חזרה על הכל"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "חזרה אחת"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "ללא"

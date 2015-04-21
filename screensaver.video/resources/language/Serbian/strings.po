@@ -31,3 +31,7 @@ msgstr "Omogući beleženje grešaka"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguracija"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Ništa"

@@ -31,3 +31,7 @@ msgstr "Aktivoni debug logging"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurimi"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Asgjë"

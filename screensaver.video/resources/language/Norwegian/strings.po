@@ -39,3 +39,7 @@ msgstr "Repeter alle"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repeter èn gang"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Ingen"

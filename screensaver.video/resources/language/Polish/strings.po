@@ -192,6 +192,50 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "Plaża 3 - [3.4GB] - 720p"
 
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Śnieg 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Śnieg 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Śnieg 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Młyn wodny 1 - [549MB] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Obraz nakładki"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Wybierz obraz nakładki"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Brak"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Zdefiniowane przez użytkownika"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Ramka obrazu 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Ramka okna 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Ramka okna 2"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Plik wygaszacza jest niepoprawny"
@@ -215,3 +259,11 @@ msgstr "Ta opcja wymusi używanie wszystkich pobranych plików wideo"
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
 msgstr "Najpierw trzeba pobrać osobno każdy plik wideo"
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Nieudane pobieranie pliku"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Może to być spowodowane przekroczeniem limitu obciążenia serwera, proszę spróbować jutro."

@@ -192,6 +192,18 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "바닷가 3 - [3.4GB] - 720p"
 
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "오버레이 이미지"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "없음"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "사용자 비디오"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "화면 보호기 파일이 적합하지 않음"

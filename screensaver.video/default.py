@@ -35,9 +35,9 @@ class ExitMonitor(xbmc.Monitor):
 if __name__ == '__main__':
 
     # Only allow one screensaver to run at a time
-    alreadyRunning = xbmcgui.Window(10000).getProperty("VideoScreensaverRunning")
+    alreadyRunning = xbmcgui.Window(10000).getProperty("VideoScreensaverStarting")
     if alreadyRunning in ["", None]:
-        xbmcgui.Window(10000).setProperty("VideoScreensaverRunning", "true")
+        xbmcgui.Window(10000).setProperty("VideoScreensaverStarting", "true")
 
         # Make a special check to see if TvTunes is running - as we want to give that time
         # to stop before we start trying to play the video
@@ -96,6 +96,6 @@ if __name__ == '__main__':
             log("Failed to start VideoScreensaver: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
         xbmcgui.Window(10025).clearProperty("TvTunesIsRunning")
-        xbmcgui.Window(10000).clearProperty("VideoScreensaverRunning")
+        xbmcgui.Window(10000).clearProperty("VideoScreensaverStarting")
     else:
         log("VideoScreensaver already flagged as running")

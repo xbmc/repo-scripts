@@ -31,3 +31,7 @@ msgstr "Aktiver fejlfindingslogning"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguration"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Intet"

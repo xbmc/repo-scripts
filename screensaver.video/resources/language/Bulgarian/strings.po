@@ -192,6 +192,26 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "Плаж 3 - [3.4GB] - 720p"
 
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Сняг 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Сняг 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Сняг 3 - [1.2GB] - 720p"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Без"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Избрани"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Избраният файл е невалиден"
@@ -215,3 +235,7 @@ msgstr "Ще бъдат ползвани всички видео файлове,
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
 msgstr "Всеки файл, който желаете да ползвате, трябва първо да бъде свален."
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Свалянето на видео файла се провали"

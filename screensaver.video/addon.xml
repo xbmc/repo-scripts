@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.video" name="VideoScreensaver" version="1.1.0" provider-name="robwebset">
+<addon id="screensaver.video" name="VideoScreensaver" version="1.1.1" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -20,7 +20,7 @@
 		<summary lang="ko">비디오 파일 재생 화면 보호기</summary>
 		<summary lang="lt">Ekrano užsklanda, kuri atkuria vaizdo failą</summary>
 		<summary lang="nl">Schermbeveiliging die een videobestand afspeelt</summary>
-		<summary lang="pl">Wygaszacza ekranu odtwarzający plik wideo</summary>
+		<summary lang="pl">Wygaszacz ekranu odtwarzający plik wideo</summary>
 		<summary lang="pt">Protetor de ecrã que reproduz um ficheiro de vídeo</summary>
 		<summary lang="pt_BR">Protetor de Tela que reproduz arquivos de vídeos.</summary>
 		<summary lang="ro">Protector ecran care redă un fișier video</summary>
@@ -39,7 +39,7 @@
 		<description lang="ko">화면 보호기가 시작될 때 사용자 비디오 또는 내장 비디오를 재생합니다</description>
 		<description lang="lt">Atkuria vaizdo įrašą, kai įjungiama ekrano užsklanda. Tai gali būti savas  ar vienas iš integruotų vaizdo įrašų</description>
 		<description lang="nl">Speelt een video wanneer de schermbeveiliger start, dit kan een vooraf ingestelde video zijn of één van de ingebouwde video's</description>
-		<description lang="pl">Wygaszacza ekranu, który po uruchomieniu odtwarza wbudowany bądź niestandardowy plik wideo.</description>
+		<description lang="pl">Wygaszacz ekranu, który po uruchomieniu odtwarza wbudowany bądź niestandardowy plik wideo.</description>
 		<description lang="pt">Reproduz um vídeo quando o protetor de ecrã inicia, este pode ser um vídeo personalizado ou um dos vídeos embutidos</description>
 		<description lang="pt_BR">Reproduza um vídeo quando iniciar a proteção de tela, podes setar uma vídeo customizado ou um dos vídeos pré-existentes que podem ser transferidos via ajustes do addon.</description>
 		<description lang="sv">Spelar en film när skärmsläckaren startar, det kan vara en egen film eller någon av de inbyggda filmerna</description>

@@ -31,3 +31,7 @@ msgstr "Gaitu debug saioa"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurazioa"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Bat ere ez"

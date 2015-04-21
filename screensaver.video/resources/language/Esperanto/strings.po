@@ -23,3 +23,7 @@ msgstr "Ekrankurteno"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguro"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "None"

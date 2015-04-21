@@ -192,6 +192,50 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "Παραλία 3 - [3.4GB] - 720p"
 
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Χιόνι 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Χιόνι 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Χιόνι 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Νερόμυλος 1 - [549MB] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Εικόνα Επικάλυψης"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Επιλογή Εικόνας Επικάλυψης"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Καμία"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Ορισμένο από το Χρήστη"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Πλαίσιο Φωτογραφίας 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Πλαίσιο Παραθύρου 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Πλαίσιο Παραθύρου 2"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Το Αρχείο Προφύλαξης Οθόνης Δεν Είναι Έγκυρο"
@@ -215,3 +259,11 @@ msgstr "Αυτή η επιλογή θα χρησιμοποιήσει όλα τα
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
 msgstr "Κάθε απαιτούμενο βίντεο πρέπει να έχει ληφθεί ξεχωριστά εξ' αρχής"
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Αδυναμία λήψης αρχείου βίντεο"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Ενδέχεται να οφείλεται στο όριο ταχύτητας του διακομιστή, δοκιμάστε ξανά αύριο"

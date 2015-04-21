@@ -35,3 +35,7 @@ msgstr "Configurație"
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nivel de întunecare"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Niciunul"
