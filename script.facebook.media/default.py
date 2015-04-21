@@ -550,11 +550,10 @@ class FacebookSession:
             item.setProperty('uid',user.id)
             items.append(item)
         options = [ ('add_user','facebook-media-icon-adduser.png',__lang__(30038),'data'),
-                    ('remove_user','facebook-media-icon-removeuser.png',__lang__(30039),'data'),
-                    ('reauth_user','facebook-media-icon-reauth-user.png',__lang__(30040),'data'),
-                    ('extauth_user','facebook-media-icon-reauth-user.png','Extend Authorization','data')
+                    ('remove_user','facebook-media-icon-removeuser.png',__lang__(30039),'data')
+#                    ('reauth_user','facebook-media-icon-reauth-user.png',__lang__(30040),'data'),
+#                    ('extauth_user','facebook-media-icon-reauth-user.png','Extend Authorization','data')
         ]
-                    #('change_user_password','facebook-media-icon-reauth-user.png',__lang__(30064),'data')]
         for action,icon,label,data in options:
             item = xbmcgui.ListItem()
             item.setThumbnailImage(icon)
@@ -684,7 +683,7 @@ class FacebookSession:
             self._permissions = {}
             for p in self.graph.getObject('me').connections.permissions():
                 self._permissions[p.permission()] = p.status() == 'granted' and True or False
-        LOG('Permissons: {0}'.format( ', '.join([p for p in self._permissions.keys() if self._permissions[p]])))
+            LOG('Permissons: {0}'.format( ', '.join([p for p in self._permissions.keys() if self._permissions[p]])))
         return self._permissions.get(perm,False)
 
     def refreshCATEGORIES(self):
@@ -703,15 +702,12 @@ class FacebookSession:
 
         items = []
 
-        if not item and self.permission('user_friends'):
+        if uid == 'me':
             cids = ('albums','videos','friends','photosofme','videosofme')
             cats = (__lang__(30001),__lang__(30002),__lang__(30003),__lang__(30004),__lang__(30005))
         else:
             cids = ('albums','videos','photosofme','videosofme')
-            if uid == 'me':
-                cats = (__lang__(30001),__lang__(30002),__lang__(30004),__lang__(30005))
-            else:
-                cats = (__lang__(30001),__lang__(30002),__lang__(30006),__lang__(30007))
+            cats = (__lang__(30001),__lang__(30002),__lang__(30006),__lang__(30007))
 
         for cat,cid in zip(cats,cids):
             item = xbmcgui.ListItem()
@@ -872,6 +868,10 @@ class FacebookSession:
         LOG('ALBUMS - STOPPED')
 
     def FRIENDS(self,uid='me'):
+        if not self.permission('user_friends'):
+            if not self.extendAuthorization(ask=True,permission='user_friends'):
+                return
+
         LOG('FRIENDS - STARTED')
         self.saveState()
 
@@ -1239,29 +1239,34 @@ class FacebookSession:
                 self.openAddUserWindow(self.currentUser.email, self.currentUser.password())
                 self.currentUser.resetPassword()
             elif action == 'extauth_user':
-                token = self.getAuthExtended(graph=self.graph)
-                self.newTokenCallback(token)
-                self._permissions = None
-                self.refreshCATEGORIES()
+                self.extendAuthorization()
             elif action == 'change_user_password':
                 self.currentUser.changePassword()
                 self.graph.setLogin(self.currentUser.email,self.currentUser.password())
 
+    def extendAuthorization(self,ask=False,permission=None):
+        if ask:
+            yes = xbmcgui.Dialog().yesno('Extended Authorization','This action requires extended Facebook permissions','','Would you like to extend authorization?')
+            if not yes: return False
+        token = self.getAuthExtended(graph=self.graph)
+        self.newTokenCallback(token)
+        self._permissions = None
+        if permission:
+            return self.permission(permission)
+        return True
 
     def photovideoMenuSelected(self):
         item = self.getFocusedItem(128)
         name = item.getProperty('name')
-        #itemNumber = int(item.getProperty('item_number'))
+        itemNumber = int(item.getProperty('item_number'))
         if name == 'slideshow':
             self.window.setFocusId(120)
             self.setFriend()
             self.showImages(None,True)
         elif name == 'comments':
-            pass
-            #self.doCommentDialog(itemNumber)
+            self.doCommentDialog(itemNumber,item)
         elif name == 'likes':
-            pass
-            #self.doLike(itemNumber)
+            self.doLike(itemNumber,item)
 
     def doNextPrev(self):
         ilist = self.window.getControl(120)
@@ -1277,25 +1282,46 @@ class FacebookSession:
     def openSlideshowTagsWindow(self,photos,index,slideshow=False):
         openWindow('slideshow',session=self,photos=photos,index=index,slideshow=slideshow)
 
-    def doCommentDialog(self,itemNumber):
+    def doCommentDialog(self,itemNumber,comment_item):
+        if not self.permission('publish_actions'):
+            if not self.extendAuthorization(ask=True,permission='publish_actions'): return
         comment = doKeyboard("Enter Comment",'',False)
         if not comment: return
         item = self.window.getControl(120).getListItem(int(itemNumber))
         pv_obj = self.graph.fromJSON(item.getProperty('data'))
         pv_obj.comment(comment)
-        self.updateMediaItem(item,pv_obj)
+        pv_obj = self.updateMediaItem(item,pv_obj)
+        if comment_item:
+            comments = pv_obj.comments()
+            if comments:
+                comments_string = ''
+                for c in comments:
+                    name = c.from_({}).get('name','')
+                    comments_string += '[COLOR yellow]%s:[/COLOR][CR]%s[CR][CR]' % (name,c.message(''))
+                comment_item.setProperty('data',comments_string)
 
-    def doLike(self,itemNumber):
+    def doLike(self,itemNumber,like_item=None):
+        if not self.permission('publish_actions'):
+            if not self.extendAuthorization(ask=True,permission='publish_actions'): return
         item = self.window.getControl(120).getListItem(int(itemNumber))
         pv_obj = self.graph.fromJSON(item.getProperty('data'))
         pv_obj.like()
-        self.updateMediaItem(item,pv_obj)
+        pv_obj = self.updateMediaItem(item,pv_obj)
+        if like_item:
+            likes = pv_obj.connections.likes()
+            if likes:
+                likes_string = ''
+                for l in likes:
+                    likes_string += '[COLOR yellow]%s[/COLOR][CR]' % l.name('')
+                like_item.setLabel(__lang__(30043) % len(likes))
+                like_item.setProperty('data',likes_string)
 
     def updateMediaItem(self,item,pv_obj=None):
         if not pv_obj: pv_obj = self.graph.fromJSON(item.getProperty('data'))
         item.setProperty('data',pv_obj.updateData().toJSON())
         if pv_obj.hasProperty('comments'): item.setProperty('comments','true')
         if pv_obj.hasProperty('tags'): item.setProperty('tags','true')
+        return pv_obj
         #items = self.window.getControl(120).getItems()
         #idx=0
         #for i in items:
@@ -1313,29 +1339,23 @@ class FacebookSession:
         itemNumber = self.window.getControl(120).getSelectedPosition()
         item = self.getFocusedItem(120)
         pv_obj = self.graph.fromJSON(item.getProperty('data'))
+
         comments_string = ''
-#        tags_string = ''
-        likes_string = ''
         comments = pv_obj.comments()
         if comments:
             for c in comments:
                 name = c.from_({}).get('name','')
                 comments_string += '[COLOR yellow]%s:[/COLOR][CR]%s[CR][CR]' % (name,c.message(''))
-#        tags = pv_obj.tags()
-#        if tags:
-#            for t in tags:
-#                tags_string += '[COLOR yellow]%s[/COLOR][CR]' % t.name('')
+
+        likes_string = ''
         likes = pv_obj.connections.likes()
         if likes:
             for l in likes:
                 likes_string += '[COLOR yellow]%s[/COLOR][CR]' % l.name('')
-        #if comments:
-        #items.append(self.createPhotoMenuItem('comments', __lang__(30041),__lang__(30042), comments_string, itemNumber))
-        items.append(self.createPhotoMenuItem('comments', __lang__(30041),'', comments_string, itemNumber))
-#        if tags:
-#            items.append(self.createPhotoMenuItem('tags', 'TAGS', 'Click to view tagged image', tags_string, itemNumber))
-        #items.append(self.createPhotoMenuItem('likes', __lang__(30043) % len(likes), __lang__(30044), likes_string, itemNumber))
-        items.append(self.createPhotoMenuItem('likes', __lang__(30043) % len(likes), '', likes_string, itemNumber))
+
+        items.append(self.createPhotoMenuItem('comments', __lang__(30041), __lang__(30042), comments_string, itemNumber))
+        items.append(self.createPhotoMenuItem('likes', __lang__(30043) % len(likes), __lang__(30044), likes_string, itemNumber))
+
         if self.itemType(item) == 'image':
             items.append(self.createPhotoMenuItem('slideshow', __lang__(30045), __lang__(30046), '', itemNumber))
         self.window.getControl(128).reset()
