@@ -23,12 +23,10 @@ from urlresolver.plugnplay import Plugin
 import re, urllib2
 from urlresolver import common
 
-net = Net()
-
 class MuchshareResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "muchshare"
-    domains = [ "muchshare.net" ]
+    domains = ["muchshare.net"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -36,33 +34,27 @@ class MuchshareResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        try:
-            url = self.get_url(host, media_id)
-            html = self.net.http_GET(url).content
-    
-            err = re.compile('<p class="err">(.+?)<br>').findall(html)
-            if err:
-                raise Exception (str(err))
-    
-            data = {}
-            r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
-            for name, value in r:
-                data[name] = value
-                data.update({'down_direct':1})
-            
-            common.addon.show_countdown(45, title='Muchshare', text='Loading Video...')
-            html = net.http_POST(url, data).content
-            r = re.search("(?:.+var file_link = \'|.+\<a id=\"lnk_download\" href=\")(.+?)(?:\'|\"\>)", html).group(1)
-            urllib2.unquote(r)
-            return r
+        url = self.get_url(host, media_id)
+        html = self.net.http_GET(url).content
 
-        except Exception, e:
-            common.addon.log('**** Muchshare Error occured: %s' % e)
-            common.addon.show_small_popup('Error', str(e), 5000, '')
-            return self.unresolvable(code=0, msg=e)
+        err = re.compile('<p class="err">(.+?)<br>').findall(html)
+        if err:
+            raise UrlResolver.ResolverError(str(err))
+
+        data = {}
+        r = re.findall(r'type="(?:hidden|submit)?" name="(.+?)"\s* value="?(.+?)">', html)
+        for name, value in r:
+            data[name] = value
+        data.update({'down_direct': 1})
+        
+        common.addon.show_countdown(45, title='Muchshare', text='Loading Video...')
+        html = self.net.http_POST(url, data).content
+        r = re.search("(?:.+var file_link = \'|.+\<a id=\"lnk_download\" href=\")(.+?)(?:\'|\"\>)", html).group(1)
+        r = urllib2.unquote(r)
+        return r
  
     def get_url(self, host, media_id):
-        return 'http://muchshare.net/%s' % media_id 
+        return 'http://muchshare.net/%s' % media_id
         
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/([0-9a-zA-Z]+)',url)

@@ -1,6 +1,6 @@
 '''
-shared.sx urlresolver plugin
-Copyright (C) 2014 Lars-Daniel Weber
+vivo.sx urlresolver plugin
+Copyright (C) 2015 y2000j
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,17 +16,19 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
+from time import sleep
+import re
+import os
 
-class SharedsxResolver(Plugin, UrlResolver, PluginSettings):
+class VivosxResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "sharedsx"
-    domains = ["shared.sx"]
+    name = "vivosx"
+    domains = [ "vivo.sx" ]
     
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -35,13 +37,14 @@ class SharedsxResolver(Plugin, UrlResolver, PluginSettings):
     
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+        
         # get landing page
-        html = self.net.http_GET(web_url, headers={'Referer': web_url}).content
+        html = self.net.http_GET(web_url, headers = {'Referer':web_url}).content
         
         # read POST variables into data
         data = {}
         r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)"', html)
-        if not r: raise UrlResolver.ResolverError('page structure changed')
+        if not r: raise Exception('page structure changed')
         for name, value in r: data[name] = value
         
         # get delay from hoster; actually this is not needed, but we are polite
@@ -49,12 +52,8 @@ class SharedsxResolver(Plugin, UrlResolver, PluginSettings):
         r = re.search(r'var RequestWaiting = (\d+);', html)
         if r: delay = r.groups(1)[0]
         
-        # run countdown and check whether it was canceld or not
-        cnt = common.addon.show_countdown(int(delay), title='shared.sx', text='Please wait for hoster...')
-        if not cnt: raise UrlResolver.ResolverError('countdown was canceld by user')
-        
         # get video page using POST variables
-        html = self.net.http_POST(web_url, data, headers=({'Referer': web_url, 'X-Requested-With': 'XMLHttpRequest'})).content
+        html = self.net.http_POST(web_url, data, headers = ({'Referer':web_url, 'X-Requested-With':'XMLHttpRequest'})).content
         
         # search for content tag
         r = re.search(r'class="stream-content" data-url', html)
@@ -68,10 +67,10 @@ class SharedsxResolver(Plugin, UrlResolver, PluginSettings):
         return r[0]
     
     def get_url(self, host, media_id):
-        return 'http://shared.sx/%s' % media_id
+        return 'http://vivo.sx/%s' % media_id 
     
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/([0-9a-zA-Z]+)', url)
+        r = re.search('//(.+?)/([0-9a-zA-Z]+)',url)
         if r:
             return r.groups()
         else:
@@ -80,6 +79,6 @@ class SharedsxResolver(Plugin, UrlResolver, PluginSettings):
     
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?shared.sx/' +
+        return (re.match('http://(www.)?vivo.sx/' +
                          '[0-9A-Za-z]+', url) or
-                         'shared.sx' in host)
+                         'vivo.sx' in host)

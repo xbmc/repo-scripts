@@ -25,7 +25,7 @@ import urllib2
 from urlresolver import common
 import os
 
-class crunchyrollResolver(Plugin, UrlResolver, PluginSettings):
+class CrunchyRollResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "crunchyroll"
     domains = [ "crunchyroll.com" ]
@@ -40,19 +40,15 @@ class crunchyrollResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        try:
-            html=self.net.http_GET('http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s'%media_id,{'Host':'www.crunchyroll.com',
-                 'X-Device-Uniqueidentifier':'ffffffff-931d-1f73-ffff-ffffaf02fc5f',
-                 'X-Device-Manufacturer':'HTC',
-                 'X-Device-Model':'HTC Desire',
-                 'X-Application-Name':'com.crunchyroll.crunchyroid',
-                 'X-Device-Product':'htc_bravo',
-                 'X-Device-Is-GoogleTV':'0'}).content
-            mp4=re.compile(r'"video_url":"(.+?)","h"').findall(html.replace('\\',''))[0]
-            return mp4
-        except Exception, e:
-            common.addon.log_error('**** Crunchyroll Error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+        html=self.net.http_GET('http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s'%media_id,{'Host':'www.crunchyroll.com',
+             'X-Device-Uniqueidentifier':'ffffffff-931d-1f73-ffff-ffffaf02fc5f',
+             'X-Device-Manufacturer':'HTC',
+             'X-Device-Model':'HTC Desire',
+             'X-Application-Name':'com.crunchyroll.crunchyroid',
+             'X-Device-Product':'htc_bravo',
+             'X-Device-Is-GoogleTV':'0'}).content
+        mp4=re.compile(r'"video_url":"(.+?)","h"').findall(html.replace('\\',''))[0]
+        return mp4
 
     def get_url(self, host, media_id):
         return 'http://www.crunchyroll.com/android_rpc/?req=RpcApiAndroid_GetVideoWithAcl&media_id=%s' % media_id

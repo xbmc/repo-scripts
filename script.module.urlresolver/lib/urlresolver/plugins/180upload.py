@@ -16,16 +16,16 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
 from lib import jsunpack
-import re, urllib2, os, xbmcgui, xbmc
 from lib import captcha_lib
 
-net = Net()
+USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:36.0) Gecko/20100101 Firefox/36.0'
 
 class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -39,68 +39,61 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         # try embedded link first to avoid captcha, try direct link if it doesn't work
-            stream_url = self.__get_link('http://180upload.com/embed-%s.html' % media_id)
-            if not stream_url:
-                stream_url = self.__get_link(self.get_url(host, media_id))
-            return stream_url
+        stream_url = self.__get_link('http://180upload.com/embed-%s.html' % media_id)
+        if not stream_url:
+            stream_url = self.__get_link(self.get_url(host, media_id))
+        return stream_url
 
     def __get_link(self, url):
-        try:
-            common.addon.log_debug('180upload: get_link: %s' % (url))
-            html = net.http_GET(url).content
-
-            #Re-grab data values
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)"', html)
-
-            if r:
-                for name, value in r:
-                    data[name] = value
-            else:
-                raise Exception('Unable to resolve 180Upload Link')
-
-            # ignore captchas in embedded pages
-            if 'embed' not in url:
-                #Check for SolveMedia Captcha image
-                solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
-                recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
-
-                if solvemedia:
-                    data.update(captcha_lib.do_solvemedia_captcha(solvemedia.group(1)))
-                elif recaptcha:
-                    data.update(captcha_lib.do_recaptcha(recaptcha.group(1)))
-
-            common.addon.log_debug('180Upload - Requesting POST URL: %s with data: %s' % (url, data))
-            data['referer'] = url
-            html = net.http_POST(url, data).content
-
-            # try download link
-            link = re.search('id="lnk_download[^"]*" href="([^"]+)', html)
-            if link:
-                common.addon.log_debug('180Upload Download Found: %s' % link.group(1))
-                return link.group(1)
-            else:
-                # try flash player link
-                packed = re.search('id="player_code".*?(eval.*?)</script>', html, re.DOTALL)
-                if packed:
-                    js = jsunpack.unpack(packed.group(1))
-                    link = re.search('name="src"\s*value="([^"]+)', js.replace('\\', ''))
+        headers = {
+                   'User-Agent': USER_AGENT
+                   }
+        common.addon.log_debug('180upload: get_link: %s' % (url))
+        html = self.net.http_GET(url, headers).content
+        
+        #Re-grab data values
+        data = {}
+        r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)"', html)
+        
+        if r:
+            for name, value in r:
+                data[name] = value
+        else:
+            raise UrlResolver.ResolverError('Unable to resolve link')
+        
+        # ignore captchas in embedded pages
+        if 'embed' not in url:
+            data.update(captcha_lib.do_captcha(html))
+        
+        common.addon.log_debug('180Upload - Requesting POST URL: %s with data: %s' % (url, data))
+        data['referer'] = url
+        html = self.net.http_POST(url, data, headers).content
+        
+        # try download link
+        link = re.search('id="lnk_download[^"]*" href="([^"]+)', html)
+        stream_url = None
+        if link:
+            common.addon.log_debug('180Upload Download Found: %s' % link.group(1))
+            stream_url = link.group(1)
+        else:
+            # try flash player link
+            packed = re.search('id="player_code".*?(eval.*?)</script>', html, re.DOTALL)
+            if packed:
+                js = jsunpack.unpack(packed.group(1))
+                link = re.search('name="src"\s*value="([^"]+)', js.replace('\\', ''))
+                if link:
+                    common.addon.log_debug('180Upload Src Found: %s' % link.group(1))
+                    stream_url = link.group(1)
+                else:
+                    link = re.search("'file'\s*,\s*'([^']+)", js.replace('\\', ''))
                     if link:
-                        common.addon.log_debug('180Upload Src Found: %s' % link.group(1))
-                        return link.group(1)
-                    else:
-                        link = re.search("'file'\s*,\s*'([^']+)", js.replace('\\', ''))
-                        if link:
-                            common.addon.log_debug('180Upload Link Found: %s' % link.group(1))
-                            return link.group(1)
-
-                raise Exception('Unable to resolve 180Upload Link')
-        except urllib2.URLError as e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' % (e.code, url))
-            return self.unresolvable(code=3, msg=e)
-        except Exception as e:
-            common.addon.log_error('**** 180upload Error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+                        common.addon.log_debug('180Upload Link Found: %s' % link.group(1))
+                        stream_url = link.group(1)
+        
+        if stream_url:
+            return stream_url + '|User-Agent=%s' % (USER_AGENT)
+        else:
+            raise UrlResolver.ResolverError('Unable to resolve link')
 
     def get_url(self, host, media_id):
         return 'http://www.180upload.com/%s' % media_id

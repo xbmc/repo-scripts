@@ -86,6 +86,9 @@ class UrlResolver(Interface):
           (!) Use ["*"] for universal resolvers.
     '''
     
+    class ResolverError(Exception):
+        pass
+
     class unresolvable():
         '''
         An object returned to indicate that the url could not be resolved

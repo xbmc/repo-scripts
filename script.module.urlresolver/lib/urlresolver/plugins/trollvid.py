@@ -16,18 +16,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import urllib
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib,urllib2
 from urlresolver import common
-import re,xbmc
 
-class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
+class TrollVidResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "trollvid.net"
-    domains = [ "trollvid.net" ]
+    domains = ["trollvid.net"]
     
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -49,31 +49,11 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
     
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        post_url = web_url
-        hostname = self.name
-        common.addon.log(media_id)
-        common.addon.log(web_url)
-        try:
-            resp = self.net.http_GET(web_url)
-            html = resp.content
-        except urllib2.URLError, e:
-            common.addon.log_error(hostname+': got http error %d fetching 1st url %s' % (e.code, web_url))
-            return self.unresolvable(code=3, msg='Exception: %s' % e) #return False
-        
-        #try:
-        #	data = {}; r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html); data['usr_login']=''
-        #	for name, value in r: data[name] = value
-        #	data['imhuman']='Proceed to video'; data['btn_download']='Proceed to video'
-        #	xbmc.sleep(2000)
-        #	html = self.net.http_POST(post_url, data).content
-        #except urllib2.URLError, e:
-        #    common.addon.log_error(hostname+': got http error %d fetching 2nd url %s' % (e.code, web_url))
-        #    return self.unresolvable(code=3, msg='Exception: %s' % e) #return False
-        
+        resp = self.net.http_GET(web_url)
+        html = resp.content
         r = re.search('clip\s*:\s*\n*\s*{\s*\n*\s*\n*\s*\n*\s*url\s*:\s*"(http.+?)"', html)
         if r:
             stream_url = urllib.unquote_plus(r.group(1))
         else:
-            common.addon.log_error(hostname+': stream url not found')
-            return self.unresolvable(code=0, msg='no file located') #return False
+            raise UrlResolver.ResolverError('No File located')
         return stream_url

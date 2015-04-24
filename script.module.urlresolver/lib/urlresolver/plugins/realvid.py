@@ -15,17 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-import xbmc
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import re
-import urllib2
 from urlresolver import common
-
-logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class RealvidResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -42,33 +37,22 @@ class RealvidResolver(Plugin, UrlResolver, PluginSettings):
         return 'http://realvid.net/embed-%s-640x400.html' % (media_id)
 
     def get_host_and_id(self,url):
-        r=re.search(self.pattern,url)
+        r = re.search(self.pattern, url)
         if r: return r.groups()
         else: return False
 
     def valid_url(self,url,host):
-        if self.get_setting('enabled')=='false': return False
-        return re.match(self.pattern,url) or self.name in host
+        if self.get_setting('enabled') == 'false': return False
+        return re.match(self.pattern, url) or self.name in host
 
     def get_media_url(self,host,media_id):
-        try:
-            web_url = self.get_url(host, media_id)
-            link = self.net.http_GET(web_url).content
+        web_url = self.get_url(host, media_id)
+        link = self.net.http_GET(web_url).content
+        if link.find('404 Not Found') >= 0:
+            raise UrlResolver.ResolverError('The requested video was not found.')
 
-            if link.find('404 Not Found') >= 0:
-                err_title = 'Content not available.'
-                err_message = 'The requested video was not found.'
-                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
-                return self.unresolvable(1, err_message)
-
-            video_link = str(re.compile('file[: ]*"(.+?)"').findall(link)[0])
-
-            if len(video_link) > 0:
-                return video_link
-            else:
-                return self.unresolvable(0, 'No playable video found.')
-        except urllib2.URLError, e:
-            return self.unresolvable(3, str(e))
-        except Exception, e:
-            return self.unresolvable(0, str(e))
+        video_link = str(re.compile('file[: ]*"(.+?)"').findall(link)[0])
+        if len(video_link) > 0:
+            return video_link
+        else:
+            raise UrlResolver.ResolverError('No playable video found.')

@@ -15,7 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
-import os
 import xbmc
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
@@ -24,8 +23,6 @@ from urlresolver.plugnplay import Plugin
 import re
 import urllib2, urllib
 from urlresolver import common
-
-logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class DailymotionResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -37,79 +34,68 @@ class DailymotionResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
 
-
     def get_media_url(self, host, media_id):
-        try:
-            web_url = self.get_url(host, media_id)
-            link = self.net.http_GET(web_url).content            
-            if link.find('"error":') >= 0:
-                err_title = re.compile('"title":"(.+?)"').findall(link)[0]                
-                if not err_title:
-                    err_title = 'Content not available.'
-                
-                err_message = re.compile('"message":"(.+?)"').findall(link)[0]
-                if not err_message:
-                    err_message = 'No such video or the video has been removed due to copyright infringement issues.'
-                
-                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]DAILYMOTION[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
-                return self.unresolvable(code=1, msg=err_message)
+        web_url = self.get_url(host, media_id)
+        link = self.net.http_GET(web_url).content
+        if link.find('"error":') >= 0:
+            err_title = re.compile('"title":"(.+?)"').findall(link)[0]
+            if not err_title:
+                err_title = 'Content not available.'
             
-            imgSrc = re.compile('"thumbnail_url":"(.+?)"').findall(link)[0]
-            common.addon.log('img:' + imgSrc)
+            err_message = re.compile('"message":"(.+?)"').findall(link)[0]
+            if not err_message:
+                err_message = 'No such video or the video has been removed due to copyright infringement issues.'
             
-            dm_live = re.compile('live_rtsp_url":"(.+?)"', re.DOTALL).findall(link)
-            dm_1080p = re.compile('"stream_h264_hd1080_url":"(.+?)"', re.DOTALL).findall(link)
-            dm_720p = re.compile('"stream_h264_hd_url":"(.+?)"', re.DOTALL).findall(link)
-            dm_high = re.compile('"stream_h264_hq_url":"(.+?)"', re.DOTALL).findall(link)
-            dm_low = re.compile('"stream_h264_url":"(.+?)"', re.DOTALL).findall(link)
-            dm_low2 = re.compile('"stream_h264_ld_url":"(.+?)"', re.DOTALL).findall(link)
-            
-            videoUrl = []
-            
-            if dm_live:
-                liveVideoUrl = urllib.unquote_plus(dm_live[0]).replace("\\/", "/")
-                liveVideoUrl = liveVideoUrl.replace("protocol=rtsp", "protocol=rtmp")
-                liveVideoUrl = self.net.http_GET(liveVideoUrl).content            
-                videoUrl.append(liveVideoUrl)
-            else: 
-                if dm_1080p:
-                    videoUrl.append( urllib.unquote_plus(dm_1080p[0]).replace("\\/", "/") )
-                if dm_720p:
-                    videoUrl.append( urllib.unquote_plus(dm_720p[0]).replace("\\/", "/") )
-                if dm_high:
-                    videoUrl.append( urllib.unquote_plus(dm_high[0]).replace("\\/", "/") )
-                if dm_low:
-                    videoUrl.append( urllib.unquote_plus(dm_low[0]).replace("\\/", "/") )
-                if dm_low2:
-                    videoUrl.append( urllib.unquote_plus(dm_low2[0]).replace("\\/", "/") )
-            
-            vUrl = ''
-            vUrlsCount = len(videoUrl)
-            if vUrlsCount > 0:
-                q = self.get_setting('quality')
-                if q == '0':
-                    # Highest Quality
-                    vUrl = videoUrl[0]
-                elif q == '1':
-                    # Medium Quality
-                    vUrl = videoUrl[(int)(vUrlsCount / 2)]
-                elif q == '2':
-                    # Lowest Quality
-                    vUrl = videoUrl[vUrlsCount - 1]
-            
-            common.addon.log('url:' + vUrl)
+            raise UrlResolver.ResolverError(err_message)
         
-            return vUrl
-            
-        except BaseException, e:        
-            common.addon.log_error(self.name + ' - Exception: %s' % e)
-            return self.unresolvable(code=0, msg='Exception: %s' % e)
+        imgSrc = re.compile('"thumbnail_url":"(.+?)"').findall(link)[0]
+        common.addon.log('img:' + imgSrc)
         
+        dm_live = re.compile('live_rtsp_url":"(.+?)"', re.DOTALL).findall(link)
+        dm_1080p = re.compile('"stream_h264_hd1080_url":"(.+?)"', re.DOTALL).findall(link)
+        dm_720p = re.compile('"stream_h264_hd_url":"(.+?)"', re.DOTALL).findall(link)
+        dm_high = re.compile('"stream_h264_hq_url":"(.+?)"', re.DOTALL).findall(link)
+        dm_low = re.compile('"stream_h264_url":"(.+?)"', re.DOTALL).findall(link)
+        dm_low2 = re.compile('"stream_h264_ld_url":"(.+?)"', re.DOTALL).findall(link)
+        
+        videoUrl = []
+        
+        if dm_live:
+            liveVideoUrl = urllib.unquote_plus(dm_live[0]).replace("\\/", "/")
+            liveVideoUrl = liveVideoUrl.replace("protocol=rtsp", "protocol=rtmp")
+            liveVideoUrl = self.net.http_GET(liveVideoUrl).content
+            videoUrl.append(liveVideoUrl)
+        else:
+            if dm_1080p:
+                videoUrl.append(urllib.unquote_plus(dm_1080p[0]).replace("\\/", "/"))
+            if dm_720p:
+                videoUrl.append(urllib.unquote_plus(dm_720p[0]).replace("\\/", "/"))
+            if dm_high:
+                videoUrl.append(urllib.unquote_plus(dm_high[0]).replace("\\/", "/"))
+            if dm_low:
+                videoUrl.append(urllib.unquote_plus(dm_low[0]).replace("\\/", "/"))
+            if dm_low2:
+                videoUrl.append(urllib.unquote_plus(dm_low2[0]).replace("\\/", "/"))
+        
+        vUrl = ''
+        vUrlsCount = len(videoUrl)
+        if vUrlsCount > 0:
+            q = self.get_setting('quality')
+            if q == '0':
+                # Highest Quality
+                vUrl = videoUrl[0]
+            elif q == '1':
+                # Medium Quality
+                vUrl = videoUrl[(int)(vUrlsCount / 2)]
+            elif q == '2':
+                # Lowest Quality
+                vUrl = videoUrl[vUrlsCount - 1]
+        
+        common.addon.log('url:' + vUrl)
+        return vUrl
 
     def get_url(self, host, media_id):
         return 'http://www.dailymotion.com/embed/video/%s' % media_id
-        
         
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/embed/video/([0-9A-Za-z]+)', url)

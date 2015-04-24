@@ -1,3 +1,21 @@
+[B]Version 2.9.0[/B]
+- Code Base Changes:
+    - Move all exception handling out of resolvers, handled at higher level now
+    - Updated SolveMedia captcha handling
+- Resolvers Added:
+    - XFileUpload
+    - ClicknUpload
+    - TusFiles
+    - Filepup
+- Resolvers Fixed/Updated:
+    - 180Upload
+    - Divxstage
+    - Exashare
+    - Teramixer
+    - CloudyVideos
+    - MightyUpload
+    - Videomega
+
 [B]Version 2.8.0[/B]
 - Code Base Changes:
     - Speed enhancements - Further to changes made in 2.7.0 

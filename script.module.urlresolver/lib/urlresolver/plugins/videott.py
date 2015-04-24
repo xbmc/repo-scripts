@@ -16,14 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import os
-import xbmc
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2, urllib
 from urlresolver import common
 
 # Custom imports
@@ -45,42 +42,29 @@ class VideoTTResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         json_url = 'http://www.video.tt/player_control/settings.php?v=%s' % media_id
+        json = self.net.http_GET(json_url).content
+        data = loads(json)
+        vids = data['settings']['res']
+        if not vids:
+            raise UrlResolver.ResolverError('The requested video was not found.')
 
-        try:
-            json = self.net.http_GET(json_url).content
-            data = loads(json)
+        else:
+            vUrlsCount = len(vids)
 
-            vids = data['settings']['res']
+            if (vUrlsCount > 0):
+                q = self.get_setting('quality')
+                # Lowest Quality
+                li = 0
 
-            if not vids:
-                err_title = 'Content not available.'
-                err_message = 'The requested video was not found.'
-                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (json_url, err_title, err_message))
-                return self.unresolvable(1, err_message)
+                if q == '1':
+                    # Medium Quality
+                    li = (int)(vUrlsCount / 2)
+                elif q == '2':
+                    # Highest Quality
+                    li = vUrlsCount - 1
 
-            else:
-                vUrlsCount = len(vids)
-
-                if (vUrlsCount > 0):
-                    q = self.get_setting('quality')
-                    # Lowest Quality
-                    li = 0
-
-                    if q == '1':
-                        # Medium Quality
-                        li = (int)(vUrlsCount / 2)
-                    elif q == '2':
-                        # Highest Quality
-                        li = vUrlsCount - 1
-
-                    vUrl = vids[li]['u'].decode('base-64')
-                    return vUrl
-
-        except urllib2.URLError, e:
-            return self.unresolvable(3, str(e))
-        except Exception, e:
-            return self.unresolvable(0, str(e))
-
+                vUrl = vids[li]['u'].decode('base-64')
+                return vUrl
 
     def get_url(self, host, media_id):
         return 'http://www.video.tt/watch_video.php?v=%s' % media_id

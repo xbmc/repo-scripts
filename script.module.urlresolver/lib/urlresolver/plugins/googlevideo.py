@@ -54,48 +54,40 @@ class GoogleResolver(Plugin, UrlResolver, PluginSettings):
         headers = {'Referer': web_url}
         stream_url = ''
         vid_sel = web_url
-        try:
-            if 'picasaweb.' in host:
-                vid_sel = ''
-                vid_id = re.search('.*?#(.+?)$', web_url)
-                if vid_id:
-                    vid_id = vid_id.group(1)
-                    resp = self.net.http_GET(web_url, headers=headers)
-                    html = re.search('\["shared_group_' + re.escape(vid_id) + '"\](.+?),"ccOverride":"false"}', resp.content, re.DOTALL)
-                    if html:
-                        videos = re.compile(',{"url":"(https://redirector\.googlevideo\.com/.+?)","height":([0-9]+?),"width":([0-9]+?),"type":"video/.+?"}').findall(html.group(1))
-                        vid_list = []
-                        url_list = []
-                        best = 0
-                        quality = 0
-                        if videos:
-                            if len(videos) > 1:
-                                for index, video in enumerate(videos):
-                                    if int(video[1]) > quality: best = index
-                                    quality = int(video[1])
-                                    vid_list.extend(['GoogleVideo - %sp' % quality])
-                                    url_list.extend([video[0]])
-                            if len(videos) == 1: vid_sel = videos[0][0]
+        if 'picasaweb.' in host:
+            vid_sel = ''
+            vid_id = re.search('.*?#(.+?)$', web_url)
+            if vid_id:
+                vid_id = vid_id.group(1)
+                resp = self.net.http_GET(web_url, headers=headers)
+                html = re.search('\["shared_group_' + re.escape(vid_id) + '"\](.+?),"ccOverride":"false"}', resp.content, re.DOTALL)
+                if html:
+                    videos = re.compile(',{"url":"(https://redirector\.googlevideo\.com/.+?)","height":([0-9]+?),"width":([0-9]+?),"type":"video/.+?"}').findall(html.group(1))
+                    vid_list = []
+                    url_list = []
+                    best = 0
+                    quality = 0
+                    if videos:
+                        if len(videos) > 1:
+                            for index, video in enumerate(videos):
+                                if int(video[1]) > quality: best = index
+                                quality = int(video[1])
+                                vid_list.extend(['GoogleVideo - %sp' % quality])
+                                url_list.extend([video[0]])
+                        if len(videos) == 1: vid_sel = videos[0][0]
+                        else:
+                            if self.get_setting('auto_pick') == 'true': vid_sel = url_list[best]
                             else:
-                                if self.get_setting('auto_pick') == 'true': vid_sel = url_list[best]
+                                result = xbmcgui.Dialog().select('Choose a link', vid_list)
+                                if result != -1: vid_sel = url_list[result]
                                 else:
-                                    result = xbmcgui.Dialog().select('Choose a link', vid_list)
-                                    if result != -1: vid_sel = url_list[result]
-                                    else: return self.unresolvable(0, 'No link selected')
-            if vid_sel:
-                if 'redirector.' in vid_sel: stream_url = urllib2.urlopen(vid_sel).geturl()
-                elif 'google' in vid_sel: stream_url = vid_sel
-                if stream_url: return stream_url
+                                    raise UrlResolver.ResolverError('No link selected')
+        if vid_sel:
+            if 'redirector.' in vid_sel: stream_url = urllib2.urlopen(vid_sel).geturl()
+            elif 'google' in vid_sel: stream_url = vid_sel
+            if stream_url: return stream_url
 
-            raise Exception('File not found')
-
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' % (e.reason, web_url))
-            return self.unresolvable(code=3, msg=e)
-
-        except Exception, e:
-            common.addon.log_error(self.name + ': general error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+        raise UrlResolver.ResolverError('File not found')
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)

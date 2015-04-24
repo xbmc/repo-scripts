@@ -16,26 +16,25 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os, sys
+import os
 import re
-import urllib, urllib2
-
+import urllib
+import xbmcgui
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import SiteAuth
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
-import xbmc,xbmcplugin,xbmcgui,xbmcaddon
 from t0mm0.common.net import Net
 import simplejson as json
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
+# SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
 error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
     name = "realdebrid"
-    domains = [ "*" ]
+    domains = ["*"]
     profile_path = common.profile_path
     cookie_file = os.path.join(profile_path, '%s.cookies' % name)
     media_url = None
@@ -51,45 +50,34 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         except OSError:
             pass
 
-    #UrlResolver methods
+    # UrlResolver methods
     def get_media_url(self, host, media_id):
         dialog = xbmcgui.Dialog()
-        try:
-            url = 'https://real-debrid.com/ajax/unrestrict.php?link=%s' % media_id.replace('|User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0','')
-            source = self.net.http_GET(url).content
-            jsonresult = json.loads(source)
-            if 'generated_links' in jsonresult :
-                generated_links = jsonresult['generated_links']
-                if len(generated_links) == 1:
-                    return generated_links[0][2].encode('utf-8')
-                line            = []
-                for link in generated_links :
-                    extension = link[0].split('.')[-1]
-                    line.append(extension.encode('utf-8'))
-                result = dialog.select('Choose the link', line)
-                if result != -1 :
-                    link = generated_links[result][2]
-                    return link.encode('utf-8')
-                else :
-                    return self.unresolvable(0,'No generated_link') 
-            elif 'main_link' in jsonresult :
-                return jsonresult['main_link'].encode('utf-8')
-            else :
-                if 'message' in jsonresult :
-                    common.addon.log('**** Real Debrid Error occured: %s' % jsonresult['message'].encode('utf-8'))
-                    common.addon.show_small_popup(title='[B][COLOR white]REAL-DEBRID[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % jsonresult['message'].encode('utf-8'), delay=15000, image=error_logo)
-                    return self.unresolvable(0,jsonresult['message'].encode('utf-8'))
-                else :
-                    return self.unresolvable(0,'No generated_link and no main_link')
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %  (str(e), url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return self.unresolvable(3,str(e))
-        except Exception, e:
-            common.addon.log('**** Real Debrid Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]REAL-DEBRID[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(0,str(e))
-        
+        url = 'https://real-debrid.com/ajax/unrestrict.php?link=%s' % media_id.replace('|User-Agent=Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20rv%3A11.0)%20Gecko%2F20100101%20Firefox%2F11.0', '')
+        source = self.net.http_GET(url).content
+        jsonresult = json.loads(source)
+        if 'generated_links' in jsonresult:
+            generated_links = jsonresult['generated_links']
+            if len(generated_links) == 1:
+                return generated_links[0][2].encode('utf-8')
+            line = []
+            for link in generated_links:
+                extension = link[0].split('.')[-1]
+                line.append(extension.encode('utf-8'))
+            result = dialog.select('Choose the link', line)
+            if result != -1:
+                link = generated_links[result][2]
+                return link.encode('utf-8')
+            else:
+                raise UrlResolver.ResolverError('No generated_link')
+        elif 'main_link' in jsonresult:
+            return jsonresult['main_link'].encode('utf-8')
+        else:
+            if 'message' in jsonresult:
+                raise UrlResolver.ResolverError(jsonresult['message'].encode('utf-8'))
+            else:
+                raise UrlResolver.ResolverError('No generated_link and no main_link')
+
     def get_url(self, host, media_id):
         return media_id
 
@@ -98,14 +86,14 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     def get_all_hosters(self):
         if self.hosters is None:
-            try :
+            try:
                 url = 'http://www.real-debrid.com/api/regex.php?type=all'
                 response = self.net.http_GET(url).content.lstrip('/').rstrip('/g')
                 delim = '/g,/|/g\|-\|/'
                 self.hosters = [re.compile(host) for host in re.split(delim, response)]
             except:
                 self.hosters = []
-        common.addon.log_debug( 'RealDebrid hosters : %s' %self.hosters)
+        common.addon.log_debug('RealDebrid hosters : %s' % self.hosters)
         return self.hosters
 
     def get_hosts(self):
@@ -117,17 +105,17 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
                 self.hosts = response.split('","')
             except:
                 self.hosts = []
-        common.addon.log_debug( 'RealDebrid hosts : %s' %self.hosts)
-            
+        common.addon.log_debug('RealDebrid hosts : %s' % self.hosts)
+
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        if self.get_setting('login') == 'false': return False 
+        if self.get_setting('login') == 'false': return False
         common.addon.log_debug('in valid_url %s : %s' % (url, host))
         if url:
             self.get_all_hosters()
-            for host in self.hosters :
-                #common.addon.log_debug('RealDebrid checking host : %s' %str(host))
-                if re.search(host,url):
+            for host in self.hosters:
+                # common.addon.log_debug('RealDebrid checking host : %s' %str(host))
+                if re.search(host, url):
                     common.addon.log_debug('RealDebrid Match found')
                     return True
         elif host:
@@ -149,14 +137,14 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         else:
             common.addon.log_debug('checkLogin returning True')
             return True
-    
-    #SiteAuth methods
+
+    # SiteAuth methods
     def login(self):
         if self.checkLogin():
             try:
                 common.addon.log_debug('Need to login since session is invalid')
                 import hashlib
-                login_data = urllib.urlencode({'user' : self.get_setting('username'), 'pass' : hashlib.md5(self.get_setting('password')).hexdigest()})
+                login_data = urllib.urlencode({'user': self.get_setting('username'), 'pass': hashlib.md5(self.get_setting('password')).hexdigest()})
                 url = 'https://real-debrid.com/ajax/login.php?' + login_data
                 source = self.net.http_GET(url).content
                 if re.search('OK', source):
@@ -172,7 +160,7 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         else:
             return True
 
-    #PluginSettings methods
+    # PluginSettings methods
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
         xml += '<setting id="RealDebridResolver_login" '
@@ -182,7 +170,7 @@ class RealDebridResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         xml += '<setting id="RealDebridResolver_password" enable="eq(-2,true)" '
         xml += 'type="text" label="password" option="hidden" default=""/>\n'
         return xml
-        
-    #to indicate if this is a universal resolver
+
+    # to indicate if this is a universal resolver
     def isUniversal(self):
         return True

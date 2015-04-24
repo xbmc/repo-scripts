@@ -16,23 +16,18 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
-import os
-import xbmc
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2, urllib
 from urlresolver import common
 import xml.etree.ElementTree as ET
-
-logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class PlaywireResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "playwire"
-    domains = [ "playwire.com" ]
+    domains = ["playwire.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -40,36 +35,25 @@ class PlaywireResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        try:
-            web_url = self.get_url(host, media_id)
-            link = self.net.http_GET(web_url).content
+        web_url = self.get_url(host, media_id)
+        link = self.net.http_GET(web_url).content
+        if web_url.endswith('xml'):  # xml source
+            root = ET.fromstring(link)
+            stream = root.find('src')
+            if stream is not None:
+                return stream.text
+            else:
+                accessdenied = root.find('Message')
+                if accessdenied is not None:
+                    raise UrlResolver.ResolverError('You do not have permission to view this content')
 
-            if web_url.endswith('xml'): # xml source
-                root = ET.fromstring(link)
-                stream = root.find('src')
-                if stream is not None:
-                    return stream.text
-                else:
-                    accessdenied = root.find('Message')
-                    if accessdenied is not None:
-                        err_title = 'Access Denied'
-                        err_message = 'You do not have permission to view this content'
-                        common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
-                        xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
-                        return self.unresolvable(1, err_message)
-
-                    return self.unresolvable(0, 'No playable video found.')
-            else: # json source
-                r = re.search('"src":"(.+?)"',link) 
-                if r:
-                    return r.group(1)
-                else:
-                    return self.unresolvable(0, 'No playable video found.')
-        except urllib2.URLError, e:
-            return self.unresolvable(3, str(e))
-        except Exception, e:
-            return self.unresolvable(0, str(e))
-
+                raise UrlResolver.ResolverError('No playable video found.')
+        else:  # json source
+            r = re.search('"src":"(.+?)"', link)
+            if r:
+                return r.group(1)
+            else:
+                raise UrlResolver.ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
         if not 'v2' in host:

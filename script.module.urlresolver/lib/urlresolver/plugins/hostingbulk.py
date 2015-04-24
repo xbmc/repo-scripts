@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
 import xbmc
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
@@ -27,9 +26,7 @@ import urllib2, urllib
 from urlresolver import common
 from lib import jsunpack
 
-logo=os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
-class hostingbulkResolver(Plugin, UrlResolver, PluginSettings):
+class HostingBulkResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "hostingbulk"
     domains = [ "hostingbulk.com" ]
@@ -40,42 +37,31 @@ class hostingbulkResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        try:
-            web_url = self.get_url(host, media_id)
-            link = self.net.http_GET(web_url).content
+        web_url = self.get_url(host, media_id)
+        link = self.net.http_GET(web_url).content
 
-            if link.find('File Not Found') >= 0:
-                err_title = 'Content not available.'
-                err_message = 'The requested video was not found.'
-                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
-                return self.unresolvable(1, err_message)
+        if link.find('File Not Found') >= 0:
+            raise UrlResolver.ResolverError('The requested video was not found.')
 
-            videoUrl = re.compile("\'file\'\s?:\s?\'([\w\/\.\:\-\=\?]+)\'").findall(link)
+        videoUrl = re.compile("\'file\'\s?:\s?\'([\w\/\.\:\-\=\?]+)\'").findall(link)
 
-            if len(videoUrl) > 0:
-                return videoUrl[0]
+        if len(videoUrl) > 0:
+            return videoUrl[0]
+        else:
+            # search for packed function
+            sPattern = "<script type='text/javascript'>(eval\(function\(p,a,c,k,e,d\)\{while.+?(hostingbulk|np_vid|player_ads).+?)</script>"
+            r = re.search(sPattern, link, re.DOTALL)
+            if r:
+                sUnpacked = jsunpack.unpack(r.group(1))
+                r = re.search('file:"(.+?)",', sUnpacked)
+            if r:
+                return r.group(1)
             else:
-                # search for packed function
-                sPattern="<script type='text/javascript'>(eval\(function\(p,a,c,k,e,d\)\{while.+?(hostingbulk|np_vid|player_ads).+?)</script>"
-                r = re.search(sPattern, link, re.DOTALL)
-                if r:
-                    sUnpacked = jsunpack.unpack(r.group(1))
-                    r = re.search('file:"(.+?)",', sUnpacked)
-                if r:
-                    return r.group(1)
-                else:
-                    return self.unresolvable(0, 'No playable video found.')
-        except urllib2.URLError, e:
-            return self.unresolvable(3, str(e))
-        except Exception, e:
-            return self.unresolvable(0, str(e))
-
+                raise UrlResolver.ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
         #return 'http://hostingbulk.com/%s' % media_id
         return '%s/%s' % (host,media_id)
-
 
     def get_host_and_id(self, url):
         r = re.search('(http://(?:www.|)(?:.+?))/(.+)', url)

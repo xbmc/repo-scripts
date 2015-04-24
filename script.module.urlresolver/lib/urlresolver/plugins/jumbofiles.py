@@ -16,12 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2
 from urlresolver import common
 
 class JumbofilesResolver(Plugin, UrlResolver, PluginSettings):
@@ -29,47 +28,33 @@ class JumbofilesResolver(Plugin, UrlResolver, PluginSettings):
     name = "jumbofiles"
     domains = [ "jumbofiles.com" ]
 
-
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
 
-
     def get_media_url(self, host, media_id):
-        try:
-            common.addon.log('jumbofiles: in get_media_url %s %s' % (host, media_id))
-            web_url = self.get_url(host, media_id)
-            html = self.net.http_GET(web_url).content
-    
-            if 'file has been removed' in html:
-                raise Exception ('File has been removed.')
-    
-            form_values = {}
-            for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
-                form_values[i.group(1)] = i.group(2)
-    
-            html = self.net.http_POST(web_url, form_data=form_values).content
-            match = re.search('ACTION="(.+?)"', html)
-            if match:
-                return match.group(1)
-            else:
-                raise Exception ('failed to parse link')
+        common.addon.log_debug('jumbofiles: in get_media_url %s %s' % (host, media_id))
+        web_url = self.get_url(host, media_id)
+        html = self.net.http_GET(web_url).content
 
-        except urllib2.URLError, e:
-            common.addon.log_error('Jumbofiles: got http error %d fetching %s' %
-                                  (e.code, web_url))
-            return self.unresolvable(code=3, msg=e)
-        
-        except Exception, e:
-            common.addon.log_error('**** Jumbofiles Error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
-    
+        if 'file has been removed' in html:
+            raise UrlResolver.ResolverError('File has been removed.')
+
+        form_values = {}
+        for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
+            form_values[i.group(1)] = i.group(2)
+
+        html = self.net.http_POST(web_url, form_data=form_values).content
+        match = re.search('ACTION="(.+?)"', html)
+        if match:
+            return match.group(1)
+        else:
+            raise UrlResolver.ResolverError('failed to parse link')
 
     def get_url(self, host, media_id):
         common.addon.log('jumbofiles: in get_url %s %s' % (host, media_id))
-        return 'http://www.jumbofiles.com/%s' % media_id 
-        
+        return 'http://www.jumbofiles.com/%s' % media_id
         
     def get_host_and_id(self, url):
         common.addon.log('jumbofiles: in get_host_and_id %s' % (url))
@@ -78,7 +63,6 @@ class JumbofilesResolver(Plugin, UrlResolver, PluginSettings):
             return r.groups()
         else:
             return False
-
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False

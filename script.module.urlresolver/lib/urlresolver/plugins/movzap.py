@@ -16,28 +16,18 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
-import urllib
 from urlresolver import common
 from lib import jsunpack
-import xbmcgui
-import re
-import time
-from lib import jsunpack
-import xbmc
-import os
-
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class MovzapZuzVideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "movzap|zuzvideo"
-    domains = [ "movzap.com", "zuzvideo.com" ]
+    domains = ["movzap.com", "zuzvideo.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -46,39 +36,25 @@ class MovzapZuzVideoResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+        resp = self.net.http_GET(web_url)
+        html = resp.content
 
-        try:
-            resp = self.net.http_GET(web_url)
-            html = resp.content
-
-            # search for packed function
-            sPattern="<script type='text/javascript'>(eval\(function\(p,a,c,k,e,d\)\{while.+?movzap.+?)</script>"
-            r = re.search(sPattern, html, re.DOTALL)
+        # search for packed function
+        sPattern = "<script type='text/javascript'>(eval\(function\(p,a,c,k,e,d\)\{while.+?movzap.+?)</script>"
+        r = re.search(sPattern, html, re.DOTALL)
+        if r:
+            sUnpacked = jsunpack.unpack(r.group(1))
+            r = re.search('file:"(.+?)",', sUnpacked)
             if r:
-                sUnpacked = jsunpack.unpack(r.group(1))
-                r = re.search('file:"(.+?)",', sUnpacked)
-                if r:
-                    return r.group(1)
-            else:
-                # search for file reference if present
-                r = re.search('file: "(.+?)",', html)
-                if r:
-                    return r.group(1)
+                return r.group(1)
+        else:
+            # search for file reference if present
+            r = re.search('file: "(.+?)",', html)
+            if r:
+                return r.group(1)
 
-            raise Exception ('movzap|zuzvideo: could not obtain video url')
+        raise UrlResolver.ResolverError('movzap|zuzvideo: could not obtain video url')
         
-        except urllib2.URLError, e:
-            common.addon.log_error('Movzap: got http error %d fetching %s' %
-                                  (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return self.unresolvable(code=3, msg=e)
-        
-        except Exception, e:
-            common.addon.log_error('**** Movzap Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]MOVZAP[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
-
-
     def get_url(self, host, media_id):
             return '%s/%s' % (host,media_id)
 
@@ -92,4 +68,3 @@ class MovzapZuzVideoResolver(Plugin, UrlResolver, PluginSettings):
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match('http://(?:www.|)(?:movzap|zuzvideo).com/[0-9A-Za-z]+', url) or 'movzap' in host or 'zuzvideo' in host
-

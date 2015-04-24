@@ -20,11 +20,9 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, urllib2
+import re
 from urlresolver import common
 from lib import captcha_lib
-
-net = Net()
 
 class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -37,59 +35,32 @@ class HugefilesResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        try:
-            url = self.get_url(host, media_id)
-            common.addon.log('HugeFiles - Requesting GET URL: %s' % url)
-            html = self.net.http_GET(url).content
-            r = re.findall('File Not Found', html)
-            if r:
-                raise Exception('File Not Found or removed')
-                            
-            #Check page for any error msgs
-            if re.search('<b>File Not Found</b>', html):
-                common.addon.log('***** HugeFiles - File Not Found')
-                raise Exception('File Not Found')
-    
-            #Set POST data values
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)" value="(.+?)">', html)
-            
-            if r:
-                for name, value in r:
-                    data[name] = value
-            else:
-                common.addon.log('***** HugeFiles - Cannot find data values')
-                raise Exception('Unable to resolve HugeFiles Link')
-            
-            data['method_free'] = 'Free Download'
-    
-            #Check for SolveMedia Captcha image
-            solvemedia = re.search('<iframe src="(http://api.solvemedia.com.+?)"', html)
-            recaptcha = re.search('<script type="text/javascript" src="(http://www.google.com.+?)">', html)
-    
-            if solvemedia:
-                data.update(captcha_lib.do_solvemedia_captcha(solvemedia.group(1)))
-            elif recaptcha:
-                data.update(captcha_lib.do_recaptcha(recaptcha.group(1)))
-            else:
-                captcha = re.compile("left:(\d+)px;padding-top:\d+px;'>&#(.+?);<").findall(html)
-                result = sorted(captcha, key=lambda ltr: int(ltr[0]))
-                solution = ''.join(str(int(num[1]) - 48) for num in result)
-                data.update({'code': solution})
+        url = self.get_url(host, media_id)
+        common.addon.log_debug('HugeFiles - Requesting GET URL: %s' % url)
+        html = self.net.http_GET(url).content
+        if 'File Not Found' in html:
+            raise UrlResolver.ResolverError('File Not Found or removed')
 
-            common.addon.log('HugeFiles - Requesting POST URL: %s DATA: %s' % (url, data))
-            html = net.http_POST(url, data).content
-            r = re.search('fileUrl\s*=\s*"([^"]+)', html)
-            if r:
-                return r.group(1)
+        #Set POST data values
+        data = {}
+        r = re.findall(r'type="hidden"\s+name="([^"]+)"\s+value="([^"]+)', html)
+        if r:
+            for name, value in r:
+                data[name] = value
+        else:
+            raise UrlResolver.ResolverError('Cannot find data values')
+        
+        data['method_free'] = 'Free Download'
 
-            raise Exception('Unable to resolve HugeFiles Link')
-        except urllib2.HTTPError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' % (e.code, url))
-            return self.unresolvable(code=3, msg=e)
-        except Exception, e:
-            common.addon.log_error('**** Hugefiles Error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+        data.update(captcha_lib.do_captcha(html))
+
+        common.addon.log_debug('HugeFiles - Requesting POST URL: %s DATA: %s' % (url, data))
+        html = self.net.http_POST(url, data).content
+        r = re.search('fileUrl\s*=\s*"([^"]+)', html)
+        if r:
+            return r.group(1)
+
+        raise UrlResolver.ResolverError('Unable to resolve HugeFiles Link')
         
     def get_url(self, host, media_id):
         return 'http://hugefiles.net/%s' % media_id

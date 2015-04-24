@@ -41,51 +41,43 @@ class FlashxResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
         headers = {'Referer': web_url}
         smil = ''
-        try:
-            html = self.net.http_GET(web_url, headers=headers).content
-            swfurl = 'http://static.flashx.tv/player6/jwplayer.flash.swf'
-            r = re.search('"(http://.+?\.smil)"', html)
-            if r: smil = r.group(1)
-            else:
-                r = re.search('\|smil\|(.+?)\|sources\|', html)
-                if r: smil = 'http://flashx.tv/' + r.group(1) + '.smil'
-            if smil:
-                html = self.net.http_GET(smil, headers=headers).content
-                r = re.search('<meta base="(rtmp://.*?flashx\.tv:[0-9]+/)(.+/)".*/>', html, re.DOTALL)
-                if r:
-                    rtmp = r.group(1)
-                    app = r.group(2)
-                    sources = re.compile('<video src="(.+?)" height="(.+?)" system-bitrate="(.+?)" width="(.+?)".*/>').findall(html)
-                    vid_list = []
-                    url_list = []
-                    best = 0
-                    quality = 0
-                    if sources:
-                        if len(sources) > 1:
-                            for index, video in enumerate(sources):
-                                if int(video[1]) > quality: best = index
-                                quality = int(video[1])
-                                vid_list.extend(['FlashX - %sp' % quality])
-                                url_list.extend([video[0]])
-                    if len(sources) == 1: vid_sel = sources[0][0]
+        html = self.net.http_GET(web_url, headers=headers).content
+        swfurl = 'http://static.flashx.tv/player6/jwplayer.flash.swf'
+        r = re.search('"(http://.+?\.smil)"', html)
+        if r: smil = r.group(1)
+        else:
+            r = re.search('\|smil\|(.+?)\|sources\|', html)
+            if r: smil = 'http://flashx.tv/' + r.group(1) + '.smil'
+        if smil:
+            html = self.net.http_GET(smil, headers=headers).content
+            r = re.search('<meta base="(rtmp://.*?flashx\.tv:[0-9]+/)(.+/)".*/>', html, re.DOTALL)
+            if r:
+                rtmp = r.group(1)
+                app = r.group(2)
+                sources = re.compile('<video src="(.+?)" height="(.+?)" system-bitrate="(.+?)" width="(.+?)".*/>').findall(html)
+                vid_list = []
+                url_list = []
+                best = 0
+                quality = 0
+                if sources:
+                    if len(sources) > 1:
+                        for index, video in enumerate(sources):
+                            if int(video[1]) > quality: best = index
+                            quality = int(video[1])
+                            vid_list.extend(['FlashX - %sp' % quality])
+                            url_list.extend([video[0]])
+                if len(sources) == 1: vid_sel = sources[0][0]
+                else:
+                    if self.get_setting('auto_pick') == 'true': vid_sel = url_list[best]
                     else:
-                        if self.get_setting('auto_pick') == 'true': vid_sel = url_list[best]
+                        result = xbmcgui.Dialog().select('Choose a link', vid_list)
+                        if result != -1: vid_sel = url_list[result]
                         else:
-                            result = xbmcgui.Dialog().select('Choose a link', vid_list)
-                            if result != -1: vid_sel = url_list[result]
-                            else: return self.unresolvable(code=0, msg='No link selected')
+                            raise UrlResolver.ResolverError('No link selected') 
 
-                    if vid_sel: return '%s app=%s playpath=%s swfUrl=%s pageUrl=%s swfVfy=true' % (rtmp, app, vid_sel, swfurl, web_url)
+                if vid_sel: return '%s app=%s playpath=%s swfUrl=%s pageUrl=%s swfVfy=true' % (rtmp, app, vid_sel, swfurl, web_url)
 
-            raise Exception('File not found')
-
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' % (e.reason, web_url))
-            return self.unresolvable(code=3, msg=e)
-        
-        except Exception, e:
-            common.addon.log_error(self.name + ': general error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+        raise UrlResolver.ResolverError('File not found')
 
     def get_url(self, host, media_id):
         urlhash = re.search('([a-zA-Z0-9]+)(?:-+[0-9]+[xX]+[0-9]+)', media_id)

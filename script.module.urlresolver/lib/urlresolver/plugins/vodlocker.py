@@ -16,60 +16,45 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-import xbmc
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re
-import urllib2
 from urlresolver import common
 
-logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
 class VodlockerResolver(Plugin, UrlResolver, PluginSettings):
-    implements=[UrlResolver,PluginSettings]
-    name="vodlocker.com"
-    domains=[ "vodlocker.com" ]
-    
+    implements = [UrlResolver, PluginSettings]
+    name = "vodlocker.com"
+    domains = ["vodlocker.com"]
+
     def __init__(self):
-        p=self.get_setting('priority') or 100
-        self.priority=int(p)
-        self.net=Net()
-        self.pattern='http://((?:www.)?vodlocker.com)/(?:embed-)?([0-9a-zA-Z]+)(?:-\d+x\d+.html)?'
-    
-    def get_url(self,host,media_id): 
+        p = self.get_setting('priority') or 100
+        self.priority = int(p)
+        self.net = Net()
+        self.pattern = 'http://((?:www.)?vodlocker.com)/(?:embed-)?([0-9a-zA-Z]+)(?:-\d+x\d+.html)?'
+
+    def get_url(self, host, media_id):
         return 'http://vodlocker.com/embed-%s-640x400.html' % (media_id)
 
-    def get_host_and_id(self,url):
-        r=re.search(self.pattern,url)
+    def get_host_and_id(self, url):
+        r = re.search(self.pattern, url)
         if r: return r.groups()
         else: return False
 
-    def valid_url(self,url,host):
-        if self.get_setting('enabled')=='false': return False
-        return re.match(self.pattern,url) or self.name in host
+    def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
+        return re.match(self.pattern, url) or self.name in host
 
-    def get_media_url(self,host,media_id):
-        try:
-            web_url = self.get_url(host, media_id)
-            link = self.net.http_GET(web_url).content
+    def get_media_url(self, host, media_id):
+        web_url = self.get_url(host, media_id)
+        link = self.net.http_GET(web_url).content
+        if link.find('404 Not Found') >= 0:
+            raise UrlResolver.ResolverError('The requested video was not found.')
 
-            if link.find('404 Not Found') >= 0:
-                err_title = 'Content not available.'
-                err_message = 'The requested video was not found.'
-                common.addon.log_error(self.name + ' - fetching %s - %s - %s ' % (web_url,err_title,err_message))
-                xbmc.executebuiltin('XBMC.Notification([B][COLOR white]'+__name__+'[/COLOR][/B] - '+err_title+',[COLOR red]'+err_message+'[/COLOR],8000,'+logo+')')
-                return self.unresolvable(1, err_message)
+        video_link = str(re.compile('file[: ]*"(.+?)"').findall(link)[0])
 
-            video_link = str(re.compile('file[: ]*"(.+?)"').findall(link)[0])
-
-            if len(video_link) > 0:
-                return video_link
-            else:
-                return self.unresolvable(0, 'No playable video found.')
-        except urllib2.URLError, e:
-            return self.unresolvable(3, str(e))
-        except Exception, e:
-            return self.unresolvable(0, str(e))
+        if len(video_link) > 0:
+            return video_link
+        else:
+            raise UrlResolver.ResolverError('No playable video found.')

@@ -20,13 +20,9 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2, os
 from urlresolver import common
 import re
 from lib import jsunpack
-
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class TheFileResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -40,53 +36,42 @@ class TheFileResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        try:
-            headers = {
-                'Referer': web_url
-            }
-            html = self.net.http_GET(web_url).content
-            
-            # check if we have a p,ac,k,e,d source
-            r = re.search('<script\stype=(?:"|\')text/javascript(?:"|\')>(eval\(function\(p,a,c,k,e,[dr]\)(?!.+player_ads.+).+?)</script>',html,re.DOTALL)
-            if r:
-                js = jsunpack.unpack(r.group(1))
-                r = re.search("file:\'(.+?)\'",js.replace('\\',''))
-                if r:
-                    return r.group(1)
-            
-            data = {}
-            r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
-            for name, value in r: data[name] = value
-            data.update({'referer': web_url})
-            data.update({'method_free': 'Free Download'})
-            data.update({'op': 'download1'})
-            
-            html = self.net.http_POST(web_url, data, headers=headers).content
-            
-            data = {}
-            r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
-            for name, value in r: data[name] = value
-            data.update({'referer': web_url})
-            data.update({'btn_download': 'Create Download Link'})
-            data.update({'op': 'download2'})
-            
-            html = self.net.http_POST(web_url, data, headers=headers).content
-            
-            r = re.search(r'<span>\s*<a\s+href="(.+?)".*</a>\s*</span>',html)
+        headers = {
+            'Referer': web_url
+        }
+        html = self.net.http_GET(web_url).content
+        
+        # check if we have a p,ac,k,e,d source
+        r = re.search('<script\stype=(?:"|\')text/javascript(?:"|\')>(eval\(function\(p,a,c,k,e,[dr]\)(?!.+player_ads.+).+?)</script>',html,re.DOTALL)
+        if r:
+            js = jsunpack.unpack(r.group(1))
+            r = re.search("file:\'(.+?)\'",js.replace('\\',''))
             if r:
                 return r.group(1)
-            else:
-                raise Exception("File Link Not Found")
-                       
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                   (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return self.unresolvable(code=3, msg=e)
-        except Exception, e:
-            common.addon.log(self.name + ': general error occurred: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]THEFILE[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
+        
+        data = {}
+        r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
+        for name, value in r: data[name] = value
+        data.update({'referer': web_url})
+        data.update({'method_free': 'Free Download'})
+        data.update({'op': 'download1'})
+        
+        html = self.net.http_POST(web_url, data, headers=headers).content
+        
+        data = {}
+        r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
+        for name, value in r: data[name] = value
+        data.update({'referer': web_url})
+        data.update({'btn_download': 'Create Download Link'})
+        data.update({'op': 'download2'})
+        
+        html = self.net.http_POST(web_url, data, headers=headers).content
+        
+        r = re.search(r'<span>\s*<a\s+href="(.+?)".*</a>\s*</span>',html)
+        if r:
+            return r.group(1)
+        else:
+            raise UrlResolver.ResolverError("File Link Not Found")
 
     def get_url(self, host, media_id):
             return 'http://thefile.me/%s' % (media_id)

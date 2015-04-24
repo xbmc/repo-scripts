@@ -17,9 +17,8 @@
 """
 
 import re
-from t0mm0.common.net import Net
-import urllib2
 import urlresolver
+from t0mm0.common.net import Net
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
@@ -28,43 +27,25 @@ from urlresolver.plugnplay import Plugin
 class TubeplusResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver]
     name = "tubeplus.me"
-    domains = [ "tubeplus.me" ]
+    domains = ["tubeplus.me"]
     
     def __init__(self):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        #get list
-        try:
-            html = self.net.http_GET(web_url).content
-            
-            r = '"none" href="(.+?)"'
-            sources = []
-            regex = re.finditer(r, html, re.DOTALL)
+        html = self.net.http_GET(web_url).content
+        r = '"none" href="(.+?)"'
+        sources = []
+        regex = re.finditer(r, html, re.DOTALL)
+        for s in regex:
+            sources.append(urlresolver.HostedMediaFile(url=s.group(1)))
 
-            for s in regex:
-                sources.append(urlresolver.HostedMediaFile(url=s.group(1))) 
-
-            source = urlresolver.choose_source(sources)
-
-            return source.resolve()
-
-        except urllib2.URLError, e:
-            common.addon.log_error('Tubeplus: got http error %d fetching %s' %
-                                  (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return self.unresolvable(code=3, msg=e)
-        
-        except Exception, e:
-            common.addon.log_error('**** Tubeplus Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]TUBEPLUS[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
-
+        source = urlresolver.choose_source(sources)
+        return source.resolve()
 
     def get_url(self, host, media_id):
         return 'http://tubeplus.me/player/%s/' % media_id
-        
         
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/player/(\d+)', url)
@@ -81,4 +62,3 @@ class TubeplusResolver(Plugin, UrlResolver, PluginSettings):
         if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.)?tubeplus.me/player/\d+', 
                         url) or 'tubeplus' in host
-

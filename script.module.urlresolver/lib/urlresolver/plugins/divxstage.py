@@ -16,11 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, urllib2, os
 from urlresolver import common
 from lib import unwise
 
@@ -36,34 +36,26 @@ class DivxstageResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        try:
-            html = self.net.http_GET(web_url).content
-            r = re.search('<param name="src" value="(.+?)"', html)
+        html = self.net.http_GET(web_url).content
+        r = re.search('<param name="src" value="(.+?)"', html)
+        if r:
+            stream_url = r.group(1)
+        else:
+            html = unwise.unwise_process(html)
+            filekey = unwise.resolve_var(html, "flashvars.filekey")
+            
+            player_url = 'http://www.cloudtime.to/api/player.api.php?user=undefined&key=' + filekey + '&pass=undefined&codes=1&file=' + media_id
+            html = self.net.http_GET(player_url).content
+            r = re.search('url=(.+?)&', html)
             if r:
                 stream_url = r.group(1)
             else:
-                html = unwise.unwise_process(html)
-                filekey = unwise.resolve_var(html, "flashvars.filekey")
-                
-                player_url = 'http://www.cloudtime.to/api/player.api.php?user=undefined&key='+filekey+'&pass=undefined&codes=1&file='+media_id
-                html = self.net.http_GET(player_url).content
-                r = re.search('url=(.+?)&', html)
-                if r:
-                    stream_url = r.group(1)
-                else:
-                    raise Exception ('File Not Found or removed')
-                
-            return stream_url
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                   (e.code, web_url))
-            return self.unresolvable(code=3, msg=e)
-        except Exception, e:
-            common.addon.log_error('**** Divxstage Error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+                raise UrlResolver.ResolverError('File Not Found or removed')
+            
+        return stream_url
 
     def get_url(self, host, media_id):
-        return 'http://www.divxstage.eu/video/%s' % media_id
+        return 'http://www.cloudtime.to/video/%s' % media_id
 
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/(?:video/([0-9a-z]+)|embed.php\?v=([^\?&]+))', url)

@@ -1,6 +1,6 @@
 '''
-vidzi urlresolver plugin
-Copyright (C) 2014 Eldorado
+clicknupload urlresolver plugin
+Copyright (C) 2015 tknorris
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,13 +21,15 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import re
-import urllib2
 from urlresolver import common
 
-class VidziResolver(Plugin, UrlResolver, PluginSettings):
+USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
+MAX_TRIES = 3
+
+class ClickNUploadResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "vidzi"
-    domains = ["vidzi.tv"]
+    name = "clicknupload"
+    domains = ["clicknupload.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -37,21 +39,30 @@ class VidziResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
-
-        if '404 Not Found' in html:
-            raise UrlResolver.ResolverError('File Not Found or removed')
-
-        r = re.search('.+file:\s"(.+?)"', html)
-        if r:
-            return r.group(1) + '|Referer=http://vidzi.tv/nplayer/jwplayer.flash.swf'
-        else:
-            raise UrlResolver.ResolverError('Unable to locate link')
+        tries = 0
+        while tries < MAX_TRIES:
+            data = {}
+            r = re.findall(r'type="hidden"\s*name="([^"]+)"\s*value="([^"]+)', html)
+            for name, value in r:
+                data[name] = value
+            data['method_free'] = 'Free Download'
+             
+            html = self.net.http_POST(web_url, data).content
+            
+            if '>File Download Link Generated<' in html:
+                r = re.search("onClick\s*=\s*\"window\.open\('([^']+)", html)
+                if r:
+                    return  r.group(1) + '|User-Agent=%s' % (USER_AGENT)
+            
+            tries = tries + 1
+            
+        raise UrlResolver.ResolverError('Unable to locate link')
 
     def get_url(self, host, media_id):
-        return 'http://%s/%s.html' % (host, media_id)
-
+        return 'http://%s/%s' % (host, media_id)
+        
     def get_host_and_id(self, url):
-        r = re.search('http://(?:www\.|embed-)?(.+?)/(?:embed-)?([0-9a-zA-Z/]+)', url)
+        r = re.search('//(.+?)/([0-9a-zA-Z/]+)', url)
         if r:
             return r.groups()
         else:
@@ -59,4 +70,4 @@ class VidziResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www\.|embed-)?vidzi.tv/(?:embed-)?[0-9A-Za-z]+', url) or 'vidzi' in host)
+        return re.match('http://((?:www.)?clicknupload.com)/(?:f/)?([0-9A-Za-z]+)', url) or 'clicknupload' in host
