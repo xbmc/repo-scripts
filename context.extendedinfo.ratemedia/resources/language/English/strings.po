@@ -1,0 +1,10 @@
+# XBMC Media Center language file
+# Addon Name: ExtendedInfo Script - Rate media items
+# Addon id: context.extendedinfo.ratemedia
+msgid ""
+msgstr ""
+
+msgctxt "#30000"
+msgid "Rate at TheMovieDB"
+msgstr ""
+
