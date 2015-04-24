@@ -8,7 +8,7 @@ import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
-import shutil
+import uuid
 import unicodedata
 import re
 import string
@@ -25,14 +25,7 @@ __language__ = __addon__.getLocalizedString
 __cwd__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('path')), 'utf-8')
 __profile__ = unicode(xbmc.translatePath(__addon__.getAddonInfo('profile')), 'utf-8')
 __resource__ = unicode(xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')), 'utf-8')
-__temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp')), 'utf-8')
-
-
-
-if xbmcvfs.exists(__temp__):
-    shutil.rmtree(__temp__.encode(sys.getfilesystemencoding()))
-xbmcvfs.mkdirs(__temp__)
-
+__temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp', '')), 'utf-8')
 
 sys.path.append(__resource__)
 
@@ -49,6 +42,24 @@ seasons = seasons + ["Twenty-first", "Twenty-second", "Twenty-third", "Twenty-fo
 
 movie_season_pattern = ("<a href=\"(?P<link>/subtitles/[^\"]*)\">(?P<title>[^<]+)\((?P<year>\d{4})\)</a>\s+"
                         "</div>\s+<div class=\"subtle count\">\s+(?P<numsubtitles>\d+)")
+
+
+def rmtree(path):
+    if isinstance(path, unicode):
+        path = path.encode('utf-8')
+    dirs, files = xbmcvfs.listdir(path)
+    for dir in dirs:
+        rmtree(os.path.join(path, dir))
+    for file in files:
+        xbmcvfs.delete(os.path.join(path, file))
+    xbmcvfs.rmdir(path)
+
+
+try:
+    rmtree(__temp__)
+except:
+    pass
+xbmcvfs.mkdirs(__temp__)
 
 
 def find_movie(content, title, year):
@@ -286,6 +297,10 @@ def download(link, search_string=""):
     exts = [".srt", ".sub", ".txt", ".smi", ".ssa", ".ass"]
     downloadlink_pattern = "...<a href=\"(.+?)\" rel=\"nofollow\" onclick=\"DownloadSubtitle"
 
+    uid = uuid.uuid4()
+    tempdir = os.path.join(__temp__, unicode(uid))
+    xbmcvfs.mkdirs(tempdir)
+
     content, response_url = geturl(link)
     match = re.compile(downloadlink_pattern).findall(content)
     if match:
@@ -310,11 +325,7 @@ def download(link, search_string=""):
             downloadlink, link, postparams))
         response = my_urlopener.open(downloadlink, postparams)
 
-        if xbmcvfs.exists(__temp__):
-            shutil.rmtree(__temp__.encode(sys.getfilesystemencoding()))
-        xbmcvfs.mkdirs(__temp__)
-
-        local_tmp_file = os.path.join(__temp__, "subscene.xxx")
+        local_tmp_file = os.path.join(tempdir, "subscene.xxx")
         packed = False
 
         try:
@@ -341,21 +352,21 @@ def download(link, search_string=""):
                     packed = False
                     log(__name__, "Discovered a non-archive file")
             myfile.close()
-            local_tmp_file = os.path.join(__temp__, "subscene." + typeid)
-            os.rename(os.path.join(__temp__, "subscene.xxx"), local_tmp_file)
+            local_tmp_file = os.path.join(tempdir, "subscene." + typeid)
+            os.rename(os.path.join(tempdir, "subscene.xxx"), local_tmp_file)
             log(__name__, "Saving to %s" % local_tmp_file)
         except:
             log(__name__, "Failed to save subtitle to %s" % local_tmp_file)
 
         if packed:
             xbmc.sleep(500)
-            xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (local_tmp_file, __temp__,)).encode('utf-8'), True)
+            xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (local_tmp_file, tempdir,)).encode('utf-8'), True)
 
-        for file in xbmcvfs.listdir(__temp__)[1]:
+        for file in xbmcvfs.listdir(tempdir)[1]:
             if sys.platform.startswith('win'):
-                file = os.path.join(__temp__, file)
+                file = os.path.join(tempdir, file)
             else:
-                file = os.path.join(__temp__.encode('utf-8'), file)
+                file = os.path.join(tempdir.encode('utf-8'), file)
             if os.path.splitext(file)[1] in exts:
                 if search_string and string.find(string.lower(file), string.lower(search_string)) == -1:
                     continue

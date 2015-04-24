@@ -1,5 +1,5 @@
-1.1.1
-- fix for unicode problems on OpenELEC
+1.1.2
+- bug fix for temp folder issues
 
 1.1.0
 - added uploader comments to download selection
