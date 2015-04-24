@@ -1,13 +1,13 @@
 from Utils import *
 
-rottentomatoes_key = '63sbsudx936yedd2wdmt6tkn'
-base_url = "http://api.rottentomatoes.com/api/public/v1.0/lists/"
+RT_KEY = '63sbsudx936yedd2wdmt6tkn'
+BASE_URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/"
 
 
 def GetRottenTomatoesMovies(movietype):
     movies = []
-    url = movietype + '.json?apikey=%s' % (rottentomatoes_key)
-    results = Get_JSON_response(base_url + url)
+    url = movietype + '.json?apikey=%s' % (RT_KEY)
+    results = Get_JSON_response(BASE_URL + url)
     if results is not None and "movies" in results:
         for item in results["movies"]:
             if "alternate_ids" in item:
@@ -15,7 +15,7 @@ def GetRottenTomatoesMovies(movietype):
             else:
                 imdbid = ""
             poster = "http://" + item["posters"]["original"].replace("tmb", "ori")[64:]
-            if addon.getSetting("infodialog_onclick") != "false":
+            if ADDON.getSetting("infodialog_onclick") != "false":
                 # path = 'plugin://script.extendedinfo/?info=extendedinfo&&imdbid=%s' % imdbid
                 path = 'plugin://script.extendedinfo/?info=action&&id=RunScript(script.extendedinfo,info=extendedinfo,imdbid=%s)' % imdbid
             else:

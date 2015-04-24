@@ -93,6 +93,10 @@ msgctxt "#32026"
 msgid "Related TheMovieDB lists"
 msgstr ""
 
+msgctxt "#32027"
+msgid "Select person"
+msgstr ""
+
 msgctxt "#32030"
 msgid "Movie appearances"
 msgstr ""

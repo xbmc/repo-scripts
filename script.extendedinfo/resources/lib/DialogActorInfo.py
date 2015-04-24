@@ -1,23 +1,11 @@
 import xbmc
-import xbmcaddon
 import xbmcgui
 from Utils import *
-try:
-    from ImageTools import *
-except:
-    log("Exception when importing ImageTools")
+from ImageTools import *
 from TheMovieDB import *
 from YouTube import *
 import DialogVideoInfo
 import DialogTVShowInfo
-homewindow = xbmcgui.Window(10000)
-
-addon = xbmcaddon.Addon()
-addon_id = addon.getAddonInfo('id')
-addon_name = addon.getAddonInfo('name')
-addon_version = addon.getAddonInfo('version')
-addon_strings = addon.getLocalizedString
-addon_path = addon.getAddonInfo('path').decode("utf-8")
 
 
 class DialogActorInfo(xbmcgui.WindowXMLDialog):
@@ -32,13 +20,14 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
         self.person = False
         if not self.id:
             name = kwargs.get('name').decode("utf-8").split(" " + xbmc.getLocalizedString(20347) + " ")
-            name = name[0].strip()
-            names = name.split(" / ")
+            names = name[0].strip().split(" / ")
             if len(names) > 1:
-                ret = xbmcgui.Dialog().select("Actor Info", names)
+                ret = xbmcgui.Dialog().select(ADDON.getLocalizedString(32027), names)
                 if ret == -1:
                     return None
                 name = names[ret]
+            else:
+                name = names[0]
             self.id = GetPersonID(name)
             if self.id:
                 self.id = self.id["id"]
@@ -61,7 +50,7 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
             youtube_thread.join()
             self.youtube_vids = youtube_thread.listitems
         else:
-            Notify(addon.getLocalizedString(32143))
+            Notify(ADDON.getLocalizedString(32143))
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     def onInit(self):
@@ -69,7 +58,7 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
             xbmc.executebuiltin("Dialog.Close(busydialog)")
             self.close()
             return
-        homewindow.setProperty("actor.ImageColor", self.person["general"]["ImageColor"])
+        HOME.setProperty("actor.ImageColor", self.person["general"]["ImageColor"])
         windowid = xbmcgui.getCurrentWindowDialogId()
         passDictToSkin(self.person["general"], "actor.", False, False, windowid)
         self.getControl(150).addItems(create_listitems(self.person["movie_roles"], 0))
@@ -92,27 +81,27 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
             self.close()
 
     def onClick(self, controlID):
-        homewindow.setProperty("WindowColor", xbmc.getInfoLabel("Window(home).Property(ActorInfo.ImageColor)"))
+        HOME.setProperty("WindowColor", xbmc.getInfoLabel("Window(home).Property(ActorInfo.ImageColor)"))
         if controlID in [150, 550]:
             listitem = self.getControl(controlID).getSelectedItem()
             AddToWindowStack(self)
             self.close()
-            dialog = DialogVideoInfo.DialogVideoInfo(u'script-%s-DialogVideoInfo.xml' % addon_name, addon_path, id=listitem.getProperty("id"), dbid=listitem.getProperty("dbid"))
+            dialog = DialogVideoInfo.DialogVideoInfo(u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, id=listitem.getProperty("id"), dbid=listitem.getProperty("dbid"))
             dialog.doModal()
         elif controlID in [250, 650]:
             listitem = self.getControl(controlID).getSelectedItem()
-            # options = [addon.getLocalizedString(32147), addon.getLocalizedString(32148)]
-            # selection = xbmcgui.Dialog().select(addon.getLocalizedString(32151), options)
+            # options = [ADDON.getLocalizedString(32147), ADDON.getLocalizedString(32148)]
+            # selection = xbmcgui.Dialog().select(ADDON.getLocalizedString(32151), options)
             # if selection == 0:
             #     GetCreditInfo(listitem.getProperty("credit_id"))
             # if selection == 1:
             AddToWindowStack(self)
             self.close()
-            dialog = DialogTVShowInfo.DialogTVShowInfo(u'script-%s-DialogVideoInfo.xml' % addon_name, addon_path, id=listitem.getProperty("id"), dbid=listitem.getProperty("dbid"))
+            dialog = DialogTVShowInfo.DialogTVShowInfo(u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, id=listitem.getProperty("id"), dbid=listitem.getProperty("dbid"))
             dialog.doModal()
         elif controlID in [450, 750]:
             image = self.getControl(controlID).getSelectedItem().getProperty("original")
-            dialog = SlideShow(u'script-%s-SlideShow.xml' % addon_name, addon_path, image=image)
+            dialog = SlideShow(u'script-%s-SlideShow.xml' % ADDON_NAME, ADDON_PATH, image=image)
             dialog.doModal()
         elif controlID == 350:
             listitem = self.getControl(controlID).getSelectedItem()
@@ -123,7 +112,7 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
             PopWindowStack()
         elif controlID == 132:
             text = self.person["general"]["description"] + "[CR]" + self.person["general"]["biography"]
-            w = TextViewer_Dialog('DialogTextViewer.xml', addon_path, header=addon.getLocalizedString(32037), text=text, color=self.person["general"]['ImageColor'])
+            w = TextViewer_Dialog('DialogTextViewer.xml', ADDON_PATH, header=ADDON.getLocalizedString(32037), text=text, color=self.person["general"]['ImageColor'])
             w.doModal()
 
     def onFocus(self, controlID):

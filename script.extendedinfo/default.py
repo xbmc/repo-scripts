@@ -7,18 +7,18 @@ import xbmcaddon
 #     buggalo.GMAIL_RECIPIENT = "phil65@kodi.tv"
 # except:
 #     pass
-addon = xbmcaddon.Addon()
-addon_version = addon.getAddonInfo('version')
-addon_name = addon.getAddonInfo('name')
-addon_path = addon.getAddonInfo('path').decode("utf-8")
-sys.path.append(xbmc.translatePath(os.path.join(addon_path, 'resources', 'lib')).decode("utf-8"))
+ADDON = xbmcaddon.Addon()
+ADDON_VERSION = ADDON.getAddonInfo('version')
+ADDON_NAME = ADDON.getAddonInfo('name')
+ADDON_PATH = ADDON.getAddonInfo('path').decode("utf-8")
+sys.path.append(xbmc.translatePath(os.path.join(ADDON_PATH, 'resources', 'lib')).decode("utf-8"))
 from process import StartInfoActions
 
 
 class Main:
 
     def __init__(self):
-        xbmc.log("version %s started" % addon_version)
+        xbmc.log("version %s started" % ADDON_VERSION)
         xbmc.executebuiltin('SetProperty(extendedinfo_running,True,home)')
         # try:
         self._parse_argv()
@@ -26,7 +26,7 @@ class Main:
             StartInfoActions(self.infos, self.params)
         elif not self.handle:
             import DialogVideoList
-            dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % addon_name, addon_path)
+            dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % ADDON_NAME, ADDON_PATH)
             dialog.doModal()
         xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
         # except Exception:

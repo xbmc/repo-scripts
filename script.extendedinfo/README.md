@@ -6,9 +6,7 @@ Example:
 - keep Attention to the parameter separators ("&amp;&amp;")
 
 
-#########################################################################################
-Rotten Tomatoes
-#########################################################################################
+##Rotten Tomatoes
 
 Run:
 RunScript(script.extendedinfo,info=intheaters)          --> InTheatersMovies.%d.xxx
@@ -33,9 +31,7 @@ Available Properties:
 'Plot':         Movie Plot
 
 
-#########################################################################################
-The MovieDB
-#########################################################################################
+##The MovieDB
 
 Run:
 
@@ -89,9 +85,7 @@ Available Properties:
 'Art(fanart)':      TVShow Fanart
 
 
-#########################################################################################
-Trakt.tv
-#########################################################################################
+##Trakt.tv
 
 Run:
 RunScript(script.extendedinfo,info=trendingmovies)  --> TrendingMovies.%d
@@ -156,9 +150,7 @@ RunScript(script.extendedinfo,info=premiereshows)       --> PremiereShows.%d
 'Art(fanart)':   TVShow Fanart
 
 
-#########################################################################################
-TheAudioDB
-#########################################################################################
+##TheAudioDB
 
 RunScript(script.extendedinfo,info=discography)         --> Discography.%d
 - fetches the artist discography (Last.FM)
@@ -197,9 +189,7 @@ RunScript(script.extendedinfo,info=artistdetails) ???
 
 
 
-#########################################################################################
-LastFM
-#########################################################################################
+#LastFM
 
 RunScript(script.extendedinfo,info=albumshouts)
 - fetches twitter shouts for given album
@@ -247,9 +237,8 @@ RunScript(script.extendedinfo,info=nearevents)       --> NearEvents.%d
 'venue_image':  Venue image
 
 
-#########################################################################################
-YouTube
-#########################################################################################
+
+##YouTube
 
 RunScript(script.extendedinfo,info=youtubesearch)           --> YoutubeSearch.%d
 -- required additional parameters: id=
@@ -264,9 +253,7 @@ RunScript(script.extendedinfo,info=youtubeusersearch)       --> YoutubeUserSearc
 'Date':         Video Upload Date
 
 
-#########################################################################################
-Misc Images
-#########################################################################################
+##Misc Images
 
 RunScript(script.extendedinfo,info=xkcd)          --> XKCD.%d
 - fetches a daily random list of XKCD webcomics
@@ -322,24 +309,22 @@ info=albuminfo ## todo
 
 
 
-#########################################################################################
-ActorInfo / MovieInfo Dialogs (script.metadata.actors replacement)
-#########################################################################################
 
+##ActorInfo / MovieInfo Dialogs (script.metadata.actors replacement)
 
 
 XBMC.RunScript(script.extendedinfo,info=extendedactorinfo,name=ACTORNAME)
 XBMC.RunScript(script.extendedinfo,info=extendedactorinfo,id=ACTOR_TMDB_ID)
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 
-List of Built In Controls Available In script-ExtendedInfo Script-DialogInfo.xml:
+###List of Built In Controls Available In script-ExtendedInfo Script-DialogInfo.xml:
 
 150 -> container -> movies list
 250 -> container -> youtube videos
 
 
-Labels Available In script-Actors-DialogInfo.xml:
+###Labels Available In script-Actors-DialogInfo.xml:
 
 Labels of the currently selected actor / director / writer / artist.
 Window(home).Property(Title) --------------------> Name
@@ -384,9 +369,9 @@ Container(250).ListItem.Property(aspect_ratio) ---> Aspect Ratio (0.66)
 
 [...] (WIP)
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 
-SKINNING ADD-ON DIALOGS:
+##SKINNING ADD-ON DIALOGS:
 
 Please have a look at reference implementation, too much to cover. For the infodialogs it is important to include ALL lists (if you dont want to use them just hide them)
 

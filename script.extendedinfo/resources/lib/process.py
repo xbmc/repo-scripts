@@ -1,14 +1,10 @@
 from LastFM import *
-from MiscScraper import *
 from TheAudioDB import *
 from TheMovieDB import *
 from Utils import *
-from RottenTomatoes import *
+from local_db import *
 from YouTube import *
 from Trakt import *
-homewindow = xbmcgui.Window(10000)
-Addon_Data_Path = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % addon_id).decode("utf-8"))
-Skin_Data_Path = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % xbmc.getSkinDir()).decode("utf-8"))
 
 
 def StartInfoActions(infos, params):
@@ -21,19 +17,23 @@ def StartInfoActions(infos, params):
         params["prefix"] = params["prefix"] + '.'
     for info in infos:
         data = None
-        ########### Images #####################
+        #  Images
         if info == 'xkcd':
+            from MiscScraper import GetXKCDInfo
             data = GetXKCDInfo(), "XKCD"
         elif info == 'cyanide':
+            from MiscScraper import GetCandHInfo
             data = GetCandHInfo(), "CyanideHappiness"
         elif info == 'dailybabes':
+            from MiscScraper import GetDailyBabes
             data = GetDailyBabes(), "DailyBabes"
         elif info == 'dailybabe':
+            from MiscScraper import GetDailyBabes
             data = GetDailyBabes(single=True), "DailyBabe"
-        ########### Audio #####################
+        # Audio
         elif info == 'discography':
             Discography = GetDiscography(params["artistname"])
-            if len(Discography) == 0:
+            if not Discography:
                 Discography = GetArtistTopAlbums(params.get("artist_mbid"))
             data = Discography, "Discography"
         elif info == 'mostlovedtracks':
@@ -69,25 +69,34 @@ def StartInfoActions(infos, params):
         elif info == 'randomdbmovies':
             data = get_db_movies('"sort": {"method": "random"}', params.get("limit", 10)), "RandomMovies"
         elif info == 'inprogressdbmovies':
-            data = get_db_movies('"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}', params.get("limit", 10)), "RecommendedMovies"
-    ### RottenTomatoesMovies ##############################
+            method = '"sort": {"order": "descending", "method": "lastplayed"}, "filter": {"field": "inprogress", "operator": "true", "value": ""}'
+            data = get_db_movies(method, params.get("limit", 10)), "RecommendedMovies"
+    #  RottenTomatoesMovies
         elif info == 'intheaters':
+            from RottenTomatoes import GetRottenTomatoesMovies
             data = GetRottenTomatoesMovies("movies/in_theaters"), "InTheatersMovies"
         elif info == 'boxoffice':
+            from RottenTomatoes import GetRottenTomatoesMovies
             data = GetRottenTomatoesMovies("movies/box_office"), "BoxOffice"
         elif info == 'opening':
+            from RottenTomatoes import GetRottenTomatoesMovies
             data = GetRottenTomatoesMovies("movies/opening"), "Opening"
         elif info == 'comingsoon':
+            from RottenTomatoes import GetRottenTomatoesMovies
             data = GetRottenTomatoesMovies("movies/upcoming"), "ComingSoonMovies"
         elif info == 'toprentals':
+            from RottenTomatoes import GetRottenTomatoesMovies
             data = GetRottenTomatoesMovies("dvds/top_rentals"), "TopRentals"
         elif info == 'currentdvdreleases':
+            from RottenTomatoes import GetRottenTomatoesMovies
             data = GetRottenTomatoesMovies("dvds/current_releases"), "CurrentDVDs"
         elif info == 'newdvdreleases':
+            from RottenTomatoes import GetRottenTomatoesMovies
             data = GetRottenTomatoesMovies("dvds/new_releases"), "NewDVDs"
         elif info == 'upcomingdvds':
+            from RottenTomatoes import GetRottenTomatoesMovies
             data = GetRottenTomatoesMovies("dvds/upcoming"), "UpcomingDVDs"
-        ### The MovieDB ##################################
+        #  The MovieDB
         elif info == 'incinemas':
             data = GetMovieDBMovies("now_playing"), "InCinemasMovies"
         elif info == 'upcoming':
@@ -129,16 +138,20 @@ def StartInfoActions(infos, params):
                 log("IMDBId from local DB:" + str(tvdb_id))
                 if tvdb_id:
                     tvshow_id = get_show_tmdb_id(tvdb_id)
-                    log("tvdb_id to tmdb_id: %s --> %s" % (str(tvdb_id), str(tvshow_id)))
+                    log("tvdb_id to tmdb_id: %s --> %s" %
+                        (str(tvdb_id), str(tvshow_id)))
             elif tvdb_id:
                 tvshow_id = get_show_tmdb_id(tvdb_id)
-                log("tvdb_id to tmdb_id: %s --> %s" % (tvdb_id, str(tvshow_id)))
+                log("tvdb_id to tmdb_id: %s --> %s" %
+                    (tvdb_id, str(tvshow_id)))
             elif imdb_id:
                 tvshow_id = get_show_tmdb_id(imdb_id, "imdb_id")
-                log("imdb_id to tmdb_id: %s --> %s" % (imdb_id, str(tvshow_id)))
+                log("imdb_id to tmdb_id: %s --> %s" %
+                    (imdb_id, str(tvshow_id)))
             elif name:
                 tvshow_id = search_media(name, "", "tv")
-                log("search string to tmdb_id: %s --> %s" % (name, str(tvshow_id)))
+                log("search string to tmdb_id: %s --> %s" %
+                    (name, str(tvshow_id)))
             if tvshow_id:
                 data = GetSimilarTVShows(tvshow_id), "SimilarTVShows"
         elif info == 'studio':
@@ -146,7 +159,7 @@ def StartInfoActions(infos, params):
                 CompanyId = SearchforCompany(params["studio"])[0]["id"]
                 data = GetCompanyInfo(CompanyId), "StudioInfo"
         elif info == 'set':
-            if params.get("dbid", False) and not "show" in str(params.get("type", "")):
+            if params.get("dbid", False) and "show" not in str(params.get("type", "")):
                 name = GetMovieSetName(params["dbid"])
                 if name:
                     params["setid"] = SearchForSet(name)
@@ -170,16 +183,17 @@ def StartInfoActions(infos, params):
             data = GetPopularActorList(), "PopularPeople"
         elif info == 'extendedinfo':
             from DialogVideoInfo import DialogVideoInfo
-            dialog = DialogVideoInfo(u'script-%s-DialogVideoInfo.xml' % addon_name, addon_path, id=params.get("id", ""),
+            dialog = DialogVideoInfo(u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, id=params.get("id", ""),
                                      dbid=params.get("dbid", None), imdbid=params.get("imdbid", ""), name=params.get("name", ""))
             dialog.doModal()
         elif info == 'extendedactorinfo':
             from DialogActorInfo import DialogActorInfo
-            dialog = DialogActorInfo(u'script-%s-DialogInfo.xml' % addon_name, addon_path, id=params.get("id", ""), name=params.get("name", ""))
+            dialog = DialogActorInfo(u'script-%s-DialogInfo.xml' % ADDON_NAME,
+                                     ADDON_PATH, id=params.get("id", ""), name=params.get("name", ""))
             dialog.doModal()
         elif info == 'extendedtvinfo':
             from DialogTVShowInfo import DialogTVShowInfo
-            dialog = DialogTVShowInfo(u'script-%s-DialogVideoInfo.xml' % addon_name, addon_path, id=params.get("id", ""),
+            dialog = DialogTVShowInfo(u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, id=params.get("id", ""),
                                       dbid=params.get("dbid", None), imdbid=params.get("imdbid", ""), name=params.get("name", ""))
             dialog.doModal()
         elif info == 'ratemedia':
@@ -202,18 +216,19 @@ def StartInfoActions(infos, params):
         elif info == 'seasoninfo':
             if params.get("tvshow", False) and params.get("season", False):
                 from DialogSeasonInfo import DialogSeasonInfo
-                dialog = DialogSeasonInfo(u'script-%s-DialogVideoInfo.xml' % addon_name, addon_path, tvshow=params["tvshow"], season=params["season"])
+                dialog = DialogSeasonInfo(
+                    u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, tvshow=params["tvshow"], season=params["season"])
                 dialog.doModal()
             else:
                 Notify("Error", "Required data missing in script call")
         elif info == 'directormovies':
             if params.get("director", False):
-                director_id = GetPersonID(params["director"])["id"]
+                director_id = GetPersonID(params["director"], skip_dialog=True)["id"]
                 if director_id:
                     data = GetDirectorMovies(director_id), "DirectorMovies"
         elif info == 'writermovies':
             if params.get("writer", False) and not params["writer"].split(" / ")[0] == params.get("director", "").split(" / ")[0]:
-                writer_id = GetPersonID(params["writer"])["id"]
+                writer_id = GetPersonID(params["writer"], skip_dialog=True)["id"]
                 if writer_id:
                     data = GetDirectorMovies(writer_id), "WriterMovies"
         elif info == 'similarmoviestrakt':
@@ -248,23 +263,24 @@ def StartInfoActions(infos, params):
             if params.get("artist_mbid"):
                 data = GetEvents(params.get("artist_mbid")), "ArtistEvents"
         elif info == 'youtubesearch':
-            homewindow.setProperty('%sSearchValue' % params.get("prefix", ""), params.get("id", ""))  # set properties
+            HOME.setProperty('%sSearchValue' % params.get("prefix", ""), params.get("id", ""))  # set properties
             if params.get("id", False):
-                data = GetYoutubeSearchVideosV3(params.get("id", ""), params.get("hd", ""), params.get("orderby", "relevance")), "YoutubeSearch"
+                data = GetYoutubeSearchVideos(params.get("id", ""), params.get("hd", ""), params.get("orderby", "relevance")), "YoutubeSearch"
         elif info == 'youtubeplaylist':
             if params.get("id", False):
                 data = GetYoutubePlaylistVideos(params.get("id", "")), "YoutubePlaylist"
         elif info == 'youtubeusersearch':
-            if params.get("id", ""):
-                data = GetYoutubeUserVideos(params.get("id", "")), "YoutubeUserSearch"
+            user_name = params.get("id", "")
+            if user_name:
+                playlists = GetUserPlaylists(user_name)
+                data = GetYoutubePlaylistVideos(playlists["uploads"]), "YoutubeUserSearch"
         elif info == 'nearevents':
-            data = GetNearEvents(params.get("tag", ""), params.get("festivalsonly", ""), params.get(
-                "lat", ""), params.get("lon", ""), params.get("location", ""), params.get("distance", "")), "NearEvents"
+            data = GetNearEvents(params.get("tag", ""), params.get("festivalsonly", ""), params.get("lat", ""), params.get("lon", ""), params.get("location", ""), params.get("distance", "")), "NearEvents"
         elif info == 'trackinfo':
-            homewindow.setProperty('%sSummary' % params.get("prefix", ""), "")  # set properties
+            HOME.setProperty('%sSummary' % params.get("prefix", ""), "")  # set properties
             if params["artistname"] and params["trackname"]:
                 TrackInfo = GetTrackInfo(params["artistname"], params["trackname"])
-                homewindow.setProperty('%sSummary' % params.get("prefix", ""), TrackInfo["summary"])  # set properties
+                HOME.setProperty('%sSummary' % params.get("prefix", ""), TrackInfo["summary"])  # set properties
         elif info == 'venueevents':
             if params["location"]:
                 params["id"] = GetVenueID(params["location"])
@@ -274,23 +290,24 @@ def StartInfoActions(infos, params):
                 Notify("Error", "Could not find venue")
         elif info == 'topartistsnearevents':
             artists = GetXBMCArtists()
+            from MiscScraper import GetArtistNearEvents
             data = GetArtistNearEvents(artists["result"]["artists"][0:49]), "TopArtistsNearEvents"
-        elif info == 'channels':
-            channels = create_channel_list()
-      #      prettyprint(channels)
+        # elif info == 'channels':
+        #     channels = create_channel_list()
         elif info == 'favourites':
             if params.get("id", ""):
                 favourites = GetFavouriteswithType(params.get("id", ""))
             else:
                 favourites = GetFavourites()
-                homewindow.setProperty('favourite.count', str(len(favourites)))
+                HOME.setProperty('favourite.count', str(len(favourites)))
                 if len(favourites) > 0:
-                    homewindow.setProperty('favourite.1.name', favourites[-1]["Label"])
+                    HOME.setProperty('favourite.1.name', favourites[-1]["Label"])
             data = favourites, "Favourites"
         elif info == 'json':
             data = GetYoutubeVideos(params["feed"]), "RSS"
         elif info == 'similarlocal' and "dbid" in params:
-            data = GetSimilarFromOwnLibrary(params["dbid"]), "SimilarLocalMovies"
+            data = GetSimilarFromOwnLibrary(
+                params["dbid"]), "SimilarLocalMovies"
         elif info == 'iconpanel':
             data = GetIconPanel(int(params["id"])), "IconPanel" + str(params["id"])
         elif info == 'weather':
@@ -315,9 +332,9 @@ def StartInfoActions(infos, params):
         elif info == 'action':
             xbmc.executebuiltin(params.get("id", ""))
         elif info == 'bounce':
-            homewindow.setProperty(params.get("name", ""), "True")
+            HOME.setProperty(params.get("name", ""), "True")
             xbmc.sleep(200)
-            homewindow.clearProperty(params.get("name", ""))
+            HOME.clearProperty(params.get("name", ""))
         elif info == "youtubevideo":
             if params.get("id", ""):
                 xbmc.executebuiltin("Dialog.Close(all,true)")
@@ -344,13 +361,13 @@ def StartInfoActions(infos, params):
         elif info == 'updatexbmcdatabasewithartistmbid':
             SetMusicBrainzIDsForAllArtists(True, False)
         elif info == 'deletecache':
-            homewindow.clearProperties()
-            for the_file in os.listdir(Addon_Data_Path):
-                file_path = os.path.join(Addon_Data_Path, the_file)
+            HOME.clearProperties()
+            for the_file in os.listdir(ADDON_DATA_PATH):
+                file_path = os.path.join(ADDON_DATA_PATH, the_file)
                 try:
                     if os.path.isfile(file_path) and not the_file == "settings.xml":
                         os.unlink(file_path)
-                except Exception, e:
+                except Exception as e:
                     log(e)
             Notify("Cache deleted")
         elif info == 'syncwatchlist':

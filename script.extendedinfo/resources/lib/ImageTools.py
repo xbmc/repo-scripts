@@ -1,35 +1,22 @@
 import urllib
 import xbmc
-import xbmcaddon
-import xbmcgui
 import xbmcvfs
 import os
 from Utils import *
-try:
-    from PIL import Image, ImageFilter, ImageOps
-except:
-    log("Exception when importing PIL")
+from PIL import Image, ImageFilter
 
-addon = xbmcaddon.Addon()
-addon_id = addon.getAddonInfo('id')
-addon_icon = addon.getAddonInfo('icon')
-addon_strings = addon.getLocalizedString
-addon_name = addon.getAddonInfo('name')
-addon_path = addon.getAddonInfo('path').decode("utf-8")
-Addon_Data_Path = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % addon_id).decode("utf-8"))
-homewindow = xbmcgui.Window(10000)
 THUMBS_CACHE_PATH = xbmc.translatePath("special://profile/Thumbnails/Video")
 
 
 def Filter_Image(filterimage, radius):
-    if not xbmcvfs.exists(Addon_Data_Path):
-        xbmcvfs.mkdir(Addon_Data_Path)
+    if not xbmcvfs.exists(ADDON_DATA_PATH):
+        xbmcvfs.mkdir(ADDON_DATA_PATH)
     filterimage = xbmc.translatePath(urllib.unquote(filterimage.encode("utf-8"))).replace("image://", "")
     if filterimage.endswith("/"):
         filterimage = filterimage[:-1]
     cachedthumb = xbmc.getCacheThumbName(filterimage)
     filename = "%s-radius_%i.png" % (cachedthumb, radius)
-    targetfile = os.path.join(Addon_Data_Path, filename)
+    targetfile = os.path.join(ADDON_DATA_PATH, filename)
     xbmc_vid_cache_file = os.path.join("special://profile/Thumbnails/Video", cachedthumb[0], cachedthumb)
     xbmc_cache_file = os.path.join("special://profile/Thumbnails", cachedthumb[0], cachedthumb[:-4] + ".jpg")
     if filterimage == "":
@@ -113,18 +100,11 @@ def Get_Colors(img):
         minBrightness = 130
         if Avg < minBrightness:
             Diff = minBrightness - Avg
-            if rAvg <= (255 - Diff):
-                rAvg += Diff
-            else:
-                rAvg = 255
-            if gAvg <= (255 - Diff):
-                gAvg += Diff
-            else:
-                gAvg = 255
-            if bAvg <= (255 - Diff):
-                bAvg += Diff
-            else:
-                bAvg = 255
+            for color in [rAvg, gAvg, bAvg]:
+                if color <= (255 - Diff):
+                    color += Diff
+                else:
+                    color = 255
         imagecolor = "FF%s%s%s" % (format(rAvg, '02x'), format(gAvg, '02x'), format(bAvg, '02x'))
     else:
         imagecolor = "FFF0F0F0"

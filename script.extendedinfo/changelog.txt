@@ -1,3 +1,13 @@
+v2.0.8
+- adjust youtube user videos to API V3
+- fix c & h webcomics
+- fix for actor info call by name
+- adjust Trakt to API v2
+- localization
+- skip dialog for writermovies / directormovies when called from skin
+- show age of death instead of actual age for dead persons
+- code cosmetics, small bugfixes
+
 v2.0.7
 - added RateMedia call
 - fixes for special chars in search terms for some calls
@@ -8,6 +18,7 @@ v2.0.7
 - updated C & H URL range to include latest images
 - show list title in filter window
 - instantly show busydialog when using extendedactorinfo
+- fix onclick for tvshow infodialog calls
 - code cleanup, small bugfixes
 
 v2.0.6
