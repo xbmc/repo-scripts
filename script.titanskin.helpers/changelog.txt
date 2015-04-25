@@ -1,0 +1,37 @@
+1.7.0
+- auto focus next season added
+- smart shortcuts support
+- various fixes
+- boxsets support
+1.6.7
+- added support for weather and nextaired alerts
+- added support to focus next unwatched episodes
+- moved some of the code to service
+1.6.0
+- speed optimizations
+- custom method for extrafanart detection
+- custom method for random fanart for home tiles
+1.5.0
+- new methods for widget assignments
+- various fixes
+1.2.7
+- support for plexbmc
+- fixes for MB3 new auth methods
+- more speed optimizations
+1.1.6
+- speed optimizations
+- added caching for user collections
+- fixed views for MB3
+1.1.0
+- support for new menu system
+- fixes for collection backgrounds from MB3
+1.0.8
+- fixed script error  for non mediabrowser users
+- optimized some code
+- added method for autofocus submenus
+- new methods for retrieving the artwork
+- support for custom collection widgets
+1.0.2 - fixed small issue with moving home items that are top most or down
+1.0.1 - Changes for official XBMC repository
+1.0.0
+- Initial version for official repository
