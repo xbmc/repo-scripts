@@ -18,43 +18,43 @@ msgstr ""
 
 msgctxt "#32001"
 msgid "Copy Movie Fanart"
-msgstr "פאנארט של סרט"
+msgstr "העתק פאנארט סרט"
 
 msgctxt "#32002"
 msgid "Copy TV Show Fanart"
-msgstr "פאנארט של תכנית טלוויזיה"
+msgstr "העתק פאנארט סדרה"
 
 msgctxt "#32003"
 msgid "Copy Music Video Fanart"
-msgstr "פאנארט של קליפ"
+msgstr "העתק פאנארט קליפ"
 
 msgctxt "#32004"
 msgid "Copy Artist Fanart"
-msgstr "פאנארט של אמן"
+msgstr "העתק פאנארט אמן"
 
 msgctxt "#32005"
 msgid "Copy Movie Thumbs"
-msgstr "תמונה ממוזערת של סרט"
+msgstr "העתק תמונת סרט ממוזערת"
 
 msgctxt "#32007"
 msgid "Copy Season Thumbs"
-msgstr "תמונה ממוזערת של עונה"
+msgstr "העתק תמונת עונה ממוזערת"
 
 msgctxt "#32008"
 msgid "Copy Episode Thumbs"
-msgstr "תמונה ממוזערת של פרק"
+msgstr "העתק תמונת פרק ממוזערת"
 
 msgctxt "#32009"
 msgid "Copy Music Video Thumbs"
-msgstr "תמונה ממוזערת של קליפ"
+msgstr "העתק תמונת קליפ ממוזערת"
 
 msgctxt "#32010"
 msgid "Copy Artist Thumbs"
-msgstr "תמונה ממוזערת של אמן"
+msgstr "העתק תמונת אמן ממוזערת"
 
 msgctxt "#32011"
 msgid "Copy Album Thumbs"
-msgstr "תמונה ממוזערת של אלבום"
+msgstr "העתק תמונת אלבום ממוזערת"
 
 msgctxt "#32012"
 msgid "Destination directory"
@@ -62,11 +62,11 @@ msgstr "תיקיית יעד"
 
 msgctxt "#32013"
 msgid "Copy TV Show Banners"
-msgstr "באנר של תכנית טלוויזיה"
+msgstr "העתק באנר סדרה"
 
 msgctxt "#32014"
 msgid "Copy TV Show Posters"
-msgstr "פוסטר של תכנית טלוויזיה"
+msgstr "העתק פוסטר סדרה"
 
 msgctxt "#32015"
 msgid "Custom source"

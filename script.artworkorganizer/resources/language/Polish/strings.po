@@ -18,19 +18,19 @@ msgstr ""
 
 msgctxt "#32001"
 msgid "Copy Movie Fanart"
-msgstr "Skopiuj tapetę filmu"
+msgstr "Kopiuj fototapetę filmu"
 
 msgctxt "#32002"
 msgid "Copy TV Show Fanart"
-msgstr "Skopiuj tapetę serialu"
+msgstr "Skopiuj fototapetę serialu"
 
 msgctxt "#32003"
 msgid "Copy Music Video Fanart"
-msgstr "Skopiuj tapetę teledysku"
+msgstr "Kopiuj fototapetę teledysku"
 
 msgctxt "#32004"
 msgid "Copy Artist Fanart"
-msgstr "Skopiuj tapetę wykonawcy"
+msgstr "Kopiuj fototapetę wykonawcy"
 
 msgctxt "#32005"
 msgid "Copy Movie Thumbs"
@@ -102,8 +102,8 @@ msgstr "wybierz, które grafiki powinny zostać skopiowane"
 
 msgctxt "#32107"
 msgid "search a custom folder for artwork"
-msgstr "Przeszukuj podany folder grafik"
+msgstr "przeszukuj niestandardowy folder grafik"
 
 msgctxt "#32108"
 msgid "select a custom folder where the addon should store the artwork"
-msgstr "wybierz folder, w którym wtyczka bedzie przechowywać grafikę"
+msgstr "wybierz folder, w którym dodatek powinien przechowywać grafikę"

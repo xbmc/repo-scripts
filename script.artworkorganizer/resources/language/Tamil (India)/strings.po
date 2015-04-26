@@ -27,3 +27,7 @@ msgstr "பொதுவானது"
 msgctxt "#32102"
 msgid "Advanced"
 msgstr "மேம்பட்ட"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "அதி மேம்பட்ட"

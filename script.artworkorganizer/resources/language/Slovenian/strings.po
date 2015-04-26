@@ -16,6 +16,46 @@ msgstr ""
 "Language: sl\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
+msgctxt "#32005"
+msgid "Copy Movie Thumbs"
+msgstr "Kopiraj sličice filma"
+
+msgctxt "#32007"
+msgid "Copy Season Thumbs"
+msgstr "Kopiraj sličice sezone"
+
+msgctxt "#32008"
+msgid "Copy Episode Thumbs"
+msgstr "Kopiraj sličice epizode"
+
+msgctxt "#32009"
+msgid "Copy Music Video Thumbs"
+msgstr "Kopiraj sličice glasbenega videa"
+
+msgctxt "#32010"
+msgid "Copy Artist Thumbs"
+msgstr "Kopiraj sličice izvajalca"
+
+msgctxt "#32011"
+msgid "Copy Album Thumbs"
+msgstr "Kopiraj sličice albuma"
+
+msgctxt "#32012"
+msgid "Destination directory"
+msgstr "Ciljna mapa"
+
+msgctxt "#32013"
+msgid "Copy TV Show Banners"
+msgstr "Kopiraj pasice TV oddaje"
+
+msgctxt "#32014"
+msgid "Copy TV Show Posters"
+msgstr "Kopiraj plakate TV oddaje"
+
+msgctxt "#32015"
+msgid "Custom source"
+msgstr "Vir po meri"
+
 msgctxt "#32016"
 msgid "Path"
 msgstr "Pot"

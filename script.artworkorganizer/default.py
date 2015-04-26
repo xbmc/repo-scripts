@@ -243,9 +243,12 @@ class Main:
                 processeditems = processeditems + 1
                 self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32003) + ': ' + str( count + 1 ) )
                 name = item['title']
-                artist = item['artist'][0]
                 artwork = item['fanart']
-                tmp_filename = artist + ' - ' + name + '.jpg'
+                if item['artist']: # bug workaround, musicvideos can end up in the database without an artistname
+                    artist = item['artist'][0]
+                    tmp_filename = artist + ' - ' + name + '.jpg'
+                else:
+                    tmp_filename = name + '.jpg'
                 filename = clean_filename( tmp_filename )
                 if artwork != '':
                     try:
@@ -444,9 +447,12 @@ class Main:
                 processeditems = processeditems + 1
                 self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32009) + ': ' + str( count + 1 ) )
                 name = item['title']
-                artist = item['artist'][0]
                 artwork = item['thumbnail']
-                tmp_filename = artist + ' - ' + name + '.jpg'
+                if item['artist']: # bug workaround, musicvideos can end up in the database without an artistname
+                    artist = item['artist'][0]
+                    tmp_filename = artist + ' - ' + name + '.jpg'
+                else:
+                    tmp_filename = name + '.jpg'
                 filename = clean_filename( tmp_filename )
                 if artwork != '':
                     try:

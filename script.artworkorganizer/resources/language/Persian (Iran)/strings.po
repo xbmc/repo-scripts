@@ -23,3 +23,11 @@ msgstr "مسیر"
 msgctxt "#32101"
 msgid "General"
 msgstr "عمومی"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "پیشرفته"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "تخصصی"

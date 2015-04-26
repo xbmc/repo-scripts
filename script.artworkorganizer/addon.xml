@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artworkorganizer" name="Artwork Organizer" version="3.0.1" provider-name="ronie">
+<addon id="script.artworkorganizer" name="Artwork Organizer" version="3.0.4" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.12.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -9,7 +9,7 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="be">Copies your fanart and thumbs into a separate directories</summary>
-		<summary lang="bg">Копира фанарт изображенията и миниатюрите в отделни директории.</summary>
+		<summary lang="bg">Копира фен-арт изображенията и миниатюрите в отделни директории.</summary>
 		<summary lang="ca">Copia el fanart i les miniatures en directoris separats</summary>
 		<summary lang="de">Kopiert deine FanArts und Vorschaubilder in ein separates Verzeichnis</summary>
 		<summary lang="el">Αντιγράφει τα fanart και τις μικρογραφίες σε ξεχωριστούς φακέλους</summary>
@@ -19,22 +19,23 @@
 		<summary lang="fr">Copie de vos fanart et vignettes dans des répertoires distincts</summary>
 		<summary lang="fr_CA">Copie vos fanarts et imagettes dans des répertoires distincts</summary>
 		<summary lang="gl">Copia o teu fanart e miniaturas en cartafoles separados</summary>
-		<summary lang="he">העתק את הפאנארט והתמונות הממוזערות שלך אל תיקיות נפרדות</summary>
+		<summary lang="he">העתקת פאנארט ותמונות הממוזערות אל תיקיות נפרדות</summary>
 		<summary lang="hr">Kopira vaše slike omota i minijature u odvojene direktorije</summary>
 		<summary lang="hu">A fanartok és bélyegképek külön könyvtárba másolása</summary>
 		<summary lang="id">Menyalin fanart dan gambar kecil Anda ke direktori terpisah</summary>
 		<summary lang="it">Copia fanart ed copertine in una cartella separata</summary>
 		<summary lang="ko">팬아트와 썸네일을 별도의 디렉토리에 복사합니다</summary>
 		<summary lang="lt">Kopijuoti FanArt ir miniatiūras į atskirus katalogus</summary>
-		<summary lang="nl">kopieer je fanart en afbeeldingsminiaturen in aparte mappen</summary>
+		<summary lang="nl">kopieert je fanart en afbeeldingsminiaturen in aparte mappen</summary>
 		<summary lang="no">Kopierer din fanart og miniatyrbilder til separate mapper</summary>
-		<summary lang="pl">Kopiuje tapety oraz miniatury do osobnych katalogów</summary>
+		<summary lang="pl">Kopiuje fototapety oraz miniatury do osobnych folderów</summary>
 		<summary lang="pt">Copia a sua fanart e miniaturas para pastas separadas</summary>
 		<summary lang="pt_BR">Copia suas fanarts e miniaturas para pastas separadas</summary>
 		<summary lang="sv">Kopierar din fanart och miniatyrer till separata kataloger</summary>
+		<summary lang="tr">Fanart ve küçük resimlerinizi ayrı dizinlere kopyalar</summary>
 		<summary lang="zh">复制同人画和缩略图到单独目录</summary>
 		<description lang="be">This script can be used to copy your movie, tvshow, artist and album fanart and thumbs into a separate directories.</description>
-		<description lang="bg">Добавката може да се ползва за копиране на фанарт изображенията и миниатюрите от филми, ТВ сериали, изпълнители и албуми в отделни директории.</description>
+		<description lang="bg">Добавката може да се ползва за копиране на фен-арт изображенията и миниатюрите от филми, ТВ сериали, изпълнители и албуми в отделни директории.</description>
 		<description lang="ca">El script pot ser utilitzat per copiar el fanart i les imatges en miniatura de les teves pel·lícules, series, artistes i àlbums en directoris separats.</description>
 		<description lang="de">Dieses Script kann benutzt werden, um deine Film-, TV-Sendungs-, Artist- und Album-FanArt und -Vorschaubilder in separate Verzeichnisse zu kopieren.</description>
 		<description lang="el">Το script μπορεί να χρησιμοποιηθεί για να αντιγράψετε τα fanart και τις μικρογραφίες των ταινιών, των σειρών, των καλλιτεχνών και των άλμπουμ σας σε ξεχωριστούς φακέλους</description>
@@ -45,7 +46,7 @@
 		<description lang="fr">Ce script peut être utilisé pour copier vos film, séries tv, artiste et album fanart et vignettes dans des répertoires distincts.</description>
 		<description lang="fr_CA">Ce script peut être utilisé pour copier les fanarts et imagettes de vos films, séries télé, artistes et albums dans des répertoires distincts.</description>
 		<description lang="gl">Este script pode usarse para copiar o fanart e as miniaturas do teu filme, serie, artista ou álbum en cartafoles separados.</description>
-		<description lang="he">סקריפט זה יכול לשמש להעתקת פאנארט ותמונות ממוזערות של סרט, תכנית טלוויזיה, אמן ואלבום אל תיקיות נפרדות.</description>
+		<description lang="he">סקריפט זה יכול לשמש להעתקת פאנארט ותמונות ממוזערות של סרט, סדרה, אמן ואלבום אל תיקיות נפרדות.</description>
 		<description lang="hr">Ova skripta se može koristiti za kopiranje vaših filmskih, TV serijskih, izvođača, albumskih slika omota i minijatura u odvojene direktorije.</description>
 		<description lang="hu">Ez a szkript arra alkalmas hogy átmásolja a filmek, sorozatok, előadók és album fanartokat és bélyegképeket külön könyvtárakba.</description>
 		<description lang="id">Script ini dapat digunakan untuk menyalin fanart dan gambar kecil film, acara tv, artis dan album ke direktori terpisah.</description>
@@ -54,10 +55,11 @@
 		<description lang="lt">Šis scenarijus gali būti naudojamas, norint nukopijuoti filmų, tv laidų, atlikėjų ir albumų fanart ir miniatiūras į atskirus katalogus.</description>
 		<description lang="nl">Dit script kan worden gebruikt om je film, tvshow, artiest en album fanart en afbeeldingsminiaturen in aparte mappen te kopieren</description>
 		<description lang="no">Dette skriptet kan brukes til å kopiere din filmer, tv-serier, artister og album -fanart og miniatyrbilder inn i separate mapper.</description>
-		<description lang="pl">Ten skrypt może zostać użyty do kopiowania tapet oraz miniatury filmów, seriali, wykonawców oraz albumów do osobnych katalogów.</description>
+		<description lang="pl">Ten skrypt może zostać użyty do kopiowania fototapet oraz miniatury filmów, seriali, wykonawców oraz albumów do osobnych folderów.</description>
 		<description lang="pt">Este script pode ser usado para copiar para pastas separadas as suas fanart e miniaturas de filmes, séries tv, artistas e álbums.</description>
 		<description lang="pt_BR">Este script pode ser usado para copiar suas miniaturas e fanarts de filmes, séries, artistas e álbuns em pastas separadas.</description>
 		<description lang="sv">Detta skript kan användas för att kopiera dina film, tv-serier, artist och album fanart samt miniatyrer till separata mappar.</description>
+		<description lang="tr">Bu betik film, tv programı, sanatçı ve albüm fanart ve küçük resimlerinizi ayrı dizinlere kopyalamak için kullanılabilir.</description>
 		<description lang="zh">此脚本可用于复制你的电影、剧集、艺人和专辑的同人画和缩略图到一个单独目录。</description>
 		<language></language>
 		<platform>all</platform>

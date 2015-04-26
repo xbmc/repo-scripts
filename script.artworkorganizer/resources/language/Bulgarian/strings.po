@@ -18,19 +18,19 @@ msgstr ""
 
 msgctxt "#32001"
 msgid "Copy Movie Fanart"
-msgstr "Копирай фанарта на филма"
+msgstr "Копирай фен-арта на филма"
 
 msgctxt "#32002"
 msgid "Copy TV Show Fanart"
-msgstr "Копирай фанарта на сериала"
+msgstr "Копирай фен-арта на сериала"
 
 msgctxt "#32003"
 msgid "Copy Music Video Fanart"
-msgstr "Копирай фанарта на музикалния клип"
+msgstr "Копирай фен-арта на музикалния клип"
 
 msgctxt "#32004"
 msgid "Copy Artist Fanart"
-msgstr "Копирай фанарта на артиста"
+msgstr "Копирай фен-арта на артиста"
 
 msgctxt "#32005"
 msgid "Copy Movie Thumbs"

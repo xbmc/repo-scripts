@@ -23,3 +23,11 @@ msgstr "Putanja"
 msgctxt "#32101"
 msgid "General"
 msgstr "Opšte"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Napredno"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Stručno"

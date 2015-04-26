@@ -27,3 +27,7 @@ msgstr "Општо"
 msgctxt "#32102"
 msgid "Advanced"
 msgstr "Напредно"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Експертно"
