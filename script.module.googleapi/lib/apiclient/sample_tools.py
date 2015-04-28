@@ -1,4 +1,4 @@
-# Copyright (C) 2013 Google Inc.
+# Copyright 2014 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 Consolidates a lot of code commonly repeated in sample applications.
 """
+from __future__ import absolute_import
 
 __author__ = 'jcgregorio@google.com (Joe Gregorio)'
 __all__ = ['init']
@@ -31,7 +32,7 @@ from oauth2client import file
 from oauth2client import tools
 
 
-def init(argv, name, version, doc, filename, scope=None, parents=[]):
+def init(argv, name, version, doc, filename, scope=None, parents=[], discovery_filename=None):
   """A common initialization routine for samples.
 
   Many of the sample applications do the same initialization, which has now
@@ -49,6 +50,7 @@ def init(argv, name, version, doc, filename, scope=None, parents=[]):
     file: string, filename of the application. Usually set to __file__.
     parents: list of argparse.ArgumentParser, additional command-line flags.
     scope: string, The OAuth scope used.
+    discovery_filename: string, name of local discovery file (JSON). Use when discovery doc not available via URL.
 
   Returns:
     A tuple of (service, flags), where service is the service object and flags
@@ -88,6 +90,14 @@ def init(argv, name, version, doc, filename, scope=None, parents=[]):
     credentials = tools.run_flow(flow, storage, flags)
   http = credentials.authorize(http = httplib2.Http())
 
-  # Construct a service object via the discovery service.
-  service = discovery.build(name, version, http=http)
+  if discovery_filename is None:
+    # Construct a service object via the discovery service.
+    service = discovery.build(name, version, http=http)
+  else:
+    # Construct a service object using a local discovery document file.
+    with open(discovery_filename) as discovery_file:
+      service = discovery.build_from_document(
+          discovery_file.read(),
+          base='https://www.googleapis.com/',
+          http=http)
   return (service, flags)
