@@ -1,3 +1,7 @@
+1.3
+-----
+Changed API endpoint URI to elisaviihde.fi (no more beta.elisaviihde.fi)
+
 1.2
 -----
 Added KODI addon packaging

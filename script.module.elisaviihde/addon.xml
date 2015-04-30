@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.elisaviihde"
     name="Elisa Viihde Python library"
-    version="1.2.0"
+    version="1.3.0"
     provider-name="enyone">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
