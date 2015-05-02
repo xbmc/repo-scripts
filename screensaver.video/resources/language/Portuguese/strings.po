@@ -92,9 +92,129 @@ msgctxt "#32055"
 msgid "Prevent Screensaver Starting If Playing Media"
 msgstr "Impedir Início Do Protetor de Ecrã Se Estiver a Reproduzir Mídia"
 
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Alterar Volume Quando o Protector de Ecrã Iniciar"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Definir Volume Para"
+
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nível de Atenuação Ecrã"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Parar Protector de Ecrã Automaticamente"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Parar Protector de Ecrã Após (Minutos)"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** Todos os Vídeos Transferidos ***"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Aquário 1 - [846MB] - 480p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Aquário 2 - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Lareira 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Lareira 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Lareira 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Aquário 3 - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Lareira 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Espaço 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Praia 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Praia 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Espaço 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Floresta 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Sci-Fi 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Cascata 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Cascata 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Cascata 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Praia 3 - [3.4GB] - 720p"
+
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Neve 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Neve 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Neve 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Moinho 1 - [549MB] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Imagem Sobreposta"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Seleccionar Ficheiro de Imagem Sobreposta"
 
 msgctxt "#32202"
 msgid "None"
@@ -103,3 +223,47 @@ msgstr "Nenhuma"
 msgctxt "#32203"
 msgid "User Defined"
 msgstr "Definido pelo Utilizador"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Frame de Imagem 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Frame de Janela 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Frame de Janela 2"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "Ficheiro do Protector de Ecrã Inválido"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "O seguinte vídeo predefinido já existe"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Reutilizar este ficheiro?"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "A Transferir Ficheiro de Vídeo para Protecção de Ecrã"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "Esta opção irá fazer uso de todos os vídeos já transferidos"
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "Cada vídeo exigido deverá ser primeiro transferido individualmente"
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Transferência do ficheiro de vídeo falhou"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Deverá ser devido à largura de banda do servidor ter sido excedida, por favor, tente amanhã"

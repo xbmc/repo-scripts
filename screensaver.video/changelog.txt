@@ -1,3 +1,6 @@
+v1.1.2
+- Add option to reset volume on startup
+
 v1.1.1
 - Set variable when VideoScreensaver is running so other addons know about it
 

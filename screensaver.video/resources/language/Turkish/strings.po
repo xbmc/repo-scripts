@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32001"
 msgid "Screensaver"
-msgstr "Ekran koruyucu"
+msgstr "Ekran Koruyucu"
 
 msgctxt "#32002"
 msgid "Debugging"
@@ -34,7 +34,7 @@ msgstr "Video Seçimi"
 
 msgctxt "#32005"
 msgid "VideoScreensaver"
-msgstr "Video Ekranı Kaydedici"
+msgstr "Video Ekran Koruyucu"
 
 msgctxt "#32006"
 msgid "Configuration"
@@ -42,7 +42,7 @@ msgstr "Yapılandırma"
 
 msgctxt "#32020"
 msgid "Preset Video"
-msgstr "Video Ön Ayarı"
+msgstr "Önayarlı Video"
 
 msgctxt "#32021"
 msgid "User Defined"
@@ -50,15 +50,15 @@ msgstr "Kullanıcı Tanımlı"
 
 msgctxt "#32022"
 msgid "Selected Screensaver"
-msgstr "Seçilmiş Ekran Koruyucu"
+msgstr "Seçili ekran koruyucu"
 
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
-msgstr "Bir Klasördeki Tüm Dosyaları Kullan"
+msgstr "Klasördeki bütün dosyaları kullan"
 
 msgctxt "#32024"
 msgid "Repeat Type For Multiple Files"
-msgstr "Çoklu Dosya Türleri İçin Tekrar Et"
+msgstr "Çoklu dosyalar için tekrarlama türü"
 
 msgctxt "#32025"
 msgid "Repeat All"
@@ -66,63 +66,155 @@ msgstr "Hepsini Tekrarla"
 
 msgctxt "#32026"
 msgid "Repeat One"
-msgstr "Tekini Tekrarla"
+msgstr "Birini Tekrarla"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
-msgstr "Video Dosyasının Ön Ayarını İndir / Ayarla"
+msgstr "Önayarlı video dosyasını ayarla / indir"
 
 msgctxt "#32051"
 msgid "Select Video File"
-msgstr "Video Dosyasını Seç"
+msgstr "Video dosyasını seç"
 
 msgctxt "#32052"
 msgid "Show Time"
-msgstr "Şov Zamanı"
+msgstr "Saati göster"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
-msgstr "Videoyu Rastgele Bir Noktadan Başlat"
+msgstr "Videoyu rastgele bir noktadan başlat"
 
 msgctxt "#32054"
 msgid "Select Videos Folder"
-msgstr "Videolar Klasörünü Seç"
+msgstr "Videolar klasörünü seç"
 
 msgctxt "#32055"
 msgid "Prevent Screensaver Starting If Playing Media"
-msgstr "Medya Oynatırken Ekran Koruyucunun Başlamasını Önle"
+msgstr "Medya oynatılırken ekran koruyucunun başlamasını engelle"
 
 msgctxt "#32056"
 msgid "Change Volume When Screensaver Starts"
-msgstr "Ekran Koruyucu Başladığında Ses Ayarlanabilsin"
+msgstr "Ekran koruyucu başladığında ses düzeyini değiştir"
 
 msgctxt "#32057"
 msgid "Set Volume To"
-msgstr "Ses Seviyesi"
+msgstr "Ses düzeyi"
 
 msgctxt "#32058"
 msgid "Dim Level"
-msgstr "Ayarlama Seviyesi"
+msgstr "Ekranı karartma düzeyi"
 
 msgctxt "#32059"
 msgid "Stop Screensaver Automatically"
-msgstr "Ekran Koruyucuyu Kendiliğinden Durdur"
+msgstr "Ekran koruyucuyu otomatik olarak durdur"
 
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
-msgstr "Ekran Koruyucuyu Önceden Durdur (Dakika)"
+msgstr "Ekran koruyucuyu durdurma zamanı (dakika)"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
-msgstr "İndirilen Tüm Videolar"
+msgstr "*** İndirilen Bütün Videolar *** "
 
 msgctxt "#32101"
 msgid "Aquarium 1  - [846MB] - 400p"
-msgstr "Akvaryum 1 [846MB]-400P"
+msgstr "Akvaryum 1 - [846MB] - 400P"
 
 msgctxt "#32102"
 msgid "Aquarium 2  - [2.7GB] - 720p"
-msgstr "Akvaryum 2- [2.7GB] - 720P"
+msgstr "Akvaryum 2 - [2.7GB] - 720P"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Şömine 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Şömine 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Şömine 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Akvaryum 3  - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Şömine 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Uzay 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Kumsal 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Kumsal 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Uzay 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Ormanlık Alan 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Bilim Kurgu 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Şelale 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Şelale 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Şelale 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Kumsal 3 - [3.4GB] - 720p"
+
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Kar 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Kar 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Kar 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Su Değirmeni 1 - [549MB] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Çerçeve Resmi"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Çerçeve resim dosyasını seçin"
 
 msgctxt "#32202"
 msgid "None"
@@ -131,3 +223,47 @@ msgstr "Yok"
 msgctxt "#32203"
 msgid "User Defined"
 msgstr "Kullanıcı Tanımlı"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Resim Çerçevesi 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Pencere Çerçevesi 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Pencere Çerçevesi 2"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "Ekran koruyucu dosyası geçerli değil"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "Aşağıdaki varsayılan video zaten var"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Bu dosya yeniden kullanılsın mı?"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "Ekran koruyucu video dosyası indiriliyor"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "Bu seçenek indirilmiş bütün video dosyalarını kullanacaktır."
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "Her bir videonun ayrı ayrı indirilmesi gerekmektedir."
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Video dosyası indirilemedi"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Bu hata sunucu bant genişliği sınırının aşılması nedeniyle olabilir, lütfen yarın tekrar deneyin."

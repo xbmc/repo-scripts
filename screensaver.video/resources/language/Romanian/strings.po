@@ -32,6 +32,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configurație"
 
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "Video predefinit"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "Definit de utilizator"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Protector ecran selectat"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Arată ora"
+
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nivel de întunecare"
@@ -39,3 +55,7 @@ msgstr "Nivel de întunecare"
 msgctxt "#32202"
 msgid "None"
 msgstr "Niciunul"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Definit de utilizator"

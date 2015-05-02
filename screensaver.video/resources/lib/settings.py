@@ -106,7 +106,7 @@ class Settings():
         [32111, "Matrix001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05RTczMTM0QjNBNUE0QTVRUVdFMjEwMzMyN0VXUVM="],
         [32115, "RetroSciFi-001-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD02QjVCNzREQzNBNUE0QTVRUVdFMjEwNDA4N0VXUVM="],
         [32120, "Snow001-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvRjI5QkZFQzIzQTVBNEE1UVFXRTk0MTMzN0VXUVMvU25vdzAwMS03MjBwLm1wNA=="],
-        [32121, "Snow002-1080p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvRTkzNjVGMTkzQTVBNEE1UVFXRTk0MTM3NUVXUVMvU25vdzAwMi0xMDgwcC5tcDQ="],
+        [32121, "Snow002-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlSGFzaC85MEE1NjhDRDNBNUE0QTVRUVdFMjc3ODg4N0VXUVMvU25vdzAwMi0xMDgwcC5tcDQ="],
         [32122, "Snow003-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjE0RUE1NDYzQTVBNEE1UVFXRTk0MTQ3MkVXUVMvU25vdzAwMy03MjBwLm1wNA=="],
         [32108, "Space001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1EQ0E4OTFEMTNBNUE0QTVRUVdFMjAxMTc3NkVXUVM="],
         [32112, "Space002-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD00NDQxQ0JCNTNBNUE0QTVRUVdFMjEwMzA4OUVXUVM="],
@@ -249,3 +249,10 @@ class Settings():
                 return Settings.OVERLAY_IMAGES[overlayId]
         else:
             return None
+
+    @staticmethod
+    def getStartupVolume():
+        # Check to see if the volume needs to be changed when the system starts
+        if __addon__.getSetting("resetVolumeOnStartup") == 'true':
+            return int(float(__addon__.getSetting("resetStartupVolumeValue")))
+        return -1

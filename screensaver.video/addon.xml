@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.video" name="VideoScreensaver" version="1.1.1" provider-name="robwebset">
+<addon id="screensaver.video" name="VideoScreensaver" version="1.1.2" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
 	<extension point="xbmc.ui.screensaver" library="default.py"/>
   	<extension point="xbmc.python.script" library="screensaver.py" />
+	<extension point="xbmc.service" library="service.py" start="login">
+		<provides>executable</provides>
+	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="bg">Скрийнсейвър, който възпроизвежда видео файлове</summary>
 		<summary lang="de">Bildschirmschoner, der eine Videodatei abspielt</summary>
@@ -25,6 +28,7 @@
 		<summary lang="pt_BR">Protetor de Tela que reproduz arquivos de vídeos.</summary>
 		<summary lang="ro">Protector ecran care redă un fișier video</summary>
 		<summary lang="sv">Skärmsläckare som spelar upp en film</summary>
+		<summary lang="tr">Video dosyası oynatan ekran koruyucu</summary>
 		<summary lang="zh">播放视频文件的屏幕保护</summary>
 		<description lang="bg">Възпроизвежда видео файлове при стартиране на скрийнсейвър. Можете да изберете даден видео файл или да ползвате някой от вградените.</description>
 		<description lang="de">Spielt beim Start des Bildschirmschoners ein Video ab. Dies kann ein benutzerdefiniertes oder eines der eingebauten Videos sein</description>
@@ -43,6 +47,7 @@
 		<description lang="pt">Reproduz um vídeo quando o protetor de ecrã inicia, este pode ser um vídeo personalizado ou um dos vídeos embutidos</description>
 		<description lang="pt_BR">Reproduza um vídeo quando iniciar a proteção de tela, podes setar uma vídeo customizado ou um dos vídeos pré-existentes que podem ser transferidos via ajustes do addon.</description>
 		<description lang="sv">Spelar en film när skärmsläckaren startar, det kan vara en egen film eller någon av de inbyggda filmerna</description>
+		<description lang="tr">Ekran koruyucu başladığında bir video oynatır, bu özel bir video veya yerleşik videolardan biri olabilir</description>
 		<description lang="zh">屏幕保护时播放视频，可以是自定义视频或内建视频</description>
 		<language></language>
 		<platform>all</platform>
