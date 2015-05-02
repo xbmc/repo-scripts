@@ -36,6 +36,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Pasues"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Gabim"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artistët"

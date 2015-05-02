@@ -96,6 +96,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Következő"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Hiba"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Zene könyvtár"
@@ -155,3 +159,7 @@ msgstr "Hozzáadás a sorhoz"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Sor lecserélése"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "A zene könyvtár frissítése"

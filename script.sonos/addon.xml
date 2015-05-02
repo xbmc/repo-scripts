@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sonos" name="Sonos" version="1.3.2" provider-name="robwebset">
+<addon id="script.sonos" name="Sonos" version="1.3.4" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="2.3.0"/>
@@ -84,7 +84,7 @@
 	
 		<description lang="no">Støtter enkle Sonos Kontroll og notiser fra Kodi. Les wiki for fler detaljer.</description>
 	
-		<description lang="pl">Obsługuje proste sterowanie Sonos Controller i powiadomienia z Kodi.  Więcej szczegółów znajdziesz w wiki.</description>
+		<description lang="pl">Obsługuje proste sterowanie systemem Sonos oraz powiadomienia z Kodi.  Więcej szczegółów znajdziesz w na stronach Wiki dodatku.</description>
 	
 		<description lang="pt">Suporta Controlo Sonos simples e notificações através do Kodi. Verifique o wiki para mais detalhes.</description>
 	

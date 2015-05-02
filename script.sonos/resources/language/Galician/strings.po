@@ -108,10 +108,6 @@ msgctxt "#32023"
 msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
 msgstr "Ligar o Volume do Kodi co Altofalante Sonos (Requírese Reiniciar)"
 
-msgctxt "#32024"
-msgid "Switch Sonos To Line-In On Kodi Startup"
-msgstr "Mudar Sonos ao Line-In ao Iniciar o Kodi"
-
 msgctxt "#32025"
 msgid "Volume Change Increments"
 msgstr "Incrementar Cambios no Volume"
@@ -136,6 +132,10 @@ msgctxt "#32035"
 msgid "Layout"
 msgstr "Deseño"
 
+msgctxt "#32042"
+msgid "Hide Sonos Logo"
+msgstr "Agochar o Logo"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "O seguinte axuste do ArtistSlideshow debe estar activado"
@@ -147,6 +147,22 @@ msgstr "Quere activalo automaticamente?"
 msgctxt "#32062"
 msgid "Next"
 msgstr "Seguinte"
+
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr "Iniciada a actualización da biblioteca"
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr "Actualización da biblioteca en curso"
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr "Enderezo IP non estabelecido"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Erro"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -211,3 +227,7 @@ msgstr "Engadir á Cola"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Substituír Cola"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Actualizar biblioteca de música"

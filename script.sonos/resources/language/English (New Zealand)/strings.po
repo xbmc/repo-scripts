@@ -96,6 +96,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Next"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Error"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Music Library"
@@ -155,3 +159,7 @@ msgstr "Add To Queue"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Replace Queue"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Update Music Library"

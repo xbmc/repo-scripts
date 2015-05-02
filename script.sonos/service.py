@@ -296,7 +296,16 @@ if __name__ == '__main__':
     autoIpAdd = AutoUpdateIPAddress()
     del autoIpAdd
 
-    if (not Settings.isNotificationEnabled()) and (not Settings.linkAudioWithSonos()) and (not Settings.autoPauseSonos()):
+    # Check for the list of things that impact audio
+    audioChanges = Settings.linkAudioWithSonos() or Settings.switchSonosToLineIn() or Settings.switchSonosToLineInOnMediaStart()
+
+    # Check to see if we need to launch the Sonos Controller as soon as Kodi starts
+    if Settings.autoLaunchControllerOnStartup():
+        # Launch the Sonos controller, but do not block as we have more to do as a service
+        log("SonosService: Launching controller on startup")
+        xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__cwd__, "default.py")), False)
+
+    if (not Settings.isNotificationEnabled()) and (not audioChanges) and (not Settings.autoPauseSonos()):
         log("SonosService: Notifications, Volume Link and Auto Pause are disabled, exiting service")
     else:
         sonosDevice = Sonos.createSonosDevice()

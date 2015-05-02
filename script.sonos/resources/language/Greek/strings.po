@@ -108,10 +108,6 @@ msgctxt "#32023"
 msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
 msgstr "Σύνδεση της Έντασης Ήχου του Kodi με το Ηχείο Sonos (απαιτείται επανεκκίνηση)"
 
-msgctxt "#32024"
-msgid "Switch Sonos To Line-In On Kodi Startup"
-msgstr "Εναλλαγή του Sonos σε Είσοδο Ήχου κατά την Εκκίνηση του Kodi"
-
 msgctxt "#32025"
 msgid "Volume Change Increments"
 msgstr "Βήματα Έντασης Ήχου"
@@ -131,10 +127,6 @@ msgstr "Όνομα Ζώνης (Προαιρετικό)"
 msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Αυτόματη Ενημέρωση Διεύθυνσης IP κατά την Εκκίνηση"
-
-msgctxt "#32030"
-msgid "Switch Sonos To Line-In On Media Start"
-msgstr "Εναλλαγή του Sonos σε Είσοδο Ήχου κατά την Αναπαραγωγή"
 
 msgctxt "#32031"
 msgid "Coordinator"
@@ -203,6 +195,46 @@ msgstr "Επόμενο"
 msgctxt "#32063"
 msgid "Failed To Process Sonos Update Event"
 msgstr "Αποτυχία Ενημέρωσης του Sonos"
+
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr "Ξεκίνησε η Ενημέρωση Συλλογής"
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr "Η Ενημέρωση Συλλογής Είναι Σε Εξέλιξη"
+
+msgctxt "#32066"
+msgid "Error From Speaker %s"
+msgstr "Σφάλμα Από Το Ηχείο %s"
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr "Δεν Ορίστηκε Διεύθυνση IP"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Σφάλμα"
+
+msgctxt "#32069"
+msgid "Failed to perform lookup %s (%s)"
+msgstr "Αδυναμία αναζήτησης %s (%s)"
+
+msgctxt "#32070"
+msgid "Failed to perform queue lookup"
+msgstr "Αδυναμία αναζήτησης των σε αναμονή"
+
+msgctxt "#32071"
+msgid "Failed to perform radio station lookup"
+msgstr "Αδυναμία αναζήτησης ραδ. σταθμού"
+
+msgctxt "#32072"
+msgid "Failed to perform radio shows lookup"
+msgstr "Αδυναμία αναζήτησης ραδ. εκπομπών"
+
+msgctxt "#32073"
+msgid "Failed to perform action %s"
+msgstr "Αδυναμία εκτέλεσης ενέργειας %s"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -279,6 +311,10 @@ msgstr "Προσθήκη Στην Αναμονή"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Αντικατάσταση Αναμονής"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Ενημέρωση Μουσικής Συλλογής"
 
 msgctxt "#32200"
 msgid "Enter Speech Text To Play ..."

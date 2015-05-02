@@ -32,6 +32,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "بعدی"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "خطا"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "کتابخانه ی موسیقی"

@@ -44,6 +44,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "ต่อไป"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "ผิดพลาด"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "คลังข้อมูล วิดีโอ"
