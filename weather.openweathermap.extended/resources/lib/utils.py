@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import math
 import xbmc, xbmcgui, xbmcaddon
 
@@ -8,8 +10,6 @@ WEATHER_WINDOW = xbmcgui.Window(12600)
 DEBUG          = __addon__.getSetting('Debug')
 TEMPUNIT       = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
 SPEEDUNIT      = xbmc.getRegion('speedunit')
-if SPEEDUNIT in ('ft/s', 'ft/min', 'ft/h', 'inch/s', 'yard/s', 'kts', ):
-    SPEEDUNIT = 'mph'
 
 
 def log(txt):
@@ -288,6 +288,52 @@ WEEK_DAY_SHORT = { '0' : 47,
                    '5' : 45,
                    '6' : 46 }
 
+def SPEED(mps):
+    if SPEEDUNIT == 'km/h':
+        speed = mps * 3.6
+    elif SPEEDUNIT == 'm/min':
+        speed = mps * 60
+    elif SPEEDUNIT == 'ft/h':
+        speed = mps * 11810,88
+    elif SPEEDUNIT == 'ft/min':
+        speed = mps * 196,84
+    elif SPEEDUNIT == 'ft/s':
+        speed = mps * 3.281
+    elif SPEEDUNIT == 'mph':
+        speed = mps * 2.237
+    elif SPEEDUNIT == 'knots':
+        speed = mps * 1.944
+    elif SPEEDUNIT == 'Beaufort':
+        speed = KPHTOBFT(mps* 3.6)
+    elif SPEEDUNIT == 'inch/s':
+        speed = mps * 39.37
+    elif SPEEDUNIT == 'yard/s':
+        speed = mps * 1.094
+    elif SPEEDUNIT == 'Furlong/Fortnight':
+        speed = mps * 6012.886
+    else:
+        speed = mps
+    return str(int(round(speed)))
+
+def TEMP(deg):
+    if TEMPUNIT == '°F':
+        temp = deg * 1.8 + 32
+    elif TEMPUNIT == 'K':
+        temp = deg + 273.15
+    elif TEMPUNIT == '°Ré':
+        temp = deg * 0.8
+    elif TEMPUNIT == '°Ra':
+        temp = deg * 1.8 + 491.67
+    elif TEMPUNIT == '°Rø':
+        temp = deg * 0.525 + 7.5
+    elif TEMPUNIT == '°D':
+        temp = deg / -0.667 + 150
+    elif TEMPUNIT == '°N':
+        temp = deg * 0.33
+    else:
+        temp = deg
+    return str(int(round(temp)))
+
 def WIND_DIR(deg):
     if deg >= 349 or deg <=  11:
         return 71
@@ -354,17 +400,17 @@ def KPHTOBFT(spd):
     return bft
 
 #### thanks to FrostBox @ http://forum.kodi.tv/showthread.php?tid=114637&pid=937168#pid937168
-def FEELS_LIKE( T=10, V=25, D='C' ):
+def FEELS_LIKE( T=10, V=25, ext=True ):
     FeelsLike = T
     if round( ( V + .0 ) / 1.609344 ) > 4:
         FeelsLike = ( 13.12 + ( 0.6215 * T ) - ( 11.37 * V**0.16 ) + ( 0.3965 * T * V**0.16 ) )
-    if D == 'C':
-        return str( int( round( FeelsLike ) ) )
+    if ext:
+        return TEMP( FeelsLike )
     else:
-        return str( int( round( FeelsLike * 1.8 + 32 ) ) )
+        return str(int(round(FeelsLike)))
 
 #### thanks to FrostBox @ http://forum.kodi.tv/showthread.php?tid=114637&pid=937168#pid937168
-def DEW_POINT( Tc=0, RH=93, D='C', minRH=( 0, 0.075 )[ 0 ] ):
+def DEW_POINT( Tc=0, RH=93, minRH=( 0, 0.075 )[ 0 ], ext=True ):
     Es = 6.11 * 10.0**( 7.5 * Tc / ( 237.7 + Tc ) )
     RH = RH or minRH
     E = ( RH * Es ) / 100
@@ -372,10 +418,10 @@ def DEW_POINT( Tc=0, RH=93, D='C', minRH=( 0, 0.075 )[ 0 ] ):
         DewPoint = ( -430.22 + 237.7 * math.log( E ) ) / ( -math.log( E ) + 19.08 )
     except ValueError:
         DewPoint = 0
-    if D == 'C':
-        return str( int( round( DewPoint ) ) )
+    if ext:
+        return TEMP( DewPoint )
     else:
-        return str( int( round( DewPoint * 1.8 + 32 ) ) )
+        return str(int(round(DewPoint)))
 
 def CAPITALIZE(string):
     string = string[0].upper() + string[1:]

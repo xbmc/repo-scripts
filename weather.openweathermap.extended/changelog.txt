@@ -1,3 +1,6 @@
+v2.0.1
+- add proper support for new speed and temp units
+
 v2.0.0
 - bump for isengard
 
