@@ -38,7 +38,7 @@ msgstr "Paveikslėlių aplankas"
 
 msgctxt "#30005"
 msgid "Dim level"
-msgstr "Pritemdimo lygis"
+msgstr "Pritemdymo lygis"
 
 msgctxt "#30006"
 msgid "Effect"
@@ -87,6 +87,10 @@ msgstr "Rodytis paveikslėlius atsitiktine tvarka"
 msgctxt "#30017"
 msgid "Create image index"
 msgstr "Sukurti atvaizdį indeksą"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Naudoti aplanko ir failo vardą"
 
 msgctxt "#30019"
 msgid "Creating index"

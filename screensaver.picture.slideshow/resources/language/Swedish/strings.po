@@ -84,6 +84,22 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Visa bilder i slumpmässig ordning"
 
+msgctxt "#30017"
+msgid "Create image index"
+msgstr "Skapa bildindex"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Använd mapp- och filnamn"
+
+msgctxt "#30019"
+msgid "Creating index"
+msgstr "Skapar index"
+
+msgctxt "#30020"
+msgid "Index created"
+msgstr "Index skapat"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Visa bilddatum"
@@ -107,3 +123,11 @@ msgstr "Ytterligare"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Avancerad"
+
+msgctxt "#30027"
+msgid "Update index"
+msgstr "Uppdatera index"
+
+msgctxt "#30028"
+msgid "Indexing is not supported with fanart"
+msgstr "Indexering av fanart stöds inte"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="2.0.11" provider-name="Team-Kodi">
+<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="2.1.0" provider-name="Team-Kodi">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -10,7 +10,7 @@
 		<summary lang="am">መመልከቻ ማዳኛ የ ምስል ተንሸራታች ማሳያ </summary>
 		<summary lang="ar">شاشة التوقف هي التي تعرض صورة تلقائيا</summary>
 		<summary lang="be">Ахоўнік экрану што робіць паказ слайдаў</summary>
-		<summary lang="bg">Скрийнсейвър, изобразяващ слайдшоу от картини</summary>
+		<summary lang="bg">Скрийнсейвър, изобразяващ презентация от картини</summary>
 		<summary lang="ca">Estalvi de pantalla que mostra una presentació de diapositives d'imatges</summary>
 		<summary lang="cs">Spořič obrazovky promítající obrázky</summary>
 		<summary lang="cy">Arbedwr sgrin sy'n dangos sioe o ddelweddau</summary>
@@ -26,7 +26,7 @@
 		<summary lang="et">Ekraanisäästja, mis näitab piltide slaidiesitlust</summary>
 		<summary lang="fi">Näytönsäästäjä, joka toistaa kuvia diaesityksenä</summary>
 		<summary lang="fr">Économiseur d'écran affichant un diaporama</summary>
-		<summary lang="fr_CA">Économiseur d'écran qui affiche un diaporama</summary>
+		<summary lang="fr_CA">Économiseur d'écran affichant un diaporama</summary>
 		<summary lang="gl">O gardapantallas que amosa unha presentación de imaxes</summary>
 		<summary lang="he">שומר מסך אשר יציג מצגת של תמונות</summary>
 		<summary lang="hi">सक्रीनसेवर जो चित्रो के स्लीडेशो को प्रदर्शन करता है </summary>
@@ -35,7 +35,7 @@
 		<summary lang="is">Skjáhvíla sem sýnir skyggnusýningu mynda</summary>
 		<summary lang="it">Salvaschermo che mostra una presentazione di immagini</summary>
 		<summary lang="ja">画像をスライドショー表示するスクリーンセーバー</summary>
-		<summary lang="ko">이미지 슬라이드쇼를 보여주는 화면보호기</summary>
+		<summary lang="ko">이미지 슬라이드쇼를 보여주는 화면 보호기</summary>
 		<summary lang="lt">Ekrano užsklanda, kuri rodo skaidrių peržiūrą</summary>
 		<summary lang="lv">Ekrānsaudzētājs, kas rāda attēlu slīdīti</summary>
 		<summary lang="mk">Заштита на екран што покажува слајдшоу од слики</summary>
@@ -62,7 +62,7 @@
 		<description lang="am">የ ተንሸራታች ማሳያ መመልከቻ ማዳኛ የተለያዩ ተንሸራታች ማሳያ ምስሎች በ ተለያዩ መሸጋገሪያ ውጤቶችን በመጠቀም ያሳይዎታል፡ ማዋቀር ይችላሉ የ ሙዚቃ መጻህፍት ቤት ወይንም የ ቪዲዮ ወይንም የምስሎች ፎልደር እንዲያሳይ</description>
 		<description lang="ar">شاشة توقف العرض التلقائي ستظهر لك عرض تدريجي للصور باستخدام تأثيرات تحول مختلفة. ممكن أن تكون كونت لتعرض مكتبة الموسيقى أو الفيديو الخاصة بك, أو مجلد مخصص من الصور.</description>
 		<description lang="be">Слайдавы ахоўнік экрану будзе паказваць выявы з дапамогай разнастайных пераходных эфектаў. Можна сканфігураваць для паказу вашых бібліятэк музыкі ці відэа, альбо пэўных каталогаў з выявамі</description>
-		<description lang="bg">Скрийнсейвърът "Slideshow" изобразява слайдшоу от картини с разнообразни ефекти при прехода между отделните картини. Можете да зададете като източник на картини фанарт изображенията от видео/музикалната библиотеката или персонална папка с изображения.</description>
+		<description lang="bg">Скрийнсейвърът „Презентация“ изобразява презентация от картини с разнообразни ефекти при прехода между отделните картини. Можете да зададете като източник на картини фен-арт изображенията от видео/музикалната библиотеката или персонална папка с изображения.</description>
 		<description lang="ca">El protector de pantalles Projecció mostrarà una projecció de diapositives utilitzant diferents efectes de transició. Es pot configurar per mostrar el fanart de les vostres biblioteques de música o un directori d'imatges personalitzat</description>
 		<description lang="cs">Spořič obrazovky promítání vám bude promítat zvolené obrázky s použitím různých přechodových efektů. Může být nastaven k zobrazování fanart z vašich hudebních, či video knihoven, nebo vlastní složky obrázků.</description>
 		<description lang="cy">Bydd yr arbedwr sgrin Slideshow yn dangos sioe o ddelweddau dan ddefnyddio amryw o effeithiau trawsnewidiol.Mae modd ei ffurfweddu i ddangos celf eich cerddoriaeth neu fideo neu ffolder cyfaddas o ddelweddau.</description>
@@ -86,14 +86,14 @@
 		<description lang="is">Þessi skjáhvíla sýnir þér skyggnusýningu af myndum með ýmsum myndbrellum. Það er hægt að stilla hana til að sýna Fanart myndir úr tónlistar eða myndbandasöfnum, eða frá sérsniðinni möppu með myndum.</description>
 		<description lang="it">Il salvaschermo Slideshow mostra una presentazione di immagini usando diversi effetti di transizione. Può essere configurato per mostrare le fanart delle librerie musica o video, oppure una cartella di immagini specifica</description>
 		<description lang="ja">The Slideshow screensaver will show you a slide show of images using various transition effects. It can be configured to show your libraries music or video fanart, or a custom folder of images</description>
-		<description lang="ko">슬라이드쇼 화면보호기는 다양한 화면 전환효과를 이용해 이미지 슬라이드쇼를 보여줍니다. 음악 라이브러리, 비디오 팬아트, 사용자 폴더의 사진을 볼 수 있게 설정할 수 있습니다.</description>
+		<description lang="ko">슬라이드쇼 화면 보호기는 다양한 화면 전환효과를 이용해 이미지 슬라이드쇼를 보여줍니다. 음악 라이브러리, 비디오 팬아트, 사용자 폴더의 사진을 볼 수 있게 설정할 수 있습니다.</description>
 		<description lang="lt">Skaidrių peržiūros ekrano užsklanda atvaizduoja skaidrių peržiūros vaizdus, naudojant įvairius perėjimo efektus. Jis konfigūruojamas, kad rodyti jūsų bibliotekos muzikos ar vaizdo FanArt arba pasirinktinį paveikslėlių aplanką</description>
 		<description lang="lv">Slīdītes ekrānsaudzētājs parādīs slīdīti ar attēliem, izmantojot dažādus pārejas efektus. To var konfigurēt, lai rāda fanumākslu no mūzikas vai video bibliotekām, vai arī no pielāgotas attēlu mapes</description>
 		<description lang="mk">Слајдшоу заштитата на екран ќе покаже слајд шоу на слики користејќи ефекти на транзиција. Може да биде конфигурирано да покажува и плакат од вашата музика или филмови или ваша папка со слики</description>
 		<description lang="ms">Penyelamat skrin paparan slaid akan paparkan paparan slaid imej menggunakan pelabgai kesan peralihan. Ia boleh dikonfigur untuk tunjukkan pustaka muzik atau seni peminat anda, atau folder imej suai</description>
 		<description lang="nl">De Diavoorstellingsschermbeveiliging zal u een diavoorstelling tonen met verschillende overgangseffecten. U kan muziek- of videofanart uit uw bibliotheek tonen of zelf een map opgeven die afbeeldingen bevat.</description>
 		<description lang="no">Denne skjermbeskytteren viser bilder med forskjellige overgangseffekter. Den kan konfigureres til å vise fanart fra musikk- eller videobiblioteket ditt, eller en mappe med bilder.</description>
-		<description lang="pl">Ten wygaszacz ekranu to pokaz slajdów obrazów, przy użyciu różnych efektów przejść. Może być skonfigurowany tak, aby pokazywał tapety filmów, muzyki lub podany przez użytkownika folder ze obrazami.</description>
+		<description lang="pl">Ten wygaszacz ekranu to pokaz slajdów obrazów, przy użyciu różnych efektów przejść. Może być skonfigurowany tak, aby pokazywał fototapety filmów, muzyki lub podany przez użytkownika folder z obrazami.</description>
 		<description lang="pt">O protector de ecrã de slides irá mostrar-lhe imagens usando vários efeitos de transição. Pode ser configurada para mostrar as imagens de Fanart da sua biblioteca de música ou de vídeo, e também pode mostrar as imagens de uma pasta à sua escolha.</description>
 		<description lang="pt_BR">O screensaver Slideshow irá mostrar-lhe uma apresentação de slides de suas fotografias usando diferentes efeitos de transição. Ele pode ser configurado para visualizar fanarts de sua biblioteca de músicas ou de vídeo, ou ainda utilizar uma pasta personalizada que contenha imagens</description>
 		<description lang="ro">Screensaver de tip diapozitive va afișa imagini folosind diferite efecte de tranziție. Poate fi configurat să afișeze imagini fanart din mediateca audio sau video sau dintr-un dosar personalizat.</description>

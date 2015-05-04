@@ -34,7 +34,7 @@ msgstr "Fanart de música"
 
 msgctxt "#30004"
 msgid "Image Folder"
-msgstr "Imagenes de una carpeta"
+msgstr "Carpeta de imágenes"
 
 msgctxt "#30005"
 msgid "Dim level"
@@ -87,6 +87,10 @@ msgstr "Mostrar las imágenes en orden aleatorio"
 msgctxt "#30017"
 msgid "Create image index"
 msgstr "Crear índice de imágenes"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Usar nombre de carpeta y archivo"
 
 msgctxt "#30019"
 msgid "Creating index"

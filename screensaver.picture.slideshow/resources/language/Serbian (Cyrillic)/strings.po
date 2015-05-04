@@ -20,6 +20,10 @@ msgctxt "#30001"
 msgid "Folder"
 msgstr "Фасцикле"
 
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Ниво затамљења"
+
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "Онемогућено"
@@ -27,3 +31,7 @@ msgstr "Онемогућено"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Основно"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "Напредни"

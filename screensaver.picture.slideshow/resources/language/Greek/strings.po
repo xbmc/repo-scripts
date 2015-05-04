@@ -88,6 +88,10 @@ msgctxt "#30017"
 msgid "Create image index"
 msgstr "Δημιουργία δείκτη εικόνας"
 
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Χρήση φακέλου- και ονόματος αρχείου"
+
 msgctxt "#30019"
 msgid "Creating index"
 msgstr "Δημιουργείται ο δείκτης"

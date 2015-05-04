@@ -84,6 +84,22 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Prikaži slike naizmjeničnim odabirom"
 
+msgctxt "#30017"
+msgid "Create image index"
+msgstr "Stvori popis slika"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Korisit mapu - i naziv datoteke"
+
+msgctxt "#30019"
+msgid "Creating index"
+msgstr "Stvori popis"
+
+msgctxt "#30020"
+msgid "Index created"
+msgstr "Popis stvoren"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Prikaži datum slike"
@@ -107,3 +123,11 @@ msgstr "Dodatno"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Napredno"
+
+msgctxt "#30027"
+msgid "Update index"
+msgstr "Ažuriraj popis"
+
+msgctxt "#30028"
+msgid "Indexing is not supported with fanart"
+msgstr "Stvaranje popisa nije dopušteno sa slikama omota"

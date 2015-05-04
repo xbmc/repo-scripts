@@ -64,6 +64,10 @@ msgctxt "#30013"
 msgid "Disabled"
 msgstr "Оневозможено"
 
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Основно"
+
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Напредно"

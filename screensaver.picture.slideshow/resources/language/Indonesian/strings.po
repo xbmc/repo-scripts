@@ -20,9 +20,17 @@ msgctxt "#30001"
 msgid "Folder"
 msgstr "Folder"
 
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Fanart Musik"
+
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "Tingkat redup"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Slide"
 
 msgctxt "#30013"
 msgid "Disabled"

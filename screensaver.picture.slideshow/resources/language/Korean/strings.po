@@ -88,6 +88,10 @@ msgctxt "#30017"
 msgid "Create image index"
 msgstr "이미지 인덱스 생성"
 
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "사용자 폴더 - 파일 이름"
+
 msgctxt "#30019"
 msgid "Creating index"
 msgstr "인덱스 생성"

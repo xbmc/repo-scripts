@@ -88,6 +88,10 @@ msgctxt "#30017"
 msgid "Create image index"
 msgstr "Creëer afbeelding index"
 
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Gebruik map- en bestandsnaam"
+
 msgctxt "#30019"
 msgid "Creating index"
 msgstr "Creëren index"

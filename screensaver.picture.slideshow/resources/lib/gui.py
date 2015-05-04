@@ -13,7 +13,7 @@
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
 
-import random
+import random, copy, threading
 import xbmcgui, xbmcaddon
 import EXIFvfs
 from iptcinfovfs import IPTCInfo
@@ -78,12 +78,14 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         speedup = 1 / float(effectslowdown)
         self.adj_time = int(101000 * speedup)
         # get the images
-        items = self._get_items()
-        if items:
+        self._get_items()
+        if self.items:
             # hide startup splash
             self._set_prop('Splash', 'hide')
+            thread = img_update(data=self._get_items)
+            thread.start()
             # start slideshow
-            self._start_show(items)
+            self._start_show(copy.deepcopy(self.items))
 
     def _get_vars(self):
         # get the screensaver window id
@@ -275,6 +277,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 # break out of the for loop if onScreensaverDeactivated is called
                 if  self.stop or self.Monitor.abortRequested():
                     break
+            items = copy.deepcopy(self.items)
 
     def _get_items(self):
 	# check if we have an image folder, else fallback to video fanart
@@ -283,10 +286,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 hexfile = checksum(self.slideshow_path)
                 if not xbmcvfs.exists(CACHEFILE % hexfile):
                     create_cache()
-                items = self._read_cache(hexfile)
+                self.items = self._read_cache(hexfile)
             else:
-                items = walk(self.slideshow_path)
-            if not items:
+                self.items = walk(self.slideshow_path)
+            if not self.items:
                 self.slideshow_type = '0'
 	# video fanart
         if self.slideshow_type == '0':
@@ -296,7 +299,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             methods = [('AudioLibrary.GetArtists', 'artists')]
         # query the db
         if not self.slideshow_type == '2':
-            items = []
+            self.items = []
             for method in methods:
                 json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "' + method[0] + '", "params": {"properties": ["fanart"]}, "id": 1}')
                 json_query = unicode(json_query, 'utf-8', errors='ignore')
@@ -304,11 +307,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 if json_response.has_key('result') and json_response['result'] != None and json_response['result'].has_key(method[1]):
                     for item in json_response['result'][method[1]]:
                         if item['fanart']:
-                            items.append([item['fanart'], item['label']])
+                            self.items.append([item['fanart'], item['label']])
         # randomize
         if self.slideshow_random == 'true':
-            random.shuffle(items, random.random)
-        return items
+            random.shuffle(self.items, random.random)
+        return self.items
 
     def _read_cache(self, hexfile):
         images = ''
@@ -389,6 +392,18 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self._clear_prop('Music')
         self._clear_prop('Splash')
         self.close()
+
+
+class img_update(threading.Thread):
+    def __init__( self, *args, **kwargs ):
+        self._get_items =  kwargs['data']
+        threading.Thread.__init__(self)
+
+    def run(self):
+        while True:
+            if xbmc.Monitor().waitForAbort(1800) or xbmc.Monitor().onScreensaverDeactivated():
+                break
+            self._get_items()
 
 class MyMonitor(xbmc.Monitor):
     def __init__( self, *args, **kwargs ):

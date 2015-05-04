@@ -20,6 +20,10 @@ msgctxt "#30001"
 msgid "Folder"
 msgstr "پوشه"
 
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "میزان نور محافظ"
+
 msgctxt "#30007"
 msgid "Slide"
 msgstr "اسلاید"
@@ -27,3 +31,11 @@ msgstr "اسلاید"
 msgctxt "#30013"
 msgid "Disabled"
 msgstr "غیر فعال"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "ساده"
+
+msgctxt "#30026"
+msgid "Advanced"
+msgstr "پیشرفته"

@@ -88,6 +88,10 @@ msgctxt "#30017"
 msgid "Create image index"
 msgstr "Create image index"
 
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Use folder- and filename"
+
 msgctxt "#30019"
 msgid "Creating index"
 msgstr "Creating index"

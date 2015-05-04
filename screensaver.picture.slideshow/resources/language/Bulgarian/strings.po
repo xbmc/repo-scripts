@@ -26,11 +26,11 @@ msgstr "Папка"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr "Фанарт на видео файловете"
+msgstr "Фен-арт на видео файловете"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr "Фанарт на аудио файловете"
+msgstr "Фен-арт на аудио файловете"
 
 msgctxt "#30004"
 msgid "Image Folder"
@@ -75,6 +75,10 @@ msgstr "...името на папката"
 msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Показвай изображенията в произволен ред"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Ползвай папка и име на файла"
 
 msgctxt "#30021"
 msgid "Display picture date"
