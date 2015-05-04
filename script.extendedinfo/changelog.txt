@@ -1,3 +1,9 @@
+v2.0.9
+- fixed Trakt ratings (0-10 instead of 0-1)
+- fixed Trakt TvShow Widget Click Action
+- fixed busydialog for extendedactorinfo call by name when several actors found
+- fixed a localization label
+
 v2.0.8
 - adjust youtube user videos to API V3
 - fix c & h webcomics

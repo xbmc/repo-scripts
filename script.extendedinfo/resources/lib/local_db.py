@@ -1,6 +1,9 @@
 import xbmcvfs
 import simplejson
 from Utils import *
+id_list = []
+title_list = []
+originaltitle_list = []
 
 
 def GetXBMCArtists():

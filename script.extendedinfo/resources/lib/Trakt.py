@@ -76,7 +76,7 @@ def HandleTraktMovieResult(results):
                  'mpaa': movie["movie"]["certification"],
                  'Plot': movie["movie"]["overview"],
                  'Premiered': premiered,
-                 'Rating': round(movie["movie"]["rating"] / 10.0, 1),
+                 'Rating': round(movie["movie"]["rating"], 1),
                  'Votes': movie["movie"]["votes"],
                  'Watchers': movie["watchers"],
                  'Genre': " / ".join(movie["movie"]["genres"]),
@@ -95,12 +95,8 @@ def HandleTraktTVShowResult(results):
             premiered = str(datetime.datetime.fromtimestamp(int(tvshow['show']["first_aired"])))[:10]
         except:
             premiered = ""
-        banner = tvshow['show']["images"]["banner"]["full"]
-        fanart = tvshow['show']["images"]["fanart"]["full"]
-        poster = tvshow['show']["images"]["poster"]["full"]
         airs = fetch(tvshow['show'], "airs")
-        air_day = fetch(airs, "day")
-        air_time = fetch(airs, "time")
+        path = 'plugin://script.extendedinfo/?info=action&&id=RunScript(script.extendedinfo,info=extendedtvinfo,imdbid=%s)' % tvshow['show']['ids']["imdb"]
         show = {'Title': tvshow['show']["title"],
                 'Label': tvshow['show']["title"],
                 'TVShowTitle': tvshow['show']["title"],
@@ -114,22 +110,22 @@ def HandleTraktTVShowResult(results):
                 'tvdb_id': tvshow['show']['ids']["tvdb"],
                 'imdb_id': tvshow['show']['ids']["imdb"],
                 'imdbid': tvshow['show']['ids']["imdb"],
-                'Path': 'plugin://script.extendedinfo/?info=extendedtvinfo&&imdbid=%s' % tvshow['show']['ids']["imdb"],
-                'AirDay': air_day,
-                'AirShortTime': air_time,
-                'Label2': air_day + " " + air_time,
+                'Path': path,
+                'AirDay': fetch(airs, "day"),
+                'AirShortTime': fetch(airs, "time"),
+                'Label2': fetch(airs, "day") + " " + fetch(airs, "time"),
                 'Premiered': premiered,
                 'Country': tvshow['show']["country"],
-                'Rating': round(tvshow['show']["rating"] / 10.0, 1),
+                'Rating': round(tvshow['show']["rating"], 1),
                 'Votes': tvshow['show']["votes"],
                 'Watchers': fetch(tvshow, "watchers"),
                 'Genre': " / ".join(tvshow['show']["genres"]),
-                'Art(poster)': poster,
-                'Poster': poster,
-                'Art(banner)': banner,
-                'Banner': banner,
-                'Art(fanart)': fanart,
-                'Fanart': fanart,
+                'Art(poster)': tvshow['show']["images"]["poster"]["full"],
+                'Poster': tvshow['show']["images"]["poster"]["full"],
+                'Art(banner)': tvshow['show']["images"]["banner"]["full"],
+                'Banner': tvshow['show']["images"]["banner"]["full"],
+                'Art(fanart)': tvshow['show']["images"]["fanart"]["full"],
+                'Fanart': tvshow['show']["images"]["fanart"]["full"],
                 'Thumb': tvshow['show']["images"]["fanart"]["thumb"]}
         shows.append(show)
     return shows

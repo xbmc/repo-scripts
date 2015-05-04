@@ -520,12 +520,6 @@ def MultiSearch(String):
 
 def GetPersonID(person, skip_dialog=False):
     persons = person.split(" / ")
-    # if len(persons) > 1:
-    #     personlist = []
-    #     for item in persons:
-    #         personlist.append(item["name"])
-    #     selection = xbmcgui.Dialog().select("Select Actor", personlist)
-    # else:
     person = persons[0]
     response = GetMovieDBData("search/person?query=%s&include_adult=%s&" % (url_quote(person), include_adult), 30)
     if response and "results" in response:
@@ -533,6 +527,7 @@ def GetPersonID(person, skip_dialog=False):
             names = []
             for item in response["results"]:
                 names.append(item["name"])
+            xbmc.executebuiltin("Dialog.Close(busydialog)")
             selection = xbmcgui.Dialog().select(ADDON.getLocalizedString(32151), names)
             if selection > -1:
                 return response["results"][selection]

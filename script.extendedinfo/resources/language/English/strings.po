@@ -110,7 +110,7 @@ msgid "Enter person name"
 msgstr ""
 
 msgctxt "#32034"
-msgid "Person results for "%s"
+msgid "Person results for %s"
 msgstr ""
 
 msgctxt "#32035"

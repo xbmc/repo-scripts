@@ -14,7 +14,6 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
 
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
-        xbmc.executebuiltin("ActivateWindow(busydialog)")
         self.movieplayer = VideoPlayer(popstack=True)
         self.id = kwargs.get('id', False)
         self.person = False
@@ -28,13 +27,14 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
                 name = names[ret]
             else:
                 name = names[0]
+            xbmc.executebuiltin("ActivateWindow(busydialog)")
             self.id = GetPersonID(name)
             if self.id:
                 self.id = self.id["id"]
             else:
                 return None
-        xbmc.executebuiltin("ActivateWindow(busydialog)")
         if self.id:
+            xbmc.executebuiltin("ActivateWindow(busydialog)")
             self.person = GetExtendedActorInfo(self.id)
             youtube_thread = Get_Youtube_Vids_Thread(self.person["general"]["name"], "", "relevance", 15)
             youtube_thread.start()
@@ -68,6 +68,7 @@ class DialogActorInfo(xbmcgui.WindowXMLDialog):
         self.getControl(550).addItems(create_listitems(self.person["movie_crew_roles"], 0))
         self.getControl(650).addItems(create_listitems(self.person["tvshow_crew_roles"], 0))
         self.getControl(750).addItems(create_listitems(self.person["tagged_images"], 0))
+        xbmc.executebuiltin("Dialog.Close(busydialog)")
     #    self.getControl(150).addItems(tvshow_listitems)
 
     def setControls(self):

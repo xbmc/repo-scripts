@@ -20,9 +20,6 @@ ADDON_NAME = ADDON.getAddonInfo('name')
 ADDON_PATH = ADDON.getAddonInfo('path').decode("utf-8")
 ADDON_DATA_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID).decode("utf-8"))
 HOME = xbmcgui.Window(10000)
-id_list = []
-title_list = []
-originaltitle_list = []
 global windowstack
 windowstack = []
 
