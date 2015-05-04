@@ -16,18 +16,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import urllib
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib,urllib2
 from urlresolver import common
-import re
 
-class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
+class VideoValleyResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "videovalley.net"
-    domains = [ "videovalley.net" ]
+    domains = ["videovalley.net"]
     
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -51,20 +51,12 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
     
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        post_url = web_url
-        hostname = self.name
         common.addon.log(web_url)
-        try:
-            resp = self.net.http_GET(web_url)
-            html = resp.content
-        except urllib2.URLError, e:
-            common.addon.log_error(hostname+': got http error %d fetching %s' % (e.code, web_url))
-            return self.unresolvable(code=3, msg='Exception: %s' % e) #return False
+        resp = self.net.http_GET(web_url)
+        html = resp.content
         r = re.search("'file'\s*:\s*'(.+?)'", html)
         if r:
             stream_url = urllib.unquote_plus(r.group(1))
         else:
-            common.addon.log_error(hostname+': stream url not found')
-            return self.unresolvable(code=0, msg='no file located') #return False
+            raise UrlResolver.ResolverError('no file located')
         return stream_url
-	

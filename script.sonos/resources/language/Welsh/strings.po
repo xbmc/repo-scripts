@@ -32,6 +32,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Nesaf"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Gwall"
+
 msgctxt "#32114"
 msgid "Tracks"
 msgstr "Traciau"

@@ -18,17 +18,12 @@
 
 import re
 from t0mm0.common.net import Net
-import urllib2, os
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import xbmcgui
 from lib import unwise
 import urllib
-
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class CloudyResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -82,48 +77,36 @@ class CloudyResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        dialog = xbmcgui.Dialog()
         #grab stream details
-        try:
-            html = self.net.http_GET(web_url).content
-            html = unwise.unwise_process(html)
-            filekey = unwise.resolve_var(html, "flashvars.filekey")
+        html = self.net.http_GET(web_url).content
+        html = unwise.unwise_process(html)
+        filekey = unwise.resolve_var(html, "flashvars.filekey")
 
-            error_url = None
-            stream_url = None
-            # try to resolve 3 times then give up
-            for x in range(0, 2):
-                link = self.__get_stream_url(media_id, filekey, 
-                                        error_num=x,
-                                        error_url=error_url)
+        error_url = None
+        stream_url = None
+        # try to resolve 3 times then give up
+        for x in range(0, 2):
+            link = self.__get_stream_url(media_id, filekey, 
+                                    error_num=x,
+                                    error_url=error_url)
 
-                if link:
-                    active = self.__is_stream_url_active(link)
+            if link:
+                active = self.__is_stream_url_active(link)
 
-                    if active:
-                        stream_url = urllib.unquote(link)
-                        break;
-                    else:
-                        # link inactive
-                        error_url = link
+                if active:
+                    stream_url = urllib.unquote(link)
+                    break;
                 else:
-                    # no link found
-                    raise Exception ('File Not Found or removed')
-
-            if stream_url:
-                return stream_url
+                    # link inactive
+                    error_url = link
             else:
-                raise Exception ('File Not Found or removed')
+                # no link found
+                raise UrlResolver.ResolverError('File Not Found or removed')
 
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                   (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return self.unresolvable(code=3, msg=e)
-        except Exception, e:
-            common.addon.log('**** Cloudy Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]CLOUDY[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
+        if stream_url:
+            return stream_url
+        else:
+            raise UrlResolver.ResolverError('File Not Found or removed')
 
     def get_url(self, host, media_id):
         return 'http://www.cloudy.ec/embed.php?id=%s' % media_id

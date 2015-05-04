@@ -115,7 +115,7 @@ msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
 msgstr ""
 
 msgctxt "#32024"
-msgid "Switch Sonos To Line-In On Kodi Startup"
+msgid "Switch Sonos To Line-In On Kodi Startup (Restart Required)"
 msgstr ""
 
 msgctxt "#32025"
@@ -139,7 +139,7 @@ msgid "Automatically Update IP Address On Startup"
 msgstr ""
 
 msgctxt "#32030"
-msgid "Switch Sonos To Line-In On Media Start"
+msgid "Switch Sonos To Line-In On Media Start (Restart Required)"
 msgstr ""
 
 msgctxt "#32031"
@@ -194,7 +194,11 @@ msgctxt "#32043"
 msgid "Make Artist Slideshow Image Full Screen"
 msgstr ""
 
-#empty strings from id 32044 to 32059
+msgctxt "#32044"
+msgid "Launch Controller On Kodi Startup"
+msgstr ""
+
+#empty strings from id 32045 to 32059
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

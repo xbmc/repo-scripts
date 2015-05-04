@@ -286,31 +286,39 @@ if __name__ == '__main__':
     Settings.cleanAddonSettings()
 
     screenWindow = ScreensaverWindow.createScreensaverWindow()
-    # Now show the window and block until we exit
-    screensaverTimeout = Settings.screensaverTimeout()
-    if screensaverTimeout < 1:
-        log("Starting Screensaver in Modal Mode")
-        screenWindow.doModal()
-    else:
-        log("Starting Screensaver in Show Mode")
-        screenWindow.show()
 
-        # The timeout is in minutes, and the sleep is in msec, so convert the
-        # countdown into the correct "sleep units" which will be every 0.1 seconds
-        checkInterval = 100
-        countdown = screensaverTimeout * 60 * (1000 / checkInterval)
+    xbmcgui.Window(10000).setProperty("VideoScreensaverRunning", "true")
 
-        # Now wait until the screensaver is closed
-        while not screenWindow.isComplete():
-            xbmc.sleep(checkInterval)
-            # Update the countdown
-            countdown = countdown - 1
-            if countdown < 1:
-                log("Stopping Screensaver as countdown expired")
-                # close the screensaver window
-                screenWindow.close()
-                # Reset the countdown to stop multiple closes being sent
-                countdown = 100
+    try:
+        # Now show the window and block until we exit
+        screensaverTimeout = Settings.screensaverTimeout()
+        if screensaverTimeout < 1:
+            log("Starting Screensaver in Modal Mode")
+            screenWindow.doModal()
+        else:
+            log("Starting Screensaver in Show Mode")
+            screenWindow.show()
+
+            # The timeout is in minutes, and the sleep is in msec, so convert the
+            # countdown into the correct "sleep units" which will be every 0.1 seconds
+            checkInterval = 100
+            countdown = screensaverTimeout * 60 * (1000 / checkInterval)
+
+            # Now wait until the screensaver is closed
+            while not screenWindow.isComplete():
+                xbmc.sleep(checkInterval)
+                # Update the countdown
+                countdown = countdown - 1
+                if countdown < 1:
+                    log("Stopping Screensaver as countdown expired")
+                    # Close the screensaver window
+                    screenWindow.close()
+                    # Reset the countdown to stop multiple closes being sent
+                    countdown = 100
+    except:
+        log("VideoScreensaver ERROR: %s" % traceback.format_exc(), xbmc.LOGERROR)
+
+    xbmcgui.Window(10000).clearProperty("VideoScreensaverRunning")
 
     del screenWindow
     log("Leaving Screensaver Script")

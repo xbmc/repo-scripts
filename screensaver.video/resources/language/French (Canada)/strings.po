@@ -192,6 +192,50 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "Plage 3 - [3,4 Go] - 720p"
 
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Neige 1 - [1,3 Go] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Neige 2 - [677 Mo] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Neige 3 - [1,2 Go] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Moulin à eau 1 - [549 Mo] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Image de surcouche"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Sélectionner un fichier d'image de surcouche"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Aucun"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Défini par l'utilisateur"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Cadre photo 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Cadre de fenêtre 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Cadre de fenêtre 2"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Le fichier d'économiseur d'écran n'est pas valide"
@@ -215,3 +259,11 @@ msgstr "Cette option utilisera toutes les vidéos déjà téléchargées"
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
 msgstr "Chaque vidéo requise devrait d'abord être téléchargée individuellement"
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Échec lors du téléchargement du fichier vidéo"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Ceci pourrait être causé par un dépassement de la limite de bande passante du serveur, veuillez ressayez demain"

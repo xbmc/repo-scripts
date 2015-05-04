@@ -16,16 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import re, urllib, urllib2, os
+import re, urllib
 from t0mm0.common.net import Net
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from lib import unwise
-
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
 
 class NovamovResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -39,33 +36,23 @@ class NovamovResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        #find key
-        try:
-            html = self.net.http_GET(web_url).content
-            html = unwise.unwise_process(html)
-            filekey = unwise.resolve_var(html, "flashvars.filekey")
-            
-            #get stream url from api
-            api = 'http://www.novamov.com/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
-            html = self.net.http_GET(api).content
-            r = re.search('url=(.+?)&title', html)
+        html = self.net.http_GET(web_url).content
+        html = unwise.unwise_process(html)
+        filekey = unwise.resolve_var(html, "flashvars.filekey")
+        
+        #get stream url from api
+        api = 'http://www.novamov.com/api/player.api.php?key=%s&file=%s' % (filekey, media_id)
+        html = self.net.http_GET(api).content
+        r = re.search('url=(.+?)&title', html)
+        if r:
+            stream_url = urllib.unquote(r.group(1))
+        else:
+            r = re.search('file no longer exists', html)
             if r:
-                stream_url = urllib.unquote(r.group(1))
-            else:
-                r = re.search('file no longer exists',html)
-                if r:
-                    raise Exception ('File Not Found or removed')
-                raise Exception ('Failed to parse url')
-            
-            return stream_url
-        except urllib2.URLError, e:
-            common.addon.log_error('Novamov: got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return self.unresolvable(code=3, msg=e)
-        except Exception, e:
-            common.addon.log_error('**** Novamov Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]NOVAMOV[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
+                raise UrlResolver.ResolverError('File Not Found or removed')
+            raise UrlResolver.ResolverError('Failed to parse url')
+        
+        return stream_url
 
     def get_url(self, host, media_id):
         return 'http://www.novamov.com/video/%s' % media_id

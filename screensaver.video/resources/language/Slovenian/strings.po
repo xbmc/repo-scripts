@@ -31,3 +31,7 @@ msgstr "Vključi zapisovanje razhroščevanja"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Nastavitve"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Brez"

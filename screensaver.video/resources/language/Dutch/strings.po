@@ -192,6 +192,50 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "strand 3 - [3.4GB] - 720p"
 
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Sneeuw 1 - [1.3GB] -720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Sneeuw 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Sneeuw 3 - [1.2GB] -720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Waterrad 1 - [549MB] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Overlap afbeelding"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Selecteer Overlap Afbeelding Bestand"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Geen"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Gebruiker gedefinieerd"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Afbeelding Frame 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Venster Frame 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Venster Frame 2"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Schermbeveiligingsbestand is niet geldig"
@@ -215,3 +259,11 @@ msgstr "Deze optie zal alle reeds gedownloade video`s gebruiken"
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
 msgstr "Elke benodigde video zal eerst individueel moeten worden gedownload"
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Mislukt om video bestand te downloaden"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Dit kan door de server bandbreedte limiet zijn, probeer het morgen nog eens"

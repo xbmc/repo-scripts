@@ -21,62 +21,53 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
-import urllib,urllib2,re,xbmc
+import urllib
+import re
+import xbmc
 
-class MP4StarResolver(Plugin,UrlResolver,PluginSettings):
-    implements=[UrlResolver,PluginSettings]
-    name="mp4star"
-    domains=[ "mp4star.com" ]
-    domain="http://mp4star.com"
-    
+class MP4StarResolver(Plugin, UrlResolver, PluginSettings):
+    implements = [UrlResolver, PluginSettings]
+    name = "mp4star"
+    domains = ["mp4star.com"]
+    domain = "http://mp4star.com"
+
     def __init__(self):
-        p=self.get_setting('priority') or 100
-        self.priority=int(p)
-        self.net=Net()
-        self.pattern='http://((?:www.)?mp4star.com)/\D+/(\d+)'
-    
-    def get_url(self,host,media_id):
-        return self.domain+'/vid/'+media_id
-    
-    def get_host_and_id(self,url):
-        r=re.search(self.pattern,url)
+        p = self.get_setting('priority') or 100
+        self.priority = int(p)
+        self.net = Net()
+        self.pattern = 'http://((?:www.)?mp4star.com)/\D+/(\d+)'
+
+    def get_url(self, host, media_id):
+        return self.domain + '/vid/' + media_id
+
+    def get_host_and_id(self, url):
+        r = re.search(self.pattern, url)
         if r: return r.groups()
         else: return False
-    
-    def valid_url(self,url,host):
-        if self.get_setting('enabled')=='false': return False
-        return re.match(self.pattern,url) or self.name in host
-    
-    def get_media_url(self,host,media_id):
-        web_url=self.get_url(host,media_id)
-        post_url=web_url
-        hostname=self.name
+
+    def valid_url(self, url, host):
+        if self.get_setting('enabled') == 'false': return False
+        return re.match(self.pattern, url) or self.name in host
+
+    def get_media_url(self, host, media_id):
+        web_url = self.get_url(host, media_id)
+        post_url = web_url
         common.addon.log(web_url)
-        headers={'Referer':web_url}
-        try:
-            resp=self.net.http_GET(web_url)
-            html=resp.content
-        except urllib2.URLError,e:
-            common.addon.log_error(hostname+': got http error %d fetching %s'%(e.code,web_url))
-            return self.unresolvable(code=3,msg='Exception: %s'%e) #return False
-        data={}
-        r=re.findall(r'<input type="hidden"\s*value="(.*?)"\s*name="(.+?)"',html)
+        headers = {'Referer': web_url}
+        resp = self.net.http_GET(web_url)
+        html = resp.content
+        data = {}
+        r = re.findall(r'<input type="hidden"\s*value="(.*?)"\s*name="(.+?)"', html)
         if r:
-            for value,name in r: data[name]=value
-            #data.update({'referer': web_url})
-            #headers={'Referer':web_url}
-            xbmc.sleep(4)
-            try:
-                html=self.net.http_POST(post_url,data,headers=headers).content
-            except urllib2.URLError,e:
-                common.addon.log_error(hostname+': got http error %d posting %s'%(e.code,web_url))
-                return self.unresolvable(code=3,msg='Exception: %s'%e) #return False
-        r=re.search('<source src="(\D+://.+?)" type="video',html)
+            for value, name in r: data[name] = value
+            # data.update({'referer': web_url})
+            # headers={'Referer':web_url}
+            xbmc.sleep(4000)
+            html = self.net.http_POST(post_url, data, headers=headers).content
+        r = re.search('<source src="(\D+://.+?)" type="video', html)
         if r:
-            xbmc.sleep(4)
-            stream_url=urllib.unquote_plus(r.group(1))
+            xbmc.sleep(4000)
+            stream_url = urllib.unquote_plus(r.group(1))
         else:
-            common.addon.log_error(hostname+': stream url not found')
-            return self.unresolvable(code=0,msg='no file located') #return False
+            raise UrlResolver.ResolverError('no file located')
         return stream_url
-	

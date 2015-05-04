@@ -6,7 +6,6 @@ from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 
-
 # Custom imports
 from base64 import b64decode
 from binascii import unhexlify
@@ -25,80 +24,60 @@ class VideobbResolver(Plugin, UrlResolver, PluginSettings):
         self.priority = int(p)
         self.net = Net()
 
-
     def get_media_url(self, host, media_id):
         #grab json info for this video
-        json_url = 'http://videobb.com/player_control/settings.php?v=%s' % \
-                                                                    media_id
-        try:
-            json = self.net.http_GET(json_url).content
+        json_url = 'http://videobb.com/player_control/settings.php?v=%s' % media_id
+        json = self.net.http_GET(json_url).content
+
+        #find highest quality URL
+        max_res = [240, 480, 99999][int(self.get_setting('q'))]
+        chosen_res = 0
+        r = re.finditer('"l".*?:.*?"(.+?)".+?"u".*?:.*?"(.+?)"', json)
+        if r:
+            for match in r:
+                res, url = match.groups()
+                res = int(res.strip('p'))
+                if res > chosen_res and res <= max_res:
+                    stream_url_part1 = url.decode('base-64')
+                    chosen_res = res
+        else:
+            raise UrlResolver.ResolverError('videobb: stream url part1 not found')
+
+        # Try to load the datas from json.
+        aData = loads(json)
+
+        # Decode the link from the json data settings
+        spn_ik = unhexlify(self.__decrypt(aData["settings"]["login_status"]["spen"], aData["settings"]["login_status"]["salt"], 950569)).split(';')
+        spn = spn_ik[0].split('&')
+        ik = spn_ik[1]
+
+        for item in ik.split('&') :
+            temp = item.split('=')
+            if temp[0] == 'ik' :
+                key = self.__get_key(temp[1])
+
+        sLink = ""
+        for item in spn :
+            item = item.split('=')
+            if(int(item[1])==1):
+                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["info"]["sece2"], aData["settings"]["config"]["rkts"], key) + '&' #decrypt32byte
+            elif(int(item[1]==2)):
+                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["banner"]["g_ads"]["url"],aData["settings"]["config"]["rkts"], key) + '&'
+            elif(int(item[1])==3):
+                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["banner"]["g_ads"]["type"],aData["settings"]["config"]["rkts"], key,26,25431,56989,93,32589,784152) + '&'
+            elif(int(item[1])==4):
+                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["banner"]["g_ads"]["time"],aData["settings"]["config"]["rkts"], key,82,84669,48779,32,65598,115498) + '&'
+            elif(int(item[1])==5):
+                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["login_status"]["euno"],aData["settings"]["login_status"]["pepper"], key,10,12254,95369,39,21544,545555) + '&'
+            elif(int(item[1])==6):
+                sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["login_status"]["sugar"],aData["settings"]["banner"]["lightbox2"]["time"], key,22,66595,17447,52,66852,400595) + '&'
     
-            #find highest quality URL
-            max_res = [240, 480, 99999][int(self.get_setting('q'))]
-            r = re.finditer('"l".*?:.*?"(.+?)".+?"u".*?:.*?"(.+?)"', json)
-            chosen_res = 0
-            stream_url = False
-        
-            if r:
-                for match in r:
-                    res, url = match.groups()
-                    res = int(res.strip('p'))
-                    if res > chosen_res and res <= max_res:
-                        stream_url_part1 = url.decode('base-64')
-                        chosen_res = res
-            else:
-                raise Exception ('videobb: stream url part1 not found')
-
-            # Try to load the datas from json.
-            aData = loads(json)
-
-            # Decode the link from the json data settings
-            spn_ik = unhexlify(self.__decrypt(aData["settings"]["login_status"]["spen"], aData["settings"]["login_status"]["salt"], 950569)).split(';')
-            spn = spn_ik[0].split('&')
-            ik = spn_ik[1]
-
-            for item in ik.split('&') :
-                temp = item.split('=')
-                if temp[0] == 'ik' :
-                    key = self.__get_key(temp[1])
-
-            sLink = ""
-            for item in spn :
-                item = item.split('=')
-                if(int(item[1])==1):
-                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["info"]["sece2"], aData["settings"]["config"]["rkts"], key) + '&' #decrypt32byte
-                elif(int(item[1]==2)):
-                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["banner"]["g_ads"]["url"],aData["settings"]["config"]["rkts"], key) + '&'
-                elif(int(item[1])==3):
-                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["banner"]["g_ads"]["type"],aData["settings"]["config"]["rkts"], key,26,25431,56989,93,32589,784152) + '&'
-                elif(int(item[1])==4):
-                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["banner"]["g_ads"]["time"],aData["settings"]["config"]["rkts"], key,82,84669,48779,32,65598,115498) + '&'
-                elif(int(item[1])==5):
-                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["login_status"]["euno"],aData["settings"]["login_status"]["pepper"], key,10,12254,95369,39,21544,545555) + '&'
-                elif(int(item[1])==6):
-                    sLink = sLink + item[0]+ '=' + self.__decrypt(aData["settings"]["login_status"]["sugar"],aData["settings"]["banner"]["lightbox2"]["time"], key,22,66595,17447,52,66852,400595) + '&'
-        
-            sLink = sLink + "start=0"
-
-            stream_url = stream_url_part1 + '&' + sLink
-
-            return stream_url
-
-        except urllib2.URLError, e:
-            common.addon.log_error('VideoBB: got http error %d fetching %s' %
-                                    (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return self.unresolvable(code=3, msg=e)
-
-        except Exception, e:
-            common.addon.log_error('**** VideoBB Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]VIDEOBB[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
-
+        sLink = sLink + "start=0"
+        stream_url = stream_url_part1 + '&' + sLink
+        return stream_url
 
     def get_url(self, host, media_id):
         return 'http://www.videobb.com/video/%s' % media_id
-
 
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/(?:e/|video/|watch_video.php\?v=)([0-9a-zA-Z]+)',
@@ -108,13 +87,11 @@ class VideobbResolver(Plugin, UrlResolver, PluginSettings):
         else:
             return False
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match('http://(www.)?videobb.com/' +
                         '(e/|video/|watch_video.php\?v=)' +
                         '[0-9A-Za-z]+', url) or 'videobb' in host
-
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)

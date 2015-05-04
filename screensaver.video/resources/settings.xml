@@ -23,4 +23,8 @@
 		<setting id="stopAutomatic" type="bool" label="32059" default="false"/>
 		<setting id="stopAfter" subsetting="true" visible="eq(-1,true)" label="32060" type="slider" default="60" range="5,5,240" option="int"/>
 	</category>
+	<category label="32007">
+    	<setting id="resetVolumeOnStartup" type="bool" label="32061" default="false"/>
+		<setting id="resetStartupVolumeValue" label="32062" visible="eq(-1,true)" type="slider" default="100" range="0,1,100" option="int" />
+	</category>
 </settings>

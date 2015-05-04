@@ -17,8 +17,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import re
-import urllib2
-import urllib
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
@@ -38,25 +36,17 @@ class VidbullResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        try:
-            headers = {
-                       'User-Agent': USER_AGENT
-                    }
-            
-            web_url = self.get_url(host, media_id)
-            html = self.net.http_GET(web_url, headers=headers).content
-            match = re.search('<source\s+src="([^"]+)', html)
-            if match:
-                return match.group(1)
-            else:
-                raise Exception('File Link Not Found')
-
-        except urllib2.HTTPError as e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' % (e.code, web_url))
-            return self.unresolvable(code=3, msg=e)
-        except Exception as e:
-            common.addon.log('**** Vidbull Error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+        headers = {
+                   'User-Agent': USER_AGENT
+                }
+        
+        web_url = self.get_url(host, media_id)
+        html = self.net.http_GET(web_url, headers=headers).content
+        match = re.search('<source\s+src="([^"]+)', html)
+        if match:
+            return match.group(1)
+        else:
+            raise UrlResolver.ResolverError('File Link Not Found')
 
     def get_url(self, host, media_id):
         return 'http://www.vidbull.com/%s' % media_id 

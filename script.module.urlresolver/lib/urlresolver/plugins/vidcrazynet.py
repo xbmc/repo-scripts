@@ -20,14 +20,14 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib,urllib2
+import urllib
 from urlresolver import common
 import re
 
-class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
+class VidCrazyResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vidcrazy.net"
-    domains = [ "vidcrazy.net" ]
+    domains = ["vidcrazy.net"]
     
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -36,8 +36,7 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
         self.pattern = 'http://((?:video.)?vidcrazy.net)/(\D+.php\?file=[0-9a-zA-Z\-_]+)[&]*'
     
     def get_url(self, host, media_id):
-            return 'http://video.vidcrazy.net/%s' % (media_id)
-            #return 'http://video.vidcrazy.net/nvs.php?file=%s' % (media_id)
+        return 'http://video.vidcrazy.net/%s' % (media_id)
     
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
@@ -50,20 +49,12 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
     
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        post_url = web_url
-        hostname = self.name
         common.addon.log(web_url)
-        try:
-            resp = self.net.http_GET(web_url)
-            html = resp.content
-        except urllib2.URLError, e:
-            common.addon.log_error(hostname+': got http error %d fetching %s' % (e.code, web_url))
-            return self.unresolvable(code=3, msg='Exception: %s' % e) #return False
+        resp = self.net.http_GET(web_url)
+        html = resp.content
         r = re.search("'file'\s*:\s*'(.+?)'", html)
         if r:
             stream_url = urllib.unquote_plus(r.group(1))
         else:
-            common.addon.log_error(hostname+': stream url not found')
-            return self.unresolvable(code=0, msg='no file located') #return False
+            raise UrlResolver.ResolverError('no file located')
         return stream_url
-

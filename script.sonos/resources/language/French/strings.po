@@ -108,10 +108,6 @@ msgctxt "#32023"
 msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
 msgstr "Lier le volume de Kodi avec Sonos (Redémarage requis)"
 
-msgctxt "#32024"
-msgid "Switch Sonos To Line-In On Kodi Startup"
-msgstr "Basculer Sonos vers Entrée source au démarrage de Kodi"
-
 msgctxt "#32025"
 msgid "Volume Change Increments"
 msgstr "Pas de changement de volume"
@@ -131,10 +127,6 @@ msgstr "Nom de zone (Optionnel)"
 msgctxt "#32029"
 msgid "Automatically Update IP Address On Startup"
 msgstr "Mettre à jour les adresses IP au démarrage"
-
-msgctxt "#32030"
-msgid "Switch Sonos To Line-In On Media Start"
-msgstr "Basculer sur l'entrée source au démarrage d'un média"
 
 msgctxt "#32031"
 msgid "Coordinator"
@@ -203,6 +195,18 @@ msgstr "Suivant"
 msgctxt "#32063"
 msgid "Failed To Process Sonos Update Event"
 msgstr "Erreur à la mise à jour du processus Sonos"
+
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr "Mise-à-jour de la médiathèque démarrée"
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr "Mise à jour de la médiathèque déjà en cours"
+
+msgctxt "#32068"
+msgid "Error"
+msgstr "Erreur"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -279,6 +283,10 @@ msgstr "Ajouter à la liste d'attente"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "Remplacer la liste d'attente"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "Mise à jour bibliothèque musical"
 
 msgctxt "#32200"
 msgid "Enter Speech Text To Play ..."

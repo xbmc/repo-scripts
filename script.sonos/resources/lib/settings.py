@@ -176,3 +176,7 @@ class Settings():
     @staticmethod
     def autoResumeSonos():
         return int(float(__addon__.getSetting("autoResumeSonos")))
+
+    @staticmethod
+    def autoLaunchControllerOnStartup():
+        return __addon__.getSetting("autoLaunchControllerOnStartup") == 'true'

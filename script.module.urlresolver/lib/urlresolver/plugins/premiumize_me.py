@@ -45,24 +45,20 @@ class PremiumizeMeResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #UrlResolver methods
     def get_media_url(self, host, media_id):
-        try:
-            username = self.get_setting('username')
-            password = self.get_setting('password')
-            url = 'https://api.premiumize.me/pm-api/v1.php?'
-            query = urllib.urlencode({'method': 'directdownloadlink', 'params[login]': username, 'params[pass]': password, 'params[link]': media_id})
-            url = url + query
-            response = self.net.http_GET(url).content
-            response = json.loads(response)
-            if 'status' in response:
-                if response['status'] == 200:
-                    link = response['result']['location']
-                else:
-                    raise Exception('Link Not Found: Error Code: %s' % response['status'])
+        username = self.get_setting('username')
+        password = self.get_setting('password')
+        url = 'https://api.premiumize.me/pm-api/v1.php?'
+        query = urllib.urlencode({'method': 'directdownloadlink', 'params[login]': username, 'params[pass]': password, 'params[link]': media_id})
+        url = url + query
+        response = self.net.http_GET(url).content
+        response = json.loads(response)
+        if 'status' in response:
+            if response['status'] == 200:
+                link = response['result']['location']
             else:
-                raise Exception('Unexpected Response Received')
-        except Exception, e:
-            common.addon.log_error('**** Premiumize Error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+                raise UrlResolver.ResolverError('Link Not Found: Error Code: %s' % response['status'])
+        else:
+            raise UrlResolver.ResolverError('Unexpected Response Received')
 
         common.addon.log_debug('Premiumize.me: Resolved to %s' % link)
         return link

@@ -16,16 +16,15 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import re
+import urllib2
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
-import re
-import urllib2
 
-net = Net()
-USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
+USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
 
 class SharerepoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -38,37 +37,29 @@ class SharerepoResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        try:
-            web_url = self.get_url(host, media_id)
-            headers = {
-                'User-Agent': USER_AGENT,
-                'Referer': web_url
-            }
+        web_url = self.get_url(host, media_id)
+        headers = {
+            'User-Agent': USER_AGENT,
+            'Referer': web_url
+        }
 
-            try:
+        try:
+            html = self.net.http_GET(web_url, headers=headers).content
+        except urllib2.HTTPError as e:
+            if e.code == 404:
+                # sharerepo supports two different styles of links/media_ids
+                # if the first fails, try the second kind
+                web_url = 'http://sharerepo.com/%s' % media_id
                 html = self.net.http_GET(web_url, headers=headers).content
-            except urllib2.HTTPError as e:
-                if e.code == 404:
-                    # sharerepo supports two different styles of links/media_ids
-                    # if the first fails, try the second kind
-                    web_url = 'http://sharerepo.com/%s' % media_id
-                    html = self.net.http_GET(web_url, headers=headers).content
-                else:
-                    raise
-                
-            link = re.search("file\s*:\s*'([^']+)", html)
-            if link:
-                common.addon.log('ShareRepo Link Found: %s' % link.group(1))
-                return link.group(1) + '|User-Agent=%s' % (USER_AGENT)
             else:
-                raise Exception('Unable to resolve ShareRepo Link')
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                   (e.code, web_url))
-            return self.unresolvable(code=3, msg=e)
-        except Exception, e:
-            common.addon.log('sharerepo: general error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+                raise
+            
+        link = re.search("file\s*:\s*'([^']+)", html)
+        if link:
+            common.addon.log_debug('ShareRepo Link Found: %s' % link.group(1))
+            return link.group(1) + '|User-Agent=%s' % (USER_AGENT)
+        else:
+            raise UrlResolver.ResolverError('Unable to resolve ShareRepo Link')
 
     def get_url(self, host, media_id):
         return 'http://sharerepo.com/f/%s' % media_id

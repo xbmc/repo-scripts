@@ -20,6 +20,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Sekva"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Eraro"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artisto"

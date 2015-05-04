@@ -48,7 +48,7 @@
 			<aligny>center</aligny>
 			<textcolor>white</textcolor>
 			<wrapmultiline>true</wrapmultiline>
-			<label>Enter Login Information</label>
+			<label>Initialize</label>
 		</control>
 		<control type="image" id="111">
 			<posx>359</posx>
@@ -87,7 +87,7 @@
 			<aligny>center</aligny>
 			<textcolor>white</textcolor>
 			<wrapmultiline>true</wrapmultiline>
-			<label>Authorize Via Web Viewer</label>
+			<label>Authorize With Token</label>
 		</control>
 		<control type="image" id="121">
 			<posx>655</posx>

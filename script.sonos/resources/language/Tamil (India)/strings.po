@@ -36,6 +36,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "அடுத்து"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "பிழை"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "கலைஞர்"

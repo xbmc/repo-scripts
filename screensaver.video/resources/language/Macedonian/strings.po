@@ -31,3 +31,7 @@ msgstr "Овозможи обележување на грешки"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Конфигурација"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Ништо"

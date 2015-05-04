@@ -18,12 +18,8 @@
 """
 
 import os
-import random
 import re
-import urllib, urllib2
-import ast
-import xbmc,xbmcplugin,xbmcgui,xbmcaddon,time,datetime
-import cookielib
+import urllib
 import json
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
@@ -32,20 +28,17 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
-class purevid(Plugin, UrlResolver, SiteAuth, PluginSettings):
-    implements   = [UrlResolver, SiteAuth, PluginSettings]
-    name         = "purevid"
-    domains = [ "purevid.com" ]
-    profile_path = common.profile_path    
-    cookie_file  = os.path.join(profile_path, '%s.cookies' % name)
+class PurevidResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+    implements = [UrlResolver, SiteAuth, PluginSettings]
+    name = "purevid"
+    domains = ["purevid.com"]
+    profile_path = common.profile_path
+    cookie_file = os.path.join(profile_path, '%s.cookies' % name)
     
     def __init__(self):
-        p             = self.get_setting('priority') or 1
+        p = self.get_setting('priority') or 1
         self.priority = int(p)
-        self.net      = Net()
+        self.net = Net()
         try:
             os.makedirs(os.path.dirname(self.cookie_file))
         except OSError:
@@ -53,31 +46,23 @@ class purevid(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #UrlResolver methods
     def get_media_url(self, host, media_id):
-        try :
-            web_url = self.get_url(host, media_id)
-            try:
-                html = self.net.http_GET(web_url).content
-            except urllib2.URLError, e:
-                raise Exception ('got http error %d fetching %s' % (e.code, web_url))
-            data = json.loads(html)                
-            if self.get_setting('quality') == '0' :
-                url = data['clip']['bitrates'][0]['url']
-            else :
-                url = data['clip']['bitrates'][-1]['url']
-            params = ''
-            for val in data['plugins']['lighttpd']['params'] :
-                params += val['name'] + '=' + val['value'] + '&'
-            url =  url + '?' + params[:-1]
-            cookies = {}
-            for cookie in self.net._cj:
-                cookies[cookie.name] = cookie.value
-            url = url + '|' + urllib.urlencode({'Cookie' :urllib.urlencode(cookies)}) 
-            common.addon.log(url)
-            return url
-        except Exception, e:
-            common.addon.log('**** Purevid Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]PUREVID[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
+        web_url = self.get_url(host, media_id)
+        html = self.net.http_GET(web_url).content
+        data = json.loads(html)
+        if self.get_setting('quality') == '0':
+            url = data['clip']['bitrates'][0]['url']
+        else:
+            url = data['clip']['bitrates'][-1]['url']
+        params = ''
+        for val in data['plugins']['lighttpd']['params']:
+            params += val['name'] + '=' + val['value'] + '&'
+        url = url + '?' + params[:-1]
+        cookies = {}
+        for cookie in self.net._cj:
+            cookies[cookie.name] = cookie.value
+        url = url + '|' + urllib.urlencode({'Cookie': urllib.urlencode(cookies)})
+        common.addon.log_debug(url)
+        return url
                                                                                             
     def get_url(self, host, media_id):
         return 'http://www.purevid.com/?m=video_info_embed_flv&id=%s' % media_id

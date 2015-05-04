@@ -16,18 +16,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import re
+import xbmc
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2, re, os,xbmc
 from urlresolver import common
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
-
-class streamintoResolver(Plugin, UrlResolver, PluginSettings):
+class StreamintoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "streaminto"
     domains = ["streamin.to"]
@@ -39,40 +36,27 @@ class streamintoResolver(Plugin, UrlResolver, PluginSettings):
         #e.g. http://streamin.to/20xk6r5vpkch
         self.pattern = 'http://((?:www.)?streamin.to)/(.*)'
 
-
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        try:
-            resp = self.net.http_GET(web_url)
+        resp = self.net.http_GET(web_url)
+        html = resp.content
+        post_url = web_url
 
-            html = resp.content
-            post_url =  web_url    #resp.get_url()
+        # get post vars
+        form_values = {}
+        for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
+            form_values[i.group(1)] = i.group(2)
+        xbmc.sleep(5000)
+        html = self.net.http_POST(post_url, form_data=form_values).content
 
-            # get post vars
-            form_values = {}
-            for i in re.finditer('<input.*?name="(.*?)".*?value="(.*?)">', html):
-                form_values[i.group(1)] = i.group(2)
-            xbmc.sleep(5000)
-            html = self.net.http_POST(post_url, form_data=form_values).content
-
-            # get stream url
-            pattern = 'streamer:\s*"([^"]+)",' #streamer: "
-            file = 'file:\s*"([^"]+)",' #streamer: "
-            r = re.search(pattern, html)
-            rr = re.search(file, html)
-            if r:
-                return r.group(1).replace(':1935','') + ' swfUrl=http://streamin.to/player/player.swf live=false swfVfy=1 playpath=' + rr.group(1).replace('.flv','')
-
-            raise Exception ('File Not Found or removed')
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                   (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return self.unresolvable(code=3, msg=e)
-        except Exception, e:
-            common.addon.log('**** streaminto Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]streaminto[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
+        # get stream url
+        pattern = 'streamer:\s*"([^"]+)",'  # streamer: "
+        file = 'file:\s*"([^"]+)",'  # streamer: "
+        r = re.search(pattern, html)
+        rr = re.search(file, html)
+        if r:
+            return r.group(1).replace(':1935', '') + ' swfUrl=http://streamin.to/player/player.swf live=false swfVfy=1 playpath=' + rr.group(1).replace('.flv', '')
+        raise UrlResolver.ResolverError('File Not Found or removed')
 
     def get_url(self, host, media_id):
             return 'http://streamin.to/%s' % (media_id)
@@ -83,7 +67,6 @@ class streamintoResolver(Plugin, UrlResolver, PluginSettings):
             return r.groups()
         else:
             return False
-
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False

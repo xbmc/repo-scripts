@@ -192,6 +192,50 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "Playa 3 - [3.4GB] - 720p"
 
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Nieve 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Nieve 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Nieve 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Molino de agua 1 - [549MB] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Sobreponer imagen"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Seleccionar archivo de imagen de superposición"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Ninguno"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Usuario definido"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Marco de imagen 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Marco de Ventana 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Marco de Ventana 2"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Archivo de salva pantalla no es valido"
@@ -215,3 +259,11 @@ msgstr "Esta opción usará todos los vídeos ya descargados "
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
 msgstr "Cada vídeo requiere que sea descargado primero individualmente "
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Error al descargar el archivo de vídeo"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Esto puede ser debido a que se ha superado el límite de ancho de banda del servidor, por favor intentelo de nuevo mañana"

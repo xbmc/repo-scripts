@@ -23,13 +23,10 @@ from urlresolver.plugnplay import Plugin
 import urllib2, re, os
 from urlresolver import common
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
 class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "gorillavid"
-    domains = [ "gorillavid.in", "gorillavid.com" ]
+    domains = ["gorillavid.in", "gorillavid.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -38,39 +35,24 @@ class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
         #e.g. http://gorillavid.com/vb80o1esx2eb
         self.pattern = 'http://((?:www.)?gorillavid.(?:in|com))/(?:embed-)?([0-9a-zA-Z]+)'
 
-
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        """ Human Verification """
-        try:
-            resp = self.net.http_GET(web_url)
-            html = resp.content
-            r = re.findall(r"<title>404 - Not Found</title>",html)
-            if r:
-                raise Exception ('File Not Found or removed')
-            post_url = resp.get_url()
-            form_values = {}
-            for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
-                form_values[i.group(1)] = i.group(2)
-                
-            html = self.net.http_POST(post_url, form_data=form_values).content
-            r = re.search('file: "(.+?)"', html)
-            if r:
-                return r.group(1)
-            else:
-                raise Exception ('Unable to resolve Gorillavid link')
-        except urllib2.URLError, e:
-            common.addon.log_error('gorillavid: got http error %d fetching %s' %
-                                  (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 5000, error_logo)
-            return self.unresolvable(code=3, msg=e)
-        
-        except Exception, e:
-            common.addon.log_error('**** Gorillavid Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]GORILLAVID[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
-        
-        
+        resp = self.net.http_GET(web_url)
+        html = resp.content
+        r = re.findall(r"<title>404 - Not Found</title>", html)
+        if r:
+            raise UrlResolver.ResolverError('File Not Found or removed')
+        post_url = resp.get_url()
+        form_values = {}
+        for i in re.finditer('<input type="hidden" name="(.+?)" value="(.+?)">', html):
+            form_values[i.group(1)] = i.group(2)
+            
+        html = self.net.http_POST(post_url, form_data=form_values).content
+        r = re.search('file: "(.+?)"', html)
+        if r:
+            return r.group(1)
+        else:
+            raise UrlResolver.ResolverError('Unable to resolve Gorillavid link')
 
     def get_url(self, host, media_id):
         return 'http://gorillavid.in/%s' % (media_id)
@@ -81,7 +63,6 @@ class GorillavidResolver(Plugin, UrlResolver, PluginSettings):
             return r.groups()
         else:
             return False
-
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False

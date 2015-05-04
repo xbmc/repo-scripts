@@ -48,7 +48,11 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr ""
 
-#empty strings from id 32007 to 32019
+msgctxt "#32007"
+msgid "Startup"
+msgstr ""
+
+#empty strings from id 32008 to 32019
 
 msgctxt "#32020"
 msgid "Preset Video"
@@ -124,7 +128,15 @@ msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr ""
 
-#empty strings from id 32061 to 32099
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr ""
+
+#empty strings from id 32063 to 32099
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

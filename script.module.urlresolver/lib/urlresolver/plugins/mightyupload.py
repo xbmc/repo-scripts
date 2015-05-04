@@ -20,18 +20,16 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
 from urlresolver import common
 from lib import jsunpack
 import re
-import os
 
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
+USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:36.0) Gecko/20100101 Firefox/36.0'
 
 class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "mightyupload"
-    domains = [ "mightyupload.com" ]
+    domains = ["mightyupload.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -40,43 +38,42 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-
-        try:
-            html = self.net.http_GET(web_url).content           
-            form_values = {}
-            for i in re.finditer('<input type="hidden" name="(.*?)" value="(.*?)"', html):
-                form_values[i.group(1)] = i.group(2)   
-            html = self.net.http_POST(web_url, form_data=form_values).content
-            r = re.search('<IFRAME SRC="(.*?)" .*?></IFRAME>',html,re.DOTALL)
-            if r:
-                html = self.net.http_GET(r.group(1)).content
-            r = re.search("<div id=\"player_code\">.*?<script type='text/javascript'>(.*?)</script>",html,re.DOTALL)
-            if not r:
-                raise Exception ('Unable to resolve Mightyupload link. Player config not found.')
-            r_temp = re.search("file: '([^']+)'",r.group(1))
-            if r_temp:
-                return r_temp.group(1)
+        html = self.net.http_GET(web_url).content
+        form_values = {}
+        stream_url = None
+        for i in re.finditer('<input type="hidden" name="(.*?)" value="(.*?)"', html):
+            form_values[i.group(1)] = i.group(2)
+        html = self.net.http_POST(web_url, form_data=form_values).content
+        r = re.search('<IFRAME SRC="(.*?)" .*?></IFRAME>', html, re.DOTALL)
+        if r:
+            html = self.net.http_GET(r.group(1)).content
+        r = re.search("<div id=\"player_code\">.*?<script type='text/javascript'>(.*?)</script>", html, re.DOTALL)
+        if not r:
+            raise UrlResolver.ResolverError('Unable to resolve Mightyupload link. Player config not found.')
+        r_temp = re.search("file: '([^']+)'", r.group(1))
+        if r_temp:
+            stream_url = r_temp.group(1)
+        else:
             js = jsunpack.unpack(r.group(1))
-            r = re.search("'file','([^']+)'", js.replace('\\',''))
+            r = re.search("'file','([^']+)'", js.replace('\\', ''))
             if not r:
-                r = re.search('"src"value="([^"]+)', js.replace('\\',''))
+                r = re.search('"src"value="([^"]+)', js.replace('\\', ''))
+
             if not r:
-                raise Exception ('Unable to resolve Mightyupload link. Filelink not found.')
-            return r.group(1)
-        
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            return self.unresolvable(code=3, msg='Exception: %s' % e) 
-        except Exception, e:
-            common.addon.log('**** Mightyupload Error occured: %s' % e)
-            return self.unresolvable(code=0, msg='Exception: %s' % e)
+                raise UrlResolver.ResolverError('Unable to resolve Mightyupload link. Filelink not found.')
+
+            stream_url = r.group(1)
+
+        if stream_url:
+            return stream_url + '|User-Agent=%s' % (USER_AGENT)
+        else:
+            raise UrlResolver.ResolverError('Unable to resolve link')
 
     def get_url(self, host, media_id):
             return 'http://www.mightyupload.com/embed-%s.html' % (media_id)
 
     def get_host_and_id(self, url):
-        r = re.search('http://(?:www.)(.+?)/embed-([\w]+)-', url)
+        r = re.search('http://(?:www.)?(.+?)/embed-([\w]+)-', url)
         if r:
             return r.groups()
         else:
@@ -89,5 +86,3 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         return re.match('http://(www.)?mightyupload.com/[0-9A-Za-z]+', url) or 'mightyupload' in host
-
-

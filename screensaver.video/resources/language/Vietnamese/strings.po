@@ -27,3 +27,7 @@ msgstr "Tìm sửa lỗi"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Cấu hình"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Không"

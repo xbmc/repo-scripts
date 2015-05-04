@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 Teramixer.com urlresolver XBMC Addon
@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 
-import urllib, urllib2, os, re
+import re
 import base64
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
@@ -26,14 +26,12 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-#SET OK_LOGO# THANKS TO JUL1EN094
-ok_logo = os.path.join(common.addon_path, 'resources', 'images', 'greeninch.png')
-
 class TeramixerResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "teramixer"    
+    name       = "teramixer"
+    domains    = [ 'teramixer.com' ]
+    useragent  = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'    
+
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -41,39 +39,20 @@ class TeramixerResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        base_url = 'http://www.'+host+'.com/'+media_id
+        base_url = 'http://www.' + host + '.com/' + media_id
         try:
-            html  = self.net.http_GET(base_url).content
+            html = self.net.http_GET(base_url).content
             encodedUrl = re.findall("""filepath = '(.*)';""", html)[0]
             encodedUrl = encodedUrl[9:]
             encodedUrl = base64.b64decode(encodedUrl)
             if not encodedUrl.startswith('aws'): encodedUrl = encodedUrl[1:]
-            stream_url = 'http://'+encodedUrl
+            stream_url = 'http://%s|User-Agent=%s' %(encodedUrl,self.useragent)
             return stream_url
-        except urllib2.HTTPError, e:
-            e = e.code
-            common.addon.log_error(self.name + ': got Http error %s fetching %s' % (e, base_url))
-            common.addon.show_small_popup('Error','Http error: %s' % e, 8000, image=error_logo)
-            return self.unresolvable(code=3, msg=e)
-        except urllib2.URLError, e:
-            e = str(e.args)
-            common.addon.log_error(self.name + ': got Url error %s fetching %s' % (e, base_url))
-            common.addon.show_small_popup('Error','URL error: %s' % e, 8000, image=error_logo)
-            return self.unresolvable(code=3, msg=e)
-        except IndexError, e :
+        except IndexError as e:
             if re.search("""<title>File not found or deleted - Teramixer</title>""", html) :
-                e = 'File not found or removed'
-                common.addon.log('**** Teramixer Error occured: %s' % e)
-                common.addon.show_small_popup(title='[B][COLOR white]TERAMIXER[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-                return self.unresolvable(code=1, msg=e)
-            else :
-                common.addon.log('**** Teramixer Error occured: %s' % e)
-                common.addon.show_small_popup(title='[B][COLOR white]TERAMIXER[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-                return self.unresolvable(code=0, msg=e) 
-        except Exception, e:
-            common.addon.log('**** Teramixer Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]TERAMIXER[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg=e)
+                raise UrlResolver.ResolverError('File not found or removed')
+            else:
+                raise UrlResolver.ResolverError(e)
 
     def get_url(self, host, media_id):
         return 'http://www.teramixer.com/%s' % media_id
@@ -82,16 +61,16 @@ class TeramixerResolver(Plugin, UrlResolver, PluginSettings):
         r = re.search('http://(www.)?(.+?).com/(embed/)?(.+)', url)
         if r :
             ls = r.groups()
-            ls = (ls[1],ls[3])
+            ls = (ls[1], ls[3])
             return ls
         else :
             return False
 
     def valid_url(self, url, host):
-        if self.get_setting('enabled') == 'false': 
+        if self.get_setting('enabled') == 'false':
             return False
-        return re.match('http://(www.)?teramixer.com/(embed/)?[0-9A-Za-z]+',url) or 'teramixer.com' in host    
+        return re.match('http://(www.)?teramixer.com/(embed/)?[0-9A-Za-z]+', url) or 'teramixer.com' in host
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
-        return xml            
+        return xml

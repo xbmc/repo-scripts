@@ -192,6 +192,50 @@ msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
 msgstr "Beach 3 - [3.4GB] - 720p"
 
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Snö 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Snö 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Snö 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Vattenkvarn - [549MB] - 1080p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Överläggsbild"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Välj överläggsbild"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Ingen"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "Användarbestämd"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Bildram 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Fönsterram 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Fönsterram 2"
+
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
 msgstr "Filen är inte giltig som skärmsläckarfilm"
@@ -215,3 +259,11 @@ msgstr "Denna inställning använder samtliga nedladdade filmer"
 msgctxt "#32305"
 msgid "Each video required should be downloaded individually first"
 msgstr "Varje video måste nedladdas individuellt först"
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Kunde inte ladda ner videofil"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "Detta kan bero på att serverbandbredden är överskriden, försök igen nästa dag"

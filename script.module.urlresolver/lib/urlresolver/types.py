@@ -129,7 +129,7 @@ class HostedMediaFile:
           
     def resolve(self):
         '''
-        Resolves this :class:`HostedMediaFile` to a media URL. 
+        Resolves this :class:`HostedMediaFile` to a media URL.
         
         Example::
             
@@ -137,15 +137,15 @@ class HostedMediaFile:
         
         .. note::
         
-            This method currently uses just the highest priority resolver to 
-            attempt to resolve to a media URL and if that fails it will return 
-            False. In future perhaps we should be more clever and check to make 
-            sure that there are no more resolvers capable of attempting to 
-            resolve the URL first. 
+            This method currently uses just the highest priority resolver to
+            attempt to resolve to a media URL and if that fails it will return
+            False. In future perhaps we should be more clever and check to make
+            sure that there are no more resolvers capable of attempting to
+            resolve the URL first.
         
         Returns:
             A direct URL to the media file that is playable by XBMC, or False
-            if this was not possible. 
+            if this was not possible.
         '''
         for resolver in self.__resolvers:
             try:
@@ -155,19 +155,24 @@ class HostedMediaFile:
                         common.addon.log_debug('logging in')
                         resolver.login()
                     self._host, self._media_id = resolver.get_host_and_id(self._url)
-                    stream_url = resolver.get_media_url(self._host, self._media_id)
-                    # this logic is weird because get_media_url returns an object of class unresolvable that evals to False when resolve fails
-                    if stream_url:
-                        # if we got a valid url back, then test it and only return the valid stream_url if the test succeeds
-                        if self.__test_stream(stream_url):
-                            self.__resolvers = [ resolver ] # Found a valid resolver, ignore the others
+                    try:
+                        stream_url = resolver.get_media_url(self._host, self._media_id)
+                        if stream_url and self.__test_stream(stream_url):
+                            self.__resolvers = [resolver]  # Found a valid resolver, ignore the others
                             self._valid_url = True
                             return stream_url
-                        else:
-                            return False
-                    # return the unresolvable if there's not a True stream_url
-                    else:
-                        return stream_url
+                    except UrlResolver.ResolverError as e:
+                        common.addon.log_error('Resolver Error: %s - %s - %s' % (e, resolver.name, self._url))
+                        common.addon.log_debug(traceback.format_exc())
+                        return UrlResolver.unresolvable(code=0, msg=e)
+                    except urllib2.HTTPError as e:
+                        common.addon.log_error('HTTP Error: %s - %s - %s - %s' % (e.code, resolver.name, self._url))
+                        common.addon.log_debug(traceback.format_exc())
+                        return UrlResolver.unresolvable(code=3, msg=e)
+                    except Exception as e:
+                        common.addon.log_error('Unknown Error: %s - %s - %s' % (e, resolver.name, self._url))
+                        common.addon.log_error(traceback.format_exc())
+                        return UrlResolver.unresolvable(code=0, msg=e)
             except Exception as e:
                 common.addon.log_notice("Resolver '%s' crashed: %s. Ignoring" % (resolver.name, e))
                 common.addon.log_debug(traceback.format_exc())

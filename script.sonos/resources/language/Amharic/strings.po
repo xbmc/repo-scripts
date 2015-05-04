@@ -24,6 +24,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "ይቀጥሉ "
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "ስህተት"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "ከያኒዎች "

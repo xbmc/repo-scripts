@@ -27,3 +27,7 @@ msgstr "डिबगिंग"
 msgctxt "#32003"
 msgid "Enable debug logging"
 msgstr "लॉगिंग डिबग सक्षम"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "कोई नहीं"

@@ -44,6 +44,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Seuraava"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Virhe"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Musiikkikirjasto"

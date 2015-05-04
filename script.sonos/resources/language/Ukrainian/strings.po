@@ -36,9 +36,17 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Наступний"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Помилка"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "Бібліотека музики"
+
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Черга"
 
 msgctxt "#32110"
 msgid "Artists"

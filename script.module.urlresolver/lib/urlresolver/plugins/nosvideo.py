@@ -20,14 +20,9 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, os
+import re
 from urlresolver import common
 from lib import jsunpack
-
-# SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
-net = Net()
 
 class NosvideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -40,48 +35,38 @@ class NosvideoResolver(Plugin, UrlResolver, PluginSettings):
         self.net = Net()
 
     def get_media_url(self, host, media_id):
-        code = 0
-        try:
-            url = self.get_url(host, media_id)
-            print url
-            html = self.net.http_GET(url).content
-            if 'File Not Found' in html:
-                code = 1
-                raise Exception('File Not Found')
+        url = self.get_url(host, media_id)
+        html = self.net.http_GET(url).content
+        if 'File Not Found' in html:
+            raise UrlResolver.ResolverError('File Not Found')
 
-            headers = {
-                'Referer': url
-            }
+        headers = {
+            'Referer': url
+        }
 
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)"\s* value="(.+?)"', html)
-            for name, value in r:
-                data[name] = value
-            data.update({'method_free': 'Free Download'})
-            print data
+        data = {}
+        r = re.findall(r'type="hidden" name="(.+?)"\s* value="(.+?)"', html)
+        for name, value in r:
+            data[name] = value
+        data.update({'method_free': 'Free Download'})
 
-            html = net.http_POST(url, data, headers=headers).content
+        html = self.net.http_POST(url, data, headers=headers).content
 
-            r = re.search('(eval\(function\(p,a,c,k,e,[dr].*)', html)
+        r = re.search('(eval\(function\(p,a,c,k,e,[dr].*)', html)
+        if r:
+            js = jsunpack.unpack(r.group(1))
+            r = re.search('playlist=(.*)&config=', js)
             if r:
-                js = jsunpack.unpack(r.group(1))
-                r = re.search('playlist=(.*)&config=', js)
+                html = self.net.http_GET(r.group(1)).content
+                r = re.search('<file>\s*(.*)\s*</file>', html)
                 if r:
-                    html = self.net.http_GET(r.group(1)).content
-                    r = re.search('<file>\s*(.*)\s*</file>', html)
-                    if r:
-                        return r.group(1)
-                    else:
-                        raise Exception('Unable to locate video file')
+                    return r.group(1)
                 else:
-                    raise Exception('Unable to locate playlist')
+                    raise UrlResolver.ResolverError('Unable to locate video file')
             else:
-                raise Exception('Unable to locate packed data')
-
-        except Exception, e:
-            common.addon.log('**** Nosvideo Error occured: %s' % e)
-            common.addon.show_small_popup('*** Nosvideo Error occured ***', str(e), 5000, '')
-            return self.unresolvable(code=code, msg='Exception: %s' % e)
+                raise UrlResolver.ResolverError('Unable to locate playlist')
+        else:
+            raise UrlResolver.ResolverError('Unable to locate packed data')
 
     def get_url(self, host, media_id):
         return 'http://nosvideo.com/?v=%s' % media_id
@@ -93,7 +78,6 @@ class NosvideoResolver(Plugin, UrlResolver, PluginSettings):
         else:
             return False
         return('host', 'media_id')
-
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False

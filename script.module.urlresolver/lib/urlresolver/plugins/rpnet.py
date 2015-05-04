@@ -16,9 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os, sys
 import re
-
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import SiteAuth
 from urlresolver.plugnplay.interfaces import PluginSettings
@@ -46,18 +44,14 @@ class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #UrlResolver methods
     def get_media_url(self, host, media_id):
-        try:
-            username = self.get_setting('username')
-            password = self.get_setting('password')
-            url   = 'https://premium.rpnet.biz/client_api.php?'
-            url += 'username=%s&password=%s&action=generate&links=%s'
-            url   = url %(username, password, media_id)
-            response = self.net.http_GET(url).content
-            response = json.loads(response)
-            return response['links'][0]['generated']
-        except Exception, e:
-            common.addon.log_error('**** Rpnet Error occured: %s' % e)
-            return self.unresolvable(code=0, msg=e)
+        username = self.get_setting('username')
+        password = self.get_setting('password')
+        url = 'https://premium.rpnet.biz/client_api.php?'
+        url += 'username=%s&password=%s&action=generate&links=%s'
+        url = url % (username, password, media_id)
+        response = self.net.http_GET(url).content
+        response = json.loads(response)
+        return response['links'][0]['generated']
 
     def get_url(self, host, media_id):
         return media_id
@@ -77,7 +71,7 @@ class RPnetResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false':
             return False
-        if self.get_setting('login') == 'false': return False             
+        if self.get_setting('login') == 'false': return False
         for pattern in self.get_all_hosters():
             if pattern.findall(url):
                 return True

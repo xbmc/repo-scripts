@@ -38,32 +38,28 @@ class AllmyvideosResolver(Plugin,UrlResolver,PluginSettings):
         self.net=Net()
 
     def get_media_url(self,host,media_id):
-        try:
-            url=self.get_url1st(host,media_id)
-            headers={'User-Agent':USER_AGENT,'Referer':url}
-            html=self.net.http_GET(url,headers=headers).content
-            stream_url = self.__get_best_source(html) 
-            if stream_url:
-                xbmc.sleep(2000)
-                return stream_url
-            
-            url=self.get_url(host,media_id)
-            headers={'User-Agent':USER_AGENT,'Referer':url}
-            html=self.net.http_GET(url,headers=headers).content
-            
-            data={}; r=re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">',html)
-            for name,value in r: data[name]=value
-            html=net.http_POST(url,data,headers=headers).content
-            
-            stream_url = self.__get_best_source(html) 
-            if stream_url:
-                xbmc.sleep(2000)
-                return stream_url
-            
-            raise Exception('could not find video')          
-        except Exception, e:
-            common.addon.log('**** Allmyvideos Error occured: %s' % e)
-            return self.unresolvable(code=0, msg='Exception: %s' % e)
+        url=self.get_url1st(host,media_id)
+        headers={'User-Agent':USER_AGENT,'Referer':url}
+        html=self.net.http_GET(url,headers=headers).content
+        stream_url = self.__get_best_source(html) 
+        if stream_url:
+            xbmc.sleep(2000)
+            return stream_url
+        
+        url=self.get_url(host,media_id)
+        headers={'User-Agent':USER_AGENT,'Referer':url}
+        html=self.net.http_GET(url,headers=headers).content
+        
+        data={}; r=re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">',html)
+        for name,value in r: data[name]=value
+        html=net.http_POST(url,data,headers=headers).content
+        
+        stream_url = self.__get_best_source(html) 
+        if stream_url:
+            xbmc.sleep(2000)
+            return stream_url
+        
+        raise UrlResolver.ResolverError('could not find video')
 
     def __get_best_source(self, html):
         r=re.search('"sources"\s*:\s*(\[.*?\])',html, re.DOTALL)

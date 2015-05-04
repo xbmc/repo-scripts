@@ -35,3 +35,7 @@ msgstr "Выбор видео"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Настройка"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Нет"

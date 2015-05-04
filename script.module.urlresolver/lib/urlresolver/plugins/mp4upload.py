@@ -19,49 +19,37 @@
 
 import re
 from t0mm0.common.net import Net
-import urllib2
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import xbmcgui
 
 class Mp4uploadResolver(Plugin, UrlResolver, PluginSettings):
-	implements = [UrlResolver, PluginSettings]
-	name = "mp4upload"
-	domains = [ "mp4upload.com" ]
+    implements = [UrlResolver, PluginSettings]
+    name = "mp4upload"
+    domains = ["mp4upload.com"]
 
-	def __init__(self):
-		p = self.get_setting('priority') or 100
-		self.priority = int(p)
-		self.net = Net()
-		
-		
-	def get_media_url(self, host, media_id):
-		web_url = self.get_url(host, media_id)
-		try:
-			link = self.net.http_GET(web_url).content
-		except urllib2.URLError, e:
-			common.addon.log_error(self.name + '- got http error %d fetching %s' % (e.code, web_url))
-			return False
-		
-		link = ''.join(link.splitlines()).replace('\t','')
-		videoUrl = re.compile('\'file\': \'(.+?)\'').findall(link)[0]
-		
-		return videoUrl
-		
-		
-	def get_url(self, host, media_id):
-		return 'http://www.mp4upload.com/embed-%s.html' % media_id
-		
-		
-	def get_host_and_id(self, url):
-		r = re.search('//(.+?)/embed-(.+?)\.', url)
-		if r:
-			return r.groups()
-		else:
-			return False
-			
-			
-	def valid_url(self, url, host):
-		return 'mp4upload.com' in url or self.name in host
+    def __init__(self):
+        p = self.get_setting('priority') or 100
+        self.priority = int(p)
+        self.net = Net()
+
+    def get_media_url(self, host, media_id):
+        web_url = self.get_url(host, media_id)
+        link = self.net.http_GET(web_url).content
+        link = ''.join(link.splitlines()).replace('\t', '')
+        videoUrl = re.compile('\'file\': \'(.+?)\'').findall(link)[0]
+        return videoUrl
+
+    def get_url(self, host, media_id):
+        return 'http://www.mp4upload.com/embed-%s.html' % media_id
+
+    def get_host_and_id(self, url):
+        r = re.search('//(.+?)/embed-(.+?)\.', url)
+        if r:
+            return r.groups()
+        else:
+            return False
+
+    def valid_url(self, url, host):
+        return 'mp4upload.com' in url or self.name in host

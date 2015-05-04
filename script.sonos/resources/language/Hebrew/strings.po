@@ -72,6 +72,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "הבא"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "שגיאה"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "ספריית מוזיקה "
@@ -119,6 +123,10 @@ msgstr "הוספה לתור"
 msgctxt "#32156"
 msgid "Replace Queue"
 msgstr "החלפת תור"
+
+msgctxt "#32157"
+msgid "Update Music Library"
+msgstr "עדכן ספריית המוזיקה"
 
 msgctxt "#32223"
 msgid "Good Morning"

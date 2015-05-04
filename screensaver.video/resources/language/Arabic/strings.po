@@ -31,3 +31,7 @@ msgstr "تمكين تسجيل التصحيح"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "إعدادات"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "بلا"

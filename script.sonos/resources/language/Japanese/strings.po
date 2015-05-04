@@ -40,6 +40,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "次へ"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "エラー"
+
 msgctxt "#32100"
 msgid "Music Library"
 msgstr "ミュージックライブラリ"

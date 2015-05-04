@@ -24,12 +24,10 @@ from urlresolver.plugnplay import Plugin
 from urlresolver import common
 from t0mm0.common.net import Net
 
-net = Net()
-
-class veeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
+class VeeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
     name = "veeHD"
-    domains = [ "veehd.com" ]
+    domains = ["veehd.com"]
     profile_path = common.profile_path
     cookie_file = os.path.join(profile_path, '%s.cookies' % name)
     
@@ -44,36 +42,32 @@ class veeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #UrlResolver methods
     def get_media_url(self, host, media_id):
-        try:
-            if not self.get_setting('login')=='true' or not (self.get_setting('username') and self.get_setting('password')):
-                raise Exception('VeeHD requires a username & password')
+        if not self.get_setting('login')=='true' or not (self.get_setting('username') and self.get_setting('password')):
+            raise UrlResolver.ResolverError('VeeHD requires a username & password')
 
-            web_url = self.get_url(host, media_id)
-            html = self.net.http_GET(web_url).content
+        web_url = self.get_url(host, media_id)
+        html = self.net.http_GET(web_url).content
 
-            # two possible playeriframe's: stream and download
-            for match in re.finditer('playeriframe.+?src\s*:\s*"([^"]+)', html):
-                player_url = 'http://%s%s'%(host,match.group(1))
+        # two possible playeriframe's: stream and download
+        for match in re.finditer('playeriframe.+?src\s*:\s*"([^"]+)', html):
+            player_url = 'http://%s%s'%(host,match.group(1))
+            html = self.net.http_GET(player_url).content
+            
+            # if the player html contains an iframe the iframe url has to be gotten and then the player_url tried again
+            r = re.search('<iframe.*?src="([^"]+)', html)
+            if r:
+                frame_url = 'http://%s%s'%(host,r.group(1))
+                self.net.http_GET(frame_url)
                 html = self.net.http_GET(player_url).content
-                
-                # if the player html contains an iframe the iframe url has to be gotten and then the player_url tried again
-                r = re.search('<iframe.*?src="([^"]+)', html)
+
+            patterns = ['"video/divx"\s+src="([^"]+)', '"url"\s*:\s*"([^"]+)', 'href="([^"]+(?:mp4|avi))']
+            for pattern in patterns:
+                r = re.search(pattern, html)
                 if r:
-                    frame_url = 'http://%s%s'%(host,r.group(1))
-                    self.net.http_GET(frame_url)
-                    html = self.net.http_GET(player_url).content
+                    stream_url = urllib.unquote(r.group(1))
+                    return stream_url
 
-                patterns = ['"video/divx"\s+src="([^"]+)', '"url"\s*:\s*"([^"]+)', 'href="([^"]+(?:mp4|avi))']
-                for pattern in patterns:
-                    r = re.search(pattern, html)
-                    if r:
-                        stream_url = urllib.unquote(r.group(1))
-                        return stream_url
-
-            raise Exception ('File Not Found or Removed')
-        except Exception, e:
-            common.addon.log('**** VeeHD Error occured: %s' % e)
-            return self.unresolvable(code=0, msg='Exception: %s' % e)    
+        raise UrlResolver.ResolverError('File Not Found or Removed')
         
     def get_url(self, host, media_id):
         return 'http://veehd.com/video/%s' % media_id
@@ -101,7 +95,7 @@ class veeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         terms = 'on'
         remember = 'on'
         data = {'ref': ref, 'uname': login, 'pword': pword, 'submit': submit, 'terms': terms, 'remember_me': remember}
-        html = net.http_POST(loginurl, data).content
+        html = self.net.http_POST(loginurl, data).content
         self.net.save_cookies(self.cookie_file)
         if re.search('my dashboard', html):
             return True

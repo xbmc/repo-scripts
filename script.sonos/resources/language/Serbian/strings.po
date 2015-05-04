@@ -32,6 +32,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Sledeće"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Greška"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Izvođači"

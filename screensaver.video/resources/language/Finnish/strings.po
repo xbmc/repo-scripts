@@ -31,3 +31,7 @@ msgstr "Suorituslokin tallennus (debug log)"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Asetukset"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Pois"

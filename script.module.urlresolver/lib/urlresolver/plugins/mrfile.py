@@ -20,17 +20,13 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2
 from urlresolver import common
 import re
-import os
 
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
-class mrfileResolver(Plugin, UrlResolver, PluginSettings):
+class MrFileResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "mrfile"
-    domains = [ "mrfile.me" ]
+    domains = ["mrfile.me"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -39,25 +35,13 @@ class mrfileResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        try:
-            html = self.net.http_GET(web_url).content
-            if re.search('File was deleted',html):
-                raise Exception ('File Not Found or removed')
-            r = re.search("file: '([^']+)'",html)
-            if not r:
-                raise Exception ('Unable to resolve mrfile link. Filelink not found.')
-            return r.group(1)
-        
-        except urllib2.URLError, e:
-            common.addon.log_error(self.name + ': got http error %d fetching %s' %
-                                    (e.code, web_url))
-            common.addon.show_small_popup('Error','Http error: '+str(e), 8000, error_logo)
-            return self.unresolvable(code=3, msg='Exception: %s' % e) 
-        except Exception, e:
-            common.addon.log('**** mrfile Error occured: %s' % e)
-            common.addon.show_small_popup(title='[B][COLOR white]mrfile[/COLOR][/B]', msg='[COLOR red]%s[/COLOR]' 
-            % e, delay=5000, image=error_logo)
-            return self.unresolvable(code=0, msg='Exception: %s' % e)
+        html = self.net.http_GET(web_url).content
+        if re.search('File was deleted', html):
+            raise UrlResolver.ResolverError('File Not Found or removed')
+        r = re.search("file: '([^']+)'", html)
+        if not r:
+            raise UrlResolver.ResolverError('Unable to resolve mrfile link. Filelink not found.')
+        return r.group(1)
 
     def get_url(self, host, media_id):
             return 'http://www.mrfile.me/embed-%s.html' % (media_id)
@@ -73,8 +57,5 @@ class mrfileResolver(Plugin, UrlResolver, PluginSettings):
             else:
                 return False
 
-
     def valid_url(self, url, host):
         return re.match('http://(www.)?mrfile.me/[0-9A-Za-z]+', url) or 'mrfile' in host
-
-

@@ -16,65 +16,43 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import re
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, os
-import xbmcgui
 from urlresolver import common
 
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo = os.path.join(common.addon_path, 'resources', 'images', 'redx.png')
-
-net = Net()
-
-class AllmyvideosResolver(Plugin, UrlResolver, PluginSettings):
+class MegaVidsResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "mega-vids"
     domains = [ "mega-vids.com" ]
-
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
 
-
     def get_media_url(self, host, media_id):
-        try:
-            url = self.get_url(host, media_id)
-            html = self.net.http_GET(url).content
-            dialog = xbmcgui.DialogProgress()
-            dialog.create('Resolving', 'Resolving mega-vids Link...')       
-            dialog.update(0)
-    
-            data = {}
-            r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
-            for name, value in r:
-                data[name] = value
-                
-            html = net.http_POST(url, data).content
-            dialog.update(50)
+        url = self.get_url(host, media_id)
+        html = self.net.http_GET(url).content
+
+        data = {}
+        r = re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">', html)
+        for name, value in r:
+            data[name] = value
             
-            r = re.search("file\s*:\s*'(.+?)'", html)
-            if r:
-                dialog.update(100)
-                dialog.close()
-                return r.group(1)
-            else:
-                dialog.close()
-                raise Exception('could not find video')          
+        html = net.http_POST(url, data).content
         
-        except Exception, e:
-            common.addon.log('**** mega-vids Error occured: %s' % e)
-            common.addon.show_small_popup('Error', str(e), 5000, '')
-            return self.unresolvable(code=0, msg='Exception: %s' % e)
+        r = re.search("file\s*:\s*'(.+?)'", html)
+        if r:
+            return r.group(1)
+        else:
+            raise UrlResolver.ResolverError('could not find video')
         
     def get_url(self, host, media_id):
-        return 'http://mega-vids.com/%s' % media_id 
+        return 'http://mega-vids.com/%s' % media_id
         
-
     def get_host_and_id(self, url):
         r = re.search('//(.+?)/(?:embed-)?([0-9a-zA-Z]+)',url)
         if r:
@@ -82,7 +60,6 @@ class AllmyvideosResolver(Plugin, UrlResolver, PluginSettings):
         else:
             return False
         return('host', 'media_id')
-
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False

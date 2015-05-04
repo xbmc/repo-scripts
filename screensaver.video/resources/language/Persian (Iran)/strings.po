@@ -31,3 +31,7 @@ msgstr "فعال‌کردن گزارش‌گیری اشکال‌زدایی"
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "پیکربندی"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "هیچ"

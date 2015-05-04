@@ -20,6 +20,10 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Li jmiss"
 
+msgctxt "#32068"
+msgid "Error"
+msgstr "Problema"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artisti"

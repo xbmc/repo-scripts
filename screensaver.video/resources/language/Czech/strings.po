@@ -43,3 +43,11 @@ msgstr "Opakovat vše"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Opakovat jednou"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Obrázek pro overlay "
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Žádné"

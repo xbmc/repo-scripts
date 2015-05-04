@@ -43,3 +43,7 @@ msgstr "Ismétlés Mind"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Ismétlés Egyszer"
+
+msgctxt "#32202"
+msgid "None"
+msgstr "Nincs"
