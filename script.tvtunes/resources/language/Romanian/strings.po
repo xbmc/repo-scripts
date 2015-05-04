@@ -28,6 +28,10 @@ msgctxt "#32019"
 msgid "Enable debug logging"
 msgstr "Activează jurnalizare depanare"
 
+msgctxt "#32030"
+msgid "All"
+msgstr "Toate"
+
 msgctxt "#32036"
 msgid "Never"
 msgstr "Niciodată"
@@ -35,6 +39,10 @@ msgstr "Niciodată"
 msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Protector ecran"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Dosar"
 
 msgctxt "#32057"
 msgid "Fanart"
@@ -63,6 +71,10 @@ msgstr "Filme"
 msgctxt "#32202"
 msgid "TV Shows"
 msgstr "Seriale"
+
+msgctxt "#32203"
+msgid "Music Videos"
+msgstr "Videoclipuri muzicale"
 
 msgctxt "#32991"
 msgid "Playback"

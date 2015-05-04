@@ -1,3 +1,6 @@
+v4.7.1
+- Add option to reset volume on startup
+
 v4.7.0
 - Add option to exclude items from the Screensaver
 

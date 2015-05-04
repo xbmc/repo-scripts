@@ -38,6 +38,9 @@
 		<setting id="flac" type="bool" label="FLAC" visible="eq(-3,true)" subsetting="true" default="true"/>
 		<setting id="m4a" type="bool" label="M4A" visible="eq(-4,true)" subsetting="true" default="true"/>
 		<setting id="wav" type="bool" label="WAV" visible="eq(-5,true)" subsetting="true" default="true"/>
+    	<setting label="32079" type="lsep"/>
+    	<setting id="resetVolumeOnStartup" type="bool" label="32080" default="false"/>
+		<setting id="resetStartupVolumeValue" label="32081" visible="eq(-1,true)" type="slider" default="100" range="0,1,100" option="int" />
     	<setting label="32018" type="lsep"/>
     	<setting id="logEnabled" type="bool" label="32019" default="false"/>
 	</category>

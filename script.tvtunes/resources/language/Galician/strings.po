@@ -60,6 +60,10 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Atenuar a música ao saír"
 
+msgctxt "#32009"
+msgid "Automatically Download Theme If"
+msgstr "Descargar automaticamente o tema si"
+
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Misturar varias pistas"
@@ -136,6 +140,26 @@ msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "Reproducir música ao navegar pola listaxe de vídeos musicais"
 
+msgctxt "#32030"
+msgid "All"
+msgstr "Todo"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
 msgctxt "#32036"
 msgid "Never"
 msgstr "Nunca"
@@ -143,6 +167,38 @@ msgstr "Nunca"
 msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Protector de pantalla"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Tempo de Espera (Segundos)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Columnas"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Velocidade"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Ordenar ó chou"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Tipo de imaxe"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Cartafol"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Recursivo"
 
 msgctxt "#32057"
 msgid "Fanart"
@@ -155,6 +211,22 @@ msgstr "Miniatura"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "Reparto"
+
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Filmes, Series de TV"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Nivel de atenuación"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Esquerda"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Dereita"
 
 msgctxt "#32070"
 msgid "Top"
@@ -272,6 +344,10 @@ msgctxt "#32207"
 msgid "Move themes into themes folder?"
 msgstr "Mover os temas ao cartafol de temas?"
 
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Acción]: Inicar o protector de pantalla"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Reprodución"
@@ -287,3 +363,7 @@ msgstr "Sistema de ficheiros"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Erro: Fallou a conexión a goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Non se atoparon imaxes!"

@@ -276,6 +276,13 @@ class Settings():
         # Default is to prompt the user
         return Settings.PROMPT_ENGINE
 
+    @staticmethod
+    def getStartupVolume():
+        # Check to see if the volume needs to be changed when the system starts
+        if __addon__.getSetting("resetVolumeOnStartup") == 'true':
+            return int(float(__addon__.getSetting("resetStartupVolumeValue")))
+        return -1
+
 
 # Class to handle all the screen saver settings
 class ScreensaverSettings():

@@ -16,6 +16,10 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32004"
+msgid "Username:"
+msgstr "Kullanıcı adı:"
+
 msgctxt "#32007"
 msgid "Path:"
 msgstr "Yol:"

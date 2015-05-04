@@ -32,6 +32,14 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "फिल्म की नादानोंं"
 
+msgctxt "#32070"
+msgid "Top"
+msgstr "ऊपर "
+
+msgctxt "#32071"
+msgid "Bottom"
+msgstr "नीचे "
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "सिनेमा"

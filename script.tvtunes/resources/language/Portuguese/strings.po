@@ -316,6 +316,34 @@ msgctxt "#32072"
 msgid "Crossfade"
 msgstr "Sobreposição na transição"
 
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Incluir Imagens Artwork Downloader"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Apenas Mostrar Imagens Quando Existe Um Tema"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Reproduzir Tema Uma Vez, Mostrar Todas As Imagens"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Mostrar Todas As Imagens, Repetir Tema"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Reproduzir Tema Uma Vez, Saltar Imagens Restantes"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Repetir Regras"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Mostrar Diálogo de Seleção Se Auto Condizer Falhar"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERRO"
@@ -424,6 +452,10 @@ msgctxt "#32207"
 msgid "Move themes into themes folder?"
 msgstr "Quer mover as músicas para a pasta de músicas?"
 
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Action]: Iniciar Protetor de Ecrã"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Reprodução"
@@ -439,3 +471,7 @@ msgstr "Sistema de Ficheiros"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Erro: não foi possível ligar a goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Nenhumas Imagens encontradas!"
