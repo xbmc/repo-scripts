@@ -17,3 +17,7 @@ Version 1.0.1
 -script.module.elementtree now imported properly.
 Version 1.0.2
 -Fixed search results error due to changes on twitter.
+Version 1.0.3
+-Fixed search results error again
+-Changed some timeout settings to fire less frequently
+-Added twitter account icons

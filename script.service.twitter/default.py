@@ -148,21 +148,22 @@ while (not xbmc.abortRequested):
 				dispname=str(name[1])
 				dispname=word_resolver.name(dispname)
 				xbmc.log('Twitter URL = '+'http://www.twitter.com/search?q='+search_string+'&f=realtime'+'   Number of tweets to skip = '+str(test_tweet))
-				text=re.compile('<p class="js-tweet-text tweet-text".+?>(.+?)</p>').findall(link)
+				text=re.compile('<p class=".+?tweet-text.+?".+?>(.+?)</p>').findall(link)
 				text=text[test_tweet]
 				text = word_resolver.text(text)
+				icon=re.compile('<img class=".+?js-action-profile-avatar" src="(.+?)"').findall(link)
+				icon=icon[test_tweet]
 				if old_text != text:
-					xbmc.executebuiltin('XBMC.Notification("%s","%s",%d,"%s")' % (dispname+'  @'+username, text, display_time, twitter_icon))
+					xbmc.executebuiltin('XBMC.Notification("%s","%s",%d,"%s")' % (dispname+'  @'+username, text, display_time, icon))
 					xbmc.sleep(wait_time)
 					old_text = text
 				else:
-					xbmc.sleep(500)
+					xbmc.sleep(5000)
 			except:
 				xbmc.log('No Twitter Results, URL = '+'http://www.twitter.com/search?q='+search_string+'&f=realtime')
-				xbmc.executebuiltin('XBMC.Notification("%s", "%s")' % (translation(30017),translation(30018)))
-				xbmc.sleep(500)			
+				xbmc.sleep(wait_time)			
 		
 		else:
-			xbmc.sleep(1000)
+			xbmc.sleep(wait_time)
 	
 
