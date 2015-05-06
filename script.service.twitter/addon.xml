@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
  id="script.service.twitter"
-    version="1.0.3"
+    version="1.1.0"
     name="Twitter Feeds"
     provider-name="Romans I XVI"
     >
@@ -19,8 +19,9 @@
         <platform>all</platform>
 	<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
 	<forum>http://forum.xbmc.org/showthread.php?tid=185834</forum>
-	<source>https://github.com/asojka09/script.service.twitter</source>
-	<email>austinsojka@hotmail.com</email>
+	<source></source>
+	<email></email>
+  <broken>Broken to excessive use</broken>
     </extension>
 </addon>
 
