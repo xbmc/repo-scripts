@@ -316,19 +316,19 @@ def SPEED(mps):
     return str(int(round(speed)))
 
 def TEMP(deg):
-    if TEMPUNIT == '°F':
+    if TEMPUNIT == u'°F':
         temp = deg * 1.8 + 32
-    elif TEMPUNIT == 'K':
+    elif TEMPUNIT == u'K':
         temp = deg + 273.15
-    elif TEMPUNIT == '°Ré':
+    elif TEMPUNIT == u'°Ré':
         temp = deg * 0.8
-    elif TEMPUNIT == '°Ra':
+    elif TEMPUNIT == u'°Ra':
         temp = deg * 1.8 + 491.67
-    elif TEMPUNIT == '°Rø':
+    elif TEMPUNIT == u'°Rø':
         temp = deg * 0.525 + 7.5
-    elif TEMPUNIT == '°D':
+    elif TEMPUNIT == u'°D':
         temp = deg / -0.667 + 150
-    elif TEMPUNIT == '°N':
+    elif TEMPUNIT == u'°N':
         temp = deg * 0.33
     else:
         temp = deg
