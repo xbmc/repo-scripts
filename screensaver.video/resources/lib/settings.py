@@ -69,9 +69,12 @@ class Settings():
     # Locations:
     # ozibox.com
     #    Aquarium001.mkv
+    #    Aquarium004-720p.mp4
     #    Beach002-720p.mp4
+    #    Christmas001-1080p.mp4
     #    Fireplace001-720p.mkv
     #    Fireplace002.mkv
+    #    JohnnyCastaway001-480.mp4
     #    Matrix001-720.mp4
     #    RetroSciFi-001-1080p.mp4
     #    Snow001-720p.mp4
@@ -84,6 +87,7 @@ class Settings():
     #    Waterfall001-720p.mp4
     #    Waterfall002-720p.mp4
     #    Watermill001-1080p.mp4
+    #
     # copy.com
     #    Aquarium002-720p.mkv
     #    Aquarium003-720p.mp4
@@ -91,19 +95,24 @@ class Settings():
     #    Beach003-720p.mp4
     #    Fireplace003-1080p.mkv
     #    Fireplace004-720p.mp4
+    #    Ocean001-720p.mp4
     #    Waterfall003-720p.mp4
     PRESET_VIDEOS = (
         [32101, "Aquarium001.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD03QTcyNTkyQTNBNUE0QTVRUVdFMjAxMTY2N0VXUVM="],
         [32102, "Aquarium002-720p.mkv", "aHR0cDovL2NvcHkuY29tL2NlbXZGQ213M016SVhOMU8vQXF1YXJpdW0wMDItNzIwcC5ta3Y="],
         [32106, "Aquarium003-720p.mp4", "aHR0cDovL2NvcHkuY29tLzFkaUJkN3Z6SWt3ZFpDdVQvQXF1YXJpdW0wMDMtNzIwcC5tcDQ="],
+        [32124, "Aquarium004-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQ0NCNDY2NDEzQTVBNEE1UVFXRTEzMDY2OTlFV1FTL0FxdWFyaXVtMDA0LTcyMHAubXA0"],
         [32109, "Beach001-720p.mp4", "aHR0cDovL2NvcHkuY29tL1VvRE1OZ0JWajBmTVFxeFYvQmVhY2gwMDEtNzIwcC5tcDQ="],
         [32110, "Beach002-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1CN0U5RjZDRTNBNUE0QTVRUVdFMjEwMzI1MUVXUVM="],
         [32119, "Beach003-720p.mp4", "aHR0cDovL2NvcHkuY29tL0t0OVFsNlVlVEVLR09vZXUvQmVhY2gwMDMtNzIwcC5tcDQ="],
+        [32125, "Christmas001-1080p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjE0NEQ1MDIzQTVBNEE1UVFXRTEzMDY3MDJFV1FTL0NocmlzdG1hczAwMS0xMDgwcC5tcDQ="],
         [32103, "Fireplace001-720p.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1ENzMwODE2OTNBNUE0QTVRUVdFMjAxMTcyOUVXUVM="],
         [32104, "Fireplace002.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05QkRBRDdDODNBNUE0QTVRUVdFMjAxMTY4OUVXUVM="],
         [32105, "Fireplace003-1080p.mkv", "aHR0cDovL2NvcHkuY29tL1dzZEcwdmZ0cWl2V3NqWUQvRmlyZXBsYWNlMDAzLTEwODBwLm1rdg=="],
         [32107, "Fireplace004-720p.mp4", "aHR0cDovL2NvcHkuY29tL2I2VlJ6UTFYeEVmSXhwU0gvRmlyZXBsYWNlMDA0LTcyMHAubXA0"],
+        [32126, "JohnnyCastaway001-480.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvODU1RDlBMDQzQTVBNEE1UVFXRTEzMDY2ODhFV1FTL0pvaG5ueUNhc3Rhd2F5MDAxLTQ4MC5tcDQ="],
         [32111, "Matrix001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05RTczMTM0QjNBNUE0QTVRUVdFMjEwMzMyN0VXUVM="],
+        [32127, "Ocean001-720p.mp4", "aHR0cDovL2NvcHkuY29tL1hiZndJTVEzZWxOSmVsQnMlMkZPY2VhbjAwMS03MjBwLm1wNA=="],
         [32115, "RetroSciFi-001-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD02QjVCNzREQzNBNUE0QTVRUVdFMjEwNDA4N0VXUVM="],
         [32120, "Snow001-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvRjI5QkZFQzIzQTVBNEE1UVFXRTk0MTMzN0VXUVMvU25vdzAwMS03MjBwLm1wNA=="],
         [32121, "Snow002-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlSGFzaC85MEE1NjhDRDNBNUE0QTVRUVdFMjc3ODg4N0VXUVMvU25vdzAwMi0xMDgwcC5tcDQ="],

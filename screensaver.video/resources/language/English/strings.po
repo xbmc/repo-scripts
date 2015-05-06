@@ -234,7 +234,23 @@ msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
 msgstr ""
 
-#empty strings from id 32124 to 32199
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr ""
+
+#empty strings from id 32128 to 32199
 
 msgctxt "#32200"
 msgid "Overlay Image"
