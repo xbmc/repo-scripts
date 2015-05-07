@@ -6,7 +6,10 @@ class Media(object):
     def __init__(self, keys=None):
         self.keys = keys
 
+        self.images = None
+        self.overview = None
         self.rating = None
+        self.score = None
 
     @property
     def pk(self):
@@ -16,6 +19,12 @@ class Media(object):
         return self.keys[0]
 
     def update(self, info=None, **kwargs):
+        update_attributes(self, info, [
+            'overview',
+            'images',
+            'score'
+        ])
+
         self.rating = Rating.create(info) or self.rating
 
     def __str__(self):
@@ -104,7 +113,10 @@ class Show(Media):
     def update(self, info=None, **kwargs):
         super(Show, self).update(info, **kwargs)
 
-        update_attributes(self, info, ['title', 'year'])
+        update_attributes(self, info, ['title'])
+
+        if info.get('year'):
+            self.year = int(info['year'])
 
     @classmethod
     def create(cls, keys, info=None, **kwargs):
@@ -118,9 +130,10 @@ class Show(Media):
 
 
 class Season(Media):
-    def __init__(self, number):
-        super(Season, self).__init__([number])
+    def __init__(self, keys=None):
+        super(Season, self).__init__(keys)
 
+        self.show = None
         self.episodes = {}
 
     def to_identifier(self):
@@ -139,6 +152,12 @@ class Season(Media):
     def to_dict(self):
         result = self.to_identifier()
 
+        result.update({
+            'ids': dict([
+                (key, value) for (key, value) in self.keys[1:]  # NOTE: keys[0] is the season identifier
+            ])
+        })
+
         if self.rating:
             result['rating'] = self.rating.value
             result['rated_at'] = to_iso8601(self.rating.timestamp)
@@ -146,8 +165,8 @@ class Season(Media):
         return result
 
     @classmethod
-    def create(cls, number, info=None, **kwargs):
-        season = cls(number)
+    def create(cls, keys, info=None, **kwargs):
+        season = cls(keys)
         season.update(info, **kwargs)
 
         return season
@@ -157,12 +176,19 @@ class Season(Media):
 
 
 class Episode(Video):
-    def __init__(self, number):
-        super(Episode, self).__init__([number])
+    def __init__(self, keys=None):
+        super(Episode, self).__init__(keys)
+
+        self.show = None
+        self.season = None
+
+        self.title = None
 
     def to_identifier(self):
+        _, number = self.pk
+
         return {
-            'number': self.pk
+            'number': number
         }
 
     @deprecated('Episode.to_info() has been moved to Episode.to_dict()')
@@ -172,8 +198,9 @@ class Episode(Video):
     def to_dict(self):
         result = self.to_identifier()
 
-        # add ids as well since trakt adds ids to the episodes as well
         result.update({
+            'title': self.title,
+
             'watched': 1 if self.is_watched else 0,
             'collected': 1 if self.is_collected else 0,
 
@@ -184,7 +211,9 @@ class Episode(Video):
             'collected_at': to_iso8601(self.collected_at),
             'paused_at': to_iso8601(self.paused_at),
 
-            'ids': {}
+            'ids': dict([
+                (key, value) for (key, value) in self.keys[1:]  # NOTE: keys[0] is the (<season>, <episode>) identifier
+            ])
         })
 
         if self.rating:
@@ -193,15 +222,23 @@ class Episode(Video):
 
         return result
 
+    def update(self, info=None, **kwargs):
+        super(Episode, self).update(info, **kwargs)
+
+        update_attributes(self, info, ['title'])
+
     @classmethod
-    def create(cls, pk, info=None, **kwargs):
-        episode = cls(pk)
+    def create(cls, keys, info=None, **kwargs):
+        episode = cls(keys)
         episode.update(info, **kwargs)
 
         return episode
 
     def __repr__(self):
-        return '<Episode E%02d>' % self.pk
+        if self.title:
+            return '<Episode S%02dE%02d - %r>' % (self.pk[0], self.pk[1], self.title)
+
+        return '<Episode S%02dE%02d>' % self.pk
 
 
 class Movie(Video):
@@ -246,7 +283,10 @@ class Movie(Video):
     def update(self, info=None, **kwargs):
         super(Movie, self).update(info, **kwargs)
 
-        update_attributes(self, info['movie'], ['title', 'year'])
+        update_attributes(self, info, ['title'])
+
+        if info.get('year'):
+            self.year = int(info['year'])
 
     @classmethod
     def create(cls, keys, info, **kwargs):

@@ -1,3 +1,33 @@
+2.3.0 (2015-04-11)
+------------------
+**Changes**
+ - Added support for PIN authentication
+ - Added automatic OAuth token refreshing *(see "examples/pin.py" for an example)*
+ - Added :code:`Trakt.configuration.oauth.from_response()` configuration method
+ - Added tests for the :code:`Trakt['oauth']` interface
+ - Added tests to ensure authentication headers are being sent
+ - :code:`Trakt['oauth']` methods now raise an exception if you are missing required configuration parameters
+ - :code:`Trakt['oauth'].token()` method has been renamed to :code:`Trakt['oauth'].token_exchange()` *(old method is still present for compatibility)*
+
+**Fixed**
+ - :code:`Trakt['oauth']` "_url" methods could raise an exception in some cases
+
+2.2.0 (2015-04-02)
+------------------
+**Changes**
+ - Added unit tests (with travis-ci.org and coveralls.io integrations)
+ - Added :code:`/movies`, :code:`/shows`, :code:`/search` and :code:`/users/settings` interfaces
+ - Added parent properties ("show", "season")
+ - Added "images", "overview" and "score" properties to the :code:`Media` class
+ - Added "last_watched_at" property to movies and episodes
+ - Updated :code:`/sync/playback` interface (to include type filtering)
+ - "progress" and "paused_at" properties are now included in :code:`to_dict()`
+
+**Fixed**
+ - "year" property could be returned as a string in some cases
+ - Catch an exception in :code:`trakt.media_mapper`
+ - Catch a case where :code:`Interface.get_data()` can raise a :code:`KeyError: 'content-type'` exception
+
 2.1.1 (2015-02-06)
 ------------------
 **Changes**

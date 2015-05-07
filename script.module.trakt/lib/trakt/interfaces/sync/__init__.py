@@ -31,13 +31,4 @@ class SyncInterface(Interface):
 
     @deprecated("Trakt['sync'].playback() has been moved to Trakt['sync/playback'].get()")
     def playback(self, store=None, **kwargs):
-        response = self.http.get('playback')
-
-        items = self.get_data(response, **kwargs)
-
-        if type(items) is not list:
-            return None
-
-        return self.media_mapper(
-            store, items
-        )
+        raise NotImplementedError()
