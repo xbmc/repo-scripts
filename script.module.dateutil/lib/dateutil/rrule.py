@@ -392,7 +392,7 @@ class rrule(rrulebase):
             if isinstance(bymonth, integer_types):
                 bymonth = (bymonth,)
 
-            self._bymonth = set(bymonth)
+            self._bymonth = tuple(sorted(set(bymonth)))
 
         # byyearday
         if byyearday is None:
@@ -401,7 +401,7 @@ class rrule(rrulebase):
             if isinstance(byyearday, integer_types):
                 byyearday = (byyearday,)
 
-            self._byyearday = set(byyearday)
+            self._byyearday = tuple(sorted(set(byyearday)))
 
         # byeaster
         if byeaster is not None:
@@ -410,7 +410,7 @@ class rrule(rrulebase):
             if isinstance(byeaster, integer_types):
                 self._byeaster = (byeaster,)
             else:
-                self._byeaster = tuple(byeaster)
+                self._byeaster = tuple(sorted(byeaster))
         else:
             self._byeaster = None
 
@@ -422,8 +422,8 @@ class rrule(rrulebase):
             if isinstance(bymonthday, integer_types):
                 bymonthday = (bymonthday,)
 
-            self._bymonthday = set([x for x in bymonthday if x > 0])
-            self._bynmonthday = set([x for x in bymonthday if x < 0])
+            self._bymonthday = tuple(sorted(set([x for x in bymonthday if x > 0])))
+            self._bynmonthday = tuple(sorted(set([x for x in bymonthday if x < 0])))
 
         # byweekno
         if byweekno is None:
@@ -432,17 +432,18 @@ class rrule(rrulebase):
             if isinstance(byweekno, integer_types):
                 byweekno = (byweekno,)
 
-            self._byweekno = set(byweekno)
+            self._byweekno = tuple(sorted(set(byweekno)))
 
         # byweekday / bynweekday
         if byweekday is None:
             self._byweekday = None
             self._bynweekday = None
         else:
-            if isinstance(byweekday, integer_types):
+            # If it's one of the valid non-sequence types, convert to a
+            # single-element sequence before the iterator that builds the
+            # byweekday set.
+            if isinstance(byweekday, integer_types) or hasattr(byweekday, "n"):
                 byweekday = (byweekday,)
-            elif hasattr(byweekday, "n"):
-                byweekday = (byweekday.weekday,)
 
             self._byweekday = set()
             self._bynweekday = set()
@@ -458,6 +459,12 @@ class rrule(rrulebase):
                 self._byweekday = None
             elif not self._bynweekday:
                 self._bynweekday = None
+
+            if self._byweekday is not None:
+                self._byweekday = tuple(sorted(self._byweekday))
+
+            if self._bynweekday is not None:
+                self._bynweekday = tuple(sorted(self._bynweekday))
 
         # byhour
         if byhour is None:
@@ -476,6 +483,8 @@ class rrule(rrulebase):
             else:
                 self._byhour = set(byhour)
 
+            self._byhour = tuple(sorted(self._byhour))
+
         # byminute
         if byminute is None:
             if freq < MINUTELY:
@@ -492,6 +501,8 @@ class rrule(rrulebase):
                                                         base=60)
             else:
                 self._byminute = set(byminute)
+
+            self._byminute = tuple(sorted(self._byminute))
 
         # bysecond
         if bysecond is None:
@@ -511,6 +522,8 @@ class rrule(rrulebase):
                                                         base=60)
             else:
                 self._bysecond = set(bysecond)
+
+            self._bysecond = tuple(sorted(self._bysecond))
 
         if self._freq >= HOURLY:
             self._timeset = None
@@ -794,10 +807,13 @@ class rrule(rrulebase):
         BYHOUR would be {21, 1, 5, 9, 13, 17}, because 4 and 24 are not
         coprime.
 
-        :param:`start` specifies the starting position.
-        :param:`byxxx` is an iterable containing the list of allowed values.
-        :param:`base` is the largest allowable value for the specified
-                      frequency (e.g. 24 hours, 60 minutes).
+        :param start:
+            Specifies the starting position.
+        :param byxxx: 
+            An iterable containing the list of allowed values.
+        :param base: 
+            The largest allowable value for the specified frequency (e.g.
+            24 hours, 60 minutes).
 
         This does not preserve the type of the iterable, returning a set, since
         the values should be unique and the order is irrelevant, this will
@@ -811,7 +827,7 @@ class rrule(rrulebase):
 
         # Support a single byxxx value.
         if isinstance(byxxx, integer_types):
-            byxxx = (byxxx)
+            byxxx = (byxxx, )
 
         for num in byxxx:
             i_gcd = gcd(self._interval, base)
@@ -830,12 +846,15 @@ class rrule(rrulebase):
         specified along with a `BYXXX` parameter at the same "level"
         (e.g. `HOURLY` specified with `BYHOUR`).
 
-        :param:`value` is the old value of the component.
-        :param:`byxxx` is the `BYXXX` set, which should have been generated
-                       by `rrule._construct_byset`, or something else which
-                       checks that a valid rule is present.
-        :param:`base` is the largest allowable value for the specified
-                      frequency (e.g. 24 hours, 60 minutes).
+        :param value: 
+            The old value of the component.
+        :param byxxx: 
+            The `BYXXX` set, which should have been generated by
+            `rrule._construct_byset`, or something else which checks that a
+            valid rule is present.
+        :param base:
+            The largest allowable value for the specified frequency (e.g.
+            24 hours, 60 minutes).
 
         If a valid value is not found after `base` iterations (the maximum
         number before the sequence would start to repeat), this raises a

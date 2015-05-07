@@ -1,3 +1,8 @@
+Version 2.4.2
+
+- dateutil v2.4.2
+- fixed missing dependency
+
 Version 2.4.0
 
 - dateutil v2.4.0
