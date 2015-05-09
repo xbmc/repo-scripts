@@ -160,7 +160,7 @@ def discover(device=None):
                 try:
                     message, address = s.recvfrom(8096)
                     response = DiscoveryResponse(message,address)
-                    if (not device or device == response.device) and response.valid and not response in responses:
+                    if response.valid and (not device or device == response.device) and not response in responses:
                         responses.append(response)
                         util.DEBUG_LOG('<-o   Response Packet[{0}]({1})'.format(i.name,binascii.hexlify(message)))
                     elif response.valid:

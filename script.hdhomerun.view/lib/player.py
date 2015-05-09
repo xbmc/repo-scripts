@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import xbmc, xbmcgui
 import util
 
@@ -71,6 +72,10 @@ class ChannelPlayer(xbmc.Player):
             self.owner.onPlayBackFailed()
             return True
 
+    @property
+    def url(self):
+        return xbmc.getInfoLabel('Player.Filenameandpath') or ''
+
     def getArgs(self):
         transcode = TRANSCODE_PROFILES[util.getSetting('transcode',0)]
         if not transcode: return ''
@@ -102,3 +107,38 @@ class ChannelPlayer(xbmc.Player):
         except:
             util.ERROR()
         return False
+
+class FullsceenVideoInitializer(xbmc.Player):
+    def start(self):
+        util.DEBUG_LOG('FS video initializer: STARTED')
+        ver = util.kodiSimpleVersion()
+        print ver
+        if ver and ver < 15:
+            util.DEBUG_LOG('FS video initializer: FINISHED (Not needed)')
+            return
+        self._finished = False
+        if self.isPlaying():
+            return self.finish()
+        dummy = os.path.join(xbmc.translatePath(util.ADDON.getAddonInfo('path')).decode('utf-8'),'resources','dummy.mp4')
+        self.play(dummy)
+        while not self._finished:
+            xbmc.sleep(100)
+        util.DEBUG_LOG('FS video initializer: FINISHED')
+
+    def finish(self):
+        if self._finished: return
+        util.DEBUG_LOG('WORKAROUND: Activating fullscreen')
+        while xbmc.getCondVisibility('Window.IsActive(fullscreenvideo)'):
+            xbmc.sleep(100)
+        xbmc.sleep(500)
+        xbmc.executebuiltin('ActivateWindow(fullscreenvideo)')
+        self._finished = True
+
+    def onPlayBackStarted(self):
+        self.stop()
+
+    def onPlayBackStopped(self):
+        self.finish()
+
+    def onPlayBackEnded(self):
+        self.finish()

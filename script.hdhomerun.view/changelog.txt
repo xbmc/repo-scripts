@@ -1,3 +1,7 @@
+** 2015.5.9 **
+
+Fix for video not being visible when addon is running (Kodi 15 beta1)
+
 ** 2015.4.8 **
 
 Fix error causing issues with multiple devices

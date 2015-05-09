@@ -95,6 +95,12 @@ def showTextDialog(heading,text):
     t = TextBox()
     t.setControls(heading,text)
 
+def kodiSimpleVersion():
+    try:
+        return float(xbmc.getInfoLabel('System.BuildVersion').split(' ',1)[0])
+    except:
+        return 0
+
 class TextBox:
     # constants
     WINDOW = 10147

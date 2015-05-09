@@ -142,7 +142,6 @@ class OptionsDialog(BaseDialog):
             if action == xbmcgui.ACTION_GESTURE_SWIPE_RIGHT or  action == xbmcgui.ACTION_MOVE_LEFT:
                 return self.doClose()
             elif action == xbmcgui.ACTION_PREVIOUS_MENU or action == xbmcgui.ACTION_NAV_BACK:
-                print 'TEST'
                 return self.doClose()
 
             self.main.propertyTimer.reset(self)
@@ -675,6 +674,7 @@ def start():
         window = GuideOverlayWindow(skin.OVERLAY,path,'Main','1080i')
         window.touchMode = True
     else:
+        player.FullsceenVideoInitializer().start()
         util.setGlobalProperty('touch.mode','')
         window = GuideOverlayDialog(skin.OVERLAY,path,'Main','1080i')
 
