@@ -29,7 +29,7 @@ __icon__       = sys.modules[ "__main__" ].__icon__
 __language__   = sys.modules[ "__main__" ].__language__
 
 __libbasepath__  = xbmc.translatePath(os.path.join(__cwd__,'resources','lib','%s') )
-__libbaseurl__   = "http://mirrors.xbmc.org/build-deps/addon-deps/binaries/libboblight"
+__libbaseurl__   = "http://mirrors.kodi.tv/build-deps/addon-deps/binaries/libboblight"
 
 def DownloaderClass(url,dest):
     dp = xbmcgui.DialogProgress()
@@ -75,7 +75,10 @@ def get_platform():
   elif  xbmc.getCondVisibility('system.platform.ios'):
     platform = "ios"
   elif  xbmc.getCondVisibility('system.platform.android'):
-    platform = "android"
+    if os.uname()[4].startswith("arm"):
+      platform = "android"
+    else:
+      platform = "androidx86"
   else:
     platform = "linux"
   return platform 
@@ -87,13 +90,13 @@ def get_libname(platform):
     return "libboblight-ios.0.dylib"
   elif platform == "win32":
     return "libboblight-win32.0.dll"
-  elif platform == "android":
+  elif platform == "android" or platform == "androidx86":
     return "libboblight.so"
   elif platform == "linux":
     return "libboblight.so"
 
 def get_download_path(platform):
-  if platform == "android":
+  if platform == "android" or platform == "androidx86":
     return "/data/data/org.xbmc.kodi/files/"
   else:
     return xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib') )
@@ -101,7 +104,7 @@ def get_download_path(platform):
 def get_libpath(platform):
   if platform == 'linux':
     return get_libname(platform)
-  elif platform == 'android':
+  elif platform == 'android' or platform == 'androidx86':
     return "/data/data/org.xbmc.kodi/files/%s" % (get_libname(platform),)
   else:
     return __libbasepath__ % (get_libname(platform),)  

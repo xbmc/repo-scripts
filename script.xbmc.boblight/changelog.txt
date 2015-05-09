@@ -1,3 +1,6 @@
+2.0.13
+- [feature] - enable androidx86 support
+
 2.0.12
 - [fix] Official repo push problem
 
