@@ -1,3 +1,6 @@
+4.0.11
+- fix       - ignore multiple onSettingsChanged() callbacks
+
 3.0.10/4.0.10
 - fix       - correct Import.
 

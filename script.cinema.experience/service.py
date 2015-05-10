@@ -49,8 +49,15 @@ class CE_Monitor( xbmc.Monitor ):
         self.enabled = kwargs['enabled']
         self.update_settings = kwargs['update_settings']
         self.previous_method = ""
+        self.updating = False
     
     def onSettingsChanged( self ):
+        # settings.store_settings() will trigger 132 onSettingsChanged() callbacks
+        # make sure we only process the first callback and ignore the rest
+        # fixes crash on osx
+        if self.updating:
+            return
+        self.updating = True
         try:
             xbmc.sleep( 10000 )
             if not self.original_settings == settings.read_settings_xml():
@@ -58,6 +65,7 @@ class CE_Monitor( xbmc.Monitor ):
                 self.original_settings = self.new_settings
         except:
             traceback.print_exc()
+        self.updating = False
         
     def onNotification( self, sender, method, data):
         if sender == "xbmc":

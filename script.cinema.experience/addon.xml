@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.cinema.experience"
      name="Cinema Experience"
-  version="4.0.10"
+  version="4.0.11"
   provider-name="Giftie">
     <requires>
         <import addon="xbmc.python" version="2.12.0"/>
