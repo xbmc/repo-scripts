@@ -1,3 +1,9 @@
+0.8.0b
+- Added volume control (thanks to gravewrought - pr#1)
+
+0.6.8b
+- Fixed default playlist folder
+
 0.6.6b
 - Added PartyMode Autostart to programs
 - Support for playlist instead of partymode

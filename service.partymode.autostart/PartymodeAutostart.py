@@ -18,6 +18,14 @@ def log(txt):
     message = u'%s: %s' % (__addonid__, txt)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
+def executeJSONRPC(jsonStr):
+    import json
+
+    response = json.loads(xbmc.executeJSONRPC(jsonStr))
+    response = response['result'] if 'result' in response else response
+
+    return response
+
 class Main:
     def __init__(self):
         # catch: addon settings change and Screensaver start
@@ -42,8 +50,14 @@ class Main:
 
         self.visualisationPartymode                     = __addon__.getSetting('visualisation-partymode') == 'true'
         self.delayVisualisationPartyMode                = int(__addon__.getSetting('delay-visualisation-partymode'))
+        
+        self.volumePartyMode                            = __addon__.getSetting('volume-partymode') == 'true'
+        self.volumeLevelPartyMode                       = int(__addon__.getSetting('volume-level-partymode'))
 
     def runPartyMode(self):
+        if self.volumePartyMode:
+            executeJSONRPC('{{"jsonrpc": "2.0", "method": "Application.SetVolume", "params": {{ "volume": {0}}}, "id": 1}}'.format(self.volumeLevelPartyMode))
+
         if self.startupPlaylist:
 
             log('Start Playlist: ' + self.startupPlaylistPath)
@@ -56,6 +70,7 @@ class Main:
             xbmc.executebuiltin("XBMC.PlayerControl(PartyMode)")
 
         self.activateVisualisation()
+
 
     def activateVisualisation(self):
         if self.visualisationPartymode:
@@ -109,7 +124,6 @@ class Main:
         conutdownDlg.close()
 
         return finished
-
 
 class serviceMonitor(xbmc.Monitor):
     def __init__(self, onSettingsChangedAction=None, onScreensaverActivatedAction=None):
