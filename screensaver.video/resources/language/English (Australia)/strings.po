@@ -32,6 +32,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuration"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Startup"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "None"

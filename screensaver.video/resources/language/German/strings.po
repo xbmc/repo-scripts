@@ -40,6 +40,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguration"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Starten"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Standardvideo"
@@ -111,6 +115,14 @@ msgstr "Bildschirmschoner automatisch stoppen"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Bildschirmschoner stoppen nach (Minuten)"
+
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Lautstärke beim Starten zurücksetzen"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Lautstärke beim Starten festlegen auf"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -207,6 +219,22 @@ msgstr "Schnee 3 - [1.2GB] - 720p"
 msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
 msgstr "Wassermühle 1 - [549MB] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Aquarium 4 - [780MB] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Weihnachten 1 - [777MB] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny Castaway 1 - [75MB] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Ozean 1 - [1.1GB] - 720p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

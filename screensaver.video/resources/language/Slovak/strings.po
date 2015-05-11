@@ -36,6 +36,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurácia"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Spustenie"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Žiadne"

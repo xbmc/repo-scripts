@@ -36,6 +36,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguráció"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Indítás"
+
 msgctxt "#32025"
 msgid "Repeat All"
 msgstr "Ismétlés Mind"

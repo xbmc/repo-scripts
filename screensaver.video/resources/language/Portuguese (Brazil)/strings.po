@@ -40,6 +40,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configurações"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Inicialização"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Vídeo Pré-Ajustado"
@@ -111,6 +115,14 @@ msgstr "Interromper o Protetor de Tela Automaticamete"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Interromper o Protetor de Tela Após (Minutos)"
+
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Resetar volume ao inicializar"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Setar o volume ao inicializar para"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

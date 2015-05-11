@@ -40,6 +40,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguracja"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Uruchomienie"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Predefiniowane wideo"
@@ -98,7 +102,7 @@ msgstr "Zmieniaj głośność po uruchomieniu wygaszacza ekranu"
 
 msgctxt "#32057"
 msgid "Set Volume To"
-msgstr "Ustaw głośność na"
+msgstr "Ustawiaj poziom głośności na"
 
 msgctxt "#32058"
 msgid "Dim Level"
@@ -111,6 +115,14 @@ msgstr "Zatrzymuj wygaszacz automatycznie"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Zatrzymuj wygaszacz po (minuty)"
+
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Przywracaj domyślny poziom głośności po uruchomieniu"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Ustawiaj poziom głośności po uruchomieniu na"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -207,6 +219,22 @@ msgstr "Śnieg 3 - [1.2GB] - 720p"
 msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
 msgstr "Młyn wodny 1 - [549MB] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Akwarium 4 - [780MB] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Boże Narodzenie 1 - [777MB] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny Castaway 1 - [75MB] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Ocean 1 - [1.1GB] - 720p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

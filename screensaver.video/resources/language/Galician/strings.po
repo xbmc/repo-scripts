@@ -36,6 +36,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuración"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Arrinque"
+
 msgctxt "#32025"
 msgid "Repeat All"
 msgstr "Repetir Todos"

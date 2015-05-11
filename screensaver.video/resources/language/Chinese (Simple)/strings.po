@@ -40,6 +40,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "设置"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "启动"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "预置视频"

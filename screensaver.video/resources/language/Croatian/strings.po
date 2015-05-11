@@ -40,6 +40,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguracija"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Pokretanje"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Predložak video snimke"

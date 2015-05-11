@@ -40,6 +40,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguration"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Använd Scrollbar"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Förinställd film"

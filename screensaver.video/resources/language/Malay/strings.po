@@ -28,6 +28,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurasi"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Permulaan"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Tiada"

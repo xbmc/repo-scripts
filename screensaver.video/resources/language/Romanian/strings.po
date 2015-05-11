@@ -32,6 +32,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configurație"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Pornire"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Video predefinit"

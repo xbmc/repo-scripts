@@ -40,6 +40,10 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuration"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Démarrage"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Préréglage Vidéo"
