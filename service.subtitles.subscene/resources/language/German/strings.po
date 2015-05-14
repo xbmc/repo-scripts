@@ -27,3 +27,7 @@ msgstr "Es wurde keine passende Episode im Untertitel-Paket gefunden"
 msgctxt "#32003"
 msgid "Download didn't contain a subtitle file"
 msgstr "Der Download enthielt keine Untertiteldatei"
+
+msgctxt "#32004"
+msgid "Subscene provides none of your chosen languages"
+msgstr "Subscene bietet keine der ausgewählten Sprachen an"

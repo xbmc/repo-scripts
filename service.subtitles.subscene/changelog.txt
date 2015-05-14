@@ -1,29 +1,13 @@
+1.5.0
+- improved performance
+- improved language detection
+- removed support for languages with nearly no uploads on subscene
+- better title detection (release year can be one off)
+- better episode detection (allows episode markers in 1x01 format)
+
 1.1.2
 - bug fix for temp folder issues
 
 1.1.0
 - added uploader comments to download selection
 
-1.0.5
-- fix for "No subtitles found" after a change in the sites HTML
-
-1.0.4
-- fixed an issue where files from prevoius downloads were used instead of the current download
-
-1.0.3
-- fixed an issue where no number of files were given on subscene results page
-
-1.0.2
-- now correctly identifies Persian language
-
-1.0.1
-- fix for "No subtitles found" after a change in the sites HTML
-
-1.0.0
-New release for XBMC 13.0 Gotham.
-
-New features:
-- Improved title matching (works best with library titles)
-- Download file from season pack
-- Shows Sync flag when filename matches
-- Manual search

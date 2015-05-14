@@ -27,3 +27,7 @@ msgstr ""
 msgctxt "#32003"
 msgid "Download didn't contain a subtitle file"
 msgstr ""
+
+msgctxt "#32004"
+msgid "Subscene provides none of your chosen languages"
+msgstr ""

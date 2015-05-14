@@ -1,103 +1,107 @@
 # -*- coding: utf-8 -*-
-
+import gzip
+import time
+from StringIO import StringIO
 import xbmc
 import urllib2
 import re
 
-LANGUAGES = (
-    ("Albanian", "29", "sq", "alb", "0", 30201),
-    ("Arabic", "12", "ar", "ara", "1", 30202),
-    ("Belarusian", "0", "hy", "arm", "2", 30203),
-    ("Bosnian", "10", "bs", "bos", "3", 30204),
-    ("Bulgarian", "33", "bg", "bul", "4", 30205),
-    ("Catalan", "53", "ca", "cat", "5", 30206),
-    ("Chinese", "17", "zh", "chi", "6", 30207),
-    ("Croatian", "38", "hr", "hrv", "7", 30208),
-    ("Czech", "7", "cs", "cze", "8", 30209),
-    ("Danish", "24", "da", "dan", "9", 30210),
-    ("Dutch", "23", "nl", "dut", "10", 30211),
-    ("English", "2", "en", "eng", "11", 30212),
-    ("Estonian", "20", "et", "est", "12", 30213),
-    ("Persian", "52", "fa", "per", "13", 30247),
-    ("Finnish", "31", "fi", "fin", "14", 30214),
-    ("French", "8", "fr", "fre", "15", 30215),
-    ("German", "5", "de", "ger", "16", 30216),
-    ("Greek", "16", "el", "ell", "17", 30217),
-    ("Hebrew", "22", "he", "heb", "18", 30218),
-    ("Hindi", "42", "hi", "hin", "19", 30219),
-    ("Hungarian", "15", "hu", "hun", "20", 30220),
-    ("Icelandic", "6", "is", "ice", "21", 30221),
-    ("Indonesian", "0", "id", "ind", "22", 30222),
-    ("Italian", "9", "it", "ita", "23", 30224),
-    ("Japanese", "11", "ja", "jpn", "24", 30225),
-    ("Korean", "4", "ko", "kor", "25", 30226),
-    ("Latvian", "21", "lv", "lav", "26", 30227),
-    ("Lithuanian", "0", "lt", "lit", "27", 30228),
-    ("Macedonian", "35", "mk", "mac", "28", 30229),
-    ("Malay", "0", "ms", "may", "29", 30248),
-    ("Norwegian", "3", "no", "nor", "30", 30230),
-    ("Polish", "26", "pl", "pol", "31", 30232),
-    ("Portuguese", "32", "pt", "por", "32", 30233),
-    ("PortugueseBrazil", "48", "pb", "pob", "33", 30234),
-    ("Romanian", "13", "ro", "rum", "34", 30235),
-    ("Russian", "27", "ru", "rus", "35", 30236),
-    ("Serbian", "36", "sr", "scc", "36", 30237),
-    ("Slovak", "37", "sk", "slo", "37", 30238),
-    ("Slovenian", "1", "sl", "slv", "38", 30239),
-    ("Spanish", "28", "es", "spa", "39", 30240),
-    ("Swedish", "25", "sv", "swe", "40", 30242),
-    ("Thai", "0", "th", "tha", "41", 30243),
-    ("Turkish", "30", "tr", "tur", "42", 30244),
-    ("Ukrainian", "46", "uk", "ukr", "43", 30245),
-    ("Vietnamese", "51", "vi", "vie", "44", 30246),
-    ("BosnianLatin", "10", "bs", "bos", "100", 30204),
-    ("Farsi", "52", "fa", "per", "13", 30247),
-    ("English (US)", "2", "en", "eng", "100", 30212),
-    ("English (UK)", "2", "en", "eng", "100", 30212),
-    ("Portuguese (Brazilian)", "48", "pt-br", "pob", "100", 30234),
-    ("Portuguese (Brazil)", "48", "pb", "pob", "33", 30234),
-    ("Portuguese-BR", "48", "pb", "pob", "33", 30234),
-    ("Brazilian", "48", "pb", "pob", "33", 30234),
-    ("Español (Latinoamérica)", "28", "es", "spa", "100", 30240),
-    ("Español (España)", "28", "es", "spa", "100", 30240),
-    ("Spanish (Latin America)", "28", "es", "spa", "100", 30240),
-    ("Español", "28", "es", "spa", "100", 30240),
-    ("SerbianLatin", "36", "sr", "scc", "100", 30237),
-    ("Spanish (Spain)", "28", "es", "spa", "100", 30240),
-    ("Chinese (Traditional)", "17", "zh", "chi", "100", 30207),
-    ("Chinese (Simplified)", "17", "zh", "chi", "100", 30207))
-
 subscene_languages = {
-    'Chinese BG code': 'Chinese',
-    'Brazillian Portuguese': 'Portuguese (Brazil)',
-    'Serbian': 'SerbianLatin',
-    'Ukranian': 'Ukrainian',
-    'Farsi/Persian': 'Persian'
+    'Albanian': {'id': 1, '3let': 'alb', '2let': 'sq', 'name': 'Albanian'},
+    'Arabic': {'id': 2, '3let': 'ara', '2let': 'ar', 'name': 'Arabic'},
+    'Big 5 code': {'id': 3, '3let': 'chi', '2let': 'zh', 'name': 'Chinese'},
+    'Brazillian Portuguese': {'id': 4, '3let': 'por', '2let': 'pb', 'name': 'Brazilian Portuguese'},
+    'Bulgarian': {'id': 5, '3let': 'bul', '2let': 'bg', 'name': 'Bulgarian'},
+    'Chinese BG code': {'id': 7, '3let': 'chi', '2let': 'zh', 'name': 'Chinese'},
+    'Croatian': {'id': 8, '3let': 'hrv', '2let': 'hr', 'name': 'Croatian'},
+    'Czech': {'id': 9, '3let': 'cze', '2let': 'cs', 'name': 'Czech'},
+    'Danish': {'id': 10, '3let': 'dan', '2let': 'da', 'name': 'Danish'},
+    'Dutch': {'id': 11, '3let': 'dut', '2let': 'nl', 'name': 'Dutch'},
+    'English': {'id': 13, '3let': 'eng', '2let': 'en', 'name': 'English'},
+    'Estonian': {'id': 16, '3let': 'est', '2let': 'et', 'name': 'Estonian'},
+    'Farsi/Persian': {'id': 46, '3let': 'per', '2let': 'fa', 'name': 'Persian'},
+    'Finnish': {'id': 17, '3let': 'fin', '2let': 'fi', 'name': 'Finnish'},
+    'French': {'id': 18, '3let': 'fre', '2let': 'fr', 'name': 'French'},
+    'German': {'id': 19, '3let': 'ger', '2let': 'de', 'name': 'German'},
+    'Greek': {'id': 21, '3let': 'gre', '2let': 'el', 'name': 'Greek'},
+    'Hebrew': {'id': 22, '3let': 'heb', '2let': 'he', 'name': 'Hebrew'},
+    'Hungarian': {'id': 23, '3let': 'hun', '2let': 'hu', 'name': 'Hungarian'},
+    'Icelandic': {'id': 25, '3let': 'ice', '2let': 'is', 'name': 'Icelandic'},
+    'Indonesian': {'id': 44, '3let': 'ind', '2let': 'id', 'name': 'Indonesian'},
+    'Italian': {'id': 26, '3let': 'ita', '2let': 'it', 'name': 'Italian'},
+    'Japanese': {'id': 27, '3let': 'jpn', '2let': 'ja', 'name': 'Japanese'},
+    'Korean': {'id': 28, '3let': 'kor', '2let': 'ko', 'name': 'Korean'},
+    'Lithuanian': {'id': 43, '3let': 'lit', '2let': 'lt', 'name': 'Lithuanian'},
+    'Malay': {'id': 50, '3let': 'may', '2let': 'ms', 'name': 'Malay'},
+    'Norwegian': {'id': 30, '3let': 'nor', '2let': 'no', 'name': 'Norwegian'},
+    'Polish': {'id': 31, '3let': 'pol', '2let': 'pl', 'name': 'Polish'},
+    'Portuguese': {'id': 32, '3let': 'por', '2let': 'pt', 'name': 'Portuguese'},
+    'Romanian': {'id': 33, '3let': 'rum', '2let': 'ro', 'name': 'Romanian'},
+    'Russian': {'id': 34, '3let': 'rus', '2let': 'ru', 'name': 'Russian'},
+    'Serbian': {'id': 35, '3let': 'scc', '2let': 'sr', 'name': 'Serbian'},
+    'Slovak': {'id': 36, '3let': 'slo', '2let': 'sk', 'name': 'Slovak'},
+    'Slovenian': {'id': 37, '3let': 'slv', '2let': 'sl', 'name': 'Slovenian'},
+    'Spanish': {'id': 38, '3let': 'spa', '2let': 'es', 'name': 'Spanish'},
+    'Swedish': {'id': 39, '3let': 'swe', '2let': 'sv', 'name': 'Swedish'},
+    'Thai': {'id': 40, '3let': 'tha', '2let': 'th', 'name': 'Thai'},
+    'Turkish': {'id': 41, '3let': 'tur', '2let': 'tr', 'name': 'Turkish'},
+    'Vietnamese': {'id': 45, '3let': 'vie', '2let': 'vi', 'name': 'Vietnamese'}
 }
 
 
-def get_language_info(language):
-    if language in subscene_languages:
-        language = subscene_languages[language]
+def get_language_codes(languages):
+    codes = {}
+    for lang in subscene_languages:
+        if subscene_languages[lang]['3let'] in languages:
+            codes[str(subscene_languages[lang]['id'])] = 1
+    keys = codes.keys()
+    return keys
 
-    for lang in LANGUAGES:
-        if lang[0] == language:
-            return {'name': lang[0], '2let': lang[2], '3let': lang[3]}
+
+def get_episode_pattern(episode):
+    parts = episode.split(':')
+    if len(parts) < 2:
+        return "%%%%%"
+    season = int(parts[0])
+    epnr = int(parts[1])
+    patterns = [
+        "s%#02de%#02d" % (season, epnr),
+        "%#02dx%#02d" % (season, epnr),
+    ]
+    if season < 10:
+        patterns.append("(?:\A|\D)%dx%#02d" % (season, epnr))
+    return '(?:%s)' % '|'.join(patterns)
+
+subscene_start = time.time()
 
 
 def log(module, msg):
-    xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
+    global subscene_start
+    xbmc.log((u"### [%s] %f - %s" % (module, time.time() - subscene_start, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
 
 
-def geturl(url):
+def geturl(url, cookies=None):
     log(__name__, "Getting url: %s" % url)
     try:
-        response = urllib2.urlopen(url)
-        content = response.read()
-        #Fix non-unicode characters in movie titles
+        request = urllib2.Request(url)
+        request.add_header('Accept-encoding', 'gzip')
+        if cookies:
+            request.add_header('Cookie', cookies)
+        log(__name__, "request done")
+        response = urllib2.urlopen(request)
+        log(__name__, "request done")
+        if response.info().get('Content-Encoding') == 'gzip':
+            buf = StringIO(response.read())
+            f = gzip.GzipFile(fileobj=buf)
+            content = f.read()
+        else:
+            content = response.read()
+        log(__name__, "read done")
+        # Fix non-unicode characters in movie titles
         strip_unicode = re.compile("([^-_a-zA-Z0-9!@#%&=,/'\";:~`\$\^\*\(\)\+\[\]\.\{\}\|\?<>\\]+|[^\s]+)")
         content = strip_unicode.sub('', content)
         return_url = response.geturl()
+        log(__name__, "fetching done")
     except:
         log(__name__, "Failed to get url: %s" % url)
         content = None
