@@ -282,43 +282,52 @@ class VolumeDrop(object):
 # Main of the Video Screensaver
 ##################################
 if __name__ == '__main__':
-    # Before we start, make sure that the settings have been updated correctly
-    Settings.cleanAddonSettings()
+    # Check for the case where the screensaver has been launched as a script
+    # But needs to behave like the full screensaver, not just a video player
+    # This is the case for things like screensaver.random
+    if (len(sys.argv) > 1) and ("screensaver" in sys.argv[1]):
+        # Launch the core screensaver script - this will ensure all the pre-checks
+        # are done (like TvTunes) before running the screensaver
+        log("Screensaver started by script with screensaver argument")
+        xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__cwd__, "default.py")))
+    else:
+        # Before we start, make sure that the settings have been updated correctly
+        Settings.cleanAddonSettings()
 
-    screenWindow = ScreensaverWindow.createScreensaverWindow()
+        screenWindow = ScreensaverWindow.createScreensaverWindow()
 
-    xbmcgui.Window(10000).setProperty("VideoScreensaverRunning", "true")
+        xbmcgui.Window(10000).setProperty("VideoScreensaverRunning", "true")
 
-    try:
-        # Now show the window and block until we exit
-        screensaverTimeout = Settings.screensaverTimeout()
-        if screensaverTimeout < 1:
-            log("Starting Screensaver in Modal Mode")
-            screenWindow.doModal()
-        else:
-            log("Starting Screensaver in Show Mode")
-            screenWindow.show()
+        try:
+            # Now show the window and block until we exit
+            screensaverTimeout = Settings.screensaverTimeout()
+            if screensaverTimeout < 1:
+                log("Starting Screensaver in Modal Mode")
+                screenWindow.doModal()
+            else:
+                log("Starting Screensaver in Show Mode")
+                screenWindow.show()
 
-            # The timeout is in minutes, and the sleep is in msec, so convert the
-            # countdown into the correct "sleep units" which will be every 0.1 seconds
-            checkInterval = 100
-            countdown = screensaverTimeout * 60 * (1000 / checkInterval)
+                # The timeout is in minutes, and the sleep is in msec, so convert the
+                # countdown into the correct "sleep units" which will be every 0.1 seconds
+                checkInterval = 100
+                countdown = screensaverTimeout * 60 * (1000 / checkInterval)
 
-            # Now wait until the screensaver is closed
-            while not screenWindow.isComplete():
-                xbmc.sleep(checkInterval)
-                # Update the countdown
-                countdown = countdown - 1
-                if countdown < 1:
-                    log("Stopping Screensaver as countdown expired")
-                    # Close the screensaver window
-                    screenWindow.close()
-                    # Reset the countdown to stop multiple closes being sent
-                    countdown = 100
-    except:
-        log("VideoScreensaver ERROR: %s" % traceback.format_exc(), xbmc.LOGERROR)
+                # Now wait until the screensaver is closed
+                while not screenWindow.isComplete():
+                    xbmc.sleep(checkInterval)
+                    # Update the countdown
+                    countdown = countdown - 1
+                    if countdown < 1:
+                        log("Stopping Screensaver as countdown expired")
+                        # Close the screensaver window
+                        screenWindow.close()
+                        # Reset the countdown to stop multiple closes being sent
+                        countdown = 100
+        except:
+            log("VideoScreensaver ERROR: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
-    xbmcgui.Window(10000).clearProperty("VideoScreensaverRunning")
+        xbmcgui.Window(10000).clearProperty("VideoScreensaverRunning")
 
-    del screenWindow
-    log("Leaving Screensaver Script")
+        del screenWindow
+        log("Leaving Screensaver Script")
