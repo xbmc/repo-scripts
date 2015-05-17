@@ -39,6 +39,35 @@ def url_quote(url):
     return url
 
 
+class Select_Dialog(xbmcgui.WindowXMLDialog):
+    ACTION_PREVIOUS_MENU = [9, 92, 10]
+
+    def __init__(self, *args, **kwargs):
+        xbmcgui.WindowXMLDialog.__init__(self)
+        self.items = kwargs.get('listing')
+        self.index = -1
+
+    def onInit(self):
+        self.list = self.getControl(6)
+        self.getControl(3).setVisible(False)
+        self.getControl(5).setVisible(False)
+        self.getControl(1).setLabel(ADDON.getLocalizedString(32151))
+        self.list.addItems(self.items)
+        self.setFocus(self.list)
+
+    def onAction(self, action):
+        if action in self.ACTION_PREVIOUS_MENU:
+            self.close()
+
+    def onClick(self, controlID):
+        if controlID == 6 or controlID == 3:
+            self.index = int(self.list.getSelectedItem().getProperty("index"))
+            self.close()
+
+    def onFocus(self, controlID):
+        pass
+
+
 class TextViewer_Dialog(xbmcgui.WindowXMLDialog):
     ACTION_PREVIOUS_MENU = [9, 92, 10]
 
@@ -652,12 +681,11 @@ def create_listitems(data=None, preload_images=0):
         for (count, result) in enumerate(data):
             listitem = xbmcgui.ListItem('%s' % (str(count)))
             itempath = ""
-            counter = 1
             for (key, value) in result.iteritems():
                 if not value:
                     continue
                 value = unicode(value)
-                if counter <= preload_images:
+                if count < preload_images:
                     if value.startswith("http://") and (value.endswith(".jpg") or value.endswith(".png")):
                         if value not in image_requests:
                             thread = Get_File_Thread(value)
@@ -689,9 +717,8 @@ def create_listitems(data=None, preload_images=0):
                         pass
                 listitem.setProperty('%s' % (key), value)
             listitem.setPath(path=itempath)
-            listitem.setProperty("index", str(counter))
+            listitem.setProperty("index", str(count))
             itemlist.append(listitem)
-            counter += 1
         for x in threads:
             x.join()
     return itemlist

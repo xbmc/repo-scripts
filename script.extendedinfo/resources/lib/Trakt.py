@@ -57,10 +57,6 @@ def GetTraktCalendarShows(Type):
 def HandleTraktMovieResult(results):
     movies = []
     for movie in results:
-        try:
-            premiered = str(datetime.datetime.fromtimestamp(int(movie["movie"]["released"])))[:10]
-        except:
-            premiered = ""
         if ADDON.getSetting("infodialog_onclick") != "false":
             path = 'plugin://script.extendedinfo/?info=action&&id=RunScript(script.extendedinfo,info=extendedinfo,id=%s)' % str(fetch(movie["movie"]["ids"], 'tmdb'))
         else:
@@ -75,7 +71,7 @@ def HandleTraktMovieResult(results):
                  'Path': path,
                  'mpaa': movie["movie"]["certification"],
                  'Plot': movie["movie"]["overview"],
-                 'Premiered': premiered,
+                 'Premiered': movie["movie"]["released"],
                  'Rating': round(movie["movie"]["rating"], 1),
                  'Votes': movie["movie"]["votes"],
                  'Watchers': movie["watchers"],
@@ -91,10 +87,6 @@ def HandleTraktMovieResult(results):
 def HandleTraktTVShowResult(results):
     shows = []
     for tvshow in results:
-        try:
-            premiered = str(datetime.datetime.fromtimestamp(int(tvshow['show']["first_aired"])))[:10]
-        except:
-            premiered = ""
         airs = fetch(tvshow['show'], "airs")
         path = 'plugin://script.extendedinfo/?info=action&&id=RunScript(script.extendedinfo,info=extendedtvinfo,imdbid=%s)' % tvshow['show']['ids']["imdb"]
         show = {'Title': tvshow['show']["title"],
@@ -114,7 +106,7 @@ def HandleTraktTVShowResult(results):
                 'AirDay': fetch(airs, "day"),
                 'AirShortTime': fetch(airs, "time"),
                 'Label2': fetch(airs, "day") + " " + fetch(airs, "time"),
-                'Premiered': premiered,
+                'Premiered': tvshow['show']["first_aired"][:10],
                 'Country': tvshow['show']["country"],
                 'Rating': round(tvshow['show']["rating"], 1),
                 'Votes': tvshow['show']["votes"],

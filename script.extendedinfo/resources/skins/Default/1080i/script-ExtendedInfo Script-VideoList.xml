@@ -375,7 +375,6 @@
                 <radioposx>288</radioposx>
                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-focus.png</texturefocus>
                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(WindowColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-                <aspectratio>keep</aspectratio>
                 <textureradioonfocus>moviedb.png</textureradioonfocus>
                 <textureradioofffocus>moviedb.png</textureradioofffocus>
                 <textureradioonnofocus>moviedb.png</textureradioonnofocus>
@@ -449,12 +448,10 @@
                     <height>75</height>
                     <textoffsetx>25</textoffsetx>
                     <textoffsety>25</textoffsety>
-                    <textwidth>315</textwidth>
                     <align>left</align>
                     <aligny>top</aligny>
                     <font>font13</font>
                     <textcolor>FF999999</textcolor>
-                    <focusedcolor>FFFAFAFA</focusedcolor>
                 </control>
                 <control type="button" id="5002">
                     <label>$LOCALIZE[515]</label>

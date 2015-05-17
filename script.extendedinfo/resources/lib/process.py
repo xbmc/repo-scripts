@@ -182,20 +182,26 @@ def StartInfoActions(infos, params):
         elif info == 'popularpeople':
             data = GetPopularActorList(), "PopularPeople"
         elif info == 'extendedinfo':
+            HOME.setProperty('infodialogs.active', "true")
             from DialogVideoInfo import DialogVideoInfo
             dialog = DialogVideoInfo(u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, id=params.get("id", ""),
                                      dbid=params.get("dbid", None), imdbid=params.get("imdbid", ""), name=params.get("name", ""))
             dialog.doModal()
+            HOME.clearProperty('infodialogs.active')
         elif info == 'extendedactorinfo':
+            HOME.setProperty('infodialogs.active', "true")
             from DialogActorInfo import DialogActorInfo
             dialog = DialogActorInfo(u'script-%s-DialogInfo.xml' % ADDON_NAME,
                                      ADDON_PATH, id=params.get("id", ""), name=params.get("name", ""))
             dialog.doModal()
+            HOME.clearProperty('infodialogs.active')
         elif info == 'extendedtvinfo':
+            HOME.setProperty('infodialogs.active', "true")
             from DialogTVShowInfo import DialogTVShowInfo
             dialog = DialogTVShowInfo(u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, id=params.get("id", ""),
                                       dbid=params.get("dbid", None), imdbid=params.get("imdbid", ""), name=params.get("name", ""))
             dialog.doModal()
+            HOME.clearProperty('infodialogs.active')
         elif info == 'ratemedia':
             media_type = params.get("type", False)
             if media_type:
@@ -215,10 +221,11 @@ def StartInfoActions(infos, params):
                         send_rating_for_media_item(media_type, tmdb_id, rating)
         elif info == 'seasoninfo':
             if params.get("tvshow", False) and params.get("season", False):
+                HOME.setProperty('infodialogs.active', "true")
                 from DialogSeasonInfo import DialogSeasonInfo
-                dialog = DialogSeasonInfo(
-                    u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, tvshow=params["tvshow"], season=params["season"])
+                dialog = DialogSeasonInfo(u'script-%s-DialogVideoInfo.xml' % ADDON_NAME, ADDON_PATH, tvshow=params["tvshow"], season=params["season"])
                 dialog.doModal()
+                HOME.clearProperty('infodialogs.active')
             else:
                 Notify("Error", "Required data missing in script call")
         elif info == 'directormovies':
@@ -303,8 +310,6 @@ def StartInfoActions(infos, params):
                 if len(favourites) > 0:
                     HOME.setProperty('favourite.1.name', favourites[-1]["Label"])
             data = favourites, "Favourites"
-        elif info == 'json':
-            data = GetYoutubeVideos(params["feed"]), "RSS"
         elif info == 'similarlocal' and "dbid" in params:
             data = GetSimilarFromOwnLibrary(
                 params["dbid"]), "SimilarLocalMovies"

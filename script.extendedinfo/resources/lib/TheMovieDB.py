@@ -2,6 +2,7 @@ from YouTube import *
 from Utils import *
 from local_db import compare_with_library, GetImdbIDFromDatabase
 import threading
+import re
 from urllib2 import Request, urlopen
 
 TMDB_KEY = '34142515d9d23817496eeb4ff1d223d0'
@@ -524,12 +525,12 @@ def GetPersonID(person, skip_dialog=False):
     response = GetMovieDBData("search/person?query=%s&include_adult=%s&" % (url_quote(person), include_adult), 30)
     if response and "results" in response:
         if len(response["results"]) > 1 and not skip_dialog:
-            names = []
-            for item in response["results"]:
-                names.append(item["name"])
+            listitems = create_listitems(HandleTMDBPeopleResult(response["results"]))
             xbmc.executebuiltin("Dialog.Close(busydialog)")
-            selection = xbmcgui.Dialog().select(ADDON.getLocalizedString(32151), names)
-            if selection > -1:
+            w = Select_Dialog('DialogSelect.xml', ADDON_PATH, listing=listitems)
+            w.doModal()
+            selection = w.index
+            if selection >= 0:
                 return response["results"][selection]
         elif response["results"]:
             return response["results"][0]
@@ -607,7 +608,13 @@ def GetCreditInfo(credit_id):
 def GetSeasonInfo(tmdb_tvshow_id, tvshowname, season_number):
     if not tmdb_tvshow_id:
         response = GetMovieDBData("search/tv?query=%s&language=%s&" % (url_quote(tvshowname), ADDON.getSetting("LanguageID")), 30)
-        tmdb_tvshow_id = str(response['results'][0]['id'])
+        if response["results"]:
+            tmdb_tvshow_id = str(response['results'][0]['id'])
+        else:
+            tvshowname = re.sub('\(.*?\)', '', tvshowname)
+            response = GetMovieDBData("search/tv?query=%s&language=%s&" % (url_quote(tvshowname), ADDON.getSetting("LanguageID")), 30)
+            if response["results"]:
+                tmdb_tvshow_id = str(response['results'][0]['id'])
     response = GetMovieDBData("tv/%s/season/%s?append_to_response=videos,images,external_ids,credits&language=%s&include_image_language=en,null,%s&" % (tmdb_tvshow_id, season_number, ADDON.getSetting("LanguageID"), ADDON.getSetting("LanguageID")), 7)
     # prettyprint(response)
     if not response:

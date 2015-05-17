@@ -83,7 +83,7 @@
                             <align>left</align>
                             <label fallback="No info available">[B]$INFO[Window.Property(movie.TagLine),,[CR]][/B]$INFO[Window.Property(movie.Plot)]</label>
                             <font>font12</font>
-                            <autoscroll delay="10000" time="AutoScrollTime" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
+                            <autoscroll delay="10000" time="2000" repeat="10000">true</autoscroll>
                         </control>
                     </control>
                     <control type="group" id="50000">
@@ -160,10 +160,6 @@
                                     <focusedcolor>FFFAFAFA</focusedcolor>
                                     <aligny>bottom</aligny>
                                     <textoffsety>77</textoffsety>
-                                    <radioposx>118</radioposx>
-                                    <radioposy>30</radioposy>
-                                    <radiowidth>44</radiowidth>
-                                    <radioheight>44</radioheight>
                                     <onclick>Action(Close)</onclick>
                                     <onleft>8</onleft>
                                     <onright>6001</onright>
@@ -836,7 +832,7 @@
                                             <textcolor>FFFAFAFA</textcolor>
                                             <font>font12</font>
                                             <label>$INFO[ListItem.Label]$INFO[ListItem.Property(character),[COLOR FF999999][CR] $LOCALIZE[20347] ,[/COLOR]]</label>
-                                            <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
+                                            <autoscroll delay="5000" time="2000" repeat="8001">true</autoscroll>
                                         </control>
                                     </control>
                                 </control>
@@ -987,7 +983,7 @@
                                             <align>center</align>
                                             <font>font12</font>
                                             <label>$INFO[ListItem.Label]$INFO[ListItem.Property(job),[COLOR FF999999][CR],[/COLOR]]</label>
-                                            <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
+                                            <autoscroll delay="5000" time="2000" repeat="8001">true</autoscroll>
                                         </control>
                                     </control>
                                 </control>
@@ -1034,7 +1030,6 @@
                             <wrapmultiline>true</wrapmultiline>
                             <label>$INFO[Window.Property(movie.omdb.Awards),,[CR]]$INFO[Window.Property(movie.omdb.tomatoConsensus),,[CR]]</label>
                             <font>font12</font>
-                            <autoscroll delay="10000" time="AutoScrollTime" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
                         </control>
                     </control>
                     <control type="group" id="50112">
@@ -1218,7 +1213,7 @@
                                             <align>center</align>
                                             <font>font12</font>
                                             <label>$INFO[ListItem.Label]</label>
-                                            <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
+                                            <autoscroll delay="5000" time="2000" repeat="8001">true</autoscroll>
                                         </control>
                                     </control>
                                 </control>
@@ -1264,7 +1259,7 @@
                             <label fallback="N / A">$INFO[Window.Property(movie.set.overview)]</label>
                             <font>font12</font>
                             <textcolor>FFFAFAFA</textcolor>
-                            <scroll>true</scroll>
+                            <autoscroll delay="10000" time="2000" repeat="10000">true</autoscroll>
                             <visible>!StringCompare(Window.Property(movie.set.overview),Window.Property(movie.set.label))</visible>
                         </control>
                         <control type="image">
@@ -1457,7 +1452,7 @@
                                             <align>center</align>
                                             <font>font12</font>
                                             <label>$INFO[ListItem.Label]</label>
-                                            <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
+                                            <autoscroll delay="5000" time="2000" repeat="8001">true</autoscroll>
                                         </control>
                                     </control>
                                 </control>
@@ -1510,7 +1505,6 @@
                             <ondown>350</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="410" width="380">
@@ -1644,7 +1638,6 @@
                             <ondown>550</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="410" width="380">
@@ -1775,7 +1768,6 @@
                             <ondown>1450</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="400" width="373">
@@ -1841,7 +1833,7 @@
                                         <align>center</align>
                                         <font>font12</font>
                                         <label>$INFO[ListItem.Label]</label>
-                                        <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
+                                        <autoscroll delay="5000" time="2000" repeat="8001">true</autoscroll>
                                     </control>
                                 </control>
                             </focusedlayout>
@@ -1893,7 +1885,6 @@
                             <ondown>650</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="400" width="373">
@@ -1959,7 +1950,7 @@
                                         <align>center</align>
                                         <font>font12</font>
                                         <label>$INFO[ListItem.Label]</label>
-                                        <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
+                                        <autoscroll delay="5000" time="2000" repeat="8001">true</autoscroll>
                                     </control>
                                 </control>
                             </focusedlayout>
@@ -2020,7 +2011,6 @@
                             <ondown>850</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="400" width="240">
@@ -2084,7 +2074,7 @@
                                         <align>center</align>
                                         <font>font12</font>
                                         <label>$INFO[ListItem.Property(release_date)][CR]$INFO[ListItem.Property(certification)]</label>
-                                        <autoscroll delay="5000" time="AutoScrollTime" repeat="8001">true</autoscroll>
+                                        <autoscroll delay="5000" time="2000" repeat="8001">true</autoscroll>
                                     </control>
                                 </control>
                             </focusedlayout>
@@ -2116,7 +2106,6 @@
                             <ondown>1050</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <itemlayout height="100" width="270">
                                 <control type="group">
@@ -2201,7 +2190,6 @@
                             <ondown>950</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="400" width="630">
@@ -2285,7 +2273,6 @@
                             <ondown>1250</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>vertical</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="100" width="270">
@@ -2711,7 +2698,6 @@
                             <ondown>RunScript(script.extendedinfo,info=bounce,name=Bounce.Down)</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>vertical</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="360" width="380">
@@ -2917,7 +2903,6 @@
                                     <posx>0</posx>
                                     <height>79</height>
                                     <width>2</width>
-                                    <height>71</height>
                                     <texture>info/upright.png</texture>
                                 </control>
                                 <control type="label">
@@ -2948,7 +2933,6 @@
                                     <posx>0</posx>
                                     <height>79</height>
                                     <width>2</width>
-                                    <height>71</height>
                                     <texture>info/upright.png</texture>
                                 </control>
                                 <control type="label">
@@ -2976,7 +2960,6 @@
                                 <posy>1</posy>
                                 <height>79</height>
                                 <width>2</width>
-                                <height>71</height>
                                 <texture>info/upright.png</texture>
                             </control>
                             <control type="group">
@@ -3011,7 +2994,6 @@
                                     <posy>1</posy>
                                     <height>79</height>
                                     <width>2</width>
-                                    <height>71</height>
                                     <texture>info/upright.png</texture>
                                 </control>
                                 <control type="label">
@@ -3043,7 +3025,6 @@
                                     <posy>1</posy>
                                     <height>79</height>
                                     <width>2</width>
-                                    <height>71</height>
                                     <texture>info/upright.png</texture>
                                 </control>
                                 <control type="label">

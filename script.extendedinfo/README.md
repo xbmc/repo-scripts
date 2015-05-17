@@ -277,15 +277,6 @@ fetches similar movies from local database
 
 
 
-info=json
-    Property Prefix: RSS
-    needed parameters:
-    -feed: url to json feed
-
-fetches items from a json feed (yahoo pipes, youtube JSON API)
-
-
-
 Misc Calls:
 
 info=artistdetails

@@ -136,7 +136,7 @@
                             <align>left</align>
                             <label fallback="No info available">$INFO[Window.Property(actor.Biography)]</label>
                             <font>font12</font>
-                            <autoscroll delay="10000" time="AutoScrollTime" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
+                            <autoscroll delay="10000" time="2000" repeat="10000">true</autoscroll>
                         </control>
                     </control>
                     <control type="group" id="1500">
@@ -248,6 +248,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFF0F0F0</textcolor>
                                             <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Character)][/COLOR]</label>
                                         </control>
                                     </control>
@@ -316,6 +317,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFF0F0F0</textcolor>
                                             <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Character)][/COLOR]</label>
                                         </control>
                                     </control>
@@ -432,6 +434,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFF0F0F0</textcolor>
                                             <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Character)][/COLOR]</label>
                                         </control>
                                     </control>
@@ -500,6 +503,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFF0F0F0</textcolor>
                                             <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Character)][/COLOR]</label>
                                         </control>
                                     </control>
@@ -616,6 +620,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFF0F0F0</textcolor>
                                             <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Job)][/COLOR]</label>
                                         </control>
                                     </control>
@@ -684,6 +689,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFF0F0F0</textcolor>
                                             <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Job)][/COLOR]</label>
                                         </control>
                                     </control>
@@ -800,6 +806,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFF0F0F0</textcolor>
                                             <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Job)][/COLOR]</label>
                                         </control>
                                     </control>
@@ -868,6 +875,7 @@
                                             <posy>340</posy>
                                             <align>center</align>
                                             <font>font12</font>
+                                            <textcolor>FFF0F0F0</textcolor>
                                             <label>$INFO[ListItem.Label][CR][COLOR FF999999]$INFO[ListItem.Property(Job)][/COLOR]</label>
                                         </control>
                                     </control>
@@ -918,7 +926,6 @@
                             <ondown>450</ondown>
                             <pagecontrol>60</pagecontrol>
                             <scrolltime>300</scrolltime>
-                            <focusposition>0</focusposition>
                             <orientation>horizontal</orientation>
                             <preloaditems>2</preloaditems>
                             <itemlayout height="410" width="380">
@@ -947,6 +954,7 @@
                                         <posy>227</posy>
                                         <align>center</align>
                                         <font>font12</font>
+                                        <textcolor>FFF0F0F0</textcolor>
                                         <info>ListItem.Label</info>
                                     </control>
                                 </control>
@@ -986,6 +994,7 @@
                                         <posy>227</posy>
                                         <align>center</align>
                                         <font>font12</font>
+                                        <textcolor>FFF0F0F0</textcolor>
                                         <info>ListItem.Label</info>
                                     </control>
                                 </control>

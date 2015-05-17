@@ -1,3 +1,12 @@
+v2.0.10
+- fixed tv show lookup with year in brackets attached to lookup string
+- fixed "Premiered" property for trakt calls
+- skin compatibility
+- fixed some wrong string ids
+- some new InfoLabels for AudioDB album items
+- Added person image thumb for "choose-person" select dialog
+- Added infodialogs.active property
+
 v2.0.9
 - fixed Trakt ratings (0-10 instead of 0-1)
 - fixed Trakt TvShow Widget Click Action
