@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.random" name="RandomScreensaver" version="1.0.0" provider-name="robwebset">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+	</requires>
+	<extension point="xbmc.ui.screensaver" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Random Screensaver</summary>
+		<description lang="en">Screensaver that selects an installed screensaver at random to be used.</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=226971</forum>
+		<source>http://robwebset.googlecode.com/svn/trunk/screensaver.random/</source>
+	</extension>
+</addon>
