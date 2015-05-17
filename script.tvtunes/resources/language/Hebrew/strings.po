@@ -224,6 +224,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "למטה"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "הפעלה"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "שגיאה"

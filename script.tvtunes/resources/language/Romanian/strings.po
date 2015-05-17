@@ -60,6 +60,10 @@ msgctxt "#32064"
 msgid "Dim Level"
 msgstr "Nivel de întunecare"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Pornire"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Caut informaţii..."

@@ -60,6 +60,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "底部"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "启动"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "错误"

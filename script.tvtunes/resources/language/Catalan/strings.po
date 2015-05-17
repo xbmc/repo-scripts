@@ -148,6 +148,10 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Repartiment"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Inici"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERROR"

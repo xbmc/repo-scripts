@@ -164,6 +164,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "Dolje"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Pokretanje"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "GREŠKA"

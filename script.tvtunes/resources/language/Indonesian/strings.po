@@ -60,6 +60,10 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Para Pelaku"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Memulai"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "KESALAHAN"

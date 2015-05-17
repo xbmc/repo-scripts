@@ -56,6 +56,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "Bottom"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Startup"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Movies"

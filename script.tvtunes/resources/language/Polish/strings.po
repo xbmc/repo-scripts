@@ -340,6 +340,18 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Reguły zapętlania"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Uruchomienie"
+
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Przywracaj domyślny poziom głośności po uruchomieniu"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Ustawiaj poziom głośności po uruchomieniu na"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Pokazuj okno wyboru przy nieudanym dopasowaniu"

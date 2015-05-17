@@ -340,6 +340,10 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Κανόνες Επανάληψης"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Εκκίνηση"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Εμφάνιση Παραθύρου Επιλογής Αν Αποτύχει η Αυτόματη Ταύτιση"

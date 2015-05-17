@@ -340,6 +340,18 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Kartojimo taisyklės"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Paleidimas"
+
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Atstatyti garsumą paleidus"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Nustatyti garsumą paleidus į"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Rodyti parinkimo dialogą, jei nepavyko sutapdinti automatiškai"

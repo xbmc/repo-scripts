@@ -340,6 +340,18 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Repetir Regras"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Inicialização"
+
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Resetar o volume ao inicializar"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Sete o volume ao inicializar para"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Mostrar Seleção se Auto Localizar Falhar"

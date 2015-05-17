@@ -340,6 +340,18 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Regeln wiederholen"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Starten"
+
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Lautstärke beim Starten zurücksetzen"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Lautstärke beim Starten festlegen auf"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Blende Auswahldialog ein, falls AutoMatch fehlschlägt"

@@ -144,6 +144,10 @@ msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "뮤직비디오 목록을 탐색할 때 테마 음악 재생"
 
+msgctxt "#32030"
+msgid "All"
+msgstr "모두"
+
 msgctxt "#32031"
 msgid "televisiontunes.com"
 msgstr "televisiontunes.com"
@@ -204,6 +208,26 @@ msgctxt "#32046"
 msgid "Random"
 msgstr "무작위"
 
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "대기 시간 (초)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "효과 시간 (초)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "컬럼"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "속도"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "이미지 일치"
+
 msgctxt "#32052"
 msgid "Random Order"
 msgstr "무작위 순서"
@@ -219,6 +243,10 @@ msgstr "이미지 형식"
 msgctxt "#32055"
 msgid "Folder"
 msgstr "폴더"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "하위 항목 포함"
 
 msgctxt "#32057"
 msgid "Fanart"
@@ -236,6 +264,10 @@ msgctxt "#32060"
 msgid "Movies, TV Shows"
 msgstr "영화, TV 쇼"
 
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "화면 보호기 동작 중 테마 재생"
+
 msgctxt "#32062"
 msgid "Fanart,Thumbnail,Cast"
 msgstr "팬아트, 썸네일, 배우"
@@ -252,6 +284,22 @@ msgctxt "#32065"
 msgid "Thumbnail,Cast"
 msgstr "썸네일, 배우"
 
+msgctxt "#32066"
+msgid "Slider"
+msgstr "슬라이더"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "슬라이드 시작:"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "왼쪽"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "오른쪽"
+
 msgctxt "#32070"
 msgid "Top"
 msgstr "상단"
@@ -259,6 +307,46 @@ msgstr "상단"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "하단"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "크로스페이드"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Artwork Downloader 이미지 포함"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "테마가 있을 경우만 이미지 표시"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "테마 한 번만 재생, 모든 이미지 표시"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "모든 이미지 표시, 테마 반복"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "테마 한 번만 재생, 나머지 이미지 건너뜀"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "규칙 반복"
+
+msgctxt "#32079"
+msgid "Startup"
+msgstr "시작"
+
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "시작할 때 음량 초기화"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "시작할 때 음량 설정:"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
@@ -320,6 +408,10 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "이것을 다운로드 하겠습니까?"
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "찾기 결과가 불완전할 것입니다"
+
 msgctxt "#32116"
 msgid "You can help to get more theme on:"
 msgstr "더 많은 테마 음악을 위해 도움을 줄 수 있습니다: "
@@ -360,6 +452,18 @@ msgctxt "#32205"
 msgid "[Action]: Retrieve Missing Themes"
 msgstr "[동작]: 누락된 테마 음악 가져오기"
 
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "태마 폴더에 없는 테마가 있습니다."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "테마를 테마 폴더로 이동하겠습니까?"
+
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[동작]: 화면 보호기 시작"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "재생"
@@ -375,3 +479,7 @@ msgstr "파일 시스템"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "오류: goear.com 연결 실패"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "이미지 찾을 수 없음!"

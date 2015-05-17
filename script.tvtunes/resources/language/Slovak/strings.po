@@ -48,6 +48,10 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Obsadenie"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Spustenie"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmy"

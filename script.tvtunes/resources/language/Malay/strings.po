@@ -56,6 +56,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "Bawah"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Permulaan"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Cereka"

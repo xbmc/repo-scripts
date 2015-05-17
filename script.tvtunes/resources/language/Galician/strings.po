@@ -236,6 +236,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "Abaixo"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Arrinque"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "Error"

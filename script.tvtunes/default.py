@@ -19,6 +19,7 @@ from settings import log
 
 from scraper import TvTunesScraper
 from backend import runBackend
+from screensaver import launchScreensaver
 
 
 #########################
@@ -44,6 +45,9 @@ if __name__ == '__main__':
 
     elif params.get("mode", False) == "solo":
         TvTunesScraper()
+
+    elif params.get("screensaver", False):
+        launchScreensaver()
 
     else:
         # Close any open dialogs

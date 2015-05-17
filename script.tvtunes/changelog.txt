@@ -1,3 +1,6 @@
+v4.7.2
+- Add argument to allow the script to start the screensaver
+
 v4.7.1
 - Add option to reset volume on startup
 

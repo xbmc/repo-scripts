@@ -160,6 +160,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "Bottom"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Startup"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERROR"

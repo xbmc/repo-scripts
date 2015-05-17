@@ -188,6 +188,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "Inferiore"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Avvio"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "Errore"

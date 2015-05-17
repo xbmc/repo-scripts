@@ -340,6 +340,10 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Repetir Regras"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Inicialização"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Mostrar Diálogo de Seleção Se Auto Condizer Falhar"
