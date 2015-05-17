@@ -190,9 +190,13 @@ def notification(id):
 
 def get_showids(item):
     ret = []
-    pattern = r'^(?P<term>[^\(]*)(\s+\((\w{2,3})\))?$'
+    pattern = r'^(?P<term>[^\(]*)(\s+\((?P<etc>\w{2,4})\))?$'
     match = re.search(pattern, item['tvshow'], re.I)
     if match:
+        etc = match.group('etc')
+        if etc and len(etc) == 4 and etc.isdigit():
+            item['year'] = etc
+
         term = match.group('term')
         qparams = {'action': 'autoname', 'nyelv': '0', 'term': term}
         datas = query_data(qparams)
@@ -205,8 +209,7 @@ def get_showids(item):
                         break
             else:
                 ret = map(lambda x: x['ID'], datas)
-
-        if '-100' in ret:
+        if '-100x' in ret:
             ret = []
 
     ret.sort(reverse=True)
@@ -425,7 +428,7 @@ def clean_movie_title(item, use_dir):
     if not 'year' in item or not item['year']:
         item['year'] = infos[1]
 
-    title_pattern = r'^(?P<title>.+)S(?P<season>\d+)E(?P<episode>\d+)$'
+    title_pattern = r'^(?P<title>.+)S(?P<season>\d+)E(?P<episode>\d+).*$'
     title_match = re.search(title_pattern, infos[0], re.IGNORECASE)
 
     if title_match:

@@ -1,4 +1,7 @@
-0.017
+0.0.18
+- check tvshow title contains year info
+
+0.0.17
 - path encoding and helix related bug fixes
 
 0.0.16
