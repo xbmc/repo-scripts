@@ -1,3 +1,18 @@
+Version 1.0.5
+
+added google drive support
+make compression setting compatible with python 2.6 and above
+added settings dialog option - thanks ed_davidson
+fix for growing backups - thanks brokeh
+
+Version 1.0.4
+
+exit if we can't delete the old archive, non recoverable
+
+Version 1.0.3
+
+added "delete auth" dialog to delete oauth files in settings
+
 Version 1.0.2
 
 updated xbmc.python version to 2.19.0 - should be helix only

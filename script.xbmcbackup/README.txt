@@ -47,6 +47,11 @@ Using Dropbox as a storage target adds a few steps the first time you wish to ru
 
 Once you have your app key and secret add them to the settings. Kodi Backup now needs to have permission to access your Dropbox account. When you see the prompt regarding the Dropbox URL Authorization DO NOT click OK. Check your Kodi log file for a line from "script.xbmcbackup" containing the authorization URL. Cut/paste this into a browser and click Allow. Once this is done you can click "OK" in Kodi and proceed as normal. Kodi Backup will cache the authorization code so you only have to do this once, or if you revoke the Dropbox permissions. 
 
+Using Google Drive: 
+
+Using the Google Drive target is very similar to the Dropbox one. You must create a Google API project and authenticate your account via the id and secret. Instructions for enable the Google API for Google Drive can be found here (https://developers.google.com/drive/web/quickstart/quickstart-python). You'll need the client id and client secret generated for the addon settings. You only need to follow Step 1. 
+
+Once you have the client ID and Secret add them to the addon settings and run a backup. You'll get a notification that you need to enter your authorization code. Check your Kodi log file for a line from "script.xbmcbackup" containing the authorization URL. Cut/paste this into a browser and click Allow. Once this is done put the code from your browser into the pop-up dialog. The addon will cache these credentials so it should be a one-time authentication. From there the backup should start to run. 
 
 Scripting A Backup: 
 

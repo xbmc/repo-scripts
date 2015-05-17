@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
 	<category id="general" label="30011">
-		<setting id="remote_selection" type="enum" lvalues="30018|30019|30027" default="0" label="30025"/>
+		<setting id="remote_selection" type="enum" lvalues="30018|30019|30027|30098" default="0" label="30025"/>
 		<setting id="remote_path_2" type="text" label="30024" default="" visible="eq(-1,1)" />
 		<setting id="remote_path" type="folder" label="30020" visible="eq(-2,0)" />
 		<setting id="dropbox_key" type="text" label="30028" visible="eq(-3,2)" default="" />
 		<setting id="dropbox_secret" type="text" label="30029" visible="eq(-4,2)" default="" />
+		<setting id="google_drive_id" type="text" label="Client ID" visible="eq(-5,3)" default="" />
+		<setting id="google_drive_secret" type="text" label="Client Secret" visible="eq(-6,3)" default="" />
+		<setting id="remove_auth_button" type="action" label="30093" action="RunScript(special://home/addons/script.xbmcbackup/remove_auth.py)" visible="gt(-7,1)"/>
 		<setting id="compress_backups" type="bool" label="30087" default="false" />
 		<setting id="backup_rotation" type="number" label="30026" default="0" />
 		<setting id="progress_mode" type="enum" label="30022" lvalues="30082|30083|30084" default="0" />

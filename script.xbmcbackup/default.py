@@ -29,14 +29,18 @@ if("mode" in params):
 #if mode wasn't passed in as arg, get from user
 if(mode == -1):
     #figure out if this is a backup or a restore from the user
-    mode = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30023),[utils.getString(30016),utils.getString(30017)])
+    mode = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30023),[utils.getString(30016),utils.getString(30017),utils.getString(30099)])
 
 #check if program should be run
 if(mode != -1):
     #run the profile backup
     backup = XbmcBackup()
 
-    if(backup.remoteConfigured()):
+    if(mode == 2):
+        #open the settings dialog
+        utils.openSettings()
+
+    elif(backup.remoteConfigured()):
 
         if(mode == backup.Restore):
             #get list of valid restore points

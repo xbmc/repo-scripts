@@ -84,4 +84,11 @@
     <string id="30090">The destination may not be writeable</string>
     <string id="30091">Zip archive could not be copied</string>
     <string id="30092">Not all files were copied</string>
+	<string id="30093">Delete Authorization Info</string>
+	<string id="30094">This will delete any OAuth token files</string>
+	<string id="30095">Do you want to do this?</string>
+	<string id="30096">Old Zip Archive could not be deleted</string>
+	<string id="30097">This needs to happen before a backup can run</string>
+	<string id="30098">Google Drive</string>
+	<string id="30099">Open Settings</string>
 </strings>
