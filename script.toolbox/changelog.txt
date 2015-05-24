@@ -1,0 +1,5 @@
+v1.0.1
+- first version for Kodi official repository
+
+v1.0.0
+- Initial Release.
