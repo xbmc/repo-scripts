@@ -155,7 +155,7 @@ class Main:
             old_files = []
         for old_file in old_files:
             if not old_file.endswith( '.nfo' ):
-                success, loglines = deleteFile( os.path.join(dir_path, old_file) )
+                success, loglines = deleteFile( os.path.join(dir_path, old_file.decode('utf-8')) )
 
 
     def _clean_text( self, text ):
@@ -197,7 +197,7 @@ class Main:
                     lw.log( loglines )
                 if not success:
                     return False
-                if os.path.getsize( tmpname ) > 999:
+                if xbmcvfs.Stat( tmpname ).st_size() > 999:
                     image_ext = getImageType( tmpname )
                     if not xbmcvfs.exists ( dst + image_ext ):
                         lw.log( ['copying %s to %s' % (tmpname, dst2 + image_ext)] )
@@ -425,10 +425,11 @@ class Main:
                     lw.log( loglines )
                 if not success:
                     return data
-        try:
-            xmldata = _xmltree.parse(filename).getroot()
-        except Exception, e:
-            lw.log( ['invalid or missing xml file', e] )
+        loglines, rawxml = readFile( filename )
+        lw.log( loglines )
+        if rawxml:
+            xmldata = _xmltree.fromstring( rawxml )
+        else:
             deleteFile( filename )
             return data
         if item == "images":
@@ -582,25 +583,19 @@ class Main:
 
     def _get_local_data( self, item ):
         data = []
-        filenames = []
         local_path = os.path.join( self.LOCALARTISTPATH, smartUTF8(self.NAME).decode('utf-8'), 'override' )
         if item == "similar":
-            filenames.append( os.path.join( local_path, 'artistsimilar.nfo' ) )
+            filename = os.path.join( local_path, 'artistsimilar.nfo' )
         elif item == "albums":
-            filenames.append( os.path.join( local_path, 'artistsalbums.nfo' ) )
+            filename = os.path.join( local_path, 'artistsalbums.nfo' )
         elif item == "bio":
-            filenames.append( os.path.join( local_path, 'artistbio.nfo' ) )
-        found_xml = True
-        for filename in filenames:
-            lw.log( ['checking filename ' + filename] )
-            try:
-                xmldata = _xmltree.parse(filename).getroot()
-            except Exception, e:
-                lw.log( ['invalid or missing local xml file for %s' % item, e] )
-                found_xml = False
-            if found_xml:
-                break
-        if not found_xml:
+            filename = os.path.join( local_path, 'artistbio.nfo' )
+        lw.log( ['checking filename ' + filename] )
+        loglines, rawxml = readFile( filename )
+        lw.log( loglines )
+        if rawxml:
+            xmldata = _xmltree.fromstring( rawxml )
+        else:
             return []
         if item == "bio":
             for element in xmldata.getiterator():
@@ -1049,7 +1044,6 @@ class Main:
         if self._playback_stopped_or_changed():
             return False
         lw.log( ["checking this artist's " + type + "s against currently playing " + type] )
-#        mboptions = type + '?artist=' + mbid + '&limit=100&fmt=json'
         mboptions = {"artist":mbid, "limit":"100", "fmt":"json"}
         for thing in self._get_musicbrainz_info( mboptions, '', type + 's', type + 's', query_times ):
             title = smartUTF8( thing['title'] )

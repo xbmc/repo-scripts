@@ -1,3 +1,10 @@
+v.1.8.4~beta1
+- fixed another UTF-8 encoding issue
+
+v.1.8.3
+- fixed reading of override data so it works properly with SMB shares
+- updates to other file read functions to work with SMB shares
+
 v.1.8.2
 - updated for Helix
 - fixed crash at exist when artist images have unicode characters in name
