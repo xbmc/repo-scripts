@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30000">
+        <setting label="30001" type="ipaddress" id="receiver1" default=""/>
+        <setting label="30002" type="ipaddress" id="receiver2" default=""/>
+        <setting label="30003" type="ipaddress" id="receiver3" default=""/>
+    </category>
+    <category label="30010">
+        <setting label="30011" type="slider" id="interval" default="30" range="15,15,300" option="int"/>
+		<setting label="30012" type="enum" id="autoupdate" lvalues="30013|30014|30015" default="1"/>
+    </category>
+    <category label="30020">
+        <setting label="30021" type="bool" id="messages" default="true"/>
+		<setting label="30022" type="slider" id="showtime" default="5" range="1,1,15" enable="eq(-1,true)" subsetting="true" option="int"/>
+    </category>
+</settings>

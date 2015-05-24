@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Settings -->
+	<string id="30000">IP-Adressen</string>
+    <string id="30001">Receiver 1</string>
+    <string id="30002">Receiver 2</string>
+    <string id="30003">Receiver 3</string>
+
+	<string id="30010">Verhalten</string>
+    <string id="30011">Prüfintervall (Sekunden)</string>
+	<string id="30012">Evo-Update</string>
+	<string id="30013">Deaktiviert</string>
+	<string id="30014">Nachfrage</string>
+	<string id="30015">Automatisch</string>
+
+	<string id="30020">Anzeige</string>
+	<string id="30021">Hinweise anzeigen</string>
+	<string id="30022">Anzeigedauer (Sekunden)</string>
+	
+	<!-- Notifications -->
+	<string id="30100">Erweiterungen auf %s gestartet</string>
+	<string id="30101">Installation auf %s erfolgt</string>
+	
+	<!-- Dialogs -->
+	<string id="30200">Basisinstallation auf %s ist veraltet. Bei Update wird der Receiver neu gestartet. Update installieren?</string>
+</strings>

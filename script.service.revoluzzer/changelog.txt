@@ -1,0 +1,27 @@
+v1.0.0
+- finalized first production version
+
+v0.3.3
+- handling of autoupdate corrected
+
+v0.3.2
+- enhanced compatibility
+
+v0.3.1
+- corrected showtime type
+
+v0.3.0
+- monitor class added to react on changed settings while running
+- settings extended
+
+v0.2.0
+- added installation and update procedure on device
+- notification string localized
+
+v0.1.1
+- removed os dependent stuff
+- improved check for state of device
+- several code improvements
+
+v0.1.0
+- initial version
