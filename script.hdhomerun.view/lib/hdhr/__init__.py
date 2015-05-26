@@ -257,7 +257,7 @@ class GuideChannel(dict):
         if not shows: return Show()
         now = time.time()
         for s in shows:
-            if now >= s.get('StartTime') and now < s.get('EndTime'):
+            if s.get('StartTime') <= now < s.get('EndTime'):
                 return Show(s)
         return Show()
 
@@ -267,7 +267,7 @@ class GuideChannel(dict):
         if len(shows) < 2: return Show()
         now = time.time()
         for i,s in enumerate(shows):
-            if now >= s.get('StartTime') and now < s.get('EndTime'):
+            if s.get('StartTime') <= now < s.get('EndTime'):
                 i+=1
                 if i >= len(shows): break
                 return Show(shows[i])

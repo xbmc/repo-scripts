@@ -38,7 +38,7 @@ class PlayerStatus(object):
 
 class ChannelPlayer(xbmc.Player):
     def init(self,owner,lineup,touch_mode=False):
-        self.status = PlayerStatus()
+        self.status = hasattr(self,'status') and self.status or PlayerStatus() #Keep old if we reset
         self.owner = owner
         self.lineUp = lineup
         self.touchMode = touch_mode

@@ -1,3 +1,8 @@
+** 2015.5.22 **
+
+When playing a channel, guide now hides automatically
+Fix for guide not updating properly
+
 ** 2015.5.9 **
 
 Fix for video not being visible when addon is running (Kodi 15 beta1)
