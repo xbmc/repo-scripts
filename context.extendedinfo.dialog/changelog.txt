@@ -1,2 +1,8 @@
+v1.0.0
+- added support for actors and directors
+
+v0.9.0
+- change label id to use correct range
+
 v0.1.0
-Initial Release.
+- Initial Release.
