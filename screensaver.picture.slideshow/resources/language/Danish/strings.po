@@ -50,7 +50,7 @@ msgstr "Dias"
 
 msgctxt "#30008"
 msgid "Crossfade"
-msgstr "Blanding"
+msgstr "Glidende overgang"
 
 msgctxt "#30009"
 msgid "Pan and zoom"

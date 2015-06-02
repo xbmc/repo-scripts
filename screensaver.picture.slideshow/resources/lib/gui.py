@@ -114,6 +114,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if self.slideshow_scale == 'false':
             self.image1 = self.getControl(1)
             self.image2 = self.getControl(2)
+            self.image3 = self.getControl(5)
+            self.image4 = self.getControl(6)
             self.getControl(3).setVisible(False)
             self.getControl(4).setVisible(False)
         else:
@@ -121,6 +123,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self.image2 = self.getControl(4)
             self.getControl(1).setVisible(False)
             self.getControl(2).setVisible(False)
+            self.getControl(5).setVisible(False)
+            self.getControl(6).setVisible(False)
         if self.slideshow_name == '0':
             self.getControl(99).setVisible(False)
         else:
@@ -146,6 +150,14 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     continue
                 # add image to gui
                 cur_img.setImage(img[0],False)
+
+                # add background image to gui
+                if self.slideshow_scale == 'false':
+                    if order[0] == 1:
+                        self.image3.setImage(img[0],False)
+                    else:
+                        self.image4.setImage(img[0],False)
+
                 # give xbmc some time to load the image
                 if not self.startup:
                     xbmc.sleep(1000)
@@ -261,6 +273,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     # add fade anim, used for both fade and slide/zoom anim
                     self._set_prop('Fade%d' % order[0], '0')
                     self._set_prop('Fade%d' % order[1], '1')
+
+                # add fade anim to background images
+                if self.slideshow_scale == 'false':
+                    self._set_prop('Fade1%d' % order[0], '0')
+                    self._set_prop('Fade1%d' % order[1], '1')
+
                 # define next image
                 if cur_img == self.image1:
                     cur_img = self.image2
