@@ -250,8 +250,8 @@ III. Control id's used in script-globalsearch-main.xml
 
 190 - 'Searching...' label, visible when the script is searching
 191 - Search category label, visible when the script is searching
-198 - 'No results found' label, visible when no results are found
-199 - 'New search' button, visible when the script finished searching
+198 - 'New search' button, visible when the script finished searching
+199 - 'No results found' label, visible when no results are found
 
 
 

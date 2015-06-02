@@ -52,6 +52,10 @@ msgctxt "#32008"
 msgid "Search Actors"
 msgstr "Aktörlerde Ara"
 
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "EPG'de Ara"
+
 msgctxt "#32101"
 msgid "Enter search string"
 msgstr "Arama dizesi girin"

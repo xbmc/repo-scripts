@@ -52,6 +52,10 @@ msgctxt "#32008"
 msgid "Search Actors"
 msgstr "Hledej herce"
 
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Hledej v EPG"
+
 msgctxt "#32101"
 msgid "Enter search string"
 msgstr "Zadejte řetězec k vyhledání"

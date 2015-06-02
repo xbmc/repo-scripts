@@ -1,3 +1,6 @@
+v4.0.2
+- rating fixes
+
 v4.0.1
 - fix channel id
 

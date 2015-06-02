@@ -52,6 +52,10 @@ msgctxt "#32008"
 msgid "Search Actors"
 msgstr "Търсене в раздел \"Актьори\""
 
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Търсене в ЕПС"
+
 msgctxt "#32101"
 msgid "Enter search string"
 msgstr "Въведете низ за търсене"

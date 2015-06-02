@@ -22,11 +22,11 @@ msgstr "Allgemein"
 
 msgctxt "#32001"
 msgid "Search Movies"
-msgstr "Suche Filme"
+msgstr "Filme suchen"
 
 msgctxt "#32002"
 msgid "Search TV Shows"
-msgstr "Suche TV-Serien"
+msgstr "Fernsehserien suchen"
 
 msgctxt "#32003"
 msgid "Search Episodes"
@@ -34,23 +34,27 @@ msgstr "Folgen suchen"
 
 msgctxt "#32004"
 msgid "Search Music Videos"
-msgstr "Suche Musikvideos"
+msgstr "Musikvideos suchen"
 
 msgctxt "#32005"
 msgid "Search Artists"
-msgstr "Suche Interpreten"
+msgstr "Interpreten suchen"
 
 msgctxt "#32006"
 msgid "Search Abums"
-msgstr "Suche Alben"
+msgstr "Alben suchen"
 
 msgctxt "#32007"
 msgid "Search Songs"
-msgstr "Suche Songs"
+msgstr "Songs suchen"
 
 msgctxt "#32008"
 msgid "Search Actors"
-msgstr "Suche Darsteller"
+msgstr "Darsteller suchen"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "EPG suchen"
 
 msgctxt "#32101"
 msgid "Enter search string"
@@ -62,31 +66,31 @@ msgstr "Album durchsuchen"
 
 msgctxt "#32204"
 msgid "Season information"
-msgstr "Staffel-Informationen"
+msgstr "Staffelinformationen"
 
 msgctxt "#32205"
 msgid "Play trailer"
-msgstr "Trailer abspielen"
+msgstr "Filmvorschau wiedergeben"
 
 msgctxt "#32206"
 msgid "Find album"
-msgstr "Finde Album"
+msgstr "Album ausfindig machen"
 
 msgctxt "#32207"
 msgid "Find all seasons"
-msgstr "Finde alle Staffeln"
+msgstr "Alle Staffeln ausfindig machen"
 
 msgctxt "#32208"
 msgid "Find all episodes"
-msgstr "Nach allen Folgen suchen"
+msgstr "Alle Folgen ausfindig machen"
 
 msgctxt "#32209"
 msgid "Find all albums"
-msgstr "Finde alle Alben"
+msgstr "Alle Alben ausfindig machen"
 
 msgctxt "#32210"
 msgid "Find all songs"
-msgstr "Finde alle Songs"
+msgstr "Alle Songs ausfindig machen"
 
 msgctxt "#32211"
 msgid "Movies starring"

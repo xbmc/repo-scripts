@@ -52,6 +52,10 @@ msgctxt "#32008"
 msgid "Search Actors"
 msgstr "搜索演员"
 
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "搜索电子节目单"
+
 msgctxt "#32101"
 msgid "Enter search string"
 msgstr "输入搜索字符串"

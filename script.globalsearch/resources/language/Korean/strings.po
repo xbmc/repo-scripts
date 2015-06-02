@@ -52,6 +52,10 @@ msgctxt "#32008"
 msgid "Search Actors"
 msgstr "배우 검색"
 
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "EPG 찾기"
+
 msgctxt "#32101"
 msgid "Enter search string"
 msgstr "검색어 입력"
