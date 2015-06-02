@@ -114,7 +114,7 @@ msgstr "Afficher les paroles automatiquement"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
-msgstr "Nettoyer les titres de chansons (enlever ce qui est entre parenthèses)"
+msgstr "Nettoyer les titres de chansons (supprimer ce qui est entre parenthèses)"
 
 msgctxt "#32158"
 msgid "Script is already running!"

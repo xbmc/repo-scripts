@@ -114,7 +114,7 @@ msgstr "Wyświetlaj tekst utworu automatycznie"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
-msgstr "Oczyszczaj tytuł piosenki (usuwa część w nawiasach)"
+msgstr "Oczyszczaj tytuł utworu (usuwa część w nawiasach)"
 
 msgctxt "#32158"
 msgid "Script is already running!"

@@ -3,6 +3,7 @@ import re
 import chardet
 from tagger import *
 from mutagen.flac import FLAC
+from mutagen.mp4 import MP4
 import xbmcvfs
 from utilities import *
 
@@ -29,6 +30,8 @@ def getEmbedLyrics(song, getlrc):
             lry = getID3Lyrics(filename, getlrc)
         elif  ext == '.flac':
             lry = getFlacLyrics(filename, getlrc)
+        elif  ext == '.m4a':
+            lry = getMP4Lyrics(filename, getlrc)
         if not lry:
             return None
         lyrics.lyrics = lry
@@ -184,6 +187,17 @@ def getFlacLyrics(filename, getlrc):
         tags = FLAC(filename)
         if tags.has_key('lyrics'):
             lyr = tags['lyrics'][0]
+            match1 = re.compile('\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
+            if (getlrc and match1) or ((not getlrc) and (not match1)):
+                return lyr
+    except:
+        return None
+
+def getMP4Lyrics(filename, getlrc):
+    try:
+        tags = MP4(filename)
+        if tags.has_key('\xa9lyr'):
+            lyr = tags['\xa9lyr'][0]
             match1 = re.compile('\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
             if (getlrc and match1) or ((not getlrc) and (not match1)):
                 return lyr

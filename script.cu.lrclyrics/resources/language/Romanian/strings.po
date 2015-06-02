@@ -40,6 +40,10 @@ msgctxt "#32102"
 msgid "- Lyrics folder"
 msgstr "- Dosar versuri"
 
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Folosește numele fișierului pentru căutare"
+
 msgctxt "#32107"
 msgid "Filename format"
 msgstr "Format nume fișier"
@@ -52,9 +56,17 @@ msgctxt "#32151"
 msgid "Options"
 msgstr "Opțiuni"
 
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Cataloage de versuri normale"
+
 msgctxt "#32156"
 msgid "Display lyrics automatically"
 msgstr "Arată versuri automat"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "Scriptul rulează deja!"
 
 msgctxt "#32159"
 msgid "Enable debug logging"

@@ -23,12 +23,18 @@ class MAIN():
         if ( __addon__.getSetting( "save_lyrics_path" ) == "" ):
             __addon__.setSetting(id="save_lyrics_path", value=os.path.join( __profile__.encode("utf-8"), "lyrics" ))
         self.main_loop()
+        self.cleanup_main()
 
     def setup_main(self):
         self.fetchedLyrics = []
         self.current_lyrics = Lyrics()
         self.MyPlayer = MyPlayer(function=self.myPlayerChanged)
         self.Monitor = MyMonitor(function = self.update_settings)
+
+    def cleanup_main(self):
+        # Clean up the monitor and Player classes on exit
+        del self.MyPlayer
+        del self.Monitor
 
     def get_scraper_list(self):
         self.scrapers = []
@@ -47,7 +53,8 @@ class MAIN():
                 log('searching for manually defined lyrics')
                 self.get_manual_lyrics()
             # check if we are on the music visualization screen
-            elif xbmc.getCondVisibility("Window.IsVisible(12006)"):
+            # do not try and get lyrics if TvTunes is running as it will just be a theme that is about to stop
+            elif xbmc.getCondVisibility("Window.IsVisible(12006)") and xbmcgui.Window(10025).getProperty("TvTunesIsRunning") in [None, ""]:
                 if not self.triggered:
                     self.triggered = True
                     # notify user the script is running

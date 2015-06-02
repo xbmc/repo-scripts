@@ -154,6 +154,7 @@ class Song:
         if not song.artist and not xbmc.getInfoLabel("MusicPlayer.TimeRemaining"):
             # no artist and infinite playing time ? We probably listen to a radio
             # which usually set the song title as "Artist - Title" (via ICY StreamTitle)
+            song.analyze_safe = False
             sep = song.title.find("-")
             if sep > 1:
                 song.artist = song.title[:sep - 1].strip()

@@ -1,3 +1,12 @@
+v3.1.2
+- Clean up the Monitor and Player classes on exit
+
+v3.1.1
+- Do not try and get lyrics if TvTunes is running
+
+v3.1.0
+- add support for mp4 files
+
 v3.0.11
 - properly handle lyrics in the uslt tag
 
