@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# Reference:
-# http://wiki.xbmc.org/index.php?title=Audio/Video_plugin_tutorial
 import sys
 import os
 import urllib
@@ -99,15 +97,26 @@ class MenuNavigator():
         elif foldername == MenuNavigator.MUSICVIDEOS:
             self.setVideoList('GetMusicVideos', MenuNavigator.MUSICVIDEOS, 'musicvideoid')
 
-    # Produce the list of videos and flag which ones have themes
+    # Produce the list of videos and flag which ones have Extras
     def setVideoList(self, jsonGet, target, dbid):
         videoItems = self.getVideos(jsonGet, target, dbid)
 
         for videoItem in videoItems:
-            if not self.hasVideoExtras(target, videoItem['dbid'], videoItem['file']):
-                continue
             # Create the list-item for this video
             li = xbmcgui.ListItem(videoItem['title'], iconImage=videoItem['thumbnail'])
+
+            if not self.hasVideoExtras(target, videoItem['dbid'], videoItem['file']):
+                # Check if we are supporting YouTube Searches, if so it doesn't matter
+                # If we do not have any Extras yet
+                if not Settings.isYouTubeSearchSupportEnabled():
+                    continue
+            else:
+                # There are extras, if so then we should check to see if we are actually
+                # showing all the Videos, as if we are and YouTube is being used, we
+                # should flag the ones with physical extras
+                if Settings.isYouTubeSearchSupportEnabled():
+                    li.setInfo('video', {'PlayCount': 1})
+
             # Remove the default context menu
             li.addContextMenuItems([], replaceItems=True)
             # Get the title of the video owning the extras
@@ -142,7 +151,7 @@ class MenuNavigator():
                 videoItem['file'] = item['file']
 
                 if item['thumbnail'] is None:
-                    item['thumbnail'] = 'DefaultFolder.png'
+                    videoItem['thumbnail'] = 'DefaultFolder.png'
                 else:
                     videoItem['thumbnail'] = item['thumbnail']
                 videoItem['fanart'] = item['fanart']
@@ -172,6 +181,7 @@ class MenuNavigator():
             videoExtras = VideoExtrasBase(file, target)
             # We are only checking for existence of extras, no need for fanart
             firstExtraFile = videoExtras.findExtras(True)
+            del videoExtras
             if firstExtraFile:
                 log("MenuNavigator: Extras found for (%d) %s" % (dbid, file))
                 return True
@@ -190,6 +200,7 @@ class MenuNavigator():
 
         # Perform the search command
         files = videoExtras.findExtras(extrasDb=extrasDb, defaultFanArt=extrasDefaultFanArt)
+        del videoExtras
 
         tvShowTitle = ""
         if target == MenuNavigator.TVSHOWS:
@@ -213,6 +224,17 @@ class MenuNavigator():
             anItem.addContextMenuItems([], replaceItems=True)
             url = self._build_url({'mode': 'playallextras', 'foldername': target, 'path': path, 'parentTitle': extrasParentTitle})
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=anItem, isFolder=False)
+
+        # Check if we want to have YouTube Extra Support
+        if Settings.isYouTubeSearchSupportEnabled():
+            # Create the message to the YouTube Plugin
+            url = "plugin://plugin.video.youtube/search/?q=%s+Extras" % extrasParentTitle.replace(" ", "+")
+            li = xbmcgui.ListItem(__addon__.getLocalizedString(32116))
+            # Use the DVD Cover artwork for the logo (Same as the others)
+            if extrasDefaultIconImage != "":
+                li.setIconImage(extrasDefaultIconImage)
+            li.addContextMenuItems(self._getYouTubeContextMenu(extrasParentTitle), replaceItems=True)
+            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Add each of the extras to the list to display
         for anExtra in files:
@@ -246,6 +268,7 @@ class MenuNavigator():
         # Perform the search command
         # No need for fanart default as only getting a list to play, not display
         files = videoExtras.findExtras(extrasDb=extrasDb)
+        del videoExtras
 
         ExtrasPlayer.playAll(files, extrasParentTitle)
 
@@ -261,6 +284,8 @@ class MenuNavigator():
         # Perform the search command
         # No need for fanart default as only getting a list to play, not display
         files = videoExtras.findExtras(extrasDb=extrasDb)
+        del videoExtras
+
         for anExtra in files:
             if anExtra.isFilenameMatch(filename):
                 log("MenuNavigator: Found  = %s" % filename)
@@ -295,6 +320,9 @@ class MenuNavigator():
             extrasDb = ExtrasDB()
             # We are only updating the DB for an entry already shown, no need for fanart
             files = videoExtras.findExtras(extrasDb=extrasDb)
+            del videoExtras
+            del extrasDb
+
             for anExtra in files:
                 if anExtra.isFilenameMatch(filename):
                     log("MenuNavigator: Found  = %s" % filename)
@@ -314,6 +342,9 @@ class MenuNavigator():
             extrasDb = ExtrasDB()
             # We are only updating the DB for an entry already shown, no need for fanart
             files = videoExtras.findExtras(extrasDb=extrasDb)
+            del videoExtras
+            del extrasDb
+
             for anExtra in files:
                 if anExtra.isFilenameMatch(filename):
                     log("MenuNavigator: Found  = %s" % filename)
@@ -329,6 +360,8 @@ class MenuNavigator():
         # Perform the search command
         # We are only updating the NFO for an entry already shown, no need for fanart
         files = videoExtras.findExtras()
+        del videoExtras
+
         for anExtra in files:
             if anExtra.isFilenameMatch(filename):
                 log("MenuNavigator: Found  = %s" % filename)
@@ -361,6 +394,8 @@ class MenuNavigator():
         # Perform the search command
         # We are only updating the NFO for an entry already shown, no need for fanart
         files = videoExtras.findExtras()
+        del videoExtras
+
         for anExtra in files:
             if anExtra.isFilenameMatch(filename):
                 log("MenuNavigator: Found  = %s" % filename)
@@ -417,6 +452,34 @@ class MenuNavigator():
 
         return ctxtMenu
 
+    # Adds the context menu for the youtube link to allow searching for different words
+    def _getYouTubeContextMenu(self, title):
+        ctxtMenu = []
+
+        title = title.replace(" ", "+")
+
+        # Extras
+        cmd = "/search/?q=%s+Extras" % title
+        ctxtMenu.append((__addon__.getLocalizedString(32001), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+
+        # Deleted Scenes
+        cmd = "/search/?q=%s+Deleted+Scene" % title
+        ctxtMenu.append((__addon__.getLocalizedString(32117), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+
+        # Special Features
+        cmd = "/search/?q=%s+Special+Features" % title
+        ctxtMenu.append((__addon__.getLocalizedString(32118), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+
+        # Bloopers
+        cmd = "/search/?q=%s+Blooper" % title
+        ctxtMenu.append((__addon__.getLocalizedString(32119), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+
+        # Interviews
+        cmd = "/search/?q=%s+Interview" % title
+        ctxtMenu.append((__addon__.getLocalizedString(32120), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+
+        return ctxtMenu
+
 
 ################################
 # Main of the VideoExtras Plugin
@@ -440,6 +503,7 @@ if __name__ == '__main__':
         log("VideoExtrasPlugin: Mode is NONE - showing root menu")
         menuNav = MenuNavigator(base_url, addon_handle)
         menuNav.showRootMenu()
+        del menuNav
     elif mode[0] == 'folder':
         log("VideoExtrasPlugin: Mode is FOLDER")
 
@@ -449,6 +513,7 @@ if __name__ == '__main__':
         if (foldername is not None) and (len(foldername) > 0):
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.showFolder(foldername[0])
+            del menuNav
 
     elif mode[0] == 'listextras':
         log("VideoExtrasPlugin: Mode is LIST EXTRAS")
@@ -474,6 +539,7 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.showExtras(path[0], foldername[0], extrasParentTitle, extrasDefaultFanArt, extrasDefaultIconImage)
+            del menuNav
 
     elif mode[0] == 'playallextras':
         log("VideoExtrasPlugin: Mode is PLAY ALL EXTRAS")
@@ -491,6 +557,7 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.playAllExtras(path[0], foldername[0], extrasParentTitle)
+            del menuNav
 
     elif mode[0] == 'playextra':
         log("VideoExtrasPlugin: Mode is PLAY EXTRA")
@@ -510,6 +577,7 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.playExtra(path[0], foldername[0], filename[0], extrasParentTitle)
+            del menuNav
 
     elif mode[0] == 'resumeextra':
         log("VideoExtrasPlugin: Mode is RESUME EXTRA")
@@ -529,6 +597,7 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.playExtra(path[0], foldername[0], filename[0], extrasParentTitle, forceResume=True)
+            del menuNav
 
     elif mode[0] == 'beginextra':
         log("VideoExtrasPlugin: Mode is BEGIN EXTRA")
@@ -548,6 +617,7 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.playExtra(path[0], foldername[0], filename[0], extrasParentTitle, fromStart=True)
+            del menuNav
 
     elif mode[0] == 'markwatched':
         log("VideoExtrasPlugin: Mode is MARK WATCHED")
@@ -563,6 +633,7 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.markAsWatched(path[0], foldername[0], filename[0])
+            del menuNav
 
     elif mode[0] == 'markunwatched':
         log("VideoExtrasPlugin: Mode is MARK UNWATCHED")
@@ -578,6 +649,7 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.markAsUnwatched(path[0], foldername[0], filename[0])
+            del menuNav
 
     elif mode[0] == 'edittitle':
         log("VideoExtrasPlugin: Mode is EDIT TITLE")
@@ -593,6 +665,7 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.editTitle(foldername[0], path[0], filename[0])
+            del menuNav
 
     elif mode[0] == 'editplot':
         log("VideoExtrasPlugin: Mode is EDIT PLOT")
@@ -608,3 +681,4 @@ if __name__ == '__main__':
 
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.editPlot(foldername[0], path[0], filename[0])
+            del menuNav

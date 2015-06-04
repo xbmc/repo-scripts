@@ -149,6 +149,7 @@ class VideoExtrasService():
                 videoExtras = VideoExtrasBase(item['file'], target)
                 # Only checking for the existence of extras - no need for DB or default Fanart
                 firstExtraFile = videoExtras.findExtras(True)
+                del videoExtras
                 # Check if any extras exist for this movie
                 if firstExtraFile:
                     log("VideoExtrasService: Extras found for (%d) %s" % (item[dbid], item['title']))
@@ -203,6 +204,28 @@ class VideoExtrasService():
                 log("VideoExtrasService: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
 
+# Check theYouTube settings are correct, we will automatically disable the
+# option if the YouTube addon is not installed
+def checkYouTubeSettings():
+    # Check to see if the YouTube support is enabled
+    if Settings.isYouTubeSearchSupportEnabled():
+        # It is enabled in settings, but we should check to ensure that the
+        # YouTube addon is actually installed
+        youtubeInstalled = False
+        try:
+            youtubeAddon = xbmcaddon.Addon(id='plugin.video.youtube')
+            if youtubeAddon not in [None, ""]:
+                youtubeInstalled = True
+        except:
+            # We will get an exception if we can not find the YouTube addon
+            youtubeInstalled = False
+
+        if not youtubeInstalled:
+            # There is no YouTube addon installed, so disable this option in settings
+            log("VideoExtrasService: Disabling YouTube support as addon not installed")
+            Settings.disableYouTubeSearchSupport()
+
+
 ###################################
 # Main of the Video Extras Service
 ###################################
@@ -225,6 +248,10 @@ if __name__ == '__main__':
             skinExtrasList = os_path_join(skinExtrasList, "icons")
             skinExtrasList = os_path_join(skinExtrasList, "list1.png")
             __addon__.setSetting('listImage', skinExtrasList)
+
+    # Check theYouTube settings are correct, we will automatically disable the
+    # option if the YouTube addon is not installed
+    checkYouTubeSettings()
 
     # Make sure that the service option is enabled
     if Settings.isServiceEnabled():

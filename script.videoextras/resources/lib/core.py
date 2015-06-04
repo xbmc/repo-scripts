@@ -378,6 +378,7 @@ class VideoExtrasBase():
         try:
             extrasFinder = VideoExtrasFinder(extrasDb, defaultFanArt=defaultFanArt, videoType=self.videoType)
             files = extrasFinder.loadExtras(self.baseDirectory, self.filename, exitOnFirst)
+            del extrasFinder
         except:
             log("VideoExtrasBase: %s" % traceback.format_exc(), xbmc.LOGERROR)
         return files

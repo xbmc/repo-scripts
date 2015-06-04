@@ -16,6 +16,10 @@ msgstr ""
 "Language: am\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgctxt "#32001"
+msgid "Extras"
+msgstr "ተጨማሪዎች"
+
 msgctxt "#32008"
 msgid "Information"
 msgstr "መረጃ"
@@ -55,6 +59,10 @@ msgstr "አርእስት ማረሚያ"
 msgctxt "#32110"
 msgid "Movies"
 msgstr "ሙቪዎች"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "የቲቪ ትርኢት "
 
 msgctxt "#32113"
 msgid "Plot"

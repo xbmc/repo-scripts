@@ -164,6 +164,10 @@ msgctxt "#32034"
 msgid "List Image"
 msgstr "Lijst afbeelding"
 
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "Activeer YouTube zoek ondersteuning"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Speel alles af"
@@ -223,6 +227,10 @@ msgstr "Wijzig verhaallijn"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Niet gelukt verhaallijn te updaten"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "Zoek YouTube ..."
 
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"

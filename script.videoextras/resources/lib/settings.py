@@ -176,3 +176,11 @@ class Settings():
         if __addon__.getSetting("useCustomImages") != "true":
             return None
         return __addon__.getSetting('listImage')
+
+    @staticmethod
+    def isYouTubeSearchSupportEnabled():
+        return __addon__.getSetting("enableYouTubeSearchSupport") == 'true'
+
+    @staticmethod
+    def disableYouTubeSearchSupport():
+        __addon__.setSetting("enableYouTubeSearchSupport", "false")

@@ -52,6 +52,10 @@ msgctxt "#32021"
 msgid "Database"
 msgstr "Veritabanı"
 
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Yer Paylaşımı Resmi"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Tümünü yürüt"

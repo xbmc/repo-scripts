@@ -164,6 +164,10 @@ msgctxt "#32034"
 msgid "List Image"
 msgstr "Auflistungsbild"
 
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "YouTube-Suchunterstützung aktivieren"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Alle wiedergeben"
@@ -223,6 +227,22 @@ msgstr "Handlung bearbeiten"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Aktualisierung der Handlung fehlgeschlagen"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "YouTube durchsuchen ..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "Gelöschte Szenen"
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "Besondere Merkmale"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "Patzer"
 
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"

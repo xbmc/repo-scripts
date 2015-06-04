@@ -24,6 +24,10 @@ msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
 msgstr "Prové dun camiño para engadir Extras á sea biblioteca de Vídeos. Ver na wiki para instruccións da configuración."
 
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Autores de temas, por favor vexan a wiki para saber como integralo no seu tema:\nhttp://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
 msgctxt "#32001"
 msgid "Extras"
 msgstr "Extras"
@@ -140,6 +144,18 @@ msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
 msgstr "Subcartafol Personalizado de Vídeos Musicais"
 
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Actualizar o ficheiro advancedsettings.xml"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Actualizar o tema Confluence"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Empregar imaxes personalizadas"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Reproducir todo"
@@ -191,3 +207,35 @@ msgstr "Vídeos Musicais"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Sinopse"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Editar a sinopse"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Produciuse un fallo ao actualizar a sinopse"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Non foi posíbel actualizar o tema Confluence"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Non todos os ficheiros se actualizaron como se agardaba"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Tema Confluence actualizado"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Recomendase reiniciar Kodi agora"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Non foi posíbel crear os ficheiros no cartafol do tema Confluence."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Por favor verifica que o usuario que executa Kodi ten permisos de escritura no cartafol."

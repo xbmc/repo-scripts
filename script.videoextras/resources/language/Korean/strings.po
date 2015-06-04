@@ -164,6 +164,10 @@ msgctxt "#32034"
 msgid "List Image"
 msgstr "목록 이미지"
 
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "YouTube 검색 사용"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "모두 재생"
@@ -223,6 +227,18 @@ msgstr "줄거리 편집"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "줄거리 업데이트 실패"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "YouTube 검색 ..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "삭제 장면"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "실수 장면"
 
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"

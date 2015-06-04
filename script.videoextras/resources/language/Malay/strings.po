@@ -40,6 +40,10 @@ msgctxt "#32019"
 msgid "Debugging"
 msgstr "Penyahpepijatan"
 
+msgctxt "#32021"
+msgid "Database"
+msgstr "Pangkalan data"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Main Semua"
@@ -51,6 +55,18 @@ msgstr "Maklumat"
 msgctxt "#32105"
 msgid "Start from beginning"
 msgstr "Mula dari permulaan"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Tanda sebagai ditonton"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Tanda sebagai belum ditonton"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Sunting tajuk"
 
 msgctxt "#32110"
 msgid "Movies"

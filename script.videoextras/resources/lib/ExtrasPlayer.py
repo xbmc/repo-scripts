@@ -112,6 +112,8 @@ class ExtrasPlayer(xbmc.Player):
             else:
                 log("ExtrasPlayer: Only played to time = %d (Not saving state)" % currentTime)
 
+        del extrasPlayer
+
     # Calls the media player to play the selected item
     @staticmethod
     def performPlayAction(extraItem, parentTitle=""):
@@ -147,6 +149,7 @@ class ExtrasPlayer(xbmc.Player):
 
         # Now update the database with the fact this has now been watched
         extraItem.saveState()
+        del extrasPlayer
 
     # Create a list item from an extras item
     def _getListItem(self, extrasItem, ignoreResume=False):

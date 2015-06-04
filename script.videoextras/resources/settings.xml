@@ -28,6 +28,7 @@
 		<setting label="32028" option="close" type="action" action="RunScript($CWD/default.py)"/>
 	</category>
 	<category label="32016">
+		<setting id="enableYouTubeSearchSupport" type="bool" label="32035" default="true"/>
 		<setting id="forceButtonDisplay" type="bool" label="32017" default="false"/>
 		<setting id="excludeFilesRegex" type="text" label="32018" default="\.(jpg|idx|srt|nfo|sub|db|txt)$"/>
 		<setting id="serviceEnabled" type="bool" label="32027" default="true"/>

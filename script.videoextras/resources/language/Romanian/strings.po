@@ -80,6 +80,10 @@ msgctxt "#32111"
 msgid "TV Shows"
 msgstr "Seriale"
 
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Videoclipuri muzicale"
+
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Intrigă"

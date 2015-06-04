@@ -50,6 +50,7 @@ if __name__ == '__main__':
         # Start by removing the database
         extrasDb = ExtrasDB()
         extrasDb.cleanDatabase()
+        del extrasDb
 
         # Also tidy up any of the cache files that exist
         CacheCleanup.removeAllCachedFiles()
