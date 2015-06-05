@@ -151,7 +151,10 @@ def discover(device=None):
     for attempt in (0,1):
         for s,i in sockets:
             util.DEBUG_LOG('  o-> Broadcasting to {0}: {1}'.format(i.name,i.broadcast))
-            s.sendto(packet, (i.broadcast, DEVICE_DISCOVERY_PORT))
+            try:
+                s.sendto(packet, (i.broadcast, DEVICE_DISCOVERY_PORT))
+            except:
+                util.ERROR()
 
         end = time.time() + 0.25 #250ms
 
