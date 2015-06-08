@@ -1,0 +1,366 @@
+# XBMC Media Center language file
+# Addon Name: Kodi File Cleaner
+# Addon id: script.filecleaner
+# Addon version: 4.0.0
+# Addon Provider: Anthirian, drewzh
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-04-10 16:23+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Regularly deletes old movies, TV show episodes and music videos"
+msgstr "Regularnie usuwa stare filmy, seriale i teledyski"
+
+msgctxt "Addon Description"
+msgid "This addon will automatically scan your library for watched movies, TV show episodes and music videos, and delete them from the file system based on numerous critia such as age, rating, free disk space, etc. All these options and more can be configured via the addon's settings. Also make sure you set the correct path to the disk you wish to check for free space, especially when you store your videos on a secondary drive or a network share. Through the settings you can view which videos have been cleaned.\n\nBeware!\nThis addon has the potential to erase your entire video collection! Please make sure you understand exactly what this addon is designed to do before enabling any type of cleaning in the settings. I will not be held responsible for loss of data due to user error.\n\nOriginally developed by Andrew 'drewzh' Higginson (xbmcfilecleaner@drewzh.com)"
+msgstr "Ta wtyczka automatycznie skanuje bibliotekę w poszukiwaniu obejrzanych filmów, seriali i teledysków następnie usuwa je na podstawie wielu kryteriów takie jak: wiek, ocena, ilość miejsca na dysku, itd. Wszystkie te i więcej opcji można skonfigurować poprzez menu ustawień wtyczki. Upewnij się, że podałeś poprawną ścieżkę do dysku w celu sprawdzania wolnego miejsca, zwłaszcza w sytuacji posiadania filmów na innym dysku lub udziale sieciowym. W ustawieniach możesz sprawdzić, które wideo zostało usunięte.\n\nUWAGA!\nTa wtyczka może potencjalnie usunąć całą Twoją kolekcję! Upewnij się, że w pełni rozumiesz do czego jest ta wtyczka stworzona zanim włączysz jakąkolwiek opcję czyszczenia. Nie odpowiadam za stracone dane w wyniku błędu użytkownika.\n\nStworzony przez Andrew 'drewzh' Higginson (xbmcfilecleaner@drewzh.com)"
+
+msgctxt "Addon Disclaimer"
+msgid "It is recommended to not delete videos permanently until you are familiar with all of the settings."
+msgstr "Zalecamy nie usuwać permanentnie wideo dopóki nie znasz wszystkich opcji"
+
+
+# Actions section
+# =======================
+msgctxt "#32100"
+msgid "Actions"
+msgstr "Akcje"
+
+msgctxt "#32101"
+msgid "[B]Which videos do you want to clean?[/B]"
+msgstr "[B]Które wideo chcesz usunąć?[/B]"
+
+msgctxt "#32102"
+msgid "Default action"
+msgstr "Domyślna akcja"
+
+msgctxt "#32103"
+msgid "Clean up"
+msgstr "Wyczyść"
+
+msgctxt "#32104"
+msgid "View log"
+msgstr "Pokaż log"
+
+msgctxt "#32105"
+msgid "Cleaning type"
+msgstr "Typ czyszczenia"
+
+msgctxt "#32106"
+msgid "Move elsewhere"
+msgstr "Przenieś gdzie indziej"
+
+msgctxt "#32107"
+msgid "Delete permanently"
+msgstr "Usuń permanentnie"
+
+msgctxt "#32108"
+msgid "[I]Please specify where to store watched videos [/I]"
+msgstr "[I]Wskaż lokalizacje do zapisywania obejrzanych wideo [/I]"
+
+msgctxt "#32109"
+msgid "Holding folder location"
+msgstr "Lokalizacja folderu zawierającego"
+
+msgctxt "#32110"
+msgid "Create subdirectories (i.e. [B]../Artist[/B], [B]../Movie[/B] and [B]../Show[/B])"
+msgstr "Stwórz pod-foldery (np. [B]../Artist[/B], [B]../Movie[/B] and [B]../Show[/B])"
+
+msgctxt "#32111"
+msgid "Clean movies"
+msgstr "Wyczyść filmy"
+
+msgctxt "#32112"
+msgid "Clean TV shows"
+msgstr "Wyczyść seriale"
+
+msgctxt "#32113"
+msgid "Clean music videos"
+msgstr "Wyczyść teledyski"
+
+msgctxt "#32114"
+msgid "Clean Kodi video library afterwards"
+msgstr "Wyczyść bibliotekę wideo Kodi po zakończeniu"
+
+msgctxt "#32115"
+msgid "Also delete empty folders"
+msgstr "Usuń również puste foldery"
+
+msgctxt "#32116"
+msgid "Ignore files with the following extensions (separate with commas)"
+msgstr "Ignoruj pliki z następującymi rozszerzeniami (oddziel je przecinkiem)"
+
+msgctxt "#32117"
+msgid "Also clean related files with similar names (e.g. subtitles)"
+msgstr "Wyczyść pliki z podobną nazwą (np. napisy)"
+
+
+
+# Frequency section
+# =======================
+msgctxt "#32200"
+msgid "Frequency"
+msgstr "Częstotliwość"
+
+msgctxt "#32201"
+msgid "[B]When should watched videos be cleaned?[/B]"
+msgstr "[B]Kiedy powinny być czyszczone obejrzane wideo?[/B]"
+
+msgctxt "#32202"
+msgid "Run as a service"
+msgstr "Uruchom jako usługę"
+
+msgctxt "#32203"
+msgid "Delayed start (in minutes)"
+msgstr "Opóźniony start (w minutach)"
+
+msgctxt "#32204"
+msgid "Scan interval (in minutes)"
+msgstr "Interwał skanowania (w minutach)"
+
+msgctxt "#32205"
+msgid "Do not clean during playback"
+msgstr "Nie czyść podczas odtwarzania"
+
+msgctxt "#32206"
+msgid "Start cleaning right after playback stops"
+msgstr "Zacznij czyszczenie zaraz po zakończeniu odtwarzania"
+
+
+# Conditions section
+# =======================
+msgctxt "#32300"
+msgid "Conditions"
+msgstr "Warunki"
+
+msgctxt "#32301"
+msgid "[B]Which conditions must be met before a watched video is cleaned?[/B]"
+msgstr "[B]Jakie warunki muszą być spełnione zanim obejrzane wideo zostanie wyczyszczone?[/B]"
+
+msgctxt "#32302"
+msgid "Wait a certain number of days after watching before cleaning"
+msgstr "Odczekaj określoną ilość dni po obejrzeniu zanim wyczyścisz"
+
+msgctxt "#32303"
+msgid "Days after which a video is considerd to have expired"
+msgstr "Dni po których wideo jest określane jako wygasłe"
+
+msgctxt "#32304"
+msgid "Only delete videos with low ratings"
+msgstr "Usuwaj tylko wideo z niską oceną"
+
+msgctxt "#32305"
+msgid "[I]Note that music videos do not have ratings and ignore these settings [/I]"
+msgstr "[I]Pamiętaj, że teledyski nie mają ocen i ignoruj te ustawienia [/I]"
+
+msgctxt "#32306"
+msgid "Delete a video with a rating lower than"
+msgstr "Usuń wideo z oceną niższą niż"
+
+msgctxt "#32307"
+msgid "Ignore videos without rating"
+msgstr "Ignoruj wideo bez oceny"
+
+msgctxt "#32308"
+msgid "Only clean videos if low on disk space"
+msgstr "Czyść wideo tylko jeżeli jest mało wolnego miejsca na dysku"
+
+msgctxt "#32309"
+msgid "Minimum percentage of free disk space"
+msgstr "Minimalny procent wolnego miejsca na dysku"
+
+msgctxt "#32310"
+msgid "Path to check for free disk space"
+msgstr "Ścieżka do sprawdzania ilości wolnego miejsca"
+
+msgctxt "#32311"
+msgid "Do not clean videos that are still in progress"
+msgstr "Nie czyść wideo, które są w trakcie oglądania"
+
+msgctxt "#32312"
+msgid "[I]Note that music videos cannot be partially played and will ignore this [/I]"
+msgstr "[I]Pamiętaj, że teledysków nie można częściowo obejrzeć i ignoruj to [/I]"
+
+
+# Exclusions section
+# ==================
+msgctxt "#32400"
+msgid "Exclusions"
+msgstr "Wyjątki"
+
+msgctxt "#32401"
+msgid "[B]Which paths must not be touched?[/B]"
+msgstr "[B]Które ścieżki nie mają być ruszane?[/B]"
+
+msgctxt "#32402"
+msgid "Enable exclusions"
+msgstr "Włącz wyjątki"
+
+msgctxt "#32403"
+msgid "[I]Use the same type of path (local, NFS, SMB) you use for the library [/I]"
+msgstr "[I]Użyj tego samego typu ścieżki (lokalnie, NFS, SMB) jakiego używasz w swojej bibliotece [/I]"
+
+msgctxt "#32404"
+msgid "Path to exclude"
+msgstr "Ścieżka do wykluczenia"
+
+msgctxt "#32405"
+msgid "Reset exclusions"
+msgstr "Reset wykluczeń"
+
+# Notifications section
+# =======================
+msgctxt "#32500"
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+msgctxt "#32501"
+msgid "[B]How much information do you want to get?[/B]"
+msgstr "[B]Ile informacji chcesz otrzymać?[/B]"
+
+msgctxt "#32502"
+msgid "Show notifications"
+msgstr "Pokaż powiadomienia"
+
+msgctxt "#32503"
+msgid "Do not show notifications during video playback"
+msgstr "Nie pokazuj powiadomień podczas odtwarzania"
+
+msgctxt "#32504"
+msgid "Enable debug messages"
+msgstr "Włącz wiadomości debugera"
+
+
+# Localization strings
+# for Kodi notifications
+# =======================
+msgctxt "#32511"
+msgid "Error reading hard disk. Please check your settings."
+msgstr "Błąd odczytu dysku twardego. Sprawdź swoje ustawienia."
+
+msgctxt "#32512"
+msgid "Could not check disk space. Access denied."
+msgstr "Nie można sprawdzić wolnego miejsca. Brak dostępu."
+
+msgctxt "#32513"
+msgid "Could not check disk space. Path does not exist."
+msgstr "Nie można sprawdzić wolnego miejsca. Ścieżka nie istnieje."
+
+msgctxt "#32514"
+msgid "Cleaning results"
+msgstr "Wynik czyszczenia"
+
+msgctxt "#32515"
+msgid "movie(s)"
+msgstr "film(-ów)"
+
+msgctxt "#32516"
+msgid "episode(s)"
+msgstr "odcinek(-ów)"
+
+msgctxt "#32517"
+msgid "music video(s)"
+msgstr "teledysk(-ów)"
+
+#Suffix for cleaning results. Do not remove the single leading whitespace!
+msgctxt "#32518"
+msgid " were cleaned"
+msgstr " zostało wyczyszczonych"
+
+msgctxt "#32519"
+msgid "Would you like to view the cleaning log?"
+msgstr "Chcesz wyświetlić dziennik czyszczenia?"
+
+msgctxt "#32520"
+msgid "No cleaning required"
+msgstr "Nie wymaga czyszczenia"
+
+msgctxt "#32521"
+msgid "The destination folder is not set up."
+msgstr "Folder docelowy nie określony"
+
+msgctxt "#32522"
+msgid "You must first select a holding folder."
+msgstr "Musisz najpierw podać folder zawierający"
+
+msgctxt "#32523"
+msgid "Would you like to do this now?"
+msgstr "Czy chcesz to zrobić teraz?"
+
+# Temporary, until Linux remote share disk space checks are supported
+msgctxt "#32524"
+msgid "Remote disk space checking is not supported for your OS yet"
+msgstr "Zdalne sprawdzanie pojemności dysku nie jest obsługiwane przez Twój system operacyjny"
+
+# Log section
+# =======================
+
+msgctxt "#32600"
+msgid "History"
+msgstr "Historia"
+
+msgctxt "#32601"
+msgid "[B]See which files have been cleaned recently.[/B]"
+msgstr "[B]Zobacz jakie pliki ostatnio usunięto.[/B]"
+
+msgctxt "#32602"
+msgid "View cleaning history"
+msgstr "Pokaż historię czyszczenia"
+
+msgctxt "#32603"
+msgid "[B]Cleaning Log[/B]"
+msgstr "[B]Dziennik czyszczenia[/B]"
+
+msgctxt "#32604"
+msgid "Are you sure?"
+msgstr "Jesteś pewny?"
+
+msgctxt "#32605"
+msgid "This will trim the log file, keeping the first 25 lines."
+msgstr "Ta akcja ograniczy dziennik do pierwszych 25 linijek."
+
+msgctxt "#32606"
+msgid "This will delete the entire contents of the log file."
+msgstr "Ta akcja wyczyści cały dziennik."
+
+msgctxt "#32607"
+msgid "This action is irreversible. Do you wish to continue?"
+msgstr "Ta akcja jest nieodwracalna. Chcesz kontynuować?"
+
+msgctxt "#32608"
+msgid "Trim"
+msgstr "Trymować"
+
+msgctxt "#32609"
+msgid "Clear"
+msgstr "Oczyścić"
+
+msgctxt "#32610"
+msgid "This will reset any exclusions you have set up."
+msgstr "Wszystkie Twoje wykluczenia zostaną zresetowane."
+
+msgctxt "#32611"
+msgid "Errors occurred while moving"
+msgstr "Błedy podczas przenoszenia"
+
+msgctxt "#32612"
+msgid "Not all files could be moved to the holding folder."
+msgstr "Nie wszystkie pliki mogły zostać przeniesione do folderu"
+
+msgctxt "#32613"
+msgid "Ensure you have appropriate permissions and try again."
+msgstr "Upewnij się, że masz odpowiednie uprawnienia i spróbuj ponownie"
+
+msgctxt "#32614"
+msgid "Please check the log file for details and move the particular files manually."
+msgstr "Sprawdź plik log po szczegóły następnie przenieś odpowiednie pliki ręcznie"

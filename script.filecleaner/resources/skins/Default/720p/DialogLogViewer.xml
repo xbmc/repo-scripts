@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window>
+    <defaultcontrol>203</defaultcontrol>
+    <animation effect="fade" time="350">WindowOpen</animation>
+    <animation effect="fade" time="350">WindowClose</animation>
+    <zorder>1</zorder>
+    <controls>
+        <control type="image" id="101">
+            <description>Background</description>
+            <width>1280</width>
+            <height>720</height>
+            <visible>true</visible>
+            <colordiffuse>FF43C6DB</colordiffuse>
+            <texture border="40">DialogBack2.png</texture>
+        </control>
+        <control type="image" id="102">
+            <description>Dialog Header image</description>
+            <posx>40</posx>
+            <posy>10</posy>
+            <width>1280</width>
+            <height>50</height>
+            <texture>dialogheader.png</texture>
+        </control>
+        <control type="image" id="103">
+            <description>Separator</description>
+            <posx>40</posx>
+            <posy>80r</posy>
+            <width>1225</width>
+            <height>2</height>
+            <texture>separator.png</texture>
+        </control>
+        <control type="label" id="201">
+            <description>Window Title</description>
+            <posx>565</posx> <!-- window width / 2 - label width / 2 -->
+            <posy>25</posy>
+            <width>150</width>
+            <height>20</height>
+            <aligny>center</aligny>
+        </control>
+        <control type="textbox" id="202">
+            <description>Log Contents</description>
+            <posx>30</posx>
+            <posy>60</posy>
+            <width>1210</width>
+            <height>580</height>
+            <align>left</align>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <textcolor>CCFFFFFF</textcolor>
+            <pagecontrol>203</pagecontrol>
+            <autoscroll delay="3000" time="1000" repeat="10000">!Control.HasFocus(203)</autoscroll>
+        </control>
+        <control type="scrollbar" id="203">
+            <description>Scrollbar for Log</description>
+            <posx>1240</posx>
+            <posy>60</posy>
+            <width>25</width>
+            <height>580</height>
+            <texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+            <texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+            <texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+            <textureslidernib>ScrollBarNib.png</textureslidernib>
+            <textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
+            <colordiffuse>FFCCCCCC</colordiffuse>
+            <pulseonselect>True</pulseonselect>
+            <orientation>vertical</orientation>
+            <showonepage>true</showonepage>
+            <onleft>302</onleft>
+            <onright>301</onright>
+        </control>
+        <control type="button" id="301">
+            <description>Trim Button</description>
+            <posx>320</posx>
+            <posy>65r</posy>
+            <width>250</width>
+            <height>40</height>
+            <align>center</align>
+            <label>$ADDON[script.filecleaner 32608]</label>
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <colordiffuse>FF43C6DB</colordiffuse>
+            <onright>302</onright>
+            <onleft>203</onleft>
+            <onup>203</onup>
+            <ondown>203</ondown>
+        </control>
+        <control type="button" id="302">
+            <description>Clear Button</description>
+            <posx>580r</posx>
+            <posy>65r</posy>
+            <width>250</width>
+            <height>40</height>
+            <align>center</align>
+            <label>$ADDON[script.filecleaner 32609]</label>
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>203</onright>
+            <onleft>301</onleft>
+            <onup>203</onup>
+            <ondown>203</ondown>
+        </control>
+        <control type="button" id="303">
+            <description>Close Window Button</description>
+            <posx>1190</posx>
+            <posy>10</posy>
+            <width>64</width>
+            <height>32</height>
+            <visible>System.GetBool(input.enablemouse)</visible>
+            <texturenofocus border="5">DialogCloseButton.png</texturenofocus>
+            <texturefocus border="5">DialogCloseButton-focus.png</texturefocus>
+        </control>
+    </controls>
+</window>

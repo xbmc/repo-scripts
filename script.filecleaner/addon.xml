@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.filecleaner" name="Kodi File Cleaner" version="4.1.0" provider-name="Anthirian, drewzh">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0" />
+        <import addon="xbmc.json" version="6.20.0" />
+        <import addon="xbmc.gui" version="5.3.0" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.service" library="service.py" start="login" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Regularly deletes old movies, TV show episodes and music videos</summary>
+        <description lang="en">
+This addon will automatically scan your library for watched movies, TV show episodes and music videos, and delete them from the file system based on numerous critia such as age, rating, free disk space, etc. All these options and more can be configured via the addon's settings. Also make sure you set the correct path to the disk you wish to check for free space, especially when you store your videos on a secondary drive or a network share. Through the settings you can view which videos have been cleaned.
+
+Beware!
+This addon has the potential to erase your entire video collection! Please make sure you understand exactly what this addon is designed to do before enabling any type of cleaning in the settings. I will not be held responsible for loss of data due to user error.
+
+Originally developed by Andrew 'drewzh' Higginson (xbmcfilecleaner@drewzh.com)
+        </description>
+        <summary lang="nl">Verwijdert regelmatig oude films, afleveringen van TV-series en videoclips</summary>
+        <description lang="nl">
+Deze addon zal automatisch de videobibliotheek scannen op zoek naar bekeken films, afleveringen van TV-series en videoclips, en deze van de harde schijf verwijderen en daarbij letten op verscheidene criteria, zoals leeftijd, cijfer, vrije harde schijfruimte, etc. Al deze opties, en andere, zijn in te stellen via het optiesmenu van de addon. Let er daarbij ook op dat je het juiste pad instelt naar de schijf die je wil gebruiken voor het controleren van de vrije schijfruimte, met name als je videocollectie op een andere harde schijf staat of op een netwerkshare. Via de instellingen kun je tevens bekijken welke video's er opgeschoond zijn.
+
+Waarschuwing!
+Deze addon kan in een keer je hele videocollectie verwijderen! Zorg dat je precies weet wat deze addon doet voor je voor een type video's het opschonen activeert in de opties. Ik ben niet verantwoordelijk voor verlies van gegevens door handelen van de gebruiker.
+
+Oorspronkelijk ontwikkeld door Andrew 'drewzh' Higginson (xbmcfilecleaner@drewzh.com)
+        </description>
+        <disclaimer lang="en">It is recommended to not delete videos permanently until you are familiar with all of the settings.</disclaimer>
+        <disclaimer lang="nl">Het is verstandig om videos pas permanent te verwijderen als je bekend bent met alle instellingen.</disclaimer>
+        <platform>all</platform>
+        <language/>
+        <source>https://github.com/Anthirian/script.filecleaner</source>
+        <forum>http://forum.kodi.tv/showthread.php?tid=162517</forum>
+        <website/>
+        <email/>
+    </extension>
+</addon>
+

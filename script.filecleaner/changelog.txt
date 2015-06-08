@@ -1,0 +1,111 @@
+Version 4.1.0
+==============
+- [NEW] Helix compatibility
+- [NEW] Show information dialogs when errors occur
+- [NEW] Change name to Kodi File Cleaner
+- [NEW] Kodi library cleaning occurs silently
+- [NEW] Allow users to reset excluded paths by pressing a button
+
+- [FIX] Fall back to copy and delete in case of permission problems
+- [FIX] Log file was not being created automatically
+
+Version 4.0.1
+==============
+- [NEW] Specify whether to clean up or view log on manual run
+
+- [FIX] A memory leak could occur when the user enabled deleting empty folders
+- [FIX] Disabling the addon froze XBMC completely
+- [FIX] Video library was not being cleaned up afterwards
+
+Version 4.0.0
+==============
+- [NEW] Gotham compatibility
+- [NEW] Start addon manually
+- [NEW] Allow disabling the service
+- [NEW] Log file viewer (accessible from settings)
+- [NEW] Support for stacked movies (does not include DVD folder structures, e.g. VIDEO_TS)
+- [NEW] Polish translation (thanks struart)
+
+- [FIX] Subtitles with language codes were not cleaned
+- [FIX] Changed localizations to use the new PO structure
+- [FIX] Increased the maximum allowed scan interval
+- [FIX] Videos are now moved by default instead of deleted, to prevent loss of data
+- [FIX] Improved support for unicode filenames
+
+Version 3.2.1
+==============
+- [FIX] Related files were not being cleaned
+
+Version 3.2.0
+==============
+- [NEW] Clean related files with similar names (e.g. subtitles) (thanks WoLpH)
+
+Version 3.1.0
+===============
+- [NEW] Exclude up to three file paths from being cleaned
+
+Version 3.0.2
+===============
+- [FIX] Filenames with non-ASCII characters were not being cleaned
+
+Version 3.0.1
+===============
+- [FIX] Setting a different locale broke the addon
+
+Version 3.0.0
+===============
+- [NEW] Frodo compatibility
+- [NEW] Music videos support (please use TheAudioDB.com scraper)
+- [NEW] Only clean while not playing video
+- [NEW] Do not clean videos that are in progress
+- [NEW] Do not clean during video playback
+- [NEW] Hide notifications during video playback
+- [NEW] Delete the parent folder of the file being cleaned, if that folder becomes empty (configurable)
+- [NEW] No more individual notifications, but a summary instead (see logs for more details)
+- [NEW] JSON-RPC is used to find watched videos (backward compatibility with Eden is effectively lost)
+
+- [FIX] Redesigned addon settings
+
+Version 2.0.0
+===============
+- [NEW] Eden compatibility
+- [NEW] Addon now runs as a service
+- [NEW] Dutch language support
+- [NEW] Set delayed start
+- [NEW] Set scan interval
+
+- [FIX] Totally revamped the settings page
+- [FIX] Removed obsolete setting to delete files after x days in the holding folder
+- [FIX] Users could not disable expiration checks
+- [FIX] Disk space checks did not work on Windows
+- [FIX] Enhanced queries used to select files to be deleted
+- [FIX] Updated text strings
+- [FIX] More more descriptive notifications and logging
+
+Version 1.3.5
+===============
+- [FIX] Various bug fixes
+
+Version 1.2.0
+===============
+- [NEW] Delete based on rating
+- [NEW] Move videos to holding folder instead of deleting
+
+- [FIX] Code cleanup
+
+Version 1.1.2
+===============
+- [FIX] Adhere to file naming conventions
+- [FIX] Updated contact details
+- [FIX] Fixed autoStart method call
+
+Version 1.1.0
+===============
+- [FIX] Almost entire rewrite of script
+- [FIX] Created service loop instead of relying on AlarmClock
+- [FIX] Setting changes will now be detected by the running service
+- [FIX] Removed 'delete only if watched' option and instead will ONLY delete watched files
+
+Version 1.0.0
+===============
+- [NEW] Intial version
