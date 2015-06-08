@@ -35,3 +35,8 @@
 - Changed the XML Filename,since the Name of the Screensaver has now a space in it
 0.8.9
 - Added Extension Point so it could be added on the Random Screen Saver
+0.9
+- Error Corrected now the Pagenr is set up correctly
+0.9.1
+- Seitnr change to str for correct Display
+- Changed Athor to L0RE instead of L0RErepo

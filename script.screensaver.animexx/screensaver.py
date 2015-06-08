@@ -45,7 +45,7 @@ class Animexx(xbmcgui.WindowXMLDialog):
 
 #Loads JSON FEED
     def Feedladen(self,seitenr):
-       self.url="https://ws.animexx.de/json/7-0328ijel/fanart/get_new/?seite=seitenr"
+       self.url="https://ws.animexx.de/json/7-0328ijel/fanart/get_new/?seite=" + str(seitenr)
        if self.debug=="true":
           xbmc.log("Fanartsaver - Feedladen - Get Page: "+ str(seitenr))
        # JSON will be loaded in "Struktur"
