@@ -1,0 +1,181 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: French (Canada) (http://www.transifex.com/projects/p/xbmc-addons/language/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "Protéger le contenu de Kodi avec un NIP"
+
+msgctxt "Addon Description"
+msgid "Force users to enter the correct pin code for given content."
+msgstr "Forcer les utilisateurs à saisir le bon NIP pour un contenu donné."
+
+msgctxt "#32001"
+msgid "Pin Sentry"
+msgstr "Sentinelle de NIP"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Configuration"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Débogage"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Activer la journalisation de débogage"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Opérations"
+
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "Longueur de NIP"
+
+msgctxt "#32007"
+msgid "Set Pin Value"
+msgstr "Définir la valeur du NIP"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** AVERTISSEMENT : NIP NON DÉFINI ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "Notification de NIP invalide"
+
+msgctxt "#32010"
+msgid "Popup Notification"
+msgstr "Notification de fenêtre contextuelle"
+
+msgctxt "#32011"
+msgid "Dialog Box"
+msgstr "Boîte de dialogue"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Aucun"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Retour arrière"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Terminé"
+
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "Saisir le NIP"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "NIP erroné"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "Saisir le NIP existant"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "Saisir le nouveau NIP"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "Saisir le nouveau NIP de nouveau"
+
+msgctxt "#32108"
+msgid "Newly entered pins do not match, pin remains unchanged."
+msgstr "Les nouveaux NIP saisis ne correspondent pas. Le NIP est inchangé."
+
+msgctxt "#32109"
+msgid "Incorrect number of digits entered for the pin."
+msgstr "Le nombre de chiffres de NIP saisi est invalide."
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "Nettoyer la base de données"
+
+msgctxt "#32114"
+msgid "Set Permissions"
+msgstr "Définir les permissions"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Avancé"
+
+msgctxt "#32116"
+msgid "Only Enforce Pin Between Set Times"
+msgstr "Ne faire respecter le NIP que durant des plages horaires définies"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Heure de début"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Heure de fin"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Arrière-plan"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Noir"
+
+msgctxt "#32122"
+msgid "PinSentry"
+msgstr "Sentinelle de NIP"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Personnalisé"
+
+msgctxt "#32124"
+msgid "Custom Background Image"
+msgstr "Image d'arrière-plan personnalisée"
+
+msgctxt "#32125"
+msgid "Activity"
+msgstr "Activité"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "Vidéo en cours de lecture"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "Navigation"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "Plugiciels"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Émissions télé"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "Sagas"

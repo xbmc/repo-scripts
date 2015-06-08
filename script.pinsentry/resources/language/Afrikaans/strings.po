@@ -1,0 +1,73 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Afrikaans (http://www.transifex.com/projects/p/xbmc-addons/language/af/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: af\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Konfigurasie"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Ontfouting"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Stel ontfout log in staat"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Geen"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Klaar"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Gevorderde"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Eind Tyd"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Agtergrond"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Swart"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Verpersoonlikte"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "Inproppe"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Flieks"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV Programme"

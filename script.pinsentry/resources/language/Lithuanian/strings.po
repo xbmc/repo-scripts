@@ -1,0 +1,181 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Lithuanian (http://www.transifex.com/projects/p/xbmc-addons/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "Apsaugoti Kodi turinį PIN kodu"
+
+msgctxt "Addon Description"
+msgid "Force users to enter the correct pin code for given content."
+msgstr "Reikalauti vartotojų įvesti teisingą PIN kodą pasirinktam turiniui."
+
+msgctxt "#32001"
+msgid "Pin Sentry"
+msgstr "Pin Sentry"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Sąranka"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Derinimas"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Įjungti derinimo žurnalą"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Operacijos"
+
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "PIN ilgis"
+
+msgctxt "#32007"
+msgid "Set Pin Value"
+msgstr "Nustatyti PIN reikšmę"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** ĮSPĖJIMAS: PIN NENUSTATYTAS ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "Klaidingo PIN pranešimas"
+
+msgctxt "#32010"
+msgid "Popup Notification"
+msgstr "Iššokantis pranešimas"
+
+msgctxt "#32011"
+msgid "Dialog Box"
+msgstr "Dialogo langas"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Joks"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Atgal"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Baigta"
+
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "Įvesti PIN"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "Klaidingas PIN"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "Įveskite esamą PIN"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "Įveskite naują PIN"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "Pakartokite naują PIN"
+
+msgctxt "#32108"
+msgid "Newly entered pins do not match, pin remains unchanged."
+msgstr "Naujai įvesti PIN kodai nesutampa, PIN lieka nepakeistas."
+
+msgctxt "#32109"
+msgid "Incorrect number of digits entered for the pin."
+msgstr "Įvestas neteisinga PIN kodo skaitmenų skaičius."
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "Išvalyti duomenų bazę"
+
+msgctxt "#32114"
+msgid "Set Permissions"
+msgstr "Nustatyti leidimus"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Pažangus"
+
+msgctxt "#32116"
+msgid "Only Enforce Pin Between Set Times"
+msgstr "Reikalauti PIN tik šiame laiko tarpe"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Pradžios laikas"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Pabaigos laikas"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Fonas"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Juodas ekranas"
+
+msgctxt "#32122"
+msgid "PinSentry"
+msgstr "PinSentry"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Savas"
+
+msgctxt "#32124"
+msgid "Custom Background Image"
+msgstr "Savas fono atvaizdas"
+
+msgctxt "#32125"
+msgid "Activity"
+msgstr "Veikla"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "Atkuriamas vaizdo įrašas"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "Navigacija"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "Papildiniai"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmai"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV laidos"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "Filmų rinkiniai"

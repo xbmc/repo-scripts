@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.pinsentry" name="PinSentry" version="1.0.0" provider-name="robwebset">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.simplejson" version="3.3.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="plugin.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.service" library="service.py" start="login">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Kodi-Inhalt mit einem PIN-Code sichern</summary>
+		<summary lang="en">Protect Kodi Content With A Pin Code</summary>
+		<summary lang="en_US">Protect Kodi Content With A Pin Code</summary>
+		<summary lang="fr_CA">Protéger le contenu de Kodi avec un NIP</summary>
+		<summary lang="ko">PIN 코드로 Kodi 콘텐츠를 보호합니다</summary>
+		<summary lang="lt">Apsaugoti Kodi turinį PIN kodu</summary>
+		<summary lang="pl">Umożliwia zabezpieczenie zawartości Kodi przy pomocy kodu PIN.</summary>
+		<summary lang="pt_BR">Proteger o Conteúdo do Kodi com um Código Pin</summary>
+		<description lang="en">Force users to enter the correct pin code for given content.</description>
+		<description lang="en_US">Force users to enter the correct pin code for given content.</description>
+		<description lang="fr_CA">Forcer les utilisateurs à saisir le bon NIP pour un contenu donné.</description>
+		<description lang="ko">특정 콘텐츠에서 PIN 코드 입력을 요구합니다.</description>
+		<description lang="lt">Reikalauti vartotojų įvesti teisingą PIN kodą pasirinktam turiniui.</description>
+		<description lang="pl">Wymusza na użytkownikach wprowadzenie poprawnego kodu PIN, przez uzyskaniem dostępu do danej zawartości.</description>
+		<description lang="pt_BR">Força o usuário a entrar o código Pin correto para lhe dar acesso aos conteúdos.</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=228451</forum>
+		<source>https://github.com/robwebset/script.pinsentry</source>
+	</extension>
+</addon>

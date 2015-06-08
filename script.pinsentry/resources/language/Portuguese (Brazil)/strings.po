@@ -1,0 +1,181 @@
+# Kodi Media Center language file
+# Addon Name: PinSentry
+# Addon id: script.pinsentry
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "Proteger o Conteúdo do Kodi com um Código Pin"
+
+msgctxt "Addon Description"
+msgid "Force users to enter the correct pin code for given content."
+msgstr "Força o usuário a entrar o código Pin correto para lhe dar acesso aos conteúdos."
+
+msgctxt "#32001"
+msgid "Pin Sentry"
+msgstr "Pin Sentry"
+
+msgctxt "#32002"
+msgid "Setup"
+msgstr "Ajustes"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Depurando"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Ativar log de depuração"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Operações"
+
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "Tamanho Pin"
+
+msgctxt "#32007"
+msgid "Set Pin Value"
+msgstr "Setar o Valor do Pin"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** ALERTA: PIN NÃO FOI SETADO ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "Pin de Notificação Inválido"
+
+msgctxt "#32010"
+msgid "Popup Notification"
+msgstr "Popup Notificação"
+
+msgctxt "#32011"
+msgid "Dialog Box"
+msgstr "Caixa de Diálogo"
+
+msgctxt "#32012"
+msgid "None"
+msgstr "Nenhum"
+
+msgctxt "#32101"
+msgid "Backspace"
+msgstr "Backspace"
+
+msgctxt "#32102"
+msgid "Done"
+msgstr "Feito"
+
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "Entre com o Pin"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "Pin Inválido"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "Entre com o Pin Existente"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "Entre com o Novo Pin"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "Entre novamente com o Novo Pin"
+
+msgctxt "#32108"
+msgid "Newly entered pins do not match, pin remains unchanged."
+msgstr "Pins recém-introduzidos não são iguais, pin permanece inalterado."
+
+msgctxt "#32109"
+msgid "Incorrect number of digits entered for the pin."
+msgstr "Número de dígitos incorretos informados para o pin."
+
+msgctxt "#32113"
+msgid "Clean Database"
+msgstr "Limpar Banco de Dados"
+
+msgctxt "#32114"
+msgid "Set Permissions"
+msgstr "Setar Permissões"
+
+msgctxt "#32115"
+msgid "Advanced"
+msgstr "Avançado"
+
+msgctxt "#32116"
+msgid "Only Enforce Pin Between Set Times"
+msgstr "Somente Requerer Pin entre Ajustes de Hora"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Hora de Início"
+
+msgctxt "#32118"
+msgid "End Time"
+msgstr "Hora Término"
+
+msgctxt "#32120"
+msgid "Background"
+msgstr "Imagem de fundo"
+
+msgctxt "#32121"
+msgid "Black"
+msgstr "Tela preta"
+
+msgctxt "#32122"
+msgid "PinSentry"
+msgstr "PinSentry"
+
+msgctxt "#32123"
+msgid "Custom"
+msgstr "Personalizado"
+
+msgctxt "#32124"
+msgid "Custom Background Image"
+msgstr "Imagem de Fundo Customizada"
+
+msgctxt "#32125"
+msgid "Activity"
+msgstr "Atividade"
+
+msgctxt "#32126"
+msgid "Video Playing"
+msgstr "Vídeo Em Reprodução"
+
+msgctxt "#32127"
+msgid "Navigation"
+msgstr "Navegação"
+
+msgctxt "#32128"
+msgid "Plugins"
+msgstr "Plugins"
+
+msgctxt "#32201"
+msgid "Movies"
+msgstr "Filmes"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "Seriados"
+
+msgctxt "#32203"
+msgid "Movie Sets"
+msgstr "Coletâneas"
