@@ -36,6 +36,10 @@ msgctxt "#32049"
 msgid "Columns"
 msgstr "Lajur"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Folder"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Seni Peminat"
@@ -55,6 +59,10 @@ msgstr "Atas"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "Bawah"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Resap Silang"
 
 msgctxt "#32079"
 msgid "Startup"

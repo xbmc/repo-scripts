@@ -352,7 +352,15 @@ msgctxt "#32081"
 msgid "Set Volume On Startup To"
 msgstr ""
 
-#empty strings from id 32082 to 32099
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr ""
+
+#empty strings from id 32084 to 32099
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"

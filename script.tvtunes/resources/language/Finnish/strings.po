@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Näytönsäästäjä"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Kansionimet"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanitaide"
@@ -55,6 +59,10 @@ msgstr "Ylös"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "Alas"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Ristihäivytys"
 
 msgctxt "#32201"
 msgid "Movies"

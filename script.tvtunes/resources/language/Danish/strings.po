@@ -108,6 +108,14 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Pauseskærm"
 
+msgctxt "#32046"
+msgid "Random"
+msgstr "Tilfældig"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Mappe"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fankunst"
@@ -127,6 +135,10 @@ msgstr "Top"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "Bund"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Glidende overgang"
 
 msgctxt "#32079"
 msgid "Startup"

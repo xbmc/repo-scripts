@@ -20,6 +20,10 @@ msgctxt "#32036"
 msgid "Never"
 msgstr "هرگز"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "پوشه"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "باز پخش"

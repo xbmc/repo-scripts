@@ -169,7 +169,7 @@ class Settings():
 
     # Calculates the regular expression to use to search for theme files
     @staticmethod
-    def getThemeFileRegEx(searchDir=None, extensionOnly=False):
+    def getThemeFileRegEx(searchDir=None, extensionOnly=False, audioOnly=False):
         fileTypes = "mp3"  # mp3 is the default that is always supported
         if(__addon__.getSetting("wma") == 'true'):
             fileTypes = fileTypes + "|wma"
@@ -179,6 +179,17 @@ class Settings():
             fileTypes = fileTypes + "|m4a"
         if(__addon__.getSetting("wav") == 'true'):
             fileTypes = fileTypes + "|wav"
+        if(__addon__.getSetting("wav") == 'true'):
+            fileTypes = fileTypes + "|wav"
+        if not audioOnly:
+            if(__addon__.getSetting("mp4") == 'true'):
+                fileTypes = fileTypes + "|mp4"
+            if(__addon__.getSetting("mkv") == 'true'):
+                fileTypes = fileTypes + "|mkv"
+            if(__addon__.getSetting("avi") == 'true'):
+                fileTypes = fileTypes + "|avi"
+            if(__addon__.getSetting("mov") == 'true'):
+                fileTypes = fileTypes + "|mov"
         themeRegEx = '(theme[ _A-Za-z0-9.-]*.(' + fileTypes + ')$)'
         # If using the directory method then remove the requirement to have "theme" in the name
         if (searchDir is not None) and Settings.isThemeDirEnabled():

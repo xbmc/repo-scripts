@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# Reference:
-# http://wiki.xbmc.org/index.php?title=Audio/Video_plugin_tutorial
 import sys
 import os
 import re
@@ -291,6 +289,7 @@ class MenuNavigator():
             xbmc.Player().play(playlist)
         else:
             log("No themes found for %s" % path)
+        del themeFiles
 
     def _stopPlayingTheme(self):
         # Check if a tune is already playing
@@ -395,6 +394,9 @@ if __name__ == '__main__':
     addon_handle = int(sys.argv[1])
     args = urlparse.parse_qs(sys.argv[2][1:])
 
+    # Record what the plugin deals with, files in our case
+    xbmcplugin.setContent(addon_handle, 'files')
+
     # Get the current mode from the arguments, if none set, then use None
     mode = args.get('mode', None)
 
@@ -405,6 +407,8 @@ if __name__ == '__main__':
         log("TvTunesPlugin: Mode is NONE - showing root menu")
         menuNav = MenuNavigator(base_url, addon_handle)
         menuNav.showRootMenu()
+        del menuNav
+
     elif mode[0] == 'folder':
         log("TvTunesPlugin: Mode is FOLDER")
 
@@ -414,6 +418,7 @@ if __name__ == '__main__':
         if (foldername is not None) and (len(foldername) > 0):
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.showFolder(foldername[0])
+            del menuNav
 
     elif mode[0] == 'findtheme':
         log("TvTunesPlugin: Mode is FIND THEME")
@@ -429,6 +434,7 @@ if __name__ == '__main__':
         # Perform the fetch
         menuNav = MenuNavigator(base_url, addon_handle)
         menuNav.fetchTheme(title[0], path[0], originaltitle)
+        del menuNav
 
     elif mode[0] == 'filter':
         log("TvTunesPlugin: Mode is FILTER")
@@ -451,6 +457,7 @@ if __name__ == '__main__':
         # Only one action at the moment
         menuNav = MenuNavigator(base_url, addon_handle)
         menuNav.fetchAllMissingThemes()
+        del menuNav
 
     elif mode[0] == 'screensaver':
         log("TvTunesPlugin: Mode is Screensaver")

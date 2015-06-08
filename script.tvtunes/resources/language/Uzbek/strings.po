@@ -28,6 +28,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Ekran saqlovchi"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Jild"
+
 msgctxt "#32059"
 msgid "Cast"
 msgstr "Rollarda"

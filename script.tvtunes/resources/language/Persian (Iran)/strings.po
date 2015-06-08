@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "محافظ صفحه"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "پوشه"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "فن آرت"

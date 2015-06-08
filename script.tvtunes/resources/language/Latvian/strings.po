@@ -40,6 +40,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Ekrānsaudzētājs"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Mape"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanu māksla"

@@ -52,6 +52,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Заставка"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Папка"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Фанарт"
@@ -71,6 +75,10 @@ msgstr "Вверху"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "Внизу"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Затухание"
 
 msgctxt "#32079"
 msgid "Startup"

@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Skermskut"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Vouer"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Ondersteunerkuns"
@@ -47,6 +51,10 @@ msgstr "Duimnaelskets"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "Rolverdeling"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Kruisdemp"
 
 msgctxt "#32201"
 msgid "Movies"

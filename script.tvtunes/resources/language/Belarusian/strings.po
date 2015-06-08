@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Тэчка"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"
@@ -47,6 +51,10 @@ msgstr "Мініятуры"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "Cast"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Перакрыццё"
 
 msgctxt "#32079"
 msgid "Startup"

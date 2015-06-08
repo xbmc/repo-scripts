@@ -48,6 +48,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Skjávari"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Mappa"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Aðdáendamyndir"
@@ -59,6 +63,10 @@ msgstr "Smámynd"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "Leikarar"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Krossblanda"
 
 msgctxt "#32101"
 msgid "ERROR"

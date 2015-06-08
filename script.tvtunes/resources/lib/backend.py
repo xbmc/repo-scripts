@@ -24,7 +24,7 @@ from themeFinder import ThemeFiles
 ###################################
 # Custom Player to play the themes
 ###################################
-class Player(xbmc.Player):
+class TvTunesPlayer(xbmc.Player):
     def __init__(self, *args):
         # Record if the volume is currently altered
         self.hasChangedVolume = False
@@ -45,6 +45,8 @@ class Player(xbmc.Player):
         # Record the number of tracks left to play in the playlist
         # (Only used if skipping through tracks)
         self.remainingTracks = -1
+
+        self.playListItems = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
 
         # Save off the current repeat state before we started playing anything
         if xbmc.getCondVisibility('Playlist.IsRepeat'):
@@ -68,7 +70,7 @@ class Player(xbmc.Player):
 
     def restoreSettings(self):
         log("Player: Restoring player settings")
-        while self.isPlayingAudio():
+        while self.isPlaying():
             xbmc.sleep(1)
         # Restore repeat state
         if self.hasChangedRepeat:
@@ -90,14 +92,15 @@ class Player(xbmc.Player):
     def stop(self):
         log("Player: stop called")
         # Only stop if playing audio
-        if self.isPlayingAudio():
+        if self.isPlaying():
             xbmc.Player.stop(self)
         self.restoreSettings()
 
-    def play(self, item=None, listitem=None, windowed=False, fastFade=False):
+    def play(self, item=None, listitem=None, windowed=True, fastFade=False):
         # if something is already playing, then we do not want
         # to replace it with the theme
         if not self.isPlaying():
+            self.playListItems = item
             # Perform and lowering of the sound for theme playing
             self._lowerVolume()
 
@@ -120,7 +123,7 @@ class Player(xbmc.Player):
                 xbmc.Player.play(self, item=item, listitem=listitem, windowed=windowed)
 
                 # Wait until playing has started
-                while not self.isPlayingAudio():
+                while not self.isPlaying():
                     xbmc.sleep(30)
 
                 for step in range(0, (numSteps - 1)):
@@ -160,7 +163,7 @@ class Player(xbmc.Player):
                 log("Player: Playlist size = %d" % self.playlistSize)
                 # Check if we are limiting each track in the list
                 if not Settings.isLoop():
-                    # Already started laying the first, so the remaining number of
+                    # Already started playing the first, so the remaining number of
                     # tracks is one less than the total
                     self.remainingTracks = self.playlistSize - 1
                 self._setNextSkipTrackTime(self.startTime)
@@ -203,7 +206,7 @@ class Player(xbmc.Player):
 
     # Graceful end of the playing, will fade if set to do so
     def endPlaying(self, fastFade=False, slowFade=False):
-        if self.isPlayingAudio() and Settings.isFadeOut():
+        if self.isPlaying() and Settings.isFadeOut():
             cur_vol = self._getVolume()
 
             # Calculate how fast to fade the theme, this determines
@@ -234,7 +237,7 @@ class Player(xbmc.Player):
 
     # Checks if the play duration has been exceeded and then stops playing
     def checkEnding(self):
-        if self.isPlayingAudio() and (self.startTime > 0):
+        if self.isPlaying() and (self.startTime > 0):
             # Get the current time
             currTime = int(time.time())
 
@@ -272,6 +275,23 @@ class Player(xbmc.Player):
         if trackLimit > trackLength and (Settings.isLoop() or self.remainingTracks > 0):
             self.remainingTracks = self.remainingTracks - 1
             self.trackEndTime = self.trackEndTime + trackLength
+
+    # Check if tTvTunes is playing a video theme
+    def isPlayingTheme(self):
+        # All audio is considered a theme
+        if self.isPlayingAudio():
+            return True
+
+        if not self.isPlayingVideo():
+            return False
+        # Get the currently playing file
+        filePlaying = self.getPlayingFile()
+
+        i = 0
+        while i < self.playlistSize:
+            if self.playListItems[i].getfilename() == filePlaying:
+                return True
+        return False
 
 
 ###############################################################
@@ -336,8 +356,8 @@ class WindowShowing():
                 xbmcgui.Window(12000).clearProperty("TvTunesContinuePlaying")
                 return False
 
-            # Only pay attention to the forced playing if there is actually audio playing
-            if xbmc.Player().isPlayingAudio():
+            # Only pay attention to the forced playing if there is actually media playing
+            if xbmc.Player().isPlaying():
                 return True
         return False
 
@@ -383,7 +403,15 @@ class WindowShowing():
 
     @staticmethod
     def isPluginPath():
-        return "plugin://" in xbmc.getInfoLabel("ListItem.Path")
+        currentPath = xbmc.getInfoLabel("ListItem.Path")
+        if "plugin://" in currentPath:
+            # There is a special case for Emby.Kodi that supports TvTunes
+            # https://github.com/MediaBrowser/Emby.Kodi
+            # So we pretend that isn't a plugin as long as Custom Path is set
+            if ("plugin.video.emby" in currentPath) and Settings.isCustomPathEnabled():
+                return False
+            return True
+        return False
 
     @staticmethod
     def isMovieSet():
@@ -495,7 +523,7 @@ class DelayedStartTheme():
 ###########################################
 class TunesBackend():
     def __init__(self):
-        self.themePlayer = Player()
+        self.themePlayer = TvTunesPlayer()
         self._stop = False
         log("### starting TvTunes Backend ###")
         self.newThemeFiles = ThemeFiles("")
@@ -563,7 +591,7 @@ class TunesBackend():
                         self.oldThemeFiles = self.newThemeFiles
 
                 # There is no theme at this location, so make sure we are stopped
-                if not self.newThemeFiles.hasThemes() and self.themePlayer.isPlayingAudio() and TvTunesStatus.isAlive():
+                if not self.newThemeFiles.hasThemes() and self.themePlayer.isPlayingTheme() and TvTunesStatus.isAlive():
                     self.themePlayer.endPlaying()
                     self.oldThemeFiles.clear()
                     self.prevThemeFiles.clear()
@@ -571,7 +599,7 @@ class TunesBackend():
                     TvTunesStatus.setAliveState(False)
 
                 # This will occur when a theme has stopped playing, maybe is is not set to loop
-                if TvTunesStatus.isAlive() and not self.themePlayer.isPlayingAudio():
+                if TvTunesStatus.isAlive() and not self.themePlayer.isPlayingTheme():
                     log("TunesBackend: playing ends")
                     self.themePlayer.restoreSettings()
                     TvTunesStatus.setAliveState(False)
@@ -726,7 +754,7 @@ class TunesBackend():
             # Check if a theme is already playing, if there is we will need
             # to stop it before playing the new theme
             # Stop any audio playing
-            if self.themePlayer.isPlayingAudio():  # and self.prevThemeFiles.hasThemes()
+            if self.themePlayer.isPlayingTheme():  # and self.prevThemeFiles.hasThemes()
                 fastFadeNeeded = True
                 log("TunesBackend: Stopping previous theme: %s" % self.prevThemeFiles.getPath())
                 self.themePlayer.endPlaying(fastFade=fastFadeNeeded)
@@ -746,11 +774,13 @@ class TunesBackend():
 
     def stop(self):
         log("TunesBackend: ### Stopping TvTunes Backend ###")
-        if TvTunesStatus.isAlive() and not self.themePlayer.isPlayingVideo():
-            log("TunesBackend: stop playing")
-            self.themePlayer.stop()
-            while self.themePlayer.isPlayingAudio():
-                xbmc.sleep(50)
+        if TvTunesStatus.isAlive():
+            # If video is playing, check to see if it is a theme video
+            if self.themePlayer.isPlayingTheme():
+                log("TunesBackend: stop playing")
+                self.themePlayer.stop()
+                while self.themePlayer.isPlaying():
+                    xbmc.sleep(50)
         TvTunesStatus.setAliveState(False)
 
         # If currently playing a video file, then we have been overridden,
@@ -785,5 +815,7 @@ def runBackend():
 
         # Start the themes running
         main.run()
+
+        del main
     else:
         log("TvTunes Already Running")

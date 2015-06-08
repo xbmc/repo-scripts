@@ -40,6 +40,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Képernyővédő"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Mappa"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"
@@ -59,6 +63,10 @@ msgstr "Felül"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "Alul"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Átmosás"
 
 msgctxt "#32079"
 msgid "Startup"

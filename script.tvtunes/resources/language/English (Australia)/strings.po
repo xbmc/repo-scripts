@@ -36,6 +36,14 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Folder"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Recursive"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"

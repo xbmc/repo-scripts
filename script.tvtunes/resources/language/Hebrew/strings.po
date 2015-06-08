@@ -224,6 +224,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "למטה"
 
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "התמזגות"
+
 msgctxt "#32079"
 msgid "Startup"
 msgstr "הפעלה"

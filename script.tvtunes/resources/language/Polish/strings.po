@@ -142,7 +142,7 @@ msgstr "Domyślne źródło motywów "
 
 msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
-msgstr "Odtwarzaj motywy podczas przeglądania listy utworów"
+msgstr "Odtwarzaj motywy podczas przeglądania listy teledysków"
 
 msgctxt "#32030"
 msgid "All"
@@ -351,6 +351,14 @@ msgstr "Przywracaj domyślny poziom głośności po uruchomieniu"
 msgctxt "#32081"
 msgid "Set Volume On Startup To"
 msgstr "Ustawiaj poziom głośności po uruchomieniu na"
+
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr "Typy plików muzycznych"
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr "Typy plików wideo"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"

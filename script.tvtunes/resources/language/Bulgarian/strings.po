@@ -276,6 +276,10 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "долу"
 
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Плавен преход"
+
 msgctxt "#32074"
 msgid "Only Show Images When A Theme Exists"
 msgstr "Ползвай само картини за които има мелодия"

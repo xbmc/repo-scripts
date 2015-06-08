@@ -40,6 +40,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Ekran koruyucu"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Dizin"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"
@@ -63,6 +67,10 @@ msgstr "Sol"
 msgctxt "#32069"
 msgid "Right"
 msgstr "Sağ"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Çapraz geçiş"
 
 msgctxt "#32201"
 msgid "Movies"

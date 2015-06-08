@@ -40,6 +40,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Spořič obrazovky"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Složka"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"
@@ -67,6 +71,10 @@ msgstr "Vršek"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "Spodek"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Prolnutí"
 
 msgctxt "#32201"
 msgid "Movies"

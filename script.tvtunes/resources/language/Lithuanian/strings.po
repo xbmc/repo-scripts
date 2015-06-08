@@ -352,6 +352,14 @@ msgctxt "#32081"
 msgid "Set Volume On Startup To"
 msgstr "Nustatyti garsumą paleidus į"
 
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr "Garso failų tipai"
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr "Vaizdo failų tipai"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Rodyti parinkimo dialogą, jei nepavyko sutapdinti automatiškai"

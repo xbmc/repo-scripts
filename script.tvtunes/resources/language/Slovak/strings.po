@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Šetrič obrazovky"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Priečinok"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"
@@ -47,6 +51,10 @@ msgstr "Náhľady"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "Obsadenie"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Prelínanie"
 
 msgctxt "#32079"
 msgid "Startup"

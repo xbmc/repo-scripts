@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "螢幕保護程式"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "資料夾"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"
@@ -47,6 +51,10 @@ msgstr "縮略圖"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "演員"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "淡入淡出"
 
 msgctxt "#32201"
 msgid "Movies"

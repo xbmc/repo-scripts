@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Čuvar ekrana"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Fascikle"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Zan. slika"

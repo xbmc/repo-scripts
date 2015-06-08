@@ -68,6 +68,10 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "நடித்துள்ளவர்கள்"
 
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "குறுக்குமங்கு"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "திரைப்படங்கள்"

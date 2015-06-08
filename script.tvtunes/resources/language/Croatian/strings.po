@@ -144,6 +144,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Čuvar zaslona"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Mapa"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Slika omota"
@@ -163,6 +167,10 @@ msgstr "Gore"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "Dolje"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Pretapanje"
 
 msgctxt "#32079"
 msgid "Startup"

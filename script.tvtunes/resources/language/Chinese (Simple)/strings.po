@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "屏幕保护"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "文件夹"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "同人画"
@@ -59,6 +63,10 @@ msgstr "顶部"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "底部"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "淡入淡出"
 
 msgctxt "#32079"
 msgid "Startup"

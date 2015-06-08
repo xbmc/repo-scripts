@@ -352,6 +352,14 @@ msgctxt "#32081"
 msgid "Set Volume On Startup To"
 msgstr "Lautstärke beim Starten festlegen auf"
 
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr "Audiodateitypen"
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr "Videodateitypen"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Blende Auswahldialog ein, falls AutoMatch fehlschlägt"

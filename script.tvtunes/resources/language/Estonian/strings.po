@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Ekraanisäästja"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Kaustanimi"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Pildid"
@@ -47,6 +51,10 @@ msgstr "Pisipildid"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "Näitlejad"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Siire"
 
 msgctxt "#32201"
 msgid "Movies"

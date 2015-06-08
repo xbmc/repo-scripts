@@ -92,6 +92,10 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Zasedba"
 
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Prelivanje"
+
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Pridobivam podatke ..."

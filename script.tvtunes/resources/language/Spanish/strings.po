@@ -344,6 +344,14 @@ msgctxt "#32079"
 msgid "Startup"
 msgstr "Utilizar Scrollbar"
 
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Restablecer Volumen al iniciar"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Ajustar Volumen al iniciar"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Mostrar diálogo de selección si se produce un error en la autobusqueda"

@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Pantaila babeslea"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Karpeta"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart-a"

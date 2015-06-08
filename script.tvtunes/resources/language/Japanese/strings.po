@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "スクリーンセーバー"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "フォルダー"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "ファンアート"
@@ -47,6 +51,10 @@ msgstr "サムネイル"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "出演者"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "クロスフェード"
 
 msgctxt "#32201"
 msgid "Movies"

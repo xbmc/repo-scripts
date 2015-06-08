@@ -28,6 +28,7 @@ from settings import list_dir
 from settings import dir_exists
 from settings import os_path_join
 from settings import os_path_split
+from settings import normalize_string
 
 from themeFinder import ThemeFiles
 
@@ -205,9 +206,15 @@ class ArtworkDownloaderSupport(object):
 
 # Class to hold groups of images and media
 class MediaGroup(object):
-    def __init__(self, videoPath="", imageArray=[]):
+    def __init__(self, videoPath="", title="", imageArray=[]):
         self.isPlayingTheme = False
         self.path = videoPath
+        self.themePath = videoPath
+        if title not in [None, ""]:
+            # Need to have a different theme path than the video if we have custom path set
+            if Settings.isCustomPathEnabled():
+                self.themePath = os_path_join(Settings.getCustomPath(), normalize_string(title))
+
         # If the user does not want to play themes, just have an empty set of themes
         # have this as the default, as we will load the theme later
         self.themeFiles = ThemeFiles("")
@@ -230,11 +237,16 @@ class MediaGroup(object):
 
     # Check if this media group should be excluded
     def shouldExclude(self):
-        if (self.path is None) or (self.path == ""):
+        # Check both the file location and the source location for an exclude
+        if self.path in [None, ""]:
             return False
         shouldSkip = self.themeFiles.shouldExcludeFromScreensaver(self.path)
         if shouldSkip:
             log("MediaGroup: Skipping %s" % self.path)
+        elif self.themePath not in [None, "", self.path]:
+            shouldSkip = self.themeFiles.shouldExcludeFromScreensaver(self.themePath)
+            if shouldSkip:
+                log("MediaGroup: Skipping %s" % self.path)
         return shouldSkip
 
     # Add an image to the group, giving it's aspect radio
@@ -271,7 +283,7 @@ class MediaGroup(object):
 
                 # Check if the user wants to play themes
                 if ScreensaverSettings.isPlayThemes():
-                    self.themeFiles = ThemeFiles(self.path)
+                    self.themeFiles = ThemeFiles(self.themePath, audioOnly=True)
                     # Check if we only want groups with themes in
                     if ScreensaverSettings.isOnlyIfThemes():
                         if not self.themeFiles.hasThemes():
@@ -284,6 +296,7 @@ class MediaGroup(object):
                 artDownloader = ArtworkDownloaderSupport()
                 for artImg in artDownloader.loadExtraFanart(self.path):
                     self.addImage(artImg, 16.0 / 9.0)
+                del artDownloader
 
                 # Now that we have all of the images, mix them up
                 random.shuffle(self.images)
@@ -552,6 +565,7 @@ class ScreensaverBase(object):
 
         # Now restore the volume to what it should be
         volumeCtrl.restoreVolume()
+        del volumeCtrl
 
         log('Screensaver: start_loop end')
 
@@ -584,6 +598,7 @@ class ScreensaverBase(object):
         jsonProps = list(imageTypes)
         # The file is actually the path for a TV Show, the video file for movies
         jsonProps.append('file')
+        jsonProps.append('title')
         query = {'jsonrpc': '2.0', 'id': 0, 'method': method, 'params': {'properties': jsonProps}}
         response = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
 
@@ -592,7 +607,12 @@ class ScreensaverBase(object):
             for item in response['result'][key]:
                 # Check to see if we can get the path or file for the video
                 if ('file' in item) and not self.exit_requested:
-                    mediaGroup = MediaGroup(item['file'])
+                    title = ""
+                    # Also need the title if running with a custom path
+                    if 'title' in item:
+                        title = item['title']
+
+                    mediaGroup = MediaGroup(item['file'], title)
 
                     # Check if we want to include this media group
                     if not mediaGroup.shouldExclude():

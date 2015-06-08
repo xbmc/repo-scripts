@@ -140,6 +140,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Folder"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"
@@ -159,6 +163,10 @@ msgstr "Top"
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "Bottom"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Crossfade"
 
 msgctxt "#32079"
 msgid "Startup"

@@ -53,6 +53,11 @@ class NfoReader():
         # Find out the name of the NFO file
         nfoFileName = os_path_join(directory, "tvtunes.nfo")
 
+        # If this is a plugin path, then don't try and get the NFO file
+        if "plugin://" in nfoFileName:
+            log("NfoReader: Plugin paths do not support NFO files: %s" % nfoFileName, self.debug_logging_enabled)
+            return
+
         log("NfoReader: Searching for NFO file: %s" % nfoFileName, self.debug_logging_enabled)
 
         # Return False if file does not exist
@@ -208,9 +213,10 @@ class NfoReader():
 # Calculates file locations
 ##############################
 class ThemeFiles():
-    def __init__(self, rawPath, pathList=None, debug_logging_enabled=True):
+    def __init__(self, rawPath, pathList=None, debug_logging_enabled=True, audioOnly=False):
         self.debug_logging_enabled = debug_logging_enabled
         self.forceShuffle = False
+        self.audioOnly = audioOnly
         self.rawPath = rawPath
         if rawPath == "":
             self.clear()
@@ -412,7 +418,9 @@ class ThemeFiles():
         workingPath = self._getUsablePath(rawPath)
 
         nfoRead = NfoReader(workingPath)
-        return nfoRead.getExcludeFromScreensaver()
+        toExclude = nfoRead.getExcludeFromScreensaver()
+        del nfoRead
+        return toExclude
 
     # Search for theme files in the given directory
     def _getThemeFiles(self, directory, extensionOnly=False):
@@ -425,13 +433,14 @@ class ThemeFiles():
             # Do not want the theme keyword if looking at an entire directory
             themeFiles = themeFiles + self._getThemeFiles(nfoDir, True)
 
-        log("ThemeFiles: Searching %s for %s" % (directory, Settings.getThemeFileRegEx(directory, extensionOnly)), self.debug_logging_enabled)
+        del nfoRead
+        log("ThemeFiles: Searching %s for %s" % (directory, Settings.getThemeFileRegEx(directory, extensionOnly, self.audioOnly)), self.debug_logging_enabled)
 
         # check if the directory exists before searching
         if dir_exists(directory):
             dirs, files = list_dir(directory)
             for aFile in files:
-                m = re.search(Settings.getThemeFileRegEx(directory, extensionOnly), aFile, re.IGNORECASE)
+                m = re.search(Settings.getThemeFileRegEx(directory, extensionOnly, self.audioOnly), aFile, re.IGNORECASE)
                 if m:
                     path = os_path_join(directory, aFile)
                     log("ThemeFiles: Found match: %s" % path, self.debug_logging_enabled)

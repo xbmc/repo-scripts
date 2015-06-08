@@ -28,6 +28,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "स्क्रीनसेवर"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "फोल्डर"
+
 msgctxt "#32059"
 msgid "Cast"
 msgstr "फिल्म की नादानोंं"
@@ -39,6 +43,10 @@ msgstr "ऊपर "
 msgctxt "#32071"
 msgid "Bottom"
 msgstr "नीचे "
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "क्रॉसफेड"
 
 msgctxt "#32201"
 msgid "Movies"

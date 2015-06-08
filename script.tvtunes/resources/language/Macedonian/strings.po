@@ -36,6 +36,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Чувар на екран"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Папки"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fan-арт"
@@ -47,6 +51,10 @@ msgstr "Сликичка"
 msgctxt "#32059"
 msgid "Cast"
 msgstr "Улоги"
+
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Преклоп"
 
 msgctxt "#32201"
 msgid "Movies"

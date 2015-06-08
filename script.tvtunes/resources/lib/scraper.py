@@ -45,7 +45,7 @@ class WindowShowing():
 #################################
 # Core TvTunes Scraper class
 #################################
-class TvTunesScraper:
+class TvTunesScraper():
     def __init__(self):
         # Get the name of the theme we are looking for
         videoItem = self.getSoloVideo()

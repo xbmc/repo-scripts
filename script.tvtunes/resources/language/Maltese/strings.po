@@ -28,6 +28,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Skrinsejver"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Fowlder"
+
 msgctxt "#32058"
 msgid "Thumbnail"
 msgstr "Tambnejl"

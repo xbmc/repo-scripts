@@ -28,6 +28,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "ဖိုလ်ဒါ"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fanart"

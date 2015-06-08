@@ -32,6 +32,10 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Paususkermur"
 
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Mappa"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Fjepparatilfar"

@@ -1,3 +1,9 @@
+v4.7.3
+- Set the content value for the plugin part of TvTunes
+- Allow TvTunes to run for plugin.video.emby
+- Add support for Video Themes to play in the background
+- Fix screensaver playing themes if using a custom theme path
+
 v4.7.2
 - Add argument to allow the script to start the screensaver
 

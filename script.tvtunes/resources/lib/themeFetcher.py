@@ -35,7 +35,7 @@ from grooveshark import Client
 #################################
 # Core TvTunes Scraper class
 #################################
-class TvTunesFetcher:
+class TvTunesFetcher():
     def __init__(self, videoList):
         # Set up the addon directories if they do not already exist
         if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")):

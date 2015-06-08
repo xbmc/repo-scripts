@@ -148,6 +148,22 @@ msgctxt "#32030"
 msgid "All"
 msgstr "Tutto"
 
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "grooveshark.com"
+msgstr "grooveshark.com"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
 msgctxt "#32035"
 msgid "Prompt User"
 msgstr "Conferma Utente"
@@ -160,9 +176,81 @@ msgctxt "#32037"
 msgid "Only Single Entry Found"
 msgstr "Trovate Solo Voci Singole"
 
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Trovata Voce Priorità 1 (*)"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Trovata Voce Priorità 1 (*) o 2 (~)"
+
 msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Salvaschermo"
+
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "RandomZoomIn"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "AppleTVLike"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "GridSwitch"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Casuale"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Tempo Attesa (Secondi)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Tempo Effetto (Secondi)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Colonne"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Velocità"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Congruenza Immagine"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Ordine Casuale"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Sorgente Immagine"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Tipo Immagine"
+
+msgctxt "#32055"
+msgid "Folder"
+msgstr "Cartella"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Ricorsivo"
 
 msgctxt "#32057"
 msgid "Fanart"
@@ -176,9 +264,45 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Cast"
 
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Film, Serie TV"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Riproduci Temi Durante Screensaver"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fanart,Anteprima,Cast"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fanart,Anteprima"
+
 msgctxt "#32064"
 msgid "Dim Level"
 msgstr "Livello Opacità"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Anteprima,Cast"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Scorrimento"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Scorrimento Da"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Sinistra"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Destra"
 
 msgctxt "#32070"
 msgid "Top"
@@ -188,9 +312,57 @@ msgctxt "#32071"
 msgid "Bottom"
 msgstr "Inferiore"
 
+msgctxt "#32072"
+msgid "Crossfade"
+msgstr "Dissolvenza"
+
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Includi Immagini Artwork Downloader"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Mostra Immagini Solo Quando Esiste Un Tema"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Riproduci Tema Una Volta, Mostra Tutte Le Immagini"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Mostra Tutte Le Immagini, Ripeti Tema"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Riproduci Tema Una Volta, Salta Immagini Rimanenti"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Regole Ripetizione"
+
 msgctxt "#32079"
 msgid "Startup"
 msgstr "Avvio"
+
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Reset Volume All'Avvio"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Imposta Volume All'Avvio A"
+
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr "Tipi di file Audio"
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr "Tipi di file Video"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Mostra Finestra Selezione Se Fallisce Abbinamento Automatico"
 
 msgctxt "#32101"
 msgid "ERROR"
@@ -300,6 +472,10 @@ msgctxt "#32207"
 msgid "Move themes into themes folder?"
 msgstr "Sposta i temi dentro la cartella dei temi?"
 
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Azione]: Avvia Screensaver"
+
 msgctxt "#32991"
 msgid "Playback"
 msgstr "Riproduzione"
@@ -315,3 +491,7 @@ msgstr "File system"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Errore: impossibile collegarsi a goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "Nessuna Immagine trovata!"
