@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+  <defaultcontrol always="true">901</defaultcontrol>
+  <allowoverlay>yes</allowoverlay>
+  <backgroundcolor>0</backgroundcolor>
+  <zorder>0</zorder>
+  <type>dialog</type>
+  <coordinates>
+    <system>1</system>
+    <posx>1</posx>
+    <posy>1</posy>
+  </coordinates>
+  <controls>
+    <control type="button" id="10">
+      <description>Close</description>
+      <posx>1</posx>
+      <posy>1</posy>
+      <width>5</width>
+      <height>5</height>
+      <label>X</label>
+      <font>font9</font>
+      <visible>true</visible>
+    </control>
+    <control type="button" id="901">
+      <description>Answer</description>
+      <posx>10</posx>
+      <posy>10</posy>
+      <width>100</width>
+      <height>30</height>
+      <label>Answer</label>
+      <font>font12</font>
+      <visible>true</visible>
+    </control>
+  </controls>
+</window>

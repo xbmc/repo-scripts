@@ -1,0 +1,11 @@
+<?xml version="1.0" ?><addon id="script.mcuphone_pip" name="MCUphone PiP" provider-name="PostMet Corporation" version="0.1.1">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension library="default.py" point="xbmc.service" start="startup"/>
+  <extension point="xbmc.addon.metadata">
+    <platform>linux</platform>
+    <summary lang="en">Video and audio SIP soft phone PIP helper.</summary>
+    <description lang="en">PIP helper for MCUPhone plugin</description>
+  </extension>
+</addon>
