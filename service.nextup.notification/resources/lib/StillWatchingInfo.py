@@ -24,13 +24,14 @@ class StillWatchingInfo(xbmcgui.WindowXMLDialog):
         thumb = self.item['art'].get('thumb','')
         landscape = self.item['art'].get('tvshow.landscape','')
         fanartimage = self.item['art'].get('tvshow.fanart','')
+        clearartimage = self.item['art'].get('tvshow.clearart','')
         name = self.item['label']
         rating = str(round(float(self.item['rating'])))
         year = self.item['firstaired']
         overview = self.item['plot']
         season = self.item['season']
         episodeNum = self.item['episode']
-        
+        title = self.item['title']
         # set the dialog data
         self.getControl(4000).setLabel(name)
         self.getControl(4006).setText(overview)
@@ -73,11 +74,25 @@ class StillWatchingInfo(xbmcgui.WindowXMLDialog):
             pass
         
         try:
+            titleControl = self.getControl(4010)
+            if(titleControl != None):
+                titleControl.setLabel(title)
+        except:
+            pass
+        
+        try:
             resolutionControl = self.getControl(4011)
             if(resolutionControl != None):
                 resolution1 =  self.item['streamdetails'].get('video')
                 resolution = resolution1[0].get('height')    
                 resolutionControl.setLabel(str(resolution))
+        except:
+            pass
+        
+        try:
+            clearartControl = self.getControl(4014)
+            if(clearartControl != None):
+                clearartControl.setImage(clearartimage)
         except:
             pass
         

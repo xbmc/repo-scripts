@@ -1,6 +1,11 @@
-[B]1.0.4[/B]
-- Added Season Number, Episode Number, Video Resolution (wasn't working previously)
+[B]1.0.6[/B]
+- Added option to include watched episodes
+- New default next up dialog
+- A couple more controls added to still watching info
 
+
+[B]1.0.5[/B]
+- Added Season Number, Episode Number, Video Resolution (wasn't working previously)
 
 [B]1.0.4[/B]
 - Added Season Number, Episode Number, Video Resolution and TV Show Fanart for skin support

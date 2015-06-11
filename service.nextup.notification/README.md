@@ -40,6 +40,8 @@ Skinners:
           - 4007 - TV Show Fanart
           - 4008 - Season Number
           - 4009 - Episode Number
+          - 4010 - Title
           - 4011 - Video Resolution
           - 4012 - Continue Watching Button
           - 4013 - Cancel Button
+          - 4014 - TV Show ClearArt

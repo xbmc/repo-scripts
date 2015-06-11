@@ -77,7 +77,7 @@
 					<font>Tiny</font>
 					<align>justify</align>
 					<autoscroll>false</autoscroll>
-					<textcolor>4Ddddddd</textcolor>
+					<textcolor>B3bbbbbb</textcolor>
 				</control>
 				<control type="label" description="Total Time">
 					<right>30</right>
