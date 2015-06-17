@@ -118,7 +118,7 @@ class VolumeDrop(object):
     def _setVolume(self, newvolume):
         # Can't use the RPC version as that will display the volume dialog
         # '{"jsonrpc": "2.0", "method": "Application.SetVolume", "params": { "volume": %d }, "id": 1}'
-        xbmc.executebuiltin('XBMC.SetVolume(%d)' % newvolume, True)
+        xbmc.executebuiltin('SetVolume(%d)' % newvolume, True)
 
     def lowerVolume(self):
         try:
@@ -588,7 +588,7 @@ class ScreensaverBase(object):
                 imgGrp = self._getFolderImages(path)
                 imageGroups.extend(imgGrp)
         if not imageGroups and not self.exit_requested:
-            cmd = 'XBMC.Notification("{0}", "{1}")'.format(__addon__.getLocalizedString(32101).encode('utf-8'), __addon__.getLocalizedString(32995).encode('utf-8'))
+            cmd = 'Notification("{0}", "{1}")'.format(__addon__.getLocalizedString(32101).encode('utf-8'), __addon__.getLocalizedString(32995).encode('utf-8'))
             xbmc.executebuiltin(cmd)
         return imageGroups
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<category label="32991">
+		<setting id="enableThemePlaying" type="bool" label="32084" default="true"/>
 		<setting id="loop" type="bool" label="32001" default="false"/>
 		<setting id="downvolume" label="32002" type="slider" default="0" range="0,1,60" option="int" />
 		<setting id="delayStart" label="32024" type="slider" default="0" range="0,1,60" option="int" />
@@ -20,7 +21,7 @@
 		<setting id="multiThemeDownload" type="bool" label="32014" default="false"/>
 		<setting id="searchMovieDownload" type="bool" label="32015" default="true"/>
 		<setting id="showVideoInfoButton" type="bool" label="32020" default="true"/>
-		<setting id="searchSource" type="enum" label="32028" lvalues="32030|32031|32032|32033|32034|32035" default="1" />
+		<setting id="searchSource" type="enum" label="32028" lvalues="32030|32031|32032|32034|32035" default="1" />
 		<setting label="32022" type="lsep"/>
 		<setting label="32023" type="action" option="close" action="RunScript($CWD/default.py)"/>
 	</category>

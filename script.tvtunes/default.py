@@ -18,7 +18,6 @@ sys.path.append(__lib__)
 from settings import log
 
 from scraper import TvTunesScraper
-from backend import runBackend
 from screensaver import launchScreensaver
 
 
@@ -41,7 +40,7 @@ if __name__ == '__main__':
     log("params %s" % params)
 
     if params.get("backend", False):
-        runBackend()
+        log("TvTunes: Ignoring manual call to run backend")
 
     elif params.get("mode", False) == "solo":
         TvTunesScraper()

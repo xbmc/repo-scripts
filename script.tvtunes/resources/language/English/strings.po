@@ -156,10 +156,6 @@ msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr ""
 
-msgctxt "#32033"
-msgid "grooveshark.com"
-msgstr ""
-
 msgctxt "#32034"
 msgid "goear.com"
 msgstr ""
@@ -360,7 +356,11 @@ msgctxt "#32083"
 msgid "Video File Types"
 msgstr ""
 
-#empty strings from id 32084 to 32099
+msgctxt "#32084"
+msgid "Enable Theme Playing (Restart Required)"
+msgstr ""
+
+#empty strings from id 32085 to 32099
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"

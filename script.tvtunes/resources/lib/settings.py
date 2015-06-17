@@ -4,6 +4,7 @@ import xbmc
 import xbmcaddon
 import os
 import xbmcvfs
+import xbmcgui
 
 __addon__ = xbmcaddon.Addon(id='script.tvtunes')
 __addonid__ = __addon__.getAddonInfo('id')
@@ -52,6 +53,21 @@ def os_path_join(dir, file):
     except:
         pass
     return os.path.join(dir, file)
+
+
+# There has been problems with calling isfile with non ascii characters,
+# so we have this method to try and do the conversion for us
+def os_path_isfile(workingPath,):
+    # Convert each argument - if an error, then it will use the default value
+    # that was passed in
+    try:
+        workingPath = workingPath.decode("utf-8")
+    except:
+        pass
+    try:
+        return os.path.isfile(workingPath)
+    except:
+        return False
 
 
 # Splits a path the same way as os.path.split but supports paths of a different
@@ -109,6 +125,131 @@ def dir_exists(dirpath):
     return xbmcvfs.exists(directoryPath)
 
 
+################################################################
+# Class to make it easier to see which screen is being displayed
+################################################################
+class WindowShowing():
+    @staticmethod
+    def isHome():
+        return xbmc.getCondVisibility("Window.IsVisible(home)")
+
+    @staticmethod
+    def isVideoLibrary():
+        return xbmc.getCondVisibility("Window.IsVisible(videolibrary)") or WindowShowing.isTvTunesOverrideTvShows() or WindowShowing.isTvTunesOverrideMovie() or WindowShowing.isTvTunesOverrideContinuePlaying()
+
+    @staticmethod
+    def isMovieInformation():
+        return xbmc.getCondVisibility("Window.IsVisible(movieinformation)") or WindowShowing.isTvTunesOverrideMovie()
+
+    @staticmethod
+    def isTvShows():
+        return xbmc.getCondVisibility("Container.Content(tvshows)") or WindowShowing.isTvTunesOverrideTvShows()
+
+    @staticmethod
+    def isSeasons():
+        return xbmc.getCondVisibility("Container.Content(Seasons)") or WindowShowing.isTvTunesOverrideTvShows()
+
+    @staticmethod
+    def isEpisodes():
+        return xbmc.getCondVisibility("Container.Content(Episodes)") or WindowShowing.isTvTunesOverrideTvShows()
+
+    @staticmethod
+    def isMovies():
+        return xbmc.getCondVisibility("Container.Content(movies)") or WindowShowing.isTvTunesOverrideMovie()
+
+    @staticmethod
+    def isScreensaver():
+        return xbmc.getCondVisibility("System.ScreenSaverActive")
+
+    @staticmethod
+    def isShutdownMenu():
+        return xbmc.getCondVisibility("Window.IsVisible(shutdownmenu)")
+
+    @staticmethod
+    def isTvTunesOverrideTvShows():
+        win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
+        return win.getProperty("TvTunesSupported").lower() == "tvshows"
+
+    @staticmethod
+    def isTvTunesOverrideMovie():
+        win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
+        return win.getProperty("TvTunesSupported").lower() == "movies"
+
+    @staticmethod
+    def isTvTunesOverrideContinuePlaying():
+        # Check the home screen for the forced continue playing flag
+        if xbmcgui.Window(12000).getProperty("TvTunesContinuePlaying").lower() == "true":
+            # Never allow continues playing on the Home Screen
+            if WindowShowing.isHome():
+                # An addon may have forgotten to undet the flag, or crashed
+                # force the unsetting of the flag
+                log("WindowShowing: Removing TvTunesContinuePlaying property when on Home screen")
+                xbmcgui.Window(12000).clearProperty("TvTunesContinuePlaying")
+                return False
+
+            # Only pay attention to the forced playing if there is actually media playing
+            if xbmc.Player().isPlaying():
+                return True
+        return False
+
+    # Works out if the custom window option to play the TV Theme is set
+    # and we have just opened a dialog over that
+    @staticmethod
+    def isTvTunesOverrideContinuePrevious():
+        # Check the master override that forces the existing playing theme
+        if WindowShowing.isTvTunesOverrideContinuePlaying():
+            return True
+
+        if WindowShowing.isTvTunesOverrideTvShows() or WindowShowing.isTvTunesOverrideMovie():
+            # Check if this is a dialog, in which case we just continue playing
+            try:
+                dialogid = xbmcgui.getCurrentWindowDialogId()
+            except:
+                dialogid = 9999
+            if dialogid != 9999:
+                # Is a dialog so return True
+                return True
+        return False
+
+    @staticmethod
+    def isRecentEpisodesAdded():
+        return xbmc.getInfoLabel("container.folderpath") == "videodb://recentlyaddedepisodes/"
+
+    @staticmethod
+    def isTvShowTitles():
+        showingTvShowTitles = (xbmc.getInfoLabel("container.folderpath") == "videodb://tvshows/titles/")
+        # There is a case where the user may have created a smart playlist that then
+        # groups together all the TV Shows, if they also have the option to play themes
+        # while browsing TV Shows enabled, then we need to return True for this case
+        if not showingTvShowTitles:
+            # Check if we are viewing a video playlist
+            if 'special://profile/playlists/video/' in xbmc.getInfoLabel("container.folderpath"):
+                # Check if what is being showed is actually TV Shows
+                showingTvShowTitles = WindowShowing.isTvShows()
+        return showingTvShowTitles
+
+    @staticmethod
+    def isMusicVideoTitles():
+        return xbmc.getInfoLabel("container.folderpath") == "videodb://musicvideos/"
+
+    @staticmethod
+    def isPluginPath():
+        currentPath = xbmc.getInfoLabel("ListItem.Path")
+        if "plugin://" in currentPath:
+            # There is a special case for Emby.Kodi that supports TvTunes
+            # https://github.com/MediaBrowser/Emby.Kodi
+            # So we pretend that isn't a plugin as long as Custom Path is set
+            if ("plugin.video.emby" in currentPath) and Settings.isCustomPathEnabled():
+                return False
+            return True
+        return False
+
+    @staticmethod
+    def isMovieSet():
+        folderPathId = "videodb://movies/sets/"
+        return xbmc.getCondVisibility("!IsEmpty(ListItem.DBID) + SubString(ListItem.Path," + folderPathId + ",left)")
+
+
 ##############################
 # Stores Various Settings
 ##############################
@@ -116,7 +257,6 @@ class Settings():
     ALL_ENGINES = 'All'
     TELEVISION_TUNES = 'televisiontunes.com'
     SOUNDCLOUD = 'soundcloud.com'
-    GROOVESHARK = 'grooveshark.com'
     GOEAR = 'goear.com'
     PROMPT_ENGINE = 'Prompt User'
 
@@ -124,6 +264,16 @@ class Settings():
     AUTO_DOWNLOAD_SINGLE_ITEM = 1
     AUTO_DOWNLOAD_PRIORITY_1 = 2
     AUTO_DOWNLOAD_PRIORITY_1_OR_2 = 2
+
+    @staticmethod
+    def reloadSettings():
+        # Force the reload of the settings to pick up any new values
+        global __addon__
+        __addon__ = xbmcaddon.Addon(id='script.tvtunes')
+
+    @staticmethod
+    def isThemePlayingEnabled():
+        return __addon__.getSetting("enableThemePlaying") == 'true'
 
     @staticmethod
     def isCustomPathEnabled():
@@ -281,8 +431,6 @@ class Settings():
         elif index == 2:
             return Settings.SOUNDCLOUD
         elif index == 3:
-            return Settings.GROOVESHARK
-        elif index == 4:
             return Settings.GOEAR
         # Default is to prompt the user
         return Settings.PROMPT_ENGINE

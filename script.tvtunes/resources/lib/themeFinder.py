@@ -22,6 +22,7 @@ from settings import os_path_join
 from settings import os_path_split
 from settings import list_dir
 from settings import dir_exists
+from settings import os_path_isfile
 
 
 #############################################
@@ -334,7 +335,7 @@ class ThemeFiles():
         # os.path.isfile as it will return false even if it is a file
         # (A bit of a shame - but that's the way it is)
         fileExt = None
-        if workingPath.startswith("smb://") or workingPath.startswith("afp://") or os.path.isfile(workingPath):
+        if workingPath.startswith("smb://") or workingPath.startswith("afp://") or os_path_isfile(workingPath):
             fileExt = os.path.splitext(workingPath)[1]
         # If this is a file, then get it's parent directory
         # Also limit file extensions to a maximum of 4 characters

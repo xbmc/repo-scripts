@@ -3,6 +3,7 @@ import sys
 import os
 import xbmc
 import xbmcaddon
+import xbmcgui
 
 
 __addon__ = xbmcaddon.Addon(id='script.tvtunes')
@@ -16,6 +17,15 @@ sys.path.append(__lib__)
 from settings import log
 from settings import Settings
 
+from backend import TunesBackend
+
+
+# Class to detect when something in the system has changed
+class TvTunesMonitor(xbmc.Monitor):
+    def onSettingsChanged(self):
+        log("TvTunesMonitor: Notification of settings change received")
+        Settings.reloadSettings()
+
 
 ##################################
 # Main of the TvTunes Service
@@ -28,4 +38,30 @@ if __name__ == '__main__':
         log("TvTunesService: No Volume Change Required")
     else:
         log("TvTunesService: Setting volume to %s" % startupVol)
-        xbmc.executebuiltin('XBMC.SetVolume(%d)' % startupVol, True)
+        xbmc.executebuiltin('SetVolume(%d)' % startupVol, True)
+
+    # Check if the video info button should be hidden, we do this here as this will be
+    # called when the system is loaded, it can then be read by the skin
+    # when it comes to draw the button
+    if Settings.hideVideoInfoButton():
+        xbmcgui.Window(12003).setProperty("TvTunes_HideVideoInfoButton", "true")
+    else:
+        xbmcgui.Window(12003).clearProperty("TvTunes_HideVideoInfoButton")
+
+    # Make sure the user wants to play themes
+    if Settings.isThemePlayingEnabled():
+        log("TvTunesService: Theme playing enabled")
+
+        # Create a monitor so we can reload the settings if they change
+        systemMonitor = TvTunesMonitor()
+
+        # Start looping to perform the TvTune theme operations
+        main = TunesBackend()
+
+        # Start the themes running
+        main.runAsAService()
+
+        del main
+        del systemMonitor
+    else:
+        log("TvTunesService: Theme playing disabled")

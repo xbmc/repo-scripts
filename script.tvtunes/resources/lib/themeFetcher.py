@@ -29,7 +29,6 @@ from settings import os_path_split
 from settings import dir_exists
 
 import soundcloud
-from grooveshark import Client
 
 
 #################################
@@ -248,9 +247,6 @@ class TvTunesFetcher():
         elif self.searchEngine == Settings.SOUNDCLOUD:
             # Soundcloud is selected
             searchListing = SoundcloudListing()
-        elif self.searchEngine == Settings.GROOVESHARK:
-            # grooveshark is selected
-            searchListing = GroovesharkListing()
         elif self.searchEngine == Settings.TELEVISION_TUNES:
             # Default to Television Tunes
             searchListing = TelevisionTunesListing()
@@ -262,12 +258,11 @@ class TvTunesFetcher():
             self.searchEngine = Settings.getSearchEngine()
 
             tvtunesList = TelevisionTunesListing().themeSearch(showname, alternativeTitle, showProgressDialog)
-            groovesharkList = GroovesharkListing().themeSearch(showname, alternativeTitle, showProgressDialog)
             goearList = GoearListing().themeSearch(showname, alternativeTitle, showProgressDialog)
             soundcloudList = SoundcloudListing().themeSearch(showname, alternativeTitle, showProgressDialog)
 
             # Join all the entries into one list
-            theme_list = tvtunesList + groovesharkList + goearList + soundcloudList
+            theme_list = tvtunesList + goearList + soundcloudList
             # Now sort the list
             theme_list.sort()
         else:
@@ -295,7 +290,6 @@ class TvTunesFetcher():
         displayList = []
         displayList.insert(0, Settings.TELEVISION_TUNES)
         displayList.insert(1, Settings.SOUNDCLOUD)
-        displayList.insert(2, Settings.GROOVESHARK)
         displayList.insert(3, Settings.GOEAR)
 
         displayList.insert(4, "** %s **" % __language__(32121))
@@ -303,7 +297,6 @@ class TvTunesFetcher():
         if showManualOptions:
             displayList.insert(5, "%s %s" % (Settings.TELEVISION_TUNES, __language__(32118)))
             displayList.insert(6, "%s %s" % (Settings.SOUNDCLOUD, __language__(32118)))
-            displayList.insert(7, "%s %s" % (Settings.GROOVESHARK, __language__(32118)))
             displayList.insert(8, "%s %s" % (Settings.GOEAR, __language__(32118)))
 
         isManualSearch = False
@@ -319,10 +312,8 @@ class TvTunesFetcher():
             elif (select == 1) or (select == 6):
                 self.searchEngine = Settings.SOUNDCLOUD
             elif (select == 2) or (select == 7):
-                self.searchEngine = Settings.GROOVESHARK
-            elif (select == 3) or (select == 8):
                 self.searchEngine = Settings.GOEAR
-            elif (select == 4):
+            elif (select == 3):
                 self.searchEngine = Settings.ALL_ENGINES
 
             # Record if this is a manual search
@@ -1179,10 +1170,13 @@ class SoundcloudListing(DefaultListing):
 
             # Loop over the tracks produced assigning it to the list
             for track in tracks:
-                # another dictionary for holding all the results for a specific song
-                themeName = track.title
-                duration = self._convertTime(track.duration)
+                if track in [None, ""]:
+                    continue
+
                 try:
+                    # another dictionary for holding all the results for a specific song
+                    themeName = track.title
+                    duration = self._convertTime(track.duration)
                     # Only allow the theme if it is streamable
                     if track.streamable:
                         id = track.id
@@ -1233,118 +1227,3 @@ class SoundcloudListing(DefaultListing):
             return ' (%s %s)' % (s, size_name[i])
         else:
             return ""
-
-
-#################################################
-# Searches www.grooveshark.com for themes
-#################################################
-class GroovesharkListing(DefaultListing):
-    # Perform the search for the theme
-    def _search(self, showname, progressDialog):
-        log("GroovesharkListing: Search for %s" % showname)
-        tracks = None
-
-        # There is only a single api call for grooveshark, so start at 25%
-        progressDialog.updateProgress(25)
-
-        try:
-            client = Client()
-            client.init()
-            tracks = client.search(showname)
-        except:
-            log("GroovesharkListing: Request failed for %s" % showname, True, xbmc.LOGERROR)
-            log("GroovesharkListing: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
-
-        # Once the search has been done, go to 75%
-        progressDialog.updateProgress(75)
-
-        # Loop over the tracks produced assigning it to the list
-        theme_list = []
-        for track in tracks:
-            log("GroovesharkListing: Found %s" % track.name)
-            # Construct the custom holder for the theme
-            theme = GroovesharkThemeItemDetails(track)
-            theme_list.append(theme)
-
-        # Make sure we are at 100% when we are finished processing the results
-        progressDialog.updateProgress(100)
-
-        return theme_list
-
-
-###########################################################
-# Holds the details of each theme retrieved from a search
-# Custom for grooveshark as we need to generate the streem
-# just for the entry that is used, this is because getting
-# each of the streams for everything in the list takes
-# far too long up-front, so we just get the one that the
-# user wants
-###########################################################
-class GroovesharkThemeItemDetails(ThemeItemDetails):
-    def __init__(self, track):
-        self.grooveshark_track = track
-        duration = self._convertTime(track.duration)
-        ThemeItemDetails.__init__(self, track.name, "", duration, albumname=track.album)
-
-    # Checks if the theme this points to is the same
-    def __eq__(self, other):
-        if other is None:
-            return False
-        # Check if the URL is the same as that will make it unique
-        return self.grooveshark_track.id == other.grooveshark_track.id
-
-    # Get the URL used to download the theme
-    def getMediaURL(self):
-        # We need to generate the URL on the fly, this is because it takes too
-        # long to generate before hand for each track
-        log("GroovesharkThemeItemDetails: Getting stream for %s" % self.grooveshark_track.name)
-
-        try:
-            self.trackUrl = self.grooveshark_track.stream.url
-            log("GroovesharkThemeItemDetails: Stream url is %s" % self.trackUrl)
-        except:
-            log("GroovesharkThemeItemDetails: Request failed for %s" % self.grooveshark_track.name, True, xbmc.LOGERROR)
-            log("GroovesharkThemeItemDetails: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
-
-        return self.trackUrl
-
-    # Plays a preview of the given file
-    def playPreview(self):
-        # For Grooveshark we need to download and then play the downloaded theme
-        # passing the URL to the player no longer works
-        isSelected = False
-        theme_file = 'grooveshark_tmptheme.mp3'
-        tmpdestination = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % (__addonid__, theme_file)).decode("utf-8")
-
-        try:
-            fp, h = urllib.urlretrieve(self.getMediaURL(), tmpdestination)
-            log(h)
-
-            # Now play the preview
-            isSelected = ThemeItemDetails.playPreview(self, tmpdestination)
-
-            # Make sure there is no longer a theme playing as
-            # we want to delete the temp file
-            while xbmc.Player().isPlayingAudio():
-                xbmc.sleep(5)
-
-            xbmcvfs.delete(tmpdestination)
-        except:
-            log("download: Theme download Failed!!!", True, xbmc.LOGERROR)
-            log("download: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
-        return isSelected
-
-    # this method converts the time in milliseconds to human readable format.
-    def _convertTime(self, totalSeconds):
-        # Several tracks do not include a duration, so only create on if it is valid
-        if (totalSeconds is None) or (totalSeconds == "") or (int(float(totalSeconds)) < 1):
-            log("GroovesharkThemeItemDetails: Duration of %s is None or less than 1" % self.grooveshark_track.name)
-            return ""
-
-        x = int(float(totalSeconds))
-        seconds = x % 60
-        x /= 60
-        minutes = x % 60
-        x /= 60
-        hours = x % 24
-        return " [%02d:%02d:%02d]" % (hours, minutes, seconds)
