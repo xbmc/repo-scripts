@@ -52,6 +52,7 @@ if __name__ == '__main__':
         try:
             # Stop TvTunes trying to start while we load the screensaver
             xbmcgui.Window(10025).setProperty("TvTunesIsRunning", "VideoScreensaver")
+            xbmcgui.Window(10025).setProperty("TvTunesBlocked", "true")
 
             # Give a little bit of time for everything to shake out before starting the screensaver
             # waiting another few seconds to start a screensaver is not going to make a difference
@@ -85,7 +86,7 @@ if __name__ == '__main__':
                 # playing for the screensaver, it will then listen for any action or
                 # activity and stop the video being used as the screensaver
                 log("Running video screensaver in separate thread")
-                xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__cwd__, "screensaver.py")))
+                xbmc.executebuiltin('RunScript(%s)' % (os.path.join(__cwd__, "screensaver.py")))
                 # Give the screensaver time to kick in
                 xbmc.sleep(3000)
             else:
@@ -95,6 +96,7 @@ if __name__ == '__main__':
         except:
             log("Failed to start VideoScreensaver: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
+        xbmcgui.Window(10025).clearProperty("TvTunesBlocked")
         xbmcgui.Window(10025).clearProperty("TvTunesIsRunning")
         xbmcgui.Window(10000).clearProperty("VideoScreensaverStarting")
     else:

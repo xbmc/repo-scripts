@@ -28,4 +28,4 @@ if __name__ == '__main__':
         log("VideoScreensaverService: No Volume Change Required")
     else:
         log("VideoScreensaverService: Setting volume to %s" % startupVol)
-        xbmc.executebuiltin('XBMC.SetVolume(%d)' % startupVol, True)
+        xbmc.executebuiltin('SetVolume(%d)' % startupVol, True)

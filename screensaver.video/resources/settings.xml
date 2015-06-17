@@ -19,6 +19,7 @@
 		<setting id="mediaPlayingBlock" type="bool" label="32055" default="true"/>
 		<setting id="alterVolume" type="bool" label="32056" default="false"/>
 		<setting id="screensaverVolume" subsetting="true" visible="eq(-1,true)" label="32057" type="slider" default="0" range="0,1,100" option="int"/>
+		<setting id="useAudioSuspend" subsetting="true" visible="eq(-2,true)" label="32063" type="bool" default="false"/>
 		<setting id="dimLevel" type="slider" label="32058" range="0,1,14" option="int" default="0"/>
 		<setting id="stopAutomatic" type="bool" label="32059" default="false"/>
 		<setting id="stopAfter" subsetting="true" visible="eq(-1,true)" label="32060" type="slider" default="60" range="5,5,240" option="int"/>

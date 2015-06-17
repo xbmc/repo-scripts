@@ -124,6 +124,10 @@ msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "Set Volume On Startup To"
 
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Use Audio Engine Suspend For 0 Volume"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** All Downloaded Videos ***"

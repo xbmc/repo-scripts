@@ -265,3 +265,9 @@ class Settings():
         if __addon__.getSetting("resetVolumeOnStartup") == 'true':
             return int(float(__addon__.getSetting("resetStartupVolumeValue")))
         return -1
+
+    @staticmethod
+    def isUseAudioSuspend():
+        if Settings.getVolume() == 0:
+            return __addon__.getSetting("useAudioSuspend") == 'true'
+        return False

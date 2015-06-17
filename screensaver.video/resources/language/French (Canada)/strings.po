@@ -116,6 +116,18 @@ msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Arrêter l'économiseur d'écran après x minutes"
 
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Réinitialiser le volume au démarrage"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Régler le volume au démarrage sur"
+
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Utiliser la mise en veille du moteur audio pour un volume à 0"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Toutes les vidéos téléchargées ***"
@@ -211,6 +223,22 @@ msgstr "Neige 3 - [1,2 Go] - 720p"
 msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
 msgstr "Moulin à eau 1 - [549 Mo] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Aquarium 4 - [780 Mo] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Noël 1 - [777 Mo] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny naufragé 1 - [75 Mo] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Océan 1 - [1,1 Go] - 720p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

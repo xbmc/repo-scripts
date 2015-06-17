@@ -124,6 +124,10 @@ msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "Setar o volume ao inicializar para"
 
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Usar suspender na engine de áudio para o volume 0"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Todos os Vídeos Transferidos ***"
@@ -219,6 +223,22 @@ msgstr "Snow 3 - [1.2GB] - 720p"
 msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
 msgstr "Watermill 1 - [549MB] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Aquarium 4 - [780MB] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Christmas 1 - [777MB] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny Castaway 1 - [75MB] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Ocean 1 - [1.1GB] - 720p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

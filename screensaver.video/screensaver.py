@@ -176,7 +176,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
                 errorLocation = Settings.getScreensaverFolder()
 
             log("No Screensaver file set or not valid %s" % errorLocation)
-            cmd = 'XBMC.Notification("{0}", "{1}", 5, "{2}")'.format(__addon__.getLocalizedString(32300).encode('utf-8'), errorLocation, __icon__)
+            cmd = 'Notification("{0}", "{1}", 5, "{2}")'.format(__addon__.getLocalizedString(32300).encode('utf-8'), errorLocation, __icon__)
             xbmc.executebuiltin(cmd)
             return None
 
@@ -253,11 +253,15 @@ class VolumeDrop(object):
     def _setVolume(self, newvolume):
         # Can't use the RPC version as that will display the volume dialog
         # '{"jsonrpc": "2.0", "method": "Application.SetVolume", "params": { "volume": %d }, "id": 1}'
-        xbmc.executebuiltin('XBMC.SetVolume(%d)' % newvolume, True)
+        xbmc.executebuiltin('SetVolume(%d)' % newvolume, True)
 
     def lowerVolume(self):
         try:
-            if self.screensaverVolume > -1:
+            # If we are after a zero volume then we have the option to suspend
+            # the Audio Engine
+            if Settings.isUseAudioSuspend():
+                xbmc.audioSuspend()
+            elif self.screensaverVolume > -1:
                 vol = self.screensaverVolume
                 # Make sure the volume still has a value, otherwise we see the mute symbol
                 if vol < 1:
@@ -271,8 +275,10 @@ class VolumeDrop(object):
 
     def restoreVolume(self):
         try:
+            if Settings.isUseAudioSuspend():
+                xbmc.audioResume()
             # Don't change the volume unless requested to
-            if self.screensaverVolume > -1:
+            elif self.screensaverVolume > -1:
                 self._setVolume(self.original_volume)
         except:
             log("VolumeDrop: %s" % traceback.format_exc(), xbmc.LOGERROR)
@@ -289,7 +295,7 @@ if __name__ == '__main__':
         # Launch the core screensaver script - this will ensure all the pre-checks
         # are done (like TvTunes) before running the screensaver
         log("Screensaver started by script with screensaver argument")
-        xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__cwd__, "default.py")))
+        xbmc.executebuiltin('RunScript(%s)' % (os.path.join(__cwd__, "default.py")))
     else:
         # Before we start, make sure that the settings have been updated correctly
         Settings.cleanAddonSettings()

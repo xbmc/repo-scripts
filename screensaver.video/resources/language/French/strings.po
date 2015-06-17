@@ -116,101 +116,129 @@ msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Arrêter l'Économiseur d'écran après (en minutes)"
 
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Réinitialiser le volume au démarrage"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Activer le son au démarrage de"
+
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Mettre en veille le moteur audio pour un volume à 0"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Toutes les vidéos téléchargées ***"
 
 msgctxt "#32101"
 msgid "Aquarium 1  - [846MB] - 400p"
-msgstr "Aquarium 1  - [846MB] - 400p"
+msgstr "Aquarium 1  - [846Mo] - 400p"
 
 msgctxt "#32102"
 msgid "Aquarium 2  - [2.7GB] - 720p"
-msgstr "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Aquarium 2  - [2.7Go] - 720p"
 
 msgctxt "#32103"
 msgid "Fireplace 1 - [965MB] - 720p"
-msgstr "Fireplace 1 - [965MB] - 720p"
+msgstr "Fireplace 1 - [965Mo] - 720p"
 
 msgctxt "#32104"
 msgid "Fireplace 2 - [827MB] - 480p"
-msgstr "Fireplace 2 - [827MB] - 480p"
+msgstr "Fireplace 2 - [827Mo] - 480p"
 
 msgctxt "#32105"
 msgid "Fireplace 3 - [2.1GB] - 1080p"
-msgstr "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Fireplace 3 - [2.1Go] - 1080p"
 
 msgctxt "#32106"
 msgid "Aquarium 3  - [2.4GB] - 720p"
-msgstr "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Aquarium 3  - [2.4Go] - 720p"
 
 msgctxt "#32107"
 msgid "Fireplace 4 - [2.7GB] - 720p"
-msgstr "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Fireplace 4 - [2.7Go] - 720p"
 
 msgctxt "#32108"
 msgid "Space 1 - [970MB] - 720p"
-msgstr "Space 1 - [970MB] - 720p"
+msgstr "Space 1 - [970Mo] - 720p"
 
 msgctxt "#32109"
 msgid "Beach 1 - [2.5GB] - 720p"
-msgstr "Beach 1 - [2.5GB] - 720p"
+msgstr "Beach 1 - [2.5Go] - 720p"
 
 msgctxt "#32110"
 msgid "Beach 2 - [838MB] - 720p"
-msgstr "Beach 2 - [838MB] - 720p"
+msgstr "Beach 2 - [838Mo] - 720p"
 
 msgctxt "#32111"
 msgid "Matrix 1 - [909MB] - 720p"
-msgstr "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909Mo] - 720p"
 
 msgctxt "#32112"
 msgid "Space 2 - [563MB] - 1080p"
-msgstr "Space 2 - [563MB] - 1080p"
+msgstr "Space 2 - [563Mo] - 1080p"
 
 msgctxt "#32113"
 msgid "Woodland 1 - [1.3GB] - 720p"
-msgstr "Woodland 1 - [1.3GB] - 720p"
+msgstr "Woodland 1 - [1.3Go] - 720p"
 
 msgctxt "#32114"
 msgid "Star Trek TNG 1 - [54MB] - 720p"
-msgstr "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54Mo] - 720p"
 
 msgctxt "#32115"
 msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
-msgstr "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Sci-Fi 1 - [200Mo] - 1080p"
 
 msgctxt "#32116"
 msgid "Waterfall 1 - [1.3GB] - 720p"
-msgstr "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Waterfall 1 - [1.3Go] - 720p"
 
 msgctxt "#32117"
 msgid "Waterfall 2 - [1.3GB] - 720p"
-msgstr "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Waterfall 2 - [1.3Go] - 720p"
 
 msgctxt "#32118"
 msgid "Waterfall 3 - [2.4GB] - 720p"
-msgstr "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Waterfall 3 - [2.4Go] - 720p"
 
 msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
-msgstr "Beach 3 - [3.4GB] - 720p"
+msgstr "Beach 3 - [3.4Go] - 720p"
 
 msgctxt "#32120"
 msgid "Snow 1 - [1.3GB] - 720p"
-msgstr "Snow 1 - [1.3GO] - 720p"
+msgstr "Snow 1 - [1.3Go] - 720p"
 
 msgctxt "#32121"
 msgid "Snow 2 - [677MB] - 1080p"
-msgstr "Snow 2 - [677MO] - 1080p"
+msgstr "Snow 2 - [677Mo] - 1080p"
 
 msgctxt "#32122"
 msgid "Snow 3 - [1.2GB] - 720p"
-msgstr "Snow 3 - [1.2GO] - 720p"
+msgstr "Snow 3 - [1.2Go] - 720p"
 
 msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
-msgstr "Watermill 1 - [549MO] - 1080p"
+msgstr "Watermill 1 - [549Mo] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Aquarium 4 - [780Mo] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Christmas 1 - [777Mo] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny Castaway 1 - [75Mo] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Ocean 1 - [1.1Go] - 720p"
 
 msgctxt "#32200"
 msgid "Overlay Image"
@@ -227,6 +255,18 @@ msgstr "Aucun"
 msgctxt "#32203"
 msgid "User Defined"
 msgstr "Défini par l'utilisateur"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Cadre d'image 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Cadre de fenêtre 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Cadre de fenêtre 2"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

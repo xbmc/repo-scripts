@@ -124,6 +124,10 @@ msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "Ustawiaj poziom głośności po uruchomieniu na"
 
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Wstrzymuj dźwiękowe urządzenie wyjściowe dla poziomu głośności 0"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Wszystkie pobrane wideo ***"
@@ -294,4 +298,4 @@ msgstr "Nieudane pobieranie pliku"
 
 msgctxt "#32307"
 msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
-msgstr "Może to być spowodowane przekroczeniem limitu obciążenia serwera, proszę spróbować jutro."
+msgstr "Może to być spowodowane przekroczeniem limitu obciążenia serwera, spróbuj ponownie jutro."

@@ -124,6 +124,10 @@ msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "Nustatyti garsumą paleidus į"
 
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Naudoti garso variklio sustabdymą, esant 0 garsumui"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "*** Visi atsisiųsti vaizdo įrašai ***"

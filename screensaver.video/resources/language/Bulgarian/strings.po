@@ -204,6 +204,18 @@ msgctxt "#32122"
 msgid "Snow 3 - [1.2GB] - 720p"
 msgstr "Сняг 3 - [1.2GB] - 720p"
 
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Аквариум 4 - [780MB] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Коледа 1 - [777MB] - 1080p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Океан 1 - [1.1GB] - 720p"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Без"

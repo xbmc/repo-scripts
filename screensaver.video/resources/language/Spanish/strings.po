@@ -116,6 +116,14 @@ msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Detener salva pantallas después de (Minutos)"
 
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Restablecer Volumen al iniciar"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Ajustar Volumen al iniciar"
+
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
 msgstr "Todos los vídeos descargados"
@@ -211,6 +219,22 @@ msgstr "Nieve 3 - [1.2GB] - 720p"
 msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
 msgstr "Molino de agua 1 - [549MB] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Acuario 4 - [780MB] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Navidad 1 - [777MB] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny el Naufrago 1 - [75MB] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Océano 1 - [1.1GB] - 720p"
 
 msgctxt "#32200"
 msgid "Overlay Image"
