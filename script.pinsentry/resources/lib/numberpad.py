@@ -75,6 +75,18 @@ class NumberPad(xbmcgui.WindowXMLDialog):
         except:
             log("NumberPad: Failed to set title")
 
+        # Check if the direction keys are being used as a pin code, in which case
+        # we do not want to allow the user to select any of the buttons via the screen
+        if Settings.isDirectionKeysAsPin():
+            try:
+                for i in range(0, 10):
+                    numButton = self.getControl(i + 10)
+                    numButton.setEnabled(False)
+                backspaceButton = self.getControl(NumberPad.BUTTON_BACKSPACE)
+                backspaceButton.setEnabled(False)
+            except:
+                log("NumberPad: Failed to disable keys on keypad")
+
         xbmcgui.WindowXMLDialog.onInit(self)
 
     # Detect things like remote control of keyboard button presses
@@ -103,9 +115,30 @@ class NumberPad(xbmcgui.WindowXMLDialog):
             # NumericValue found, convert it
             # Numbers as follows
             # 140 = 0, 141 = 1 ...
-            # So take 58 off and you get the number
+            # So take 140 off and you get the number
             numVal = id - 140
             self._numberEntered(numVal)
+        elif Settings.isDirectionKeysAsPin() and (id > 0) and (id < 5):
+            # If we want to allow the direction arrows on remote controls to be used
+            # in the keys, then we need to map the directions to numbers, for simplicity
+            # we map like a phone or remote, looking at the key pad:
+            #     1 2 3
+            #     4 5 6
+            #     7 8 9
+            #       0
+            # So we map UP to 2, Down to 8, Left to 4 and right to 6
+            if id == 1:
+                # 1 is Left
+                self._numberEntered(4)
+            elif id == 2:
+                # 2 is Right
+                self._numberEntered(6)
+            elif id == 3:
+                # 3 is Up
+                self._numberEntered(2)
+            elif id == 4:
+                # 4 is Down
+                self._numberEntered(8)
         else:
             log("NumberPad: Unknown key pressed %s" % str(id))
 

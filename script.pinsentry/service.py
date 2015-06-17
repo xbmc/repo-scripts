@@ -25,9 +25,7 @@ from background import Background
 
 
 # Feature Options:
-# Different Pins for different priorities (one a subset of the next)
-# Option to have different passwords without the numbers (Remote with no numbers?)
-# Cleanup database of removed library items (when screensaver starts)
+# Cleanup database of removed library items (when screensaver starts, or library refresh)
 
 
 # Class to handle core Pin Sentry behaviour
@@ -74,7 +72,7 @@ class PinSentry():
         return PinSentry.pinLevelCached
 
     @staticmethod
-    def promptUserForPin():
+    def promptUserForPin(requiredLevel=1):
         userHasAccess = True
 
         # Set the background
@@ -95,27 +93,38 @@ class PinSentry():
         enteredPin = numberpad.getPin()
         del numberpad
 
+        # Find out what level this pin gives access to
+        # This will be the highest level
+        pinMatchLevel = Settings.getSecurityLevelForPin(enteredPin)
+
         # Check to see if the pin entered is correct
-        if Settings.isPinCorrect(enteredPin):
-            log("PinSentry: Pin entered Correctly")
+        if pinMatchLevel >= requiredLevel:
+            log("PinSentry: Pin entered correctly for security level %d" % pinMatchLevel)
             userHasAccess = True
             # Check if we are allowed to cache the pin level
-            PinSentry.setCachedPinLevel(1)
+            PinSentry.setCachedPinLevel(pinMatchLevel)
         else:
-            log("PinSentry: Incorrect Pin Value Entered")
+            log("PinSentry: Incorrect Pin Value Entered, required level %d entered level %d" % (requiredLevel, pinMatchLevel))
             userHasAccess = False
 
         return userHasAccess
 
     @staticmethod
-    def displayInvalidPinMessage():
+    def displayInvalidPinMessage(level=1):
         # Invalid Key Notification: Dialog, Popup Notification, None
         notifType = Settings.getInvalidPinNotificationType()
         if notifType == Settings.INVALID_PIN_NOTIFICATION_POPUP:
-            cmd = 'XBMC.Notification("{0}", "{1}", 5, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), __icon__)
+            cmd = ""
+            if Settings.getNumberOfLevels() > 1:
+                cmd = 'Notification("{0}", "{1} {2}", 5, "{3}")'.format(__addon__.getLocalizedString(32104).encode('utf-8'), __addon__.getLocalizedString(32211).encode('utf-8'), str(level), __icon__)
+            else:
+                cmd = 'Notification("{0}", "{1}", 5, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), __icon__)
             xbmc.executebuiltin(cmd)
         elif notifType == Settings.INVALID_PIN_NOTIFICATION_DIALOG:
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'))
+            line3 = None
+            if Settings.getNumberOfLevels() > 1:
+                line3 = "%s %d" % (__addon__.getLocalizedString(32211), level)
+            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), line3)
         # Remaining option is to not show any error
 
 
@@ -154,6 +163,7 @@ class PinSentryPlayer(xbmc.Player):
         if not PinSentry.isPinSentryEnabled():
             return
 
+        isMusicVideo = False
         isTvShow = False
         # Get the information for what is currently playing
         # http://kodi.wiki/view/InfoLabels#Video_player
@@ -172,6 +182,9 @@ class PinSentryPlayer(xbmc.Player):
             securityLevel = pinDB.getTvShowSecurityLevel(title)
             del pinDB
         else:
+            # Check if the video is a music video
+            isMusicVideo = self.isMusicVideoPlaying()
+
             # Not a TvShow, so check for the Movie Title
             title = xbmc.getInfoLabel("VideoPlayer.Title")
 
@@ -180,19 +193,27 @@ class PinSentryPlayer(xbmc.Player):
                 title = xbmc.getInfoLabel("ListItem.Title")
 
             if title not in [None, ""]:
-                log("PinSentryPlayer: Title: %s" % title)
-                pinDB = PinSentryDB()
-                securityLevel = pinDB.getMovieSecurityLevel(title)
-                del pinDB
-
-                # If no security found for the Movie - check the Music Video
-                if securityLevel < 1:
+                if not isMusicVideo:
+                    # Check for a Movie
+                    log("PinSentryPlayer: Title: %s" % title)
+                    pinDB = PinSentryDB()
+                    securityLevel = pinDB.getMovieSecurityLevel(title)
+                    del pinDB
+                else:
                     # Now check to see if this is  music video
                     log("PinSentryPlayer: Checking Music video for: %s" % title)
                     pinDB = PinSentryDB()
                     securityLevel = pinDB.getMusicVideoSecurityLevel(title)
                     del pinDB
 
+        # For video files it is possible to set them to always be allowed to play, in this case
+        # the security value is -1 and we don't want to perform any new checking
+        if securityLevel == -1:
+            log("PinSentryPlayer: Security level is -1, so allowing access")
+            return
+
+        # Now perform the check that restricts if a file is in a file source
+        # that should not be played
         if securityLevel < 1 and Settings.isActiveFileSource() and Settings.isActiveFileSourcePlaying():
             # Get the path of the file being played
             filePath = xbmc.getInfoLabel("Player.Folderpath")
@@ -223,7 +244,10 @@ class PinSentryPlayer(xbmc.Player):
 
             if cert not in [None, ""]:
                 log("PinSentryPlayer: Checking for certification restrictions: %s" % str(cert))
-                cert = cert.replace('Rated ', '', 1).strip()
+                # Now split based on a colon and spaces, we only want the last bit of the
+                # MPAA setting as the first bit can change based on scraper
+                cert = cert.strip().split(':')[-1]
+                cert = cert.strip().split()[-1]
                 pinDB = PinSentryDB()
                 if isTvShow:
                     # Look up the TV Shows Certificate to see if it is restricted
@@ -232,6 +256,18 @@ class PinSentryPlayer(xbmc.Player):
                     # Look up the Movies Certificate to see if it is restricted
                     securityLevel = pinDB.getMovieClassificationSecurityLevel(cert)
                 del pinDB
+
+            # If we have still not set security yet, check to make sure that the classification was actually
+            # one of our supported types
+            if securityLevel < 1:
+                if isTvShow:
+                    if not Settings.isSupportedTvShowClassification(cert):
+                        securityLevel = Settings.getDefaultTvShowsWithoutClassification()
+                        log("PinSentryPlayer: Setting TV Show to level %d as there is no valid MPAA value" % securityLevel)
+                elif not isMusicVideo:
+                    if not Settings.isSupportedMovieClassification(cert):
+                        securityLevel = Settings.getDefaultMoviesWithoutClassification()
+                        log("PinSentryPlayer: Setting Movie to level %d as there is no valid MPAA value" % securityLevel)
 
         # Check if security has been set on this item
         if securityLevel < 1:
@@ -267,16 +303,30 @@ class PinSentryPlayer(xbmc.Player):
         log("PinSentryPlayer: Pausing video to check if OK to play")
 
         # Prompt the user for the pin, returns True if they knew it
-        if PinSentry.promptUserForPin():
+        if PinSentry.promptUserForPin(securityLevel):
             log("PinSentryPlayer: Resuming video")
             # Pausing again will start the video playing again
             self.pause()
         else:
             log("PinSentryPlayer: Stopping video")
             self.stop()
-            PinSentry.displayInvalidPinMessage()
+            PinSentry.displayInvalidPinMessage(securityLevel)
 
         xbmcgui.Window(10000).clearProperty("PinSentryPrompting")
+
+    # Checks if the current item is a Music Video
+    def isMusicVideoPlaying(self):
+        if xbmc.getInfoLabel("VideoPlayer.Album") not in [None, ""]:
+            return True
+        if xbmc.getInfoLabel("VideoPlayer.Artist") not in [None, ""]:
+            return True
+        if xbmc.getInfoLabel("ListItem.Artist") not in [None, ""]:
+            return True
+        if xbmc.getInfoLabel("ListItem.AlbumArtist") not in [None, ""]:
+            return True
+        if xbmc.getInfoLabel("ListItem.Album") not in [None, ""]:
+            return True
+        return False
 
 
 # Class to handle prompting for a pin when navigating the menu's
@@ -325,7 +375,7 @@ class NavigationRestrictions():
             return
 
         # Prompt the user for the pin, returns True if they knew it
-        if PinSentry.promptUserForPin():
+        if PinSentry.promptUserForPin(securityLevel):
             log("NavigationRestrictions: Allowed access to %s" % tvshow)
         else:
             log("NavigationRestrictions: Not allowed access to %s which has security level %d" % (tvshow, securityLevel))
@@ -337,7 +387,7 @@ class NavigationRestrictions():
             # Clear the previous TV Show as we will want to prompt for the pin again if the
             # user navigates there again
             self.lastTvShowChecked = ""
-            PinSentry.displayInvalidPinMessage()
+            PinSentry.displayInvalidPinMessage(securityLevel)
 
     # Checks if the user has navigated to a Movie Set that needs a pin
     def checkMovieSets(self):
@@ -377,7 +427,7 @@ class NavigationRestrictions():
             return
 
         # Prompt the user for the pin, returns True if they knew it
-        if PinSentry.promptUserForPin():
+        if PinSentry.promptUserForPin(securityLevel):
             log("NavigationRestrictions: Allowed access to movie set %s" % moveSetName)
         else:
             log("NavigationRestrictions: Not allowed access to movie set %s which has security level %d" % (moveSetName, securityLevel))
@@ -386,7 +436,7 @@ class NavigationRestrictions():
             # Clear the previous Movie Set as we will want to prompt for the pin again if the
             # user navigates there again
             self.lastMovieSetChecked = ""
-            PinSentry.displayInvalidPinMessage()
+            PinSentry.displayInvalidPinMessage(securityLevel)
 
     # Check if a user has navigated to a Plugin that requires a Pin
     def checkPlugins(self):
@@ -421,7 +471,7 @@ class NavigationRestrictions():
             # Check for the special case that we are accessing ourself
             # in which case we have a minimum security level
             if 'PinSentry' in pluginName:
-                securityLevel = 1
+                securityLevel = Settings.getSettingsSecurityLevel()
             else:
                 log("NavigationRestrictions: No security enabled for plugin %s" % pluginName)
                 return
@@ -433,7 +483,7 @@ class NavigationRestrictions():
             return
 
         # Prompt the user for the pin, returns True if they knew it
-        if PinSentry.promptUserForPin():
+        if PinSentry.promptUserForPin(securityLevel):
             log("NavigationRestrictions: Allowed access to plugin %s" % pluginName)
         else:
             log("NavigationRestrictions: Not allowed access to plugin %s which has security level %d" % (pluginName, securityLevel))
@@ -442,7 +492,7 @@ class NavigationRestrictions():
             # Clear the previous plugin as we will want to prompt for the pin again if the
             # user navigates there again
             self.lastPluginChecked = ""
-            PinSentry.displayInvalidPinMessage()
+            PinSentry.displayInvalidPinMessage(securityLevel)
 
     # Checks to see if the PinSentry addons screen has been opened
     def checkSettings(self):
@@ -479,7 +529,10 @@ class NavigationRestrictions():
         del pinDB
 
         if securityLevel < 1:
-            securityLevel = 1
+            # If the user hasn't reset the permissions, then set it to the highest
+            # security level available
+            securityLevel = Settings.getSettingsSecurityLevel()
+            log("NavigationRestrictions: Settings screen requires security level %d" % securityLevel)
 
         # Check if we have already cached the pin number and at which level
         if PinSentry.getCachedPinLevel() >= securityLevel:
@@ -491,12 +544,12 @@ class NavigationRestrictions():
         xbmc.executebuiltin("Dialog.Close(all, true)", True)
 
         # Prompt the user for the pin, returns True if they knew it
-        if PinSentry.promptUserForPin():
+        if PinSentry.promptUserForPin(securityLevel):
             log("NavigationRestrictions: Allowed access to settings")
             # Allow the user 5 minutes to change the settings
             self.canChangeSettings = int(time.time()) + 300
 
-            cmd = 'XBMC.Notification("{0}", "{1}", 10, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32110).encode('utf-8'), __icon__)
+            cmd = 'Notification("{0}", "{1}", 10, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32110).encode('utf-8'), __icon__)
             xbmc.executebuiltin(cmd)
 
             # Open the dialogs that should be shown, we don't reopen the Information dialog
@@ -507,7 +560,7 @@ class NavigationRestrictions():
         else:
             log("NavigationRestrictions: Not allowed access to settings which has security level %d" % securityLevel)
             self.canChangeSettings = False
-            PinSentry.displayInvalidPinMessage()
+            PinSentry.displayInvalidPinMessage(securityLevel)
 
     def checkFileSources(self):
         # Check if the user has navigated into a file source
@@ -552,14 +605,14 @@ class NavigationRestrictions():
             return
 
         # Prompt the user for the pin, returns True if they knew it
-        if PinSentry.promptUserForPin():
+        if PinSentry.promptUserForPin(securityLevel):
             log("NavigationRestrictions: Allowed access to File Source %s" % navPath)
         else:
             log("NavigationRestrictions: Not allowed access to File Source %s which has security level %d" % (navPath, securityLevel))
             # Move back to the Movie Section as they are not allowed where they are at the moment
             xbmc.executebuiltin("ActivateWindow(Videos,sources://video/)", True)
             self.lastFileSource = ""
-            PinSentry.displayInvalidPinMessage()
+            PinSentry.displayInvalidPinMessage(securityLevel)
 
 
 ##################################

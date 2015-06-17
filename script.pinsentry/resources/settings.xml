@@ -2,10 +2,17 @@
 <settings>
 	<category label="32002">
 		<setting id="pinValue" type="text" visible="false" option="hidden" label="Pin Value" default="" />
+		<setting id="pinValue2" type="text" visible="false" option="hidden" label="Pin Value 2" default="" />
+		<setting id="pinValue3" type="text" visible="false" option="hidden" label="Pin Value 3" default="" />
+		<setting id="pinValue4" type="text" visible="false" option="hidden" label="Pin Value 4" default="" />
+		<setting id="pinValue5" type="text" visible="false" option="hidden" label="Pin Value 5" default="" />
 		<setting id="pinValueSet" type="bool" visible="false" option="hidden" label="Pin Value Set" default="false" />
 		<setting id="pinWarning" enable="false" visible="eq(-1,false)" type="text" label="32008" default="" />
 		<setting id="pinLength" label="32006" type="slider" default="4" range="1,1,10" option="int" />
+		<setting id="directionKeysAsPin" type="bool" label="32023" default="false" />
 		<setting id="invalidPinNotificationType" label="32009" type="enum" lvalues="32010|32011|32012" default="0" />
+		<setting id="numberOfLevels" label="32020" type="enum" values="1|2|3|4|5" default="1" />
+		<setting id="showSecurityInfo" type="bool" visible="!eq(-1,0)" subsetting="true" label="32022" default="true" />
     	<setting label="32005" type="lsep"/>
 		<setting label="32007" type="action" option="close" action="RunScript($CWD/setpin.py)"/>
 		<setting label="32114" type="action" option="close" action="RunAddon(script.pinsentry)"/>
@@ -17,6 +24,8 @@
 		<setting id="activityPlugins" type="bool" label="32128" default="true" />
 		<setting id="activityFileSource" type="bool" label="32204" default="true" />
 		<setting id="activityFileSourceNavigationOnly" type="bool" subsetting="true" visible="eq(-1,true)" enable="eq(-3,true)" label="32111" default="false" />
+		<setting id="defaultMoviesWithoutClassification" type="enum" label="32017" lvalues="32013|32014" default="0" />
+		<setting id="defaultTvShowsWithoutClassification" type="enum" label="32018" lvalues="32013|32014" default="0" />
 	</category>
 	<category label="32115">
 		<setting id="pinCachingStatus" type="enum" label="32119" lvalues="32013|32014|32015" default="0"/>
@@ -26,6 +35,7 @@
 		<setting id="timeRestrictionEnabled" type="bool" label="32116" default="false" />
 		<setting id="startTime" visible="eq(-1,true)" subsetting="true" type="time" label="32117" default="06:00"/>
 		<setting id="endTime" visible="eq(-2,true)" subsetting="true" type="time" label="32118" default="20:00"/>
+		<setting id="highlightClassificationUnprotectedVideos" type="bool" label="32019" default="false" />
     	<setting label="32003" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32004" default="false"/>
 	</category>

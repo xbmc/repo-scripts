@@ -29,6 +29,7 @@ sys.path.append(__lib__)
 # Import the common settings
 from settings import Settings
 from settings import log
+from settings import os_path_join
 from database import PinSentryDB
 
 
@@ -61,28 +62,28 @@ class MenuNavigator():
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MOVIES})
         li = xbmcgui.ListItem(__addon__.getLocalizedString(32201), iconImage=__icon__)
         li.setProperty("Fanart_Image", __fanart__)
-        li.addContextMenuItems([], replaceItems=True)
+        li.addContextMenuItems(self._getContextMenu(MenuNavigator.MOVIES), replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # TV Shows
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.TVSHOWS})
         li = xbmcgui.ListItem(__addon__.getLocalizedString(32202), iconImage=__icon__)
         li.setProperty("Fanart_Image", __fanart__)
-        li.addContextMenuItems([], replaceItems=True)
+        li.addContextMenuItems(self._getContextMenu(MenuNavigator.TVSHOWS), replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Movie Sets
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MOVIESETS})
         li = xbmcgui.ListItem(__addon__.getLocalizedString(32203), iconImage=__icon__)
         li.setProperty("Fanart_Image", __fanart__)
-        li.addContextMenuItems([], replaceItems=True)
+        li.addContextMenuItems(self._getContextMenu(MenuNavigator.MOVIESETS), replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Music Videos
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MUSICVIDEOS})
         li = xbmcgui.ListItem(__addon__.getLocalizedString(32205), iconImage=__icon__)
         li.setProperty("Fanart_Image", __fanart__)
-        li.addContextMenuItems([], replaceItems=True)
+        li.addContextMenuItems(self._getContextMenu(MenuNavigator.MUSICVIDEOS), replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Plugins
@@ -111,25 +112,25 @@ class MenuNavigator():
         xbmcplugin.endOfDirectory(self.addon_handle)
 
     # Show the list of videos in a given set
-    def showFolder(self, foldername, subType=""):
+    def showFolder(self, foldername, type="", subType=""):
         # Check for the special case of manually defined folders
         if foldername == MenuNavigator.TVSHOWS:
-            self._setList(MenuNavigator.TVSHOWS, 'GetTVShows', 'tvshowid')
+            self._setList(MenuNavigator.TVSHOWS)
         elif foldername == MenuNavigator.MOVIES:
-            self._setList(MenuNavigator.MOVIES, 'GetMovies', 'movieid')
+            self._setList(MenuNavigator.MOVIES)
         elif foldername == MenuNavigator.MOVIESETS:
-            self._setList(MenuNavigator.MOVIESETS, 'GetMovieSets', 'setid')
+            self._setList(MenuNavigator.MOVIESETS)
         elif foldername == MenuNavigator.MUSICVIDEOS:
-            self._setList(MenuNavigator.MUSICVIDEOS, 'GetMusicVideos', 'musicvideoid')
+            self._setList(MenuNavigator.MUSICVIDEOS)
         elif foldername == MenuNavigator.PLUGINS:
             self._setList(MenuNavigator.PLUGINS)
         elif foldername == MenuNavigator.FILESOURCE:
             self._setList(MenuNavigator.FILESOURCE)
         elif foldername == MenuNavigator.CLASSIFICATIONS:
-            self._setClassificationList(subType)
+            self._setClassificationList(type, subType)
 
     # Produce the list of videos and flag which ones with security details
-    def _setList(self, target, jsonGet='', dbid=''):
+    def _setList(self, target):
         items = []
         if target == MenuNavigator.PLUGINS:
             items = self._setPluginList()
@@ -137,10 +138,12 @@ class MenuNavigator():
             items = self._setFileSourceList()
         else:
             # Everything other plugins are forms of video
-            items = self._getVideos(jsonGet, target, dbid)
+            items = self._getVideos(target)
 
         # Now add the security details to the list
         items = self._addSecurityFlags(target, items)
+        # Update the classifications
+        items = self._cleanClassification(target, items)
 
         for item in items:
             # Create the list-item for this video
@@ -148,29 +151,65 @@ class MenuNavigator():
 
             # Remove the default context menu
             li.addContextMenuItems([], replaceItems=True)
-            # Get the title of the video owning the extras
+            # Get the title of the video
             title = item['title']
             try:
                 title = item['title'].encode("utf-8")
             except:
                 log("setVideoList: Failed to encode title %s" % title)
 
-            # Record what the new security level will be is selected
-            newSecurityLevel = 1
-            # Add a tick if security is set
-            if item['securityLevel'] > 0:
-                li.setInfo('video', {'PlayCount': 1})
-                # Next time the item is selected, it will be disabled
-                newSecurityLevel = 0
+            # Check if the classification is restricting this item
+            isBlockedByClassification = False
+            if 'mpaa' in item:
+                if item['mpaa'] not in [None, ""]:
+                    isBlockedByClassification = True
 
-            url = self._build_url({'mode': 'setsecurity', 'level': newSecurityLevel, 'type': target, 'title': title, 'id': item['dbid']})
-            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+            # Add a tick if security is set
+            if item['securityLevel'] != 0:
+                li.setInfo('video', {'PlayCount': 1})
+                # Not the best display format - but the only way that I can get a number to display
+                # In the list, the problem is it will display 01:00 - but at least it's something
+                if Settings.showSecurityLevelInPlugin():
+                    li.setInfo('video', {'Duration': item['securityLevel']})
+            elif Settings.isHighlightClassificationUnprotectedVideos():
+                # If the user wishes to see which files are not protected by one of the rules
+                # currently applied, we put the play signal next to them
+                if not isBlockedByClassification:
+                    li.setProperty("TotalTime", "")
+                    li.setProperty("ResumeTime", "1")
+
+            # Handle the case where we want to turn off security for a video
+            if isBlockedByClassification and (item['securityLevel'] == -1):
+                # This is the case where the user has forced access to be allowed, this
+                # is useful if you have classification enabled and you want to allow a
+                # given video for a classification to be unprotected
+                li.setProperty("TotalTime", "")
+                li.setProperty("ResumeTime", "1")
+
+            li.setProperty("Fanart_Image", item['fanart'])
+            url = self._build_url({'mode': 'setsecurity', 'level': item['securityLevel'], 'type': target, 'title': title, 'id': item['dbid'], 'classificationBlocked': str(isBlockedByClassification)})
+            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
 
     # Do a lookup in the database for the given type of videos
-    def _getVideos(self, jsonGet, target, dbid):
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "thumbnail", "fanart"], "sort": { "method": "title" } }, "id": 1}' % jsonGet)
+    def _getVideos(self, target):
+        jsonGet = 'GetMovies'
+        dbid = 'movieid'
+        extraDetails = ', "mpaa"'
+        if target == MenuNavigator.TVSHOWS:
+            jsonGet = 'GetTVShows'
+            dbid = 'tvshowid'
+        elif target == MenuNavigator.MOVIESETS:
+            jsonGet = 'GetMovieSets'
+            dbid = 'setid'
+            extraDetails = ""
+        elif target == MenuNavigator.MUSICVIDEOS:
+            jsonGet = 'GetMusicVideos'
+            dbid = 'musicvideoid'
+            extraDetails = ""
+
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "thumbnail", "fanart"%s], "sort": { "method": "title" } }, "id": 1}' % (jsonGet, extraDetails))
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         log(json_response)
@@ -185,13 +224,19 @@ class MenuNavigator():
                     log("setVideoList: Failed to encode title %s" % title)
                     videoItem['title'] = item['title']
 
-                if item['thumbnail'] is None:
+                if item['thumbnail'] in [None, ""]:
                     videoItem['thumbnail'] = 'DefaultFolder.png'
                 else:
                     videoItem['thumbnail'] = item['thumbnail']
-                videoItem['fanart'] = item['fanart']
+
+                if item['fanart'] in [None, ""]:
+                    videoItem['fanart'] = __fanart__
+                else:
+                    videoItem['fanart'] = item['fanart']
 
                 videoItem['dbid'] = item[dbid]
+                if 'mpaa' in item:
+                    videoItem['mpaa'] = item['mpaa']
 
                 videolist.append(videoItem)
         return videolist
@@ -225,11 +270,52 @@ class MenuNavigator():
             if item['title'] in securityDetails:
                 title = item['title']
                 securityLevel = securityDetails[title]
-                log("%s has security level %d" % (title, securityLevel))
+                log("PinSentryPlugin: %s has security level %d" % (title, securityLevel))
 
             item['securityLevel'] = securityLevel
 
         del pinDB
+        return items
+
+    # Update the classifications
+    def _cleanClassification(self, target, items):
+        securityDetails = {}
+        # Make the call to the DB to get all the specific security settings
+        if target == MenuNavigator.MOVIES:
+            pinDB = PinSentryDB()
+            securityDetails = pinDB.getAllMovieClassificationSecurity(True)
+            del pinDB
+        elif target == MenuNavigator.TVSHOWS:
+            pinDB = PinSentryDB()
+            securityDetails = pinDB.getAllTvClassificationSecurity(True)
+            del pinDB
+        else:
+            # No Classifications to deal with
+            return items
+
+        # Generate a list of certificates to check against
+        certValues = securityDetails.keys()
+
+        log("PinSentryPlugin: Allowing certificates for %s" % str(certValues))
+
+        # Check each of the items and add a flag if they are protected by a classification rule
+        for item in items:
+            if 'mpaa' in item:
+                if item['mpaa'] not in [None, ""]:
+                    cert = item['mpaa'].strip().split(':')[-1]
+                    cert = cert.strip().split()[-1]
+
+                    try:
+                        cert = cert.encode("utf-8")
+                    except:
+                        log("PinSentryPlugin: Failed to encode certificate")
+
+                    if cert in certValues:
+                        item['mpaa'] = cert
+                        log("PinSentryPlugin: Setting mpaa for %s to %s" % (item['title'], cert))
+                    else:
+                        log("PinSentryPlugin: Clearing mpaa for %s (was %s)" % (item['title'], item['mpaa']))
+                        item['mpaa'] = ""
         return items
 
     # get the list of plugins installed on the system
@@ -253,11 +339,15 @@ class MenuNavigator():
                 pluginDetails['title'] = addonItem['name']
                 pluginDetails['dbid'] = addonId
 
-                if addonItem['thumbnail'] is None:
+                if addonItem['thumbnail'] in [None, ""]:
                     pluginDetails['thumbnail'] = 'DefaultAddon.png'
                 else:
                     pluginDetails['thumbnail'] = addonItem['thumbnail']
-                pluginDetails['fanart'] = addonItem['fanart']
+
+                if addonItem['fanart'] in [None, ""]:
+                    pluginDetails['fanart'] = __fanart__
+                else:
+                    pluginDetails['fanart'] = addonItem['fanart']
 
                 plugins.append(pluginDetails)
         return plugins
@@ -277,29 +367,30 @@ class MenuNavigator():
                 fileDetails['title'] = fileSource['label']
                 fileDetails['dbid'] = fileSource['file']
                 fileDetails['thumbnail'] = 'DefaultFolder.png'
+                fileDetails['fanart'] = __fanart__
 
                 fileSources.append(fileDetails)
         return fileSources
 
     # Display the classification details
-    def _setClassificationList(self, subType=""):
+    def _setClassificationList(self, type="", subtype=""):
         classifications = ()
         securityDetails = {}
 
         # Make the call to the DB to get all the specific security settings
         pinDB = PinSentryDB()
 
-        if subType == MenuNavigator.CLASSIFICATIONS_MOVIES:
+        if type == MenuNavigator.CLASSIFICATIONS_MOVIES:
             classifications = Settings.movieCassificationsNames
             securityDetails = pinDB.getAllMovieClassificationSecurity()
-        elif subType == MenuNavigator.CLASSIFICATIONS_TV:
+        elif type == MenuNavigator.CLASSIFICATIONS_TV:
             classifications = Settings.tvCassificationsNames
             securityDetails = pinDB.getAllTvClassificationSecurity()
 
         del pinDB
 
         # Check if we are showing the root classification listing
-        if subType in [None, ""]:
+        if type in [None, ""]:
             url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.CLASSIFICATIONS, 'type': MenuNavigator.CLASSIFICATIONS_MOVIES})
             li = xbmcgui.ListItem(__addon__.getLocalizedString(32207), iconImage=__icon__)
             li.setProperty("Fanart_Image", __fanart__)
@@ -311,34 +402,109 @@ class MenuNavigator():
             li.setProperty("Fanart_Image", __fanart__)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
-        else:
+        elif subtype in [None, ""]:
+            # Get all the different language that are supported
+            languages = []
             for classification in classifications:
+                if classification['lang'] not in languages:
+                    languages.append(classification['lang'])
+
+            # Check to see if we can sort all the entries alphabetically for the given language
+            try:
+                languages = sorted(languages, key=__addon__.getLocalizedString)
+            except:
+                # If it fails to sort, then we just list them unsorted
+                log("PinSentryPlugin: Failed to sort language list")
+
+            # Now print out the item for each language
+            for lang in languages:
+                url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.CLASSIFICATIONS, 'type': type, 'subtype': str(lang)})
+                li = xbmcgui.ListItem(__addon__.getLocalizedString(lang), iconImage=__icon__)
+                li.setProperty("Fanart_Image", __fanart__)
+                li.addContextMenuItems([], replaceItems=True)
+                xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+        else:
+            # Get the root location of the icons
+            iconLocation = os_path_join(__resource__, 'media')
+            iconLocation = os_path_join(iconLocation, 'classifications')
+
+            for classification in classifications:
+                # Check if we are looking for a specific country
+                if subtype != str(classification['lang']):
+                    continue
+
+                fullName = classification['name'] % __addon__.getLocalizedString(classification['lang'])
                 idStr = str(classification['id'])
                 securityLevel = 0
                 if idStr in securityDetails:
                     securityLevel = securityDetails[idStr]
-                    log("Classification %s has security level %d" % (classification['name'], securityLevel))
+                    log("PinSentryPlugin: Classification %s has security level %d" % (fullName, securityLevel))
 
-                li = xbmcgui.ListItem(classification['name'], iconImage=__icon__)
+                # Set the icon to the certificate one if available
+                iconImage = __icon__
+                if classification['icon'] not in [None, ""]:
+                    iconImage = os_path_join(iconLocation, classification['icon'])
 
-                # Record what the new security level will be is selected
-                newSecurityLevel = 1
+                li = xbmcgui.ListItem(fullName, iconImage=iconImage)
+
                 # Add a tick if security is set
                 if securityLevel > 0:
                     li.setInfo('video', {'PlayCount': 1})
-                    # Next time the item is selected, it will be disabled
-                    newSecurityLevel = 0
 
                 li.setProperty("Fanart_Image", __fanart__)
                 li.addContextMenuItems([], replaceItems=True)
-                url = self._build_url({'mode': 'setsecurity', 'type': subType, 'id': classification['id'], 'title': classification['match'], 'level': newSecurityLevel})
-                xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+                url = self._build_url({'mode': 'setsecurity', 'type': type, 'id': classification['id'], 'title': classification['match'], 'level': securityLevel})
+                xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
 
     # Set the security value for a given video
-    def setSecurity(self, type, title, id, level):
+    def setSecurity(self, type, title, id, oldLevel, classBlocked=False, forceLevel=None):
         log("Setting security for (id:%s) %s" % (id, title))
+
+        level = 1
+
+        # Check if we need to prompt the user or the new security level has been supplied
+        if forceLevel is None:
+            # Set the new security level to be used
+            if oldLevel > 0:
+                # Default is to disable it if it was enabled
+                level = 0
+
+            numLevels = Settings.getNumberOfLevels()
+            if numLevels > 1 or classBlocked:
+                # Need to prompt the user to see which pin they are trying to set
+                displayNameList = []
+                # Add the option to turn it off
+                displayNameList.append("%s %s" % (__addon__.getLocalizedString(32211), __addon__.getLocalizedString(32013)))
+                for i in range(1, numLevels + 1):
+                    secLevStr = str(i)
+                    if numLevels < 2:
+                        # If there is only one security level, use "On" rather than the number
+                        secLevStr = __addon__.getLocalizedString(32014)
+                    displayString = "%s %s" % (__addon__.getLocalizedString(32211), secLevStr)
+                    displayNameList.append(displayString)
+
+                # Check if we need the option to disable a classification restriction
+                if classBlocked:
+                    displayNameList.append(__addon__.getLocalizedString(32212))
+
+                select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32001), displayNameList)
+
+                if select != -1:
+                    level = select
+                    if classBlocked and (select >= (len(displayNameList) - 1)):
+                        level = -1
+                    log("Setting security level to %d" % level)
+                else:
+                    log("Exiting set security as no level selected")
+                    return
+        else:
+            level = forceLevel
+
+        # This could take a little time to set the value so show the busy dialog
+        xbmc.executebuiltin("ActivateWindow(busydialog)")
+
         if title not in [None, ""]:
             pinDB = PinSentryDB()
             if type == MenuNavigator.TVSHOWS:
@@ -364,6 +530,12 @@ class MenuNavigator():
             elif type == MenuNavigator.CLASSIFICATIONS_TV:
                 pinDB.setTvClassificationSecurityLevel(id, title, level)
             del pinDB
+        else:
+            # Handle the bulk operations like set All security for the movies
+            self._setBulkSecurity(type, level)
+
+        xbmc.executebuiltin("Dialog.Close(busydialog)")
+        xbmc.executebuiltin("Container.Refresh")
 
     # Sets the security details on all the Movies in a given Movie Set
     def _setSecurityOnMoviesInMovieSets(self, setid, level):
@@ -377,8 +549,35 @@ class MenuNavigator():
             if 'movies' in json_response['result']['setdetails']:
                 for item in json_response['result']['setdetails']['movies']:
                     # Now set the security on the movies in the set
-                    self.setSecurity(MenuNavigator.MOVIES, item['label'], item['movieid'], level)
+                    self.setSecurity(MenuNavigator.MOVIES, item['label'], item['movieid'], level, forceLevel=level)
         return
+
+    # Performs an operation on all the elements of a given type
+    def _setBulkSecurity(self, type, level):
+        items = self._getVideos(type)
+        for item in items:
+            # Get the title of the video
+            title = item['title']
+            try:
+                title = item['title'].encode("utf-8")
+            except:
+                log("PinSentryPlugin: setBulkSecurity Failed to encode title %s" % title)
+            self.setSecurity(type, title, item['dbid'], level, forceLevel=level)
+
+    # Construct the context menu
+    def _getContextMenu(self, type):
+        ctxtMenu = []
+
+        if type in [MenuNavigator.TVSHOWS, MenuNavigator.MOVIES, MenuNavigator.MOVIESETS, MenuNavigator.MUSICVIDEOS]:
+            # Clear All Security
+            cmd = self._build_url({'mode': 'setsecurity', 'level': 0, 'type': type, 'forceLevel': 0})
+            ctxtMenu.append((__addon__.getLocalizedString(32209), 'RunPlugin(%s)' % cmd))
+
+            # Apply Security To All
+            cmd = self._build_url({'mode': 'setsecurity', 'level': 1, 'type': type})
+            ctxtMenu.append((__addon__.getLocalizedString(32210), 'RunPlugin(%s)' % cmd))
+
+        return ctxtMenu
 
 
 ################################
@@ -416,14 +615,18 @@ if __name__ == '__main__':
         # Get the actual folder that was navigated to
         foldername = args.get('foldername', None)
         type = args.get('type', None)
+        subtype = args.get('subtype', None)
 
         if (foldername is not None) and (len(foldername) > 0):
-            subType = ""
+            type1 = ""
             if (type is not None) and (len(type) > 0):
-                subType = type[0]
+                type1 = type[0]
+            subtype1 = ""
+            if (subtype is not None) and (len(subtype) > 0):
+                subtype1 = subtype[0]
 
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.showFolder(foldername[0], subType)
+            menuNav.showFolder(foldername[0], type1, subtype1)
             del menuNav
 
     elif mode[0] == 'setsecurity':
@@ -434,6 +637,8 @@ if __name__ == '__main__':
         title = args.get('title', None)
         level = args.get('level', None)
         id = args.get('id', None)
+        classificationBlocked = args.get('classificationBlocked', None)
+        forceLevel = args.get('forceLevel', None)
 
         if (type is not None) and (len(type) > 0):
             log("PinSentryPlugin: Type to set security for %s" % type[0])
@@ -443,12 +648,19 @@ if __name__ == '__main__':
             secLevel = 0
             if (level is not None) and (len(level) > 0):
                 secLevel = int(level[0])
-            dbid = 0
+            dbid = ""
             if (id is not None) and (len(id) > 0):
                 dbid = id[0]
+            classBlocked = False
+            if (classificationBlocked is not None) and (len(classificationBlocked) > 0):
+                if classificationBlocked[0] == str(True):
+                    classBlocked = True
+            forceLevelVal = None
+            if (forceLevel is not None) and (len(forceLevel) > 0):
+                forceLevelVal = int(forceLevel[0])
 
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.setSecurity(type[0], secTitle, dbid, secLevel)
+            menuNav.setSecurity(type[0], secTitle, dbid, secLevel, classBlocked, forceLevelVal)
             del menuNav
 
     elif mode[0] == 'setclassification':

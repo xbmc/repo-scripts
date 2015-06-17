@@ -146,7 +146,7 @@ class PinSentryDB():
     # Set the security value for a given TvShow
     def setTvShowSecurityLevel(self, showName, dbid, level=1):
         ret = -1
-        if level > 0:
+        if level != 0:
             ret = self._insertOrUpdate("TvShows", showName, dbid, level)
         else:
             self._deleteSecurityDetails("TvShows", showName)
@@ -155,7 +155,7 @@ class PinSentryDB():
     # Set the security value for a given Movie
     def setMovieSecurityLevel(self, movieName, dbid, level=1):
         ret = -1
-        if level > 0:
+        if level != 0:
             ret = self._insertOrUpdate("Movies", movieName, dbid, level)
         else:
             self._deleteSecurityDetails("Movies", movieName)
@@ -164,7 +164,7 @@ class PinSentryDB():
     # Set the security value for a given Movie Set
     def setMovieSetSecurityLevel(self, movieSetName, dbid, level=1):
         ret = -1
-        if level > 0:
+        if level != 0:
             ret = self._insertOrUpdate("MovieSets", movieSetName, dbid, level)
         else:
             self._deleteSecurityDetails("MovieSets", movieSetName)
@@ -173,7 +173,7 @@ class PinSentryDB():
     # Set the security value for a given Plugin
     def setPluginSecurityLevel(self, pluginName, dbid, level=1):
         ret = -1
-        if level > 0:
+        if level != 0:
             ret = self._insertOrUpdate("Plugins", pluginName, dbid, level)
         else:
             self._deleteSecurityDetails("Plugins", pluginName)
@@ -182,7 +182,7 @@ class PinSentryDB():
     # Set the security value for a given Music Video
     def setMusicVideoSecurityLevel(self, musicVideoName, dbid, level=1):
         ret = -1
-        if level > 0:
+        if level != 0:
             ret = self._insertOrUpdate("MusicVideos", musicVideoName, dbid, level)
         else:
             self._deleteSecurityDetails("MusicVideos", musicVideoName)
@@ -191,7 +191,7 @@ class PinSentryDB():
     # Set the security value for a given File Source
     def setFileSourceSecurityLevel(self, sourceName, sourcePath, level=1):
         ret = -1
-        if level > 0:
+        if level != 0:
             ret = self._insertOrUpdate("FileSources", sourceName, sourcePath, level)
         else:
             self._deleteSecurityDetails("FileSources", sourceName)
@@ -200,7 +200,7 @@ class PinSentryDB():
     # Set the security value for a given Movie Classification
     def setMovieClassificationSecurityLevel(self, id, match, level=1):
         ret = -1
-        if level > 0:
+        if level != 0:
             ret = self._insertOrUpdate("ClassificationsMovies", id, match, level)
         else:
             self._deleteSecurityDetails("ClassificationsMovies", id)
@@ -209,7 +209,7 @@ class PinSentryDB():
     # Set the security value for a given TV Classification
     def setTvClassificationSecurityLevel(self, id, match, level=1):
         ret = -1
-        if level > 0:
+        if level != 0:
             ret = self._insertOrUpdate("ClassificationsTV", id, match, level)
         else:
             self._deleteSecurityDetails("ClassificationsTV", id)
@@ -344,12 +344,18 @@ class PinSentryDB():
         return self._getAllSecurityDetails("FileSources", keyCol=2)
 
     # Get All Movie Classification entries from the database
-    def getAllMovieClassificationSecurity(self):
-        return self._getAllSecurityDetails("ClassificationsMovies")
+    def getAllMovieClassificationSecurity(self, useCertKey=False):
+        keyCol = 1
+        if useCertKey:
+            keyCol = 2
+        return self._getAllSecurityDetails("ClassificationsMovies", keyCol)
 
     # Get All TV Classification entries from the database
-    def getAllTvClassificationSecurity(self):
-        return self._getAllSecurityDetails("ClassificationsTV")
+    def getAllTvClassificationSecurity(self, useCertKey=False):
+        keyCol = 1
+        if useCertKey:
+            keyCol = 2
+        return self._getAllSecurityDetails("ClassificationsTV", keyCol)
 
     # Select all security details from a given table in the database
     def _getAllSecurityDetails(self, tableName, keyCol=1):

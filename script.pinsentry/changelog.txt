@@ -1,2 +1,11 @@
+v1.0.1
+- Add More Classification Ratings
+- Add default behaviour for unsupported certifications
+- Add support for bulk security setting
+- Add option to view videos protected by classification
+- Add support for multiple security levels
+- Add support for pins using just direction keys
+- Allow a video restricted by classification to be excluded
+
 v1.0.0
 - Initial Version

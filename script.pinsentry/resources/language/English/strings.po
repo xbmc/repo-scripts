@@ -88,7 +88,35 @@ msgctxt "#32016"
 msgid "Remember Pin For (Minutes)"
 msgstr ""
 
-#empty strings from id 32017 to 32100
+msgctxt "#32017"
+msgid "Block Movies Without A Classification"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Block TV Shows Without A Classification"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Highlight Videos Not Protected By Classifications"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Number Of Security Levels"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Set Pin For Security Level"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Show Security Level On Permissions Screen"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Allow Direction Keys In Pin Code"
+msgstr ""
+
+#empty strings from id 32024 to 32100
 
 msgctxt "#32101"
 msgid "Backspace"
@@ -232,4 +260,54 @@ msgstr ""
 
 msgctxt "#32208"
 msgid "TV Classifications"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Clear All Security"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Apply Security To All"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Security Level"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Remove Classification Restriction"
+msgstr ""
+
+#empty strings from id 32213 to 32300
+
+msgctxt "#32301"
+msgid "UK"
+msgstr ""
+
+msgctxt "#32302"
+msgid "USA"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr ""
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr ""
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr ""
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr ""
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr ""
+
+msgctxt "#32308"
+msgid "Hungary"
 msgstr ""
