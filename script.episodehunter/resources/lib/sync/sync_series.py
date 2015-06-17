@@ -23,6 +23,7 @@ class Series(sync.Sync):
         self.xbmc_series = []
 
     def sync(self):
+        helper.debug("Start syncing tv shows")
         self.create_progress(helper.language(32051))  # "Comparing XBMC database with episodehunter.tv"
         try:
             self.get_series()
@@ -38,6 +39,7 @@ class Series(sync.Sync):
         except SystemExit:
             pass
 
+        helper.debug("The synchronize is complete")
         self.quit()
 
     def _sync(self):

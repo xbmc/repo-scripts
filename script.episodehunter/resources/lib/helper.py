@@ -31,17 +31,27 @@ def chunks(l, n):
         yield l[i:i+n]
 
 
+def xbmc_print(msg):
+    xbmc.log(__name__ + ": " + msg)
+
+
 def debug(msg):
     """ Prints debug message if debugging is enable in the user settings """
     is_debuging = settings.getSetting("debug")
     if is_debuging:
         try:
-            xbmc.log(__name__ + ": " + msg)
+            xbmc_print(str(msg))
         except Exception:
             try:
-                xbmc.log(__name__ + ": You are trying to print some bad string, " + msg.encode("utf-8", "ignore"))
+                xbmc_print("You are trying to print some bad string, " + str(msg).encode("utf-8", "ignore"))
             except Exception:
-                xbmc.log(__name__ + ": You are trying to print a bad string, I can not even print it")
+                xbmc_print("You are trying to print a bad string, I can not even print it")
+
+
+def print_exception_information():
+    import traceback
+    stack_trace = traceback.format_exc()
+    debug(stack_trace)
 
 
 def notification(header, message, level=0):

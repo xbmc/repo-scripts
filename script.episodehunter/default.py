@@ -29,11 +29,13 @@ def menu():
                 try:
                     sync.Movies(connection).sync()
                 except Exception as error:
+                    helper.print_exception_information()
                     dialog.create_error_dialog(str(error))
             elif select == 1:  # TV
                 try:
                     sync.Series(connection).sync()
                 except Exception as error:
+                    helper.print_exception_information()
                     dialog.create_error_dialog(str(error))
             elif select == 2:  # Settings
                 helper.settings.openSettings()

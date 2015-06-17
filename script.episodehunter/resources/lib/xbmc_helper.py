@@ -31,6 +31,8 @@ def get_active_players_from_xbmc():
     try:
         return result[0]['playerid']
     except KeyError:
+        helper.debug("Failing to fetch player id")
+        helper.debug(result)
         return None
 
 
@@ -40,6 +42,8 @@ def get_currently_playing_from_xbmc(playerid):
     try:
         return result['item']
     except KeyError:
+        helper.debug("Failing to fetch playing item for player id: " + str(playerid))
+        helper.debug(result)
         return None
 
 
@@ -58,7 +62,9 @@ def get_movies_from_xbmc():
     try:
         return result['movies']
     except KeyError:
-        return None
+        helper.debug("Failing to fetch movies from xbmc library")
+        helper.debug(result)
+        return []
 
 
 def get_tv_shows_from_xbmc():
@@ -73,7 +79,9 @@ def get_tv_shows_from_xbmc():
     try:
         return result['tvshows']
     except KeyError:
-        return None
+        helper.debug("Failing to fetch tv shows from xbmc library")
+        helper.debug(result)
+        return []
 
 
 def get_seasons_from_xbmc(tvshow):
@@ -84,7 +92,9 @@ def get_seasons_from_xbmc(tvshow):
     try:
         return result['seasons']
     except KeyError:
-        return None
+        helper.debug("Failing to fetch seasons for TV show with id: " + str(tvshow))
+        helper.debug(result)
+        return []
 
 
 def get_episodes_from_xbmc(tvshow, season):
@@ -95,7 +105,9 @@ def get_episodes_from_xbmc(tvshow, season):
     try:
         return result['episodes']
     except KeyError:
-        return None
+        helper.debug("Failing to fetch episodes in season " + str(season) + ", tvshow id: " + str(tvshow))
+        helper.debug(result)
+        return []
 
 
 def get_movie_details_from_xbmc_by_title(title, year, fields):
@@ -104,6 +116,8 @@ def get_movie_details_from_xbmc_by_title(title, year, fields):
     try:
         return result['moviedetails']
     except KeyError:
+        helper.debug("Failing to fetch movie from xbmc library by title")
+        helper.debug(result)
         return None
 
 
@@ -123,6 +137,8 @@ def get_movie_details_from_xbmc(library_id):
     try:
         return result['moviedetails']
     except KeyError:
+        helper.debug("Failing to fetch movie details from xbmc library")
+        helper.debug(result)
         return None
 
 
@@ -142,6 +158,8 @@ def get_episode_details_from_xbmc(library_id):
     try:
         return result['episodedetails']
     except KeyError:
+        helper.debug("Failing to fetch episode details from xbmc library")
+        helper.debug(result)
         return None
 
 
@@ -156,6 +174,8 @@ def get_show_details_from_xbmc(library_id):
     try:
         return result['tvshowdetails']
     except KeyError:
+        helper.debug("Failing to fetch tv show details from xbmc library")
+        helper.debug(result)
         return None
 
 
