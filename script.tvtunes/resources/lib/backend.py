@@ -127,7 +127,7 @@ class TunesBackend():
                     # timeout and the user will have to wait longer
                     log("TunesBackend: Restarting screensaver that TvTunes stopped")
                     xbmc.executebuiltin("ActivateScreensaver", True)
-                    continue
+                continue
 
             # Check if TvTunes is blocked from playing any themes
             if xbmcgui.Window(10025).getProperty('TvTunesBlocked') not in [None, ""]:
@@ -314,7 +314,7 @@ class TunesBackend():
             # Check if a theme is already playing, if there is we will need
             # to stop it before playing the new theme
             # Stop any audio playing
-            if self.themePlayer.isPlayingTheme():  # and self.prevThemeFiles.hasThemes()
+            if self.themePlayer.isPlayingTheme():
                 fastFadeNeeded = True
                 log("TunesBackend: Stopping previous theme: %s" % self.prevThemeFiles.getPath())
                 self.themePlayer.endPlaying(fastFade=fastFadeNeeded)
@@ -322,6 +322,10 @@ class TunesBackend():
             # Check if this should be delayed
             if not self.delayedStart.shouldStartPlaying(self.newThemeFiles):
                 return False
+
+            # Before we start playing the theme, highlight that TvTunes is active by
+            # Setting the property that confluence reads
+            xbmcgui.Window(10025).setProperty("TvTunesIsAlive", "true")
 
             # Store the new theme that is being played
             self.prevThemeFiles = self.newThemeFiles
@@ -361,3 +365,7 @@ class TunesBackend():
         self.delayedStart.clear()
         # Clear the option used by other add-ons to work out if TvTunes is playing a theme
         xbmcgui.Window(10025).clearProperty("TvTunesIsRunning")
+        # The following value is added for the Confluence skin to not show what is
+        # currently playing, maybe change this name when we submit the pull request to
+        # Confluence - new name: PlayingBackgroundMedia
+        xbmcgui.Window(10025).clearProperty("TvTunesIsAlive")

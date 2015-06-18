@@ -292,6 +292,7 @@ class ThemePlayer(xbmc.Player):
             while i < self.playlistSize:
                 if self.playListItems[i].getfilename() == filePlaying:
                     return True
+                i = i + 1
         except:
             log("ThemePlayer: Exception when checking if theme is playing")
         return False

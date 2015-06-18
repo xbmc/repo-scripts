@@ -271,7 +271,7 @@ class ThemeFiles():
     # Returns the playlist for the themes
     def getThemePlaylist(self):
         # Take the list of files and create a playlist from them
-        playlist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
         for aFile in self.themeFiles:
             # Add the theme file to a playlist
