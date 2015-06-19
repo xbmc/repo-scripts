@@ -226,6 +226,15 @@
                 "major": "15",
                 "minor": "0",
                 "tag": "beta",
+                "tagversion":"2",
+                "revision": "20150614-daedd5f",
+                "addon_support": "yes"
+            },
+        "beta": [
+            {
+                "major": "15",
+                "minor": "0",
+                "tag": "beta",
                 "tagversion":"1",
                 "revision": "20150501-d1a2c33",
                 "addon_support": "yes"
