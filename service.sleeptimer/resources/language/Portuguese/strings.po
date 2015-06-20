@@ -1,0 +1,110 @@
+# Kodi Media Center language file
+# Addon Name: Sleep Timer
+# Addon id: service.sleeptimer
+# Addon Provider: enen92,Solo0815
+msgid ""
+msgstr ""
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#settings labels
+msgctxt "#30000"
+msgid "Sleep Timer"
+msgstr "Sleep Timer"
+
+msgctxt "#30001"
+msgid "Cancel to continue playing"
+msgstr "Cancele para continuar a reprodução"
+
+msgctxt "#30002"
+msgid "Service check time (minutes)"
+msgstr "Tempo de verificação (minutos)"
+
+msgctxt "#30003"
+msgid "Waiting time for the dialog (before stop) (seconds)"
+msgstr "Tempo de espera para a janela (antes de parar) (segundos)"
+
+msgctxt "#30004"
+msgid "Slow mute audio before stop playing"
+msgstr "Silenciar progressivamente o audio antes de parar"
+
+msgctxt "#30005"
+msgid "General"
+msgstr "Geral"
+
+msgctxt "#30006"
+msgid "Time between 1% volume change  (millisec)"
+msgstr "Tempo entre a alteração de 1% volume (millisec)"
+
+msgctxt "#30007"
+msgid "Next check time if dialog is cancelled (minutes)"
+msgstr "Intervalo até pedir novamente para cancelar (minutes)"
+
+msgctxt "#30008"
+msgid "Enable Screensaver after stopping"
+msgstr "Activar protector de ecrã após parar"
+
+msgctxt "#30009"
+msgid "Audio/Video Supervision settings"
+msgstr "Definições de supervisão de áudio/vídeo"
+
+msgctxt "#30010"
+msgid "Enable Video Supervision"
+msgstr "Activar supervisão de vídeo"
+
+msgctxt "#30011"
+msgid "Enable Audio Supervision"
+msgstr "Activar supervisão de áudio"
+
+msgctxt "#30012"
+msgid "Maximum Playing time (minutes) before asking to stop"
+msgstr "Tempo máximo de reprodução (minutos) antes de perguntar p/ parar"
+
+msgctxt "#30013"
+msgid "Video Playbacktime"
+msgstr "Tempo de reprodução de Vídeo"
+
+msgctxt "#30014"
+msgid "Audio Playbacktime"
+msgstr "Tempo de reprodução de Áudio"
+
+msgctxt "#30015"
+msgid "Debug"
+msgstr "Depuração"
+
+msgctxt "#30016"
+msgid "Debug mode"
+msgstr "Modo de depuração"
+
+msgctxt "#30017"
+msgid "'Enable' debugging sets:"
+msgstr "'Activar' sets de depuração"
+
+msgctxt "#30018"
+msgid "Audio and Video-Check enabled"
+msgstr "Verificação de áudio e vídeo activados"
+
+msgctxt "#30019"
+msgid "Service check time (minutes): '1'"
+msgstr "Tempo de verificação do serviço (minutos): '1'"
+
+msgctxt "#30020"
+msgid "Waiting time for the dialog (before stop) (seconds): '30'"
+msgstr "Tempo de espera para a dialog (antes de parar) (segundos): '30'"
+
+msgctxt "#30021"
+msgid "It doesn't matter, what you set in the other Tabs!"
+msgstr "Estas definições são independentes das restantes"
+
+msgctxt "#30022"
+msgid "Execute custom cmd after playback stop"
+msgstr "Executar comando customizado após a reprodução ser parada"
+
+msgctxt "#30023"
+msgid "Custom CMD"
+msgstr "Comando customizado"

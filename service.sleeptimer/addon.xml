@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.sleeptimer"
+       name="Sleep Timer"
+      version="2.0.2"
+      provider-name="enen92, Solo0815">
+    <requires>
+		<import addon="xbmc.addon" version="14.0.0"/>
+		<import addon="xbmc.python" version="2.19.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Did you fall asleep? Get better control over media playback </summary>
+        <summary lang="pt">Adormeceu? Tenha melhor controlo sobre a reprodução de media </summary>
+         <description lang="en">This service addon makes Kodi stop any playback if it exceeds a given playback time. If you have that awful habit of leaving Kodi playing live content after you fell asleep, this addon is for you! It gives extended control over the playback time. Step mute the audio, enable the screensaver or run a custom command after the playback is stopped.</description>
+         <description lang="pt">Este service addon faz com que o Kodi pare qualquer playback se o seu tempo exceder um valor fornecido. Se tiver o hábito de adormecer enquanto o Kodi está a reproduzir conteúdo multimédia, este addon é para si! Este extende o controlo do tempo de reprodução. Baixe o volume do áudio, active o protector de ecrã ou execute um comando customizado após a reprodução ser interrompida.</description>
+         <forum>http://forum.kodi.tv/showthread.php?tid=211971</forum>
+    	    <source>https://github.com/enen92/service.sleeptimer</source>
+         <platform>all</platform>
+         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    </extension>
+</addon>

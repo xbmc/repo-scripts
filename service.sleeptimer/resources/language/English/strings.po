@@ -1,0 +1,111 @@
+# Kodi Media Center language file
+# Addon Name: Sleep Timer
+# Addon id: service.sleeptimer
+# Addon Provider: enen92,Solo0815
+msgid ""
+msgstr ""
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#settings labels
+
+msgctxt "#30000"
+msgid "Sleep Timer"
+""
+
+msgctxt "#30001"
+msgid "Cancel to continue playing"
+""
+
+msgctxt "#30002"
+msgid "Service check time (minutes)"
+""
+
+msgctxt "#30003"
+msgid "Waiting time for the dialog (before stop) (seconds)"
+""
+
+msgctxt "#30004"
+msgid "Slow mute audio before stop playing"
+""
+
+msgctxt "#30005"
+msgid "General"
+""
+
+msgctxt "#30006"
+msgid "Time between 1% volume change  (millisec)"
+""
+
+msgctxt "#30007"
+msgid "Next check time if dialog is cancelled (minutes)"
+""
+
+msgctxt "#30008"
+msgid "Enable Screensaver after stopping"
+""
+
+msgctxt "#30009"
+msgid "Audio/Video Supervision settings"
+""
+
+msgctxt "#30010"
+msgid "Enable Video Supervision"
+""
+
+msgctxt "#30011"
+msgid "Enable Audio Supervision"
+""
+
+msgctxt "#30012"
+msgid "Maximum Playing time (minutes) before asking to stop"
+""
+
+msgctxt "#30013"
+msgid "Video Playbacktime"
+""
+
+msgctxt "#30014"
+msgid "Audio Playbacktime"
+""
+
+msgctxt "#30015"
+msgid "Debug"
+""
+
+msgctxt "#30016"
+msgid "Debug mode"
+""
+
+msgctxt "#30017"
+msgid "'Enable' debugging sets:"
+""
+
+msgctxt "#30018"
+msgid "Audio and Video-Check enabled"
+""
+
+msgctxt "#30019"
+msgid "Service check time (minutes): '1'"
+""
+
+msgctxt "#30020"
+msgid "Waiting time for the dialog (before stop) (seconds): '30'"
+""
+
+msgctxt "#30021"
+msgid "It doesn't matter, what you set in the other Tabs!"
+""
+
+msgctxt "#30022"
+msgid "Execute custom cmd after playback stop"
+""
+
+msgctxt "#30023"
+msgid "Custom CMD"
+""

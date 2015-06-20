@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30005">
+		<setting id="check_time" label="30002" default="5" type="labelenum" values="1|3|5|10|15|20|25|30"/>
+		<setting id="waiting_time_dialog" label="30003" type="labelenum" default="60" values="30|45|60|90|120|150|180"/>
+		<setting id="audio_change" label="30004" type="bool" default="true" visible="true"/>
+		<setting id="audio_change_rate" label="30006" enable="eq(-1,true)" type="slider" default="500" range="50,50,3000" option="int"/>
+		<setting id="check_time_next" label="30007" default="30" type="labelenum" values="15|30|45|60|90|120"/>
+		<setting id="enable_screensaver" label="30008" type="bool" default="false" visible="true"/>
+	     <setting id="custom_cmd" label="30022" type="bool" default="false" visible="true"/>
+	     <setting id="cmd" type="text" label="30023" default="" visible="eq(-1,true)"/>
+	</category>
+	<category label="30009">
+		<setting id="video_enable" label="30010" type="bool" default="true" visible="true"/>
+		<setting id="audio_enable" label="30011" type="bool" default="true" visible="true"/>
+		<setting label="30012" type="lsep"/>
+		<setting id="max_time_video" label="30013" type="labelenum" default="150" enable="eq(-3,true)" values="90|120|150|180|210|240|270|300|330|360|390|420"/>
+		<setting id="max_time_audio" label="30014" type="labelenum" default="150" enable="eq(-3,true)" values="90|120|150|180|210|240|270|300|330|360|390|420"/>
+	</category>
+	<category label="30015">
+		<setting id="debug_mode" label="30016" type="bool" default="false" visible="true"/>
+		<setting label="30017" type="lsep" enable="eq(-1,true)"/>
+		<setting type="sep"/>
+		<setting label="30018" type="lsep" enable="eq(-3,true)"/>
+		<setting label="30019" type="lsep" enable="eq(-4,true)"/>
+		<setting label="30020" type="lsep" enable="eq(-5,true)"/>
+		<setting type="sep"/>
+		<setting label="30021" type="lsep" enable="eq(-7,true)"/>
+	</category>
+</settings>
