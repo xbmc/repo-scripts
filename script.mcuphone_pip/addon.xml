@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><addon id="script.mcuphone_pip" name="MCUphone PiP" provider-name="PostMet Corporation" version="0.1.1">
+<?xml version="1.0" ?><addon id="script.mcuphone_pip" name="MCUphone PiP" provider-name="PostMet Corporation" version="0.1.4">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
