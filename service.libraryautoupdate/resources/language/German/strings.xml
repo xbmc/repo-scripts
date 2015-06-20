@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- German language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/de/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC Library Auto Update</string>
+    <string id="30001">Allgemein</string>
+    <string id="30002">Video</string>
+    <string id="30003">Musik</string>
+    <string id="30004">Videobibliothek aktualisieren</string>
+    <string id="30005">Musikbibliothek aktualisieren</string>
+    <string id="30006">Benachrichtigungen anzeigen</string>
+    <string id="30007">Während des Abspielens starten</string>
+    <string id="30008">Startverzögerung (Minuten)</string>
+    <string id="30009">Erweiterten Timer verwenden</string>
+    <string id="30010">Zeit zwischen Updates (Stunden)</string>
+    <string id="30011">Cron Ausdruck</string>
+    <string id="30012">Videobibliothek aktualisieren</string>
+    <string id="30013">Musikbibliothek aktualisieren</string>
+
+    <!-- specific paths -->
+    <string id="30020">Aktualisiere konkreten Pfad 1</string>
+    <string id="30021">Aktualisiere konkreten Pfad 2</string>
+    <string id="30022">Aktualisiere konkreten Pfad 3</string>
+    <string id="30023">Videopfad</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Disclaimer lesen</string>
+    <string id="30031">Haftungsausschluss für Video-Pfad</string>
+    <string id="30032">Der Pfad muss bereits als Video Quelle mit Inhalt vorliegen</string>
+    <string id="30033">Für einen Scan muss der Pfad mit dem Quellpfad exakt übereinstimmen</string>
+
+    <!-- cleaning -->
+    <string id="30040">Aufräumen</string>
+    <string id="30041">Libraries aufräumen</string>
+    <string id="30042">Quellen vor dem Säubern verifizieren</string>
+    <string id="30043">Frequenz</string>
+    <string id="30044">Nach Update</string>
+    <string id="30045">Ein Mal pro Tag</string>
+    <string id="30046">Ein Mal pro Woche</string>
+    <string id="30047">Ein Mal pro Monat</string>
+    <string id="30048">Videodatenbank säubern</string>
+    <string id="30049">Musikdatenbank säubern</string>
+    <string id="30050">Fehler beim Säubern der Datenbank</string>
+    <string id="30051">User fragen, bevor Datenbank gesäubert wird.</string>
+    <string id="30052">Datenbanksäuberung ist in Planung.</string>
+    <string id="30053">Möchten Sie es jetzt starten?</string>
+    <string id="30054">zu säubernde Datenbank</string>
+    <string id="30055">Beides</string>
+    <string id="30056">Video Cron Ausdruck</string>
+    <string id="30057">Musik Cron Ausdruck</string>
+
+    <!-- manual run -->
+    <string id="30060">Update wird nochmal starten</string>
+    <string id="30061">Manuelles Update durchführen?</string>
+</strings>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Malay language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/ms/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30001">Am</string>
+    <string id="30002">Video</string>
+    <string id="30003">Musik</string>
+    <string id="30004">Kemaskini Pustaka Video</string>
+    <string id="30005">Kemaskini Pustaka Muzik</string>
+    <string id="30012">Kemaskini Pustaka Video</string>
+    <string id="30013">Kemaskini Pustaka Muzik</string>
+    <string id="30043">Frekuensi</string>
+    <string id="30048">Kosongkan Pustaka Video</string>
+    <string id="30049">Kosongkan Pustaka Muzik</string>
+    <string id="30055">Kedua-dua</string>
+</strings>

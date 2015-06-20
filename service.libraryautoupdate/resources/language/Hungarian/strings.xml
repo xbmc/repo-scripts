@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Hungarian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/hu/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">Az XBMC könyvtárak automatikus frissítése</string>
+    <string id="30001">Általános</string>
+    <string id="30002">Video</string>
+    <string id="30003">Zene</string>
+    <string id="30004">A videó könyvtár frissítése</string>
+    <string id="30005">A zene könyvtár frissítése</string>
+    <string id="30006">Értesítések megjelenítése</string>
+    <string id="30007">Futtatás lejátszás közben</string>
+    <string id="30008">Késleltetés indítás után (perc)</string>
+    <string id="30009">Haladó időzítő használata</string>
+    <string id="30010">Frissítések közti idő (óra)</string>
+    <string id="30011">Cron kifejezés</string>
+    <string id="30012">A videó könyvtár frissítése</string>
+    <string id="30013">A zene könyvtár frissítése</string>
+    <string id="30014">Csak tétlenség esetén fut</string>
+
+    <!-- specific paths -->
+    <string id="30020">Frissítés függő útvonal 1</string>
+    <string id="30021">Frissítés függő útvonal 2</string>
+    <string id="30022">Frissítés függő útvonal 3</string>
+    <string id="30023">Videó útvonal</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Jogi nyilatkozat elolvasása</string>
+    <string id="30031">Videó útvonalak jogi nyilatkozata</string>
+    <string id="30032">Az útvonalnak egy meglévő videó tartalomra kell mutatnia</string>
+    <string id="30033">Az útvonalnak pontosan meg kell egyeznie a forrás útvonalával a kereséshez</string>
+
+    <!-- cleaning -->
+    <string id="30040">Tisztítás</string>
+    <string id="30041">Könyvtárak tisztítása</string>
+    <string id="30042">Források ellenőrzése tisztítás előtt</string>
+    <string id="30043">Gyakoriság</string>
+    <string id="30044">Frissítés után</string>
+    <string id="30045">Naponta</string>
+    <string id="30046">Hetente</string>
+    <string id="30047">Havonta</string>
+    <string id="30048">Videó könyvtár tisztítása</string>
+    <string id="30049">Zene könyvtár tisztítása</string>
+    <string id="30050">Hiba a tisztítás közben</string>
+    <string id="30051">Kérdezzen a tisztítás előtt</string>
+    <string id="30052">Az adatbázis tisztítás elő van jegyezve</string>
+    <string id="30053">Szeretné most futtatni?</string>
+    <string id="30054">Tisztítandó könyvtár</string>
+    <string id="30055">Mindkettő</string>
+    <string id="30056">Video időzítő kifejezés (cron)</string>
+    <string id="30057">Zene időzítő kifejezés (cron)</string>
+
+    <!-- manual run -->
+    <string id="30060">A frissítés újra le fog futni</string>
+    <string id="30061">Szeretné kézzel elindítani a frissítést?</string>
+</strings>

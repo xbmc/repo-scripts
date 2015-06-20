@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Translated using Transifex web application. For support, or if you would like to to help out, please visit your language team! -->
+<!-- Norwegian language-Team URL: http://www.transifex.com/projects/p/xbmc-addons/language/no/ -->
+<!-- Report language file syntax bugs at: alanwww1@xbmc.org -->
+
+<strings>
+    <string id="30000">XBMC bibliotek auto oppdatering</string>
+    <string id="30001">Generelt</string>
+    <string id="30002">Video</string>
+    <string id="30003">Musikk</string>
+    <string id="30004">Oppdater bibliotek for Video</string>
+    <string id="30005">Oppdater bibliotek for Musikk</string>
+    <string id="30006">Vis notifikasjoner</string>
+    <string id="30007">Kjør samtidig som avspilling</string>
+    <string id="30008">Forsinkelse av oppstart (minutter)</string>
+    <string id="30009">Bruk avansert Timer</string>
+    <string id="30010">Tid mellom oppdateringer (timer)</string>
+    <string id="30011">Cron uttrykk</string>
+    <string id="30012">Oppdater bibliotek for Video</string>
+    <string id="30013">Oppdater bibliotek for Musikk</string>
+    <string id="30014">Kun kjør når ledig</string>
+
+    <!-- specific paths -->
+    <string id="30020">Oppdater sti 1</string>
+    <string id="30021">Oppdater sti 2</string>
+    <string id="30022">Oppdater sti 3</string>
+    <string id="30023">Video sti</string>
+
+    <!-- disclaimer -->
+    <string id="30030">Les Ansvarsfraskrivelsen</string>
+    <string id="30031">Video sti Ansvarsfraskrivelse</string>
+    <string id="30032">Stien må allerede være en video kilde med innhold</string>
+    <string id="30033">Sti må være nøyaktig lik kilde sti for skanning</string>
+
+    <!-- cleaning -->
+    <string id="30040">Rydding</string>
+    <string id="30041">Rydd i bibliotekene</string>
+    <string id="30042">Verifiser kildene før rydding</string>
+    <string id="30043">Frekvens</string>
+    <string id="30044">Etter Oppdatering</string>
+    <string id="30045">En gang om dagen</string>
+    <string id="30046">En gang i uken</string>
+    <string id="30047">En gang i måneden</string>
+    <string id="30048">Rydd i Video biblioteket</string>
+    <string id="30049">Rydd i Musikk biblioteket</string>
+    <string id="30050">Feil ved rydding i database</string>
+    <string id="30051">Spør bruker før Rydding av Bibliotek</string>
+    <string id="30052">Rydding av database er planlagt</string>
+    <string id="30053">Ønsker du å starte den nå?</string>
+    <string id="30054">Bibliotek å rydde</string>
+    <string id="30055">Begge</string>
+    <string id="30056">Video Cron uttrykk</string>
+    <string id="30057">Musikk Cron uttrykk</string>
+
+    <!-- manual run -->
+    <string id="30060">Oppdatering vil kjøre igjen</string>
+    <string id="30061">Ønsker du å kjøre en oppdatering manuelt?</string>
+</strings>
