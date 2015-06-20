@@ -399,8 +399,8 @@ class GUI( xbmcgui.WindowXML ):
         else:
             VIEW_SIZE = 0
         phoneResize(VIEW_SIZES[VIEW_SIZE][0], VIEW_SIZES[VIEW_SIZE][1])
-        phone("window hide")
-        phone("window show")
+#        phone("window hide")
+#        phone("window show")
 
     ##--------- Focus -----------##
     def onFocus( self, controlId ):
