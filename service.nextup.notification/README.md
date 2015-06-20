@@ -8,7 +8,7 @@ Configuration:
  
 Skinners:
 
-  - There is a script-nextup-notification-NextUpInfo.xml and script-nextup-notification-StillWatchingInfo.xml file located in default/720p/ simply copy this to your skin folder and adjust it how you like it. 
+  - There is a script-nextup-notification-NextUpInfo.xml and script-nextup-notification-StillWatchingInfo.xml file located in default/1080i/ simply copy this to your skin folder and adjust it how you like it. 
   
       Controls Available:
   

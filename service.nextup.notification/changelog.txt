@@ -1,3 +1,7 @@
+[B]1.0.7[/B]
+- Fix for strm files
+- Fix to not start at the begining when include watched episodes selected
+
 [B]1.0.6[/B]
 - Added option to include watched episodes
 - New default next up dialog
