@@ -230,7 +230,6 @@
                 "revision": "20150614-daedd5f",
                 "addon_support": "yes"
             },
-        "beta": [
             {
                 "major": "15",
                 "minor": "0",
