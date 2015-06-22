@@ -110,14 +110,16 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.slideshow_iptc   = __addon__.getSetting('iptc')
         self.slideshow_music  = __addon__.getSetting('music')
         self.slideshow_cache  = __addon__.getSetting('cache')
+        self.slideshow_bg     = __addon__.getSetting('background')
         # select which image controls from the xml we are going to use
         if self.slideshow_scale == 'false':
             self.image1 = self.getControl(1)
             self.image2 = self.getControl(2)
-            self.image3 = self.getControl(5)
-            self.image4 = self.getControl(6)
             self.getControl(3).setVisible(False)
             self.getControl(4).setVisible(False)
+            if self.slideshow_bg == 'true':
+                self.image3 = self.getControl(5)
+                self.image4 = self.getControl(6)
         else:
             self.image1 = self.getControl(3)
             self.image2 = self.getControl(4)
@@ -136,6 +138,9 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         # show music info during slideshow if enabled
         if self.slideshow_music == 'true':
             self._set_prop('Music', 'show')
+        # show background if enabled
+        if self.slideshow_bg == 'true':
+            self._set_prop('Background', 'show')
 
     def _start_show(self, items):
         # start with image 1
@@ -150,14 +155,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     continue
                 # add image to gui
                 cur_img.setImage(img[0],False)
-
                 # add background image to gui
-                if self.slideshow_scale == 'false':
+                if self.slideshow_bg == 'true':
                     if order[0] == 1:
                         self.image3.setImage(img[0],False)
                     else:
                         self.image4.setImage(img[0],False)
-
                 # give xbmc some time to load the image
                 if not self.startup:
                     xbmc.sleep(1000)
@@ -273,12 +276,10 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     # add fade anim, used for both fade and slide/zoom anim
                     self._set_prop('Fade%d' % order[0], '0')
                     self._set_prop('Fade%d' % order[1], '1')
-
                 # add fade anim to background images
-                if self.slideshow_scale == 'false':
+                if self.slideshow_bg == 'true':
                     self._set_prop('Fade1%d' % order[0], '0')
                     self._set_prop('Fade1%d' % order[1], '1')
-
                 # define next image
                 if cur_img == self.image1:
                     cur_img = self.image2
@@ -406,9 +407,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self._clear_prop('Slide2')
         self._clear_prop('Fade1')
         self._clear_prop('Fade2')
+        self._clear_prop('Fade11')
+        self._clear_prop('Fade12')
         self._clear_prop('Dim')
         self._clear_prop('Music')
         self._clear_prop('Splash')
+        self._clear_prop('Background')
         self.close()
 
 

@@ -18,11 +18,11 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Źródło obrazów do pokazu slajdów"
+msgstr "Źródło obrazów dla pokazu slajdów"
 
 msgctxt "#30001"
 msgid "Folder"
-msgstr "Katalog"
+msgstr "Folder"
 
 msgctxt "#30002"
 msgid "Video Fanart"
@@ -46,11 +46,11 @@ msgstr "Efekt"
 
 msgctxt "#30007"
 msgid "Slide"
-msgstr "Przesuwany"
+msgstr "Przesuwania"
 
 msgctxt "#30008"
 msgid "Crossfade"
-msgstr "Przejście"
+msgstr "Przejścia"
 
 msgctxt "#30009"
 msgid "Pan and zoom"
@@ -58,11 +58,11 @@ msgstr "Efekt Kena Burnsa"
 
 msgctxt "#30010"
 msgid "Amount of seconds to display each image"
-msgstr "Liczba sekund wyświetlania pojedynczego obrazu "
+msgstr "Liczba sekund wyświetlania każdego obrazu "
 
 msgctxt "#30011"
 msgid "Scale images fullscreen"
-msgstr "Skaluj obrazy do pełnego ekranu"
+msgstr "Dopasowuj obrazy do pełnego ekranu"
 
 msgctxt "#30012"
 msgid "Display image name"
@@ -70,7 +70,7 @@ msgstr "Wyświetlaj nazwę obrazu"
 
 msgctxt "#30013"
 msgid "Disabled"
-msgstr "Wyłączony"
+msgstr "Nieaktywny"
 
 msgctxt "#30014"
 msgid "Use filename"
@@ -106,7 +106,7 @@ msgstr "Wyświetlaj datę obrazu"
 
 msgctxt "#30022"
 msgid "Display additional picture tags"
-msgstr "Wyświetlaj dodatkowe etykiety obrazu"
+msgstr "Wyświetlaj dodatkowe znaczniki obrazu"
 
 msgctxt "#30023"
 msgid "Display music info during audio playback"

@@ -62,11 +62,11 @@ msgstr "Durée d'affichage de chaque image en secondes"
 
 msgctxt "#30011"
 msgid "Scale images fullscreen"
-msgstr "Rendre les images en plein écran"
+msgstr "Agrandir les images en plein écran"
 
 msgctxt "#30012"
 msgid "Display image name"
-msgstr "Afficher les noms d'images"
+msgstr "Afficher le nom des images"
 
 msgctxt "#30013"
 msgid "Disabled"
@@ -102,7 +102,7 @@ msgstr "Index créé"
 
 msgctxt "#30021"
 msgid "Display picture date"
-msgstr "Afficher la date de l'images"
+msgstr "Afficher la date des images"
 
 msgctxt "#30022"
 msgid "Display additional picture tags"
@@ -130,4 +130,4 @@ msgstr "Mettre l'index à jour"
 
 msgctxt "#30028"
 msgid "Indexing is not supported with fanart"
-msgstr "L'indexation n'est pas pris en charge pour le fanart"
+msgstr "L'indexation n'est pas prise en charge avec le fanart"

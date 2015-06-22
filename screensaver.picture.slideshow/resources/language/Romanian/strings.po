@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#30000"
 msgid "Source of slideshow images"
-msgstr "Sursă imaginilor pentru prezentare"
+msgstr "Sursă imagini diaporamă"
 
 msgctxt "#30001"
 msgid "Folder"
@@ -26,11 +26,11 @@ msgstr "Dosar"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr "Poze - Fanart video"
+msgstr "Creații artistice video"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr "Poze - Fanart muzică"
+msgstr "Creații artistice muzică"
 
 msgctxt "#30004"
 msgid "Image Folder"
@@ -84,6 +84,22 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Arată imaginile în ordine aleatoare"
 
+msgctxt "#30017"
+msgid "Create image index"
+msgstr "Crează index imagine"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Folosește dosar- și nume fișier"
+
+msgctxt "#30019"
+msgid "Creating index"
+msgstr "Se creează index"
+
+msgctxt "#30020"
+msgid "Index created"
+msgstr "Index creat"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Arata data imaginii"
@@ -107,3 +123,11 @@ msgstr "Adițional "
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Avansat"
+
+msgctxt "#30027"
+msgid "Update index"
+msgstr "Actualizează index"
+
+msgctxt "#30028"
+msgid "Indexing is not supported with fanart"
+msgstr "Indexarea nu este posibilă pentru creațiile artistice"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="2.1.1" provider-name="Team-Kodi">
+<addon id="screensaver.picture.slideshow" name="Picture Slideshow Screensaver" version="2.1.3" provider-name="Team-Kodi">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -46,7 +46,7 @@
 		<summary lang="pl">Wygaszacz ekranu wyświetlający pokaz slajdów</summary>
 		<summary lang="pt">Protecção de ecrã que mostra uma apresentação de slides</summary>
 		<summary lang="pt_BR">Proteção de tela que mostra uma apresentação de fotografias</summary>
-		<summary lang="ro">Screensaver care afișează o prezentare de diapozitive</summary>
+		<summary lang="ro">Protector ecran care afișează o diaporamă de imagini</summary>
 		<summary lang="ru">Заставка, показывающая слайд-шоу из изображений</summary>
 		<summary lang="sk">Šetrič obrazovky zobrazujúci prezentáciu obrázkov</summary>
 		<summary lang="sl">Ohranjevalnik zaslona, ki prikazuje diaprojekcijo slik</summary>
@@ -78,7 +78,7 @@
 		<description lang="et">Slaidiesitluse ekraanisäästja näitab sulle slaidiesitlust kasutades erinevaid üleminekuefekte. Slaidiesitlust on võimalik koostada nii muusika või videote fännipiltidest kui ka kasutades selleks spetsiaalset määratud piltide kausta.</description>
 		<description lang="fi">Slideshow-näytönsäästäjä näyttää diaesityksen käyttäen erilaisia siirtymätehosteita. Sen voi asettaa näyttämään musiikki- tai videokirjastojen fanitaidetta tai kuvia valitusta kuvakansiosta.</description>
 		<description lang="fr">L'économiseur Diaporama affiche un album photo en utilisant divers effets de transition. Il peut afficher votre collection de fanarts vidéos ou musicaux, ou un dossier d'images de votre choix.</description>
-		<description lang="fr_CA">L'économiseur d'écran diaporama affichera un diaporama des images avec différents effets de transition. Il peut être configuré pour afficher votre audiothèque, les fanarts de vos vidéos ou un dossier personnalisé d'images.</description>
+		<description lang="fr_CA">L'économiseur d'écran diaporama vous montrera un diaporama d'images avec différents effets de transition. Il peut être configuré pour afficher votre audiothèque, les fanarts de vos vidéos ou un dossier personnalisé d'images.</description>
 		<description lang="gl">O gardapantallas Slideshow amosará unha presentación de imaxes empregando varios efectos de transición. Pode ser configurado para amosar os carteis das túas biblotecas de video ou música ou imaxes dun cartafol personalizado.</description>
 		<description lang="he">השומר מסך יציג לך מצגת של תמונות אשר עושה שימוש במעברים שונים. יש אפשרות להגדיר את תמונות הפאנארט של ספריות המוזיקה והוידאו, או תיקיית תמונות אישית</description>
 		<description lang="hr">Čuvar zaslona slikovne prezentacije prikazuje slikovnu prezentaciju uz razne prijelazne efekte. Može se podesiti da prikazuje Vašu bazu glazbenih ili video slika omota, ili odabranu mapu sa slikama</description>
@@ -93,10 +93,10 @@
 		<description lang="ms">Penyelamat skrin paparan slaid akan paparkan paparan slaid imej menggunakan pelabgai kesan peralihan. Ia boleh dikonfigur untuk tunjukkan pustaka muzik atau seni peminat anda, atau folder imej suai</description>
 		<description lang="nl">De Diavoorstellingsschermbeveiliging zal u een diavoorstelling tonen met verschillende overgangseffecten. U kan muziek- of videofanart uit uw bibliotheek tonen of zelf een map opgeven die afbeeldingen bevat.</description>
 		<description lang="no">Denne skjermbeskytteren viser bilder med forskjellige overgangseffekter. Den kan konfigureres til å vise fanart fra musikk- eller videobiblioteket ditt, eller en mappe med bilder.</description>
-		<description lang="pl">Ten wygaszacz ekranu to pokaz slajdów obrazów, przy użyciu różnych efektów przejść. Może być skonfigurowany tak, aby pokazywał fototapety filmów, muzyki lub podany przez użytkownika folder z obrazami.</description>
+		<description lang="pl">Ten wygaszacz ekranu to pokaz slajdów obrazów, przy użyciu różnych efektów przejść. Może być skonfigurowany tak, aby pokazywał fototapety filmów, muzyki lub obrazy z niestandardowego folderu.</description>
 		<description lang="pt">O protector de ecrã de slides irá mostrar-lhe imagens usando vários efeitos de transição. Pode ser configurada para mostrar as imagens de Fanart da sua biblioteca de música ou de vídeo, e também pode mostrar as imagens de uma pasta à sua escolha.</description>
 		<description lang="pt_BR">O screensaver Slideshow irá mostrar-lhe uma apresentação de slides de suas fotografias usando diferentes efeitos de transição. Ele pode ser configurado para visualizar fanarts de sua biblioteca de músicas ou de vídeo, ou ainda utilizar uma pasta personalizada que contenha imagens</description>
-		<description lang="ro">Screensaver de tip diapozitive va afișa imagini folosind diferite efecte de tranziție. Poate fi configurat să afișeze imagini fanart din mediateca audio sau video sau dintr-un dosar personalizat.</description>
+		<description lang="ro">Protector ecran de tip diaporamă care va afișa imagini folosind diferite efecte de tranziție. Poate fi configurat să afișeze imagini creații artistice din mediateca audio sau video sau dintr-un dosar personalizat.</description>
 		<description lang="ru">Эта заставка показывается слайд-шоу из изображений, используя различные эффекты переходов. Заставку можно настроить для показ фанарта для музыки и видео из вашей библиотеки мультимедиа или изображениям из заданной папки.</description>
 		<description lang="sk">Tento šetrič vám ukáže prezentáciu obrázkov za použitia rôznych efektov prechodov. Môže byť nastavený na zobrazovanie vašej knižnice hudby alebo video fanartov, alebo vlastného priečinku s obrázkami.</description>
 		<description lang="sl">Predvajalnik slik prikaže diaprojekcijo slik z uporabo različnih učinkov prehoda. To je mogoče nastaviti tako, da se prikažejo ozadja knjižnice glasbe ali videa alislike iz izbrane mape.</description>

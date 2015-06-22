@@ -60,6 +60,10 @@ msgctxt "#30010"
 msgid "Amount of seconds to display each image"
 msgstr "Yksittäisen kuvan näyttämiseen käytettävä aika sekunneissa"
 
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Skaalaa kuvat kokoruutuun"
+
 msgctxt "#30012"
 msgid "Display image name"
 msgstr "Näytä kuvan nimi"
@@ -68,13 +72,45 @@ msgctxt "#30013"
 msgid "Disabled"
 msgstr "Ei käytössä"
 
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Käytä tiedoston nimeä"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Käytän kansion nimeä"
+
 msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Näytä kuvat satunnaisessa järjestyksessä"
 
+msgctxt "#30017"
+msgid "Create image index"
+msgstr "Luo kuvaindeksi"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "Käytä kansion ja tiedoston nimeä"
+
+msgctxt "#30019"
+msgid "Creating index"
+msgstr "Luodaan indeksiä"
+
+msgctxt "#30020"
+msgid "Index created"
+msgstr "Indeksi luotu"
+
 msgctxt "#30021"
 msgid "Display picture date"
 msgstr "Näytä kuvan päiväys"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Näytä lisää kuvatageja"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Näytä musiikin tiedot ääntä toistettaessa"
 
 msgctxt "#30024"
 msgid "Basic"
@@ -83,3 +119,11 @@ msgstr "Perus"
 msgctxt "#30026"
 msgid "Advanced"
 msgstr "Lisäasetukset"
+
+msgctxt "#30027"
+msgid "Update index"
+msgstr "Päivitä indeksi"
+
+msgctxt "#30028"
+msgid "Indexing is not supported with fanart"
+msgstr "Indeksöintiä ei tueta fanart:n kanssa"
