@@ -156,7 +156,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 # add image to gui
                 cur_img.setImage(img[0],False)
                 # add background image to gui
-                if self.slideshow_bg == 'true':
+                if self.slideshow_scale == 'false' and self.slideshow_bg == 'true':
                     if order[0] == 1:
                         self.image3.setImage(img[0],False)
                     else:
