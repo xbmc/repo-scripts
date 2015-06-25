@@ -1,3 +1,6 @@
+v1.1.7
+- Prevent possible deadlock while background media is playing
+
 v1.1.6
 - Add option to use Audio Engine Suspend for disabling volume
 
