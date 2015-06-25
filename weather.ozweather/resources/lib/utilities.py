@@ -54,7 +54,7 @@ WEATHER_CODES = { 'Clearing Shower'                 : '39',
                   'Unknown'                         : 'na',
                   'nt_unknown'                      : 'na'}
 
-"""   These are the weather codes fro XBMC is seems
+"""   These are the weather codes for XBMC is seems
 N/A Not Available
 0 Rain/Lightning
 01 Windy/Rain

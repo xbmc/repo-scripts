@@ -1,3 +1,6 @@
+V0.8.1
+- Scraping fixes for new weatherzone, mainly moonphase
+
 V0.8.0
 - Cope with locales that don't provide pressure information
 

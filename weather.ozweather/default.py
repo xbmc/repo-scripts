@@ -16,6 +16,7 @@
 # *  http://www.gnu.org/copyleft/gpl.html
 # *
 
+
 import os, sys, urllib, urllib2, socket
 import xbmc, xbmcvfs, xbmcgui, xbmcaddon
 import CommonFunctions
@@ -52,6 +53,7 @@ RADAR_BACKGROUNDS_PATH = ""
 LOOP_IMAGES_PATH = ""
 TEMPUNIT = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
 WEATHER_ICON = xbmc.translatePath('special://temp/weather/%s.png').decode("utf-8")
+
 
 # this is fetchpage from parseDOM...
 # added emergency latin 1 decoding for wierd char issues on Weatherzone
@@ -146,6 +148,8 @@ def fetchPage(params={}):
 ################################################################################
 # blank out all the window properties
 
+
+
 def clearProperties():
     log("Clearing Properties")
     try:
@@ -191,39 +195,39 @@ def clearProperties():
 
         #and all the properties for the forecast
         for count in range(0,7):
-            setProperty(WEATHER_WINDOW, 'Day%i.Title'                       % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.RainChance'                  % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.RainChanceAmount'            % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.ChancePrecipitation'         % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.Precipitation'               % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.HighTemp'                    % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.LowTemp'                     % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.HighTemperature'             % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.LowTemperature'              % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.Outlook'                     % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.LongOutlookDay'              % count)
-            setProperty(WEATHER_WINDOW, 'Day%i.OutlookIcon'                 % count, "na.png")
-            setProperty(WEATHER_WINDOW, 'Day%i.ConditionIcon'               % count, "na.png")
-            setProperty(WEATHER_WINDOW, 'Day%i.FanartCode'                  % count)
-            setProperty(WEATHER_WINDOW, 'Day.%i.ShortDate'                  % count)
-            setProperty(WEATHER_WINDOW, 'Day.%i.ShortDay'                   % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.Title'                           % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.RainChance'                      % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.RainChanceAmount'                % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.ChancePrecipitation'             % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.Precipitation'                   % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.HighTemp'                        % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.LowTemp'                         % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.HighTemperature'                 % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.LowTemperature'                  % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.Outlook'                         % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.LongOutlookDay'                  % count)
+            setProperty(WEATHER_WINDOW, 'Day%i.OutlookIcon'                     % count, "na.png")
+            setProperty(WEATHER_WINDOW, 'Day%i.ConditionIcon'                   % count, "na.png")
+            setProperty(WEATHER_WINDOW, 'Day%i.FanartCode'                      % count)
+            setProperty(WEATHER_WINDOW, 'Day.%i.ShortDate'                      % count)
+            setProperty(WEATHER_WINDOW, 'Day.%i.ShortDay'                       % count)
             
-            setProperty(WEATHER_WINDOW, 'Daily.%i.Title'                       % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.RainChance'                  % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.RainChanceAmount'            % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.ChancePrecipitation'         % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.Precipitation'               % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.HighTemp'                    % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.LowTemp'                     % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.HighTemperature'             % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.LowTemperature'              % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.Outlook'                     % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.LongOutlookDay'              % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.OutlookIcon'                 % count, "na.png")
-            setProperty(WEATHER_WINDOW, 'Daily.%i.ConditionIcon'               % count, "na.png")
-            setProperty(WEATHER_WINDOW, 'Daily.%i.FanartCode'                  % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.ShortDate'                   % count)
-            setProperty(WEATHER_WINDOW, 'Daily.%i.ShortDay'                    % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.Title'                        % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.RainChance'                   % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.RainChanceAmount'             % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.ChancePrecipitation'          % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.Precipitation'                % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.HighTemp'                     % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.LowTemp'                      % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.HighTemperature'              % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.LowTemperature'               % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.Outlook'                      % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.LongOutlookDay'               % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.OutlookIcon'                  % count, "na.png")
+            setProperty(WEATHER_WINDOW, 'Daily.%i.ConditionIcon'                % count, "na.png")
+            setProperty(WEATHER_WINDOW, 'Daily.%i.FanartCode'                   % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.ShortDate'                    % count)
+            setProperty(WEATHER_WINDOW, 'Daily.%i.ShortDay'                     % count)
 
     except Exception as inst:
         log("********** OzWeather Couldn't clear all the properties, sorry!!", inst)
@@ -682,17 +686,19 @@ def propertiesPDOM(page, extendedFeatures):
 
    #moonphase
     try:
-            ret = common.parseDOM(page, "div", attrs = { "class": "boxed_blue_nopad" })
+            ret = common.parseDOM(page, "table", attrs = { "class": "astronomy" })
             #create lists of each of the maxes, mins, and descriptions
             #Get the days UV in text form like 'Extreme' and number '11'
-            moonChunk = common.parseDOM(ret, "td", attrs = { "class": "bg_yellow" , "align":"center", "valign":"middle"})
+            #log("ret is " + str(ret))
+            moonChunk = common.parseDOM(ret, "td", attrs = { "align":"center", "valign":"middle"})
+            #log("moonChunk is " + str(moonChunk))
             moonPhase = common.parseDOM(moonChunk, "img", ret="title")[0]
             #log("&&&&& " + str(moonChunk))
             log("Moonphase is: " + str(moonPhase[0]))
 
     except Exception as inst:
         log("OzWeather Couldn't Find a Moonphase, sorry!", inst)
-
+        moonPhase = ""
 
 
     #ABC VIDEO URL
@@ -740,42 +746,42 @@ def propertiesPDOM(page, extendedFeatures):
     #SET PROPERTIES
     try:
         #now set all the XBMC current weather properties
-        setProperty(WEATHER_WINDOW, 'WeatherProviderLogo'   , xbmc.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
-        setProperty(WEATHER_WINDOW, 'WeatherProvider', 'Bureau of Meteorology Australia (via WeatherZone)')
-        setProperty(WEATHER_WINDOW, 'WeatherVersion', ADDONNAME + "-" + VERSION)
+        setProperty(WEATHER_WINDOW, 'WeatherProviderLogo'       , xbmc.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
+        setProperty(WEATHER_WINDOW, 'WeatherProvider'           , 'Bureau of Meteorology Australia (via WeatherZone)')
+        setProperty(WEATHER_WINDOW, 'WeatherVersion'            , ADDONNAME + "-" + VERSION)
 
-        setProperty(WEATHER_WINDOW, 'Current.Condition'     , shortDesc[0])
-        setProperty(WEATHER_WINDOW, 'Current.ShortOutlook'  , shortDesc[0])
-        setProperty(WEATHER_WINDOW, 'Current.ConditionLong' , longDayCast)
-        setProperty(WEATHER_WINDOW, 'Current.Temperature'   , temperature)
-        setProperty(WEATHER_WINDOW, 'Current.WindGust'      , windGusts)
-        setProperty(WEATHER_WINDOW, 'Current.Wind'          , windSpeed)
-        setProperty(WEATHER_WINDOW, 'Current.WindDegree'    , windDirection)
-        setProperty(WEATHER_WINDOW, 'Current.WindDirection' , windDirection)
-        setProperty(WEATHER_WINDOW, 'Current.Pressure'      , pressure)
-        setProperty(WEATHER_WINDOW, 'Current.FireDanger'    , fireDanger)
+        setProperty(WEATHER_WINDOW, 'Current.Condition'         , shortDesc[0])
+        setProperty(WEATHER_WINDOW, 'Current.ShortOutlook'      , shortDesc[0])
+        setProperty(WEATHER_WINDOW, 'Current.ConditionLong'     , longDayCast)
+        setProperty(WEATHER_WINDOW, 'Current.Temperature'       , temperature)
+        setProperty(WEATHER_WINDOW, 'Current.WindGust'          , windGusts)
+        setProperty(WEATHER_WINDOW, 'Current.Wind'              , windSpeed)
+        setProperty(WEATHER_WINDOW, 'Current.WindDegree'        , windDirection)
+        setProperty(WEATHER_WINDOW, 'Current.WindDirection'     , windDirection)
+        setProperty(WEATHER_WINDOW, 'Current.Pressure'          , pressure)
+        setProperty(WEATHER_WINDOW, 'Current.FireDanger'        , fireDanger)
         setProperty(WEATHER_WINDOW, 'Current.FireDangerText'    , fireDangerText)
-        setProperty(WEATHER_WINDOW, 'Current.Humidity'      , humidity)
-        setProperty(WEATHER_WINDOW, 'Current.FeelsLike'     , feelsLike)
-        setProperty(WEATHER_WINDOW, 'Current.DewPoint'      , dewPoint)
-        setProperty(WEATHER_WINDOW, 'Current.UVIndex'       , UV)
-        setProperty(WEATHER_WINDOW, 'Current.Sunrise'       , sunrise)
-        setProperty(WEATHER_WINDOW, 'Current.Sunset'        , sunset)
-        setProperty(WEATHER_WINDOW, 'Current.Precipitation' , rainSince9)
-        setProperty(WEATHER_WINDOW, 'Current.RainSince9'    , rainSince9)
-        setProperty(WEATHER_WINDOW, 'Current.RainLastHr'    , rainLastHr)
-        setProperty(WEATHER_WINDOW, 'Current.OutlookIcon'   , '%s.png' % weathercode)
-        setProperty(WEATHER_WINDOW, 'Current.ConditionIcon' , '%s.png' % weathercode)
-        setProperty(WEATHER_WINDOW, 'Current.FanartCode'    , weathercode)
-        setProperty(WEATHER_WINDOW, 'Current.IsFetched'     , "true")
+        setProperty(WEATHER_WINDOW, 'Current.Humidity'          , humidity)
+        setProperty(WEATHER_WINDOW, 'Current.FeelsLike'         , feelsLike)
+        setProperty(WEATHER_WINDOW, 'Current.DewPoint'          , dewPoint)
+        setProperty(WEATHER_WINDOW, 'Current.UVIndex'           , UV)
+        setProperty(WEATHER_WINDOW, 'Current.Sunrise'           , sunrise)
+        setProperty(WEATHER_WINDOW, 'Current.Sunset'            , sunset)
+        setProperty(WEATHER_WINDOW, 'Current.Precipitation'     , rainSince9)
+        setProperty(WEATHER_WINDOW, 'Current.RainSince9'        , rainSince9)
+        setProperty(WEATHER_WINDOW, 'Current.RainLastHr'        , rainLastHr)
+        setProperty(WEATHER_WINDOW, 'Current.OutlookIcon'       , '%s.png' % weathercode)
+        setProperty(WEATHER_WINDOW, 'Current.ConditionIcon'     , '%s.png' % weathercode)
+        setProperty(WEATHER_WINDOW, 'Current.FanartCode'        , weathercode)
+        setProperty(WEATHER_WINDOW, 'Current.IsFetched'         , "true")
  
-        setProperty(WEATHER_WINDOW, 'Today.IsFetched'       , "true")
-        setProperty(WEATHER_WINDOW, 'Today.Sunrise'         , sunrise)
-        setProperty(WEATHER_WINDOW, 'Today.Sunset'          , sunset)
-        setProperty(WEATHER_WINDOW, 'Today.moonphase'       , moonPhase)
+        setProperty(WEATHER_WINDOW, 'Today.IsFetched'           , "true")
+        setProperty(WEATHER_WINDOW, 'Today.Sunrise'             , sunrise)
+        setProperty(WEATHER_WINDOW, 'Today.Sunset'              , sunset)
+        setProperty(WEATHER_WINDOW, 'Today.moonphase'           , moonPhase)
 
         #we only have one long description available so set it here instead of in the loop
-        setProperty(WEATHER_WINDOW, 'Daily.0.LongOutlookDay', longDayCast)
+        setProperty(WEATHER_WINDOW, 'Daily.0.LongOutlookDay'    , longDayCast)
 
         #and all the properties for the forecast
         for count, desc in enumerate(shortDesc):
