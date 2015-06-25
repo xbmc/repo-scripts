@@ -88,7 +88,7 @@
          <font>font16</font>
          <textcolor>FFFFFFFF</textcolor>
          <shadowcolor>66000000</shadowcolor>
-         <autoscroll delay="3000" time="1500" repeat="10000"></autoscroll>
+         <autoscroll delay="15000" time="1500" repeat="10000"></autoscroll>
          <label>...</label>
         </control>
 
