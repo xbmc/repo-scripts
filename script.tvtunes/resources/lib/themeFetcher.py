@@ -408,6 +408,7 @@ class ThemeItemDetails():
             xbmc.sleep(5)
 
         xbmcgui.Window(10025).setProperty("TvTunesIsAlive", "true")
+        xbmcgui.Window(10025).setProperty("PlayingBackgroundMedia", "true")
         xbmc.Player().play(theme_url, listitem)
         # Prompt the user to see if this is the theme to download
         isSelected = xbmcgui.Dialog().yesno(__language__(32103), __language__(32114))
@@ -416,6 +417,7 @@ class ThemeItemDetails():
         if xbmc.Player().isPlayingAudio():
             xbmc.Player().stop()
         xbmcgui.Window(10025).clearProperty('TvTunesIsAlive')
+        xbmcgui.Window(10025).clearProperty('PlayingBackgroundMedia')
         return isSelected
 
 

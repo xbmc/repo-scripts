@@ -24,6 +24,11 @@ def normalize_string(text):
         text = text.replace(":", "")
         text = text.replace("/", "-")
         text = text.replace("\\", "-")
+        text = text.replace("<", "")
+        text = text.replace(">", "")
+        text = text.replace("*", "")
+        text = text.replace("?", "")
+        text = text.replace('|', "")
         text = text.strip()
         # Remove dots from the last character as windows can not have directories
         # with dots at the end
@@ -441,6 +446,20 @@ class Settings():
         if __addon__.getSetting("resetVolumeOnStartup") == 'true':
             return int(float(__addon__.getSetting("resetStartupVolumeValue")))
         return -1
+
+    @staticmethod
+    def isVideoThemesOnlyIfOneExists():
+        index = int(__addon__.getSetting("playVideoThemeRules"))
+        if index == 2:
+            return True
+        return False
+
+    @staticmethod
+    def isVideoThemesFirst():
+        index = int(__addon__.getSetting("playVideoThemeRules"))
+        if index == 1:
+            return True
+        return False
 
 
 # Class to handle all the screen saver settings

@@ -1,3 +1,9 @@
+v5.0.2
+- Exclude invalid characters from custom path names
+- Fix issue where themes never loop
+- Fix issue where video themes do not stop to start new ones
+- Add option to filter to just theme videos if they exist
+
 v5.0.1
 - Fix bug where screensaver keeps restarting
 - Fix issue when multiple themes exist

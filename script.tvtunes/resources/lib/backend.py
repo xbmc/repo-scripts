@@ -98,7 +98,7 @@ class TunesBackend():
         self.lastLoggedThemePath = ""
 
     def runAsAService(self):
-        while (not xbmc.abortRequested):
+        while not xbmc.abortRequested:
             # Wait a little before starting the check each time
             xbmc.sleep(200)
 
@@ -326,6 +326,7 @@ class TunesBackend():
             # Before we start playing the theme, highlight that TvTunes is active by
             # Setting the property that confluence reads
             xbmcgui.Window(10025).setProperty("TvTunesIsAlive", "true")
+            xbmcgui.Window(10025).setProperty("PlayingBackgroundMedia", "true")
 
             # Store the new theme that is being played
             self.prevThemeFiles = self.newThemeFiles
@@ -369,3 +370,4 @@ class TunesBackend():
         # currently playing, maybe change this name when we submit the pull request to
         # Confluence - new name: PlayingBackgroundMedia
         xbmcgui.Window(10025).clearProperty("TvTunesIsAlive")
+        xbmcgui.Window(10025).clearProperty("PlayingBackgroundMedia")

@@ -45,6 +45,7 @@
 		<setting id="mkv" type="bool" label="MKV" visible="eq(-9,true)" subsetting="true" default="true"/>
 		<setting id="avi" type="bool" label="AVI" visible="eq(-10,true)" subsetting="true" default="true"/>
 		<setting id="mov" type="bool" label="MOV" visible="eq(-11,true)" subsetting="true" default="true"/>
+		<setting id="playVideoThemeRules" visible="eq(-4,true)|eq(-3,true)|eq(-2,true)|eq(-1,true)" type="enum" label="32085" lvalues="32086|32087|32088" default="0"/>
     	<setting label="32079" type="lsep"/>
     	<setting id="resetVolumeOnStartup" type="bool" label="32080" default="false"/>
 		<setting id="resetStartupVolumeValue" label="32081" visible="eq(-1,true)" type="slider" default="100" range="0,1,100" option="int" />

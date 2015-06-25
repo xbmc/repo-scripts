@@ -233,6 +233,11 @@ class ThemeFiles():
         else:
             self.themeFiles = self._generateThemeFilelistWithDirs(rawPath)
 
+        # Check if we need to handle the ordering for video themes
+        if not audioOnly:
+            self.doNotShuffle = self._filterForVideoThemesRule()
+            self.forceShuffle = False
+
     # Define the equals to be based off of the list of theme files
     def __eq__(self, other):
         try:
@@ -258,6 +263,18 @@ class ThemeFiles():
             return result
         return not result
 
+    # Checks if the given file is names as a video file
+    def _isVideoFile(self, filename):
+        if filename.endswith('.mp4'):
+            return True
+        if filename.endswith('.mkv'):
+            return True
+        if filename.endswith('.avi'):
+            return True
+        if filename.endswith('.mov'):
+            return True
+        return False
+
     def hasThemes(self):
         return (len(self.themeFiles) > 0)
 
@@ -271,13 +288,15 @@ class ThemeFiles():
     # Returns the playlist for the themes
     def getThemePlaylist(self):
         # Take the list of files and create a playlist from them
-        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+        # Needs to be a Music playlist otherwise repeat will not work
+        # via the JSON interface
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
         playlist.clear()
         for aFile in self.themeFiles:
             # Add the theme file to a playlist
             playlist.add(url=aFile)
 
-        if (Settings.isShuffleThemes() or self.forceShuffle) and playlist.size() > 1:
+        if (not self.doNotShuffle) and (Settings.isShuffleThemes() or self.forceShuffle) and (playlist.size() > 1):
             playlist.shuffle()
 
         # Now we have the playlist, and it has been shuffled if needed
@@ -459,3 +478,46 @@ class ThemeFiles():
                 # Not in the list, add it
                 mergedList.append(b_item)
         return mergedList
+
+    # Applies the rules for where the video themes appear in the list
+    def _filterForVideoThemesRule(self):
+        # Check if we just leave the list as it is
+        if not Settings.isVideoThemesFirst() and not Settings.isVideoThemesOnlyIfOneExists():
+            return False
+
+        # Go through each file seeing if it ends with one of the expected
+        # video formats that we support
+        containsVideoFile = False
+        for aThemeFile in self.themeFiles:
+            if self._isVideoFile(aThemeFile):
+                containsVideoFile = True
+                break
+
+        # Check if there are no video files, so nothing to do
+        if not containsVideoFile:
+            return False
+
+        # Now strip out anything that is not a video file
+        videoThemes = []
+        audioThemes = []
+        for aThemeFile in self.themeFiles:
+            if self._isVideoFile(aThemeFile):
+                videoThemes.append(aThemeFile)
+            else:
+                audioThemes.append(aThemeFile)
+
+        # Check if we need to only return video themes if one exists
+        # and we don't want audio themes in this case
+        if Settings.isVideoThemesOnlyIfOneExists():
+            log("ThemeFiles: Removing non video themes", self.debug_logging_enabled)
+            self.themeFiles = videoThemes
+        elif Settings.isVideoThemesFirst():
+            # If we want to shuffle the tracks, then do this before we join the
+            # two arrays together
+            if Settings.isShuffleThemes():
+                random.shuffle(videoThemes)
+                random.shuffle(audioThemes)
+            self.themeFiles = videoThemes + audioThemes
+            return True
+
+        return False
