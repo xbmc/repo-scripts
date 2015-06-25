@@ -1,3 +1,9 @@
+v1.3.1
+- Allow VideoExtras to run for plugin.video.emby
+- Update YouTube Context menu
+- Fix basic list screen when YouTube is enabled
+- Add option to watch extras on Vimeo
+
 v1.3.0
 - Add option to watch extras on YouTube
 

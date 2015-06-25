@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import unicodedata
 import xbmc
 import xbmcaddon
 import os
@@ -69,6 +70,27 @@ def dir_exists(dirpath):
             dirSep = "\\"
         directoryPath = "%s%s" % (directoryPath, dirSep)
     return xbmcvfs.exists(directoryPath)
+
+
+# Remove characters that can not be used as directory path names
+def normalize_string(text):
+    try:
+        text = text.replace(":", "")
+        text = text.replace("/", "-")
+        text = text.replace("\\", "-")
+        text = text.replace("<", "")
+        text = text.replace(">", "")
+        text = text.replace("*", "")
+        text = text.replace("?", "")
+        text = text.replace('|', "")
+        text = text.strip()
+        # Remove dots from the last character as windows can not have directories
+        # with dots at the end
+        text = text.rstrip('.')
+        text = unicodedata.normalize('NFKD', unicode(text, 'utf-8')).encode('ascii', 'ignore')
+    except:
+        pass
+    return text
 
 
 ##############################
@@ -184,3 +206,11 @@ class Settings():
     @staticmethod
     def disableYouTubeSearchSupport():
         __addon__.setSetting("enableYouTubeSearchSupport", "false")
+
+    @staticmethod
+    def isVimeoSearchSupportEnabled():
+        return __addon__.getSetting("enableVimeoSearchSupport") == 'true'
+
+    @staticmethod
+    def disableVimeoSearchSupport():
+        __addon__.setSetting("enableVimeoSearchSupport", "false")

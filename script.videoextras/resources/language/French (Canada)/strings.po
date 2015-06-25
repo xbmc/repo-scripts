@@ -244,6 +244,10 @@ msgctxt "#32119"
 msgid "Bloopers"
 msgstr "Bêtisier"
 
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "Entrevues"
+
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
 msgstr "Cette action mettra à jour le fichier advancedsettings.xml pour s'assurer que les fichiers supplémentaires sont gérés correctement. Veuillez vous assurer que les changements sont enregistrés avant l'exécution. Poursuivre? "

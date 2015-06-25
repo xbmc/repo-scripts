@@ -1,19 +1,4 @@
 # -*- coding: utf-8 -*-
-# *  This Program is free software; you can redistribute it and/or modify
-# *  it under the terms of the GNU General Public License as published by
-# *  the Free Software Foundation; either version 2, or (at your option)
-# *  any later version.
-# *
-# *  This Program is distributed in the hope that it will be useful,
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# *  GNU General Public License for more details.
-# *
-# *  You should have received a copy of the GNU General Public License
-# *  along with XBMC; see the file COPYING.  If not, write to
-# *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-# *  http://www.gnu.org/copyleft/gpl.html
-# *
 import sys
 import os
 import traceback
@@ -146,7 +131,7 @@ class VideoExtrasService():
                     return
 
                 log("VideoExtrasService: %s detected: %s = %s" % (target, item['title'], item['file']))
-                videoExtras = VideoExtrasBase(item['file'], target)
+                videoExtras = VideoExtrasBase(item['file'], target, item['title'])
                 # Only checking for the existence of extras - no need for DB or default Fanart
                 firstExtraFile = videoExtras.findExtras(True)
                 del videoExtras
@@ -226,6 +211,28 @@ def checkYouTubeSettings():
             Settings.disableYouTubeSearchSupport()
 
 
+# Check Vimeo settings are correct, we will automatically disable the
+# option if the Vimeo addon is not installed
+def checkVimeoSettings():
+    # Check to see if the Vimeo support is enabled
+    if Settings.isVimeoSearchSupportEnabled():
+        # It is enabled in settings, but we should check to ensure that the
+        # Vimeo addon is actually installed
+        vimeoInstalled = False
+        try:
+            vimeoAddon = xbmcaddon.Addon(id='plugin.video.vimeo')
+            if vimeoAddon not in [None, ""]:
+                vimeoInstalled = True
+        except:
+            # We will get an exception if we can not find the Vimeo addon
+            vimeoInstalled = False
+
+        if not vimeoInstalled:
+            # There is no Vimeo addon installed, so disable this option in settings
+            log("VideoExtrasService: Disabling Vimeo support as addon not installed")
+            Settings.disableVimeoSearchSupport()
+
+
 ###################################
 # Main of the Video Extras Service
 ###################################
@@ -249,9 +256,13 @@ if __name__ == '__main__':
             skinExtrasList = os_path_join(skinExtrasList, "list1.png")
             __addon__.setSetting('listImage', skinExtrasList)
 
-    # Check theYouTube settings are correct, we will automatically disable the
+    # Check the YouTube settings are correct, we will automatically disable the
     # option if the YouTube addon is not installed
     checkYouTubeSettings()
+
+    # Check the Vimeo settings are correct, we will automatically disable the
+    # option if the Vimeo addon is not installed
+    checkVimeoSettings()
 
     # Make sure that the service option is enabled
     if Settings.isServiceEnabled():

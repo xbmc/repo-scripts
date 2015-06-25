@@ -240,6 +240,10 @@ msgctxt "#32119"
 msgid "Bloopers"
 msgstr "실수 장면"
 
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "인터뷰"
+
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
 msgstr "부가 영상 파일을 정확하게 처리하기 위해 advancedsettings.xml 을 수정합니다. 실행하기 전에 변경 사항을 저장하세요. 계속하겠습니까?"

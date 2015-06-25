@@ -105,7 +105,7 @@ class MenuNavigator():
             # Create the list-item for this video
             li = xbmcgui.ListItem(videoItem['title'], iconImage=videoItem['thumbnail'])
 
-            if not self.hasVideoExtras(target, videoItem['dbid'], videoItem['file']):
+            if not self.hasVideoExtras(target, videoItem['dbid'], videoItem['file'], videoItem['title']):
                 # Check if we are supporting YouTube Searches, if so it doesn't matter
                 # If we do not have any Extras yet
                 if not Settings.isYouTubeSearchSupportEnabled():
@@ -161,7 +161,7 @@ class MenuNavigator():
                 Videolist.append(videoItem)
         return Videolist
 
-    def hasVideoExtras(self, target, dbid, file):
+    def hasVideoExtras(self, target, dbid, file, title=None):
         # If the service is on, then we can just check to see if the overlay image exists
         if Settings.isServiceEnabled():
             # Get the path where the file exists
@@ -178,7 +178,7 @@ class MenuNavigator():
         # Otherwise, need to do the lookup the old fashioned way of looking for the
         # extras files on the file system (This is much slower)
         else:
-            videoExtras = VideoExtrasBase(file, target)
+            videoExtras = VideoExtrasBase(file, target, title)
             # We are only checking for existence of extras, no need for fanart
             firstExtraFile = videoExtras.findExtras(True)
             del videoExtras
@@ -196,7 +196,7 @@ class MenuNavigator():
             extrasDb = ExtrasDB()
 
         # Create the extras class that will be used to process the extras
-        videoExtras = VideoExtrasBase(path, target)
+        videoExtras = VideoExtrasBase(path, target, extrasParentTitle)
 
         # Perform the search command
         files = videoExtras.findExtras(extrasDb=extrasDb, defaultFanArt=extrasDefaultFanArt)
@@ -227,21 +227,18 @@ class MenuNavigator():
 
         # Check if we want to have YouTube Extra Support
         if Settings.isYouTubeSearchSupportEnabled():
-            # Create the message to the YouTube Plugin
-            url = "plugin://plugin.video.youtube/search/?q=%s+Extras" % extrasParentTitle.replace(" ", "+")
-            li = xbmcgui.ListItem(__addon__.getLocalizedString(32116))
-            # Use the DVD Cover artwork for the logo (Same as the others)
-            if extrasDefaultIconImage != "":
-                li.setIconImage(extrasDefaultIconImage)
-            li.addContextMenuItems(self._getYouTubeContextMenu(extrasParentTitle), replaceItems=True)
-            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+            self._getVideoPluginLink(extrasParentTitle, 'plugin.video.youtube', 32116, extrasDefaultIconImage, extrasDefaultFanArt)
+
+        # Check if we want to have Vimeo Extra Support
+        if Settings.isVimeoSearchSupportEnabled():
+            self._getVideoPluginLink(extrasParentTitle, 'plugin.video.vimeo', 32122, extrasDefaultIconImage, extrasDefaultFanArt)
 
         # Add each of the extras to the list to display
         for anExtra in files:
             # Create the list item
             li = anExtra.createListItem(parentTitle=extrasParentTitle, tvShowTitle=tvShowTitle, defaultIconImage=extrasDefaultIconImage)
             # Hack, if the "TotalTime" and "ResumeTime" are set on the list item
-            # and it is partially watched, then XBMC will display the continue dialog
+            # and it is partially watched, then Kodi will display the continue dialog
             # However we can not get what the user selects from this dialog, so it
             # will always continue.  Found out that we can hack this by clearing
             # the "TotalTime" property
@@ -263,7 +260,7 @@ class MenuNavigator():
             extrasDb = ExtrasDB()
 
         # Create the extras class that will be used to process the extras
-        videoExtras = VideoExtrasBase(path, target)
+        videoExtras = VideoExtrasBase(path, target, extrasParentTitle)
 
         # Perform the search command
         # No need for fanart default as only getting a list to play, not display
@@ -279,7 +276,7 @@ class MenuNavigator():
             extrasDb = ExtrasDB()
 
         # Create the extras class that will be used to process the extras
-        videoExtras = VideoExtrasBase(path, target)
+        videoExtras = VideoExtrasBase(path, target, extrasParentTitle)
 
         # Perform the search command
         # No need for fanart default as only getting a list to play, not display
@@ -426,59 +423,81 @@ class MenuNavigator():
         # Resume
         if extraItem.getResumePoint() > 0:
             cmd = self._build_url({'mode': 'resumeextra', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8"), 'parentTitle': extrasParentTitle})
-            ctxtMenu.append(("%s %s" % (__addon__.getLocalizedString(32104), extraItem.getDisplayResumePoint()), 'XBMC.RunPlugin(%s)' % cmd))
+            ctxtMenu.append(("%s %s" % (__addon__.getLocalizedString(32104), extraItem.getDisplayResumePoint()), 'RunPlugin(%s)' % cmd))
 
         # Play Now
         cmd = self._build_url({'mode': 'beginextra', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8"), 'parentTitle': extrasParentTitle})
-        ctxtMenu.append((__addon__.getLocalizedString(32105), 'XBMC.RunPlugin(%s)' % cmd))
+        ctxtMenu.append((__addon__.getLocalizedString(32105), 'RunPlugin(%s)' % cmd))
 
         # Mark As Watched
         if (extraItem.getWatched() == 0) or (extraItem.getResumePoint() > 0):
             cmd = self._build_url({'mode': 'markwatched', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
-            ctxtMenu.append((__addon__.getLocalizedString(32106), 'XBMC.RunPlugin(%s)' % cmd))
+            ctxtMenu.append((__addon__.getLocalizedString(32106), 'RunPlugin(%s)' % cmd))
 
         # Mark As Unwatched
         if (extraItem.getWatched() != 0) or (extraItem.getResumePoint() > 0):
             cmd = self._build_url({'mode': 'markunwatched', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
-            ctxtMenu.append((__addon__.getLocalizedString(32107), 'XBMC.RunPlugin(%s)' % cmd))
+            ctxtMenu.append((__addon__.getLocalizedString(32107), 'RunPlugin(%s)' % cmd))
 
         # Edit Title
         cmd = self._build_url({'mode': 'edittitle', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
-        ctxtMenu.append((__addon__.getLocalizedString(32108), 'XBMC.RunPlugin(%s)' % cmd))
+        ctxtMenu.append((__addon__.getLocalizedString(32108), 'RunPlugin(%s)' % cmd))
 
         # Edit Plot
         cmd = self._build_url({'mode': 'editplot', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
-        ctxtMenu.append((__addon__.getLocalizedString(32114), 'XBMC.RunPlugin(%s)' % cmd))
+        ctxtMenu.append((__addon__.getLocalizedString(32114), 'RunPlugin(%s)' % cmd))
 
         return ctxtMenu
 
-    # Adds the context menu for the youtube link to allow searching for different words
-    def _getYouTubeContextMenu(self, title):
-        ctxtMenu = []
+    # Adds the Menu Item for the youtube/vimeo link to allow searching for different words
+    def _getVideoPluginLink(self, parentTitle, pluginName='plugin.video.youtube', langId=32116, defaultIconImage=None, defaultFanArt=None):
+        title = urllib.quote_plus(parentTitle)
+        # Create the message to the Plugin
+        url = "plugin://%s/search/?q=%s+Extras" % (pluginName, title)
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(langId))
+        icon = None
+        try:
+            icon = xbmcaddon.Addon(id=pluginName).getAddonInfo('icon')
+        except:
+            icon = None
+        # Now set the icon
+        if icon not in [None, ""]:
+            li.setIconImage(icon)
+        elif defaultIconImage not in [None, ""]:
+            li.setIconImage(defaultIconImage)
 
-        title = title.replace(" ", "+")
+        if defaultFanArt not in [None, ""]:
+            li.setProperty("Fanart_Image", defaultFanArt)
+
+        # Get together the items for the context menu
+        ctxtMenu = []
 
         # Extras
         cmd = "/search/?q=%s+Extras" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32001), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+        ctxtMenu.append((__addon__.getLocalizedString(32001), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # Deleted Scenes
         cmd = "/search/?q=%s+Deleted+Scene" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32117), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+        ctxtMenu.append((__addon__.getLocalizedString(32117), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # Special Features
         cmd = "/search/?q=%s+Special+Features" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32118), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+        ctxtMenu.append((__addon__.getLocalizedString(32118), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # Bloopers
         cmd = "/search/?q=%s+Blooper" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32119), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+        ctxtMenu.append((__addon__.getLocalizedString(32119), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # Interviews
         cmd = "/search/?q=%s+Interview" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32120), 'RunAddon(plugin.video.youtube,%s)' % cmd))
+        ctxtMenu.append((__addon__.getLocalizedString(32120), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
-        return ctxtMenu
+        # VFX (Visual Effects)
+        cmd = "/search/?q=%s+VFX" % title
+        ctxtMenu.append((__addon__.getLocalizedString(32121), 'RunAddon(%s,%s)' % (pluginName, cmd)))
+
+        li.addContextMenuItems(ctxtMenu, replaceItems=True)
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
 
 ################################

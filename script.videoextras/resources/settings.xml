@@ -29,7 +29,8 @@
 	</category>
 	<category label="32016">
 		<setting id="enableYouTubeSearchSupport" type="bool" label="32035" default="true"/>
-		<setting id="forceButtonDisplay" type="bool" label="32017" default="false"/>
+		<setting id="enableVimeoSearchSupport" type="bool" label="32036" default="true"/>
+		<setting id="forceButtonDisplay" type="bool"  enable="!eq(-2,true) + !eq(-1,true)" label="32017" default="false"/>
 		<setting id="excludeFilesRegex" type="text" label="32018" default="\.(jpg|idx|srt|nfo|sub|db|txt)$"/>
 		<setting id="serviceEnabled" type="bool" label="32027" default="true"/>
 		<setting id="useCustomImages" enable="eq(-1,true)" type="bool" label="32032" default="false"/>

@@ -1,19 +1,4 @@
 # -*- coding: utf-8 -*-
-# *  This Program is free software; you can redistribute it and/or modify
-# *  it under the terms of the GNU General Public License as published by
-# *  the Free Software Foundation; either version 2, or (at your option)
-# *  any later version.
-# *
-# *  This Program is distributed in the hope that it will be useful,
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# *  GNU General Public License for more details.
-# *
-# *  You should have received a copy of the GNU General Public License
-# *  along with XBMC; see the file COPYING.  If not, write to
-# *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-# *  http://www.gnu.org/copyleft/gpl.html
-# *
 import os
 import re
 import traceback
@@ -27,6 +12,7 @@ from settings import log
 from settings import os_path_join
 from settings import os_path_split
 from settings import dir_exists
+from settings import normalize_string
 
 from ExtrasItem import ExtrasItem
 
@@ -35,10 +21,11 @@ from ExtrasItem import ExtrasItem
 # Class to control Searching for the extra files
 ################################################
 class VideoExtrasFinder():
-    def __init__(self, extrasDb=None, defaultFanArt="", videoType=None):
+    def __init__(self, extrasDb=None, defaultFanArt="", videoType=None, title=None):
         self.extrasDb = extrasDb
         self.defaultFanArt = defaultFanArt
         self.videoType = videoType
+        self.title = title
         # If no Video Type is supplied, try to work it out
         if videoType is None:
             if xbmc.getCondVisibility("Container.Content(movies)"):
@@ -113,18 +100,37 @@ class VideoExtrasFinder():
                 custPath = os_path_join(custPath, path2ndLastDir)
                 log("VideoExtrasFinder: Checking existence of custom path %s" % custPath)
                 if not dir_exists(custPath):
-                    custPath = None
+                    # Some systems will store extras in the custom pass using the name
+                    # of the TV Show of Movie, so try that
+                    videoName = self.title
+                    if self.title in [None, ""]:
+                        if self.videoType == Settings.TVSHOWS:
+                            videoName = xbmc.getInfoLabel("ListItem.TVShowTitle")
+                        else:
+                            videoName = xbmc.getInfoLabel("ListItem.Title")
+                    videoName = normalize_string(videoName)
+                    # Now construct the path using the movie or TV show title
+                    custPath = Settings.getCustomPath(self.videoType)
+                    custPath = os_path_join(custPath, videoName)
+                    log("VideoExtrasFinder: Checking existence of custom path using title %s" % custPath)
+                    if not dir_exists(custPath):
+                        custPath = None
 
         return custPath
 
     def _getNfoInfo(self, directory):
+        extras = []
+        extradirs = []
+
+        # Do not look for the nfo file if dealing with a plugin
+        if 'plugin://' in directory:
+            log("VideoExtrasFinder: No NFO file search for plugin: %s" % directory)
+            return extradirs, extras
+
         # Find out the name of the NFO file
         nfoFileName = os_path_join(directory, "videoextras.nfo")
 
         log("VideoExtrasFinder: Searching for NFO file: %s" % nfoFileName)
-
-        extras = []
-        extradirs = []
 
         # Return None if file does not exist
         if not xbmcvfs.exists(nfoFileName):
@@ -348,7 +354,7 @@ class VideoExtrasFinder():
 # Base Class for handling videoExtras
 ###############################################################
 class VideoExtrasBase():
-    def __init__(self, extrasParent, videoType=None):
+    def __init__(self, extrasParent, videoType=None, title=None):
         log("VideoExtrasBase: Finding extras for %s" % extrasParent)
         self.videoType = videoType
         self.baseDirectory = extrasParent
@@ -371,12 +377,13 @@ class VideoExtrasBase():
             self.filename = (os_path_split(extrasParent))[1]
         else:
             self.filename = None
+        self.title = title
         log("VideoExtrasBase: Root directory: %s" % self.baseDirectory)
 
     def findExtras(self, exitOnFirst=False, extrasDb=None, defaultFanArt=""):
         files = []
         try:
-            extrasFinder = VideoExtrasFinder(extrasDb, defaultFanArt=defaultFanArt, videoType=self.videoType)
+            extrasFinder = VideoExtrasFinder(extrasDb, defaultFanArt=defaultFanArt, videoType=self.videoType, title=self.title)
             files = extrasFinder.loadExtras(self.baseDirectory, self.filename, exitOnFirst)
             del extrasFinder
         except:

@@ -1,21 +1,7 @@
 # -*- coding: utf-8 -*-
-# *  This Program is free software; you can redistribute it and/or modify
-# *  it under the terms of the GNU General Public License as published by
-# *  the Free Software Foundation; either version 2, or (at your option)
-# *  any later version.
-# *
-# *  This Program is distributed in the hope that it will be useful,
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# *  GNU General Public License for more details.
-# *
-# *  You should have received a copy of the GNU General Public License
-# *  along with XBMC; see the file COPYING.  If not, write to
-# *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-# *  http://www.gnu.org/copyleft/gpl.html
-# *
 import sys
 import os
+import urllib
 import traceback
 import xbmc
 import xbmcgui
@@ -152,14 +138,22 @@ class VideoExtrasDialog(xbmcgui.Window):
             displayNameList.append(anExtra.getDisplayName())
 
         # Check if we are supporting YouTube Search
+        vimeoPosition = -4
+        if Settings.isVimeoSearchSupportEnabled():
+            vimeoPosition = 0
+            displayNameList.insert(0, __addon__.getLocalizedString(32122))
+
+        # Check if we are supporting YouTube Search
         youtubePosition = -3
         if Settings.isYouTubeSearchSupportEnabled():
             youtubePosition = 0
+            vimeoPosition = vimeoPosition + 1
             displayNameList.insert(0, __addon__.getLocalizedString(32116))
 
         addPlayAll = (len(exList) > 1)
         if addPlayAll:
             youtubePosition = youtubePosition + 1
+            vimeoPosition = vimeoPosition + 1
             # Play All Selection Option
             displayNameList.insert(0, __addon__.getLocalizedString(32101))
 
@@ -180,14 +174,22 @@ class VideoExtrasDialog(xbmcgui.Window):
             if (select == 0) and (addPlayAll is True):
                 ExtrasPlayer.playAll(exList, SourceDetails.getTitle())
             elif select == youtubePosition:
-                searchDetails = "/search/?q=%s+Extras" % SourceDetails.getTitle().replace(" ", "+")
+                searchDetails = "/search/?q=%s+Extras" % urllib.quote_plus(SourceDetails.getTitle().encode('utf8'))
                 log("VideoExtras: Running YouTube Addon/Plugin with search %s" % searchDetails)
                 xbmc.executebuiltin("RunAddon(plugin.video.youtube,%s)" % searchDetails)
+            elif select == vimeoPosition:
+                searchDetails = "/search/?q=%s+Extras" % urllib.quote_plus(SourceDetails.getTitle().encode('utf8'))
+                log("VideoExtras: Running Vimeo Addon/Plugin with search %s" % searchDetails)
+                xbmc.executebuiltin("RunAddon(plugin.video.vimeo,%s)" % searchDetails)
             else:
                 itemToPlay = select
                 # If we added the PlayAll option to the list need to allow for it
                 # in the selection, so add one
                 if addPlayAll is True:
+                    itemToPlay = itemToPlay - 1
+                if vimeoPosition >= 0:
+                    itemToPlay = itemToPlay - 1
+                if youtubePosition >= 0:
                     itemToPlay = itemToPlay - 1
                 log("VideoExtrasDialog: Start playing %s" % exList[itemToPlay].getFilename())
                 ExtrasPlayer.performPlayAction(exList[itemToPlay], SourceDetails.getTitle())
@@ -213,7 +215,7 @@ class VideoExtras(VideoExtrasBase):
         # See if the option to force the extras button is enabled,
         # if which case just make sure the hide option is cleared
         # Also if we are using YouTube, we want to always display the button
-        if Settings.isForceButtonDisplay() or Settings.isYouTubeSearchSupportEnabled():
+        if Settings.isForceButtonDisplay() or Settings.isYouTubeSearchSupportEnabled() or Settings.isVimeoSearchSupportEnabled():
             xbmcgui.Window(12003).clearProperty("HideVideoExtrasButton")
             log("VideoExtras: Force VideoExtras Button Enabled")
         else:
@@ -232,7 +234,7 @@ class VideoExtras(VideoExtrasBase):
 
     def run(self, files):
         # All the files have been retrieved, now need to display them
-        if not files and not Settings.isYouTubeSearchSupportEnabled():
+        if not files and not Settings.isYouTubeSearchSupportEnabled() and not Settings.isVimeoSearchSupportEnabled():
             # "Info", "No extras found"
             xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32103))
         else:
@@ -265,11 +267,11 @@ class VideoExtras(VideoExtrasBase):
                 # The video selection will be the default return location
                 if (not Settings.isMenuReturnVideoSelection()) and needsWindowReset:
                     if Settings.isMenuReturnHome():
-                        xbmc.executebuiltin("xbmc.ActivateWindow(home)", True)
+                        xbmc.executebuiltin("ActivateWindow(home)", True)
                     else:
                         infoDialogId = 12003
                         # Put the information dialog back up
-                        xbmc.executebuiltin("xbmc.ActivateWindow(movieinformation)")
+                        xbmc.executebuiltin("ActivateWindow(movieinformation)")
                         if Settings.isMenuReturnExtras():
                             # Wait for the Info window to open, it can take a while
                             # this is to avoid the case where the exList dialog displays
@@ -340,7 +342,21 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
                 li.setInfo('video', {'Title': SourceDetails.getTitle()})
 
             li.setProperty("Fanart_Image", SourceDetails.getFanArt())
-            li.setProperty("search", "/search/?q=%s+Extras" % SourceDetails.getTitle().replace(" ", "+"))
+            li.setProperty("search", "/search/?q=%s+Extras" % urllib.quote_plus(SourceDetails.getTitle().encode('utf8')))
+            self.addItem(li)
+
+        # Check if we want to have Vimeo Extra Support
+        if Settings.isVimeoSearchSupportEnabled():
+            # Create the message to the Vimeo Plugin
+            li = xbmcgui.ListItem(__addon__.getLocalizedString(32122))
+            # Need to set the title to get it in the header
+            if SourceDetails.getTvShowTitle() != "":
+                li.setInfo('video', {'TvShowTitle': SourceDetails.getTvShowTitle()})
+            if SourceDetails.getTitle() != "":
+                li.setInfo('video', {'Title': SourceDetails.getTitle()})
+
+            li.setProperty("Fanart_Image", SourceDetails.getFanArt())
+            li.setProperty("search", "/search/?q=%s+Extras" % urllib.quote_plus(SourceDetails.getTitle().encode('utf8')))
             self.addItem(li)
 
         for anExtra in self.files:
@@ -370,12 +386,22 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
             self.close()
         elif action == ACTION_CONTEXT_MENU:
             youtubePosition = 0
+            vimeoPosition = 0
             if len(self.files) > 0:
                 youtubePosition = youtubePosition + 1
+                vimeoPosition = vimeoPosition + 1
 
-            # Check to see if the context menu has been called up for the You Tube option
-            if Settings.isYouTubeSearchSupportEnabled() and self.getCurrentListPosition() == youtubePosition:
-                contextWindow = YouTubeContextMenu.createYouTubeContextMenu(SourceDetails.getTitle())
+            if Settings.isYouTubeSearchSupportEnabled():
+                vimeoPosition = vimeoPosition + 1
+                # Check to see if the context menu has been called up for the You Tube option
+                if self.getCurrentListPosition() == youtubePosition:
+                    contextWindow = VideoPluginContextMenu.createYouTubeContextMenu(SourceDetails.getTitle())
+                    contextWindow.doModal()
+                    del contextWindow
+                    return
+
+            if Settings.isVimeoSearchSupportEnabled() and self.getCurrentListPosition() == vimeoPosition:
+                contextWindow = VideoPluginContextMenu.createVimeoContextMenu(SourceDetails.getTitle())
                 contextWindow.doModal()
                 del contextWindow
                 return
@@ -468,15 +494,26 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         # Check the YouTube Search first, as if there are no Extras on disk
         # There will not be a PlayAll button and it will just be the YouTube Link
         youtubePosition = 0
+        vimeoPosition = 0
         if len(self.files) > 0:
             youtubePosition = youtubePosition + 1
+            vimeoPosition = vimeoPosition + 1
 
-        if Settings.isYouTubeSearchSupportEnabled() and self.getCurrentListPosition() == youtubePosition:
-            anItem = self.getListItem(youtubePosition)
-            searchDetails = anItem.getProperty("search")
-            log("VideoExtras: Running YouTube Addon/Plugin with search %s" % searchDetails)
-            xbmc.executebuiltin("RunAddon(plugin.video.youtube,%s)" % searchDetails)
-            return
+        if Settings.isYouTubeSearchSupportEnabled():
+            vimeoPosition = vimeoPosition + 1
+            if self.getCurrentListPosition() == youtubePosition:
+                anItem = self.getListItem(youtubePosition)
+                searchDetails = anItem.getProperty("search")
+                log("VideoExtras: Running YouTube Addon/Plugin with search %s" % searchDetails)
+                xbmc.executebuiltin("RunAddon(plugin.video.youtube,%s)" % searchDetails)
+                return
+
+        if Settings.isVimeoSearchSupportEnabled() and self.getCurrentListPosition() == vimeoPosition:
+                anItem = self.getListItem(vimeoPosition)
+                searchDetails = anItem.getProperty("search")
+                log("VideoExtras: Running Vimeo Addon/Plugin with search %s" % searchDetails)
+                xbmc.executebuiltin("RunAddon(plugin.video.vimeo,%s)" % searchDetails)
+                return
 
         # Check for the Play All case
         if self.getCurrentListPosition() == 0:
@@ -594,16 +631,16 @@ class VideoExtrasContextMenu(xbmcgui.WindowXMLDialog):
         return self.selectionMade == VideoExtrasContextMenu.EDIT_PLOT
 
 
-# Context Menu for the YouTube Command
+# Context Menu for the YouTube/Vimeo Command
 # Overwrites the values in our own custom Context menu
-class YouTubeContextMenu(xbmcgui.WindowXMLDialog):
+class VideoPluginContextMenu(xbmcgui.WindowXMLDialog):
     EXIT = 1
     RESUME__EXTRAS = 2
     RESTART__DELETED_SCENES = 40
     MARK_WATCHED__SPECIAL_FEATURES = 41
     MARK_UNWATCHED__BLOOPERS = 42
     EDIT_TITLE__INTERVIEW = 43
-    EDIT_PLOT = 44
+    EDIT_PLOT__VFX = 44
 
     def __init__(self, *args, **kwargs):
         # Copy off the key-word arguments
@@ -611,32 +648,38 @@ class YouTubeContextMenu(xbmcgui.WindowXMLDialog):
         self.title = kwargs.pop('title')
         if self.title is not None:
             self.title = self.title.replace(" ", "+")
-        self.selectionMade = VideoExtrasContextMenu.EXIT
+        self.pluginName = kwargs.pop('pluginName')
+        self.selectionMade = VideoPluginContextMenu.EXIT
 
     # Static method to create the Window Dialog class
     @staticmethod
     def createYouTubeContextMenu(title):
-        return YouTubeContextMenu("script-videoextras-context.xml", __addon__.getAddonInfo('path').decode("utf-8"), title=title)
+        return VideoPluginContextMenu("script-videoextras-context.xml", __addon__.getAddonInfo('path').decode("utf-8"), pluginName='plugin.video.youtube', title=title)
+
+    # Static method to create the Window Dialog class
+    @staticmethod
+    def createVimeoContextMenu(title):
+        return VideoPluginContextMenu("script-videoextras-context.xml", __addon__.getAddonInfo('path').decode("utf-8"), pluginName='plugin.video.vimeo', title=title)
 
     def onInit(self):
         # Reset all the labels for the Context Menu
-        ctxButton = self.getControl(YouTubeContextMenu.RESUME__EXTRAS)
+        ctxButton = self.getControl(VideoPluginContextMenu.RESUME__EXTRAS)
         ctxButton.setLabel(__addon__.getLocalizedString(32001))
 
-        ctxButton = self.getControl(YouTubeContextMenu.RESTART__DELETED_SCENES)
+        ctxButton = self.getControl(VideoPluginContextMenu.RESTART__DELETED_SCENES)
         ctxButton.setLabel(__addon__.getLocalizedString(32117))
 
-        ctxButton = self.getControl(YouTubeContextMenu.MARK_WATCHED__SPECIAL_FEATURES)
+        ctxButton = self.getControl(VideoPluginContextMenu.MARK_WATCHED__SPECIAL_FEATURES)
         ctxButton.setLabel(__addon__.getLocalizedString(32118))
 
-        ctxButton = self.getControl(YouTubeContextMenu.MARK_UNWATCHED__BLOOPERS)
+        ctxButton = self.getControl(VideoPluginContextMenu.MARK_UNWATCHED__BLOOPERS)
         ctxButton.setLabel(__addon__.getLocalizedString(32119))
 
-        ctxButton = self.getControl(YouTubeContextMenu.EDIT_TITLE__INTERVIEW)
+        ctxButton = self.getControl(VideoPluginContextMenu.EDIT_TITLE__INTERVIEW)
         ctxButton.setLabel(__addon__.getLocalizedString(32120))
 
-        ctxButton = self.getControl(YouTubeContextMenu.EDIT_PLOT)
-        ctxButton.setLabel("")
+        ctxButton = self.getControl(VideoPluginContextMenu.EDIT_PLOT__VFX)
+        ctxButton.setLabel(__addon__.getLocalizedString(32121))
 
         xbmcgui.WindowXMLDialog.onInit(self)
 
@@ -647,22 +690,24 @@ class YouTubeContextMenu(xbmcgui.WindowXMLDialog):
         # Close the dialog after the selection
         self.close()
 
+        cmd = None
+        escTitle = urllib.quote_plus(self.title.encode('utf8'))
         # Check what the action was
-        if self.selectionMade == YouTubeContextMenu.RESUME__EXTRAS:
-            cmd = "/search/?q=%s+Extras" % self.title
-            xbmc.executebuiltin("RunAddon(plugin.video.youtube,%s)" % cmd)
-        elif self.selectionMade == YouTubeContextMenu.RESTART__DELETED_SCENES:
-            cmd = "/search/?q=%s+Deleted+Scene" % self.title
-            xbmc.executebuiltin("RunAddon(plugin.video.youtube,%s)" % cmd)
-        elif self.selectionMade == YouTubeContextMenu.MARK_WATCHED__SPECIAL_FEATURES:
-            cmd = "/search/?q=%s+Special+Features" % self.title
-            xbmc.executebuiltin("RunAddon(plugin.video.youtube,%s)" % cmd)
-        elif self.selectionMade == YouTubeContextMenu.MARK_UNWATCHED__BLOOPERS:
-            cmd = "/search/?q=%s+Blooper" % self.title
-            xbmc.executebuiltin("RunAddon(plugin.video.youtube,%s)" % cmd)
-        elif self.selectionMade == YouTubeContextMenu.EDIT_TITLE__INTERVIEW:
-            cmd = "/search/?q=%s+Interview" % self.title
-            xbmc.executebuiltin("RunAddon(plugin.video.youtube,%s)" % cmd)
+        if self.selectionMade == VideoPluginContextMenu.RESUME__EXTRAS:
+            cmd = "/search/?q=%s+Extras" % escTitle
+        elif self.selectionMade == VideoPluginContextMenu.RESTART__DELETED_SCENES:
+            cmd = "/search/?q=%s+Deleted+Scene" % escTitle
+        elif self.selectionMade == VideoPluginContextMenu.MARK_WATCHED__SPECIAL_FEATURES:
+            cmd = "/search/?q=%s+Special+Features" % escTitle
+        elif self.selectionMade == VideoPluginContextMenu.MARK_UNWATCHED__BLOOPERS:
+            cmd = "/search/?q=%s+Blooper" % escTitle
+        elif self.selectionMade == VideoPluginContextMenu.EDIT_TITLE__INTERVIEW:
+            cmd = "/search/?q=%s+Interview" % escTitle
+        elif self.selectionMade == VideoPluginContextMenu.EDIT_PLOT__VFX:
+            cmd = "/search/?q=%s+VFX" % escTitle
+
+        if cmd not in [None, ""]:
+            xbmc.executebuiltin("RunAddon(%s,%s)" % (self.pluginName, cmd))
 
 
 #########################
@@ -682,8 +727,13 @@ if __name__ == '__main__':
                 # Load the details of the current source of the extras
                 SourceDetails.forceLoadDetails()
 
+                # handle the plugins that VideoExtras supports
+                forceExtrasSupport = False
+                if ("plugin.video.emby" in sys.argv[2]) and Settings.isCustomPathEnabled():
+                    forceExtrasSupport = True
+
                 # Make sure we are not passed a plugin path
-                if "plugin://" in sys.argv[2]:
+                if ("plugin://" in sys.argv[2]) and not forceExtrasSupport:
                     if sys.argv[1] == "check":
                         xbmcgui.Window(12003).setProperty("HideVideoExtrasButton", "true")
                 else:

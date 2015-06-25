@@ -168,7 +168,11 @@ msgctxt "#32035"
 msgid "Enable YouTube Search Support"
 msgstr ""
 
-#empty strings from id 32036 to 32100
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr ""
+
+#empty strings from id 32037 to 32100
 
 msgctxt "#32101"
 msgid "Play All"
@@ -250,7 +254,15 @@ msgctxt "#32120"
 msgid "Interviews"
 msgstr ""
 
-#empty strings from id 32121 to 32149
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr ""
+
+#empty strings from id 32123 to 32149
 
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"

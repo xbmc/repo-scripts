@@ -152,7 +152,7 @@ class ConfUpdate():
             return
 
         # Now add the Video Extras onLoad command after the TvTunes one
-        DIALOG_VIDEO_INFO_ONLOAD = '\n\t<onload condition="System.HasAddon(script.videoextras)">XBMC.RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>'
+        DIALOG_VIDEO_INFO_ONLOAD = '\n\t<onload condition="System.HasAddon(script.videoextras)">RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>'
         insertTxt = previousOnLoad + DIALOG_VIDEO_INFO_ONLOAD
         dialogXmlStr = dialogXmlStr.replace(previousOnLoad, insertTxt)
 
@@ -180,7 +180,7 @@ class ConfUpdate():
 \t\t\t\t\t\t<description>Extras</description>
 \t\t\t\t\t\t<include>ButtonInfoDialogsCommonValues</include>
 \t\t\t\t\t\t<label>$ADDON[script.videoextras 32001]</label>
-\t\t\t\t\t\t<onclick>XBMC.RunScript(script.videoextras,display,"$INFO[ListItem.FilenameAndPath]")</onclick>
+\t\t\t\t\t\t<onclick>RunScript(script.videoextras,display,"$INFO[ListItem.FilenameAndPath]")</onclick>
 \t\t\t\t\t\t<visible>System.HasAddon(script.videoextras) + [Container.Content(movies) | Container.Content(episodes) | Container.Content(TVShows) | Container.Content(musicvideos)] + IsEmpty(Window(movieinformation).Property("HideVideoExtrasButton"))</visible>'''
 
         insertTxt = previousButton + (DIALOG_VIDEO_INFO_BUTTON % idval)
