@@ -110,4 +110,4 @@ msgstr "Включи воденето на журнал"
 
 msgctxt "#32130"
 msgid "Download weather maps"
-msgstr "Свали метеорологични карти"
+msgstr "Сваляй метеорологични карти"

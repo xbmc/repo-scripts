@@ -1,7 +1,7 @@
 INFO FOR SKINNERS
 
 All values returned by the addon will include their units.
-Skinner won't have to bother with it.
+Skinners won't have to bother with it.
 
 ---------------------------
 DEFAULT KODI WEATHER LABELS

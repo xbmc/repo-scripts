@@ -94,11 +94,11 @@ msgstr "Torsdag/Fredag"
 
 msgctxt "#32126"
 msgid "Use personal weather station"
-msgstr "Använd personlig väder station"
+msgstr "Använd personlig väderstation"
 
 msgctxt "#32127"
 msgid "Station ID"
-msgstr "Stations ID"
+msgstr "Stations-ID"
 
 msgctxt "#32128"
 msgid "Map zoom level"

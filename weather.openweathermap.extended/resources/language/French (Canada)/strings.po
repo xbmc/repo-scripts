@@ -22,7 +22,7 @@ msgstr "OpenWeatherMap"
 
 msgctxt "#32101"
 msgid "Location setup"
-msgstr "Réglage des lieux"
+msgstr "Configuration des lieux"
 
 msgctxt "#32102"
 msgid "Advanced"

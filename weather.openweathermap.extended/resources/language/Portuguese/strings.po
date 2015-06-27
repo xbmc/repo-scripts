@@ -16,6 +16,10 @@ msgstr ""
 "Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "OpenWeatherMap"
+msgstr "OpenWeatherMap"
+
 msgctxt "#32101"
 msgid "Location setup"
 msgstr "Definir localização"
@@ -48,9 +52,33 @@ msgctxt "#32115"
 msgid "Location 5"
 msgstr "Localização 5"
 
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "ID da Localização 1"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "ID da Localização 2"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "ID da Localização 3"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "ID da Localização 4"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "ID da Localização 5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "Mostrar lat/lon na procura de localizações"
+
 msgctxt "#32122"
 msgid "Weekend"
-msgstr "Fim de semana"
+msgstr "Fim-de-semana"
 
 msgctxt "#32123"
 msgid "Saturday/Sunday"
@@ -64,6 +92,14 @@ msgctxt "#32125"
 msgid "Thursday/Friday"
 msgstr "Quinta/Sexta"
 
+msgctxt "#32126"
+msgid "Use personal weather station"
+msgstr "Usar estação meteorológica específica"
+
+msgctxt "#32127"
+msgid "Station ID"
+msgstr "ID da Estação"
+
 msgctxt "#32128"
 msgid "Map zoom level"
 msgstr "Nível de ampliação do mapa"
@@ -71,3 +107,7 @@ msgstr "Nível de ampliação do mapa"
 msgctxt "#32129"
 msgid "Enable logging"
 msgstr "Activar log"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Transferir mapas meteorológicos"
