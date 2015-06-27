@@ -206,11 +206,20 @@ class TTSService(xbmc.Monitor):
 
 
         lastVersion = util.getSetting('version','0.0.0')
-        if LooseVersion(lastVersion) < LooseVersion(__version__):
+        if lastVersion == '0.0.0':
+            self.firstRun()
+            return True
+        elif LooseVersion(lastVersion) < LooseVersion(__version__):
             util.setSetting('version',__version__)
             self.queueNotice(u'{0}... {1}'.format(T(32104),__version__))
             return True
         return False
+
+    def firstRun(self):
+        util.LOG('FIRST RUN')
+        util.LOG('Installing default keymap')
+        from lib import keymapeditor
+        keymapeditor.installDefaultKeymap(quiet=True)
 
     def start(self):
         self.checkNewVersion()

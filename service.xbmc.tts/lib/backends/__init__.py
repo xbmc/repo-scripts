@@ -21,17 +21,17 @@ from speechutil import SpeechUtilComTTSBackend
 from recite import ReciteTTSBackend
 #from voiceover import VoiceOverBackend #Can't test
 
-backendsByPriority = [  JAWSTTSBackend,
-                        NVDATTSBackend,
-                        SAPITTSBackend,
+backendsByPriority = [  SAPITTSBackend,
+                        OSXSayTTSBackend,
                         ESpeakTTSBackend,
+                        JAWSTTSBackend,
+                        NVDATTSBackend,
                         FliteTTSBackend,
                         Pico2WaveTTSBackend,
                         FestivalTTSBackend,
                         CepstralTTSBackend,
 #                        CepstralTTSOEBackend,
                         SpeechDispatcherTTSBackend,
-                        OSXSayTTSBackend,
 #                        VoiceOverBackend,
                         SpeechServerBackend,
                         ReciteTTSBackend,

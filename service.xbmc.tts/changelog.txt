@@ -21,6 +21,14 @@ EXTERNAL TODO:
  OSX installer?
  Android TTS app for android backend
 
+** 1.0.2 **
+
+Install default keymap on first run
+
+** 1.0.1 **
+
+Change backend priorities
+
 ** 1.0.0 **
 
 Official repository release
