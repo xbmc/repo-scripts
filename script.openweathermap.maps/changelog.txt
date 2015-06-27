@@ -1,3 +1,9 @@
+v0.0.4
+- don't clear window properties
+
+v0.0.3
+- retry failed tile downloads
+
 v0.0.2
 - handle newly added speed units
 

@@ -103,9 +103,6 @@ class Main:
             xbmcvfs.mkdirs(pressuremapdir)
         thread_pressure = get_tiles(pressuremapdir, 'pressuremap-%s.png', stamp, imgs, pressure_url)
         thread_pressure.start()
-        for count in range (1, 6):
-            set_property('Map.%i.Area'       % count, '')
-            set_property('Map.%i.Layer'      % count, '')
         if streetthread_created:
             thread_street.join()
         thread_precip.join()
@@ -156,8 +153,13 @@ class get_tiles(threading.Thread):
         threading.Thread.__init__(self)
  
     def run(self):
+        self.fetch_tiles(self.imgs, self.mapdir)
+        self.merge_tiles()
+
+    def fetch_tiles(self, imgs, mapdir):
         count = 1
-        for img in self.imgs:
+        failed = []
+        for img in imgs:
             try:
                 query = self.url % (ZOOM, img[0], img[1])
                 req = urllib2.Request(query)
@@ -172,10 +174,17 @@ class get_tiles(threading.Thread):
                 response.close()
                 log('image downloaded')
             except:
-                log('image download failed')
-                return
+                data = ''
+                log('image download failed, retry')
+                if len(img) == 2:
+                    img.append(str(count))
+                failed.append(img)
             if data != '':
-                tilefile = xbmc.translatePath(os.path.join(self.mapdir, str(count) + '.png')).decode("utf-8")
+                if len(img) == 3:
+                    num = img[2]
+                else:
+                    num = str(count)
+                tilefile = xbmc.translatePath(os.path.join(mapdir, num + '.png')).decode("utf-8")
                 try:
                     tmpmap = open(tilefile, 'wb')
                     tmpmap.write(data)
@@ -186,8 +195,10 @@ class get_tiles(threading.Thread):
             count += 1
             if MONITOR.abortRequested():
                 return
-        self.merge_tiles()
-    
+        if failed:
+            xbmc.sleep(10000)
+            self.fetch_tiles(failed, mapdir)
+
     def merge_tiles(self):
         out = Image.new("RGBA", (756, 756), None)
         count = 1
