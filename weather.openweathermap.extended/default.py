@@ -276,10 +276,12 @@ def current_props(data,loc):
     set_property('Current.Location'             , loc)
     set_property('Current.Condition'            , CAPITALIZE(data['weather'][0]['description']))
     set_property('Current.Temperature'          , str(int(round(data['main']['temp']))))
-    set_property('Current.Wind'                 , str(int(round(data['wind']['speed'] * 3.6))))
-    set_property('Current.WindDirection'        , xbmc.getLocalizedString(WIND_DIR(int(round(data['wind']['deg'])))))
+    if data['wind'].has_key('speed'):
+        set_property('Current.Wind'             , str(int(round(data['wind']['speed'] * 3.6))))
+        set_property('Current.FeelsLike'        , FEELS_LIKE(int(round(data['main']['temp'])), int(round(data['wind']['speed'])), 'C'))
+    if data['wind'].has_key('deg'):
+        set_property('Current.WindDirection'    , xbmc.getLocalizedString(WIND_DIR(int(round(data['wind']['deg'])))))
     set_property('Current.Humidity'             , str(data['main']['humidity']))
-    set_property('Current.FeelsLike'            , FEELS_LIKE(int(round(data['main']['temp'])), int(round(data['wind']['speed'])), 'C'))
     set_property('Current.DewPoint'             , DEW_POINT(int(round(data['main']['temp'])), data['main']['humidity'], 'C'))
     set_property('Current.UVIndex'              , '') # not supported by openweathermap
     set_property('Current.OutlookIcon'          , '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
@@ -633,15 +635,17 @@ def hourly_props(data, daynum):
         set_property('Hourly.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
         set_property('Hourly.%i.FanartCode'      % (count+1), weathercode)
         set_property('Hourly.%i.Humidity'        % (count+1), str(item['main']['humidity']) + '%')
-        set_property('Hourly.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
-        set_property('Hourly.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
-        set_property('Hourly.%i.Cloudiness'      % (count+1), str(item['clouds']['all']) + '%')
+        if item['wind'].has_key('deg'):
+            set_property('Hourly.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
+            set_property('Hourly.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
+        set_property('Hourly.%i.Cloudiness'          % (count+1), str(item['clouds']['all']) + '%')
         if 'F' in TEMPUNIT:
             set_property('Hourly.%i.Temperature'     % (count+1), str(int(round(item['main']['temp'] * 1.8 + 32))) + TEMPUNIT)
             set_property('Hourly.%i.HighTemperature' % (count+1), str(int(round(item['main']['temp_max'] * 1.8 + 32))) + TEMPUNIT)
             set_property('Hourly.%i.LowTemperature'  % (count+1), str(int(round(item['main']['temp_min'] * 1.8 + 32))) + TEMPUNIT)
             set_property('Hourly.%i.DewPoint'        % (count+1), DEW_POINT(int(round(item['main']['temp'])), item['main']['humidity'], 'F') + TEMPUNIT)
-            set_property('Hourly.%i.FeelsLike'       % (count+1), FEELS_LIKE(int(round(item['main']['temp'])), int(round(item['wind']['speed'])), 'F') + TEMPUNIT)
+            if item['wind'].has_key('speed'):
+                set_property('Hourly.%i.FeelsLike'   % (count+1), FEELS_LIKE(int(round(item['main']['temp'])), int(round(item['wind']['speed'])), 'F') + TEMPUNIT)
             set_property('Hourly.%i.Pressure'        % (count+1), str(round(item['main']['pressure'] / 33.86 ,2)) + ' in')
             if item['main'].has_key('sea_level'):
                 set_property('Hourly.%i.SeaLevel'    % (count+1), str(round(item['main']['sea_level'] / 33.86 ,2)) + ' in')
@@ -662,7 +666,8 @@ def hourly_props(data, daynum):
             set_property('Hourly.%i.HighTemperature' % (count+1), str(int(round(item['main']['temp_max']))) + TEMPUNIT)
             set_property('Hourly.%i.LowTemperature'  % (count+1), str(int(round(item['main']['temp_min']))) + TEMPUNIT)
             set_property('Hourly.%i.DewPoint'        % (count+1), DEW_POINT(int(round(item['main']['temp'])), item['main']['humidity'], 'C') + TEMPUNIT)
-            set_property('Hourly.%i.FeelsLike'       % (count+1), FEELS_LIKE(int(round(item['main']['temp'])), int(round(item['wind']['speed'])), 'C') + TEMPUNIT)
+            if item['wind'].has_key('speed'):
+                set_property('Hourly.%i.FeelsLike'       % (count+1), FEELS_LIKE(int(round(item['main']['temp'])), int(round(item['wind']['speed'])), 'C') + TEMPUNIT)
             set_property('Hourly.%i.Pressure'        % (count+1), str(item['main']['pressure']) + ' mb')
             if item['main'].has_key('sea_level'):
                 set_property('Hourly.%i.SeaLevel'    % (count+1), str(item['main']['sea_level']) + ' mb')
@@ -679,15 +684,18 @@ def hourly_props(data, daynum):
             precip = rain + snow
             set_property('Hourly.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
         if SPEEDUNIT == 'mph':
-            set_property('Hourly.%i.WindSpeed'       % (count+1), str(int(round(item['wind']['speed'] * 2.237))) + SPEEDUNIT)
-            if item.has_key('gust'):
+            if item['wind'].has_key('speed'):
+                set_property('Hourly.%i.WindSpeed'   % (count+1), str(int(round(item['wind']['speed'] * 2.237))) + SPEEDUNIT)
+            if item['wind'].has_key('gust'):
                 set_property('Hourly.%i.WindGust'    % (count+1), str(int(round(item['wind']['gust'] * 2.237))) + SPEEDUNIT)
         elif SPEEDUNIT == 'Beaufort':
-            set_property('Hourly.%i.WindSpeed'       % (count+1), str(KPHTOBFT(round(item['wind']['speed'] * 3.6))) + SPEEDUNIT)
+            if item['wind'].has_key('speed'):
+                set_property('Hourly.%i.WindSpeed'   % (count+1), str(KPHTOBFT(round(item['wind']['speed'] * 3.6))) + SPEEDUNIT)
             if item.has_key('gust'):
                 set_property('Hourly.%i.WindGust'    % (count+1), str(KPHTOBFT(round(item['wind']['gust'] * 3.6))) + SPEEDUNIT)
         else:
-            set_property('Hourly.%i.WindSpeed'       % (count+1), str(int(round(item['wind']['speed'] * 3.6))) + SPEEDUNIT)
+            if item['wind'].has_key('speed'):
+                set_property('Hourly.%i.WindSpeed'   % (count+1), str(int(round(item['wind']['speed'] * 3.6))) + SPEEDUNIT)
             if item.has_key('gust'):
                 set_property('Hourly.%i.WindGust'    % (count+1), str(int(round(item['wind']['gust'] * 3.6))) + SPEEDUNIT)
     count = 1
@@ -717,15 +725,17 @@ def hourly_props(data, daynum):
                 set_property('36Hour.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
                 set_property('36Hour.%i.FanartCode'      % (count+1), weathercode)
                 set_property('36Hour.%i.Humidity'        % (count+1), str(item['main']['humidity']) + '%')
-                set_property('36Hour.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
-                set_property('36Hour.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
-                set_property('36Hour.%i.Cloudiness'      % (count+1), str(item['clouds']['all']) + '%')
+                if item['wind'].has_key('deg'):
+                    set_property('36Hour.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
+                    set_property('36Hour.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
+                set_property('36Hour.%i.Cloudiness'          % (count+1), str(item['clouds']['all']) + '%')
                 if 'F' in TEMPUNIT:
                     set_property('36Hour.%i.Temperature'     % (count+1), str(int(round(item['main']['temp'] * 1.8 + 32))) + TEMPUNIT)
                     set_property('36Hour.%i.HighTemperature' % (count+1), str(int(round(item['main']['temp_max'] * 1.8 + 32))) + TEMPUNIT)
                     set_property('36Hour.%i.LowTemperature'  % (count+1), str(int(round(item['main']['temp_min'] * 1.8 + 32))) + TEMPUNIT)
                     set_property('36Hour.%i.DewPoint'        % (count+1), DEW_POINT(int(round(item['main']['temp'])), item['main']['humidity'], 'F') + TEMPUNIT)
-                    set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(int(round(item['main']['temp'])), int(round(item['wind']['speed'])), 'F') + TEMPUNIT)
+                    if item['wind'].has_key('speed'):
+                        set_property('36Hour.%i.FeelsLike'   % (count+1), FEELS_LIKE(int(round(item['main']['temp'])), int(round(item['wind']['speed'])), 'F') + TEMPUNIT)
                     set_property('36Hour.%i.Pressure'        % (count+1), str(round(item['main']['pressure'] / 33.86 ,2)) + ' in')
                     rain = 0
                     snow = 0
@@ -742,7 +752,8 @@ def hourly_props(data, daynum):
                     set_property('36Hour.%i.HighTemperature' % (count+1), str(int(round(item['main']['temp_max']))) + TEMPUNIT)
                     set_property('36Hour.%i.LowTemperature'  % (count+1), str(int(round(item['main']['temp_min']))) + TEMPUNIT)
                     set_property('36Hour.%i.DewPoint'        % (count+1), DEW_POINT(int(round(item['main']['temp'])), item['main']['humidity'], 'C') + TEMPUNIT)
-                    set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(int(round(item['main']['temp'])), int(round(item['wind']['speed'])), 'C') + TEMPUNIT)
+                    if item['wind'].has_key('speed'):
+                        set_property('36Hour.%i.FeelsLike'   % (count+1), FEELS_LIKE(int(round(item['main']['temp'])), int(round(item['wind']['speed'])), 'C') + TEMPUNIT)
                     set_property('36Hour.%i.Pressure'        % (count+1), str(item['main']['pressure']) + ' mb')
                     rain = 0
                     snow = 0
@@ -755,15 +766,18 @@ def hourly_props(data, daynum):
                     precip = rain + snow
                     set_property('36Hour.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
                 if SPEEDUNIT == 'mph':
-                    set_property('36Hour.%i.WindSpeed'       % (count+1), str(int(round(item['wind']['speed'] * 2.237))) + SPEEDUNIT)
+                    if item['wind'].has_key('speed'):
+                        set_property('36Hour.%i.WindSpeed'   % (count+1), str(int(round(item['wind']['speed'] * 2.237))) + SPEEDUNIT)
                     if item.has_key('gust'):
                         set_property('36Hour.%i.WindGust'    % (count+1), str(int(round(item['wind']['gust'] * 2.237))) + SPEEDUNIT)
                 elif SPEEDUNIT == 'Beaufort':
-                    set_property('36Hour.%i.WindSpeed'       % (count+1), str(KPHTOBFT(round(item['wind']['speed'] * 3.6))) + SPEEDUNIT)
+                    if item['wind'].has_key('speed'):
+                        set_property('36Hour.%i.WindSpeed'   % (count+1), str(KPHTOBFT(round(item['wind']['speed'] * 3.6))) + SPEEDUNIT)
                     if item.has_key('gust'):
                         set_property('36Hour.%i.WindGust'    % (count+1), str(KPHTOBFT(round(item['wind']['gust'] * 3.6))) + SPEEDUNIT)
                 else:
-                    set_property('36Hour.%i.WindSpeed'       % (count+1), str(int(round(item['wind']['speed'] * 3.6))) + SPEEDUNIT)
+                    if item['wind'].has_key('speed'):
+                        set_property('36Hour.%i.WindSpeed'   % (count+1), str(int(round(item['wind']['speed'] * 3.6))) + SPEEDUNIT)
                     if item.has_key('gust'):
                         set_property('36Hour.%i.WindGust'    % (count+1), str(int(round(item['wind']['gust'] * 3.6))) + SPEEDUNIT)
                 set_property('36Hour.%i.Heading'             % (count+1), xbmc.getLocalizedString(33018))
