@@ -245,27 +245,37 @@ def station_props(data,loc):
     set_property('Current.Location'             , loc)
     if data.has_key('last') and data['last'].has_key('main') and data['last']['main'].has_key('temp'):
         set_property('Current.Temperature'      , str(int(round(data['last']['main']['temp'])) - 273)) # api values are in K
+    else:
+        set_property('Current.Temperature'      , '')
     if data.has_key('last') and data['last'].has_key('main') and data['last']['main'].has_key('humidity'):
         set_property('Current.Humidity'         , str(data['last']['main']['humidity']))
+    else:
+        set_property('Current.Humidity'         , '')
     if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('speed'):
         set_property('Current.Wind'             , str(int(round(data['last']['wind']['speed'] * 3.6))))
+    else:
+        set_property('Current.Wind'             , '')
     if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('deg'):
         set_property('Current.WindDirection'    , xbmc.getLocalizedString(WIND_DIR(int(round(data['last']['wind']['deg'])))))
+    else:
+        set_property('Current.WindDirection', '')
     try:
         set_property('Current.FeelsLike'        , FEELS_LIKE(data['last']['main']['temp'] -273, data['last']['wind']['speed'], False)) # api values are in K
     except:
-        pass
+        set_property('Current.FeelsLike'        , '')
     if data.has_key('last') and data['last'].has_key('calc') and data['last']['calc'].has_key('dewpoint'):
         set_property('Current.DewPoint'         , str(int(round(data['last']['calc']['dewpoint'])) - 273)) # api values are in K
     else:
         try:
             set_property('Current.DewPoint'     , DEW_POINT(data['last']['main']['temp'] -273, data['last']['main']['humidity'], False)) # api values are in K
         except:
-            pass
+            set_property('Current.DewPoint'     , '')
     set_property('Current.UVIndex'              , '') # no idea how the api returns it
 # extended properties
     if data.has_key('last') and data['last'].has_key('clouds') and data['last']['clouds'][0] != '':
         set_property('Current.Cloudiness'       , data['last']['clouds'][0]['condition'])
+    else:
+        set_property('Current.Cloudiness'       , '')
 
 def current_props(data,loc):
 # standard properties
@@ -277,10 +287,17 @@ def current_props(data,loc):
     set_property('Current.Location'             , loc)
     set_property('Current.Condition'            , CAPITALIZE(data['weather'][0]['description']))
     set_property('Current.Temperature'          , str(int(round(data['main']['temp']))))
-    set_property('Current.Wind'                 , str(int(round(data['wind']['speed'] * 3.6))))
-    set_property('Current.WindDirection'        , xbmc.getLocalizedString(WIND_DIR(int(round(data['wind']['deg'])))))
+    if data['wind'].has_key('speed'):
+        set_property('Current.Wind'             , str(int(round(data['wind']['speed'] * 3.6))))
+        set_property('Current.FeelsLike'        , FEELS_LIKE(data['main']['temp'], data['wind']['speed'], False))
+    else:
+        set_property('Current.Wind'             , '')
+        set_property('Current.FeelsLike'        , '')
+    if data['wind'].has_key('deg'):
+        set_property('Current.WindDirection'    , xbmc.getLocalizedString(WIND_DIR(int(round(data['wind']['deg'])))))
+    else:
+        set_property('Current.WindDirection'    , '')
     set_property('Current.Humidity'             , str(data['main']['humidity']))
-    set_property('Current.FeelsLike'            , FEELS_LIKE(data['main']['temp'], data['wind']['speed'], False))
     set_property('Current.DewPoint'             , DEW_POINT(data['main']['temp'], data['main']['humidity'], False))
     set_property('Current.UVIndex'              , '') # not supported by openweathermap
     set_property('Current.OutlookIcon'          , '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
@@ -294,8 +311,12 @@ def current_props(data,loc):
         set_property('Current.Pressure'             , str(round(data['main']['pressure'] / 33.86 ,2)) + ' in')
         if data['main'].has_key('sea_level'):
             set_property('Current.SeaLevel'         , str(round(data['main']['sea_level'] / 33.86 ,2)) + ' in')
+        else:
+            set_property('Current.SeaLevel'         , '')
         if data['main'].has_key('grnd_level'):
             set_property('Current.GroundLevel'      , str(round(data['main']['grnd_level'] / 33.86 ,2)) + ' in')
+        else:
+            set_property('Current.GroundLevel'      , '')
         rain = 0
         snow = 0
         if data.has_key('rain'):
@@ -304,20 +325,28 @@ def current_props(data,loc):
             elif data['rain'].has_key('3h'):
                 rain = data['rain']['3h']
             set_property('Current.Rain'             , str(round(rain *  0.04 ,2)) + ' in')
+        else:
+            set_property('Current.Rain'             , '')
         if data.has_key('snow'):
             if data['snow'].has_key('1h'):
                 snow = data['snow']['1h']
             elif data['snow'].has_key('3h'):
                 snow = data['snow']['3h']
             set_property('Current.Snow'             , str(round(snow *  0.04 ,2)) + ' in')
+        else:
+            set_property('Current.Snow'             , '')
         precip = rain + snow
         set_property('Current.Precipitation'        , str(round(precip *  0.04 ,2)) + ' in')
     else:
         set_property('Current.Pressure'             , str(data['main']['pressure']) + ' mb')
         if data['main'].has_key('sea_level'):
             set_property('Current.SeaLevel'         , str(data['main']['sea_level']) + ' mb')
+        else:
+            set_property('Current.SeaLevelSnow'     , '')
         if data['main'].has_key('grnd_level'):
             set_property('Current.GroundLevel'      , str(data['main']['grnd_level']) + ' mb')
+        else:
+            set_property('Current.GroundLevel'      , '')
         rain = 0
         snow = 0
         if data.has_key('rain'):
@@ -326,20 +355,30 @@ def current_props(data,loc):
             elif data['rain'].has_key('3h'):
                 rain = data['rain']['3h']
             set_property('Current.Rain'             , str(int(round(rain))) + ' mm')
+        else:
+            set_property('Current.Rain'             , '')
         if data.has_key('snow'):
             if data['snow'].has_key('1h'):
                 snow = data['snow']['1h']
             elif data['snow'].has_key('3h'):
                 snow = data['snow']['3h']
             set_property('Current.Snow'             , str(int(round(snow))) + ' mm')
+        else:
+            set_property('Current.Snow'             , '')
         precip = rain + snow
         set_property('Current.Precipitation'        , str(int(round(precip))) + ' mm')
     if data['wind'].has_key('gust'):
         set_property('Current.WindGust'         , SPEED(data['wind']['gust']) + SPEEDUNIT)
+    else:
+        set_property('Current.WindGust'         , '')
     if data['wind'].has_key('var_beg'):
         set_property('Current.WindDirStart'     , xbmc.getLocalizedString(WIND_DIR(data['wind']['var_beg'])))
+    else:
+        set_property('Current.WindDirStart'     , '')
     if data['wind'].has_key('var_end'):
         set_property('Current.WindDirEnd'       , xbmc.getLocalizedString(WIND_DIR(data['wind']['var_end'])))
+    else:
+        set_property('Current.WindDirEnd'       , '')
     set_property('Forecast.City'                , data['name'])
     set_property('Forecast.Country'             , data['sys']['country'])
     set_property('Forecast.Latitude'            , str(data['coord']['lat']))
@@ -401,9 +440,13 @@ def daily_props(data):
             if item.has_key('rain'):
                 rain = item['rain']
                 set_property('Daily.%i.Rain'        % (count+1), str(round(rain * 0.04 ,2)) + ' in')
+            else:
+                set_property('Daily.%i.Rain'        % (count+1), '')
             if item.has_key('snow'):
                 snow = item['snow']
                 set_property('Daily.%i.Snow'        % (count+1), str(round(snow * 0.04 ,2)) + ' in')
+            else:
+                set_property('Daily.%i.Snow'        % (count+1), '')
             precip = rain + snow
             set_property('Daily.%i.Precipitation'   % (count+1), str(round(precip * 0.04 ,2)) + ' in')
         else:
@@ -413,14 +456,20 @@ def daily_props(data):
             if item.has_key('rain'):
                 rain = item['rain']
                 set_property('Daily.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
+            else:
+                set_property('Daily.%i.Rain'        % (count+1), '')
             if item.has_key('snow'):
                 snow = item['snow']
                 set_property('Daily.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
+            else:
+                set_property('Daily.%i.Snow'        % (count+1), '')
             precip = rain + snow
             set_property('Daily.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
         set_property('Daily.%i.WindSpeed'           % (count+1), SPEED(item['speed']) + SPEEDUNIT)
         if item.has_key('gust'): 
             set_property('Daily.%i.WindGust'        % (count+1), SPEED(item['gust']) + SPEEDUNIT)
+        else:
+            set_property('Daily.%i.WindGust'        % (count+1), '')
         set_property('Daily.%i.Cloudiness'          % (count+1), str(item['clouds']) + '%')
     if WEEKEND == '2':
         weekend = [4,5]
@@ -467,9 +516,13 @@ def daily_props(data):
                 if item.has_key('rain'):
                     rain = item['rain']
                     set_property('Weekend.%i.Rain'        % (count+1), str(round(rain * 0.04 ,2)) + ' in')
+                else:
+                    set_property('Weekend.%i.Rain'        % (count+1), '')
                 if item.has_key('snow'):
                     snow = item['snow']
                     set_property('Weekend.%i.Snow'        % (count+1), str(round(snow * 0.04 ,2)) + ' in')
+                else:
+                    set_property('Weekend.%i.Snow'        % (count+1), '')
                 precip = rain + snow
                 set_property('Weekend.%i.Precipitation'   % (count+1), str(round(precip * 0.04 ,2)) + ' in')
             else:
@@ -479,14 +532,20 @@ def daily_props(data):
                 if item.has_key('rain'):
                     rain = item['rain']
                     set_property('Weekend.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
+                else:
+                    set_property('Weekend.%i.Rain'        % (count+1), '')
                 if item.has_key('snow'):
                     snow = item['snow']
                     set_property('Weekend.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
+                else:
+                    set_property('Weekend.%i.Snow'        % (count+1), '')
                 precip = rain + snow
                 set_property('Weekend.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
             set_property('Weekend.%i.WindSpeed'           % (count+1), SPEED(item['speed']) + SPEEDUNIT)
             if item.has_key('gust'): 
                 set_property('Weekend.%i.WindGust'        % (count+1), SPEED(item['gust']) + SPEEDUNIT)
+            else:
+                set_property('Weekend.%i.WindGust'        % (count+1), '')
             count += 1
             if count == 2:
                 break
@@ -526,9 +585,13 @@ def daily_props(data):
             if item.has_key('rain'):
                 rain = item['rain']
                 set_property('36Hour.%i.Rain'        % (count+1), str(round(rain * 0.04 ,2)) + ' in')
+            else:
+                set_property('36Hour.%i.Rain'        % (count+1), '')
             if item.has_key('snow'):
                 snow = item['snow']
                 set_property('36Hour.%i.Snow'        % (count+1), str(round(snow * 0.04 ,2)) + ' in')
+            else:
+                set_property('36Hour.%i.Snow'        % (count+1), '')
             precip = rain + snow
             set_property('36Hour.%i.Precipitation'   % (count+1), str(round(precip * 0.04 ,2)) + ' in')
         else:
@@ -538,14 +601,20 @@ def daily_props(data):
             if item.has_key('rain'):
                 rain = item['rain']
                 set_property('36Hour.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
+            else:
+                set_property('36Hour.%i.Rain'        % (count+1), '')
             if item.has_key('snow'):
                 snow = item['snow']
                 set_property('36Hour.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
+            else:
+                set_property('36Hour.%i.Snow'        % (count+1), '')
             precip = rain + snow
             set_property('36Hour.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
         set_property('36Hour.%i.WindSpeed'           % (count+1), SPEED(item['speed']) + SPEEDUNIT)
         if item.has_key('gust'): 
             set_property('36Hour.%i.WindGust'        % (count+1), SPEED(item['gust']) + SPEEDUNIT)
+        else:
+            set_property('36Hour.%i.WindGust'        % (count+1), '')
         set_property('36Hour.%i.Cloudiness'          % (count+1), str(item['clouds']) + '%')
         if count == 0:
             set_property('36Hour.%i.Heading'         % (count+1), xbmc.getLocalizedString(33006))
@@ -577,49 +646,75 @@ def hourly_props(data, daynum):
         set_property('Hourly.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
         set_property('Hourly.%i.FanartCode'      % (count+1), weathercode)
         set_property('Hourly.%i.Humidity'        % (count+1), str(item['main']['humidity']) + '%')
-        set_property('Hourly.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
-        set_property('Hourly.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
-        set_property('Hourly.%i.Cloudiness'      % (count+1), str(item['clouds']['all']) + '%')
-        set_property('Hourly.%i.Temperature'     % (count+1), TEMP(item['main']['temp']) + TEMPUNIT)
-        set_property('Hourly.%i.HighTemperature' % (count+1), TEMP(item['main']['temp_max']) + TEMPUNIT)
-        set_property('Hourly.%i.LowTemperature'  % (count+1), TEMP(item['main']['temp_min']) + TEMPUNIT)
-        set_property('Hourly.%i.DewPoint'        % (count+1), DEW_POINT(item['main']['temp'], item['main']['humidity']) + TEMPUNIT)
-        set_property('Hourly.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed']) + TEMPUNIT)
+        if item['wind'].has_key('deg'):
+            set_property('Hourly.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
+            set_property('Hourly.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
+        else:
+            set_property('Hourly.%i.WindDirection'   % (count+1), '')
+            set_property('Hourly.%i.WindDegree'      % (count+1), '')
+        set_property('Hourly.%i.Cloudiness'          % (count+1), str(item['clouds']['all']) + '%')
+        set_property('Hourly.%i.Temperature'         % (count+1), TEMP(item['main']['temp']) + TEMPUNIT)
+        set_property('Hourly.%i.HighTemperature'     % (count+1), TEMP(item['main']['temp_max']) + TEMPUNIT)
+        set_property('Hourly.%i.LowTemperature'      % (count+1), TEMP(item['main']['temp_min']) + TEMPUNIT)
+        set_property('Hourly.%i.DewPoint'            % (count+1), DEW_POINT(item['main']['temp'], item['main']['humidity']) + TEMPUNIT)
+        if item['wind'].has_key('speed'):
+            set_property('Hourly.%i.WindSpeed'       % (count+1), SPEED(item['wind']['speed']) + SPEEDUNIT)
+            set_property('Hourly.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed']) + TEMPUNIT)
+        else:
+            set_property('Hourly.%i.WindSpeed'       % (count+1), '')
+            set_property('Hourly.%i.FeelsLike'       % (count+1), '')
+        if item['wind'].has_key('gust'):
+            set_property('Hourly.%i.WindGust'        % (count+1), SPEED(item['wind']['gust']) + SPEEDUNIT)
+        else:
+            set_property('Hourly.%i.WindGust'        % (count+1), '')
         if 'F' in TEMPUNIT:
             set_property('Hourly.%i.Pressure'        % (count+1), str(round(item['main']['pressure'] / 33.86 ,2)) + ' in')
             if item['main'].has_key('sea_level'):
                 set_property('Hourly.%i.SeaLevel'    % (count+1), str(round(item['main']['sea_level'] / 33.86 ,2)) + ' in')
+            else:
+                set_property('Hourly.%i.SeaLevel'    % (count+1), '')
             if item['main'].has_key('grnd_level'):
                 set_property('Hourly.%i.GroundLevel' % (count+1), str(round(item['main']['grnd_level'] / 33.86 ,2)) + ' in')
+            else:
+                set_property('Hourly.%i.GroundLevel' % (count+1), '')
             rain = 0
             snow = 0
             if item.has_key('rain') and item['rain'].has_key('3h'):
                 rain = item['rain']['3h']
                 set_property('Hourly.%i.Rain'        % (count+1), str(round(rain *  0.04 ,2)) + ' in')
+            else:
+                set_property('Hourly.%i.Rain'        % (count+1), '')
             if item.has_key('snow') and item['snow'].has_key('3h'):
                 snow = item['snow']['3h']
                 set_property('Hourly.%i.Snow'        % (count+1), str(round(snow *  0.04 ,2)) + ' in')
+            else:
+                set_property('Hourly.%i.Snow'        % (count+1), '')
             precip = rain + snow
             set_property('Hourly.%i.Precipitation'   % (count+1), str(round(precip *  0.04 ,2)) + ' in')
         else:
             set_property('Hourly.%i.Pressure'        % (count+1), str(item['main']['pressure']) + ' mb')
             if item['main'].has_key('sea_level'):
                 set_property('Hourly.%i.SeaLevel'    % (count+1), str(item['main']['sea_level']) + ' mb')
+            else:
+                set_property('Hourly.%i.SeaLevel'    % (count+1), '')
             if item['main'].has_key('grnd_level'):
                 set_property('Hourly.%i.GroundLevel' % (count+1), str(item['main']['grnd_level']) + ' mb')
+            else:
+                set_property('Hourly.%i.GroundLevel' % (count+1), '')
             rain = 0
             snow = 0
             if item.has_key('rain') and item['rain'].has_key('3h'):
                 rain = item['rain']['3h']
                 set_property('Hourly.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
+            else:
+                set_property('Hourly.%i.Rain'        % (count+1), '')
             if item.has_key('snow') and item['snow'].has_key('3h'):
                 snow = item['snow']['3h']
                 set_property('Hourly.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
+            else:
+                set_property('Hourly.%i.Snow'        % (count+1), '')
             precip = rain + snow
             set_property('Hourly.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
-        set_property('Hourly.%i.WindSpeed'           % (count+1), SPEED(item['wind']['speed']) + SPEEDUNIT)
-        if item.has_key('gust'):
-            set_property('Hourly.%i.WindGust'        % (count+1), SPEED(item['wind']['gust']) + SPEEDUNIT)
     count = 1
     if daynum == '':
         return
@@ -647,14 +742,26 @@ def hourly_props(data, daynum):
                 set_property('36Hour.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
                 set_property('36Hour.%i.FanartCode'      % (count+1), weathercode)
                 set_property('36Hour.%i.Humidity'        % (count+1), str(item['main']['humidity']) + '%')
-                set_property('36Hour.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
-                set_property('36Hour.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
                 set_property('36Hour.%i.Cloudiness'      % (count+1), str(item['clouds']['all']) + '%')
                 set_property('36Hour.%i.Temperature'     % (count+1), TEMP(item['main']['temp']) + TEMPUNIT)
                 set_property('36Hour.%i.HighTemperature' % (count+1), TEMP(item['main']['temp_max']) + TEMPUNIT)
                 set_property('36Hour.%i.LowTemperature'  % (count+1), TEMP(item['main']['temp_min']) + TEMPUNIT)
                 set_property('36Hour.%i.DewPoint'        % (count+1), DEW_POINT(item['main']['temp'], item['main']['humidity']) + TEMPUNIT)
-                set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed']) + TEMPUNIT)
+                if item['wind'].has_key('deg'):
+                    set_property('36Hour.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
+                    set_property('36Hour.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
+                else:
+                    set_property('36Hour.%i.WindDegree'      % (count+1), '')
+                if item['wind'].has_key('speed'):
+                    set_property('36Hour.%i.WindSpeed'       % (count+1), SPEED(item['wind']['speed']) + SPEEDUNIT)
+                    set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed']) + TEMPUNIT)
+                else:
+                    set_property('36Hour.%i.WindSpeed'       % (count+1), '')
+                    set_property('36Hour.%i.FeelsLike'       % (count+1), '')
+                if item['wind'].has_key('gust'):
+                    set_property('36Hour.%i.WindGust'        % (count+1), SPEED(item['wind']['gust']) + SPEEDUNIT)
+                else:
+                    set_property('36Hour.%i.WindGust'        % (count+1), '')
                 if 'F' in TEMPUNIT:
                     set_property('36Hour.%i.Pressure'        % (count+1), str(round(item['main']['pressure'] / 33.86 ,2)) + ' in')
                     rain = 0
@@ -662,9 +769,13 @@ def hourly_props(data, daynum):
                     if item.has_key('rain') and item['rain'].has_key('3h'):
                         rain = item['rain']['3h']
                         set_property('36Hour.%i.Rain'        % (count+1), str(round(rain *  0.04 ,2)) + ' in')
+                    else:
+                        set_property('36Hour.%i.Rain'        % (count+1), '')
                     if item.has_key('snow') and item['snow'].has_key('3h'):
                         snow = item['snow']['3h']
                         set_property('36Hour.%i.Snow'        % (count+1), str(round(snow *  0.04 ,2)) + ' in')
+                    else:
+                        set_property('36Hour.%i.Snow'        % (count+1), '')
                     precip = rain + snow
                     set_property('36Hour.%i.Precipitation'   % (count+1), str(round(precip *  0.04 ,2)) + ' in')
                 else:
@@ -674,14 +785,15 @@ def hourly_props(data, daynum):
                     if item.has_key('rain') and item['rain'].has_key('3h'):
                         rain = item['rain']['3h']
                         set_property('36Hour.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
+                    else:
+                        set_property('36Hour.%i.Rain'        % (count+1), '')
                     if item.has_key('snow') and item['snow'].has_key('3h'):
                         snow = item['snow']['3h']
                         set_property('36Hour.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
+                    else:
+                        set_property('36Hour.%i.Snow'        % (count+1), '')
                     precip = rain + snow
                     set_property('36Hour.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
-                set_property('36Hour.%i.WindSpeed'           % (count+1), SPEED(item['wind']['speed']) + SPEEDUNIT)
-                if item.has_key('gust'):
-                    set_property('36Hour.%i.WindGust'        % (count+1), SPEED(item['wind']['gust']) + SPEEDUNIT)
                 set_property('36Hour.%i.Heading'             % (count+1), xbmc.getLocalizedString(33018))
                 set_property('36Hour.%i.TemperatureHeading'  % (count+1), xbmc.getLocalizedString(391))
                 break

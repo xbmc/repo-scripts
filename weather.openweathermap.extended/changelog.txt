@@ -1,3 +1,6 @@
+v2.0.4
+- better handling of key errors
+
 v2.0.3
 - fix crash due to undefined keys
 
