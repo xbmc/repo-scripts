@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.trakt.addtowatchlist" name="Trakt - Add to watchlist button" version="1.0.0" provider-name="razzeee">
+  <requires>
+    <import addon="xbmc.python" version="2.20.0"/>
+    <import addon="script.trakt" version="3.0.2"/>
+  </requires>
+    <extension point="kodi.context.item" library="addon.py">		
+      <item>
+        <label>32000</label>
+        <visible>StringCompare(ListItem.dbtype,movie) | StringCompare(ListItem.dbtype,tvshow) | StringCompare(ListItem.dbtype,season) | StringCompare(ListItem.dbtype,episode)</visible>
+      </item>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Add Trakt add to watchlist button to context menu in video library</summary>>
+    <platform>all</platform>
+    <forum></forum>
+    <source></source>
+  </extension>
+</addon>
