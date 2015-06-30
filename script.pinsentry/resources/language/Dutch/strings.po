@@ -16,6 +16,18 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "Addon Summary"
+msgid "Protect Kodi Content With A Pin Code"
+msgstr "Bescherm Kodi inhoud met een Pincode"
+
+msgctxt "Addon Description"
+msgid "Force users to enter the correct pin code for given content."
+msgstr "Forceer gebruikers een geldige pin in te voeren voor gegeven content."
+
+msgctxt "#32001"
+msgid "Pin Sentry"
+msgstr "Pin Sentry"
+
 msgctxt "#32002"
 msgid "Setup"
 msgstr "Setup"
@@ -32,9 +44,49 @@ msgctxt "#32005"
 msgid "Operations"
 msgstr "Besturingen"
 
+msgctxt "#32006"
+msgid "Pin Length"
+msgstr "wachtwoord lengte"
+
+msgctxt "#32007"
+msgid "Set Pin Value"
+msgstr "Instellen wachtwoord waarde"
+
+msgctxt "#32008"
+msgid "*** WARNING: PIN NOT SET ***"
+msgstr "*** WAARSCHUWING: WACHTWOORD NIET INGESTELD ***"
+
+msgctxt "#32009"
+msgid "Invalid Pin Notification"
+msgstr "Onjuiste wachtwoord notificatie"
+
+msgctxt "#32010"
+msgid "Popup Notification"
+msgstr "Popup notificatie"
+
+msgctxt "#32011"
+msgid "Dialog Box"
+msgstr "Dialoog box"
+
 msgctxt "#32012"
 msgid "None"
 msgstr "Geen"
+
+msgctxt "#32013"
+msgid "Off"
+msgstr "Uit"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "Aan"
+
+msgctxt "#32015"
+msgid "For Time Period"
+msgstr "Voor tijd periode"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "Onthoud wachtwoord voor (Minuten)"
 
 msgctxt "#32101"
 msgid "Backspace"
@@ -44,17 +96,69 @@ msgctxt "#32102"
 msgid "Done"
 msgstr "Klaar"
 
+msgctxt "#32103"
+msgid "Enter Pin"
+msgstr "Invoeren wachtwoord"
+
+msgctxt "#32104"
+msgid "Invalid Pin"
+msgstr "Onjuist wachtwoord"
+
+msgctxt "#32105"
+msgid "Enter Existing Pin"
+msgstr "Invoeren bestaand wachtwoord"
+
+msgctxt "#32106"
+msgid "Enter New Pin"
+msgstr "Toevoegen Nieuw wachtwoord"
+
+msgctxt "#32107"
+msgid "Reenter New Pin"
+msgstr "Herinvoeren Nieuw wachtwoord"
+
+msgctxt "#32108"
+msgid "Newly entered pins do not match, pin remains unchanged."
+msgstr "Nieuw ingevoerde wachtwoorden komen niet overeen. Pin blijft onveranderd."
+
+msgctxt "#32109"
+msgid "Incorrect number of digits entered for the pin."
+msgstr "Niet juist aantal nummer ingevoerd voor het wachtwoord."
+
+msgctxt "#32110"
+msgid "Settings change permitted"
+msgstr "Instellingsverandering toegestaan"
+
+msgctxt "#32111"
+msgid "Only Restrict File Sources During Navigation"
+msgstr "Alleen verbieden bestandsbronnen tijdens navigatie"
+
 msgctxt "#32113"
 msgid "Clean Database"
 msgstr "opschonen Database"
+
+msgctxt "#32114"
+msgid "Set Permissions"
+msgstr "Instellen toestemmingen"
 
 msgctxt "#32115"
 msgid "Advanced"
 msgstr "Geavanceerd"
 
+msgctxt "#32116"
+msgid "Only Enforce Pin Between Set Times"
+msgstr "Alleen afdwingen wachtwoord tussen ingestelde tijden"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Start tijd"
+
 msgctxt "#32118"
 msgid "End Time"
 msgstr "Eind tijd"
+
+msgctxt "#32119"
+msgid "Remember Pin"
+msgstr "Onthoud wachtwoord"
 
 msgctxt "#32120"
 msgid "Background"
@@ -64,9 +168,21 @@ msgctxt "#32121"
 msgid "Black"
 msgstr "Zwart"
 
+msgctxt "#32122"
+msgid "PinSentry"
+msgstr "PinSentry"
+
 msgctxt "#32123"
 msgid "Custom"
 msgstr "Eigen"
+
+msgctxt "#32124"
+msgid "Custom Background Image"
+msgstr "Aangepaste achtergrondafbeelding"
+
+msgctxt "#32125"
+msgid "Activity"
+msgstr "Activiteit"
 
 msgctxt "#32126"
 msgid "Video Playing"
@@ -91,3 +207,23 @@ msgstr "TV Series"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "Filmsets"
+
+msgctxt "#32204"
+msgid "File Source"
+msgstr "Bestandsbron"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "Muziekvideos"
+
+msgctxt "#32206"
+msgid "Classifications"
+msgstr "Classificatie`s"
+
+msgctxt "#32207"
+msgid "Movie Classifications"
+msgstr "Film classificatie`s"
+
+msgctxt "#32208"
+msgid "TV Classifications"
+msgstr "TV Classificatie`s"

@@ -24,10 +24,6 @@ from database import PinSentryDB
 from background import Background
 
 
-# Feature Options:
-# Cleanup database of removed library items (when screensaver starts, or library refresh)
-
-
 # Class to handle core Pin Sentry behaviour
 class PinSentry():
     pinLevelCached = 0
@@ -268,6 +264,26 @@ class PinSentryPlayer(xbmc.Player):
                     if not Settings.isSupportedMovieClassification(cert):
                         securityLevel = Settings.getDefaultMoviesWithoutClassification()
                         log("PinSentryPlayer: Setting Movie to level %d as there is no valid MPAA value" % securityLevel)
+
+            # Check if we have set security based off of the classification
+            if securityLevel > 0:
+                # Before we check to make sure the user can access this video based on the
+                # movie or TV Show classification, check for the case where there is background
+                # media playing, this can be the case if TvTunes has started a Video while browsing
+                # We do not want to prompt for the user to input the key for this
+                isBackgroundMedia = True
+                # Total wait for not playing background media is 1 second
+                loopCount = 100
+                while isBackgroundMedia and (loopCount > 0):
+                    loopCount = loopCount - 1
+                    if xbmcgui.Window(10025).getProperty("PlayingBackgroundMedia") in [None, ""]:
+                        isBackgroundMedia = False
+                        break
+                    xbmc.sleep(10)
+
+                if isBackgroundMedia:
+                    securityLevel = 0
+                    log("PinSentryPlayer: Playing background media")
 
         # Check if security has been set on this item
         if securityLevel < 1:

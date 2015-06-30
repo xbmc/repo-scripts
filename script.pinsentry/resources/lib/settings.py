@@ -42,6 +42,22 @@ class Settings():
     INVALID_PIN_NOTIFICATION_DIALOG = 1
     INVALID_PIN_NOTIFICATION_NONE = 2
 
+    # Flags from www.pixabay.com User:OpenClipartVectors
+    # https://pixabay.com/en/photos/?q=user%3AOpenClipartVectors+flag&image_type=&cat=&order=
+    flags = [{'lang': 32301, 'icon': 'UK/UK-flag.png'},
+             {'lang': 32302, 'icon': 'USA/USA-flag.png'},
+             {'lang': 32303, 'icon': 'Germany/Germany-flag.png'},
+             {'lang': 32304, 'icon': 'Ireland/Ireland-flag.png'},
+             {'lang': 32305, 'icon': 'Netherlands/Netherlands-flag.png'},
+             {'lang': 32306, 'icon': 'Australia/Australia-flag.png'},
+             {'lang': 32307, 'icon': 'Brazil/Brazil-flag.png'},
+             {'lang': 32308, 'icon': 'Hungary/Hungary-flag.png'},
+             {'lang': 32309, 'icon': 'Denmark/Denmark-flag.png'},
+             {'lang': 32310, 'icon': 'Norway/Norway-flag.png'},
+             {'lang': 32311, 'icon': 'Sweden/Sweden-flag.png'},
+             {'lang': 32312, 'icon': 'Finland/Finland-flag.png'},
+             {'lang': 32313, 'icon': 'Canada/Canada-flag.png'}]
+
     # http://en.wikipedia.org/wiki/Motion_picture_rating_system
     movieCassificationsNames = [{'id': 1, 'name': '%s - U', 'lang': 32301, 'match': 'U', 'icon': 'UK/UK-U.png'},  # UK
                                 {'id': 2, 'name': '%s - PG', 'lang': 32301, 'match': 'PG', 'icon': 'UK/UK-PG.png'},
@@ -96,7 +112,47 @@ class Settings():
                                 {'id': 44, 'name': '%s - 12', 'lang': 32308, 'match': '12', 'icon': 'Hungary/Hungary-12.png'},
                                 {'id': 45, 'name': '%s - 16', 'lang': 32308, 'match': '16', 'icon': 'Hungary/Hungary-16.png'},
                                 {'id': 46, 'name': '%s - 18', 'lang': 32308, 'match': '18', 'icon': 'Hungary/Hungary-18.png'},
-                                {'id': 47, 'name': '%s - X', 'lang': 32308, 'match': 'X', 'icon': 'Hungary/Hungary-X.png'}]
+                                {'id': 47, 'name': '%s - X', 'lang': 32308, 'match': 'X', 'icon': 'Hungary/Hungary-X.png'},
+                                # Denmark
+                                {'id': 48, 'name': '%s - A', 'lang': 32309, 'match': 'A', 'icon': 'Denmark/Denmark-A.png'},
+                                {'id': 49, 'name': '%s - 7', 'lang': 32309, 'match': '7', 'icon': 'Denmark/Denmark-7.png'},
+                                {'id': 50, 'name': '%s - 11', 'lang': 32309, 'match': '11', 'icon': 'Denmark/Denmark-11.png'},
+                                {'id': 51, 'name': '%s - 15', 'lang': 32309, 'match': '15', 'icon': 'Denmark/Denmark-15.png'},
+                                {'id': 52, 'name': '%s - F', 'lang': 32309, 'match': 'F', 'icon': 'Denmark/Denmark-F.png'},
+                                # Norway
+                                {'id': 53, 'name': '%s - A', 'lang': 32310, 'match': 'A', 'icon': 'Norway/Norway-A.png'},
+                                {'id': 54, 'name': '%s - 7', 'lang': 32310, 'match': '7', 'icon': 'Norway/Norway-7.png'},
+                                {'id': 55, 'name': '%s - 11', 'lang': 32310, 'match': '11', 'icon': 'Norway/Norway-11.png'},
+                                {'id': 56, 'name': '%s - 15', 'lang': 32310, 'match': '15', 'icon': 'Norway/Norway-15.png'},
+                                {'id': 57, 'name': '%s - 18', 'lang': 32310, 'match': '18', 'icon': 'Norway/Norway-18.png'},
+                                # Norway (New classifications for 2015 onwards)
+                                {'id': 58, 'name': '%s - A', 'lang': 32310, 'match': 'A', 'icon': 'Norway/Norway-2015-A.png'},
+                                {'id': 59, 'name': '%s - 6', 'lang': 32310, 'match': '6', 'icon': 'Norway/Norway-2015-6.png'},
+                                {'id': 60, 'name': '%s - 9', 'lang': 32310, 'match': '9', 'icon': 'Norway/Norway-2015-9.png'},
+                                {'id': 61, 'name': '%s - 12', 'lang': 32310, 'match': '12', 'icon': 'Norway/Norway-2015-12.png'},
+                                {'id': 62, 'name': '%s - 15', 'lang': 32310, 'match': '15', 'icon': 'Norway/Norway-2015-15.png'},
+                                {'id': 63, 'name': '%s - 18', 'lang': 32310, 'match': '18', 'icon': 'Norway/Norway-2015-18.png'},
+                                # Sweden
+                                {'id': 64, 'name': '%s - Btl', 'lang': 32311, 'match': 'Btl', 'icon': None},
+                                {'id': 65, 'name': '%s - 7', 'lang': 32311, 'match': '7', 'icon': None},
+                                {'id': 66, 'name': '%s - 11', 'lang': 32311, 'match': '11', 'icon': None},
+                                {'id': 67, 'name': '%s - 15', 'lang': 32311, 'match': '15', 'icon': None},
+                                # Finland
+                                {'id': 68, 'name': '%s - S', 'lang': 32312, 'match': 'S', 'icon': 'Finland/Finland-S.png'},
+                                {'id': 69, 'name': '%s - 7', 'lang': 32312, 'match': '7', 'icon': 'Finland/Finland-7.png'},
+                                {'id': 69, 'name': '%s - 12', 'lang': 32312, 'match': '12', 'icon': 'Finland/Finland-12.png'},
+                                {'id': 69, 'name': '%s - 16', 'lang': 32312, 'match': '16', 'icon': 'Finland/Finland-16.png'},
+                                {'id': 69, 'name': '%s - 18', 'lang': 32312, 'match': '18', 'icon': 'Finland/Finland-18.png'},
+                                # Canada
+                                {'id': 70, 'name': '%s - G', 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-G.png'},
+                                {'id': 71, 'name': '%s - PG', 'lang': 32313, 'match': 'PG', 'icon': 'Canada/Canada-PG.png'},
+                                {'id': 72, 'name': '%s - 14A', 'lang': 32313, 'match': '14A', 'icon': 'Canada/Canada-14A.png'},
+                                {'id': 73, 'name': '%s - 18A', 'lang': 32313, 'match': '18A', 'icon': 'Canada/Canada-18A.png'},
+                                {'id': 74, 'name': '%s - R', 'lang': 32313, 'match': 'R', 'icon': 'Canada/Canada-R.png'},
+                                {'id': 75, 'name': '%%s (%s) - G' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-Quebec-G.png'},
+                                {'id': 76, 'name': '%%s (%s) - 13+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '13+', 'icon': 'Canada/Canada-Quebec-13.png'},
+                                {'id': 77, 'name': '%%s (%s) - 16+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '16+', 'icon': 'Canada/Canada-Quebec-16.png'},
+                                {'id': 78, 'name': '%%s (%s) - 18+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'}]
 
     # http://en.wikipedia.org/wiki/Television_content_rating_systems
     tvCassificationsNames = [{'id': 1, 'name': '%s - TV-Y', 'lang': 32302, 'match': 'TV-Y', 'icon': 'USA/USA-TV-Y.png'},  # USA
@@ -132,7 +188,24 @@ class Settings():
                              {'id': 27, 'name': '%s - 6', 'lang': 32308, 'match': '6', 'icon': 'Hungary/Hungary-TV-6.png'},
                              {'id': 28, 'name': '%s - 12', 'lang': 32308, 'match': '12', 'icon': 'Hungary/Hungary-TV-12.png'},
                              {'id': 29, 'name': '%s - 16', 'lang': 32308, 'match': '16', 'icon': 'Hungary/Hungary-TV-16.png'},
-                             {'id': 30, 'name': '%s - 18', 'lang': 32308, 'match': '18', 'icon': 'Hungary/Hungary-TV-18.png'}]
+                             {'id': 30, 'name': '%s - 18', 'lang': 32308, 'match': '18', 'icon': 'Hungary/Hungary-TV-18.png'},
+                             # Finland
+                             {'id': 31, 'name': '%s - S', 'lang': 32312, 'match': 'S', 'icon': 'Finland/Finland-S.png'},
+                             {'id': 32, 'name': '%s - 7', 'lang': 32312, 'match': '7', 'icon': 'Finland/Finland-7.png'},
+                             {'id': 33, 'name': '%s - 12', 'lang': 32312, 'match': '12', 'icon': 'Finland/Finland-12.png'},
+                             {'id': 34, 'name': '%s - 16', 'lang': 32312, 'match': '16', 'icon': 'Finland/Finland-16.png'},
+                             {'id': 35, 'name': '%s - 18', 'lang': 32312, 'match': '18', 'icon': 'Finland/Finland-18.png'},
+                             # Canada
+                             {'id': 36, 'name': '%s - C', 'lang': 32313, 'match': 'C', 'icon': 'Canada/Canada-TV-C.png'},
+                             {'id': 37, 'name': '%s - C8', 'lang': 32313, 'match': 'C8', 'icon': 'Canada/Canada-TV-C8.png'},
+                             {'id': 38, 'name': '%s - G', 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-TV-G.png'},
+                             {'id': 39, 'name': '%s - PG', 'lang': 32313, 'match': 'PG', 'icon': 'Canada/Canada-TV-PG.png'},
+                             {'id': 40, 'name': '%s - 14+', 'lang': 32313, 'match': '14+', 'icon': 'Canada/Canada-TV-14.png'},
+                             {'id': 41, 'name': '%s - 18+', 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-TV-18.png'},
+                             {'id': 42, 'name': '%%s (%s) - G' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-Quebec-G.png'},
+                             {'id': 43, 'name': '%%s (%s) - 13+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '13+', 'icon': 'Canada/Canada-Quebec-13.png'},
+                             {'id': 44, 'name': '%%s (%s) - 16+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '16+', 'icon': 'Canada/Canada-Quebec-16.png'},
+                             {'id': 45, 'name': '%%s (%s) - 18+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'}]
 
     @staticmethod
     def reloadSettings():
@@ -315,15 +388,15 @@ class Settings():
 
     @staticmethod
     def isSupportedMovieClassification(classification):
-        for classification in Settings.movieCassificationsNames:
-            if classification == classification['match']:
+        for classificationItem in Settings.movieCassificationsNames:
+            if classification == classificationItem['match']:
                 return True
         return False
 
     @staticmethod
     def isSupportedTvShowClassification(classification):
-        for classification in Settings.tvCassificationsNames:
-            if classification == classification['match']:
+        for classificationItem in Settings.tvCassificationsNames:
+            if classification == classificationItem['match']:
                 return True
         return False
 

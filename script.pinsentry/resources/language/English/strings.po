@@ -311,3 +311,27 @@ msgstr ""
 msgctxt "#32308"
 msgid "Hungary"
 msgstr ""
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr ""
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr ""
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr ""
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr ""
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr ""

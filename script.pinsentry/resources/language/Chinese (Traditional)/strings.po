@@ -32,6 +32,14 @@ msgctxt "#32012"
 msgid "None"
 msgstr "關閉"
 
+msgctxt "#32013"
+msgid "Off"
+msgstr "關閉"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "開啟"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "退格"

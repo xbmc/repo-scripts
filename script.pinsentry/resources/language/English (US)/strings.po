@@ -72,6 +72,22 @@ msgctxt "#32012"
 msgid "None"
 msgstr "None"
 
+msgctxt "#32013"
+msgid "Off"
+msgstr "Off"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "On"
+
+msgctxt "#32015"
+msgid "For Time Period"
+msgstr "For Time Period"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "Remember Pin For (Minutes)"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Backspace"
@@ -108,6 +124,14 @@ msgctxt "#32109"
 msgid "Incorrect number of digits entered for the pin."
 msgstr "Incorrect number of digits entered for the pin."
 
+msgctxt "#32110"
+msgid "Settings change permitted"
+msgstr "Settings change permitted"
+
+msgctxt "#32111"
+msgid "Only Restrict File Sources During Navigation"
+msgstr "Only Restrict File Sources During Navigation"
+
 msgctxt "#32113"
 msgid "Clean Database"
 msgstr "Clean Database"
@@ -131,6 +155,10 @@ msgstr "Start Time"
 msgctxt "#32118"
 msgid "End Time"
 msgstr "End Time"
+
+msgctxt "#32119"
+msgid "Remember Pin"
+msgstr "Remember Pin"
 
 msgctxt "#32120"
 msgid "Background"
@@ -179,3 +207,23 @@ msgstr "TV Shows"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "Movie Sets"
+
+msgctxt "#32204"
+msgid "File Source"
+msgstr "File Source"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "Music Videos"
+
+msgctxt "#32206"
+msgid "Classifications"
+msgstr "Ratings"
+
+msgctxt "#32207"
+msgid "Movie Classifications"
+msgstr "Movie Ratings"
+
+msgctxt "#32208"
+msgid "TV Classifications"
+msgstr "TV Ratings"

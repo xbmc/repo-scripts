@@ -72,6 +72,22 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Joks"
 
+msgctxt "#32013"
+msgid "Off"
+msgstr "Išj."
+
+msgctxt "#32014"
+msgid "On"
+msgstr "Įj."
+
+msgctxt "#32015"
+msgid "For Time Period"
+msgstr "Laiko tarpui"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "Atsiminti PIN (minutėmis)"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Atgal"
@@ -108,6 +124,14 @@ msgctxt "#32109"
 msgid "Incorrect number of digits entered for the pin."
 msgstr "Įvestas neteisinga PIN kodo skaitmenų skaičius."
 
+msgctxt "#32110"
+msgid "Settings change permitted"
+msgstr "Leidžiama keisti nustatymus"
+
+msgctxt "#32111"
+msgid "Only Restrict File Sources During Navigation"
+msgstr "Apriboti failų šaltinius tik navigacijos metu"
+
 msgctxt "#32113"
 msgid "Clean Database"
 msgstr "Išvalyti duomenų bazę"
@@ -131,6 +155,10 @@ msgstr "Pradžios laikas"
 msgctxt "#32118"
 msgid "End Time"
 msgstr "Pabaigos laikas"
+
+msgctxt "#32119"
+msgid "Remember Pin"
+msgstr "Atsiminti PIN"
 
 msgctxt "#32120"
 msgid "Background"
@@ -179,3 +207,23 @@ msgstr "TV laidos"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "Filmų rinkiniai"
+
+msgctxt "#32204"
+msgid "File Source"
+msgstr "Failų šaltinis"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "Muzikiniai vaizdo įrašai"
+
+msgctxt "#32206"
+msgid "Classifications"
+msgstr "Klasifikacija"
+
+msgctxt "#32207"
+msgid "Movie Classifications"
+msgstr "Filmų klasifikacija"
+
+msgctxt "#32208"
+msgid "TV Classifications"
+msgstr "TV klasifikacija"

@@ -83,3 +83,7 @@ msgstr "剧集"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "电影设置"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "音乐电视"

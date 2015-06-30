@@ -68,6 +68,22 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Keines"
 
+msgctxt "#32013"
+msgid "Off"
+msgstr "Aus"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "Ein"
+
+msgctxt "#32015"
+msgid "For Time Period"
+msgstr "Für einen Zeitraum"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "PIN merken für (Minuten)"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Löschen"
@@ -96,6 +112,10 @@ msgctxt "#32107"
 msgid "Reenter New Pin"
 msgstr "Neue PIN erneut eingeben"
 
+msgctxt "#32110"
+msgid "Settings change permitted"
+msgstr "Einstellungsänderung erlaubt"
+
 msgctxt "#32113"
 msgid "Clean Database"
 msgstr "Datenbank aufräumen"
@@ -115,6 +135,10 @@ msgstr "Startzeit"
 msgctxt "#32118"
 msgid "End Time"
 msgstr "Endzeit"
+
+msgctxt "#32119"
+msgid "Remember Pin"
+msgstr "PIN merken"
 
 msgctxt "#32120"
 msgid "Background"
@@ -163,3 +187,23 @@ msgstr "Fernsehserien"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "Filmzusammenstellungen"
+
+msgctxt "#32204"
+msgid "File Source"
+msgstr "Dateiquelle"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "Musikvideos"
+
+msgctxt "#32206"
+msgid "Classifications"
+msgstr "Einstufungen"
+
+msgctxt "#32207"
+msgid "Movie Classifications"
+msgstr "Filmeinstufungen"
+
+msgctxt "#32208"
+msgid "TV Classifications"
+msgstr "Fernseheinstufungen"

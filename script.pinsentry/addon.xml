@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.pinsentry" name="PinSentry" version="1.0.1" provider-name="robwebset">
+<addon id="script.pinsentry" name="PinSentry" version="1.0.2" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -20,6 +20,7 @@
 		<summary lang="fr_CA">Protéger le contenu de Kodi avec un NIP</summary>
 		<summary lang="ko">PIN 코드로 Kodi 콘텐츠를 보호합니다</summary>
 		<summary lang="lt">Apsaugoti Kodi turinį PIN kodu</summary>
+		<summary lang="nl">Bescherm Kodi inhoud met een Pincode</summary>
 		<summary lang="pl">Umożliwia zabezpieczenie zawartości Kodi przy pomocy kodu PIN.</summary>
 		<summary lang="pt_BR">Proteger o Conteúdo do Kodi com um Código Pin</summary>
 		<description lang="en">Force users to enter the correct pin code for given content.</description>
@@ -27,6 +28,7 @@
 		<description lang="fr_CA">Forcer les utilisateurs à saisir le bon NIP pour un contenu donné.</description>
 		<description lang="ko">특정 콘텐츠에서 PIN 코드 입력을 요구합니다.</description>
 		<description lang="lt">Reikalauti vartotojų įvesti teisingą PIN kodą pasirinktam turiniui.</description>
+		<description lang="nl">Forceer gebruikers een geldige pin in te voeren voor gegeven content.</description>
 		<description lang="pl">Wymusza na użytkownikach wprowadzenie poprawnego kodu PIN, przez uzyskaniem dostępu do danej zawartości.</description>
 		<description lang="pt_BR">Força o usuário a entrar o código Pin correto para lhe dar acesso aos conteúdos.</description>
 		<language></language>

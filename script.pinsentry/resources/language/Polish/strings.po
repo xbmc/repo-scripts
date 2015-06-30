@@ -72,6 +72,22 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Brak"
 
+msgctxt "#32013"
+msgid "Off"
+msgstr "Wyłączone"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "Włączone"
+
+msgctxt "#32015"
+msgid "For Time Period"
+msgstr "Czasowo"
+
+msgctxt "#32016"
+msgid "Remember Pin For (Minutes)"
+msgstr "Pamiętaj kod PIN przez (minuty)"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Cofnięcie"
@@ -108,6 +124,14 @@ msgctxt "#32109"
 msgid "Incorrect number of digits entered for the pin."
 msgstr "Wprowadzono niepoprawną liczbę cyfr kodu PIN."
 
+msgctxt "#32110"
+msgid "Settings change permitted"
+msgstr "Dozwolona zmiana ustawień"
+
+msgctxt "#32111"
+msgid "Only Restrict File Sources During Navigation"
+msgstr "Ograniczaj dostęp do źródeł mediów tylko podczas nawigacji"
+
 msgctxt "#32113"
 msgid "Clean Database"
 msgstr "Wyczyść bazę danych"
@@ -131,6 +155,10 @@ msgstr "Początek o godzinie"
 msgctxt "#32118"
 msgid "End Time"
 msgstr "Koniec o godzinie"
+
+msgctxt "#32119"
+msgid "Remember Pin"
+msgstr "Pamiętaj kod PIN"
 
 msgctxt "#32120"
 msgid "Background"
@@ -179,3 +207,23 @@ msgstr "Seriale"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "Serie filmowe"
+
+msgctxt "#32204"
+msgid "File Source"
+msgstr "Źródło mediów"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "Teledyski"
+
+msgctxt "#32206"
+msgid "Classifications"
+msgstr "Kategorie wiekowe"
+
+msgctxt "#32207"
+msgid "Movie Classifications"
+msgstr "Kategorie wiekowe filmów"
+
+msgctxt "#32208"
+msgid "TV Classifications"
+msgstr "Kategorie wiekowe seriali"

@@ -1,3 +1,7 @@
+v1.0.2
+- Fix character encoding issue
+- Do not check classifications of background videos
+
 v1.0.1
 - Add More Classification Ratings
 - Add default behaviour for unsupported certifications
