@@ -231,7 +231,7 @@ msgid "Sync collection on library update or cleaning"
 msgstr ""
 
 msgctxt "#32056"
-msgid "Show notifications"
+msgid "Show sync notifications"
 msgstr ""
 
 msgctxt "#32057"
@@ -240,10 +240,6 @@ msgstr ""
 
 msgctxt "#32058"
 msgid "Remove deleted TV episodes from Trakt collection"
-msgstr ""
-
-msgctxt "#32059"
-msgid "Show marked as watched notification"
 msgstr ""
 
 msgctxt "#32060"
@@ -551,53 +547,113 @@ msgid "Remove from Watchlist"
 msgstr ""
 
 msgctxt "#32136"
-msgid "Add to Watchlist"
+msgid "Add to watchlist"
 msgstr ""
 
 msgctxt "#32137"
-msgid "Rate this Movie"
+msgid "Rate this movie"
 msgstr ""
 
 msgctxt "#32138"
-msgid "Rate this Show"
+msgid "Rate this show"
 msgstr ""
 
 msgctxt "#32139"
-msgid "Rate this Episode"
+msgid "Rate this episode"
 msgstr ""
 
 msgctxt "#32140"
-msgid "Toggle Watched"
+msgid "Toggle watched"
 msgstr ""
 
 msgctxt "#32141"
-msgid "Manage All Lists"
+msgid "Manage all lists"
 msgstr ""
 
 msgctxt "#32142"
-msgid "Update All Tags"
+msgid "Update all tags"
 msgstr ""
 
 msgctxt "#32143"
-msgid "Synchronize Library"
+msgid "Synchronize library"
 msgstr ""
 
 msgctxt "#32144"
-msgid "Where can I find my PIN?"
+msgid "How do I authorize the trakt addon to access my trakt.tv account?"
 msgstr ""
 
-msgctxt "#32145"
-msgid "PIN"
-msgstr ""
-
-msgctxt "#32146"
-msgid "Please enter your PIN in settings"
-msgstr ""
+#empty strings from id 32145 to 32146
 
 msgctxt "#32147"
-msgid "Incorrect PIN"
+msgid "Trakt.tv PIN Authorization Failed"
 msgstr ""
 
-msgctxt "#32148"
-msgid "Scan the qr code or visit http://trakt.tv/pin/999 for your own personal PIN"
+#empty string with id 32148
+
+msgctxt "#32149"
+msgid "Rate this Season"
+msgstr ""
+
+msgctxt "#32150"
+msgid "You will be reminded in 24 hours"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Use Addon Settings later if you change your mind"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Trakt Authorization Complete"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Trakt Account Authorization"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Authorize"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Remind Me Later"
+msgstr ""
+
+msgctxt "#32156"
+msgid "No Thanks"
+msgstr ""
+
+msgctxt "#32157"
+msgid "Account Authorization"
+msgstr ""
+
+msgctxt "#32159"
+msgid "Visit {0} or scan the QR Code below."
+msgstr ""
+
+msgctxt "#32160"
+msgid "Authorize the trakt addon to access your account."
+msgstr ""
+
+msgctxt "#32161"
+msgid "Enter the PIN provided in the box below."
+msgstr ""
+
+msgctxt "#32162"
+msgid "The trakt addon CAN NOT be used without authorizing it to access your trakt.tv account."
+msgstr ""
+
+msgctxt "#32163"
+msgid "User"
+msgstr ""
+
+msgctxt "#32164"
+msgid "Fallback to Title/Year matching if necessary"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Trakt - Added to watchlist"
+msgstr ""
+
+msgctxt "#32166"
+msgid "Trakt - Failed adding to watchlist"
 msgstr ""
