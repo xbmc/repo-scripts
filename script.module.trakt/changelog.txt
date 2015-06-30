@@ -1,3 +1,11 @@
+Version 2.3.3
+
+- trakt.py ac86ab644e5900df388f236f8ffdf8413fcf5248
+
+Version 2.3.2
+
+- trakt.py 480dbe963ee0c92c1d77b271da000c9f3fbfe9b9
+
 Version 2.3.1
 
 - trakt.py 472bb02986e44bebdb33c7ff17a73a06df0853e2
