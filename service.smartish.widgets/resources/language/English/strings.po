@@ -1,0 +1,92 @@
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-12 02:27:08\n"
+"PO-Revision-Date: 2015-06-12 02:27:08\n"
+"Last-Translator: you <>\n"
+"Language-Team: English <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "#32000"
+msgid "Weighting"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Tag"
+msgstr ""
+
+msgctxt "#32002"
+msgid "TheMovieDB Keywords"
+msgstr ""
+
+msgctxt "#32003"
+msgid "TheMovieDB Related"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Mood"
+msgstr ""
+
+msgctxt "#32005"
+msgid "PVR"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Role"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Client settings"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Number of widget items to return"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Number of hours 'Now' is +/-"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Number of days history to consider..."
+msgstr ""
+
+msgctxt "#32011"
+msgid "...this weekday at this time"
+msgstr ""
+
+msgctxt "#32012"
+msgid "...every day at this time"
+msgstr ""
+
+msgctxt "#32013"
+msgid "...every day"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Recently Added additional score percentage"
+msgstr ""
+
+msgctxt "#32015"
+msgid "This weekday at this time"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Every day at this time"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Every day"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Get additional information from TheMovieDB"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Client/Server"
+msgstr ""

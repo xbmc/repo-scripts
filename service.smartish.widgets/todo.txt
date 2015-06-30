@@ -1,0 +1,11 @@
+* Use new data available for PVR in Isengard
+* Combined widget (reliant on more data available for PVR - at the moment, this cannot be compared to other widgets)
+* New role - solo
+* Improve sharing of habits amongst profiles/sources (reliant on server having all sources available)
+* Improve TMDB code
+ - Ensure importing is consistent
+ - Refresh data at variable interval
+ - Encourage users to donate to TMDB
+* Think through and implement relevant server/client/tmdb connection (lost) messages
+* Improve close listener service, open new listener service (if old service hasn't de-registered listener quite yet)
+* Implement server/client (variable?) timeout - esp. failure state

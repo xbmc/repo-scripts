@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<category label="$ADDON[service.smartish.widgets 32019]">
+		<setting label="$ADDON[service.smartish.widgets 32006]" type="labelenum" values="Server|Client" id="role" default="Server" />
+		<setting label="$LOCALIZE[730]" type="number" default="45354" id="port" />
+		<setting label="$ADDON[service.smartish.widgets 32007]" type="lsep" />
+		<setting label="$LOCALIZE[1009]" type="ipaddress" id="serverip" />
+	</category>
+    <category label="$LOCALIZE[128]">
+		<setting label="$ADDON[service.smartish.widgets 32008]" type="slider" id="returnLimit" default="20" range="1,1,50" option="int" />
+		<setting label="$ADDON[service.smartish.widgets 32009]" type="slider" id="hoursNow" default="2" range="1,1,8" option="int" />
+		<setting label="$ADDON[service.smartish.widgets 32010]" type="lsep"/>
+		<setting label="$ADDON[service.smartish.widgets 32011]" type="slider" id="dayLimit" default="28" range="7,7,56" option="int" />
+		<setting label="$ADDON[service.smartish.widgets 32012]" type="slider" id="timeLimit" default="7" range="0,1,56" option="int" />
+		<setting label="$ADDON[service.smartish.widgets 32013]" type="slider" id="allLimit" default="7" range="0,1,56" option="int" />
+		<setting label="$ADDON[service.smartish.widgets 32014]" type="lsep"/>
+ 		<setting label="$ADDON[service.smartish.widgets 32015]" type="slider" id="dayRecent" default="100" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32016]" type="slider" id="timeRecent" default="50" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32017]" type="slider" id="allRecent" default="25" range="0,1,100" option="int" />
+		<setting label="$ADDON[service.smartish.widgets 32018]" type="bool" id="getTMDB" default="false"/>
+	</category>
+	<category label="$LOCALIZE[20342]">
+		<!--setting label="Rank weekday at this time habits by date" type="bool" id="movieDayOrder" default="false"/>
+		<setting label="Rank every day at this time habits by date" type="bool" id="movieTimeOrder" default="false"/>
+		<setting label="Rank every day habits by date" type="bool" id="movieAllOrder" default="false"/-->
+		<setting label="$ADDON[service.smartish.widgets 32000]" type="lsep"/>
+ 		<setting label="$LOCALIZE[515]" type="slider" id="movieGenre" default="70" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[20337]" type="slider" id="movieActor" default="60" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[20339]" type="slider" id="movieDirector" default="50" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[20417]" type="slider" id="movieWriter" default="40" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32001]" type="slider" id="movieTag" default="60" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[572]" type="slider" id="movieStudio" default="30" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[563]" type="slider" id="movieRating" default="30" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32002]" type="slider" id="movieKeyword" default="15" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32003]" type="slider" id="movieRelated" default="15" range="0,1,100" option="int" />
+	</category>
+	<category label="$LOCALIZE[20360]">
+		<!--setting label="Rank weekday at this time habits by date" type="bool" id="tvDayOrder" default="false"/>
+		<setting label="Rank every day at this time habits by date" type="bool" id="tvTimeOrder" default="false"/>
+		<setting label="Rank every day habits by date" type="bool" id="tvAllOrder" default="false"/-->
+		<setting label="$ADDON[service.smartish.widgets 32000]" type="lsep"/>
+ 		<setting label="$LOCALIZE[515]" type="slider" id="tvGenre" default="70" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[20337]" type="slider" id="tvActor" default="60" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32001]" type="slider" id="tvTag" default="60" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[572]" type="slider" id="tvStudio" default="30" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[563]" type="slider" id="tvRating" default="30" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32002]" type="slider" id="tvKeyword" default="15" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32003]" type="slider" id="tvRelated" default="15" range="0,1,100" option="int" />
+	</category>
+	<category label="$LOCALIZE[132]">
+		<!--setting label="Rank weekday at this time habits by date" type="bool" id="albumDayOrder" default="false"/>
+		<setting label="Rank every day at this time habits by date" type="bool" id="albumTimeOrder" default="false"/>
+		<setting label="Rank every day habits by date" type="bool" id="albumAllOrder" default="false"/-->
+		<setting label="$ADDON[service.smartish.widgets 32000]" type="lsep"/>
+ 		<setting label="$LOCALIZE[557]" type="slider" id="albumArtist" default="60" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[736]" type="slider" id="albumStyle" default="70" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[15111]" type="slider" id="albumTheme" default="60" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[515]" type="slider" id="albumGenre" default="60" range="0,1,100" option="int" />
+ 		<setting label="$ADDON[service.smartish.widgets 32004]" type="slider" id="albumMood" default="60" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[21899]" type="slider" id="albumLabel" default="30" range="0,1,100" option="int" />
+	</category>
+	<category label="$ADDON[service.smartish.widgets 32005]">
+		<!--setting label="Rank weekday at this time habits by date" type="bool" id="pvrDayOrder" default="false"/>
+		<setting label="Rank every day at this time habits by date" type="bool" id="pvrTimeOrder" default="false"/>
+		<setting label="Rank every day habits by date" type="bool" id="pvrAllOrder" default="false"/-->
+		<setting label="$ADDON[service.smartish.widgets 32000]" type="lsep"/>
+ 		<setting label="$LOCALIZE[515]" type="slider" id="pvrGenre" default="70" range="0,1,100" option="int" />
+ 		<setting label="$LOCALIZE[19029]" type="slider" id="pvrChannel" default="40" range="0,1,100" option="int" />
+	</category>
+</settings>
