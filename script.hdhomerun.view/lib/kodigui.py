@@ -2,6 +2,88 @@
 import xbmc, xbmcgui
 import time, threading
 
+class BaseFunctions:
+    xmlFile = ''
+    path = ''
+    theme = ''
+    res = '720p'
+
+    def __init__(self):
+        self.open = True
+
+    @classmethod
+    def open(cls,**kwargs):
+        window = cls(cls.xmlFile, cls.path, cls.theme, cls.res)
+        window.modal()
+        return window
+
+    def modal(self):
+        self.open = True
+        self.doModal()
+        self.open = False
+
+class BaseWindow(xbmcgui.WindowXML,BaseFunctions):
+    def __init__(self,*args,**kwargs):
+        BaseFunctions.__init__(self)
+        self._closing = False
+        self._winID = ''
+        self.started = False
+
+    def onInit(self):
+        self._winID = xbmcgui.getCurrentWindowId()
+        if self.started:
+            self.onReInit()
+
+        else:
+            self.started = True
+            self.onFirstInit()
+
+    def onFirstInit(self): pass
+
+    def onReInit(self): pass
+
+    def setProperty(self,key,value):
+        if self._closing: return
+        xbmcgui.Window(self._winID).setProperty(key,value)
+        xbmcgui.WindowXML.setProperty(self,key,value)
+
+    def doClose(self):
+        self._closing = True
+        self.close()
+
+    def onClosed(self): pass
+
+class BaseDialog(xbmcgui.WindowXMLDialog,BaseFunctions):
+    def __init__(self,*args,**kwargs):
+        BaseFunctions.__init__(self)
+        self._closing = False
+        self._winID = ''
+        self.started = False
+
+    def onInit(self):
+        self._winID = xbmcgui.getCurrentWindowDialogId()
+        if self.started:
+            self.onReInit()
+
+        else:
+            self.started = True
+            self.onFirstInit()
+
+    def onFirstInit(self): pass
+
+    def onReInit(self): pass
+
+    def setProperty(self,key,value):
+        if self._closing: return
+        xbmcgui.Window(self._winID).setProperty(key,value)
+        xbmcgui.WindowXMLDialog.setProperty(self,key,value)
+
+    def doClose(self):
+        self._closing = True
+        self.close()
+
+    def onClosed(self): pass
+
 class ManagedListItem(object):
     def __init__(self,label='', label2='', iconImage='', thumbnailImage='', path='',data_source=None):
         self._listItem = xbmcgui.ListItem(label,label2,iconImage,thumbnailImage,path)
@@ -14,6 +96,10 @@ class ManagedListItem(object):
         self.path = path
         self._ID = None
         self._manager = None
+        self._valid = True
+
+    def __nonzero__(self):
+        return self._valid
 
     @property
     def listItem(self):
@@ -117,7 +203,7 @@ class ManagedControlList(object):
         self.window = window
         self.control = window.getControl(control_id)
         self.items = []
-        self.sort = None
+        self._sortKey = None
         self._idCounter = 0
         self._maxViewIndex = max_view_index
 
@@ -138,6 +224,7 @@ class ManagedControlList(object):
         for idx in range(bottom,top):
             li = self.control.getListItem(idx)
             mli = self.items[idx]
+            mli._manager = self
             mli._listItem = li
             mli._updateListItem()
 
@@ -145,8 +232,14 @@ class ManagedControlList(object):
         self._idCounter+=1
         return str(self._idCounter)
 
-    def setSort(self,sort):
-        self._sortKey = sort
+    def reInit(self,window,control_id):
+        self.controlID = control_id
+        self.window = window
+        self.control = window.getControl(control_id)
+        self.control.addItems([i._takeListItem(self,self._nextID()) for i in self.items])
+
+    def setSort(self,key):
+        self._sortKey = key
 
     def addItem(self,managed_item):
         self.items.append(managed_item)
@@ -159,6 +252,9 @@ class ManagedControlList(object):
 
     def replaceItems(self,managed_items):
         oldSize = self.size()
+
+        for i in self.items: i._valid = False
+
         self.items = managed_items
         size = self.size()
         if size > oldSize:
@@ -191,10 +287,18 @@ class ManagedControlList(object):
         return self.getListItem(pos)
 
     def removeItem(self,index):
-        self.items.pop(index)
+        old = self.items.pop(index)
+        old._valid = False
+
         self.control.removeItem(index)
+        top = self.control.size() - 1
+        if top < 0: return
+        if top < index: index = top
+        self.control.selectItem(index)
 
     def insertItem(self,index,managed_item):
+        if index >= self.size():
+            return self.addItem(managed_item)
         self.items.insert(index,managed_item)
         self.control.addItem(managed_item._takeListItem(self,self._nextID()))
         self._updateItems(index,self.size())
@@ -204,7 +308,7 @@ class ManagedControlList(object):
         if source_idx < dest_idx:
             rstart = source_idx
             rend = dest_idx+1
-            dest_idx-=1
+            #dest_idx-=1
         else:
             rstart = dest_idx
             rend = source_idx+1
@@ -241,6 +345,7 @@ class ManagedControlList(object):
 
 
     def reset(self):
+        for i in self.items: i._valid = False
         self.items = []
         self.control.reset()
 
@@ -259,14 +364,14 @@ class ManagedControlList(object):
         return range(max(selected - viewPosition,0),min(selected + (self._maxViewIndex - viewPosition) + 1,self.size() - 1))
 
     def positionIsValid(self,pos):
-        return pos > 0 and pos < self.size()
+        return 0 <= pos < self.size()
 
-    def sort(self,sort=None):
-        sort = sort or self._sortKey
+    def sort(self,key=None,reverse=False):
+        self._sortKey = key or self._sortKey
 
-        self.items.sort(key=self._sortKey)
+        self.items.sort(key=self._sortKey,reverse=reverse)
 
-        self._updateItems(0,self.size)
+        self._updateItems(0,self.size())
 
     def getManagedItemPosition(self,mli):
         return self.items.index(mli)
@@ -274,6 +379,12 @@ class ManagedControlList(object):
     def getListItemFromManagedItem(self,mli):
         pos = self.items.index(mli)
         return self.control.getListItem(pos)
+
+    def topHasFocus(self):
+        return self.getSelectedPosition() == 0
+
+    def bottomHasFocus(self):
+        return self.getSelectedPosition() == self.size() - 1
 
 class PropertyTimer():
     def __init__(self,window_id,timeout,property_,value,addon_id=None):

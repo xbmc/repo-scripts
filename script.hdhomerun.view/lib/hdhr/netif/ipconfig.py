@@ -2,8 +2,8 @@
 
 import subprocess
 
-def parse():
-    data = subprocess.check_output('ipconfig /all',startupinfo=getStartupInfo())
+def parse(data=None):
+    data = data or subprocess.check_output('ipconfig /all',startupinfo=getStartupInfo())
     dlist = [d.rstrip() for d in data.split('\n')]
     mode = None
     sections = []
@@ -28,7 +28,7 @@ def parse():
                 mode = 'VALUE:' + k
                 v = v.replace('(Preferred)','')
                 sections[-1][k] = v.strip()
-        elif mode.startswith('VALUE:'):
+        elif mode and mode.startswith('VALUE:'):
             if not d.startswith('        '):
                 mode = 'DATA'
                 dlist.insert(0,d)

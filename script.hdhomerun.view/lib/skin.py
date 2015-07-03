@@ -45,16 +45,17 @@ def skinningAPIisOld():
 
 OLD_API = skinningAPIisOld()
 
-if OLD_API:
-    OVERLAY = 'script-hdhomerun-view-overlay.gotham.xml'
-    CHANNEL_ENTRY = 'script-hdhomerun-view-channel_entry.gotham.xml'
-else:
-    OVERLAY = 'script-hdhomerun-view-overlay.xml'
-    CHANNEL_ENTRY = 'script-hdhomerun-view-channel_entry.xml'
 
+OVERLAY = 'script-hdhomerun-view-overlay.xml'
+CHANNEL_ENTRY = 'script-hdhomerun-view-channel_entry.xml'
+DVR_WINDOW = "script-hdhomerun-view-dvr.xml"
+
+DVR_RECORD_DIALOG = "script-hdhomerun-view-dvr_record_dialog.xml"
+DVR_EPISODES_DIALOG = "script-hdhomerun-view-dvr_episodes_dialog.xml"
 OPTIONS_DIALOG = "script-hdhomerun-view-options.xml"
 
-SKINS_XMLS = (OVERLAY,CHANNEL_ENTRY)
+
+SKINS_XMLS = (OVERLAY,CHANNEL_ENTRY,DVR_WINDOW,DVR_RECORD_DIALOG)
 
 def copyTree(source,target):
 	pct = 0

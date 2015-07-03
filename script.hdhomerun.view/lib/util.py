@@ -69,6 +69,9 @@ def _processSettingForWrite(value):
 def setGlobalProperty(key,val):
     xbmcgui.Window(10000).setProperty('script.hdhomerun.view.{0}'.format(key),val)
 
+def getGlobalProperty(key):
+    return xbmc.getInfoLabel('Window(10000).Property(script.hdhomerun.view.{0})'.format(key))
+
 def showNotification(message,time_ms=3000,icon_path=None,header=ADDON.getAddonInfo('name')):
     try:
         icon_path = icon_path or xbmc.translatePath(ADDON.getAddonInfo('icon')).decode('utf-8')
@@ -100,6 +103,23 @@ def kodiSimpleVersion():
         return float(xbmc.getInfoLabel('System.BuildVersion').split(' ',1)[0])
     except:
         return 0
+
+def sortTitle(title):
+    return title.startswith('The ') and title[4:] or title
+
+def busyDialog(msg='LOADING'):
+    def methodWrap(func):
+        def inner(*args,**kwargs):
+            try:
+                setGlobalProperty('busy',msg)
+                func(*args,**kwargs)
+            finally:
+                setGlobalProperty('busy','')
+        return inner
+    return methodWrap
+
+def withBusyDialog(method,msg,*args,**kwargs):
+    return busyDialog(msg or 'LOADING')(method)(*args,**kwargs)
 
 class TextBox:
     # constants

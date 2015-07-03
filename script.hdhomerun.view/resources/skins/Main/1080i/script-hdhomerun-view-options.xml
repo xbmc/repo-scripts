@@ -1,122 +1,128 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <window>
-    <defaultcontrol>240</defaultcontrol>
     <coordinates>
         <system>1</system>
         <posx>0</posx>
         <posy>0</posy>
     </coordinates>
+    <animation effect="slide" start="0,1080" end="0,0" time="300" reversible="false" condition="!IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowOpen</animation>
+    <animation effect="slide" start="0,0" end="0,-1080" time="300" reversible="false" condition="!IsEmpty(Window(10000).Property(script.hdhomerun.view.window.animations))">WindowClose</animation>
     <controls>
-        <control type="button" id="239">
-            <left>0</left>
-            <top>0</top>
-            <width>1810</width>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width>
             <height>1080</height>
-            <label> </label>
-            <font>-</font>
-            <texturefocus>-</texturefocus>
-            <texturenofocus>-</texturenofocus>
+            <texture>script-hdhomerun-view-white_square.png</texture>
+            <colordiffuse>D0000000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+        </control>
+
+        <control type="grouplist" id="252">
+            <posx>682</posx>
+            <posy>300</posy>
+            <height>300</height>
+            <width>556</width>
+            <itemgap>44</itemgap>
+            <ondown>240</ondown>
+            <orientation>horizontal</orientation>
+
+            <control type="button" id="241">
+                <visible>!Control.IsVisible(248)</visible>
+                <width>256</width>
+                <height>256</height>
+                <label>[B]$ADDON[script.hdhomerun.view 32836][/B]</label>
+                <font>font13</font>
+                <align>center</align>
+                <aligny>top</aligny>
+                <textcolor>FFFFFFFF</textcolor>
+                <textoffsety>266</textoffsety>
+                <texturefocus>script-hdhomerun-view-search_icon_focus.png</texturefocus>
+                <texturenofocus>script-hdhomerun-view-search_icon.png</texturenofocus>
+            </control>
+
+            <control type="button" id="248">
+                <visible>!Player.HasVideo | !IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr))</visible>
+                <width>256</width>
+                <height>256</height>
+                <label>[B]LIVE TV[/B]</label>
+                <font>font13</font>
+                <align>center</align>
+                <aligny>top</aligny>
+                <textcolor>FFFFFFFF</textcolor>
+                <textoffsety>266</textoffsety>
+                <texturefocus>script-hdhomerun-view-live_tv_icon_focus.png</texturefocus>
+                <texturenofocus>script-hdhomerun-view-live_tv_icon.png</texturenofocus>
+            </control>
+
+            <control type="button" id="247">
+                <width>256</width>
+                <height>256</height>
+                <label>[B]$ADDON[script.hdhomerun.view 32837][/B]</label>
+                <font>font13</font>
+                <align>center</align>
+                <aligny>top</aligny>
+                <textcolor>FFFFFFFF</textcolor>
+                <textoffsety>266</textoffsety>
+                <texturefocus>script-hdhomerun-view-exit_icon_focus.png</texturefocus>
+                <texturenofocus>script-hdhomerun-view-exit_icon.png</texturenofocus>
+            </control>
         </control>
 
         <control type="group" id="240">
-            <visible>True</visible>
-            <animation effect="slide" start="0,0" end="-130,0" time="100">WindowOpen</animation>
-            <animation effect="slide" start="-130,0" end="0,0" time="100">WindowClose</animation>
+            <defaultcontrol>242</defaultcontrol>
 
-            <defaultcontrol>241</defaultcontrol>
+            <posx>665</posx>
+            <posy>700</posy>
 
-            <posx>1920</posx>
-            <posy>0</posy>
-
-            <control type="image">
-                <posx>0</posx>
-                <posy>0</posy>
-                <width>130</width>
-                <height>1080</height>
-                <texture>script-hdhomerun-view-white_square.png</texture>
-                <colordiffuse>CC000000</colordiffuse>
-            </control>
-
-            <control type="button" id="238">
-                <left>1810</left>
+            <control type="grouplist" id="250">
+                <left>0</left>
                 <top>0</top>
-                <width>110</width>
-                <height>1080</height>
-                <label> </label>
-                <font>-</font>
-                <texturefocus>-</texturefocus>
-                <texturenofocus>-</texturenofocus>
-            </control>
+                <height>110</height>
+                <itemgap>50</itemgap>
+                <onup>252</onup>
+                <orientation>horizontal</orientation>
 
-            <control type="group">
-                <left>10</left>
-                <top>100</top>
-                <height>390</height>
-                <control type="button" id="241">
-                    <left>0</left>
-                    <top>0</top>
-                    <width>110</width>
-                    <height>110</height>
-                    <label>31356</label>
-                    <font>-</font>
-                    <texturefocus>script-hdhomerun-view-search_icon_focus.png</texturefocus>
-                    <texturenofocus>script-hdhomerun-view-search_icon.png</texturenofocus>
-                    <onup>245</onup>
-                    <ondown>242</ondown>
-                </control>
                 <control type="button" id="242">
-                    <left>0</left>
-                    <top>140</top>
                     <width>110</width>
                     <height>110</height>
                     <label>13395</label>
                     <font>-</font>
                     <texturefocus>script-hdhomerun-view-video_icon_focus.png</texturefocus>
                     <texturenofocus>script-hdhomerun-view-video_icon.png</texturenofocus>
-                    <onup>241</onup>
-                    <ondown>243</ondown>
                     <onclick>ActivateWindow(OSDVideoSettings)</onclick>
                 </control>
+
                 <control type="button" id="243">
-                    <left>0</left>
-                    <top>280</top>
                     <width>110</width>
                     <height>110</height>
                     <label>13396</label>
                     <font>-</font>
                     <texturefocus>script-hdhomerun-view-audio_icon_focus.png</texturefocus>
                     <texturenofocus>script-hdhomerun-view-audio_icon.png</texturenofocus>
-                    <onup>242</onup>
-                    <ondown>244</ondown>
                     <onclick>ActivateWindow(OSDAudioSettings)</onclick>
                 </control>
-            </control>
 
-            <control type="button" id="244">
-                <left>10</left>
-                <top>760</top>
-                <width>110</width>
-                <height>110</height>
-                <label>13396</label>
-                <font>-</font>
-                <texturefocus>script-hdhomerun-view-volume_up_icon.png</texturefocus>
-                <texturenofocus colordiffuse="FFA0A0A0">script-hdhomerun-view-volume_up_icon.png</texturenofocus>
-                <onup>243</onup>
-                <ondown>245</ondown>
-                <onclick>VolumeUp</onclick>
-            </control>
-            <control type="button" id="245">
-                <left>10</left>
-                <top>900</top>
-                <width>110</width>
-                <height>110</height>
-                <label>13396</label>
-                <font>-</font>
-                <texturefocus>script-hdhomerun-view-volume_down_icon.png</texturefocus>
-                <texturenofocus colordiffuse="FFA0A0A0">script-hdhomerun-view-volume_down_icon.png</texturenofocus>
-                <onup>244</onup>
-                <ondown>241</ondown>
-                <onclick>VolumeDown</onclick>
+                <control type="button" id="245">
+                    <width>110</width>
+                    <height>110</height>
+                    <label>13396</label>
+                    <font>-</font>
+                    <texturefocus>script-hdhomerun-view-volume_down_icon_focus.png</texturefocus>
+                    <texturenofocus>script-hdhomerun-view-volume_down_icon.png</texturenofocus>
+                    <onclick>VolumeDown</onclick>
+                </control>
+
+                <control type="button" id="244">
+                    <width>110</width>
+                    <height>110</height>
+                    <label>13396</label>
+                    <font>-</font>
+                    <texturefocus>script-hdhomerun-view-volume_up_icon_focus.png</texturefocus>
+                    <texturenofocus>script-hdhomerun-view-volume_up_icon.png</texturenofocus>
+                    <onclick>VolumeUp</onclick>
+                </control>
+
             </control>
 
         </control>

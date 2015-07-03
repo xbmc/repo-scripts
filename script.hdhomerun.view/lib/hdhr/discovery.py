@@ -7,7 +7,8 @@ import struct
 import StringIO
 import time
 import base64
-
+import requests
+import errors
 from lib import util
 
 DEVICE_DISCOVERY_PORT = 65001
@@ -25,107 +26,271 @@ DEVICE_ID = 0x02
 LINEUP_URL = 0x27
 STORAGE_URL = 0x28
 DEVICE_AUTH = 0x29
+STORAGE_SERVER_BASE_URL = 0x2A
 
 LINEUP_URL_BASE = 'http://{ip}/lineup.json'
 
+ID_COUNTER = 0
 
-class DiscoveryResponse(object):
-    def __init__(self,packet,address):
-        self.ip, self.port = address
-        self.tags = {}
-        self.valid = self.processPacket(packet)
+def getNextID():
+    global ID_COUNTER
+    ID_COUNTER+=1
+    return ID_COUNTER
+
+class Devices(object):
+    MAX_AGE = 3600
+
+    def __init__(self):
+        self._discoveryTimestamp = time.time()
+        self._storageServers = []
+        self._tunerDevices = {}
+        self._other = []
+
+    def __contains__(self, device):
+        for d in self.allDevices:
+            if d == device: return True
+        return False
+
+    @property
+    def storageServers(self):
+        return self._storageServers
+
+    @property
+    def tunerDevices(self):
+        return self._tunerDevices.values()
+
+    @property
+    def allDevices(self):
+        return self.tunerDevices + self.storageServers + self._other
+
+    def isOld(self):
+        return (time.time() - self._discoveryTimestamp) > self.MAX_AGE
+
+    def tunerDevice(self,ID):
+        return self._tunerDevices.get('ID')
+
+    def defaultTunerDevice(self):
+        #Return device with the most number of channels as default
+        highest = None
+        for d in self._tunerDevices.values():
+            if not highest or highest.channelCount < d.channelCount:
+                highest = d
+        return highest
+
+    def hasTunerDevices(self):
+        return bool(self._tunerDevices)
+
+    def hasStorageServers(self):
+        return bool(self._storageServers)
+
+    def createDevice(self,packet,address):
+        try:
+
+            header = packet[:4]
+            data = packet[4:-4]
+            chksum = packet[-4:]
+
+            self.responseType, packetLength = struct.unpack('>HH',header)
+            if not self.responseType == DISCOVER_RESPONSE:
+                util.DEBUG_LOG('WRONG RESPONSE TYPE')
+                return None
+
+            if packetLength != len(data):
+                util.DEBUG_LOG('BAD PACKET LENGTH')
+                return None
+
+            if chksum != struct.pack('>I',crc32c.cksum(header + data)):
+                util.DEBUG_LOG('BAD CRC')
+                return None
+        except:
+            traceback.print_exc()
+            return None
+
+        dataIO = StringIO.StringIO(data)
+
+        tag, length = struct.unpack('>BB',dataIO.read(2))
+        deviceType = struct.unpack('>I',dataIO.read(length))[0]
+
+        if deviceType == TUNER_DEVICE:
+            return self.processData(TunerDevice(address),dataIO)
+        elif deviceType == STORAGE_SERVER:
+            return self.processData(StorageServer(address),dataIO)
+        else:
+            return self.processData(Device(address),dataIO)
+
+    def processData(self,device,dataIO):
+        while True:
+            header = dataIO.read(2)
+            if not header: return device
+            tag, length = struct.unpack('>BB',header)
+            if tag == DEVICE_ID:
+                device._id = struct.unpack('>I',dataIO.read(length))[0]
+                device.ID = hex(device._id)[2:]
+            elif tag == LINEUP_URL:
+                device.lineUpURL = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
+            elif tag == STORAGE_URL:
+                device._storageURL = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
+            elif tag == DEVICE_AUTH:
+                device._deviceAuth = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
+            elif tag == STORAGE_SERVER_BASE_URL:
+                device._baseURL = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
+            else:
+                dataIO.read(length)
+        return device
+
+    def add(self,packet, address):
+        device = self.createDevice(packet,address)
+
+        if not device or not device.valid:
+            return None
+        elif device in self:
+            return False
+
+        if isinstance(device,TunerDevice):
+            self._tunerDevices[device.ID] = device
+        elif isinstance(device,StorageServer):
+            self._storageServers.append(device)
+        else:
+            self._other.append(device)
+
+        return True
+
+    def getDeviceByIP(self,ip):
+        for d in self.tunerDevices + self.storageServers:
+            if d.ip == ip:
+                return d
+        return None
+
+    def apiAuthID(self):
+        combined = ''
+        ids = []
+        for d in self.tunerDevices:
+            ids.append(d.ID)
+            authID = d.deviceAuth
+            if not authID: continue
+            combined += authID
+
+        if not combined:
+            util.LOG('WARNING: No device auth for any devices!')
+            raise errors.NoDeviceAuthException()
+
+        return base64.standard_b64encode(combined)
+
+class Device(object):
+    typeName = 'Unknown'
+    def __init__(self,address): self.ip, self.port = address
+
+    def __ne__(self,other): return not self.__eq__(other)
+
+    def __str__(self): return self.__repr__()
+
+    def __repr__(self): return '<Device type={0}:ip={1}>'.format(getattr(self,'device','?'),self.ip)
+
+    @property
+    def valid(self): return False
+
+    @property
+    def url(self): return ''
+
+    def display(self): return repr(self)
+
+
+class TunerDevice(Device):
+    typeName = 'TunerDevice'
+
+    def __init__(self,address):
+        Device.__init__(self,address)
         self.channelCount = 0
 
     def __eq__(self,other):
-        if self.responseType != other.responseType: return False
-        if self.device != other.device: return False
-        if self.device == TUNER_DEVICE:
-            return self._id == other._id
-        elif self.device == STORAGE_SERVER:
-            return self.storageURL == other.storageURL
-        return True
-
-    def __ne__(self,other):
-        return not self.__eq__(other)
-
-    def __str__(self):
-        return self.__repr__()
+        if not isinstance(other,TunerDevice): return False
+        return self._id == other._id
 
     def __repr__(self):
-        return '<DiscoveryResponse device={0}:id={1}:url={2}>'.format(getattr(self,'device','?'),getattr(self,'ID','?'),self.url or '?')
+        return '<TunerDevice id={0}:url={1}>'.format(getattr(self,'ID','?'),self.url or '?')
+
+    @property
+    def valid(self):
+        return hasattr(self,'ID')
 
     @property
     def url(self):
-        if self.device == TUNER_DEVICE:
-            url = getattr(self,'lineUpURL',None)
-            if not url:
-                url = LINEUP_URL_BASE.format(ip=self.ip)
-            return url
-        elif self.device == STORAGE_SERVER:
-            return getattr(self,'storageURL','')
+        url = getattr(self,'lineUpURL',None)
+        if not url:
+            url = LINEUP_URL_BASE.format(ip=self.ip)
+        return url
 
     @property
     def deviceAuth(self):
         return getattr(self,'_deviceAuth',None)
 
-    def processPacket(self,packet):
+    def display(self):
         try:
-            header = packet[:4]
-            self.responseType, packetLength = struct.unpack('>HH',header)
-            if not self.responseType == DISCOVER_RESPONSE:
-                util.DEBUG_LOG('WRONG RESPONSE TYPE')
-                return False
-            data = packet[4:-4]
-            chksum = packet[-4:]
-
-            if packetLength != len(data):
-                util.DEBUG_LOG('BAD PACKET LENGTH')
-                return False
-
-            if chksum != struct.pack('>I',crc32c.cksum(header + data)):
-                util.DEBUG_LOG('BAD CRC')
-                return False
+            out = '\nDevice at {ip}:\n    ID: {ID}\n    Type: {dtype}\n    DeviceAuth: {auth}\n    URL: {url}\n    Channels: {chancount}'
+            return out.format(ip=self.ip,dtype=self.typeName,ID=getattr(self,'ID','?'),auth=base64.standard_b64encode(self.deviceAuth),url=self.url,chancount=self.channelCount)
         except:
-            traceback.print_exc()
-            return False
+            util.ERROR('Failed to format {0} info'.format(self.typeName),hide_tb=True)
 
-        self.processData(data)
-        return True
+    def lineUp(self):
+        req = requests.get(self.url)
 
-    def processData(self,data):
-        dataIO = StringIO.StringIO(data)
-        while True:
-            header = dataIO.read(2)
-            if not header: return
-            tag, length = struct.unpack('>BB',header)
-            if tag == DEVICE_TYPE:
-                self.device = struct.unpack('>I',dataIO.read(length))[0]
-            elif tag == DEVICE_ID:
-                self._id = struct.unpack('>I',dataIO.read(length))[0]
-                self.ID = hex(self._id)[2:]
-            elif tag == LINEUP_URL:
-                self.lineUpURL = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
-            elif tag == STORAGE_URL:
-                self.storageURL = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
-            elif tag == DEVICE_AUTH:
-                self._deviceAuth = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
-            else:
-                dataIO.read(length)
+        try:
+            lineUp = req.json()
+            self.channelCount = len(lineUp)
+            return lineUp
+        except:
+            util.ERROR('Failed to parse lineup JSON data. Older device?',hide_tb=True)
+            return None
 
-    def typeName(self):
-        if self.device == TUNER_DEVICE:
-            return 'Tuner'
-        elif self.device == STORAGE_SERVER:
-            return 'Storage Server'
-        return 'Unknown'
+class StorageServer(Device):
+    typeName = 'StorageServer'
+    _ruleSyncURI = 'recording_events.post?sync'
+    _recordingsURI = 'recorded_files.json'
+
+    def __init__(self,address):
+        Device.__init__(self,address)
+        self.ID = getNextID()
+
+    def __eq__(self,other):
+        if not isinstance(other,StorageServer): return False
+        return self._baseURL == other._baseURL
+
+    def __repr__(self):
+        return '<StorageServer url={0}>'.format(self._baseURL or '?')
+
+    @property
+    def valid(self):
+        return hasattr(self,'_baseURL')
+
+    @property
+    def storageURL(self):
+        return getattr(self,'_storageURL','') or self.url(self._recordingsURI)
+
+    def url(self,path):
+        return getattr(self,'_baseURL','') + '/' + path
 
     def display(self):
-        out = '\nDevice at {ip}:\n    ID: {ID}\n    Type: {dtype}\n    DeviceAuth: {auth}\n    URL: {url}\n    Channels: {chancount}'
         try:
-            return out.format(ip=self.ip,dtype=self.typeName(),ID=self.ID,auth=base64.standard_b64encode(self.deviceAuth),url=self.url,chancount=self.channelCount)
+            out = '\nDevice at {ip}:\n    Type: {dtype}\n    URL: {url}'
+            return out.format(ip=self.ip,dtype=self.typeName,url=self._baseURL)
         except:
-            util.ERROR('Failed to format device info',hide_tb=True)
-            return repr(self)
+            util.ERROR('Failed to format {0} info'.format(self.typeName),hide_tb=True)
+
+    def recordings(self):
+        util.DEBUG_LOG('Getting recordings from: {0}'.format(self.storageURL))
+        req = requests.get(self.storageURL)
+
+        try:
+            recordings = req.json()
+            return recordings
+        except:
+            util.ERROR('Failed to parse recordings JSON data.',hide_tb=True)
+            return None
+
+    def syncRules(self):
+        util.DEBUG_LOG('Pinging storage Server: {0}'.format(self._baseURL))
+
+        requests.post(self.url(self._ruleSyncURI))
 
 
 def discover(device=None):
@@ -134,20 +299,22 @@ def discover(device=None):
     sockets = []
     for i in ifaces:
         if not i.broadcast: continue
-        if i.ip.startswith('127.'): continue
+        #if i.ip.startswith('127.'): continue
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.settimeout(0.01) #10ms
         s.bind((i.ip, 0))
         s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         sockets.append((s,i))
-    payload = struct.pack('>BBI',0x01,0x04,0x00000001) #Device Type Filter (tuner)
+    payload = struct.pack('>BBI',0x01,0x04,0xFFFFFFFF) #Device Type Filter (any)
     payload += struct.pack('>BBI',0x02,0x04,0xFFFFFFFF) #Device ID Filter (any)
     header = struct.pack('>HH',0x0002,len(payload))
     data = header + payload
     crc = crc32c.cksum(data)
     packet = data + struct.pack('>I',crc)
     util.DEBUG_LOG('  o-> Broadcast Packet({0})'.format(binascii.hexlify(packet)))
-    responses = []
+
+    devices = Devices()
+
     for attempt in (0,1):
         for s,i in sockets:
             util.DEBUG_LOG('  o-> Broadcasting to {0}: {1}'.format(i.name,i.broadcast))
@@ -162,18 +329,19 @@ def discover(device=None):
             for s,i in sockets:
                 try:
                     message, address = s.recvfrom(8096)
-                    response = DiscoveryResponse(message,address)
-                    if response.valid and (not device or device == response.device) and not response in responses:
-                        responses.append(response)
+
+                    added = devices.add(message,address)
+
+                    if added:
                         util.DEBUG_LOG('<-o   Response Packet[{0}]({1})'.format(i.name,binascii.hexlify(message)))
-                    elif response.valid:
+                    elif added == False:
                         util.DEBUG_LOG('<-o   Response Packet[{0}](Duplicate)'.format(i.name))
-                    else:
+                    elif added == None:
                         util.DEBUG_LOG('<-o   INVALID RESPONSE[{0}]({1})'.format(i.name,binascii.hexlify(message)))
                 except socket.timeout:
                     pass
                 except:
                     traceback.print_exc()
 
-    return responses
+    return devices
 

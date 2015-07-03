@@ -36,11 +36,23 @@ class PlayerStatus(object):
         if len(self.channel.sources) <= self.index: return None
         return self.channel.sources[self.index]
 
-class ChannelPlayer(xbmc.Player):
-    def init(self,owner,lineup,touch_mode=False):
+class HDHRPlayer(xbmc.Player):
+    @property
+    def url(self):
+        return xbmc.getInfoLabel('Player.Filenameandpath') or ''
+
+    @property
+    def time(self):
+        try:
+            return self.getTime()
+        except:
+            pass
+        return 0
+
+    def init(self,owner,devices,touch_mode=False):
         self.status = hasattr(self,'status') and self.status or PlayerStatus() #Keep old if we reset
         self.owner = owner
-        self.lineUp = lineup
+        self.devices = devices
         self.touchMode = touch_mode
 
         return self
@@ -65,16 +77,12 @@ class ChannelPlayer(xbmc.Player):
         source = self.status.nextSource()
         if source:
             util.DEBUG_LOG('Playing from NEXT source: {0}'.format(source.ID))
-            self.play(source.url,self.item,self.touchMode,0)
+            self.play(source.url,self.status.item,self.touchMode,0)
             return True
         else:
             self.status.reset()
             self.owner.onPlayBackFailed()
             return True
-
-    @property
-    def url(self):
-        return xbmc.getInfoLabel('Player.Filenameandpath') or ''
 
     def getArgs(self):
         transcode = TRANSCODE_PROFILES[util.getSetting('transcode',0)]
@@ -96,23 +104,35 @@ class ChannelPlayer(xbmc.Player):
         args = self.getArgs()
         self.play(url + args,item,self.touchMode,0)
 
+    def playRecording(self,rec):
+        li = xbmcgui.ListItem(rec.episodeTitle,rec.seriesTitle,thumbnailImage=rec.icon,path=rec.playURL)
+        li.setInfo('video',{'duration':str(rec.duration/60),'title':rec.episodeTitle,'tvshowtitle':rec.seriesTitle})
+        li.addStreamInfo('video',{'duration':rec.duration})
+        li.setIconImage(rec.icon)
+        self.play(rec.playURL,li,self.touchMode,0)
+
     def isPlayingHDHR(self):
         if not self.isPlaying(): return False
         try:
-            path = xbmc.getInfoLabel('Player.Filenameandpath')
-            #path = self.getVideoInfoTag().getPath() #Doesn't work, occasionally returns ''
-            ip = path.split('://',1)[-1].split('/')[0].split(':')[0]
-            if self.lineUp.getDeviceByIP(ip):
+            ip = self.url.split('://',1)[-1].split('/')[0].split(':')[0]
+            if self.devices.getDeviceByIP(ip):
                 return True
         except:
             util.ERROR()
         return False
 
+    def isPlayingRecording(self):
+        try:
+            if '/play?' in self.url: return True
+        except:
+            util.ERROR()
+        return False
+
+
 class FullsceenVideoInitializer(xbmc.Player):
     def start(self):
         util.DEBUG_LOG('FS video initializer: STARTED')
         ver = util.kodiSimpleVersion()
-        print ver
         if ver and ver < 15:
             util.DEBUG_LOG('FS video initializer: FINISHED (Not needed)')
             return
@@ -128,7 +148,7 @@ class FullsceenVideoInitializer(xbmc.Player):
     def finish(self):
         if self._finished: return
         util.DEBUG_LOG('WORKAROUND: Activating fullscreen')
-        while xbmc.getCondVisibility('Window.IsActive(fullscreenvideo)'):
+        while self.isPlaying():
             xbmc.sleep(100)
         xbmc.sleep(500)
         xbmc.executebuiltin('ActivateWindow(fullscreenvideo)')

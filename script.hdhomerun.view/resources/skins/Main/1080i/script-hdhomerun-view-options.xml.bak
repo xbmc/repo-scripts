@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <defaultcontrol>240</defaultcontrol>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>
+        <control type="button" id="239">
+            <left>0</left>
+            <top>0</top>
+            <width>1810</width>
+            <height>1080</height>
+            <label> </label>
+            <font>-</font>
+            <texturefocus>-</texturefocus>
+            <texturenofocus>-</texturenofocus>
+        </control>
+
+        <control type="group" id="240">
+            <visible>True</visible>
+            <animation effect="slide" start="0,0" end="-130,0" time="100">WindowOpen</animation>
+            <animation effect="slide" start="-130,0" end="0,0" time="100">WindowClose</animation>
+
+            <defaultcontrol>246</defaultcontrol>
+
+            <posx>1920</posx>
+            <posy>0</posy>
+
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>130</width>
+                <height>1080</height>
+                <texture>script-hdhomerun-view-white_square.png</texture>
+                <colordiffuse>CC000000</colordiffuse>
+            </control>
+
+            <control type="button" id="238">
+                <left>1810</left>
+                <top>0</top>
+                <width>110</width>
+                <height>1080</height>
+                <label> </label>
+                <font>-</font>
+                <texturefocus>-</texturefocus>
+                <texturenofocus>-</texturenofocus>
+            </control>
+
+            <control type="grouplist" id="250">
+                <left>10</left>
+                <top>50</top>
+                <height>550</height>
+                <itemgap>30</itemgap>
+                <onup>245</onup>
+                <ondown>244</ondown>
+                <control type="button" id="246">
+                    <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.DVR_ENABLED))</visible>
+                    <width>110</width>
+                    <height>110</height>
+                    <label>13396</label>
+                    <font>-</font>
+                    <texturefocus>script-hdhomerun-view-dvr_icon_focus.png</texturefocus>
+                    <texturenofocus>script-hdhomerun-view-dvr_icon.png</texturenofocus>
+                </control>
+                <control type="button" id="241">
+                    <width>110</width>
+                    <height>110</height>
+                    <label>31356</label>
+                    <font>-</font>
+                    <texturefocus>script-hdhomerun-view-search_icon_focus.png</texturefocus>
+                    <texturenofocus>script-hdhomerun-view-search_icon.png</texturenofocus>
+                </control>
+                <control type="button" id="242">
+                    <width>110</width>
+                    <height>110</height>
+                    <label>13395</label>
+                    <font>-</font>
+                    <texturefocus>script-hdhomerun-view-video_icon_focus.png</texturefocus>
+                    <texturenofocus>script-hdhomerun-view-video_icon.png</texturenofocus>
+                    <onclick>ActivateWindow(OSDVideoSettings)</onclick>
+                </control>
+                <control type="button" id="243">
+                    <width>110</width>
+                    <height>110</height>
+                    <label>13396</label>
+                    <font>-</font>
+                    <texturefocus>script-hdhomerun-view-audio_icon_focus.png</texturefocus>
+                    <texturenofocus>script-hdhomerun-view-audio_icon.png</texturenofocus>
+                    <onclick>ActivateWindow(OSDAudioSettings)</onclick>
+                </control>
+            </control>
+
+            <control type="button" id="244">
+                <left>10</left>
+                <top>760</top>
+                <width>110</width>
+                <height>110</height>
+                <label>13396</label>
+                <font>-</font>
+                <texturefocus>script-hdhomerun-view-volume_up_icon.png</texturefocus>
+                <texturenofocus colordiffuse="FFA0A0A0">script-hdhomerun-view-volume_up_icon.png</texturenofocus>
+                <onup>243</onup>
+                <ondown>245</ondown>
+                <onclick>VolumeUp</onclick>
+            </control>
+            <control type="button" id="245">
+                <left>10</left>
+                <top>900</top>
+                <width>110</width>
+                <height>110</height>
+                <label>13396</label>
+                <font>-</font>
+                <texturefocus>script-hdhomerun-view-volume_down_icon.png</texturefocus>
+                <texturenofocus colordiffuse="FFA0A0A0">script-hdhomerun-view-volume_down_icon.png</texturenofocus>
+                <onup>244</onup>
+                <ondown>241</ondown>
+                <onclick>VolumeDown</onclick>
+            </control>
+
+        </control>
+    </controls>
+</window>

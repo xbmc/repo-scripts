@@ -53,7 +53,10 @@
                 <width>820</width>
                 <height>1080</height>
                 <scrolltime>200</scrolltime>
+                <onup>200</onup>
+                <ondown>200</ondown>
                 <orientation>vertical</orientation>
+                <preloaditems>2</preloaditems>
 
                 <!-- ITEM LAYOUT ########################################## -->
                 <itemlayout height="270">
@@ -118,34 +121,7 @@
                             <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Thumb]</texture>
                             <aspectratio aligny="top">scale</aspectratio>
                         </control>
-                        <control type="image">
-                            <posx>190</posx>
-                            <posy>193</posy>
-                            <width>88</width>
-                            <height>66</height>
-                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Property(next.icon)]</texture>
-                            <aspectratio aligny="top">scale</aspectratio>
-                        </control>
-                        <control type="label">
-                            <posx>298</posx>
-                            <posy>193</posy>
-                            <width>500</width>
-                            <height>30</height>
-                            <font>font10</font>
-                            <align>left</align>
-                            <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Property(next.title)]</label>
-                        </control>
-                        <control type="label">
-                            <posx>298</posx>
-                            <posy>223</posy>
-                            <width>150</width>
-                            <height>30</height>
-                            <font>font10</font>
-                            <align>left</align>
-                            <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Property(next.start)]</label>
-                        </control>
+
                         <control type="textbox">
                             <posx>10</posx>
                             <posy>180</posy>
@@ -176,6 +152,36 @@
                             <textcolor>FFFFFFFF</textcolor>
                             <label>$INFO[ListItem.Property(show.synopsis)]</label>
                         </control>
+
+                        <control type="image">
+                            <posx>190</posx>
+                            <posy>193</posy>
+                            <width>88</width>
+                            <height>66</height>
+                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Property(next.icon)]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>193</posy>
+                            <width>500</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.title)]</label>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>223</posy>
+                            <width>150</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.start)]</label>
+                        </control>
+
                         <control type="image">
                             <posx>180</posx>
                             <posy>180</posy>
@@ -354,34 +360,7 @@
                             <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Thumb]</texture>
                             <aspectratio aligny="top">scale</aspectratio>
                         </control>
-                        <control type="image">
-                            <posx>190</posx>
-                            <posy>193</posy>
-                            <width>88</width>
-                            <height>66</height>
-                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Property(next.icon)]</texture>
-                            <aspectratio aligny="top">scale</aspectratio>
-                        </control>
-                        <control type="label">
-                            <posx>298</posx>
-                            <posy>193</posy>
-                            <width>500</width>
-                            <height>30</height>
-                            <font>font10</font>
-                            <align>left</align>
-                            <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Property(next.title)]</label>
-                        </control>
-                        <control type="label">
-                            <posx>298</posx>
-                            <posy>223</posy>
-                            <width>150</width>
-                            <height>30</height>
-                            <font>font10</font>
-                            <align>left</align>
-                            <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Property(next.start)]</label>
-                        </control>
+
                         <control type="textbox">
                             <posx>10</posx>
                             <posy>180</posy>
@@ -412,6 +391,36 @@
                             <textcolor>FFFFFFFF</textcolor>
                             <label>$INFO[ListItem.Property(show.synopsis)]</label>
                         </control>
+
+                        <control type="image">
+                            <posx>190</posx>
+                            <posy>193</posy>
+                            <width>88</width>
+                            <height>66</height>
+                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Property(next.icon)]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>193</posy>
+                            <width>500</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.title)]</label>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>223</posy>
+                            <width>150</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.start)]</label>
+                        </control>
+
                         <control type="image">
                             <posx>180</posx>
                             <posy>180</posy>
@@ -492,34 +501,7 @@
                             <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Thumb]</texture>
                             <aspectratio aligny="top">scale</aspectratio>
                         </control>
-                        <control type="image">
-                            <posx>190</posx>
-                            <posy>193</posy>
-                            <width>88</width>
-                            <height>66</height>
-                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Property(next.icon)]</texture>
-                            <aspectratio aligny="top">scale</aspectratio>
-                        </control>
-                        <control type="label">
-                            <posx>298</posx>
-                            <posy>193</posy>
-                            <width>500</width>
-                            <height>30</height>
-                            <font>font10</font>
-                            <align>left</align>
-                            <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Property(next.title)]</label>
-                        </control>
-                        <control type="label">
-                            <posx>298</posx>
-                            <posy>223</posy>
-                            <width>150</width>
-                            <height>30</height>
-                            <font>font10</font>
-                            <align>left</align>
-                            <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Property(next.start)]</label>
-                        </control>
+
                         <control type="textbox">
                             <posx>10</posx>
                             <posy>180</posy>
@@ -549,6 +531,34 @@
                             <align>left</align>
                             <textcolor>FFFFFFFF</textcolor>
                             <label>$INFO[ListItem.Property(show.synopsis)]</label>
+                        </control>
+                        <control type="image">
+                            <posx>190</posx>
+                            <posy>193</posy>
+                            <width>88</width>
+                            <height>66</height>
+                            <texture fallback="script-hdhomerun-view-default_image.png">$INFO[ListItem.Property(next.icon)]</texture>
+                            <aspectratio aligny="top">scale</aspectratio>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>193</posy>
+                            <width>500</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.title)]</label>
+                        </control>
+                        <control type="label">
+                            <posx>298</posx>
+                            <posy>223</posy>
+                            <width>150</width>
+                            <height>30</height>
+                            <font>font10</font>
+                            <align>left</align>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>$INFO[ListItem.Property(next.start)]</label>
                         </control>
                         <control type="image">
                             <posx>180</posx>
@@ -667,6 +677,86 @@
         </control>
 
         <control type="group">
+            <description>Seek bar for DVR</description>
+            <visible>[!IsEmpty(Window.Property(show.seekbar)) + Player.HasVideo()] | [!IsEmpty(Window(10000).Property(script.hdhomerun.view.playing.dvr)) + [Player.Paused | Player.Seeking | Player.DisplayAfterSeek | Player.Forwarding | Player.Rewinding]]</visible>
+            <posx>40</posx>
+            <posy>960</posy>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1840</width>
+                <height>60</height>
+                <texture>script-hdhomerun-view-white_square.png</texture>
+                <colordiffuse>DD000000</colordiffuse>
+            </control>
+            <control type="group">
+                <control type="progress">
+                    <posx>120</posx>
+                    <posy>20</posy>
+                    <width>1600</width>
+                    <height>20</height>
+                    <visible>true</visible>
+                    <reveal>false</reveal>
+                    <info>Player.ProgressCache</info>
+                    <texturebg colordiffuse="DD404040">script-hdhomerun-view-white_square.png</texturebg>
+                    <lefttexture>-</lefttexture>
+                    <midtexture colordiffuse="FF606060">script-hdhomerun-view-white_square.png</midtexture>
+                    <righttexture>-</righttexture>
+                    <overlaytexture>-</overlaytexture>
+                </control>
+                <control type="progress">
+                    <posx>120</posx>
+                    <posy>20</posy>
+                    <width>1600</width>
+                    <height>20</height>
+                    <visible>true</visible>
+                    <reveal>false</reveal>
+                    <info>Player.Progress</info>
+                    <texturebg colordiffuse="01000000">script-hdhomerun-view-white_square.png</texturebg>
+                    <lefttexture>-</lefttexture>
+                    <midtexture colordiffuse="9000FF00">script-hdhomerun-view-white_square.png</midtexture>
+                    <righttexture>-</righttexture>
+                    <overlaytexture>-</overlaytexture>
+                </control>
+                <control type="slider" id="251">
+                    <description>Seek Slider</description>
+                    <posx>120</posx>
+                    <posy>0</posy>
+                    <width>1600</width>
+                    <height>60</height>
+                    <action>seek</action>
+                    <texturesliderbar colordiffuse="00FFFFFF">script-hdhomerun-view-white_square.png</texturesliderbar>
+                    <textureslidernib colordiffuse="FF004000">script-hdhomerun-view-white_nib.png</textureslidernib>
+                    <textureslidernibfocus colordiffuse="FF008000">script-hdhomerun-view-white_nib.png</textureslidernibfocus>
+                </control>
+
+                <control type="label">
+                    <posx>20</posx>
+                    <posy>20</posy>
+                    <width>200</width>
+                    <height>20</height>
+                    <font>font10</font>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <label>$INFO[Player.Time(hh:mm:ss)]</label>
+                </control>
+                <control type="label">
+                    <posx>1820</posx>
+                    <posy>20</posy>
+                    <width>200</width>
+                    <height>20</height>
+                    <font>font10</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <label>$INFO[Player.Duration(hh:mm:ss)]</label>
+                </control>
+
+            </control>
+        </control>
+
+        <control type="group">
             <visible>!IsEmpty(Window.Property(loading.progress))</visible>
             <posx>760</posx>
             <posy>340</posy>
@@ -736,5 +826,43 @@
             </control>
 
         </control>
+
+        <control type="group">
+            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
+            <posx>1367</posx>
+            <posy>860</posy>
+
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>503</width>
+                <height>170</height>
+                <texture>script-hdhomerun-view-loading_bg.png</texture>
+                <colordiffuse>80FFFFFF</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="label">
+                <posx>21</posx>
+                <posy>44</posy>
+                <width>307</width>
+                <height>106</height>
+                <font>font13</font>
+                <align>center</align>
+                <aligny>center</aligny>
+                <textcolor>FF000000</textcolor>
+                <label>[B]$INFO[Window(10000).Property(script.hdhomerun.view.busy)][/B]</label>
+            </control>
+            <control type="image">
+                <posx>354</posx>
+                <posy>21</posy>
+                <width>128</width>
+                <height>128</height>
+                <texture>script-hdhomerun-view-loading.gif</texture>
+                <colordiffuse>80FFFFFF</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+
+        </control>
+
     </controls>
 </window>
