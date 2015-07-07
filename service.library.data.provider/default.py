@@ -161,7 +161,7 @@ class Main:
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
 
             # Play an albums
-            elif type == "play_album":
+            elif content_type == "play_album":
                 self.play_album(self.ALBUM)
                 return
 
