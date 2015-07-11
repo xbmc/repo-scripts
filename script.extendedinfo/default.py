@@ -1,18 +1,12 @@
+# -*- coding: utf8 -*-
+
+# Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
+# This program is Free Software see LICENSE file for details
+
 import sys
-import os
 import xbmc
-import xbmcaddon
-# try:
-#     import buggalo
-#     buggalo.GMAIL_RECIPIENT = "phil65@kodi.tv"
-# except:
-#     pass
-ADDON = xbmcaddon.Addon()
-ADDON_VERSION = ADDON.getAddonInfo('version')
-ADDON_NAME = ADDON.getAddonInfo('name')
-ADDON_PATH = ADDON.getAddonInfo('path').decode("utf-8")
-sys.path.append(xbmc.translatePath(os.path.join(ADDON_PATH, 'resources', 'lib')).decode("utf-8"))
-from process import StartInfoActions
+from resources.lib.process import start_info_actions
+from resources.lib.Utils import *
 
 
 class Main:
@@ -20,33 +14,22 @@ class Main:
     def __init__(self):
         xbmc.log("version %s started" % ADDON_VERSION)
         xbmc.executebuiltin('SetProperty(extendedinfo_running,True,home)')
-        # try:
         self._parse_argv()
         if self.infos:
-            StartInfoActions(self.infos, self.params)
-        elif not self.handle:
-            import DialogVideoList
-            dialog = DialogVideoList.DialogVideoList(u'script-%s-VideoList.xml' % ADDON_NAME, ADDON_PATH)
-            dialog.doModal()
+            start_info_actions(self.infos, self.params)
+        else:
+            HOME.setProperty('infodialogs.active', "true")
+            from resources.lib.WindowManager import wm
+            wm.open_video_list()
+            HOME.clearProperty('infodialogs.active')
         xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
-        # except Exception:
-        #     xbmc.executebuiltin('Dialog.Close(busydialog)')
-        #     buggalo.onExceptionRaised()
-        #     xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
 
     def _parse_argv(self):
-        if sys.argv[0] == 'plugin://script.extendedinfo/':
-            args = sys.argv[2][1:].split("&&")
-            self.handle = int(sys.argv[1])
-            self.control = "plugin"
-        else:
-            self.control = None
-            self.handle = None
-            args = sys.argv
+        self.handle = None
         self.infos = []
-        self.params = {"handle": self.handle,
-                       "control": self.control}
-        for arg in args:
+        self.params = {"handle": None,
+                       "control": None}
+        for arg in sys.argv:
             if arg == 'script.extendedinfo':
                 continue
             param = arg.replace('"', '').replace("'", " ")

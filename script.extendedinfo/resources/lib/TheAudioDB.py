@@ -1,35 +1,39 @@
+# -*- coding: utf8 -*-
+
+# Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
+# This program is Free Software see LICENSE file for details
+
 import xbmc
 from Utils import *
-from local_db import CompareAlbumWithLibrary
+from local_db import compare_album_with_library
 
 AUDIO_DB_KEY = '58353d43204d68753987fl'
 BASE_URL = 'http://www.theaudiodb.com/api/v1/json/%s/' % (AUDIO_DB_KEY)
 
 
-def HandleAudioDBAlbumResult(results):
+def handle_audiodb_albums(results):
     albums = []
     if 'album' in results and results['album']:
-        localdescription = 'strDescription' + xbmc.getLanguage(xbmc.ISO_639_1).upper()
+        local_description = 'strDescription' + xbmc.getLanguage(xbmc.ISO_639_1).upper()
         for album in results['album']:
-            if localdescription in album and album[localdescription]:
-                Description = album.get(localdescription, "")
+            if local_description in album and album[local_description]:
+                description = album.get(local_description, "")
             elif 'strDescriptionEN' in album and album['strDescriptionEN']:
-                Description = album['strDescriptionEN']
+                description = album['strDescriptionEN']
             elif 'strDescription' in album and album['strDescription']:
-                Description = album['strDescription']
+                description = album['strDescription']
             else:
-                Description = ""
+                description = ""
             if 'strReview' in album and album['strReview']:
-                Description += "[CR][CR][B]" + xbmc.getLocalizedString(185) + ":[/B][CR][CR]" + album['strReview']
+                description += "[CR][CR][B]" + LANG(185) + ":[/B][CR][CR]" + album['strReview']
             album = {'artist': album['strArtist'],
-                     'Label2': album['strArtist'],
                      'mbid': album['strMusicBrainzID'],
                      'id': album['idAlbum'],
-                     'audiodbid': album['idAlbum'],
-                     'Description': Description,
-                     'Path': "",
-                     'Plot': Description,
-                     'Genre': album['strGenre'],
+                     'audiodb_id': album['idAlbum'],
+                     'Description': description,
+                     'path': "",
+                     'Plot': description,
+                     'genre': album['strGenre'],
                      'Mood': album['strMood'],
                      'Style': album['strStyle'],
                      'Speed': album['strSpeed'],
@@ -48,78 +52,78 @@ def HandleAudioDBAlbumResult(results):
                      'name': album['strAlbum'],
                      'Label': album['strAlbum']}
             albums.append(album)
-        albums = CompareAlbumWithLibrary(albums)
+        albums = compare_album_with_library(albums)
     else:
-        log("Error when handling HandleAudioDBAlbumResult results")
+        log("Error when handling handle_audiodb_albums results")
     return albums
 
 
-def HandleAudioDBTrackResult(results):
+def handle_audiodb_tracks(results):
     tracks = []
     if 'track' in results and results['track']:
         for track in results['track']:
             if 'strMusicVid' in track and track['strMusicVid']:
-                Thumb = "http://i.ytimg.com/vi/" + ExtractYoutubeID(track.get('strMusicVid', '')) + "/0.jpg"
-                Path = ConvertYoutubeURL(track['strMusicVid'])
+                thumb = "http://i.ytimg.com/vi/" + extract_youtube_id(track.get('strMusicVid', '')) + "/0.jpg"
+                path = convert_youtube_url(track['strMusicVid'])
             else:
-                Thumb = ""
-                Path = ""
+                thumb = ""
+                path = ""
             track = {'Track': track['strTrack'],
                      'Artist': track['strArtist'],
                      'mbid': track['strMusicBrainzID'],
                      'Album': track['strAlbum'],
-                     'Thumb': Thumb,
-                     'Path': Path,
+                     'thumb': thumb,
+                     'path': path,
                      'Label': track['strTrack']}
             tracks.append(track)
     else:
-        log("Error when handling HandleAudioDBTrackResult results")
+        log("Error when handling handle_audiodb_tracks results")
         prettyprint(results)
     return tracks
 
 
-def HandleAudioDBMusicVideoResult(results):
+def handle_audiodb_musicvideos(results):
     mvids = []
     if 'mvids' in results and results['mvids']:
         for mvid in results['mvids']:
             mvid = {'Track': mvid['strTrack'],
                     'Description': mvid['strDescriptionEN'],
                     'id': mvid['idTrack'],
-                    'Thumb': "http://i.ytimg.com/vi/" + ExtractYoutubeID(mvid.get('strMusicVid', '')) + "/0.jpg",
-                    'Path': ConvertYoutubeURL(mvid['strMusicVid']),
+                    'thumb': "http://i.ytimg.com/vi/" + extract_youtube_id(mvid.get('strMusicVid', '')) + "/0.jpg",
+                    'path': convert_youtube_url(mvid['strMusicVid']),
                     'Label': mvid['strTrack']}
             mvids.append(mvid)
     else:
-        log("Error when handling HandleAudioDBMusicVideoResult results")
+        log("Error when handling handle_audiodb_musicvideos results")
     return mvids
 
 
-def GetExtendedAudioDBInfo(results):
+def extended_artist_info(results):
     artists = []
     if 'artists' in results and results['artists']:
         for artist in results['artists']:
-            localbio = 'strBiography' + ADDON.getSetting("LanguageID").upper()
-            if localbio in artist and artist[localbio]:
-                Description = fetch(artist, localbio)
+            local_bio = 'strBiography' + SETTING("LanguageID").upper()
+            if local_bio in artist and artist[local_bio]:
+                description = fetch(artist, local_bio)
             elif 'strBiographyEN' in artist and artist['strBiographyEN']:
-                Description = fetch(artist, 'strBiographyEN')
+                description = fetch(artist, 'strBiographyEN')
             elif 'strBiography' in artist and artist['strBiography']:
-                Description = fetch(artist, 'strBiography')
+                description = fetch(artist, 'strBiography')
             else:
-                Description = ""
+                description = ""
             if 'strArtistBanner' in artist and artist['strArtistBanner']:
                 banner = artist['strArtistBanner']
             else:
                 banner = ""
             if 'strReview' in artist and artist['strReview']:
-                Description += "[CR]" + fetch(artist, 'strReview')
+                description += "[CR]" + fetch(artist, 'strReview')
             artist = {'artist': fetch(artist, 'strArtist'),
                       'mbid': fetch(artist, 'strMusicBrainzID'),
                       'Banner': banner,
                       'Logo': fetch(artist, 'strArtistLogo'),
-                      'Fanart': fetch(artist, 'strArtistFanart'),
-                      'Fanart2': fetch(artist, 'strArtistFanart2'),
-                      'Fanart3': fetch(artist, 'strArtistFanart3'),
+                      'fanart': fetch(artist, 'strArtistFanart'),
+                      'fanart2': fetch(artist, 'strArtistFanart2'),
+                      'fanart3': fetch(artist, 'strArtistFanart3'),
                       'Born': fetch(artist, 'intBornYear'),
                       'Formed': fetch(artist, 'intFormedYear'),
                       'Died': fetch(artist, 'intDiedYear'),
@@ -137,68 +141,68 @@ def GetExtendedAudioDBInfo(results):
                       'Facebook': fetch(artist, 'strFacebook'),
                       'LastFMChart': fetch(artist, 'strLastFMChart'),
                       'Gender': fetch(artist, 'strGender'),
-                      'audiodbid': fetch(artist, 'idArtist'),
-                      'Description': Description,
-                      'Plot': Description,
-                      'Path': "",
-                      'Genre': fetch(artist, 'strGenre'),
+                      'audiodb_id': fetch(artist, 'idArtist'),
+                      'Description': description,
+                      'Plot': description,
+                      'path': "",
+                      'genre': fetch(artist, 'strGenre'),
                       'Style': fetch(artist, 'strStyle'),
-                      'Thumb': fetch(artist, 'strArtistThumb'),
+                      'thumb': fetch(artist, 'strArtistThumb'),
                       'Art(Thumb)': fetch(artist, 'strArtistThumb'),
                       'Members': fetch(artist, 'intMembers')}
             artists.append(artist)
     else:
-        log("Error when handling GetExtendedAudioDBInfo results")
+        log("Error when handling extended_artist_info results")
     if artists:
         return artists[0]
     else:
         return {}
 
 
-def GetDiscography(search_string):
-    url = 'searchalbum.php?s=%s' % (url_quote(search_string))
-    results = Get_JSON_response(BASE_URL + url)
-    return HandleAudioDBAlbumResult(results)
+def get_artist_discography(search_str):
+    url = 'searchalbum.php?s=%s' % (url_quote(search_str))
+    results = get_JSON_response(url=BASE_URL + url, folder="TheAudioDB")
+    return handle_audiodb_albums(results)
 
 
-def GetArtistDetails(search_string):
-    url = 'search.php?s=%s' % (url_quote(search_string))
-    results = Get_JSON_response(BASE_URL + url)
-    return GetExtendedAudioDBInfo(results)
+def get_artist_details(search_str):
+    url = 'search.php?s=%s' % (url_quote(search_str))
+    results = get_JSON_response(url=BASE_URL + url, folder="TheAudioDB")
+    return extended_artist_info(results)
 
 
-def GetMostLovedTracks(search_string="", mbid=""):
+def get_most_loved_tracks(search_str="", mbid=""):
     if mbid:
-        pass
+        url = 'track-top10-mb.php?s=%s' % (mbid)
     else:
-        url = 'track-top10.php?s=%s' % (url_quote(search_string))
+        url = 'track-top10.php?s=%s' % (url_quote(search_str))
     log("GetMostLoveTracks URL:" + url)
-    results = Get_JSON_response(BASE_URL + url)
-    return HandleAudioDBTrackResult(results)
+    results = get_JSON_response(url=BASE_URL + url, folder="TheAudioDB")
+    return handle_audiodb_tracks(results)
 
 
-def GetAlbumDetails(audiodbid="", mbid=""):
-    if audiodbid:
-        url = 'album.php?m=%s' % (audiodbid)
+def get_album_details(audiodb_id="", mbid=""):
+    if audiodb_id:
+        url = 'album.php?m=%s' % (audiodb_id)
     elif mbid:
         url = 'album-mb.php?i=%s' % (mbid)
-    results = Get_JSON_response(BASE_URL + url)
-    return HandleAudioDBAlbumResult(results)[0]
+    results = get_JSON_response(url=BASE_URL + url, folder="TheAudioDB")
+    return handle_audiodb_albums(results)[0]
 
 
-def GetMusicVideos(audiodbid):
-    if audiodbid:
-        url = 'mvid.php?i=%s' % (audiodbid)
-        results = Get_JSON_response(BASE_URL + url)
-        return HandleAudioDBMusicVideoResult(results)
+def get_musicvideos(audiodb_id):
+    if audiodb_id:
+        url = 'mvid.php?i=%s' % (audiodb_id)
+        results = get_JSON_response(url=BASE_URL + url, folder="TheAudioDB")
+        return handle_audiodb_musicvideos(results)
     else:
         return []
 
 
-def GetTrackDetails(audiodbid):
-    if audiodbid:
-        url = 'track.php?m=%s' % (audiodbid)
-        results = Get_JSON_response(BASE_URL + url)
-        return HandleAudioDBTrackResult(results)
+def get_track_details(audiodb_id):
+    if audiodb_id:
+        url = 'track.php?m=%s' % (audiodb_id)
+        results = get_JSON_response(url=BASE_URL + url, folder="TheAudioDB")
+        return handle_audiodb_tracks(results)
     else:
         return []

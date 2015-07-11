@@ -1,78 +1,82 @@
+# -*- coding: utf8 -*-
+
+# Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
+# This program is Free Software see LICENSE file for details
+
 import re
 import random
-import sys
 import urllib
 import xbmc
 from Utils import *
 import datetime
-import simplejson
 
 # TVRAGE_KEY = 'VBp9BuIr5iOiBeWCFRMG'
 BANDSINTOWN_KEY = 'xbmc_open_source_media_center'
 
 
-def GetXKCDInfo():
+def get_xkcd_images():
     now = datetime.datetime.now()
-    filename = "xkcd" + str(now.month) + "x" + str(now.day) + "x" + str(now.year)
+    filename = "xkcd%ix%ix%i" % (now.month, now.day, now.year)
     path = xbmc.translatePath(ADDON_DATA_PATH + "/" + filename + ".txt")
     if xbmcvfs.exists(path):
-        results = read_from_file(path)
-        return results
+        return read_from_file(path)
     else:
         items = []
         for i in range(0, 10):
             try:
                 base_url = 'http://xkcd.com/'
                 url = '%i/info.0.json' % random.randrange(1, 1190)
-                results = Get_JSON_response(base_url + url, 9999)
+                results = get_JSON_response(base_url + url, 9999, folder="XKCD")
                 item = {'Image': results["img"],
-                        'Thumb': results["img"],
-                        'Path': "plugin://script.extendedinfo?info=setfocus",
-                        'Poster': results["img"],
-                        'Title': results["title"],
+                        'thumb': results["img"],
+                        'path': "plugin://script.extendedinfo?info=setfocus",
+                        'poster': results["img"],
+                        'title': results["title"],
                         'Description': results["alt"]}
                 items.append(item)
             except:
                 log("Error when setting XKCD info")
-        save_to_file(items, filename, ADDON_DATA_PATH)
+        save_to_file(content=items,
+                     filename=filename,
+                     path=ADDON_DATA_PATH)
         return items
 
 
-def GetCandHInfo():
+def get_cyanide_images():
     now = datetime.datetime.now()
-    filename = "cyanide" + str(now.month) + "x" + str(now.day) + "x" + str(now.year)
+    filename = "cyanide%ix%ix%i" % (now.month, now.day, now.year)
     path = xbmc.translatePath(ADDON_DATA_PATH + "/" + filename + ".txt")
     if xbmcvfs.exists(path):
-        results = read_from_file(path)
-        return results
+        return read_from_file(path)
     else:
         items = []
         for i in range(1, 10):
             url = r'http://www.explosm.net/comics/%i/' % random.randrange(1, 3868)
-            response = GetStringFromUrl(url)
+            response = get_http(url)
             if response:
                 keyword = re.search("<meta property=\"og:image\".*?content=\"([^\"]*)\"", response).group(1)
                 url = re.search("<meta property=\"og:url\".*?content=\"([^\"]*)\"", response).group(1)
                 newitem = {'Image': keyword,
-                           'Thumb': keyword,
-                           'Path': "plugin://script.extendedinfo?info=setfocus",
-                           'Poster': keyword,
-                           'Title': url}
+                           'thumb': keyword,
+                           'path': "plugin://script.extendedinfo?info=setfocus",
+                           'poster': keyword,
+                           'title': url}
                 items.append(newitem)
-        save_to_file(items, filename, ADDON_DATA_PATH)
+        save_to_file(content=items,
+                     filename=filename,
+                     path=ADDON_DATA_PATH)
         return items
 
 
-def GetDailyBabes(single=False):
+def get_babe_images(single=False):
     now = datetime.datetime.now()
     if single is True:
-        filename = "babe" + str(now.month) + "x" + str(now.day) + "x" + str(now.year)
+        filename = "babe%ix%ix%i" % (now.month, now.day, now.year)
     else:
-        filename = "babes" + str(now.month) + "x" + str(now.day) + "x" + str(now.year)
-    path = xbmc.translatePath(ADDON_DATA_PATH + "/" + filename + ".txt")
+        filename = "babes%ix%ix%i" % (now.month, now.day, now.year)
+    path = xbmc.translatePath(os.path.join(ADDON_DATA_PATH, "Babes", filename + ".txt"))
     if xbmcvfs.exists(path):
-        results = read_from_file(path)
-        return results
+        return read_from_file(path)
     else:
         items = []
         for i in range(1, 10):
@@ -85,15 +89,18 @@ def GetDailyBabes(single=False):
                 day = random.randrange(1, 28)
                 image = random.randrange(1, 8)
             url = 'http://img1.demo.jsxbabeotd.dellsports.com/static/models/2014/%s/%s/%i.jpg' % (str(month).zfill(2), str(day).zfill(2), image)
-            newitem = {'Thumb': url,
-                       'Path': "plugin://script.extendedinfo?info=setfocus",
-                       'Title': "2014/" + str(month) + "/" + str(day) + " (Nr. " + str(image) + ")"}
+            newitem = {'thumb': url,
+                       'path': "plugin://script.extendedinfo?info=setfocus",
+                       'title': "2014/%i/%i (Nr. %i)" % (month, day, image)
+                       }
             items.append(newitem)
-        save_to_file(items, filename, ADDON_DATA_PATH)
+        save_to_file(content=items,
+                     filename=filename,
+                     path=os.path.join(ADDON_DATA_PATH, "Babes"))
         return items
 
 
-def HandleBandsInTownResult(results):
+def handle_bandsintown_events(results):
     events = []
     for event in results:
         try:
@@ -114,31 +121,32 @@ def HandleBandsInTownResult(results):
                      'artists': artists}
             events.append(event)
         except Exception as e:
-            log("Exception in HandleBandsInTownResult")
+            log("Exception in handle_bandsintown_events")
             log(e)
             prettyprint(event)
     return events
 
 
-def GetArtistNearEvents(Artists):  # not possible with api 2.0
-    ArtistStr = ''
+def get_artist_near_events(artists):  # not possible with api 2.0
+    artist_str = ''
     count = 0
-    for art in Artists:
+    for art in artists:
         artist = art['artist']
         try:
             artist = urllib.quote(artist)
         except:
             artist = urllib.quote(artist.encode("utf-8"))
         if count < 49:
-            if len(ArtistStr) > 0:
-                ArtistStr = ArtistStr + '&'
-            ArtistStr = ArtistStr + 'artists[]=' + artist
+            if len(artist_str) > 0:
+                artist_str = artist_str + '&'
+            artist_str = artist_str + 'artists[]=' + artist
             count += 1
     base_url = 'http://api.bandsintown.com/events/search?format=json&location=use_geoip&radius=50&per_page=100&api_version=2.0'
-    url = '&%sapp_id=%s' % (ArtistStr, BANDSINTOWN_KEY)
-    results = Get_JSON_response(base_url + url)
-    return HandleBandsInTownResult(results)
-    if False:
-        log("GetArtistNearEvents: error when getting artist data from " + url)
+    url = '&%sapp_id=%s' % (artist_str, BANDSINTOWN_KEY)
+    results = get_JSON_response(base_url + url, folder="BandsInTown")
+    if results:
+        return handle_bandsintown_events(results)
+    else:
+        log("get_artist_near_events: Could not get data from " + url)
         log(results)
         return []

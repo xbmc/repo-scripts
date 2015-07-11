@@ -1,3 +1,47 @@
+v3.0.0
+- API CHANGE: "imdbid" param for script call is now "imdb_id"
+- new add-on extension point: Video plugin
+- added 24 movie / TV show listings from different content providers to plugin
+- added T9 Live Search for TMDB browser (also works via remote)
+- added Google AutoCompletions for TMDB browser search
+- added script call for Google AutoCompletions
+- added script calls for TMDB starred/rated movies and TV shows
+- added genre label for tvshows
+- added context menu entry for posters / backdrops (allows using them as local artwork)
+- added local-check for Trakt and RT movie lists
+- added button id 10 to play trailer for movie info dialog
+- added genre, country and plot InfoLabels for TMDB movies
+- added local check for tvshows
+- added browsing tvshow credits (via selectdialog)
+- added infodialogs.active property for home
+- added certification for tvshows
+- added date label to episodes
+- added ability to download youtube / trailer videos via context menu
+- added option to override onback behaviour by skinners
+- added additional second list layout for TMDB Browser
+- added option to force native dialog layouts
+- added ability to remove single filters in browser dialog
+- fixed onclick for Trakt calendar items
+- fixed limit param for some script calls
+- fixed biography dialog for actors
+- fixed RT json parsing in case premiered is not available
+- fixed MovieDB TV show favourites processing
+- fixed similarlocal call
+- fixed maps.browser call
+- fixed onclick for Trakt calendar items
+- fixed character InfoLabel for tvshow roles
+- filter out duplicates for crew roles (and merge job strings)
+- put cache files into subdirectories
+- improved dialog open/close behaviour
+- higher image resolution for episode stills
+- reworked settings
+- open tvshow in library when available (depends on skin setting)
+- merge duplicates for some actor / crew lists
+- some visual tweaks for infodialogs
+- localization
+- Code cleanup
+- lot more stuff I forgot
+
 v2.0.10
 - fixed tv show lookup with year in brackets attached to lookup string
 - fixed "Premiered" property for trakt calls
@@ -11,17 +55,17 @@ v2.0.9
 - fixed Trakt ratings (0-10 instead of 0-1)
 - fixed Trakt TvShow Widget Click Action
 - fixed busydialog for extendedactorinfo call by name when several actors found
-- fixed a localization label
+- localization
 
 v2.0.8
-- adjust youtube user videos to API V3
-- fix c & h webcomics
-- fix for actor info call by name
+- adjusted youtube user videos to API V3
+- fixed c & h webcomics
+- fixed actor info call by name
 - adjust Trakt to API v2
-- localization
 - skip dialog for writermovies / directormovies when called from skin
 - show age of death instead of actual age for dead persons
 - code cosmetics, small bugfixes
+- localization
 
 v2.0.7
 - added RateMedia call
@@ -29,17 +73,17 @@ v2.0.7
 - fix specials episodes
 - fix for case when no data available
 - fix for filter window page change logic
-- localization
 - updated C & H URL range to include latest images
 - show list title in filter window
 - instantly show busydialog when using extendedactorinfo
 - fix onclick for tvshow infodialog calls
 - code cleanup, small bugfixes
+- localization
 
 v2.0.6
 - fixes concerning plugin handling
 - new look for movie set part from movie info dialog
-- fixes for movie lists (also for removing / refreshing list items)
+- fixes for movie lists (also for removing / refreshing listitems)
 - some more fixes for filter window
 - fixed 0.0 rating (not allowed)
 - context menu fixes
@@ -87,7 +131,7 @@ v2.0.1
 - repo release version
 
 v2.0.0
-- Standalone part: MovieDB Browser, extended Info dialogs for movies / TV /seasons / episodes /actors
+- Standalone part: MovieDB Browser, extended Info dialogs for movies / TV /seasons / episodes / actors
 - localization
 - too much to count
 

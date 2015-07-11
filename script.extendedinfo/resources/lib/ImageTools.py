@@ -1,3 +1,8 @@
+# -*- coding: utf8 -*-
+
+# Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
+# This program is Free Software see LICENSE file for details
+
 import urllib
 import xbmc
 import xbmcvfs
@@ -6,20 +11,21 @@ from Utils import *
 from PIL import Image, ImageFilter
 
 THUMBS_CACHE_PATH = xbmc.translatePath("special://profile/Thumbnails/Video")
+ADDON_DATA_PATH_IMAGES = os.path.join(ADDON_DATA_PATH, "images")
 
 
-def Filter_Image(filterimage, radius):
-    if not xbmcvfs.exists(ADDON_DATA_PATH):
-        xbmcvfs.mkdir(ADDON_DATA_PATH)
-    filterimage = xbmc.translatePath(urllib.unquote(filterimage.encode("utf-8"))).replace("image://", "")
-    if filterimage.endswith("/"):
-        filterimage = filterimage[:-1]
-    cachedthumb = xbmc.getCacheThumbName(filterimage)
+def filter_image(input_img, radius):
+    if not xbmcvfs.exists(ADDON_DATA_PATH_IMAGES):
+        xbmcvfs.mkdir(ADDON_DATA_PATH_IMAGES)
+    input_img = xbmc.translatePath(urllib.unquote(input_img.encode("utf-8"))).replace("image://", "")
+    if input_img.endswith("/"):
+        input_img = input_img[:-1]
+    cachedthumb = xbmc.getCacheThumbName(input_img)
     filename = "%s-radius_%i.png" % (cachedthumb, radius)
-    targetfile = os.path.join(ADDON_DATA_PATH, filename)
+    targetfile = os.path.join(ADDON_DATA_PATH_IMAGES, filename)
     xbmc_vid_cache_file = os.path.join("special://profile/Thumbnails/Video", cachedthumb[0], cachedthumb)
     xbmc_cache_file = os.path.join("special://profile/Thumbnails", cachedthumb[0], cachedthumb[:-4] + ".jpg")
-    if filterimage == "":
+    if input_img == "":
         return "", ""
     if not xbmcvfs.exists(targetfile):
         img = None
@@ -34,11 +40,11 @@ def Filter_Image(filterimage, radius):
                     img = Image.open(xbmc.translatePath(xbmc_vid_cache_file))
                     break
                 else:
-                    xbmcvfs.copy(unicode(filterimage, 'utf-8', errors='ignore'), targetfile)
+                    xbmcvfs.copy(unicode(input_img, 'utf-8', errors='ignore'), targetfile)
                     img = Image.open(targetfile)
                     break
             except:
-                log("Could not get image for %s (try %i)" % (filterimage, i))
+                log("Could not get image for %s (try %i)" % (input_img, i))
                 xbmc.sleep(500)
         if not img:
             return "", ""
@@ -50,7 +56,7 @@ def Filter_Image(filterimage, radius):
     else:
         log("blurred img already created: " + targetfile)
         img = Image.open(targetfile)
-    imagecolor = Get_Colors(img)
+    imagecolor = get_colors(img)
     return targetfile, imagecolor
 
 
@@ -70,7 +76,7 @@ def get_cached_thumb(filename):
     return thumbpath
 
 
-def Get_Colors(img):
+def get_colors(img):
     width, height = img.size
     try:
         pixels = img.load()
@@ -112,7 +118,7 @@ def Get_Colors(img):
     return imagecolor
 
 
-class Filter_Image_Thread(threading.Thread):
+class FilterImageThread(threading.Thread):
 
     def __init__(self, image="", radius=25):
         threading.Thread.__init__(self)
@@ -121,7 +127,7 @@ class Filter_Image_Thread(threading.Thread):
 
     def run(self):
         try:
-            self.image, self.imagecolor = Filter_Image(self.filterimage, self.radius)
+            self.image, self.imagecolor = filter_image(self.filterimage, self.radius)
         except:
             self.image = ""
             self.imagecolor = ""
