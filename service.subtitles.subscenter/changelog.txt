@@ -1,3 +1,6 @@
+3.3.1 - by CaTz (11/07/2015)
+- Bug fix, Handle titles that contains "." properly.
+
 3.3.0 - by CaTz 08/11/2014
 - Bug fix, add slash or backslash at the end of path (fix xbmcvfs.exists in Helix)
 - Add support for preferred language in Helix

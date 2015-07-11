@@ -33,7 +33,7 @@ __temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp', '')), 'u
 cache = StorageServer.StorageServer(__scriptname__, int(24 * 364 / 2))  # 6 months
 regexHelper = re.compile('\W+', re.UNICODE)
 
-#===============================================================================
+# ===============================================================================
 # Private utility functions
 #===============================================================================
 def normalizeString(str):
@@ -43,9 +43,26 @@ def normalizeString(str):
 
 
 def clean_title(item):
-    item["title"] = unicode(os.path.splitext(item["title"])[0], "utf-8")
-    item["tvshow"] = unicode(os.path.splitext(item["tvshow"])[0], "utf-8")
+    title = os.path.splitext(item["title"])
+    tvshow = os.path.splitext(item["tvshow"])
+    if len(title) > 1:
+        if re.match(r'^\.[a-z]{2,4}$', title[1], re.IGNORECASE):
+            item["title"] = title[0]
+        else:
+            item["title"] = ''.join(title)
+    else:
+        item["title"] = title[0]
 
+    if len(tvshow) > 1:
+        if re.match(r'^\.[a-z]{2,4}$', tvshow[1], re.IGNORECASE):
+            item["tvshow"] = tvshow[0]
+        else:
+            item["tvshow"] = ''.join(tvshow)
+    else:
+        item["tvshow"] = tvshow[0]
+
+    item["title"] = unicode(item["title"], "utf-8")
+    item["tvshow"] = unicode(item["tvshow"], "utf-8")
     # Removes country identifier at the end
     item["title"] = re.sub(r'\([^\)]+\)\W*$', '', item["title"])
     item["tvshow"] = re.sub(r'\([^\)]+\)\W*$', '', item["tvshow"])
