@@ -1,3 +1,6 @@
+4.3.3 - by CaTz (11/07/2015)
+- Bug fix, Handle titles that contains "." properly.
+
 4.3.2 - by CaTz 11/01/2015
 - changed URL from hebsubs.com-> ktuvit.com
 

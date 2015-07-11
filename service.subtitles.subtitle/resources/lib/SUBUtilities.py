@@ -43,9 +43,26 @@ def normalizeString(str):
 
 
 def clean_title(item):
-    item["title"] = unicode(os.path.splitext(item["title"])[0], "utf-8")
-    item["tvshow"] = unicode(os.path.splitext(item["tvshow"])[0], "utf-8")
+    title = os.path.splitext(item["title"])
+    tvshow = os.path.splitext(item["tvshow"])
+    if len(title) > 1:
+        if re.match(r'^\.[a-z]{2,4}$', title[1], re.IGNORECASE):
+            item["title"] = title[0]
+        else:
+            item["title"] = ''.join(title)
+    else:
+        item["title"] = title[0]
 
+    if len(tvshow) > 1:
+        if re.match(r'^\.[a-z]{2,4}$', tvshow[1], re.IGNORECASE):
+            item["tvshow"] = tvshow[0]
+        else:
+            item["tvshow"] = ''.join(tvshow)
+    else:
+        item["tvshow"] = tvshow[0]
+
+    item["title"] = unicode(item["title"], "utf-8")
+    item["tvshow"] = unicode(item["tvshow"], "utf-8")
     # Removes country identifier at the end
     item["title"] = re.sub(r'\([^\)]+\)\W*$', '', item["title"])
     item["tvshow"] = re.sub(r'\([^\)]+\)\W*$', '', item["tvshow"])
@@ -358,8 +375,8 @@ class SubtitleHelper:
         return round(rating, 1)
 
     def download(self, id, zip_filename):
-        ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
-        ## pass that to XBMC to copy and activate
+        # # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
+        # # pass that to XBMC to copy and activate
         if xbmcvfs.exists(__temp__):
             shutil.rmtree(__temp__)
         xbmcvfs.mkdirs(__temp__)
@@ -378,7 +395,7 @@ class SubtitleHelper:
     def _is_logged_in(self, url):
         content = self.urlHandler.request(url)
         if content is not None and (
-            re.search(r'friends\.php', content) or not re.search(r'login\.php', content)):  #check if logged in
+                    re.search(r'friends\.php', content) or not re.search(r'login\.php', content)):  # check if logged in
             return content
         elif self.login():
             return self.urlHandler.request(url)
