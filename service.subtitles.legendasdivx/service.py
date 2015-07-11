@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.2.1
+# Service LegendasDivx.com version 0.2.3
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -46,7 +46,7 @@ __descon__ = __addon__.getSetting( 'DESC' )
 __search__ = __addon__.getSetting( 'SEARCH' )
 debug = __addon__.getSetting( 'DEBUG' )
 
-main_url = "http://www.legendasdivx.com/"
+main_url = "https://www.legendasdivx.com/"
 debug_pretext = "LegendasDivx"
 #SEARCH_PAGE_URL = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
 
@@ -115,9 +115,9 @@ def urlpost(query, lang, page):
     postdata = urllib.urlencode({'query' : query, 'form_cat' : lang})
     cj = cookielib.CookieJar()
     my_opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-    my_opener.addheaders = [('Referer', 'http://www.legendasdivx.com/modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page))]
+    my_opener.addheaders = [('Referer', main_url + 'modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page))]
     urllib2.install_opener(my_opener)
-    request = urllib2.Request('http://www.legendasdivx.com/modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page), postdata)
+    request = urllib2.Request(main_url + 'modules.php?name=Downloads&file=jz&d_op=search&op=_jz00&page='+ str(page), postdata)
     log(u"POST url page: %s" % page)
     log(u"POST url data: %s" % postdata)
     try:
@@ -405,11 +405,11 @@ def Download(id, filename):
     login_postdata = urllib.urlencode({'username' : username, 'user_password' : password, 'op' : 'login'})
     cj = cookielib.CookieJar()
     my_opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-    my_opener.addheaders = [('Referer', 'http://www.legendasdivx.com/modules.php?name=Your_Account')]
+    my_opener.addheaders = [('Referer', main_url + 'modules.php?name=Your_Account')]
     urllib2.install_opener(my_opener)
-    request = urllib2.Request('http://www.legendasdivx.com/modules.php?name=Your_Account', login_postdata)
+    request = urllib2.Request(main_url + 'modules.php?name=Your_Account', login_postdata)
     response = urllib2.urlopen(request).read()
-    content = my_opener.open('http://www.legendasdivx.com/modules.php?name=Downloads&d_op=getit&lid=' + id + '&username=' + username)
+    content = my_opener.open(main_url + 'modules.php?name=Downloads&d_op=getit&lid=' + id + '&username=' + username)
     content = content.read()
     #### If user is not registered or User\Pass is misspelled it will generate an error message and break the script execution!
     if 'Apenas Disponvel para utilizadores registados.' in content.decode('utf8', 'ignore'):
