@@ -49,10 +49,10 @@ class RecordingRule(dict):
 
     def modify(self):
         url = MODIFY_RULE_URL.format(
-            deviceAuth=self['STORAGE_SERVER']._devices.apiAuthID(),
+            deviceAuth=urllib.quote(self['STORAGE_SERVER']._devices.apiAuthID(), ''),
             cmd='add',
             seriesID=self.seriesID,
-            title=urllib.quote(self.title.encode('utf-8')),
+            title=urllib.quote(self.title.encode('utf-8'), ''),
             recentOnly=self.get('RecentOnly') or 0,
             priority=self.priority
         )
@@ -68,7 +68,7 @@ class RecordingRule(dict):
 
     def delete(self):
         url = MODIFY_RULE_URL.format(
-            deviceAuth=self['STORAGE_SERVER']._devices.apiAuthID(),
+            deviceAuth=urllib.quote(self['STORAGE_SERVER']._devices.apiAuthID(), ''),
             cmd='delete',
             seriesID=self.seriesID,
             title='',
@@ -189,7 +189,7 @@ class StorageServers(object):
             self.getRecordingsFailed = True
 
     def _getRules(self):
-        url = RECORDING_RULES_URL.format(self._devices.apiAuthID())
+        url = RECORDING_RULES_URL.format(urllib.quote(self._devices.apiAuthID(), ''))
         util.DEBUG_LOG('Getting recording rules: {0}'.format(url))
         #req = requests.get(url,headers={'Cache-Control':'no-cache'})
         req = requests.get(url)
@@ -232,7 +232,7 @@ class StorageServers(object):
 
     def hideSeries(self,series):
         try:
-            url = SUGGEST_URL.format(deviceAuth=self._devices.apiAuthID(),command=series.hidden and 'unhide' or 'hide',seriesID=series.ID)
+            url = SUGGEST_URL.format(deviceAuth=urllib.quote(self._devices.apiAuthID(), ''),command=series.hidden and 'unhide' or 'hide',seriesID=series.ID)
             util.DEBUG_LOG('Series hide URL: {0}'.format(url))
             req = requests.get(url)
 

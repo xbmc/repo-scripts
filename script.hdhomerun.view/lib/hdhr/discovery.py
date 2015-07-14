@@ -41,10 +41,62 @@ class Devices(object):
     MAX_AGE = 3600
 
     def __init__(self):
+        self.reDiscover()
+
+    def reDiscover(self):
         self._discoveryTimestamp = time.time()
         self._storageServers = []
         self._tunerDevices = {}
         self._other = []
+        self.discover()
+
+    def discover(self, device=None):
+        import netif
+        ifaces = netif.getInterfaces()
+        sockets = []
+        for i in ifaces:
+            if not i.broadcast: continue
+            #if i.ip.startswith('127.'): continue
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.settimeout(0.01) #10ms
+            s.bind((i.ip, 0))
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+            sockets.append((s,i))
+        payload = struct.pack('>BBI',0x01,0x04,0xFFFFFFFF) #Device Type Filter (any)
+        payload += struct.pack('>BBI',0x02,0x04,0xFFFFFFFF) #Device ID Filter (any)
+        header = struct.pack('>HH',0x0002,len(payload))
+        data = header + payload
+        crc = crc32c.cksum(data)
+        packet = data + struct.pack('>I',crc)
+        util.DEBUG_LOG('  o-> Broadcast Packet({0})'.format(binascii.hexlify(packet)))
+
+        for attempt in (0,1):
+            for s,i in sockets:
+                util.DEBUG_LOG('  o-> Broadcasting to {0}: {1}'.format(i.name,i.broadcast))
+                try:
+                    s.sendto(packet, (i.broadcast, DEVICE_DISCOVERY_PORT))
+                except:
+                    util.ERROR()
+
+            end = time.time() + 0.25 #250ms
+
+            while time.time() < end:
+                for s,i in sockets:
+                    try:
+                        message, address = s.recvfrom(8096)
+
+                        added = self.add(message,address)
+
+                        if added:
+                            util.DEBUG_LOG('<-o   Response Packet[{0}]({1})'.format(i.name,binascii.hexlify(message)))
+                        elif added == False:
+                            util.DEBUG_LOG('<-o   Response Packet[{0}](Duplicate)'.format(i.name))
+                        elif added == None:
+                            util.DEBUG_LOG('<-o   INVALID RESPONSE[{0}]({1})'.format(i.name,binascii.hexlify(message)))
+                    except socket.timeout:
+                        pass
+                    except:
+                        traceback.print_exc()
 
     def __contains__(self, device):
         for d in self.allDevices:
@@ -291,57 +343,4 @@ class StorageServer(Device):
         util.DEBUG_LOG('Pinging storage Server: {0}'.format(self._baseURL))
 
         requests.post(self.url(self._ruleSyncURI))
-
-
-def discover(device=None):
-    import netif
-    ifaces = netif.getInterfaces()
-    sockets = []
-    for i in ifaces:
-        if not i.broadcast: continue
-        #if i.ip.startswith('127.'): continue
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.settimeout(0.01) #10ms
-        s.bind((i.ip, 0))
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        sockets.append((s,i))
-    payload = struct.pack('>BBI',0x01,0x04,0xFFFFFFFF) #Device Type Filter (any)
-    payload += struct.pack('>BBI',0x02,0x04,0xFFFFFFFF) #Device ID Filter (any)
-    header = struct.pack('>HH',0x0002,len(payload))
-    data = header + payload
-    crc = crc32c.cksum(data)
-    packet = data + struct.pack('>I',crc)
-    util.DEBUG_LOG('  o-> Broadcast Packet({0})'.format(binascii.hexlify(packet)))
-
-    devices = Devices()
-
-    for attempt in (0,1):
-        for s,i in sockets:
-            util.DEBUG_LOG('  o-> Broadcasting to {0}: {1}'.format(i.name,i.broadcast))
-            try:
-                s.sendto(packet, (i.broadcast, DEVICE_DISCOVERY_PORT))
-            except:
-                util.ERROR()
-
-        end = time.time() + 0.25 #250ms
-
-        while time.time() < end:
-            for s,i in sockets:
-                try:
-                    message, address = s.recvfrom(8096)
-
-                    added = devices.add(message,address)
-
-                    if added:
-                        util.DEBUG_LOG('<-o   Response Packet[{0}]({1})'.format(i.name,binascii.hexlify(message)))
-                    elif added == False:
-                        util.DEBUG_LOG('<-o   Response Packet[{0}](Duplicate)'.format(i.name))
-                    elif added == None:
-                        util.DEBUG_LOG('<-o   INVALID RESPONSE[{0}]({1})'.format(i.name,binascii.hexlify(message)))
-                except socket.timeout:
-                    pass
-                except:
-                    traceback.print_exc()
-
-    return devices
 

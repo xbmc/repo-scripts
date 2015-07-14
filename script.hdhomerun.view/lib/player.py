@@ -84,6 +84,10 @@ class HDHRPlayer(xbmc.Player):
             self.owner.onPlayBackFailed()
             return True
 
+    def onPlayBackSeek(self, seek_time, seek_offset):
+        self.owner.onPlayBackSeek(seek_time, seek_offset)
+        xbmc.Player.onPlayBackSeek(self, seek_time, seek_offset)
+
     def getArgs(self):
         transcode = TRANSCODE_PROFILES[util.getSetting('transcode',0)]
         if not transcode: return ''

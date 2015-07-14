@@ -148,7 +148,7 @@ class Series(dict):
         return self.get('SuggestHide') == 1
 
     def episodes(self,device_auth):
-        url = EPISODES_URL.format(deviceAuth=device_auth,seriesID=self.ID)
+        url = EPISODES_URL.format(deviceAuth=urllib.quote(device_auth, ''),seriesID=self.ID)
         util.DEBUG_LOG('Episodes URL: {0}'.format(url))
 
         req = requests.get(url)
@@ -233,9 +233,9 @@ class Episode(dict):
 
 def search(deviceAuth,category='',terms=''):
     if terms:
-        url = SEARCH_URL.format(deviceAuth=deviceAuth,search=urllib.quote(terms.encode('utf-8')))
+        url = SEARCH_URL.format(deviceAuth=urllib.quote(deviceAuth,''),search=urllib.quote(terms.encode('utf-8'), ''))
     elif category:
-        url = SUGGEST_URL.format(deviceAuth=deviceAuth,category=category)
+        url = SUGGEST_URL.format(deviceAuth=urllib.quote(deviceAuth,''),category=category)
 
     util.DEBUG_LOG('Search URL: {0}'.format(url))
 

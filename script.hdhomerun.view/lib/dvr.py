@@ -117,6 +117,7 @@ class EpisodesDialog(kodigui.BaseDialog):
             self.sort('AIRDATE')
 
     def doContextMenu(self):
+        return
         items = [('delete', T(32809))]
         idx = xbmcgui.Dialog().select(T(32810),[i[1] for i in items])
         if idx < 0:
@@ -202,7 +203,8 @@ class DVRBase(util.CronReceiver):
     RULES_BUTTON = 303
 
     RECORDINGS_REFRESH_INTERVAL = 600
-    SEARCH_REFRESH_INTERVAL = 600
+    SEARCH_REFRESH_INTERVAL = 3600
+    RULES_REFRESH_INTERVAL = 3660
 
     def __init__(self,*args,**kwargs):
         self._BASE.__init__(self,*args,**kwargs)
@@ -220,10 +222,6 @@ class DVRBase(util.CronReceiver):
 
         util.setGlobalProperty('DVR_MODE',val)
 
-        if val == 'SEARCH':
-            if time.time() - self.lastSearchRefresh > self.SEARCH_REFRESH_INTERVAL:
-                self.fillSearchPanel()
-
     def onFirstInit(self):
         self.start()
 
@@ -234,6 +232,7 @@ class DVRBase(util.CronReceiver):
         self.searchPanel = None
         self.ruleList = None
         self.searchTerms = ''
+        self.category = 'series'
         self.play = None
         self.options = None
         self.devices = self.main.devices
@@ -242,6 +241,7 @@ class DVRBase(util.CronReceiver):
         self.cron = self.main.cron
         self.lastRecordingsRefresh = 0
         self.lastSearchRefresh = 0
+        self.lastRulesRefresh = 0
         self.movingRule = None
         self.mode = 'WATCH'
         util.setGlobalProperty('NO_RESULTS',T(32802))
@@ -361,11 +361,16 @@ class DVRBase(util.CronReceiver):
             self.mode = 'RULES'
 
     def tick(self):
-        if time.time() - self.lastRecordingsRefresh > self.RECORDINGS_REFRESH_INTERVAL:
+        now = time.time()
+        if now - self.lastRecordingsRefresh > self.RECORDINGS_REFRESH_INTERVAL:
             self.updateRecordings()
+        if now - self.lastSearchRefresh > self.SEARCH_REFRESH_INTERVAL:
+            self.fillSearchPanel(update=True)
+        if now - self.lastRulesRefresh > self.RULES_REFRESH_INTERVAL:
+            self.fillRules(update=True)
 
     def setMode(self,mode):
-        self.mode == mode
+        self.mode = mode
         if mode == 'WATCH':
             self.setFocusId(100)
         elif mode == 'SEARCH':
@@ -426,16 +431,13 @@ class DVRBase(util.CronReceiver):
             self.showList.addItems(items)
 
     @util.busyDialog('LOADING GUIDE')
-    def fillSearchPanel(self,category='Series'):
+    def fillSearchPanel(self, update=False):
         self.lastSearchRefresh = time.time()
 
         items = []
 
-        if self.searchTerms:
-            category = ''
-
         try:
-            searchResults = hdhr.guide.search(self.devices.apiAuthID(),category=category,terms=self.searchTerms) or []
+            searchResults = hdhr.guide.search(self.devices.apiAuthID(),category=self.category,terms=self.searchTerms) or []
         except:
             e = util.ERROR()
             util.showNotification(e,header=T(32831))
@@ -451,13 +453,17 @@ class DVRBase(util.CronReceiver):
             item.setProperty('has.rule',r.hasRule and '1' or '')
             item.setProperty('hidden',r.hidden and '1' or '')
             items.append(item)
-
-        self.searchPanel.reset()
-        self.searchPanel.addItems(items)
+        if update:
+            self.searchPanel.replaceItems(items)
+        else:
+            self.searchPanel.reset()
+            self.searchPanel.addItems(items)
 
     @util.busyDialog('LOADING RULES')
     def fillRules(self,update=False):
+        self.lastRulesRefresh = time.time()
         if update: self.storageServer.updateRules()
+
         items = []
         for r in self.storageServer.rules:
             item = kodigui.ManagedListItem(r.title,data_source=r)
@@ -469,7 +475,7 @@ class DVRBase(util.CronReceiver):
         else:
             util.setGlobalProperty('NO_RULES','')
 
-        items.sort(key=lambda x: x.dataSource.priority)
+        items.sort(key=lambda x: x.dataSource.priority, reverse=True)
 
         self.ruleList.reset()
         self.ruleList.addItems(items)
@@ -543,7 +549,7 @@ class DVRBase(util.CronReceiver):
 
     @util.busyDialog('UPDATING')
     def updateRulePriorities(self):
-        for i, item in enumerate(self.ruleList):
+        for i, item in enumerate(reversed(self.ruleList)):
             try:
                 item.dataSource.priority = i
             except ValueError:
@@ -556,10 +562,12 @@ class DVRBase(util.CronReceiver):
         #self.searchTerms = self.getControl(self.SEARCH_EDIT_ID).getText() or ''
         if category:
             self.searchTerms = ''
+            self.category = category
             catDisplay = {'series':'Shows','movie':'Movies','sport':'Sports'}
             util.setGlobalProperty('search.terms',catDisplay[category])
-            self.fillSearchPanel(category=category)
+            self.fillSearchPanel()
         else:
+            self.category = ''
             self.searchTerms = xbmcgui.Dialog().input(T(32812),self.searchTerms)
             util.setGlobalProperty('search.terms',self.searchTerms)
             self.fillSearchPanel()
