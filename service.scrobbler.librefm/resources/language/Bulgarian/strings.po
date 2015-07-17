@@ -26,7 +26,7 @@ msgstr "Изпрати песните към Libre.fm"
 
 msgctxt "#30005"
 msgid "Submit streaming radio to Libre.fm"
-msgstr "Изпрати радио стрийминга към Libre.fm"
+msgstr "Изпрати радио потока към Libre.fm"
 
 msgctxt "#30006"
 msgid "Libre.fm username"

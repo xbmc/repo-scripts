@@ -22,7 +22,7 @@ msgstr "Korzystanie z mediów Nakladki"
 
 msgctxt "#30004"
 msgid "Submit songs to Libre.fm"
-msgstr "Publikowanie odtwarzanych utworów w serwisie Libre.fm"
+msgstr "Publikuj odtwarzane utwory w serwisie Libre.fm"
 
 msgctxt "#30005"
 msgid "Submit streaming radio to Libre.fm"

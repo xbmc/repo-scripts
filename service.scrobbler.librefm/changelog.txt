@@ -1,3 +1,6 @@
+2.0.3
+- update language files from Transifex
+
 2.0.2
 - update language files from Transifex
 - better support for streaming radio

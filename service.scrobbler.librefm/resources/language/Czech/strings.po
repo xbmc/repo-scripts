@@ -24,6 +24,10 @@ msgctxt "#30004"
 msgid "Submit songs to Libre.fm"
 msgstr "Odesílat skladby na Libre.fm"
 
+msgctxt "#30005"
+msgid "Submit streaming radio to Libre.fm"
+msgstr "Odešli hrající radio na Libre.fm"
+
 msgctxt "#30006"
 msgid "Libre.fm username"
 msgstr "Uživatelské jméno Libre.fm"
@@ -31,3 +35,15 @@ msgstr "Uživatelské jméno Libre.fm"
 msgctxt "#30007"
 msgid "Libre.fm password"
 msgstr "Heslo Libre.fm"
+
+msgctxt "#32001"
+msgid "Authentication error"
+msgstr "Chyba při přihlášení."
+
+msgctxt "#32002"
+msgid "Invalid time, please adjust your system clock and restart Kodi"
+msgstr "Špatný čas, upravte prosím váš systémový čas a restartujte Kodi"
+
+msgctxt "#32003"
+msgid "Please update the add-on"
+msgstr "Aktualizujte prosím doplněk"

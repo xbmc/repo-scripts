@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.scrobbler.librefm" name="Libre.fm Scrobbler" version="2.0.2" provider-name="Team-Kodi">
+<addon id="service.scrobbler.librefm" name="Libre.fm Scrobbler" version="2.0.3" provider-name="Team-Kodi">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 	</requires>
@@ -11,6 +11,7 @@
 		<summary lang="be">Scrobble service for libre.fm</summary>
 		<summary lang="bg">Скробблер услуга за libre.fm</summary>
 		<summary lang="ca">Servei de Scrobble per libre.fm</summary>
+		<summary lang="cs">Scrobble služba pro libre.fm</summary>
 		<summary lang="de">Scrobbler Service für libre.fm</summary>
 		<summary lang="el">Υπηρεσία κοινοποίησης (scrobble) για το libre.fm</summary>
 		<summary lang="en">Scrobble service for libre.fm</summary>
@@ -41,6 +42,7 @@
 		<description lang="be">Scrobbler will submit info of the songs you've been listening to in Kodi to libre.fm</description>
 		<description lang="bg">Скробблера ще изпраща информация за слушаната от вас музиката в Kodi към libre.fm</description>
 		<description lang="ca">El Scrobbler enviarà informació de les cançons que escoltis en l'Kodi a libre.fm</description>
+		<description lang="cs">Scrobbler pošle info o písničce, kterou právě posloucháte v Kodi na libre.fm</description>
 		<description lang="de">Scrobboler wird Informationen über die Songs welche du in Kodi hörst an libre.fm übermitteln</description>
 		<description lang="el">Το Scrobbler θα υποβάλλει πληροφορίες των τραγουδιών που ακούτε στο libre.fm</description>
 		<description lang="en">Scrobbler will submit info of the songs you've been listening to in Kodi to libre.fm</description>

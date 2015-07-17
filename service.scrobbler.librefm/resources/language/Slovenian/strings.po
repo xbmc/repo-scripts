@@ -31,3 +31,11 @@ msgstr "Uporabniško ime Libre.fm"
 msgctxt "#30007"
 msgid "Libre.fm password"
 msgstr "Geslo Libre.fm"
+
+msgctxt "#32001"
+msgid "Authentication error"
+msgstr "Napaka pri overjanju"
+
+msgctxt "#32003"
+msgid "Please update the add-on"
+msgstr "Posodobite dodatek"
