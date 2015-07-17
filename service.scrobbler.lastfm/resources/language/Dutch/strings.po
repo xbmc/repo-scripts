@@ -74,4 +74,4 @@ msgstr "verbinden met last.fm mislukt"
 
 msgctxt "#32027"
 msgid "No username or password provided"
-msgstr "geen gebruikersnaam of paswoord ingevoerd"
+msgstr "geen gebruikersnaam of wachtwoord ingevoerd"

@@ -24,6 +24,10 @@ msgctxt "#30001"
 msgid "Submit songs to Last.fm"
 msgstr "Odesílat skladby na Last.fm"
 
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Odešli streamované radio na Last.fm"
+
 msgctxt "#30003"
 msgid "Last.fm username"
 msgstr "Uživatelské jméno Last.fm"
@@ -31,6 +35,10 @@ msgstr "Uživatelské jméno Last.fm"
 msgctxt "#30004"
 msgid "Last.fm password"
 msgstr "Heslo Last.fm"
+
+msgctxt "#30005"
+msgid "Confirm Love/Ban submissions"
+msgstr "Potvrď  Love/Ban pro odeslání"
 
 msgctxt "#32011"
 msgid "Last.fm"
@@ -59,3 +67,11 @@ msgstr "Zablokováno: '%s'."
 msgctxt "#32017"
 msgid "Could not ban '%s'."
 msgstr "Nelze zablokovat skladbu '%s'."
+
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Spojení s Last.fm selhalo"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Neposkytnuto jméno nebo heslo"

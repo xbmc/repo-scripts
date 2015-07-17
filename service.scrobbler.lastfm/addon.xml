@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.scrobbler.lastfm" name="Last.fm" version="1.1.0" provider-name="Team-Kodi">
+<addon id="service.scrobbler.lastfm" name="Last.fm" version="1.1.1" provider-name="Team-Kodi">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
 	<extension point="xbmc.service" library="scrobbler.py" start="login"/>
 	<extension point="xbmc.addon.metadata">
+		<summary lang="cs">Last.fm doplněk pro odesílání infa na server</summary>
 		<summary lang="de">Last.fm scrobbler</summary>
 		<summary lang="el">Υπηρεσία κοινοποίησης (scrobbler) του Last.fm</summary>
 		<summary lang="en">Last.fm scrobbler</summary>
 		<summary lang="en_NZ">Last.fm scrobbler</summary>
 		<summary lang="en_US">Last.fm scrobbler</summary>
 		<summary lang="es">Last.fm scrobbler</summary>
+		<summary lang="fi">Last.fm scrobbleri</summary>
+		<summary lang="fr">Scrobbler Last.fm</summary>
 		<summary lang="fr_CA">Scrobbler Last.fm</summary>
 		<summary lang="gl">Last.fm scrobbler</summary>
+		<summary lang="hr">Last.fm skrobler</summary>
 		<summary lang="is">Last.fm scrobbler</summary>
 		<summary lang="it">Scrobbler Last.fm</summary>
 		<summary lang="ko">Last.fm 스크로블러</summary>
@@ -24,14 +28,18 @@
 		<summary lang="pt">Scrobbler Last.fm</summary>
 		<summary lang="pt_BR">Last.fm scrobbler</summary>
 		<summary lang="sv">Last.fm scrobbler</summary>
+		<description lang="cs">The Last.fm scrobbler odešle info o právě poslouchaných písničkách na last.fm</description>
 		<description lang="de">Der Last.fm Scrobbler überträgt Informationen des Liedes, das Du hörst in Kodi, zu last.fm</description>
 		<description lang="el">Το Scrobbler του Last.fm θα υποβάλλει πληροφορίες των τραγουδιών που ακούτε στο last.fm</description>
 		<description lang="en">The Last.fm scrobbler will submit info of the songs you've been listening to in Kodi to last.fm</description>
 		<description lang="en_NZ">The Last.fm scrobbler will submit info of the songs you've been listening to in Kodi to last.fm</description>
 		<description lang="en_US">The Last.fm scrobbler will submit info of the songs you've been listening to in Kodi to last.fm</description>
 		<description lang="es">Last.fm scrobbler informará de las canciones que has estado escuchando en Kodi a Last.fm</description>
+		<description lang="fi">Last.fm scrobbleri lähettää tietoja Kodissa soittamistasi kappaleista Last.fm:lle</description>
+		<description lang="fr">Le scrobbler Last.fm soumettra les infos des musiques que vous écoutez dans Kodi à last.fm</description>
 		<description lang="fr_CA">Le scrobbler Last.fm enverra des infos à propos des morceaux que vous avez écoutées avec Kodi à Last.fm</description>
 		<description lang="gl">O Last.fm scrobbler enviará info. das cancións que está a escotar no Kodi a last.fm</description>
+		<description lang="hr">Last.fm skrobler će prijaviti informacije pjesme koju slušate u Kodiju na last.fm</description>
 		<description lang="is">The Last.fm scrobbler mun senda gögn um lögin sem þú hefur verið að hlusta á í Kodi til last.fm</description>
 		<description lang="it">Lo scrobler Last.fm invia a last.fm informazioni sul brano che stai ascoltando in Kodi </description>
 		<description lang="ko">Last.fm 스크로블러는 Kodi에서 듣고있는 노래 정보를 last.fm으로 전송합니다.</description>

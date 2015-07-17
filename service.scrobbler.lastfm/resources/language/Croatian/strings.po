@@ -24,6 +24,10 @@ msgctxt "#30001"
 msgid "Submit songs to Last.fm"
 msgstr "Prijavi pjesme na Last.fm"
 
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Prijavi stremanje radija na Last.fm"
+
 msgctxt "#30003"
 msgid "Last.fm username"
 msgstr "Last.fm korisničko Ime"

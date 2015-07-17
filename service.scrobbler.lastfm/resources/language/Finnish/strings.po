@@ -24,6 +24,10 @@ msgctxt "#30001"
 msgid "Submit songs to Last.fm"
 msgstr "Lähetä kappaletiedot Last.fm-palveluun"
 
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Lähetä radiostreami Last.fm-palveluun"
+
 msgctxt "#30003"
 msgid "Last.fm username"
 msgstr "Last.fm-käyttäjätunnus"
@@ -31,6 +35,10 @@ msgstr "Last.fm-käyttäjätunnus"
 msgctxt "#30004"
 msgid "Last.fm password"
 msgstr "Last.fm-salasana"
+
+msgctxt "#30005"
+msgid "Confirm Love/Ban submissions"
+msgstr "Vahvista Tykkää/Estä toiminnot"
 
 msgctxt "#32011"
 msgid "Last.fm"
@@ -59,3 +67,11 @@ msgstr "Esto asetettu: '%s'."
 msgctxt "#32017"
 msgid "Could not ban '%s'."
 msgstr "'%s':lle ei voida asettaa estoa."
+
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Yhdistäminen Last.fm:ään epäonnistui"
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Käyttäjänimeä tai salasanaa ei oltu annettu"

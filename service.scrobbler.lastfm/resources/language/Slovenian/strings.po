@@ -24,6 +24,10 @@ msgctxt "#30001"
 msgid "Submit songs to Last.fm"
 msgstr "Objavi pesmi na Last.fm"
 
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Objavi pretočni radio na Last.fm."
+
 msgctxt "#30003"
 msgid "Last.fm username"
 msgstr "Uporabniško ime Last.fm"
@@ -59,3 +63,11 @@ msgstr "Prepovedano: '%s'."
 msgctxt "#32017"
 msgid "Could not ban '%s'."
 msgstr "'%s' ni bilo mogoče prepovedati."
+
+msgctxt "#32026"
+msgid "Connect to Last.fm failed"
+msgstr "Povezovanje z Last.fm je spodletelo."
+
+msgctxt "#32027"
+msgid "No username or password provided"
+msgstr "Uporabniško ime oz. geslo ni podano."
