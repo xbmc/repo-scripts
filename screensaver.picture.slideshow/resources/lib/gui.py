@@ -29,8 +29,6 @@ __addon__    = sys.modules[ '__main__' ].__addon__
 __addonid__  = sys.modules[ '__main__' ].__addonid__
 __cwd__      = sys.modules[ '__main__' ].__cwd__
 __skindir__  = xbmc.getSkinDir().decode('utf-8')
-__skinhome__ = xbmc.translatePath( os.path.join( 'special://home/addons/', __skindir__, 'addon.xml' ).encode('utf-8') ).decode('utf-8')
-__skinxbmc__ = xbmc.translatePath( os.path.join( 'special://xbmc/addons/', __skindir__, 'addon.xml' ).encode('utf-8') ).decode('utf-8')
 
 # images types that can contain exif/iptc data
 EXIF_TYPES  = ('.jpg', '.jpeg', '.tif', '.tiff')
@@ -371,14 +369,12 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
     def _get_animspeed(self):
         # find the skindir
-        if xbmcvfs.exists( __skinxbmc__ ):
-            # xbmc addon dir
-            skinxml = __skinxbmc__
-        elif xbmcvfs.exists( __skinhome__ ):
-            # user addon dir
-            skinxml = __skinhome__
-        else:
-            return
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddonDetails", "params": {"addonid": "%s", "properties": ["path", "extrainfo"]}, "id": 1}' % __skindir__)
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
+        json_response = simplejson.loads(json_query)
+        if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('addon') and json_response['result']['addon'].has_key('path'):
+            skinpath = json_response['result']['addon']['path']
+        skinxml = xbmc.translatePath( os.path.join( skinpath, 'addon.xml' ).encode('utf-8') ).decode('utf-8')
         try:
             # parse the skin addon.xml
             self.xml = parse(skinxml)

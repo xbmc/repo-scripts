@@ -1,3 +1,9 @@
+v2.1.6
+- cosmetics
+
+v2.1.5
+- use different method to find the addon.xml of the skin
+
 v2.1.4
 - fix missing settings string
 - fix crash on update due to incompatible settings
