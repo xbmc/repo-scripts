@@ -1,3 +1,6 @@
+v3.0.7
+- updated language files from Transifex
+
 v3.0.6
 - fix another crash on empty values
 

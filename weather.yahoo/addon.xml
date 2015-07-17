@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.yahoo" name="Yahoo! Weather" version="3.0.6" provider-name="ronie">
+<addon id="weather.yahoo" name="Yahoo! Weather" version="3.0.7" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -39,7 +39,7 @@
 		<summary lang="pl">Prognoza pogody z serwisu yahoo.com</summary>
 		<summary lang="pt">Previsão do tempo a partir de yahoo.com</summary>
 		<summary lang="pt_BR">Previsão Climática de yahoo.com</summary>
-		<summary lang="ro">Previziuni meteo de la yahoo.com</summary>
+		<summary lang="ro">Prognoze meteo de la yahoo.com</summary>
 		<summary lang="ru">Прогноз погоды от yahoo.com</summary>
 		<summary lang="sk">Predpoveď počasia z yahoo.com</summary>
 		<summary lang="sl">Vremenska napoved iz yahoo.com</summary>
@@ -79,7 +79,7 @@
 		<description lang="pl">Prognoza pogody jest dostarczona dzięki uprzejmości serwisu Yahoo! (http://weather.yahoo.com/)</description>
 		<description lang="pt">Previsão metereológica fornecida por Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="pt_BR">Previsão climática fornecida por Yahoo! Weather (http://weather.yahoo.com)</description>
-		<description lang="ro">Previziune meteo oferite de Yahoo! Weather (http://weather.yahoo.com/)</description>
+		<description lang="ro">Prognoză meteo oferită de Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="ru">Прогноз погоды предоставлен Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="sk">Predpoveď počasia poskytovaná službou Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="sl">Vremenska napoved od Yahoo! Weather (http://weather.yahoo.com/)</description>
@@ -109,7 +109,7 @@
 		<disclaimer lang="hr">Korištenje ovog dodatka podrazumijeva da se slažete sa Pravilima korištenja koji se nalaze na: http://developer.yahoo.com/weather/#terms</disclaimer>
 		<disclaimer lang="hu">Ennek a kiegészínőnek a használatával elfogadja a Felhasználói Feltételeket amik megtalálhatóak a http://developer.yahoo.com/weather/#terms oldalon</disclaimer>
 		<disclaimer lang="is">Notkun á þessarri viðbót gefur til kynna að þú hafir samþykkt skilmálana sem finna má á http://developer.yahoo.com/weather/#terms</disclaimer>
-		<disclaimer lang="it">L'uso di questo add-on implica l'accettazione delle Condizioni di Servizio che trovi su http://developer.yahoo.com/weather/#terms</disclaimer>
+		<disclaimer lang="it">L'uso di questo Add-on implica l'accettazione delle Condizioni di Servizio che trovi su http://developer.yahoo.com/weather/#terms</disclaimer>
 		<disclaimer lang="ja">このアドオンを使うことにより、http://developer.yahoo.com/weather/#terms にある利用規約に同意したとみなされます。</disclaimer>
 		<disclaimer lang="ko">이 애드온을 사용하는 것은 http://developer.yahoo.com/weather/#terms 에 있는 서비스 이용 약관에 동의함을 의미합니다.</disclaimer>
 		<disclaimer lang="lt">Naudodami šį priedą, jūs sutinkate su paslaugos sąlygomis, esančiomis http://developer.yahoo.com/weather/#terms</disclaimer>

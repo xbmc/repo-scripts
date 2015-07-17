@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32101"
 msgid "Location setup"
-msgstr "Configurare locaţie"
+msgstr "Alegere locaţii"
 
 msgctxt "#32111"
 msgid "Location 1"
