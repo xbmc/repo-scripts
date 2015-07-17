@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32000"
 msgid "Do you want to play the playlist instead of entering?"
-msgstr "Wollen Sie die Wiedergabeliste abspielen anstatt zu öffnen?"
+msgstr "Wollen Sie die Wiedergabeliste abspielen anstatt den Standard-Eintrag zu öffnen?"
 
 msgctxt "#32001"
 msgid "None (clear current settings)"

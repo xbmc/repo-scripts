@@ -26,4 +26,4 @@ msgstr "Brak (Wyczyść bieżące ustawienia)"
 
 msgctxt "#32002"
 msgid "(no action)"
-msgstr "(brak wyboru)"
+msgstr "(brak operacji)"
