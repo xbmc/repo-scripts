@@ -29,8 +29,9 @@ def culrc_run(mode):
         # we're already running, user clicked button on osd
         WIN.setProperty('culrc.force','TRUE')
     else:
-        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ , __language__(32158), 2000)).encode('utf-8', 'ignore'))
         log('script already running')
+        if __addon__.getSetting( "silent" ) == 'false':
+            xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ , __language__(32158), 2000)).encode('utf-8', 'ignore'))
 
 if ( __name__ == "__main__" ):
     service = __addon__.getSetting( "service" )

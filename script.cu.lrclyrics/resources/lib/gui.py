@@ -53,12 +53,13 @@ class MAIN():
                 log('searching for manually defined lyrics')
                 self.get_manual_lyrics()
             # check if we are on the music visualization screen
-            # do not try and get lyrics if TvTunes is running as it will just be a theme that is about to stop
-            elif xbmc.getCondVisibility("Window.IsVisible(12006)") and xbmcgui.Window(10025).getProperty("TvTunesIsRunning") in [None, ""]:
+            # do not try and get lyrics for any background media
+            elif xbmc.getCondVisibility("Window.IsVisible(12006)") and xbmcgui.Window(10025).getProperty("PlayingBackgroundMedia") in [None, ""]:
                 if not self.triggered:
                     self.triggered = True
                     # notify user the script is running
-                    xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ , __language__(32004), 2000)).encode('utf-8', 'ignore'))
+                    if __addon__.getSetting( "silent" ) == 'false':
+                        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ , __language__(32004), 2000)).encode('utf-8', 'ignore'))
                     # start fetching lyrics
                     self.myPlayerChanged()
                 elif WIN.getProperty('culrc.force') == 'TRUE':
@@ -230,7 +231,8 @@ class MAIN():
                     # signal gui thread to exit
                     WIN.setProperty('culrc.nolyrics', 'TRUE')
                     # notify user no lyrics were found
-                    xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ + ": " + __language__(32001), song.artist.decode("utf-8") + " - " + song.title.decode("utf-8"), 2000)).encode('utf-8', 'ignore'))
+                    if __addon__.getSetting( "silent" ) == 'false':
+                        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ + ": " + __language__(32001), song.artist.decode("utf-8") + " - " + song.title.decode("utf-8"), 2000)).encode('utf-8', 'ignore'))
                 break
             xbmc.sleep( 50 )
         if xbmc.getCondVisibility('MusicPlayer.HasNext'):

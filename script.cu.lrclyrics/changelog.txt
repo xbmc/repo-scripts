@@ -1,3 +1,6 @@
+v3.1.3
+- Update background media check to PlayingBackgroundMedia
+
 v3.1.2
 - Clean up the Monitor and Player classes on exit
 

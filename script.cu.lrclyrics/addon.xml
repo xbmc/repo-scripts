@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="3.1.2" provider-name="Taxigps|ronie">
+<addon id="script.cu.lrclyrics" name="CU LRC Lyrics" version="3.1.3" provider-name="Taxigps|ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.chardet" version="2.1.2"/>
