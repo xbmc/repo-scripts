@@ -22,35 +22,39 @@ msgstr "כללי"
 
 msgctxt "#32001"
 msgid "Search Movies"
-msgstr "חפש סרטים"
+msgstr "חיפוש סרטים"
 
 msgctxt "#32002"
 msgid "Search TV Shows"
-msgstr "חפש תכניות טלוויזיה"
+msgstr "חיפוש סדרות"
 
 msgctxt "#32003"
 msgid "Search Episodes"
-msgstr "חפש פרקים"
+msgstr "חיפוש פרקים"
 
 msgctxt "#32004"
 msgid "Search Music Videos"
-msgstr "חפש קליפים"
+msgstr "חיפוש קליפים"
 
 msgctxt "#32005"
 msgid "Search Artists"
-msgstr "חפש אמנים"
+msgstr "חיפוש אמנים"
 
 msgctxt "#32006"
 msgid "Search Abums"
-msgstr "חפש אלבומים"
+msgstr "חיפוש אלבומים"
 
 msgctxt "#32007"
 msgid "Search Songs"
-msgstr "חפש שירים"
+msgstr "חיפוש שירים"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "חיפוש שחקנים"
 
 msgctxt "#32101"
 msgid "Enter search string"
-msgstr "הזן מחרוזת חיפוש"
+msgstr "הזנת מחרוזת חיפוש"
 
 msgctxt "#32203"
 msgid "Browse album"
@@ -62,27 +66,31 @@ msgstr "פרטי עונה"
 
 msgctxt "#32205"
 msgid "Play trailer"
-msgstr "נגן קדימון"
+msgstr "ניגון קדימון"
 
 msgctxt "#32206"
 msgid "Find album"
-msgstr "מצא אלבום"
+msgstr "מציאת אלבום"
 
 msgctxt "#32207"
 msgid "Find all seasons"
-msgstr "מצא כל העונות"
+msgstr "מציאת כל העונות"
 
 msgctxt "#32208"
 msgid "Find all episodes"
-msgstr "מצא כל הפרקים"
+msgstr "מציאת כל הפרקים"
 
 msgctxt "#32209"
 msgid "Find all albums"
-msgstr "מצא כל האלבומים"
+msgstr "מציאת כל האלבומים"
 
 msgctxt "#32210"
 msgid "Find all songs"
-msgstr "מצא כל השירים"
+msgstr "מציאת כל השירים"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "סרטים בכיכוב"
 
 msgctxt "#32299"
 msgid "NEW SEARCH"

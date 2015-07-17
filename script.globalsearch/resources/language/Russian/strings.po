@@ -52,6 +52,10 @@ msgctxt "#32008"
 msgid "Search Actors"
 msgstr "Поиск актёров"
 
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Поиск телепередач"
+
 msgctxt "#32101"
 msgid "Enter search string"
 msgstr "Строка поиска"

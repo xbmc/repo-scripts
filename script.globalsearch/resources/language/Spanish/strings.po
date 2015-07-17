@@ -52,6 +52,10 @@ msgctxt "#32008"
 msgid "Search Actors"
 msgstr "Actores de busqueda"
 
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Buscar EPG"
+
 msgctxt "#32101"
 msgid "Enter search string"
 msgstr "Introduzca la cadena de búsqueda"

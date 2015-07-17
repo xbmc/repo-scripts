@@ -48,6 +48,14 @@ msgctxt "#32007"
 msgid "Search Songs"
 msgstr "Išči Pesmi"
 
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Išči igralce"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Išči EPV (EPG)"
+
 msgctxt "#32101"
 msgid "Enter search string"
 msgstr "Vnesite iskalni niz"
@@ -83,6 +91,10 @@ msgstr "Najdi vse albume"
 msgctxt "#32210"
 msgid "Find all songs"
 msgstr "Najdi vse pesmi"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Filmi z zvezdniki"
 
 msgctxt "#32299"
 msgid "NEW SEARCH"
