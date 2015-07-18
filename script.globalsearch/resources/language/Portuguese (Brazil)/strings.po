@@ -50,11 +50,7 @@ msgstr "Pesquisar Músicas"
 
 msgctxt "#32008"
 msgid "Search Actors"
-msgstr "Pesquisar Atores"
-
-msgctxt "#32009"
-msgid "Search EPG"
-msgstr "Pesquisar EPG"
+msgstr "Procurar Atores"
 
 msgctxt "#32101"
 msgid "Enter search string"

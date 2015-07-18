@@ -22,19 +22,19 @@ msgstr "Ogólne"
 
 msgctxt "#32001"
 msgid "Search Movies"
-msgstr "Wyszukaj filmy"
+msgstr "Wyszukaj Filmy"
 
 msgctxt "#32002"
 msgid "Search TV Shows"
-msgstr "Wyszukaj seriale"
+msgstr "Wyszukaj Seriale"
 
 msgctxt "#32003"
 msgid "Search Episodes"
-msgstr "Wyszukaj odcinki"
+msgstr "Wyszukaj Odcinki"
 
 msgctxt "#32004"
 msgid "Search Music Videos"
-msgstr "Wyszukaj teledyski"
+msgstr "Wyszukaj Teledyski"
 
 msgctxt "#32005"
 msgid "Search Artists"
@@ -42,23 +42,19 @@ msgstr "Wyszukaj wykonawców"
 
 msgctxt "#32006"
 msgid "Search Abums"
-msgstr "Wyszukaj albumy"
+msgstr "Wyszukaj Albumy"
 
 msgctxt "#32007"
 msgid "Search Songs"
-msgstr "Wyszukaj utwory"
+msgstr "Wyszukaj Piosenki"
 
 msgctxt "#32008"
 msgid "Search Actors"
-msgstr "Wyszukaj aktorów"
-
-msgctxt "#32009"
-msgid "Search EPG"
-msgstr "Wyszukaj w przewodniku"
+msgstr "Szukaj Aktorów"
 
 msgctxt "#32101"
 msgid "Enter search string"
-msgstr "Wprowadź wyrażenie"
+msgstr "Wprowadzanie wyszukiwanego ciągu"
 
 msgctxt "#32203"
 msgid "Browse album"
@@ -90,7 +86,7 @@ msgstr "Znajdź wszystkie albumy"
 
 msgctxt "#32210"
 msgid "Find all songs"
-msgstr "Znajdź wszystkie utwory"
+msgstr "Znajdź wszystkie piosenki"
 
 msgctxt "#32211"
 msgid "Movies starring"

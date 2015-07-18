@@ -25,25 +25,12 @@ You can specify which categories should be searched (this overrides the user pre
 RunScript(script.globalsearch,movies=true)
 RunScript(script.globalsearch,tvshows=true&amp;musicvideos=true&amp;songs=true)
 
-available options: epg, movies, tvshows, episodes, musicvideos, artists, albums, songs, actors
+available options: movies, tvshows, episodes, musicvideos, artists, albums, songs, actors
 
 
 
 I. Infolabels available in script-globalsearch-main.xml
 -------------------------------------------------------
-EPG:
-ListItem.Label
-ListItem.Icon
-ListItem.Property(Genre)
-ListItem.Property(Plot)
-ListItem.Property(Duration)
-ListItem.Property(Starttime)
-ListItem.Property(Endtime)
-ListItem.Property(ChannelName)
-ListItem.Property(ChannelNumber)
-ListItem.Property(Path)
-
-
 MOVIES (and movies by actor):
 ListItem.Label
 ListItem.Icon
@@ -244,14 +231,10 @@ III. Control id's used in script-globalsearch-main.xml
 211 - Container for found movies containing the actor
 219 - The script will set this id to visible when movies containing the actor are found
 
-220 - Label containing the number of found programmes
-221 - Container for found programmes 
-229 - The script will set this id to visible when programmes are found
-
 190 - 'Searching...' label, visible when the script is searching
 191 - Search category label, visible when the script is searching
-198 - 'New search' button, visible when the script finished searching
-199 - 'No results found' label, visible when no results are found
+198 - 'No results found' label, visible when no results are found
+199 - 'New search' button, visible when the script finished searching
 
 
 
@@ -259,7 +242,7 @@ IV. Control id's used in script-globalsearch-infodialog.xml
 -----------------------------------------------------------
 100 - Hidden list containing the selected ListItem.
 
-110 - The script will set this id to visible when the selected item is a movie or actor
+110 - The script will set this id to visible when the selected item is a movie
 120 - The script will set this id to visible when the selected item is a tv show
 130 - The script will set this id to visible when the selected item is a season
 140 - The script will set this id to visible when the selected item is a episode
@@ -267,7 +250,6 @@ IV. Control id's used in script-globalsearch-infodialog.xml
 160 - The script will set this id to visible when the selected item is a artist
 170 - The script will set this id to visible when the selected item is a album
 180 - The script will set this id to visible when the selected item is a song
-200 - The script will set this id to visible when the selected item is a programme
 
 191 - First button (OK), but you can specify a diffrent label for it if you like
 192 - Second button. The script will set the button label and the visible condition.

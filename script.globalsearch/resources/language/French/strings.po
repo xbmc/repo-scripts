@@ -52,13 +52,9 @@ msgctxt "#32008"
 msgid "Search Actors"
 msgstr "Recherche Acteurs"
 
-msgctxt "#32009"
-msgid "Search EPG"
-msgstr "Recherche GEP"
-
 msgctxt "#32101"
 msgid "Enter search string"
-msgstr "Veuillez saisir un mot pour la recherche"
+msgstr "Entrer Mot de Recherche"
 
 msgctxt "#32203"
 msgid "Browse album"

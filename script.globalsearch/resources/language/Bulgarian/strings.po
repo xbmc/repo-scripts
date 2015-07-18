@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32000"
 msgid "General"
-msgstr "Общи"
+msgstr "General"
 
 msgctxt "#32001"
 msgid "Search Movies"
@@ -51,10 +51,6 @@ msgstr "Търсене в песните"
 msgctxt "#32008"
 msgid "Search Actors"
 msgstr "Търсене в раздел \"Актьори\""
-
-msgctxt "#32009"
-msgid "Search EPG"
-msgstr "Търсене в ЕПС"
 
 msgctxt "#32101"
 msgid "Enter search string"

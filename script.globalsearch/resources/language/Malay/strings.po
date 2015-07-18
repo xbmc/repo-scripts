@@ -20,10 +20,6 @@ msgctxt "#32000"
 msgid "General"
 msgstr "Am"
 
-msgctxt "#32101"
-msgid "Enter search string"
-msgstr "Masukkan rentetan gelintar"
-
 msgctxt "#32205"
 msgid "Play trailer"
 msgstr "Main treler"

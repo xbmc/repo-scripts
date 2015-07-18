@@ -1,15 +1,5 @@
-v4.0.3
-- fix README
-
-v4.0.2
-- rating fixes
-
-v4.0.1
-- fix channel id
-
-v4.0.0
-- add support for epg search
-- fix fanart in infodialog
+v4.0.4
+- no change
 
 v3.0.4
 - update language files from Transifex

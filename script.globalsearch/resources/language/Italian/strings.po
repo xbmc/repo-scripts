@@ -50,19 +50,15 @@ msgstr "Ricerca Canzoni"
 
 msgctxt "#32008"
 msgid "Search Actors"
-msgstr "Ricerca Attori"
-
-msgctxt "#32009"
-msgid "Search EPG"
-msgstr "Ricerca EPG"
+msgstr "Ricerca attori"
 
 msgctxt "#32101"
 msgid "Enter search string"
-msgstr "Inserisci stringa di ricerca"
+msgstr "Inserisci Stringa di Ricerca"
 
 msgctxt "#32203"
 msgid "Browse album"
-msgstr "Sfoglia Album"
+msgstr "Sfoglia album"
 
 msgctxt "#32204"
 msgid "Season information"
@@ -74,28 +70,28 @@ msgstr "Riproduci Trailer"
 
 msgctxt "#32206"
 msgid "Find album"
-msgstr "Trova Album"
+msgstr "Trova album"
 
 msgctxt "#32207"
 msgid "Find all seasons"
-msgstr "Trova tutte le Stagioni"
+msgstr "Trova tutte le stagioni"
 
 msgctxt "#32208"
 msgid "Find all episodes"
-msgstr "Trova tutti gli Episodi"
+msgstr "Trova tutti gli episodi"
 
 msgctxt "#32209"
 msgid "Find all albums"
-msgstr "Trova tutti gli Album"
+msgstr "Trova tutti gli album"
 
 msgctxt "#32210"
 msgid "Find all songs"
-msgstr "Trova tutti i Brani"
+msgstr "Trova tutte le canzoni"
 
 msgctxt "#32211"
 msgid "Movies starring"
-msgstr "Cast del Film"
+msgstr "Cast del film"
 
 msgctxt "#32299"
 msgid "NEW SEARCH"
-msgstr "NUOVA RICERCA"
+msgstr "Nuova Ricerca"
