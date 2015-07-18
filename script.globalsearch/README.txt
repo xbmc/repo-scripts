@@ -259,7 +259,7 @@ IV. Control id's used in script-globalsearch-infodialog.xml
 -----------------------------------------------------------
 100 - Hidden list containing the selected ListItem.
 
-110 - The script will set this id to visible when the selected item is a movie
+110 - The script will set this id to visible when the selected item is a movie or actor
 120 - The script will set this id to visible when the selected item is a tv show
 130 - The script will set this id to visible when the selected item is a season
 140 - The script will set this id to visible when the selected item is a episode
@@ -267,8 +267,7 @@ IV. Control id's used in script-globalsearch-infodialog.xml
 160 - The script will set this id to visible when the selected item is a artist
 170 - The script will set this id to visible when the selected item is a album
 180 - The script will set this id to visible when the selected item is a song
-210 - The script will set this id to visible when the selected item is a actor
-220 - The script will set this id to visible when the selected item is a programme
+200 - The script will set this id to visible when the selected item is a programme
 
 191 - First button (OK), but you can specify a diffrent label for it if you like
 192 - Second button. The script will set the button label and the visible condition.

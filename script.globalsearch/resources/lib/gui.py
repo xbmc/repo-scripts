@@ -26,7 +26,8 @@ def log(txt):
 
 class GUI( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):
-        self.searchstring = kwargs[ "searchstring" ].replace('(', '[(]').replace(')', '[)]').replace('+', '[+]')
+        # some sanitize work for search string: strip the input and escape some chars
+        self.searchstring = kwargs[ "searchstring" ].replace('(', '[(]').replace(')', '[)]').replace('+', '[+]').strip()
         log('script version %s started' % __addonversion__)
         self.nextsearch = False
 

@@ -25,7 +25,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.getControl( 160 ).setVisible( False )
         self.getControl( 170 ).setVisible( False )
         self.getControl( 180 ).setVisible( False )
-        self.getControl( 200 ).setVisible( False )
+        try:
+            self.getControl( 200 ).setVisible( False )
+        except:
+            pass
         self.getControl( 191 ).setVisible( False )
         self.getControl( 192 ).setVisible( False )
         self.getControl( 193 ).setVisible( False )
@@ -35,7 +38,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         if self.content == 'epg':
             self.getControl( 192 ).setLabel( xbmc.getLocalizedString(208) )
             self.getControl( 193 ).setLabel( xbmc.getLocalizedString(20410) )
-            self.getControl( 200 ).setVisible( True )
+            try:
+                self.getControl( 200 ).setVisible( True )
+            except:
+                pass
             self.getControl( 191 ).setVisible( True )
             self.getControl( 192 ).setVisible( True )
         if self.content == 'movies':
