@@ -32,7 +32,7 @@ Dialog call examples:
 
 
 Notes:
-- use "|" to append several builtins
+- use "||" as separator to append several builtins
 - escape stuff in following form: '"$INFO[xxx]"'
 
 

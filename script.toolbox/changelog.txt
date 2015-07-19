@@ -1,3 +1,8 @@
+v1.1.0
+- lot of refactoring
+- added some calls to trigger ArtToLibrary stuff (thx bryanbrazil)
+- unified separator handling
+
 v1.0.1
 - first version for Kodi official repository
 

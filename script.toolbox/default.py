@@ -24,172 +24,105 @@ class Main:
         self._init_vars()
         self._parse_argv()
         if self.infos:
-            self._StartInfoActions()
+            self.StartInfoActions(self.infos, self.params)
         elif not len(sys.argv) > 1:
-            self._selection_dialog()
-        if self.control == "plugin":
-            xbmcplugin.endOfDirectory(self.handle)
+            self.selection_dialog()
         xbmc.executebuiltin('ClearProperty(toolbox_running,home)')
-        while self.daemon and not xbmc.abortRequested:
+        while self.params.get("daemon", False) and not xbmc.abortRequested:
             self.image_now = xbmc.getInfoLabel("Player.Art(thumb)")
             if self.image_now != self.image_prev:
                 self.image_prev = self.image_now
-                image, imagecolor = Filter_Image(self.image_now, self.radius)
-                HOME.setProperty(self.prefix + 'ImageFilter', image)
-                HOME.setProperty(self.prefix + "ImageColor", imagecolor)
+                image, imagecolor = Filter_Image(self.image_now, int(self.params.get("radius", 5)))
+                HOME.setProperty(self.params.get("prefix", "") + 'ImageFilter', image)
+                HOME.setProperty(self.params.get("prefix", "") + "ImageColor", imagecolor)
             else:
                 xbmc.sleep(300)
 
-    def _StartInfoActions(self):
+    def StartInfoActions(self, infos, params):
+        prettyprint(params)
+        prettyprint(infos)
         for info in self.infos:
             if info == 'playmovie':
-                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "movieid": %i }, "options":{ "resume": %s } }, "id": 1 }' % (self.dbid, self.resume))
+                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "movieid": %i }, "options":{ "resume": %s } }, "id": 1 }' % (int(params["dbid"]), self.resume))
             elif info == 'playepisode':
-                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "episodeid": %i }, "options":{ "resume": %s }  }, "id": 1 }' % (self.dbid, self.resume))
+                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "episodeid": %i }, "options":{ "resume": %s }  }, "id": 1 }' % (int(params["dbid"]), self.resume))
             elif info == 'playmusicvideo':
-                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "musicvideoid": %i } }, "id": 1 }' % self.dbid)
+                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "musicvideoid": %i } }, "id": 1 }' % int(params["dbid"]))
             elif info == 'playalbum':
-                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "albumid": %i } }, "id": 1 }' % self.dbid)
+                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "albumid": %i } }, "id": 1 }' % int(params["dbid"]))
             elif info == 'playsong':
-                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "songid": %i } }, "id": 1 }' % self.dbid)
-            elif info == 'channels':
-                channels = create_channel_list()
+                xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "songid": %i } }, "id": 1 }' % int(params["dbid"]))
             elif info == 'favourites':
-                if self.id:
-                    favourites = GetFavouriteswithType(self.id)
+                if params.get("id", ""):
+                    favourites = GetFavouriteswithType(params.get("id", ""))
                 else:
                     favourites = GetFavourites()
                     HOME.setProperty('favourite.count', str(len(favourites)))
                     if len(favourites) > 0:
                         HOME.setProperty('favourite.1.name', favourites[-1]["Label"])
-                passDataToSkin('Favourites', favourites, self.prefix, self.window, self.control, self.handle)
-            elif info == 'playliststats':
-                GetPlaylistStats(self.id)
+                passDataToSkin('Favourites', favourites, params.get("prefix", ""), self.window)
             elif info == 'selectdialog':
-                CreateDialogSelect(self.header)
+                CreateDialogSelect(params.get("header"))
             elif info == 'exportskinsettings':
-                export_skinsettings(self.text)
+                export_skinsettings(params.get("text"))
             elif info == 'importskinsettings':
                 import_skinsettings()
+            elif info == 'extrathumbmovie' :
+                AddArtToLibrary("extrathumb", "Movie", "extrathumbs", EXTRATHUMB_LIMIT)
+            elif info == 'extrafanartmovie' :
+                AddArtToLibrary("extrafanart", "Movie", "extrafanart", EXTRAFANART_LIMIT)
+            elif info == 'extrafanarttvshow' :
+                AddArtToLibrary("extrafanart", "TVShow", "extrafanart", EXTRAFANART_LIMIT)
             elif info == 'okdialog':
-                CreateDialogOK(self.header, self.text)
+                CreateDialogOK(params.get("header"), params.get("text"))
             elif info == 'builtin':
-                xbmc.executebuiltin(self.id)
+                xbmc.executebuiltin(params.get("id", ""))
             elif info == 'yesnodialog':
-                CreateDialogYesNo(self.header, self.text, self.nolabel, self.yeslabel, self.noaction, self.yesaction)
+                CreateDialogYesNo(params.get("header"), params.get("text"), params.get("nolabel", ""), params.get("yeslabel", ""), params.get("noaction"), params.get("yesaction", ""))
             elif info == 'notification':
-                CreateNotification(self.header, self.text, self.icon, self.time, self.sound)
+                CreateNotification(params.get("header"), params.get("text"), params.get("icon", xbmcgui.NOTIFICATION_INFO), int(params.get("time", 5000)), params.get("sound", True))
             elif info == 'textviewer':
-                w = TextViewer_Dialog('DialogTextViewer.xml', ADDON_PATH, header=self.header, text=self.text)
+                w = TextViewer_Dialog('DialogTextViewer.xml', ADDON_PATH, header=params.get("header"), text=params.get("text"))
                 w.doModal()
+            elif info == "infopanel":
+                open_info_panel()
             elif info == "sortletters":
-                listitems = GetSortLetters(self.path, self.id)
-                passDataToSkin('SortLetters', listitems, self.prefix, self.window, self.control, self.handle)
-            # elif info == 'slideshow':
-            #     windowid = xbmcgui.getCurrentWindowId()
-            #     Window = xbmcgui.Window(windowid)
-            #     focusid = Window.getFocusId()
-            #     itemlist = Window.getFocus()
-            #     numitems = itemlist.getSelectedPosition()
-            #     log("items:" + str(numitems))
-            #     for i in range(0, numitems):
-            #         pass
+                listitems = GetSortLetters(self.path, params.get("id", ""))
+                passDataToSkin('SortLetters', listitems, params.get("prefix", ""), self.window)
             elif info == 'jumptoletter':
-                JumpToLetter(self.id)
+                JumpToLetter(params.get("id", ""))
             elif info == 'blur':
-                HOME.clearProperty(self.prefix + 'ImageFilter')
-                log("Blur image %s with radius %i" % (self.id, self.radius))
-                image, imagecolor = Filter_Image(self.id, self.radius)
-                HOME.setProperty(self.prefix + 'ImageFilter', image)
-                HOME.setProperty(self.prefix + "ImageColor", imagecolor)
+                HOME.clearProperty(params.get("prefix", "") + 'ImageFilter')
+                log("Blur image %s with radius %i" % (params.get("id", ""), int(params.get("radius", 5))))
+                image, imagecolor = Filter_Image(params.get("id", ""), int(params.get("radius", 5)))
+                HOME.setProperty(params.get("prefix", "") + 'ImageFilter', image)
+                HOME.setProperty(params.get("prefix", "") + "ImageColor", imagecolor)
 
     def _init_vars(self):
         self.window = xbmcgui.Window(10000)  # Home Window
-        self.control = None
-        self.infos = []
-        self.id = ""
-        self.dbid = ""
         self.resume = "false"
-        self.header = ""
-        self.text = ""
-        self.yeslabel = ""
-        self.yesaction = ""
-        self.nolabel = ""
-        self.noaction = ""
-        self.icon = ""
-        self.prefix = ""
-        self.sound = True
-        self.time = 5000
-        self.radius = 5
-        self.daemon = False
         self.image_now = ""
         self.image_prev = ""
-        self.autoclose = ""
-        # self.Monitor = ToolBoxMonitor(self)
+        self.params = {}
+
 
     def _parse_argv(self):
         args = sys.argv
+        self.infos = []
         for arg in args:
-            arg = arg.replace("'\"", "").replace("\"'", "")
-            log(arg)
             if arg == 'script.toolbox':
                 continue
-            elif arg.startswith('info='):
+            if arg.startswith('info='):
                 self.infos.append(arg[5:])
-            elif arg.startswith('id='):
-                self.id = RemoveQuotes(arg[3:])
-            elif arg.startswith('dbid='):
-                self.dbid = int(arg[5:])
-            elif arg.startswith('daemon='):
-                self.daemon = True
-            elif arg.startswith('resume='):
-                self.resume = arg[7:]
-            elif arg.startswith('prefix='):
-                self.prefix = arg[7:]
-                if not self.prefix.endswith("."):
-                    self.prefix = self.prefix + "."
-            elif arg.startswith('header='):
-                self.header = arg[7:]
-            elif arg.startswith('text='):
-                self.text = arg[5:]
-            elif arg.startswith('yeslabel='):
-                self.yeslabel = arg[9:]
-            elif arg.startswith('nolabel='):
-                self.nolabel = arg[8:]
-            elif arg.startswith('yesaction='):
-                self.yesaction = arg[10:]
-            elif arg.startswith('noaction='):
-                self.noaction = arg[9:]
-            elif arg.startswith('icon='):
-                self.icon = arg[5:]
-            elif arg.startswith('radius='):
-                self.radius = int(arg[7:])
-            elif arg.startswith('sound='):
-                if "false" in arg or "False" in arg:
-                    self.sound = False
-            elif arg.startswith('time='):
-                self.time = int(arg[5:])
-            elif arg.startswith('window='):
-                if arg[7:] == "currentdialog":
-                    xbmc.sleep(300)
-                    self.window = xbmcgui.Window(xbmcgui.getCurrentWindowDialogId())
-                elif arg[7:] == "current":
-                    xbmc.sleep(300)
-                    self.window = xbmcgui.Window(xbmcgui.getCurrentWindowId())
-                else:
-                    self.window = xbmcgui.Window(int(arg[7:]))
-            elif arg.startswith('control='):
-                self.control = int(arg[8:])
+            else:
+                try:
+                    self.params[arg.split("=")[0].lower()] = "=".join(arg.split("=")[1:]).strip()
+                except:
+                    pass
 
-    def _selection_dialog(self):
-        modeselect = []
-        modeselect.append(ADDON_LANGUAGE(32001))
-        modeselect.append(ADDON_LANGUAGE(32002))
-        modeselect.append(ADDON_LANGUAGE(32003))
-        modeselect.append(ADDON_LANGUAGE(32014))
-        modeselect.append(ADDON_LANGUAGE(32015))
-        modeselect.append(ADDON_LANGUAGE(32018))
-        modeselect.append(ADDON_LANGUAGE(32017))
+    def selection_dialog(self):
+        modeselect = [ADDON_LANGUAGE(32001), ADDON_LANGUAGE(32002), ADDON_LANGUAGE(32003),
+                      ADDON_LANGUAGE(32014), ADDON_LANGUAGE(32015), ADDON_LANGUAGE(32018), ADDON_LANGUAGE(32017)]
         dialogSelection = xbmcgui.Dialog()
         selection = dialogSelection.select(ADDON_LANGUAGE(32004), modeselect)
         if selection == 0:
@@ -210,20 +143,6 @@ class Main:
             AddArtToLibrary("extrathumb", "Movie", "extrathumbs", EXTRATHUMB_LIMIT)
             AddArtToLibrary("extrafanart", "Movie", "extrafanart", EXTRAFANART_LIMIT)
             AddArtToLibrary("extrafanart", "TVShow", "extrafanart", EXTRAFANART_LIMIT)
-
-
-class ToolBoxMonitor(xbmc.Monitor):
-
-    def __init__(self, *args, **kwargs):
-        xbmc.Monitor.__init__(self)
-
-    def onPlayBackStarted(self):
-        pass
-        # HOME.clearProperty(self.prefix + 'ImageFilter')
-        # Notify("test", "test")
-        # image, imagecolor = Filter_Image(self.id, self.radius)
-        # HOME.setProperty(self.prefix + 'ImageFilter', image)
-        # HOME.setProperty(self.prefix + "ImageColor", imagecolor)
 
 
 if __name__ == "__main__":
