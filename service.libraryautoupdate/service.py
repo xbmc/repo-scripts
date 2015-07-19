@@ -27,6 +27,7 @@ class AutoUpdater:
     timer_amounts['5'] = 24
 
     def __init__(self):
+        utils.check_data_dir()  #in case this directory does not exist yet
         self.monitor = UpdateMonitor(update_settings = self.createSchedules,after_scan = self.databaseUpdated)
         self.readLastRun()
 
@@ -292,13 +293,17 @@ class AutoUpdater:
     def readLastRun(self):
         if(self.last_run == 0):
             #read it in from the settings
-            utils.log(xbmc.translatePath(utils.data_dir() + "last_run.txt"))
             if(xbmcvfs.exists(xbmc.translatePath(utils.data_dir() + "last_run.txt"))):
-               runFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "last_run.txt"))
+                
+                runFile = xbmcvfs.File(xbmc.translatePath(utils.data_dir() + "last_run.txt"))
 
-               self.last_run = float(runFile.read())
+                try:
+                    #there may be an issue with this file, we'll get it the next time through
+                    self.last_run = float(runFile.read())
+                except ValueError:
+                    self.last_run = 0 
 
-               runFile.close()
+                runFile.close()
             else:
                self.last_run = 0
 

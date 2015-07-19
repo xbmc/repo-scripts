@@ -19,6 +19,7 @@
     <string id="30012">Update Video Library</string>
     <string id="30013">Update Music Library</string>
     <string id="30014">Only run when idle</string>
+	<string id="30015">Disable manual run prompt</string>
 
     <!-- specific paths -->
     <string id="30020">Update Specific Path 1</string>

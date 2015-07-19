@@ -3,10 +3,15 @@ import resources.lib.utils as utils
 from service import AutoUpdater
 
 autoUpdate = AutoUpdater()
+runUpdate = False
 
-nextRun = autoUpdate.showNotify(False)
-#check if we should run updates
-runUpdate = xbmcgui.Dialog().yesno(utils.getString(30000),utils.getString(30060) + nextRun,line2=utils.getString(30061),autoclose=6000)
+if(utils.getSetting('disable_manual_prompt') == 'false'):
+    nextRun = autoUpdate.showNotify(False)
+    #check if we should run updates
+    runUpdate = xbmcgui.Dialog().yesno(utils.getString(30000),utils.getString(30060) + nextRun,line2=utils.getString(30061),autoclose=6000)
+else:
+    #the user has elected to skip the prompt
+    runUpdate = True
 
 if(runUpdate):
     #run the program

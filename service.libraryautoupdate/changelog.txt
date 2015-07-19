@@ -1,3 +1,8 @@
+Version 0.9.8
+
+added prompt disable setting for manual run
+added better error checking for last_run.txt file
+
 Version 0.9.7
 
 Fixed issue with stacked timers not executing

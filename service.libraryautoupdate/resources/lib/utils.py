@@ -1,9 +1,14 @@
 import xbmc
 import xbmcgui
 import xbmcaddon
-    
+import xbmcvfs
+
 __addon_id__= 'service.libraryautoupdate'
 __Addon = xbmcaddon.Addon(__addon_id__)
+
+def check_data_dir():
+    if(not xbmcvfs.exists(xbmc.translatePath(data_dir()))):
+        xbmcvfs.mkdir(xbmc.translatePath(data_dir()))
 
 def data_dir():
     return __Addon.getAddonInfo('profile')
