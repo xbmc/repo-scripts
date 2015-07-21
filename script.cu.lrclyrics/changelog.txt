@@ -1,3 +1,6 @@
+v3.1.5
+- fix polish language file
+
 v3.1.4
 - add option to hide notifications
 

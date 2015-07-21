@@ -54,7 +54,7 @@ msgstr "%A\\%T"
 
 msgctxt "#32106"
 msgid "Use only filename for search"
-msgstr "Używaj nazwy pliku jako podstawy wyszukiwania
+msgstr "Używaj nazwy pliku jako podstawy wyszukiwania"
 
 msgctxt "#32107"
 msgid "Filename format"
