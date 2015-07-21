@@ -265,62 +265,64 @@ class Main:
                             rating = str(round(float(item2['rating']),1))
                             episodeno = "s%se%s" %(season,episode)
                             art2 = item2['art']
-                    #seasonthumb = ''
-                    if (item2['resume']['position'] and item2['resume']['total']) > 0:
-                        resume = "true"
-                        played = '%s%%'%int((float(item2['resume']['position']) / float(item2['resume']['total'])) * 100)
-                    else:
-                        resume = "false"
-                        played = '0%'
-                    if item2['playcount'] >= 1:
-                        watched = "true"
-                    else:
-                        watched = "false"
-                    if not self.PLOT_ENABLE and watched == "false":
-                        plot = __localize__(32014)
-                    else:
-                        plot = item2['plot']
-                    art = item['art']
-                    path = media_path(item['file'])
-                    play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(item2.get('episodeid')) + ')'
-                    streaminfo = media_streamdetails(item['file'].encode('utf-8').lower(),
-                                                     item2['streamdetails'])
-                    if len(item['studio']) > 0:
-                        studio = item['studio'][0]
-                    else:
-                        studio = ""
-                    self.WINDOW.setProperty("%s.%d.DBID"                % (request, count), str(item2.get('episodeid')))
-                    self.WINDOW.setProperty("%s.%d.Title"               % (request, count), item2['title'])
-                    self.WINDOW.setProperty("%s.%d.Episode"             % (request, count), episode)
-                    self.WINDOW.setProperty("%s.%d.EpisodeNo"           % (request, count), episodeno)
-                    self.WINDOW.setProperty("%s.%d.Season"              % (request, count), season)
-                    self.WINDOW.setProperty("%s.%d.Plot"                % (request, count), plot)
-                    self.WINDOW.setProperty("%s.%d.TVshowTitle"         % (request, count), item2['showtitle'])
-                    self.WINDOW.setProperty("%s.%d.Rating"              % (request, count), rating)
-                    self.WINDOW.setProperty("%s.%d.Runtime"             % (request, count), str(int((item2['runtime'] / 60) + 0.5)))
-                    self.WINDOW.setProperty("%s.%d.Premiered"           % (request, count), item2['firstaired'])
-                    self.WINDOW.setProperty("%s.%d.Art(thumb)"          % (request, count), art2.get('thumb',''))
-                    self.WINDOW.setProperty("%s.%d.Art(tvshow.fanart)"  % (request, count), art2.get('tvshow.fanart',''))
-                    self.WINDOW.setProperty("%s.%d.Art(tvshow.poster)"  % (request, count), art2.get('tvshow.poster',''))
-                    self.WINDOW.setProperty("%s.%d.Art(tvshow.banner)"  % (request, count), art2.get('tvshow.banner',''))
-                    self.WINDOW.setProperty("%s.%d.Art(tvshow.clearlogo)"% (request, count), art2.get('tvshow.clearlogo',''))
-                    self.WINDOW.setProperty("%s.%d.Art(tvshow.clearart)" % (request, count), art2.get('tvshow.clearart',''))
-                    self.WINDOW.setProperty("%s.%d.Art(tvshow.landscape)"% (request, count), art2.get('tvshow.landscape',''))
-                    self.WINDOW.setProperty("%s.%d.Art(tvshow.characterart)"% (request, count), art2.get('tvshow.characterart',''))
-                    #self.WINDOW.setProperty("%s.%d.Art(season.poster)" % (request, count), seasonthumb)
-                    self.WINDOW.setProperty("%s.%d.Studio"              % (request, count), studio)
-                    self.WINDOW.setProperty("%s.%d.mpaa"                % (request, count), item['mpaa'])
-                    self.WINDOW.setProperty("%s.%d.Resume"              % (request, count), resume)
-                    self.WINDOW.setProperty("%s.%d.PercentPlayed"       % (request, count), played)
-                    self.WINDOW.setProperty("%s.%d.Watched"             % (request, count), watched)
-                    self.WINDOW.setProperty("%s.%d.File"                % (request, count), item2['file'])
-                    self.WINDOW.setProperty("%s.%d.Path"                % (request, count), path)
-                    self.WINDOW.setProperty("%s.%d.Play"                % (request, count), play)
-                    self.WINDOW.setProperty("%s.%d.VideoCodec"          % (request, count), streaminfo['videocodec'])
-                    self.WINDOW.setProperty("%s.%d.VideoResolution"     % (request, count), streaminfo['videoresolution'])
-                    self.WINDOW.setProperty("%s.%d.VideoAspect"         % (request, count), streaminfo['videoaspect'])
-                    self.WINDOW.setProperty("%s.%d.AudioCodec"          % (request, count), streaminfo['audiocodec'])
-                    self.WINDOW.setProperty("%s.%d.AudioChannels"       % (request, count), str(streaminfo['audiochannels']))
+
+                        #seasonthumb = ''
+                        if (item2['resume']['position'] and item2['resume']['total']) > 0:
+                            resume = "true"
+                            played = '%s%%'%int((float(item2['resume']['position']) / float(item2['resume']['total'])) * 100)
+                        else:
+                            resume = "false"
+                            played = '0%'
+                        if item2['playcount'] >= 1:
+                            watched = "true"
+                        else:
+                            watched = "false"
+                        if not self.PLOT_ENABLE and watched == "false":
+                            plot = __localize__(32014)
+                        else:
+                            plot = item2['plot']
+                        art = item['art']
+                        path = media_path(item['file'])
+                        play = 'XBMC.RunScript(' + __addonid__ + ',episodeid=' + str(item2.get('episodeid')) + ')'
+                        streaminfo = media_streamdetails(item['file'].encode('utf-8').lower(),
+                                                         item2['streamdetails'])
+                        if len(item['studio']) > 0:
+                            studio = item['studio'][0]
+                        else:
+                            studio = ""
+                        self.WINDOW.setProperty("%s.%d.DBID"                % (request, count), str(item2.get('episodeid')))
+                        self.WINDOW.setProperty("%s.%d.Title"               % (request, count), item2['title'])
+                        self.WINDOW.setProperty("%s.%d.Episode"             % (request, count), episode)
+                        self.WINDOW.setProperty("%s.%d.EpisodeNo"           % (request, count), episodeno)
+                        self.WINDOW.setProperty("%s.%d.Season"              % (request, count), season)
+                        self.WINDOW.setProperty("%s.%d.Plot"                % (request, count), plot)
+                        self.WINDOW.setProperty("%s.%d.TVshowTitle"         % (request, count), item2['showtitle'])
+                        self.WINDOW.setProperty("%s.%d.Rating"              % (request, count), rating)
+                        self.WINDOW.setProperty("%s.%d.Runtime"             % (request, count), str(int((item2['runtime'] / 60) + 0.5)))
+                        self.WINDOW.setProperty("%s.%d.Premiered"           % (request, count), item2['firstaired'])
+                        self.WINDOW.setProperty("%s.%d.Art(thumb)"          % (request, count), art2.get('thumb',''))
+                        self.WINDOW.setProperty("%s.%d.Art(tvshow.fanart)"  % (request, count), art2.get('tvshow.fanart',''))
+                        self.WINDOW.setProperty("%s.%d.Art(tvshow.poster)"  % (request, count), art2.get('tvshow.poster',''))
+                        self.WINDOW.setProperty("%s.%d.Art(tvshow.banner)"  % (request, count), art2.get('tvshow.banner',''))
+                        self.WINDOW.setProperty("%s.%d.Art(tvshow.clearlogo)"% (request, count), art2.get('tvshow.clearlogo',''))
+                        self.WINDOW.setProperty("%s.%d.Art(tvshow.clearart)" % (request, count), art2.get('tvshow.clearart',''))
+                        self.WINDOW.setProperty("%s.%d.Art(tvshow.landscape)"% (request, count), art2.get('tvshow.landscape',''))
+                        self.WINDOW.setProperty("%s.%d.Art(tvshow.characterart)"% (request, count), art2.get('tvshow.characterart',''))
+                        #self.WINDOW.setProperty("%s.%d.Art(season.poster)" % (request, count), seasonthumb)
+                        self.WINDOW.setProperty("%s.%d.Studio"              % (request, count), studio)
+                        self.WINDOW.setProperty("%s.%d.mpaa"                % (request, count), item['mpaa'])
+                        self.WINDOW.setProperty("%s.%d.Resume"              % (request, count), resume)
+                        self.WINDOW.setProperty("%s.%d.PercentPlayed"       % (request, count), played)
+                        self.WINDOW.setProperty("%s.%d.Watched"             % (request, count), watched)
+                        self.WINDOW.setProperty("%s.%d.File"                % (request, count), item2['file'])
+                        self.WINDOW.setProperty("%s.%d.Path"                % (request, count), path)
+                        self.WINDOW.setProperty("%s.%d.Play"                % (request, count), play)
+                        self.WINDOW.setProperty("%s.%d.VideoCodec"          % (request, count), streaminfo['videocodec'])
+                        self.WINDOW.setProperty("%s.%d.VideoResolution"     % (request, count), streaminfo['videoresolution'])
+                        self.WINDOW.setProperty("%s.%d.VideoAspect"         % (request, count), streaminfo['videoaspect'])
+                        self.WINDOW.setProperty("%s.%d.AudioCodec"          % (request, count), streaminfo['audiocodec'])
+                        self.WINDOW.setProperty("%s.%d.AudioChannels"       % (request, count), str(streaminfo['audiochannels']))
+                    del json_query2
             del json_query
 
     def _fetch_tvshows(self, request):
