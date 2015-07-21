@@ -133,7 +133,11 @@ msgctxt "#32159"
 msgid "Enable debug logging"
 msgstr ""
 
-#empty strings from id 32160 to 32198
+msgctxt "#32160"
+msgid "Hide notifications"
+msgstr ""
+
+#empty strings from id 32161 to 32198
 #Skin labels
 
 msgctxt "#32199"
