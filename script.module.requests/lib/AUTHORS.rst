@@ -1,14 +1,10 @@
 Requests is written and maintained by Kenneth Reitz and
 various contributors:
 
-Development Lead
-````````````````
+Keepers of the Three Crystals
+`````````````````````````````
 
-- Kenneth Reitz <me@kennethreitz.org> `@kennethreitz <https://github.com/kennethreitz>`_
-
-Core Contributors
-`````````````````
-
+- Kenneth Reitz <me@kennethreitz.org> `@kennethreitz <https://github.com/kennethreitz>`_, Keeper of the Master Crystal.
 - Cory Benfield <cory@lukasa.co.uk> `@lukasa <https://github.com/lukasa>`_
 - Ian Cordasco <graffatcolmingov@gmail.com> `@sigmavirus24 <https://github.com/sigmavirus24>`_
 
@@ -160,3 +156,5 @@ Patches and Suggestions
 - Scott Sadler (`@ssadler <https://github.com/ssadler>`_)
 - Arthur Darcet (`@arthurdarcet <https://github.com/arthurdarcet>`_)
 - Ulrich Petri (`@ulope <https://github.com/ulope>`_)
+- Muhammad Yasoob Ullah Khalid <yasoob.khld@gmail.com> (`@yasoob <https://github.com/yasoob>`_)
+- Paul van der Linden (`@pvanderlinden <https://github.com/pvanderlinden>`_)
