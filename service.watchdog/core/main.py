@@ -167,17 +167,22 @@ class EventHandler(FileSystemEventHandler):
 
 def main():
     progress = xbmcgui.DialogProgressBG()
-    progress.create("Watchdog starting. Please wait...")
+    try:
+        progress.create("Watchdog starting. Please wait...")
+    except:
+        progress = None
 
     if settings.STARTUP_DELAY > 0:
         log("waiting for user delay of %d seconds" % settings.STARTUP_DELAY)
         msg = "Delaying startup by %d seconds."
-        progress.update(0, message=msg % settings.STARTUP_DELAY)
+        if progress:
+            progress.update(0, message=msg % settings.STARTUP_DELAY)
         start = time.time()
         while time.time() - start < settings.STARTUP_DELAY:
             xbmc.sleep(100)
             if xbmc.abortRequested:
-                progress.close()
+                if progress:
+                    progress.close()
                 return
 
     sources = []
@@ -206,7 +211,8 @@ def main():
     observer.start()  # start so emitters are started on schedule
 
     for i, (libtype, path) in enumerate(sources):
-        progress.update((i+1)/len(sources)*100, message="Setting up %s" % path)
+        if progress:
+            progress.update((i+1)/len(sources)*100, message="Setting up %s" % path)
         try:
             emitter_cls = emitters.select_emitter(path)
         except IOError:
@@ -228,7 +234,8 @@ def main():
                 break
 
     xbmcif.start()
-    progress.close()
+    if progress:
+        progress.close()
     log("initialization done")
 
     if settings.SHOW_STATUS_DIALOG:
@@ -237,7 +244,10 @@ def main():
         not_watching = ["Not watching '%s'" % path for _, path in sources
                         if path not in observer.paths]
         dialog = xbmcgui.Dialog()
-        dialog.select('Watchdog status', watching + not_watching)
+        try:
+            dialog.select('Watchdog status', watching + not_watching)
+        except:
+            dialog = None
 
     if xbmc.__version__ >= '2.19.0':
         monitor = xbmc.Monitor()

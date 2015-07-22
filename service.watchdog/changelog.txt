@@ -1,3 +1,6 @@
+[B]0.9.6[/B]
+- headless support
+
 [B]0.9.5[/B]
 - improved detection of offline media sources
 
