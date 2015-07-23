@@ -1,3 +1,19 @@
+v3.1.0
+- added additional properties for db movies
+- added actor age for ActorInfo dialog
+- fixed movie poster not appearing on some occasions
+- fixed behavour in case no remote info is available
+- fixed linebreaks at beginning of some biographies
+- fixed list bounce for info dialogs in case of fast repitition
+- fixed autocomplete exception in case result is empty
+- reworked image slideshow (now allows moving through list)
+- siginificant faster dialog loading times (async youtube list filling)
+- visual tweaks for TMDB browser list viewtype
+- improvements for movie info dialog local check
+- navigation fix for TV show info dialog
+- changed credit dialog order
+- texture cleanup
+
 v3.0.0
 - API CHANGE: "imdbid" param for script call is now "imdb_id"
 - new add-on extension point: Video plugin

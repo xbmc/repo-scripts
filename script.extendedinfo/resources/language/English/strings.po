@@ -111,6 +111,8 @@ msgctxt "#32019"
 msgid "Job"
 msgstr ""
 
+#: \resources\skins\Default\1080i\script-ExtendedInfo
+#: Script-DialogInfo.xml:118
 msgctxt "#32020"
 msgid "Age"
 msgstr ""

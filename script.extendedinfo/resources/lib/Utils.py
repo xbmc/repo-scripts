@@ -25,8 +25,8 @@ ADDON_ID = ADDON.getAddonInfo('id')
 ADDON_ICON = ADDON.getAddonInfo('icon')
 ADDON_NAME = ADDON.getAddonInfo('name')
 ADDON_PATH = ADDON.getAddonInfo('path').decode("utf-8")
-ADDON_DATA_PATH = os.path.join(xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID).decode("utf-8"))
 ADDON_VERSION = ADDON.getAddonInfo('version')
+ADDON_DATA_PATH = xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID).decode("utf-8")
 HOME = xbmcgui.Window(10000)
 SETTING = ADDON.getSetting
 
@@ -161,10 +161,11 @@ def get_google_autocomplete_items(search_str, youtube=False):
     result = get_JSON_response(url=base_url + url,
                                headers=headers,
                                folder="Google")
-    for item in result[1]:
-        li = {"label": item,
-              "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % item}
-        listitems.append(li)
+    if result and len(result) > 1:
+        for item in result[1]:
+            li = {"label": item,
+                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % item}
+            listitems.append(li)
     return listitems
 
 
@@ -741,6 +742,8 @@ def pass_dict_to_skin(data=None, prefix="", debug=False, precache=False, window_
     threads = []
     image_requests = []
     for (key, value) in data.iteritems():
+        if not value:
+            continue
         value = unicode(value)
         if precache:
             if value.startswith("http") and (value.endswith(".jpg") or value.endswith(".png")):
@@ -898,4 +901,4 @@ def clean_text(text):
             text = text[1:]
         else:
             break
-    return text
+    return text.strip()
