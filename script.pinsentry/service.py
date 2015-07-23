@@ -112,9 +112,9 @@ class PinSentry():
         if notifType == Settings.INVALID_PIN_NOTIFICATION_POPUP:
             cmd = ""
             if Settings.getNumberOfLevels() > 1:
-                cmd = 'Notification("{0}", "{1} {2}", 5, "{3}")'.format(__addon__.getLocalizedString(32104).encode('utf-8'), __addon__.getLocalizedString(32211).encode('utf-8'), str(level), __icon__)
+                cmd = 'Notification("{0}", "{1} {2}", 3000, "{3}")'.format(__addon__.getLocalizedString(32104).encode('utf-8'), __addon__.getLocalizedString(32211).encode('utf-8'), str(level), __icon__)
             else:
-                cmd = 'Notification("{0}", "{1}", 5, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), __icon__)
+                cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), __icon__)
             xbmc.executebuiltin(cmd)
         elif notifType == Settings.INVALID_PIN_NOTIFICATION_DIALOG:
             line3 = None
@@ -564,9 +564,7 @@ class NavigationRestrictions():
             log("NavigationRestrictions: Allowed access to settings")
             # Allow the user 5 minutes to change the settings
             self.canChangeSettings = int(time.time()) + 300
-
-            cmd = 'Notification("{0}", "{1}", 10, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32110).encode('utf-8'), __icon__)
-            xbmc.executebuiltin(cmd)
+            xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32110).encode('utf-8'), __icon__, 3000, False)
 
             # Open the dialogs that should be shown, we don't reopen the Information dialog
             # as if we do the Close Dialog will not close it and the pin screen will not show correctly
@@ -631,23 +629,245 @@ class NavigationRestrictions():
             PinSentry.displayInvalidPinMessage(securityLevel)
 
 
+# Class the handle user control
+class UserPinControl():
+    def __init__(self):
+        self.isEnabled = False
+        self.userId = None
+        self.allowedStartTime = 0
+        self.allowedEndTime = 2439  # Number of minutes in a day
+        self.usedViewingLimit = 0
+        self.startedViewing = 0
+        self.screensaverStart = 0
+        self.warningDisplayed = False
+
+    def startupCheck(self):
+        # When the system starts up we need to check to see if User restriction is enabled
+        if Settings.getNumberOfLimitedUsers() < 1:
+            log("UserPinControl: No Limited users configured")
+            self.isEnabled = False
+            return
+
+        self.isEnabled = True
+
+        # Set the background
+        background = Background.createBackground()
+        if background is not None:
+            background.show()
+
+        preventAccess = False
+        tryAgain = True
+        while tryAgain:
+            tryAgain = False
+            # Need to find out which user this is, so prompt them for a pin
+            numberpad = NumberPad.createNumberPad()
+            numberpad.doModal()
+
+            # Get the code that the user entered
+            enteredPin = numberpad.getPin()
+            del numberpad
+
+            # Find out which user owns this pin
+            self.userId = Settings.getUserForPin(enteredPin)
+
+            # Check for the unrestricted user
+            if self.userId == "unrestrictedUserPin":
+                log("UserPinControl: Unrestricted user pin entered")
+                self.isEnabled = False
+                break
+
+            if self.userId in [None, ""]:
+                log("UserPinControl: Unknown pin entered, offering retry")
+                # This is not a valid user, so display the error message and work out
+                # if we should prompt the user again or shutdown the system
+                tryAgain = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32104).encode('utf-8'), __addon__.getLocalizedString(32129).encode('utf-8'))
+
+                if not tryAgain:
+                    # Need to stop this user accessing the system
+                    preventAccess = True
+
+        # Remove the background if we had one
+        if background is not None:
+            background.close()
+            del background
+
+        if preventAccess:
+            log("UserPinControl: Shutting down as unknown user pin entered")
+            self.shutdown()
+        elif self.isEnabled:
+            log("UserPinControl: User logged in is %s" % self.userId)
+            # Load the settings for this user
+            self.allowedStartTime, displayStartTime = Settings.getUserStartTime(self.userId)
+            self.allowedEndTime, displayEndTime = Settings.getUserEndTime(self.userId)
+            self.usedViewingLimit = Settings.getUserViewingUsedTime(self.userId)
+
+            self.displaySummary()
+
+            # Now we can record when this user started viewing in this session
+            localTime = time.localtime()
+            self.startedViewing = (localTime.tm_hour * 60) + localTime.tm_min
+
+            # We actually want to also record how many minutes have already been viewed in previous
+            # sessions, so roll the clock back by that much
+            self.startedViewing = self.startedViewing - self.usedViewingLimit
+
+            log("UserPinControl: Time already used for user is %d" % self.usedViewingLimit)
+
+            # Record that we are running as a restricted user so that the default script
+            # can display the status of how long is left when it is selected
+            xbmcgui.Window(10000).setProperty("PinSentry_RestrictedUser", self.userId)
+
+    def checkDisplayStatus(self):
+        # This method will display the current time remaining if the property is set
+        # by the script being run as a program
+        if xbmcgui.Window(10000).getProperty("PinSentry_DisplayStatus") not in ["", None]:
+            xbmcgui.Window(10000).clearProperty("PinSentry_DisplayStatus")
+            self.displaySummary()
+
+    def displaySummary(self):
+        # Load the settings for this user
+        allowedStartTime, displayStartTime = Settings.getUserStartTime(self.userId)
+        allowedEndTime, displayEndTime = Settings.getUserEndTime(self.userId)
+        viewingLimit = Settings.getUserViewingLimit(self.userId)
+        usersName = Settings.getUserName(self.userId)
+
+        # Work out how much time is remaining
+        displayRemainingTime = viewingLimit - self.usedViewingLimit
+        if displayRemainingTime < 0:
+            displayRemainingTime = 0
+
+        # Do a notification to let the user know how long they have left today
+        summaryUserName = "%s:    %s" % (__addon__.getLocalizedString(32035), usersName)
+        summaryLimit = "%s:    %d" % (__addon__.getLocalizedString(32033), viewingLimit)
+        summaryLimitRemaining = "%s:    %d" % (__addon__.getLocalizedString(32131), displayRemainingTime)
+        summaryAccess = "%s:    %s - %s" % (__addon__.getLocalizedString(32132), displayStartTime, displayEndTime)
+        fullSummary = "%s\n%s\n%s\n%s" % (summaryUserName, summaryLimit, summaryLimitRemaining, summaryAccess)
+        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001).encode('utf-8'), fullSummary)
+
+    # Check the current user access status
+    def check(self):
+        # If we have found the correct user, then we need to ensure we are
+        # in the valid time duration and have not exceeded the limit
+        if not self.isEnabled:
+            return True
+        # Check for the case where we didn't get the user ID - this means we are
+        # already shutting down
+        if self.userId in [None, ""]:
+            return False
+
+        log("UserPinControl: Performing check for user %s" % self.userId)
+
+        # First check that the current time is within the allowed boundaries
+        localTime = time.localtime()
+        currentTime = (localTime.tm_hour * 60) + localTime.tm_min
+
+        if self.allowedStartTime > currentTime or self.allowedEndTime < currentTime:
+            log("UserPinControl: User not allowed access until %d to %d currently %d" % (self.allowedStartTime, self.allowedEndTime, currentTime))
+            self.shutdown(32130)
+            return False
+
+        # Check if the screensaver is running, if so we need to make sure we do not
+        # class that as time used by the user
+        if xbmc.getCondVisibility("System.ScreenSaverActive"):
+            if self.screensaverStart < 1:
+                self.screensaverStart = currentTime
+        else:
+            # Not the screensaver, check to see if this is the first check
+            # after the screensaver stopped
+            if self.screensaverStart > 0:
+                screensaverDuration = currentTime - self.screensaverStart
+                self.screensaverStart = 0
+                log("UserPinControl: Updating duration for screensaver, %d minutes" % screensaverDuration)
+                # Now we roll the time forward that we started viewing so that
+                # we are not counting the screensaver
+                self.startedViewing = self.startedViewing + screensaverDuration
+
+            # Check to see if we need to update the record for how long the user has already been viewing
+            viewingLimit = Settings.getUserViewingLimit(self.userId)
+            self.usedViewingLimit = currentTime - self.startedViewing
+            log("UserPinControl: Time used by user is %d" % self.usedViewingLimit)
+
+            # Update the settings record for how much this user has viewed so far
+            Settings.setUserViewingUsedTime(self.userId, self.usedViewingLimit)
+
+            # Now check to see if the user has exceeded their limit
+            if self.usedViewingLimit >= viewingLimit:
+                self.shutdown(32133)
+                return False
+
+            # Check if we need to warn the user that the time is running out
+            warningTime = Settings.getWarnExpiringTime()
+            if (not self.warningDisplayed) and ((self.usedViewingLimit + warningTime) >= viewingLimit):
+                self.warningDisplayed = True
+                # Calculate the time left
+                remainingTime = viewingLimit - self.usedViewingLimit
+                msg = "%d %s" % (remainingTime, __addon__.getLocalizedString(32134))
+                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), msg, __icon__, 3000, False)
+
+        return True
+
+    def shutdown(self, reason=0):
+        # Check to see if anything is playing
+        if xbmc.Player().isPlaying():
+            # Stop what is playing as we are going to be exiting
+            xbmc.Player().stop()
+
+        # Make sure there are no dialogs being displayed
+        xbmc.executebuiltin("Dialog.Close(all, true)", True)
+
+        # Display a notification to let the user know why we are about to shut down
+        if reason > 0:
+            cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(reason).encode('utf-8'), __icon__)
+            xbmc.executebuiltin(cmd)
+
+        # Give the user time to see why we are shutting down
+        waitTime = 35
+        while (waitTime > 0) and (not xbmc.abortRequested):
+            xbmc.sleep(100)
+            waitTime = waitTime - 1
+
+        # Using ShutDown will perform the default behaviour that Kodi has in the system settings
+        xbmc.executebuiltin("ShutDown")
+
+
 ##################################
 # Main of the PinSentry Service
 ##################################
 if __name__ == '__main__':
-    log("Starting Pin Sentry Service")
+    log("Starting Pin Sentry Service %s" % __addon__.getAddonInfo('version'))
+
+    # Tidy up any old pins and set any warnings when we first start
+    Settings.checkPinSettings()
 
     # Make sure that the database exists if this is the first time
     pinDB = PinSentryDB()
     pinDB.createOrUpdateDB()
     del pinDB
 
+    # Check to see if we need to restrict based on a given user to ensure they
+    # are allowed to use the system
+    userCtrl = UserPinControl()
+    userCtrl.startupCheck()
+
     playerMonitor = PinSentryPlayer()
     systemMonitor = PinSentryMonitor()
     navRestrictions = NavigationRestrictions()
 
+    loopsUntilUserControlCheck = 0
     while (not xbmc.abortRequested):
+        # No need to perform the user control check every fraction of a second
+        # about every minute will be OK
+        if loopsUntilUserControlCheck < 1:
+            # If we are going to shut down then start closing down this script
+            if not userCtrl.check():
+                break
+            loopsUntilUserControlCheck = 600
+        else:
+            loopsUntilUserControlCheck = loopsUntilUserControlCheck - 1
+
         xbmc.sleep(100)
+        userCtrl.checkDisplayStatus()
+
         # Check if the Pin is set, as no point prompting if it is not
         if PinSentry.isPinSentryEnabled():
             # Check to see if we need to restrict navigation access
@@ -662,6 +882,7 @@ if __name__ == '__main__':
             navRestrictions.checkSettings()
 
     log("Stopping Pin Sentry Service")
+    del userCtrl
     del navRestrictions
     del playerMonitor
     del systemMonitor

@@ -1,3 +1,11 @@
+v1.1.0
+- Add feature to restrict a given user/pin to set times and durations
+
+v1.0.3
+- Fix bug where user higher than security level 1 cannot change pin
+- Highlight which pin is not set when using multiple pins
+- Prevent an already used pin being entered for a different security level
+
 v1.0.2
 - Fix character encoding issue
 - Do not check classifications of background videos
