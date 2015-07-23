@@ -254,7 +254,23 @@ msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr ""
 
-#empty strings from id 32128 to 32199
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr ""
+
+#empty strings from id 32132 to 32199
 
 msgctxt "#32200"
 msgid "Overlay Image"

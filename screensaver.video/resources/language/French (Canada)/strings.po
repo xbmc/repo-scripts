@@ -106,7 +106,7 @@ msgstr "Définir le volume à"
 
 msgctxt "#32058"
 msgid "Dim Level"
-msgstr "Niveau d'assombrissement"
+msgstr "Niveau d'atténuation"
 
 msgctxt "#32059"
 msgid "Stop Screensaver Automatically"

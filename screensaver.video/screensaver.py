@@ -33,6 +33,54 @@ from settings import dir_exists
 from VideoParser import VideoParser
 
 
+# Video Screensaver Player that can detect when the next item in a playlist starts
+class VideoScreensaverPlayer(xbmc.Player):
+    def __init__(self, *args):
+        self.initialStart = True
+        xbmc.Player.__init__(self, *args)
+
+    def onPlayBackStarted(self):
+        # The first item in a playlist will have already had it's start time
+        # set correctly if it is a clock
+        if self.initialStart is True:
+            self.initialStart = False
+            log("onPlayBackStarted received for initial video")
+            return
+
+        if self.isPlayingVideo():
+            # Get the currently playing file
+            filename = self.getPlayingFile()
+            log("onPlayBackStarted received for file %s" % filename)
+
+            duration = self._getVideoDuration(filename)
+            log("onPlayBackStarted: Duration is %d for file %s" % (duration, filename))
+
+            startTime = Settings.getTimeForClock(filename, duration)
+
+            # Set the clock start time
+            if startTime > 0 and duration > 10:
+                self.seekTime(startTime)
+        else:
+            log("onPlayBackStarted received, but not playing video file")
+
+        xbmc.Player.onPlayBackStarted(self)
+
+    # Returns the duration in seconds
+    def _getVideoDuration(self, filename):
+        duration = 0
+        try:
+            # Parse the video file for the duration
+            duration = VideoParser().getVideoLength(filename)
+        except:
+            log("Failed to get duration from %s" % filename, xbmc.LOGERROR)
+            log("Error: %s" % traceback.format_exc(), xbmc.LOGERROR)
+            duration = 0
+
+        log("Duration retrieved is = %d" % duration)
+
+        return duration
+
+
 class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     TIME_CONTROL = 3002
     DIM_CONTROL = 3003
@@ -40,6 +88,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
 
     def __init__(self, *args, **kwargs):
         self.isClosed = False
+        self.player = VideoScreensaverPlayer()
 
     # Static method to create the Window class
     @staticmethod
@@ -66,7 +115,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
         self.volumeCtrl.lowerVolume()
 
         # Now play the video
-        xbmc.Player().play(playlist)
+        self.player.play(playlist)
 
         # Set the video to loop, as we want it running as long as the screensaver
         repeatType = Settings.getFolderRepeatType()
@@ -116,7 +165,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
     def close(self):
         log("Ending Screensaver")
         # Exiting, so stop the video
-        if xbmc.Player().isPlayingVideo():
+        if self.player.isPlayingVideo():
             log("Stopping screensaver video")
             # There is a problem with using the normal "xbmc.Player().stop()" to stop
             # the video playing if another addon is selected - it will just continue
@@ -176,7 +225,7 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
                 errorLocation = Settings.getScreensaverFolder()
 
             log("No Screensaver file set or not valid %s" % errorLocation)
-            cmd = 'Notification("{0}", "{1}", 5, "{2}")'.format(__addon__.getLocalizedString(32300).encode('utf-8'), errorLocation, __icon__)
+            cmd = 'Notification("{0}", "{1}", 3000, "{2}")'.format(__addon__.getLocalizedString(32300).encode('utf-8'), errorLocation, __icon__)
             xbmc.executebuiltin(cmd)
             return None
 
@@ -184,25 +233,36 @@ class ScreensaverWindow(xbmcgui.WindowXMLDialog):
 
     # Apply any user setting to the created playlist
     def _updatePlaylistForSettings(self, playlist):
+        if playlist.size() < 1:
+            return playlist
+
+        filename = playlist[0].getfilename()
+        duration = self._getVideoDuration(filename)
+        log("Duration is %d for file %s" % (duration, filename))
+
+        startTime = 0
+
+        # Check if we have a random start time
+        if Settings.isRandomStart():
+            startTime = random.randint(0, int(duration * 0.75))
+            startTime = duration - 5
+
+        clockStart = Settings.getTimeForClock(filename, duration)
+        if clockStart > 0:
+            startTime = clockStart
+
         # Set the random start
-        if Settings.isRandomStart() and playlist.size() > 0:
-            filename = playlist[0].getfilename()
-            duration = self._getVideoDuration(filename)
+        if (startTime > 0) and (duration > 10):
+            listitem = xbmcgui.ListItem()
+            # Record if the theme should start playing part-way through
+            listitem.setProperty('StartOffset', str(startTime))
 
-            log("Duration is %d for file %s" % (duration, filename))
+            log("Setting start of %d for %s" % (startTime, filename))
 
-            if duration > 10:
-                listitem = xbmcgui.ListItem()
-                # Record if the theme should start playing part-way through
-                randomStart = random.randint(0, int(duration * 0.75))
-                listitem.setProperty('StartOffset', str(randomStart))
-
-                log("Setting Random start of %d for %s" % (randomStart, filename))
-
-                # Remove the old item from the playlist
-                playlist.remove(filename)
-                # Add the new item at the start of the list
-                playlist.add(filename, listitem, 0)
+            # Remove the old item from the playlist
+            playlist.remove(filename)
+            # Add the new item at the start of the list
+            playlist.add(filename, listitem, 0)
 
         return playlist
 

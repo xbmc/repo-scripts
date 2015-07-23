@@ -23,6 +23,7 @@ class Downloader:
         addonRootDir = xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")
         self.tempDir = os_path_join(addonRootDir, 'temp')
         self.videoDir = os_path_join(addonRootDir, 'videos')
+        self.ziggyServer = "aHR0cDovL2tvZGkuemlnZ3k3MzcwMS5zZWVkci5pby9WaWRlb1NjcmVlbnNhdmVyLw=="
 
         # Set up the addon directories if they do not already exist
         if not dir_exists(addonRootDir):
@@ -59,7 +60,7 @@ class Downloader:
 
     # Download the video file
     def download(self, fileUrl, filename, displayName):
-        log("Download: %s" % fileUrl)
+        log("Download: %s" % filename)
         tmpdestination = os_path_join(self.tempDir, filename)
         destination = os_path_join(self.videoDir, filename)
 
@@ -78,37 +79,57 @@ class Downloader:
         downloadProgressDialog = xbmcgui.DialogProgress()
         downloadProgressDialog.create(__addon__.getLocalizedString(32303), displayName, filename, destination)
 
-        try:
-            # Callback method to report progress
-            def _report_hook(count, blocksize, totalsize):
-                percent = int(float(count * blocksize * 100) / totalsize)
-                downloadProgressDialog.update(percent, displayName, filename, destination)
+        # Callback method to report progress
+        def _report_hook(count, blocksize, totalsize):
+            percent = int(float(count * blocksize * 100) / totalsize)
+            downloadProgressDialog.update(percent, displayName, filename, destination)
 
-            # Now retrieve the actual file
-            fp, h = urllib.urlretrieve(fileUrl, tmpdestination, _report_hook)
-            log(h)
+        # First Try Ziggy Server, then the default
+        urls = []
+        urls.append(base64.b64decode(self.ziggyServer) + filename)
+        if fileUrl not in [None, ""]:
+            urls.append(fileUrl)
 
-            # Check to make sure that the file created downloaded correctly
-            st = xbmcvfs.Stat(tmpdestination)
-            fileSize = st.st_size()
-            log("Download: Size of file %s is %d" % (tmpdestination, fileSize))
-            # Check for something that has a size greater than zero (in case some OSs do not
-            # support looking at the size), but less that 1,000,000 (As all our files are
-            # larger than that
-            if (fileSize > 0) and (fileSize < 1000000):
-                log("Download: Detected that file %s did not download correctly as file size is only %d" % (fileUrl, fileSize))
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32005), __addon__.getLocalizedString(32306), __addon__.getLocalizedString(32307))
-            else:
-                log("Download: Copy from %s to %s" % (tmpdestination, destination))
-                copy = xbmcvfs.copy(tmpdestination, destination)
-                if copy:
-                    log("Download: Copy Successful")
+        showError = False
+        downloadOK = False
+        for downloadURL in urls:
+            try:
+                log("Download: Using server: %s" % downloadURL)
+
+                # Now retrieve the actual file
+                fp, h = urllib.urlretrieve(downloadURL, tmpdestination, _report_hook)
+                log(h)
+
+                # Check to make sure that the file created downloaded correctly
+                st = xbmcvfs.Stat(tmpdestination)
+                fileSize = st.st_size()
+                log("Download: Size of file %s is %d" % (tmpdestination, fileSize))
+                # Check for something that has a size greater than zero (in case some OSs do not
+                # support looking at the size), but less that 1,000,000 (As all our files are
+                # larger than that
+                if (fileSize > 0) and (fileSize < 1000000):
+                    log("Download: Detected that file %s did not download correctly as file size is only %d" % (downloadURL, fileSize))
+                    if showError:
+                        xbmcgui.Dialog().ok(__addon__.getLocalizedString(32005), __addon__.getLocalizedString(32306), __addon__.getLocalizedString(32307))
                 else:
-                    log("Download: Copy Failed")
-            xbmcvfs.delete(tmpdestination)
-        except:
-            log("Download: Theme download Failed!!!", xbmc.LOGERROR)
-            log("Download: %s" % traceback.format_exc(), xbmc.LOGERROR)
+                    log("Download: Copy from %s to %s" % (tmpdestination, destination))
+                    copy = xbmcvfs.copy(tmpdestination, destination)
+                    if copy:
+                        log("Download: Copy Successful")
+                        downloadOK = True
+                    else:
+                        log("Download: Copy Failed")
+                xbmcvfs.delete(tmpdestination)
+            except:
+                log("Download: Theme download Failed!!!", xbmc.LOGERROR)
+                log("Download: %s" % traceback.format_exc(), xbmc.LOGERROR)
+                if not showError:
+                    log("Download: Trying different server", xbmc.LOGERROR)
+            # If we have downloaded OK, there is no need to loop
+            if downloadOK:
+                break
+            # If the second option fails then show the error
+            showError = True
 
         # Make sure the progress dialog has been closed
         downloadProgressDialog.close()

@@ -49,6 +49,8 @@ if __name__ == '__main__':
         # Start the monitor so we can see when the screensaver quits
         exitMon = ScreensaverExitMonitor()
 
+        log("Starting Video Screensaver %s" % __addon__.getAddonInfo('version'))
+
         # Make a special check to see if and background media is running (e.g. TvTunes)
         # As we want to give that time to stop before we start trying to play the video
         maxBackgroundMediaWait = 400

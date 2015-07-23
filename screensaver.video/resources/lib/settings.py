@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import time
 import xbmc
 import xbmcaddon
 import xbmcvfs
@@ -38,6 +39,31 @@ def os_path_join(dir, file):
     return os.path.join(dir, file)
 
 
+# Splits a path the same way as os.path.split but supports paths of a different
+# OS than that being run on
+def os_path_split(fullpath):
+    # Check if it ends in a slash
+    if fullpath.endswith("/") or fullpath.endswith("\\"):
+        # Remove the slash character
+        fullpath = fullpath[:-1]
+
+    try:
+        slash1 = fullpath.rindex("/")
+    except:
+        slash1 = -1
+
+    try:
+        slash2 = fullpath.rindex("\\")
+    except:
+        slash2 = -1
+
+    # Parse based on the last type of slash in the string
+    if slash1 > slash2:
+        return fullpath.rsplit("/", 1)
+
+    return fullpath.rsplit("\\", 1)
+
+
 # Checks if a directory exists (Do not use for files)
 def dir_exists(dirpath):
     directoryPath = dirpath
@@ -72,6 +98,8 @@ class Settings():
     #    Aquarium004-720p.mp4
     #    Beach002-720p.mp4
     #    Christmas001-1080p.mp4
+    #    Clock001-720p.mp4
+    #    Clock002-360p.mp4
     #    Fireplace001-720p.mkv
     #    Fireplace002.mkv
     #    JohnnyCastaway001-480.mp4
@@ -92,24 +120,29 @@ class Settings():
     # copy.com
     #    Aquarium002-720p.mkv
     #    Aquarium003-720p.mp4
+    #    Aquarium005-720p.mkv
     #    Beach001-720p.mp4
     #    Beach003-720p.mp4
     #    Fireplace003-1080p.mkv
     #    Fireplace004-720p.mp4
+    #    Space003-720p.mkv
     #    Waterfall003-720p.mp4
     PRESET_VIDEOS = (
         [32101, "Aquarium001.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD03QTcyNTkyQTNBNUE0QTVRUVdFMjAxMTY2N0VXUVM="],
-        [32102, "Aquarium002-720p.mkv", "aHR0cDovL2NvcHkuY29tL2NlbXZGQ213M016SVhOMU8vQXF1YXJpdW0wMDItNzIwcC5ta3Y="],
-        [32106, "Aquarium003-720p.mp4", "aHR0cDovL2NvcHkuY29tLzFkaUJkN3Z6SWt3ZFpDdVQvQXF1YXJpdW0wMDMtNzIwcC5tcDQ="],
+        [32102, "Aquarium002-720p.mkv", "aHR0cDovL2NvcHkuY29tL2NlbXZGQ213M016SVhOMU8/ZG93bmxvYWQ9MQ=="],
+        [32106, "Aquarium003-720p.mp4", "aHR0cDovL2NvcHkuY29tLzFkaUJkN3Z6SWt3ZFpDdVQ/ZG93bmxvYWQ9MQ=="],
         [32124, "Aquarium004-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQ0NCNDY2NDEzQTVBNEE1UVFXRTEzMDY2OTlFV1FTL0FxdWFyaXVtMDA0LTcyMHAubXA0"],
-        [32109, "Beach001-720p.mp4", "aHR0cDovL2NvcHkuY29tL1VvRE1OZ0JWajBmTVFxeFYvQmVhY2gwMDEtNzIwcC5tcDQ="],
+        [32128, "Aquarium005-720p.mkv", "aHR0cDovL2NvcHkuY29tL0Y4NnRrUU9kR3hRVEVBR1Q/ZG93bmxvYWQ9MQ=="],
+        [32109, "Beach001-720p.mp4", "aHR0cDovL2NvcHkuY29tL1VvRE1OZ0JWajBmTVFxeFY/ZG93bmxvYWQ9MQ=="],
         [32110, "Beach002-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1CN0U5RjZDRTNBNUE0QTVRUVdFMjEwMzI1MUVXUVM="],
-        [32119, "Beach003-720p.mp4", "aHR0cDovL2NvcHkuY29tL0t0OVFsNlVlVEVLR09vZXUvQmVhY2gwMDMtNzIwcC5tcDQ="],
+        [32119, "Beach003-720p.mp4", "aHR0cDovL2NvcHkuY29tL0t0OVFsNlVlVEVLR09vZXU/ZG93bmxvYWQ9MQ=="],
         [32125, "Christmas001-1080p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjE0NEQ1MDIzQTVBNEE1UVFXRTEzMDY3MDJFV1FTL0NocmlzdG1hczAwMS0xMDgwcC5tcDQ="],
+        [32130, "Clock001-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvRDZBRjc2MEEzQTVBNEE1UVFXRTE1MDM1OTRFV1FTL0Nsb2NrMDAxLTcyMHAubXA0"],
+        [32131, "Clock002-360p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjFDMjJCNTMzQTVBNEE1UVFXRTE1MDM1OThFV1FTL0Nsb2NrMDAyLTM2MHAubXA0"],
         [32103, "Fireplace001-720p.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1ENzMwODE2OTNBNUE0QTVRUVdFMjAxMTcyOUVXUVM="],
         [32104, "Fireplace002.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05QkRBRDdDODNBNUE0QTVRUVdFMjAxMTY4OUVXUVM="],
-        [32105, "Fireplace003-1080p.mkv", "aHR0cDovL2NvcHkuY29tL1dzZEcwdmZ0cWl2V3NqWUQvRmlyZXBsYWNlMDAzLTEwODBwLm1rdg=="],
-        [32107, "Fireplace004-720p.mp4", "aHR0cDovL2NvcHkuY29tL2I2VlJ6UTFYeEVmSXhwU0gvRmlyZXBsYWNlMDA0LTcyMHAubXA0"],
+        [32105, "Fireplace003-1080p.mkv", "aHR0cDovL2NvcHkuY29tL1dzZEcwdmZ0cWl2V3NqWUQ/ZG93bmxvYWQ9MQ=="],
+        [32107, "Fireplace004-720p.mp4", "aHR0cDovL2NvcHkuY29tL2I2VlJ6UTFYeEVmSXhwU0g/ZG93bmxvYWQ9MQ=="],
         [32126, "JohnnyCastaway001-480.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvODU1RDlBMDQzQTVBNEE1UVFXRTEzMDY2ODhFV1FTL0pvaG5ueUNhc3Rhd2F5MDAxLTQ4MC5tcDQ="],
         [32111, "Matrix001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05RTczMTM0QjNBNUE0QTVRUVdFMjEwMzMyN0VXUVM="],
         [32127, "Ocean001-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvMjI2NzJBNzczQTVBNEE1UVFXRTEzMTg1NDlFV1FTL09jZWFuMDAxLTcyMHAubXA0"],
@@ -119,10 +152,11 @@ class Settings():
         [32122, "Snow003-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjE0RUE1NDYzQTVBNEE1UVFXRTk0MTQ3MkVXUVMvU25vdzAwMy03MjBwLm1wNA=="],
         [32108, "Space001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1EQ0E4OTFEMTNBNUE0QTVRUVdFMjAxMTc3NkVXUVM="],
         [32112, "Space002-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD00NDQxQ0JCNTNBNUE0QTVRUVdFMjEwMzA4OUVXUVM="],
+        [32129, "Space003-720p.mp4", "aHR0cDovL2NvcHkuY29tL3NEZDByM0gxRldZVGptUjk/ZG93bmxvYWQ9MQ=="],
         [32114, "StarTrekTNG-001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1FM0VFRTkyNzNBNUE0QTVRUVdFMjEwNDA4NEVXUVM="],
         [32116, "Waterfall001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD0wNDk1NDU5RTNBNUE0QTVRUVdFMjExNTk2N0VXUVM="],
         [32117, "Waterfall002-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD0wQTRGQjAxMjNBNUE0QTVRUVdFMjExNTk4NUVXUVM="],
-        [32118, "Waterfall003-720p.mp4", "aHR0cDovL2NvcHkuY29tL20xcnNFVXhjVXlBTWVOaGMvV2F0ZXJmYWxsMDAzLTcyMHAubXA0"],
+        [32118, "Waterfall003-720p.mp4", "aHR0cDovL2NvcHkuY29tL20xcnNFVXhjVXlBTWVOaGM/ZG93bmxvYWQ9MQ=="],
         [32123, "Watermill001-1080p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQTRDNzMxNkYzQTVBNEE1UVFXRTk0MTQ0OEVXUVMvV2F0ZXJtaWxsMDAxLTEwODBwLm1wNA=="],
         [32113, "Woodland001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD0xODFDMjE1QjNBNUE0QTVRUVdFMjEwMzMyOUVXUVM="]
     )
@@ -271,3 +305,29 @@ class Settings():
         if Settings.getVolume() == 0:
             return __addon__.getSetting("useAudioSuspend") == 'true'
         return False
+
+    @staticmethod
+    def getTimeForClock(filenameAndPath, duration):
+        startTime = 0
+        justFilename = os_path_split(filenameAndPath)[-1]
+        # Check if we are dealing with a clock
+        if 'clock' in justFilename.lower():
+            # Get the current time, we need to convert
+            localTime = time.localtime()
+            startTime = (((localTime.tm_hour * 60) + localTime.tm_min) * 60) + localTime.tm_sec
+
+            # Check if the video is the 12 hour or 24 hour clock
+            if duration < 46800:
+                # 12 hour clock
+                log("12 hour clock detected for %s" % justFilename)
+                if startTime > 43200:
+                    startTime = startTime - 43200
+            else:
+                log("24 hour clock detected for %s" % justFilename)
+
+        # Just make sure that the start time is not larger than the duration
+        if startTime > duration:
+            log("Start time %d later than duration %d" % (startTime, duration))
+            startTime = 0
+
+        return startTime
