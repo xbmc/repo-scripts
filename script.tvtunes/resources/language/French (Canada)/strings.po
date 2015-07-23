@@ -156,10 +156,6 @@ msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr "soundcloud.com"
 
-msgctxt "#32033"
-msgid "grooveshark.com"
-msgstr "grooveshark.com"
-
 msgctxt "#32034"
 msgid "goear.com"
 msgstr "goear.com"
@@ -282,7 +278,7 @@ msgstr "Fanart,imagette"
 
 msgctxt "#32064"
 msgid "Dim Level"
-msgstr "Niveau d'assombrissement"
+msgstr "Niveau d'atténuation"
 
 msgctxt "#32065"
 msgid "Thumbnail,Cast"

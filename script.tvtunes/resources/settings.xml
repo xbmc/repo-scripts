@@ -13,6 +13,7 @@
 		<setting id="fadeIn" type="bool" label="32013" default="false"/>
 		<setting id="shuffle" type="bool" label="32010" default="true"/>
 		<setting id="random" type="bool" label="32011" default="false"/>
+		<setting id="singleThemeOnly" type="bool" label="32089" default="false"/>
 		<setting id="trackLengthLimit" label="32027" type="slider" default="0" range="0,10,180" option="int" />
 	</category>
 	<category label="32992">
@@ -46,6 +47,7 @@
 		<setting id="avi" type="bool" label="AVI" visible="eq(-10,true)" subsetting="true" default="true"/>
 		<setting id="mov" type="bool" label="MOV" visible="eq(-11,true)" subsetting="true" default="true"/>
 		<setting id="playVideoThemeRules" visible="eq(-4,true)|eq(-3,true)|eq(-2,true)|eq(-1,true)" type="enum" label="32085" lvalues="32086|32087|32088" default="0"/>
+		<setting id="repeatSingleAudioAfterVideo" type="bool" label="32090" visible="eq(-1,1)" subsetting="true" default="false"/>
     	<setting label="32079" type="lsep"/>
     	<setting id="resetVolumeOnStartup" type="bool" label="32080" default="false"/>
 		<setting id="resetStartupVolumeValue" label="32081" visible="eq(-1,true)" type="slider" default="100" range="0,1,100" option="int" />

@@ -136,10 +136,6 @@ msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr "soundcloud.com"
 
-msgctxt "#32033"
-msgid "grooveshark.com"
-msgstr "grooveshark.com"
-
 msgctxt "#32034"
 msgid "goear.com"
 msgstr "goear.com"

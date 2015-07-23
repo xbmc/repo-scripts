@@ -156,10 +156,6 @@ msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr "soundcloud.com"
 
-msgctxt "#32033"
-msgid "grooveshark.com"
-msgstr "grooveshark.com"
-
 msgctxt "#32034"
 msgid "goear.com"
 msgstr "goear.com"
@@ -359,6 +355,26 @@ msgstr "Garso failų tipai"
 msgctxt "#32083"
 msgid "Video File Types"
 msgstr "Vaizdo failų tipai"
+
+msgctxt "#32084"
+msgid "Enable Theme Playing (Restart Required)"
+msgstr "Įjungti temos atkūrimą (reikia paleisti iš naujo)"
+
+msgctxt "#32085"
+msgid "When A Video Theme Exists"
+msgstr "Kai egzistuoja vaizdo tema"
+
+msgctxt "#32086"
+msgid "Mix With Audio Themes"
+msgstr "Sumaišyti su garso temomis"
+
+msgctxt "#32087"
+msgid "Play Video Themes First"
+msgstr "Pirma atkurti vaizdo temas"
+
+msgctxt "#32088"
+msgid "Only Play Video Themes"
+msgstr "Atkurti tik vaizdo temas"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"

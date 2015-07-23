@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tvtunes" name="TvTunes" version="5.0.2" provider-name="robwebset">
+<addon id="script.tvtunes" name="TvTunes" version="5.0.3" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/> 
+		<import addon="script.module.beautifulsoup" version="3.2.1"/>
 		<import addon="script.module.requests" version="2.3.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">

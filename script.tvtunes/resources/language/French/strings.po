@@ -156,10 +156,6 @@ msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr "soundcloud.com"
 
-msgctxt "#32033"
-msgid "grooveshark.com"
-msgstr "grooveshark.com"
-
 msgctxt "#32034"
 msgid "goear.com"
 msgstr "goear.com"
@@ -351,6 +347,34 @@ msgstr "Réinitialiser le volume au démarrage"
 msgctxt "#32081"
 msgid "Set Volume On Startup To"
 msgstr "Au démarrage, mettre le volume à "
+
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr "Types de fichiers Audio"
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr "Types de fichiers Vidéo"
+
+msgctxt "#32084"
+msgid "Enable Theme Playing (Restart Required)"
+msgstr "Activer la lecture du thème (redémarrage requis)"
+
+msgctxt "#32085"
+msgid "When A Video Theme Exists"
+msgstr "Quand un thème Vidéo existe"
+
+msgctxt "#32086"
+msgid "Mix With Audio Themes"
+msgstr "Mixer avec les thèmes Audio"
+
+msgctxt "#32087"
+msgid "Play Video Themes First"
+msgstr "Jouer en premier les thèmes Vidéo"
+
+msgctxt "#32088"
+msgid "Only Play Video Themes"
+msgstr "Jouer uniquement les thèmes Vidéo"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"

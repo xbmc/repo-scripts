@@ -25,7 +25,7 @@ class ThemePlayer(xbmc.Player):
         self.hasChangedVolume = False
         self.hasChangedRepeat = False
         # Save the volume from before any alterations
-        self.original_volume = self._getVolume()
+        self.original_volume = -1
 
         # Record the time that playing was started
         # 0 is not playing
@@ -43,6 +43,8 @@ class ThemePlayer(xbmc.Player):
 
         self.playListItems = []
 
+        self.repeatOneSet = False
+
         # Save off the current repeat state before we started playing anything
         if xbmc.getCondVisibility('Playlist.IsRepeat'):
             self.repeat = "RepeatAll"
@@ -58,10 +60,13 @@ class ThemePlayer(xbmc.Player):
         self.restoreSettings()
         xbmc.Player.onPlayBackStopped(self)
 
-    def onPlayBackEnded(self):
-        log("ThemePlayer: Received onPlayBackEnded")
-        self.restoreSettings()
-        xbmc.Player.onPlayBackEnded(self)
+    def onPlayBackStarted(self):
+        # Check if the item that has just been started is one of our themes
+        # if it isn't then the user has manually started a new media file, so we
+        # need to stop the current one
+        if not self.isPlayingTheme():
+            self.restoreSettings()
+        xbmc.Player.onPlayBackStarted(self)
 
     def restoreSettings(self):
         log("ThemePlayer: Restoring player settings")
@@ -71,22 +76,26 @@ class ThemePlayer(xbmc.Player):
             maxLoop = maxLoop - 1
             xbmc.sleep(1)
 
-        # Restore repeat state
-        if self.hasChangedRepeat:
-            xbmc.executebuiltin("PlayerControl(%s)" % self.repeat)
-            # We no longer use the JSON method to repeat as it does not work with videos
-            # xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "%s" }, "id": 1 }' % self.repeat)
-            self.hasChangedRepeat = False
         # Force the volume to the starting volume, but only if we have changed it
         if self.hasChangedVolume:
             # There have been reports of some audio systems like PulseAudio return that they have
             # stopped playing the audio, however they have not quite finished, to accommodate
             # this we add an extra sleep in here
             xbmc.sleep(350)
-            self._setVolume(self.original_volume)
+            if self.original_volume > -1:
+                self._setVolume(self.original_volume)
             # Record that the volume has been restored
             self.hasChangedVolume = False
             log("ThemePlayer: Restored volume to %d" % self.original_volume)
+
+        # Restore repeat state
+        if self.hasChangedRepeat:
+            xbmc.executebuiltin("PlayerControl(%s)" % self.repeat)
+            # We no longer use the JSON method to repeat as it does not work with videos
+            # xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "%s" }, "id": 1 }' % self.repeat)
+            self.hasChangedRepeat = False
+            self.repeatOneSet = False
+
         # Record the time that playing was started (0 is stopped)
         self.startTime = 0
 
@@ -212,8 +221,9 @@ class ThemePlayer(xbmc.Player):
     def _lowerVolume(self):
         try:
             if Settings.getDownVolume() != 0:
-                current_volume = self._getVolume()
-                vol = current_volume - Settings.getDownVolume()
+                # Save the volume from before any alterations
+                self.original_volume = self._getVolume()
+                vol = self.original_volume - Settings.getDownVolume()
                 # Make sure the volume still has a value
                 if vol < 1:
                     vol = 1
@@ -257,6 +267,22 @@ class ThemePlayer(xbmc.Player):
 
     # Checks if the play duration has been exceeded and then stops playing
     def checkEnding(self):
+        # Check for the case where the user is playing a video and an audio theme in the
+        # same playlist and wants to repeat the audio theme after the video finishes
+        try:
+            if (not self.repeatOneSet) and self.isPlayingAudio() and Settings.isRepeatSingleAudioAfterVideo():
+                # Check to see if the first item was a video
+                if len(self.playListItems) > 1:
+                    if Settings.isVideoFile(self.playListItems[0]):
+                        # So we know that we did play a video, now we are
+                        # playing an audio file, so set repeat on the current item
+                        log("ThemePlayer: Setting single track to repeat %s" % self.playListItems[1])
+                        xbmc.executebuiltin("PlayerControl(RepeatOne)")
+                        self.repeatOneSet = True
+                        self.hasChangedRepeat = True
+        except:
+            log("ThemePlayer: Failed to check audio repeat after video")
+
         if self.isPlaying() and (self.startTime > 0):
             # Get the current time
             currTime = int(time.time())
@@ -290,11 +316,19 @@ class ThemePlayer(xbmc.Player):
             self.trackEndTime = -1
             return
         self.trackEndTime = currentTime + trackLimit
-        trackLength = int(self.getTotalTime())
-        log("ThemePlayer: track length = %d" % trackLength)
-        if trackLimit > trackLength and (Settings.isLoop() or self.remainingTracks > 0):
-            self.remainingTracks = self.remainingTracks - 1
-            self.trackEndTime = self.trackEndTime + trackLength
+
+        # Allow for the case where the track has just been stopped, in which
+        # case the call to get the total time will fail as there is no track
+        # to get the length of
+        try:
+            trackLength = int(self.getTotalTime())
+            log("ThemePlayer: track length = %d" % trackLength)
+            if trackLimit > trackLength and (Settings.isLoop() or self.remainingTracks > 0):
+                self.remainingTracks = self.remainingTracks - 1
+                self.trackEndTime = self.trackEndTime + trackLength
+        except:
+            log("ThemePlayer: Failed to get track total time as not playing")
+            self.trackEndTime = -1
 
     # Check if tTvTunes is playing a video theme
     def isPlayingTheme(self):

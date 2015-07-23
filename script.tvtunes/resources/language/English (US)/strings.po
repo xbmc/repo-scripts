@@ -156,10 +156,6 @@ msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr "soundcloud.com"
 
-msgctxt "#32033"
-msgid "grooveshark.com"
-msgstr "grooveshark.com"
-
 msgctxt "#32034"
 msgid "goear.com"
 msgstr "goear.com"
@@ -359,6 +355,26 @@ msgstr "Audio File Types"
 msgctxt "#32083"
 msgid "Video File Types"
 msgstr "Video File Types"
+
+msgctxt "#32084"
+msgid "Enable Theme Playing (Restart Required)"
+msgstr "Enable Theme Playing (Restart Required)"
+
+msgctxt "#32085"
+msgid "When A Video Theme Exists"
+msgstr "When A Video Theme Exists"
+
+msgctxt "#32086"
+msgid "Mix With Audio Themes"
+msgstr "Mix With Audio Themes"
+
+msgctxt "#32087"
+msgid "Play Video Themes First"
+msgstr "Play Video Themes First"
+
+msgctxt "#32088"
+msgid "Only Play Video Themes"
+msgstr "Only Play Video Themes"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"

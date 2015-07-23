@@ -10,9 +10,8 @@ import xbmcvfs
 import traceback
 import math
 
-# Following includes required for GoEar support
 import urllib2
-from bs4 import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 import HTMLParser
 
 
@@ -806,6 +805,7 @@ class TelevisionTunesListing(DefaultListing):
 
         # Default is to just do a normal search
         cleanTitle = self.commonTitleCleanup(name)
+        cleanTitle = cleanTitle.replace("'", "")
         themeDetailsList = self._search(cleanTitle, progressDialog)
 
         # If there is an alternative title for this movie or show then
@@ -821,91 +821,98 @@ class TelevisionTunesListing(DefaultListing):
 
     # Perform the search for the theme
     def _search(self, showname, progressDialog):
-        search_url = "http://www.televisiontunes.com/search.php?searWords=%s&Send=Search"
+        search_url = "http://www.televisiontunes.com/search.php?q=%s"
 
         log("TelevisionTunesListing: Search for %s" % showname)
-        theme_list = []
-        next = True
+        themeList = []
         url = search_url % urllib.quote_plus(showname)
-        urlpage = ""
 
-        progressSteps = 1
-        while next is True:
-            # Check if the user has cancelled it
-            if progressDialog.isUserCancelled():
-                break
+        # We will only have progressed to at most 80%, so mark as completed at this point
+        progressDialog.updateProgress(25)
 
-            # We do not know the number of calls we will do, so assume 5
-            if progressSteps < 4:
-                progressDialog.updateProgress(20 * progressSteps)
+        # Get the HTMl at the given URL
+        data = TelevisionTunesListing.getHtmlSource(url)
+        # Check for an error occuring in the fetch from the web
+        if data is not None:
+            # Need to use BeautifulSoup 3 as version 4 does not work with the data returned
+            soup = BeautifulSoup(''.join(data))
 
-            # Get the HTMl at the given URL
-            data = self._getHtmlSource(url + urlpage)
-            # Check for an error occuring in the fetch from the web
-            if data is None:
-                break
-            log("TelevisionTunesListing: Search url = %s" % (url + urlpage))
-            # Search the HTML for the links to the themes
-            match = re.search(r"1\.&nbsp;(.*)<br>", data)
-            if match:
-                data2 = re.findall('<a href="(.*?)">(.*?)</a>', match.group(1))
-            else:
-                log("TelevisionTunesListing: no theme found for %s" % showname)
-                data2 = ""
-            for i in data2:
-                themeURL = i[0] or ""
-                themeName = i[1] or ""
-                log("TelevisionTunesListing: found %s (%s)" % (themeName, themeURL))
-                downloadUrl = self._getMediaURL(themeURL)
-                theme = ThemeItemDetails(themeName, downloadUrl)
-                theme_list.append(theme)
-            match = re.search(r'&search=Search(&page=\d)"><b>Next</b>', data)
-            if match:
-                urlpage = match.group(1)
-            else:
-                next = False
-            log("TelevisionTunesListing: next page = %s" % next)
+            progressDialog.updateProgress(50)
+
+            # Get the section that has all of the search matches in it
+            searchResults = soup.findAll('div', {"class": "jp-title"})
+
+            for entry in searchResults:
+                # Get the link
+                link = entry.find('a')
+                trackName = link.string
+                trackUrl = link['href']
+                log("TelevisionTunesListing: found %s (%s)" % (trackName, trackUrl))
+                themeScraperEntry = TelevisionTunesItemDetails(trackName, trackUrl)
+                themeList.append(themeScraperEntry)
+        else:
+            log("TelevisionTunesListing: No data for %s" % search_url)
+
+        if len(themeList) < 1:
+            log("TelevisionTunesListing: no theme found for %s" % showname)
 
         # We will only have progressed to at most 80%, so mark as completed at this point
         progressDialog.updateProgress(100)
 
-        return theme_list
+        return themeList
 
     # We don't add any appendices for Television Tunes search
     def getSearchAppendices(self):
         return []
 
-    def _getHtmlSource(self, url, save=False):
-        # fetch the html source
-        class AppURLopener(urllib.FancyURLopener):
-            version = "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.0.1) Gecko/2008070208 Firefox/3.6"
-        urllib._urlopener = AppURLopener()
+    @staticmethod
+    def getHtmlSource(url, save=False):
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', ' Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
 
+        doc = None
         try:
-            if os.path.isfile(url):
-                sock = open(url, "r")
-            else:
-                urllib.urlcleanup()
-                sock = urllib.urlopen(url)
-
-            htmlsource = sock.read()
-            sock.close()
-            return htmlsource
+            response = urllib2.urlopen(req)
+            # Holds the webpage that was read via the response.read() command
+            doc = response.read()
+            # Closes the connection after we have read the webpage.
+            try:
+                response.close()
+            except:
+                log("TelevisionTunesListing: Failed to close connection for %s" % url)
         except:
-            log("getHtmlSource: ERROR opening page %s" % url, True, xbmc.LOGERROR)
-            log("getHtmlSource: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
+            log("TelevisionTunesListing: ERROR opening page %s" % url, True, xbmc.LOGERROR)
+            log("TelevisionTunesListing: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
             xbmcgui.Dialog().ok(__language__(32101), __language__(32102))
             return None
+        return doc
 
-    # Gets the URL to stream and download from
-    def _getMediaURL(self, themeURL):
-        audio_id = themeURL
-        audio_id = audio_id.replace("http://www.televisiontunes.com/", "")
-        audio_id = audio_id.replace(".html", "")
 
-        download_url = "http://www.televisiontunes.com/download.php?f=%s" % audio_id
+#########################################
+# Custom TelevisionTunes.com Item Details
+#########################################
+class TelevisionTunesItemDetails(ThemeItemDetails):
+    # Get the URL used to download the theme
+    def getMediaURL(self):
+        data = TelevisionTunesListing.getHtmlSource("http://www.televisiontunes.com" + ThemeItemDetails.getMediaURL(self))
 
-        return download_url
+        # Check for an error occuring in the fetch from the web
+        if data is None:
+            return None
+
+        soup = BeautifulSoup(''.join(data))
+
+        searchResults = soup.find('a', {"id": "download_song"})
+        trackUrl = searchResults['href']
+
+        if trackUrl is None:
+            return None
+
+        downloadURL = "http://www.televisiontunes.com" + trackUrl
+
+        log("TelevisionTunesItemDetails: Download URL: %s" % downloadURL)
+
+        return downloadURL
 
 
 #################################################
@@ -993,6 +1000,7 @@ class GoearListing(DefaultListing):
         requestFailed = True
         maxAttempts = 3
         is404error = False
+        doc = None
 
         while requestFailed and (maxAttempts > 0):
             maxAttempts = maxAttempts - 1
@@ -1021,7 +1029,7 @@ class GoearListing(DefaultListing):
         if requestFailed:
             # pop up a notification, and then return than none were found
             if not is404error:
-                xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (__language__(32105).encode('utf-8'), __language__(32994).encode('utf-8'), 5, __icon__))
+                xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (__language__(32105).encode('utf-8'), __language__(32994).encode('utf-8'), 3000, __icon__))
             return None
 
         # Load the output of the search request into Soup
@@ -1084,7 +1092,7 @@ class GoearListing(DefaultListing):
                 themeScraperEntry = GoearThemeItemDetails(trackName, trackUrl, trackLength, trackQuality, groupName)
                 themeList.append(themeScraperEntry)
                 log("GoearListing: Theme Details = %s" % themeScraperEntry.getDisplayString())
-                log("GoearListing: Theme URL = %s" % themeScraperEntry.getMediaURL())
+                log("GoearListing: Theme URL = %s" % trackUrl)
             except:
                 log("GoearListing: Failed when processing page %s" % traceback.format_exc(), True, xbmc.LOGERROR)
 
@@ -1092,7 +1100,7 @@ class GoearListing(DefaultListing):
 
 
 ################################
-# Custom Goear,com Item Details
+# Custom Goear.com Item Details
 ################################
 class GoearThemeItemDetails(ThemeItemDetails):
     # Get the URL used to download the theme

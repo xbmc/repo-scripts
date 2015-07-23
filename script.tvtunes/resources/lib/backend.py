@@ -98,6 +98,8 @@ class TunesBackend():
         self.lastLoggedThemePath = ""
 
     def runAsAService(self):
+        logVideoLibraryNotShowing = True
+
         while not xbmc.abortRequested:
             # Wait a little before starting the check each time
             xbmc.sleep(200)
@@ -117,8 +119,8 @@ class TunesBackend():
             # NOTE: The screensaver kicking in will only be picked up if the option
             # "Use Visualization if Playing Audio" is disabled
             if WindowShowing.isScreensaver():
-                log("TunesBackend: Screensaver active")
                 if self.isAlive:
+                    log("TunesBackend: Screensaver active")
                     self.stop(fastFade=True)
 
                     # It may be possible that we stopped for the screen-saver about to kick in
@@ -135,10 +137,13 @@ class TunesBackend():
                 continue
 
             if not WindowShowing.isVideoLibrary():
-                log("TunesBackend: Video Library no longer visible")
+                log("TunesBackend: Video Library no longer visible", logVideoLibraryNotShowing)
+                logVideoLibraryNotShowing = False
                 # End playing cleanly (including any fade out) and then stop everything
                 self.stop()
                 continue
+            else:
+                logVideoLibraryNotShowing = True
 
             # There is a valid page selected and there is currently nothing playing
             if self.isPlayingZone() and not WindowShowing.isTvTunesOverrideContinuePrevious():
@@ -168,9 +173,21 @@ class TunesBackend():
                         self.isAlive = False
                 else:
                     # This will occur when a theme has stopped playing, maybe is is not set to loop
-                    log("TunesBackend: playing ended, restoring settings")
-                    self.themePlayer.restoreSettings()
-                    self.isAlive = False
+                    # There can be a delay when playing between playlist items, so give it a little
+                    # time to start playing the next one
+                    themeIsStillPlaying = False
+                    maxLoop = 500
+                    while (maxLoop > 0) and (not themeIsStillPlaying):
+                        maxLoop = maxLoop - 1
+                        xbmc.sleep(1)
+                        if self.themePlayer.isPlayingTheme():
+                            themeIsStillPlaying = True
+                            break
+
+                    if not themeIsStillPlaying:
+                        log("TunesBackend: playing ended, restoring settings")
+                        self.themePlayer.restoreSettings()
+                        self.isAlive = False
 
             # This is the case where the user has moved from within an area where the themes
             # to an area where the theme is no longer played, so it will trigger a stop and
@@ -185,6 +202,7 @@ class TunesBackend():
         # We have finished running, just make one last check to ensure
         # we do not need to stop any audio
         self.stop(True)
+        del self.themePlayer
 
     # Works out if the currently displayed area on the screen is something
     # that is deemed a zone where themes should be played
@@ -311,6 +329,7 @@ class TunesBackend():
             # this is needed if switching from one theme to the next, we
             # do not want a long pause starting and stopping
             fastFadeNeeded = False
+
             # Check if a theme is already playing, if there is we will need
             # to stop it before playing the new theme
             # Stop any audio playing
@@ -371,3 +390,6 @@ class TunesBackend():
         # Confluence - new name: PlayingBackgroundMedia
         xbmcgui.Window(10025).clearProperty("TvTunesIsAlive")
         xbmcgui.Window(10025).clearProperty("PlayingBackgroundMedia")
+
+        # Clear the Theme Player by resetting it
+        self.themePlayer = ThemePlayer()

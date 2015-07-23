@@ -1,3 +1,12 @@
+v5.0.3
+- Fix possible script error if track duration limit is applied during theme stop
+- Add option to only play one theme when there are multiple
+- Fix issue where volume can increase after first item in theme list
+- Add option to loop the audio track after a video background is played
+- Prevent the need to restart after setting the hide or show TvTunes button
+- Update televisiontunes.com support after website change
+- Speed up listing on goear.com
+
 v5.0.2
 - Exclude invalid characters from custom path names
 - Fix issue where themes never loop

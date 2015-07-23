@@ -254,6 +254,13 @@ class WindowShowing():
         folderPathId = "videodb://movies/sets/"
         return xbmc.getCondVisibility("!IsEmpty(ListItem.DBID) + SubString(ListItem.Path," + folderPathId + ",left)")
 
+    @staticmethod
+    def updateHideVideoInfoButton():
+        if Settings.hideVideoInfoButton():
+            xbmcgui.Window(12003).setProperty("TvTunes_HideVideoInfoButton", "true")
+        else:
+            xbmcgui.Window(12003).clearProperty("TvTunes_HideVideoInfoButton")
+
 
 ##############################
 # Stores Various Settings
@@ -275,6 +282,22 @@ class Settings():
         # Force the reload of the settings to pick up any new values
         global __addon__
         __addon__ = xbmcaddon.Addon(id='script.tvtunes')
+        # The user may have change the display settings to show or hide the info button
+        # so make sure we update it
+        WindowShowing.updateHideVideoInfoButton()
+
+    # Checks if the given file is names as a video file
+    @staticmethod
+    def isVideoFile(filename):
+        if filename.endswith('.mp4'):
+            return True
+        if filename.endswith('.mkv'):
+            return True
+        if filename.endswith('.avi'):
+            return True
+        if filename.endswith('.mov'):
+            return True
+        return False
 
     @staticmethod
     def isThemePlayingEnabled():
@@ -459,6 +482,17 @@ class Settings():
         index = int(__addon__.getSetting("playVideoThemeRules"))
         if index == 1:
             return True
+        return False
+
+    @staticmethod
+    def onlyPlaySingleTheme():
+        return __addon__.getSetting("singleThemeOnly") == 'true'
+
+    @staticmethod
+    def isRepeatSingleAudioAfterVideo():
+        if __addon__.getSetting("repeatSingleAudioAfterVideo") == 'true':
+            if Settings.isVideoThemesFirst():
+                return True
         return False
 
 
