@@ -1,3 +1,6 @@
+v1.3.2
+- Update for latest skins
+
 v1.3.1
 - Allow VideoExtras to run for plugin.video.emby
 - Update YouTube Context menu

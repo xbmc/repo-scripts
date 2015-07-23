@@ -232,6 +232,22 @@ msgctxt "#32116"
 msgid "Search YouTube ..."
 msgstr "Zoek YouTube ..."
 
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "Verwijderde scenes"
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "Speciale toevoegingen"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "Bloopers"
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "interviews"
+
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
 msgstr "Deze actie zal het bestand advancedsettings.xml updaten om zeker te zijn dat de extra bestanden juist worden behandeld. weet zeker dan alle veranderingen zijn opgeslagen voor starten, Verdergaan?"

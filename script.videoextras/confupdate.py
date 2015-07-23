@@ -143,15 +143,15 @@ class ConfUpdate():
         dialogXmlStr = self._addIncludeToXml(dialogXmlStr)
 
         # Start by adding the onLoad section
-        previousOnLoad = 'RunScript(script.tvtunes,backend=True)</onload>'
+        previousOnLoad = '</allowoverlay>'
 
         if previousOnLoad not in dialogXmlStr:
             # The file has had a standard component deleted, so quit
-            log("DialogVideoInfo: Could not find TvTunes onLoad command, skipping file", xbmc.LOGERROR)
+            log("DialogVideoInfo: Could not find allowoverlay command, skipping file", xbmc.LOGERROR)
             self.errorToLog = True
             return
 
-        # Now add the Video Extras onLoad command after the TvTunes one
+        # Now add the Video Extras onLoad command after the allowoverlay one
         DIALOG_VIDEO_INFO_ONLOAD = '\n\t<onload condition="System.HasAddon(script.videoextras)">RunScript(script.videoextras,check,"$INFO[ListItem.FilenameAndPath]")</onload>'
         insertTxt = previousOnLoad + DIALOG_VIDEO_INFO_ONLOAD
         dialogXmlStr = dialogXmlStr.replace(previousOnLoad, insertTxt)

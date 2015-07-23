@@ -714,6 +714,8 @@ class VideoPluginContextMenu(xbmcgui.WindowXMLDialog):
 # Main
 #########################
 if __name__ == '__main__':
+    log("Starting VideoExtras %s" % __addon__.getAddonInfo('version'))
+
     try:
         if len(sys.argv) > 2:
             # get the type of operation
