@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: OpenWeatherMap Extended
+# Addon id: weather.openweathermap.extended
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Slovenian (http://www.transifex.com/projects/p/xbmc-addons/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+msgctxt "#32000"
+msgid "OpenWeatherMap"
+msgstr "OpenWeatherMap"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Nastavitev kraja"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Napredno"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Strokovno"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Kraj 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Kraj 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Kraj 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Kraj 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Kraj 5"
+
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "ID kraja 1"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "ID kraja 2"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "ID kraja 3"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "ID kraja 4"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "ID kraja 5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "Pri iskanju krajev pokaži zemlj. širino/višino"
+
+msgctxt "#32122"
+msgid "Weekend"
+msgstr "Vikend"
+
+msgctxt "#32123"
+msgid "Saturday/Sunday"
+msgstr "Sobota/nedelja"
+
+msgctxt "#32124"
+msgid "Friday/Saturday"
+msgstr "Petek/sobota"
+
+msgctxt "#32125"
+msgid "Thursday/Friday"
+msgstr "Četrtek/petek"
+
+msgctxt "#32126"
+msgid "Use personal weather station"
+msgstr "Uporabi osebno vremensko postajo"
+
+msgctxt "#32127"
+msgid "Station ID"
+msgstr "ID postaje"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "Raven povečave kart"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "Vključi zapisnik"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Prenesi vremenske karte"

@@ -1,0 +1,113 @@
+# Kodi Media Center language file
+# Addon Name: OpenWeatherMap Extended
+# Addon id: weather.openweathermap.extended
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "OpenWeatherMap"
+msgstr "OpenWeatherMap"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "Locatiesetup"
+
+msgctxt "#32102"
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+msgctxt "#32103"
+msgid "Expert"
+msgstr "Expert"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "Locatie 1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "Locatie 2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "Locatie 3"
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr "Locatie 4"
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr "Locatie 5"
+
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "Locatie 1 ID"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "Locatie 2 ID"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "Locatie 3 ID"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "Locatie 4 ID"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "Locatie 5 ID"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "Toon lat/lon bij zoeken naar locaties"
+
+msgctxt "#32122"
+msgid "Weekend"
+msgstr "Weekend"
+
+msgctxt "#32123"
+msgid "Saturday/Sunday"
+msgstr "Zaterdag/Zondag"
+
+msgctxt "#32124"
+msgid "Friday/Saturday"
+msgstr "Vrijdag/Zaterdag"
+
+msgctxt "#32125"
+msgid "Thursday/Friday"
+msgstr "Donderdag/Vrijdag"
+
+msgctxt "#32126"
+msgid "Use personal weather station"
+msgstr "Gebruik persoonlijk weerstation"
+
+msgctxt "#32127"
+msgid "Station ID"
+msgstr "Station ID"
+
+msgctxt "#32128"
+msgid "Map zoom level"
+msgstr "Zoomniveau kaart"
+
+msgctxt "#32129"
+msgid "Enable logging"
+msgstr "Zet log aan"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Download weer kaarten"

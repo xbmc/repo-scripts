@@ -1,0 +1,71 @@
+v3.0.0
+- use image resource for weather icons
+
+v2.0.4
+- better handling of key errors
+
+v2.0.3
+- fix crash due to undefined keys
+
+v2.0.2
+- fix unicode error
+
+v2.0.1
+- add proper support for new speed and temp units
+
+v2.0.0
+- bump for isengard
+
+v1.2.1
+- handle newly added speed units
+
+v1.2.0
+- split maps into a separate addon
+
+v1.1.3
+- better visibillity clouds and precip maps
+
+v1.1.2
+- fix missing import
+
+v1.1.1
+- fix crash when logging is enabled
+
+v1.1.0
+- download maps in a separate script
+
+v1.0.4
+- add setting to disable maps
+
+v1.0.3
+- add lat/lon properties
+- fix crash on invalid image files
+
+v1.0.2
+- fix gzip support
+
+v1.0.1
+- disable logging
+
+v1.0.0
+- bump for helix
+
+v0.0.6
+- wrong temperature in F for hourly forecast
+- properly round pressure
+- add space between value and unit
+
+v0.0.5
+- fix maps being cached
+
+v0.0.4
+- use substring location search
+
+v0.0.3
+- fix crash due to empty time value
+
+v0.0.2
+- fix crash due to undefined variable 
+
+v0.0.1
+- initial beta
