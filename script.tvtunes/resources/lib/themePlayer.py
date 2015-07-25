@@ -110,11 +110,13 @@ class ThemePlayer(xbmc.Player):
         # if something is already playing, then we do not want
         # to replace it with the theme
         if not self.isPlaying():
+            # Save the volume from before any alterations
+            self.original_volume = self._getVolume()
             # Perform and lowering of the sound for theme playing
             self._lowerVolume()
 
             if Settings.isFadeIn():
-                # Get the current volume - this is out target volume
+                # Get the current volume - this is our target volume
                 targetVol = self._getVolume()
                 cur_vol_perc = 1
 

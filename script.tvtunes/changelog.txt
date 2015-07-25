@@ -1,3 +1,7 @@
+v5.0.4
+- Add details about advancedsettings.xml
+- Fix issue with not always restoring volume
+
 v5.0.3
 - Fix possible script error if track duration limit is applied during theme stop
 - Add option to only play one theme when there are multiple

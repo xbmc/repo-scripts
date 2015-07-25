@@ -360,14 +360,9 @@ class Settings():
         if(__addon__.getSetting("wav") == 'true'):
             fileTypes = fileTypes + "|wav"
         if not audioOnly:
-            if(__addon__.getSetting("mp4") == 'true'):
-                fileTypes = fileTypes + "|mp4"
-            if(__addon__.getSetting("mkv") == 'true'):
-                fileTypes = fileTypes + "|mkv"
-            if(__addon__.getSetting("avi") == 'true'):
-                fileTypes = fileTypes + "|avi"
-            if(__addon__.getSetting("mov") == 'true'):
-                fileTypes = fileTypes + "|mov"
+            videoFileTypes = Settings.getVideoThemeFileExtensions()
+            if videoFileTypes not in [None, ""]:
+                fileTypes = fileTypes + '|' + videoFileTypes
         themeRegEx = '(theme[ _A-Za-z0-9.-]*.(' + fileTypes + ')$)'
         # If using the directory method then remove the requirement to have "theme" in the name
         if (searchDir is not None) and Settings.isThemeDirEnabled():
@@ -378,6 +373,19 @@ class Settings():
         if extensionOnly:
             themeRegEx = '(.(' + fileTypes + ')$)'
         return themeRegEx
+
+    @staticmethod
+    def getVideoThemeFileExtensions():
+        fileTypes = []
+        if(__addon__.getSetting("mp4") == 'true'):
+            fileTypes.append("mp4")
+        if(__addon__.getSetting("mkv") == 'true'):
+            fileTypes.append("mkv")
+        if(__addon__.getSetting("avi") == 'true'):
+            fileTypes.append("avi")
+        if(__addon__.getSetting("mov") == 'true'):
+            fileTypes.append("mov")
+        return '|'.join(fileTypes)
 
     @staticmethod
     def isShuffleThemes():
