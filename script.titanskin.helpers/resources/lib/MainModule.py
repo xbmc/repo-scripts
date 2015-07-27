@@ -5,14 +5,15 @@ import xbmcaddon
 import shutil
 import xbmcaddon
 import xbmcvfs
-import os
+import os, sys
 import time
 import urllib
 import xml.etree.ElementTree as etree
 from xml.dom.minidom import parse
 import json
 import random
-import base64
+
+import Utils as utils
 
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
 from xml.etree import ElementTree
@@ -21,15 +22,13 @@ import xml.etree.cElementTree as ET
 
 doDebugLog = False
 
-__language__ = xbmc.getLocalizedString
-
 win = xbmcgui.Window( 10000 )
 addon = xbmcaddon.Addon(id='script.titanskin.helpers')
 addondir = xbmc.translatePath(addon.getAddonInfo('profile'))
 
-def logMsg(msg, level = 1):
-    if doDebugLog == True:
-        xbmc.log(msg)
+__language__ = xbmc.getLocalizedString
+__cwd__ = addon.getAddonInfo('path')
+
 
 def sendClick(controlId):
     win = xbmcgui.Window( 10000 )
@@ -45,201 +44,8 @@ def defaultSettings():
 def musicSearch():
     xbmc.executebuiltin( "ActivateWindow(MusicLibrary)" )
     xbmc.executebuiltin( "SendClick(8)" )
-
-def videoSearch():
-    xbmc.executebuiltin( "ActivateWindow(VideoLibrary)" )
-    xbmc.executebuiltin( "SendClick(8)" )    
     
-def showWidget():
-    win = xbmcgui.Window( 10000 )
-    linkCount = 0
-    xbmc.executebuiltin('Control.SetFocus(77777,0)')
-    while linkCount !=10 and not xbmc.getCondVisibility("ControlGroup(77777).HasFocus"):
-        time.sleep(0.1)
-        if not xbmc.getCondVisibility("ControlGroup(77777).HasFocus"):
-            xbmc.executebuiltin('Control.SetFocus(77777,0)')
-        linkCount += 1
-    
-def setWidget(containerID):
-    win.clearProperty("activewidget")
-    win.clearProperty("customwidgetcontent")
-    skinStringContent = ""
-    customWidget = False
-    
-    try:
-        # workaround for numeric labels (get translated by xbmc)
-        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(submenuVisibility)")
-        skinString = skinString.replace("num-","")
-        if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
-            skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
         
-        # normal method by getting the defaultID
-        if skinStringContent == "":
-            skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
-            if xbmc.getCondVisibility("Skin.String(widget-" + skinString + ')'):
-                skinStringContent = xbmc.getInfoLabel("Skin.String(widget-" + skinString + ')')
-           
-        if skinStringContent != "":
-     
-            if "$INFO" in skinStringContent:
-                skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
-                skinStringContent = skinStringContent.replace(")]", "")
-                skinStringContent = win.getProperty(skinStringContent)
-                customWidget = True
-            if "Activate" in skinStringContent:
-                skinStringContent = skinStringContent.split(",",1)[1]
-                skinStringContent = skinStringContent.replace(",return","")
-                skinStringContent = skinStringContent.replace(")","")
-                skinStringContent = skinStringContent.replace("\"","")
-                customWidget = True
-            if ":" in skinStringContent:
-                customWidget = True
-                
-            if customWidget:
-                 win.setProperty("customwidgetcontent", skinStringContent)
-                 win.setProperty("activewidget","custom")
-            else:
-                win.clearProperty("customwidgetcontent")
-                win.setProperty("activewidget",skinStringContent)
-
-        else:
-            win.clearProperty("activewidget")
-        
-        #also set spotlightwidget for enhancedhomescreen
-        if xbmc.getCondVisibility("Skin.String(GadgetRows, enhanced)"):
-            setSpotlightWidget(containerID)
-    except: pass
-
-def setSpotlightWidget(containerID):
-    win.clearProperty("spotlightwidgetcontent")
-    skinStringContent = ""
-    customWidget = False
-    
-    # workaround for numeric labels (get translated by xbmc)
-    skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(submenuVisibility)")
-    skinString = skinString.replace("num-","")
-    if xbmc.getCondVisibility("Skin.String(spotlightwidget-" + skinString + ')'):
-        skinStringContent = xbmc.getInfoLabel("Skin.String(spotlightwidget-" + skinString + ')')
-    
-    # normal method by getting the defaultID
-    if skinStringContent == "":
-        skinString = xbmc.getInfoLabel("Container(" + containerID + ").ListItem.Property(defaultID)")
-        if xbmc.getCondVisibility("Skin.String(spotlightwidget-" + skinString + ')'):
-            skinStringContent = xbmc.getInfoLabel("Skin.String(spotlightwidget-" + skinString + ')')
-       
-    if skinStringContent != "":
- 
-        if "$INFO" in skinStringContent:
-            skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
-            skinStringContent = skinStringContent.replace(")]", "")
-            skinStringContent = win.getProperty(skinStringContent)
-        if "Activate" in skinStringContent:
-            skinStringContent = skinStringContent.split(",",1)[1]
-            skinStringContent = skinStringContent.replace(",return","")
-            skinStringContent = skinStringContent.replace(")","")
-            skinStringContent = skinStringContent.replace("\"","")
-
-        win.setProperty("spotlightwidgetcontent", skinStringContent)
-
-    else:
-        win.clearProperty("spotlightwidgetcontent")        
-
-def setSkinVersion():
-    skin = xbmc.getSkinDir()
-    skinLabel = xbmcaddon.Addon(id=skin).getAddonInfo('name')
-    skinVersion = xbmcaddon.Addon(id=skin).getAddonInfo('version')
-    win.setProperty("skinTitle",skinLabel + " (v" + skinVersion + ")")
-        
-def setCustomContent(skinString):
-    #legacy
-    skinStringContent = xbmc.getInfoLabel("Skin.String(" + skinString + ')')
-
-    if "$INFO" in skinStringContent:
-        skinStringContent = skinStringContent.replace("$INFO[Window(Home).Property(", "")
-        skinStringContent = skinStringContent.replace(")]", "")
-        skinStringContent = win.getProperty(skinStringContent)    
-
-    if "Activate" in skinStringContent:
-        skinStringContent = skinStringContent.split(",",1)[1]
-        skinStringContent = skinStringContent.replace(",return","")
-        skinStringContent = skinStringContent.replace(")","")
-        skinStringContent = skinStringContent.replace("\"","")
-           
-        xbmc.executebuiltin("Skin.SetString(" + skinString + ','+ skinStringContent + ')')         
-
-    win.setProperty("customwidgetcontent", skinStringContent)
-        
-def updatePlexlinks():
-    logMsg("update plexlinks started...")
-    xbmc.executebuiltin('RunScript(plugin.video.plexbmc,skin)')
-    linkCount = 0
-    logMsg("updateplexlinks started...")
-    
-    #update plex window properties
-    xbmc.sleep(3000)
-    while linkCount !=10:
-        plexstring = "plexbmc." + str(linkCount)
-        link = win.getProperty(plexstring + ".title")
-        logMsg(plexstring + ".title --> " + link)
-        plexType = win.getProperty(plexstring + ".type")
-        logMsg(plexstring + ".type --> " + plexType)            
-
-        link = win.getProperty(plexstring + ".recent")
-        logMsg(plexstring + ".recent --> " + link)
-        link = link.replace("ActivateWindow(VideoLibrary, ", "")
-        link = link.replace("ActivateWindow(VideoLibrary,", "")
-        link = link.replace("ActivateWindow(MusicFiles,", "")
-        link = link.replace("ActivateWindow(Pictures,", "")
-        link = link.replace(",return)", "")
-        win.setProperty(plexstring + ".recent.content", link)
-        logMsg(plexstring + ".recent --> " + link)
-
-        link = win.getProperty(plexstring + ".viewed")
-        logMsg(plexstring + ".viewed --> " + link)
-        link = link.replace("ActivateWindow(VideoLibrary, ", "")
-        link = link.replace("ActivateWindow(VideoLibrary,", "")
-        link = link.replace("ActivateWindow(MusicFiles,", "")
-        link = link.replace("ActivateWindow(Pictures,", "")
-        link = link.replace(",return)", "")
-        win.setProperty(plexstring + ".viewed.content", link)
-        logMsg(plexstring + ".viewed --> " + link)
-
-        linkCount += 1
-    
-    xbmc.sleep(5000)
-    updatePlexBackgrounds()   
-        
-def updatePlexBackgrounds():
-    logMsg("update plex backgrounds started...")        
-    
-    #update plex backgrounds
-    linkCount = 0
-    xbmc.sleep(5000)
-    while linkCount !=10:
-        plexstring = "plexbmc." + str(linkCount)
-        randomNr = random.randrange(1,10+1)       
-        plexType = win.getProperty(plexstring + ".type")
-        randomimage = ""
-        if plexType == "movie":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
-            win.setProperty("plexfanartbg", randomimage)
-        elif plexType == "artist":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Art(fanart)")
-            if randomimage == "":
-                randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(1).Art(fanart)")
-            if randomimage == "":
-                randomimage = "special://skin/extras/backgrounds/hover_my music.png"                
-        elif plexType == "show":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").Property(Fanart_Image)")
-        elif plexType == "photo":
-            randomimage = xbmc.getInfoLabel("Container(100" + str(linkCount) + ").ListItem(" + str(randomNr) + ").PicturePath")                
-
-        if randomimage != "":
-            win.setProperty(plexstring + ".background", randomimage)
-            logMsg(plexstring + ".background --> " + randomimage)            
-
-        linkCount += 1
-               
 def showInfoPanel():
     tryCount = 0
     secondsToDisplay = "4"
@@ -258,455 +64,457 @@ def showInfoPanel():
 
 def addShortcutWorkAround():
     xbmc.executebuiltin('SendClick(301)')
-    if xbmc.getCondVisibility("System.Platform.Windows"):
-        xbmc.sleep(1000)
-    else:
-        xbmc.sleep(2500)
-        if xbmc.getCondVisibility("System.Platform.Linux.RaspberryPi "):
-            xbmc.sleep(1000)
-    xbmc.executebuiltin('SendClick(401)')
-
-def checkExtraFanArt():
-        
-    lastPath = None
     
+    count = 0
+    #wait for the empy item is focused
+    while (count != 60 and xbmc.getCondVisibility("Window.IsActive(script-skinshortcuts.xml)")):
+        if not xbmc.getCondVisibility("StringCompare(Container(211).ListItem.Property(path), noop)"):
+            xbmc.sleep(100)
+            count += 1
+        else:
+            break
+        
+    if xbmc.getCondVisibility("StringCompare(Container(211).ListItem.Property(path), noop) + Window.IsActive(script-skinshortcuts.xml)"):
+        xbmc.executebuiltin('SendClick(401)')
+    
+                 
+def getFavourites():
     try:
-        efaPath = None
-        efaFound = False
-        liArt = None
-        liPath = xbmc.getInfoLabel("ListItem.Path")
-        containerPath = xbmc.getInfoLabel("Container.FolderPath")
-        
-        if (liPath != None and (xbmc.getCondVisibility("Container.Content(movies) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(tvshows)")) and not "videodb:" in liPath):
-                           
-            if xbmc.getCondVisibility("Container.Content(episodes)"):
-                liArt = xbmc.getInfoLabel("ListItem.Art(tvshow.fanart)")
+        xbmcplugin.setContent(int(sys.argv[1]), 'files')
+        favoritesCount = 0
+        fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
+        if xbmcvfs.exists( fav_file ):
+            doc = parse( fav_file )
+            listing = doc.documentElement.getElementsByTagName( 'favourite' )
             
-            # do not set extra fanart for virtuals
-            if (("plugin://" in liPath) or ("addon://" in liPath) or ("sources" in liPath) or ("plugin://" in containerPath) or ("sources://" in containerPath) or ("plugin://" in containerPath)):
-                win.clearProperty("ExtraFanArtPath")
-                lastPath = None
-            else:
-
-                if xbmcvfs.exists(liPath + "extrafanart/"):
-                    efaPath = liPath + "extrafanart/"
-                else:
-                    pPath = liPath.rpartition("/")[0]
-                    pPath = pPath.rpartition("/")[0]
-                    if xbmcvfs.exists(pPath + "/extrafanart/"):
-                        efaPath = pPath + "/extrafanart/"
-                        
-                if xbmcvfs.exists(efaPath):
-                    dirs, files = xbmcvfs.listdir(efaPath)
-                    if files.count > 1:
-                        efaFound = True
-                        
-                if (efaPath != None and efaFound == True):
-                    if lastPath != efaPath:
-                        win.setProperty("ExtraFanArtPath",efaPath)
-                        lastPath = efaPath
-                        
-                else:
-                    win.clearProperty("ExtraFanArtPath")
-                    lastPath = None
-        else:
-            win.clearProperty("ExtraFanArtPath")
-            lastPath = None
-    
-    except:
-        xbmc.log("Titan skin helper: error occurred in assigning extra fanart background")
-          
-def focusEpisode():
-    
-    totalItems = 0
-    curView = xbmc.getInfoLabel("Container.Viewmode") 
-    viewId = int(getViewId(curView))
-    
-    wid = xbmcgui.getCurrentWindowId()
-    window = xbmcgui.Window( wid )        
-    control = window.getControl(int(viewId))
-    totalItems = int(xbmc.getInfoLabel("Container.NumItems"))
-    
-    #only do a focus if we're on top of the list, else skip to prevent bouncing of the list
-    if not int(xbmc.getInfoLabel("Container.Position")) > 1:
-        if (xbmc.getCondVisibility("Container.SortDirection(ascending)")):
-            curItem = 0
-            control.selectItem(0)
-            xbmc.sleep(250)
-            while ((xbmc.getCondVisibility("Container.Content(episodes) | Container.Content(seasons)")) and totalItems >= curItem):
-                if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png" and xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label") != ".." and not xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Label").startswith("*")):
-                    if curItem != 0:
-                        control.selectItem(curItem)
-                    break
-                else:
-                    curItem += 1
-        
-        elif (xbmc.getCondVisibility("Container.SortDirection(descending)")):
-            curItem = totalItems
-            control.selectItem(totalItems)
-            xbmc.sleep(250)
-            while ((xbmc.getCondVisibility("Container.Content(episodes) | Container.Content(seasons)")) and curItem != 0):
+            for count, favourite in enumerate(listing):
+                label = ""
+                image = "special://skin/extras/hometiles/favourites.png"
+                for (name, value) in favourite.attributes.items():
+                    if name == "name":
+                        label = value
+                    if name == "thumb":
+                        image = value
+                path = favourite.childNodes [ 0 ].nodeValue
                 
-                if (xbmc.getInfoLabel("Container.ListItem(" + str(curItem) + ").Overlay") != "OverlayWatched.png"):
-                    control.selectItem(curItem-1)
-                    break
-                else:    
-                    curItem -= 1
-            
+                path="plugin://script.titanskin.helpers?LAUNCHAPP&&&" + path
+                li = xbmcgui.ListItem(label, path=path)
+                li.setThumbnailImage(image)
+                li.setProperty('IsPlayable', 'false')
+                
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=li, isFolder=False)
+    except Exception as e: 
+        print "exception ?"
+        print e
+        pass        
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-def getViewId(viewString):
-    # get all views from views-file
-    viewId = None
-    skin_view_file = os.path.join(xbmc.translatePath('special://skin/extras'), "views.xml")
-    tree = etree.parse(skin_view_file)
-    root = tree.getroot()
-    for view in root.findall('view'):
-        if viewString == __language__(int(view.attrib['languageid'])):
-            viewId=view.attrib['value']
+def selectOverlayTexture():
+    overlaysList = []
+    overlaysList.append("Custom Overlay Image")
+    dirs, files = xbmcvfs.listdir("special://skin/extras/bgoverlays/")
+    for file in files:
+        if file.endswith(".png"):
+            label = file.replace(".png","")
+            overlaysList.append(label)
     
-    return viewId
+    overlaysList.append("None")
     
-    
-def getImageFromPath(libPath):
-    
-    logMsg("getting images for path " + libPath)
-    if "$INFO" in libPath:
-        libPath = libPath.replace("$INFO[Window(Home).Property(", "")
-        libPath = libPath.replace(")]", "")
-        libPath = win.getProperty(libPath)    
-
-    if "Activate" in libPath:
-        libPath = libPath.split(",",1)[1]
-        libPath = libPath.replace(",return","")
-        libPath = libPath.replace(")","")
-        libPath = libPath.replace("\"","")
-    
-    #safety check: does the config directory exist?
-    if not xbmcvfs.exists(addondir + os.sep):
-        xbmcvfs.mkdir(addondir)
-    
-    # Blacklist checks
-    txtb64 = base64.urlsafe_b64encode(libPath)
-    if len(txtb64) > 20:
-        txtb64 = txtb64[-20:]
-    txtPath = os.path.join(addondir,txtb64 + ".txt")
-    
-    if win.getProperty(txtPath) == "blacklist":
-        logMsg("path blacklisted - skipping for path " + libPath)
-        return None
-        
-    blacklistPath = os.path.join(addondir,"blacklist.txt")
-    if (xbmcvfs.exists(blacklistPath) and os.path.getsize(blacklistPath) > 0):
-        blfile = open(blacklistPath, 'r')
-        if libPath in blfile.read():
-            logMsg("path blacklisted - skipping for path " + libPath)
-            blfile.close()
-            return None
-        logMsg("path is NOT blacklisted (or blacklist file error) - continuing for path " + libPath)
-        blfile.close()
-    
-    #no blacklist so read cache and/or path
-    images = []
-    
-    #delete existing cache file if cache expired
-    if xbmcvfs.exists(txtPath) and win.getProperty(txtPath) != "loaded":
-        logMsg("cache file outdated, deleting... " + txtPath)
-        xbmcvfs.delete(txtPath)
-    
-    #cache file exists and cache is not expired, load cache file
-    if (xbmcvfs.exists(txtPath) and os.path.getsize(txtPath) > 0) and win.getProperty(txtPath) == "loaded":
-        txtfile = open(txtPath, 'r')
-        logMsg("get images from the cache file... " + libPath)
-        for line in txtfile.readlines():
-            if not "skip" in line:
-                logMsg("found image in cache... " + line)
-                images.append(line)
-        txtfile.close()
-        if images != []:
-            random.shuffle(images)
-            logMsg("loading done setting image from cache... " + images[0])
-            return images[0]
-        else:
-            logMsg("cache file empty...skipping...")
+    dialog = xbmcgui.Dialog()
+    ret = dialog.select(xbmc.getLocalizedString(31470), overlaysList)
+    if ret == 0:
+        dialog = xbmcgui.Dialog()
+        custom_texture = dialog.browse( 2 , xbmc.getLocalizedString(31457), 'files')
+        if custom_texture:
+            xbmc.executebuiltin("Skin.SetString(ColorThemeTexture,Custom)")
+            xbmc.executebuiltin("Skin.SetString(CustomColorThemeTexture,%s)" % custom_texture)
     else:
-        #no cache file so try to load images from the path
-        logMsg("get images from the path or plugin... " + libPath)
-        if libPath.startswith("plugin://"):
-            media_type = "files"
-        else:
-            media_type = "video"
-        media_array = None
-        media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + libPath + '", "media": "' + media_type + '", "limits": {"end":50}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
-        
-        if(media_array != None and media_array.has_key('files')):
-            for media in media_array['files']:
+        xbmc.executebuiltin("Skin.SetString(ColorThemeTexture,%s)" % overlaysList[ret])
+        xbmc.executebuiltin("Skin.Reset(CustomColorThemeTexture)")
+
+def selectBusyTexture():
+    
+    xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+    import Dialogs as dialogs
+    spinnersList = []
+    
+    currentSpinnerTexture = xbmc.getInfoLabel("Skin.String(SpinnerTexture)")
+    
+    listitem = xbmcgui.ListItem(label="None")
+    listitem.setProperty("icon","None")
+    spinnersList.append(listitem)
+    
+    listitem = xbmcgui.ListItem(label="Custom single image (gif)")
+    listitem.setProperty("icon","special://skin/extras/icons/animated-gif-icon.png")
+    spinnersList.append(listitem)
+    
+    listitem = xbmcgui.ListItem(label="Custom multi image (path)")
+    listitem.setProperty("icon","special://skin/extras/icons/animated-spinner-folder-icon.png")
+    spinnersList.append(listitem)
+
+    dirs, files = xbmcvfs.listdir("special://skin/extras/busy_spinners/")
+    
+    for dir in dirs:
+        listitem = xbmcgui.ListItem(label=dir)
+        listitem.setProperty("icon","special://skin/extras/busy_spinners/" + dir)
+        spinnersList.append(listitem)
+    
+    for file in files:
+        if file.endswith(".gif"):
+            label = file.replace(".gif","")
+            listitem = xbmcgui.ListItem(label=label)
+            listitem.setProperty("icon","special://skin/extras/busy_spinners/" + file)
+            spinnersList.append(listitem)
+
+    w = dialogs.DialogSelectBig( "DialogSelect.xml", __cwd__, listing=spinnersList, windowtitle="select trailer",multiselect=False )
+    
+    count = 0
+    for li in spinnersList:
+        if li.getLabel() == currentSpinnerTexture:
+            w.autoFocusId = count
+        count += 1
+         
+    xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+    w.doModal()
+    selectedItem = w.result
+    del w
+    
+    if selectedItem == -1:
+        return
+    
+    if selectedItem == 1:
+        dialog = xbmcgui.Dialog()
+        custom_texture = dialog.browse( 2 , xbmc.getLocalizedString(31504), 'files', mask='.gif')
+        if custom_texture:
+            xbmc.executebuiltin("Skin.SetString(SpinnerTexture,%s)" %spinnersList[selectedItem].getLabel())
+            xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % custom_texture)
+    elif selectedItem == 2:
+        dialog = xbmcgui.Dialog()
+        custom_texture = dialog.browse( 0 , xbmc.getLocalizedString(31504), 'files')
+        if custom_texture:
+            xbmc.executebuiltin("Skin.SetString(SpinnerTexture,%s)" %spinnersList[selectedItem].getLabel())
+            xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % custom_texture)
+    else:
+        xbmc.executebuiltin("Skin.SetString(SpinnerTexture,%s)" %spinnersList[selectedItem].getLabel())
+        xbmc.executebuiltin("Skin.SetString(SpinnerTexturePath,%s)" % spinnersList[selectedItem].getProperty("icon"))
+                
+def enableViews():
+    import Dialogs as dialogs
+    
+    allViews = []   
+    views_file = xbmc.translatePath( 'special://skin/extras/views.xml' ).decode("utf-8")
+    if xbmcvfs.exists( views_file ):
+        doc = parse( views_file )
+        listing = doc.documentElement.getElementsByTagName( 'view' )
+        for count, view in enumerate(listing):
+            id = view.attributes[ 'value' ].nodeValue
+            label = xbmc.getLocalizedString(int(view.attributes[ 'languageid' ].nodeValue)) + " (" + str(id) + ")"
+            type = view.attributes[ 'type' ].nodeValue
+            listitem = xbmcgui.ListItem(label=label)
+            listitem.setProperty("id",id)
+            if not xbmc.getCondVisibility("Skin.HasSetting(View.Disabled.%s)" %id):
+                listitem.select(selected=True)
+            allViews.append(listitem)
+    
+    w = dialogs.DialogSelectSmall( "DialogSelect.xml", __cwd__, listing=allViews, windowtitle=xbmc.getLocalizedString(31487),multiselect=True )
+    w.doModal()
+    
+    selectedItems = w.result
+    if selectedItems != -1:
+        itemcount = len(allViews) -1
+        while (itemcount != -1):
+            viewid = allViews[itemcount].getProperty("id")
+            if itemcount in selectedItems:
+                #view is enabled
+                xbmc.executebuiltin("Skin.Reset(View.Disabled.%s)" %viewid)
+            else:
+                #view is disabled
+                xbmc.executebuiltin("Skin.SetBool(View.Disabled.%s)" %viewid)
+            itemcount -= 1    
+    del w        
+
+def setForcedView(contenttype):
+    currentView = xbmc.getInfoLabel("Skin.String(ForcedViews.%s)" %contenttype)
+    selectedItem = selectView(contenttype, currentView, True, True)
+    
+    if selectedItem != -1 and selectedItem != None:
+        xbmc.executebuiltin("Skin.SetString(ForcedViews.%s,%s)" %(contenttype, selectedItem))
+    
+def setView():
+    #sets the selected viewmode for the container
+    import Dialogs as dialogs
+    
+    #get current content type
+    contenttype="other"
+    if xbmc.getCondVisibility("Container.Content(episodes)"):
+        contenttype = "episodes"
+    elif xbmc.getCondVisibility("Container.Content(movies) + !substring(Container.FolderPath,setid=)"):
+        contenttype = "movies"  
+    elif xbmc.getCondVisibility("[Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + !substring(Container.FolderPath,setid=)"):
+        contenttype = "sets"
+    elif xbmc.getCondVisibility("substring(Container.FolderPath,setid=)"):
+        contenttype = "setmovies" 
+    elif xbmc.getCondVisibility("Container.Content(tvshows)"):
+        contenttype = "tvshows"
+    elif xbmc.getCondVisibility("Container.Content(seasons)"):
+        contenttype = "seasons"
+    elif xbmc.getCondVisibility("Container.Content(musicvideos)"):
+        contenttype = "musicvideos"
+    elif xbmc.getCondVisibility("Container.Content(artists)"):
+        contenttype = "artists"
+    elif xbmc.getCondVisibility("Container.Content(songs)"):
+        contenttype = "songs"
+    elif xbmc.getCondVisibility("Container.Content(albums)"):
+        contenttype = "albums"
+    elif xbmc.getCondVisibility("Container.Content(songs)"):
+        contenttype = "songs"
+    elif xbmc.getCondVisibility("Window.IsActive(tvchannels) | Window.IsActive(radiochannels)"):
+        contenttype = "tvchannels"
+    elif xbmc.getCondVisibility("Window.IsActive(tvrecordings) | Window.IsActive(radiorecordings)"):
+        contenttype = "tvrecordings"
+    elif xbmc.getCondVisibility("Window.IsActive(programs) | Window.IsActive(addonbrowser)"):
+        contenttype = "programs"
+    elif xbmc.getCondVisibility("Window.IsActive(pictures)"):
+        contenttype = "pictures"
+    
+    currentView = xbmc.getInfoLabel("Container.Viewmode")
+    selectedItem = selectView(contenttype, currentView)
+    currentForcedView = xbmc.getInfoLabel("Skin.String(ForcedViews.%s)" %contenttype)
+    
+    #also store forced view    
+    if currentForcedView != "None":
+        xbmc.executebuiltin("Skin.SetString(ForcedViews.%s,%s)" %(contenttype, selectedItem))
+    
+    #set view
+    if selectedItem != -1 and selectedItem != None:
+        xbmc.executebuiltin("Container.SetViewMode(%s)" %selectedItem)
+    
+def searchTrailer(title):
+    xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+    import Dialogs as dialogs
+    libPath = "plugin://plugin.video.youtube/kodion/search/query/?q=%s Trailer" %title
+    media_array = None
+    allTrailers = []
+    media_array = utils.getJSON('Files.GetDirectory','{ "properties": ["title","art","plot"], "directory": "' + libPath + '", "media": "files", "limits": {"end":25} }')
+    if(media_array != None and media_array.has_key('files')):
+        for media in media_array['files']:
+            
+            if not media["filetype"] == "directory":
+                label = media["label"]
+                label2 = media["plot"]
+                image = None
                 if media.has_key('art'):
-                    if media['art'].has_key('fanart'):
-                        images.append(media['art']['fanart'])
-                    if media['art'].has_key('tvshow.fanart'):
-                        images.append(media['art']['tvshow.fanart'])
-        else:
-            logMsg("media array empty or error so add this path to blacklist..." + libPath)
-            if libPath.startswith("videodb://") or libPath.startswith("library://") or libPath.endswith(".xsp"):
-                win.setProperty(txtPath,"blacklist")
-                return None
-            else:
-                blacklistPath = os.path.join(addondir,"blacklist.txt")
-                blfile = open(blacklistPath, 'a')
-                blfile.write(libPath + '\n')
-                blfile.close()
-                win.setProperty(txtPath,"blacklist")
-                return None
-    
-    #all is fine, we have some images to randomize and return one
-    txtfile = open(txtPath, 'w')
-    image = None
-    if images != []:
-        for image in images:
-            txtfile.write(image + '\n')
-        random.shuffle(images)
-        image = images[0]
-        logMsg("setting random image.... " + image)
-    else:
-        logMsg("image array empty so skipping this path until next restart - " + libPath)
-        win.setProperty(txtPath,"loaded")
-        txtfile.write('skip')
-    
-    win.setProperty(txtPath,"loaded")
-    txtfile.close()
-    return image
+                    if media['art'].has_key('thumb'):
+                        image = (media['art']['thumb'])
+                        
+                path = media["file"]
+                listitem = xbmcgui.ListItem(label=label, label2=label2, iconImage=image)
+                listitem.setProperty("path",path)
+                listitem.setProperty("icon",image)
+                allTrailers.append(listitem)
 
-    
-def UpdateBackgrounds():
-
-    #get all playlists
-    if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.playlists)"):
-        try:
-            playlistCount = 0
-            path = "special://profile/playlists/video/"
-            if xbmcvfs.exists( path ):
-                dirs, files = xbmcvfs.listdir(path)
-                for file in files:
-                    if file.endswith(".xsp"):
-                        playlist = path + file
-                        label = file.replace(".xsp","")
-                        image = getImageFromPath(playlist)
-                        if image != None:
-                            playlist = "ActivateWindow(Videos," + playlist + ",return)"
-                            win.setProperty("playlist." + str(playlistCount) + ".image", image)
-                            win.setProperty("playlist." + str(playlistCount) + ".label", label)
-                            win.setProperty("playlist." + str(playlistCount) + ".action", playlist)
-                            playlistCount += 1
-        except:
-            #something wrong so disable the smartshortcuts for this section for now
-            xbmc.executebuiltin("Skin.Reset(SmartShortcuts.playlists)")
-    
-    #get favorites
-    if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.favorites)"):
-        try:
-            favoritesCount = 0
-            fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
-            if xbmcvfs.exists( fav_file ):
-                doc = parse( fav_file )
-                listing = doc.documentElement.getElementsByTagName( 'favourite' )
-                
-                for count, favourite in enumerate(listing):
-                    name = favourite.attributes[ 'name' ].nodeValue
-                    path = favourite.childNodes [ 0 ].nodeValue
-                    if (path.startswith("ActivateWindow(Videos") or path.startswith("ActivateWindow(10025")) and not "script://" in path:
-                        image = getImageFromPath(path)
-                        if image != None:
-                            win.setProperty("favorite." + str(favoritesCount) + ".image", image)
-                            win.setProperty("favorite." + str(favoritesCount) + ".label", name)
-                            win.setProperty("favorite." + str(favoritesCount) + ".action", path)
-                            favoritesCount += 1
-        except:
-            #something wrong so disable the smartshortcuts for this section for now
-            xbmc.executebuiltin("Skin.Reset(SmartShortcuts.favorites)")    
-
-    
-    #get in progress movies  
-    win.setProperty("InProgressMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/inprogressmovies.xsp"))
-
-    #get recent and unwatched movies
-    win.setProperty("RecentMovieBackground",getImageFromPath("videodb://recentlyaddedmovies/"))
-    
-    #unwatched movies
-    win.setProperty("UnwatchedMovieBackground",getImageFromPath("special://skin/extras/widgetplaylists/unwatchedmovies.xsp"))
-  
-    #get in progress tvshows
-    win.setProperty("InProgressShowsBackground",getImageFromPath("library://video/inprogressshows.xml"))
-
-    #get recent episodes
-    win.setProperty("RecentEpisodesBackground",getImageFromPath("videodb://recentlyaddedepisodes/"))
-
-def getJSON(method,params):
-    json_response = xbmc.executeJSONRPC('{ "jsonrpc" : "2.0" , "method" : "' + method + '" , "params" : ' + params + ' , "id":1 }')
-
-    jsonobject = json.loads(json_response.decode('utf-8','replace'))
-   
-    if(jsonobject.has_key('result')):
-        return jsonobject['result']
-    else:
-        xbmc.log("no result " + str(jsonobject),xbmc.LOGDEBUG)
-        return None
-
-
-def setMovieSetDetails():
-    #get movie set details -- thanks to phil65 - used this idea from his skin info script
-    dbId = xbmc.getInfoLabel("ListItem.DBID")
-    
-    win.clearProperty('MovieSet.Title')
-    win.clearProperty('MovieSet.Runtime')
-    win.clearProperty('MovieSet.Writer')
-    win.clearProperty('MovieSet.Director')
-    win.clearProperty('MovieSet.Genre')
-    win.clearProperty('MovieSet.Country')
-    win.clearProperty('MovieSet.Studio')
-    win.clearProperty('MovieSet.Years')
-    win.clearProperty('MovieSet.Year')
-    win.clearProperty('MovieSet.Count')
-    win.clearProperty('MovieSet.Plot')
+    w = dialogs.DialogSelectBig( "DialogSelect.xml", __cwd__, listing=allTrailers, windowtitle="select trailer",multiselect=False )
+    xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+    w.doModal()
+    selectedItem = w.result
+    del w
+    if selectedItem != -1:
+        path = allTrailers[selectedItem].getProperty("path")
+        xbmc.executebuiltin("PlayMedia(%s)" %path)
             
-    if dbId != "":
-        json_response = getJSON('VideoLibrary.GetMovieSetDetails', '{"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer","genre" , "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} }' % dbId)
-        #clear_properties()
-        if ("setdetails" in json_response):
-            
-            count = 1
-            runtime = 0
-            writer = []
-            director = []
-            genre = []
-            country = []
-            studio = []
-            years = []
-            plot = ""
-            title_list = ""
-            title_header = "[B]" + str(json_response['setdetails']['limits']['total']) + " " + xbmc.getLocalizedString(20342) + "[/B][CR]"
-            set_fanart = []
-            for item in json_response['setdetails']['movies']:
-                art = item['art']
-                set_fanart.append(art.get('fanart', ''))
-                title_list += "[I]" + item['label'] + " (" + str(item['year']) + ")[/I][CR]"
-                if item['plotoutline']:
-                    plot += "[B]" + item['label'] + " (" + str(item['year']) + ")[/B][CR]" + item['plotoutline'] + "[CR][CR]"
-                else:
-                    plot += "[B]" + item['label'] + " (" + str(item['year']) + ")[/B][CR]" + item['plot'] + "[CR][CR]"
-                runtime += item['runtime']
-                count += 1
-                if item.get("writer"):
-                    writer += [w for w in item["writer"] if w and w not in writer]
-                if item.get("director"):
-                    director += [d for d in item["director"] if d and d not in director]
-                if item.get("genre"):
-                    genre += [g for g in item["genre"] if g and g not in genre]
-                if item.get("country"):
-                    country += [c for c in item["country"] if c and c not in country]
-                if item.get("studio"):
-                    studio += [s for s in item["studio"] if s and s not in studio]
-                years.append(str(item['year']))
-            win.setProperty('MovieSet.Plot', plot)
-            if json_response['setdetails']['limits']['total'] > 1:
-                win.setProperty('MovieSet.ExtendedPlot', title_header + title_list + "[CR]" + plot)
-            else:
-                win.setProperty('MovieSet.ExtendedPlot', plot)
-            win.setProperty('MovieSet.Title', title_list)
-            win.setProperty('MovieSet.Runtime', str(runtime / 60))
-            win.setProperty('MovieSet.Writer', " / ".join(writer))
-            win.setProperty('MovieSet.Director', " / ".join(director))
-            win.setProperty('MovieSet.Genre', " / ".join(genre))
-            win.setProperty('MovieSet.Country', " / ".join(country))
-            win.setProperty('MovieSet.Studio', " / ".join(studio))
-            win.setProperty('MovieSet.Years', " / ".join(years))
-            win.setProperty('MovieSet.Year', years[0] + " - " + years[-1])
-            win.setProperty('MovieSet.Count', str(json_response['setdetails']['limits']['total']))
-            
-            count = 40
-            while dbId == xbmc.getInfoLabel("ListItem.DBID") and set_fanart != []:
-                #rotate fanart from movies in set while listitem is in focus
-                if count == 40:
-                    random.shuffle(set_fanart)
-                    win.setProperty('ExtraFanArtPath', set_fanart[0])
-                    count = 0
-                else:
-                    count += 1
-                xbmc.sleep(125)
-            
-def setView(containerType,viewId):
+def getNextEpisodes():
+    limit = 25
+    count = 0
+    xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+    # First we get a list of all the in-progress TV shows
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "studio", "mpaa", "file", "art" ] }, "id": "1"}')
 
-    if viewId=="00":
-        curView = xbmc.getInfoLabel("Container.Viewmode")
-        viewId = getViewId(curView)
+    json_result = json.loads(json_query_string)
+    # If we found any, find the oldest unwatched show for each one.
+    if json_result.has_key('result') and json_result['result'].has_key('tvshows'):
+        for item in json_result['result']['tvshows']:
+            json_query2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "sort": {"method":"episode"}, "filter": {"and": [ {"field": "playcount", "operator": "lessthan", "value":"1"}, {"field": "season", "operator": "greaterthan", "value": "0"} ]}, "properties": [ "title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "tvshowid", "art", "streamdetails", "firstaired", "runtime", "writer", "cast", "dateadded", "lastplayed" ], "limits":{"end":1}}, "id": "1"}' %item['tvshowid'])
+            if json_query2:
+                json_query2 = json.loads(json_query2)
+                if json_query2.has_key('result') and json_query2['result'].has_key('episodes'):
+                    
+                    for item in json_query2['result']['episodes']:
+                        liz = utils.createListItem(item)
+                        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item['file'], listitem=liz)
+                        count +=1
+                        if count == limit:
+                            break
+                            
+    if count < limit:
+        # Fill the list with first episodes of unwatched tv shows
+        json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": { "sort": { "order": "ascending", "method": "dateadded" }, "filter": {"and": [{"operator":"false", "field":"inprogress", "value":""}]}, "properties": [ "title", "studio", "mpaa", "file", "art" ] }, "id": "1"}')
+        json_result = json.loads(json_query_string)
+        if json_result.has_key('result') and json_result['result'].has_key('tvshows'):
+            for item in json_result['result']['tvshows']:
+                json_query2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "sort": {"method":"episode"}, "filter": {"and": [ {"field": "playcount", "operator": "lessthan", "value":"1"}, {"field": "season", "operator": "greaterthan", "value": "0"} ]}, "properties": [ "title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "resume", "tvshowid", "art", "streamdetails", "firstaired", "runtime", "writer", "cast", "dateadded", "lastplayed" ], "limits":{"end":1}}, "id": "1"}' %item['tvshowid'])
+                if json_query2:
+                    json_query2 = json.loads(json_query2)
+                    if json_query2.has_key('result') and json_query2['result'].has_key('episodes'):
+                        
+                        for item in json_query2['result']['episodes']:
+                            liz = utils.createListItem(item)
+                            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item['file'], listitem=liz)
+                            count +=1
+                            if count == limit:
+                                break
         
-    else:
-        viewId=viewId    
-
-    if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc)"):
-        __settings__ = xbmcaddon.Addon(id='plugin.video.netflixbmc')
-
-        if containerType=="MOVIES":
-            __settings__.setSetting('viewIdVideos', viewId)
-        elif containerType=="SERIES":
-            __settings__.setSetting('viewIdEpisodesNew', viewId)
-        elif containerType=="SEASONS":
-            __settings__.setSetting('viewIdEpisodesNew', viewId)
-        elif containerType=="EPISODES":
-            __settings__.setSetting('viewIdEpisodesNew', viewId)
-        else:
-            __settings__.setSetting('viewIdActivity', viewId)
-            
-    if xbmc.getCondVisibility("System.HasAddon(plugin.video.xbmb3c)"):
-        __settings__ = xbmcaddon.Addon(id='plugin.video.xbmb3c')
-        if __settings__.getSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType) != "disabled":
-            __settings__.setSetting(xbmc.getSkinDir()+ '_VIEW_' + containerType, viewId)
-
-def checkNotifications(notificationType):
+        
     
-    if notificationType == "weather":
-        winw = xbmcgui.Window(12600)
-        if (winw.getProperty("Alerts.RSS") != "" and winw.getProperty("Current.Condition") != ""):
-            dialog = xbmcgui.Dialog()
-            dialog.notification(xbmc.getLocalizedString(31294), winw.getProperty("Alerts"), xbmcgui.NOTIFICATION_WARNING, 8000)
+    xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
+
+def getRecommendedMovies():
+    limit = 25
+    count = 0
+    xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+    # First we get a list of all the in-progress Movies
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "runtime", "writer", "cast", "dateadded", "lastplayed" ] }, "id": "1"}')
+    json_result = json.loads(json_query_string)
+    # If we found any, find the oldest unwatched show for each one.
+    if json_result.has_key('result') and json_result['result'].has_key('movies'):
+        for item in json_result['result']['movies']:
+            liz = utils.createListItem(item)
+            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item['file'], listitem=liz)
+            count +=1
+            if count == limit:
+                break
     
-    if notificationType == "nextaired":
-        if (win.getProperty("NextAired.TodayShow") != ""):
-            dialog = xbmcgui.Dialog()
-            dialog.notification(xbmc.getLocalizedString(31295), win.getProperty("NextAired.TodayShow"), xbmcgui.NOTIFICATION_WARNING, 8000)    
-            
-            
-def showSubmenu(showOrHide,doFocus):
+    # Fill the list with random items with a score higher then 7
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "random" }, "filter": {"and": [{"operator":"is", "field":"playcount", "value":"0"},{"operator":"greaterthan", "field":"rating", "value":"7"}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "runtime", "writer", "cast", "dateadded", "lastplayed" ] }, "id": "1"}')
+    json_result = json.loads(json_query_string)
+    # If we found any, find the oldest unwatched show for each one.
+    if json_result.has_key('result') and json_result['result'].has_key('movies'):
+        for item in json_result['result']['movies']:
+            liz = utils.createListItem(item)
+            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item['file'], listitem=liz)
+            count +=1
+            if count == limit:
+                break
+    
+    xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
+    
+def getRecommendedMedia(ondeckOnly=True):
+    limit = 25
+    count = 0
+    allItems = []
+    allTitles = list()
+    xbmcplugin.setContent(int(sys.argv[1]), 'files')
+    # Get a list of all the in-progress Movies
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "mpaa", "runtime", "writer", "cast", "dateadded", "lastplayed", "tagline" ] }, "id": "1"}')
+    json_result = json.loads(json_query_string)
+    if json_result.has_key('result') and json_result['result'].has_key('movies'):
+        for item in json_result['result']['movies']:
+            lastplayed = item["lastplayed"]
+            if not item["title"] in allTitles:
+                allItems.append((lastplayed,item))
+                allTitles.append(item["title"])
+    
+    # Get a list of all the in-progress MusicVideos
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMusicVideos", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "limits": { "start" : 0, "end": 25 }, "properties": [ "title", "playcount", "plot", "file", "resume", "art", "streamdetails", "year", "runtime", "dateadded", "lastplayed" ] }, "id": "1"}')
+    json_result = json.loads(json_query_string)
+    if json_result.has_key('result') and json_result['result'].has_key('musicvideos'):
+        for item in json_result['result']['musicvideos']:
+            lastplayed = item["lastplayed"]
+            if not item["title"] in allTitles and item["resume"]["position"] != 0:
+                allItems.append((lastplayed,item))
+                allTitles.append(item["title"])
+    
+    # Get a list of all the in-progress music songs
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "AudioLibrary.GetRecentlyPlayedSongs", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "limits": { "start" : 0, "end": 5 }, "properties": [ "artist", "title", "rating", "fanart", "thumbnail", "duration", "playcount", "comment", "file", "album", "lastplayed" ] }, "id": "1"}')
+    json_result = json.loads(json_query_string)
+    if json_result.has_key('result') and json_result['result'].has_key('songs'):
+        for item in json_result['result']['songs']:
+            lastplayed = item["lastplayed"]
+            if not item["title"] in allTitles and lastplayed and item["thumbnail"]:
+                allItems.append((lastplayed,item))
+                allTitles.append(item["title"])
+    
+    # NextUp episodes
+    json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": { "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "studio", "mpaa", "file", "art" ] }, "id": "1"}')
+    json_result = json.loads(json_query_string)
+    if json_result.has_key('result') and json_result['result'].has_key('tvshows'):
+        for item in json_result['result']['tvshows']:
+            json_query2 = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "tvshowid": %d, "sort": {"method":"episode"}, "filter": {"and": [ {"field": "playcount", "operator": "lessthan", "value":"1"}, {"field": "season", "operator": "greaterthan", "value": "0"} ]}, "properties": [ "title", "playcount", "season", "episode", "showtitle", "plot", "file", "rating", "mpaa", "resume", "tvshowid", "art", "streamdetails", "firstaired", "runtime", "writer", "cast", "dateadded", "lastplayed" ], "limits":{"end":1}}, "id": "1"}' %item['tvshowid'])
+            if json_query2:
+                json_query2 = json.loads(json_query2)
+                if json_query2.has_key('result') and json_query2['result'].has_key('episodes'):
+                    
+                    for item in json_query2['result']['episodes']:
+                        lastplayed = item["lastplayed"]
+                        if not item["title"] in allTitles:
+                            allItems.append((lastplayed,item))
+                            allTitles.append(item["title"])            
+    
+    
+    #sort the list with in progress items by lastplayed date   
+    from operator import itemgetter
+    allItems = sorted(allItems,key=itemgetter(0),reverse=True)
+    
+    if not ondeckOnly:
+        # Random movies with a score higher then 7
+        json_query_string = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "sort": { "order": "descending", "method": "random" }, "filter": {"and": [{"operator":"is", "field":"playcount", "value":"0"},{"operator":"greaterthan", "field":"rating", "value":"7"}]}, "properties": [ "title", "playcount", "plot", "file", "rating", "resume", "art", "streamdetails", "year", "runtime", "writer", "cast", "dateadded", "lastplayed" ] }, "id": "1"}')
+        json_result = json.loads(json_query_string)
+        # If we found any, find the oldest unwatched show for each one.
+        if json_result.has_key('result') and json_result['result'].has_key('movies'):
+            for item in json_result['result']['movies']:
+                lastplayed = item["lastplayed"]
+                if not item["title"] in set(allTitles):
+                    allItems.append((lastplayed,item))
+                    allTitles.append(item["title"])
 
-    submenuTitle = xbmc.getInfoLabel("Container(300).ListItem.Label")
-    submenu = win.getProperty("submenutype")
-    submenuloading = ""
-    if xbmc.getCondVisibility("Skin.HasSetting(AutoShowSubmenu)"):
-        submenuloading = win.getProperty("submenuloading")
+    #build that listing
+    for item in allItems:
+        liz = utils.createListItem(item[1])
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item[1]['file'], listitem=liz)
+        count +=1
+        if count == limit:
+            break       
+    
+   
+    xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))    
+    
+def selectView(contenttype="other", currentView=None, displayNone=False, displayViewId=False):
+    import Dialogs as dialogs
+    currentViewSelectId = None
 
-    # SHOW SUBMENU    
-    if showOrHide == "SHOW":
-        if submenuloading != "loading":
-            if submenu != "":
-                win.setProperty("submenu", "show")
-                if doFocus != None:
-                    win.setProperty("submenuTitle", submenuTitle)
-                    xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
-                    time.sleep(0.2)
-                    xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
-            else:
-                win.setProperty("submenu", "hide")
-        else:
-            win.setProperty("submenuloading", "")
-
-    #HIDE SUBMENU
-    elif showOrHide == "HIDE":
-        win.setProperty("submenuloading", "loading")
-        win.setProperty("submenu", "hide")
-        if doFocus != None:
-            win.setProperty("submenu", "show")
-            xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
-            time.sleep(0.5)
-            xbmc.executebuiltin('Control.SetFocus('+ doFocus +',0)')
-            win.setProperty("submenuloading", "loading")
-            win.setProperty("submenu", "hide")
-            
+    allViews = []
+    if displayNone:
+        listitem = xbmcgui.ListItem(label="None")
+        listitem.setProperty("id","None")
+        allViews.append(listitem)
+        
+    views_file = xbmc.translatePath( 'special://skin/extras/views.xml' ).decode("utf-8")
+    if xbmcvfs.exists( views_file ):
+        doc = parse( views_file )
+        listing = doc.documentElement.getElementsByTagName( 'view' )
+        itemcount = 0
+        for count, view in enumerate(listing):
+            label = __language__(int(view.attributes[ 'languageid' ].nodeValue))
+            id = view.attributes[ 'value' ].nodeValue
+            if displayViewId:
+                label = label + " (" + str(id) + ")"
+            type = view.attributes[ 'type' ].nodeValue
+            if label.lower() == currentView.lower() or id == currentView:
+                currentViewSelectId = itemcount
+                if displayNone == True:
+                    currentViewSelectId += 1
+            if (type == "all" or contenttype in type) and not xbmc.getCondVisibility("Skin.HasSetting(View.Disabled.%s)" %id):
+                image = "special://skin/extras/viewthumbs/%s.jpg" %id
+                listitem = xbmcgui.ListItem(label=label, iconImage=image)
+                listitem.setProperty("id",id)
+                listitem.setProperty("icon",image)
+                allViews.append(listitem)
+                itemcount +=1
+    w = dialogs.DialogSelectBig( "DialogSelect.xml", __cwd__, listing=allViews, windowtitle="select view",multiselect=False )
+    w.autoFocusId = currentViewSelectId
+    w.doModal()
+    selectedItem = w.result
+    del w
+    if selectedItem != -1:
+        id = allViews[selectedItem].getProperty("id")
+        return id
+    

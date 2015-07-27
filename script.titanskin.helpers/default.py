@@ -1,4 +1,5 @@
 import xbmcaddon
+import xbmcplugin
 import os
 
 __settings__ = xbmcaddon.Addon(id='script.titanskin.helpers')
@@ -7,8 +8,6 @@ BASE_RESOURCE_PATH = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'li
 sys.path.append(BASE_RESOURCE_PATH)
 
 import MainModule
-import BackupRestore
-from SearchDialog import SearchDialog
 
 #script init
 action = ""
@@ -24,57 +23,100 @@ except:
 
 try:
     argument1 = str(sys.argv[2])
-except: 
+except:
     pass
 
 try:
     argument2 = str(sys.argv[3])
-except: 
+except:
     pass
 
 try:
     argument3 = str(sys.argv[4])
 except: 
     pass  
-
+    
 # select action
 if action == "SENDCLICK":
     MainModule.sendClick(argument1)
+
 elif action =="ADDSHORTCUT":
     MainModule.addShortcutWorkAround()
-elif action == "SETVIEW":
-    MainModule.setView(argument1, argument2)
-elif action == "SHOWSUBMENU":
-    MainModule.showSubmenu(argument1,argument2)
+
 elif action == "SHOWINFO":
     MainModule.showInfoPanel()
+
+#setwidget is called from window other then home    
 elif action == "SETWIDGET":
-    MainModule.setWidget(argument1)
-elif action == "UPDATEPLEXLINKS":   
-    MainModule.updatePlexlinks()
-elif action == "SHOWWIDGET":   
-    MainModule.showWidget()
-elif action == "SETCUSTOM":
-    MainModule.setCustomContent(argument1)
+    if (xbmc.getCondVisibility("!Window.IsActive(home)")):
+        from HomeMonitor import HomeMonitor
+        HomeMonitor().setWidget(argument1)
 elif action == "DEFAULTSETTINGS":
     MainModule.defaultSettings()
 elif action == "MUSICSEARCH":
     MainModule.musicSearch()
+elif action == "SETVIEW":
+    MainModule.setView()
+elif action == "SEARCHTRAILER":
+    MainModule.searchTrailer(argument1)
+elif action == "SETFORCEDVIEW":
+    MainModule.setForcedView(argument1)    
+elif action == "ENABLEVIEWS":
+    MainModule.enableViews()
 elif action == "VIDEOSEARCH":
-    #MainModule.videoSearch()
-    searchDialog = SearchDialog("CustomSearch.xml", __cwd__, "default", "1080i")
+    from SearchDialog import SearchDialog
+    searchDialog = SearchDialog("script-titanskin_helpers-CustomSearch.xml", __cwd__, "default", "1080i")
     searchDialog.doModal()
     del searchDialog
-    
+elif action == "COLORPICKER":
+    from ColorPicker import ColorPicker
+    colorPicker = ColorPicker("script-titanskin_helpers-ColorPicker.xml", __cwd__, "default", "1080i")
+    colorPicker.skinString = argument1
+    colorPicker.doModal()
+    del colorPicker
+elif action == "COLORTHEMES":
+    from ColorThemes import ColorThemes
+    colorThemes = ColorThemes("script-titanskin_helpers-ColorThemes.xml", __cwd__, "default", "1080i")
+    colorThemes.doModal()
+    del colorThemes
+elif action == "CREATECOLORTHEME":
+    import ColorThemes as colorThemes
+    colorThemes.createColorTheme()
+elif action == "RESTORECOLORTHEME":
+    import ColorThemes as colorThemes
+    colorThemes.restoreColorTheme()
+elif action == "COLORTHEMETEXTURE":    
+    MainModule.selectOverlayTexture()
+elif action == "BUSYTEXTURE":    
+    MainModule.selectBusyTexture()     
 elif action == "BACKUP":
+    import BackupRestore
     BackupRestore.backup()
 elif action == "RESTORE":
+    import BackupRestore
     BackupRestore.restore()
 elif action == "RESET":
+    import BackupRestore
     BackupRestore.reset()
-elif action == "BACKGROUNDS":
-    MainModule.UpdateBackgrounds()
-elif action == "CHECKNOTIFICATIONS":
-    MainModule.checkNotifications(argument1)
 elif action == "SETSKINVERSION":
-    MainModule.setSkinVersion()
+    import Utils as utils
+    utils.setSkinVersion()
+elif "NEXTEPISODES" in argument1:
+    MainModule.getNextEpisodes()
+elif "RECOMMENDEDMOVIES" in argument1:
+    MainModule.getRecommendedMovies()
+elif "RECOMMENDEDMEDIA" in argument1:
+    MainModule.getRecommendedMedia(False)
+elif "INPROGRESSMEDIA" in argument1:
+    MainModule.getRecommendedMedia(True)      
+elif argument1 == "?FAVOURITES":
+    MainModule.getFavourites()
+elif "?LAUNCHAPP" in argument1:
+    try:
+        app = argument1.split("&&&")[-1]
+        xbmc.executebuiltin(app)
+    except: pass
+
+
+    
+    

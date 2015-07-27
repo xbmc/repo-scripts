@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog" id="1119">
+	<defaultcontrol always="true">3110</defaultcontrol>
+	<backgroundcolor>0</backgroundcolor>
+	<controls>
+	
+		<include>DialogOverlayExtra</include>
+		
+		 <control type="group" id="1000">
+            <posx>337</posx>
+			<posy>280</posy>
+			<width>1320</width>
+			<!-- background panel -->
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-80</posy>
+				<width>1290</width>
+				<height>750</height>
+				<texture border="15">diffuse/bgpanel.png</texture>
+				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+				<animation effect="fade" reversible="false" end="75" time="0" condition="true">Conditional</animation>
+			</control>
+			<control type="image">
+				<posx>-20</posx>
+				<posy>-20</posy>
+				<width>1290</width>
+				<height>690</height>
+				<texture border="15">diffuse/bgpanel.png</texture>
+				<bordersize>10</bordersize>
+				<colordiffuse>$INFO[Skin.String(GeneralPanelsColor)]</colordiffuse>
+				<animation effect="fade" reversible="false" end="90" time="0" condition="true">Conditional</animation>
+			</control>
+			
+			<!--Header-->
+			<control type="label" id="1">
+				<description>Heading</description>
+				<posx>0</posx>
+				<posy>-70</posy>
+				<width>1250</width>
+				<height>50</height>
+				<label>31463</label>
+				<include>DialogHeader_Alt</include>
+				<align>center</align>
+				<wrapmultiline>true</wrapmultiline>
+			</control>
+		
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1250</width>
+				<height>615</height>
+				<texture border="5">dialogs/default/inner.png</texture>
+			</control>
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>625</width>
+				<height>615</height>
+				<texture border="5">dialogs/default/inner-dark.png</texture>
+			</control>
+			<control type="image">
+				<right>80</right>
+				<posy>10</posy>
+				<width>580</width>
+				<height>320</height>
+				<aspectratio>scale</aspectratio>
+				<texture background="true" fallback="dialogs/select/iconsbig/DefaultAddon.png">$INFO[Container(6).ListItem.Icon]</texture>
+			</control>
+			
+			<control type="textbox">
+				<width>575</width>
+				<height>130</height>
+				<right>80</right>
+				<font>Reg25</font>
+				<posy>360</posy>
+				<label>$INFO[Container(6).ListItem.Property(description)]</label>
+				<textcolor>$INFO[Skin.String(GeneralTextColor)]</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<align>left</align>
+				<aligny>top</aligny>
+			</control>
+			
+			<control type="list" id="6">
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>610</width>
+				<height>600</height>
+				<onright>61</onright>
+				<onup>6</onup>
+				<ondown>6</ondown>
+				<onright>61</onright>
+				<pagecontrol>61</pagecontrol>
+				<scrolltime tween="cubic" easing="out">500</scrolltime>
+				<itemlayout height="60">
+					<control type="image">
+						<posx>0</posx>
+						<posy>1</posy>
+						<width>644</width>
+						<height>60</height>
+						<texture>dialogs/default/separator.png</texture>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>5</posy>
+						<width>50</width>
+						<height>50</height>
+						<aspectratio>keep</aspectratio>
+						<texture background="true" fallback="dialogs/select/icons/DefaultAddon.png">$INFO[ListItem.Icon]</texture>
+					</control>
+					<control type="label">
+						<posx>80</posx>
+						<posy>0</posy>
+						<width>544</width>
+						<height>60</height>
+						<label>$VAR[customLibraryLabel]</label>
+						<align>left</align>
+						<aligny>center</aligny>
+						<include>DialogListNF_Alt</include>
+						<scroll>false</scroll>
+					</control>
+					<control type="label">
+						<posx>624</posx>
+						<posy>0</posy>
+						<width>544</width>
+						<height>60</height>
+						<info>ListItem.Property(Addon.Version)</info>
+						<align>right</align>
+						<aligny>center</aligny>
+						<include>DialogListNF_Alt</include>
+						<scroll>false</scroll>
+					</control>
+				</itemlayout>
+				<focusedlayout height="60">
+					<control type="group">
+						<visible>!Control.HasFocus(6)</visible>
+						<animation effect="fade" start="0" end="100" time="300" tween="sine" easing="inout" condition="![Container(6).Scrolling | Container(6).OnScrollNext | Container(6).OnScrollPrevious]">Visible</animation>
+						<animation effect="fade" start="100" end="0" time="300" tween="sine" easing="inout" condition="![Container(6).Scrolling | Container(6).OnScrollNext | Container(6).OnScrollPrevious]">Hidden</animation>
+						<control type="image">
+							<posx>0</posx>
+							<posy>1</posy>
+							<width>644</width>
+							<height>60</height>
+							<texture>dialogs/default/separator.png</texture>
+						</control>
+						<control type="label">
+							<posx>80</posx>
+							<posy>0</posy>
+							<width>544</width>
+							<height>60</height>
+							<info>ListItem.Label</info>
+							<align>left</align>
+							<aligny>center</aligny>
+							<include>DialogListNF_Alt</include>
+							<scroll>false</scroll>
+						</control>
+						<control type="label">
+							<posx>624</posx>
+							<posy>0</posy>
+							<width>544</width>
+							<height>60</height>
+							<info>ListItem.Property(Addon.Version)</info>
+							<align>right</align>
+							<aligny>center</aligny>
+							<include>DialogListNF_Alt</include>
+							<scroll>false</scroll>
+						</control>
+					</control>
+					<control type="group">
+						<visible>Control.HasFocus(6)</visible>
+						<animation effect="fade" start="0" end="100" time="300" tween="sine" easing="inout" condition="![Container(6).Scrolling | Container(6).OnScrollNext | Container(6).OnScrollPrevious]">Visible</animation>
+						<animation effect="fade" start="100" end="0" time="300" tween="sine" easing="inout" condition="![Container(6).Scrolling | Container(6).OnScrollNext | Container(6).OnScrollPrevious]">Hidden</animation>
+						<control type="image">
+							<width>610</width>
+							<height>60</height>
+							<texture border="5">diffuse/panel.png</texture><colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+						</control>
+						<control type="label">
+							<posx>80</posx>
+							<posy>0</posy>
+							<width>544</width>
+							<height>60</height>
+							<label>$INFO[ListItem.Label]</label>
+							<align>left</align>
+							<aligny>center</aligny>
+							<include>DialogListFO_Alt</include>
+						</control>
+						<control type="label">
+							<posx>624</posx>
+							<posy>0</posy>
+							<width>544</width>
+							<height>60</height>
+							<info>ListItem.Property(Addon.Version)</info>
+							<align>right</align>
+							<aligny>center</aligny>
+							<include>DialogListFO_Alt</include>
+							<scroll>false</scroll>
+						</control>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>5</posy>
+						<width>50</width>
+						<height>50</height>
+						<aspectratio>keep</aspectratio>
+						<texture background="true" fallback="dialogs/select/icons/DefaultAddon.png">$INFO[ListItem.Icon]</texture>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="scrollbar" id="61">
+				<posx>630</posx>
+				<posy>10</posy>
+				<width>15</width>
+				<height>480</height>
+				<onup>60</onup>
+				<ondown>60</ondown>
+				<onright>6</onright>
+				<animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(6) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling  | Skin.HasSetting(alwaysShowScrollbars)">Conditional</animation>
+				<animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(6) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling  | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+			</control>	
+			
+
+		</control>
+		
+		
+
+
+	</controls>
+</window>

@@ -7,15 +7,19 @@ import urllib
 import threading
 import InfoDialog
 
-__settings__ = xbmcaddon.Addon(id='script.titanskin.helpers')
-__cwd__ = __settings__.getAddonInfo('path')
+
 
 class SearchDialog(xbmcgui.WindowXMLDialog):
 
     searchThread = None
+    settings = None
+    cwd = None
+    searchString = ""
     
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+        self.settings = xbmcaddon.Addon(id='script.titanskin.helpers')
+        self.cwd = self.settings.getAddonInfo('path')
         
     def onInit(self):
         self.action_exitkeys_id = [10, 13]
@@ -36,13 +40,7 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         ACTION_PARENT_DIR = 9
         
         if action.getId() in ACTION_CANCEL_DIALOG:
-            searchTerm = self.getControl(3010).getText()
-            if(len(searchTerm) == 0):
-                self.close()
-            else:
-                searchTerm = searchTerm[:-1]
-                self.getControl(3010).setText(searchTerm)
-                self.searchThread.setSearch(searchTerm)
+            self.removeCharacter()
         
         elif action.getId() in ACTION_SHOW_INFO:
             self.showInfo()
@@ -51,7 +49,19 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
     def closeDialog(self):
         self.searchThread.stopRunning()
         self.close()
-        
+    
+    def removeCharacter(self):
+        if(len(self.searchString) == 0 or self.searchString == " "):
+                self.closeDialog()
+        else:
+            if(len(self.searchString) == 1):
+                searchTerm = " "
+            else:
+                searchTerm = self.searchString[:-1]
+            self.getControl(3010).setLabel(searchTerm)
+            self.searchString = searchTerm
+            self.searchThread.setSearch(searchTerm)
+    
     def onClick(self, controlID):
 
         if(controlID == 3020):
@@ -127,17 +137,18 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         elif(controlID == 3055):
             self.addCharacter("9")  
         elif(controlID == 3056):
-            searchTerm = self.getControl(3010).getText()
-            searchTerm = searchTerm[:-1]
-            self.getControl(3010).setText(searchTerm)
-            self.searchThread.setSearch(searchTerm)
+           self.removeCharacter()
         elif(controlID == 3057):
             self.addCharacter(" ")
         elif(controlID == 3058):
-            self.getControl(3010).setText("")
+            self.getControl(3010).setLabel(" ")
+            self.searchString = ""
             self.searchThread.setSearch("")
         elif(controlID == 3010):
-            searchTerm = self.getControl(3010).getText()
+            dialog = xbmcgui.Dialog()
+            searchTerm = dialog.input(xbmc.getLocalizedString(16017), type=xbmcgui.INPUT_ALPHANUM)
+            self.getControl(3010).setLabel(searchTerm)
+            self.searchString = searchTerm
             self.searchThread.setSearch(searchTerm)
         elif(controlID == 3110):       
             itemList = self.getControl(3110)
@@ -160,9 +171,9 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         pass
 
     def addCharacter(self, char):
-        searchTerm = self.getControl(3010).getText()
-        searchTerm = searchTerm + char
-        self.getControl(3010).setText(searchTerm)
+        searchTerm = self.searchString + char
+        self.getControl(3010).setLabel(searchTerm)
+        self.searchString = searchTerm
         self.searchThread.setSearch(searchTerm)
     
     def showInfo( self ):
@@ -177,7 +188,7 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         elif controlId == 3112:
             listitem = self.getControl( controlId ).getSelectedItem()
             content = "episodes"
-        info_dialog = InfoDialog.GUI( "CustomInfo.xml" , __cwd__, "default", "1080i", listitem=listitem, content=content )
+        info_dialog = InfoDialog.GUI( "script-titanskin_helpers-CustomInfo.xml" , self.cwd, "default", "1080i", listitem=listitem, content=content )
         info_dialog.doModal()
         if info_dialog.action is not None:
             if info_dialog.action == 'play_movie':

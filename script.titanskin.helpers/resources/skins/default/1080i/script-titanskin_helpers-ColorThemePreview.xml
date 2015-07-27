@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-------------------------------------------------------------------->
+<!-- To view bind keymap or skin shortcut to "ActivateWindow(1122)" -->
+<!-------------------------------------------------------------------->
+
+<window type="dialog" id="1122">
+
+<allowoverlay>yes</allowoverlay>
+
+  <controls>
+  
+		<control type="image">
+            <posx>-10</posx>
+            <posy>-10</posy>
+            <width>1940</width>
+            <height>1100</height>
+            <texture>special://skin/extras/backgrounds/global_blue.jpg</texture>
+            <aspectratio>scale</aspectratio>
+        </control>
+	
+	<control type="group">
+			<control type="image">
+					<posx>0</posx>
+					<posy>980</posy>
+					<width>1920</width>
+					<height>110</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<visible>!StringCompare(Skin.String(FooterOpacity),0)</visible>
+					<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),20)">Conditional</animation>
+			</control>
+			<control type="label">	
+					<posx>380</posx>
+					<posy>1025</posy>
+					<width>1340</width>
+					<height>50</height>
+					<label>Footer / RSS Text goes here....		Footer / RSS Text goes here....</label>
+					<font>Reg40</font>
+					<textcolor>$INFO[Skin.String(FooterTextColor)]</textcolor>
+					<animation effect="slide" start="0,0" end="-15,-15" center="auto" easing="out" tween="back" time="0" condition="true">Conditional</animation>
+				</control>
+	</control>
+	
+	<control type="group">
+            <posx>30</posx>
+            <posy>15</posy>
+            <width>350</width>
+            <height>300</height>
+            <visible>Weather.IsFetched</visible>
+            <!--Weather Today-->
+            <control type="image">
+                <!--Icon-->
+                <texture>special://skin/extras/weathericons/$INFO[skin.string(WeatherIconPack)]/$INFO[Window(Weather).Property(Current.FanartCode)].png</texture>
+                <width>125</width>
+                <height>125</height>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+            </control>
+            <control type="label">
+                <!--Temp-->
+                <width>160</width>
+                <height>40</height>
+                <posx>140</posx>
+                <posy>25</posy>
+                <font>Bold38</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Temperature)] $INFO[System.TemperatureUnits]</label>
+                <visible>Weather.IsFetched</visible>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+            </control>
+            <control type="label">
+                <!--Temp-->
+                <width>220</width>
+                <height>40</height>
+                <posx>140</posx>
+                <posy>70</posy>
+                <font>Reg28</font>
+                <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+				<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                <align>left</align>
+                <label>$INFO[Window(Weather).Property(Current.Condition)]</label>
+                <visible>Weather.IsFetched</visible>
+            </control>
+        </control>
+	
+	<control type="group">
+		
+        <control type="group">
+            
+            <control type="grouplist">
+                <!--Time Grouplist Line 1-->
+                <posx>1260</posx>
+                <posy>10</posy>
+                <width>600</width>
+                <height>100</height>
+                <align>right</align>
+                <itemgap>4</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="label">
+                    <!--Time-->
+                    <width min="0" max="300">auto</width>
+                    <height>100</height>
+                    <info>System.Time(hh:mm)</info>
+                    <font>Bold55</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <!--AM-->
+                    <visible>substring(system.time,AM,right)</visible>
+                    <width min="0" max="150">auto</width>
+                    <height>100</height>
+                    <label>378</label>
+                    <font>Bold55</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <!--PM-->
+                    <visible>substring(system.time,PM,right)</visible>
+                    <width min="0" max="150">auto</width>
+                    <height>100</height>
+                    <label>379</label>
+                    <font>Bold55</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+            </control>
+            <control type="grouplist">
+                <!--Date Grouplist Line 2-->
+                <posx>1260</posx>
+                <posy>85</posy>
+                <width>600</width>
+                <height>50</height>
+                <align>right</align>
+                <itemgap>4</itemgap>
+                <orientation>horizontal</orientation>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="label">
+                    <!--Day-->
+                    <width min="0" max="400">auto</width>
+                    <height>50</height>
+                    <info>System.Date(DDD)</info>
+                    <font>Reg30</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <width min="0" max="400">auto</width>
+                    <height>50</height>
+                    <label>, </label>
+                    <font>Reg30</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <!--Date-->
+                    <width min="0" max="400">auto</width>
+                    <height>50</height>
+                    <info>System.Date(d)</info>
+                    <font>Reg30</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <visible>SubString(System.Language,German)</visible>
+                    <width min="0" max="400">auto</width>
+                    <height>50</height>
+                    <label>. </label>
+                    <font>Reg30</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <label></label>
+                    <visible>!SubString(System.Language,German)</visible>
+                    <width min="0" max="400">auto</width>
+                    <height>50</height>
+                    <font>Reg</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+                <control type="label">
+                    <!--Month-->
+                    <width min="0" max="400">auto</width>
+                    <height>50</height>
+                    <info>System.Date(MMM)</info>
+                    <font>Reg30</font>
+                    <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+					<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+                </control>
+            </control>
+        </control>
+	</control>
+	
+<control type="grouplist">
+		<posx>60</posx>
+		<posy>1005</posy>
+		<width>1000</width>
+		<height>130</height>
+		<itemgap>25</itemgap>
+		<orientation>horizontal</orientation>
+		
+		<control type="button">
+			<label></label>
+			<include>animation_fade_visible_hidden</include>
+			<width>60</width>
+			<height>60</height>
+			<font>-</font>
+			<texturefocus colordiffuse="white">touchcontrols/icon_back.png</texturefocus>
+			<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_back.png</texturenofocus>
+			<aspectratio aligny="bottom">keep</aspectratio>
+			<onclick>Back</onclick>
+		</control>
+		
+		<control type="button">
+			<include>animation_fade_visible_hidden</include>
+			<width>60</width>
+			<height>60</height>
+			<label>210</label>
+			<font>-</font>
+			<texturefocus colordiffuse="white">touchcontrols/icon_home.png</texturefocus>
+			<texturenofocus colordiffuse="$VAR[ThemeFontColorBBWhite]">touchcontrols/icon_home.png</texturenofocus>
+			<aspectratio>keep</aspectratio>
+			<onclick>ActivateWindow(Home)</onclick>
+		</control>
+	</control>
+	
+	<control type="group">
+			<posy>20</posy>
+				<control type="image">
+					<!--Panel Shadow 600 300-->
+					<posx>658</posx>
+					<posy>308</posy>
+					<width>615</width>
+					<height>265</height>
+					<texture>home/home_shadow.png</texture>
+				</control>
+				<control type="image">
+					<!--focus image-->
+					<posx>661</posx>
+					<posy>313</posy>
+					<width>590</width>
+					<height>240</height>
+					<bordersize>-8</bordersize>
+					<texture>home/home_matte2.png</texture>
+					<colordiffuse>$INFO[Skin.String(HomeViewDetailsFocusColor)]</colordiffuse>
+				</control>
+				<control type="image">
+					<!--Panel Normal-->
+					<posx>661</posx>
+					<posy>313</posy>
+					<width>590</width>
+					<height>240</height>
+					<texture background="true" diffuse="home/home_matte2.png">special://skin/extras/hometiles/livetv.png</texture>
+					<aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
+					<fadetime>800</fadetime>
+					<include>backgroundfade</include>
+				</control>
+				<control type="image">
+					<!--Panel Ovelay-->
+					<posx>661</posx>
+					<posy>313</posy>
+					<width>590</width>
+					<height>240</height>
+					<colordiffuse>ccFFFFFF</colordiffuse>
+					<texture diffuse="home/home_matte2.png">home/home_overlay.png</texture>
+				</control>
+				<control type="label">
+					<!--Label Grey-->
+					<centerleft>965</centerleft>
+					<posy>460</posy>
+					<width>890</width>
+					<height>100</height>
+					<align>center</align>
+					<label>Home Tile</label>
+					<font>Reg45</font>
+					<textcolor>$INFO[Skin.String(HomeViewDetailsFocusColor)]</textcolor>
+					<shadowcolor>black</shadowcolor>
+				</control>
+					<control type="image">
+						<posx>886</posx>
+						<posy>553</posy>
+						<width>149</width>
+						<height>33</height>
+						<texture colordiffuse="$INFO[Skin.String(PanelColor)]">colors/color_white.png</texture>
+						<animation effect="fade" reversible="false" end="80" time="0" condition="true">Conditional</animation>
+					</control>
+					<control type="image">
+						<posx>886</posx>
+						<posy>558</posy>
+						<width>149</width>
+						<height>28</height>
+						<texture colordiffuse="$INFO[Skin.String(HomeViewDetailsFocusColor)]">home/home_arrow_down.png</texture>
+						<aspectratio>keep</aspectratio>
+					</control>
+			</control>
+
+		<!--Right Area-->
+		
+		<control type="image">
+					<posx>1370</posx>
+					<posy>160</posy>
+					<width>460</width>
+					<height>240</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<animation effect="fade" end="80" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),80)">Conditional</animation>
+					<animation effect="fade" end="60" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),60)">Conditional</animation>
+					<animation effect="fade" end="40" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),40)">Conditional</animation>
+					<animation effect="fade" end="20" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),20)">Conditional</animation>
+					<animation effect="fade" end="0" time="0" reversible="false" condition="StringCompare(Skin.String(FooterOpacity),0)">Conditional</animation>
+		</control>
+		<control type="image">
+					<posx>1370</posx>
+					<posy>260</posy>
+					<width>460</width>
+					<height>40</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<animation effect="fade" end="20" time="0" reversible="false" condition="true">Conditional</animation>
+		</control>
+		<control type="label">
+					<posx>1370</posx>
+					<posy>260</posy>
+					<width>460</width>
+					<height>40</height>
+					<label>General/Footer Panel Color & Opacity: $INFO[Skin.String(FooterOpacity)]%</label>
+					<textcolor>white</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<align>center</align>
+					<font>Reg20</font>
+		</control>
+		
+		<control type="image">
+					<posx>1370</posx>
+					<posy>420</posy>
+					<width>460</width>
+					<height>240</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),80)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),60)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),40)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),20)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(ViewDetailsPanelOpacity),0)">Conditional</animation>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+		</control>
+		<control type="image">
+					<posx>1370</posx>
+					<posy>520</posy>
+					<width>460</width>
+					<height>40</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<animation effect="fade" end="20" time="0" reversible="false" condition="true">Conditional</animation>
+		</control>
+		<control type="label">
+					<posx>1370</posx>
+					<posy>520</posy>
+					<width>460</width>
+					<height>40</height>
+					<label>Media Details Panel Color & Opacity: $INFO[Skin.String(ViewDetailsPanelOpacity)]%</label>
+					<textcolor>white</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<align>center</align>
+					<font>Reg20</font>
+		</control>		
+		<control type="image">
+					<posx>1370</posx>
+					<posy>680</posy>
+					<width>460</width>
+					<height>240</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<animation effect="fade" reversible="false" end="80" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),80)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="60" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),60)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="40" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),40)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="20" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),20)">Conditional</animation>
+					<animation effect="fade" reversible="false" end="0" time="0" condition="StringCompare(Skin.String(OSDPanelOpacity),0)">Conditional</animation>
+		</control>
+		<control type="image">
+					<posx>1370</posx>
+					<posy>780</posy>
+					<width>460</width>
+					<height>40</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<animation effect="fade" end="20" time="0" reversible="false" condition="true">Conditional</animation>
+		</control>
+		<control type="label">
+					<posx>1370</posx>
+					<posy>780</posy>
+					<width>460</width>
+					<height>40</height>
+					<label>OSD Panel Color & Opacity: $INFO[Skin.String(OSDPanelOpacity)]%</label>
+					<textcolor>white</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<align>center</align>
+					<font>Reg20</font>
+		</control>	
+        <!--Left Area-->
+		<control type="image">
+					<posx>80</posx>
+					<posy>160</posy>
+					<width>460</width>
+					<height>740</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<animation effect="fade" end="20" time="0" reversible="false" condition="true">Conditional</animation>
+		</control>
+		<control type="image">
+					<posx>90</posx>
+					<posy>170</posy>
+					<width>440</width>
+					<height>720</height>
+					<texture border="5">diffuse/panel.png</texture>
+					<colordiffuse>$INFO[Skin.String(PanelColor)]</colordiffuse>
+					<animation effect="fade" end="90" time="0" reversible="false" condition="true">Conditional</animation>
+		</control>
+        <control type="grouplist">
+            <posx>90</posx>
+            <posy>200</posy>
+            <width>440</width>
+            <height>720</height>
+            <onup>100</onup>
+            <ondown>100</ondown>
+            <onleft>noop</onleft>
+            <onright>1000</onright>
+            <scrolltime>0</scrolltime>
+            <orientation>vertical</orientation>
+			
+			<control type="label">
+				<label>Button Text & Focus Colors</label>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<width>440</width>
+				<align>center</align>
+				<font>Bold24</font>
+			</control>
+			
+			<control type="button">
+				<label>No Focus</label>
+				<onclick>noop</onclick>
+				<textcolor fallback="white">$INFO[Skin.String(ButtonTextColor)]</textcolor>
+				<width>440</width>
+				<align>left</align>
+				<font>Reg28</font>
+				<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" diffuse="diffuse/panel.png" border="5">colors/color_90%trans_white.png</texturenofocus>
+			</control>
+			<control type="button">
+				<label>Focus</label>
+				<onclick>noop</onclick>
+				<textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+				<width>440</width>
+				<align>left</align>
+				<font>Reg28</font>
+				<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]" border="5">diffuse/panel.png</texturenofocus>
+			</control>
+			<control type="button">
+				<label>Disabled</label>
+				<onclick>noop</onclick>
+				<textcolor>lightgrey</textcolor>
+				<width>440</width>
+				<align>left</align>
+				<font>Reg28</font>
+				<onfocus>SetProperty(currentButton,8,Home)</onfocus>
+			</control>
+        </control>
+		<control type="radiobutton">
+					<posx>90</posx>
+					<posy>500</posy>
+					<width>440</width>
+                    <align>left</align>
+                    <label>Radio Button</label>
+                    <height>50</height>
+                    <font>Reg28</font>
+                    <onclick condition="true">noop</onclick>
+					<selected>!Player.Paused</selected>
+		</control>
+		<control type="spincontrolex">
+					<posx>90</posx>
+					<posy>560</posy>
+                    <font>-</font>
+                    <width>440</width>
+					<height>50</height>
+                    <align>left</align>
+                    <textcolor>-</textcolor>
+                    <focusedcolor>-</focusedcolor>
+                    <disabledcolor>-</disabledcolor>
+                    <pulseonselect>false</pulseonselect>
+                    <texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texturenofocus>
+                    <texturenofocus>-</texturenofocus>
+        </control>
+		<control type="label">
+				<label>Spin Control</label>
+				<posx>140</posx>
+				<posy>560</posy>
+				<textcolor>$INFO[Skin.String(ButtonFocusTextColor)]</textcolor>
+				<width>440</width>
+				<align>left</align>
+				<height>50</height>
+				<font>Reg28</font>
+		</control>
+		
+		<control type="label">
+			<posx>100</posx>
+			<posy>680</posy>
+			<height>60</height>
+			<align>center</align>
+			<width>440</width>
+			<label>Media Views Text & Shadow Colors</label>
+			<textcolor>white</textcolor>
+			<shadowcolor>black</shadowcolor>
+			<font>Bold24</font>
+		</control>
+		
+		<control type="image">
+			<posx>90</posx>
+			<posy>750</posy>
+			<height>115</height>
+			<width>440</width>
+			<texture border="5">diffuse/panel.png</texture>
+			<colordiffuse>$INFO[Skin.String(ButtonFocusColor)]</colordiffuse>
+			<animation effect="fade" reversible="false" end="40" time="0" condition="true">Conditional</animation>
+		</control>
+		<control type="label">
+			<posx>100</posx>
+			<posy>740</posy>
+			<height>60</height>
+			<align>left</align>
+			<width>440</width>
+			<label>Details Focus Text</label>
+			<textcolor>$INFO[Skin.String(ViewDetailsFocusColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+			<font>Reg28</font>
+		</control>
+		<control type="label">
+			<posx>100</posx>
+			<posy>800</posy>
+			<height>60</height>
+			<align>left</align>
+			<width>440</width>
+			<label>Details Text</label>
+			<textcolor>$INFO[Skin.String(ViewDetailsTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(ViewDetailsTextShadowColor)]</shadowcolor>
+			<font>Reg28</font>
+		</control>
+</controls>
+</window>

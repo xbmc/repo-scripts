@@ -1,3 +1,11 @@
+1.8.0
+- moved all processing to several background threads for more smooth UI
+- added caching to smart shortcuts and library background worker
+- support for smartshortcuts for plex and netflixbmc addons
+- music artwork retrieval 
+- colorthemes added
+- widget entrypoints added
+
 1.7.0
 - auto focus next season added
 - smart shortcuts support

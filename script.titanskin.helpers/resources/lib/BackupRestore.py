@@ -11,16 +11,12 @@ import urllib
 import time
 import zipfile
 import shutil
-
+import Utils as utils
 import random
 
 doDebugLog = False
 
 __language__ = xbmc.getLocalizedString
-
-def logMsg(msg, level = 1):
-    if doDebugLog == True:
-        xbmc.log(msg)
 
 def backup():
     try:
@@ -32,7 +28,7 @@ def backup():
             from xml.dom.minidom import parse
             guisettings_path = xbmc.translatePath('special://profile/guisettings.xml').decode("utf-8")
             if xbmcvfs.exists(guisettings_path):
-                logMsg("guisettings.xml found")
+                utils.logMsg("guisettings.xml found")
                 doc = parse(guisettings_path)
                 skinsettings = doc.documentElement.getElementsByTagName('setting')
                 newlist = []
@@ -61,15 +57,15 @@ def backup():
                     
                 #get skinshortcuts preferences
                 skinshortcuts_path_source = xbmc.translatePath('special://profile/addon_data/script.skinshortcuts/').decode("utf-8")
-                logMsg(skinshortcuts_path_source)
+                utils.logMsg(skinshortcuts_path_source)
                 if xbmcvfs.exists(skinshortcuts_path_source):
                     dirs, files = xbmcvfs.listdir(skinshortcuts_path_source)
                     for file in files:
                         if ".xml" in file:
                             sourcefile = skinshortcuts_path_source + file
                             destfile = skinshortcuts_path + file
-                            logMsg("source --> " + sourcefile)
-                            logMsg("destination --> " + destfile)
+                            utils.logMsg("source --> " + sourcefile)
+                            utils.logMsg("destination --> " + destfile)
                             xbmcvfs.copy(sourcefile,destfile)    
                 
                 #save guisettings
@@ -82,20 +78,27 @@ def backup():
                 i = datetime.now()
                 
                 #zip the backup
-                zip(temp_path,backup_path + "TITANSKIN_BACKUP_" + i.strftime('%Y%m%d-%H%M'))
+                backup_name = "TITANSKIN_BACKUP_" + i.strftime('%Y%m%d-%H%M')
+                zip_temp = xbmc.translatePath('special://temp/' + backup_name)
+                zip_final = backup_path + backup_name + ".zip"
+                zip(temp_path,zip_temp)
+                
+                #copy to final location
+                xbmcvfs.copy(zip_temp + ".zip", zip_final)
                 
                 #cleanup temp
                 shutil.rmtree(temp_path)
+                xbmcvfs.delete(zip_temp + ".zip")
                 
                 xbmcgui.Dialog().ok(__language__(31272), __language__(31278))
                 
             else:
                 xbmcgui.Dialog().ok(__language__(31272), __language__(31279))
-                logMsg("guisettings.xml not found")
+                utils.logMsg("guisettings.xml not found")
     
-    except:
+    except Exception as e:
         xbmcgui.Dialog().ok(__language__(31272), __language__(31279))
-        xbmc.log("exception in creating skin backup")
+        utils.logMsg("ERROR while creating backup ! --> " + str(e), 0)
 
 
         
@@ -106,7 +109,7 @@ def restore():
         zip_path = get_browse_dialog(dlg_type=1,heading=__language__(31282),mask=".zip")
         
         if zip_path != None and zip_path != "":
-            logMsg("zip_path " + zip_path)
+            utils.logMsg("zip_path " + zip_path)
             progressDialog = xbmcgui.DialogProgress(__language__(31273))
             progressDialog.create(__language__(31273))
             progressDialog.update(0, "unpacking backup...")
@@ -118,9 +121,17 @@ def restore():
             xbmcvfs.mkdir(temp_path)
             
             #unzip to temp
-            zfile = zipfile.ZipFile(zip_path)
+            if "\\" in zip_path:
+                delim = "\\"
+            else:
+                delim = "/"
+            
+            zip_temp = xbmc.translatePath('special://temp/' + zip_path.split(delim)[-1])
+            xbmcvfs.copy(zip_path,zip_temp)
+            zfile = zipfile.ZipFile(zip_temp)
             zfile.extractall(temp_path)
             zfile.close()
+            xbmcvfs.delete(zip_temp)
             
             #copy skinshortcuts preferences
             skinshortcuts_path_source = None
@@ -138,8 +149,8 @@ def restore():
                     if ".xml" in file:
                         sourcefile = skinshortcuts_path_source + file
                         destfile = skinshortcuts_path_dest + file
-                        logMsg("source --> " + sourcefile)
-                        logMsg("destination --> " + destfile)
+                        utils.logMsg("source --> " + sourcefile)
+                        utils.logMsg("destination --> " + destfile)
                         xbmcvfs.copy(sourcefile,destfile)    
             
             #read guisettings
@@ -172,9 +183,9 @@ def restore():
             shutil.rmtree(temp_path)
             xbmcgui.Dialog().ok(__language__(31273), __language__(31280))
     
-    except:
+    except Exception as e:
         xbmcgui.Dialog().ok(__language__(31272), __language__(31281))
-        xbmc.log("exception in creating skin backup")
+        utils.logMsg("ERROR while restoring backup ! --> " + str(e), 0)
 
 
 
@@ -185,8 +196,8 @@ def zip(src, dst):
         for filename in files:
             absname = os.path.abspath(os.path.join(dirname, filename))
             arcname = absname[len(abs_src) + 1:]
-            print 'zipping %s as %s' % (os.path.join(dirname, filename),
-                                        arcname)
+            utils.logMsg('zipping %s as %s' % (os.path.join(dirname, filename),
+                                        arcname))
             zf.write(absname, arcname)
     zf.close()
        
@@ -212,7 +223,7 @@ def save_to_file(content, filename, path=""):
         if not xbmcvfs.exists(path):
             xbmcvfs.mkdir(path)
         text_file_path = os.path.join(path, filename + ".txt")
-    logMsg("save to textfile: " + text_file_path)
+    utils.logMsg("save to textfile: " + text_file_path)
     text_file = xbmcvfs.File(text_file_path, "w")
     json.dump(content, text_file)
     text_file.close()
@@ -224,7 +235,7 @@ def read_from_file(path=""):
     if xbmcvfs.exists(path):
         f = open(path)
         fc = json.load(f)
-        logMsg("loaded textfile " + path)
+        utils.logMsg("loaded textfile " + path)
         return fc
     else:
         return False

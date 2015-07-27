@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="dialog" id="129">
+	<defaultcontrol always="true">3110</defaultcontrol>
+	<controls>
+    
+		<!-- Video Background -->
+        <include>GlobalBackground</include>
+
+		<!--NowPlaying-->
+        <include condition="Skin.HasTheme(classic)">NowPlayingMusicClassic</include>
+        <include condition="Skin.HasTheme(classic)">NowPlayingVideoClassic</include>
+		<include condition="!Skin.HasTheme(classic)">NowPlayingModern</include>
+        
+        <!--Header-->
+        <control type="label">
+            <include>animation_fade_visible_hidden</include>
+            <posx>61</posx>
+            <posy>10</posy>
+            <width min="80" max="1400">auto</width>
+            <height>100</height>
+            <font>Bold45</font>
+			<label>Pick color...</label>
+            <align>left</align>
+            <textcolor>$INFO[Skin.String(HeaderTextColor)]</textcolor>
+			<shadowcolor>$INFO[Skin.String(HeaderTextShadowColor)]</shadowcolor>
+			<animation effect="slide" end="80,15" time="0" condition="skin.hastheme(classic)">Conditional</animation>
+        </control>
+		<!--Time-->
+        <include>TimeInfo</include>
+		<include condition="!skin.hassetting(nofooterbar)">Footer</include>
+		
+		
+		<control type="panel" id="3110">
+			<viewtype label="31438">icons</viewtype>
+			<posx>60</posx>
+			<posy>175</posy>
+			<width>1836</width>
+			<height>700</height>
+			<orientation>vertical</orientation>
+			<onleft>3110</onleft>
+			<onright>60</onright>
+			<onup>3110</onup>
+			<ondown>3010</ondown>
+			<preloaditems>4</preloaditems>
+			<pagecontrol>60</pagecontrol>
+			<itemlayout height="100" width="100">
+				<control type="image">
+					<width>92%</width>
+					<height>92%</height>
+					<texture border="5">$INFO[ListItem.Icon]</texture>
+				</control>
+			</itemlayout>
+			<focusedlayout height="150" width="150">
+				<control type="image">
+					<width>95%</width>
+					<height>95%</height>
+					<texture border="5">$INFO[ListItem.Icon]</texture>
+				</control>
+				<control type="textbox">
+					<font>Reg24</font>
+					<left>10</left>
+					<top>10</top>
+					<right>10</right>
+					<width>90%</width>
+					<height>90%</height>
+					<align>left</align>
+					<info>ListItem.Label</info>
+					<textcolor>white</textcolor>
+					<shadowcolor>black</shadowcolor>
+				</control>
+			</focusedlayout>
+		</control>
+
+		<!-- edit manual -->
+		<control type="button" id="3010">
+			<left>60</left>
+			<top>900</top>
+			<width>800</width>
+			<height>60</height>
+			<font>Reg32</font>
+			<onup>3110</onup>
+			<ondown>SetFocus(3110,1)</ondown>
+			<onright>3011</onright>
+			<label>Manual ARGB color value:</label>
+			<label2>$INFO[Window(home).Property(colorstring)]</label2>
+			<textcolor>white</textcolor>
+			<focusedcolor>black</focusedcolor>
+			<disabledcolor>lightgrey</disabledcolor>
+			<pulseonselect>false</pulseonselect>
+			<texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texturefocus>
+			<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_90%trans_white.png</texturenofocus>
+		</control>
+		
+		<!-- None -->
+		<control type="button" id="3011">
+			<right>60</right>
+			<top>900</top>
+			<width>800</width>
+			<height>60</height>
+			<font>Reg32</font>
+			<onup>3110</onup>
+			<onleft>3010</onleft>
+			<label>None</label>
+			<textcolor>white</textcolor>
+			<focusedcolor>black</focusedcolor>
+			<disabledcolor>lightgrey</disabledcolor>
+			<pulseonselect>false</pulseonselect>
+			<texturefocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_white.png</texturefocus>
+			<texturenofocus colordiffuse="$INFO[Skin.String(ButtonFocusColor)]">colors/color_90%trans_white.png</texturenofocus>
+		</control>
+		
+		<!--vertical Scollbar-->
+		<control type="scrollbar" id="60">
+			<right>15</right>
+			<posy>175</posy>
+			<height>700</height>
+			<onup>60</onup>
+			<ondown>60</ondown>
+			<onleft>3110</onleft>
+			<animation effect="fade" start="0" end="100" time="400" condition="Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)">Conditional</animation>
+			<animation effect="fade" start="100" end="0" time="400" condition="![Control.HasFocus(60) | Skin.HasSetting(EnableTouchSupport) | Container.Scrolling | Skin.HasSetting(alwaysShowScrollbars)]">Conditional</animation>
+		</control>
+		
+
+	</controls>
+</window>
