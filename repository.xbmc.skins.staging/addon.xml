@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.xbmc.skins.staging"
+		name="XBMC.org Skin Development Repository Gotham"
+		version="1.1.1"
+		provider-name="Team XBMC">
+  <requires>
+    <import addon="xbmc.addon" version="12.0.0"/>
+  </requires>
+	<extension point="xbmc.addon.repository"
+		name="XBMC.org Skin Development Repository Gotham">
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Install Skins at Development level from XBMC.org</summary>
+		<description lang="en">Download and install skins from the XBMC.org Skin Development repository.[CR]  These skins are at development level, so this means they are not guaranteed to be stable yet.[CR]  Usage of this repo is at your own risk as breakage can happen during development.[CR]  If you find problems please report them to the dedicated threads of each skin with full details how to reproduce.</description>
+		<disclaimer lang="en">Team XBMC did not make all the add-ons on this repository and are not responsible for their content</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
