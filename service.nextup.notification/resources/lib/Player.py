@@ -205,7 +205,7 @@ class Player( xbmc.Player ):
                                     nextUpPage = NextUpInfo("script-nextup-notification-NextUpInfo.xml", addonSettings.getAddonInfo('path'), "default", "1080i")
                                     nextUpPage.setItem(episode)
                                     stillWatchingPage = StillWatchingInfo("script-nextup-notification-StillWatchingInfo.xml", addonSettings.getAddonInfo('path'), "default", "1080i")
-                                    stillWatchingPage.setItem(episode)    
+                                    stillWatchingPage.setItem(episode)
                                     playTime = xbmc.Player().getTime()
                                     totalTime = xbmc.Player().getTotalTime()
                                     playedinarownumber = addonSettings.getSetting("playedInARow")
@@ -221,9 +221,12 @@ class Player( xbmc.Player ):
                                     totalTime = xbmc.Player().getTotalTime()
                                     while xbmc.Player().isPlaying() and (totalTime-playTime > 1) and not nextUpPage.isCancel() and not nextUpPage.isWatchNow() and not stillWatchingPage.isStillWatching() and not stillWatchingPage.isCancel():
                                         xbmc.sleep(100)
-                                        playTime = xbmc.Player().getTime()
-                                        totalTime = xbmc.Player().getTotalTime()
-                                     
+                                        try:
+                                                playTime = xbmc.Player().getTime()
+                                                totalTime = xbmc.Player().getTotalTime()
+                                        except:
+                                                pass
+                                            
                                     if int(self.playedinarow) <= int(playedinarownumber):
                                         nextUpPage.close()
                                         shouldPlayDefault = not nextUpPage.isCancel()
