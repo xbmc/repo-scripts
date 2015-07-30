@@ -147,7 +147,7 @@ class TvTunesScraper():
         # check if the directory exists before searching
         if dir_exists(directory):
             # Generate the regex
-            themeFileRegEx = Settings.getThemeFileRegEx()
+            themeFileRegEx = Settings.getThemeFileRegEx(audioOnly=True)
 
             dirs, files = list_dir(directory)
             for aFile in files:

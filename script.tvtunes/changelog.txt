@@ -1,3 +1,8 @@
+v5.0.5
+- Add tvtunes.nfo option to check if the files exist before adding to playlist
+- Fix possible script error with screensaver
+- Fix issue where the system is left with repeat audio enabled
+
 v5.0.4
 - Add details about advancedsettings.xml
 - Fix issue with not always restoring volume

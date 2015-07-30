@@ -67,6 +67,7 @@ class NfoReader():
             return False
 
         returnValue = False
+        checkThemeExists = False
 
         try:
             # Need to first load the contents of the NFO file into
@@ -130,6 +131,11 @@ class NfoReader():
                 for playlistFileElem in nfoXml.findall('excludeFromScreensaver'):
                     self.excludeFromScreensaver = True
 
+                # Check if there may be theme paths that do not exist and we should
+                # check each theme to see if they they can be accessed
+                for playlistFileElem in nfoXml.findall('checkThemeExists'):
+                    checkThemeExists = True
+
                 returnValue = True
             else:
                 self.displayName = None
@@ -141,6 +147,27 @@ class NfoReader():
             log("NfoReader: Failed to process NFO: %s" % nfoFileName, True, xbmc.LOGERROR)
             log("NfoReader: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
             returnValue = False
+
+        # Not that the entire NFO file has been read, see if we need to verify
+        # that each of the themes exists
+        if checkThemeExists:
+            # Check the theme files to make sure they all exist
+            existingThemeFiles = []
+            for nfoThemeFile in self.themeFiles:
+                if xbmcvfs.exists(nfoThemeFile):
+                    existingThemeFiles.append(nfoThemeFile)
+                else:
+                    log("NfoReader: File does not exists, removing %s" % nfoThemeFile, self.debug_logging_enabled)
+            self.themeFiles = existingThemeFiles
+
+            # Check the theme directories to make sure they all exist
+            existingThemeDir = []
+            for nfoThemeDir in self.themeDirs:
+                if dir_exists(nfoThemeDir):
+                    existingThemeDir.append(nfoThemeDir)
+                else:
+                    log("NfoReader: Directory does not exists, removing %s" % nfoThemeDir, self.debug_logging_enabled)
+            self.themeDirs = existingThemeDir
 
         return returnValue
 
@@ -217,6 +244,7 @@ class ThemeFiles():
     def __init__(self, rawPath, pathList=None, debug_logging_enabled=True, audioOnly=False):
         self.debug_logging_enabled = debug_logging_enabled
         self.forceShuffle = False
+        self.doNotShuffle = False
         self.audioOnly = audioOnly
         self.rawPath = rawPath
         if rawPath == "":

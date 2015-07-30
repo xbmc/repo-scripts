@@ -329,6 +329,18 @@ class MediaGroup(object):
                     self.themePlayed = True
                     xbmc.Player().play(self.themeFiles.getThemePlaylist())
 
+                    # Wait for the audio to start before setting the repeat to only once
+                    maxLoops = 100
+                    while xbmc.Player().isPlayingAudio() and (maxLoops > 0):
+                        maxLoops = maxLoops - 1
+                        xbmc.sleep(5)
+
+                    # Check what the existing state for the player if we are going to play themes
+                    if xbmc.getCondVisibility('Playlist.IsRepeat') or xbmc.getCondVisibility('Playlist.IsRepeatOne'):
+                        # Check if we need to set the repeat to off - we handle our own repeat
+                        log("Screensaver: Setting repeat to RepeatOff")
+                        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "off" }, "id": 1 }')
+
     # Check if the theme has completed playing
     def completedGroup(self):
         # The group is never complete while there is a theme still playing
@@ -342,6 +354,7 @@ class MediaGroup(object):
             # Check to see if we have completed playing a theme and we are supposed
             # to stop after one theme
             if self.themePlayed and ScreensaverSettings.isSkipAfterThemeOnce():
+                log("MediaGroup: Theme played and settings to only play once")
                 return True
 
         # Not playing a theme, so return if we have already shown all the images
@@ -538,6 +551,7 @@ class ScreensaverBase(object):
             # completed playing the theme at least once, then we can safely repeat
             # the images we show
             if (len(imageGroups) > 1) and imageGroup.completedGroup():
+                log("Screensaver: Moving to play next group")
                 # Move onto the next group, and the first image in that group
                 imageGroup = imageGroup_cycle.next()
                 # If there are no images in this group, skip to the next (We know there

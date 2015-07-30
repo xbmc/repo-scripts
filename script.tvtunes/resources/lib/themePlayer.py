@@ -23,7 +23,6 @@ class ThemePlayer(xbmc.Player):
     def __init__(self, *args):
         # Record if the volume is currently altered
         self.hasChangedVolume = False
-        self.hasChangedRepeat = False
         # Save the volume from before any alterations
         self.original_volume = -1
 
@@ -45,14 +44,6 @@ class ThemePlayer(xbmc.Player):
 
         self.repeatOneSet = False
 
-        # Save off the current repeat state before we started playing anything
-        if xbmc.getCondVisibility('Playlist.IsRepeat'):
-            self.repeat = "RepeatAll"
-        elif xbmc.getCondVisibility('Playlist.IsRepeatOne'):
-            self.repeat = "RepeatOne"
-        else:
-            self.repeat = "RepeatOff"
-
         xbmc.Player.__init__(self, *args)
 
     def onPlayBackStopped(self):
@@ -70,6 +61,16 @@ class ThemePlayer(xbmc.Player):
 
     def restoreSettings(self):
         log("ThemePlayer: Restoring player settings")
+
+        # Restore repeat state
+        log("ThemePlayer: Restoring setting repeat to RepeatOff")
+        # Need to use the player control as the json one did not seem to work with
+        # videos, but we also call the JSON version as that catches more cases where
+        # the video has stopped - it's strange - but it works
+        xbmc.executebuiltin("PlayerControl(RepeatOff)")
+        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "off" }, "id": 1 }')
+        self.repeatOneSet = False
+
         # Give the theme a chance to finish if it is still playing
         maxLoop = 3000
         while self.isPlayingTheme() and (maxLoop > 0):
@@ -88,19 +89,20 @@ class ThemePlayer(xbmc.Player):
             self.hasChangedVolume = False
             log("ThemePlayer: Restored volume to %d" % self.original_volume)
 
-        # Restore repeat state
-        if self.hasChangedRepeat:
-            xbmc.executebuiltin("PlayerControl(%s)" % self.repeat)
-            # We no longer use the JSON method to repeat as it does not work with videos
-            # xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "%s" }, "id": 1 }' % self.repeat)
-            self.hasChangedRepeat = False
-            self.repeatOneSet = False
-
         # Record the time that playing was started (0 is stopped)
         self.startTime = 0
 
     def stop(self):
         log("ThemePlayer: stop called")
+
+        log("ThemePlayer: Restoring setting repeat to RepeatOff")
+        # Need to use the player control as the json one did not seem to work with
+        # videos, but we also call the JSON version as that catches more cases where
+        # the video has stopped - it's strange - but it works
+        xbmc.executebuiltin("PlayerControl(RepeatOff)")
+        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "off" }, "id": 1 }')
+        self.repeatOneSet = False
+
         # Only stop if playing audio
         if self.isPlaying():
             xbmc.Player.stop(self)
@@ -169,8 +171,6 @@ class ThemePlayer(xbmc.Player):
                 xbmc.executebuiltin("PlayerControl(RepeatOff)")
                 # We no longer use the JSON method to repeat as it does not work with videos
                 # xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.SetRepeat", "params": {"playerid": 0, "repeat": "off" }, "id": 1 }')
-
-            self.hasChangedRepeat = True
 
             # Record the time that playing was started
             self.startTime = int(time.time())
@@ -281,7 +281,6 @@ class ThemePlayer(xbmc.Player):
                         log("ThemePlayer: Setting single track to repeat %s" % self.playListItems[1])
                         xbmc.executebuiltin("PlayerControl(RepeatOne)")
                         self.repeatOneSet = True
-                        self.hasChangedRepeat = True
         except:
             log("ThemePlayer: Failed to check audio repeat after video")
 
