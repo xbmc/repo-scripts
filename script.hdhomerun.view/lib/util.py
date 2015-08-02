@@ -112,7 +112,7 @@ def busyDialog(msg='LOADING'):
         def inner(*args,**kwargs):
             try:
                 setGlobalProperty('busy',msg)
-                func(*args,**kwargs)
+                return func(*args,**kwargs)
             finally:
                 setGlobalProperty('busy','')
         return inner

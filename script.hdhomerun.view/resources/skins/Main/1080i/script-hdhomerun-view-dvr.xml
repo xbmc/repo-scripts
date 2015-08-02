@@ -30,11 +30,12 @@
                 <font>-</font>
                 <texturefocus>-</texturefocus>
                 <texturenofocus>-</texturenofocus>
+                <onright>200</onright>
             </control>
             <control type="group" id="100">
                 <posx>0</posx>
                 <posy>0</posy>
-                <defaultcontrol>101</defaultcontrol>
+                <defaultcontrol always="true">101</defaultcontrol>
                 <control type="image">
                     <posx>60</posx>
                     <posy>0</posy>
@@ -202,7 +203,7 @@
 
                     <!-- FOCUSED LAYOUT ####################################### -->
                     <focusedlayout height="205">
-                                                <control type="group">
+                        <control type="group">
                             <posx>0</posx>
                             <posy>0</posy>
                             <control type="image">
@@ -285,7 +286,7 @@
                 </control>
 
                 <control type="scrollbar" id="151">
-                    <visible>Container(101).Scrolling</visible>
+                    <visible allowhiddenfocus="true">Container(101).OnScrollPrevious | Container(101).OnScrollNext | Control.HasFocus(151)</visible>
                     <animation effect="fade" start="100" end="0" time="200" delay="500">Hidden</animation>
                     <posx>1765</posx>
                     <posy>40</posy>
@@ -325,6 +326,23 @@
             <animation effect="slide" start="0,0" end="-1725,0" time="200" condition="!StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),WATCH)">Conditional</animation>
             <posx>1790</posx>
             <posy>0</posy>
+
+            <control type="spincontrol" id="202">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1790</width>
+                <height>1080</height>
+                <label> </label>
+                <font>-</font>
+                <textureup>-</textureup>
+                <textureupfocus>-</textureupfocus>
+                <texturedown>-</texturedown>
+                <texturedownfocus>-</texturedownfocus>
+                <onright>300</onright>
+                <onleft>100</onleft>
+                <onup>204</onup>
+                <ondown>204</ondown>
+            </control>
 
             <control type="button" id="203">
                 <left>0</left>
@@ -405,27 +423,16 @@
                     </control>
                 </control>
 
-                <control type="button" id="202">
-                    <posx>65</posx>
-                    <posy>0</posy>
-                    <width>1725</width>
-                    <height>1080</height>
-                    <label> </label>
-                    <font>-</font>
-                    <texturefocus>-</texturefocus>
-                    <texturenofocus>-</texturenofocus>
-                    <onright>300</onright>
-                    <onleft>100</onleft>
-                    <onup>204</onup>
-                    <ondown>204</ondown>
-                </control>
+
 
                 <control type="panel" id="201">
+                    <visible>IsEmpty(Window(10000).Property(script.hdhomerun.view.now.showing))</visible>
                     <posx>90</posx>
                     <posy>70</posy>
                     <width>1800</width>
                     <height>1030</height>
                     <onup>204</onup>
+                    <ondown>551</ondown>
                     <onleft>100</onleft>
                     <onright>300</onright>
                     <scrolltime tween="sine" easing="out">200</scrolltime>
@@ -477,18 +484,17 @@
                             <texture>$INFO[ListItem.Property(channel.icon)]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
-                        <control type="label">
+                        <control type="textbox">
                             <posx>110</posx>
-                            <posy>330</posy>
+                            <posy>328</posy>
                             <width>413</width>
-                            <height>40</height>
+                            <height>80</height>
                             <font>font13</font>
                             <align>left</align>
-                            <aligny>center</aligny>
                             <textcolor>FFFFFFFF</textcolor>
                             <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                         </control>
-                        <control type="label">
+                        <!-- <control type="label">
                             <posx>110</posx>
                             <posy>365</posy>
                             <width>413</width>
@@ -497,8 +503,8 @@
                             <align>left</align>
                             <aligny>center</aligny>
                             <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Label]</label>
-                        </control>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control> -->
                         <control type="image">
                             <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
                             <posx>508</posx>
@@ -600,18 +606,17 @@
                             <texture>$INFO[ListItem.Property(channel.icon)]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
-                        <control type="label">
+                        <control type="textbox">
                             <posx>110</posx>
-                            <posy>330</posy>
+                            <posy>328</posy>
                             <width>413</width>
-                            <height>40</height>
+                            <height>80</height>
                             <font>font13</font>
                             <align>left</align>
-                            <aligny>center</aligny>
                             <textcolor>FFFFFFFF</textcolor>
                             <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                         </control>
-                        <control type="label">
+                        <!-- <control type="label">
                             <posx>110</posx>
                             <posy>365</posy>
                             <width>413</width>
@@ -620,8 +625,8 @@
                             <align>left</align>
                             <aligny>center</aligny>
                             <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Label]</label>
-                        </control>
+                            <label>$INFO[ListItem.Label2]</label>
+                        </control> -->
                         <control type="image">
                             <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
                             <posx>508</posx>
@@ -634,8 +639,581 @@
                     </focusedlayout>
                 </control>
 
+                <control type="group" id="552">
+                    <control type="button" id="281">
+                        <posx>-400</posx>
+                        <posy>0</posy>
+                        <width>10</width>
+                        <height>10</height>
+                        <label> </label>
+                        <font>-</font>
+                        <texturefocus>-</texturefocus>
+                        <texturenofocus>-</texturenofocus>
+                        <onright>300</onright>
+                        <onleft>100</onleft>
+                        <onup>271</onup>
+                        <ondown>271</ondown>
+                    </control>
+                    <control type="button" id="282">
+                        <posx>-400</posx>
+                        <posy>0</posy>
+                        <width>10</width>
+                        <height>10</height>
+                        <label> </label>
+                        <font>-</font>
+                        <texturefocus>-</texturefocus>
+                        <texturenofocus>-</texturenofocus>
+                        <onright>300</onright>
+                        <onleft>100</onleft>
+                        <onup>272</onup>
+                        <ondown>272</ondown>
+                    </control>
+                    <control type="button" id="283">
+                        <posx>-400</posx>
+                        <posy>0</posy>
+                        <width>10</width>
+                        <height>10</height>
+                        <label> </label>
+                        <font>-</font>
+                        <texturefocus>-</texturefocus>
+                        <texturenofocus>-</texturenofocus>
+                        <onright>300</onright>
+                        <onleft>100</onleft>
+                        <onup>271</onup>
+                        <ondown>271</ondown>
+                    </control>
+                    <control type="button" id="284">
+                        <posx>-400</posx>
+                        <posy>0</posy>
+                        <width>10</width>
+                        <height>10</height>
+                        <label> </label>
+                        <font>-</font>
+                        <texturefocus>-</texturefocus>
+                        <texturenofocus>-</texturenofocus>
+                        <onright>300</onright>
+                        <onleft>100</onleft>
+                        <onup>272</onup>
+                        <ondown>272</ondown>
+                    </control>
+                </control>
+
+
+                <control type="group" id="551">
+                    <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.now.showing))</visible>
+
+                    <control type="group" id="261">
+                        <posx>0</posx>
+                        <posy>0</posy>
+
+                        <control type="button" id="291">
+                            <posx>90</posx>
+                            <posy>60</posy>
+                            <width>1689</width>
+                            <height>85</height>
+                            <font>font30</font>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>[B]$INFO[Window(10000).Property(script.hdhomerun.view.ns.panel1.heading)][/B]</label>
+                            <texturefocus>-</texturefocus>
+                            <texturenofocus>-</texturenofocus>
+                            <onright>300</onright>
+                            <onleft>100</onleft>
+                            <onup>271</onup>
+                            <ondown>271</ondown>
+                        </control>
+
+                        <control type="button" id="293">
+                            <posx>90</posx>
+                            <posy>995</posy>
+                            <width>1689</width>
+                            <height>85</height>
+                            <font>font30</font>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <textcolor>FFA0A0A0</textcolor>
+                            <label>[B]$INFO[Window(10000).Property(script.hdhomerun.view.ns.panel1.footer)][/B]</label>
+                            <texturefocus>-</texturefocus>
+                            <texturenofocus>-</texturenofocus>
+                            <onright>300</onright>
+                            <onleft>100</onleft>
+                            <onup>271</onup>
+                            <ondown>271</ondown>
+                        </control>
+
+                        <control type="panel" id="271">
+                            <posx>90</posx>
+                            <posy>145</posy>
+                            <width>1800</width>
+                            <height>860</height>
+                            <onup>283</onup>
+                            <ondown>281</ondown>
+                            <onleft>100</onleft>
+                            <onright>300</onright>
+                            <scrolltime tween="sine" easing="out">200</scrolltime>
+                            <!-- <pagecontrol>251</pagecontrol> -->
+                            <preloaditems>2</preloaditems>
+                            <hitrect x="65" y="145" w="1725" h="860" />
+
+                            <itemlayout width="563" height="430">
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                    <colordiffuse>FF202020</colordiffuse>
+                                </control>
+                                <control type="image">
+                                    <posx>242</posx>
+                                    <posy>131</posy>
+                                    <width>48</width>
+                                    <height>48</height>
+                                    <texture>script-hdhomerun-view-dvr_rules_icon.png</texture>
+                                    <colordiffuse>FF000000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
+                                    <aspectratio aligny="top">scale</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>320</posy>
+                                    <width>533</width>
+                                    <height>90</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>A0000000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>20</posx>
+                                    <posy>330</posy>
+                                    <width>70</width>
+                                    <height>70</height>
+                                    <texture>$INFO[ListItem.Property(channel.icon)]</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="textbox">
+                                    <posx>110</posx>
+                                    <posy>328</posy>
+                                    <width>413</width>
+                                    <height>80</height>
+                                    <font>font13</font>
+                                    <align>left</align>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
+                                </control>
+                                <!-- <control type="label">
+                                    <posx>110</posx>
+                                    <posy>365</posy>
+                                    <width>413</width>
+                                    <height>40</height>
+                                    <font>font10</font>
+                                    <align>left</align>
+                                    <aligny>center</aligny>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>$INFO[ListItem.Label2]</label>
+                                </control> -->
+                                <control type="image">
+                                    <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                    <posx>508</posx>
+                                    <posy>375</posy>
+                                    <width>24</width>
+                                    <height>24</height>
+                                    <texture>script-hdhomerun-view-rule_indicator.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                    <colordiffuse>A0000000</colordiffuse>
+                                </control>
+                            </itemlayout>
+                            <focusedlayout width="563" height="430">
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                    <colordiffuse>FF202020</colordiffuse>
+                                </control>
+                                <control type="image">
+                                    <posx>242</posx>
+                                    <posy>131</posy>
+                                    <width>48</width>
+                                    <height>48</height>
+                                    <texture>script-hdhomerun-view-dvr_rules_icon.png</texture>
+                                    <colordiffuse>FF000000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
+                                    <aspectratio aligny="top">scale</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                    <colordiffuse>A0000000</colordiffuse>
+                                </control>
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>0</posy>
+                                    <width>553</width>
+                                    <height>15</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>FF006000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>0</posy>
+                                    <width>15</width>
+                                    <height>420</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>FF006000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>538</posx>
+                                    <posy>0</posy>
+                                    <width>15</width>
+                                    <height>420</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>FF006000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>320</posy>
+                                    <width>553</width>
+                                    <height>100</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>FF006000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>20</posx>
+                                    <posy>330</posy>
+                                    <width>70</width>
+                                    <height>70</height>
+                                    <texture>$INFO[ListItem.Property(channel.icon)]</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="textbox">
+                                    <posx>110</posx>
+                                    <posy>328</posy>
+                                    <width>413</width>
+                                    <height>80</height>
+                                    <font>font13</font>
+                                    <align>left</align>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
+                                </control>
+                                <!-- <control type="label">
+                                    <posx>110</posx>
+                                    <posy>365</posy>
+                                    <width>413</width>
+                                    <height>40</height>
+                                    <font>font10</font>
+                                    <align>left</align>
+                                    <aligny>center</aligny>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>$INFO[ListItem.Label2]</label>
+                                </control> -->
+                                <control type="image">
+                                    <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                    <posx>508</posx>
+                                    <posy>375</posy>
+                                    <width>24</width>
+                                    <height>24</height>
+                                    <texture>script-hdhomerun-view-rule_indicator.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                            </focusedlayout>
+                        </control>
+                    </control>
+
+                    <control type="group" id="262">
+                        <posx>0</posx>
+                        <posy>0</posy>
+
+                        <control type="button" id="292">
+                            <posx>90</posx>
+                            <posy>60</posy>
+                            <width>1689</width>
+                            <height>85</height>
+                            <font>font30</font>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <label>[B]$INFO[Window(10000).Property(script.hdhomerun.view.ns.panel2.heading)][/B]</label>
+                            <texturefocus>-</texturefocus>
+                            <texturenofocus>-</texturenofocus>
+                            <onright>300</onright>
+                            <onleft>100</onleft>
+                            <onup>271</onup>
+                            <ondown>271</ondown>
+                        </control>
+
+                        <control type="button" id="294">
+                            <posx>90</posx>
+                            <posy>995</posy>
+                            <width>1689</width>
+                            <height>85</height>
+                            <font>font30</font>
+                            <align>center</align>
+                            <aligny>center</aligny>
+                            <textcolor>FFA0A0A0</textcolor>
+                            <label>[B]$INFO[Window(10000).Property(script.hdhomerun.view.ns.panel2.footer)][/B]</label>
+                            <texturefocus>-</texturefocus>
+                            <texturenofocus>-</texturenofocus>
+                            <onright>300</onright>
+                            <onleft>100</onleft>
+                            <onup>271</onup>
+                            <ondown>271</ondown>
+                        </control>
+
+                        <control type="panel" id="272">
+                            <posx>90</posx>
+                            <posy>145</posy>
+                            <width>1800</width>
+                            <height>860</height>
+                            <onup>284</onup>
+                            <ondown>282</ondown>
+                            <onleft>100</onleft>
+                            <onright>300</onright>
+                            <scrolltime tween="sine" easing="out">200</scrolltime>
+                            <!-- <pagecontrol>251</pagecontrol> -->
+                            <preloaditems>2</preloaditems>
+                            <hitrect x="65" y="145" w="1725" h="860" />
+
+                            <itemlayout width="563" height="430">
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                    <colordiffuse>FF202020</colordiffuse>
+                                </control>
+                                <control type="image">
+                                    <posx>242</posx>
+                                    <posy>131</posy>
+                                    <width>48</width>
+                                    <height>48</height>
+                                    <texture>script-hdhomerun-view-dvr_rules_icon.png</texture>
+                                    <colordiffuse>FF000000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
+                                    <aspectratio aligny="top">scale</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>320</posy>
+                                    <width>533</width>
+                                    <height>90</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>A0000000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>20</posx>
+                                    <posy>330</posy>
+                                    <width>70</width>
+                                    <height>70</height>
+                                    <texture>$INFO[ListItem.Property(channel.icon)]</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="textbox">
+                                    <posx>110</posx>
+                                    <posy>328</posy>
+                                    <width>413</width>
+                                    <height>80</height>
+                                    <font>font13</font>
+                                    <align>left</align>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
+                                </control>
+                                <!-- <control type="label">
+                                    <posx>110</posx>
+                                    <posy>365</posy>
+                                    <width>413</width>
+                                    <height>40</height>
+                                    <font>font10</font>
+                                    <align>left</align>
+                                    <aligny>center</aligny>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>$INFO[ListItem.Label2]</label>
+                                </control> -->
+                                <control type="image">
+                                    <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                    <posx>508</posx>
+                                    <posy>375</posy>
+                                    <width>24</width>
+                                    <height>24</height>
+                                    <texture>script-hdhomerun-view-rule_indicator.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                    <colordiffuse>A0000000</colordiffuse>
+                                </control>
+                            </itemlayout>
+                            <focusedlayout width="563" height="430">
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                    <colordiffuse>FF202020</colordiffuse>
+                                </control>
+                                <control type="image">
+                                    <posx>242</posx>
+                                    <posy>131</posy>
+                                    <width>48</width>
+                                    <height>48</height>
+                                    <texture>script-hdhomerun-view-dvr_rules_icon.png</texture>
+                                    <colordiffuse>FF000000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
+                                    <aspectratio aligny="top">scale</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <visible>!IsEmpty(ListItem.Property(hidden))</visible>
+                                    <posx>10</posx>
+                                    <posy>10</posy>
+                                    <width>533</width>
+                                    <height>400</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                    <colordiffuse>A0000000</colordiffuse>
+                                </control>
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>0</posy>
+                                    <width>553</width>
+                                    <height>15</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>FF006000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>0</posy>
+                                    <width>15</width>
+                                    <height>420</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>FF006000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>538</posx>
+                                    <posy>0</posy>
+                                    <width>15</width>
+                                    <height>420</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>FF006000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>0</posx>
+                                    <posy>320</posy>
+                                    <width>553</width>
+                                    <height>100</height>
+                                    <texture>script-hdhomerun-view-white_square.png</texture>
+                                    <colordiffuse>FF006000</colordiffuse>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="image">
+                                    <posx>20</posx>
+                                    <posy>330</posy>
+                                    <width>70</width>
+                                    <height>70</height>
+                                    <texture>$INFO[ListItem.Property(channel.icon)]</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                                <control type="textbox">
+                                    <posx>110</posx>
+                                    <posy>328</posy>
+                                    <width>413</width>
+                                    <height>80</height>
+                                    <font>font13</font>
+                                    <align>left</align>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
+                                </control>
+                                <!-- <control type="label">
+                                    <posx>110</posx>
+                                    <posy>365</posy>
+                                    <width>413</width>
+                                    <height>40</height>
+                                    <font>font10</font>
+                                    <align>left</align>
+                                    <aligny>center</aligny>
+                                    <textcolor>FFFFFFFF</textcolor>
+                                    <label>$INFO[ListItem.Label2]</label>
+                                </control> -->
+                                <control type="image">
+                                    <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
+                                    <posx>508</posx>
+                                    <posy>375</posy>
+                                    <width>24</width>
+                                    <height>24</height>
+                                    <texture>script-hdhomerun-view-rule_indicator.png</texture>
+                                    <aspectratio>stretch</aspectratio>
+                                </control>
+                            </focusedlayout>
+                        </control>
+                    </control>
+
+                </control>
+
                 <control type="scrollbar" id="251">
-                    <visible>Container(201).Scrolling</visible>
+                    <visible>Container(201).OnScrollPrevious | Container(201).OnScrollNext</visible>
                     <animation effect="fade" start="100" end="0" time="200" delay="500">Hidden</animation>
                     <posx>1770</posx>
                     <posy>0</posy>
@@ -732,7 +1310,37 @@
                     <control type="image">
                         <posx>0</posx>
                         <posy>0</posy>
-                        <width>535</width>
+                        <width>395</width>
+                        <height>50</height>
+                        <texture>script-hdhomerun-view-white_square.png</texture>
+                        <colordiffuse>FF202020</colordiffuse>
+                        <aspectratio>stretch</aspectratio>
+                    </control>
+                    <control type="button" id="208">
+                        <posx>5</posx>
+                        <posy>5</posy>
+                        <width>385</width>
+                        <height>40</height>
+                        <hitrect x="-45" y="-50" w="445" h="90" />
+                        <ondown>204</ondown>
+                        <onleft>100</onleft>
+                        <onright>205</onright>
+                        <font>font12</font>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <textcolor>FFFFFFFF</textcolor>
+                        <label>[B]NOW SHOWING[/B]</label>
+                        <texturefocus colordiffuse="FF006000">script-hdhomerun-view-white_square.png</texturefocus>
+                        <texturenofocus colordiffuse="FF404040">script-hdhomerun-view-white_square.png</texturenofocus>
+                    </control>
+                </control>
+                <control type="group">
+                    <posx>455</posx>
+                    <posy>20</posy>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>395</width>
                         <height>50</height>
                         <texture>script-hdhomerun-view-white_square.png</texture>
                         <colordiffuse>FF202020</colordiffuse>
@@ -741,11 +1349,11 @@
                     <control type="button" id="205">
                         <posx>5</posx>
                         <posy>5</posy>
-                        <width>525</width>
+                        <width>385</width>
                         <height>40</height>
-                        <hitrect x="0" y="-50" w="725" h="90" />
+                        <hitrect x="-15" y="-50" w="415" h="90" />
                         <ondown>204</ondown>
-                        <onleft>100</onleft>
+                        <onleft>208</onleft>
                         <onright>206</onright>
                         <font>font12</font>
                         <align>center</align>
@@ -757,12 +1365,12 @@
                     </control>
                 </control>
                 <control type="group">
-                    <posx>595</posx>
+                    <posx>870</posx>
                     <posy>20</posy>
                     <control type="image">
                         <posx>0</posx>
                         <posy>0</posy>
-                        <width>535</width>
+                        <width>395</width>
                         <height>50</height>
                         <texture>script-hdhomerun-view-white_square.png</texture>
                         <colordiffuse>FF202020</colordiffuse>
@@ -771,9 +1379,9 @@
                     <control type="button" id="206">
                         <posx>5</posx>
                         <posy>5</posy>
-                        <width>525</width>
+                        <width>385</width>
                         <height>40</height>
-                        <hitrect x="0" y="-50" w="725" h="90" />
+                        <hitrect x="-15" y="-50" w="415" h="90" />
                         <ondown>204</ondown>
                         <onleft>205</onleft>
                         <onright>207</onright>
@@ -787,12 +1395,12 @@
                     </control>
                 </control>
                 <control type="group">
-                    <posx>1150</posx>
+                    <posx>1290</posx>
                     <posy>20</posy>
                     <control type="image">
                         <posx>0</posx>
                         <posy>0</posy>
-                        <width>535</width>
+                        <width>395</width>
                         <height>50</height>
                         <texture>script-hdhomerun-view-white_square.png</texture>
                         <colordiffuse>FF202020</colordiffuse>
@@ -801,9 +1409,9 @@
                     <control type="button" id="207">
                         <posx>5</posx>
                         <posy>5</posy>
-                        <width>525</width>
+                        <width>385</width>
                         <height>40</height>
-                        <hitrect x="0" y="-50" w="725" h="90" />
+                        <hitrect x="-20" y="-50" w="420" h="90" />
                         <ondown>204</ondown>
                         <onleft>206</onleft>
                         <onright>300</onright>
@@ -835,8 +1443,8 @@
                         <posy>5</posy>
                         <width>725</width>
                         <height>40</height>
-                        <hitrect x="0" y="-50" w="725" h="90" />
-                        <onup>206</onup>
+                        <hitrect x="-500" y="-50" w="1725" h="90" />
+                        <onup>208</onup>
                         <ondown>201</ondown>
                         <onleft>100</onleft>
                         <onright>300</onright>
@@ -856,6 +1464,23 @@
             <animation effect="slide" start="0,0" end="-1725,0" time="200" condition="StringCompare(Window(10000).Property(script.hdhomerun.view.DVR_MODE),RULES)">Conditional</animation>
             <posx>1855</posx>
             <posy>0</posy>
+
+            <control type="spincontrol" id="302">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1790</width>
+                <height>1080</height>
+                <label> </label>
+                <font>-</font>
+                <textureup>-</textureup>
+                <textureupfocus>-</textureupfocus>
+                <texturedown>-</texturedown>
+                <texturedownfocus>-</texturedownfocus>
+                <onleft>200</onleft>
+                <onup>301</onup>
+                <ondown>301</ondown>
+            </control>
+
             <control type="button" id="303">
                 <left>0</left>
                 <top>0</top>
@@ -865,6 +1490,7 @@
                 <font>-</font>
                 <texturefocus>-</texturefocus>
                 <texturenofocus>-</texturenofocus>
+                <onleft>200</onleft>
             </control>
             <control type="group" id="300">
                 <posx>0</posx>
@@ -931,19 +1557,6 @@
                         <angle>90</angle>
                         <label>[B]$ADDON[script.hdhomerun.view 32820][/B]</label>
                     </control>
-                </control>
-                <control type="button" id="302">
-                    <posx>65</posx>
-                    <posy>0</posy>
-                    <width>1725</width>
-                    <height>1080</height>
-                    <label> </label>
-                    <font>-</font>
-                    <texturefocus>-</texturefocus>
-                    <texturenofocus>-</texturenofocus>
-                    <onleft>200</onleft>
-                    <onup>301</onup>
-                    <ondown>301</ondown>
                 </control>
 
                 <control type="group">
@@ -1164,7 +1777,7 @@
                 </control>
 
                 <control type="scrollbar" id="351">
-                    <visible>Container(301).Scrolling</visible>
+                    <visible allowhiddenfocus="true">Container(301).OnScrollPrevious | Container(301).OnScrollNext | Control.HasFocus(351)</visible>
                     <animation effect="fade" start="100" end="0" time="200" delay="500">Hidden</animation>
                     <posx>1767</posx>
                     <posy>90</posy>
@@ -1188,7 +1801,7 @@
         </control>
 
         <control type="group">
-            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy)) + !Player.HasVideo</visible>
+            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
             <posx>1367</posx>
             <posy>860</posy>
 

@@ -701,7 +701,7 @@
             </control>
 
             <control type="scrollbar" id="251">
-                <visible>Container(201).Scrolling</visible>
+                <visible>Container(201).OnScrollPrevious | Container(201).OnScrollNext</visible>
                 <animation effect="fade" start="100" end="0" time="200" delay="500">Hidden</animation>
                 <posx>1770</posx>
                 <posy>90</posy>
@@ -724,7 +724,7 @@
         </control>
 
         <control type="group">
-            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy)) + !Player.HasVideo</visible>
+            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy))</visible>
             <posx>1367</posx>
             <posy>860</posy>
 

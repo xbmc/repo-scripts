@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
+import datetime
+import random
 import requests
 import urllib
 import json
@@ -13,9 +15,11 @@ from lib import util
 import errors
 
 GUIDE_URL = 'http://my.hdhomerun.com/api/guide.php?DeviceAuth={0}'
-SEARCH_URL = 'http://mytest.hdhomerun.com/api/search?DeviceAuth={deviceAuth}&Search={search}'
-EPISODES_URL = 'http://mytest.hdhomerun.com/api/episodes?DeviceAuth={deviceAuth}&SeriesID={seriesID}'
-SUGGEST_URL = 'http://mytest.hdhomerun.com/api/suggest?DeviceAuth={deviceAuth}&Category={category}'
+SEARCH_URL = 'http://my.hdhomerun.com/api/search?DeviceAuth={deviceAuth}&Search={search}'
+EPISODES_URL = 'http://my.hdhomerun.com/api/episodes?DeviceAuth={deviceAuth}&SeriesID={seriesID}'
+SUGGEST_URL = 'http://my.hdhomerun.com/api/suggest?DeviceAuth={deviceAuth}&Category={category}'
+NOW_SHOWING_URL = 'http://my.hdhomerun.com/api/up_next?DeviceAuth={deviceAuth}{start}'
+NOW_SHOWING_START = '&Start={utcUnixtime}'
 
 
 class Show(dict):
@@ -140,6 +144,14 @@ class Series(dict):
         return int(self.get('OriginalAirdate',0))
 
     @property
+    def startTimestamp(self):
+        return int(self.get('StartTime',0))
+
+    @property
+    def endTimestamp(self):
+        return int(self.get('EndTime',0))
+
+    @property
     def hasRule(self):
         return self.get('RecordingRule') == 1
 
@@ -232,10 +244,15 @@ class Episode(dict):
             return '%d:%02d' % (minutes, seconds)
 
 def search(deviceAuth,category='',terms=''):
+    url = None
     if terms:
         url = SEARCH_URL.format(deviceAuth=urllib.quote(deviceAuth,''),search=urllib.quote(terms.encode('utf-8'), ''))
     elif category:
         url = SUGGEST_URL.format(deviceAuth=urllib.quote(deviceAuth,''),category=category)
+
+    if not url:
+        util.DEBUG_LOG('Search: No category or terms')
+        return
 
     util.DEBUG_LOG('Search URL: {0}'.format(url))
 
@@ -249,6 +266,245 @@ def search(deviceAuth,category='',terms=''):
         util.ERROR()
 
     return None
+
+def nowShowing(deviceAuth, utcUnixtime=None):
+    start = ''
+    if utcUnixtime:
+        start = NOW_SHOWING_START.format(utcUnixtime=int(utcUnixtime))
+
+    url = NOW_SHOWING_URL.format(deviceAuth=urllib.quote(deviceAuth,''), start=start)
+
+    util.DEBUG_LOG('Now Showing URL: {0}'.format(url))
+
+    req = requests.get(url)
+
+    try:
+        results = req.json()
+        if not results: return []
+        return [Series(r) for r in results]
+    except:
+        util.ERROR()
+
+    return None
+
+class EndOfNowShowingException(Exception): pass
+
+class NowShowing(object):
+    def __init__(self, devices):
+        self.devices = devices
+        self.init()
+
+    def init(self):
+        self.data = []
+        self.buckets = []
+        self.pos = 0
+        self.highestStart = 0
+        self.atEnd = False
+        self.data = self.getData()
+        self.createBuckets()
+        self.updateTimes()
+
+    def createBuckets(self, add=False):
+        util.DEBUG_LOG('Creating buckets from {0} items...'.format(len(self.data)))
+
+        now = datetime.datetime.now()
+        nowTS = time.mktime(now.timetuple())
+        nowHalfHour = now - datetime.timedelta(minutes=now.minute%30, seconds=now.second, microseconds=now.microsecond)
+
+        if add:
+            nowHalfHour += datetime.timedelta(seconds=1800*(len(self.buckets)-1))
+        else:
+            self.buckets = []
+
+            nowShowing = []
+            while self.data:
+                series = self.data.pop()
+
+                if series.startTimestamp > self.highestStart:
+                    self.highestStart = series.startTimestamp
+
+                if series.startTimestamp <= nowTS < series.endTimestamp:
+                    nowShowing.append(series)
+                else:
+                    self.data.append(series)
+                    break
+
+            nextHalfHour = nowHalfHour + datetime.timedelta(seconds=1800)
+
+            self.buckets.append([nowShowing, 'NOW SHOWING', nextHalfHour])
+            util.DEBUG_LOG('  Now showing: {0}'.format(len(nowShowing)))
+
+        startHalfHour = nowHalfHour + datetime.timedelta(seconds=1800)
+        endHalfHour = startHalfHour + datetime.timedelta(seconds=1800)
+        startTS = time.mktime(startHalfHour.timetuple()) - 120
+        endTS = time.mktime(endHalfHour.timetuple()) - 120
+
+        curr = []
+        while self.data:
+            series = self.data.pop()
+
+            if series.startTimestamp > self.highestStart:
+                self.highestStart = series.startTimestamp
+
+            if series.startTimestamp < endTS:
+                curr.append(series)
+            elif series.endTimestamp <= startTS:
+                util.DEBUG_LOG('   -Discared old series')  # In case we happen to get a NS show that ended during processing
+            else:
+                self.data.append(series)
+
+                self.buckets.append([curr, startHalfHour, endHalfHour])
+                util.DEBUG_LOG('  Bucket  ({0}): {1}'.format(len(self.buckets) - 1, len(curr)))
+                curr = []
+                startHalfHour = startHalfHour + datetime.timedelta(seconds=1800)  # Add 28mins
+                endHalfHour = startHalfHour + datetime.timedelta(seconds=1800)
+                startTS += 1800
+                endTS += 1800
+
+        if curr:
+            self.buckets.append([curr, startHalfHour, endHalfHour])
+            util.DEBUG_LOG('  Bucket  ({0}): {1}'.format(len(self.buckets) - 1, len(curr)))
+
+        self.nextUpdateTimestamp = self.highestStart - random.randint(0, 1800)
+
+    def getData(self, utcUnixtime=None):
+        start = ''
+        if utcUnixtime:
+            start = NOW_SHOWING_START.format(utcUnixtime=int(utcUnixtime))
+
+        url = NOW_SHOWING_URL.format(deviceAuth=urllib.quote(self.devices.apiAuthID(),''), start=start)
+
+        util.DEBUG_LOG('Now Showing URL: {0}'.format(url))
+
+        req = requests.get(url)
+
+        try:
+            results = req.json()
+            if not results:
+                return []
+            results.reverse()
+            if not results: return []
+            return [Series(r) for r in results]
+        except:
+            util.ERROR()
+
+        return None
+
+    def nowShowing(self):
+        results, heading, endHalfHour = self.buckets[0]
+        return results, heading, self.getTimeHeadingDisplay(endHalfHour)
+
+    def upNext(self):
+        if self.pos == 0:
+            return self.nowShowing()
+
+        if self.pos >= len(self.buckets):
+            if self.atEnd:
+                raise EndOfNowShowingException()
+            self.addData()
+
+        results, startHalfHour, endHalfHour = self.buckets[self.pos]
+        if self.atEnd and self.pos == len(self.buckets) - 1:
+            endDisp = 'END'
+        else:
+            endDisp = self.getTimeHeadingDisplay(endHalfHour)
+        return results, self.getTimeHeadingDisplay(startHalfHour), endDisp
+
+    def addData(self):
+        util.DEBUG_LOG('NOW SHOWING: Adding data')
+        self.atEnd = False
+        self.data = self.getData(self.highestStart + 1)
+        if not self.data:
+            self.atEnd = True
+            raise EndOfNowShowingException()
+        self.createBuckets(add=True)
+
+    def getTimeHeadingDisplay(self, dt, now=None):
+        now = now or datetime.datetime.now()
+        if now.day != dt.day:
+            return dt.strftime('%A ') + dt.strftime('%I:%M %p').lstrip('0')
+        else:
+            return dt.strftime('%I:%M %p').lstrip('0')
+
+    def unHide(self, series):
+        if series.hidden:
+            return
+
+        for bucket in self.buckets:
+            for s in bucket[0]:
+                if s.ID == series.ID:
+                    if 'SuggestHide' in s:
+                        del s['SuggestHide']
+
+    def updateBuckets(self):
+        now = datetime.datetime.now()
+        nowTS = time.mktime(now.timetuple())
+
+        moved = 0
+        new0 = []
+        for s in self.buckets[0][0]:
+            if s.endTimestamp <= nowTS:
+                moved += 1
+                continue
+            new0.append(s)
+
+        if moved:
+            util.DEBUG_LOG('NOW SHOWING: {0} shows removed'.format(moved))
+
+        moved = 0
+        new1 = []
+        for s in self.buckets[1][0]:
+            if s.startTimestamp <= nowTS:
+                moved += 1
+                new0.append(s)
+            else:
+                new1.append(s)
+
+        if not new0:
+            return self.init()
+
+        self.buckets[0][0] = new0
+
+        if moved:
+            util.DEBUG_LOG('NOW SHOWING: {0} shows moved'.format(moved))
+
+        if len(self.buckets) <= 1:
+            return
+
+        if not new1:
+            util.DEBUG_LOG('NOW SHOWING: Bucket Removed')
+            del self.buckets[1]
+            self.buckets[0][2] = self.buckets[1][1]
+            self.atEnd = False
+
+            if self.pos > 0:
+                self.pos -= 1
+        else:
+            self.buckets[1][0] = new1
+
+    def updateTimes(self):
+        self.nextCheck = 31536000000
+        for s in self.buckets[0][0]:
+            if s.endTimestamp < self.nextCheck:
+                self.nextCheck = s.endTimestamp
+
+        for s in self.buckets[1][0]:
+            if s.startTimestamp < self.nextCheck:
+                self.nextCheck = s.startTimestamp
+
+    def checkTime(self):
+        now = time.time()
+        if now > self.nextUpdateTimestamp:
+            try:
+                self.addData()
+            except EndOfNowShowingException:
+                pass
+
+        if now >= self.nextCheck:
+            self.updateBuckets()
+            self.updateTimes()
+            return True
+        return False
 
 class Guide(object):
     def __init__(self,lineup=None):

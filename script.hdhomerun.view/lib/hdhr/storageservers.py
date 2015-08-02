@@ -5,7 +5,7 @@ import guide
 import errors
 from lib import util
 
-MY = 'mytest'
+MY = 'my'
 #RECORDING_RULES_URL = 'http://%s.hdhomerun.com/api/recording_rules?DeviceAuth={0}&random={1}' % MY
 RECORDING_RULES_URL = 'http://%s.hdhomerun.com/api/recording_rules?DeviceAuth={0}' % MY
 MODIFY_RULE_URL = 'http://%s.hdhomerun.com/api/recording_rules?DeviceAuth={deviceAuth}&Cmd={cmd}&SeriesID={seriesID}&Title={title}&RecentOnly={recentOnly}&Priority={priority}' % MY

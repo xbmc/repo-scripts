@@ -1,3 +1,13 @@
+** 2015.8.2 **
+
+Add 'Now Showing' to 'Guide Search'
+Fix issue where clicking to bring up seek bar while watching recordings occasionally starts live TV
+Fix for busy spinner not displaying when UI has focus but video is playing
+Fix some focus issues with mouse and keyboard
+Fix inability to navigate to rules/watch via keyboard when they are empty
+Hide 'All Shows' on Watch Recordings when there are now shows
+Make series title wrap to 2 lines on Guide Search and remove duplicate sub-text
+
 ** 2015.7.14 **
 
 Fix for DVR search failure when addon is left open for extended periods

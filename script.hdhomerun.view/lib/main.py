@@ -570,7 +570,6 @@ class GuideOverlay(util.CronReceiver):
 
         if self.devices.isOld(): #1 hour
             if self.updateLineup(quiet=True):
-                if self.player: self.player.init(self,self.lineUp,self.touchMode)
                 newLinup = True
             else:
                 util.DEBUG_LOG('Discovery failed!')
@@ -743,7 +742,7 @@ class GuideOverlay(util.CronReceiver):
 
         self.checkIfUpdated()
 
-    def selectChannel(self,channel):
+    def selectChannel(self, channel):
         pos = self.lineUp.index(channel.number)
         if pos > -1:
             self.channelList.selectItem(pos)
@@ -771,6 +770,7 @@ class GuideOverlay(util.CronReceiver):
                 self.showSeekBar() #Make sure the bar stays visible when we're interacting with it
             else:
                 self.showSeekBar(hide=self.seekBarVisible())
+            return True
         else:
             if not self.overlayVisible():
                 self.showOverlay()
@@ -855,11 +855,18 @@ class GuideOverlay(util.CronReceiver):
 
         if self.dvrWindow.play:
             self.showOverlay(False)
-            rec = self.dvrWindow.play
-            self.playRecording(rec)
-            self.dvrWindow.play = None
             util.setGlobalProperty('window.animations',util.getSetting('window.animations',True) and '1' or '')
-            util.setGlobalProperty('playing.dvr','1')
+
+            if isinstance(self.dvrWindow.play, hdhr.storageservers.Recording):
+                rec = self.dvrWindow.play
+                self.playRecording(rec)
+                util.setGlobalProperty('playing.dvr','1')
+            else:
+                self.playChannelByNumber(self.dvrWindow.play.channelNumber)
+
+            self.dvrWindow.play = None
+
+
             return True
 
         return False
@@ -878,6 +885,7 @@ class GuideOverlay(util.CronReceiver):
         if number in self.lineUp:
             channel = self.lineUp[number]
             self.playChannel(channel)
+            self.selectChannel(channel)
             return channel
         return None
 

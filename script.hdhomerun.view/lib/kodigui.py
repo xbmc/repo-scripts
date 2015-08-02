@@ -270,7 +270,7 @@ class ManagedControlList(object):
 
         self._updateItems(0,self.size())
 
-    def getListItem(self,pos):
+    def getListItem(self, pos):
         li = self.control.getListItem(pos)
         mli = self.items[pos]
         mli._listItem = li
@@ -284,7 +284,11 @@ class ManagedControlList(object):
 
     def getSelectedItem(self):
         pos = self.control.getSelectedPosition()
-        return self.getListItem(pos)
+        try:
+            return self.getListItem(pos)
+        except RuntimeError:  # Happens if list has been modified after getting the position
+            pass
+        return None
 
     def removeItem(self,index):
         old = self.items.pop(index)

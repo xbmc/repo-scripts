@@ -828,7 +828,7 @@
         </control>
 
         <control type="group">
-            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy)) + !Player.HasVideo</visible>
+            <visible>!IsEmpty(Window(10000).Property(script.hdhomerun.view.busy)) + [!Player.HasVideo | !IsEmpty(Window.Property(show.overlay))]</visible>
             <posx>1367</posx>
             <posy>860</posy>
 
