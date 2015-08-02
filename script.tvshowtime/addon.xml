@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.tvshowtime"
        name="TVShow Time"
-       version="1.0.14"
+       version="1.0.18"
        provider-name="CXII">
   <requires>
     <import addon="xbmc.python" version="2.19.0"/>
@@ -9,7 +9,7 @@
   <extension point="xbmc.python.script" library="program.py">
     <provides>executable</provides> 
   </extension> 
-  <extension point="xbmc.service" library="default.py" start="startup"/>
+  <extension point="xbmc.service" library="default.py" start="login"/>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">TVShow Time</summary>
     <description lang="en">Automatically set episodes as watched on tvshowtime.com - Can be done when watching the episode or from the contextual menu of the episode. You can also synchronize the whole or a part of your library.</description>

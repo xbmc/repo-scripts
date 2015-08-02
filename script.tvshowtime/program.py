@@ -140,7 +140,7 @@ def scan(way, whattvshow = 0, whatseason = 0):
                     command2 = '{"jsonrpc": "2.0", "id": 1, "method": "VideoLibrary.SetEpisodeDetails", "params": {"episodeid" : %s, "playcount": %s}}' % (result['result']['episodes'][i]['episodeid'], episode.is_watched)
                     result2 = json.loads(xbmc.executeJSONRPC(command2))
             pDialog.update(((100/total)*(i+1)), message=filename)
-            if ((i+1) % 10) == 0 and i < (total-1):
+            if ((i+1) % 30) == 0 and i < (total-1):
                 pDialog.update(((100/total)*(i+1)), message=__language__(33908))
                 xbmc.sleep(60000)
         pDialog.close()
@@ -154,21 +154,21 @@ def scan(way, whattvshow = 0, whatseason = 0):
         for i in range(0, total):
             filename = '%s.S%sE%s' % (formatName(result['result']['episodes'][i]['showtitle']), result['result']['episodes'][i]['season'], result['result']['episodes'][i]['episode'])
             log('tvshowtitle=%s' % filename)
-            episode = IsChecked(__token__, filename)
-            if episode.is_found:
-                log("episode.is_found=%s" % episode.is_found)
-                if episode.is_watched == True: episode.is_watched = 1
-                else: episode.is_watched = 0
-                log("kodi.playcount=%s" % result['result']['episodes'][i]['playcount'])
-                log("tvst.playcount=%s" % episode.is_watched)
-                if result['result']['episodes'][i]['playcount'] <> episode.is_watched:
-                    log('Kodi->TVST (%s)' % result['result']['episodes'][i]['playcount'])
-                    if result['result']['episodes'][i]['playcount'] == 1:
-                        checkin = MarkAsWatched(__token__, filename, __facebook__, __twitter__)
-                    else:
-                        checkin = MarkAsUnWatched(_token__, filename)
+            #episode = IsChecked(__token__, filename)
+            #if episode.is_found:
+            #    log("episode.is_found=%s" % episode.is_found)
+            #    if episode.is_watched == True: episode.is_watched = 1
+            #    else: episode.is_watched = 0
+            log("kodi.playcount=%s" % result['result']['episodes'][i]['playcount'])
+            #    log("tvst.playcount=%s" % episode.is_watched)
+            #    if result['result']['episodes'][i]['playcount'] <> episode.is_watched:
+            log('Kodi->TVST (%s)' % result['result']['episodes'][i]['playcount'])
+            if result['result']['episodes'][i]['playcount'] == 1:
+                checkin = MarkAsWatched(__token__, filename, __facebook__, __twitter__)
+            else:
+                checkin = MarkAsUnWatched(__token__, filename)
             pDialog.update(((100/total)*(i+1)), message=filename)
-            if ((i+1) % 5) == 0 and i < (total-1):
+            if ((i+1) % 30) == 0 and i < (total-1):
                 pDialog.update(((100/total)*(i+1)), message=__language__(33908))
                 xbmc.sleep(60000)
         pDialog.close()

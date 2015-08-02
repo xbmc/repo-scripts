@@ -7,5 +7,7 @@
 	   <setting id="twitter" type="bool" label="32303" default="true" />
 	   <setting type="lsep" label="32401" />
 	   <setting id="notifications" type="bool" label="32402" default="true" />
+	   <setting id="notif_during_playback" type="bool" label="32403" default="true" />
+	   <setting id="notif_scrobbling" type="bool" label="32404" default="true" />
 	</category>
 </settings>

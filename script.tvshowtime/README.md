@@ -11,6 +11,7 @@ install
 
 This plugin has been submitted to the [official Kodi repository](http://addons.xbmc.org/show/script.tvshowtime/).
 To install it, just follow this [HOW-TO](http://kodi.wiki/view/HOW-TO:Install_add-ons).
+After that, launch the add-on to login.
 
 build
 =====

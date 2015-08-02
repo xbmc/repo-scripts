@@ -54,13 +54,21 @@ class Monitor(xbmc.Monitor):
                     player.episode = FindEpisode(player.token, player.filename)
                     log('episode.is_found=%s' % player.episode.is_found)
                     if player.episode.is_found:
-                        if player.notifications:            
+                        if player.notifications:
+                            if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                                return
+                            if player.notif_scrobbling == 'false':
+                                return
                             notif('%s %s %sx%s' % (__language__(32904), player.episode.showname, player.episode.season_number, player.episode.number), time=2500)
                     else:
                         if player.notifications:
+                            if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                                 return
                             notif(__language__(32905), time=2500)
                 else:
                     if player.notifications:
+                        if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                             return
                         notif(__language__(32905), time=2500)
         if (method == 'VideoLibrary.OnUpdate'):
             log('VideoLibrary.OnUpdate')
@@ -87,9 +95,15 @@ class Monitor(xbmc.Monitor):
                             log('checkin.is_marked:=%s' % checkin.is_marked)
                             if checkin.is_marked:
                                 if player.notifications:
+                                    if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                                        return
+                                    if player.notif_scrobbling == 'false':
+                                        return
                                     notif('%s %s %sx%s' % (__language__(32906), self.episode.showname, self.episode.season_number, self.episode.number), time=2500)
                                 else:
                                     if player.notifications:
+                                        if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                                            return
                                         notif(__language__(32907), time=2500)
                         if playcount is 0:
                             log('MarkAsUnWatched(*, %s)' % (self.filename))
@@ -97,9 +111,15 @@ class Monitor(xbmc.Monitor):
                             log('checkin.is_unmarked:=%s' % checkin.is_unmarked)
                             if checkin.is_unmarked:
                                 if player.notifications:
+                                    if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                                        return
+                                    if player.notif_scrobbling == 'false':
+                                        return
                                     notif('%s %s %sx%s' % (__language__(32908), self.episode.showname, self.episode.season_number, self.episode.number), time=2500)
                                 else:
                                     if player.notifications:
+                                        if player.notif_during_playback == 'false' and player.isPlaying() == 1:
+                                            return
                                         notif(__language__(32907), time=2500)
 
     def getEpisodeTVDB(self, xbmc_id):
@@ -134,6 +154,8 @@ class Player(xbmc.Player):
         self.facebook = __addon__.getSetting('facebook')
         self.twitter = __addon__.getSetting('twitter')
         self.notifications = __addon__.getSetting('notifications')
+        self.notif_during_playback = __addon__.getSetting('notif_during_playback')
+        self.notif_scrobbling = __addon__.getSetting('notif_scrobbling')
         if self.token is '':
             log(__language__(32901))
             notif(__language__(32901), time=2500)
@@ -161,7 +183,7 @@ def formatNumber(number):
     if len(number) < 2:
          number = '0%s' % number
     return number
-	 
+     
 def formatName(filename):
     filename = filename.strip()
     filename = filename.replace(' ', '.')

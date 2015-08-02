@@ -1,3 +1,16 @@
+1.0.18
+change the start point for profiles' users - close #28
+
+1.0.17
+bug fix - close #27
+
+1.0.16
+add a 'Show notification on scrobble' setting
+
+1.0.15
+add a setting to show or not notifications during playback - close #24
+change the api limitation to 30 according to exception from tvshowtime.com
+
 1.0.14
 change the way to authenticate due to api changes
 enhancements

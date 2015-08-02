@@ -53,6 +53,14 @@ msgctxt "#32402"
 msgid "Show notifications"
 msgstr "Afficher les notifications"
 
+msgctxt "#32403"
+msgid "Show during playback"
+msgstr "Afficher pendant la lecture"
+
+msgctxt "#32404"
+msgid "Show notification on scrobble"
+msgstr "Afficher une notification lors du scrobble"
+
 msgctxt "#32901"
 msgid "Please login"
 msgstr "Veuillez vous connecter"
