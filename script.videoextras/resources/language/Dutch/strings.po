@@ -1,0 +1,309 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Voeg Video extra`s toe aan jou Films en TV series."
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Biedt een manier om Video extra`s toe te voegen aan jou videobibliotheek. Kijk op de wiki voor instellingsinstructies."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skinners, bekijk de wikie om te weten hoe je heet moet integreren in jouw skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extra's"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Extra`s Locatie naam"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Zoek gevestigde locaties"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Activeer extra`s met bestand tag "
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Extra`s Bestand Naam Tag"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Menu om te tonen na afspelen van een extra"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Video selectie"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informatie"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Beginscherm"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Bestandssysteem"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Afstandsbediening extra`s locatie"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Gebruik aangepaste extra`s locatie"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Locatie"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Aangepaste films Sub-Folder"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Aangepaste TV seris Sub-folder"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Forceer Extra`s knop weergave"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Uitsluiten Bestanden Reguliere Expressie"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Fout registratie"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Foutregistratie inschakelen"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Database"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Activeer Database Ondersteuning"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Besturingen"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "opschonen database en Buffer"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Gebruik gedetailleerd lijst scherm "
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Scherm te tonen na afsluiten van gedetailleerde lijst"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Toestaan het bufferen van extra`s bij opstarten"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Zoek extra`s"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Aangepaste muziekvideo Sub-folder"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Update advancedsettings.xml bestand"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Update Confluence Skin"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Gebruik aangepaste afbeeldingen"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Overlap afbeelding"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Lijst afbeelding"
+
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "Activeer YouTube zoek ondersteuning"
+
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr "Activeer Vimeo zoekondersteuning"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Speel alles af"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Geen extra`s gevonden"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Hervat vanaf"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Starten vanaf begin"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Markeer als bekeken"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "markeer als niet bekeken"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Wijzig titel"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Niet gelukt titel te updaten"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV Series"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Musiek Videos"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Wijzig verhaallijn"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Niet gelukt verhaallijn te updaten"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "Zoek YouTube ..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "Verwijderde scenes"
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "Speciale toevoegingen"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "Bloopers"
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "interviews"
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "VFX (Visuele effecten)"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "Zoek in Vimeo ..."
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Deze actie zal het bestand advancedsettings.xml updaten om zeker te zijn dat de extra bestanden juist worden behandeld. weet zeker dan alle veranderingen zijn opgeslagen voor starten, Verdergaan?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Niet mogelijk Advancedsettings.xml te updaten"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Controleer het log voor meer details"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Onjuist advancedsettings.xml, niet mogelijk te updaten"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "Advancedsettings.xml update compleet"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Dit zal jouw Confluence skin updaten om de videoextras features toe te voegen, Doorgaan?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Niet gelukt de Confluence skin te updaten"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Niet alle bestanden zijn geüpdated als verwacht"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence skin geüpdatet"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Het is aanbevolen dat je nu Kodi herstart"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Niet gelukt om bestanden te creëren in de confluence skin locatie."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Controleer of de locatie schrijfbaar is door de gebruiker die Kodi gebruikt."

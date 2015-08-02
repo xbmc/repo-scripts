@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window id="3001">
+	<!-- The following property allows TvTunes to keep playing when this window is displayed -->
+	<onload condition="!IsEmpty(ListItem.TvShowTitle)">SetProperty("TvTunesSupported", "TvShows")</onload>
+	<onload condition="IsEmpty(ListItem.TvShowTitle)">SetProperty("TvTunesSupported", "Movies")</onload>
+	<defaultcontrol always="true">51</defaultcontrol>
+	<allowoverlay>yes</allowoverlay>
+	<controls>
+		<include>CommonBackground</include>
+		<include>ContentPanelBackgrounds</include>
+		<control type="group">
+			<include>Window_OpenClose_Animation</include>		
+		</control>
+		<include>CommonPageCount</include>
+		<include>CommonNowPlaying</include>
+		<include>MainWindowMouseButtons</include>
+		<include>BehindDialogFadeOut</include>
+		<include>ScrollOffsetLabel</include>
+		<control type="image">
+			<description>Section header image</description>
+			<posx>20</posx>
+			<posy>3</posy>
+			<width>35</width>
+			<height>35</height>
+			<aspectratio>keep</aspectratio>
+			<texture>icon_video.png</texture>
+		</control>
+		<control type="grouplist">
+			<description>Section header Test Label: "Extras - Title"</description>
+			<posx>65</posx>
+			<posy>5</posy>
+			<width>1000</width>
+			<height>30</height>
+			<orientation>horizontal</orientation>
+			<align>left</align>
+			<itemgap>5</itemgap>
+			<control type="label">
+				<include>WindowTitleCommons</include>
+				<label>$ADDON[script.videoextras 32001]</label>
+			</control>
+			<control type="label" id="321">
+				<include>WindowTitleCommons</include>
+				<visible>!IsEmpty(ListItem.Title)</visible>
+				<label>[COLOR=blue] - [/COLOR] $INFO[ListItem.Title]</label>
+			</control>
+		</control>
+		<control type="group">
+			<include>VisibleFadeEffect</include>
+			<control type="list" id="51">
+				<posx>95</posx>
+				<posy>78</posy>
+				<width>1080</width>
+				<height>511</height>
+				<onleft>60</onleft>
+				<onright>60</onright>
+				<onup>51</onup>
+				<ondown>51</ondown>
+				<viewtype label="537">list</viewtype>
+				<pagecontrol>60</pagecontrol>
+				<scrolltime>200</scrolltime>
+				<itemlayout height="40" width="1080">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1080</width>
+						<height>41</height>
+						<texture border="0,2,0,2">MenuItemNF.png</texture>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>4</posy>
+						<width>40</width>
+						<height>32</height>
+						<aspectratio>keep</aspectratio>
+						<texture background="true">$INFO[ListItem.Icon]</texture>
+					</control>
+					<control type="label">
+						<posx>60</posx>
+						<posy>0</posy>
+						<width>950</width>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>grey2</textcolor>
+						<selectedcolor>selected</selectedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+					<!-- Label 2 is used to store the Duration HH:MM:SS -->
+					<control type="label">
+						<posx>950</posx>
+						<posy>0</posy>
+						<width>100</width>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>grey2</textcolor>
+						<selectedcolor>selected</selectedcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<visible>!IsEmpty(ListItem.Label2)</visible>
+						<label>$INFO[ListItem.Label2]</label>
+					</control>
+					<control type="image">
+						<posx>1050</posx>
+						<posy>14</posy>
+						<width>16</width>
+						<height>16</height>
+						<texture>OverlayWatching.png</texture>
+						<visible>ListItem.IsResumable</visible>
+					</control>
+					<control type="image">
+						<posx>1050</posx>
+						<posy>14</posy>
+						<width>20</width>
+						<height>20</height>
+						<texture>OverlayWatched.png</texture>
+						<visible>IntegerGreaterThan(ListItem.PlayCount,0)</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout height="40" width="1080">
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1080</width>
+						<height>41</height>
+						<texture border="0,2,0,2">MenuItemNF.png</texture>
+						<visible>!Control.HasFocus(51)</visible>
+						<include>VisibleFadeEffect</include>
+					</control>
+					<control type="image">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1080</width>
+						<height>41</height>
+						<texture border="0,2,0,2">MenuItemFO.png</texture>
+						<visible>Control.HasFocus(51)</visible>
+						<include>VisibleFadeEffect</include>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>4</posy>
+						<width>40</width>
+						<height>32</height>
+						<aspectratio>keep</aspectratio>
+						<texture background="true">$INFO[ListItem.Icon]</texture>
+					</control>
+					<control type="label">
+						<posx>60</posx>
+						<posy>0</posy>
+						<width>950</width>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>white</textcolor>
+						<selectedcolor>selected</selectedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+					<!-- Label 2 is used to store the Duration HH:MM:SS -->
+					<control type="label">
+						<posx>950</posx>
+						<posy>0</posy>
+						<width>100</width>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>white</textcolor>
+						<selectedcolor>selected</selectedcolor>
+						<align>right</align>
+						<aligny>center</aligny>
+						<visible>!IsEmpty(ListItem.Label2)</visible>
+						<label>$INFO[ListItem.Label2]</label>
+					</control>
+					<control type="image">
+						<posx>1050</posx>
+						<posy>14</posy>
+						<width>16</width>
+						<height>16</height>
+						<texture>OverlayWatching.png</texture>
+						<visible>ListItem.IsResumable</visible>
+					</control>
+					<control type="image">
+						<posx>1050</posx>
+						<posy>14</posy>
+						<width>20</width>
+						<height>20</height>
+						<texture>OverlayWatched.png</texture>
+						<visible>IntegerGreaterThan(ListItem.PlayCount,0)</visible>
+					</control>
+				</focusedlayout>
+			</control>
+			<control type="scrollbar" id="60">
+				<posx>1170</posx>
+				<posy>80</posy>
+				<width>25</width>
+				<height>520</height>
+				<texturesliderbackground border="0,14,0,14">ScrollBarV.png</texturesliderbackground>
+				<texturesliderbar border="0,14,0,14">ScrollBarV_bar.png</texturesliderbar>
+				<texturesliderbarfocus border="0,14,0,14">ScrollBarV_bar_focus.png</texturesliderbarfocus>
+				<textureslidernib>ScrollBarNib.png</textureslidernib>
+				<textureslidernibfocus>ScrollBarNib.png</textureslidernibfocus>
+				<onleft>51</onleft>
+				<onright>51</onright>
+				<showonepage>false</showonepage>
+				<orientation>vertical</orientation>
+				<visible>Control.IsVisible(51)</visible>
+			</control>
+		</control>
+		<control type="group">
+			<description>Plot: ScrollingDetails</description>
+			<posx>120</posx>
+			<posy>610</posy>
+			<width>1000</width>
+			<height>40</height>
+			<orientation>horizontal</orientation>
+			<align>left</align>
+			<itemgap>5</itemgap>
+			<visible>!IsEmpty(ListItem.Plot)</visible>
+			<control type="label">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width min="70" max="70">auto</width>
+				<font>font14</font>
+				<textcolor>blue</textcolor>
+				<selectedcolor>selected</selectedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<label>$ADDON[script.videoextras 32113]:</label>
+			</control>
+			<control type="label">
+				<posy>0</posy>
+				<posx>70</posx>
+				<font>font14</font>
+				<textcolor>white</textcolor>
+				<selectedcolor>selected</selectedcolor>
+				<align>left</align>
+				<aligny>center</aligny>
+				<scroll>true</scroll>
+				<scrollsuffix>    -    </scrollsuffix>
+				<scrollspeed>50</scrollspeed>
+				<label>$INFO[ListItem.Plot]</label>
+			</control>
+		</control>
+
+		<include>Clock</include>
+	</controls>
+</window>

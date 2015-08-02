@@ -1,0 +1,169 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Icelandic (http://www.transifex.com/projects/p/xbmc-addons/language/is/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: is\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Bætir Video Extras við Kvikmyndir og Sjónvarpsþætti"
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Gerir kleyft að bæta við Video Extras við myndasöfnin þín. Skoðaðu wiki til að sjá hvernig þetta er sett upp. Video Extras heldur utan um smámyndir og Fanart og fl og sér á skipulegan hátt um að geyma og halda utan um það."
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Aukahlutir"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Nafn gagnamöppu aukahluta"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Leita í undirmöppum"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Virkja Aukahluti með skráa-merkimiðum"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "skráanafns-merking Aukahluta"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Valblað sem á að sýna eftir spilaður hefur verið Aukahlutur"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Myndbandaval"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Upplýsingar"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Heim"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Skráarkerfi"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Fjarlæg staðsetning Aukahluta"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Nota sérsniðna staðsetningu fyrir Aukahluti"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Slóð"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Sérsniðin undirmappa Kvikmyndar"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Ítarlegt"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Kembing"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Virkja kembi úttak"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Gagnagrunnur"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Virkja gagnagrunnsstuðning"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Aðgerðir"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Sýna Ítarlega Lista skjáinn"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Fletta í Aukahlutum"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Sérsniðin undirmappa Tónlistarmyndbanda"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Spila allt"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Upplýsingar"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Engir Aukahlutir fundust"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Halda áfram frá"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Byrja frá byrjun"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Merkja sem séð"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Merkja sem óséð"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Breyta titli"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Gat ekki uppfært titil"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Kvikmyndir"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Sjónvarpsþættir"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Tónlistarmyndbönd"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Söguþráður"

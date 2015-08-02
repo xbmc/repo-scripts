@@ -1,0 +1,317 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr ""
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Information"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Home"
+msgstr ""
+
+msgctxt "#32010"
+msgid "File System"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Path"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Database"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr ""
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Show VideoExtras On Context Menu (Restart Required)"
+msgstr ""
+
+#empty strings from id 32038 to 32100
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Info"
+msgstr ""
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr ""
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr ""
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr ""
+
+#empty strings from id 32123 to 32149
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr ""
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr ""
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr ""
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr ""
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr ""
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr ""
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr ""
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr ""
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr ""

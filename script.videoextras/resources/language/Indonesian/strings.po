@@ -1,0 +1,89 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Indonesian (http://www.transifex.com/projects/p/xbmc-addons/language/id/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Ekstra"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Nama Direktori Ekstra"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Seleksi Video"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informasi"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Depan"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Path"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Tingkat Lanjut"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Mendeteksi  Nilai HDD"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Basis Data"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Memulai dari awal"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Tandai Telah Ditonton"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Tandai Belum Ditonton"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Edit Judul"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Film"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Acara TV"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Alur"

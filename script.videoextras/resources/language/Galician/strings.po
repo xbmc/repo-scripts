@@ -1,0 +1,241 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/xbmc-addons/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Engadir Extras de Vídeos aos seus Filmes e Series de TV."
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Prové dun camiño para engadir Extras á sea biblioteca de Vídeos. Ver na wiki para instruccións da configuración."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Autores de temas, por favor vexan a wiki para saber como integralo no seu tema:\nhttp://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extras"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Nome do Cartafol de Extras"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Buscar en Cartafoles Aniñados"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Activar Extras con Etiquetas no Ficheiros"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Extras con Etiquetas no Nome do Ficheiro"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Menú a amosar despois de reproducir un extra"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Escolla de Vídeo "
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Información"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Inicio"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Sistema de Ficheiros"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Localización Remota dos Extras"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Empregar Localización Personalizada de Extras"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Ruta"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Subcartafol Personalizado de Filmes"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Subcartafol Personalizado de Series de TV"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Amosar o Botón de Extras"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Expresión Regular de ficheiros a excluír"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Depurado"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Activar rexistro de depurado"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Base de datos"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Activar o Soporte de Base de Datos"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Operacións"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Limpar Base de Datos e Caché"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Empregar Pantalla de Listaxe Detallado"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Xanela a amosar despois de saír da listaxe detallada"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Permitir a caché de extras ao iniciar"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Buscar Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Subcartafol Personalizado de Vídeos Musicais"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Actualizar o ficheiro advancedsettings.xml"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Actualizar o tema Confluence"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Empregar imaxes personalizadas"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Reproducir todo"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Non se atoparon extras"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Continuar dende"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Comezar dende o principio"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marcar como visto"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marcar como non visto"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Editar o título"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Produciuse un erro actualizando o título"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmes"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Series de TV"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Vídeos Musicais"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Sinopse"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Editar a sinopse"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Produciuse un fallo ao actualizar a sinopse"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Non foi posíbel actualizar o tema Confluence"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Non todos os ficheiros se actualizaron como se agardaba"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Tema Confluence actualizado"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Recomendase reiniciar Kodi agora"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Non foi posíbel crear os ficheiros no cartafol do tema Confluence."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Por favor verifica que o usuario que executa Kodi ten permisos de escritura no cartafol."

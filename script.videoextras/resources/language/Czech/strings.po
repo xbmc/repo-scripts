@@ -1,0 +1,273 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/xbmc-addons/language/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Přidej Video bonusy k Filmům a TV seriím"
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Poskytuje způsob jak přidat Bonusy do vaší video knihovny. Instrukce pro nastavení viz. wiki."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Tvůrci skinů: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Bonusy"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Jméno adresáře pro Bonusy"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Prohledávej vnořené adresáře"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Zapni Bonusy s File Tag"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Jméno File Tagu pro Bonusy"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Menu po přehrání extra"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Video výběr"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informace"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Domů"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Souborový systém"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Vzdálené umístění bonusů"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Použij uživatelské umístění Bonusů"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Cesta"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Uživatelská cesta k podadresáři Filmů"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Uživatelská cesta k podadresáři TV serií"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Vynuť zobrazení tlačítka Bonusy"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Regulární výraz pro nezahrnování souborů"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Ladění"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Povolit zaznamenávání ladících informací"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Databáze"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Umožni podporu v Databázi"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Operace"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Vyčisti Databázi a Cache"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Použij obrazovku s detailem seznamu"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Okno k zobrazení po opuštění detailního seznamu"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Povol caching bonusů při startu"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Procházej Bonusy"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Uživatelský podadresář pro Hudební videa"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Updatuj soubor "
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Updatuj Confuence Skin"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Použij vlastní obrázky"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Obrázek pro overlay "
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Obrázek pro bonusy"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Přehrát vše"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Informace"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Nenalezeny žádné bonusy"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Pokračuj od"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Začít od začátku"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Označit jako zhlédnuté"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Označit jako nezhlédnuté"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Upravit název"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Update titulu skončil chybou"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Seriály"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Hudební videa"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Děj"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Editace obsahu"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Update obsahu zkončil chybou"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Tato akce updatuje soubor advancedsettings.xml a zajistí tak, že soubory bonusů budou správně zobrazeny. Před pokračováním se ujistěte, že jsou všechny změny uloženy. Pokračovat ? "
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Nelze updatovat advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Více informací naleznete v souboru se záznamem."
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Neplatný soubor advancedsettings.xml, update není možný"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml update dokončen"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Tato akce updatuje Confluence skin tak, aby podporoval bonusy pomocí doplňku VideoExtras. Pokračovat ?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Není možno updatovat Confluence skin."
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Ne všechny souboru byly updatovány tak jak se očekávalo."
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence Skin updatován"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Je doporučeno restartovat Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Není možné vytvořit soubory v adresáři skinu Confluence."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Ujistěte se, že uživatel, který spoustil Kodi má práva k zápisu do adresáře."

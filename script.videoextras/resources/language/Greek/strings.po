@@ -1,0 +1,273 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Προσθήκη DVD Extras στις Ταινίες και τις Τηλεοπτικές σας Σειρές."
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Σας παρέχει έναν τρόπο να προσθέσετε DVD Extras στη Συλλογή σας. Ελέγξτε τον ιστότοπο του wiki για οδηγίες εγκατάστασης."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skinners, ελέγξτε τον ιστότοπο για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extras"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Όνομα Φακέλου Extras"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Αναζήτηση Ένθετων Φακέλων"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Ενεργοποίηση Extras με Ετικέτα Αρχείων"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Ετικέτα Αρχείων Extras"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Μενού που θα εμφανίζεται μετά την αναπαραγωγή ενός Extra"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Επιλογή Βίντεο"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Πληροφορίες"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Αρχ. Οθόνη"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Σύστημα Αρχείων"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Τοποθεσία Απομακρυσμένων Extras"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Χρήση Τοποθεσίας Προσαρμοσμένων Extras"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Διαδρομή"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Υποφάκελος Προσαρμοσμένων Ταινιών"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Υποφάκελος Προσαρμοσμένων Τηλ. Σειρών"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Για προχωρημένους"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Εξαναγκασμός Εμφάνισης Πλήκτρου Extras"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Κανονική Έκφραση Αποκλεισμού Αρχείων"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Εντοπισμός σφαλμάτων"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Καταγραφή σφαλμάτων"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Βάση Δεδομένων"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Ενεργοποίηση Υποστήριξης Βάσης Δεδομένων"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Λειτουργίες"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Εκκαθάριση Βάσης Δεδομένων και Λανθάνουσας Μνήμης"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Χρήση Οθόνης Αναλυτικής Λίστας"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Παράθυρο που θα εμφανίζεται μετά την έξοδο από την αναλυτική λίστα"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Προσωρινή αποθήκευση Extras κατά την εκκίνηση"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Περιήγηση στα Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Υποφάκελος Προσαρμοσμένων Μουσικών Βίντεο"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Ενημέρωση του αρχείου advancedsettings.xml"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Ενημέρωση του κελύφους Confluence"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Χρήση Προσωπικών Εικόνων"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Εικόνα Επικάλυψης"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Εικόνα σε Λίστα"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Αναπαραγωγή Όλων"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Πληροφορίες"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Δε βρέθηκαν Extras"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Συνέχιση από"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Εκκίνηση από την αρχή"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Σήμανση ως Προβληθέν"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Σήμανση ως Μη Προβληθέν"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Επεξεργασία τίτλου"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Αποτυχία ενημέρωσης τίτλου"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Ταινίες"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Τηλ. Σειρές"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Μουσικά Βίντεο"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Πλοκή"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Επεξεργασία πλοκής"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Αποτυχία ενημέρωσης πλοκής"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Θα ενημερωθεί το αρχείο advancedsettings.xml για να διαχειριστεί σωστά το αρχείο των Extras. Σιγουρευτείτε ότι όλες οι αλλαγές έχουν αποθηκευθεί πριν ξεκινήσετε. Να εκτελεστεί;"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Αδυναμία ενημέρωσης του advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Ελέγξτε το αρχείο καταγραφής για λεπτομέρειες"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Εσφαλμένο advancedsettings.xml, αδυναμία ενημέρωσης"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "Η ενημέρωση του advancedsettings.xml ολοκληρώθηκε"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Θα ενημερωθεί το κέλυφος Confluence για να συμπεριληφθούν οι λειτουργίες του VideoExtras. Να εκτελεστεί;"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Αδυναμία ενημέρωσης του κελύφους Confluence"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Δεν αντιγράφηκαν όλα τα αρχεία όπως έπρεπε"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Το κέλυφος Confluence ενημερώθηκε"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Προτείνεται να επανεκκινήσετε το Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Αδυναμία δημιουργίας αρχείων στο φάκελο του Confluence."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Σιγουρευτείτε ότι ο φάκελος είναι εγγράψιμος από το χρήστη του Kodi."

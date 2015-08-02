@@ -1,0 +1,309 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "영화와 TV 쇼 라이브러리에 부가영상 추가"
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "비디오 라이브러리에 부가영상(보너스 영상, 셔플, 다른 버전 등)을 추가할 수 있게 합니다. 설치 방법은 Kodi 위키를 참조하세요."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "스킨 제작자 여러분, 스킨에 통합하는 방법은 위키를 참조하기 바랍니다: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "부가영상"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "부가영상 디렉터리 이름"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "중첩 하위 디렉터리 찾기"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "파일이름 태그로 부가영상 감지"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "부가영상 파일이름 태그"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "부가영상 재생 후 표시할 메뉴"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "비디오 선택"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "정보"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "홈"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "파일 시스템"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "원격 부가영상 위치 "
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "부가영상(Extras) 위치 사용자 설정"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "경로"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "영화 하위 폴더명 사용자 설정"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "TV 쇼 하위 폴더 사용자 설정"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "고급"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "부가영상 버튼 강제 표시"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "제외할 파일 표현식"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "디버깅"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "디버그 로그 사용"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "데이터베이스"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "데이터베이스 지원 사용"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "작업"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "데이터베이스와 캐시 정리"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "상세목록 화면 사용"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "상세목록 화면 종료 후 표시할 창"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "시작할 때 부가영상 캐시 허용"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "부가영상 탐색"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "뮤직 비디오 하위 폴더 사용자 설정"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "advancedsettings.xml 파일 업데이트"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Update Confluence 스킨 업데이트"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "사용자 이미지 사용"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "오버레이 이미지"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "목록 이미지"
+
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "YouTube 검색 사용"
+
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr "Vimeo 검색 사용"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "모두 재생"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "정보"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "부가영상 없음"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "이어서 재생: "
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "처음부터 시작"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "시청으로 표시"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "미시청으로 표시"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "제목 수정"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "제목 업데이트 실패"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "영화"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV 쇼"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "뮤직비디오"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "줄거리"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "줄거리 편집"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "줄거리 업데이트 실패"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "YouTube 검색 ..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "삭제 장면"
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "특별 기능"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "실수 장면"
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "인터뷰"
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "VFX (특수효과)"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "Vimeo 찾기 ..."
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "부가 영상 파일을 정확하게 처리하기 위해 advancedsettings.xml 을 수정합니다. 실행하기 전에 변경 사항을 저장하세요. 계속하겠습니까?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "advancedsettings.xml 파일을 수정할 수 없음"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "자세한 사항은 로그를 확인하세요"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "유효하지 않은 advancedsettings.xml 파일. 수정할 수 없음"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml 수정 완료"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "VideoExtras 사용하기 위해 Confluence 스킨을 수정합니다. 계속할까요?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Confluence 스킨을 수정할 수 없음"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "일부 파일이 수정되지 않았습니다"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence 스킨 수정 완료"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "지금 Kodi를 다시 시작하세요"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Confluence 스킨 디렉터리에 파일을 생성할 수 없음"
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Kodi를 실행 중인 사용자의 디렉터리 쓰기 권한을 확인하세요."

@@ -1,0 +1,173 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/xbmc-addons/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "הוסף ספיישלים (Video Extras) לסרטים ולסדרות שלך."
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "מספק אפשרות להוסיף ספיישלים (Video Extras) לספריית הוידאו שלך. פנה לוויקי להוראות התקנה."
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "ספיישלים"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "שם תיקיית ספיישלים"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "חפש בתיקיות מקוננות"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "אפשר זיהוי ספיישלים לפי תגית קובץ"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "תגית שם קובץ ספיישל"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "תפריט להצגה לאחר ניגון ספיישל"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "בחירת וידאו"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "מידע"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "בית"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "מערכת קבצים"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "מיקום ספיישלים מרוחק"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "מיקום ספיישלים מותאם"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "נתיב"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "תת תיקיית סרטים מותאמת"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "תת תיקיית סדרות מותאמת"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "מתקדם"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "אלץ הצגת לחצן ספיישלים"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "RegEX לאי הכללת קבצים"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "ניפוי שגיאות"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "הפעל רישום שגיאות"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "מסד נתונים"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "הפעל תמיכה במסד נתונים"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "פעולות"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "השתמש במסך רשימה מפורטת"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "חלון להצגה לאחר יציאה ממסך רשימה מפורטת"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "נגן הכל"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "מידע"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "לא נמצאו ספיישלים"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "המשך מ-"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "הפעל מהתחלה"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "סמן כנצפה"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "סמן כלא כנצפה"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "ערוך כותרת"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "סדרות"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "קליפים"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "עלילה"

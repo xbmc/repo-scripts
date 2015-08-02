@@ -1,0 +1,309 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Lithuanian (http://www.transifex.com/projects/p/xbmc-addons/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Pridėkite video priedus filmams ir TV laidoms."
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Suteikia būdą pridėti video priedus į vaizdo biblioteką. Nustatymo instrukcijas galite rasti vikio puslapyje."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Teminių išvaizdų kūrėjai, instrukcijas kaip integruoti šį priedą į jūsų teminę išvaizdą rasite vikio puslapyje: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Priedai"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Priedų katalogo vardas"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Ieškoti įdėtiniuose katalaguose"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Įjungti priedus su failo žyma"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Priedų failo vardo žyma"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Meniu, kurį rodyti po priedo atkurimo"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Vaizdo pasirinkimas"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informacija"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Pagrindinis"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Failų sistema"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Nuotolinė priedų vieta"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Naudoti individualią priedų vietą"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Kelias"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Individualus filmų poaplankis"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Individualus TV laidų poaplankis"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Papildomai"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Priverstinis priedų mygtuko rodymas"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Reguliarusis reiškinys failų išskyrimui"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Derinimas"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Įjungti derinimo žurnalą"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Duomenų bazė"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Įjungti duomenų bazės palaikymą"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Operacijos"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Išvalyti duomenų bazę ir podėlį"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Naudoti išsamaus sąrašo ekraną"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Langas, kurį rodyti išėjus iš išsamaus sąrašo"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Leisti priedų padėjimą į talpyklą paleidžint"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Naršyti priedus"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Individualus muzikinių vaizdo klipų poaplankis"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Atnaujinti advancedsettings.xml failą"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Atnaujinti Confluence teminę išvaizdą"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Naudoti savus atvaizdus"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Perdangos atvaizdas"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Sąrašo atvaizdas"
+
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "Įjungti YouTube paieškos palaikymą"
+
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr "Įjungti Vimeo paieškos palaikymą"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Atkurti visus"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Informacija"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Priedų nerasta"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Atnaujinti nuo"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Pradėti nuo pradžios"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Žymėti kaip peržiūrėtą"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Žymėti kaip neperžiūrėtą"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Keisti pavadinimą"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Nepavyko atnaujinti pavadinimo"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmai"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV laidos"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Muzikiniai vaizdo klipai"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Siužetas"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Keisti siužetą"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Nepavyko atnaujinti siužeto"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "Ieškoti YouTube..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "Pašalintos scenos"
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "Ypatumai"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "Klaidos"
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "Interviu"
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "VFX (vizualiniai efektai)"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "Ieškoti Vimeo ..."
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Šis veiksmas atnaujins advancedsettings.xml failą tam, kad užtikrinti, jog papildinių failai būtų tvarkomi teisingai. Prieš paleisdami atnaujinimą, įsitikinkite, kad išsaugojote visus pakeitimus. Tęsti?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Neįmanoma atnaujinti advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Peržiūrėkite žurnalą, norėdami gauti daugiau informacijos"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Klaidingas advancedsettings.xml, atnaujinti neįmanoma"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml atnaujinimas baigtas"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Tai atnaujins Confluence teminę išvaizdą tam, kad būtų įtrauktos VideoExtras funkcijos. Tęsti?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Nepavyko atnaujinti Confluence teminės išvaizdos"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Ne visi failai atnaujinti kaip tikėtasi"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence teminė išvaizda atnaujinta"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Rekomenduojama iš naujo paleisti Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Neįmanoma sukurti failų Confluence teminės išvaizdos kataloge."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Įsitikinkite, kad vartotojas, kuris paleido Kodi, turi teisę rašyti į šį katalogą."

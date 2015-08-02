@@ -1,0 +1,85 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (Australia) (http://www.transifex.com/projects/p/xbmc-addons/language/en_AU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_AU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extras"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Information"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Home"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Path"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Advanced"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Database"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Start from beginning"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Mark as watched"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Mark as unwatched"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Edit title"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Movies"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV Shows"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Music Videos"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

@@ -1,0 +1,201 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Videó Extrák a Filmekhez és Sorozatokhoz"
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Biztosítja a lehetőséget hogy Extrákat adjon hozzá a Videó Médiatárához. Nézze meg a wiki-t a telepítés beállításához."
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extra"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Extrák Könyvtárnév"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Keresés a Beágyazott Könyvtárakban"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Extrák engedélyezése Fájl Tag-ekkel"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Extrák Fájl Név Tag"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Melyik Menü jelenjen meg egy extra lejátszása után"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Videó Kiválasztása"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Információ"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Otthon"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Fájlrendszer"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Távoli Extrák Helye"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Használjon Egyedi helyet az Extrákhoz"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Útvonal"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Egyedi Film Alkönyvtár"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Egyedi Sorozat Alkönyvtár"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Haladó"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Extrák gomb megjelenítésének erőltetése"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Fájlok kizárása Regurális Kifejezés alapján"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Hibakeresés"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Naplózás engedélyezése"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Adatbázis"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Adatbázis támogatásának engedélyezése"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Műveletek"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Adatbázis és gyorsítótár tisztítása"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Részletes Listaképernyő használata"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Melyik ablak kerüljön használatra a részletes listából kilépve"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Extrák gyorsítótárazásának engedélyezése indításkor"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Extrák böngészése"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Egyedi Klip Alkönyvtár"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Összes lejátszása"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Infó"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Extrák nem találhatóak"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Folyatatás innen:"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Lejátszás az elejéről"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Megnézettként megjelöl"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Megnézettlenként megjelöl"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Cím szerkesztése"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Cím frissítése sikertelen"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Videóklipek"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Ismertetö"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Tartalom szerkesztése"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Tartalom frissítése sikertelen"

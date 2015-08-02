@@ -1,0 +1,85 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Malay (http://www.transifex.com/projects/p/xbmc-addons/language/ms/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ms\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Ekstra"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Maklumat"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Rumah"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Laluan"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Lanjutan"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Penyahpepijatan"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Pangkalan data"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Main Semua"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Maklumat"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Mula dari permulaan"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Tanda sebagai ditonton"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Tanda sebagai belum ditonton"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Sunting tajuk"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Cereka"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Rancangan TV"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Video Muzik"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Plot"

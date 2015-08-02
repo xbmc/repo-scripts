@@ -1,0 +1,97 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Slovak (http://www.transifex.com/projects/p/xbmc-addons/language/sk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extra"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Názov priečinka Extra"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Hľadať v podpriečinkoch"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Výber videa"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Informácie"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Domov"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Umiestnenie"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Pokročilé"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Ladenie / Debug"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Začať ukladať informácie / debug log"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Databáza"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Prehrať všetko"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Informácie"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Začať od začiatku"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Označiť ako videné"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Označiť ako nevidené"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Upraviť titul"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmy"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Seriály"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Obsah"

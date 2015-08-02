@@ -1,0 +1,273 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xbmc-addons/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Añadir extras de vídeo para sus películas y programas de televisión."
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Proporciona una manera de añadir extras de vídeos a su biblioteca. Mira el wiki para instrucciones de instalación."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Desarrolladores, por favor ver el Wiki para saber como integrarlo en tu Skin\nhttp://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extras"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Nombre de carpeta para extras"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Buscar en carpetas anidadas"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Habilitar extras con la etiqueta del archivo"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Extras con el nombre de la etiqueta del archivo"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Mostra menú después de reproducir un extra"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Selección de vídeo"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Información"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Inicio"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Sistema de archivos"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Ubicación remota de extras"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Usar ubicación por defecto para extras "
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Ruta"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Subcarpeta por defecto para películas"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Subcarpeta por defecto para series"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Forzar visualización del botón de extras"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Excluir archivos de expresiones regulares"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Depuración"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Habilitar trazas de depuración"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Base de Datos"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Habilitar el soporte de base de datos"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Operaciones"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Limpiar base de datos y memoria caché"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Usar pantalla de lista detallada"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Mostar ventana después de salir de la lista detallada"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Almacenar en caché los extras en el arranque"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Examinar Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Subcarpeta por defecto para vídeos musicales"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Actualizar archivo advancedsettings.xml "
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Actualizar la confluencia de carcasas"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Usar imágenes personalizadas"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Sobreponer imagen"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Listar imagen"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Reproducir todo"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Información"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Ningún extra encontrado"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Volver a empezar desde"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Comenzar desde el principio"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Marcar como visto"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Marcar como No Visto"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Editar titulo"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Fallo al actualizar el titulo"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Películas"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "Series TV"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Videoclips"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Argumento"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Editar trama"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Falló al actualizar trama"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Esta acción actualizara el archivo advancedsettings.xml para asegurar que los archivos adicionales sean manipulados correctamente. Asegurese de que cualquier cambio sea guardado antes de ejecutar. Continuar?   "
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "No se puede actulizar advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Por favor revisar el registro para mas detalles "
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Advancedsettings.xml invalido, no se puede actualizar"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml actualización completa"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Esto actualizará tu confluencia de carcasas para incluir las opciones adicionales de vídeo. Continuar?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "No se puede actualizar la confluencia de carcasas"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "No todos los archivos fueron actualizados como se esperaba"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluencia de carcasas actualizado"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Es recomendado que reinicie ahora Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "No se puede crear archivos en el directorio de confluencia de carcasas"
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Por favor asegúrese que el directorio este habilitado para escritura para el usuario que esta ejecutando Kodi "

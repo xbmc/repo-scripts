@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<include name="VideoExtrasOverlayIcon">
+		<control type="image">
+			<description>Overlay Video Extras flagging image</description>
+			<width>35</width>
+			<height>35</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/movies/,.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(Movies)</visible>
+		</control>
+		<control type="image">
+			<description>Overlay Video Extras flagging image</description>
+			<width>35</width>
+			<height>35</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/tvshows/,.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(TVShows)</visible>
+		</control>
+		<control type="image">
+			<description>Overlay Video Extras flagging image</description>
+			<width>35</width>
+			<height>35</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/musicvideos/,.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(MusicVideos)</visible>
+		</control>
+	</include>
+	<include name="VideoExtrasLargeIcon">
+		<control type="image">
+			<description>Large Video Extras flagging image</description>
+			<width>40</width>
+			<height>35</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/movies/,_list.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(Movies)</visible>
+		</control>
+		<control type="image">
+			<description>Large Video Extras flagging image</description>
+			<width>40</width>
+			<height>35</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/tvshows/,_list.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(TVShows)</visible>
+		</control>
+		<control type="image">
+			<description>Large Video Extras flagging image</description>
+			<width>40</width>
+			<height>35</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/musicvideos/,_list.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(MusicVideos)</visible>
+		</control>
+	</include>
+	<include name="VideoExtrasListIcon">
+		<control type="image">
+			<description>Small List Video Extras flagging image</description>
+			<width>40</width>
+			<height>26</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/movies/,_list.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(Movies)</visible>
+		</control>
+		<control type="image">
+			<description>Small List Video Extras flagging image</description>
+			<width>40</width>
+			<height>26</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/tvshows/,_list.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(TVShows)</visible>
+		</control>
+		<control type="image">
+			<description>Small List Video Extras flagging image</description>
+			<width>40</width>
+			<height>26</height>
+			<texture fallback="blank.png">$INFO[ListItem.DBID,special://profile/addon_data/script.videoextras/musicvideos/,_list.png]</texture>
+			<visible>System.HasAddon(script.videoextras) + Window.IsVisible(Videos) + Container.Content(MusicVideos)</visible>
+		</control>
+	</include>
+</includes>

@@ -1,0 +1,273 @@
+# Kodi Media Center language file
+# Addon Name: VideoExtras
+# Addon id: script.videoextras
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Add Video Extras to your Movies and TV shows."
+msgstr "Lägg till Video Extras till dina filmer och TV-program"
+
+msgctxt "Addon Description"
+msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
+msgstr "Tillhandahåller ett sätt att lägga till Video Extras till ditt filmbibliotek. Se wiki för inställningsanvisningar."
+
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skaltillverkare, använd wikin för att se hur du kan integrera det i ditt skal:\nhttp://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
+msgctxt "#32001"
+msgid "Extras"
+msgstr "Extra"
+
+msgctxt "#32002"
+msgid "Extras Directory Name"
+msgstr "Mappnamn för Extras"
+
+msgctxt "#32003"
+msgid "Search Nested Directories"
+msgstr "Sök i mappar med flera nivåer"
+
+msgctxt "#32004"
+msgid "Enable Extras with File Tag"
+msgstr "Aktivera Extras med filtagg"
+
+msgctxt "#32005"
+msgid "Extras File Name Tag"
+msgstr "Filnamnstagg för Extras"
+
+msgctxt "#32006"
+msgid "Menu to show after playing an extra"
+msgstr "Meny som skall visas efter en Extras har spelats"
+
+msgctxt "#32007"
+msgid "Video Selection"
+msgstr "Filmval"
+
+msgctxt "#32008"
+msgid "Information"
+msgstr "Information"
+
+msgctxt "#32009"
+msgid "Home"
+msgstr "Hem"
+
+msgctxt "#32010"
+msgid "File System"
+msgstr "Filsystem"
+
+msgctxt "#32011"
+msgid "Remote Extras Location"
+msgstr "Fjärrmapp för Extras"
+
+msgctxt "#32012"
+msgid "Use Custom Extras Location"
+msgstr "Använd egenvald mapp för Extras"
+
+msgctxt "#32013"
+msgid "Path"
+msgstr "Sökväg"
+
+msgctxt "#32014"
+msgid "Custom Movies Sub-Folder"
+msgstr "Egenvald undermapp för film"
+
+msgctxt "#32015"
+msgid "Custom TV Shows Sub-Folder"
+msgstr "Egenvald undermapp för TV-program"
+
+msgctxt "#32016"
+msgid "Advanced"
+msgstr "Avancerad"
+
+msgctxt "#32017"
+msgid "Force Extras Button Display"
+msgstr "Tvinga visning av knapp för Extras"
+
+msgctxt "#32018"
+msgid "Exclude Files Regular Expression"
+msgstr "Reguljärt uttryck för filexkludering"
+
+msgctxt "#32019"
+msgid "Debugging"
+msgstr "Debuggning"
+
+msgctxt "#32020"
+msgid "Enable debug logging"
+msgstr "Aktivera debugloggning"
+
+msgctxt "#32021"
+msgid "Database"
+msgstr "Databas"
+
+msgctxt "#32022"
+msgid "Enable Database Support"
+msgstr "Aktivera stöd för databas"
+
+msgctxt "#32023"
+msgid "Operations"
+msgstr "Åtgärder"
+
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Rensa databasen och cache"
+
+msgctxt "#32025"
+msgid "Use Detailed List Screen"
+msgstr "Använd detaljerad lista"
+
+msgctxt "#32026"
+msgid "Window to show after exiting detailed list"
+msgstr "Fönster att visa efter man avslutat detaljerad lista"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "Tillåt buffring av Extras vid uppstart"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Bläddra bland Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Egen undermapp för musikvideo"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Uppdatera advancedsettings.xml"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Uppdatera Confluenceskalet"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Använd egna bilder"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Överläggsbild"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "Listbild"
+
+msgctxt "#32101"
+msgid "Play All"
+msgstr "Spela alla"
+
+msgctxt "#32102"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#32103"
+msgid "No extras found"
+msgstr "Inga Extras funna"
+
+msgctxt "#32104"
+msgid "Resume from"
+msgstr "Återuppta från"
+
+msgctxt "#32105"
+msgid "Start from beginning"
+msgstr "Starta från början"
+
+msgctxt "#32106"
+msgid "Mark as watched"
+msgstr "Markera som visad"
+
+msgctxt "#32107"
+msgid "Mark as unwatched"
+msgstr "Markera som icke visad"
+
+msgctxt "#32108"
+msgid "Edit title"
+msgstr "Ändra titel"
+
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "Misslyckades uppdatera titel"
+
+msgctxt "#32110"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#32111"
+msgid "TV Shows"
+msgstr "TV-program"
+
+msgctxt "#32112"
+msgid "Music Videos"
+msgstr "Musikvideor"
+
+msgctxt "#32113"
+msgid "Plot"
+msgstr "Handling"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Redigera intrig"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Kunde inte uppdatera intrig"
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Åtgärden uppdaterar filen advancedsettings.xml för att garantera att extrasfilerna hanteras korrekt. Se till att eventuella ändringar är sparade innan du fortsätter. Fortsätta?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Kunde inte uppdatera advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Se loggfilen för detaljer"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Ogiltig advancedsettings.xml, kunde inte uppdateras"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "Uppdatering av advancedsettings.xml klar"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "Detta kommer att uppdatera ditt Confluence-skal att inkludera VideoExtras-funktionen. Fortsätta?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Kunde inte uppdatera Confluence-skalet"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Alla filer uppdaterades inte som förväntat"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence-skalet uppdaterat"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "Det är rekommenderat att du nu startar om Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Kunde inte skapa filer i katalogen för Confluence-skalet."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Vänligen se till att katalogen är skrivbar av aktuell Kodi användare."
