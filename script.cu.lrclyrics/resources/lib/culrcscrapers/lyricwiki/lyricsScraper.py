@@ -17,7 +17,7 @@ socket.setdefaulttimeout(10)
 
 class LyricsFetcher:
     def __init__( self ):
-        self.url = 'http://lyrics.wikia.com/api.php?artist=%s&song=%s&fmt=realjson'
+        self.url = 'http://lyrics.wikia.com/api.php?func=getSong&artist=%s&song=%s&fmt=realjson'
 
     def get_lyrics(self, song):
         log( "%s: searching lyrics for %s - %s" % (__title__, song.artist, song.title))
@@ -25,7 +25,6 @@ class LyricsFetcher:
         lyrics.song = song
         lyrics.source = __title__
         lyrics.lrc = __lrc__
-
         try:
             req = urllib2.urlopen(self.url % (urllib2.quote(song.artist), urllib2.quote(song.title)))
             response = req.read()
