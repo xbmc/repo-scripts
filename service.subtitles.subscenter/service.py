@@ -108,21 +108,26 @@ if params['action'] in ['search', 'manualsearch']:
     item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))  # Season
     item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))  # Episode
     item['tvshow'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))  # Show
-    item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
-        else normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))  # try to get original title
-    item['file_original_path'] = urllib.unquote(
-        unicode(xbmc.Player().getPlayingFile(), 'utf-8'))  # Full path of a playing file
+    item['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))  # try to get original title
+    item['file_original_path'] = urllib.unquote(unicode(xbmc.Player().getPlayingFile(), 'utf-8'))  # Full path of a playing file
     item['3let_language'] = []
     item['preferredlanguage'] = unicode(urllib.unquote(params.get('preferredlanguage', '')), 'utf-8')
     item['preferredlanguage'] = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ISO_639_2)
 
+    if item['title'] == "":
+        log(__scriptname__, "VideoPlayer.OriginalTitle not found")
+        item['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
+
+    if params['action'] == 'manualsearch':
+        if item['season'] != '' or item['episode']:
+            item['tvshow'] = params['searchstring']
+        else:
+            item['title'] = params['searchstring']
+
     for lang in unicode(urllib.unquote(params['languages']), 'utf-8').split(","):
         item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
-    if item['title'] == "":
-        log(__scriptname__, "VideoPlayer.OriginalTitle not found")
-        item['title'] = params['searchstring'] if params['action'] == 'manualsearch' \
-            else normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title
+    log(__scriptname__, "Item before cleaning: \n    %s" % item)
 
     # clean title + tvshow params
     clean_title(item)
@@ -134,7 +139,6 @@ if params['action'] in ['search', 'manualsearch']:
 
     if item['file_original_path'].find("http") > -1:
         item['temp'] = True
-
 
     elif item['file_original_path'].find("rar://") > -1:
         item['rar'] = True
