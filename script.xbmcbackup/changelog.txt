@@ -1,3 +1,8 @@
+Version 1.0.6
+
+fix for custom directories not working recursively
+added progress for zip extraction - hopefully helps with extract errors
+
 Version 1.0.5
 
 added google drive support

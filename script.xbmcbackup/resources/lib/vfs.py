@@ -107,9 +107,12 @@ class ZipFileSystem(Vfs):
     def cleanup(self):
         self.zip.close()
         
-    def extract(self,path):
+    def extract(self,aFile,path):
         #extract zip file to path
-        self.zip.extractall(path)
+        self.zip.extract(aFile,path)
+    
+    def listFiles(self):
+        return self.zip.infolist()
 
 class DropboxFileSystem(Vfs):
     client = None

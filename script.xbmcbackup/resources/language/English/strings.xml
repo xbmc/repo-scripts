@@ -91,4 +91,6 @@
 	<string id="30097">This needs to happen before a backup can run</string>
 	<string id="30098">Google Drive</string>
 	<string id="30099">Open Settings</string>
+	<string id="30100">Extracting Archive</string>
+	<string id="30101">Error extracting the zip archive</string>
 </strings>
