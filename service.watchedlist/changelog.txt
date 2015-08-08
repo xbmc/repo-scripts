@@ -1,3 +1,6 @@
+version 1.0.4 (16.05.2015)
+ * fixed mysql timestamp bug
+
 version 1.0.3 (11.01.2015)
  * Fixed wrong implementation of startup delay
  * Fixed missing startup execution if autostart mode is set to periodic

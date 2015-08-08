@@ -934,9 +934,9 @@ class WatchedList:
         if idletime > idletime_old:
             # the idle time increased. No user interaction probably happened
             return
-        utils.log(u'watch_user_changes: Check for user changes (no. %d)' % self.watch_user_changes_count, xbmc.LOGDEBUG)
         self.watch_user_changes_count = self.watch_user_changes_count + 1
-                        
+        utils.log(u'watch_user_changes: Check for user changes (no. %d)' % self.watch_user_changes_count, xbmc.LOGDEBUG)
+                     
         # save previous state
         old_watchedmovielist_xbmc = self.watchedmovielist_xbmc
         old_watchedepisodelist_xbmc = self.watchedepisodelist_xbmc
@@ -1109,7 +1109,7 @@ class WatchedList:
                     if utils.getSetting("db_format") == '0': # sqlite3
                         sql = 'UPDATE movie_watched SET playCount = ?, lastplayed = ?, lastChange = ? WHERE idMovieImdb LIKE ?'
                     else: # mysql
-                        sql = 'UPDATE movie_watched SET playCount = %s, lastplayed = %s, lastChange = FROM_UNIXTIME(%s) WHERE idMovieImdb LIKE %s'
+                        sql = 'UPDATE movie_watched SET playCount = %s, lastplayed = FROM_UNIXTIME(%s), lastChange = FROM_UNIXTIME(%s) WHERE idMovieImdb LIKE %s'
                     values = list([playcount_xbmc, lastplayed_new, lastchange_new, imdbId])
                 else:
                     if utils.getSetting("db_format") == '0': # sqlite3
