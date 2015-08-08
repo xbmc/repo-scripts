@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.html2text"
+       name="html2text"
+       version="2015.6.21"
+       provider-name="Aaron Swartz">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary>Turn HTML into equivalent Markdown-structured text</summary>
+    <description>html2text is a Python script that converts a page of HTML into clean, easy-to-read plain ASCII text. Better yet, that ASCII also happens to be valid Markdown (a text-to-HTML format).</description>
+    <platform>all</platform>
+    <license>GPLv3</license>
+    <source>https://github.com/Alir3z4/html2text</source>
+    <website>http://alir3z4.github.io/html2text/</website>
+  </extension>
+</addon>
