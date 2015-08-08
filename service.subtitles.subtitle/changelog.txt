@@ -1,3 +1,6 @@
+4.3.4 - by CaTz (08/08/2015)
+- Fix manual search in TvShows
+
 4.3.3 - by CaTz (11/07/2015)
 - Bug fix, Handle titles that contains "." properly.
 
