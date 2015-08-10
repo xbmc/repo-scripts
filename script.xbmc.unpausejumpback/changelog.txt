@@ -1,3 +1,6 @@
+2.3.3
+- added bulgarian translation - thx to NEOhidra
+
 2.3.2
 - jump back "in the background" when paused (i.e. while still paused instead of upon resuming)
 
