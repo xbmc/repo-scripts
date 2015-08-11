@@ -66,8 +66,12 @@ class LibraryMonitor(threading.Thread):
                     self.getStudioLogos()
                     self.delayedTaskInterval = 0                   
             
+            #flush cache if videolibrary has changed
+            elif self.win.getProperty("widgetrefresh") == "refresh":
+                self.moviesetCache = {}
+            
             # monitor listitem props when musiclibrary is active
-            if (xbmc.getCondVisibility("Window.IsActive(musiclibrary) + !Container.Scrolling")):
+            elif (xbmc.getCondVisibility("Window.IsActive(musiclibrary) + !Container.Scrolling")):
                 if self.win.getProperty("resetMusicArtCache") == "reset":
                     self.lastMusicDbId = None
                     self.musicArtCache = {}
@@ -78,7 +82,7 @@ class LibraryMonitor(threading.Thread):
                     utils.logMsg("ERROR in checkMusicArt ! --> " + str(e), 0)
             
             # monitor listitem props when videolibrary is active
-            if (xbmc.getCondVisibility("[Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Window.IsActive(fullscreenvideo)")):
+            elif (xbmc.getCondVisibility("[Window.IsActive(videolibrary) | Window.IsActive(movieinformation)] + !Window.IsActive(fullscreenvideo)")):
                 
                 self.liPath = xbmc.getInfoLabel("ListItem.Path")
                 liLabel = xbmc.getInfoLabel("ListItem.Label")
@@ -98,9 +102,17 @@ class LibraryMonitor(threading.Thread):
                     except Exception as e:
                         utils.logMsg("ERROR in LibraryMonitor ! --> " + str(e), 0)
   
-            #flush cache if videolibrary has changed
-            if self.win.getProperty("widgetrefresh") == "refresh":
-                self.moviesetCache = {}
+            else:
+                #reset window props
+                self.win.clearProperty("ListItemStudioLogo")
+                self.win.clearProperty('Duration')
+                self.win.setProperty("ExtraFanArtPath","") 
+                self.win.clearProperty("bannerArt") 
+                self.win.clearProperty("logoArt") 
+                self.win.clearProperty("cdArt")
+                self.win.clearProperty("songInfo")
+                self.win.setProperty("ExtraFanArtPath","")
+                
             
             xbmc.sleep(150)
             self.delayedTaskInterval += 0.15
@@ -143,6 +155,7 @@ class LibraryMonitor(threading.Thread):
                     unwatchedcount = 0
                     watchedcount = 0
                     runtime = 0
+                    runtime_mins = 0
                     writer = []
                     director = []
                     genre = []
@@ -186,7 +199,7 @@ class LibraryMonitor(threading.Thread):
                     else:
                         self.win.setProperty('MovieSet.ExtendedPlot', plot)
                     self.win.setProperty('MovieSet.Title', title_list)
-                    self.win.setProperty('MovieSet.Runtime', str(runtime))
+                    self.win.setProperty('MovieSet.Runtime', str(runtime / 60))
                     durationString = self.getDurationString(runtime / 60)
                     if durationString:
                         self.win.setProperty('MovieSet.Duration', durationString)
@@ -449,13 +462,13 @@ class LibraryMonitor(threading.Thread):
             if xbmc.getCondVisibility("Container.Content(songs) | Container.Content(singles)"):
                 if "singles/" in folderPath:
                     folderPath = folderPath.replace("musicdb://singles/","")
-                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","").replace("?singles=true","")
+                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","").replace(".m4a","").replace(".dsf","").replace(".mka","").replace("?singles=true","")
                 if "songs/" in folderPath:
                     folderPath = folderPath.replace("musicdb://songs/","")
-                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","")
+                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","").replace(".m4a","").replace(".dsf","").replace(".mka","")
                 elif "top100/" in folderPath:
                     folderPath = folderPath.replace("musicdb://top100/songs/","")
-                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","")
+                    dbid = folderPath.replace(".mp3","").replace(".flac","").replace(".wav","").replace(".wma","").replace(".m4a","").replace(".dsf","").replace(".mka","")
                 elif "artists/" in folderPath:
                     folderPath = folderPath.replace("musicdb://artists/","")
                     folderPath = folderPath.split("/")[2]
@@ -665,7 +678,7 @@ class Kodi_Monitor(xbmc.Monitor):
     
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)
-
+    
     def onDatabaseUpdated(self, database):
         #update nextup list when library has changed
         WINDOW = xbmcgui.Window(10000)

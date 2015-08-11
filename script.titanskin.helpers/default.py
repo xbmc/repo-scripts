@@ -107,8 +107,14 @@ elif "RECOMMENDEDMOVIES" in argument1:
     MainModule.getRecommendedMovies()
 elif "RECOMMENDEDMEDIA" in argument1:
     MainModule.getRecommendedMedia(False)
+elif "RECENTMEDIA" in argument1:
+    MainModule.getRecentMedia()
+elif "SIMILARMOVIES" in argument1:
+    MainModule.getSimilarMovies()
 elif "INPROGRESSMEDIA" in argument1:
     MainModule.getRecommendedMedia(True)      
+elif "FAVOURITEMEDIA" in argument1:
+    MainModule.getFavouriteMedia() 
 elif argument1 == "?FAVOURITES":
     MainModule.getFavourites()
 elif "?LAUNCHAPP" in argument1:

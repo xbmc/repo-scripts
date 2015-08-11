@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import xbmc
+import xbmc, xbmcgui
 import xbmcaddon
 
 
@@ -20,6 +20,14 @@ from HomeMonitor import HomeMonitor
 class Main:
     
     def __init__(self):
+        
+        win = xbmcgui.Window( 10000 )
+        win.setProperty("titanhelper.version",__addonversion__.replace(".",""))
+        skin = xbmc.getSkinDir()
+        skinLabel = xbmcaddon.Addon(id=skin).getAddonInfo('name')
+        skinVersion = xbmcaddon.Addon(id=skin).getAddonInfo('version')
+        win.setProperty("skinTitle",skinLabel + " - " + xbmc.getLocalizedString(19114) + ": " + skinVersion)
+        win.setProperty("skinVersion",xbmc.getLocalizedString(19114) + ": " + skinVersion)
         
         KodiMonitor = Kodi_Monitor()
         homeMonitor = HomeMonitor()

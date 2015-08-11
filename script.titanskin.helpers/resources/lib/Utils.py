@@ -74,19 +74,25 @@ def createListItem(item):
         liz.setProperty("episodeno", episodeno)
     
     if "episodeid" in item:
-        liz.setProperty("dbid", str(item['episodeid']))
+        liz.setProperty("DBID", str(item['episodeid']))
+        liz.setInfo( type="Video", infoLabels={ "DBID": str(item['episodeid']) })
         liz.setIconImage('DefaultTVShows.png')
         
     if "songid" in item:
-        liz.setProperty("dbid", str(item['songid']))
+        liz.setProperty("DBID", str(item['songid']))
         liz.setIconImage('DefaultAudio.png')
+        liz.setLabel2(str(item['artist'][0]))
+    
+    if "channel" in item:
+        liz.setLabel2(str(item['channel']))
         
     if "movieid" in item:
-        liz.setProperty("dbid", str(item['movieid']))
+        liz.setProperty("DBID", str(item['movieid']))
+        liz.setInfo( type="Video", infoLabels={ "DBID": str(item['movieid']) })
         liz.setIconImage('DefaultMovies.png')
     
     if "musicvideoid" in item:
-        liz.setProperty("dbid", str(item['musicvideoid']))
+        liz.setProperty("DBID", str(item['musicvideoid']))
         liz.setIconImage('DefaultMusicVideos.png')
     
     if "firstaired" in item:
@@ -148,11 +154,12 @@ def createListItem(item):
         if "thumbnail" in item:
             art.append(("thumb",item["thumbnail"]))
             liz.setThumbnailImage(item["thumbnail"])
-    
+        if "icon" in item:
+            art.append(("thumb",item["icon"]))
+            liz.setThumbnailImage(item["icon"])
     liz.setArt(art)
     
-    
-    
+
     if "streamdetails" in item:
         for key, value in item['streamdetails'].iteritems():
             for stream in value:

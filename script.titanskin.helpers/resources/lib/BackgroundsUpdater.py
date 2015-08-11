@@ -154,7 +154,7 @@ class BackgroundsUpdater(threading.Thread):
             else:
                 media_type = "video"
             media_array = None
-            media_array = utils.getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + libPath + '", "media": "' + media_type + '", "limits": {"end":50}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
+            media_array = utils.getJSON('Files.GetDirectory','{ "properties": ["title","art"], "directory": "' + libPath + '", "media": "' + media_type + '", "limits": {"end":150}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }')
             if(media_array != None and media_array.has_key('files')):
                 for media in media_array['files']:
                     if media.has_key('art'):
@@ -524,7 +524,7 @@ class BackgroundsUpdater(threading.Thread):
             self.win.setProperty("Netflix.alltv",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listViewingActivity&thumb&type=tv&widget=true&url", "special://skin/extras/hometiles/netflix.png"))
             
             #in progress
-            self.win.setProperty("Netflix.progress",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_4", "special://skin/extras/hometiles/netflix.png"))
+            self.win.setProperty("Netflix.progress",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_0", "special://skin/extras/hometiles/netflix.png"))
             
             #in progress movies
             self.win.setProperty("Netflix.progressmovies",self.getImageFromPath("plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=movie&widget=true&url=slider_4", "special://skin/extras/hometiles/netflix.png"))
