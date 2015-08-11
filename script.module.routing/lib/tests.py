@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import pytest
+import mock
 from routing import Plugin, UrlRule, RoutingError
 
 
@@ -34,6 +35,11 @@ def test_make_path():
     assert rule.make_path(1, 2) == "/p/1/2"
     assert rule.make_path(baz=3, foo=1, bar=2) == "/p/1/2?baz=3"
     assert rule.make_path(1) is None
+
+
+def test_make_path_should_urlencode_args():
+    rule = UrlRule("/foo")
+    assert rule.make_path(bar="b a&r") == "/foo?bar=b+a%26r"
 
 
 def test_url_for_path():
@@ -72,7 +78,6 @@ def test_route_for_args(plugin):
 
 
 def test_dispatch(plugin):
-    import mock
     f = mock.create_autospec(lambda: None)
     plugin.route("/foo")(f)
     plugin.run(['plugin://py.test/foo', '0', '?bar=baz'])
@@ -89,3 +94,10 @@ def test_no_route(plugin):
         plugin.run([plugin.base_url + "/foo"])
 
     assert plugin.route_for(plugin.base_url + "/foo") is None
+
+
+def test_arg_parsing(plugin):
+    f = mock.create_autospec(lambda: None)
+    plugin.route("/foo")(f)
+    plugin.run(['plugin://py.test/foo', '0', '?bar=baz'])
+    assert plugin.args['bar'][0] == 'baz'

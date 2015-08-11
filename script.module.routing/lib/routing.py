@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-
 import re
 import sys
 from urlparse import urlsplit, parse_qs
@@ -25,11 +23,11 @@ from urllib import urlencode
 try:
     import xbmc
     import xbmcaddon
-    _addon_id = xbmcaddon.Addon().getAddonInfo('id').decode('utf-8')
+    _addon_id = xbmcaddon.Addon().getAddonInfo('id')
 
     def log(msg):
         msg = "[%s][routing] %s" % (_addon_id, msg)
-        xbmc.log(msg.encode('utf-8'), level=xbmc.LOGDEBUG)
+        xbmc.log(msg, level=xbmc.LOGDEBUG)
 except ImportError:
     def log(msg):
         print(msg)
@@ -40,17 +38,28 @@ class RoutingError(Exception):
 
 
 class Plugin(object):
+    """
+    :ivar handle: The plugin handle from kodi
+    :type handle: int
+
+    :ivar args: The parsed query string.
+    :type args: dict of byte strings
+    """
 
     def __init__(self, base_url=None):
         self._rules = {}  # function to list of rules
         self.handle = int(sys.argv[1]) if sys.argv[1].isdigit() else -1
-        self.args = None
+        self.args = {}
         self.base_url = base_url
         if self.base_url is None:
-            self.base_url = "plugin://" + xbmcaddon.Addon().getAddonInfo('id').decode('utf-8')
+            self.base_url = "plugin://" + xbmcaddon.Addon().getAddonInfo('id')
 
     def route_for(self, path):
-        """ Returns the view function for path. """
+        """
+        Returns the view function for path.
+
+        :type path: byte string.
+        """
         if path.startswith(self.base_url):
             path = path.split(self.base_url, 1)[1]
 
@@ -73,7 +82,9 @@ class Plugin(object):
                            "kwargs {2}".format(func.__name__, args, kwargs))
 
     def url_for_path(self, path):
-        """ Returns the complete URL for a path. """
+        """
+        Returns the complete URL for a path.
+        """
         path = path if path.startswith('/') else '/' + path
         return self.base_url + path
 
@@ -93,8 +104,8 @@ class Plugin(object):
 
     def run(self, argv=sys.argv):
         if len(argv) > 2:
-            self.args = parse_qs(argv[2].lstrip('?'))
-        path = urlsplit(argv[0].decode('utf-8')).path or '/'
+            self.args = parse_qs(argv[2].lstrip(b'?'))
+        path = urlsplit(argv[0]).path or '/'
         self._dispatch(path)
 
     def redirect(self, path):
