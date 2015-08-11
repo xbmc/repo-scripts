@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="context.item.extras" name="Extras" version="1.0.0" provider-name="takoi">
+<addon id="context.item.extras" name="Extras" version="1.1.0" provider-name="takoi">
   <requires>
     <import addon="xbmc.python" version="2.20.0"/>
+    <import addon="script.module.routing" version="0.2.0"/>
   </requires>
   <extension point="kodi.context.item" library="addon.py">
     <item>
@@ -11,12 +12,17 @@
       </visible>
     </item>
   </extension>
+  <extension point="xbmc.python.pluginsource" library="plugin.py">
+    <provides>video</provides>
+  </extension>
   <extension point="kodi.addon.metadata">
     <platform>all</platform>
-    <summary lang="en">Browse extras from the video library</summary>
-    <description lang="en">This add-on lets you view your movie and TV show extras/special features directly from the library. To access extras, open the context menu on a video in the library and click 'Extras'.
+    <summary lang="en">View extras and special features</summary>
+    <description lang="en">Provides an easy way to browse and view movie and TV show extras. Extras can be accessed from the context menu in the video library.
 
-By default, the add-on will look in the ".extras" sub-directory for content (can be changed in settings).</description>
+By default, the add-on will look in the "Extras" sub-folder for content (can be changed in settings).
+
+Tip: for how to avoid extras beings scraped to library, see http://kodi.wiki/view/Add-on:Extras</description>
     <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
     <forum></forum>
     <source>https://github.com/tamland/kodi-addon-extras</source>

@@ -15,28 +15,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-
 import os
 import sys
 import xbmc
-import xbmcgui
-import xbmcvfs
 import xbmcaddon
+from urllib import urlencode
 
 
 def main():
     addon = xbmcaddon.Addon()
-    path = sys.listitem.getVideoInfoTag().getPath().decode('utf-8', 'ignore')
-    if not path:
+    item_path = sys.listitem.getVideoInfoTag().getPath()
+    if not item_path:
         return
-    path = os.path.join(path, addon.getSetting('extras-folder').decode('utf-8'))
-    xbmc.log(b"[%s] opening '%s'" % (addon.getAddonInfo('id'), path.encode('utf-8')), xbmc.LOGDEBUG)
-    if xbmcvfs.exists((path + '/').encode('utf-8')):
-        xbmc.executebuiltin('Container.Update(\"%s\")' % path)
-    else:
-        dialog = xbmcgui.Dialog()
-        dialog.ok(addon.getAddonInfo('name'), "No extras found")
+
+    extras_dir = os.path.join(item_path, addon.getSetting('extras-folder'))
+    xbmc.log("[%s] opening '%s'" % (addon.getAddonInfo('id'), extras_dir), xbmc.LOGDEBUG)
+
+    params = {
+        'path': extras_dir,
+        'isroot': 'true',
+        'title': sys.listitem.getLabel(),
+        'fanart': sys.listitem.getProperty('fanart_image'),
+    }
+    plugin_url = "plugin://context.item.extras/browse?" + urlencode(params)
+    xbmc.executebuiltin('Container.Update(\"%s\")' % plugin_url)
+
 
 if __name__ == '__main__':
     main()

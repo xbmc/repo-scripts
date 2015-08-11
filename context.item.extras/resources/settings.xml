@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <setting label="30001" id="extras-folder" type="text" default=".extras"/>
+    <setting label="30001" id="extras-folder" type="text" default="Extras"/>
 </settings>
