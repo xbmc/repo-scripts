@@ -44,23 +44,34 @@ class ThemePlayer(xbmc.Player):
 
         self.repeatOneSet = False
 
+        self.tvtunesPlayerStarted = False
+
         xbmc.Player.__init__(self, *args)
 
     def onPlayBackStopped(self):
-        log("ThemePlayer: Received onPlayBackStopped")
-        self.restoreSettings()
+        # The Notifications for a player will be picked up even if it was not
+        # this instance of the player that started the theme, so check to ensure
+        # TvTunes is actually the responsible for starting the player
+        if self.tvtunesPlayerStarted:
+            log("ThemePlayer: Received onPlayBackStopped")
+            self.restoreSettings()
         xbmc.Player.onPlayBackStopped(self)
 
     def onPlayBackStarted(self):
-        # Check if the item that has just been started is one of our themes
-        # if it isn't then the user has manually started a new media file, so we
-        # need to stop the current one
-        if not self.isPlayingTheme():
-            self.restoreSettings()
+        # The Notifications for a player will be picked up even if it was not
+        # this instance of the player that started the theme, so check to ensure
+        # TvTunes is actually the responsible for starting the player
+        if self.tvtunesPlayerStarted:
+            # Check if the item that has just been started is one of our themes
+            # if it isn't then the user has manually started a new media file, so we
+            # need to stop the current one
+            if not self.isPlayingTheme():
+                self.restoreSettings()
         xbmc.Player.onPlayBackStarted(self)
 
     def restoreSettings(self):
         log("ThemePlayer: Restoring player settings")
+        self.tvtunesPlayerStarted = False
 
         # Restore repeat state
         log("ThemePlayer: Restoring setting repeat to RepeatOff")
@@ -94,6 +105,7 @@ class ThemePlayer(xbmc.Player):
 
     def stop(self):
         log("ThemePlayer: stop called")
+        self.tvtunesPlayerStarted = False
 
         log("ThemePlayer: Restoring setting repeat to RepeatOff")
         # Need to use the player control as the json one did not seem to work with
@@ -109,6 +121,8 @@ class ThemePlayer(xbmc.Player):
         self.restoreSettings()
 
     def play(self, item=None, listitem=None, windowed=True, fastFade=False):
+        self.tvtunesPlayerStarted = True
+
         # if something is already playing, then we do not want
         # to replace it with the theme
         if not self.isPlaying():

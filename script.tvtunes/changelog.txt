@@ -1,3 +1,6 @@
+v6.0.1
+- Fix issue that results in any loop of another addon being removed
+
 v6.0.0
 - Add context menu for Kodi v15 (Isengard)
 

@@ -97,7 +97,7 @@ class AdvSettings():
 
             # Make a backup of the file as we are going to change it
             if xmlFileStr is not None:
-                xbmcvfs.copy(self.advSettingsXmlFile, "%s.videoextras-%s.bak" % (self.advSettingsXmlFile, self.bak_timestamp))
+                xbmcvfs.copy(self.advSettingsXmlFile, "%s.tvtunes-%s.bak" % (self.advSettingsXmlFile, self.bak_timestamp))
 
         else:
             # The file didn't exist, so create it from scratch
