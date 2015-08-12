@@ -64,6 +64,21 @@ def os_path_split(fullpath):
     return fullpath.rsplit("\\", 1)
 
 
+# There has been problems with calling isfile with non ascii characters,
+# so we have this method to try and do the conversion for us
+def os_path_isfile(workingPath,):
+    # Convert each argument - if an error, then it will use the default value
+    # that was passed in
+    try:
+        workingPath = workingPath.decode("utf-8")
+    except:
+        pass
+    try:
+        return os.path.isfile(workingPath)
+    except:
+        return False
+
+
 # Checks if a directory exists (Do not use for files)
 def dir_exists(dirpath):
     directoryPath = dirpath
@@ -92,6 +107,10 @@ def list_dir(dirpath):
 # Stores Various Settings
 ##############################
 class Settings():
+    SCHEDULE_OFF = 0
+    SCHEDULE_SETTINGS = 1
+    SCHEDULE_FILE = 2
+
     # Locations:
     # ozibox.com
     #    Aquarium001.mkv
@@ -229,6 +248,23 @@ class Settings():
         if __addon__.getSetting("videoSelection") == "1":
             __addon__.setSetting("displaySelected", "")
 
+        # Set the default values for the schedule screensaver folders
+        defaultFolder = Settings.getScreensaverFolder()
+        if defaultFolder not in [None, ""]:
+            # Make sure the directory path ends with a seperator, otherwise it
+            # will show the parent path
+            if (not defaultFolder.endswith("/")) and (not defaultFolder.endswith("\\")):
+                dirSep = "/"
+                if "\\" in defaultFolder:
+                    dirSep = "\\"
+                defaultFolder = "%s%s" % (defaultFolder, dirSep)
+            ruleNum = 1
+            while ruleNum < 6:
+                videoFileTag = "rule%dVideoFile" % ruleNum
+                if __addon__.getSetting(videoFileTag) in [None, ""]:
+                    __addon__.setSetting(videoFileTag, defaultFolder)
+                ruleNum = ruleNum + 1
+
     @staticmethod
     def setPresetVideoSelected(id):
         if id is not None:
@@ -248,6 +284,10 @@ class Settings():
     @staticmethod
     def isBlockScreensaverIfMediaPlaying():
         return __addon__.getSetting("mediaPlayingBlock") == 'true'
+
+    @staticmethod
+    def isLaunchOnStartup():
+        return __addon__.getSetting("launchOnStartup") == 'true'
 
     @staticmethod
     def getVolume():
@@ -331,3 +371,57 @@ class Settings():
             startTime = 0
 
         return startTime
+
+    @staticmethod
+    def getScheduleSetting():
+        return int(__addon__.getSetting("scheduleSource"))
+
+    @staticmethod
+    def getScheduleFile():
+        if Settings.getScheduleSetting() == Settings.SCHEDULE_FILE:
+            return __addon__.getSetting("scheduleFile")
+        return None
+
+    @staticmethod
+    def getNumberOfScheduleRules():
+        if Settings.getScheduleSetting() == Settings.SCHEDULE_SETTINGS:
+            return int(__addon__.getSetting("numberOfSchuleRules"))
+        return 0
+
+    @staticmethod
+    def getRuleVideoFile(ruleId):
+        videoFileTag = "rule%dVideoFile" % ruleId
+        return __addon__.getSetting(videoFileTag)
+
+    @staticmethod
+    def getRuleOverlayFile(ruleId):
+        overlayImageTag = "rule%dOverlayImage" % ruleId
+
+        if __addon__.getSetting(overlayImageTag):
+            overlayId = int(__addon__.getSetting(overlayImageTag))
+            # Check if this is is the manual defined option, so the last in the selection
+            if overlayId >= len(Settings.OVERLAY_IMAGES):
+                overlayFileTag = "rule%dOverlayFile" % ruleId
+                return __addon__.getSetting(overlayFileTag).decode("utf-8")
+            else:
+                return Settings.OVERLAY_IMAGES[overlayId]
+        else:
+            return None
+
+    @staticmethod
+    def getRuleStartTime(ruleId):
+        startTimeTag = "rule%dStartTime" % ruleId
+        # Get the start time
+        startTimeStr = __addon__.getSetting(startTimeTag)
+        startTimeSplit = startTimeStr.split(':')
+        startTime = (int(startTimeSplit[0]) * 60) + int(startTimeSplit[1])
+        return startTime
+
+    @staticmethod
+    def getRuleEndTime(ruleId):
+        endTimeTag = "rule%dEndTime" % ruleId
+        # Get the end time
+        endTimeStr = __addon__.getSetting(endTimeTag)
+        endTimeSplit = endTimeStr.split(':')
+        endTime = (int(endTimeSplit[0]) * 60) + int(endTimeSplit[1])
+        return endTime

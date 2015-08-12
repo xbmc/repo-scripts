@@ -1,3 +1,8 @@
+v1.2.0
+- Add scheduled video option
+- Add option to launch the screensaver on startup
+- Fix random start point always being 5 seconds from the end
+
 v1.1.8
 - Switch default downloads to server kindly provided by Ziggy
 - Add additional screensavers

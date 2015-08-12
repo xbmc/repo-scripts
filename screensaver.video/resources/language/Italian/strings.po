@@ -60,6 +60,10 @@ msgctxt "#32023"
 msgid "Use All Files In A Folder"
 msgstr "Usa Tutti I File Di Una Cartella"
 
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Ripeti Tipo Per File Multipli"
+
 msgctxt "#32025"
 msgid "Repeat All"
 msgstr "Ripeti tutto"
@@ -104,6 +108,14 @@ msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Livello Opacità"
 
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Ferma Automaticamente Screensaver"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Ferma Screensaver Dopo (Minuti)"
+
 msgctxt "#32061"
 msgid "Reset Volume On Startup"
 msgstr "Reset Volume All'Avvio"
@@ -111,6 +123,10 @@ msgstr "Reset Volume All'Avvio"
 msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "Imposta Volume All'Avvio A"
+
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Usa Sospensione Engine Audio Per Volume 0"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -172,6 +188,10 @@ msgctxt "#32114"
 msgid "Star Trek TNG 1 - [54MB] - 720p"
 msgstr "Star Trek TNG 1 - [54MB] - 720p"
 
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Sci-Fi 1 - [200MB] - 1080p"
+
 msgctxt "#32116"
 msgid "Waterfall 1 - [1.3GB] - 720p"
 msgstr "Cascata 1 - [1.3GB] - 720p"
@@ -220,6 +240,14 @@ msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Oceano 1 - [1.1GB] - 720p"
 
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Immagine Sovrapposta"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Scegli File Immagine Sovrapposta"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Nessuno"
@@ -227,6 +255,18 @@ msgstr "Nessuno"
 msgctxt "#32203"
 msgid "User Defined"
 msgstr "Definito dall'utente"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Cornice Immagine 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Cornice Finestra 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Cornice Finestra 2"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

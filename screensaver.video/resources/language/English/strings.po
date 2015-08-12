@@ -52,7 +52,11 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr ""
 
-#empty strings from id 32008 to 32019
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr ""
+
+#empty strings from id 32009 to 32019
 
 msgctxt "#32020"
 msgid "Preset Video"
@@ -82,7 +86,27 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr ""
 
-#empty strings from id 32027 to 32049
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Off"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#32030"
+msgid "File"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr ""
+
+#empty strings from id 32032 to 32049
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -140,7 +164,43 @@ msgctxt "#32063"
 msgid "Use Audio Engine Suspend For 0 Volume"
 msgstr ""
 
-#empty strings from id 32064 to 32099
+msgctxt "#32064"
+msgid "Start Time"
+msgstr ""
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr ""
+
+#empty strings from id 32073 to 32099
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
