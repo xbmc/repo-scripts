@@ -1,4 +1,4 @@
-** 2015.8.2 **
+** 2015.8.11 **
 
 Add 'Now Showing' to 'Guide Search'
 Fix issue where clicking to bring up seek bar while watching recordings occasionally starts live TV
