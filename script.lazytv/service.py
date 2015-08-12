@@ -21,8 +21,10 @@
 '''
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #@@@@@@@@@@
-#@@@@@@@@@@ - create and maintain smart playlist 
-#@@@@@@@@@@ - insert playlist check on Playstarted to help suppress next ep notify
+#@@@@@@@@@@ - allow for next ep notification in LazyTV smartplaylist READY FOR TESTING
+#@@@@@@@@@@ - suppress notification at start up READY FOR TESTING
+#@@@@@@@@@@ - improve handling of specials
+#@@@@@@@@@@ - improve refreshing of LazyTV Show Me window
 #@@@@@@@@@@
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'''
 
@@ -68,9 +70,11 @@ keep_logs              = True if __setting__('logging') 			== 'true' else False
 playlist_notifications = True if __setting__("notify")  			== 'true' else False
 resume_partials        = True if __setting__('resume_partials') 	== 'true' else False
 nextprompt             = True if __setting__('nextprompt') 			== 'true' else False
+nextprompt_or          = True if __setting__('nextprompt_or') 		== 'true' else False
 prevcheck              = True if __setting__('prevcheck') 			== 'true' else False
 moviemid               = True if __setting__('moviemid') 			== 'true' else False
 first_run              = True if __setting__('first_run') 			== 'true' else False
+startup                = True if __setting__('startup') 			== 'true' else False
 maintainsmartplaylist  = True if __setting__('maintainsmartplaylist') 			== 'true' else False
 
 if promptduration == 0:
@@ -88,7 +92,7 @@ def log(message, label = '', reset = False):
 		gap_time     = "%5f" % (new_time - start_time)
 		start_time   = new_time
 		total_gap    = "%5f" % (new_time - base_time)
-		logmsg       = '%s : %s :: %s ::: %s - %s ' % (__addonid__, total_gap, gap_time, label, message)
+		logmsg       = '%s : %s :: %s ::: %s - %s ' % (__addonid__ + 'service', total_gap, gap_time, label, message)
 		xbmc.log(msg = logmsg)
 		base_time    = start_time if reset else base_time
 
@@ -257,8 +261,11 @@ class LazyPlayer(xbmc.Player):
 
 		if 'item' in self.ep_details and 'type' in self.ep_details['item']:
 
+			pll = xbmc.getInfoLabel('VideoPlayer.PlaylistLength')
+
 			# check if this is a playlist, and if it is then suppress the next_ep_notify when there are more than 1 items
-			if xbmc.getInfoLabel('VideoPlayer.PlaylistLength') != '1':
+			# unless it IS a LazyTV playlist and the user wants nextprompts in LazyTV playlists
+			if pll != '1' and not all([self.pl_running == 'true', nextprompt_or]):
 				log('nextprompt override')
 				LazyPlayer.nextprompt_trigger_override = False			
 
@@ -349,6 +356,17 @@ class LazyPlayer(xbmc.Player):
 		self.onPlayBackEnded()
 
 	def onPlayBackEnded(self):
+
+
+		# this is right at the start so that the info for the previously played episode is retrieved while
+		# it is still available
+		pre_seas  = Main.nextprompt_info['season']
+		pre_ep    = Main.nextprompt_info['episode']
+		pre_title = Main.nextprompt_info['showtitle']
+		pre_epid  = Main.nextprompt_info['episodeid']
+		paused    = False
+
+
 		log('Playbackended', reset =True)
 
 		LazyPlayer.playing_epid = False
@@ -360,14 +378,28 @@ class LazyPlayer(xbmc.Player):
 		self.now_name = xbmc.getInfoLabel('VideoPlayer.TVShowTitle')
 
 
-		if self.now_name == '':
+		# if pl_running and user wants next ep notifications to run
+		# then pause currently playing item, run notification.
+		# the next prompt info gets refreshed when something new starts playing
+		# so the prompt has to show BEFORE the information gets over written
+		# OR this method needs to extract the information from the next_prompt_info dictionary as soon as the show is stopped
 
-			if self.pl_running == 'true':
+		if self.now_name == '' or all([self.pl_running == 'true', nextprompt_or]):
+
+			if all([self.now_name == '', self.pl_running == 'true']):
 				WINDOW.setProperty("LazyTV.playlist_running", 'false')
 
 			if LazyPlayer.nextprompt_trigger and LazyPlayer.nextprompt_trigger_override:
+
+				if self.now_name != '':
+					# if something is playing, then the list if a LazyTV playlist and nextprompt override is in chosen by the user
+					#pause
+					xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Player.PlayPause","params":{"playerid":1,"play":false},"id":1}')
+					paused = True
+
 				LazyPlayer.nextprompt_trigger = False
-				SE = str(int(Main.nextprompt_info['season'])) + 'x' + str(int(Main.nextprompt_info['episode']))
+
+				SE = str(int(pre_seas)) + 'x' + str(int(pre_ep))
 
 				log('promptdefaultaction = ' + str(promptdefaultaction))
 
@@ -378,19 +410,19 @@ class LazyPlayer(xbmc.Player):
 				elif promptdefaultaction == 1:
 					ylabel = lang(32091)
 					nlabel = lang(32092)	
-					prompt = -1				
+					prompt = -1	
 
 				if __release__ == 'Frodo':
 					if promptduration:
-						prompt = DIALOG.select(lang(32164), [lang(32165) % promptduration, lang(32166) % (Main.nextprompt_info['showtitle'], SE)], yeslabel = ylabel, nolabel = nlabel, autoclose=int(promptduration * 1000))
+						prompt = DIALOG.select(lang(32164), [lang(32165) % promptduration, lang(32166) % (pre_title, SE)], yeslabel = ylabel, nolabel = nlabel, autoclose=int(promptduration * 1000))
 					else:
-						prompt = DIALOG.select(lang(32164), [lang(32165) % promptduration, lang(32166) % (Main.nextprompt_info['showtitle'], SE)], yeslabel = ylabel, nolabel = nlabel)
+						prompt = DIALOG.select(lang(32164), [lang(32165) % promptduration, lang(32166) % (pre_title, SE)], yeslabel = ylabel, nolabel = nlabel)
 
 				elif __release__ == 'Gotham':
 					if promptduration:
-						prompt = DIALOG.yesno(lang(32167) % promptduration, lang(32168) % (Main.nextprompt_info['showtitle'], SE), lang(32169), yeslabel = ylabel, nolabel = nlabel, autoclose=int(promptduration * 1000))
+						prompt = DIALOG.yesno(lang(32167) % promptduration, lang(32168) % (pre_title, SE), lang(32169), yeslabel = ylabel, nolabel = nlabel, autoclose=int(promptduration * 1000))
 					else:
-						prompt = DIALOG.yesno(lang(32167) % promptduration, lang(32168) % (Main.nextprompt_info['showtitle'], SE), lang(32169), yeslabel = ylabel, nolabel = nlabel)
+						prompt = DIALOG.yesno(lang(32167) % promptduration, lang(32168) % (pre_title, SE), lang(32169), yeslabel = ylabel, nolabel = nlabel)
 
 				else:
 					prompt = 0
@@ -412,10 +444,18 @@ class LazyPlayer(xbmc.Player):
 					xbmc.executeJSONRPC('{"jsonrpc": "2.0","id": 1, "method": "Playlist.Clear",				"params": {"playlistid": 1}}')
 					#xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "episodeid": %d }, "options":{ "resume": true }  }, "id": 1 }' % Main.nextprompt_info['episodeid'])
 
-					add_this_ep['params']['item']['episodeid'] = int(Main.nextprompt_info['episodeid'])
+					add_this_ep['params']['item']['episodeid'] = int(pre_epid)
 					json_query(add_this_ep, False)
 					xbmc.sleep(50)
 					xbmc.Player().play(xbmc.PlayList(1))
+					if paused:
+						log('unpausing')
+						xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Player.PlayPause","params":{"playerid":1,"play":true},"id":1}')
+				elif self.now_name != '' and paused:
+					# if something is playing, then the list if a LazyTV playlist and nextprompt override is in chosen by the user
+					# if they elected not to play the next prompt, then we need to unpause
+					log('unpausing')
+					xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Player.PlayPause","params":{"playerid":1,"play":true},"id":1}')
 
 			Main.nextprompt_info = {}
 
@@ -538,7 +578,7 @@ class Main(object):
 
 		#self.get_eps(showids = self.all_shows_list)				#gets the beginning list of unwatched shows
 
-		xbmc.sleep(1000) 		# wait 1 seconds before filling the full list
+		#xbmc.sleep(1000) 		# wait 1 seconds before filling the full list
 
 		self.get_eps(showids = self.all_shows_list)
 
@@ -547,9 +587,11 @@ class Main(object):
 
 
 	def _daemon(self):
-		WINDOW.setProperty('LazyTV_service_running' , 'true')
-		xbmc.executebuiltin('Notification(%s,%s,%i)' % ('LazyTV',lang(32173),5000))
 
+		WINDOW.setProperty('LazyTV_service_running' , 'true')
+		
+		if startup:
+			xbmc.executebuiltin('Notification(%s,%s,%i)' % ('LazyTV',lang(32173),5000))
 
 		while not xbmc.abortRequested and WINDOW.getProperty('LazyTV_service_running'):
 			xbmc.sleep(100)
@@ -582,7 +624,7 @@ class Main(object):
 
 			# set TEMP episode
 			retod    = WINDOW.getProperty("%s.%s.odlist" 						% ('LazyTV', self.sp_next))
-			retoff   = WINDOW.getProperty("%s.%s.offlist" 					% ('LazyTV', self.sp_next))
+			retoff   = WINDOW.getProperty("%s.%s.offlist" 						% ('LazyTV', self.sp_next))
 			offd     = ast.literal_eval(retoff)
 			ond      = ast.literal_eval(retod)
 			tmp_wep  = int(WINDOW.getProperty("%s.%s.CountWatchedEps"         	% ('LazyTV', self.sp_next)).replace("''",'0')) + 1
@@ -684,7 +726,7 @@ class Main(object):
 
 				cp_details = json_query(prompt_query, True)
 
-				log(cp_details)
+				log(cp_details, label='cp_details')
 
 				if 'episodedetails' in cp_details:
 
@@ -1164,6 +1206,8 @@ def grab_settings(firstrun = False):
 	resume_partials        = True if __setting__('resume_partials') == 'true' else False
 	keep_logs              = True if __setting__('logging') == 'true' else False
 	nextprompt             = True if __setting__('nextprompt') == 'true' else False
+	nextprompt_or          = True if __setting__('nextprompt_or') == 'true' else False
+	startup                = True if __setting__('startup') == 'true' else False
 	promptduration         = int(float(__setting__('promptduration')))
 	prevcheck              = True if __setting__('prevcheck') == 'true' else False
 	promptdefaultaction    = int(float(__setting__('promptdefaultaction')))
