@@ -3,43 +3,43 @@
 	<defaultcontrol>200</defaultcontrol>
 	<coordinates>
 		<system>1</system>
-		<posx>0</posx>
-		<posy>0</posy>
+		<left>0</left>
+		<top>0</top>
 	</coordinates>
 	<animation effect="fade" time="250">WindowOpen</animation>
 	<animation effect="fade" time="250">WindowClose</animation>
 	<controls>
 		<control type="group">
-			<posx>100</posx>
-			<posy>30</posy>
+			<left>100</left>
+			<top>30</top>
 			<!-- ** Required ** Do not change <id> or <type> -->
 			<control type="image">
-				<posx>0</posx>
-				<posy>0</posy>
+				<left>0</left>
+				<top>0</top>
 				<width>1090</width>
 				<height>700</height>
 				<texture border="40">speedfan-panel.png</texture>
 			</control>
 			<control type="image">
 				<description>Window Icon</description>
-				<posx>25</posx>
-				<posy>8</posy>
+				<left>25</left>
+				<top>8</top>
 				<width>48</width>
 				<height>48</height>
 				<texture>speedfan-icon.png</texture>
 			</control>
 			<control type="image">
 				<description>Window Title</description>
-				<posx>75</posx>
-				<posy>15</posy>
+				<left>75</left>
+				<top>15</top>
 				<width>350</width>
 				<height>35</height>
 				<texture>speedfan-title.png</texture>
 			</control>
 			<control type="button" id="200">
 				<description>Close Window button</description>
-				<posx>1000</posx>
-				<posy>3</posy>
+				<left>1000</left>
+				<top>3</top>
 				<width>64</width>
 				<height>32</height>
 				<label>-</label>
@@ -55,8 +55,8 @@
 			</control>
 			<!-- ** Required ** Do not change <id> or <type> -->
 			<control type="list" id="120">
-				<posx>20</posx>
-				<posy>60</posy>
+				<left>20</left>
+				<top>60</top>
 				<width>1040</width>
 				<height>605</height>
 				<onleft>200</onleft>
@@ -68,16 +68,16 @@
 				<scrolltime>200</scrolltime>
 				<itemlayout height="38">					
 					<control type="image">
-						<posx>0</posx>
-						<posy>0</posy>
+						<left>0</left>
+						<top>0</top>
 						<width>1040</width>
 						<height>38</height>
 						<texture border="0">speedfan-overlay.png</texture>
 						<visible>ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>10</posx>
-						<posy>-3</posy>
+						<left>10</left>
+						<top>-3</top>
 						<width>1000</width>
 						<height>38</height>
 						<font>font18</font>
@@ -90,8 +90,8 @@
 						<visible>ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>210</posx>
-						<posy>0</posy>
+						<left>10</left>
+						<top>0</top>
 						<width>200</width>
 						<height>38</height>
 						<font>font18</font>
@@ -104,8 +104,8 @@
 						<visible>!ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>220</posx>
-						<posy>0</posy>
+						<left>220</left>
+						<top>0</top>
 						<width>200</width>
 						<height>38</height>
 						<font>font18</font>
@@ -117,8 +117,8 @@
 						<visible>!ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>640</posx>
-						<posy>0</posy>
+						<left>440</left>
+						<top>0</top>
 						<width>200</width>
 						<height>38</height>
 						<font>font18</font>
@@ -131,8 +131,8 @@
 						<visible>!ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>650</posx>
-						<posy>0</posy>
+						<left>650</left>
+						<top>0</top>
 						<width>200</width>
 						<height>38</height>
 						<font>font18</font>
@@ -146,24 +146,24 @@
 				</itemlayout>
 				<focusedlayout height="38">
 					<control type="image">
-						<posx>0</posx>
-						<posy>0</posy>
+						<left>0</left>
+						<top>0</top>
 						<width>1040</width>
 						<height>38</height>
 						<texture border="10">speedfan-list-focus.png</texture>
 						<visible>Control.HasFocus(120)</visible>
 					</control>
 					<control type="image">
-						<posx>0</posx>
-						<posy>0</posy>
+						<left>0</left>
+						<top>0</top>
 						<width>1040</width>
 						<height>38</height>
 						<texture border="0">speedfan-overlay.png</texture>
 						<visible>ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>10</posx>
-						<posy>-3</posy>
+						<left>10</left>
+						<top>-3</top>
 						<width>600</width>
 						<height>38</height>
 						<font>font18</font>
@@ -176,8 +176,8 @@
 						<visible>ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>210</posx>
-						<posy>0</posy>
+						<left>10</left>
+						<top>0</top>
 						<width>200</width>
 						<height>38</height>
 						<font>font18</font>
@@ -190,8 +190,8 @@
 						<visible>!ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>220</posx>
-						<posy>0</posy>
+						<left>220</left>
+						<top>0</top>
 						<width>200</width>
 						<height>38</height>
 						<font>font18</font>
@@ -203,8 +203,8 @@
 						<visible>!ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>640</posx>
-						<posy>0</posy>
+						<left>440</left>
+						<top>0</top>
 						<width>200</width>
 						<height>38</height>
 						<font>font18</font>
@@ -217,8 +217,8 @@
 						<visible>!ListItem.Property(istitle)</visible>
 					</control>
 					<control type="label">
-						<posx>650</posx>
-						<posy>0</posy>
+						<left>650</left>
+						<top>0</top>
 						<width>200</width>
 						<height>38</height>
 						<font>font18</font>
@@ -232,12 +232,12 @@
 				</focusedlayout>
 			</control>
 			<control type="group">
-				<posx>1055</posx>
-				<posy>60</posy>
+				<left>1055</left>
+				<top>60</top>
 				<control type="scrollbar" id="121">
 					<description>scroll bar indicator for lists</description>
-					<posx>0</posx>
-					<posy>0</posy>
+					<left>0</left>
+					<top>0</top>
 					<width>12</width>
 					<height>605</height>
 					<texturesliderbackground border="6">speedfan-scroll_back.png</texturesliderbackground>

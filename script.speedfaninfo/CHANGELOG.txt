@@ -1,3 +1,6 @@
+v.0.7.2
+- fix for incorrect display in fullscreen
+
 v.0.7.1
 - updated for Helix
 - fix for display issue in Kodi v14 (Helix)
