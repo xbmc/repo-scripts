@@ -100,3 +100,15 @@ msgctxt "#32021"
 msgid "Include Specials"
 msgstr ""
 
+msgctxt "#32022"
+msgid "Random Music Videos"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Recent Music Videos"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Recommended Music Videos"
+msgstr ""
+

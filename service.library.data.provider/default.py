@@ -106,6 +106,18 @@ class Main:
                 xbmcplugin.setContent(int(sys.argv[1]), 'songs')
                 self.parse_song('randomsongs', 32015, full_liz)
                 xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
+            elif content_type == "randommusicvideos":
+                xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
+                self.parse_musicvideos('randommusicvideos', 32022, full_liz)
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
+            elif content_type == "recentmusicvideos":
+                xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
+                self.parse_musicvideos('recentmusicvideos', 32023, full_liz)
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
+            elif content_type == "recommendedmusicvideos":
+                xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
+                self.parse_musicvideos('recommendedmusicvideos', 32024, full_liz)
+                xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
             elif content_type == 'playliststats':
                 lo = self.id.lower()
                 if ("activatewindow" in lo) and ("://" in lo) and ("," in lo):
@@ -168,10 +180,23 @@ class Main:
         if not self.TYPE:
             # Show a root menu
             full_liz = list()
-            items = [[32004, "randommovies"], [32005, "recentmovies"], [32006, "recommendedmovies"], [32007, "randomepisodes"], [32008, "recentepisodes"], [32010, "recommendedepisodes"], [32020, "favouriteepisodes"], [32019, "recentvideos"], [32016, "randomalbums"], [32017, "recentalbums"], [32018, "recommendedalbums"], [32015, "randomsongs"]]
+            items = [[32004, "randommovies"],
+                     [32005, "recentmovies"],
+                     [32006, "recommendedmovies"],
+                     [32007, "randomepisodes"],
+                     [32008, "recentepisodes"],
+                     [32010, "recommendedepisodes"],
+                     [32020, "favouriteepisodes"],
+                     [32019, "recentvideos"],
+                     [32016, "randomalbums"],
+                     [32017, "recentalbums"],
+                     [32018, "recommendedalbums"],
+                     [32015, "randomsongs"],
+                     [32022, "randommusicvideos"],
+                     [32023, "recentmusicvideos"],
+                     [32024, "recommendedmusicvideos"]]
             for item in items:
-                liz = xbmcgui.ListItem(ADDON_LANGUAGE(item[0]))
-                liz.setIconImage("DefaultFolder.png")
+                liz = xbmcgui.ListItem(ADDON_LANGUAGE(item[0]), iconImage='DefaultFolder.png')
                 full_liz.append(("plugin://service.library.data.provider?type=" + item[1], liz, True))
             xbmcplugin.addDirectoryItems(int(sys.argv[1]), full_liz)
         xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
@@ -238,6 +263,7 @@ class Main:
                     liz.setThumbnailImage(item['art'].get('poster', ''))
                     liz.setIconImage('DefaultVideoCover.png')
                     liz.setProperty("dbid", str(item['movieid']))
+                    liz.setProperty("imdbnumber", str(item['imdbnumber']))
                     liz.setProperty("fanart_image", item['art'].get('fanart', ''))
                     hasVideo = False
                     for key, value in item['streamdetails'].iteritems():
@@ -505,6 +531,69 @@ class Main:
                         break
             del json_query
 
+    def parse_musicvideos(self, request, list_type, full_liz, date_liz=None, date_type=None):
+        json_query = self._get_data(request)
+        while json_query == "LOADING":
+            xbmc.sleep(100)
+            json_query = self._get_data(request)
+
+        count = 0
+        if json_query:
+            json_query = simplejson.loads(json_query)
+            if 'result' in json_query and 'musicvideos' in json_query['result']:
+                for item in json_query['result']['musicvideos']:
+                    watched = False
+                    if item['playcount'] >= 1:
+                        watched = True
+                    if len(item['studio']) > 0:
+                        studio = item['studio'][0]
+                    else:
+                        studio = ""
+                    if not PLOT_ENABLE and not watched:
+                        plot = ADDON_LANGUAGE(32014)
+                    else:
+                        plot = item['plot']
+                    # create a list item
+                    liz = xbmcgui.ListItem(item['title'])
+                    liz.setInfo(type="Video", infoLabels={"Title": item['title']})
+                    liz.setInfo(type="Video", infoLabels={"Year": item['year']})
+                    liz.setInfo(type="Video", infoLabels={"Genre": " / ".join(item['genre'])})
+                    liz.setInfo(type="Video", infoLabels={"Studio": studio})
+                    liz.setInfo(type="Video", infoLabels={"Plot": plot})
+                    liz.setInfo(type="Video", infoLabels={"Artist": item['artist']})
+                    liz.setInfo(type="Video", infoLabels={"Director": " / ".join(item['director'])})
+                    liz.setInfo(type="Video", infoLabels={"Playcount": item['playcount']})
+                    liz.setProperty("resumetime", str(item['resume']['position']))
+                    liz.setProperty("totaltime", str(item['resume']['total']))
+                    liz.setProperty("type", ADDON_LANGUAGE(list_type))
+
+                    liz.setArt(item['art'])
+                    liz.setThumbnailImage(item['art'].get('poster', ''))
+                    liz.setIconImage('DefaultVideoCover.png')
+                    liz.setProperty("dbid", str(item['musicvideoid']))
+                    liz.setProperty("fanart_image", item['art'].get('fanart', ''))
+                    hasVideo = False
+                    for key, value in item['streamdetails'].iteritems():
+                        for stream in value:
+                            if 'video' in key:
+                                hasVideo = True
+                            liz.addStreamInfo(key, stream)
+
+                        # if duration wasnt in the streaminfo try adding the scraped one
+                    if not hasVideo:
+                        stream = {'duration': item['runtime']}
+                        liz.addStreamInfo("video", stream)
+                    full_liz.append((item['file'], liz, False))
+
+                    if date_type is not None:
+                        date_liz.append(item[date_type])
+
+                    count += 1
+                    if count == self.LIMIT:
+                        break
+
+            del json_query
+
     def play_album(self, album):
         xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "albumid": %d } }, "id": 1 }' % int(album))
         # Return ResolvedUrl as failed, as we've taken care of what to play
@@ -570,6 +659,13 @@ class Main:
 
         elif request == "randomsongs":
             return LIBRARY._fetch_random_songs(self.USECACHE)
+
+        elif request == "randommusicvideos":
+            return LIBRARY._fetch_random_musicvideos(self.USECACHE)
+        elif request == "recentmusicvideos":
+            return LIBRARY._fetch_recent_musicvideos(self.USECACHE)
+        elif request == "recommendmusicvideos":
+            return LIBRARY._fetch_recommended_musicvideos(self.USECACHE)
 
     def _parse_argv(self):
         try:

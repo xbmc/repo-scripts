@@ -19,42 +19,37 @@
 #    This script is based on service.skin.widgets
 #    Thanks to the original authors
 
-import os
 import sys
 import xbmc
 import xbmcgui
-import xbmcplugin
 import xbmcaddon
-import xbmcvfs
-import random
-import urllib
 import datetime
-from traceback import print_exc
-from time import gmtime, strftime
+import library
+LIBRARY = library.LibraryFunctions()
 
 if sys.version_info < (2, 7):
     import simplejson
 else:
     import json as simplejson
 
-__addon__        = xbmcaddon.Addon()
+__addon__ = xbmcaddon.Addon()
 __addonversion__ = __addon__.getAddonInfo('version')
-__addonid__      = __addon__.getAddonInfo('id')
-__addonname__    = __addon__.getAddonInfo('name')
-__localize__     = __addon__.getLocalizedString
+__addonid__ = __addon__.getAddonInfo('id')
+__addonname__ = __addon__.getAddonInfo('name')
+__localize__ = __addon__.getLocalizedString
 
-import library
-LIBRARY = library.LibraryFunctions()
 
 def log(txt):
     message = '%s: %s' % (__addonname__, txt.encode('ascii', 'ignore'))
     xbmc.log(msg=message, level=xbmc.LOGDEBUG)
 
+
 class Main:
     def __init__(self):
         self.WINDOW = xbmcgui.Window(10000)
 
-        # clear our property, if another instance is already running it should stop now
+        # clear our property, if another instance is already running
+        # it should stop now
         self._init_vars()
         self.WINDOW.clearProperty('LibraryDataProvider_Running')
         a_total = datetime.datetime.now()
@@ -68,49 +63,46 @@ class Main:
         # give a possible other instance some time to notice the empty property
         self.WINDOW.setProperty('LibraryDataProvider_Running', 'true')
         self._daemon()
-            
-            
+
     def _init_vars(self):
         self.WINDOW = xbmcgui.Window(10000)
-        self.Player = Widgets_Player(action = self._update)
-        self.Monitor = Widgets_Monitor(update_listitems = self._update)
+        self.Player = Widgets_Player(action=self._update)
+        self.Monitor = Widgets_Monitor(update_listitems=self._update)
 
-            
-    def _fetch_random( self ):
+    def _fetch_random(self):
         LIBRARY._fetch_random_movies()
         LIBRARY._fetch_random_episodes()
         LIBRARY._fetch_random_songs()
         LIBRARY._fetch_random_albums()
+        LIBRARY._fetch_random_musicvideos()
 
-        
-    def _fetch_recent( self ):
+    def _fetch_recent(self):
         LIBRARY._fetch_recent_movies()
         LIBRARY._fetch_recent_episodes()
         LIBRARY._fetch_recent_albums()
-            
-    
-    def _fetch_recommended( self ):
+        LIBRARY._fetch_recent_musicvideos()
+
+    def _fetch_recommended(self):
         LIBRARY._fetch_recommended_movies()
         LIBRARY._fetch_recommended_episodes()
         LIBRARY._fetch_recommended_albums()
+        LIBRARY._fetch_recommended_musicvideos()
 
-    def _fetch_favourite( self ):
+    def _fetch_favourite(self):
         LIBRARY._fetch_favourite_episodes()
-        
-        
+
     def _daemon(self):
         # deamon is meant to keep script running at all time
         count = 0
-        home_update = False
-        while (not xbmc.abortRequested) and self.WINDOW.getProperty('LibraryDataProvider_Running') == 'true':
+        while not xbmc.abortRequested and self.WINDOW.getProperty('LibraryDataProvider_Running') == 'true':
             xbmc.sleep(1000)
             if not xbmc.Player().isPlayingVideo():
                 # Update random items
                 count += 1
-                if count == 1200: # 10 minutes
+                if count == 1200:  # 10 minutes
                     self._fetch_random()
                     count = 0    # reset counter
-                    
+
     def _update(self, type):
         xbmc.sleep(1000)
         if type == 'movie':
@@ -121,7 +113,7 @@ class Main:
             LIBRARY._fetch_recent_episodes()
             LIBRARY._fetch_favourite_episodes()
         elif type == 'video':
-            #only on db update
+            # only on db update
             LIBRARY._fetch_recommended_movies()
             LIBRARY._fetch_recommended_episodes()
             LIBRARY._fetch_recent_movies()
@@ -129,7 +121,11 @@ class Main:
         elif type == 'music':
             LIBRARY._fetch_recommended_albums()
             LIBRARY._fetch_recent_albums()
-    
+        elif type == 'musicvideo':
+            LIBRARY._fetch_recommended_musicvideos()
+            LIBRARY._fetch_recent_musicvideos()
+
+
 class Widgets_Monitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)
@@ -137,20 +133,20 @@ class Widgets_Monitor(xbmc.Monitor):
 
     def onDatabaseUpdated(self, database):
         self.update_listitems(database)
-        
+
 
 class Widgets_Player(xbmc.Player):
     def __init__(self, *args, **kwargs):
         xbmc.Player.__init__(self)
         self.type = ""
-        self.action = kwargs[ "action" ]
-        self.substrings = [ '-trailer', 'http://' ]
+        self.action = kwargs["action"]
+        self.substrings = ['-trailer', 'http://']
 
     def onPlayBackStarted(self):
         xbmc.sleep(1000)
         # Set values based on the file content
         if (self.isPlayingAudio()):
-            self.type = "music"  
+            self.type = "music"
         else:
             if xbmc.getCondVisibility('VideoPlayer.Content(movies)'):
                 filename = ''
@@ -167,22 +163,22 @@ class Widgets_Player(xbmc.Player):
                 if isMovie:
                     self.type = "movie"
             elif xbmc.getCondVisibility('VideoPlayer.Content(episodes)'):
-                # Check for tv show title and season to make sure it's really an episode
+                # Check for tv show title and season
+                # to make sure it's really an episode
                 if xbmc.getInfoLabel('VideoPlayer.Season') != "" and xbmc.getInfoLabel('VideoPlayer.TVShowTitle') != "":
                     self.type = "episode"
+            elif xbmc.getCondVisibility('VideoPlayer.Content(musicvideos)'):
+                self.type = "musicvideo"
 
     def onPlayBackEnded(self):
         self.onPlayBackStopped()
 
     def onPlayBackStopped(self):
-        if self.type == 'movie':
-            self.action('movie')
-        elif self.type == 'episode':
-            self.action('episode')
-        elif self.type == 'music':
-            self.action('music')
+        # type is set in onPlayBackStarted
+        if self.type:
+            self.action(self.type)
         self.type = ""
-    
+
 log('service version %s started' % __addonversion__)
 Main()
 log('service version %s stopped' % __addonversion__)

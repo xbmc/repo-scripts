@@ -1,3 +1,10 @@
+[B]0.1.2[/B]
+- Added Music Videos.
+- Added IMDB Number as property (imdbnumer)
+
+[B]0.1.1[/B]
+- Fixed playing albums.
+
 [B]0.1.0[/B]
 - Fix refreshing bug where things were being cached forever without updating - thx SumnerH
 - Added option to hide specials from episode views - thx Razzeee
