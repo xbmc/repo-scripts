@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+	<string id="32000">Назад след пауза</string>
+	<string id="32001">Скока назад (в секунди)</string>
+	<string id="32002">Минимален престой в режим "На пауза"</string>
+	<string id="32010">Назад след &gt;&gt;</string>
+	<string id="32011">Скок назад след x2</string>
+	<string id="32012">Скок назад след x4</string>
+	<string id="32013">Скок назад след x8</string>
+	<string id="32014">Скок назад след x16</string>
+	<string id="32015">Скок назад след x32</string>
+	<string id="32020">Напред след &lt;&lt;</string>
+	<string id="32021">Скок напред след x2</string>
+	<string id="32022">Скок напред след x4</string>
+	<string id="32023">Скок напред след x8</string>
+	<string id="32024">Скок напред след x16</string>
+	<string id="32025">Скок напред след x32</string>
+	<string id="32030">Игнориране</string>
+	<string id="32031">Игнориране на Телевизия</string>
+	<string id="32032">Игнориране на HTTP източници</string>
+	<string id="32033">Игнориране на път</string>
+	<string id="32034">Път до папка (и подпапките)</string>
+	<string id="32040">Скок след възобновяване</string>
+</strings>
