@@ -353,7 +353,13 @@ class LazyPlayer(xbmc.Player):
 
 
 	def onPlayBackStopped(self):
+
+		pre_showid  = Main.nextprompt_info['tvshowid']
+
+		WINDOW.setProperty("%s.%s.Resume" % ('LazyTV', pre_showid), 'true')
+		
 		self.onPlayBackEnded()
+
 
 	def onPlayBackEnded(self):
 

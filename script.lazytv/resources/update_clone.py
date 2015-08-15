@@ -27,6 +27,7 @@ import xbmcaddon
 import re
 import sys
 import time
+import os
 from xml.etree import ElementTree as et
 import fileinput
 

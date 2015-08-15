@@ -26,7 +26,7 @@ msgstr "Primär funktion"
 
 msgctxt "#32002"
 msgid "Produce a list of 'next episodes' for each TV series"
-msgstr "Skala en lista av 'nästa avsnitt' för varje TV-serie"
+msgstr "Skapa en lista av 'nästa avsnitt' för varje TV-serie"
 
 msgctxt "#32003"
 msgid "Create and launch randomised playlist"
@@ -140,6 +140,10 @@ msgctxt "#32043"
 msgid "Ignore TV shows (movies only)"
 msgstr "Ignorera TV-program (endast filmer)"
 
+msgctxt "#32044"
+msgid "Begin with latest in progress episode"
+msgstr "Starta med senaste pågående avsnittet"
+
 msgctxt "#32060"
 msgid "List Options"
 msgstr "Listalternativ"
@@ -188,6 +192,26 @@ msgctxt "#32071"
 msgid "Reverse Order"
 msgstr "Omvänd ordning"
 
+msgctxt "#32072"
+msgid "LazyTV User Interface"
+msgstr "LazyTV användargränssnitt"
+
+msgctxt "#32073"
+msgid "Standard"
+msgstr "Standard"
+
+msgctxt "#32074"
+msgid "Posters"
+msgstr "Omslag"
+
+msgctxt "#32075"
+msgid "Big Screen"
+msgstr "Storbild"
+
+msgctxt "#32076"
+msgid "Return to LazyTV after playback\""
+msgstr "Återgå till LazyTV efteråt"
+
 msgctxt "#32080"
 msgid "Other Settings"
 msgstr "Övriga inställningar"
@@ -231,6 +255,10 @@ msgstr "E-posta +1 till författaren (ingen data kommer att skickas)"
 msgctxt "#32090"
 msgid "Default action"
 msgstr "Standardåtgärd"
+
+msgctxt "#32091"
+msgid "Dont Play"
+msgstr "Spela inte"
 
 msgctxt "#32092"
 msgid "Play"
@@ -436,6 +464,46 @@ msgctxt "#32185"
 msgid "File export completed successfully"
 msgstr "Filexportering slutförd"
 
+msgctxt "#32200"
+msgid "Multi-Select (on)"
+msgstr "Välj flera (på)"
+
+msgctxt "#32201"
+msgid "Multi-Select (off)"
+msgstr "Välj flera (av)"
+
+msgctxt "#32202"
+msgid "Play Selection"
+msgstr "Spela markerad"
+
+msgctxt "#32203"
+msgid "Export Selection"
+msgstr "Exportera markerad"
+
+msgctxt "#32204"
+msgid "Play Episode"
+msgstr "Spela avsnitt"
+
+msgctxt "#32205"
+msgid "Export Episode"
+msgstr "Exportera avsnitt"
+
+msgctxt "#32206"
+msgid "Play From Here"
+msgstr "Spela härifrån"
+
+msgctxt "#32207"
+msgid "Mark as Watched"
+msgstr "Markera som visad"
+
+msgctxt "#32208"
+msgid "Update Library"
+msgstr "Uppdatera bibliotek"
+
+msgctxt "#32209"
+msgid "Refresh List"
+msgstr "Uppdatera listan"
+
 msgctxt "#32220"
 msgid "Season"
 msgstr "Säsong"
@@ -444,6 +512,26 @@ msgctxt "#32221"
 msgid "Episode"
 msgstr "Avsnitt"
 
+msgctxt "#32222"
+msgid "Progress"
+msgstr "Sett"
+
+msgctxt "#32223"
+msgid "Available"
+msgstr "Tillgängliga"
+
 msgctxt "#32224"
 msgid "Watched"
-msgstr "Visad"
+msgstr "Sedda"
+
+msgctxt "#32225"
+msgid "Skipped"
+msgstr "Hoppat över"
+
+msgctxt "#32226"
+msgid "In this episode"
+msgstr "I det här avsnittet"
+
+msgctxt "#32250"
+msgid "* Hidden to prevent spoilers *"
+msgstr "*  Dolt för att undvika spoilers *"

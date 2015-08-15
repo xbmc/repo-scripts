@@ -646,7 +646,7 @@ def create_next_episode_list(population):
 
 	skins = {1: "script-lazytv-main.xml", 2: "script-lazytv-BigScreenList.xml"}
 
-	xmlfile = skins.get(skin, "script-lazytv-DialogSelect.xml")
+	xmlfile = skins.get(skin, "DialogSelect.xml")
 
 	list_window = yGUI(xmlfile, scriptPath, 'Default', data=stored_data_filtered)
 
