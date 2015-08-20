@@ -14,7 +14,7 @@ from utilities import *
 from audiofile import AudioFile
 
 __title__ = "GomAudio"
-__priority__ = '135'
+__priority__ = '130'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)
@@ -82,7 +82,10 @@ class LyricsFetcher:
             # timeformat conversion
             t = "%02d:%02d.%02d" % gomClient.mSecConv( int(sync[0]) )
             # unescape string
-            s = unicode(sync[1], "euc-kr").encode("utf-8").replace("&apos;","'").replace("&quot;",'"')
-            lyrline.append( "[%s]%s" %(t,s) )
+            try:
+                s = unicode(sync[1], "euc-kr").encode("utf-8").replace("&apos;","'").replace("&quot;",'"')
+                lyrline.append( "[%s]%s" %(t,s) )
+            except:
+                pass
         lyrics.lyrics = '\n'.join( lyrline )
         return lyrics

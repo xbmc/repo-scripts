@@ -1,3 +1,7 @@
+v3.2.0
+- remove broken lrc scrapers
+- fix unicodedecode crash in gomaudio
+
 v3.1.6
 - fix lyricwiki scraper
 

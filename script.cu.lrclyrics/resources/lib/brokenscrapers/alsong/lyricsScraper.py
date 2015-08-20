@@ -14,7 +14,7 @@ from utilities import *
 from audiofile import AudioFile
 
 __title__ = "Alsong"
-__priority__ = '115'
+__priority__ = '140'
 __lrc__ = True
 
 socket.setdefaulttimeout(10)
