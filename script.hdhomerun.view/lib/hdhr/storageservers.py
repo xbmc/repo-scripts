@@ -15,12 +15,24 @@ SUGGEST_URL = 'http://%s.hdhomerun.com/api/suggest?DeviceAuth={deviceAuth}&Cmd={
 
 class RecordingRule(dict):
     @property
+    def ID(self):
+        return self.get('SeriesID')
+
+    @property
     def seriesID(self):
         return self.get('SeriesID')
 
     @property
     def title(self):
         return self.get('Title','')
+
+    @property
+    def synopsis(self):
+        return ''
+
+    @property
+    def hidden(self):
+        return False
 
     @property
     def recentOnly(self):
@@ -46,6 +58,13 @@ class RecordingRule(dict):
         self['STORAGE_SERVER'] = storage_server
         if add: return self.modify()
         return self
+
+    @property
+    def hasRule(self):
+        return True
+
+    def episodes(self,device_auth):
+        return guide.episodes(device_auth, self.seriesID)
 
     def modify(self):
         url = MODIFY_RULE_URL.format(
@@ -226,9 +245,11 @@ class StorageServers(object):
         return True
 
     def addRule(self,result):
-        self._rules.append(RecordingRule(result).init(self,add=True))
+        rule = RecordingRule(result).init(self,add=True)
+        self._rules.append(rule)
         result['RecordingRule'] = 1
         self.pingUpdateRules()
+        return rule
 
     def hideSeries(self,series):
         try:

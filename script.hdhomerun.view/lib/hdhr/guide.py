@@ -110,6 +110,21 @@ class GuideChannel(dict):
     },
 '''
 
+def episodes(device_auth, ID):
+    url = EPISODES_URL.format(deviceAuth=urllib.quote(device_auth, ''),seriesID=ID)
+    util.DEBUG_LOG('Episodes URL: {0}'.format(url))
+
+    req = requests.get(url)
+
+    try:
+        results = req.json()
+        if not results: return []
+        return [Episode(r) for r in results]
+    except:
+        util.ERROR()
+
+    return None
+
 class Series(dict):
     @property
     def title(self):
@@ -160,19 +175,7 @@ class Series(dict):
         return self.get('SuggestHide') == 1
 
     def episodes(self,device_auth):
-        url = EPISODES_URL.format(deviceAuth=urllib.quote(device_auth, ''),seriesID=self.ID)
-        util.DEBUG_LOG('Episodes URL: {0}'.format(url))
-
-        req = requests.get(url)
-
-        try:
-            results = req.json()
-            if not results: return []
-            return [Episode(r) for r in results]
-        except:
-            util.ERROR()
-
-        return None
+        return episodes(device_auth, self.ID)
 
 
 class Episode(dict):
@@ -225,6 +228,9 @@ class Episode(dict):
     @property
     def originalTimestamp(self):
         return int(self.get('OriginalAirdate',0))
+
+    def onNow(self):
+        return self.startTimestamp < time.time() < self.endTimestamp
 
     def displayDate(self,original=False):
         return time.strftime('%b %d, %Y',time.localtime(original and self.originalTimestamp or self.startTimestamp))

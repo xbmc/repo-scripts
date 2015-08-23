@@ -26,6 +26,7 @@ DEVICE_ID = 0x02
 LINEUP_URL = 0x27
 STORAGE_URL = 0x28
 DEVICE_AUTH = 0x29
+DEVICE_AUTH_STRING = 0x2B
 STORAGE_SERVER_BASE_URL = 0x2A
 
 LINEUP_URL_BASE = 'http://{ip}/lineup.json'
@@ -184,6 +185,8 @@ class Devices(object):
                 device._storageURL = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
             elif tag == DEVICE_AUTH:
                 device._deviceAuth = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
+            elif tag == DEVICE_AUTH_STRING:
+                device._deviceAuthString = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
             elif tag == STORAGE_SERVER_BASE_URL:
                 device._baseURL = struct.unpack('>{0}s'.format(length),dataIO.read(length))[0]
             else:
@@ -226,7 +229,8 @@ class Devices(object):
             util.LOG('WARNING: No device auth for any devices!')
             raise errors.NoDeviceAuthException()
 
-        return base64.standard_b64encode(combined)
+        #return base64.standard_b64encode(combined)
+        return combined
 
 class Device(object):
     typeName = 'Unknown'
@@ -274,12 +278,20 @@ class TunerDevice(Device):
 
     @property
     def deviceAuth(self):
-        return getattr(self,'_deviceAuth',None)
+        authString = getattr(self,'_deviceAuthString',None)
+        if authString:
+            return authString
+
+        authBinary = getattr(self,'_deviceAuth',None)
+        if authBinary:
+            return base64.standard_b64encode(authBinary)
+
+        return None
 
     def display(self):
         try:
             out = '\nDevice at {ip}:\n    ID: {ID}\n    Type: {dtype}\n    DeviceAuth: {auth}\n    URL: {url}\n    Channels: {chancount}'
-            return out.format(ip=self.ip,dtype=self.typeName,ID=getattr(self,'ID','?'),auth=base64.standard_b64encode(self.deviceAuth),url=self.url,chancount=self.channelCount)
+            return out.format(ip=self.ip,dtype=self.typeName,ID=getattr(self,'ID','?'),auth=self.deviceAuth,url=self.url,chancount=self.channelCount)
         except:
             util.ERROR('Failed to format {0} info'.format(self.typeName),hide_tb=True)
 

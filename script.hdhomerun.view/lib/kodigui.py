@@ -282,6 +282,12 @@ class ManagedControlList(object):
                 return mli
         return None
 
+    def getListItemByProperty(self, property, value):
+        for mli in self:
+            if value == mli.getProperty(property):
+                return mli
+        return None
+
     def getSelectedItem(self):
         pos = self.control.getSelectedPosition()
         try:

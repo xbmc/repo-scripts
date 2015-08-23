@@ -355,6 +355,7 @@ class GuideOverlay(util.CronReceiver):
         self.player.seekTime(seek)
 
     def seekForwardSmall(self):
+        # self.seekAction('PlayerControl(SmallSkipForward)')
         seek = self.player.getTime() + 30
         if seek > self.player.getTotalTime():
             seek = self.player.getTotalTime()
@@ -766,10 +767,11 @@ class GuideOverlay(util.CronReceiver):
         if self.player.isPlayingRecording():
             if self.overlayVisible():
                 self.showOverlay(False)
-            if controlID and controlID == 251:
-                self.showSeekBar() #Make sure the bar stays visible when we're interacting with it
-            else:
-                self.showSeekBar(hide=self.seekBarVisible())
+            self.player.pause()
+            # if controlID and controlID == 251:
+            #     self.showSeekBar() #Make sure the bar stays visible when we're interacting with it
+            # else:
+            #     self.showSeekBar(hide=self.seekBarVisible())
             return True
         else:
             if not self.overlayVisible():
@@ -995,7 +997,7 @@ def start():
         window = GuideOverlayWindow(skin.OVERLAY,path,'Main','1080i')
         window.touchMode = True
     else:
-        player.FullsceenVideoInitializer().start()
+        #player.FullsceenVideoInitializer().start()
         util.setGlobalProperty('touch.mode','')
         window = GuideOverlayDialog(skin.OVERLAY,path,'Main','1080i')
 

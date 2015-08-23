@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <window>
-    <defaultcontrol>203</defaultcontrol>
+    <defaultcontrol>220</defaultcontrol>
     <coordinates>
         <system>1</system>
         <posx>0</posx>
@@ -119,7 +119,7 @@
                 <font>font13</font>
                 <align>left</align>
                 <textcolor>FFFFFFFF</textcolor>
-                <label>[B]$INFO[Container(201).ListItem.Property(episode.title)][/B]</label>
+                <label>[B]$INFO[Container(220).NumItems][/B]</label>
             </control>
             <control type="textbox">
                 <visible>!Control.HasFocus(201)</visible>
@@ -144,55 +144,74 @@
                 <label>$INFO[Container(201).ListItem.Property(episode.synopsis)]</label>
             </control>
 
-            <control type="group">
-                <visible>IsEmpty(Window.Property(hide.record))</visible>
-                <control type="image">
-                    <posx>635</posx>
-                    <posy>340</posy>
-                    <width>410</width>
+            <control type="grouplist" id="220">
+                <width>1540</width>
+                <left>60</left>
+                <align>center</align>
+                <top>340</top>
+                <height>110</height>
+                <itemgap>10</itemgap>
+                <ondown>200</ondown>
+                <orientation>horizontal</orientation>
+                <control type="button" id="208">
+                    <visible>!IsEmpty(Window.Property(show.watch))</visible>
+                    <width>300</width>
                     <height>70</height>
-                    <texture>script-hdhomerun-view-white_square.png</texture>
-                    <colordiffuse>FF202020</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
+                    <label>[B]WATCH[/B]</label>
+                    <font>font13</font>
+                    <align>center</align>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
+                </control>
+                <control type="button" id="206">
+                    <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
+                    <width>300</width>
+                    <height>70</height>
+                    <label>[B]PRIORITY[/B]</label>
+                    <font>font13</font>
+                    <align>center</align>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
+                </control>
+                <control type="button" id="205">
+                    <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
+                    <width>300</width>
+                    <height>70</height>
+                    <label>[B]$INFO[Window.Property(record.always)][/B]</label>
+                    <font>font13</font>
+                    <align>center</align>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
                 <control type="button" id="203">
-                    <left>640</left>
-                    <top>345</top>
-                    <width>400</width>
-                    <height>60</height>
+                    <visible>IsEmpty(Window.Property(show.hasRule))</visible>
+                    <width>300</width>
+                    <height>70</height>
                     <label>[B]$ADDON[script.hdhomerun.view 32824][/B]</label>
                     <font>font13</font>
                     <align>center</align>
-                    <texturefocus colordiffuse="FF006000">script-hdhomerun-view-white_square.png</texturefocus>
-                    <texturenofocus colordiffuse="FF404040">script-hdhomerun-view-white_square.png</texturenofocus>
-                    <ondown>200</ondown>
-                    <onright>204</onright>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
-            </control>
-
-            <control type="group">
-                <visible>!IsEmpty(Window.Property(show.hide))</visible>
-                <control type="image">
-                    <posx>1055</posx>
-                    <posy>340</posy>
-                    <width>260</width>
+                <control type="button" id="207">
+                    <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
+                    <width>300</width>
                     <height>70</height>
-                    <texture>script-hdhomerun-view-white_square.png</texture>
-                    <colordiffuse>FF202020</colordiffuse>
-                    <aspectratio>stretch</aspectratio>
+                    <label>[B]DELETE[/B]</label>
+                    <font>font13</font>
+                    <align>center</align>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
                 <control type="button" id="204">
-                    <left>1060</left>
-                    <top>345</top>
-                    <width>250</width>
-                    <height>60</height>
+                    <visible>!IsEmpty(Window.Property(show.hide))</visible>
+                    <width>300</width>
+                    <height>70</height>
                     <label>[B]$INFO[Window.Property(show.hide)][/B]</label>
                     <font>font13</font>
                     <align>center</align>
-                    <texturefocus colordiffuse="FF006000">script-hdhomerun-view-white_square.png</texturefocus>
-                    <texturenofocus colordiffuse="FF404040">script-hdhomerun-view-white_square.png</texturenofocus>
-                    <ondown>200</ondown>
-                    <onleft>203</onleft>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
             </control>
 
@@ -269,9 +288,7 @@
                 <height>600</height>
                 <scrolltime>200</scrolltime>
                 <orientation>vertical</orientation>
-                <onright>203</onright>
-                <onleft>203</onleft>
-                <onup>203</onup>
+                <onup>220</onup>
                 <pagecontrol>251</pagecontrol>
 
                 <!-- ITEM LAYOUT ########################################## -->

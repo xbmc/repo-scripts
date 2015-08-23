@@ -1,3 +1,15 @@
+** 2015.8.23 **
+
+Now showing now opens record dialog instead of live tv
+Clicking a recording rule now opens the record dialog
+Added 'WATCH' button to record dialog to switch to live tv when show is currently playing
+Added 'PRIORITY', 'ALWAYS/RECENT' and 'DELETE' buttons to record dialog when show has a recording rule
+
+** 2015.8.12 **
+
+Remove Isengard alpha workaround
+Select now pauses/unpauses recordings
+
 ** 2015.8.11 **
 
 Add 'Now Showing' to 'Guide Search'
