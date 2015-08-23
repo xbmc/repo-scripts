@@ -1,3 +1,9 @@
+0.0.20
+- fix language name conversion
+
+0.0.19
+- fix UnicodeDecodeError ( fape/service.subtitles.supersubtitles#2 )
+
 0.0.18
 - check tvshow title contains year info
 

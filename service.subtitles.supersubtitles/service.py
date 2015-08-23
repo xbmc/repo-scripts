@@ -119,8 +119,17 @@ LANGUAGES = {
 
 def recreate_dir(path):
     if xbmcvfs.exists(path):
-        shutil.rmtree(path, ignore_errors=True)
-    
+        try:
+            fse = sys.getfilesystemencoding()
+            if fse:
+                debuglog("with file system encoding: %s" % fse)
+                shutil.rmtree(__temp__.encode(fse), ignore_errors=True)
+            else:
+                debuglog("with out file system encoding")
+                shutil.rmtree(__temp__, ignore_errors=True)
+        except Exception as e:
+            errorlog("Exception while delete %s: %s" % (__temp__, e.message))
+
     if not xbmcvfs.exists(path):
         xbmcvfs.mkdirs(path)
 
@@ -130,7 +139,7 @@ def normalize_string(str):
 
 
 def lang_hun2eng(hunlang):
-    return LANGUAGES[hunlang.lower()]
+    return LANGUAGES[hunlang.encode("utf-8").lower()]
 
 
 def log(msg, level):
