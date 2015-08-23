@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+import os
 import unicodedata
+import uuid
 import xbmc
 import xbmcaddon
-import os
 import xbmcvfs
 import xbmcgui
 
@@ -320,8 +321,8 @@ class Settings():
         return __addon__.getSetting("custom_path").decode("utf-8")
 
     @staticmethod
-    def getDownVolume():
-        return int(float(__addon__.getSetting("downvolume")))
+    def getThemeVolume():
+        return int(float(__addon__.getSetting("volume")))
 
     @staticmethod
     def isLoop():
@@ -514,6 +515,27 @@ class Settings():
     @staticmethod
     def showOnContextMenu():
         return __addon__.getSetting("showOnContextMenu") == "true"
+
+    @staticmethod
+    def blockRefreshRateChange():
+        return __addon__.getSetting("blockChangeInRefreshRate") == "true"
+
+    @staticmethod
+    def isUploadEnabled():
+        return __addon__.getSetting("enableUploads") == "true"
+
+    @staticmethod
+    def getUploadSettings():
+        return 'aHR0cHM6Ly9zaXRlcy5nb29nbGUuY29tL3NpdGUvcm9id2Vic2V0L3R2dHVuZXMtdXBsb2FkLWNvbmZpZy54bWw='
+
+    @staticmethod
+    def getTvTunesId():
+        # The ID that will be used to identify this installation
+        return str(uuid.getnode())
+
+    @staticmethod
+    def setTvTunesId():
+        __addon__.setSetting("tvtunesId", Settings.getTvTunesId())
 
 
 # Class to handle all the screen saver settings

@@ -301,6 +301,10 @@ class ThemeFiles():
         self.rawPath == ""
         self.themeFiles = []
 
+    # Get the list of themes with their full paths
+    def getThemeLocations(self):
+        return self.themeFiles
+
     # Returns the playlist for the themes
     def getThemePlaylist(self):
         # Take the list of files and create a playlist from them

@@ -29,7 +29,7 @@ msgid "Play theme in loop"
 msgstr ""
 
 msgctxt "#32002"
-msgid "Lower sound value"
+msgid "Theme volume"
 msgstr ""
 
 msgctxt "#32003"
@@ -152,7 +152,9 @@ msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr ""
 
-#empty string with id 32033
+msgctxt "#32033"
+msgid "Block Refresh Rate Change"
+msgstr ""
 
 msgctxt "#32034"
 msgid "goear.com"
@@ -406,7 +408,17 @@ msgctxt "#32096"
 msgid "Show TvTunes On Context Menu"
 msgstr ""
 
-#empty strings from id 32097 to 32099
+msgctxt "#32097"
+msgid "Support TvTunes Improvements"
+msgstr ""
+
+msgctxt "#32098"
+msgid "TvTunes ID:"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Enable TvTunes Store"
+msgstr ""
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
@@ -441,7 +453,7 @@ msgid "Searching for"
 msgstr ""
 
 msgctxt "#32108"
-msgid "CANCELED"
+msgid "CANCELLED"
 msgstr ""
 
 msgctxt "#32109"
@@ -473,10 +485,12 @@ msgid "Search results will be incomplete"
 msgstr ""
 
 msgctxt "#32116"
-msgid "You can help to get more theme on:"
+msgid "Load Registration File"
 msgstr ""
 
-#empty string with id 32117
+msgctxt "#32117"
+msgid "Failed to load registration file"
+msgstr ""
 
 msgctxt "#32118"
 msgid "Manual Search..."

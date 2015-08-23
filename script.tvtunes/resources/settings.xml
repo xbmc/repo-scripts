@@ -3,7 +3,7 @@
 	<category label="32991">
 		<setting id="enableThemePlaying" type="bool" label="32084" default="true"/>
 		<setting id="loop" type="bool" label="32001" default="false"/>
-		<setting id="downvolume" label="32002" type="slider" default="0" range="0,1,60" option="int" />
+		<setting id="volume" label="32002" type="slider" default="0" range="0,1,100" option="int" />
 		<setting id="delayStart" label="32024" type="slider" default="0" range="0,1,60" option="int" />
 		<setting id="endafter" label="32021" type="slider" default="0" range="0,1,60" option="int" />
 		<setting id="movielist" type="bool" label="32016" default="false"/>
@@ -17,13 +17,17 @@
 		<setting id="trackLengthLimit" label="32027" type="slider" default="0" range="0,10,180" option="int" />
 	</category>
 	<category label="32992">
+		<setting id="tvtunesId" option="hidden" visible="false" enable="false" type="text" label="32098 " default="" />
+		<setting id="enableTvTunesStore" option="hidden" visible="false" type="bool" label="32099" default="false"/>
+		<setting label="32116" visible="eq(-1,true)" type="action" subsetting="true" option="close" action="RunScript($CWD/storereg.py)"/>
 		<setting id="auto_download" type="enum" label="32009" lvalues="32036|32037|32038|32039" default="0"/>
 		<setting id="auto_prompt_user_if_required" type="bool" label="32100" visible="!eq(-1,0)" subsetting="true" default="true"/>
 		<setting id="multiThemeDownload" type="bool" label="32014" default="false"/>
 		<setting id="searchMovieDownload" type="bool" label="32015" default="true"/>
+		<setting id="searchSource" visible="eq(-6,false)" type="enum" label="32028" lvalues="32030|32031|32032|32034|32035" default="1" />
 		<setting id="showVideoInfoButton" type="bool" label="32020" default="true"/>
-		<setting id="searchSource" type="enum" label="32028" lvalues="32030|32031|32032|32034|32035" default="1" />
 		<setting id="showOnContextMenu" type="bool" label="32096" default="true"/>
+		<setting id="enableUploads" type="bool" label="32097" default="true"/>
 		<setting label="32022" type="lsep"/>
 		<setting label="32023" type="action" option="close" action="RunScript($CWD/default.py)"/>
 		<setting label="32091" type="action" option="close" action="RunScript($CWD/advsettings.py)"/>
@@ -50,6 +54,7 @@
 		<setting id="mov" type="bool" label="MOV" visible="eq(-11,true)" subsetting="true" default="true"/>
 		<setting id="playVideoThemeRules" visible="eq(-4,true)|eq(-3,true)|eq(-2,true)|eq(-1,true)" type="enum" label="32085" lvalues="32086|32087|32088" default="0"/>
 		<setting id="repeatSingleAudioAfterVideo" type="bool" label="32090" visible="eq(-1,1)" subsetting="true" default="false"/>
+		<setting id="blockChangeInRefreshRate" type="bool" label="32033" visible="eq(-6,true)|eq(-5,true)|eq(-4,true)|eq(-3,true)" default="false"/>
     	<setting label="32079" type="lsep"/>
     	<setting id="resetVolumeOnStartup" type="bool" label="32080" default="false"/>
 		<setting id="resetStartupVolumeValue" label="32081" visible="eq(-1,true)" type="slider" default="100" range="0,1,100" option="int" />

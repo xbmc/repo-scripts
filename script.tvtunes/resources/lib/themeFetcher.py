@@ -79,7 +79,7 @@ class TvTunesFetcher():
                     # Give the user an option to stop searching the remaining themes
                     # as they did not select one for this show, but only prompt
                     # if there are more to be processed
-                    if count < total:
+                    if (count < total) and Settings.isAutoDownloadPromptUser():
                         if not xbmcgui.Dialog().yesno(__language__(32105), __language__(32119)):
                             break
 

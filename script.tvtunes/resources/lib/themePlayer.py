@@ -46,6 +46,9 @@ class ThemePlayer(xbmc.Player):
 
         self.tvtunesPlayerStarted = False
 
+        # Mark the initial refresh rate as unset
+        self.original_refreshrate = 0
+
         xbmc.Player.__init__(self, *args)
 
     def onPlayBackStopped(self):
@@ -72,6 +75,13 @@ class ThemePlayer(xbmc.Player):
     def restoreSettings(self):
         log("ThemePlayer: Restoring player settings")
         self.tvtunesPlayerStarted = False
+
+        # Check if the refresh rate need to be restored
+        if self.original_refreshrate != 0:
+            # Disable the refresh rate setting
+            xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.SetSettingValue",  "params": { "setting": "videoplayer.adjustrefreshrate", "value": %d }, "id": 1}' % self.original_refreshrate)
+            log("ThemePlayer: Restored refresh rate to %d" % self.original_refreshrate)
+            self.original_refreshrate = 0
 
         # Restore repeat state
         log("ThemePlayer: Restoring setting repeat to RepeatOff")
@@ -126,6 +136,7 @@ class ThemePlayer(xbmc.Player):
         # if something is already playing, then we do not want
         # to replace it with the theme
         if not self.isPlaying():
+            self.updateVideoRefreshRate(item)
             # Save the volume from before any alterations
             self.original_volume = self._getVolume()
             # Perform and lowering of the sound for theme playing
@@ -236,15 +247,12 @@ class ThemePlayer(xbmc.Player):
 
     def _lowerVolume(self):
         try:
-            if Settings.getDownVolume() != 0:
+            reducedVolume = Settings.getThemeVolume()
+            if reducedVolume > 0:
                 # Save the volume from before any alterations
                 self.original_volume = self._getVolume()
-                vol = self.original_volume - Settings.getDownVolume()
-                # Make sure the volume still has a value
-                if vol < 1:
-                    vol = 1
-                log("ThemePlayer: volume goal: %d%% " % vol)
-                self._setVolume(vol)
+                log("ThemePlayer: volume goal: %d%% " % reducedVolume)
+                self._setVolume(reducedVolume)
             else:
                 log("ThemePlayer: No reduced volume option set")
         except:
@@ -252,7 +260,7 @@ class ThemePlayer(xbmc.Player):
 
     # Graceful end of the playing, will fade if set to do so
     def endPlaying(self, fastFade=False, slowFade=False):
-        if self.isPlaying() and Settings.isFadeOut():
+        if self.isPlayingAudio() and Settings.isFadeOut():
             cur_vol = self._getVolume()
 
             # Calculate how fast to fade the theme, this determines
@@ -364,3 +372,39 @@ class ThemePlayer(xbmc.Player):
         if filePlaying in self.playListItems:
             return True
         return False
+
+    def updateVideoRefreshRate(self, themePlayList):
+        # Check if the setting is enabled to switch the refresh rate
+        if not Settings.blockRefreshRateChange():
+            self.original_refreshrate = 0
+            return
+
+        log("ThemePlayer: Checking for update of refresh rate")
+
+        try:
+            # Check if we have any videos in the PlayList
+            hasVideoFiles = True
+            i = 0
+            while i < themePlayList.size():
+                if Settings.isVideoFile(themePlayList[i].getfilename()):
+                    hasVideoFiles = True
+                    break
+                i = i + 1
+
+            if hasVideoFiles:
+                # Save off the existing refresh setting
+                jsonresponse = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.GetSettingValue",  "params": { "setting": "videoplayer.adjustrefreshrate" }, "id": 1}')
+                data = simplejson.loads(jsonresponse)
+                if 'result' in data:
+                    if 'value' in data['result']:
+                        self.original_refreshrate = data['result']['value']
+                        # Check if the refresh rate is currently set
+                        log("ThemePlayer: Video refresh rate currently set to %d" % self.original_refreshrate)
+
+                # Check if the refresh rate is currently set, if it is, then we need
+                if self.original_refreshrate != 0:
+                    # Disable the refresh rate setting
+                    log("ThemePlayer: Disabling refresh rate")
+                    xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Settings.SetSettingValue",  "params": { "setting": "videoplayer.adjustrefreshrate", "value": 0 }, "id": 1}')
+        except:
+            log("ThemePlayer: Failed to process video refresh")

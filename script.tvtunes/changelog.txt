@@ -1,3 +1,9 @@
+v6.0.2
+- Stop prompting to continue when auto downloading themes
+- Do not fade out video themes
+- Block refresh rate change if playing video theme
+- Change the way volume adjusts
+
 v6.0.1
 - Fix issue that results in any loop of another addon being removed
 

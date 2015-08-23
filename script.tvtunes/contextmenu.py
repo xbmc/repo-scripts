@@ -23,7 +23,7 @@ from scraper import TvTunesScraper
 # Main
 #########################
 if __name__ == '__main__':
-    log("VideoExtras: Context menu called TvTunes Scraper")
+    log("TvTunes: Context menu called TvTunes Scraper")
 
     themeScraper = TvTunesScraper()
     del themeScraper

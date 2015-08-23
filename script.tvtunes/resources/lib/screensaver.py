@@ -97,8 +97,8 @@ class MediaFiles(object):
 
 class VolumeDrop(object):
     def __init__(self, *args):
-        self.reduceVolume = Settings.getDownVolume()
-        if self.reduceVolume != 0:
+        self.reducedVolume = Settings.getThemeVolume()
+        if self.reducedVolume > 0:
             # Save the volume from before any alterations
             self.original_volume = self._getVolume()
 
@@ -122,13 +122,9 @@ class VolumeDrop(object):
 
     def lowerVolume(self):
         try:
-            if self.reduceVolume != 0:
-                vol = self.original_volume - self.reduceVolume
-                # Make sure the volume still has a value
-                if vol < 1:
-                    vol = 1
-                log("Player: volume goal: %d%%" % vol)
-                self._setVolume(vol)
+            if self.reducedVolume > 0:
+                log("Player: volume goal: %d%%" % self.reducedVolume)
+                self._setVolume(self.reducedVolume)
             else:
                 log("Player: No reduced volume option set")
         except:
@@ -136,7 +132,7 @@ class VolumeDrop(object):
 
     def restoreVolume(self):
         try:
-            if self.reduceVolume != 0:
+            if self.reducedVolume > 0:
                 self._setVolume(self.original_volume)
         except:
             log("VolumeDrop: %s" % traceback.format_exc(), True, xbmc.LOGERROR)
