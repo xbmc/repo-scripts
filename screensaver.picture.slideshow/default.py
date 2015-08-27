@@ -22,7 +22,7 @@ def _parse_argv():
 if __name__ == '__main__':
     opts = _parse_argv()
     if opts:
-        create_cache()
+        create_cache(True)
     else:
         import gui
         screensaver_gui = gui.Screensaver('script-python-slideshow.xml', __cwd__, 'default')

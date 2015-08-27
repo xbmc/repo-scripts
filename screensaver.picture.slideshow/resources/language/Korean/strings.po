@@ -131,3 +131,7 @@ msgstr "인덱스 업데이트"
 msgctxt "#30028"
 msgid "Indexing is not supported with fanart"
 msgstr "팬아트에 인덱스는 지원하지 않음"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "배경 사진 표시"

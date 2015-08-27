@@ -19,10 +19,11 @@ def log(txt):
 def checksum(path):
     return hashlib.md5(path).hexdigest()
 
-def create_cache():
+def create_cache(startup):
     slideshow_type = __addon__.getSetting('type')
     if slideshow_type == '2':
-        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonid__, __language__(30019), 5000)).encode('utf-8', 'ignore'))
+        if startup: # don't notify during background scan
+            xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonid__, __language__(30019), 5000)).encode('utf-8', 'ignore'))
         path = __addon__.getSetting('path')
         images = walk(path)
         if not xbmcvfs.exists(CACHEFOLDER):
@@ -34,7 +35,8 @@ def create_cache():
             cache.close()
         except:
             log('failed to save cachefile')
-        xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonid__, __language__(30020), 5000)).encode('utf-8', 'ignore'))
+        if startup:
+            xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonid__, __language__(30020), 5000)).encode('utf-8', 'ignore'))
     else:
         xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonid__, __language__(30028), 5000)).encode('utf-8', 'ignore'))
 

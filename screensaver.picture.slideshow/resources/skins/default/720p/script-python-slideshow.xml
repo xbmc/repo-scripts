@@ -121,7 +121,7 @@
 			</control>
 			<control type="label" id="99">
 				<posx>1250</posx>
-				<posy>640</posy>
+				<posy>600</posy>
 				<width>600</width>
 				<height>20</height>
 				<font>font16</font>
@@ -131,7 +131,7 @@
 			</control>
 			<control type="label" id="100">
 				<posx>1250</posx>
-				<posy>680</posy>
+				<posy>625</posy>
 				<width>600</width>
 				<height>20</height>
 				<font>font12</font>
@@ -140,8 +140,8 @@
 				<shadowcolor>F0000000</shadowcolor>
 			</control>
 			<control type="textbox" id="101">
-				<posx>30</posx>
-				<posy>635</posy>
+				<posx>660</posx>
+				<posy>650</posy>
 				<width>600</width>
 				<height>80</height>
 				<font>font12</font>
@@ -151,12 +151,12 @@
 			</control>
 			<control type="group">
 				<posx>20</posx>
-				<posy>20</posy>
+				<posy>575</posy>
 				<animation effect="fade" start="80" end="80" time="0" condition="true">Conditional</animation>
 				<visible>Player.HasAudio + StringCompare(Window.Property(SlideView.Music),show)</visible>
 				<control type="image">
 					<posx>0</posx>
-					<posy>0</posy>
+					<posy>-5</posy>
 					<width>140</width>
 					<height>140</height>
 					<texture fallback="DefaultAlbumCover.png">$INFO[MusicPlayer.Cover]</texture>
@@ -165,7 +165,7 @@
 				<control type="label">
 					<posx>160</posx>
 					<posy>50</posy>
-					<width>910</width>
+					<width>600</width>
 					<height>25</height>
 					<align>left</align>
 					<font>font15</font>
@@ -176,7 +176,7 @@
 				<control type="label">
 					<posx>160</posx>
 					<posy>72</posy>
-					<width>910</width>
+					<width>600</width>
 					<height>25</height>
 					<align>left</align>
 					<font>font13</font>
@@ -187,7 +187,7 @@
 				<control type="label">
 					<posx>160</posx>
 					<posy>94</posy>
-					<width>910</width>
+					<width>600</width>
 					<height>25</height>
 					<align>left</align>
 					<font>font12</font>

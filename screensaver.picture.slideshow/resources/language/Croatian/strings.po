@@ -131,3 +131,7 @@ msgstr "Ažuriraj popis"
 msgctxt "#30028"
 msgid "Indexing is not supported with fanart"
 msgstr "Stvaranje popisa nije dopušteno sa slikama omota"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Prikaži sliku pozadine"

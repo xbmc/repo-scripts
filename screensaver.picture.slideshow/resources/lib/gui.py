@@ -76,7 +76,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         speedup = 1 / float(effectslowdown)
         self.adj_time = int(101000 * speedup)
         # get the images
-        self._get_items()
+        self._get_items(True)
         if self.items:
             # hide startup splash
             self._set_prop('Splash', 'hide')
@@ -296,13 +296,13 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     break
             items = copy.deepcopy(self.items)
 
-    def _get_items(self):
+    def _get_items(self, startup):
 	# check if we have an image folder, else fallback to video fanart
         if self.slideshow_type == '2':
             if self.slideshow_cache == 'true':
-                hexfile = checksum(self.slideshow_path)
-                if not xbmcvfs.exists(CACHEFILE % hexfile):
-                    create_cache()
+                hexfile = checksum(self.slideshow_path) # check if path has changed, so we can create a new cache at startup
+                if (not xbmcvfs.exists(CACHEFILE % hexfile)) or (not startup): # create a new cache if no cache exits or during the background scan
+                    create_cache(startup)
                 self.items = self._read_cache(hexfile)
             else:
                 self.items = walk(self.slideshow_path)
@@ -416,12 +416,22 @@ class img_update(threading.Thread):
     def __init__( self, *args, **kwargs ):
         self._get_items =  kwargs['data']
         threading.Thread.__init__(self)
+        self.stop = False
+        self.Monitor = MyMonitor(action = self._exit)
 
     def run(self):
-        while True:
-            if xbmc.Monitor().waitForAbort(1800) or xbmc.Monitor().onScreensaverDeactivated():
-                break
-            self._get_items()
+        while (not self.Monitor.abortRequested()) and (not self.stop):
+            count = 0
+            while count != 3600: # check for new images every hour
+                xbmc.sleep(1000)
+                count += 1
+                if self.Monitor.abortRequested() or self.stop:
+                    return
+            self._get_items(False)
+
+    def _exit(self):
+        # exit when onScreensaverDeactivated gets called
+        self.stop = True
 
 class MyMonitor(xbmc.Monitor):
     def __init__( self, *args, **kwargs ):

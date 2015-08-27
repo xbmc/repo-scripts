@@ -131,3 +131,7 @@ msgstr "Update index"
 msgctxt "#30028"
 msgid "Indexing is not supported with fanart"
 msgstr "Indexering wordt niet ondersteunt met fanart"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Toon achtergrondafbeelding"

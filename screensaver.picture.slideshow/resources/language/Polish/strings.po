@@ -131,3 +131,7 @@ msgstr "Aktualizuj indeks"
 msgctxt "#30028"
 msgid "Indexing is not supported with fanart"
 msgstr "Indeksowanie nie obsługuje fototapet"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Pokazuj obraz tła"

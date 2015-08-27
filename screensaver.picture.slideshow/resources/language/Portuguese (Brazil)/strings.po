@@ -131,3 +131,7 @@ msgstr "Atualizar indexação"
 msgctxt "#30028"
 msgid "Indexing is not supported with fanart"
 msgstr "Indexação não é suportada com fanart"
+
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Mostrar imagem de fundo"
