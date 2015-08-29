@@ -1,3 +1,8 @@
+[B]Version 1.0.5[/B]
+- Updated formatUrl function.
+- Added encodeDict function.
+- Updated user agent.
+
 [B]Version 1.0.4[/B]
 - Small bugfix/improvements.
 

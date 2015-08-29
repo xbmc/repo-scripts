@@ -10,7 +10,7 @@ class Util(object):
   @staticmethod
   def getHtml(url, showErrorDialog = False):
     bsHtml = None
-    req = urllib2.Request(url, headers = { 'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0' })
+    req = urllib2.Request(url, headers = { 'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:40.0) Gecko/20100101 Firefox/40.0' })
     req.add_header('Accept-Encoding', 'gzip, deflate')
 
     try:
@@ -106,14 +106,27 @@ class Util(object):
 
 
   @staticmethod
-  def formatUrl(parameters):
-    return '{0}?{1}'.format(sys.argv[0], urllib.urlencode(parameters))
+  def formatUrl(parameters, domain = sys.argv[0]):
+    return '{0}?{1}'.format(domain, urllib.urlencode(Util.encodeDict(parameters)))
 
 
   @staticmethod
   def createItemPage(pageNum):
     title = '{0} {1} >'.format(Util.getTranslation(33000, Util._idPlugin), pageNum)
     return Util.createListItem(title)
+
+
+  @staticmethod
+  def encodeDict(oldDict):
+    newDict = {}
+    for k, v in oldDict.iteritems():
+      if isinstance(v, unicode):
+        v = v.encode('utf8')
+      elif isinstance(v, str):
+        # Must be encoded in UTF-8
+        v.decode('utf8')
+      newDict[k] = v
+    return newDict
 
 
   @staticmethod
