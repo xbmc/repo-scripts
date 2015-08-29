@@ -715,12 +715,13 @@ class ExtrasItem(BaseExtrasItem):
         anItem.setProperty("FileName", self.getFilename())
         anItem.setInfo('video', {'PlayCount': self.getWatched()})
         anItem.setInfo('video', {'Title': parentTitle})
-        # We store the duration here, but it is only in minutes and does not
-        # look very good if displayed, so we also set Label2 to a viewable value
+        # We store the duration here (it is only in minutes for Helix-v14 - and does not
+        # look very good if displayed), so we also set Label2 to a viewable value
+        # However for Isengard-v15 this was change to be seconds
         intDuration = self.getDuration()
         # Only add the duration if there is one
         if intDuration > 0:
-            anItem.setInfo('video', {'Duration': int(self.getDuration() / 60)})
+            anItem.setInfo('video', {'Duration': intDuration})
         if tvShowTitle != "":
             anItem.setInfo('video', {'TvShowTitle': tvShowTitle})
 

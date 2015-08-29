@@ -18,11 +18,11 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Add Video Extras to your Movies and TV shows."
-msgstr "Ajouter des Extras Video à vos Films et Emissions TV"
+msgstr "Ajouter des bonus vidéo à vos films et séries TV."
 
 msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
-msgstr "Fourni une solution pour ajouter des Extras Video à votre bibliothèque Video. Cherchez dans le Wiki les instructions de paramétrage."
+msgstr "Fournit une solution pour ajouter des bonus vidéo à votre vidéothèque. Cherchez dans le Wiki les instructions de paramétrage."
 
 msgctxt "Addon Disclaimer"
 msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
@@ -86,7 +86,7 @@ msgstr "Sous-dossier Films personalisé"
 
 msgctxt "#32015"
 msgid "Custom TV Shows Sub-Folder"
-msgstr "Sous-dossier Show TV personalisé "
+msgstr "Sous-dossier personnalisé des séries TV"
 
 msgctxt "#32016"
 msgid "Advanced"
@@ -166,7 +166,11 @@ msgstr "Lister Image"
 
 msgctxt "#32035"
 msgid "Enable YouTube Search Support"
-msgstr "Activer le support de recherche YouTube"
+msgstr "Activer la prise en charge de recherche YouTube"
+
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr "Activer la prise en charge de recherche Vimeo"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -236,6 +240,10 @@ msgctxt "#32117"
 msgid "Deleted Scenes"
 msgstr "Scènes coupées au montage"
 
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "Caractéristiques particulières"
+
 msgctxt "#32119"
 msgid "Bloopers"
 msgstr "Bêtisier"
@@ -243,6 +251,14 @@ msgstr "Bêtisier"
 msgctxt "#32120"
 msgid "Interviews"
 msgstr "Interviews"
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "Effets visuels"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "Recherche Vimeo ..."
 
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"

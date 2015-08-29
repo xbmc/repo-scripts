@@ -1,3 +1,7 @@
+v2.0.1
+- Fix durations in addon menu
+- Improve accuracy of played progress after playing item
+
 v2.0.0
 - Add support for context menu
 

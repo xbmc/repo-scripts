@@ -164,6 +164,14 @@ msgctxt "#32034"
 msgid "List Image"
 msgstr "Obrázek pro bonusy"
 
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "Povolit podporu vyhledávání na YouTube"
+
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr "Povolit podporu vyhledávání na Vimeo"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Přehrát vše"
@@ -223,6 +231,34 @@ msgstr "Editace obsahu"
 msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Update obsahu zkončil chybou"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "Pro hledej YouTube ..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "Vynechané scény"
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "Specialitky"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "Trapasy"
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "Rozhovory"
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "VFX (Zvláštní efekty)"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "Prohledej Vimeo ..."
 
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"

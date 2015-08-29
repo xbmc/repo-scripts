@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.videoextras" name="VideoExtras" version="2.0.0" provider-name="robwebset">
+<addon id="script.videoextras" name="VideoExtras" version="2.0.1" provider-name="robwebset">
 	<requires>
     	<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -26,7 +26,7 @@
     	<summary lang="en_NZ">Add Video Extras to your Movies and TV shows.</summary>
     	<summary lang="en_US">Add Video Extras to your Movies and TV shows.</summary>
     	<summary lang="es">Añadir extras de vídeo para sus películas y programas de televisión.</summary>
-    	<summary lang="fr">Ajouter des Extras Video à vos Films et Emissions TV</summary>
+    	<summary lang="fr">Ajouter des bonus vidéo à vos films et séries TV.</summary>
     	<summary lang="fr_CA">Ajouter des bonus vidéos à vos films et séries télé.</summary>
     	<summary lang="gl">Engadir Extras de Vídeos aos seus Filmes e Series de TV.</summary>
     	<summary lang="he">הוסף ספיישלים (Video Extras) לסרטים ולסדרות שלך.</summary>
@@ -41,7 +41,6 @@
     	<summary lang="pt">Adicionar Extras de Vídeo aos seus Filmes e Séries TV</summary>
     	<summary lang="pt_BR">Adiciona extras de vídeos em filmes e seriados.</summary>
     	<summary lang="sv">Lägg till Video Extras till dina filmer och TV-program</summary>
-    
     	<description lang="ca">Proporciona una manera d'afegir vídeo extres a la seva biblioteca de vídeo. Mira el wiki per instruccions d'instal·lació.</description>
     	<description lang="cs">Poskytuje způsob jak přidat Bonusy do vaší video knihovny. Instrukce pro nastavení viz. wiki.</description>
     	<description lang="de">Bietet eine Möglichkeit, um Videoextras zu Ihrer Videobibliothek hinzuzufügen. Schauen Sie ins Wiki für Installationsanweisungen.</description>
@@ -50,7 +49,7 @@
     	<description lang="en_NZ">Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions.</description>
     	<description lang="en_US">Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions.</description>
     	<description lang="es">Proporciona una manera de añadir extras de vídeos a su biblioteca. Mira el wiki para instrucciones de instalación.</description>
-    	<description lang="fr">Fourni une solution pour ajouter des Extras Video à votre bibliothèque Video. Cherchez dans le Wiki les instructions de paramétrage.</description>
+    	<description lang="fr">Fournit une solution pour ajouter des bonus vidéo à votre vidéothèque. Cherchez dans le Wiki les instructions de paramétrage.</description>
     	<description lang="fr_CA">Offre une façon d'ajouter des bonus vidéos à votre vidéothèque. Consulter le wiki pour des instructions de configuration.</description>
     	<description lang="gl">Prové dun camiño para engadir Extras á sea biblioteca de Vídeos. Ver na wiki para instruccións da configuración.</description>
     	<description lang="he">מספק אפשרות להוסיף ספיישלים (Video Extras) לספריית הוידאו שלך. פנה לוויקי להוראות התקנה.</description>
@@ -65,9 +64,22 @@
     	<description lang="pt">Permite adicionar extras de vídeo à sua Biblioteca de Vídeos. Leia o wiki para mais instruções de configuração.</description>
     	<description lang="pt_BR">Prove um caminho para vídeo extras via info de vídeo. Ver o wiki para instruções de configuração.</description>
     	<description lang="sv">Tillhandahåller ett sätt att lägga till Video Extras till ditt filmbibliotek. Se wiki för inställningsanvisningar.</description>
-	
-		<disclaimer lang="en">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
-	
+    	<disclaimer lang="cs">Tvůrci skinů: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="de">Skin-Ersteller, bitte schaut für Informationen über die Integration in euren Skin im Wiki:&#10;http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="el">Skinners, ελέγξτε τον ιστότοπο για πληροφορίες σχετικά με την ενσωμάτωση στο κέλυφός σας: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="en">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="en_US">Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="es">Desarrolladores, por favor ver el Wiki para saber como integrarlo en tu Skin&#10;http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="fr">Skinneurs, lisez le Wiki afin d'obtenir les informations pour l'intégrer à votre skin: : http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="fr_CA">Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="gl">Autores de temas, por favor vexan a wiki para saber como integralo no seu tema:&#10;http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="ko">스킨 제작자 여러분, 스킨에 통합하는 방법은 위키를 참조하기 바랍니다: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="lt">Teminių išvaizdų kūrėjai, instrukcijas kaip integruoti šį priedą į jūsų teminę išvaizdą rasite vikio puslapyje: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="nl">Skinners, bekijk de wikie om te weten hoe je heet moet integreren in jouw skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="pl">Twórcy skór powinni zapoznać się z informacjami na stronach Wiki, aby dowiedzieć więcej o integracji z dodatkiem: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="pt">Os autores dos temas deverão consultar o wiki para saberem como integrar este add-on no tema: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="pt_BR">Skinners, por favor veja o wiki para saber como integrar em sua skin:&#10;http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
+    	<disclaimer lang="sv">Skaltillverkare, använd wikin för att se hur du kan integrera det i ditt skal:&#10;http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras</disclaimer>
     	<language></language>
     	<platform>all</platform>
     	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>

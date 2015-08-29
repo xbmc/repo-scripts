@@ -224,6 +224,30 @@ msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Αποτυχία ενημέρωσης πλοκής"
 
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "YouTube Αναζήτηση ..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "Κομμένες Σκηνές"
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "Ειδικά Χαρακτηριστικά"
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "Συνεντεύξεις"
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "VFX (Οπτικά Εφέ)"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "Vimeo Αναζήτηση ..."
+
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
 msgstr "Θα ενημερωθεί το αρχείο advancedsettings.xml για να διαχειριστεί σωστά το αρχείο των Extras. Σιγουρευτείτε ότι όλες οι αλλαγές έχουν αποθηκευθεί πριν ξεκινήσετε. Να εκτελεστεί;"

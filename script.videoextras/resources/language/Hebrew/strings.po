@@ -116,6 +116,10 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "פעולות"
 
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "איפוס מסד נתונים ומטמון"
+
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "השתמש במסך רשימה מפורטת"
@@ -123,6 +127,26 @@ msgstr "השתמש במסך רשימה מפורטת"
 msgctxt "#32026"
 msgid "Window to show after exiting detailed list"
 msgstr "חלון להצגה לאחר יציאה ממסך רשימה מפורטת"
+
+msgctxt "#32027"
+msgid "Allow caching of extras on startup"
+msgstr "לאפשר מטמון של תוספות בהפעלה"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "עיון בספשיילים"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "השתמש בתמונות מותאמות אישית"
+
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "אפשר תמיכת חיפוש של YouTube"
+
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr "אפשר תמיכת חיפוש של Vimeo"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -156,6 +180,10 @@ msgctxt "#32108"
 msgid "Edit title"
 msgstr "ערוך כותרת"
 
+msgctxt "#32109"
+msgid "Failed to update title"
+msgstr "נכשל ניסיון לעדכן כותרת"
+
 msgctxt "#32110"
 msgid "Movies"
 msgstr "סרטים"
@@ -171,3 +199,47 @@ msgstr "קליפים"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "עלילה"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "עריכת עלילה"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "נכשל בעדכון עלילה"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "חיפוש ב־YouTube ..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "סצינות שנמחקו"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "פספוסים"
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "ראיונות"
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "VFX (אפקטים חזותיים)"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "חיפוש ב־Vimeo ..."
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "אנא בדוק את היומן הרישום לפרטים נוספים"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "לא כל הקבצים עודכנו כצפוי"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "מומלץ הפעיל מחדש את קודי"

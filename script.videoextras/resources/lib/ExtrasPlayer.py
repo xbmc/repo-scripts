@@ -47,10 +47,14 @@ class ExtrasPlayer(xbmc.Player):
 
         extrasPlayer = ExtrasPlayer(parentTitle=parentTitle)
 
+        # store the last file in the list, we will use this later to work out
+        # if there are still more to play
+        lastFileInList = ""
         for exItem in extrasItems:
             # Get the list item, but not any resume information
             listitem = extrasPlayer._getListItem(exItem, True)
             playlist.add(exItem.getMediaFilename(), listitem)
+            lastFileInList = exItem.getMediaFilename()
 
         extrasPlayer.play(playlist)
 
@@ -94,11 +98,11 @@ class ExtrasPlayer(xbmc.Player):
                 log("ExtrasPlayer: Failed to follow progress %s" % currentlyPlayingFile, xbmc.LOGERROR)
                 log("ExtrasPlayer: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
-            xbmc.sleep(100)
+            xbmc.sleep(10)
 
             # If the user selected the "Play All" option, then we do not want to
             # stop between the two videos, so do an extra wait
-            if not extrasPlayer.isPlayingVideo():
+            if not extrasPlayer.isPlayingVideo() and (len(extrasItems) > 1) and (currentlyPlayingFile != lastFileInList):
                 xbmc.sleep(3000)
 
         # Need to save the final file state
@@ -141,7 +145,7 @@ class ExtrasPlayer(xbmc.Player):
         while extrasPlayer.isPlayingVideo():
             # Keep track of where the current video is up to
             currentTime = int(extrasPlayer.getTime())
-            xbmc.sleep(100)
+            xbmc.sleep(10)
 
         # Record the time that the player actually stopped
         log("ExtrasPlayer: Played to time = %d" % currentTime)
