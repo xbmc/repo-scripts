@@ -23,6 +23,7 @@ from settings import os_path_split
 from settings import list_dir
 from settings import dir_exists
 from settings import os_path_isfile
+from settings import normalize_string
 
 
 #############################################
@@ -241,25 +242,35 @@ class NfoReader():
 # Calculates file locations
 ##############################
 class ThemeFiles():
-    def __init__(self, rawPath, pathList=None, debug_logging_enabled=True, audioOnly=False):
+    def __init__(self, rawPath, pathList=None, videotitle=None, debug_logging_enabled=True, audioOnly=False):
         self.debug_logging_enabled = debug_logging_enabled
         self.forceShuffle = False
         self.doNotShuffle = False
         self.audioOnly = audioOnly
         self.rawPath = rawPath
-        if rawPath == "":
+        if rawPath in [None, ""]:
             self.clear()
-        elif (pathList is not None) and (len(pathList) > 0):
-            self.themeFiles = []
-            for aPath in pathList:
-                subThemeList = self._generateThemeFilelistWithDirs(aPath)
-                # add these files to the existing list
-                self.themeFiles = self._mergeThemeLists(self.themeFiles, subThemeList)
-            # If we were given a list, then we should shuffle the themes
-            # as we don't always want the first path playing first
-            self.forceShuffle = True
         else:
-            self.themeFiles = self._generateThemeFilelistWithDirs(rawPath)
+            # Check for the case where there is a custom path set so we need to use
+            # the custom location rather than the rawPath
+            if Settings.isCustomPathEnabled() and (videotitle not in [None, ""]):
+                customRoot = Settings.getCustomPath()
+                # Make sure that the path passed in has not already been converted
+                if customRoot not in self.rawPath:
+                    self.rawPath = os_path_join(customRoot, normalize_string(videotitle))
+                    log("ThemeFiles: Setting custom path to %s" % self.rawPath, self.debug_logging_enabled)
+
+            if (pathList is not None) and (len(pathList) > 0):
+                self.themeFiles = []
+                for aPath in pathList:
+                    subThemeList = self._generateThemeFilelistWithDirs(aPath)
+                    # add these files to the existing list
+                    self.themeFiles = self._mergeThemeLists(self.themeFiles, subThemeList)
+                # If we were given a list, then we should shuffle the themes
+                # as we don't always want the first path playing first
+                self.forceShuffle = True
+            else:
+                self.themeFiles = self._generateThemeFilelistWithDirs(self.rawPath)
 
         # Check if we need to handle the ordering for video themes
         if not audioOnly:

@@ -16,25 +16,9 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Verkrijg en speel je TV serie thema`s"
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Dit script zoekt thema`s van TV series in jouw TV seriebibliotheek op www.televisiontunes.com en slaat ze op in thema[0-9].mp3 bestand in elke TV serie map. Ze worden afgespeeld wanneer je de  TV serie in bibliotheek modus bekijkt of Video-informatiescherm (Het gebruikte ontwerp moet wel compatibel zijn met dit script)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Skinners, bekijk de wiki om te zien hoe dit script in je skin te integreren: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Speel thema herhaald af"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Verlaag het geluidsvolume"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -376,6 +360,14 @@ msgctxt "#32088"
 msgid "Only Play Video Themes"
 msgstr "Allen video thema`s afspelen"
 
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Speel altijd maar één enkel thema"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Herhaal Enkel Audio Thema Na Video"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Toon selectie dialoog als automatische overeenkomst mislukt"
@@ -408,10 +400,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Zoeken naar"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "GEANNULEERD"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Aktie geannuleerd door de gebruiker."
@@ -439,10 +427,6 @@ msgstr "Deze downloaden?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Zoekresultaten zullen incompleet zijn"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Je kunt helpen om meer theme's te verkrijgen op:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

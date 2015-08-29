@@ -27,6 +27,7 @@ from settings import os_path_join
 from settings import os_path_split
 from settings import dir_exists
 
+from store import ThemeStore
 import soundcloud
 
 
@@ -62,14 +63,11 @@ class TvTunesFetcher():
             multiVideoProgressDialog = xbmcgui.DialogProgress()
             multiVideoProgressDialog.create(__language__(32105), __language__(32106))
 
-            # For the show
-            # show[0] = Title
-            # show[1] = Path where the theme is to be stored
-            # show[2] = Original Title (If set)
             count = 0
             for show in videoList:
                 count = count + 1
-                multiVideoProgressDialog.update((count * 100) / total, ("%s %s" % (__language__(32107), show[0].decode("utf-8"))), ' ')
+                title = show.get('title', "")
+                multiVideoProgressDialog.update((count * 100) / total, ("%s %s" % (__language__(32107), title.decode("utf-8"))), ' ')
                 if multiVideoProgressDialog.iscanceled():
                     multiVideoProgressDialog.close()
                     xbmcgui.Dialog().ok(__language__(32108), __language__(32109))
@@ -90,11 +88,13 @@ class TvTunesFetcher():
 
     # Search for a single theme
     def scanSingleItem(self, show, showProgressDialog=True):
-        # For the show
-        # show[0] = Title
-        # show[1] = Path where the theme is to be stored
-        # show[2] = Original Title (If set)
-        theme_list = self.searchThemeList(show[0], show[2], manual=False, showProgressDialog=showProgressDialog)
+        title = show.get('title', None)
+        originalTitle = show.get('originalTitle', None)
+        isTvShow = show.get('isTvShow', None)
+        year = show.get('year', None)
+        imdb = show.get('imdb', None)
+
+        theme_list = self.searchThemeList(title, originalTitle, isTvShow, year, imdb, manual=False, showProgressDialog=showProgressDialog)
         selectedTheme = None
 
         # Check the case where we have an automatic download enabled
@@ -113,12 +113,13 @@ class TvTunesFetcher():
         # If there is still no theme selected, prompt the user
         if (selectedTheme is None) and Settings.isAutoDownloadPromptUser():
             # Prompt the user to select which theme they want
-            selectedTheme = self.getUserChoice(theme_list, show[0], show[2])
+            selectedTheme = self.getUserChoice(theme_list, title, originalTitle, isTvShow, year, imdb)
 
         retVal = False
         if selectedTheme:
             retVal = True
-            self.download(selectedTheme, show[1])
+            savePath = show.get('path', None)
+            self.download(selectedTheme, savePath)
 
         return retVal
 
@@ -179,7 +180,7 @@ class TvTunesFetcher():
         downloadProgressDialog.close()
 
     # Retrieve the theme that the user has selected
-    def getUserChoice(self, theme_list, showname, alternativeTitle=None):
+    def getUserChoice(self, theme_list, showname, alternativeTitle=None, isTvShow=None, year=None, imdb=None):
         searchname = showname
         selectedTheme = None
         while selectedTheme is None:
@@ -215,10 +216,10 @@ class TvTunesFetcher():
                             log("getUserChoice: No text entered by user")
                             return None
                         # Set what was searched for
-                        theme_list = self.searchThemeList(result, manual=True)
+                        theme_list = self.searchThemeList(result, None, isTvShow, year, imdb, manual=True)
                         searchname = result
                     else:
-                        theme_list = self.searchThemeList(searchname, alternativeTitle)
+                        theme_list = self.searchThemeList(searchname, alternativeTitle, isTvShow, year, imdb)
                 else:
                     # Not the first entry selected, so change the select option
                     # so the index value matches the theme list
@@ -230,7 +231,7 @@ class TvTunesFetcher():
         return selectedTheme
 
     # Perform the actual search on the configured web site
-    def searchThemeList(self, showname, alternativeTitle=None, manual=False, showProgressDialog=True):
+    def searchThemeList(self, showname, alternativeTitle=None, isTvShow=None, year=None, imdb=None, manual=False, showProgressDialog=True):
         if (alternativeTitle is None) or (alternativeTitle == ""):
             log("searchThemeList: Search for %s" % showname)
         else:
@@ -249,6 +250,9 @@ class TvTunesFetcher():
         elif self.searchEngine == Settings.TELEVISION_TUNES:
             # Default to Television Tunes
             searchListing = TelevisionTunesListing()
+        elif self.searchEngine == Settings.THEMESTORE:
+            # Default to Television Tunes
+            searchListing = ThemeStoreListing()
 
         # Check the special case where we use all the engines
         if self.searchEngine == Settings.ALL_ENGINES:
@@ -256,9 +260,9 @@ class TvTunesFetcher():
             # We do not want them doing this search all the time!
             self.searchEngine = Settings.getSearchEngine()
 
-            tvtunesList = TelevisionTunesListing().themeSearch(showname, alternativeTitle, showProgressDialog)
-            goearList = GoearListing().themeSearch(showname, alternativeTitle, showProgressDialog)
-            soundcloudList = SoundcloudListing().themeSearch(showname, alternativeTitle, showProgressDialog)
+            tvtunesList = TelevisionTunesListing().themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+            goearList = GoearListing().themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+            soundcloudList = SoundcloudListing().themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
 
             # Join all the entries into one list
             theme_list = tvtunesList + goearList + soundcloudList
@@ -269,7 +273,7 @@ class TvTunesFetcher():
             if manual:
                 theme_list = searchListing.search(showname, showProgressDialog)
             else:
-                theme_list = searchListing.themeSearch(showname, alternativeTitle, showProgressDialog)
+                theme_list = searchListing.themeSearch(showname, alternativeTitle, isTvShow=isTvShow, year=year, imdb=imdb, showProgressDialog=showProgressDialog)
 
         return theme_list
 
@@ -289,14 +293,20 @@ class TvTunesFetcher():
         displayList = []
         displayList.insert(0, Settings.TELEVISION_TUNES)
         displayList.insert(1, Settings.SOUNDCLOUD)
-        displayList.insert(3, Settings.GOEAR)
+        displayList.insert(2, Settings.GOEAR)
 
-        displayList.insert(4, "** %s **" % __language__(32121))
+        manualSearchOffset = 3
+        # Check if we should make the Theme Store available
+        if Settings.isThemeStoreEnabled():
+            manualSearchOffset = manualSearchOffset + 1
+            displayList.insert(3, __language__(32125))
+
+        displayList.insert(manualSearchOffset, "** %s **" % __language__(32121))
 
         if showManualOptions:
-            displayList.insert(5, "%s %s" % (Settings.TELEVISION_TUNES, __language__(32118)))
-            displayList.insert(6, "%s %s" % (Settings.SOUNDCLOUD, __language__(32118)))
-            displayList.insert(8, "%s %s" % (Settings.GOEAR, __language__(32118)))
+            displayList.insert(manualSearchOffset + 1, "%s %s" % (Settings.TELEVISION_TUNES, __language__(32118)))
+            displayList.insert(manualSearchOffset + 2, "%s %s" % (Settings.SOUNDCLOUD, __language__(32118)))
+            displayList.insert(manualSearchOffset + 3, "%s %s" % (Settings.GOEAR, __language__(32118)))
 
         isManualSearch = False
 
@@ -306,17 +316,17 @@ class TvTunesFetcher():
             log("promptForSearchEngine: Cancelled by user")
             return False, None
         else:
-            if (select == 0) or (select == 5):
+            if (select == 0) or (select == (manualSearchOffset + 1)):
                 self.searchEngine = Settings.TELEVISION_TUNES
-            elif (select == 1) or (select == 6):
+            elif (select == 1) or (select == (manualSearchOffset + 2)):
                 self.searchEngine = Settings.SOUNDCLOUD
-            elif (select == 2) or (select == 7):
+            elif (select == 2) or (select == (manualSearchOffset + 3)):
                 self.searchEngine = Settings.GOEAR
             elif (select == 3):
                 self.searchEngine = Settings.ALL_ENGINES
 
             # Record if this is a manual search
-            if select > 4:
+            if select > manualSearchOffset:
                 isManualSearch = True
 
         log("promptForSearchEngine: New search engine is %s" % self.searchEngine)
@@ -503,7 +513,7 @@ class DefaultListing():
         return []
 
     # Searches for a given subset of themes, trying to reduce the list
-    def themeSearch(self, name, alternativeTitle=None, showProgressDialog=True):
+    def themeSearch(self, name, alternativeTitle=None, isTvShow=None, year=None, imdb=None, showProgressDialog=True):
         log("DefaultListing: ThemeSearch for %s" % name)
 
         progressDialog = DummyProgressDialog(name)
@@ -795,7 +805,7 @@ class DefaultListing():
 #################################################
 class TelevisionTunesListing(DefaultListing):
     # Television tunes just uses the default search
-    def themeSearch(self, name, alternativeTitle=None, showProgressDialog=True):
+    def themeSearch(self, name, alternativeTitle=None, isTvShow=None, year=None, imdb=None, showProgressDialog=True):
         progressDialog = DummyProgressDialog(name)
         if showProgressDialog:
             percetageProgressDivisor = 1
@@ -1237,3 +1247,48 @@ class SoundcloudListing(DefaultListing):
             return ' (%s %s)' % (s, size_name[i])
         else:
             return ""
+
+
+#################################################
+# Searches Theme Store for themes
+#################################################
+class ThemeStoreListing(DefaultListing):
+    def themeSearch(self, name, alternativeTitle=None, isTvShow=None, year=None, imdb=None, showProgressDialog=True):
+        progressDialog = DummyProgressDialog(name)
+        if showProgressDialog:
+            progressDialog = ProgressDialog(name)
+
+        # Get the details from the theme store
+        themeStore = ThemeStore()
+        progressDialog.updateProgress(25)
+
+        themeUrls = themeStore.getThemeUrls(name, isTvShow, year, imdb)
+        del themeStore
+
+        progressDialog.updateProgress(50)
+
+        themeDetailsList = []
+        themeNum = 0
+        if themeUrls is not None:
+            for themeUrl in themeUrls:
+                themeNum = themeNum + 1
+                # TODO: Add file size to displayed themes
+                title = "%s %d" % (__language__(32124), themeNum)
+                theme = ThemeItemDetails(title, themeUrl)
+                theme.setPriority(1)
+                themeDetailsList.append(theme)
+                progressDialog.updateProgress(75)
+
+        # If there is a progress dialog, make sure it is closed
+        progressDialog.updateProgress(100)
+        progressDialog.closeProgress()
+
+        return themeDetailsList
+
+    # Perform the search for the theme
+    def _search(self, showname, progressDialog):
+        return []
+
+    # We don't add any appendices for Television Tunes search
+    def getSearchAppendices(self):
+        return []

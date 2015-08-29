@@ -16,25 +16,9 @@ msgstr ""
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Obtenha e reproduza o tema musical das suas séries de TV"
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Este script ajudará você a obter o tema da sua coleção de séries de TV de www.televisiontunes.com, que serão salvos em um arquivo theme.mp3 em cada uma das pastas de suas séries e serão reproduzidos sempre que você acessar uma série na sua coleção (a skin precisa ser compatível com este recurso)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Criadores de skins, por favor vejam o changelog.txt para aprender como integrá-lo à sua skin"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Reproduzir tema em loop"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Valor de som mais baixo"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -376,6 +360,14 @@ msgctxt "#32088"
 msgid "Only Play Video Themes"
 msgstr "Somente Reproduza Vídeo Temas "
 
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Somente reproduza tema único"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Repetir tema único de áudio após o vídeo."
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Mostrar Seleção se Auto Localizar Falhar"
@@ -408,10 +400,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Pesquisando por"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "CANCELADO"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Operação cancelada pelo usuário."
@@ -439,10 +427,6 @@ msgstr "Baixar este tema?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Resultados da procura pode ficar incompleto"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Você pode ajudar a coletar mais temas em:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

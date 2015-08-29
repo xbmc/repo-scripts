@@ -16,25 +16,9 @@ msgstr ""
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Hent og afspil dine Film og TV-show Temaer."
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Scriptet vil hjælpe dig med at hente temaer til dit film og serie bibliotek fra www.televisiontunes.com. Den gemmer dem som theme[0-9].mp3 i hver af dine videomapper, så de vil blive spillet mens du gennemser dit videobibliotek når du går ind i seriemappen eller Video Information (Dit skin skal være kompatibel med denne feature)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Skinnere, se venligst wikien for hvordan du integrere det i dit skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Spil tema i loop"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Lavere lyd værdi"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -168,10 +152,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Søger efter"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "AFBRUDT"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Afbrudt af bruger."
@@ -195,10 +175,6 @@ msgstr "INDTAST MANUEL SØGNING"
 msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Hente denne?"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Du kan hjælpe til at hente flere temaer på:"
 
 msgctxt "#32201"
 msgid "Movies"

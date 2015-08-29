@@ -1,3 +1,6 @@
+v6.0.3
+- Fix custom path support
+
 v6.0.2
 - Stop prompting to continue when auto downloading themes
 - Do not fade out video themes

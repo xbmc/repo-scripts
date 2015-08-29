@@ -16,25 +16,9 @@ msgstr ""
 "Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Obtenha e reproduza as músicas dos seus filmes e séries de TV."
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Com este addon, poderá obter as músicas dos filmes e séries TV na sua biblioteca a partir de televisiontunes.com. Serão guardadas em ficheiros theme[0-9].mp3 dentro das pastas de vídeo e serão reproduzidas durante a navegação na biblioteca de vídeo, quando entrar dentro da pasta de Séries TV ou no ecrã de Informação de Vídeo (é necessário um tema compatível)."
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Autores dos temas, por favor vejam o changelog.txt para saber como integrar TVTunes nos vossos temas."
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Tocar música repetidamente"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Ajustar volume do som"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -372,10 +356,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Procurando por"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "CANCELADO"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Operação cancelada pelo utilizador."
@@ -403,10 +383,6 @@ msgstr "Transferir esta música?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Resultados da procura ficarão incompletos"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Pode ajudar-nos a obter mais músicas em:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

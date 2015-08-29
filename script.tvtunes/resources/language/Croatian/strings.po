@@ -16,25 +16,9 @@ msgstr ""
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Nabavite i reproducirajte temu vašeg omiljenog filma i TV serije prilikom pregledavanja svoje videoteke"
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "TvTunes je opremljen s moćnim značajkama koje omogućavaju nabavljanje, organizaciju i reproduciranje glazbenih tema dok vi pregledavate vašu Kodi videoteku, kada se koristi zajedno s kompatibilnom presvlakom. (Posebna zahvala Ppic,Frost i ronie na njihovom ranijem razvoju TvTunes)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Autori presvlaka, pogledajte wiki za integraciju dodatka u vašu presvlaku: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Reproduciraj temu u petlji"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Smanji glasnoću zvuka"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -204,10 +188,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Pretražujem"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "PONIŠTENO"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Radnju je poništio korisnik."
@@ -235,10 +215,6 @@ msgstr "Preuzmite  ovo?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Rezulatati pretrage biti će nepotpuni"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Možete pomoći u nabavi više tema na:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

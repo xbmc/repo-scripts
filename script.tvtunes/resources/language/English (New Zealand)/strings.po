@@ -28,10 +28,6 @@ msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Play theme in loop"
 
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Lower sound value"
-
 msgctxt "#32003"
 msgid "Use Protected SMB share"
 msgstr "Use Protected SMB share"
@@ -192,10 +188,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Searching for"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "CANCELED"
-
 msgctxt "#32110"
 msgid "Downloading:"
 msgstr "Downloading:"
@@ -215,10 +207,6 @@ msgstr "ENTER MANUAL SEARCH"
 msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Download this one?"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "You can help to get more theme on:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

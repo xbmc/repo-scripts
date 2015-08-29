@@ -16,25 +16,9 @@ msgstr ""
 "Language: bg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Сваля и възпроизвежда мелодиите от вашите филми и сериали"
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик. (Специални благодарности на Ppic, Frost и ronie за за тяната работа върху TvTunes)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Повтаряне на мелодията, без спиране"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Понижаване силата на звука"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -296,6 +280,10 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Повторение"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Стартиране"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Ръчен избор на мелодия при липса на съответствие"
@@ -328,10 +316,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Търсене за"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "ОТКАЗ"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Действието е прекъснато от потребителя."
@@ -359,10 +343,6 @@ msgstr "Да бъде ли свалена?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Резултатите от търсенето ще са непълни"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Можете да помогнете в обогатяването на библиотеката с мелодии на адрес:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

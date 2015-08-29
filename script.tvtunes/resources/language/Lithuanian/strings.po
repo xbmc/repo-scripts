@@ -16,25 +16,9 @@ msgstr ""
 "Language: lt\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "gauti ir atkurti jūsų filmų ir tv laidų temas"
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Šis skriptas jums padės temas jūsų filmų ir tv laidų temas iš www.televisiontunes.com. Jos bus išsaugotos theme[0-9].mp3 faile, kiekviename jūsų vaizdo aplanke ir bus atkurtos, naršant vaizdo bibliotekoje, pasirinkus TV laidos aplanką arba vaizdo informacijos langą (teminė išvaizda turi būti suderinama su šia funkcija)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Teminių išvaizdų kūrėjai, prašau aplankykite wiki puslapį, norėdami sužinoti kaip integruoti tai į jūsų teminę išvaizdą: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Atkurti temą pasikartojančiu ciklu"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Sumažinti garso reikšmę"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -376,6 +360,14 @@ msgctxt "#32088"
 msgid "Only Play Video Themes"
 msgstr "Atkurti tik vaizdo temas"
 
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Bet kada atkurti tik vieną tiemą"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Pakartoti atskirą garso temą po vaizdo įrašo"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Rodyti parinkimo dialogą, jei nepavyko sutapdinti automatiškai"
@@ -408,10 +400,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Ieškoma"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "ATŠAUKTA"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Vartotojas atšaukė operaciją."
@@ -439,10 +427,6 @@ msgstr "Atsiųsti šį?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Paieškos rezultatai bus nepilni"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Galite padėti gauti daugiau temų:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

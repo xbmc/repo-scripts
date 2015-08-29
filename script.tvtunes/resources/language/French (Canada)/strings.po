@@ -16,25 +16,9 @@ msgstr ""
 "Language: fr_CA\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Récupérez et lisez vos thèmes de bandes sonores en parcourant votre vidéothèque"
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "TVTunes est équipé de fonctions puissantes qui permettent l'obtention, l'organisation et la lecture de thèmes tout en parcourant votre vidéothèque, lorsque utilisé en conjonction avec un habillage compatible (remerciements particuliers à Ppic, Frost et ronie pour leur travail de développement original de TvTunes)."
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Habilleurs, consultez le wiki pour savoir comment l'intégrer à votre habillage : http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Jouer le thème en boucle"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Valeur audio basse"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -356,6 +340,34 @@ msgctxt "#32083"
 msgid "Video File Types"
 msgstr "Types de fichiers vidéos"
 
+msgctxt "#32084"
+msgid "Enable Theme Playing (Restart Required)"
+msgstr "Activer la lecture des thèmes (redémarrage exigé)"
+
+msgctxt "#32085"
+msgid "When A Video Theme Exists"
+msgstr "À la fin du thème d'une vidéo"
+
+msgctxt "#32086"
+msgid "Mix With Audio Themes"
+msgstr "Mélanger avec les thèmes audio"
+
+msgctxt "#32087"
+msgid "Play Video Themes First"
+msgstr "Lire d'abord les thèmes des vidéos"
+
+msgctxt "#32088"
+msgid "Only Play Video Themes"
+msgstr "Ne lire que les thèmes des vidéos"
+
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Ne jamais lire qu'un seul thème"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Répéter un seul thème audio après la vidéo"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Montrer la boîte de dialogue de sélection si la concordance automatique échoue"
@@ -388,10 +400,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Recherche de"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "ANNULÉ"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Opération annulée par l'utilisateur."
@@ -419,10 +427,6 @@ msgstr "Télécharger celui-ci?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Les résultats de recherche seront incomplets"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Vous pouvez aider à obtenir plus de thème sur :"
 
 msgctxt "#32118"
 msgid "Manual Search..."

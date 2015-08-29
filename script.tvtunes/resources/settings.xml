@@ -17,14 +17,14 @@
 		<setting id="trackLengthLimit" label="32027" type="slider" default="0" range="0,10,180" option="int" />
 	</category>
 	<category label="32992">
-		<setting id="tvtunesId" option="hidden" visible="false" enable="false" type="text" label="32098 " default="" />
-		<setting id="enableTvTunesStore" option="hidden" visible="false" type="bool" label="32099" default="false"/>
+		<setting id="tvtunesId" enable="false" type="text" label="32098 " default="" />
+		<setting id="enableTvTunesStore" type="bool" label="32099" default="false"/>
 		<setting label="32116" visible="eq(-1,true)" type="action" subsetting="true" option="close" action="RunScript($CWD/storereg.py)"/>
 		<setting id="auto_download" type="enum" label="32009" lvalues="32036|32037|32038|32039" default="0"/>
 		<setting id="auto_prompt_user_if_required" type="bool" label="32100" visible="!eq(-1,0)" subsetting="true" default="true"/>
 		<setting id="multiThemeDownload" type="bool" label="32014" default="false"/>
 		<setting id="searchMovieDownload" type="bool" label="32015" default="true"/>
-		<setting id="searchSource" visible="eq(-6,false)" type="enum" label="32028" lvalues="32030|32031|32032|32034|32035" default="1" />
+		<setting id="searchSource" type="enum" label="32028" lvalues="32030|32031|32032|32034|32125|32035" default="1" />
 		<setting id="showVideoInfoButton" type="bool" label="32020" default="true"/>
 		<setting id="showOnContextMenu" type="bool" label="32096" default="true"/>
 		<setting id="enableUploads" type="bool" label="32097" default="true"/>

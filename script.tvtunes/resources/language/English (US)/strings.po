@@ -28,10 +28,6 @@ msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Play theme in loop"
 
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Lower sound value"
-
 msgctxt "#32003"
 msgid "Use Protected SMB share"
 msgstr "Use Protected SMB share"
@@ -372,6 +368,14 @@ msgctxt "#32088"
 msgid "Only Play Video Themes"
 msgstr "Only Play Video Themes"
 
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Only ever play single theme"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Repeat Single Audio Theme After Video"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Show Selection Dialog If Auto Match Fails"
@@ -404,10 +408,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Searching for"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "CANCELED"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Operation canceled by user."
@@ -435,10 +435,6 @@ msgstr "Download this one?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Search results will be incomplete"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "You can help to get more theme on:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

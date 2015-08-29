@@ -16,25 +16,9 @@ msgstr ""
 "Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "הורדה וניגון נעימות של סרטים וסדרות בעת עיון בספריה"
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "סקריפט זה יעזור לך להשיג שירי נושא לספריות הסרטים והסדרות שלך מ-www.televisiontunes.com, ישמור אותם בקובץ בשם theme[0-9].mp3 בכל אחת מתיקיות הוידאו שלך והם ינוגנו בעת עיון בספריית הוידאו כאשר תיכנס לספריית סדרה או במסך מידע וידאו (נדרשת תאימות המעטפת עבור יכולת זו)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "מפתחי מעטפות, אנא פנו לוויקי ע\"מ לדעת כיצד לשלב זאת במעטפת שלכם: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "חזרה על נגינת שיר נושא"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "עוצמת אודיו נמוכה"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -59,6 +43,10 @@ msgstr "נתיב:"
 msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "דעיכה הדרגתית בעת יציאה"
+
+msgctxt "#32009"
+msgid "Automatically Download Theme If"
+msgstr "להוריד באופן אוטומטי את הערכת הנושא אם"
 
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
@@ -107,6 +95,10 @@ msgstr "דעיכה הדרגתית לאחר (דקות)"
 msgctxt "#32022"
 msgid "Operations"
 msgstr "פעולות"
+
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "עיון בערכות נושאים"
 
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
@@ -204,6 +196,10 @@ msgctxt "#32063"
 msgid "Fanart,Thumbnail"
 msgstr "פאנארט, תמונה ממוזערת"
 
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "רמת עמעום"
+
 msgctxt "#32068"
 msgid "Left"
 msgstr "שמאלה"
@@ -252,10 +248,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "מחפש"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "בוטל"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "פעולה בוטלה ע\"י המשתמש."
@@ -279,10 +271,6 @@ msgstr "הזן חיפוש ידני"
 msgctxt "#32114"
 msgid "Download this one?"
 msgstr "להוריד את זה?"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "הינך יכול לעזור בהשגת שירי נושא נוספים ב:"
 
 msgctxt "#32118"
 msgid "Manual Search..."

@@ -76,10 +76,6 @@ msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Sæki upplýsingar..."
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "HÆTT VIÐ"
-
 msgctxt "#32111"
 msgid "to:"
 msgstr "til:"

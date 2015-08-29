@@ -16,25 +16,9 @@ msgstr ""
 "Language: pl\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
-msgstr "Pobieraj i odtwarzaj motywy muzyczne filmów i seriali"
-
-msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Dodatek TvTunes wyposażono w potężny zestaw funkcji umożliwiający pobieranie, organizowanie i odtwarzanie motywów muzycznych podczas przeglądania biblioteki Kodi, przez kompatybilne z nim skóry. Specjalne podziękowanie dla Ppic,Frost i ronie za ich początkową pracę przy tworzeniu TvTunes)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "Twórcy skór mogą znaleźć informacje dotyczące integracji TvTunes ze skórą na stronach wiki: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Zapętlaj odtwarzanie motywów"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Obniżaj poziom głośności"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -376,6 +360,14 @@ msgctxt "#32088"
 msgid "Only Play Video Themes"
 msgstr "Odtwarzaj tylko motyw wideo"
 
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Odtwarzaj motyw jednorazowo"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Powtarzaj motyw muzyczny po motywie wideo"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Pokazuj okno wyboru przy nieudanym dopasowaniu"
@@ -408,10 +400,6 @@ msgctxt "#32107"
 msgid "Searching for"
 msgstr "Wyszukiwanie"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "ANULOWANO"
-
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Operacja anulowana przez użytkownika."
@@ -439,10 +427,6 @@ msgstr "Pobrać wybrany? "
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Wyniki wyszukiwania będą niekompletne"
-
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Możesz wspomóc projekt na: "
 
 msgctxt "#32118"
 msgid "Manual Search..."
