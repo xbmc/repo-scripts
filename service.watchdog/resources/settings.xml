@@ -10,19 +10,33 @@
         <setting label="30018" type="lsep"/>
         <setting label="30019" type="lsep"/>
     </category>
-    <category label="30030">
+    <category label="30058">
         <setting label="30031" id="watchvideo" type="bool" default="true"/>
         <setting label="30032" id="videosource1" type="folder" value="" enable="eq(-1,false)"/>
         <setting label="30033" id="videosource2" type="folder" value="" enable="eq(-2,false)"/>
         <setting label="30034" id="videosource3" type="folder" value="" enable="eq(-3,false)"/>
         <setting label="30035" id="videosource4" type="folder" value="" enable="eq(-4,false)"/>
         <setting label="30036" id="videosource5" type="folder" value="" enable="eq(-5,false)"/>
+        <setting label="30060" id="videosource6" type="folder" value="" enable="eq(-6,false)"/>
+        <setting label="30061" id="videosource7" type="folder" value="" enable="eq(-7,false)"/>
+        <setting label="30062" id="videosource8" type="folder" value="" enable="eq(-8,false)"/>
+        <setting label="30063" id="videosource9" type="folder" value="" enable="eq(-9,false)"/>
+        <setting label="30064" id="videosource10" type="folder" value="" enable="eq(-10,false)"/>
+        <setting label="30018" type="lsep"/>
+        <setting label="30019" type="lsep"/>
+    </category>
+    <category label="30059">
         <setting label="30037" id="watchmusic" type="bool" default="true"/>
         <setting label="30038" id="musicsource1" type="folder" value="" enable="eq(-1,false)"/>
         <setting label="30039" id="musicsource2" type="folder" value="" enable="eq(-2,false)"/>
         <setting label="30040" id="musicsource3" type="folder" value="" enable="eq(-3,false)"/>
         <setting label="30041" id="musicsource4" type="folder" value="" enable="eq(-4,false)"/>
         <setting label="30042" id="musicsource5" type="folder" value="" enable="eq(-5,false)"/>
+        <setting label="30065" id="musicsource6" type="folder" value="" enable="eq(-6,false)"/>
+        <setting label="30066" id="musicsource7" type="folder" value="" enable="eq(-7,false)"/>
+        <setting label="30067" id="musicsource8" type="folder" value="" enable="eq(-8,false)"/>
+        <setting label="30068" id="musicsource9" type="folder" value="" enable="eq(-9,false)"/>
+        <setting label="30069" id="musicsource10" type="folder" value="" enable="eq(-10,false)"/>
         <setting label="30018" type="lsep"/>
         <setting label="30019" type="lsep"/>
     </category>

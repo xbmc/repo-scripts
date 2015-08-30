@@ -1,5 +1,8 @@
+[B]0.9.7[/B]
+- increased number of possible custom sources to 10
+
 [B]0.9.6[/B]
-- headless support
+- added headless support
 
 [B]0.9.5[/B]
 - improved detection of offline media sources

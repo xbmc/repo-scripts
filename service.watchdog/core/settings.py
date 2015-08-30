@@ -40,19 +40,13 @@ SHOW_PROGRESS_DIALOG = ADDON.getSetting('hideprogress') == 'false'
 if ADDON.getSetting('watchvideo') == 'true':
     VIDEO_SOURCES = utils.get_media_sources('video')
 else:
-    VIDEO_SOURCES = [_ for _ in set([
-        ADDON.getSetting('videosource1').decode('utf-8'),
-        ADDON.getSetting('videosource2').decode('utf-8'),
-        ADDON.getSetting('videosource3').decode('utf-8'),
-        ADDON.getSetting('videosource4').decode('utf-8'),
-        ADDON.getSetting('videosource5').decode('utf-8')]) if _ != ""]
+    VIDEO_SOURCES = [ADDON.getSetting('videosource%d' % i).decode('utf-8')
+                     for i in range(1, 11)]
+    VIDEO_SOURCES = [s for s in set(VIDEO_SOURCES) if s != ""]
 
 if ADDON.getSetting('watchmusic') == 'true':
     MUSIC_SOURCES = utils.get_media_sources('music')
 else:
-    MUSIC_SOURCES = [_ for _ in set([
-        ADDON.getSetting('musicsource1').decode('utf-8'),
-        ADDON.getSetting('musicsource2').decode('utf-8'),
-        ADDON.getSetting('musicsource3').decode('utf-8'),
-        ADDON.getSetting('musicsource4').decode('utf-8'),
-        ADDON.getSetting('musicsource5').decode('utf-8')]) if _ != ""]
+    MUSIC_SOURCES = [ADDON.getSetting('musicsource%d' % i).decode('utf-8')
+                     for i in range(1, 11)]
+    MUSIC_SOURCES = [s for s in set(MUSIC_SOURCES) if s != ""]

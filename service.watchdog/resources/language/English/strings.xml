@@ -20,7 +20,7 @@
     <string id="30018">Note: Addon must be restarted for changes to take effect</string>
     <string id="30020"></string>
     <string id="30021"></string>
-    <string id="30030">Sources</string>
+    <string id="30030"></string>
     <string id="30031">Auto detect video sources</string>
     <string id="30032">Video Source 1</string>
     <string id="30033">Video Source 2</string>
@@ -48,5 +48,17 @@
     <string id="30055">Clean entire library</string>
     <string id="30056">Remove from library when files are removed</string>
     <string id="30057">Hide progress of library scan/clean (Helix only)</string>
+    <string id="30058">Video sources</string>
+    <string id="30059">Music sources</string>
+    <string id="30060">Video Source 6</string>
+    <string id="30061">Video Source 7</string>
+    <string id="30062">Video Source 8</string>
+    <string id="30063">Video Source 9</string>
+    <string id="30064">Video Source 10</string>
+    <string id="30065">Music Source 6</string>
+    <string id="30066">Music Source 7</string>
+    <string id="30067">Music Source 8</string>
+    <string id="30068">Music Source 9</string>
+    <string id="30069">Music Source 10</string>
 </strings>
 
