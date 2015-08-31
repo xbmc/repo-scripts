@@ -43,8 +43,7 @@ if __name__ == '__main__':
         log("TvTunes: Ignoring manual call to run backend")
 
     elif params.get("mode", False) == "solo":
-        themeScraper = TvTunesScraper()
-        del themeScraper
+        TvTunesScraper()
 
     elif params.get("screensaver", False):
         launchScreensaver()

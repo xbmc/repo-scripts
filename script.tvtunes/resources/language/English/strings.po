@@ -417,7 +417,7 @@ msgid "TvTunes ID:"
 msgstr ""
 
 msgctxt "#32099"
-msgid "Enable Theme Store"
+msgid "Enable TvTunes Store"
 msgstr ""
 
 msgctxt "#32100"
@@ -508,23 +508,7 @@ msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
 msgstr ""
 
-msgctxt "#32122"
-msgid "Theme Store Registration Incorrect"
-msgstr ""
-
-msgctxt "#32123"
-msgid "Theme Store Unavailable"
-msgstr ""
-
-msgctxt "#32124"
-msgid "Theme Store Audio"
-msgstr ""
-
-msgctxt "#32125"
-msgid "Theme Store"
-msgstr ""
-
-#empty strings from id 32126 to 32200
+#empty strings from id 32122 to 32200
 
 msgctxt "#32201"
 msgid "Movies"

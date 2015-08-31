@@ -19,6 +19,29 @@ from themeFetcher import TvTunesFetcher
 __addon__ = xbmcaddon.Addon(id='script.tvtunes')
 
 
+###############################################################
+# Class to make it easier to see which screen is being checked
+###############################################################
+class WindowShowing():
+
+    @staticmethod
+    def isMovieInformation():
+        return xbmc.getCondVisibility("Window.IsVisible(movieinformation)")
+
+    @staticmethod
+    def isTv():
+        if xbmc.getCondVisibility("Container.Content(tvshows)"):
+            return True
+        if xbmc.getCondVisibility("Container.Content(Seasons)"):
+            return True
+        if xbmc.getCondVisibility("Container.Content(Episodes)"):
+            return True
+        if xbmc.getInfoLabel("container.folderpath") == "videodb://tvshows/titles/":
+            return True  # TvShowTitles
+
+        return False
+
+
 #################################
 # Core TvTunes Scraper class
 #################################
@@ -30,11 +53,11 @@ class TvTunesScraper():
         # Check if multiple themes are suported
         if not Settings.isMultiThemesSupported():
             # Check if a theme already exists
-            if self._doesThemeExist(videoItem['path']):
+            if self._doesThemeExist(videoItem[1]):
                 # Prompt the user to see if we should overwrite the theme
                 if not xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32103), __addon__.getLocalizedString(32104)):
                     # No not want to overwrite, so quit
-                    log("TvTunesScraper: %s already exists" % (os_path_join(videoItem['path'], "theme.*")))
+                    log("TvTunesScraper: %s already exists" % (os_path_join(videoItem[1], "theme.*")))
                     return
 
         # Perform the fetch
@@ -52,8 +75,7 @@ class TvTunesScraper():
         # we just look at the screen details
         # The solo option is only available from the info screen
         # Looking at the TV Show information page
-        isTvShow = self._isTv()
-        if isTvShow:
+        if WindowShowing.isTv():
             videoName = xbmc.getInfoLabel("ListItem.TVShowTitle")
             log("getSoloVideo: TV Show detected %s" % videoName)
         else:
@@ -62,7 +84,7 @@ class TvTunesScraper():
 
         # Now get the video path
         videoPath = None
-        if xbmc.getCondVisibility("Window.IsVisible(movieinformation)") and isTvShow:
+        if WindowShowing.isMovieInformation() and WindowShowing.isTv():
             videoPath = xbmc.getInfoLabel("ListItem.FilenameAndPath")
         if videoPath is None or videoPath == "":
             videoPath = xbmc.getInfoLabel("ListItem.Path")
@@ -100,12 +122,7 @@ class TvTunesScraper():
 
         log("getSoloVideo: videoPath = %s" % videoPath)
 
-        # Now get the year and imdb number for the video
-        year = xbmc.getInfoLabel("ListItem.Year")
-        imdb = xbmc.getInfoLabel("ListItem.IMDBNumber")
-
-        videoItem = {'title': normVideoName, 'path': videoPath, 'originalTitle': originalTitle, 'isTvShow': isTvShow, 'year': year, 'imdb': imdb}
-        return videoItem
+        return [normVideoName, videoPath, originalTitle]
 
     # Checks if a theme exists in a directory
     def _doesThemeExist(self, directory):
@@ -138,16 +155,4 @@ class TvTunesScraper():
                 if m:
                     log("doesThemeExist: Found match: " + aFile)
                     return True
-        return False
-
-    def _isTv(self):
-        if xbmc.getCondVisibility("Container.Content(tvshows)"):
-            return True
-        if xbmc.getCondVisibility("Container.Content(Seasons)"):
-            return True
-        if xbmc.getCondVisibility("Container.Content(Episodes)"):
-            return True
-        if xbmc.getInfoLabel("container.folderpath") == "videodb://tvshows/titles/":
-            return True  # TvShowTitles
-
         return False

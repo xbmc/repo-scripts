@@ -161,9 +161,9 @@ class MenuNavigator():
                 li.setProperty("ResumeTime", "50")
 
             if videoItem['originaltitle'] is not None:
-                url = self._build_url({'mode': 'findtheme', 'foldername': target, 'path': path.encode("utf-8"), 'title': videoItem['title'].encode("utf-8"), 'isTvShow': videoItem['isTvShow'], 'year': videoItem['year'], 'imdb': videoItem['imdb'], 'originaltitle': videoItem['originaltitle'].encode("utf-8")})
+                url = self._build_url({'mode': 'findtheme', 'foldername': target, 'path': path.encode("utf-8"), 'title': videoItem['title'].encode("utf-8"), 'originaltitle': videoItem['originaltitle'].encode("utf-8")})
             else:
-                url = self._build_url({'mode': 'findtheme', 'foldername': target, 'path': path.encode("utf-8"), 'title': videoItem['title'].encode("utf-8"), 'isTvShow': videoItem['isTvShow'], 'year': videoItem['year'], 'imdb': videoItem['imdb']})
+                url = self._build_url({'mode': 'findtheme', 'foldername': target, 'path': path.encode("utf-8"), 'title': videoItem['title'].encode("utf-8")})
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
@@ -174,7 +174,7 @@ class MenuNavigator():
         if target == MenuNavigator.MUSICVIDEOS:
             origTitleRequest = ''
 
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "file", "thumbnail", "fanart", "imdbnumber", "year"%s], "sort": { "method": "title" } }, "id": 1}' % (jsonGet, origTitleRequest))
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "file", "thumbnail", "fanart"%s], "sort": { "method": "title" } }, "id": 1}' % (jsonGet, origTitleRequest))
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         log(json_response)
@@ -185,12 +185,6 @@ class MenuNavigator():
                 videoItem['title'] = item['title']
                 # The file is actually the path for a TV Show, the video file for movies
                 videoItem['file'] = item['file']
-                videoItem['imdb'] = item['imdbnumber']
-                videoItem['year'] = item['year']
-
-                videoItem['isTvShow'] = False
-                if target == MenuNavigator.TVSHOWS:
-                    videoItem['isTvShow'] = True
 
                 if item['thumbnail'] is None:
                     item['thumbnail'] = 'DefaultFolder.png'
@@ -250,7 +244,7 @@ class MenuNavigator():
         return False
 
     # Fetch a single theme
-    def fetchTheme(self, title, path, originaltitle=None, isTvShow=None, year=None, imdb=None):
+    def fetchTheme(self, title, path, originaltitle=None):
         # If there is already a theme then start playing it
         self._startPlayingExistingTheme(path)
 
@@ -275,8 +269,7 @@ class MenuNavigator():
         # Perform the fetch
         videoList = []
         normtitle = normalize_string(title)
-        videoItem = {'title': normtitle, 'path': path, 'originalTitle': originaltitle, 'isTvShow': isTvShow, 'year': year, 'imdb': imdb}
-        videoList.append(videoItem)
+        videoList.append([normtitle, path, originaltitle])
         TvTunesFetcher(videoList)
 
         # Stop playing any theme that started
@@ -338,9 +331,7 @@ class MenuNavigator():
             normOriginalTitle = None
             if videoItem['originaltitle'] is not None:
                 normOriginalTitle = normalize_string(videoItem['originaltitle']).encode("utf-8")
-
-            videoItem = {'title': normtitle, 'path': path.encode("utf-8"), 'originalTitle': normOriginalTitle, 'isTvShow': videoItem['isTvShow'], 'year': videoItem['year'], 'imdb': videoItem['imdb']}
-            videoList.append(videoItem)
+            videoList.append([normtitle, path.encode("utf-8"), normOriginalTitle])
 
         if len(videoList) > 0:
             TvTunesFetcher(videoList)
@@ -436,22 +427,13 @@ if __name__ == '__main__':
         title = args.get('title', None)
         path = args.get('path', None)
         originaltitle = args.get('originaltitle', None)
-        isTvShow = args.get('isTvShow', None)
-        year = args.get('year', None)
-        imdb = args.get('imdb', None)
 
         if originaltitle is not None:
             originaltitle = originaltitle[0]
-        if isTvShow is not None:
-            isTvShow = isTvShow[0]
-        if year is not None:
-            year = year[0]
-        if imdb is not None:
-            imdb = imdb[0]
 
         # Perform the fetch
         menuNav = MenuNavigator(base_url, addon_handle)
-        menuNav.fetchTheme(title[0], path[0], originaltitle, isTvShow, year, imdb)
+        menuNav.fetchTheme(title[0], path[0], originaltitle)
         del menuNav
 
     elif mode[0] == 'filter':

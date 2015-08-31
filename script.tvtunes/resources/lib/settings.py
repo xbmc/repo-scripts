@@ -278,7 +278,6 @@ class Settings():
     TELEVISION_TUNES = 'televisiontunes.com'
     SOUNDCLOUD = 'soundcloud.com'
     GOEAR = 'goear.com'
-    THEMESTORE = 'themestore'
     PROMPT_ENGINE = 'Prompt User'
 
     # Settings for Automatically Downloading
@@ -478,13 +477,6 @@ class Settings():
             return Settings.SOUNDCLOUD
         elif index == 3:
             return Settings.GOEAR
-        elif index == 4:
-            # If the user has selected the theme store but it is not enabled
-            # then prompt them for the correct search engine
-            if not Settings.isThemeStoreEnabled():
-                return Settings.PROMPT_ENGINE
-            return Settings.THEMESTORE
-
         # Default is to prompt the user
         return Settings.PROMPT_ENGINE
 
@@ -544,10 +536,6 @@ class Settings():
     @staticmethod
     def setTvTunesId():
         __addon__.setSetting("tvtunesId", Settings.getTvTunesId())
-
-    @staticmethod
-    def isThemeStoreEnabled():
-        return __addon__.getSetting("enableTvTunesStore") == "true"
 
 
 # Class to handle all the screen saver settings
