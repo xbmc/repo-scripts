@@ -22,5 +22,6 @@
     <source>https://github.com/divingmule/script.funnyordie</source>
     <forum>http://forum.xbmc.org/showthread.php?tid=174829</forum>
     <website>http://www.funnyordie.com</website>
+    <broken>Add-on does not function any more due to site changes. We are looking for a new maintainer for this add-on.</broken>
   </extension>
 </addon>
