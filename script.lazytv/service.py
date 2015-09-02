@@ -366,12 +366,25 @@ class LazyPlayer(xbmc.Player):
 
 		# this is right at the start so that the info for the previously played episode is retrieved while
 		# it is still available
-		pre_seas  = Main.nextprompt_info['season']
-		pre_ep    = Main.nextprompt_info['episode']
-		pre_title = Main.nextprompt_info['showtitle']
-		pre_epid  = Main.nextprompt_info['episodeid']
+
+		pre_seas  = Main.nextprompt_info.get('season', None)
+		pre_ep    = Main.nextprompt_info.get('episode', None)
+		pre_title = Main.nextprompt_info.get('showtitle', None)
+		pre_epid  = Main.nextprompt_info.get('episodeid', None)
 		paused    = False
 
+		if any([pre_seas is None, pre_ep is None, pre_title is None, pre_epid is None]):
+
+			log('Main.nextprompt_info missing vital data')
+
+			log('pre_seas %s' pre_seas)
+			log('pre_ep %s' pre_ep)
+			log('pre_title %s' pre_title)
+			log('pre_epid %s' pre_epid)
+			
+			Main.nextprompt_info = {}
+
+			return
 
 		log('Playbackended', reset =True)
 
@@ -379,7 +392,6 @@ class LazyPlayer(xbmc.Player):
 
 		xbmc.sleep(500)		#give the chance for the playlist to start the next item
 
-		
 		# this is all to handle the next_ep_notification
 		self.now_name = xbmc.getInfoLabel('VideoPlayer.TVShowTitle')
 
