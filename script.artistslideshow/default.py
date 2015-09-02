@@ -909,7 +909,7 @@ class Main:
         self.params = {}
         self.LastfmURL = 'http://ws.audioscrobbler.com/2.0/'
         self.LastfmPARAMS = {'autocorrect':'1', 'api_key':LastfmApiKey}
-        self.fanarttvURL = 'https://webservice.fanart.tv/v3/music/'
+        self.fanarttvURL = 'http://webservice.fanart.tv/v3/music/'
         self.fanarttvPARAMS = {'api_key': fanarttvApiKey}
         if self.FANARTTVCLIENTAPIKEY:
             self.fanarttvPARAMS.update( {'client_key': self.FANARTTVCLIENTAPIKEY} )

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artistslideshow" name="Artist Slideshow" version="1.8.5" provider-name="pkscout|ronie">
+<addon id="script.artistslideshow" name="Artist Slideshow" version="1.8.6" provider-name="pkscout|ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="xbmc.addon" version="14.0.0"/>

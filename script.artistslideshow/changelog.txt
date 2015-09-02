@@ -1,3 +1,6 @@
+v.1.8.6
+- changed to http for fanart.tv api, https was depreciated without notice
+
 v.1.8.5
 - disabled SSL cert verification so connections to self-signed certs will work
   (fixes problem with fanart.tv)
