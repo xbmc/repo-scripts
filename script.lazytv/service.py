@@ -377,10 +377,10 @@ class LazyPlayer(xbmc.Player):
 
 			log('Main.nextprompt_info missing vital data')
 
-			log('pre_seas %s' pre_seas)
-			log('pre_ep %s' pre_ep)
-			log('pre_title %s' pre_title)
-			log('pre_epid %s' pre_epid)
+			log('pre_seas %s' % pre_seas)
+			log('pre_ep %s' % pre_ep)
+			log('pre_title %s' % pre_title)
+			log('pre_epid %s' % pre_epid)
 			
 			Main.nextprompt_info = {}
 
