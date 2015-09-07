@@ -206,11 +206,12 @@ class TTSService(xbmc.Monitor):
 
 
         lastVersion = util.getSetting('version','0.0.0')
+        util.setSetting('version',__version__)
+
         if lastVersion == '0.0.0':
             self.firstRun()
             return True
         elif LooseVersion(lastVersion) < LooseVersion(__version__):
-            util.setSetting('version',__version__)
             self.queueNotice(u'{0}... {1}'.format(T(32104),__version__))
             return True
         return False

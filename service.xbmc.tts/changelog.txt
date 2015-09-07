@@ -3,6 +3,8 @@ Changelog for service.xbmc.tts
 
 Authors: ruuk, pvagner
 
+Translations (Thank you!): Polish - Piciok, Italian - falcon03
+
 TODO:
 -----
  Use Container(id).CurrentItem for I* to detect list item changes
@@ -20,6 +22,10 @@ EXTERNAL TODO:
 --------------
  OSX installer?
  Android TTS app for android backend
+
+** 1.0.3 **
+
+Add Italian translation - thanks to falcon03
 
 ** 1.0.2 **
 

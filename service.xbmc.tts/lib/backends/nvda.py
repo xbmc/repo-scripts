@@ -63,6 +63,9 @@ class NVDATTSBackend(TTSBackendBase):
                 self.flagAsDead('Not running')
                 return
 
+    def sayList(self,texts,interrupt=False):
+        self.say('\n'.join(texts),interrupt)
+
     def stop(self):
         if not self.dll: return
         self.dll.nvdaController_cancelSpeech()
