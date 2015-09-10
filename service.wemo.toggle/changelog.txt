@@ -1,0 +1,28 @@
+2015-07-17
+    -bugfixes
+    -refactored code base
+    -new icon
+2015-07-10
+    -added better handling for detecting movies and television shows
+2015-06-09
+    -added option to toggle multiple switches under Misc category
+2015-01-29
+    -fixed bug with option to always turn switch off when media starts
+2015-01-25
+    -added Misc category to settings
+        -option to delay service start in seconds
+        -option to turn switch on at startup
+        -option to turn switch off at shutdown
+        -option to always turn switch off when media starts
+    -credit
+        Verderer - http://forum.kodi.tv/showthread.php?tid=215291&pid=1903326#pid1903326
+        bragg2012 - http://forum.kodi.tv/showthread.php?tid=200194&pid=1804848#pid1804848
+2015-01-16
+    -initial release
+    -credit
+        cj2902 - http://wemo.forumatic.com/viewtopic.php?f=2&t=5
+        Sylv - http://forum.kodi.tv/showthread.php?tid=200194
+        sphere - http://forum.kodi.tv/showthread.php?tid=163703
+        yuvalt - http://forum.kodi.tv/showthread.php?tid=29577
+        zag - http://forum.kodi.tv/showthread.php?tid=209948
+        Kodi Wiki - http://kodi.wiki/
