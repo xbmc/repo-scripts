@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.show.runtime" name="Show Runtime" version="1.0.0" provider-name="curti">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+    </requires>
+    <extension point="kodi.context.item" library="addon.py">
+        <item>
+            <label>Show Runtime</label>
+            <visible>StringCompare(ListItem.dbtype, tvshow)</visible>
+        </item>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Display runtime for television shows</summary>
+        <description lang="en">Display remaining/total runtime for television shows</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU General Public License, v2</license>
+        <email></email>
+    </extension>
+</addon>
