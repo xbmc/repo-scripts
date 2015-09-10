@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="screensaver.digitalclock"
+        name="Digital Clock Screensaver"
+        version="2.2.0"
+        provider-name="Vojislav Vlasic">
+        <requires>
+        	<import addon="xbmc.python" version="2.1.0"/>
+  	</requires>
+  	<extension point="xbmc.ui.screensaver" library="default.py" />
+  	<extension point="xbmc.addon.metadata">
+    		<platform>all</platform>
+    		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    		<summary lang="en">Digital clock screensaver.</summary>
+		<summary lang="sr">Čuvar ekrana digitalni sat.</summary>
+    		<description lang="en">Digital clock screensaver with date and several options.</description>
+		<description lang="sr">Čuvar ekrana digitalni sat sa datumom i nekoliko opcija.</description>
+		<disclaimer lang="en">For bugs, requests or general questions visit the Digital clock screensaver thread on the Kodi forum.</disclaimer>
+		<disclaimer lang="sr">Za probleme, zahteve ili opšta pitanja posetite Digital clock screensaver temu na Kodi forumu.</disclaimer>
+  	</extension>
+</addon>

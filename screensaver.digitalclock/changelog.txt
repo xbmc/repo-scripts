@@ -1,0 +1,38 @@
+[B]2.2.0[/B]
+- Added now playing info options
+
+[B]2.1.0[/B]
+- Setting up the screensaver so it works with most of the skins
+
+[B]2.0.0[/B]
+- Added random option for transparency
+
+[B]1.9.0[/B]
+- Added random option for colors
+
+[B]1.8.0[/B]
+- Added random option for slideshow
+
+[B]1.7.0[/B]
+- Added slideshow
+
+[B]1.6.0[/B]
+- Added transparency for date
+
+[B]1.5.0[/B]
+- Added transparency for time
+
+[B]1.4.0[/B]
+- Added date colors
+
+[B]1.3.0[/B]
+- Added time colors
+
+[B]1.2.0[/B]
+- Added date format
+
+[B]1.1.0[/B]
+- Added time format
+
+[B]1.0.0[/B]
+- Initial version

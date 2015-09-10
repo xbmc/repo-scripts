@@ -1,0 +1,275 @@
+# Kodi Media Center language file
+# Addon Name: Digital Clock Screensaver
+# Addon id: screensaver.digitalclock
+# Addon Provider: Vojislav Vlasic
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/XBMC-Main-Frodo/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#settings labels
+
+msgctxt "#32001"
+msgid "General"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Number of seconds to stay in place"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Time format"
+msgstr ""
+
+msgctxt "#32007"
+msgid "17:14"
+msgstr ""
+
+msgctxt "#32008"
+msgid "05:14"
+msgstr ""
+
+msgctxt "#32009"
+msgid "05:14 PM"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Enable now playing info"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Number of seconds for information switch"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Date format"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Hide date"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Saturday 30. May 2015"
+msgstr ""
+
+msgctxt "#32033"
+msgid "30.05.2015"
+msgstr ""
+
+msgctxt "#32034"
+msgid "05.30.2015"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Colors"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Random color"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Hour color"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Colon color"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Minute color"
+msgstr ""
+
+msgctxt "#32055"
+msgid "AM/PM color"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Date color"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Now playing info color"
+msgstr ""
+
+msgctxt "#32070"
+msgid "White"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Red"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Green"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Blue"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Yellow"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Black"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Transparency"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Random transparency"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Hour transparency"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Colon transparency"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Minute transparency"
+msgstr ""
+
+msgctxt "#32105"
+msgid "AM/PM transparency"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Date transparency"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Now playing info transparency"
+msgstr ""
+
+msgctxt "#32120"
+msgid "0%"
+msgstr ""
+
+msgctxt "#32121"
+msgid "10%"
+msgstr ""
+
+msgctxt "#32122"
+msgid "20%"
+msgstr ""
+
+msgctxt "#32123"
+msgid "30%"
+msgstr ""
+
+msgctxt "#32124"
+msgid "40%"
+msgstr ""
+
+msgctxt "#32125"
+msgid "50%"
+msgstr ""
+
+msgctxt "#32126"
+msgid "60%"
+msgstr ""
+
+msgctxt "#32127"
+msgid "70%"
+msgstr ""
+
+msgctxt "#32128"
+msgid "80%"
+msgstr ""
+
+msgctxt "#32129"
+msgid "90%"
+msgstr ""
+
+msgctxt "#32130"
+msgid "100%"
+msgstr ""
+
+msgctxt "#32150"
+msgid "Background"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Background image"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Enable slideshow"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Choose slideshow directory"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Change background picture every:"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Random images"
+msgstr ""
+
+msgctxt "#32170"
+msgid "15 sec"
+msgstr ""
+
+msgctxt "#32171"
+msgid "30 sec"
+msgstr ""
+
+msgctxt "#32172"
+msgid "1 min"
+msgstr ""
+
+msgctxt "#32173"
+msgid "2 min"
+msgstr ""
+
+msgctxt "#32174"
+msgid "3 min"
+msgstr ""
+
+msgctxt "#32175"
+msgid "4 min"
+msgstr ""
+
+msgctxt "#32176"
+msgid "5 min"
+msgstr ""
+
+msgctxt "#32177"
+msgid "6 min"
+msgstr ""
+
+msgctxt "#32178"
+msgid "7 min"
+msgstr ""
+
+msgctxt "#32179"
+msgid "8 min"
+msgstr ""
+
+msgctxt "#32180"
+msgid "9 min"
+msgstr ""
+
+msgctxt "#32181"
+msgid "10 min"
+msgstr ""
