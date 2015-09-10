@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+	<defaultcontrol always="false">32500</defaultcontrol>
+    <controls>
+
+        <control type="image">
+            <description>Background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <colordiffuse>FF555555</colordiffuse>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+            <width>1280</width>
+            <height>720</height>
+            <texture>fanart.jpg</texture>
+        </control>
+
+        <control type="image">
+            <description>image</description>
+            <posx>10</posx>
+            <posy>20</posy>
+            <aspectratio scalediffuse="false" align="center" aligny="top">keep</aspectratio>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <width>300</width>
+            <texture>logo.png</texture>
+        </control>       
+
+        <control type="textbox">
+            <description>Clock</description>
+            <posx>840</posx>
+            <posy>20</posy>
+            <width>420</width>
+            <visible>true</visible>
+            <align>right</align>
+            <aligny>top</aligny>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <font>font11</font>
+            <textcolor>88FFFFFF</textcolor>
+            <shadowcolor>88000000</shadowcolor>
+            <label>$INFO[System.Time]</label>
+        </control>
+        
+	<!-- Main menu / Categories -->
+
+	<control type="group">
+	
+		<control type="panel" id="32500">
+			<posx>30</posx>
+			<posy>80</posy>
+			<width>1200</width>
+			<height>700</height>
+			<scrolltime>300</scrolltime>
+			<orientation>vertical</orientation>
+			<preloaditems>2</preloaditems>
+			<itemlayout height="300" width="380">
+				<control type="image">
+					<posy>0</posy>
+					<posx>50</posx>
+					<width>373</width>
+					<height>260</height>
+					<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+				</control>
+				<control type="group">
+					<posx>77</posx>
+					<posy>18</posy>
+					<control type="image">
+						<posy>10</posy>
+						<width>320</width>
+						<height>200</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+						<aspectratio aligny="center">scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="textbox">
+						<width>323</width>
+						<height>100</height>
+						<posx>0</posx>
+						<posy>227</posy>
+						<align>center</align>
+						<font>font12</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<info>ListItem.Label</info>
+					</control>
+				</control>
+			</itemlayout>
+			<focusedlayout height="300" width="380">
+				<control type="image">
+					<posy>0</posy>
+					<posx>50</posx>
+					<width>373</width>
+					<height>260</height>
+					<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+				</control>
+				<control type="image">
+					<posy>0</posy>
+					<posx>50</posx>
+					<width>373</width>
+					<animation effect="fade" start="0" end="100" time="160">Focus</animation>
+					<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
+					<height>260</height>
+					<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
+				</control>
+				<control type="group">
+					<posx>77</posx>
+					<posy>18</posy>
+					<control type="image">
+						<posy>10</posy>
+						<width>320</width>
+						<height>200</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Thumb]</texture>
+						<aspectratio aligny="center">scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="textbox">
+						<width>323</width>
+						<height>100</height>
+						<posx>0</posx>
+						<posy>227</posy>
+						<align>center</align>
+						<font>font12</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<info>ListItem.Label</info>
+					</control>
+				</control>
+			</focusedlayout>
+		</control>
+	</control>
+	
+	<!-- Ingredients / Drinks listing -->
+
+	<control type="group">
+	
+		<control type="panel" id="32501">
+			<posx>15</posx>
+			<posy>80</posy>
+			<width>1200</width>
+			<height>700</height>
+			<scrolltime>300</scrolltime>
+			<orientation>vertical</orientation>
+			<preloaditems>2</preloaditems>
+			<itemlayout height="300" width="300">
+				<control type="image">
+					<posy>0</posy>
+					<posx>50</posx>
+					<width>260</width>
+					<height>260</height>
+					<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+				</control>
+				<control type="group">
+					<posx>77</posx>
+					<posy>18</posy>
+					<control type="image">
+						<posy>10</posy>
+						<width>200</width>
+						<height>200</height>
+						<texture background="true" fallback="menuicons/notavailable.png">$INFO[ListItem.Thumb]</texture>
+						<aspectratio aligny="center">scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="textbox">
+						<width>200</width>
+						<height>100</height>
+						<posx>0</posx>
+						<posy>227</posy>
+						<align>center</align>
+						<font>font12</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<info>ListItem.Label</info>
+					</control>
+				</control>
+			</itemlayout>
+			<focusedlayout height="300" width="300">
+				<control type="image">
+					<posy>0</posy>
+					<posx>50</posx>
+					<width>260</width>
+					<height>260</height>
+					<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+				</control>
+				<control type="image">
+					<posy>0</posy>
+					<posx>50</posx>
+					<width>260</width>
+					<animation effect="fade" start="0" end="100" time="160">Focus</animation>
+					<animation effect="fade" start="0" end="100" time="0">UnFocus</animation>
+					<height>260</height>
+					<texture border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texture>
+				</control>
+				<control type="group">
+					<posx>77</posx>
+					<posy>18</posy>
+					<control type="image">
+						<posy>10</posy>
+						<width>200</width>
+						<height>200</height>
+						<texture background="true" fallback="menuicons/notavailable.png">$INFO[ListItem.Thumb]</texture>
+						<aspectratio aligny="center">scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="textbox">
+						<width>200</width>
+						<height>100</height>
+						<posx>0</posx>
+						<posy>227</posy>
+						<align>center</align>
+						<font>font12</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<info>ListItem.Label</info>
+					</control>
+				</control>
+			</focusedlayout>
+		</control>
+	</control>
+   </controls>
+</window>

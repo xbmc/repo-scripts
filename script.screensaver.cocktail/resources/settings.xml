@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32015">
+		<setting id="ingredient-switch" type="enum" label="32016" values="Slow|Fast" default="0" />
+		<setting id="youtube-max-results" label="32017" type="slider" default="6" range="6,3,50" option="int" />
+	</category>
+	<category label="32018">
+		<setting id="enable-instructions" type="bool" label="32019" default="true" />
+		<setting id="wait-time-instructions" type="number" label="32020" default="5" enable="eq(-1,true)"/>
+		<setting id="next-time" label="32021 " type="slider" default="60" range="40,20,600" option="int" />
+	</category>
+</settings>

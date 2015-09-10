@@ -1,0 +1,137 @@
+# Kodi Media Center language file
+# Addon Name: Cocktail
+# Addon id: script.screensaver.cocktail
+# Addon Provider: enen92,Zag
+msgid ""
+msgstr ""
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#settings labels
+
+msgctxt "#32000"
+msgid "Cocktail"
+msgstr ""
+
+msgctxt "#32001"
+msgid "See recipe"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Search videos"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Categories"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Glass"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Alcoholic Type"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Ingredient Picker"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Search"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Execute Screensaver"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Search Cocktail"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Cocktail name cannot be empty"
+msgstr ""
+
+msgctxt "#32011"
+msgid "No matching cocktails found"
+msgstr ""
+
+msgctxt "#32012"
+msgid "No results"
+msgstr ""
+
+msgctxt "#32013"
+msgid "No videos found"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Press the context menu key to search for cocktails.[CR]Press left or right to get random drinks.[CR]Press select to select ingredients and read their description.[CR] Enjoy your drink!"
+msgstr ""
+
+#settings
+
+msgctxt "#32015"
+msgid "Program"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Ingredient switch speed (in case > 6 ingredients)"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Maximum ammount of videos to display (youtube)"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Screensaver"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Enable instructions"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Wait time before picking the first random (seconds)"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Time to get next random drink (seconds)"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Added to favourites!"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Removed from favourites!"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Could not find drink in favourites!"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Favourites"
+msgstr ""
+
+msgctxt "#32026"
+msgid "You do not have any favourite drinks!"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Add to favourites"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Remove from favourites"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Ingredient description not available."
+msgstr ""
