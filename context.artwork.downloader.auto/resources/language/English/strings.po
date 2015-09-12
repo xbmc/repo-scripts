@@ -1,0 +1,10 @@
+# Kodi Media Center language file
+# Addon Name: Download All Artwork - Artwork Downloader
+# Addon id: context.artwork.downloader.auto
+msgid ""
+msgstr ""
+
+msgctxt "#30005"
+msgid "Download All Artwork"
+msgstr "Download All Artwork"
+
