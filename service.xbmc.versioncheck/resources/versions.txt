@@ -141,6 +141,15 @@
         "releasecandidate": [
             {
                 "major": "15",
+                "minor": "2",
+                "tag": "releasecandidate",
+                "tagversion":"1",
+                "revision": "20150828-59716ca",
+                "extrainfo": "RC1",
+                "addon_support": "yes"
+            },
+            {
+                "major": "15",
                 "minor": "1",
                 "tag": "releasecandidate",
                 "tagversion":"1",
@@ -469,6 +478,22 @@
             }
         ],
         "alpha": [
+            {
+                "major": "16",
+                "minor": "0",
+                "tag": "alpha",
+                "tagversion":"2",
+                "revision": "20150831-b4afc20",
+                "addon_support": "yes"
+            },
+            {
+                "major": "16",
+                "minor": "0",
+                "tag": "alpha",
+                "tagversion":"1",
+                "revision": "20150801-c5f806e",
+                "addon_support": "yes"
+            },
             {
                 "major": "15",
                 "minor": "0",

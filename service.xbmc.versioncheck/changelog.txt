@@ -1,3 +1,6 @@
+v0.3.8
+- Update version list
+
 v0.3.7
 - Update version list
 
