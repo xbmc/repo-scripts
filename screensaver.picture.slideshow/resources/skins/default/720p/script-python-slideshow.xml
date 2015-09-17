@@ -128,6 +128,8 @@
 				<align>right</align>
 				<textcolor>F0FFFFFF</textcolor>
 				<shadowcolor>F0000000</shadowcolor>
+				<animation effect="slide" start="0,0" end="0,20" time="0" condition="!Control.IsVisible(100)">Conditional</animation>
+				<animation effect="slide" start="0,0" end="0,65" time="0" condition="!Control.IsVisible(101)">Conditional</animation>
 			</control>
 			<control type="label" id="100">
 				<posx>1250</posx>
@@ -138,12 +140,13 @@
 				<align>right</align>
 				<textcolor>C0FFFFFF</textcolor>
 				<shadowcolor>F0000000</shadowcolor>
+				<animation effect="slide" start="0,0" end="0,65" time="0" condition="!Control.IsVisible(101)">Conditional</animation>
 			</control>
 			<control type="textbox" id="101">
 				<posx>660</posx>
 				<posy>650</posy>
 				<width>600</width>
-				<height>80</height>
+				<height>60</height>
 				<font>font12</font>
 				<align>left</align>
 				<textcolor>C0FFFFFF</textcolor>
