@@ -10,6 +10,8 @@ __addonid__      = __addon__.getAddonInfo('id')
 __addonversion__ = __addon__.getAddonInfo('version')
 __cwd__          = __addon__.getAddonInfo('path').decode('utf-8')
 
+MULTI = ('resource.images.weatherfanart.multi', 'resource.images.weathericons.animated')
+
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode('utf-8')
@@ -65,12 +67,11 @@ class Gui(xbmcgui.WindowXMLDialog):
         self.container = self.getControl(6)
         self.button = self.getControl(5)
         self.getControl(3).setVisible(False)
-        self.getControl(1).setLabel(xbmc.getLocalizedString(20464) % xbmc.getLocalizedString(24000))
+        self.getControl(1).setLabel(xbmc.getLocalizedString(20464) % xbmc.getLocalizedString(536))
         self.button.setLabel(xbmc.getLocalizedString(21452))
         listitem = xbmcgui.ListItem(label=xbmc.getLocalizedString(231), iconImage='DefaultAddonNone.png')
         self.container.addItem(listitem)
-        for item in self.listing :
-            self.container.addItem(item)
+        self.container.addItems(self.listing)
         self.setFocus(self.container)
 
     def onAction(self, action):
@@ -83,11 +84,14 @@ class Gui(xbmcgui.WindowXMLDialog):
             if num == 0:
                 xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.name'))
                 xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.path'))
+                xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.multi'))
             else:
                 name = self.container.getSelectedItem().getLabel()
                 path = self.container.getSelectedItem().getLabel2()
                 xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((self.property + '.name'), name))
                 xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((self.property + '.path'), 'resource://%s/' % path))
+                if path in MULTI:
+                    xbmc.executebuiltin('Skin.SetBool(%s,%s)' % (self.property + '.multi'))
             xbmc.sleep(100)
             self.close()
         elif controlID == 5:
