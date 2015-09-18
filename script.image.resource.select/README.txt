@@ -23,4 +23,4 @@ example usage:
 - RunScript(script.image.resource.select,property=Foo&studiologos;type=resource.images.studios)
 - $INFO[Skin.String(studiologos.name)]
 - $INFO[Skin.String(studiologos.path)]
-- IsEmpty(Skin.String(studiologos.multi))
+- Skin.HasSetting(studiologos.multi)
