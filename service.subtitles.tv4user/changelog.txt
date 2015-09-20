@@ -1,0 +1,33 @@
+0.8.6
+- Special on Arrow Zwetie staffel
+0.8.5
+- Now with Simpson
+0.8.4
+- Staffe 9 von 24 geht
+0.8.3
+- Master Of Sex Error Corrected
+0.8.2
+- Serien Mit Minus gehen
+- Alkatras gefixed
+0.8.1
+- Fehlerhaften HTML COde bei Mr Robot eingelesen
+0.8.0
+- Zeit Staffel bei Allen Folgen an
+0.7.9
+- Code überarbeitet, Bild Resised,Changelog verbessert, Code Bereinigt. Alles für nen kodi.tv release vorbereitet
+0.7.8
+- Flaggen eingebaut, Komentare und Code lerserlicher gemacht
+0.7.6
+- Neue Version ohne Abhämngikeit im Neuen Repo
+0.7.5
+- Abhängigkeit zum neuen Repo auf Github
+0.7.4
+- Fehler von 0.7.2 Verbessert
+0.7.2
+- Backknopf geht jetzt
+0.7.1
+- Missing Resources
+0.7.0
+- First Try
+0.5.0
+- Initial Release as subtitle Plugin
