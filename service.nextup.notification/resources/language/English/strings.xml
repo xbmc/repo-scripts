@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30001">The number of seconds before the end to show the notification</string>
+    <string id="30002">Log Level:</string>
+    <string id="30003">Settings</string>
+    <string id="30004">Advanced</string>
+    <string id="30005">Default action when nothing selected</string>
+    <string id="30006">Watch Now</string>
+    <string id="30007">Press cancel to stop automatic play of next episode...</string>
+    <string id="30008">Up Next</string>
+    <string id="30009">Number of episodes before still watching query</string>
+    <string id="30010">Continue Watching?</string>
+    <string id="30012">Still there? Press Continue Watching to watch the next episode</string>
+    <string id="30013">Include watched episodes</string>
+    <string id="30014">Disable NextUp (restart required)</string>
+</strings>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<defaultcontrol always="true">3012</defaultcontrol>
+	<zorder>0</zorder>
+	<controls>
+		<control type="group">
+			<right>10</right>
+			<bottom>10</bottom>
+			<width>600</width>
+			<height>339</height>
+			<control type="group">
+				<control type="image">
+					<animation effect="fade" start="100" end="97" time="200" condition="true">Conditional</animation>
+					<texture border="5" colordiffuse="ff000000">box.png</texture>
+				</control>
+				<control type="image" description="fanart">
+					<width>100%</width>
+					<height>100%</height>
+					<fadetime>350</fadetime>
+					<aspectratio scalediffuse="false">scale</aspectratio>
+					<texture>$INFO[Player.Art(fanart)]</texture>
+				</control>
+				<control type="image">
+					<left>0</left>
+					<right>0</right>
+					<top>0</top>
+					<height>90</height>
+					<texture border="5" colordiffuse="af000000">white.png</texture>
+				</control>
+				<control type="image">
+					<left>0</left>
+					<right>0</right>
+					<bottom>0</bottom>
+					<height>30</height>
+					<texture border="5" colordiffuse="cf000000">common/white.png</texture>
+				</control>
+				<control type="image">
+					<visible>!Control.HasFocus(3012)</visible>
+					<visible>IntegerGreaterThan(Player.TimeRemaining(ss),30)</visible>
+					<left>236</left>
+					<top>106</top>
+					<width>128</width>
+					<height>128</height>
+					<aspectratio>keep</aspectratio>
+					<texture colordiffuse="88ffffff">nextupicons/30.png</texture>
+					<animation type="Focus">
+						<effect type="zoom" start="90" end="100" time="150" tween="sine" easing="inout" center="auto" />
+						<effect type="fade" start="0" end="100" time="150" tween="sine" easing="in" />
+					</animation>
+					<animation type="Unfocus">
+						<effect type="zoom" start="100" end="90" time="150" tween="sine" easing="inout" center="auto" />
+						<effect type="fade" start="100" end="0" time="150" tween="sine" easing="out" />
+					</animation>
+				</control>
+				<control type="image">
+					<visible>Control.HasFocus(3012)</visible>
+					<visible>IntegerGreaterThan(Player.TimeRemaining(ss),30)</visible>
+					<left>236</left>
+					<top>106</top>
+					<width>128</width>
+					<height>128</height>
+					<aspectratio>keep</aspectratio>
+					<texture colordiffuse="FF00a2e0">nextupicons/30.png</texture>
+					<animation type="Focus">
+						<effect type="zoom" start="90" end="100" time="150" tween="sine" easing="inout" center="auto" />
+						<effect type="fade" start="0" end="100" time="150" tween="sine" easing="in" />
+					</animation>
+					<animation type="Unfocus">
+						<effect type="zoom" start="100" end="90" time="150" tween="sine" easing="inout" center="auto" />
+						<effect type="fade" start="100" end="0" time="150" tween="sine" easing="out" />
+					</animation>
+				</control>
+				<control type="image">
+					<visible>!Control.HasFocus(3012)</visible>
+					<visible>!IntegerGreaterThan(Player.TimeRemaining(ss),30)</visible>
+					<left>236</left>
+					<top>106</top>
+					<width>128</width>
+					<height>128</height>
+					<aspectratio>keep</aspectratio>
+					<texture colordiffuse="88ffffff">$INFO[Player.TimeRemaining(ss),nextupicons/,.png]</texture>
+					<animation type="Focus">
+						<effect type="zoom" start="90" end="100" time="150" tween="sine" easing="inout" center="auto" />
+						<effect type="fade" start="0" end="100" time="150" tween="sine" easing="in" />
+					</animation>
+					<animation type="Unfocus">
+						<effect type="zoom" start="100" end="90" time="150" tween="sine" easing="inout" center="auto" />
+						<effect type="fade" start="100" end="0" time="150" tween="sine" easing="out" />
+					</animation>
+				</control>
+				<control type="image">
+					<visible>Control.HasFocus(3012)</visible>
+					<visible>!IntegerGreaterThan(Player.TimeRemaining(ss),30)</visible>
+					<left>236</left>
+					<top>106</top>
+					<width>128</width>
+					<height>128</height>
+					<aspectratio>keep</aspectratio>
+					<texture colordiffuse="FF00a2e0">$INFO[Player.TimeRemaining(ss),nextupicons/,.png]</texture>
+					<animation type="Focus">
+						<effect type="zoom" start="90" end="100" time="150" tween="sine" easing="inout" center="auto" />
+						<effect type="fade" start="0" end="100" time="150" tween="sine" easing="in" />
+					</animation>
+					<animation type="Unfocus">
+						<effect type="zoom" start="100" end="90" time="150" tween="sine" easing="inout" center="auto" />
+						<effect type="fade" start="100" end="0" time="150" tween="sine" easing="out" />
+					</animation>
+				</control>
+				<control type="button" id="3012">
+					<description>Watch Now</description>
+					<left>5</left>
+					<top>5</top>
+					<width>577</width>
+					<height>324</height>
+					<ondown>3013</ondown>
+					<onup>3013</onup>
+					<texturefocus>noop</texturefocus>
+					<textcolor>ff333333</textcolor>
+				</control>
+				<control type="group">
+					<left>5</left>
+					<right>5</right>
+					<control type="button" id="3013">
+						<description>Cancel</description>
+						<left>225</left>
+						<bottom>1</bottom>
+						<width>150</width>
+						<onup>3012</onup>
+						<ondown>3012</ondown>
+						<align>center</align>
+						<font>font13</font>
+						<label>222</label>
+						<focusedcolor>FFededed</focusedcolor>
+						<disabledcolor>B3dddddd</disabledcolor>
+						<selectedcolor>FF000000</selectedcolor>
+						<height>25</height>
+						<textcolor>ff333333</textcolor>
+						<texturefocus colordiffuse="FF00a2e0" border="5">box.png</texturefocus>
+						<texturenofocus colordiffuse="FFFFFFFF" border="5">box.png</texturenofocus>
+					</control>
+					<control type="label" description="Total Time">
+						<align>right</align>
+						<width>100%</width>
+						<top>50</top>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>FFCCCCCC</textcolor>
+						<label>$INFO[Player.TimeRemaining(ss)]</label>
+					</control>
+					<control type="label">
+						<width>100%</width>
+						<top>0</top>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>B3dddddd</textcolor>
+						<label>$INFO[Control.GetLabel(3002),$ADDON[service.nextup.notification 30008]... ,][COLOR=FF00a2e0]$INFO[Control.GetLabel(3000), ,][/COLOR]</label>
+					</control>
+					<control type="label" description="episode/season info" id="3002">
+						<visible>false</visible>
+					</control>
+					<control type="label" description="Title" id="3000">
+						<width>100%</width>
+						<left>267</left>
+						<top>0</top>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>FF00a2e0</textcolor>
+						<visible>false</visible>
+					</control>
+					<control type="image">
+						<top>57</top>
+						<width>26</width>
+						<height>26</height>
+						<aspect>keep</aspect>
+						<texture>imdb.png</texture>
+						<visible>Control.IsVisible(3003)</visible>
+					</control>
+					<control type="label" id="3003" description="rating">
+						<left>35</left>
+						<width>100%</width>
+						<top>50</top>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>B3dddddd</textcolor>
+					</control>
+					<control type="label" id="3004" description="year/runtime">
+						<left>90</left>
+						<width>100%</width>
+						<top>50</top>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>B3dddddd</textcolor>
+						<scroll>false</scroll>
+						<visible>Control.IsVisible(3003)</visible>
+					</control>
+					<control type="label" id="3004" description="year/runtime">
+						<width>100%</width>
+						<top>50</top>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>B3dddddd</textcolor>
+						<scroll>false</scroll>
+						<visible>!Control.IsVisible(3003)</visible>
+					</control>
+					<control type="textbox" description="Plot" id="3001">
+						<visible>false</visible>
+					</control>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>
