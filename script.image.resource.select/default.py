@@ -92,6 +92,8 @@ class Gui(xbmcgui.WindowXMLDialog):
                 xbmc.executebuiltin('Skin.SetString(%s,%s)' % ((self.property + '.path'), 'resource://%s/' % path))
                 if path in MULTI:
                     xbmc.executebuiltin('Skin.SetBool(%s)' % (self.property + '.multi'))
+                else:
+                    xbmc.executebuiltin('Skin.Reset(%s)' % (self.property + '.multi'))
             xbmc.sleep(100)
             self.close()
         elif controlID == 5:
