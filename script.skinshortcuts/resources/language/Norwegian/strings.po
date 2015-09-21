@@ -125,7 +125,7 @@ msgid "Set thumbail"
 msgstr "Sett minityr"
 
 msgctxt "#32027"
-msgid "Change action"
+msgid "Custom action"
 msgstr "Egendefinert handling"
 
 msgctxt "#32028"

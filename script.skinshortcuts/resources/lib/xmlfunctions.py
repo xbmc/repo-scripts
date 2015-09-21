@@ -1,12 +1,9 @@
 # coding=utf-8
-import os, sys, datetime, unicodedata, re
+import os, sys, datetime, unicodedata
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 import xml.etree.ElementTree as xmltree
 from xml.sax.saxutils import escape as escapeXML
-import copy
-import ast
 from traceback import print_exc
-from unicodeutils import try_decode
 
 if sys.version_info < (2, 7):
     import simplejson
@@ -22,12 +19,12 @@ __masterpath__     = os.path.join( xbmc.translatePath( "special://masterprofile/
 __skin__         = xbmc.translatePath( "special://skin/" )    
 __language__     = __addon__.getLocalizedString
 
-import datafunctions, template
+import datafunctions
 DATA = datafunctions.DataFunctions()
 import hashlib, hashlist
 
 def log(txt):
-    if __addon__.getSetting( "enable_logging" ) == "true":
+    if __xbmcversion__ == "13" or __addon__.getSetting( "enable_logging" ) == "true":
         if isinstance (txt,str):
             txt = txt.decode('utf-8')
         message = u'%s: %s' % (__addonid__, txt)
@@ -39,8 +36,6 @@ class XMLFunctions():
         self.MAINBACKGROUND = {}
         self.hasSettings = False
         self.widgetCount = 1
-
-        self.skinDir = xbmc.translatePath( "special://skin" )
         
         self.checkForShorctcuts = []
         
@@ -71,7 +66,7 @@ class XMLFunctions():
                 else:
                     # Base if off of the master profile
                     dir = xbmc.translatePath( os.path.join( "special://masterprofile", dir ) ).decode( "utf-8" )
-                profilelist.append( [ dir, "StringCompare(System.ProfileName," + name.decode( "utf-8" ) + ")", name.decode( "utf-8" ) ] )
+                profilelist.append( [dir, "StringCompare(System.ProfileName," + name.decode( "utf-8" ) + ")"] )
                 
         else:
             profilelist = [["special://masterprofile", None]]
@@ -95,6 +90,16 @@ class XMLFunctions():
             log( "Failed to write menu" )
             print_exc()
             complete = False
+            
+        
+        # Clear window properties for overrides, widgets, backgrounds, properties
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-script" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-script-data" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-skin" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-skin-data" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-user" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-overrides-user-data" )
+        xbmcgui.Window( 10000 ).clearProperty( "skinshortcutsAdditionalProperties" )
         
         # Mark that we're no longer running, clear the progress dialog
         xbmcgui.Window( 10000 ).clearProperty( "skinshortcuts-isrunning" )
@@ -104,54 +109,51 @@ class XMLFunctions():
             # Menu is built, reload the skin
             xbmc.executebuiltin( "XBMC.ReloadSkin()" )
         else:
-            # Menu couldn't be built - generate a debug log
-        
-            # If we enabled debug logging
-            if weEnabledSystemDebug or weEnabledScriptDebug:
-                # Disable any logging we enabled
-                if weEnabledSystemDebug:
-                    json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":false} } ' )
-                if weEnabledScriptDebug:
-                    __addon__.setSetting( "enable_logging", "false" )
-                    
-                # Offer to upload a debug log
-                if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
-                    ret = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), __language__( 32092 ), __language__( 32093 ) )
-                    if ret:
-                        xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )
-                else:
-                    xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), __language__( 32092 ), __language__( 32094 ) )
-                    
-            else:
-                # Enable any debug logging needed                        
-                json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Settings.getSettings", "params": { "filter":{"section":"system", "category":"debug"} } }')
-                json_query = unicode(json_query, 'utf-8', errors='ignore')
-                json_response = simplejson.loads(json_query)
-                
-                enabledSystemDebug = False
-                enabledScriptDebug = False
-                if json_response.has_key('result') and json_response['result'].has_key('settings') and json_response['result']['settings'] is not None:
-                    for item in json_response['result']['settings']:
-                        if item["id"] == "debug.showloginfo":
-                            if item["value"] == False:
-                                json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":true} } ' )
-                                enabledSystemDebug = True
-                
-                if __addon__.getSetting( "enable_logging" ) != "true":
-                    __addon__.setSetting( "enable_logging", "true" )
-                    enabledScriptDebug = True
-                    
-                if enabledSystemDebug or enabledScriptDebug:
-                    # We enabled one or more of the debug options, re-run this function
-                    self.buildMenu( mainmenuID, groups, numLevels, buildMode, options, enabledSystemDebug, enabledScriptDebug )
-                else:
+            # Menu couldn't be built - if the user has script.xbmc.debug.log offer to upload a debug log
+            if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
+                # If we enabled debug logging
+                if weEnabledSystemDebug or weEnabledScriptDebug:
+                    # Disable any logging we enabled
+                    if weEnabledSystemDebug:
+                        json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":false} } ' )
+                    if weEnabledScriptDebug:
+                        __addon__.setSetting( "enable_logging", "false" )
+                        
                     # Offer to upload a debug log
-                    if xbmc.getCondVisibility( "System.HasAddon( script.xbmc.debug.log )" ):
+                    ret = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), "Unable to build menu", "Upload a debug log to xbmclogs.com?" )
+                    if ret:
+                        xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )                    
+                        
+                else:
+                    # Enable any debug logging needed                        
+                    json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Settings.getSettings", "params": { "filter":{"section":"system", "category":"debug"} } }')
+                    json_query = unicode(json_query, 'utf-8', errors='ignore')
+                    json_response = simplejson.loads(json_query)
+                    
+                    enabledSystemDebug = False
+                    enabledScriptDebug = False
+                    if json_response.has_key('result') and json_response['result'].has_key('settings') and json_response['result']['settings'] is not None:
+                        for item in json_response['result']['settings']:
+                            if item["id"] == "debug.showloginfo":
+                                if item["value"] == False:
+                                    json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":true} } ' )
+                                    enabledSystemDebug = True
+                    
+                    if __addon__.getSetting( "enable_logging" ) != "true":
+                        __addon__.setSetting( "enable_logging", "true" )
+                        enabledScriptDebug = True
+                        
+                    if enabledSystemDebug or enabledScriptDebug:
+                        # We enabled one or more of the debug options, re-run this function
+                        self.buildMenu( mainmenuID, groups, numLevels, buildMode, options, enabledSystemDebug, enabledScriptDebug )
+                    else:
+                        # Debug logging already enabled - offer to upload a debug log
                         ret = xbmcgui.Dialog().yesno( __addon__.getAddonInfo( "name" ), __language__( 32092 ), __language__( 32093 ) )
                         if ret:
-                            xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )
-                    else:
-                        xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), __language__( 32092 ), __language__( 32094 ) )
+                            xbmc.executebuiltin( "RunScript(script.xbmc.debug.log)" )                    
+                            
+            else:
+                xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), __language__( 32092 ), __language__( 32094 ) )
         
     def shouldwerun( self, profilelist ):
         try:
@@ -193,7 +195,7 @@ class XMLFunctions():
 
 
         try:
-            hashes = ast.literal_eval( xbmcvfs.File( os.path.join( __masterpath__ , xbmc.getSkinDir() + ".hash" ) ).read() )
+            hashes = eval( xbmcvfs.File( os.path.join( __masterpath__ , xbmc.getSkinDir() + ".hash" ) ).read() )
         except:
             # There is no hash list, return True
             log( "No hash list" )
@@ -242,16 +244,12 @@ class XMLFunctions():
                         else:
                             xbmc.executebuiltin( "Skin.Reset(%s)" %( hash[ 1 ][ 1 ] ) )
                 else:
-                    try:
-                        hasher = hashlib.md5()
-                        hasher.update( xbmcvfs.File( hash[0] ).read() )
-                        if hasher.hexdigest() != hash[1]:
-                            log( "Hash does not match on file " + hash[0] )
-                            log( "(" + hash[1] + " > " + hasher.hexdigest() + ")" )
-                            return True
-                    except:
-                        log( "Unable to generate hash for %s" %( hash[ 0 ] ) )
-                        log( "(%s > ?)" %( hash[ 1 ] ) )
+                    hasher = hashlib.md5()
+                    hasher.update( xbmcvfs.File( hash[0] ).read() )
+                    if hasher.hexdigest() != hash[1]:
+                        log( "Hash does not match on file " + hash[0] )
+                        log( "(" + hash[1] + " > " + hasher.hexdigest() + ")" )
+                        return True
             else:
                 if xbmcvfs.exists( hash[0] ):
                     log( "File now exists " + hash[0] )
@@ -281,10 +279,6 @@ class XMLFunctions():
         # Create a new tree and includes for the various groups
         tree = xmltree.ElementTree( xmltree.Element( "includes" ) )
         root = tree.getroot()
-        
-        # Create a Template object and pass it the root
-        Template = template.Template()
-        Template.includes = root
         
         # Get any shortcuts we're checking for
         self.checkForShortcuts = []
@@ -320,7 +314,6 @@ class XMLFunctions():
         submenuNodes = {}
         
         for profile in profilelist:
-            log( "Building menu for profile %s" %( profile[ 2 ] ) )
             # Load profile details
             profileDir = profile[0]
             profileVis = profile[1]
@@ -338,9 +331,7 @@ class XMLFunctions():
             # Clear any previous labelID's
             DATA._clear_labelID()
             
-            # Create objects to hold the items
             menuitems = []
-            templateMainMenuItems = xmltree.Element( "includes" )
             
             # If building the main menu, split the mainmenu shortcut nodes into the menuitems list
             if groups == "" or groups.split( "|" )[0] == "mainmenu":
@@ -366,38 +357,28 @@ class XMLFunctions():
             itemidmainmenu = 0
             percent = profilePercent / len( menuitems )
             
+            mainmenuItems = []
+            
             i = 0
             for item in menuitems:
                 i += 1
                 itemidmainmenu += 1
                 progress.update( ( profilePercent * profileCount) + percent * i )
+                # If this is a main menu item...
                 submenuDefaultID = None
-
                 if not isinstance( item, basestring ):
-                    # This is a main menu item (we know this because it's an element, not a string)
                     submenu = item.find( "labelID" ).text
-
-                    # Build the menu item
-                    menuitem = self.buildElement( item, "mainmenu", None, profile[1], DATA.slugify( submenu, convertInteger=True ), itemid = itemidmainmenu, options = options )
-
-                    # Add the menu item to the various includes, retaining a reference to them
-                    mainmenuItemA = copy.deepcopy( menuitem )
-                    mainmenuTree.append( mainmenuItemA )
-
+                    mainmenuItemA = self.buildElement( item, mainmenuTree, "mainmenu", None, profile[1], DATA.slugify( submenu, convertInteger=True ), itemid = itemidmainmenu, options = options )
+                    mainmenuItems.append( mainmenuItemA )
                     if buildMode == "single":
-                        mainmenuItemB = copy.deepcopy( menuitem )
-                        allmenuTree.append( mainmenuItemB )
-
-                    templateMainMenuItems.append( copy.deepcopy( menuitem ) )
-
-                    # Get submenu defaultID
+                        mainmenuItemB = self.buildElement( item, allmenuTree, "mainmenu", None, profile[1], DATA.slugify( submenu, convertInteger=True ), itemid = itemidmainmenu, options = options )
+                        mainmenuItems.append( mainmenuItemB )
                     submenuDefaultID = item.find( "defaultID" ).text
                 else:
-                    # It's an additional menu, so get its labelID
                     submenu = DATA._get_labelID( item, None )
                     
                 # Build the submenu
-                count = 0 # Used to keep track of additional submenu
+                count = 0
                 for submenuTree in submenuTrees:
                     submenuVisibilityName = submenu
                     if count == 1:
@@ -406,10 +387,9 @@ class XMLFunctions():
                         submenu = submenu[:-1] + str( count )
                         submenuVisibilityName = submenu[:-2]
                         
-                    # Get the tree's we're going to write the menu to
                     if submenu in submenuNodes:
                         justmenuTreeA = submenuNodes[ submenu ][ 0 ]
-                        justmenuTreeB = submenuNodes[ submenu ][ 1 ]
+                        justmenuTreeB = submenuNodes[ submenu ] [ 1 ]
                     else:
                         # Create these nodes
                         justmenuTreeA = xmltree.SubElement( root, "include" )
@@ -422,7 +402,6 @@ class XMLFunctions():
                         
                     itemidsubmenu = 0
                     
-                    # Get the shortcuts for the submenu
                     if count == 0:
                         submenudata = DATA._get_shortcuts( submenu, submenuDefaultID, True, profile[0] )
                     else:
@@ -473,33 +452,14 @@ class XMLFunctions():
                                 newonclick = xmltree.SubElement( mainmenuItemB, "onclick" )
                                 newonclick.text = "SetProperty(submenuVisibility," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ",10000)"
                     
-                    # Build the submenu items
+                    # Build the submenu
                     for submenuItem in submenuitems:
                         itemidsubmenu += 1
-                        # Build the item without any visibility conditions
-                        menuitem = self.buildElement( submenuItem, submenu, None, profile[1], itemid = itemidsubmenu, options = options )
-                        isSubMenuElement = xmltree.SubElement( menuitem, "property" )
-                        isSubMenuElement.set( "name", "isSubmenu" )
-                        isSubMenuElement.text = "True"
-
-                        # Add it, with appropriate visibility conditions, to the various submenu includes
-                        justmenuTreeA.append( copy.deepcopy( menuitem ) )
-
-                        menuitemCopy = copy.deepcopy( menuitem )
-                        visibilityElement = menuitemCopy.find( "visible" )
-                        visibilityElement.text = "[%s] + %s" %( visibilityElement.text, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")" )
-                        justmenuTreeB.append( menuitemCopy )
-
+                        self.buildElement( submenuItem, submenuTree, submenu, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
+                        self.buildElement( submenuItem, justmenuTreeA, submenu, None, profile[1], itemid = itemidsubmenu, options = options )
+                        self.buildElement( submenuItem, justmenuTreeB, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
                         if buildMode == "single":
-                            allmenuTree.append( copy.deepcopy( menuitemCopy ) )
-
-                        menuitemCopy = copy.deepcopy( menuitem )
-                        visibilityElement = menuitemCopy.find( "visible" )
-                        visibilityElement.text = "[%s] + %s" %( visibilityElement.text, "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")" )
-                        submenuTree.append( menuitemCopy )
-                            
-                    # Build the template for the submenu
-                    Template.parseItems( "submenu", count, justmenuTreeA, profile[ 2 ], profile[ 1 ], "StringCompare(Container(" + mainmenuID + ").ListItem.Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", item )
+                            self.buildElement( submenuItem, allmenuTree, submenu, "StringCompare(Window(10000).Property(submenuVisibility)," + DATA.slugify( submenuVisibilityName, convertInteger=True ) + ")", profile[1], itemid = itemidsubmenu, options = options )
                         
                     count += 1
 
@@ -534,14 +494,8 @@ class XMLFunctions():
                             xbmc.executebuiltin( "Skin.Reset(%s)" %( checkForShortcut[ 1 ] ) )
                     # Save this to the hashes file, so we can set it on profile changes
                     hashlist.list.append( [ "::SKINBOOL::", [ profile[ 1 ], checkForShortcut[ 1 ], checkForShortcut[ 2 ] ] ] )
-
-            # Build the template for the main menu
-            Template.parseItems( "mainmenu", 0, templateMainMenuItems, profile[ 2 ], profile[ 1 ], "", "", mainmenuID )
                     
-        # Build any 'Other' templates
-        Template.writeOthers()
-        
-        progress.update( 100, message = __language__( 32098 ) )
+        progress.update( 100 )
                 
         # Get the skins addon.xml file
         addonpath = xbmc.translatePath( os.path.join( "special://skin/", 'addon.xml').encode("utf-8") ).decode("utf-8")
@@ -552,7 +506,7 @@ class XMLFunctions():
             if extensionpoint.attrib.get( "point" ) == "xbmc.gui.skin":
                 resolutions = extensionpoint.findall( "res" )
                 for resolution in resolutions:
-                    path = xbmc.translatePath( os.path.join( self.skinDir, resolution.attrib.get( "folder" ), "script-skinshortcuts-includes.xml").encode("utf-8") ).decode("utf-8")
+                    path = xbmc.translatePath( os.path.join( "special://skin/", resolution.attrib.get( "folder" ), "script-skinshortcuts-includes.xml").encode("utf-8") ).decode("utf-8")
                     paths.append( path )
         skinVersion = addon.getroot().attrib.get( "version" )
         
@@ -576,10 +530,10 @@ class XMLFunctions():
         file.close
         
         
-    def buildElement( self, item, groupName, visibilityCondition, profileVisibility, submenuVisibility = None, itemid=-1, options=[] ):
+    def buildElement( self, item, Tree, groupName, visibilityCondition, profileVisibility, submenuVisibility = None, itemid=-1, options=[] ):
         # This function will build an element for the passed Item in
-        newelement = xmltree.Element( "item" )
-
+        # the passed Tree
+        newelement = xmltree.SubElement( Tree, "item" )
         if itemid is not -1:
             newelement.set( "id", str( itemid ) )
             
@@ -607,63 +561,11 @@ class XMLFunctions():
         defaultID.text = item.find( "defaultID" ).text
         defaultID.set( "name", "defaultID" )
         
-        # Additional properties
-        properties = eval( item.find( "additional-properties" ).text )
-        if len( properties ) != 0:
-            repr( properties )
-            for property in properties:
-                if property[0] == "node.visible":
-                    visibleProperty = xmltree.SubElement( newelement, "visible" )
-                    visibleProperty.text = try_decode( property[1] )                    
-                else:
-                    additionalproperty = xmltree.SubElement( newelement, "property" )
-                    additionalproperty.set( "name", property[0].decode( "utf-8" ) )
-                    additionalproperty.text = DATA.local( property[1] )[1]
-                        
-                    # If this is a widget or background, set a skin setting to say it's enabled
-                    if property[0] == "widget":
-                        xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-widget-" + property[1] + ")" )
-                        # And if it's the main menu, list it
-                        if groupName == "mainmenu":
-                            xbmc.executebuiltin( "Skin.SetString(skinshortcuts-widget-" + str( self.widgetCount ) + "," + property[ 1 ] + ")" )
-                            self.widgetCount += 1
-                    elif property[0] == "background":
-                        try:
-                            xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-background-" + property[1] + ")" )
-                        except UnicodeEncodeError:							
-                            xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-background-" + property[1].encode('utf-8') + ")" )
-                        
-                    # If this is the main menu, and we're cloning widgets or backgrounds...
-                    if groupName == "mainmenu":
-                        if "clonewidgets" in options:
-                            if property[0] == "widget" or property[0] == "widgetName" or property[0] == "widgetType" or property[0] == "widgetPlaylist":
-                                self.MAINWIDGET[ property[0] ] = property[1]
-                        if "clonebackgrounds" in options:
-                            if property[0] == "background" or property[0] == "backgroundName" or property[0] == "backgroundPlaylist" or property[0] == "backgroundPlaylistName":
-                                self.MAINBACKGROUND[ property[0] ] = property[1]
-
-                    # For backwards compatibility, save widgetPlaylist as widgetPath too
-                    if property[ 0 ] == "widgetPlaylist":
-                        additionalproperty = xmltree.SubElement( newelement, "property" )
-                        additionalproperty.set( "name", "widgetPath" )
-                        try:
-                            additionalproperty.text = DATA.local( property[1].decode( "utf-8" ) )[1]
-                        except:
-                            additionalproperty.text = DATA.local( property[1] )[1]
-        
         # Primary visibility
         visibility = item.find( "visibility" )
         if visibility is not None:
             xmltree.SubElement( newelement, "visible" ).text = visibility.text
-        
-        #additional onclick (group overrides)
-        onclicks = item.findall( "additional-action" )
-        for onclick in onclicks:
-            onclickelement = xmltree.SubElement( newelement, "onclick" )
-            onclickelement.text = onclick.text
-            if "condition" in onclick.attrib:
-                onclickelement.set( "condition", onclick.attrib.get( "condition" ) )
-        
+            
         # Onclick
         onclicks = item.findall( "override-action" )
         if len( onclicks ) == 0:
@@ -695,18 +597,9 @@ class XMLFunctions():
                 onclickelement.text = onclick.text
                 
             # Also add it as a path property
-            if not self.propertyExists( "path", newelement ):
-                # we only add the path property if there isn't already one in the list because it has to be unique in Kodi lists
-                pathelement = xmltree.SubElement( newelement, "property" )
-                pathelement.set( "name", "path" )
-                pathelement.text = onclickelement.text
-            
-            # Get 'list' property (the action property of an ActivateWindow shortcut)
-            if not self.propertyExists( "list", newelement ):
-                # we only add the list property if there isn't already one in the list because it has to be unique in Kodi lists
-                listElement = xmltree.SubElement( newelement, "property" )
-                listElement.set( "name", "list" )
-                listElement.text = DATA.getListProperty( onclickelement.text )
+            pathelement = xmltree.SubElement( newelement, "property" )
+            pathelement.set( "name", "path" )
+            pathelement.text = onclickelement.text
                 
             if onclick.text == "ActivateWindow(Settings)":
                 self.hasSettings = True
@@ -751,89 +644,78 @@ class XMLFunctions():
         # Group name
         group = xmltree.SubElement( newelement, "property" )
         group.set( "name", "group" )
-        group.text = try_decode( groupName )
+        try:
+            group.text = groupName.decode( "utf-8" )
+        except:
+            group.text = groupName
 
         if groupName == "mainmenu":
             self.MAINWIDGET = {}
             self.MAINBACKGROUND = {}
         
+        # Additional properties
+        properties = eval( item.find( "additional-properties" ).text )
+        if len( properties ) != 0:
+            repr( properties )
+            for property in properties:
+                if property[0] == "node.visible":
+                    visibleProperty = xmltree.SubElement( newelement, "visible" )
+                    try:
+                        visibleProperty.text = property[1].decode( "utf-8" )
+                    except:
+                        visibleProperty.text = property[1]
+                else:
+                    additionalproperty = xmltree.SubElement( newelement, "property" )
+                    additionalproperty.set( "name", property[0].decode( "utf-8" ) )
+                    try:
+                        additionalproperty.text = DATA.local( property[1].decode( "utf-8" ) )[1]
+                    except:
+                        additionalproperty.text = DATA.local( property[1] )[1]
+                        
+                    # If this is a widget or background, set a skin setting to say it's enabled
+                    if property[0] == "widget":
+                        xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-widget-" + property[1] + ")" )
+                        # And if it's the main menu, list it
+                        if groupName == "mainmenu":
+                            xbmc.executebuiltin( "Skin.SetString(skinshortcuts-widget-" + str( self.widgetCount ) + "," + property[ 1 ] + ")" )
+                            self.widgetCount += 1
+                    elif property[0] == "background":
+                        xbmc.executebuiltin( "Skin.SetBool(skinshortcuts-background-" + property[1] + ")" )
+                        
+                    # If this is the main menu, and we're cloning widgets or backgrounds...
+                    if groupName == "mainmenu":
+                        if "clonewidgets" in options:
+                            if property[0] == "widget" or property[0] == "widgetName" or property[0] == "widgetType" or property[0] == "widgetPlaylist":
+                                self.MAINWIDGET[ property[0] ] = property[1]
+                        if "clonebackgrounds" in options:
+                            if property[0] == "background" or property[0] == "backgroundName" or property[0] == "backgroundPlaylist" or property[0] == "backgroundPlaylistName":
+                                self.MAINBACKGROUND[ property[0] ] = property[1]
+                                
         # If this isn't the main menu, and we're cloning widgets or backgrounds...
         if groupName != "mainmenu":
             if "clonewidgets" in options and len( self.MAINWIDGET ) is not 0:
                 for key in self.MAINWIDGET:
                     additionalproperty = xmltree.SubElement( newelement, "property" )
                     additionalproperty.set( "name", key )
-                    additionalproperty.text = try_decode( self.MAINWIDGET[ key ] )
+                    try:
+                        additionalproperty.text = self.MAINWIDGET[ key ].decode( "utf-8" )
+                    except:
+                        additionalproperty.text = self.MAINWIDGET[ key ]
             if "clonebackgrounds" in options and len( self.MAINBACKGROUND ) is not 0:
                 for key in self.MAINBACKGROUND:
                     additionalproperty = xmltree.SubElement( newelement, "property" )
                     additionalproperty.set( "name", key )
-                    additionalproperty.text = DATA.local( self.MAINBACKGROUND[ key ] )[1]
-
-        propertyPatterns = self.getPropertyPatterns(labelID.text, groupName)
-        if len(propertyPatterns) > 0:
-            propertyReplacements = self.getPropertyReplacements(newelement)
-            for propertyName in propertyPatterns:
-                propertyPattern = propertyPatterns[propertyName][0]
-                for original, replacement in propertyReplacements:
-                    regexpPattern = re.compile(re.escape(original), re.IGNORECASE)
-                    propertyPattern = regexpPattern.sub(replacement, propertyPattern)
-    
-                additionalproperty = xmltree.SubElement(newelement, "property")
-                additionalproperty.set("name", propertyName.decode("utf-8"))
-                additionalproperty.text = propertyPattern.decode("utf-8")
+                    try:
+                        additionalproperty.text = DATA.local( self.MAINBACKGROUND[ key ].decode( "utf-8" ) )[1]
+                    except:
+                        additionalproperty.text = DATA.local( self.MAINBACKGROUND[ key ] )[1]
             
         return newelement
-
-
-    def getPropertyPatterns(self, labelID, group):
-        overrides = DATA._get_overrides_skin()
-        propertyPatterns = {}
         
-        if overrides is not None:
-            propertyPatternElements = overrides.getroot().findall("propertypattern")
-            for propertyPatternElement in propertyPatternElements:
-                propertyName = propertyPatternElement.get("property")
-                propertyGroup = propertyPatternElement.get("group")
-              
-                if not propertyName or not propertyGroup or propertyGroup != group or not propertyPatternElement.text:
-                    continue
-                  
-                propertyLabelID = propertyPatternElement.get("labelID")
-                if not propertyLabelID:
-                    if propertyName not in propertyPatterns:
-                        propertyPatterns[propertyName] = [propertyPatternElement.text, False]
-                elif propertyLabelID == labelID:
-                    if propertyName not in propertyPatterns or propertyPatterns[propertyName][1] == False:
-                        propertyPatterns[propertyName] = [propertyPatternElement.text, True]
-
-        return propertyPatterns
-    
-        
-    def getPropertyReplacements(self, element):
-        propertyReplacements = []
-        for subElement in list(element):
-            if subElement.tag == "property":
-                propertyName = subElement.get("name")
-                if propertyName and subElement.text:
-                    propertyReplacements.append(("::%s::" % propertyName, subElement.text))
-            elif subElement.text:
-                propertyReplacements.append(("::%s::" % subElement.tag, subElement.text))
-
-        return propertyReplacements
-
-
-    def propertyExists( self, propertyName, element ):
-        for item in element.findall( "property" ):
-            if propertyName in item.attrib:
-                return True
-        return False
-
-
-      
     def findIncludePosition( self, list, item ):
         try:
             return list.index( item )
         except:
             return None
+            
             

@@ -125,7 +125,7 @@ msgid "Set thumbail"
 msgstr "Ορισμός μικρογραφίας"
 
 msgctxt "#32027"
-msgid "Change action"
+msgid "Custom action"
 msgstr "Προσαρμοσμένη ενέργεια"
 
 msgctxt "#32028"

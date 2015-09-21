@@ -125,7 +125,7 @@ msgid "Set thumbail"
 msgstr "Bélyegkép beállítás"
 
 msgctxt "#32027"
-msgid "Change action"
+msgid "Custom action"
 msgstr "Egyéni parancs"
 
 msgctxt "#32028"
