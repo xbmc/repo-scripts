@@ -1,0 +1,89 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/xbmc-addons/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "General"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Cerca Pel·lícules"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Cerca Sèries de TV"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Cerca Episodis"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Cerca Vídeos Musicals"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Cerca Artistes"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Cerca Àlbums"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Cerca Cançons"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Introdueix la cerca"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Examinar àlbum"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Informació de la temporada"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Reprodueix el tràiler"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Troba l'àlbum"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Troba totes les temporades"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Troba tots els episodis"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Troba tots els àlbums"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Troba totes les cançons"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "NOVA CERCA"

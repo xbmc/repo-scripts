@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30100">
+       <setting id="movies" type="bool" label="32001" default="true"/>
+       <setting id="actors" type="bool" label="32008" default="true"/>
+       <setting id="tvshows" type="bool" label="32002" default="true"/>
+       <setting id="episodes" type="bool" label="32003" default="true"/>
+       <setting id="musicvideos" type="bool" label="32004" default="true"/>
+       <setting id="epg" type="bool" label="32009" default="false"/>
+       <setting id="artists" type="bool" label="32005" default="true"/>
+       <setting id="albums" type="bool" label="32006" default="true"/>
+       <setting id="songs" type="bool" label="32007" default="true"/>
+    </category>
+</settings>

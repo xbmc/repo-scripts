@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "常规"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "搜索电影"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "搜索剧集"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "搜索分集"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "搜索音乐电视"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "搜索艺人"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "搜索专辑"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "搜寻歌曲"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "搜索演员"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "搜索电子节目单"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "输入搜索字符串"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "浏览专辑"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "季信息"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "播放预告片"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "查找专辑"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "查找整季"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "查找所有分集"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "查找所有专辑"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "查找所有歌曲"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "电影主演"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "新搜索"

@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Turkish (http://www.transifex.com/projects/p/xbmc-addons/language/tr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Genel"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Filmlerde Ara"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "TV Programlarında Ara"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Bölümlerde Ara"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Müzik Videolarında Ara"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Sanatçılarda Ara"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Albümlerde Ara"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Şarkılarda Ara"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Aktörlerde Ara"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "EPG'de Ara"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Arama dizesi girin"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Albüme gözat"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Sezon bilgisi"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Fragmanı oynat"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Albümü bul"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Bütün sezonları bul"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Bütün bölümleri bul"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Bütün albümleri bul"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Bütün şarkıları bul"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Film yıldızları"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "YENİ ARAMA"

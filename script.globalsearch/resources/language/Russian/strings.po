@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Russian (http://www.transifex.com/projects/p/xbmc-addons/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Основные"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Поиск фильмов"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Поиск сериалов"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Поиск серий"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Поиск муз. клипов"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Поиск исполнителей"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Поиск альбомов"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Поиск песен"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Поиск актёров"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Поиск телепередач"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Строка поиска"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Просмотреть альбом"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Информация о сезоне"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Показать трейлер"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Найти альбом"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Найти все сезоны"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Найти все серии"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Найти все альбомы"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Найти все песни"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "В главных ролях"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "НОВЫЙ ПОИСК"

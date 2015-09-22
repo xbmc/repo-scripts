@@ -1,0 +1,97 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/xbmc-addons/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Általános"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Filmek keresése"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Sorozatok keresése"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Epizódok keresése"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Videóklippek keresése"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Előadók keresése"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Albumok keresése"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Számok keresése"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Színészek keresése"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Adja meg a keresendő szöveget/szövegrészt"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "ALbumok tallózása"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Évad információk"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Előzetes lejátszása"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Album találatok"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Találatok az évadok között"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Találatok az epizódok között"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Találatok az albumok között"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Találatok a számok között"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Filmekben szerepel"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "ÚJ KERESÉS"

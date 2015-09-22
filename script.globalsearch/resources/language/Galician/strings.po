@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/xbmc-addons/language/gl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Xeral"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Buscar Filmes"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Buscar Series de TV"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Buscar Episodios"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Buscar Vídeos Musicais"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Buscar Artistas"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Buscar Álbums"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Buscar Cancións"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Buscar Actores"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Buscar na Guía"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Introducir cadea de búsqueda"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Explorar álbum"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Información da Tempada"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Reproducir avance"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Buscar álbum"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Buscar todas as tempadas"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Buscar todos os episodios"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Buscar todos os álbums"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Buscar todas as cancións"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Protagonistas do filme"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "NOVA BUSCA"
