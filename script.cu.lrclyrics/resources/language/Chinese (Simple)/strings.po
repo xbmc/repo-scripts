@@ -1,0 +1,129 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "File"
+msgstr "文件"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "歌词未找到！"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "内嵌"
+
+msgctxt "#32004"
+msgid "Searching lyrics..."
+msgstr "正在搜索歌词..."
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "保存歌词到歌词目录"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "- 歌词目录"
+
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "- 保存格式"
+
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
+msgctxt "#32105"
+msgid "%A\\%T"
+msgstr "%A\\%T"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "仅使用文件名查找"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "文件名格式"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "同名歌词文件保存在子目录"
+
+msgctxt "#32112"
+msgid "- Sub folder name"
+msgstr "- 子目录名"
+
+msgctxt "#32113"
+msgid "Save lyrics to song folder"
+msgstr "保存歌词到歌曲目录"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "刮削器"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "选项"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "搜索内嵌歌词"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "搜索本地歌词文件"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "同步歌词刮削器"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "非同步歌词刮削器"
+
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "自动显示歌词"
+
+msgctxt "#32157"
+msgid "Clean song title (remove part in brackets)"
+msgstr "清理歌曲标题（移除括号内的部分）"
+
+msgctxt "#32158"
+msgid "Script is already running!"
+msgstr "脚本已经在运行!"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "显示调试信息"
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC 歌词"

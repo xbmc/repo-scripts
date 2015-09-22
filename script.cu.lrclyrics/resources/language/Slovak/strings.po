@@ -1,0 +1,97 @@
+# Kodi Media Center language file
+# Addon Name: CU LRC Lyrics
+# Addon id: script.cu.lrclyrics
+# Addon Provider: Taxigps|ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Slovak (http://www.transifex.com/projects/p/xbmc-addons/language/sk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+msgctxt "#32000"
+msgid "File"
+msgstr "Súbor"
+
+msgctxt "#32001"
+msgid "No lyrics found!"
+msgstr "Texty skladieb nenájdené!"
+
+msgctxt "#32002"
+msgid "Embedded"
+msgstr "Vložené"
+
+msgctxt "#32101"
+msgid "Save lyrics to lyrics folder"
+msgstr "Uložiť Texty skladieb"
+
+msgctxt "#32102"
+msgid "- Lyrics folder"
+msgstr "Uložiť priečinok"
+
+msgctxt "#32106"
+msgid "Use only filename for search"
+msgstr "Použiť len názov súboru pre vyhľadávanie"
+
+msgctxt "#32107"
+msgid "Filename format"
+msgstr "Formát názvu súboru"
+
+msgctxt "#32108"
+msgid "%A - %T"
+msgstr "%A - %T"
+
+msgctxt "#32109"
+msgid "%A\\%B\\%T"
+msgstr "%A\\%B\\%T"
+
+msgctxt "#32110"
+msgid "%A\\%B\\%N %T"
+msgstr "%A\\%B\\%N %T"
+
+msgctxt "#32111"
+msgid "Same name lyrics saved in sub folder"
+msgstr "Načítať texty skladieb s rovnakým menom súboru z podpriečinku"
+
+msgctxt "#32112"
+msgid "- Sub folder name"
+msgstr "- Názov podpriečinku"
+
+msgctxt "#32150"
+msgid "Scrapers"
+msgstr "Sťahovače"
+
+msgctxt "#32151"
+msgid "Options"
+msgstr "Možnosti"
+
+msgctxt "#32152"
+msgid "Search for embedded lyrics"
+msgstr "Hľadať vložené Texty skladieb"
+
+msgctxt "#32153"
+msgid "Search for local lyrics files"
+msgstr "Hľadať lokálne súbory Textov skladieb"
+
+msgctxt "#32154"
+msgid "Synchronised lyrics scrapers"
+msgstr "Sťahovače synchronizovaných textov skladieb"
+
+msgctxt "#32155"
+msgid "Regular lyrics scrapers"
+msgstr "Sťahovače bežných textov skladieb"
+
+msgctxt "#32159"
+msgid "Enable debug logging"
+msgstr "Začať ukladať informácie / debug log"
+
+msgctxt "#32199"
+msgid "CU LRC Lyrics"
+msgstr "CU LRC Lyrics"
