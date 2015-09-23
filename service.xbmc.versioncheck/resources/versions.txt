@@ -143,6 +143,15 @@
                 "major": "15",
                 "minor": "2",
                 "tag": "releasecandidate",
+                "tagversion":"2",
+                "revision": "20150920-4ed3eb6",
+                "extrainfo": "RC2",
+                "addon_support": "yes"
+            },
+            {
+                "major": "15",
+                "minor": "2",
+                "tag": "releasecandidate",
                 "tagversion":"1",
                 "revision": "20150828-59716ca",
                 "extrainfo": "RC1",
