@@ -22,10 +22,7 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 import re, os, xbmc, json
 from urlresolver import common
-#SET ERROR_LOGO# THANKS TO VOINAGE, BSTRDMKR, ELDORADO
-error_logo=os.path.join(common.addon_path,'resources','images','redx.png')
-net=Net()
-USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
+
 class AllmyvideosResolver(Plugin,UrlResolver,PluginSettings):
     implements=[UrlResolver,PluginSettings]
     name="allmyvideos"
@@ -39,7 +36,7 @@ class AllmyvideosResolver(Plugin,UrlResolver,PluginSettings):
 
     def get_media_url(self,host,media_id):
         url=self.get_url1st(host,media_id)
-        headers={'User-Agent':USER_AGENT,'Referer':url}
+        headers={'User-Agent':common.IE_USER_AGENT,'Referer':url}
         html=self.net.http_GET(url,headers=headers).content
         stream_url = self.__get_best_source(html) 
         if stream_url:
@@ -47,12 +44,12 @@ class AllmyvideosResolver(Plugin,UrlResolver,PluginSettings):
             return stream_url
         
         url=self.get_url(host,media_id)
-        headers={'User-Agent':USER_AGENT,'Referer':url}
+        headers={'User-Agent':common.IE_USER_AGENT,'Referer':url}
         html=self.net.http_GET(url,headers=headers).content
         
         data={}; r=re.findall(r'type="hidden" name="(.+?)"\s* value="?(.+?)">',html)
         for name,value in r: data[name]=value
-        html=net.http_POST(url,data,headers=headers).content
+        html=self.net.http_POST(url,data,headers=headers).content
         
         stream_url = self.__get_best_source(html) 
         if stream_url:
@@ -71,7 +68,7 @@ class AllmyvideosResolver(Plugin,UrlResolver,PluginSettings):
                 if 'label' in source and int(source['label'])>max_label:
                     stream_url = source['file']
                     max_label = int(source['label'])
-            if stream_url: return stream_url+'|User-Agent=%s'%(USER_AGENT)
+            if stream_url: return stream_url+'|User-Agent=%s'%(common.IE_USER_AGENT)
         
     def get_url(self,host,media_id):
         return 'http://allmyvideos.net/%s'%media_id 

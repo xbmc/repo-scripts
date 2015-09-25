@@ -20,17 +20,18 @@
 """
 
 import re
+import json
 from t0mm0.common.net import Net
 from urlresolver import common
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 
-class VideoMegaResolver(Plugin, UrlResolver, PluginSettings):
+class MailRuResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "videomega"
-    domains = ["videomega.tv"]
-    pattern = '//((?:www.)?videomega.tv)/(?:(?:iframe|cdn|validatehash|view)\.php)?\?(?:ref|hashkey)=([a-zA-Z0-9]+)'
+    name = "mail.ru"
+    domains = ["mail.ru"]
+    pattern = '//((?:videoapi.)?my\.mail\.ru)/(?:videos/embed/)?mail/([^/]+)/(?:video/)?(?:st|tv|archi)/([a-zA-Z0-9]+)'
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -39,28 +40,42 @@ class VideoMegaResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        headers = {
-                   'User-Agent': common.IOS_USER_AGENT,
-                   'Referer': web_url
-        }
-        
-        html = self.net.http_GET(web_url, headers=headers).content
-        match = re.search('<source\s+src="([^"]+)', html)
+        html = self.net.http_GET(web_url).content
+        match = re.search('"metadataUrl"\s*:\s*"([^"]+)', html)
         if match:
-            return match.group(1) + '|User-Agent=%s' % (common.IOS_USER_AGENT)
+            json_url = match.group(1)
+            response = self.net.http_GET(json_url)
+            html = response.content
+            if html:
+                js_data = json.loads(html)
+                headers = dict(response._response.info().items())
+                stream_url = ''
+                best_quality = 0
+                for video in js_data['videos']:
+                    if int(video['key'][:-1]) > best_quality:
+                        stream_url = video['url']
+                        best_quality = int(video['key'][:-1])
+                    
+                    if 'set-cookie' in headers:
+                        stream_url += '|Cookie=%s' % (headers['set-cookie'])
+                    
+                if stream_url:
+                    return stream_url
 
         raise UrlResolver.ResolverError('No playable video found.')
 
     def get_url(self, host, media_id):
-        return 'http://videomega.tv/cdn.php?ref=%s' % (media_id)
+        user, media_id = media_id.split('|')
+        return 'http://videoapi.my.mail.ru/videos/embed/mail/%s/st/%s.html' % (user, media_id)
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)
         if r:
-            return r.groups()
+            host, user, media_id = r.groups()
+            return host, '%s|%s' % (user, media_id)
         else:
             return False
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.search(self.pattern, url) or 'videomega' in host
+        return re.search(self.pattern, url) or 'mail.ru' in host

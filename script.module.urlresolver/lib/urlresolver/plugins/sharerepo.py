@@ -24,8 +24,6 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
 
-USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
-
 class SharerepoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "sharerepo"
@@ -39,7 +37,7 @@ class SharerepoResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         headers = {
-            'User-Agent': USER_AGENT,
+            'User-Agent': common.IE_USER_AGENT,
             'Referer': web_url
         }
 
@@ -57,7 +55,7 @@ class SharerepoResolver(Plugin, UrlResolver, PluginSettings):
         link = re.search("file\s*:\s*'([^']+)", html)
         if link:
             common.addon.log_debug('ShareRepo Link Found: %s' % link.group(1))
-            return link.group(1) + '|User-Agent=%s' % (USER_AGENT)
+            return link.group(1) + '|User-Agent=%s' % (common.IE_USER_AGENT)
         else:
             raise UrlResolver.ResolverError('Unable to resolve ShareRepo Link')
 

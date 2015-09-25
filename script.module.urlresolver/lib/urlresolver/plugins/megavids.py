@@ -42,7 +42,7 @@ class MegaVidsResolver(Plugin, UrlResolver, PluginSettings):
         for name, value in r:
             data[name] = value
             
-        html = net.http_POST(url, data).content
+        html = self.net.http_POST(url, data).content
         
         r = re.search("file\s*:\s*'(.+?)'", html)
         if r:

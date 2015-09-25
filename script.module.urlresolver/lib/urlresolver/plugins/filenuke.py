@@ -24,8 +24,6 @@ import re
 import urllib2
 from urlresolver import common
 
-USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
-
 class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "filenuke"
@@ -39,29 +37,22 @@ class FilenukeResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         headers = {
-            'User-Agent': USER_AGENT,
-            'Referer': web_url
+                   'User-Agent': common.IE_USER_AGENT
         }
-        # Otherwise just use the original url to get the content. For sharesix
-        html = self.net.http_GET(web_url).content
-        
-        data = {
-                "method_free": "Free",
-                "op": "download1",
-                "referer": web_url,
-                "usr_login": ""
-                }
-        r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
-        for name, value in r:
-            data[name] = value
 
-        html = self.net.http_POST(web_url, data, headers=headers).content
+        html = self.net.http_GET(web_url, headers=headers).content
+        r = re.search('<a[^>]*id="go-next"[^>*]href="([^"]+)', html)
+        if r:
+            next_url = 'http://' + host + r.group(1)
+            print next_url
+            html = self.net.http_GET(next_url, headers=headers).content
+        
         if 'file you were looking for could not be found' in html:
             raise UrlResolver.ResolverError('File Not Found or removed')
         
         r = re.search("var\s+lnk\d+\s*=\s*'(.*?)'", html)
         if r:
-            stream_url = r.group(1) + '|User-Agent=%s' % (USER_AGENT)
+            stream_url = r.group(1) + '|User-Agent=%s' % (common.IE_USER_AGENT)
             return stream_url
         else:
             raise UrlResolver.ResolverError('Unable to locate link')

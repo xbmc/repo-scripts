@@ -106,11 +106,11 @@ class PremiumizeMeResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     #PluginSettings methods
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
-        xml += '<setting id="PremiumizeMeResolver_login" '
+        xml += '<setting id="%s_login" ' % (self.__class__.__name__)
         xml += 'type="bool" label="login" default="false"/>\n'
-        xml += '<setting id="PremiumizeMeResolver_username" enable="eq(-1,true)" '
+        xml += '<setting id="%s_username" enable="eq(-1,true)" ' % (self.__class__.__name__)
         xml += 'type="text" label="Customer ID" default=""/>\n'
-        xml += '<setting id="PremiumizeMeResolver_password" enable="eq(-2,true)" '
+        xml += '<setting id="%s_password" enable="eq(-2,true)" ' % (self.__class__.__name__)
         xml += 'type="text" label="PIN" option="hidden" default=""/>\n'
         return xml
 

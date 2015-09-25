@@ -95,7 +95,7 @@ class VideobbResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
-        xml += '<setting label="Highest Quality" id="VideobbResolver_q" '
+        xml += '<setting label="Highest Quality" id="%s_q" ' % (self.__class__.__name__)
         xml += 'type="enum" values="240p|480p|Maximum" default="2" />\n'
         return xml
 

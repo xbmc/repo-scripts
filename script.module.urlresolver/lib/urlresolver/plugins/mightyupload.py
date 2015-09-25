@@ -24,8 +24,6 @@ from urlresolver import common
 from lib import jsunpack
 import re
 
-USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:36.0) Gecko/20100101 Firefox/36.0'
-
 class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "mightyupload"
@@ -65,7 +63,7 @@ class MightyuploadResolver(Plugin, UrlResolver, PluginSettings):
             stream_url = r.group(1)
 
         if stream_url:
-            return stream_url + '|User-Agent=%s' % (USER_AGENT)
+            return stream_url + '|User-Agent=%s' % (common.IE_USER_AGENT)
         else:
             raise UrlResolver.ResolverError('Unable to resolve link')
 

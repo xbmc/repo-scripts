@@ -30,7 +30,6 @@ class ExashareResolver(Plugin,UrlResolver,PluginSettings):
     domains      = [ "exashare.com" ]
     profile_path = common.profile_path    
     cookie_file  = os.path.join(profile_path,'%s.cookies'%name)
-    USER_AGENT   = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
     
     def __init__(self):
         p=self.get_setting('priority') or 100
@@ -40,7 +39,7 @@ class ExashareResolver(Plugin,UrlResolver,PluginSettings):
     #UrlResolver methods
     def get_media_url(self, host, media_id):
         base_url = 'http://www.' + host + '.com/' + media_id
-        headers = {'User-Agent': self.USER_AGENT, 'Referer': 'http://www.' + host + '.com/'}
+        headers = {'User-Agent': common.IE_USER_AGENT, 'Referer': 'http://www.' + host + '.com/'}
         try: html = self.net.http_GET(base_url).content
         except: html = self.net.http_GET(base_url, headers=headers).content
         if re.search("""File Not Found""", html):
@@ -105,7 +104,7 @@ class ExashareResolver(Plugin,UrlResolver,PluginSettings):
                 common.addon.log('logging in exashare')
                 url='http://www.exashare.com/'
                 data={'login':self.get_setting('username'),'password':self.get_setting('password'),'op':'login','redirect':'/login.html'}
-                headers={'User-Agent':self.USER_AGENT,'Referer':url}
+                headers={'User-Agent':common.IE_USER_AGENT,'Referer':url}
                 try: source=self.net.http_POST(url,data).content
                 except: source=self.net.http_POST(url,data,headers=headers).content
                 if re.search('Your username is for logging in and cannot be changed',source):

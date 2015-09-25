@@ -25,8 +25,6 @@ from urlresolver import common
 from lib import jsunpack
 from lib import captcha_lib
 
-USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:36.0) Gecko/20100101 Firefox/36.0'
-
 class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "180upload"
@@ -46,7 +44,7 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
 
     def __get_link(self, url):
         headers = {
-                   'User-Agent': USER_AGENT
+                   'User-Agent': common.IE_USER_AGENT
                    }
         common.addon.log_debug('180upload: get_link: %s' % (url))
         html = self.net.http_GET(url, headers).content
@@ -91,7 +89,7 @@ class OneeightyuploadResolver(Plugin, UrlResolver, PluginSettings):
                         stream_url = link.group(1)
         
         if stream_url:
-            return stream_url + '|User-Agent=%s' % (USER_AGENT)
+            return stream_url + '|User-Agent=%s&Referer=%s' % (common.IE_USER_AGENT, url)
         else:
             raise UrlResolver.ResolverError('Unable to resolve link')
 

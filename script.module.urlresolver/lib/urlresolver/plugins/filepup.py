@@ -20,8 +20,17 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import urllib2, re, os
+import re
+import urllib2
+import urllib
 from urlresolver import common
+
+class NoRedirection(urllib2.HTTPErrorProcessor):
+    def http_response(self, request, response):
+        return response
+
+    https_response = http_response
+
 
 class FilePupResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -36,16 +45,24 @@ class FilePupResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        resp = self.net.http_GET(web_url)
-        html = resp.content
-        r = re.search('<source\s+src\s*=\s*"([^"]+)', html)
-        if r:
-            return r.group(1)
+        headers = {
+                   'User-Agent': common.IE_USER_AGENT
+        }
+        html = self.net.http_GET(web_url, headers=headers).content
+        match = re.search("document.location='([^']+).*?DOWNLOAD AS A FREE USER", html, re.I)
+        if match:
+            data = urllib.urlencode({'task': 'download'})
+            req = urllib2.Request(match.group(1))
+            req.add_header('User-Agent', common.IE_USER_AGENT)
+            opener = urllib2.build_opener(NoRedirection)
+            urllib2.install_opener(opener)
+            res = urllib2.urlopen(req, data=data)
+            return res.info().getheader('location') + '|Referer=%s' % (web_url)
         else:
-            raise UrlResolver.ResolverError('Unable to resolve FilePup link')
+            raise UrlResolver.ResolverError('Unable to location download link')
 
     def get_url(self, host, media_id):
-        return 'http://filepup.net/play/%s' % (media_id)
+        return 'http://www.filepup.net/files/%s' % (media_id)
 
     def get_host_and_id(self, url):
         r = re.search(self.pattern, url)

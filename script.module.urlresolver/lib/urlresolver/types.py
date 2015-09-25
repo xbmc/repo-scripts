@@ -166,7 +166,7 @@ class HostedMediaFile:
                         common.addon.log_debug(traceback.format_exc())
                         return UrlResolver.unresolvable(code=0, msg=e)
                     except urllib2.HTTPError as e:
-                        common.addon.log_error('HTTP Error: %s - %s - %s - %s' % (e.code, resolver.name, self._url))
+                        common.addon.log_error('HTTP Error: %s - %s - %s' % (e.code, resolver.name, self._url))
                         common.addon.log_debug(traceback.format_exc())
                         return UrlResolver.unresolvable(code=3, msg=e)
                     except Exception as e:
@@ -226,7 +226,7 @@ class HostedMediaFile:
         try: http_code = urllib2.urlopen(request, timeout=15).getcode()
         except urllib2.URLError as e:
             # treat an unhandled url type as success
-            if 'unknown url type' in str(e.reason).lower():
+            if hasattr(e, 'reason') and 'unknown url type' in str(e.reason).lower():
                 return True
             else:
                 if isinstance(e, urllib2.HTTPError):

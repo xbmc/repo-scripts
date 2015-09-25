@@ -25,8 +25,6 @@ from urlresolver.plugnplay import Plugin
 from urlresolver import common
 from lib import captcha_lib
 
-USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
-
 class VidplayResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vidplay"
@@ -41,7 +39,7 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
         embed_url = 'http://vidplay.net/vidembed-%s' % (media_id)
         response = urllib2.urlopen(embed_url)
         if response.getcode() == 200 and response.geturl() != embed_url and response.geturl()[-3:].lower() in ['mp4', 'avi', 'mkv']:
-            return response.geturl() + '|User-Agent=%s' % (USER_AGENT)
+            return response.geturl() + '|User-Agent=%s' % (common.IE_USER_AGENT)
 
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
@@ -71,7 +69,7 @@ class VidplayResolver(Plugin, UrlResolver, PluginSettings):
                 raise UrlResolver.ResolverError('Unable to resolve VidPlay Link')
 
         if stream_url:
-            return stream_url + '|User-Agent=%s' % (USER_AGENT)
+            return stream_url + '|User-Agent=%s' % (common.IE_USER_AGENT)
         else:
             raise UrlResolver.ResolverError('Unable to resolve link')
 

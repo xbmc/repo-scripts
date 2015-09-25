@@ -31,6 +31,7 @@ class PromptfileResolver(Plugin, UrlResolver, PluginSettings):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
+        self.pattern = '//((?:www.)?promptfile.com)/(?:l|e)/([0-9A-Za-z\-]+)'
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
@@ -47,10 +48,10 @@ class PromptfileResolver(Plugin, UrlResolver, PluginSettings):
         return stream_url
 
     def get_url(self, host, media_id):
-        return 'http://www.promptfile.com/%s' % (media_id)
+        return 'http://www.promptfile.com/e/%s' % (media_id)
 
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/(.+)', url)
+        r = re.search(self.pattern, url)
         if r:
             return r.groups()
         else:
@@ -58,6 +59,4 @@ class PromptfileResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?promptfile.com/l/' +
-                         '[0-9A-Za-z\-]+', url) or
-                         'promptfile' in host)
+        return re.search(self.pattern, url) or 'promptfile' in host

@@ -33,6 +33,7 @@ class MovshareResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "movshare"
     domains = ["movshare.net"]
+    pattern = '//((?:www\.|embed\.)?movshare\.net)/(?:mobile/video\.php\?id=|video/|embed\.php\?v=)([0-9a-z]+)'
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -69,7 +70,7 @@ class MovshareResolver(Plugin, UrlResolver, PluginSettings):
         return 'http://www.movshare.net/video/%s' % media_id
 
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/(?:video/|embed\.php\?v=)([0-9a-z]+)', url)
+        r = re.search(self.pattern, url)
         if r:
             return r.groups()
         else:
@@ -77,5 +78,4 @@ class MovshareResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match('http://(?:www|embed)\.?movshare.net/(?:video|embed)',
-                        url) or 'movshare' in host
+        return re.search(self.pattern, url) or 'movshare' in host

@@ -20,16 +20,15 @@ from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, urllib
+import re
 from urlresolver import common
 from lib import jsunpack
 
-MAX_TRIES=3
-
-class TheVideoResolver(Plugin, UrlResolver, PluginSettings):
+class VidAgResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "thevideo"
-    domains = ["thevideo.me"]
+    name = "vid.ag"
+    domains = ["vid.ag"]
+    pattern = '//((?:www\.)?vid\.ag)/(?:embed-)?([0-9A-Za-z]+)'
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -39,22 +38,23 @@ class TheVideoResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
-        r = re.findall(r"'label'\s*:\s*'([^']+)p'\s*,\s*'file'\s*:\s*'([^']+)", html)
-        if not r:
-            raise UrlResolver.ResolverError('Unable to locate link')
-        else:
-            max_quality = 0
-            for quality, stream_url in r:
-                if int(quality) >= max_quality:
-                    best_stream_url = stream_url
-                    max_quality = int(quality)
-            return best_stream_url
+        for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
+            js_data = jsunpack.unpack(match.group(1))
+            r = re.search('file\s*:\s*"([^"]+)', js_data)
+            if r:
+                return r.group(1)
+        
+        r = re.search('file\s*:\s*"([^"]+)', html)
+        if r:
+            return r.group(1)
+
+        raise UrlResolver.ResolverError('File Not Found or removed')
 
     def get_url(self, host, media_id):
         return 'http://%s/embed-%s.html' % (host, media_id)
 
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/(?:embed-)?([0-9a-zA-Z/]+)', url)
+        r = re.search(self.pattern, url)
         if r:
             return r.groups()
         else:
@@ -62,6 +62,4 @@ class TheVideoResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www\.|embed-)?thevideo.me/' +
-                         '[0-9A-Za-z]+', url) or
-                         'thevideo' in host)
+        return (re.search(self.pattern, url) or 'vid.ag' in host)

@@ -29,48 +29,39 @@ from lib import jsunpack
 class MovDivxResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "movdivx"
-    domains = [ "movdivx.com" ]
+    domains = ["movdivx.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
         #e.g. http://movdivx.com/trrrw4r6bjqu/American_Dad__s_1_e_3_p1-1.flv.html
-        self.pattern = 'http://(movdivx.com)/(.+?).html'
+        self.pattern = 'http://(?:www.)?(movdivx.com)/(.+?).html'
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
 
-        r = 'name="op" value="(.+?)">.+?'
-        r += 'name="usr_login" value="(.+?)?">.+?'
-        r += 'name="id" value="(.+?)".+?'
-        r += 'name="fname" value="(.+?)".+?'
-
-        r = re.search(r, html, re.DOTALL)
-        op, usr_login, id, fname = r.groups()
-        data = {'op': op}
-        data['usr_login'] = usr_login
-        data['id'] = id
-        data['fname'] = fname
-        data['referer'] = web_url
-        data['method_free'] = 'Continue to Stream'
-
+        data = {}
+        for match in re.finditer('type="hidden"\s*name="([^"]+)"\s*value="([^"]+)', html):
+            key, value = match.groups()
+            data[key] = value
+        data['method_free'] = 'Continue to Stream >>'
+        
         html = self.net.http_POST(web_url, data).content
 
         # get url from packed javascript
-        sPattern = '<script type=(?:"|\')text/javascript(?:"|\')>'
-        sPattern += '(eval\(function\(p,a,c,k,e,d\).*?)</script>'
-        
-        matches = re.findall(sPattern, html, re.DOTALL + re.IGNORECASE)
-        if matches:
-            sJavascript = matches[-1]
-            sUnpacked = jsunpack.unpack(sJavascript)
-            sUnpacked = sUnpacked.replace('\\', '')
-            sPattern = "\('file','([^']+)"
-            r = re.search(sPattern, sUnpacked)
-            if r:
-                return r.group(1)
+        sPattern = '(eval\(function\(p,a,c,k,e,d\).*?)</script>'
+        for match in re.finditer(sPattern, html, re.DOTALL | re.IGNORECASE):
+            fragment = match.group(1)
+            js_data = jsunpack.unpack(fragment)
+            match = re.search('name="src"\s*value="([^"]+)', js_data)
+            if match:
+                return match.group(1)
+            else:
+                match = re.search('file\s*:\s*"([^"]+)', js_data)
+                if match:
+                    return match.group(1)
 
         raise UrlResolver.ResolverError('failed to parse link')
 
@@ -87,4 +78,4 @@ class MovDivxResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match(self.pattern, url) or self.name in host
+        return re.search(self.pattern, url) or self.name in host

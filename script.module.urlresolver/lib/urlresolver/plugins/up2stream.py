@@ -1,6 +1,6 @@
 """
-mrfile urlresolver plugin
-Copyright (C) 2014 Lynx187
+up2stream urlresolver plugin
+Copyright (C) 2015 tknorris
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,11 +22,19 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
 import re
+import urllib2
 
-class MrFileResolver(Plugin, UrlResolver, PluginSettings):
+class NoRedirection(urllib2.HTTPErrorProcessor):
+    def http_response(self, request, response):
+        return response
+
+    https_response = http_response
+
+class Up2StreamResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "mrfile"
-    domains = ["mrfile.me"]
+    name = "up2stream"
+    domains = ["www.up2stream.com"]
+    pattern = '//((?:www\.)?up2stream.com)/view.php\?ref=([0-9]+)'
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -36,28 +44,31 @@ class MrFileResolver(Plugin, UrlResolver, PluginSettings):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         headers = {
-                   'User-Agent': common.IE_USER_AGENT}
+                   'User-Agent': common.IE_USER_AGENT
+        }
+        opener = urllib2.build_opener(NoRedirection)
+        urllib2.install_opener(opener)
         html = self.net.http_GET(web_url, headers=headers).content
-        if re.search('File was deleted', html):
-            raise UrlResolver.ResolverError('File Not Found or removed')
-        r = re.search("file: '([^']+)'", html)
-        if not r:
-            raise UrlResolver.ResolverError('Unable to resolve mrfile link. Filelink not found.')
-        return r.group(1) + '|User-Agent=%s' % (common.IE_USER_AGENT)
+        match = re.search('<iframe[^>]*src="([^"]+)', html, re.I)
+        if match:
+            ad_url = 'http://up2stream.com' + match.group(1)
+            _html = self.net.http_GET(ad_url, headers=headers).content
+        
+        match = re.search('<source[^>]*src="([^"]+)', html, re.I)
+        if match:
+            return match.group(1) + '|User-Agent=%s&Referer=%s' % (common.IE_USER_AGENT, web_url)
+        
+        raise UrlResolver.ResolverError("File Not Found or removed")
 
     def get_url(self, host, media_id):
-            return 'http://www.mrfile.me/embed-%s.html' % (media_id)
-
+        return 'http://up2stream.com/view.php?ref=%s' % media_id
+    
     def get_host_and_id(self, url):
-        r = re.search('http://(?:www.)?(.+?)/embed-([\w]+)-', url)
+        r = re.search(self.pattern, url)
         if r:
             return r.groups()
         else:
-            r = re.search('//(.+?)/([\w]+)', url)
-            if r:
-                return r.groups()
-            else:
-                return False
+            return False
 
     def valid_url(self, url, host):
-        return re.match('http://(www.)?mrfile.me/[0-9A-Za-z]+', url) or 'mrfile' in host
+        return re.search(self.pattern, url) or 'up2stream' in host

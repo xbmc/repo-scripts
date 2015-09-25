@@ -32,7 +32,6 @@ class SpeedVideoResolver(Plugin, UrlResolver, PluginSettings):
     name = "speedvideo"
     domains = ["speedvideo.net"]
     domain = "speedvideo.net"
-    USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -56,7 +55,7 @@ class SpeedVideoResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         base_url = self.get_url(host, media_id)
-        headers = {'User-Agent':self.USER_AGENT, 'Referer':'http://%s/' % self.domain}
+        headers = {'User-Agent':common.IE_USER_AGENT, 'Referer':'http://%s/' % self.domain}
         html = self.net.http_GET(base_url, headers=headers).content
         linkfile = re.compile('var linkfile\s*=\s*"([A-Za-z0-9]+)"').findall(html)[0]
         common.addon.log_debug(linkfile)

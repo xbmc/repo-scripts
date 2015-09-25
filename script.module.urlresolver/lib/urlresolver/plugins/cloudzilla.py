@@ -1,6 +1,6 @@
-'''
-thevideo urlresolver plugin
-Copyright (C) 2014 Eldorado
+"""
+TheFile.me urlresolver plugin
+Copyright (C) 2013 voinage
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,22 +14,20 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 
 from t0mm0.common.net import Net
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
-import re, urllib
 from urlresolver import common
-from lib import jsunpack
+import re
 
-MAX_TRIES=3
-
-class TheVideoResolver(Plugin, UrlResolver, PluginSettings):
+class CloudZillaResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
-    name = "thevideo"
-    domains = ["thevideo.me"]
+    name = "cloudzilla"
+    domains = ['cloudzilla.to', 'neodrive.co']
+    pattern = '//(?:www.)?(cloudzilla.to|neodrive.co)/(?:share/file|embed)/([A-Za-z0-9]+)'
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -38,23 +36,19 @@ class TheVideoResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
+        print web_url
         html = self.net.http_GET(web_url).content
-        r = re.findall(r"'label'\s*:\s*'([^']+)p'\s*,\s*'file'\s*:\s*'([^']+)", html)
-        if not r:
-            raise UrlResolver.ResolverError('Unable to locate link')
+        match = re.search('vurl\s*=\s*"([^"]+)', html)
+        if match:
+            return match.group(1)
         else:
-            max_quality = 0
-            for quality, stream_url in r:
-                if int(quality) >= max_quality:
-                    best_stream_url = stream_url
-                    max_quality = int(quality)
-            return best_stream_url
-
+            raise UrlResolver.ResolverError('Unable to resolve cloudtime link. Filelink not found.')
+        
     def get_url(self, host, media_id):
-        return 'http://%s/embed-%s.html' % (host, media_id)
+            return 'http://%s/embed/%s' % (host, media_id)
 
     def get_host_and_id(self, url):
-        r = re.search('//(.+?)/(?:embed-)?([0-9a-zA-Z/]+)', url)
+        r = re.search(self.pattern, url)
         if r:
             return r.groups()
         else:
@@ -62,6 +56,4 @@ class TheVideoResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www\.|embed-)?thevideo.me/' +
-                         '[0-9A-Za-z]+', url) or
-                         'thevideo' in host)
+        return re.search(self.pattern, url) or 'cloudzilla' in host or 'neodrive' in host

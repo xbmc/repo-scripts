@@ -22,9 +22,7 @@ from urlresolver.plugnplay import Plugin
 from urlresolver.plugnplay.interfaces import UrlResolver
 from urlresolver.plugnplay.interfaces import PluginSettings
 import re
-import urllib2
-import xbmcgui
-
+from lib import jsunpack
 
 class FlashxResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
@@ -35,53 +33,30 @@ class FlashxResolver(Plugin, UrlResolver, PluginSettings):
         p = self.get_setting('priority') or 100
         self.priority = int(p)
         self.net = Net()
-        self.pattern = 'http://((?:www.|play.)?flashx.tv)/(?:embed-)?([0-9a-zA-Z/-]+)(?:.html)?'
+        self.pattern = '//((?:www.|play.)?flashx.tv)/(?:embed-|dl\?)?([0-9a-zA-Z/-]+)'
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
         headers = {'Referer': web_url}
-        smil = ''
-        html = self.net.http_GET(web_url, headers=headers).content
-        swfurl = 'http://static.flashx.tv/player6/jwplayer.flash.swf'
-        r = re.search('"(http://.+?\.smil)"', html)
-        if r: smil = r.group(1)
-        else:
-            r = re.search('\|smil\|(.+?)\|sources\|', html)
-            if r: smil = 'http://flashx.tv/' + r.group(1) + '.smil'
-        if smil:
-            html = self.net.http_GET(smil, headers=headers).content
-            r = re.search('<meta base="(rtmp://.*?flashx\.tv:[0-9]+/)(.+/)".*/>', html, re.DOTALL)
-            if r:
-                rtmp = r.group(1)
-                app = r.group(2)
-                sources = re.compile('<video src="(.+?)" height="(.+?)" system-bitrate="(.+?)" width="(.+?)".*/>').findall(html)
-                vid_list = []
-                url_list = []
-                best = 0
-                quality = 0
-                if sources:
-                    if len(sources) > 1:
-                        for index, video in enumerate(sources):
-                            if int(video[1]) > quality: best = index
-                            quality = int(video[1])
-                            vid_list.extend(['FlashX - %sp' % quality])
-                            url_list.extend([video[0]])
-                if len(sources) == 1: vid_sel = sources[0][0]
-                else:
-                    if self.get_setting('auto_pick') == 'true': vid_sel = url_list[best]
-                    else:
-                        result = xbmcgui.Dialog().select('Choose a link', vid_list)
-                        if result != -1: vid_sel = url_list[result]
-                        else:
-                            raise UrlResolver.ResolverError('No link selected') 
-
-                if vid_sel: return '%s app=%s playpath=%s swfUrl=%s pageUrl=%s swfVfy=true' % (rtmp, app, vid_sel, swfurl, web_url)
+        stream_url = self.__get_link(web_url, headers)
+        if stream_url is None:
+            headers['User-Agent'] = common.IOS_USER_AGENT
+            stream_url = self.__get_link(web_url, headers)
+        
+        if stream_url is not None:
+            return stream_url + '|User-Agent=%s' % (common.IE_USER_AGENT)
 
         raise UrlResolver.ResolverError('File not found')
 
+    def __get_link(self, web_url, headers):
+        html = self.net.http_GET(web_url, headers=headers).content
+        for match in re.finditer('(eval\(function\(p,a,c,k,e,d\).*?)</script>', html, re.DOTALL):
+            js = jsunpack.unpack(match.group(1))
+            match2 = re.search('file\s*:\s*"([^"]+(?:video|mobile)[^"]+)', js)
+            if match2:
+                return match2.group(1)
+        
     def get_url(self, host, media_id):
-        urlhash = re.search('([a-zA-Z0-9]+)(?:-+[0-9]+[xX]+[0-9]+)', media_id)
-        if urlhash: media_id = urlhash.group(1)
         return 'http://flashx.tv/embed-%s.html' % media_id
 
     def get_host_and_id(self, url):
@@ -91,7 +66,7 @@ class FlashxResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return re.match(self.pattern, url) or self.name in host
+        return re.search(self.pattern, url) or self.name in host
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)

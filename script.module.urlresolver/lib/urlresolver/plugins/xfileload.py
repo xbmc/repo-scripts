@@ -24,8 +24,6 @@ import re
 from urlresolver import common
 from lib import captcha_lib
 
-USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
-
 class XFileLoadResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "xfileload"
@@ -51,7 +49,7 @@ class XFileLoadResolver(Plugin, UrlResolver, PluginSettings):
             # find the href on the same line as the download button image
             r = re.search('href="([^"]+).*?downdown\.png', html)
             if r:
-                return  r.group(1) + '|User-Agent=%s' % (USER_AGENT)
+                return  r.group(1) + '|User-Agent=%s' % (common.IE_USER_AGENT)
                         
         raise UrlResolver.ResolverError('Unable to locate link')
 

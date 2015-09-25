@@ -122,7 +122,13 @@ def resolve_var(HTML, key): #this should probably be located elsewhere
         if tmp2:
             tmp2 = tmp2.group(1)
         else:
-            tmp2 = "" #oops, should not happen in the variable is valid
+            key = key.split("\\.")
+            if len(key) == 2:
+                tmp2 = re.compile(r'[^\w\.]' + key[0] + '\s*=\s*\{.*[^\w\.]' + key[1] + '\s*\:\s*[\"\'](.*?)[\"\']').search(tmp1) #for 'vars = { key: "value" }', cloudy
+            if tmp2:
+                tmp2 = tmp2.group(1)
+            else:
+                tmp2 = "" #oops, should not happen in the variable is valid
     return tmp2
 
 if __name__ == "__main__":

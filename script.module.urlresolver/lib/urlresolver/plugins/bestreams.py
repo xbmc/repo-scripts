@@ -42,32 +42,26 @@ class BestreamsResolver(Plugin, UrlResolver, PluginSettings):
         }
 
         data = {}
-        r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
-        for name, value in r: data[name] = value
+        for r in re.finditer(r'type="hidden"\s*name="([^"]+)"\s*value="([^"]+)', html):
+            data[r.group(1)] = r.group(2)
         data.update({'referer': web_url})
         data.update({'imhuman': 'Proceed to video'})
 
         # parse cookies from file as they are only useful for this interaction
-        cookies = {}
+        cookies = ['lang=1']
         for match in re.finditer("\$\.cookie\('([^']+)',\s*'([^']+)", html):
             key, value = match.groups()
-            cookies[key] = value
-        headers['Cookie'] = urllib.urlencode(cookies)
+            cookies.append('%s=%s' % (key, urllib.quote_plus(value)))
+        headers['Cookie'] = '; '.join(cookies)
 
         xbmc.sleep(2000)  # POST seems to fail is submitted too soon after GET. Page Timeout?
         #sleep(2)
 
         html = self.net.http_POST(web_url, data, headers=headers).content
-        ##print html #<< has character errors
-        #htmlA=html.splitlines() #<< to print as much as possible, skipping lines with unhandable characters.
-        #for htmlAa in htmlA:
-        #	try: print htmlAa
-        #	except: pass
-
-        #sleep(6)
         r = re.search('file\s*:\s*"(http://.+?)"', html)  # Incase they start using this again.
         if r:
             return r.group(1)
+
         r = re.search('streamer\s*:\s*"(\D+://.+?)"', html)
         r2 = re.search('file\s*:\s*"([^"]+)', html)
         if r and r2:

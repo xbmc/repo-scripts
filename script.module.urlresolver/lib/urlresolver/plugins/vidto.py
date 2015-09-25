@@ -24,8 +24,6 @@ from urlresolver import common
 import xbmc
 from lib import jsunpack
 
-USER_AGENT='Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:30.0) Gecko/20100101 Firefox/30.0'
-
 class VidtoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "vidto"
@@ -40,7 +38,7 @@ class VidtoResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
         headers = {
             'Referer': web_url,
-            'User-Agent': USER_AGENT
+            'User-Agent': common.IE_USER_AGENT
         }
 
         html = self.net.http_GET(web_url).content

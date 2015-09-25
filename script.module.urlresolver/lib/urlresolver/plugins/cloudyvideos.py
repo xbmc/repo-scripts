@@ -39,26 +39,31 @@ class CloudyVideosResolver(Plugin, UrlResolver, PluginSettings):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
         form_values = {}
+        stream_url = ''
         for i in re.finditer('<input type="hidden" name="([^"]+)" value="([^"]+)', html):
             form_values[i.group(1)] = i.group(2)
 
         xbmc.sleep(2000)
-        html = self.net.http_POST(web_url, form_data=form_values).content
+        header = {'Referer': web_url}
+        html = self.net.http_POST(web_url, form_data=form_values, headers=header).content
         
-        r = re.search("file: '([^']+)'", html)
+        r = re.search("file\s*:\s*'([^']+)'", html)
         if r:
-            return r.group(1)
+            stream_url = r.group(1)
 
         for match in re.finditer('(eval\(function.*?)</script>', html, re.DOTALL):
             js_data = jsunpack.unpack(match.group(1))
             match2 = re.search('<param\s+name="src"\s*value="([^"]+)', js_data)
             if match2:
-                return match2.group(1)
+                stream_url = match2.group(1)
             else:
                 match2 = re.search('<embed.*?type="video.*?src="([^"]+)', js_data)
                 if match2:
-                    return match2.group(1)
+                    stream_url = match2.group(1)
             
+        if stream_url:
+            return stream_url + '|User-Agent=%s&Referer=%s' % (common.IE_USER_AGENT, web_url)
+
         raise UrlResolver.ResolverError('Unable to resolve cloudyvideos link. Filelink not found.')
 
     def get_url(self, host, media_id):

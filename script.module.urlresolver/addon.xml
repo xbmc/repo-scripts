@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.urlresolver" 
      name="URLResolver" 
-     version="2.9.0" 
+     version="2.10.0" 
      provider-name="Eldorado">
   <requires>
     <import addon="xbmc.python" version="2.1.0" />
     <import addon="script.module.t0mm0.common" version="2.0.0"/>
     <import addon="script.module.simplejson" version="3.3.0"/>
-    <import addon="plugin.video.youtube" version="4.4.7"/>
   </requires>
   <extension point="xbmc.python.module" library="lib" />
   <extension point="xbmc.addon.metadata">

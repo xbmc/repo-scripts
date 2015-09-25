@@ -80,7 +80,7 @@ class CloudyResolver(Plugin, UrlResolver, PluginSettings):
         #grab stream details
         html = self.net.http_GET(web_url).content
         html = unwise.unwise_process(html)
-        filekey = unwise.resolve_var(html, "flashvars.filekey")
+        filekey = unwise.resolve_var(html, "vars.key")
 
         error_url = None
         stream_url = None

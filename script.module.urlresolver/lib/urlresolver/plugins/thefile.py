@@ -22,12 +22,11 @@ from urlresolver.plugnplay.interfaces import PluginSettings
 from urlresolver.plugnplay import Plugin
 from urlresolver import common
 import re
-from lib import jsunpack
 
 class TheFileResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "thefile"
-    domains = [ "thefile.me" ]
+    domains = ["thefile.me"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -36,45 +35,15 @@ class TheFileResolver(Plugin, UrlResolver, PluginSettings):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        headers = {
-            'Referer': web_url
-        }
         html = self.net.http_GET(web_url).content
-        
-        # check if we have a p,ac,k,e,d source
-        r = re.search('<script\stype=(?:"|\')text/javascript(?:"|\')>(eval\(function\(p,a,c,k,e,[dr]\)(?!.+player_ads.+).+?)</script>',html,re.DOTALL)
-        if r:
-            js = jsunpack.unpack(r.group(1))
-            r = re.search("file:\'(.+?)\'",js.replace('\\',''))
-            if r:
-                return r.group(1)
-        
-        data = {}
-        r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
-        for name, value in r: data[name] = value
-        data.update({'referer': web_url})
-        data.update({'method_free': 'Free Download'})
-        data.update({'op': 'download1'})
-        
-        html = self.net.http_POST(web_url, data, headers=headers).content
-        
-        data = {}
-        r = re.findall(r'type="hidden"\s*name="(.+?)"\s*value="(.*?)"', html)
-        for name, value in r: data[name] = value
-        data.update({'referer': web_url})
-        data.update({'btn_download': 'Create Download Link'})
-        data.update({'op': 'download2'})
-        
-        html = self.net.http_POST(web_url, data, headers=headers).content
-        
-        r = re.search(r'<span>\s*<a\s+href="(.+?)".*</a>\s*</span>',html)
-        if r:
-            return r.group(1)
+        match = re.search('file: "([^"]+)', html)
+        if match:
+            return match.group(1)
         else:
-            raise UrlResolver.ResolverError("File Link Not Found")
-
+            raise UrlResolver.ResolverError('Unable to resolve thefile link. Filelink not found.')
+        
     def get_url(self, host, media_id):
-            return 'http://thefile.me/%s' % (media_id)
+            return 'http://thefile.me/plugins/mediaplayer/site/_embed.php?u=%s' % (media_id)
 
     def get_host_and_id(self, url):
         r = re.search(r'//(.+?)/(.+)', url)
@@ -83,9 +52,6 @@ class TheFileResolver(Plugin, UrlResolver, PluginSettings):
         else:
             return False
 
-
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
         return re.match(r'http://(www.)?thefile.me/.+', url) or 'thefile' in host
-
-

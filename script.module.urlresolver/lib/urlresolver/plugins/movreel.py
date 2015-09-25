@@ -114,10 +114,10 @@ class MovreelResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
-        xml += '<setting id="movreelResolver_login" '
+        xml += '<setting id="%s_login" ' % (self.__class__.__name__)
         xml += 'type="bool" label="login" default="false"/>\n'
-        xml += '<setting id="movreelResolver_username" enable="eq(-1,true)" '
+        xml += '<setting id="%s_username" enable="eq(-1,true)" ' % (self.__class__.__name__)
         xml += 'type="text" label="username" default=""/>\n'
-        xml += '<setting id="movreelResolver_password" enable="eq(-2,true)" '
+        xml += '<setting id="%s_password" enable="eq(-2,true)" ' % (self.__class__.__name__)
         xml += 'type="text" label="password" option="hidden" default=""/>\n'
         return xml

@@ -33,14 +33,14 @@ class PurevidResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     name = "purevid"
     domains = ["purevid.com"]
     profile_path = common.profile_path
-    cookie_file = os.path.join(profile_path, '%s.cookies' % name)
+    pv_cookie_file = os.path.join(profile_path, '%s.cookies' % name)
     
     def __init__(self):
         p = self.get_setting('priority') or 1
         self.priority = int(p)
         self.net = Net()
         try:
-            os.makedirs(os.path.dirname(self.cookie_file))
+            os.makedirs(os.path.dirname(self.pv_cookie_file))
         except OSError:
             pass
 
@@ -49,7 +49,7 @@ class PurevidResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
         web_url = self.get_url(host, media_id)
         html = self.net.http_GET(web_url).content
         data = json.loads(html)
-        if self.get_setting('quality') == '0':
+        if self.get_setting('quality') == 'FLV':
             url = data['clip']['bitrates'][0]['url']
         else:
             url = data['clip']['bitrates'][-1]['url']
@@ -83,9 +83,9 @@ class PurevidResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     #SiteAuth methods
     def needLogin(self):
         url = 'http://www.purevid.com/?m=main'
-        if not os.path.exists(self.cookie_file):
+        if not os.path.exists(self.pv_cookie_file):
             return True
-        self.net.set_cookies(self.cookie_file)
+        self.net.set_cookies(self.pv_cookie_file)
         source = self.net.http_GET(url).content
         common.addon.log_debug(source.encode('utf-8'))
         if re.search("""<span>Welcome <strong>.*</strong></span>""", source) :
@@ -102,8 +102,8 @@ class PurevidResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
             data = {'username' : self.get_setting('username'), 'password' : self.get_setting('password')}        
             source = self.net.http_POST(url,data).content        
             if re.search(self.get_setting('username'), source):            
-                self.net.save_cookies(self.cookie_file)
-                self.net.set_cookies(self.cookie_file)
+                self.net.save_cookies(self.pv_cookie_file)
+                self.net.set_cookies(self.pv_cookie_file)
                 return True
             else:
                 return False
@@ -113,14 +113,14 @@ class PurevidResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     #PluginSettings methods
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
-        xml += '<setting id="purevid_login" '        
+        xml += '<setting id="PurevidResolver_login" '        
         xml += 'type="bool" label="Login" default="false"/>\n'
-        xml += '<setting id="purevid_username" enable="eq(-1,true)" '
+        xml += '<setting id="PurevidResolver_username" enable="eq(-1,true)" '
         xml += 'type="text" label="     username" default=""/>\n'
-        xml += '<setting id="purevid_password" enable="eq(-2,true)" '
+        xml += '<setting id="PurevidResolver_password" enable="eq(-2,true)" '
         xml += 'type="text" label="     password" option="hidden" default=""/>\n'
-        xml += '<setting label="Video quality" id="%s_quality" ' % self.__class__.__name__
-        xml += 'type="enum" values="FLV|Maximum" default="0" />\n'
+        xml += '<setting label="Video quality" id="PurevidResolver_quality" '
+        xml += 'type="labelenum" values="FLV|Maximum" default="Maximum" />\n'
         xml += '<setting label="This plugin calls the Purevid urlresolver - '
         xml += 'change settings there." type="lsep" />\n'
         return xml

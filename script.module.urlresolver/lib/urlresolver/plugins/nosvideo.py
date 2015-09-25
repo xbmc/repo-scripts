@@ -27,7 +27,7 @@ from lib import jsunpack
 class NosvideoResolver(Plugin, UrlResolver, PluginSettings):
     implements = [UrlResolver, PluginSettings]
     name = "nosvideo"
-    domains = ["nosvideo.com"]
+    domains = ["nosvideo.com", "noslocker.com"]
 
     def __init__(self):
         p = self.get_setting('priority') or 100
@@ -48,26 +48,46 @@ class NosvideoResolver(Plugin, UrlResolver, PluginSettings):
         r = re.findall(r'type="hidden" name="(.+?)"\s* value="(.+?)"', html)
         for name, value in r:
             data[name] = value
-        data.update({'method_free': 'Free Download'})
+        data.update({'method_free': 'Continue to Video'})
 
         html = self.net.http_POST(url, data, headers=headers).content
 
         r = re.search('(eval\(function\(p,a,c,k,e,[dr].*)', html)
         if r:
             js = jsunpack.unpack(r.group(1))
-            r = re.search('playlist=(.*)&config=', js)
+            js = js.replace('\\', '')
+            html = js
+        else:
+            r = re.search("src='([^']+/videojs/[^']+)", html)
             if r:
                 html = self.net.http_GET(r.group(1)).content
-                r = re.search('<file>\s*(.*)\s*</file>', html)
-                if r:
-                    return r.group(1)
-                else:
-                    raise UrlResolver.ResolverError('Unable to locate video file')
             else:
-                raise UrlResolver.ResolverError('Unable to locate playlist')
-        else:
-            raise UrlResolver.ResolverError('Unable to locate packed data')
+                r = re.search('<iframe\s+src="([^"]+)', html)
+                if r:
+                    html = self.net.http_GET(r.group(1)).content
+        
+        return self.__find_links(html)
 
+    def __find_links(self, html):
+        r = re.search('playlist=([^&]+)', html)
+        if r:
+            html = self.net.http_GET(r.group(1)).content
+            r = re.search('<file>\s*(.*)\s*</file>', html)
+            if r:
+                return r.group(1) + '|User-Agent=%s' % (common.IE_USER_AGENT)
+            else:
+                raise UrlResolver.ResolverError('Unable to locate video file')
+        else:
+            r = re.search("file\s*:\s*'([^']+)", html)
+            if r:
+                return r.group(1) + '|User-Agent=%s' % (common.IE_USER_AGENT)
+            else:
+                r = re.search('<source\s+src="([^"]+)', html)
+                if r:
+                    return r.group(1) + '|User-Agent=%s' % (common.IE_USER_AGENT)
+                else:
+                    raise UrlResolver.ResolverError('Unable to locate playlist')
+        
     def get_url(self, host, media_id):
         return 'http://nosvideo.com/?v=%s' % media_id
 
@@ -81,6 +101,6 @@ class NosvideoResolver(Plugin, UrlResolver, PluginSettings):
 
     def valid_url(self, url, host):
         if self.get_setting('enabled') == 'false': return False
-        return (re.match('http://(www.)?nosvideo.com/' +
-                         '(?:\?v\=|embed/)[0-9A-Za-z]+', url) or
+        return (re.match('http://(www.)?(nosvideo|noslocker).com/' +
+                         '(?:\?v\=|embed/)?[0-9A-Za-z]+', url) or
                          'nosvideo' in host)

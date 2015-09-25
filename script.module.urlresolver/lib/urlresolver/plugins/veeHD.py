@@ -26,7 +26,7 @@ from t0mm0.common.net import Net
 
 class VeeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     implements = [UrlResolver, SiteAuth, PluginSettings]
-    name = "veeHD"
+    name = "VeeHD"
     domains = ["veehd.com"]
     profile_path = common.profile_path
     cookie_file = os.path.join(profile_path, '%s.cookies' % name)
@@ -42,7 +42,7 @@ class VeeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
     #UrlResolver methods
     def get_media_url(self, host, media_id):
-        if not self.get_setting('login')=='true' or not (self.get_setting('username') and self.get_setting('password')):
+        if not self.get_setting('login') == 'true' or not (self.get_setting('username') and self.get_setting('password')):
             raise UrlResolver.ResolverError('VeeHD requires a username & password')
 
         web_url = self.get_url(host, media_id)
@@ -50,13 +50,13 @@ class VeeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
 
         # two possible playeriframe's: stream and download
         for match in re.finditer('playeriframe.+?src\s*:\s*"([^"]+)', html):
-            player_url = 'http://%s%s'%(host,match.group(1))
+            player_url = 'http://%s%s' % (host, match.group(1))
             html = self.net.http_GET(player_url).content
             
             # if the player html contains an iframe the iframe url has to be gotten and then the player_url tried again
             r = re.search('<iframe.*?src="([^"]+)', html)
             if r:
-                frame_url = 'http://%s%s'%(host,r.group(1))
+                frame_url = 'http://%s%s' % (host, r.group(1))
                 self.net.http_GET(frame_url)
                 html = self.net.http_GET(player_url).content
 
@@ -105,11 +105,11 @@ class VeeHDResolver(Plugin, UrlResolver, SiteAuth, PluginSettings):
     #PluginSettings methods
     def get_settings_xml(self):
         xml = PluginSettings.get_settings_xml(self)
-        xml += '<setting id="veeHDResolver_login" '
+        xml += '<setting id="%s_login" ' % (self.__class__.__name__)
         xml += 'type="bool" label="login" default="false"/>\n'
-        xml += '<setting id="veeHDResolver_username" enable="eq(-1,true)" '
+        xml += '<setting id="%s_username" enable="eq(-1,true)" ' % (self.__class__.__name__)
         xml += 'type="text" label="username" default=""/>\n'
-        xml += '<setting id="veeHDResolver_password" enable="eq(-2,true)" '
+        xml += '<setting id="%s_password" enable="eq(-2,true)" ' % (self.__class__.__name__)
         xml += 'type="text" label="password" option="hidden" default=""/>\n'
         return xml
         
