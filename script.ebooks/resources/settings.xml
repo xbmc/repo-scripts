@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32002">
+		<setting id="eBooksFolder" label="32005" type="folder"/>
+		<setting id="fallbackCoverImage" label="32015" type="image"/>
+		<setting id="onlyShowWholeBookIfChapters" type="bool" label="32017" default="true"/>
+		<setting id="markReadWhenNavToNextChapter" type="bool" label="32018" default="false"/>
+		<setting id="useWhiteBackground" type="bool" label="32022" default="false"/>
+<!--		<setting id="fontSize" label="32023" type="enum" values="10|12|13|14|16|30" default="2" /> -->
+		<setting id="usePageNumbersForPdf" type="bool" label="32021" default="false"/>
+	</category>
+	<category label="32007">
+		<setting label="32008" type="action" action="RunScript($CWD/cleancovercache.py)"/>
+		<setting label="32013" type="action" action="RunScript($CWD/deletedb.py)"/>
+    	<setting label="32003" type="lsep"/>
+    	<setting id="logEnabled" type="bool" label="32004" default="false"/>
+	</category>
+</settings>
