@@ -2,7 +2,7 @@
 # Awesome efficient lightweight code.
 # last modified 19 March 2011
 # added support for TVDB search for show, seasons, episodes
-# also searches imdb (using http://www.imdbapi.com/) for missing info in movies or tvshows
+# also searches imdb (using http://www.omdbapi.com/) for missing info in movies or tvshows
 
 import sys
 import simplejson as simplejson 
@@ -34,9 +34,9 @@ class TMDB(object):
         self.lang = lang
         self.api_key = api_key
         self.url_prefix = 'http://api.themoviedb.org/3'
-        self.imdb_api = 'http://www.imdbapi.com/?i=%s'
-        self.imdb_name_api = 'http://www.imdbapi.com/?t=%s'
-        self.imdb_nameyear_api = 'http://www.imdbapi.com/?t=%s&y=%s' 
+        self.imdb_api = 'http://www.omdbapi.com/?i=%s'
+        self.imdb_name_api = 'http://www.omdbapi.com/?t=%s'
+        self.imdb_nameyear_api = 'http://www.omdbapi.com/?t=%s&y=%s' 
       
     def __clean_name(self, mystring):
         newstring = ''
@@ -422,6 +422,7 @@ class TMDB(object):
                 #Update any missing information from IDMB
                 if meta.has_key('imdb_id'):
                     imdb_id = meta['imdb_id']
+            if imdb_id: 
                 addon.log('Requesting IMDB for extra information: %s' % imdb_id, 0)
                 imdb_meta = self.search_imdb(name, imdb_id)
                 if imdb_meta:

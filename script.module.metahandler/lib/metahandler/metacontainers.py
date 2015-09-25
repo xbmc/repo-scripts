@@ -62,12 +62,12 @@ class MetaContainer:
         else:
             self.path = xbmc.translatePath('special://profile/addon_data/script.module.metahandler')
 
-        self.work_path = os.path.join(self.path, 'work')
-        self.cache_path = os.path.join(self.path,  'meta_cache')
+        self.work_path = os.path.join(self.path, 'work\\')
+        self.cache_path = os.path.join(self.path,  'meta_cache\\')
         self.videocache = os.path.join(self.cache_path, 'video_cache.db')
         self.work_videocache = os.path.join(self.work_path, 'video_cache.db')
-        self.movie_images = os.path.join(self.cache_path, 'movie')
-        self.tv_images = os.path.join(self.cache_path, 'tvshow')        
+        self.movie_images = os.path.join(self.cache_path, 'movie\\')
+        self.tv_images = os.path.join(self.cache_path, 'tvshow\\')        
         
         self.table_list = ['movie_meta', 'tvshow_meta', 'season_meta', 'episode_meta']
      

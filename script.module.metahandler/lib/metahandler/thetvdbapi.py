@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import urllib
+import urllib, urllib2
 import datetime
 import random
 import re
@@ -256,6 +256,8 @@ class TheTVDB(object):
         get_args = {"seriesname": show_name}
         if language is not None:
             get_args['language'] = language
+        else:
+            get_args['language'] = self.language
         get_args = urllib.urlencode(get_args, doseq=True)
         url = "%s/GetSeries.php?%s" % (self.base_url, get_args)
         if want_raw:
@@ -371,7 +373,7 @@ class TheTVDB(object):
 
 
     def _get_xml_data(self, url, filter_func = None, zip_name = None, callback = None):
-        data = urllib.urlopen(url)
+        data = urllib2.urlopen(url)
         if zip_name:
             zipfile = ZipFile(StringIO(data.read()))
             data = zipfile.open(zip_name)
