@@ -1,3 +1,12 @@
+v3.1.1
+- some fixes for personal weather stations
+
+v3.1.0
+- don't hardcode the icon path
+
+v3.0.1
+- more verbose logging
+
 v3.0.0
 - use image resource for weather icons
 

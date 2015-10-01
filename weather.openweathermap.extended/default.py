@@ -25,7 +25,7 @@ LATLON         = __addon__.getSetting('LatLon')
 WEEKEND        = __addon__.getSetting('Weekend')
 STATION        = __addon__.getSetting('Station')
 MAP            = __addon__.getSetting('Map')
-WEATHER_ICON   = xbmc.translatePath('resource://resource.images.weathericons.default/%s.png').decode("utf-8")
+WEATHER_ICON   = xbmc.translatePath('%s.png').decode("utf-8")
 DATEFORMAT     = xbmc.getRegion('dateshort')
 TIMEFORMAT     = xbmc.getRegion('meridiem')
 LANGUAGE       = xbmc.getLanguage().lower()
@@ -158,7 +158,9 @@ def location(string):
     return locs, locids, locdegs
 
 def forecast(loc,locid,locationdeg):
-    log('weather location: %s' % locid)
+    log('weather location id: %s' % locid)
+    log('weather location name: %s' % loc)
+    log('weather location deg: %s' % locationdeg)
     if MAP == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
         lat = float(eval(locationdeg)[0])
         lon = float(eval(locationdeg)[1])
@@ -245,37 +247,42 @@ def station_props(data,loc):
     set_property('Current.Location'             , loc)
     if data.has_key('last') and data['last'].has_key('main') and data['last']['main'].has_key('temp'):
         set_property('Current.Temperature'      , str(int(round(data['last']['main']['temp'])) - 273)) # api values are in K
-    else:
-        set_property('Current.Temperature'      , '')
     if data.has_key('last') and data['last'].has_key('main') and data['last']['main'].has_key('humidity'):
         set_property('Current.Humidity'         , str(data['last']['main']['humidity']))
-    else:
-        set_property('Current.Humidity'         , '')
     if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('speed'):
         set_property('Current.Wind'             , str(int(round(data['last']['wind']['speed'] * 3.6))))
-    else:
-        set_property('Current.Wind'             , '')
     if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('deg'):
         set_property('Current.WindDirection'    , xbmc.getLocalizedString(WIND_DIR(int(round(data['last']['wind']['deg'])))))
-    else:
-        set_property('Current.WindDirection', '')
     try:
         set_property('Current.FeelsLike'        , FEELS_LIKE(data['last']['main']['temp'] -273, data['last']['wind']['speed'], False)) # api values are in K
     except:
-        set_property('Current.FeelsLike'        , '')
+        pass
     if data.has_key('last') and data['last'].has_key('calc') and data['last']['calc'].has_key('dewpoint'):
-        set_property('Current.DewPoint'         , str(int(round(data['last']['calc']['dewpoint'])) - 273)) # api values are in K
+        if data['last']['main']['temp'] - data['last']['calc']['dewpoint'] > 100:
+            set_property('Current.DewPoint'     , str(int(round(data['last']['calc']['dewpoint'])))) # api values are in C
+        else:
+            set_property('Current.DewPoint'     , str(int(round(data['last']['calc']['dewpoint'])) - 273)) # api values are in K
     else:
         try:
             set_property('Current.DewPoint'     , DEW_POINT(data['last']['main']['temp'] -273, data['last']['main']['humidity'], False)) # api values are in K
         except:
-            set_property('Current.DewPoint'     , '')
-    set_property('Current.UVIndex'              , '') # no idea how the api returns it
+            pass
+    #set_property('Current.UVIndex'              , '') # no idea how the api returns it, use data from current_props()
 # extended properties
     if data.has_key('last') and data['last'].has_key('clouds') and data['last']['clouds'][0] != '':
         set_property('Current.Cloudiness'       , data['last']['clouds'][0]['condition'])
-    else:
-        set_property('Current.Cloudiness'       , '')
+    if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('gust'):
+        set_property('Current.WindGust'         , SPEED(data['last']['wind']['gust']) + SPEEDUNIT)
+    if data.has_key('last') and data['last'].has_key('rain') and data['last']['rain'].has_key('1h'):
+        if 'F' in TEMPUNIT:
+            set_property('Current.Precipitation', str(round(data['last']['rain']['1h'] *  0.04 ,2)) + ' in')
+        else:
+            set_property('Current.Precipitation', str(int(round(data['last']['rain']['1h']))) + ' mm')
+    if data.has_key('last') and data['last'].has_key('main') and data['last']['main'].has_key('pressure'):
+        if 'F' in TEMPUNIT:
+            set_property('Current.Pressure'     , str(round(data['last']['main']['pressure'] / 33.86 ,2)) + ' in')
+        else:
+            set_property('Current.Pressure'     , str(data['last']['main']['pressure']) + ' mb')
 
 def current_props(data,loc):
 # standard properties
@@ -302,51 +309,29 @@ def current_props(data,loc):
     set_property('Current.UVIndex'              , '') # not supported by openweathermap
     set_property('Current.OutlookIcon'          , '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
     set_property('Current.FanartCode'           , weathercode)
+    set_property('Location'                     , loc)
+    set_property('Updated'                      , convert_date(data['dt']))
 # extended properties
     set_property('Current.Cloudiness'           , str(data['clouds']['all']) + '%')
     set_property('Current.ShortOutlook'         , data['weather'][0]['main'])
-    set_property('Current.LowTemperature'       , TEMP(data['main']['temp_min']) + TEMPUNIT)
-    set_property('Current.HighTemperature'      , TEMP(data['main']['temp_max']) + TEMPUNIT)
-    if 'F' in TEMPUNIT:
-        set_property('Current.Pressure'             , str(round(data['main']['pressure'] / 33.86 ,2)) + ' in')
-        if data['main'].has_key('sea_level'):
-            set_property('Current.SeaLevel'         , str(round(data['main']['sea_level'] / 33.86 ,2)) + ' in')
-        else:
-            set_property('Current.SeaLevel'         , '')
-        if data['main'].has_key('grnd_level'):
-            set_property('Current.GroundLevel'      , str(round(data['main']['grnd_level'] / 33.86 ,2)) + ' in')
-        else:
-            set_property('Current.GroundLevel'      , '')
-        rain = 0
-        snow = 0
-        if data.has_key('rain'):
-            if data['rain'].has_key('1h'):
-                rain = data['rain']['1h']
-            elif data['rain'].has_key('3h'):
-                rain = data['rain']['3h']
-            set_property('Current.Rain'             , str(round(rain *  0.04 ,2)) + ' in')
-        else:
-            set_property('Current.Rain'             , '')
-        if data.has_key('snow'):
-            if data['snow'].has_key('1h'):
-                snow = data['snow']['1h']
-            elif data['snow'].has_key('3h'):
-                snow = data['snow']['3h']
-            set_property('Current.Snow'             , str(round(snow *  0.04 ,2)) + ' in')
-        else:
-            set_property('Current.Snow'             , '')
-        precip = rain + snow
-        set_property('Current.Precipitation'        , str(round(precip *  0.04 ,2)) + ' in')
+    if data['main'].has_key('temp_min'):
+        set_property('Current.LowTemperature'   , TEMP(data['main']['temp_min']) + TEMPUNIT)
     else:
-        set_property('Current.Pressure'             , str(data['main']['pressure']) + ' mb')
+        set_property('Current.LowTemperature'   , '')
+    if data['main'].has_key('temp_max'):
+        set_property('Current.HighTemperature'  , TEMP(data['main']['temp_max']) + TEMPUNIT)
+    else:
+        set_property('Current.HighTemperature'  , '')
+    if 'F' in TEMPUNIT:
+        set_property('Current.Pressure'         , str(round(data['main']['pressure'] / 33.86 ,2)) + ' in')
         if data['main'].has_key('sea_level'):
-            set_property('Current.SeaLevel'         , str(data['main']['sea_level']) + ' mb')
+            set_property('Current.SeaLevel'     , str(round(data['main']['sea_level'] / 33.86 ,2)) + ' in')
         else:
-            set_property('Current.SeaLevelSnow'     , '')
+            set_property('Current.SeaLevel'     , '')
         if data['main'].has_key('grnd_level'):
-            set_property('Current.GroundLevel'      , str(data['main']['grnd_level']) + ' mb')
+            set_property('Current.GroundLevel'  , str(round(data['main']['grnd_level'] / 33.86 ,2)) + ' in')
         else:
-            set_property('Current.GroundLevel'      , '')
+            set_property('Current.GroundLevel'  , '')
         rain = 0
         snow = 0
         if data.has_key('rain'):
@@ -354,19 +339,49 @@ def current_props(data,loc):
                 rain = data['rain']['1h']
             elif data['rain'].has_key('3h'):
                 rain = data['rain']['3h']
-            set_property('Current.Rain'             , str(int(round(rain))) + ' mm')
+            set_property('Current.Rain'         , str(round(rain *  0.04 ,2)) + ' in')
         else:
-            set_property('Current.Rain'             , '')
+            set_property('Current.Rain'         , '')
         if data.has_key('snow'):
             if data['snow'].has_key('1h'):
                 snow = data['snow']['1h']
             elif data['snow'].has_key('3h'):
                 snow = data['snow']['3h']
-            set_property('Current.Snow'             , str(int(round(snow))) + ' mm')
+            set_property('Current.Snow'         , str(round(snow *  0.04 ,2)) + ' in')
         else:
-            set_property('Current.Snow'             , '')
+            set_property('Current.Snow'         , '')
         precip = rain + snow
-        set_property('Current.Precipitation'        , str(int(round(precip))) + ' mm')
+        set_property('Current.Precipitation'    , str(round(precip *  0.04 ,2)) + ' in')
+    else:
+        set_property('Current.Pressure'         , str(data['main']['pressure']) + ' mb')
+        if data['main'].has_key('sea_level'):
+            set_property('Current.SeaLevel'     , str(data['main']['sea_level']) + ' mb')
+        else:
+            set_property('Current.SeaLevelSnow' , '')
+        if data['main'].has_key('grnd_level'):
+            set_property('Current.GroundLevel'  , str(data['main']['grnd_level']) + ' mb')
+        else:
+            set_property('Current.GroundLevel'  , '')
+        rain = 0
+        snow = 0
+        if data.has_key('rain'):
+            if data['rain'].has_key('1h'):
+                rain = data['rain']['1h']
+            elif data['rain'].has_key('3h'):
+                rain = data['rain']['3h']
+            set_property('Current.Rain'         , str(int(round(rain))) + ' mm')
+        else:
+            set_property('Current.Rain'         , '')
+        if data.has_key('snow'):
+            if data['snow'].has_key('1h'):
+                snow = data['snow']['1h']
+            elif data['snow'].has_key('3h'):
+                snow = data['snow']['3h']
+            set_property('Current.Snow'         , str(int(round(snow))) + ' mm')
+        else:
+            set_property('Current.Snow'         , '')
+        precip = rain + snow
+        set_property('Current.Precipitation'    , str(int(round(precip))) + ' mm')
     if data['wind'].has_key('gust'):
         set_property('Current.WindGust'         , SPEED(data['wind']['gust']) + SPEEDUNIT)
     else:
@@ -802,7 +817,7 @@ class MyMonitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)
 
-log('version %s started: %s' % (__version__, sys.argv[1]))
+log('version %s started with argv: %s' % (__version__, sys.argv[1]))
 
 MONITOR = MyMonitor()
 set_property('Forecast.IsFetched' , 'true')

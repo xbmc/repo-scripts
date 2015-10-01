@@ -18,7 +18,7 @@ Current.WindDirection
 Current.Humidity
 Current.FeelsLike
 Current.DewPoint
-Current.ConditionIcon
+Current.ConditionIcon      (eg. resource://resource.images.weathericons.default/28.png)
 Current.FanartCode
 
 
@@ -70,6 +70,7 @@ Current.Snow               (amount of snow over the last 3 hours)
 Current.Precipitation      (total amount of rain and snow over the last 3 hours)
 Current.Cloudiness         (cloud coverage)
 Current.ShortOutlook       (eg. 'Rain')
+Current.OutlookIcon        (eg. 28.png)
 
 
 TODAY

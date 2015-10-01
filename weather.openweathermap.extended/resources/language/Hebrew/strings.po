@@ -16,6 +16,10 @@ msgstr ""
 "Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "OpenWeatherMap"
+msgstr "OpenWeatherMap"
+
 msgctxt "#32101"
 msgid "Location setup"
 msgstr "הגדרות מיקום"
@@ -48,6 +52,30 @@ msgctxt "#32115"
 msgid "Location 5"
 msgstr "מיקום 5"
 
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "מזהה מיקום 1"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "מזהה מיקום 2"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "מזהה מיקום 3"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "מזהה מיקום 4"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "מזהה מיקום 5"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "הצג קווי אורך / רוחב כאשר מחפשים תחנה"
+
 msgctxt "#32122"
 msgid "Weekend"
 msgstr "סוף שבוע"
@@ -64,6 +92,14 @@ msgctxt "#32125"
 msgid "Thursday/Friday"
 msgstr "חמישי/שישי"
 
+msgctxt "#32126"
+msgid "Use personal weather station"
+msgstr "השתמש בתחנת מזג אויר פרטית"
+
+msgctxt "#32127"
+msgid "Station ID"
+msgstr "מזהה תחנה"
+
 msgctxt "#32128"
 msgid "Map zoom level"
 msgstr "רמת תקריב של מפה"
@@ -71,3 +107,7 @@ msgstr "רמת תקריב של מפה"
 msgctxt "#32129"
 msgid "Enable logging"
 msgstr "אפשר יומן רישום"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "הורד מפות מזג אויר"
