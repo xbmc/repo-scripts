@@ -1,3 +1,7 @@
+v2.0.5
+- personal weather station fixes
+- fix potential crash on missing keys in api response
+
 v2.0.4
 - better handling of key errors
 

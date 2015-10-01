@@ -16,6 +16,10 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32000"
+msgid "OpenWeatherMap"
+msgstr "OpenWeatherMap"
+
 msgctxt "#32101"
 msgid "Location setup"
 msgstr "Konum ayarı"
@@ -48,6 +52,30 @@ msgctxt "#32115"
 msgid "Location 5"
 msgstr "Konum 5"
 
+msgctxt "#32116"
+msgid "Location 1 ID"
+msgstr "Konum 1 ID"
+
+msgctxt "#32117"
+msgid "Location 2 ID"
+msgstr "Konum 2 ID"
+
+msgctxt "#32118"
+msgid "Location 3 ID"
+msgstr "Konum 3 ID"
+
+msgctxt "#32119"
+msgid "Location 4 ID"
+msgstr "Konum 4 ID"
+
+msgctxt "#32120"
+msgid "Location 5 ID"
+msgstr "Konum 5 ID"
+
+msgctxt "#32121"
+msgid "Show lat/lon when searching locations"
+msgstr "Konumları ararken enlem/boylam bilgilerini göster"
+
 msgctxt "#32122"
 msgid "Weekend"
 msgstr "Hafta sonu"
@@ -64,6 +92,14 @@ msgctxt "#32125"
 msgid "Thursday/Friday"
 msgstr "Perşembe/Cuma"
 
+msgctxt "#32126"
+msgid "Use personal weather station"
+msgstr "Kişisel hava durumu istasyonu kullan"
+
+msgctxt "#32127"
+msgid "Station ID"
+msgstr "İstasyon ID"
+
 msgctxt "#32128"
 msgid "Map zoom level"
 msgstr "Harita yakınlaştırma düzeyi"
@@ -71,3 +107,7 @@ msgstr "Harita yakınlaştırma düzeyi"
 msgctxt "#32129"
 msgid "Enable logging"
 msgstr "Günlüğü etkinleştir"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Hava durumu haritalarını indir"

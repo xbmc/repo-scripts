@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.openweathermap.extended" name="OpenWeatherMap Extended" version="2.0.4" provider-name="ronie">
+<addon id="weather.openweathermap.extended" name="OpenWeatherMap Extended" version="2.0.5" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -13,12 +13,14 @@
 		<summary lang="de">Wettervorhersage von openweathermap.org</summary>
 		<summary lang="el">Πρόγνωση καιρού από το openweathermap.org</summary>
 		<summary lang="en">Weather forecast from openweathermap.org</summary>
+		<summary lang="en_NZ">Weather forecast from openweathermap.org</summary>
 		<summary lang="en_US">Weather forecast from openweathermap.org</summary>
 		<summary lang="es">Predicción meteorológica de openweathermap.org</summary>
 		<summary lang="fi">Sääennuste openweathermap.org :sta</summary>
 		<summary lang="fr">Prévisions météo d'openweathermap.org</summary>
 		<summary lang="fr_CA">Prévisions météorologiques de openweathermap.org</summary>
 		<summary lang="gl">Previsión meteorolóxica de openweathermap.org</summary>
+		<summary lang="he">תחזית מזג אויר מאת openweathermap.org</summary>
 		<summary lang="hr">Vremenska prognoza s openweathermap.org</summary>
 		<summary lang="hu">Időjárás előrejelzés az openweathermap.org oldalról</summary>
 		<summary lang="is">Veðurspá frá openweathermap.org</summary>
@@ -34,6 +36,7 @@
 		<summary lang="sl">Vremenska napoved openweathermap.org</summary>
 		<summary lang="sr_RS">Временска прогноза са openweathermap.org</summary>
 		<summary lang="sv">Väderprognos från openweathermap.org</summary>
+		<summary lang="tr">Hava durumu - openweathermap.org</summary>
 		<description lang="bg">Синоптична прогноза, предоставена от OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="cs">Předpověď počasí poskytnuta OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="de">Wettervorhersage bereitgestellt durch OpenWeatherMap (http://openweathermap.org/)</description>
@@ -45,6 +48,7 @@
 		<description lang="fr">Prévisions météo fournies par OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="fr_CA">Prévisions météorologiques fournies OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="gl">Previsión meteorolóxica fornecida por OpenWeatherMap (http://openweathermap.org/)</description>
+		<description lang="he">תחזית מזג האויר מסופקת ע"י OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="hr">Vremenska prognoza dostupna od strane OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="hu">Az időjárás előrejelzést biztosítja az OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="is">Veðurspá kemur frá OpenWeatherMap (http://openweathermap.org/)</description>
@@ -60,6 +64,7 @@
 		<description lang="sl">Vremensko napoved zagotavlja OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="sr_RS">Временску прогнозу омогућио OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="sv">Väderprognos tillhandahållen av OpenWeatherMap (http://openweathermap.org/)</description>
+		<description lang="tr">OpenWeatherMap tarafından sağlana hava durumu tahmini (http://openweathermap.org/)</description>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
