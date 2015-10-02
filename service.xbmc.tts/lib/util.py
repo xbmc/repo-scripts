@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os, sys, re, xbmc, time, binascii, xbmcaddon
-from module.TextToSpeech import sayText as notifySayText, safeDecode #analysis:ignore
 
 ADDON_ID = 'service.xbmc.tts'
 
@@ -78,7 +77,7 @@ def playSound(name,return_duration=False):
 
 def stopSounds():
     if hasattr(xbmc,'stopSFX'): xbmc.stopSFX()
-    
+
 def showNotification(message,time_ms=3000,icon_path=None,header='XBMC TTS'):
     try:
         icon_path = icon_path or xbmc.translatePath(xbmcaddon.Addon(ADDON_ID).getAddonInfo('icon')).decode('utf-8')
@@ -150,7 +149,7 @@ def _processSetting(setting,default):
     elif isinstance(default,list):
         if setting: return binascii.unhexlify(setting).split('\0')
         else: return default
-    
+
     return setting
 
 def setSetting(key,value):
@@ -175,7 +174,7 @@ def isATV2():
 
 def isRaspberryPi():
     return xbmc.getCondVisibility('System.Platform.Linux.RaspberryPi')
-    
+
 def raspberryPiDistro():
     if not isRaspberryPi(): return None
     if isOpenElec(): return 'OPENELEC'
@@ -187,8 +186,8 @@ def raspberryPiDistro():
         ERROR('raspberryPiDistro() - Failed to get uname output',hide_tb=True)
     if uname and 'raspbmc' in uname: return 'RASPBMC'
     return 'UNKNOWN'
-    
-        
+
+
 def isOpenElec():
     return xbmc.getCondVisibility('System.HasAddon(os.openelec.tv)')
 
@@ -205,8 +204,8 @@ def busyDialog(func):
         finally:
             xbmc.executebuiltin("Dialog.Close(10138)")
     return inner
-    
-@busyDialog    
+
+@busyDialog
 def selectBackend():
     import backends
     import xbmcgui
@@ -219,8 +218,8 @@ def selectBackend():
     idx = xbmcgui.Dialog().select(T(32181),display)
     if idx < 0: return
     setSetting('backend',choices[idx])
-    
-@busyDialog    
+
+@busyDialog
 def selectPlayer(provider):
     import xbmcgui
     import backends
@@ -237,7 +236,7 @@ def selectPlayer(provider):
     LOG('Player for {0} set to: {1}'.format(provider,player))
     setSetting('player.{0}'.format(provider),player)
 
-@busyDialog    
+@busyDialog
 def selectSetting(provider,setting,*args):
     import xbmcgui
     import backends
@@ -260,8 +259,22 @@ def runInThread(func,args=(),name='?'):
      import threading
      thread = threading.Thread(target=func,args=args,name='TTSThread: {0}'.format(name))
      thread.start()
-     
-################################################################        
+
+BASE_COMMAND = 'XBMC.NotifyAll(service.xbmc.tts,SAY,"{{\\"text\\":\\"{0}\\",\\"interrupt\\":{1}}}")'
+
+def safeEncode(text):
+    return binascii.hexlify(text.encode('utf-8'))
+
+def safeDecode(enc_text):
+    return binascii.unhexlify(enc_text).decode('utf-8')
+
+def notifySayText(text,interrupt=False):
+    assert isinstance(text,unicode), "Not Unicode"
+    command = BASE_COMMAND.format(safeEncode(text),repr(interrupt).lower())
+    #print command
+    xbmc.executebuiltin(command)
+
+################################################################
 #Deprecated in Gotham - now using NotifyAll
 LAST_COMMAND_DATA = ''
 

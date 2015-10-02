@@ -3,7 +3,7 @@ Changelog for service.xbmc.tts
 
 Authors: ruuk, pvagner
 
-Translations (Thank you!): Polish - Piciok, Italian - falcon03
+Translations (Thank you!): Polish - Piciok, Italian - falcon03, German - donkamillo
 
 TODO:
 -----
@@ -22,6 +22,11 @@ EXTERNAL TODO:
 --------------
  OSX installer?
  Android TTS app for android backend
+
+** 1.0.4 **
+
+Add German translation - thanks to donkamillo
+Fix keymapeditor speech
 
 ** 1.0.3 **
 
