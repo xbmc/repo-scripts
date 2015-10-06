@@ -23,6 +23,10 @@ EXTERNAL TODO:
  OSX installer?
  Android TTS app for android backend
 
+** 1.0.5 **
+
+Add client=t to Google backend URL to fix 503 errors
+
 ** 1.0.4 **
 
 Add German translation - thanks to donkamillo

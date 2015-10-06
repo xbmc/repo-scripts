@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="service.xbmc.tts"
        name="Kodi Screen Reader"
-       version="1.0.4"
+       version="1.0.5"
        provider-name="Rick Phillips (ruuk), pvagner">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>

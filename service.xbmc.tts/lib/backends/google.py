@@ -42,7 +42,7 @@ LANGUAGES = [    ('af', 'Afrikaans'),
 class GoogleTTSBackend(base.SimpleTTSBackendBase):
     provider = 'Google'
     displayName = 'Google'
-    ttsURL = 'http://translate.google.com/translate_tts?tl={0}&q={1}'
+    ttsURL = 'http://translate.google.com/translate_tts?client=t&tl={0}&q={1}'
     canStreamWav = util.commandIsAvailable('mpg123')
     playerClass = audio.MP3AudioPlayerHandler
     settings = {
