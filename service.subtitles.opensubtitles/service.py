@@ -148,7 +148,7 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
   for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
     if lang == "Portuguese (Brazil)":
       lan = "pob"
-    if lang == "Greek":
+    elif lang == "Greek":
       lan = "ell"
     else:
       lan = xbmc.convertLanguage(lang,xbmc.ISO_639_2)
