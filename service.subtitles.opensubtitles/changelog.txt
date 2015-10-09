@@ -1,3 +1,6 @@
+5.0.14
+- Fix for Portuguese (Brazil) broken by 42f6ec9, thx host505
+
 5.0.13
 - Fix for Greek subtitles, thx host505
 
