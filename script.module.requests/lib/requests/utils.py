@@ -67,7 +67,7 @@ def super_len(o):
         return len(o.getvalue())
 
 
-def get_netrc_auth(url):
+def get_netrc_auth(url, raise_errors=False):
     """Returns the Requests tuple auth for a given url from netrc."""
 
     try:
@@ -105,8 +105,9 @@ def get_netrc_auth(url):
                 return (_netrc[login_i], _netrc[2])
         except (NetrcParseError, IOError):
             # If there was a parsing error or a permissions issue reading the file,
-            # we'll just skip netrc auth
-            pass
+            # we'll just skip netrc auth unless explicitly asked to raise errors.
+            if raise_errors:
+                raise
 
     # AppEngine hackiness.
     except (ImportError, AttributeError):
@@ -498,7 +499,9 @@ def should_bypass_proxies(url):
     if no_proxy:
         # We need to check whether we match here. We need to see if we match
         # the end of the netloc, both with and without the port.
-        no_proxy = no_proxy.replace(' ', '').split(',')
+        no_proxy = (
+            host for host in no_proxy.replace(' ', '').split(',') if host
+        )
 
         ip = netloc.split(':')[0]
         if is_ipv4_address(ip):
@@ -536,36 +539,22 @@ def get_environ_proxies(url):
     else:
         return getproxies()
 
+def select_proxy(url, proxies):
+    """Select a proxy for the url, if applicable.
+
+    :param url: The url being for the request
+    :param proxies: A dictionary of schemes or schemes and hosts to proxy URLs
+    """
+    proxies = proxies or {}
+    urlparts = urlparse(url)
+    proxy = proxies.get(urlparts.scheme+'://'+urlparts.hostname)
+    if proxy is None:
+        proxy = proxies.get(urlparts.scheme)
+    return proxy
 
 def default_user_agent(name="python-requests"):
     """Return a string representing the default user agent."""
-    _implementation = platform.python_implementation()
-
-    if _implementation == 'CPython':
-        _implementation_version = platform.python_version()
-    elif _implementation == 'PyPy':
-        _implementation_version = '%s.%s.%s' % (sys.pypy_version_info.major,
-                                                sys.pypy_version_info.minor,
-                                                sys.pypy_version_info.micro)
-        if sys.pypy_version_info.releaselevel != 'final':
-            _implementation_version = ''.join([_implementation_version, sys.pypy_version_info.releaselevel])
-    elif _implementation == 'Jython':
-        _implementation_version = platform.python_version()  # Complete Guess
-    elif _implementation == 'IronPython':
-        _implementation_version = platform.python_version()  # Complete Guess
-    else:
-        _implementation_version = 'Unknown'
-
-    try:
-        p_system = platform.system()
-        p_release = platform.release()
-    except IOError:
-        p_system = 'Unknown'
-        p_release = 'Unknown'
-
-    return " ".join(['%s/%s' % (name, __version__),
-                     '%s/%s' % (_implementation, _implementation_version),
-                     '%s/%s' % (p_system, p_release)])
+    return '%s/%s' % (name, __version__)
 
 
 def default_headers():

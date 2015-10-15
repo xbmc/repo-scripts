@@ -85,6 +85,14 @@ _openssl_verify = {
 
 DEFAULT_SSL_CIPHER_LIST = util.ssl_.DEFAULT_CIPHERS
 
+# OpenSSL will only write 16K at a time
+SSL_WRITE_BLOCKSIZE = 16384
+
+try:
+    _ = memoryview
+    has_memoryview = True
+except NameError:
+    has_memoryview = False
 
 orig_util_HAS_SNI = util.HAS_SNI
 orig_connection_ssl_wrap_socket = connection.ssl_wrap_socket
@@ -204,13 +212,21 @@ class WrappedSocket(object):
                 continue
 
     def sendall(self, data):
-        while len(data):
-            sent = self._send_until_done(data)
-            data = data[sent:]
+        if has_memoryview and not isinstance(data, memoryview):
+            data = memoryview(data)
+
+        total_sent = 0
+        while total_sent < len(data):
+            sent = self._send_until_done(data[total_sent:total_sent+SSL_WRITE_BLOCKSIZE])
+            total_sent += sent
+
+    def shutdown(self):
+        # FIXME rethrow compatible exceptions should we ever use this
+        self.connection.shutdown()
 
     def close(self):
         if self._makefile_refs < 1:
-            return self.connection.shutdown()
+            return self.connection.close()
         else:
             self._makefile_refs -= 1
 
@@ -251,7 +267,7 @@ def _verify_callback(cnx, x509, err_no, err_depth, return_code):
 
 def ssl_wrap_socket(sock, keyfile=None, certfile=None, cert_reqs=None,
                     ca_certs=None, server_hostname=None,
-                    ssl_version=None):
+                    ssl_version=None, ca_cert_dir=None):
     ctx = OpenSSL.SSL.Context(_openssl_versions[ssl_version])
     if certfile:
         keyfile = keyfile or certfile  # Match behaviour of the normal python ssl library
@@ -260,9 +276,9 @@ def ssl_wrap_socket(sock, keyfile=None, certfile=None, cert_reqs=None,
         ctx.use_privatekey_file(keyfile)
     if cert_reqs != ssl.CERT_NONE:
         ctx.set_verify(_openssl_verify[cert_reqs], _verify_callback)
-    if ca_certs:
+    if ca_certs or ca_cert_dir:
         try:
-            ctx.load_verify_locations(ca_certs, None)
+            ctx.load_verify_locations(ca_certs, ca_cert_dir)
         except OpenSSL.SSL.Error as e:
             raise ssl.SSLError('bad ca_certs: %r' % ca_certs, e)
     else:
@@ -287,7 +303,7 @@ def ssl_wrap_socket(sock, keyfile=None, certfile=None, cert_reqs=None,
                 raise timeout('select timed out')
             continue
         except OpenSSL.SSL.Error as e:
-            raise ssl.SSLError('bad handshake', e)
+            raise ssl.SSLError('bad handshake: %r' % e)
         break
 
     return WrappedSocket(cnx, sock)

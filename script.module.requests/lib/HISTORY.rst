@@ -3,11 +3,63 @@
 Release History
 ---------------
 
+2.8.1 (2015-10-13)
+++++++++++++++++++
+
+**Bugfixes**
+
+- Update certificate bundle to match ``certifi`` 2015.9.6.2's weak certificate
+  bundle.
+- Fix a bug in 2.8.0 where requests would raise ``ConnectTimeout`` instead of
+  ``ConnectionError``
+- When using the PreparedRequest flow, requests will now correctly respect the
+  ``json`` parameter. Broken in 2.8.0.
+- When using the PreparedRequest flow, requests will now correctly handle a
+  Unicode-string method name on Python 2. Broken in 2.8.0.
+
+2.8.0 (2015-10-05)
+++++++++++++++++++
+
+**Minor Improvements** (Backwards Compatible)
+
+- Requests now supports per-host proxies. This allows the ``proxies``
+  dictionary to have entries of the form
+  ``{'<scheme>://<hostname>': '<proxy>'}``. Host-specific proxies will be used
+  in preference to the previously-supported scheme-specific ones, but the
+  previous syntax will continue to work.
+- ``Response.raise_for_status`` now prints the URL that failed as part of the
+  exception message.
+- ``requests.utils.get_netrc_auth`` now takes an ``raise_errors`` kwarg,
+  defaulting to ``False``. When ``True``, errors parsing ``.netrc`` files cause
+  exceptions to be thrown.
+- Change to bundled projects import logic to make it easier to unbundle
+  requests downstream.
+- Changed the default User-Agent string to avoid leaking data on Linux: now
+  contains only the requests version.
+
+**Bugfixes**
+
+- The ``json`` parameter to ``post()`` and friends will now only be used if
+  neither ``data`` nor ``files`` are present, consistent with the
+  documentation.
+- We now ignore empty fields in the ``NO_PROXY`` enviroment variable.
+- Fixed problem where ``httplib.BadStatusLine`` would get raised if combining
+  ``stream=True`` with ``contextlib.closing``.
+- Prevented bugs where we would attempt to return the same connection back to
+  the connection pool twice when sending a Chunked body.
+- Miscellaneous minor internal changes.
+- Digest Auth support is now thread safe.
+
+**Updates**
+
+- Updated urllib3 to 1.12.
+
 2.7.0 (2015-05-03)
 ++++++++++++++++++
 
 This is the first release that follows our new release process. For more, see
-[our documentation](http://docs.python-requests.org/en/latest/community/release-process/).
+`our documentation
+<http://docs.python-requests.org/en/latest/community/release-process/>`_.
 
 **Bugfixes**
 
@@ -161,7 +213,7 @@ This is the first release that follows our new release process. For more, see
 **Bugfixes**
 
 - Only parse the URL once (#2353)
-- Allow Content-Length header to always be overriden (#2332)
+- Allow Content-Length header to always be overridden (#2332)
 - Properly handle files in HTTPDigestAuth (#2333)
 - Cap redirect_cache size to prevent memory abuse (#2299)
 - Fix HTTPDigestAuth handling of redirects after authenticating successfully
@@ -509,7 +561,7 @@ This is not a backwards compatible change.
 - Digest Authentication improvements.
 - Ensure proxy exclusions work properly.
 - Clearer UnicodeError exceptions.
-- Automatic casting of URLs to tsrings (fURL and such)
+- Automatic casting of URLs to strings (fURL and such)
 - Bugfixes.
 
 0.13.6 (2012-08-06)
@@ -561,7 +613,7 @@ This is not a backwards compatible change.
 
 - Removal of Requests.async in favor of `grequests <https://github.com/kennethreitz/grequests>`_
 - Allow disabling of cookie persistiance.
-- New implimentation of safe_mode
+- New implementation of safe_mode
 - cookies.get now supports default argument
 - Session cookies not saved when Session.request is called with return_response=False
 - Env: no_proxy support.
@@ -678,7 +730,7 @@ This is not a backwards compatible change.
 
 * ``Response.content`` is now bytes-only. (*Backwards Incompatible*)
 * New ``Response.text`` is unicode-only.
-* If no ``Response.encoding`` is specified and ``chardet`` is available, ``Respoonse.text`` will guess an encoding.
+* If no ``Response.encoding`` is specified and ``chardet`` is available, ``Response.text`` will guess an encoding.
 * Default to ISO-8859-1 (Western) encoding for "text" subtypes.
 * Removal of `decode_unicode`. (*Backwards Incompatible*)
 * New multiple-hooks system.
@@ -798,7 +850,7 @@ This is not a backwards compatible change.
 0.7.5 (2011-11-04)
 ++++++++++++++++++
 
-* Response.content = None if there was an invalid repsonse.
+* Response.content = None if there was an invalid response.
 * Redirection auth handling.
 
 0.7.4 (2011-10-26)
@@ -885,7 +937,7 @@ This is not a backwards compatible change.
 ++++++++++++++++++
 
 * New callback hook system
-* New persistient sessions object and context manager
+* New persistent sessions object and context manager
 * Transparent Dict-cookie handling
 * Status code reference object
 * Removed Response.cached
@@ -919,7 +971,7 @@ This is not a backwards compatible change.
 * Redirect Fixes
 * settings.verbose stream writing
 * Querystrings for all methods
-* URLErrors (Connection Refused, Timeout, Invalid URLs) are treated as explicity raised
+* URLErrors (Connection Refused, Timeout, Invalid URLs) are treated as explicitly raised
   ``r.requests.get('hwe://blah'); r.raise_for_status()``
 
 
