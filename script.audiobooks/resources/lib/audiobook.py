@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+import locale
 import sys
 import re
 import subprocess
 import traceback
 import xbmc
 import xbmcvfs
+import xbmcgui
 import xbmcaddon
 
 __addon__ = xbmcaddon.Addon(id='script.audiobooks')
@@ -22,8 +24,8 @@ from settings import os_path_split
 from database import AudioBooksDB
 
 
-# Generic class for handling m4b details
-class M4BHandler():
+# Generic class for handling audiobook details
+class AudioBookHandler():
     def __init__(self, audioBookFilePath):
         self.filePath = audioBookFilePath
         self.fileName = os_path_split(audioBookFilePath)[-1]
@@ -32,12 +34,24 @@ class M4BHandler():
         self.chapters = []
         self.numChapters = 0
         self.position = -1
+        self.chapterPosition = -1
         self.totalDuration = -1
         self.isComplete = None
 
+    @staticmethod
+    def createHandler(audioBookFilePath):
+        audiobookType = None
+        # Check which type of Audiobook it is
+        if audioBookFilePath.lower().endswith('.m4b'):
+            audiobookType = M4BHandler(audioBookFilePath)
+        else:
+            audiobookType = FolderHandler(audioBookFilePath)
+
+        return audiobookType
+
     # Will load the basic details needed for simple listings
-    def _loadBasicDetails(self):
-        log("M4BHandler: Loading audio book %s (%s)" % (self.filePath, self.fileName))
+    def _loadDetails(self):
+        log("AudioBookHandler: Loading audio book %s (%s)" % (self.filePath, self.fileName))
 
         # Check to see if we already have an image available
         self.coverImage = self._getExistingCoverImage()
@@ -50,14 +64,16 @@ class M4BHandler():
             self.title = audiobookDetails['title']
             self.numChapters = audiobookDetails['numChapters']
             self.position = audiobookDetails['position']
+            self.chapterPosition = audiobookDetails['chapterPosition']
             self.isComplete = audiobookDetails['complete']
         else:
             self.position = 0
+            self.chapterPosition = 0
             self.isComplete = False
-            self._loadFFmpegDetails()
+            self._loadSpecificDetails()
 
             if self.title in [None, ""]:
-                log("M4BHandler: No title found for %s, using filename" % self.filePath)
+                log("AudioBookHandler: No title found for %s, using filename" % self.filePath)
                 self.title = self._getFallbackTitle()
 
             self.numChapters = len(self.chapters)
@@ -67,80 +83,246 @@ class M4BHandler():
 
         del audiobookDB
 
+    def _loadSpecificDetails(self, includeCover=True):
+        pass
+
+    def getFile(self, tryUtf8=False):
+        filePathValue = self.filePath
+        if tryUtf8:
+            try:
+                filePathValue = filePathValue.encode("utf-8")
+            except:
+                pass
+        return filePathValue
+
+    def getTitle(self):
+        if self.title in [None, ""]:
+            self._loadDetails()
+        return self.title
+
+    def getCoverImage(self, tryUtf8=False):
+        if self.coverImage is None:
+            self._loadDetails()
+
+        coverImageValue = self.coverImage
+        # Make sure the cover is correctly encoded
+        if tryUtf8 and (coverImageValue not in [None, ""]):
+            try:
+                coverImageValue = coverImageValue.encode("utf-8")
+            except:
+                pass
+
+        return coverImageValue
+
+    def getPosition(self):
+        if self.position < 0:
+            self._loadDetails()
+        return self.position, self.chapterPosition
+
+    def getChapterDetails(self):
+        # If the chapter information has not been loaded yet, then we need to load it
+        if len(self.chapters) < 1:
+            self._loadSpecificDetails(includeCover=False)
+        return self.chapters
+
+    def getTotalDuration(self):
+        if self.totalDuration < 0:
+            # The duration is actually set by the last chapter
+            self._loadSpecificDetails(includeCover=False)
+        return self.totalDuration
+
+    def isCompleted(self):
+        if self.isComplete is None:
+            self._loadDetails()
+        return self.isComplete
+
+    def getChapterPosition(self, filename):
+        # Default behaviour is to not track using the chapter
+        return 0
+
+    # Create a list item from an audiobook details
+    def getPlayList(self, startTime=-1, startChapter=0):
+        log("AudioBookHandler: Getting playlist to start for time %d" % startTime)
+        listitem = self._getListItem(self.getTitle(), startTime)
+
+        # Wrap the audiobook up in a playlist
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
+        playlist.clear()
+        playlist.add(self.getFile(), listitem)
+
+        return playlist
+
+    # Create a list item from an audiobook details
+    def _getListItem(self, title, startTime=-1, chapterTitle=''):
+        log("AudioBookHandler: Getting listitem for %s (Chapter: %s)" % (title, chapterTitle))
+
+        listitem = xbmcgui.ListItem()
+        # Set the display title on the music player
+        # Have to set this as video otherwise it will not start the audiobook at the correct Offset place
+        listitem.setInfo('video', {'Title': title})
+
+        if chapterTitle not in [None, ""]:
+            listitem.setInfo('music', {'album': chapterTitle})
+
+        # If both the Icon and Thumbnail is set, the list screen will choose to show
+        # the thumbnail
+        coverImage = self.getCoverImage()
+        if coverImage in [None, ""]:
+            coverImage = __addon__.getAddonInfo('icon')
+
+        listitem.setIconImage(coverImage)
+        listitem.setThumbnailImage(coverImage)
+
+        # Record if the video should start playing part-way through
+        startPoint = startTime
+        if startTime < 0:
+            startPoint = self.getPosition()
+        if startPoint > 0:
+            listitem.setProperty('StartOffset', str(startPoint))
+
+        return listitem
+
     def _getExistingCoverImage(self):
         # Check if there is a cached version, or a local one on the drive
         fullpathLocalImage, bookExt = os.path.splitext(self.filePath)
         fullpathLocalImage = "%s.jpg" % fullpathLocalImage
 
         if xbmcvfs.exists(fullpathLocalImage):
-            log("M4BHandler: Found local cached image %s" % fullpathLocalImage)
+            log("AudioBookHandler: Found local cached image %s" % fullpathLocalImage)
             return fullpathLocalImage
 
         # Check for a cached cover
         return self._getCachedCover(self.fileName)
 
-    # Will load the basic details needed for simple listings
-    def _loadFFmpegDetails(self, includeCover=True):
+    # Checks the cache to see if there is a cover for this audiobook
+    def _getCachedCover(self, fileName):
+        cachedCover = None
+        # check if the directory exists before searching
+        dirs, files = xbmcvfs.listdir(Settings.getCoverCacheLocation())
+        for aFile in files:
+            # Get the filename without extension
+            coverSrc, ext = os.path.splitext(aFile)
+
+            # Get the name that the cached cover will have been stored as
+            targetSrc, bookExt = os.path.splitext(fileName)
+
+            if targetSrc == coverSrc:
+                cachedCover = os_path_join(Settings.getCoverCacheLocation(), aFile)
+                log("AudioBookHandler: Cached cover found: %s" % cachedCover)
+
+        return cachedCover
+
+    def _getFallbackTitle(self):
+        # Remove anything after the final dot
+        sections = self.fileName.split('.')
+        sections.pop()
+        # Replace the dots with spaces
+        return ' '.join(sections)
+
+    # Runs the ffmpeg command, returning the text output, saving the cover image if
+    # a target is given in the request
+    def _runFFmpegCommand(self, fullFileName, coverTargetName=None):
         # Check to see if ffmpeg is enabled
         ffmpeg = Settings.getFFmpegLocation()
 
         if ffmpeg in [None, ""]:
-            log("M4BHandler: ffmpeg not enabled")
-            return
+            log("AudioBookHandler: ffmpeg not enabled")
+            return None
+
+        log("AudioBookHandler: Running ffmpeg for %s" % fullFileName)
 
         info = None
-        try:
-            # Use ffmpeg to read the audio book and extract all of the details
-            startupinfo = None
-            if sys.platform.lower() == 'win32':
-                # Need to stop the dialog appearing on windows
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
-            # The ffmpeg command will throw an error if the image file already exists
-            # so check to see if we already have one
+        # Use ffmpeg to read the audio book and extract all of the details
+        startupinfo = None
+        if sys.platform.lower() == 'win32':
+            # Need to stop the dialog appearing on windows
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
+        # Check if we need the image
+        coverTempName = None
+        if coverTargetName not in [None, '']:
             coverTempName = os_path_join(Settings.getTempLocation(), 'maincover.jpg')
             # Remove the temporary name if it is already there
             if xbmcvfs.exists(coverTempName):
                 xbmcvfs.delete(coverTempName)
 
+        try:
             # Generate the ffmpeg command
-            ffmpegCmd = [ffmpeg, '-hide_banner', '-i', self.filePath, coverTempName]
+            ffmpegCmd = [ffmpeg, '-hide_banner', '-y', '-i', fullFileName]
+
+            # Handle non ascii characters in the file name path
+            try:
+                ffmpegCmd[4] = ffmpegCmd[4].decode('utf-8').encode(locale.getpreferredencoding())
+            except:
+                log("AudioBookHandler: Failed file system encoding ffmpeg command 1, using default")
+                try:
+                    ffmpegCmd[4] = ffmpegCmd[4].encode(locale.getpreferredencoding())
+                except:
+                    log("AudioBookHandler: Failed file system encoding ffmpeg command 2, using default")
+
+            # Add the output image to the command line if it is needed
+            if coverTempName is not None:
+                try:
+                    coverTempName = coverTempName.decode('utf-8').encode(locale.getpreferredencoding())
+                except:
+                    log("AudioBookHandler: Failed file system encoding coverTempName ffmpeg command 1, using default")
+                    try:
+                        coverTempName = coverTempName.encode(locale.getpreferredencoding())
+                    except:
+                        log("AudioBookHandler: Failed file system encoding coverTempName ffmpeg command 2, using default")
+                ffmpegCmd.append(coverTempName)
+
+            # Make the ffmpeg call
             info = subprocess.check_output(ffmpegCmd, shell=False, startupinfo=startupinfo, stderr=subprocess.STDOUT)
 
-            if (self.coverImage in [None, ""]) and includeCover:
-                # Check if there is an image in the temporary location
-                if xbmcvfs.exists(coverTempName):
-                    coverFileName, oldExt = os.path.splitext(self.fileName)
-                    targetCoverName = "%s.jpg" % coverFileName
-                    coverTargetName = os_path_join(Settings.getCoverCacheLocation(), targetCoverName)
-
-                    # Now move the file to the covers cache directory
-                    copy = xbmcvfs.copy(coverTempName, coverTargetName)
-                    if copy:
-                        log("M4BHandler: copy successful for %s" % coverTargetName)
-                        self.coverImage = coverTargetName
-                    else:
-                        log("M4BHandler: copy failed from %s to %s" % (coverTempName, coverTargetName))
-                    xbmcvfs.delete(coverTempName)
-            else:
-                # Tidy up the image that we actually do not need
-                if xbmcvfs.exists(coverTempName):
-                    xbmcvfs.delete(coverTempName)
+        except subprocess.CalledProcessError as error:
+            # This exception will be thrown if ffmpeg prints to STDERR, which it will do if
+            # you try and run the command without an output (i.e. image file), but in most
+            # cases it does actually have the information we need
+            log("AudioBookHandler: CalledProcessError received, processing remaining output")
+            info = error.output
         except:
-            log("M4BHandler: Failed to get data using ffmpeg for file %s with error %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
+            log("AudioBookHandler: Failed to get data using ffmpeg for file %s with error %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
+        # Check if there is an image in the temporary location
+        if coverTempName not in [None, ""]:
+            if xbmcvfs.exists(coverTempName):
+                # Now move the file to the covers cache directory
+                copy = xbmcvfs.copy(coverTempName, coverTargetName)
+                if copy:
+                    log("AudioBookHandler: copy successful for %s" % coverTargetName)
+                else:
+                    log("AudioBookHandler: copy failed from %s to %s" % (coverTempName, coverTargetName))
+
+                # Tidy up the image that we actually do not need
+                xbmcvfs.delete(coverTempName)
+
+        # Now the command has been run
+        ffmpegOutput = None
         if info not in [None, ""]:
-            self._processFFmpegOutput(info)
+            ffmpegOutput = self._processFFmpegOutput(info)
+
+        return ffmpegOutput
 
     # Handles the processing of the text output of ffmpeg
     def _processFFmpegOutput(self, info):
-        log("M4BHandler: FFmpeg info for file %s is: %s" % (self.filePath, info))
+        log("AudioBookHandler: FFmpeg info is: %s" % info)
 
         # The pattern to find chapter info
-        chapter_pattern = re.compile('^Chapter #(\d+)[\.:](\d+): start (\d+\.\d+), end (\d+\.\d+)$')
+        chapter_pattern = re.compile('^Chapter #(\d+)[\.:](\d+): start (\d+\.\d+), end (\d+\.\d+)$', re.IGNORECASE)
         # The pattern that finds the title for a chapter
-        title_pattern = re.compile('^\s*title\s*:\s*(.*)$')
+        title_pattern = re.compile('^\s*title\s*:\s*(.*)$', re.IGNORECASE)
+        album_pattern = re.compile('^\s*album\s*:\s*(.*)$', re.IGNORECASE)
+        # The pattern to find the total duration
+        duration_pattern = re.compile('^\s*Duration\s*:\s*(.*), start', re.IGNORECASE)
+
+        title = None
+        album = None
+        duration = None
+        chapters = []
+        totalDuration = None
 
         # Get the title from the output
         lines = info.split('\n')
@@ -157,11 +339,23 @@ class M4BHandler():
                 break
 
             # Check for the first title as that will be the main title
-            if self.title in [None, ""]:
+            if title in [None, ""]:
                 main_title_match = title_pattern.match(line)
                 if main_title_match:
-                    self.title = main_title_match.group(1)
-                    log("M4BHandler: Found title in ffmpeg output: %s" % self.title)
+                    title = main_title_match.group(1)
+                    log("AudioBookHandler: Found title in ffmpeg output: %s" % title)
+
+            if album in [None, ""]:
+                main_album_match = album_pattern.match(line)
+                if main_album_match:
+                    album = main_album_match.group(1)
+                    log("AudioBookHandler: Found album in ffmpeg output: %s" % album)
+
+            if duration in [None, 0, ""]:
+                main_duration_match = duration_pattern.match(line)
+                if main_duration_match:
+                    duration = self._getSecondsInTimeString(main_duration_match.group(1))
+                    log("AudioBookHandler: Found duration in ffmpeg output: %s" % duration)
 
             # Chapters are listed in the following format
             # ---
@@ -169,7 +363,6 @@ class M4BHandler():
             # Metadata:
             #   title           : Part 30
             # ---
-
             chapter_match = chapter_pattern.match(line)
             # If we found a chapter, skip ahead to the title and ignore the lines between them
             if not chapter_match:
@@ -184,7 +377,7 @@ class M4BHandler():
             # chapter_subnum = chapter_match.group(2)
             start_time = int(float(chapter_match.group(3)))
             end_time = int(float(chapter_match.group(4)))
-            duration = end_time - start_time
+            chapterDuration = end_time - start_time
 
             chapterTitle = ""
             if title_match:
@@ -194,66 +387,89 @@ class M4BHandler():
                 chapterTitle = "%s %d" % (__addon__.getLocalizedString(32017), chapterNum)
 
             chapterNum += 1
-            log("M4BHandler: Chapter details. Title: %s, start_time: %s, end_time: %s, duration: %d" % (chapterTitle, start_time, end_time, duration))
+            log("AudioBookHandler: Chapter details. Title: %s, start_time: %s, end_time: %s, duration: %d" % (chapterTitle, start_time, end_time, chapterDuration))
 
-            detail = {'title': chapterTitle, 'startTime': start_time, 'endTime': end_time, 'duration': duration}
-            self.chapters.append(detail)
+            detail = {'title': chapterTitle.strip(), 'startTime': start_time, 'endTime': end_time, 'duration': chapterDuration}
+            chapters.append(detail)
 
             # The total Duration is always the end of the last chapter
-            self.totalDuration = end_time
+            totalDuration = end_time
 
-    def getFile(self):
-        return self.filePath
+        # If there is no duration, then use the last chapter duration
+        if duration in [None, 0, '']:
+            duration = totalDuration
 
-    def getTitle(self):
-        if self.title in [None, ""]:
-            self._loadBasicDetails()
-        return self.title
+        returnData = {'title': title, 'album': album, 'duration': duration, 'chapters': chapters}
+        return returnData
 
-    def getCoverImage(self):
-        if self.coverImage is None:
-            self._loadBasicDetails()
-        return self.coverImage
+    def _getMainCoverLocation(self):
+        coverFileName, oldExt = os.path.splitext(self.fileName)
+        targetCoverName = "%s.jpg" % coverFileName
+        coverTargetName = os_path_join(Settings.getCoverCacheLocation(), targetCoverName)
 
-    def getPosition(self):
-        if self.position < 0:
-            self._loadBasicDetails()
-        return self.position
+        log("AudioBookHandler: Cached cover target location is %s" % coverTargetName)
+        return coverTargetName
 
-    def getChapterDetails(self):
-        # If the chapter information has not been loaded yet, then we need to load it
-        if len(self.chapters) < 1:
-            self._loadFFmpegDetails(includeCover=False)
-        return self.chapters
+    # Converts a time string 00:00:00.00 to the total number of seconds
+    def _getSecondsInTimeString(self, fullTimeString):
+        # Start by splitting the time into sections
+        hours = 0
+        minutes = 0
+        seconds = 0
 
-    def getTotalDuration(self):
-        if self.totalDuration < 0:
-            # The duration is actually set by the last chapter
-            self._loadFFmpegDetails(includeCover=False)
-        return self.totalDuration
+        try:
+            timeParts = list(reversed(fullTimeString.split(':')))
+            if len(timeParts) > 2:
+                hours = int(timeParts[2])
+            if len(timeParts) > 1:
+                minutes = int(timeParts[1])
+            if len(timeParts) > 1:
+                seconds = int(float(timeParts[0]))
+        except:
+            # time sections are not numbers
+            log("AudioBookHandler: Exception Details: %s" % traceback.format_exc())
+            hours = 0
+            minutes = 0
+            seconds = 0
 
-    def isCompleted(self):
-        if self.isComplete is None:
-            self._loadBasicDetails()
-        return self.isComplete
+        totalInSeconds = (((hours * 60) + minutes) * 60) + seconds
+        log("AudioBookHandler: Time %s, splits into hours=%d, minutes=%d, seconds=%d, total=%d" % (fullTimeString, hours, minutes, seconds, totalInSeconds))
 
-    # Checks the cache to see if there is a cover for this audiobook
-    def _getCachedCover(self, fileName):
-        cachedCover = None
-        # check if the directory exists before searching
-        dirs, files = xbmcvfs.listdir(Settings.getCoverCacheLocation())
-        for aFile in files:
-            # Get the filename without extension
-            coverSrc, ext = os.path.splitext(aFile)
+        # Return the total time in seconds
+        return totalInSeconds
 
-            # Get the name that the cached cover will have been stored as
-            targetSrc, bookExt = os.path.splitext(fileName)
+    def getChapterStart(self, chapterNum):
+        # Work out at what time the given chapter starts, this will be part wat through a file
+        idx = chapterNum - 1
+        if (idx > -1) and (len(self.chapters) > idx):
+            chapterDetails = self.chapters[idx]
+            return chapterDetails['startTime']
+        return 0
 
-            if targetSrc == coverSrc:
-                cachedCover = os_path_join(Settings.getCoverCacheLocation(), aFile)
-                log("M4BHandler: Cached cover found: %s" % cachedCover)
 
-        return cachedCover
+# Class for handling m4b files
+class M4BHandler(AudioBookHandler):
+    def __init__(self, audioBookFilePath):
+        AudioBookHandler.__init__(self, audioBookFilePath)
+
+    # Will load the basic details needed for simple listings
+    def _loadSpecificDetails(self, includeCover=True):
+        # check if the cover is required
+        coverTargetName = None
+        if includeCover:
+            coverTargetName = self._getMainCoverLocation()
+
+        info = self._runFFmpegCommand(self.filePath, coverTargetName)
+
+        # If we needed the cover, then save the details
+        if includeCover:
+            if xbmcvfs.exists(coverTargetName):
+                self.coverImage = coverTargetName
+
+        if info not in [None, ""]:
+            self.title = info['title']
+            self.chapters = info['chapters']
+            self.totalDuration = info['duration']
 
     def _getFallbackTitle(self):
         # Remove anything after the final dot
@@ -261,3 +477,138 @@ class M4BHandler():
         sections.pop()
         # Replace the dots with spaces
         return ' '.join(sections)
+
+
+# Class for handling m4b files
+class FolderHandler(AudioBookHandler):
+    def __init__(self, audioBookFilePath):
+        AudioBookHandler.__init__(self, audioBookFilePath)
+        # The fileName value will be the directory name for Folder audiobooks
+        self.chapterFiles = []
+
+    # Will load the basic details needed for simple listings
+    def _loadSpecificDetails(self, includeCover=True):
+        # List all the files in the directory, as that will be the chapters
+        dirs, files = xbmcvfs.listdir(self.filePath)
+
+        # Check if the cover image is required
+        coverTargetName = None
+        if includeCover and (self.coverImage in [None, ""]):
+            coverTargetName = self._getMainCoverLocation()
+
+        runningStartTime = 0
+        for audioFile in files:
+            if not Settings.isPlainAudioFile(audioFile):
+                continue
+
+            # Store this audio file in the chapter file list
+            fullpath = os_path_join(self.filePath, audioFile)
+            self.chapterFiles.append(fullpath)
+
+            # Make the call to ffmpeg to get the details of the chapter
+            info = self._runFFmpegCommand(fullpath, coverTargetName)
+
+            # If we needed the cover, then save the details
+            if coverTargetName not in [None, ""]:
+                if xbmcvfs.exists(coverTargetName):
+                    self.coverImage = coverTargetName
+                    # Clear the cover image flag so we do not get it again
+                    coverTargetName = None
+
+            duration = 0
+            chapterTitle = None
+            endTime = 0
+            if info not in [None, ""]:
+                if self.title in [None, ""]:
+                    self.title = info['album']
+                duration = info['duration']
+                chapterTitle = info['title']
+                if duration not in [None, 0]:
+                    endTime = runningStartTime + info['duration']
+
+            if chapterTitle in [None, ""]:
+                # Now generate the name of the chapter from the audio file
+                sections = audioFile.split('.')
+                sections.pop()
+                # Replace the dots with spaces
+                chapterTitle = ' '.join(sections)
+
+            detail = {'title': chapterTitle, 'startTime': runningStartTime, 'endTime': endTime, 'duration': duration}
+            self.chapters.append(detail)
+            # Set the next start time to be after this chapter
+            runningStartTime = endTime
+
+        if runningStartTime > 0:
+            self.totalDuration = runningStartTime
+
+    # Create a list item from an audiobook details
+    def getPlayList(self, startTime=-1, startChapter=0):
+        log("FolderHandler: Getting playlist to start for time %d" % startTime)
+
+        # Wrap the audiobook up in a playlist
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
+        playlist.clear()
+
+        # Add each chapter file
+        idx = 0
+        startPosition = 0
+        if startTime > 0:
+            startPosition = startTime
+
+        # Start on the correct chapter
+        if startChapter > 1:
+            idx = startChapter - 1
+
+        while idx < len(self.getChapterDetails()):
+            chapterDetail = self.chapters[idx]
+            listitem = self._getListItem(self.getTitle(), startPosition, chapterDetail['title'])
+            playlist.add(self.chapterFiles[idx], listitem)
+            # Once we set the correct starting position for the main chapter, reset it
+            # that that the next chapters start at the beginning
+            startPosition = 0
+            idx += 1
+
+        return playlist
+
+    def getChapterPosition(self, filename):
+        chapterPosition = 0
+        if len(self.chapterFiles) < 1:
+            self._loadSpecificDetails(False)
+
+        # Make sure the filename passed in is not utf-8 othersise it will not work
+        compareFilename = filename
+        try:
+            compareFilename = compareFilename .decode('utf-8')
+        except:
+            pass
+
+        if compareFilename in self.chapterFiles:
+            chapterPosition = self.chapterFiles.index(compareFilename)
+            chapterPosition += 1
+            log("FolderHandler: Found Chapter at position %d for %s" % (chapterPosition, filename))
+
+        return chapterPosition
+
+    def getChapterStart(self, chapterNum):
+        # As each chapter is in it's own file, it will always start at zero
+        return 0
+
+    def _getFallbackTitle(self):
+        # Replace the dots with spaces
+        return self.fileName.replace('.', ' ')
+
+    def _getExistingCoverImage(self):
+        # Call the common cover file check first
+        coverImg = AudioBookHandler._getExistingCoverImage(self)
+
+        # There is an extra check that we can make for folder audiobooks
+        # so if one has not been found then look in the folder for folder.jpg
+        if coverImg is None:
+            dirs, files = xbmcvfs.listdir(self.filePath)
+
+            for coverFile in files:
+                if coverFile.lower() in ['folder.jpg', 'folder.png']:
+                    coverImg = os_path_join(self.filePath, coverFile)
+                    break
+
+        return coverImg

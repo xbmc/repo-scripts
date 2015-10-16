@@ -1,2 +1,7 @@
+v1.1.0
+- Add support for non m4b audio books
+- Improve error handling of ffmpeg
+- Add option to automatically number chapters
+
 v1.0.0
 - Initial Release

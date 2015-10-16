@@ -99,3 +99,7 @@ msgstr ""
 msgctxt "#32019"
 msgid "Resume From"
 msgstr ""
+
+msgctxt "#32020"
+msgid "Automatically Number Chapters"
+msgstr ""

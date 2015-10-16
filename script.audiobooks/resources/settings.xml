@@ -4,6 +4,7 @@
 		<setting id="audioBooksFolder" label="32005" type="folder"/>
 		<setting id="ffmpegLocation" label="32015" type="file"/>
     	<setting id="markCompletedItems" label="32016" type="bool" default="true"/>
+    	<setting id="autoNumberChapters" label="32020" type="bool" default="false"/>
 		<setting id="fallbackCoverImage" label="32014" type="image"/>
 	</category>
 	<category label="32007">

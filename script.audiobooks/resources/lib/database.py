@@ -38,7 +38,7 @@ class AudioBooksDB():
             c.execute('''CREATE TABLE version (version text primary key)''')
 
             # Insert a row for the version
-            versionNum = "1"
+            versionNum = "2"
 
             # Run the statement passing in an array with one value
             c.execute("INSERT INTO version VALUES (?)", (versionNum,))
@@ -47,7 +47,7 @@ class AudioBooksDB():
             # The "id" will be auto-generated as the primary key
             # Note: Index will automatically be created for "unique" values, so no
             # need to manually create them
-            c.execute('''CREATE TABLE books (id integer primary key, fullpath text unique, title text, num_chapters integer, position integer, complete integer)''')
+            c.execute('''CREATE TABLE books (id integer primary key, fullpath text unique, title text, num_chapters integer, position integer, complete integer, chapter_position integer)''')
 
             # Save (commit) the changes
             conn.commit()
@@ -55,6 +55,28 @@ class AudioBooksDB():
             # We can also close the connection if we are done with it.
             # Just be sure any changes have been committed or they will be lost.
             conn.close()
+        else:
+            # The database was already created, check to see if they need to be updated
+            # Check if this is an upgrade
+            conn = sqlite3.connect(self.databasefile)
+            conn.text_factory = str
+            c = conn.cursor()
+            c.execute('SELECT * FROM version')
+            currentVersion = int(c.fetchone()[0])
+            log("AudioBooksDB: Current version number in DB is: %d" % currentVersion)
+
+            # If the database is at version one, add the version 2 tables
+            if currentVersion < 2:
+                log("AudioBooksDB: Updating to version 2")
+                # Add the column that was added in version 2
+                # This will always be added to the end
+                c.execute('''ALTER TABLE books ADD COLUMN chapter_position integer DEFAULT 0''')
+                # Update the new version of the database
+                currentVersion = 2
+                c.execute('DELETE FROM version')
+                c.execute("INSERT INTO version VALUES (?)", (currentVersion,))
+                # Save (commit) the changes
+                conn.commit()
 
     # Get a connection to the current database
     def getConnection(self):
@@ -86,10 +108,11 @@ class AudioBooksDB():
         # row[3] - Number of chapters in the book
         # row[4] - Position listened until
         # row[5] - 1 if complete, otherwise 0
+        # row[6] - Chapter number listened until
         completeStatus = False
         if row[5] == 1:
             completeStatus = True
-        returnData = {'fullpath': row[1], 'title': row[2], 'numChapters': row[3], 'position': row[4], 'complete': completeStatus}
+        returnData = {'fullpath': row[1], 'title': row[2], 'numChapters': row[3], 'chapterPosition': row[6], 'position': row[4], 'complete': completeStatus}
 
         conn.close()
         return returnData
@@ -102,7 +125,7 @@ class AudioBooksDB():
         c = conn.cursor()
 
         insertData = (fullPath, title, numChapters)
-        cmd = 'INSERT OR REPLACE INTO books (fullpath, title, num_chapters, position, complete) VALUES (?,?,?,0,0)'
+        cmd = 'INSERT OR REPLACE INTO books (fullpath, title, num_chapters, position, complete, chapter_position) VALUES (?,?,?,0,0,0)'
         c.execute(cmd, insertData)
 
         rowId = c.lastrowid
@@ -111,8 +134,8 @@ class AudioBooksDB():
 
         return rowId
 
-    def setPosition(self, fullPath, position, complete=False):
-        log("AudioBooksDB: Setting read chapter for book %s to %s" % (fullPath, position))
+    def setPosition(self, fullPath, position, chapterPosition=0, complete=False):
+        log("AudioBooksDB: Setting read chapter for book %s to %s (Chapter: %d)" % (fullPath, position, chapterPosition))
 
         # Get a connection to the DB
         conn = self.getConnection()
@@ -121,8 +144,8 @@ class AudioBooksDB():
         completeStatus = 0
         if complete:
             completeStatus = 1
-        insertData = (position, completeStatus, fullPath)
-        cmd = 'UPDATE books SET position = ?, complete = ? WHERE fullpath = ?'
+        insertData = (position, completeStatus, chapterPosition, fullPath)
+        cmd = 'UPDATE books SET position = ?, complete = ?, chapter_position = ? WHERE fullpath = ?'
 
         c.execute(cmd, insertData)
 
@@ -157,11 +180,12 @@ class AudioBooksDB():
             # row[3] - Number of chapters in the book
             # row[4] - Position listened until
             # row[5] - 1 if complete, otherwise 0
+            # row[6] - Chapter number listened until
             for row in rows:
                 completeStatus = False
                 if row[5] == 1:
                     completeStatus = True
-                details = {'fullpath': row[1], 'title': row[2], 'numChapters': row[3], 'position': row[4], 'complete': completeStatus}
+                details = {'fullpath': row[1], 'title': row[2], 'numChapters': row[3], 'chapterPosition': row[6], 'position': row[4], 'complete': completeStatus}
                 results.append(details)
 
         conn.close()
