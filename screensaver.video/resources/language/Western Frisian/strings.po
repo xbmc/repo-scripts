@@ -16,6 +16,14 @@ msgstr ""
 "Language: fy\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Ynstellingen"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Triem"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Gjin"

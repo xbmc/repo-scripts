@@ -20,6 +20,22 @@ msgctxt "#32001"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "ပိတ်"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "ပြုပြင်ရန်"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "ဖိုင်"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "အဆုံးသတ်ချိန်"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "ဘာမှမဟုတ်"

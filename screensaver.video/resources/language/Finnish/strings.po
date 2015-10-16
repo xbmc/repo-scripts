@@ -32,6 +32,26 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Asetukset"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Ei käytössä"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Asetukset"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Tiedosto"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Päättymisaika"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Ajastus"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Pois"

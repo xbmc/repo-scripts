@@ -32,6 +32,18 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguracija"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Isklj."
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Postavke"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Datoteke"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Ništa"

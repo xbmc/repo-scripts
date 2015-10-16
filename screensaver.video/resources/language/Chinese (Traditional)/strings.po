@@ -32,6 +32,26 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "系統設定"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "關閉"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "系統設定"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "檔案"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "結束時間"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "時間表"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "關閉"

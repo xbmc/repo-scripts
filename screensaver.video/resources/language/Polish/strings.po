@@ -44,6 +44,10 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Uruchomienie"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Odtwarzaj wygaszacz po uruchomieniu programu"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Predefiniowane wideo"
@@ -71,6 +75,26 @@ msgstr "Powtarzaj wszystkie"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Powtarzaj jeden"
+
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Ustawienia harmonogramu"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Wyłączone"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Ustawienia"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Plik"
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "Plik ustawień harmonogramu"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -127,6 +151,42 @@ msgstr "Ustawiaj poziom głośności po uruchomieniu na"
 msgctxt "#32063"
 msgid "Use Audio Engine Suspend For 0 Volume"
 msgstr "Wstrzymuj dźwiękowe urządzenie wyjściowe dla poziomu głośności 0"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Początek o godzinie"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Koniec o godzinie"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Wyzwalacz"
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Liczba reguł harmonogramu"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Reguła 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Reguła 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Reguła 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Reguła 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Reguła 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -239,6 +299,22 @@ msgstr "Johnny Castaway 1 - [75MB] - 480p"
 msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Ocean 1 - [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Akwarium 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Kosmos 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Zegar 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Zegar 2 - [1.3GB] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

@@ -36,6 +36,30 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Uppsetning"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Ræsing"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Af"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Stillingar"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Skrá"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Lokatími"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Dagskrá"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Enginn"

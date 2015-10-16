@@ -32,6 +32,26 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "ปรับตั้งค่า"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "ปิด"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "แฟ้ม"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "เวลาสิ้นสุด"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "ตารางงาน"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "ไม่มี"

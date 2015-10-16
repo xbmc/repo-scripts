@@ -32,6 +32,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Nastavitve"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Izključeno"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Nastavitve"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Datoteka"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Čas zaključka"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Brez"

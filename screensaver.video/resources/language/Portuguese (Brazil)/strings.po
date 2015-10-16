@@ -44,6 +44,10 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Inicialização"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Lançar protetor de tela ao inicializar"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Vídeo Pré-Ajustado"
@@ -71,6 +75,26 @@ msgstr "Repetir tudo"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repetir uma vez"
+
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Ajustes de agendamento"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Desligado"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Ajustes"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Arquivo"
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "Arquivo de ajustes de agendamentos"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -127,6 +151,42 @@ msgstr "Setar o volume ao inicializar para"
 msgctxt "#32063"
 msgid "Use Audio Engine Suspend For 0 Volume"
 msgstr "Usar suspender na engine de áudio para o volume 0"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Hora de Início"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Hora Término"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Agendar"
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Número de regras de agendamentos"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Regra 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Regra 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Regra 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Regra 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Regra 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -239,6 +299,22 @@ msgstr "Johnny Castaway 1 - [75MB] - 480p"
 msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Ocean 1 - [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Aquarium 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Space 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Clock 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Clock 2 - [1.3GB] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

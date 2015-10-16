@@ -68,6 +68,18 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Ponovi jednom"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Isključen"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Postavke"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Datoteka"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Postavi/Preuzmi datoteku predloška video snimke"
@@ -91,6 +103,14 @@ msgstr "Odaberi mapu video snimaka"
 msgctxt "#32055"
 msgid "Prevent Screensaver Starting If Playing Media"
 msgstr "Spriječi pokretanje čuvara zaslona ako se medij repoducira"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Vrijeme završetka"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Planirano vrijeme"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

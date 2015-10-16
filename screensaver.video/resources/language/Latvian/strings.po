@@ -32,6 +32,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurācija"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Izslēgts"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Iestatījumi"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fails"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Beigu laiks"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Nav"

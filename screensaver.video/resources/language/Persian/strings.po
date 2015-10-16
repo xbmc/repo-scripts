@@ -16,6 +16,14 @@ msgstr ""
 "Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "خاموش"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "تنظیمات"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "خالی"

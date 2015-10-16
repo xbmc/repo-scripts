@@ -44,6 +44,26 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repeter èn gang"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Av"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Innstillinger"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fil"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Ferdig klokken"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Planlegg"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Ingen"

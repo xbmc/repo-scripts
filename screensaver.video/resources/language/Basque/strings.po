@@ -32,6 +32,26 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurazioa"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Itzali"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Ezarpenak"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fitxategia"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Amaiera ordua"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Plangintza"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Bat ere ez"

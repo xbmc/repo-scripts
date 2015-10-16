@@ -32,6 +32,26 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuración"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Apagado"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Configuración"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fichero"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Hora de Finalización"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Programación"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Ninguno"

@@ -32,6 +32,10 @@ msgctxt "#32004"
 msgid "Video Selection"
 msgstr "בחירת וידאו"
 
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "שומר מסך וידאו"
+
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "הגדרות"
@@ -39,6 +43,18 @@ msgstr "הגדרות"
 msgctxt "#32007"
 msgid "Startup"
 msgstr "הפעלה"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "מותאם אישית"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "שומר מסך נבחר"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "להשתמש בכל קבצים בתיקייה"
 
 msgctxt "#32025"
 msgid "Repeat All"
@@ -48,6 +64,54 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "חזרה אחת"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "כבוי"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "אפשרויות"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "קובץ"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "בחירת קובץ וידאו"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "הצג זמן"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "בחירת תיקיית וידאו"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "רמת עמעום"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "זמן התחלה"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "זמן סיום"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "תזמון"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** כל וידאו שהורד ***"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "ללא"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "מותאם אישית"

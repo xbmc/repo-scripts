@@ -44,6 +44,10 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Opstarten"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Start schermbeveiliging bij aanvang"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Voor ingestelde video"
@@ -71,6 +75,26 @@ msgstr "Alles herhalen"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Eén Herhalen"
+
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Schema instellingen"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Uit"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Instellingen"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Bestand"
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "Schema instellingenbestand"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -127,6 +151,42 @@ msgstr "Stel volume bij opstart in op"
 msgctxt "#32063"
 msgid "Use Audio Engine Suspend For 0 Volume"
 msgstr "Gebruik Geluidsbron uitgesteld voor 0 Volume"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Start tijd"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Eind tijd"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Inplannen"
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Nummer van schema regels"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Regel 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Regel 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Regel 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Regel 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Regel 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -206,7 +266,7 @@ msgstr "Waterval 3 - [2.4GB] - 720p"
 
 msgctxt "#32119"
 msgid "Beach 3 - [3.4GB] - 720p"
-msgstr "strand 3 - [3.4GB] - 720p"
+msgstr "Strand 3 - [3.4GB] - 720p"
 
 msgctxt "#32120"
 msgid "Snow 1 - [1.3GB] - 720p"
@@ -239,6 +299,22 @@ msgstr "Johnny Castaway 1 - [75MB] - 480p"
 msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Oceaan 1 0 [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Aquarium 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Ruimte 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Klok 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Klok 2 - [1.3GB] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

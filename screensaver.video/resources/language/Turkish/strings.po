@@ -40,6 +40,14 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Yapılandırma"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Başlangıç"
+
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Başlangıçta Ekran Koruyucuyu Başlat"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Önayarlı Video"
@@ -67,6 +75,26 @@ msgstr "Hepsini Tekrarla"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Birini Tekrarla"
+
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Zamanlama Ayarları"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Kapalı"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Ayarlar"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Dosya"
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "Zamanlama Ayarları Dosyası"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -111,6 +139,54 @@ msgstr "Ekran koruyucuyu otomatik olarak durdur"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Ekran koruyucuyu durdurma zamanı (dakika)"
+
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Başlangıçta Ses Düzeyini Sıfırla"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Başlandıçta Ses Düzeyini Ayarla"
+
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "0 Ses Düzeyi İçin Ses Altyapısını Askıya Almayı Kullan"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Başlangıç Zamanı"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Bitiş Zamanı"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Zamanlama"
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Zamanlama Kuralı Sayısı"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Kural 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Kural 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Kural 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Kural 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Kural 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -223,6 +299,22 @@ msgstr "Johnny Castaway 1 - [75MB] - 480p"
 msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Okyanus 1 - [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Akvaryum 5  - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Uzay 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Saat 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Saat 2 - [1.3GB] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

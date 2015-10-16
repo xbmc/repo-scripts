@@ -40,6 +40,14 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Настройки"
 
+msgctxt "#32007"
+msgid "Startup"
+msgstr "Стартиране"
+
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "При стартиране включи скрийнсейвъра"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Шаблонни"
@@ -67,6 +75,18 @@ msgstr "Повтори всички"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Повтори един"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Изключено"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Настройки"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Файл"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -111,6 +131,38 @@ msgstr "Спирай скрийнсейвъра автоматично"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Спирай скрийсейвъра след (мин)"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Начален час"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Краен час"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Планиране"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Правило 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Правило 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Правило 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Правило 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Правило 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -216,6 +268,22 @@ msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Океан 1 - [1.1GB] - 720p"
 
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Аквариум 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Космос 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Часовник 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Часовник 2 - [1.3GB] - 360p"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Без"
@@ -223,6 +291,18 @@ msgstr "Без"
 msgctxt "#32203"
 msgid "User Defined"
 msgstr "Избрани"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Рамка на снимка 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Рамка на прозорец 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Рамка на прозорец 2 "
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"

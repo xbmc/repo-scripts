@@ -40,6 +40,26 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "При запуске"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Выкл."
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Настройки"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Файл"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Время окончания"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Расписание"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Нет"

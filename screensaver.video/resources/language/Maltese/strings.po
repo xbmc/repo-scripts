@@ -24,6 +24,18 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfigurazzjoni"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Mitfi"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Settings"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fajl"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Xejn"

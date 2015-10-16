@@ -19,3 +19,11 @@ msgstr ""
 msgctxt "#32001"
 msgid "Screensaver"
 msgstr "Ekran qoruyucusu"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Parametrlər"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fayl"

@@ -40,6 +40,26 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Spustenie"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Vypnuté"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Nastavenia"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Súbor"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Skončí o"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Plán"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Žiadne"

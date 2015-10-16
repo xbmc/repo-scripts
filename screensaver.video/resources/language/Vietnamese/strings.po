@@ -28,6 +28,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Cấu hình"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Tắt"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Cài Đặt"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Tập tin"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Giờ Hết"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Không"

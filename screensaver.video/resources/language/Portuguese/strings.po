@@ -72,6 +72,18 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repetir Um"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Desligado"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Definições"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Ficheiro"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Definir/Descarregar Ficheiro Vídeo Pré-selecionado"
@@ -115,6 +127,14 @@ msgstr "Parar Protector de Ecrã Automaticamente"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Parar Protector de Ecrã Após (Minutos)"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Hora de término"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Programação"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

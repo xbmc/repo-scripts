@@ -235,6 +235,13 @@ class Settings():
         return __addon__.getSetting("useFolder") == "true"
 
     @staticmethod
+    def isFolderNested():
+        nested = False
+        if Settings.isFolderSelection():
+            nested = __addon__.getSetting("screensaverFolderNested") == "true"
+        return nested
+
+    @staticmethod
     def setVideoSelectionPredefined():
         __addon__.setSetting("videoSelection", "0")
 
@@ -312,6 +319,10 @@ class Settings():
         if __addon__.getSetting("stopAutomatic") == 'true':
             timoutSetting = int(float(__addon__.getSetting("stopAfter")))
         return timoutSetting
+
+    @staticmethod
+    def isShutdownAfterTimeout():
+        return __addon__.getSetting("stopAutomaticShutdown") == 'true'
 
     @staticmethod
     def getFolderRepeatType():

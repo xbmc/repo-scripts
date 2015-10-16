@@ -72,6 +72,18 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repetera en"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Av"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Inställningar"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fil"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Ange/ladda ned förinställd filmfil"
@@ -115,6 +127,14 @@ msgstr "Stoppa skärmsläckaren automatiskt"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Stoppa skärmsläckare efter (minuter)"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Sluttid"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Schema"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

@@ -72,6 +72,18 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "重复单个"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "关"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "设置"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "文件"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "设置/下载预置视频文件"
@@ -115,6 +127,14 @@ msgstr "自动停止屏幕保护"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "延时停止屏幕保护（分）"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "结束时间"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "时间安排"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

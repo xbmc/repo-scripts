@@ -32,6 +32,26 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "設定"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "オフ"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "設定"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "ファイル"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "終了時間"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "スケジュール"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "なし"

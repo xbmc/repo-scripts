@@ -32,6 +32,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "إعدادات"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "معطلة"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "الإعدادات"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "المجلد"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "وقت الانتهاء"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "بلا"

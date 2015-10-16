@@ -32,6 +32,26 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Permulaan"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Dimatikan"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Seting"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fail"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Masa Akhir"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Jadual"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Tiada"

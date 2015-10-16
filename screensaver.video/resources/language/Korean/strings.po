@@ -72,6 +72,18 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "한 개 반복"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "끔"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "설정"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "파일"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "프리셋 비디오 파일 설정/다운로드"
@@ -123,6 +135,18 @@ msgstr "시작할 때 음량 초기화"
 msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "시작할 때 음량 설정:"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "시작 시각"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "종료 시각"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "예약"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

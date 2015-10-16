@@ -32,6 +32,26 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "கட்டமைப்பு"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "நிறுத்து"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "அமைப்புக்கள்"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "கோப்பு"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "முடியும் நேரம்"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "திட்டமிடு"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "எதுவுமில்லை"

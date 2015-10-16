@@ -32,6 +32,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "پیکربندی"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "خاموش"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "تنظیمات"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "فایل"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "زمان اتمام"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "هیچ"

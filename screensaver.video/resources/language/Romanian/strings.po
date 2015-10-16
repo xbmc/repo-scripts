@@ -48,6 +48,18 @@ msgctxt "#32022"
 msgid "Selected Screensaver"
 msgstr "Protector ecran selectat"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Oprit"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Setări"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fișier"
+
 msgctxt "#32052"
 msgid "Show Time"
 msgstr "Arată ora"
@@ -55,6 +67,10 @@ msgstr "Arată ora"
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nivel de întunecare"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Se termină la"
 
 msgctxt "#32202"
 msgid "None"

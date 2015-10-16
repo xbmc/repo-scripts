@@ -7,7 +7,8 @@
 		<setting id="useFolder" subsetting="true" visible="eq(-3,1)" type="bool" label="32023" default="false"/>
 		<setting id="screensaverFile" label="32051" subsetting="true" visible="eq(-4,1) + eq(-1,false)" type="video"/>
 		<setting id="screensaverFolder" label="32054" subsetting="true" visible="eq(-5,1) + eq(-2,true)" type="folder"/>
-		<setting id="folderRepeatType" subsetting="true" visible="eq(-6,1) + eq(-3,true)" type="enum" label="32024" lvalues="32025|32026" default="0"/>
+		<setting id="screensaverFolderNested" label="32010" subsetting="true" visible="eq(-6,1) + eq(-3,true)" type="bool" default="false"/>
+		<setting id="folderRepeatType" subsetting="true" visible="eq(-7,1) + eq(-4,true)" type="enum" label="32024" lvalues="32025|32026" default="0"/>
 		<setting id="overlayImage" type="enum" label="32200" lvalues="32202|32204|32205|32206|32203" default="0"/>
 		<setting id="overlayImageFile" label="32201" subsetting="true" visible="eq(-1,4)" type="image"/>
     	<setting label="32002" type="lsep"/>
@@ -23,6 +24,7 @@
 		<setting id="dimLevel" type="slider" label="32058" range="0,1,14" option="int" default="0"/>
 		<setting id="stopAutomatic" type="bool" label="32059" default="false"/>
 		<setting id="stopAfter" subsetting="true" visible="eq(-1,true)" label="32060" type="slider" default="60" range="5,5,240" option="int"/>
+		<setting id="stopAutomaticShutdown" subsetting="true" visible="eq(-2,true)" type="bool" label="32009" default="false"/>
 	</category>
 	<category label="32007">
     	<setting id="resetVolumeOnStartup" type="bool" label="32061" default="false"/>

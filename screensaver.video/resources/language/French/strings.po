@@ -44,6 +44,10 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Démarrage"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Lancer l'économiseur d'écran au démarrage"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Préréglage Vidéo"
@@ -71,6 +75,26 @@ msgstr "Tout Répéter"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Répéter une fois"
+
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Paramètres de planification"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Non"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Paramètres"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fichier"
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "Fichier de paramètres de planification"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -127,6 +151,42 @@ msgstr "Activer le son au démarrage de"
 msgctxt "#32063"
 msgid "Use Audio Engine Suspend For 0 Volume"
 msgstr "Mettre en veille le moteur audio pour un volume à 0"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Heure de début"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Heure de fin"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Planifier"
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Nombre de règles de planification"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Règle 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Règle 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Règle 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Règle 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Règle 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -239,6 +299,22 @@ msgstr "Johnny Castaway 1 - [75Mo] - 480p"
 msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Ocean 1 - [1.1Go] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Aquarium 5  - [3.0Go] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Space 3 - [2.2Go] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Clock 1 - [1.5Go] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Clock 2 - [1.3Go] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

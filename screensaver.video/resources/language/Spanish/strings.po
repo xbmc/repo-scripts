@@ -72,6 +72,18 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repetir Uno"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Desactivado"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Opciones"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Archivo"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Colocar/Descargar archivo de vídeo precargado"
@@ -123,6 +135,14 @@ msgstr "Restablecer Volumen al iniciar"
 msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "Ajustar Volumen al iniciar"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Hora de Finalización"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Guía TV"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

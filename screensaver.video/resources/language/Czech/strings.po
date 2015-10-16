@@ -44,6 +44,26 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Opakovat jednou"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Vypnuto"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Nastavení"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Soubor"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Čas ukončení"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Rozvrh"
+
 msgctxt "#32200"
 msgid "Overlay Image"
 msgstr "Obrázek pro overlay "

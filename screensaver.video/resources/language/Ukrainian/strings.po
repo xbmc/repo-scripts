@@ -32,6 +32,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Налаштування"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Вимкн."
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Налаштування"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Файл"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Час закінчення"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Нічого"

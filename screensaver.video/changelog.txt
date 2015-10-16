@@ -1,3 +1,7 @@
+v1.2.1
+- Add option to shutdown after the screensaver is automatically stopped
+- Search sub-directories when custom folder location selected
+
 v1.2.0
 - Add scheduled video option
 - Add option to launch the screensaver on startup

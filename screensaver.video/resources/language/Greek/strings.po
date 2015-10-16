@@ -44,6 +44,10 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Εκκίνηση"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Εκκίνηση προφύλαξης οθόνης κατά την εκκίνηση του Kodi"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Προρυθμισμένο Βίντεο"
@@ -71,6 +75,26 @@ msgstr "Επανάληψη Όλων"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Επανάληψη Ενός"
+
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Ρυθμίσεις Προγράμματος"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Ανενεργό"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Αρχείο"
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "Αρχείο Ρυθμίσεων Προγράμματος"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -115,6 +139,54 @@ msgstr "Αυτόματη Διακοπή Προφύλαξης Οθόνης"
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Διακοπή Προφύλαξης Οθόνης Μετά Από (Λεπτά)"
+
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Επαναφορά Έντασης κατά την εκκίνηση"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Ορισμός Έντασης κατά την εκκίνηση στο"
+
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Χρησιμοποίησε την Αδρανοποίηση της Μηχανής Ήχου για Ένταση 0"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Χρόνος Έναρξης"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Χρόνος λήξης"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Προγραμματισμός"
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Αριθμός προγραμματισμένων Κανόνων"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Κανόνας 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Κανόνας 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Κανόνας 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Κανόνας 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Κανόνας 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -211,6 +283,38 @@ msgstr "Χιόνι 3 - [1.2GB] - 720p"
 msgctxt "#32123"
 msgid "Watermill 1 - [549MB] - 1080p"
 msgstr "Νερόμυλος 1 - [549MB] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Ενυδρείο 4 - [780ΜΒ] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Χριστούγεννα 1 - [777MB] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny Castaway 1 - [75MB] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Ωκεανός 1 - [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Ενυδρείο 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Διάστημα 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Ρολόι 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Ρολόι 2 - [1.3GB] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

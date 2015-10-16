@@ -36,6 +36,26 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Opstart"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Fra"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Indstillinger"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fil"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Sluttid"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Tidsplan"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Intet"

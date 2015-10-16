@@ -40,6 +40,18 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Arrinque"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Iniciar o protector de pantalla no Inicio"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Protector de pantalla seleccionado"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "Empregar todos os ficheiros dun cartafol"
+
 msgctxt "#32025"
 msgid "Repeat All"
 msgstr "Repetir Todos"
@@ -48,10 +60,250 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repetir Un"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Apagado"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Configuracións"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Arquivo"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Seleccionar o ficheiro de vídeo"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Amosar a hora"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "Iniciar o vídeo nun punto ó chou"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "Seleccionar o cartafol dos vídeos"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Evitar iniciar o protector de pantalla durante a reprodución dun medio"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Mudar o volume cando inicie o protector de pantalla"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Estabelecer o volume a"
+
 msgctxt "#32058"
 msgid "Dim Level"
 msgstr "Nivel de atenuación"
 
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Deter automaticamente o protector de pantalla"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Deter o protector de pantalla despois de (minutos)"
+
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Restabelecer o volume ao iniciar"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Estabelecer o volume ao iniciar a"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Hora de fin"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Programación"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Regra 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Regra 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Regra 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Regra 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Regra 5"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** Todos os vídeos descargados ***"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Acuario 1  - [846MB] - 400p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Acuario 2  - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Cheminea 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Cheminea 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Cheminea 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Acuario 3  - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Cheminea 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Espazo 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Praia 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Praia 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Espazo 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Bosque 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Sci-Fi Retro 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Fervenza 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Fervenza 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Fervenza 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Praia 3 - [3.4GB] - 720p"
+
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Neve 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Neve 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Neve 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Muíño 1 - [549MB] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Acuario 4 - [780MB] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Nadal 1 - [777MB] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny Castaway 1 - [75MB] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Oceano 1 - [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Acuario 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Espazo 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Reloxo 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Reloxo 2 - [1.3GB] - 360p"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Ningún"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "Ficheiro non válido"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "Este vídeo xa existe"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Volver empregar este ficheiro?"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "Descargar ficheiro de vídeo"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "Esta opción empregará todos os vídeos descargados"
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "Primeiro cada vídeo ten que ser descargado individualmente"
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Fallou a descarga do vídeo"

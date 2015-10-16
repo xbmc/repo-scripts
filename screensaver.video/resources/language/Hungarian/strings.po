@@ -48,6 +48,26 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Ismétlés Egyszer"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Kikapcsolva"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Beállítások"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Helyi fájl"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Befejezés időpontja"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Időzítés"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Nincs"

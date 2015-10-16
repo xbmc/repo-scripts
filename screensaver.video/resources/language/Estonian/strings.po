@@ -32,6 +32,26 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Konfiguratsioon"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Väljas"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Seaded"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Failinimi"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Lõpp aeg"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Ajakava"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Puudub"

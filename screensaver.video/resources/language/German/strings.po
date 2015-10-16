@@ -44,6 +44,10 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Starten"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Bildschirmschoner beim Starten ausführen"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Standardvideo"
@@ -71,6 +75,26 @@ msgstr "Alle wiederholen"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Eins wiederholen"
+
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Zeitplaneinstellungen"
+
+msgctxt "#32028"
+msgid "Off"
+msgstr "Aus"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Datei"
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "Zeitplaneinstellungsdatei"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -123,6 +147,42 @@ msgstr "Lautstärke beim Starten zurücksetzen"
 msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "Lautstärke beim Starten festlegen auf"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Startzeit"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Endzeit"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Zeitplan"
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Anzahl der Zeitplanregeln"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Regel 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Regel 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Regel 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Regel 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Regel 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -235,6 +295,22 @@ msgstr "Johnny Castaway 1 - [75MB] - 480p"
 msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Ozean 1 - [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Aquarium 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Weltraum 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Uhr 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Uhr 2 - [1.3GB] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

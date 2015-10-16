@@ -72,6 +72,18 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Ripeti uno"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Off"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "File"
+
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
 msgstr "Imposta/Scarica Video File Preferito"
@@ -127,6 +139,14 @@ msgstr "Imposta Volume All'Avvio A"
 msgctxt "#32063"
 msgid "Use Audio Engine Suspend For 0 Volume"
 msgstr "Usa Sospensione Engine Audio Per Volume 0"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Orario fine riproduzione"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Palinsesto"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"
@@ -239,6 +259,22 @@ msgstr "Johnny Castaway 1 - [75MB] - 480p"
 msgctxt "#32127"
 msgid "Ocean 1 - [1.1GB] - 720p"
 msgstr "Oceano 1 - [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Acquario 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Spazio 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Orologio 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Orologio 2 - [1.3GB] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"

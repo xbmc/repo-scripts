@@ -24,6 +24,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "ማዋቀሪያ "
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "ማጥፊያ "
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "ማሰናጃዎች"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "ፋይል"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "መጨረሻው ጊዜ"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "ምንም "

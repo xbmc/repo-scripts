@@ -16,6 +16,22 @@ msgstr ""
 "Language: hy\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Անջատել"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Կարգավորումներ"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Ֆայլ"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Վերջ"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Ոչինչ"

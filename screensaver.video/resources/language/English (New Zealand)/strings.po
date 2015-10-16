@@ -48,6 +48,26 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repeat One"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Off"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Settings"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "File"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "End Time"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Schedule"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "None"

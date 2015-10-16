@@ -32,6 +32,22 @@ msgctxt "#32006"
 msgid "Configuration"
 msgstr "Ffurfweddiad"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Diffodd"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Gosodiadau"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Ffeil"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Amser Gorffen"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Dim"

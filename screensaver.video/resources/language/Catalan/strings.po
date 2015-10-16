@@ -40,6 +40,26 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Inici"
 
+msgctxt "#32028"
+msgid "Off"
+msgstr "Inactiu"
+
+msgctxt "#32029"
+msgid "Settings"
+msgstr "Configuració"
+
+msgctxt "#32030"
+msgid "File"
+msgstr "Fitxer"
+
+msgctxt "#32065"
+msgid "End Time"
+msgstr "Hora de finalització"
+
+msgctxt "#32066"
+msgid "Schedule"
+msgstr "Planificació"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "Cap"
