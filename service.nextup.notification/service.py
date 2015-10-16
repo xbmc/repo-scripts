@@ -33,11 +33,14 @@ class Service():
 
     def ServiceEntryPoint(self):
         player = Player()
-
+        monitor = xbmc.Monitor()
+        
         lastFile = None
-
-        while not xbmc.abortRequested:
-            xbmc.sleep(1000)
+        while not monitor.abortRequested():
+            # check every 5 sec
+            if monitor.waitForAbort(5):
+                # Abort was requested while waiting. We should exit
+                break
             if xbmc.Player().isPlaying():
                 try:
                     playTime = xbmc.Player().getTime()
@@ -58,13 +61,9 @@ class Service():
                             player.autoPlayPlayback()
                             self.logMsg("Netflix style autoplay succeeded.", 2)
 
-                    xbmc.sleep(1000)
-
                 except Exception as e:
                     self.logMsg("Exception in Playback Monitor Service: %s" % e)
                     pass
-            else:
-                xbmc.sleep(5000)
 
         self.logMsg("======== STOP %s ========" % self.addonName, 0)
 

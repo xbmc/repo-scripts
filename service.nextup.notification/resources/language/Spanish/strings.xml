@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30001">Segundos antes del final a los que mostrar la notificación</string>
+    <string id="30002">Nivel del log:</string>
+    <string id="30003">Configuración</string>
+    <string id="30004">Avanzado</string>
+    <string id="30005">Acción por defecto cuando nada es seleccionado</string>
+    <string id="30006">Ver ahora</string>
+    <string id="30007">Presione Cancelar para detener la reproducción automática del siguiente episodio...</string>
+    <string id="30008">A continuación</string>
+    <string id="30009">Número de episodios antes de seguir viendo la consulta</string>
+    <string id="30010">¿Seguir viendo?</string>
+    <string id="30012">¿Aún ahí? Presione Seguir viendo para ver el siguiente episodio</string>
+    <string id="30013">Incluir episodios vistos</string>
+    <string id="30014">Desactivar NextUp (requiere reiniciar)</string>
+</strings>

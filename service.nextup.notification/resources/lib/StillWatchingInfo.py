@@ -36,7 +36,14 @@ class StillWatchingInfo(xbmcgui.WindowXMLDialog):
         # set the dialog data
         self.getControl(4000).setLabel(name)
         self.getControl(4006).setText(overview)
-        self.getControl(4001).setImage(image)
+
+        try:
+            posterControl = self.getControl(4001)
+            if posterControl is not None:
+                self.getControl(4001).setImage(image)
+        except:
+            pass
+
         try:
             thumbControl = self.getControl(4002)
             if thumbControl is not None:

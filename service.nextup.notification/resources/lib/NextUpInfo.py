@@ -42,7 +42,12 @@ class NextUpInfo(xbmcgui.WindowXMLDialog):
         self.getControl(3002).setLabel(episodeInfo)
         self.getControl(3004).setLabel(info)
 
-        self.getControl(3009).setImage(image)
+        try:
+            posterControl = self.getControl(3009)
+            if posterControl != None:
+                posterControl.setImage(image)
+        except:
+            pass
 
         try:
             fanartControl = self.getControl(3005)
@@ -65,7 +70,12 @@ class NextUpInfo(xbmcgui.WindowXMLDialog):
         except:
             pass
 
-        self.getControl(3006).setImage(clearartimage)
+        try:
+            clearartimageControl = self.getControl(3006)
+            if clearartimageControl != None:
+                self.getControl(3006).setImage(clearartimage)
+        except:
+            pass
 
         if rating is not None:
             self.getControl(3003).setLabel(rating)
