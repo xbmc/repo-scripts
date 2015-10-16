@@ -1,0 +1,2 @@
+v0.2.2 (November 21st, 2014)
+- m3u8 version 0.2.2
