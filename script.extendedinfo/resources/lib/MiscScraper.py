@@ -20,26 +20,25 @@ def get_xkcd_images():
     path = xbmc.translatePath(ADDON_DATA_PATH + "/" + filename + ".txt")
     if xbmcvfs.exists(path):
         return read_from_file(path)
-    else:
-        items = []
-        for i in range(0, 10):
-            try:
-                base_url = 'http://xkcd.com/'
-                url = '%i/info.0.json' % random.randrange(1, 1190)
-                results = get_JSON_response(base_url + url, 9999, folder="XKCD")
-                item = {'Image': results["img"],
-                        'thumb': results["img"],
-                        'path': "plugin://script.extendedinfo?info=setfocus",
-                        'poster': results["img"],
-                        'title': results["title"],
-                        'Description': results["alt"]}
-                items.append(item)
-            except:
-                log("Error when setting XKCD info")
-        save_to_file(content=items,
-                     filename=filename,
-                     path=ADDON_DATA_PATH)
-        return items
+    items = []
+    for i in range(0, 10):
+        try:
+            base_url = 'http://xkcd.com/'
+            url = '%i/info.0.json' % random.randrange(1, 1190)
+            results = get_JSON_response(base_url + url, 9999, folder="XKCD")
+            item = {'Image': results["img"],
+                    'thumb': results["img"],
+                    'path': "plugin://script.extendedinfo?info=setfocus",
+                    'poster': results["img"],
+                    'title': results["title"],
+                    'Description': results["alt"]}
+            items.append(item)
+        except:
+            log("Error when setting XKCD info")
+    save_to_file(content=items,
+                 filename=filename,
+                 path=ADDON_DATA_PATH)
+    return items
 
 
 def get_cyanide_images():
@@ -48,24 +47,23 @@ def get_cyanide_images():
     path = xbmc.translatePath(ADDON_DATA_PATH + "/" + filename + ".txt")
     if xbmcvfs.exists(path):
         return read_from_file(path)
-    else:
-        items = []
-        for i in range(1, 10):
-            url = r'http://www.explosm.net/comics/%i/' % random.randrange(1, 3868)
-            response = get_http(url)
-            if response:
-                keyword = re.search("<meta property=\"og:image\".*?content=\"([^\"]*)\"", response).group(1)
-                url = re.search("<meta property=\"og:url\".*?content=\"([^\"]*)\"", response).group(1)
-                newitem = {'Image': keyword,
-                           'thumb': keyword,
-                           'path': "plugin://script.extendedinfo?info=setfocus",
-                           'poster': keyword,
-                           'title': url}
-                items.append(newitem)
-        save_to_file(content=items,
-                     filename=filename,
-                     path=ADDON_DATA_PATH)
-        return items
+    items = []
+    for i in range(1, 10):
+        url = r'http://www.explosm.net/comics/%i/' % random.randrange(1, 3868)
+        response = get_http(url)
+        if response:
+            keyword = re.search("<meta property=\"og:image\".*?content=\"([^\"]*)\"", response).group(1)
+            url = re.search("<meta property=\"og:url\".*?content=\"([^\"]*)\"", response).group(1)
+            newitem = {'Image': keyword,
+                       'thumb': keyword,
+                       'path': "plugin://script.extendedinfo?info=setfocus",
+                       'poster': keyword,
+                       'title': url}
+            items.append(newitem)
+    save_to_file(content=items,
+                 filename=filename,
+                 path=ADDON_DATA_PATH)
+    return items
 
 
 def get_babe_images(single=False):
@@ -77,27 +75,26 @@ def get_babe_images(single=False):
     path = xbmc.translatePath(os.path.join(ADDON_DATA_PATH, "Babes", filename + ".txt"))
     if xbmcvfs.exists(path):
         return read_from_file(path)
-    else:
-        items = []
-        for i in range(1, 10):
-            if single is True:
-                month = now.month
-                day = now.day
-                image = i
-            else:
-                month = random.randrange(1, 9)
-                day = random.randrange(1, 28)
-                image = random.randrange(1, 8)
-            url = 'http://img1.demo.jsxbabeotd.dellsports.com/static/models/2014/%s/%s/%i.jpg' % (str(month).zfill(2), str(day).zfill(2), image)
-            newitem = {'thumb': url,
-                       'path': "plugin://script.extendedinfo?info=setfocus",
-                       'title': "2014/%i/%i (Nr. %i)" % (month, day, image)
-                       }
-            items.append(newitem)
-        save_to_file(content=items,
-                     filename=filename,
-                     path=os.path.join(ADDON_DATA_PATH, "Babes"))
-        return items
+    items = []
+    for i in range(1, 10):
+        if single is True:
+            month = now.month
+            day = now.day
+            image = i
+        else:
+            month = random.randrange(1, 9)
+            day = random.randrange(1, 28)
+            image = random.randrange(1, 8)
+        url = 'http://img1.demo.jsxbabeotd.dellsports.com/static/models/2014/%s/%s/%i.jpg' % (str(month).zfill(2), str(day).zfill(2), image)
+        newitem = {'thumb': url,
+                   'path': "plugin://script.extendedinfo?info=setfocus",
+                   'title': "2014/%i/%i (Nr. %i)" % (month, day, image)
+                   }
+        items.append(newitem)
+    save_to_file(content=items,
+                 filename=filename,
+                 path=os.path.join(ADDON_DATA_PATH, "Babes"))
+    return items
 
 
 def handle_bandsintown_events(results):
@@ -146,7 +143,6 @@ def get_artist_near_events(artists):  # not possible with api 2.0
     results = get_JSON_response(base_url + url, folder="BandsInTown")
     if results:
         return handle_bandsintown_events(results)
-    else:
-        log("get_artist_near_events: Could not get data from " + url)
-        log(results)
-        return []
+    log("get_artist_near_events: Could not get data from " + url)
+    log(results)
+    return []

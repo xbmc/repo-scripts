@@ -252,8 +252,8 @@ def auth_request_token(cache_days=9999):
     returns request token, is used to get session_id
     '''
     request_token = get_request_token()
-    username = SETTING("tmdb_username")
-    password = SETTING("tmdb_password")
+    username = url_quote(SETTING("tmdb_username"))
+    password = url_quote(SETTING("tmdb_password"))
     response = get_tmdb_data("authentication/token/validate_with_login?request_token=%s&username=%s&password=%s&" % (request_token, username, password), cache_days)
     if "success" in response and response["success"]:
         return response["request_token"]

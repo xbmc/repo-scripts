@@ -355,7 +355,7 @@ def start_info_actions(infos, params):
                 xbmc.executebuiltin("RunScript(script.extendedinfo,info=ratemedia,type=episode,tvshow=%s,season=%s)" % (xbmc.getInfoLabel("ListItem.TVShowTitle"), xbmc.getInfoLabel("ListItem.Season")))
         elif info == 'youtubebrowser':
             resolve_url(params.get("handle"))
-            wm.open_youtube_list()
+            wm.open_youtube_list(search_str=params.get("id", ""))
         elif info == 'extendedinfo':
             resolve_url(params.get("handle"))
             HOME.setProperty('infodialogs.active', "true")
@@ -447,8 +447,11 @@ def start_info_actions(infos, params):
             return None
         elif info == 'selectautocomplete':
             resolve_url(params.get("handle"))
-            window_id = xbmcgui.getCurrentWindowDialogId()
-            window = xbmcgui.Window(window_id)
+            try:
+                window_id = xbmcgui.getCurrentWindowDialogId()
+                window = xbmcgui.Window(window_id)
+            except:
+                return None
             get_kodi_json(method="Input.SendText",
                           params='{"text":"%s", "done":false}' % params.get("id"))
             # xbmc.executebuiltin("SendClick(103,32)")

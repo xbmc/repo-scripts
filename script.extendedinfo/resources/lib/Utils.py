@@ -161,12 +161,26 @@ def get_google_autocomplete_items(search_str, youtube=False):
     result = get_JSON_response(url=base_url + url,
                                headers=headers,
                                folder="Google")
-    if result and len(result) > 1:
-        for item in result[1]:
-            li = {"label": item,
-                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % item}
-            listitems.append(li)
+    if not result or len(result) <= 1:
+        return []
+    for item in result[1]:
+        if is_hebrew(item):
+            search_str = item[::-1]
+        else:
+            search_str = item
+        li = {"label": item,
+              "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
+        listitems.append(li)
     return listitems
+
+
+def is_hebrew(text):
+    if type(text) != unicode:
+        text = text.decode('utf-8')
+    for chr in text:
+        if ord(chr) >= 1488 and ord(chr) <= 1514:
+            return True
+    return False
 
 
 def get_common_words_autocomplete_items(search_str):
@@ -484,7 +498,8 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
         try:
             prop = simplejson.loads(HOME.getProperty(hashed_url))
             log("prop load for %s. time: %f" % (url, time.time() - now))
-            return prop
+            if prop:
+                return prop
         except:
             log("could not load prop data for %s" % url)
     if xbmcvfs.exists(path) and ((now - os.path.getmtime(path)) < cache_seconds):
@@ -503,9 +518,12 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
                 results = read_from_file(path)
             else:
                 results = []
-    HOME.setProperty(hashed_url + "_timestamp", str(now))
-    HOME.setProperty(hashed_url, simplejson.dumps(results))
-    return results
+    if results:
+        HOME.setProperty(hashed_url + "_timestamp", str(now))
+        HOME.setProperty(hashed_url, simplejson.dumps(results))
+        return results
+    else:
+        return []
 
 
 class FunctionThread(threading.Thread):

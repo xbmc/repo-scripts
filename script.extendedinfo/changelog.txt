@@ -1,3 +1,8 @@
+v3.1.1
+- hebrew fix for keyboard
+- more minor bugfixes
+- url-quote login data for TMDB
+
 v3.1.0
 - added additional properties for db movies
 - added actor age for ActorInfo dialog

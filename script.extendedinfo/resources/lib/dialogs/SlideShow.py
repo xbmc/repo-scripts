@@ -19,12 +19,12 @@ class SlideShow(DialogXML):
     def onInit(self):
         super(SlideShow, self).onInit()
         if self.imagelist:
-            self.getControl(10000).addItems(create_listitems(self.imagelist))
-            self.getControl(10000).selectItem(self.index)
-            self.setFocusId(10000)
-            xbmc.executebuiltin("SetFocus(10000)")
+            self.getControl(10001).addItems(create_listitems(self.imagelist))
+            self.getControl(10001).selectItem(self.index)
+            self.setFocusId(10001)
+            xbmc.executebuiltin("SetFocus(10001)")
 
     def onAction(self, action):
         if action in self.ACTION_PREVIOUS_MENU:
-            self.position = self.getControl(10000).getSelectedPosition()
+            self.position = self.getControl(10001).getSelectedPosition()
             self.close()
