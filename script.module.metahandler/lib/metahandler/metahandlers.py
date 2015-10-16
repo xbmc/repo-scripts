@@ -732,7 +732,7 @@ class MetaData:
             if DB == 'sqlite':
                 sql_insert = 'INSERT OR ' + sql_insert.replace('%s', '?')
 
-            common.addon.log('Updating local cache for config data: %s value: %s' % (setting, value), 2)
+            common.addon.log('Updating local cache for config data: %s value: %s' % (setting, value), 0)
             common.addon.log('SQL Insert: %s' % sql_insert, 0)                 
 
             self.dbcur.execute(sql_insert, (setting, value))
@@ -748,7 +748,7 @@ class MetaData:
         Validate cache timestamp to ensure it is only refreshed once every 7 days
         '''
 
-        common.addon.log('Looking up TMDB config cache values', 2)        
+        common.addon.log('Looking up TMDB config cache values', 0)        
         tmdb_image_url = self._get_config('tmdb_image_url')
         tmdb_config_timestamp = self._get_config('tmdb_config_timestamp')
         
@@ -767,15 +767,15 @@ class MetaData:
             
             #If cache hasn't expired, set constant values
             if age <= float(expire):
-                common.addon.log('Cache still valid, setting values', 2)
+                common.addon.log('Cache still valid, setting values', 0)
                 common.addon.log('Setting tmdb_image_url: %s' % tmdb_image_url, 0)
                 self.tmdb_image_url = tmdb_image_url
             else:
-                common.addon.log('Cache is too old, need to request new values', 2)
+                common.addon.log('Cache is too old, need to request new values', 0)
         
         #Either we don't have the values or the cache has expired, so lets request and set them - update cache in the end
         if (not tmdb_image_url or not tmdb_config_timestamp) or age > expire:
-            common.addon.log('No cached config data found or cache expired, requesting from TMDB', 2)
+            common.addon.log('No cached config data found or cache expired, requesting from TMDB', 0)
 
             tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
             config_data = tmdb.call_config()
@@ -807,7 +807,7 @@ class MetaData:
             common.addon.log('Invalid addon id', 3)
             return False
         
-        common.addon.log('Looking up in local cache for addon id: %s' % addon_id, 2)
+        common.addon.log('Looking up in local cache for addon id: %s' % addon_id, 0)
         common.addon.log('SQL Select: %s' % sql_select, 0)
         try:    
             self.dbcur.execute(sql_select)
@@ -846,7 +846,7 @@ class MetaData:
             common.addon.log('Invalid addon id', 3)
             return
         
-        common.addon.log('Inserting into addons table addon id: %s' % addon_id, 2)
+        common.addon.log('Inserting into addons table addon id: %s' % addon_id, 0)
         common.addon.log('SQL Insert: %s' % sql_insert, 0)
         try:
             self.dbcur.execute(sql_insert, (addon_id, movie_covers, tv_covers, tv_banners, movie_backdrops, tv_backdrops, last_update))
@@ -892,7 +892,7 @@ class MetaData:
             common.addon.log('Invalid addon id', 3)
             return
         
-        common.addon.log('Updating addons table addon id: %s movie_covers: %s tv_covers: %s tv_banners: %s movie_backdrops: %s tv_backdrops: %s last_update: %s' % (addon_id, movie_covers, tv_covers, tv_banners, movie_backdrops, tv_backdrops, last_update), 2)
+        common.addon.log('Updating addons table addon id: %s movie_covers: %s tv_covers: %s tv_banners: %s movie_backdrops: %s tv_backdrops: %s last_update: %s' % (addon_id, movie_covers, tv_covers, tv_banners, movie_backdrops, tv_backdrops, last_update), 0)
         common.addon.log('SQL Update: %s' % sql_update, 0)
         try:    
             self.dbcur.execute(sql_update)
@@ -921,8 +921,8 @@ class MetaData:
             DICT of meta data or None if cannot be found.
         '''
        
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('Attempting to retrieve meta data for %s: %s %s %s %s' % (media_type, name, year, imdb_id, tmdb_id), 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('Attempting to retrieve meta data for %s: %s %s %s %s' % (media_type, name, year, imdb_id, tmdb_id), 0)
  
         if imdb_id:
             imdb_id = self._valid_imdb_id(imdb_id)
@@ -1082,8 +1082,8 @@ class MetaData:
         Returns:
             DICT of meta data or None if cannot be found.
         '''
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('Updating meta data: %s Old: %s %s New: %s %s Year: %s' % (name.encode('ascii','replace'), imdb_id, tmdb_id, new_imdb_id, new_tmdb_id, year), 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('Updating meta data: %s Old: %s %s New: %s %s Year: %s' % (name.encode('ascii','replace'), imdb_id, tmdb_id, new_imdb_id, new_tmdb_id, year), 0)
         
         if imdb_id:
             imdb_id = self._valid_imdb_id(imdb_id)        
@@ -1386,7 +1386,7 @@ class MetaData:
         meta['tagline'] = md.get('tagline', '')
         meta['rating'] = float(md.get('rating', 0))
         meta['votes'] = str(md.get('votes', ''))
-        meta['duration'] = str(md.get('runtime', 0))
+        meta['duration'] = int(str(md.get('runtime', 0))) * 60
         meta['plot'] = md.get('overview', '')
         meta['mpaa'] = md.get('certification', '')       
         meta['premiered'] = md.get('released', '')
@@ -1552,7 +1552,7 @@ class MetaData:
                 meta['title'] = name
                 if str(show.rating) != '' and show.rating != None:
                     meta['rating'] = float(show.rating)
-                meta['duration'] = show.runtime
+                meta['duration'] = int(show.runtime) * 60
                 meta['plot'] = show.overview
                 meta['mpaa'] = show.content_rating
                 meta['premiered'] = str(show.first_aired)
@@ -1588,7 +1588,7 @@ class MetaData:
                         if imdb_meta.has_key('rating'):
                             meta['rating'] = float(imdb_meta['rating'])
                         if imdb_meta.has_key('runtime'):
-                            meta['duration'] = imdb_meta['runtime']
+                            meta['duration'] = int(imdb_meta['runtime']) * 60
                         if imdb_meta.has_key('cast'):
                             meta['cast'] = imdb_meta['cast']
                         if imdb_meta.has_key('cover_url'):
@@ -1619,14 +1619,14 @@ class MetaData:
             - Name
             - Year
         ''' 
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('Meta data refresh - searching for movie: %s' % name, 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('Meta data refresh - searching for movie: %s' % name, 0)
         tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
         movie_list = []
         meta = tmdb.tmdb_search(name)
         if meta:
             if meta['total_results'] == 0:
-                common.addon.log('No results found', 2)
+                common.addon.log('No results found', 0)
                 return None
             for movie in meta['results']:
                 if movie['release_date']:
@@ -1635,7 +1635,7 @@ class MetaData:
                     year = None
                 movie_list.append({'title': movie['title'],'original_title': movie['original_title'], 'imdb_id': '', 'tmdb_id': movie['id'], 'year': year})
         else:
-            common.addon.log('No results found', 2)
+            common.addon.log('No results found', 0)
             return None
 
         common.addon.log('Returning results: %s' % movie_list, 0)
@@ -1653,19 +1653,19 @@ class MetaData:
         Returns:
             List of dicts - each movie in it's own dict with supporting info
         ''' 
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('TMDB - requesting similar movies: %s' % tmdb_id, 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('TMDB - requesting similar movies: %s' % tmdb_id, 0)
         tmdb = TMDB(api_key=self.tmdb_api_key, lang=self.__get_tmdb_language())
         movie_list = []
         meta = tmdb.tmdb_similar_movies(tmdb_id, page)
         if meta:
             if meta['total_results'] == 0:
-                common.addon.log('No results found', 2)
+                common.addon.log('No results found', 0)
                 return None
             for movie in meta['results']:
                 movie_list.append(movie)
         else:
-            common.addon.log('No results found', 2)
+            common.addon.log('No results found', 0)
             return None
 
         common.addon.log('Returning results: %s' % movie_list, 0)
@@ -1691,8 +1691,8 @@ class MetaData:
             no meta info was found in order to save these.
         '''  
               
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('Attempting to retrieve episode meta data for: imdbid: %s season: %s episode: %s air_date: %s' % (imdb_id, season, episode, air_date), 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('Attempting to retrieve episode meta data for: imdbid: %s season: %s episode: %s air_date: %s' % (imdb_id, season, episode, air_date), 0)
                
         if not season:
             season = 0
@@ -1857,8 +1857,8 @@ class MetaData:
         Returns:
             DICT of meta data or None if cannot be found.
         '''
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('Updating episode meta data: %s IMDB: %s SEASON: %s EPISODE: %s TVDB ID: %s NEW IMDB ID: %s NEW TVDB ID: %s' % (name, imdb_id, season, episode, tvdb_id, new_imdb_id, new_tvdb_id), 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('Updating episode meta data: %s IMDB: %s SEASON: %s EPISODE: %s TVDB ID: %s NEW IMDB ID: %s NEW TVDB ID: %s' % (name, imdb_id, season, episode, tvdb_id, new_imdb_id, new_tvdb_id), 0)
 
       
         if imdb_id:
@@ -2158,8 +2158,8 @@ class MetaData:
             watched (int): Can specify what to change watched status (overlay) to
                         
         '''   
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('Updating watched flag for: %s %s %s %s %s %s %s %s %s' % (media_type, name, imdb_id, tmdb_id, season, episode, year, watched, air_date), 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('Updating watched flag for: %s %s %s %s %s %s %s %s %s' % (media_type, name, imdb_id, tmdb_id, season, episode, year, watched, air_date), 0)
 
         if imdb_id:
             imdb_id = self._valid_imdb_id(imdb_id)
@@ -2419,8 +2419,8 @@ class MetaData:
         #Find tvdb_id for the TVshow
         tvdb_id = self._get_tvdb_id(tvshowtitle, imdb_id)
 
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('Updating season meta data: %s IMDB: %s TVDB ID: %s SEASON: %s' % (tvshowtitle, imdb_id, tvdb_id, season), 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('Updating season meta data: %s IMDB: %s TVDB ID: %s SEASON: %s' % (tvshowtitle, imdb_id, tvdb_id, season), 0)
 
       
         if imdb_id:
@@ -2591,8 +2591,8 @@ class MetaData:
             DICT of meta data or None if cannot be found.
         '''
        
-        common.addon.log('---------------------------------------------------------------------------------------', 2)
-        common.addon.log('Starting batch meta grab', 2)
+        common.addon.log('---------------------------------------------------------------------------------------', 0)
+        common.addon.log('Starting batch meta grab', 0)
         common.addon.log('Batch meta information passed in: %s' % batch_ids, 0)
 
         #Ensure IMDB ID's are formatted properly first
@@ -2643,10 +2643,10 @@ class MetaData:
             
             if media_type==self.type_movie:
                 meta = self._get_tmdb_meta(record[0], record[1], record[2], record[3])
-                common.addon.log('---------------------------------------------------------------------------------------', 2)
+                common.addon.log('---------------------------------------------------------------------------------------', 0)
             elif media_type==self.type_tvshow:
                 meta = self._get_tvdb_meta(record[0], record[1], record[2], record[3])
-                common.addon.log('---------------------------------------------------------------------------------------', 2)
+                common.addon.log('---------------------------------------------------------------------------------------', 0)
 
             new_meta.append(meta)
             
