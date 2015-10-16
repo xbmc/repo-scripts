@@ -172,6 +172,10 @@ msgctxt "#32036"
 msgid "Enable Vimeo Search Support"
 msgstr "Activer la prise en charge de la recherche sur Vimeo"
 
+msgctxt "#32037"
+msgid "Show VideoExtras On Context Menu (Restart Required)"
+msgstr "Montrer Bonus vidéo dans le menu contextuel (redémarrage exigé)"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Tout lire"
@@ -262,7 +266,7 @@ msgstr "Recherche sur Vimeo..."
 
 msgctxt "#32150"
 msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
-msgstr "Cette action mettra à jour le fichier advancedsettings.xml pour s'assurer que les fichiers supplémentaires sont gérés correctement. Veuillez vous assurer que les changements sont enregistrés avant l'exécution. Poursuivre? "
+msgstr "Cette action mettra à jour le fichier advancedsettings.xml pour garantir que les fichiers supplémentaires soient gérés correctement. Veuillez vous assurer que les changements sont enregistrés avant l'exécution. Poursuivre? "
 
 msgctxt "#32151"
 msgid "Unable to update advancedsettings.xml"
@@ -282,7 +286,7 @@ msgstr "Mise à jour de advancedsettings.xml terminée"
 
 msgctxt "#32155"
 msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
-msgstr "Ceci mettra à jour votre habillage Confluence pour inclure les fonctions Bonus vidéos. Poursuivre?"
+msgstr "Ceci mettra à jour votre habillage Confluence pour inclure les fonctions Bonus vidéo. Poursuivre?"
 
 msgctxt "#32156"
 msgid "Unable to update the Confluence skin"

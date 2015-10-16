@@ -1,3 +1,6 @@
+v2.0.2
+- Allow custom path to be a network share
+
 v2.0.1
 - Fix durations in addon menu
 - Improve accuracy of played progress after playing item

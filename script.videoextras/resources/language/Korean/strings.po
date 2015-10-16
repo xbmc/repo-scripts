@@ -172,6 +172,10 @@ msgctxt "#32036"
 msgid "Enable Vimeo Search Support"
 msgstr "Vimeo 검색 사용"
 
+msgctxt "#32037"
+msgid "Show VideoExtras On Context Menu (Restart Required)"
+msgstr "컨텍스트 메뉴에 VideoExtras 표시 (재시동 필요)"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "모두 재생"

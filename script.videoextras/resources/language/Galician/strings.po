@@ -216,6 +216,18 @@ msgctxt "#32115"
 msgid "Failed to update plot"
 msgstr "Produciuse un fallo ao actualizar a sinopse"
 
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "Buscar no YouTube ..."
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "VFX (Efectos visuais)"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "Buscar no Vimeo ..."
+
 msgctxt "#32156"
 msgid "Unable to update the Confluence skin"
 msgstr "Non foi posíbel actualizar o tema Confluence"

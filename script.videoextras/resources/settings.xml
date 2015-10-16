@@ -14,7 +14,7 @@
 	<category label="32010">
 	    <setting label="32011" type="lsep"/>
 		<setting id="custom_path_enable" type="bool" label="32012" default="false"/>
-		<setting id="custom_path" enable="eq(-1,true)" type="folder" source="files" label="32013" default="" />
+		<setting id="custom_path" enable="eq(-1,true)" type="folder" label="32013" default="" />
 		<setting id="custom_path_movies" enable="eq(-2,true)" type="text" label="32014" default="Movies"/>
 		<setting id="custom_path_tvshows" enable="eq(-3,true)" type="text" label="32015" default="TvShows"/>
 		<setting id="custom_path_musicvideos" enable="eq(-4,true)" type="text" label="32029" default="MusicVideos"/>

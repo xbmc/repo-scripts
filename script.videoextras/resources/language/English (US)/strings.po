@@ -172,6 +172,10 @@ msgctxt "#32036"
 msgid "Enable Vimeo Search Support"
 msgstr "Enable Vimeo Search Support"
 
+msgctxt "#32037"
+msgid "Show VideoExtras On Context Menu (Restart Required)"
+msgstr "Show VideoExtras On Context Menu (Restart Required)"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Play All"
