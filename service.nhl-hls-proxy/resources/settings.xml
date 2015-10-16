@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<!-- HLS Proxy Settings -->
+	<category label="30001">
+		<setting type="lsep" label="30005"/>
+		<setting type="lsep" label="30006"/>
+		<setting id="hls_listen_host" type="text" label="30002" default="127.0.0.1"/>
+		<setting id="hls_listen_port" type="number" label="30003" default="54321"/>
+	</category>
+</settings>

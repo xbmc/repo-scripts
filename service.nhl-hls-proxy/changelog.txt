@@ -1,0 +1,9 @@
+v0.0.3 (October 8th, 2015)
+- Add Content-Encoding to the list of headers that we ignore.
+
+v0.0.2 (May 19th, 2015)
+- Increase the length of the generated playlist from 4 hours to 6 hours.
+
+v0.0.1 (November 21st, 2014)
+- Initial release.
+

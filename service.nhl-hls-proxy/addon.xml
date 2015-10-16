@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.nhl-hls-proxy" name="NHL HLS Proxy" version="0.0.3" provider-name="Timewasted">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="script.module.m3u8" version="0.2.2"/>
+		<import addon="script.module.requests" version="2.3.0"/>
+	</requires>
+	<extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">NHL HLS Proxy</summary>
+		<description lang="en">An HTTP Live Streaming proxy which handles NHL streams.[CR]The primary purpose is to allow for rewinding live streams to the start of the game.  With this, you never have to miss a moment of the game!</description>
+		<language>en</language>
+		<platform>all</platform>
+		<license>BSD</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=207178</forum>
+		<website>https://github.com/timewasted/service.nhl-hls-proxy</website>
+		<source>https://github.com/timewasted/service.nhl-hls-proxy</source>
+		<email>ryan@timewasted.me</email>
+	</extension>
+</addon>

@@ -1,0 +1,41 @@
+# NHL HLS Proxy language file
+# Addon Name: NHL HLS Proxy
+# Addon id: service.nhl-hls-proxy
+# Addon provider: Timewasted
+msgid ""
+msgstr ""
+"Project-Id-Version: NHL-HLS-Proxy\n"
+"Report-Msgid-Bugs-To: https://github.com/timewasted/service.nhl-hls-proxy\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Timewasted\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30001"
+msgid "HLS Proxy"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Listen on address"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Listen on port"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Listen port must be between 1024 and 65535 inclusive"
+msgstr ""
+
+msgctxt "#30005"
+msgid "You shouldn't need to change these settings"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Changes require a restart of Kodi to take effect"
+msgstr ""
