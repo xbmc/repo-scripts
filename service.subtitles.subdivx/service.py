@@ -13,6 +13,7 @@ from pprint import pformat
 import re
 import shutil
 import sys
+import tempfile
 import time
 from unicodedata import normalize
 from urllib import FancyURLopener, unquote, quote_plus, urlencode
@@ -84,7 +85,10 @@ SUBTITLE_RE = re.compile(r'''<a\s+class="titulo_menu_izq2?"\s+
 # 'comment': Translation author comment, may contain filename
 # 'downloads': Downloads, used for ratings
 
-DOWNLOAD_LINK_RE = re.compile(r'bajar.php\?id=(.*?)&u=(.*?)\"', re.IGNORECASE |
+DETAIL_PAGE_LINK_RE = re.compile(r'<a rel="nofollow" class="detalle_link" href="http://www.subdivx.com/(?P<id>.*?)"><b>Bajar</b></a>',
+                                 re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
+
+DOWNLOAD_LINK_RE = re.compile(r'bajar.php\?id=(?P<id>.*?)&u=(?P<u>.*?)\"', re.IGNORECASE |
                               re.DOTALL | re.MULTILINE | re.UNICODE)
 
 # ==========
@@ -354,35 +358,44 @@ def _save_subtitles(workdir, content):
     return None
 
 
-def ensure_workdir(workdir):
-    # Cleanup temp dir, we recommend you download/unzip your subs in temp
-    # folder and pass that to XBMC to copy and activate
-    if xbmcvfs.exists(workdir):
-        shutil.rmtree(workdir)
-    xbmcvfs.mkdirs(workdir)
-    return xbmcvfs.exists(workdir)
-
-
 def Download(subdivx_id, workdir):
     """Called when subtitle download is requested from XBMC."""
-    subtitles_list = []
     # Get the page with the subtitle link,
     # i.e. http://www.subdivx.com/X6XMjE2NDM1X-iron-man-2-2010
     subtitle_detail_url = MAIN_SUBDIVX_URL + subdivx_id
+    # Fetch and scrape new intermediate page
     html_content = get_url(subtitle_detail_url)
-    match = DOWNLOAD_LINK_RE.findall(html_content)
-    if match:
-        actual_subtitle_file_url = (MAIN_SUBDIVX_URL + "bajar.php?id=" +
-                                    match[0][0] + "&u=" + match[0][1])
-        content = get_url(actual_subtitle_file_url)
-        if content is not None:
-            saved_fname = _save_subtitles(workdir, content)
-            if saved_fname:
-                subtitles_list.append(saved_fname)
-    else:
-        log(u"Expected content not found in selected subtitle detail page",
+    if html_content is None:
+        log(u"No content found in selected subtitle intermediate detail page",
             level=LOGFATAL)
-    return subtitles_list
+        return []
+    match = DETAIL_PAGE_LINK_RE.search(html_content)
+    if match is None:
+        log(u"Expected content not found in selected subtitle intermediate detail page",
+            level=LOGFATAL)
+        return []
+    id_ = match.group('id')
+    # Fetch and scrape final page
+    html_content = get_url(MAIN_SUBDIVX_URL + id_)
+    if html_content is None:
+        log(u"No content found in final download page", level=LOGFATAL)
+        return []
+    match = DOWNLOAD_LINK_RE.search(html_content)
+    if match is None:
+        log(u"Expected content not found in final download page",
+            level=LOGFATAL)
+        return []
+    id_, u = match.group('id', 'u')
+    actual_subtitle_file_url = MAIN_SUBDIVX_URL + "bajar.php?id=" + id_ + "&u=" + u
+    content = get_url(actual_subtitle_file_url)
+    if content is None:
+        log(u"Got no content when downloading actual subtitle file",
+            level=LOGFATAL)
+        return []
+    saved_fname = _save_subtitles(workdir, content)
+    if saved_fname is None:
+        return []
+    return [saved_fname]
 
 
 def _double_dot_fix_hack(video_filename):
@@ -448,14 +461,19 @@ def get_params(argv):
     return params
 
 
+def debug_dump_path(victim, name):
+    t = type(victim)
+    log("%s (%s): %s" % (name, t, victim))
+
+
 def main():
     """Main entry point of the script when it is invoked by XBMC."""
-    log(u"Version: %s" % __version__, level=LOGINFO)
-
     # Get parameters from XBMC and launch actions
     params = get_params(sys.argv)
+    action = params.get('action', 'Unknown')
+    xbmc.log(u"SUBDIVX - Version: %s -- Action: %s" % (__version__, action), level=LOGINFO)
 
-    if params['action'] in ('search', 'manualsearch'):
+    if action in ('search', 'manualsearch'):
         item = {
             'temp': False,
             'rar': False,
@@ -501,14 +519,13 @@ def main():
 
         Search(item)
 
-    elif params['action'] == 'download':
-        workdir = pjoin(__profile__, 'temp')
+    elif action == 'download':
+        debug_dump_path(xbmc.translatePath(__addon__.getAddonInfo('profile')),
+                        "xbmc.translatePath(__addon__.getAddonInfo('profile'))")
+        debug_dump_path(__profile__, '__profile__')
+        workdir = tempfile.mkdtemp(dir=__profile__)
         # Make sure it ends with a path separator (Kodi 14)
         workdir = workdir + os.path.sep
-        workdir = xbmc.translatePath(workdir).decode("utf-8")
-
-        ensure_workdir(workdir)
-
         # We pickup our arguments sent from the Search() function
         subs = Download(params["id"], workdir)
         # We can return more than one subtitle for multi CD versions, for now
@@ -521,7 +538,7 @@ def main():
     # Send end of directory to XBMC
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-    if (params['action'] == 'download' and
+    if (action == 'download' and
             __addon__.getSetting('show_nick_in_place_of_lang') == 'true'):
         time.sleep(3)
         _double_dot_fix_hack(params['filename'])

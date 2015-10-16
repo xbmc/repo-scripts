@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="30000">
-        <setting id="show_nick_in_place_of_lang" type="bool" label="30001" default="false"/>
+        <setting id="show_nick_in_place_of_lang" type="bool" label="30001" default="true"/>
     </category>
 </settings>

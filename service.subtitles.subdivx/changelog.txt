@@ -1,3 +1,14 @@
+0.0.8
+- Handle new page added by subdivx.com. Thanks github users @upadrian,
+  @gboado and @felexx90
+- Simplify handling of temporary directory used to download & uncompress
+  subtitle files by skipping the 'remove it recursively and re-create' stage
+  which caused problems with mixed/unknown encodings, Unicode text passed in
+  by Kodi or read from the FS when calling shutil.rmtree().
+  Instead, use Python's tempfile.mkdtemp() and don't remove tempdirs.
+- Toggle default value of setting 'Show uploader name in place of language'
+  added in v0.0.5 to be ON.
+
 0.0.7
 - Remove code added for 0.0.5 which isn't needed, had been added to workarond
   a Kodi Helix bug with handling of temp dir.
