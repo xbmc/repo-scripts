@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.image.resource.select" name="Image Resource Select Addon" version="0.0.5" provider-name="ronie">
+<addon id="script.image.resource.select" name="Image Resource Select Addon" version="0.0.6" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
+		<import addon="script.module.simplejson" version="3.3.0" />
 	</requires>
 	<extension point="xbmc.python.library" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
@@ -10,7 +11,7 @@
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
-		<forum></forum>
+		<forum>http://forum.kodi.tv/showthread.php?tid=239558</forum>
 		<website></website>
 		<email></email>
 		<source>https://github.com/ronie/script.image.resource.select</source>
