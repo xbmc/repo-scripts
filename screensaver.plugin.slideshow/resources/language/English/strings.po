@@ -15,6 +15,10 @@ msgstr ""
 
 #All %s must remain in string but can change position
 
+msgctxt "#32000"
+msgid "Main"
+msgstr ""
+
 msgctxt "#32001"
 msgid "Source Path"
 msgstr ""
@@ -58,7 +62,7 @@ msgid "Randomize Order"
 msgstr ""
 
 msgctxt "#32013"
-msgid "Show Titles (If Available)"
+msgid "Show Caption"
 msgstr ""
 
 msgctxt "#32014"
@@ -72,3 +76,40 @@ msgstr ""
 msgctxt "#32016"
 msgid "ShareSocial Imagestream"
 msgstr ""
+
+msgctxt "#32017"
+msgid "Caption"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Template"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Title: $TITLE[ULTSE,prefix,postfix]"
+msgstr ""
+
+msgctxt "#32021"
+msgid "   U=uppercase, L=lowercase, T=title"
+msgstr ""
+
+msgctxt "#32022"
+msgid "   S=underscores to spaces, E=remove extension"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Date/Time: $DATETIME[format,prefix,postfix]"
+msgstr ""
+
+msgctxt "#32024"
+msgid "   See the support forum thread for date/time formatting"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Exif: $EXIF[exif_tag,prefix,postfix]"
+msgstr ""
+

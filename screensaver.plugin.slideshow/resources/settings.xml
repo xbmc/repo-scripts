@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
-  <setting label="32001" type="action" action="RunScript(screensaver.plugin.slideshow,choosestream)" id="path"/>
-  <setting label="32002" type="enum" id="time" default="4" values="1|2|3|4|5|6|7|8|9|10"/>
-  <setting label="32003" type="slider" id="level" range="0,1,100" option="percent" default="100"/>
-  <setting label="32004" type="enum" id="effect" default="2" lvalues="32006|32007|32005"/>
-  <setting id="randomize" type="bool" label="32012" default="true" />
-  <setting id="titles" type="bool" label="32013" default="false" />
-  <setting id="onstart" type="bool" label="32010" default="false" />
-  <setting id="xbmc_slideshow" type="bool" label="32014" default="false" enable="eq(-1,true)"/>
+    <category label="32000">
+        <setting label="32001" type="action" action="RunScript(screensaver.plugin.slideshow,choosestream)" id="path" />
+        <setting label="32002" type="slider" id="time" default="4" range="1,30" option="int" />
+        <setting label="32003" type="slider" id="level" range="0,1,100" option="percent" default="100" />
+        <setting label="32004" type="enum" id="effect" default="2" lvalues="32006|32007|32005" />
+        <setting id="randomize" type="bool" label="32012" default="true" />
+        <setting id="onstart" type="bool" label="32010" default="false" />
+        <setting id="xbmc_slideshow" type="bool" label="32014" default="false" enable="eq(-1,true)" />
+    </category>
+    <category label="32017">
+        <setting id="titles" type="bool" label="32013" default="false" />
+        <setting id="advanced_caption" type="bool" label="32018" default="false" enable="eq(-1,true)" subsetting="true" />
+        <setting label="32019" type="text" id="caption_template" default="$TITLE[TES]$DATETIME[%a %b %d @ %I:%M %p, - ]$EXIF[Model, with ]"  enable="eq(-1,true) + eq(-2,true)" subsetting="true" />
+        <setting type="lsep" label="32020" />
+        <setting type="lsep" label="32021" />
+        <setting type="lsep" label="32022" />
+        <setting type="lsep" label="32023" />
+        <setting type="lsep" label="32024" />
+        <setting type="lsep" label="32025" />
+    </category>
 </settings>

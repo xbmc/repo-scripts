@@ -1,6 +1,38 @@
 Plugin Slideshow Screensaver Changelog
 
-Current Version : 0.0.9
+** 0.0.17 ***
+
+Changed "Amount Of Seconds To Display Each Image" setting to allow up to 30 seconds
+
+** 0.0.16 ***
+
+Fix for settings being grayed out
+Fix for broken 'Source Path' selection in settings
+
+** 0.0.15 ***
+
+Fix for source path not being selectable on Helix
+
+** 0.0.14 ***
+
+Fix for modules not being added to import path on Helix causing import errors
+
+** 0.0.13 ***
+
+Fixes for errors with some plugins
+
+** 0.0.12 ***
+
+Now works with plugins that don't use default.py
+
+** 0.0.11 ***
+
+Fix for caption format in settings not affecting output
+
+** 0.0.10 ***
+
+Added the ability to add formatted captions
+Added the ability to add exif information in captions
 
 ** 0.0.9 ***
 
@@ -29,7 +61,7 @@ Rename xbmcplugin.py to fakexbmcplugin.py (thought I already did that, hmm...)
 
 Added option in settings 'Show Titles (If Available)'
 Error indicator and message now moves randomly about screen (this is a screensaver, not a screen burner =] )
-Added option in settings under 'Slideshow On XBMC Startup': 'Normal XBMC Slideshow (Plugins Only)'. When checked and path is a plugin, will start with an xbmc slideshow (old behavior). If unchecked (default) will start with the normal screensaver behavior. 
+Added option in settings under 'Slideshow On XBMC Startup': 'Normal XBMC Slideshow (Plugins Only)'. When checked and path is a plugin, will start with an xbmc slideshow (old behavior). If unchecked (default) will start with the normal screensaver behavior.
 
 ** 0.0.4 ***
 
