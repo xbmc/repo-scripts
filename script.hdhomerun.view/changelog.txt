@@ -1,3 +1,8 @@
+** 2015.10.18 **
+
+Use new recording rules API
+Guide search is now 4 wide instead of 3
+
 ** 2015.8.23 **
 
 Now showing now opens record dialog instead of live tv

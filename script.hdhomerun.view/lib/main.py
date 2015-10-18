@@ -233,6 +233,8 @@ class GuideOverlay(util.CronReceiver):
 
     def onAction(self,action):
         try:
+            #print action.getId()
+            #print action.getButtonCode()
             #'{"jsonrpc": "2.0", "method": "Input.ShowCodec", "id": 1}'
             if self.overlayVisible(): self.propertyTimer.reset()
 
@@ -262,6 +264,10 @@ class GuideOverlay(util.CronReceiver):
                 self.channelUp()
             elif action == xbmcgui.ACTION_CHANNEL_DOWN: #or action == xbmcgui.ACTION_PAGE_DOWN: #For testing
                 self.channelDown()
+            elif action.getButtonCode() == 61519:
+                xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ShowCodec", "id": 1}')
+                # xbmc.executebuiltin('Action(CodecInfo)')
+
         except:
             util.ERROR()
             self._BASE.onAction(self,action)
@@ -340,11 +346,11 @@ class GuideOverlay(util.CronReceiver):
         elif action == xbmcgui.ACTION_PLAY:
             if xbmc.getCondVisibility('Player.Paused'):
                 self.player.pause()
-            ct = 0
-            # Wait till player is actually unpaused before we return, so that initial paused stat var doesn't get confused
-            while xbmc.getCondVisibility('Player.Paused') and ct < 20: # Only do this 20 times (2 secs) in case this isn't as safe as I thought :)
-                xbmc.sleep(100)
-                ct += 1
+                ct = 0
+                # Wait till player is actually unpaused before we return, so that initial paused stat var doesn't get confused
+                while xbmc.getCondVisibility('Player.Paused') and ct < 20: # Only do this 20 times (2 secs) in case this isn't as safe as I thought :)
+                    xbmc.sleep(100)
+                    ct += 1
 
         return True
 

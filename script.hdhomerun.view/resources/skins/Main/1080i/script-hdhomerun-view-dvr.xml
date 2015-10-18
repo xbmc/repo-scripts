@@ -440,19 +440,19 @@
                     <preloaditems>2</preloaditems>
 
                     <hitrect x="65" y="70" w="1725" h="1030" />
-                    <itemlayout width="563" height="430">
+                    <itemlayout width="423" height="325">
                         <control type="image">
                             <posx>10</posx>
                             <posy>10</posy>
-                            <width>533</width>
-                            <height>400</height>
+                            <width>393</width>
+                            <height>295</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>FF202020</colordiffuse>
                         </control>
                         <control type="image">
-                            <posx>242</posx>
-                            <posy>131</posy>
+                            <posx>182</posx>
+                            <posy>103</posy>
                             <width>48</width>
                             <height>48</height>
                             <texture>script-hdhomerun-view-dvr_rules_icon.png</texture>
@@ -462,15 +462,15 @@
                         <control type="image">
                             <posx>10</posx>
                             <posy>10</posy>
-                            <width>533</width>
-                            <height>400</height>
+                            <width>393</width>
+                            <height>295</height>
                             <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
                             <aspectratio aligny="top">scale</aspectratio>
                         </control>
                         <control type="image">
                             <posx>10</posx>
-                            <posy>320</posy>
-                            <width>533</width>
+                            <posy>230</posy>
+                            <width>393</width>
                             <height>90</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <colordiffuse>A0000000</colordiffuse>
@@ -478,37 +478,26 @@
                         </control>
                         <control type="image">
                             <posx>20</posx>
-                            <posy>330</posy>
-                            <width>70</width>
-                            <height>70</height>
+                            <posy>240</posy>
+                            <width>60</width>
+                            <height>60</height>
                             <texture>$INFO[ListItem.Property(channel.icon)]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="textbox">
-                            <posx>110</posx>
-                            <posy>328</posy>
-                            <width>413</width>
+                            <posx>100</posx>
+                            <posy>234</posy>
+                            <width>268</width>
                             <height>80</height>
-                            <font>font13</font>
+                            <font>font12</font>
                             <align>left</align>
                             <textcolor>FFFFFFFF</textcolor>
                             <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                         </control>
-                        <!-- <control type="label">
-                            <posx>110</posx>
-                            <posy>365</posy>
-                            <width>413</width>
-                            <height>40</height>
-                            <font>font10</font>
-                            <align>left</align>
-                            <aligny>center</aligny>
-                            <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Label2]</label>
-                        </control> -->
                         <control type="image">
                             <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
-                            <posx>508</posx>
-                            <posy>375</posy>
+                            <posx>358</posx>
+                            <posy>195</posy>
                             <width>24</width>
                             <height>24</height>
                             <texture>script-hdhomerun-view-rule_indicator.png</texture>
@@ -518,19 +507,19 @@
                             <visible>!IsEmpty(ListItem.Property(hidden))</visible>
                             <posx>10</posx>
                             <posy>10</posy>
-                            <width>533</width>
-                            <height>400</height>
+                            <width>393</width>
+                            <height>295</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>A0000000</colordiffuse>
                         </control>
                     </itemlayout>
-                    <focusedlayout width="563" height="430">
+                    <focusedlayout width="423" height="325">
                         <control type="image">
                             <posx>10</posx>
                             <posy>10</posy>
-                            <width>533</width>
-                            <height>400</height>
+                            <width>393</width>
+                            <height>295</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>FF202020</colordiffuse>
@@ -547,8 +536,8 @@
                         <control type="image">
                             <posx>10</posx>
                             <posy>10</posy>
-                            <width>533</width>
-                            <height>400</height>
+                            <width>393</width>
+                            <height>295</height>
                             <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
                             <aspectratio aligny="top">scale</aspectratio>
                         </control>
@@ -556,8 +545,8 @@
                             <visible>!IsEmpty(ListItem.Property(hidden))</visible>
                             <posx>10</posx>
                             <posy>10</posy>
-                            <width>533</width>
-                            <height>400</height>
+                            <width>393</width>
+                            <height>295</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <aspectratio>stretch</aspectratio>
                             <colordiffuse>A0000000</colordiffuse>
@@ -565,7 +554,7 @@
                         <control type="image">
                             <posx>0</posx>
                             <posy>0</posy>
-                            <width>553</width>
+                            <width>403</width>
                             <height>15</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <colordiffuse>FF006000</colordiffuse>
@@ -575,62 +564,51 @@
                             <posx>0</posx>
                             <posy>0</posy>
                             <width>15</width>
-                            <height>420</height>
+                            <height>315</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <colordiffuse>FF006000</colordiffuse>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
-                            <posx>538</posx>
+                            <posx>398</posx>
                             <posy>0</posy>
                             <width>15</width>
-                            <height>420</height>
+                            <height>315</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <colordiffuse>FF006000</colordiffuse>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
                             <posx>0</posx>
-                            <posy>320</posy>
-                            <width>553</width>
-                            <height>100</height>
+                            <posy>230</posy>
+                            <width>403</width>
+                            <height>85</height>
                             <texture>script-hdhomerun-view-white_square.png</texture>
                             <colordiffuse>FF006000</colordiffuse>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
                             <posx>20</posx>
-                            <posy>330</posy>
-                            <width>70</width>
-                            <height>70</height>
+                            <posy>240</posy>
+                            <width>60</width>
+                            <height>60</height>
                             <texture>$INFO[ListItem.Property(channel.icon)]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="textbox">
-                            <posx>110</posx>
-                            <posy>328</posy>
-                            <width>413</width>
+                            <posx>100</posx>
+                            <posy>234</posy>
+                            <width>268</width>
                             <height>80</height>
-                            <font>font13</font>
+                            <font>font12</font>
                             <align>left</align>
                             <textcolor>FFFFFFFF</textcolor>
                             <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                         </control>
-                        <!-- <control type="label">
-                            <posx>110</posx>
-                            <posy>365</posy>
-                            <width>413</width>
-                            <height>40</height>
-                            <font>font10</font>
-                            <align>left</align>
-                            <aligny>center</aligny>
-                            <textcolor>FFFFFFFF</textcolor>
-                            <label>$INFO[ListItem.Label2]</label>
-                        </control> -->
                         <control type="image">
                             <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
-                            <posx>508</posx>
-                            <posy>375</posy>
+                            <posx>358</posx>
+                            <posy>195</posy>
                             <width>24</width>
                             <height>24</height>
                             <texture>script-hdhomerun-view-rule_indicator.png</texture>
@@ -756,19 +734,19 @@
                             <preloaditems>2</preloaditems>
                             <hitrect x="65" y="145" w="1725" h="860" />
 
-                            <itemlayout width="563" height="430">
+                            <itemlayout width="423" height="325">
                                 <control type="image">
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <aspectratio>stretch</aspectratio>
                                     <colordiffuse>FF202020</colordiffuse>
                                 </control>
                                 <control type="image">
-                                    <posx>242</posx>
-                                    <posy>131</posy>
+                                    <posx>182</posx>
+                                    <posy>103</posy>
                                     <width>48</width>
                                     <height>48</height>
                                     <texture>script-hdhomerun-view-dvr_rules_icon.png</texture>
@@ -778,15 +756,15 @@
                                 <control type="image">
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
                                     <posx>10</posx>
-                                    <posy>320</posy>
-                                    <width>533</width>
+                                    <posy>230</posy>
+                                    <width>393</width>
                                     <height>90</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>A0000000</colordiffuse>
@@ -794,37 +772,26 @@
                                 </control>
                                 <control type="image">
                                     <posx>20</posx>
-                                    <posy>330</posy>
-                                    <width>70</width>
-                                    <height>70</height>
+                                    <posy>240</posy>
+                                    <width>60</width>
+                                    <height>60</height>
                                     <texture>$INFO[ListItem.Property(channel.icon)]</texture>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="textbox">
-                                    <posx>110</posx>
-                                    <posy>328</posy>
-                                    <width>413</width>
+                                    <posx>100</posx>
+                                    <posy>234</posy>
+                                    <width>268</width>
                                     <height>80</height>
-                                    <font>font13</font>
+                                    <font>font12</font>
                                     <align>left</align>
                                     <textcolor>FFFFFFFF</textcolor>
                                     <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                                 </control>
-                                <!-- <control type="label">
-                                    <posx>110</posx>
-                                    <posy>365</posy>
-                                    <width>413</width>
-                                    <height>40</height>
-                                    <font>font10</font>
-                                    <align>left</align>
-                                    <aligny>center</aligny>
-                                    <textcolor>FFFFFFFF</textcolor>
-                                    <label>$INFO[ListItem.Label2]</label>
-                                </control> -->
                                 <control type="image">
                                     <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
-                                    <posx>508</posx>
-                                    <posy>375</posy>
+                                    <posx>358</posx>
+                                    <posy>195</posy>
                                     <width>24</width>
                                     <height>24</height>
                                     <texture>script-hdhomerun-view-rule_indicator.png</texture>
@@ -834,19 +801,19 @@
                                     <visible>!IsEmpty(ListItem.Property(hidden))</visible>
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <aspectratio>stretch</aspectratio>
                                     <colordiffuse>A0000000</colordiffuse>
                                 </control>
                             </itemlayout>
-                            <focusedlayout width="563" height="430">
+                            <focusedlayout width="423" height="325">
                                 <control type="image">
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <aspectratio>stretch</aspectratio>
                                     <colordiffuse>FF202020</colordiffuse>
@@ -863,8 +830,8 @@
                                 <control type="image">
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
@@ -872,8 +839,8 @@
                                     <visible>!IsEmpty(ListItem.Property(hidden))</visible>
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <aspectratio>stretch</aspectratio>
                                     <colordiffuse>A0000000</colordiffuse>
@@ -881,7 +848,7 @@
                                 <control type="image">
                                     <posx>0</posx>
                                     <posy>0</posy>
-                                    <width>553</width>
+                                    <width>403</width>
                                     <height>15</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
@@ -891,62 +858,51 @@
                                     <posx>0</posx>
                                     <posy>0</posy>
                                     <width>15</width>
-                                    <height>420</height>
+                                    <height>315</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <posx>538</posx>
+                                    <posx>398</posx>
                                     <posy>0</posy>
                                     <width>15</width>
-                                    <height>420</height>
+                                    <height>315</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="image">
                                     <posx>0</posx>
-                                    <posy>320</posy>
-                                    <width>553</width>
-                                    <height>100</height>
+                                    <posy>230</posy>
+                                    <width>403</width>
+                                    <height>85</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="image">
                                     <posx>20</posx>
-                                    <posy>330</posy>
-                                    <width>70</width>
-                                    <height>70</height>
+                                    <posy>240</posy>
+                                    <width>60</width>
+                                    <height>60</height>
                                     <texture>$INFO[ListItem.Property(channel.icon)]</texture>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="textbox">
-                                    <posx>110</posx>
-                                    <posy>328</posy>
-                                    <width>413</width>
+                                    <posx>100</posx>
+                                    <posy>234</posy>
+                                    <width>268</width>
                                     <height>80</height>
-                                    <font>font13</font>
+                                    <font>font12</font>
                                     <align>left</align>
                                     <textcolor>FFFFFFFF</textcolor>
                                     <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                                 </control>
-                                <!-- <control type="label">
-                                    <posx>110</posx>
-                                    <posy>365</posy>
-                                    <width>413</width>
-                                    <height>40</height>
-                                    <font>font10</font>
-                                    <align>left</align>
-                                    <aligny>center</aligny>
-                                    <textcolor>FFFFFFFF</textcolor>
-                                    <label>$INFO[ListItem.Label2]</label>
-                                </control> -->
                                 <control type="image">
                                     <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
-                                    <posx>508</posx>
-                                    <posy>375</posy>
+                                    <posx>358</posx>
+                                    <posy>195</posy>
                                     <width>24</width>
                                     <height>24</height>
                                     <texture>script-hdhomerun-view-rule_indicator.png</texture>
@@ -1010,19 +966,19 @@
                             <preloaditems>2</preloaditems>
                             <hitrect x="65" y="145" w="1725" h="860" />
 
-                            <itemlayout width="563" height="430">
+                            <itemlayout width="423" height="325">
                                 <control type="image">
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <aspectratio>stretch</aspectratio>
                                     <colordiffuse>FF202020</colordiffuse>
                                 </control>
                                 <control type="image">
-                                    <posx>242</posx>
-                                    <posy>131</posy>
+                                    <posx>182</posx>
+                                    <posy>103</posy>
                                     <width>48</width>
                                     <height>48</height>
                                     <texture>script-hdhomerun-view-dvr_rules_icon.png</texture>
@@ -1032,15 +988,15 @@
                                 <control type="image">
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
                                 <control type="image">
                                     <posx>10</posx>
-                                    <posy>320</posy>
-                                    <width>533</width>
+                                    <posy>230</posy>
+                                    <width>393</width>
                                     <height>90</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>A0000000</colordiffuse>
@@ -1048,37 +1004,26 @@
                                 </control>
                                 <control type="image">
                                     <posx>20</posx>
-                                    <posy>330</posy>
-                                    <width>70</width>
-                                    <height>70</height>
+                                    <posy>240</posy>
+                                    <width>60</width>
+                                    <height>60</height>
                                     <texture>$INFO[ListItem.Property(channel.icon)]</texture>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="textbox">
-                                    <posx>110</posx>
-                                    <posy>328</posy>
-                                    <width>413</width>
+                                    <posx>100</posx>
+                                    <posy>234</posy>
+                                    <width>268</width>
                                     <height>80</height>
-                                    <font>font13</font>
+                                    <font>font12</font>
                                     <align>left</align>
                                     <textcolor>FFFFFFFF</textcolor>
                                     <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                                 </control>
-                                <!-- <control type="label">
-                                    <posx>110</posx>
-                                    <posy>365</posy>
-                                    <width>413</width>
-                                    <height>40</height>
-                                    <font>font10</font>
-                                    <align>left</align>
-                                    <aligny>center</aligny>
-                                    <textcolor>FFFFFFFF</textcolor>
-                                    <label>$INFO[ListItem.Label2]</label>
-                                </control> -->
                                 <control type="image">
                                     <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
-                                    <posx>508</posx>
-                                    <posy>375</posy>
+                                    <posx>358</posx>
+                                    <posy>195</posy>
                                     <width>24</width>
                                     <height>24</height>
                                     <texture>script-hdhomerun-view-rule_indicator.png</texture>
@@ -1088,19 +1033,19 @@
                                     <visible>!IsEmpty(ListItem.Property(hidden))</visible>
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <aspectratio>stretch</aspectratio>
                                     <colordiffuse>A0000000</colordiffuse>
                                 </control>
                             </itemlayout>
-                            <focusedlayout width="563" height="430">
+                            <focusedlayout width="423" height="325">
                                 <control type="image">
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <aspectratio>stretch</aspectratio>
                                     <colordiffuse>FF202020</colordiffuse>
@@ -1117,8 +1062,8 @@
                                 <control type="image">
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture fallback="script-hdhomerun-view-no_image.png">$INFO[ListItem.Thumb]</texture>
                                     <aspectratio aligny="top">scale</aspectratio>
                                 </control>
@@ -1126,8 +1071,8 @@
                                     <visible>!IsEmpty(ListItem.Property(hidden))</visible>
                                     <posx>10</posx>
                                     <posy>10</posy>
-                                    <width>533</width>
-                                    <height>400</height>
+                                    <width>393</width>
+                                    <height>295</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <aspectratio>stretch</aspectratio>
                                     <colordiffuse>A0000000</colordiffuse>
@@ -1135,7 +1080,7 @@
                                 <control type="image">
                                     <posx>0</posx>
                                     <posy>0</posy>
-                                    <width>553</width>
+                                    <width>403</width>
                                     <height>15</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
@@ -1145,62 +1090,51 @@
                                     <posx>0</posx>
                                     <posy>0</posy>
                                     <width>15</width>
-                                    <height>420</height>
+                                    <height>315</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="image">
-                                    <posx>538</posx>
+                                    <posx>398</posx>
                                     <posy>0</posy>
                                     <width>15</width>
-                                    <height>420</height>
+                                    <height>315</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="image">
                                     <posx>0</posx>
-                                    <posy>320</posy>
-                                    <width>553</width>
-                                    <height>100</height>
+                                    <posy>230</posy>
+                                    <width>403</width>
+                                    <height>85</height>
                                     <texture>script-hdhomerun-view-white_square.png</texture>
                                     <colordiffuse>FF006000</colordiffuse>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="image">
                                     <posx>20</posx>
-                                    <posy>330</posy>
-                                    <width>70</width>
-                                    <height>70</height>
+                                    <posy>240</posy>
+                                    <width>60</width>
+                                    <height>60</height>
                                     <texture>$INFO[ListItem.Property(channel.icon)]</texture>
                                     <aspectratio>stretch</aspectratio>
                                 </control>
                                 <control type="textbox">
-                                    <posx>110</posx>
-                                    <posy>328</posy>
-                                    <width>413</width>
+                                    <posx>100</posx>
+                                    <posy>234</posy>
+                                    <width>268</width>
                                     <height>80</height>
-                                    <font>font13</font>
+                                    <font>font12</font>
                                     <align>left</align>
                                     <textcolor>FFFFFFFF</textcolor>
                                     <label>[B]$INFO[ListItem.Property(series.title)][/B]</label>
                                 </control>
-                                <!-- <control type="label">
-                                    <posx>110</posx>
-                                    <posy>365</posy>
-                                    <width>413</width>
-                                    <height>40</height>
-                                    <font>font10</font>
-                                    <align>left</align>
-                                    <aligny>center</aligny>
-                                    <textcolor>FFFFFFFF</textcolor>
-                                    <label>$INFO[ListItem.Label2]</label>
-                                </control> -->
                                 <control type="image">
                                     <visible>!IsEmpty(ListItem.Property(has.rule))</visible>
-                                    <posx>508</posx>
-                                    <posy>375</posy>
+                                    <posx>358</posx>
+                                    <posy>195</posy>
                                     <width>24</width>
                                     <height>24</height>
                                     <texture>script-hdhomerun-view-rule_indicator.png</texture>
@@ -1216,9 +1150,9 @@
                     <visible>Container(201).OnScrollPrevious | Container(201).OnScrollNext</visible>
                     <animation effect="fade" start="100" end="0" time="200" delay="500">Hidden</animation>
                     <posx>1770</posx>
-                    <posy>0</posy>
+                    <posy>70</posy>
                     <width>10</width>
-                    <height>1080</height>
+                    <height>1010</height>
                     <visible>true</visible>
                     <texturesliderbackground colordiffuse="40000000">script-hdhomerun-view-white_square.png</texturesliderbackground>
                     <texturesliderbar colordiffuse="40FFFFFF">script-hdhomerun-view-white_square.png</texturesliderbar>

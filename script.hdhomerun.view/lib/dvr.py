@@ -24,15 +24,14 @@ class RecordDialog(kodigui.BaseDialog):
         self.rule = kwargs.get('rule')
         self.storageServer = kwargs.get('storage_server')
         self.results = kwargs.get('results')
-        self.showHide = kwargs.get('show_hide') or self.series.hidden
+        self.showHide = (kwargs.get('show_hide') or self.series.hidden) and not self.series.hasRule
         self.ruleAdded = False
         self.setPriority = False
         self.onNow = None
 
     def onFirstInit(self):
         self.episodeList = kodigui.ManagedControlList(self,self.EPISODE_LIST,20)
-        hideText = self.series.hidden and T(32841) or T(32840)
-        self.setProperty('show.hide',self.showHide and hideText or '')
+        self.showHideButton(self.showHide)
         self.setProperty('show.hasRule',self.series.hasRule and '1' or '')
         self.setProperty('record.always',(hasattr(self.series, 'recentOnly') and self.series.recentOnly) and 'RECENT' or 'ALWAYS')
         self.setProperty('series.title',self.series.title)
@@ -83,6 +82,14 @@ class RecordDialog(kodigui.BaseDialog):
 
         self.episodeList.addItems(items)
 
+    def showHideButton(self, show=True):
+        self.showHide = show
+        if show:
+            hideText = self.series.hidden and T(32841) or T(32840)
+            self.setProperty('show.hide',hideText)
+        else:
+            self.setProperty('show.hide','')
+
     def add(self):
         try:
             self.rule = self.storageServer.addRule(self.series)
@@ -97,6 +104,7 @@ class RecordDialog(kodigui.BaseDialog):
         xbmcgui.Dialog().ok(T(32800),T(32801),'',self.series.title)
 
         self.setProperty('show.hasRule', '1')
+        self.showHideButton(False)
 
     def hide(self):
         try:
@@ -128,6 +136,8 @@ class RecordDialog(kodigui.BaseDialog):
             return
         self.parent.deleteRule(self.rule)
         self.setProperty('show.hasRule', '')
+
+        self.showHideButton()
 
     def watch(self):
         self.parent.playShow(self.onNow)
@@ -448,9 +458,9 @@ class DVRBase(util.CronReceiver):
         elif action == xbmcgui.ACTION_MOUSE_MOVE and self.getFocusId() == self.RULE_LIST_ID:
             if self.movingRule:
                 self.moveRule(True)
-        # elif action.getButtonCode() in (61575, 61486):
-        #     if self.getFocusId() == self.RULE_LIST_ID:
-        #         return self.deleteRule()
+        elif action.getButtonCode() in (61575, 61486):
+            if self.getFocusId() == self.RULE_LIST_ID:
+                return self.deleteRule()
 
     def onClick(self,controlID):
         #print 'click: {0}'.format(controlID)
@@ -719,7 +729,7 @@ class DVRBase(util.CronReceiver):
                 self.fillNSPanel2(searchResults)
 
                 if fix_selection:
-                    off1 = self.nowShowingPanel1.getSelectedPosition() % 3
+                    off1 = self.nowShowingPanel1.getSelectedPosition() % 4
                     if self.nowShowingPanel2.positionIsValid(off1):
                         self.nowShowingPanel2.selectItem(off1)
 
@@ -731,7 +741,7 @@ class DVRBase(util.CronReceiver):
                 self.fillNSPanel1(searchResults)
 
                 if fix_selection:
-                    off2 = self.nowShowingPanel2.getSelectedPosition() % 3
+                    off2 = self.nowShowingPanel2.getSelectedPosition() % 4
                     if self.nowShowingPanel1.positionIsValid(off2):
                         self.nowShowingPanel1.selectItem(off2)
 
@@ -746,12 +756,12 @@ class DVRBase(util.CronReceiver):
                 self.fillNSPanel2(searchResults)
 
                 if fix_selection:
-                    off1 = (self.nowShowingPanel1.getSelectedPosition() + 1) % 3
-                    off2 = self.nowShowingPanel2.size() % 3
+                    off1 = (self.nowShowingPanel1.getSelectedPosition() + 1) % 4
+                    off2 = self.nowShowingPanel2.size() % 4
                     if off1 < off2:
                         self.nowShowingPanel2.selectItem((self.nowShowingPanel2.size() - 1) - (off2 - off1))
                     elif off2 < off1:
-                        self.nowShowingPanel2.selectItem((self.nowShowingPanel2.size() - 4) + off1)
+                        self.nowShowingPanel2.selectItem((self.nowShowingPanel2.size() - 5) + (off1 - off2))
                     else:
                         self.nowShowingPanel2.selectItem((self.nowShowingPanel2.size() - 1))
 
@@ -763,12 +773,12 @@ class DVRBase(util.CronReceiver):
                 self.fillNSPanel1(searchResults)
 
                 if fix_selection:
-                    off1 = self.nowShowingPanel1.size() % 3
-                    off2 = (self.nowShowingPanel2.getSelectedPosition() + 1) % 3
+                    off1 = self.nowShowingPanel1.size() % 4
+                    off2 = (self.nowShowingPanel2.getSelectedPosition() + 1) % 4
                     if off2 < off1:
                         self.nowShowingPanel1.selectItem((self.nowShowingPanel1.size() - 1) - (off1 - off2))
                     elif off1 < off2:
-                        self.nowShowingPanel1.selectItem((self.nowShowingPanel1.size() - 4) + off2)
+                        self.nowShowingPanel1.selectItem((self.nowShowingPanel1.size() - 5) + (off2 - off1))
                     else:
                         self.nowShowingPanel1.selectItem((self.nowShowingPanel1.size() - 1))
 
@@ -870,14 +880,13 @@ class DVRBase(util.CronReceiver):
             item = kodigui.ManagedListItem(r.title,data_source=r)
             item.setProperty('rule.recent_only',r.recentOnly and T(32805) or T(32806))
             item.setProperty('seriesID', r.seriesID)
+            #print '{0} {1}'.format(r.ruleID, r.title)
             items.append(item)
 
         if not items:
             util.setGlobalProperty('NO_RULES',self.storageServer.getRulesFailed and '[COLOR 80FF0000]{0}[/COLOR]'.format(T(32830)) or T(32804))
         else:
             util.setGlobalProperty('NO_RULES','')
-
-        items.sort(key=lambda x: x.dataSource.priority, reverse=True)
 
         self.ruleList.reset()
         self.ruleList.addItems(items)
@@ -889,15 +898,6 @@ class DVRBase(util.CronReceiver):
         try:
             if idx == 0:
                 self.toggleRuleRecent()
-            # elif idx == 1:
-                # item = self.ruleList.getSelectedItem()
-                # priority = xbmcgui.Dialog().input(T(32811),str(item.dataSource.priority))
-                # try:
-                #     item.dataSource.priority = int(priority)
-                #     #item.setLabel2(str(item.dataSource.priority))
-                # except ValueError:
-                #     return
-                # self.fillRules(update=True)
             elif idx == 1:
                 self.deleteRule()
 
@@ -948,9 +948,9 @@ class DVRBase(util.CronReceiver):
         if not move:
             if self.movingRule:
                 util.setGlobalProperty('moving.rule','')
-                self.movingRule = None
                 if move is not None:
-                    self.updateRulePriorities()
+                    self.updateRulePriority()
+                self.movingRule = None
             elif move is not None:
                 item = self.ruleList.getSelectedItem()
                 if not item:
@@ -964,14 +964,15 @@ class DVRBase(util.CronReceiver):
             self.ruleList.moveItem(self.movingRule,pos)
 
     @util.busyDialog('UPDATING')
-    def updateRulePriorities(self):
-        for i, item in enumerate(reversed(self.ruleList)):
-            try:
-                item.dataSource.priority = i
-            except ValueError:
-                util.ERROR()
-                return
+    def updateRulePriority(self):
+        pos = self.movingRule.pos()
+        if pos == 0:
+            afterRuleID = 0
+        else:
+            pos -= 1
+            afterRuleID = self.ruleList.getListItem(pos).dataSource.ruleID
 
+        self.movingRule.dataSource.move(afterRuleID)
         self.fillRules(update=True)
 
     def setSearch(self,category=None):
