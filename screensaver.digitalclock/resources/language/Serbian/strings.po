@@ -43,11 +43,19 @@ msgid "05:14 PM"
 msgstr ""
 
 msgctxt "#32020"
-msgid "Omogući podatke o trenutnoj reprodukciji"
+msgid "Omogući dodatne podatke"
 msgstr ""
 
 msgctxt "#32021"
 msgid "Broj sekundi za zamenu podataka"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Omogući podatke o trenutnoj reprodukciji"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Omogući podatke o vremenskoj prognozi"
 msgstr ""
 
 msgctxt "#32030"
@@ -99,7 +107,7 @@ msgid "Boja datuma"
 msgstr ""
 
 msgctxt "#32057"
-msgid "Boja podataka trenutne reprodukcije"
+msgid "Boja dodatnih podataka"
 msgstr ""
 
 msgctxt "#32070"
@@ -155,7 +163,7 @@ msgid "Providnost datuma"
 msgstr ""
 
 msgctxt "#32107"
-msgid "Providnost podataka trenutne reprodukcije"
+msgid "Providnost dodatnih podataka"
 msgstr ""
 
 msgctxt "#32120"

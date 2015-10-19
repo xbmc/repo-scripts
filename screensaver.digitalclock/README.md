@@ -1,16 +1,19 @@
 Digital clock screensaver
 =================
 
-Digital clock screensaver with date and several options.
+Digital clock screensaver with date, now playing information, weather information, image slideshow and several options.
 
 These are the options:
 
 General
-- Number of seconds to stay in place (Number of minutes that the clock will stay in place before moving to a random location)
+- Number of seconds to stay in place (Number of seconds that the clock will stay in place before moving to a random location)
 - Time format
 - Date format
-- Enable now playing info (Shows movie title, tv show title and episode title, artist and song, works with radio too)
-- Number of seconds for information switch (Switch between tv show title and episode title, artist and song, etc.)
+- Enable additional information
+- Number of seconds for information switch (Number of seconds before the information will be switched with another one, i.e. Artist - Song - Weather information)
+- Enable now playing information
+- Enable weather information
+- Weather icons
 
 Colors (Users can choose either to have a random color every time the clock moves or one from the list)
 - Random color
@@ -19,6 +22,8 @@ Colors (Users can choose either to have a random color every time the clock move
 - Minute color color
 - AM/PM color
 - Date color
+- Additional information color
+- Weather icon color
 
 Transparency (Users can choose either to have a random transparency every time the clock moves or one from the list)
 - Random transparency
@@ -27,8 +32,11 @@ Transparency (Users can choose either to have a random transparency every time t
 - Minute color transparency
 - AM/PM transparency
 - Date transparency
+- Additional information transparency
+- Weather icon transparency
 
 Background
+- Text shadow color
 - Enable slideshow (Users can have a slideshow of their images for background)
 - Choose slideshow directory
 - Change background picture every
@@ -36,7 +44,14 @@ Background
 - Background image (Users can select one colored background image from the list)
 
 This screensaver is configured for every skin separately since it has to use Fonts defined by the skin!
-If the skin is not on the list the screensaver won't work with it:
+
+Skin developers have an option to use script-screensaver-digitalclock-custom.xml in their skins 1080i,720p... folder.
+They should provide and maintain that xml file with their skin!
+Screensaver will check for skin folders in this order: 1080i,720p, 21x9 16x9, 4x3Hirez.
+If no script-screensaver-digitalclock-custom.xml is found screensaver will look for an appropriate xml file within screensavers folder.
+If there is no appropriate xml file it will use skin.default.xml
+
+If the skin is not on the list screensaver will use default font names from confluence (It might not look pretty but it will work with any skin):
 
 - Aeon Nox 5
 - Aeon MQ5
@@ -44,19 +59,20 @@ If the skin is not on the list the screensaver won't work with it:
 - Amber (Works, we're just waiting for the skin update)
 - AppTV (Works, we're just waiting for the skin update)
 - Arctic: Zephyr (Works but it still doesn't have the proper font - contacted the developer)
-- Avalon (Works, we're just waiting for the skin update)
-- Back Row (Works, we're just waiting for the skin update)
+- Avalon
+- Back Row
 - Bello
-- Black Glass Nova (Works, we're just waiting for the skin update)
+- Black Glass Nova
 - Box (Works but it still doesn't have the proper font - contacted the developer)
+- Chroma
 - Cirrus Extended (Works, we're just waiting for the skin update)
 - Confluence
 - Conq (Works but it still doesn't have the proper font - contacted the developer)
 - Eminence (Works but it still doesn't have the proper font - contacted the developer)
 - Maximinimalism (Works, we're just waiting for the skin update)
-- Metropolis (Works, we're just waiting for the skin update)
+- Metropolis
 - Mimic
-- Nebula (Works, we're just waiting for the skin update)
+- Nebula
 - Neon
 - Rapier
 - Refocus (Works but it still doesn't have the proper font - contacted the developer)

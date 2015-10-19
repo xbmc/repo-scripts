@@ -1,5 +1,23 @@
+[B]2.8.0[/B]
+- Changed the way screensaver deals with custom xml files
+
+[B]2.7.0[/B]
+- Added support for text shadow color
+
+[B]2.6.0[/B]
+- Added support for Chroma skin
+
+[B]2.5.0[/B]
+- Added weather icon support (Thanks to Mario and the rest of Titan skin crew)
+
+[B]2.4.0[/B]
+- Added skin.custom for skin developers and skin.default for skins that are not directly supported
+
+[B]2.3.0[/B]
+- Added weather information and reworked current options
+
 [B]2.2.0[/B]
-- Added now playing info options
+- Added now playing information options
 
 [B]2.1.0[/B]
 - Setting up the screensaver so it works with most of the skins

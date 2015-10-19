@@ -43,11 +43,19 @@ msgid "05:14 PM"
 msgstr ""
 
 msgctxt "#32020"
-msgid "Enable now playing info"
+msgid "Enable additional information"
 msgstr ""
 
 msgctxt "#32021"
 msgid "Number of seconds for information switch"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Enable now playing information"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Enable weather information"
 msgstr ""
 
 msgctxt "#32030"
@@ -68,6 +76,30 @@ msgstr ""
 
 msgctxt "#32034"
 msgid "05.30.2015"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Weather icons"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Hide weather icon"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Icon set 1"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Icon set 2"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Icon set 3"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Icon set 4"
 msgstr ""
 
 msgctxt "#32050"
@@ -99,7 +131,11 @@ msgid "Date color"
 msgstr ""
 
 msgctxt "#32057"
-msgid "Now playing info color"
+msgid "Additional information color"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Weather icon color"
 msgstr ""
 
 msgctxt "#32070"
@@ -155,7 +191,11 @@ msgid "Date transparency"
 msgstr ""
 
 msgctxt "#32107"
-msgid "Now playing info transparency"
+msgid "Additional information transparency"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Weather icon transparency"
 msgstr ""
 
 msgctxt "#32120"
@@ -226,6 +266,10 @@ msgctxt "#32155"
 msgid "Random images"
 msgstr ""
 
+msgctxt "#32156"
+msgid "Text shadow color"
+msgstr ""
+
 msgctxt "#32170"
 msgid "15 sec"
 msgstr ""
@@ -272,4 +316,20 @@ msgstr ""
 
 msgctxt "#32181"
 msgid "10 min"
+msgstr ""
+
+msgctxt "#32190"
+msgid "None"
+msgstr ""
+
+msgctxt "#32191"
+msgid "White"
+msgstr ""
+
+msgctxt "#32192"
+msgid "Gray"
+msgstr ""
+
+msgctxt "#32193"
+msgid "Black"
 msgstr ""
