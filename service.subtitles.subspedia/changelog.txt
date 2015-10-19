@@ -1,0 +1,4 @@
+0.0.2
+- adding notification in English and Italian
+0.0.1
+- initial release
