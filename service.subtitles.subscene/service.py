@@ -230,7 +230,7 @@ def getallsubs(url, allowed_languages, filename="", episode=""):
                 subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
                                   'lang': language_info, 'hearing_imp': hearing_imp, 'comment': comment})
 
-    subtitles.sort(key=lambda x: [not x['sync']])
+    subtitles.sort(key=lambda x: [not x['sync'], not x['lang']['name'] == PreferredSub])
     for s in subtitles:
         append_subtitle(s)
 
@@ -365,19 +365,19 @@ def download(link, episode=""):
 
         try:
             log(__name__, "Saving subtitles to '%s'" % local_tmp_file)
-            local_file_handle = open(local_tmp_file, "wb")
+            local_file_handle = xbmcvfs.File(local_tmp_file, "wb")
             local_file_handle.write(response.read())
             local_file_handle.close()
 
             # Check archive type (rar/zip/else) through the file header (rar=Rar!, zip=PK)
-            myfile = open(local_tmp_file, "rb")
-            myfile.seek(0)
+            myfile = xbmcvfs.File(local_tmp_file, "rb")
+            myfile.seek(0,0)
             if myfile.read(1) == 'R':
                 typeid = "rar"
                 packed = True
                 log(__name__, "Discovered RAR Archive")
             else:
-                myfile.seek(0)
+                myfile.seek(0,0)
                 if myfile.read(1) == 'P':
                     typeid = "zip"
                     packed = True
@@ -388,7 +388,7 @@ def download(link, episode=""):
                     log(__name__, "Discovered a non-archive file")
             myfile.close()
             local_tmp_file = os.path.join(tempdir, "subscene." + typeid)
-            os.rename(os.path.join(tempdir, "subscene.xxx"), local_tmp_file)
+            xbmcvfs.rename(os.path.join(tempdir, "subscene.xxx"), local_tmp_file)
             log(__name__, "Saving to %s" % local_tmp_file)
         except:
             log(__name__, "Failed to save subtitle to %s" % local_tmp_file)
@@ -455,13 +455,15 @@ if params['action'] == 'search' or params['action'] == 'manualsearch':
     item['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle"))  # try to get original title
     item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path
     item['3let_language'] = []
+    PreferredSub = params.get('preferredlanguage')
 
     if 'searchstring' in params:
         item['mansearch'] = True
         item['mansearchstr'] = params['searchstring']
 
-    for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
-        item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
+    if 'languages' in params:
+        for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
+            item['3let_language'].append(xbmc.convertLanguage(lang, xbmc.ISO_639_2))
 
     if item['title'] == "":
         item['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))  # no original title, get just Title

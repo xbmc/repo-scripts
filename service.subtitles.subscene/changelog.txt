@@ -1,3 +1,7 @@
+1.5.1
+- consider preferred language
+- bug fixes
+
 1.5.0
 - improved performance
 - improved language detection
