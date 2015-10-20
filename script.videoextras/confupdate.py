@@ -156,12 +156,12 @@ class ConfUpdate():
         insertTxt = previousOnLoad + DIALOG_VIDEO_INFO_ONLOAD
         dialogXmlStr = dialogXmlStr.replace(previousOnLoad, insertTxt)
 
-        # Now we need to add the button after the TvTunes button
-        previousButton = '"TvTunes_HideVideoInfoButton"))</visible>'
+        # Now we need to add the button after the Final button
+        previousButton = '<label>13511</label>'
 
         if previousButton not in dialogXmlStr:
             # The file has had a standard component deleted, so quit
-            log("DialogVideoInfo: Could not find TvTunes button, skipping file", xbmc.LOGERROR)
+            log("DialogVideoInfo: Could not find final button, skipping file", xbmc.LOGERROR)
             self.errorToLog = True
             return
 
@@ -175,7 +175,7 @@ class ConfUpdate():
             else:
                 idval = idval + 1
 
-        # Now add the Video Extras button after the TvTunes one
+        # Now add the Video Extras button after the Final one
         DIALOG_VIDEO_INFO_BUTTON = '''\n\t\t\t\t\t</control>\n\t\t\t\t\t<control type="button" id="%d">
 \t\t\t\t\t\t<description>Extras</description>
 \t\t\t\t\t\t<include>ButtonInfoDialogsCommonValues</include>
