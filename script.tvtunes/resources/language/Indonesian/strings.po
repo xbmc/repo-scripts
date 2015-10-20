@@ -72,10 +72,6 @@ msgctxt "#32101"
 msgid "ERROR"
 msgstr "KESALAHAN"
 
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "BATAL"
-
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Film"

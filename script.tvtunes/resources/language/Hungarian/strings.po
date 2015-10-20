@@ -76,6 +76,10 @@ msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Információ szerzése...."
 
+msgctxt "#32108"
+msgid "CANCELLED"
+msgstr "MEGSZAKÍTVA"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmek"

@@ -24,6 +24,10 @@ msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library."
 msgstr ""
 
+msgctxt "Addon Disclaimer"
+msgid "The collection of themes is maintain as a source to consult historical archives of music themes for movies and series. Thus its only purpose is educational and referential, and it is not maintained for the purpose of reselling and re-distributing music or for profitable purpose. Its access is intended strictly in the same way people access plots, trailers, scripts or other material in connection to a film. Any donation is with the purpose of supporting TvTunes' development and towards the costs of maintaining the library. Any holder of rights to these themes who would like to have their material removed from the archives just needs to request so by contacting TvTunes's Theme Library via the Kodi forum."
+msgstr ""
+
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr ""
@@ -417,7 +421,7 @@ msgid "TvTunes ID:"
 msgstr ""
 
 msgctxt "#32099"
-msgid "Enable TvTunes Store"
+msgid "Enable Theme Library"
 msgstr ""
 
 msgctxt "#32100"
@@ -508,7 +512,43 @@ msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
 msgstr ""
 
-#empty strings from id 32122 to 32200
+msgctxt "#32122"
+msgid "Theme Library Registration Incorrect"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Theme Library Unavailable"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Theme Library Audio"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Theme Library"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Theme Library Video"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Play themes when viewing Video Information"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Play themes when browsing TV Show Seasons"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Play themes when browsing TV Show Episodes"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Play themes when browsing Music Library"
+msgstr ""
+
+#empty strings from id 32131 to 32200
 
 msgctxt "#32201"
 msgid "Movies"

@@ -23,6 +23,7 @@ from settings import os_path_split
 from settings import list_dir
 from settings import dir_exists
 from settings import os_path_isfile
+from settings import normalize_string
 
 
 #############################################
@@ -241,25 +242,35 @@ class NfoReader():
 # Calculates file locations
 ##############################
 class ThemeFiles():
-    def __init__(self, rawPath, pathList=None, debug_logging_enabled=True, audioOnly=False):
+    def __init__(self, rawPath, pathList=None, videotitle=None, debug_logging_enabled=True, audioOnly=False):
         self.debug_logging_enabled = debug_logging_enabled
         self.forceShuffle = False
         self.doNotShuffle = False
         self.audioOnly = audioOnly
         self.rawPath = rawPath
-        if rawPath == "":
+        if rawPath in [None, ""]:
             self.clear()
-        elif (pathList is not None) and (len(pathList) > 0):
-            self.themeFiles = []
-            for aPath in pathList:
-                subThemeList = self._generateThemeFilelistWithDirs(aPath)
-                # add these files to the existing list
-                self.themeFiles = self._mergeThemeLists(self.themeFiles, subThemeList)
-            # If we were given a list, then we should shuffle the themes
-            # as we don't always want the first path playing first
-            self.forceShuffle = True
         else:
-            self.themeFiles = self._generateThemeFilelistWithDirs(rawPath)
+            # Check for the case where there is a custom path set so we need to use
+            # the custom location rather than the rawPath
+            if Settings.isCustomPathEnabled() and (videotitle not in [None, ""]):
+                customRoot = Settings.getCustomPath()
+                # Make sure that the path passed in has not already been converted
+                if customRoot not in self.rawPath:
+                    self.rawPath = os_path_join(customRoot, normalize_string(videotitle))
+                    log("ThemeFiles: Setting custom path to %s" % self.rawPath, self.debug_logging_enabled)
+
+            if (pathList is not None) and (len(pathList) > 0):
+                self.themeFiles = []
+                for aPath in pathList:
+                    subThemeList = self._generateThemeFilelistWithDirs(aPath)
+                    # add these files to the existing list
+                    self.themeFiles = self._mergeThemeLists(self.themeFiles, subThemeList)
+                # If we were given a list, then we should shuffle the themes
+                # as we don't always want the first path playing first
+                self.forceShuffle = True
+            else:
+                self.themeFiles = self._generateThemeFilelistWithDirs(self.rawPath)
 
         # Check if we need to handle the ordering for video themes
         if not audioOnly:
@@ -485,16 +496,21 @@ class ThemeFiles():
         del nfoRead
         log("ThemeFiles: Searching %s for %s" % (directory, Settings.getThemeFileRegEx(directory, extensionOnly, self.audioOnly)), self.debug_logging_enabled)
 
-        # check if the directory exists before searching
-        if dir_exists(directory):
-            dirs, files = list_dir(directory)
-            for aFile in files:
-                m = re.search(Settings.getThemeFileRegEx(directory, extensionOnly, self.audioOnly), aFile, re.IGNORECASE)
-                if m:
-                    path = os_path_join(directory, aFile)
-                    log("ThemeFiles: Found match: %s" % path, self.debug_logging_enabled)
-                    # Add the theme file to the list
-                    themeFiles.append(path)
+        # Make sure that the path does not point to a plugin, as we are checking the
+        # file-system for themes, not plugins. This can be the case with Emby
+        if "plugin://" in directory:
+            log("ThemeFiles: Plugin paths do not support theme files: %s" % directory, self.debug_logging_enabled)
+        else:
+            # check if the directory exists before searching
+            if dir_exists(directory):
+                dirs, files = list_dir(directory)
+                for aFile in files:
+                    m = re.search(Settings.getThemeFileRegEx(directory, extensionOnly, self.audioOnly), aFile, re.IGNORECASE)
+                    if m:
+                        path = os_path_join(directory, aFile)
+                        log("ThemeFiles: Found match: %s" % path, self.debug_logging_enabled)
+                        # Add the theme file to the list
+                        themeFiles.append(path)
 
         return themeFiles
 
@@ -550,3 +566,142 @@ class ThemeFiles():
             return True
 
         return False
+
+
+# Class to handle all themes when browsing music
+class MusicThemeFiles():
+    def __init__(self, debug_logging_enabled=True):
+        self.debug_logging_enabled = debug_logging_enabled
+        self.themeFiles = self._getThemesForActiveItem()
+
+    # Define the equals to be based off of the list of theme files
+    def __eq__(self, other):
+        try:
+            if isinstance(other, MusicThemeFiles):
+                # If the lengths are not the same, there is no chance of a match
+                if len(self.themeFiles) != len(other.themeFiles):
+                    return False
+                # Make sure each file in the list is also in the source list
+                for aFile in other.themeFiles:
+                    if self.themeFiles.count(aFile) < 1:
+                        return False
+            else:
+                return False
+        except AttributeError:
+            return False
+        # If we reach here then the theme lists are equal
+        return True
+
+    # Define the not equals to be based off of the list of theme files
+    def __ne__(self, other):
+        result = self.__eq__(other)
+        if result is NotImplemented:
+            return result
+        return not result
+
+    def hasThemes(self):
+        return (len(self.themeFiles) > 0)
+
+    def getPath(self):
+        # This is used for logging the theme group that is active
+        return "Music-Themes"
+
+    def clear(self):
+        self.themeFiles = []
+
+    # Get the list of themes with their full paths
+    def getThemeLocations(self):
+        return ""
+
+    # Returns the playlist for the themes
+    def getThemePlaylist(self):
+        # Take the list of files and create a playlist from them
+        # Needs to be a Music playlist otherwise repeat will not work
+        # via the JSON interface
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
+        playlist.clear()
+        for aFile in self.themeFiles:
+            # Add the theme file to a playlist
+            playlist.add(url=aFile)
+
+        # Check if we have more than one item in the playlist
+        if playlist.size() > 1:
+            playlist.shuffle()
+            # Check if we are only supposed to play one theme when there are multiple
+            # available
+            if Settings.onlyPlaySingleTheme():
+                firstTheme = playlist[0].getfilename()
+                playlist.clear()
+                playlist.add(url=firstTheme)
+
+        # Now we have the playlist, and it has been shuffled if needed
+        # Check if we need to have a random start time for the first track
+        # Note: The following method (rather than seek) should prevent
+        # the seek dialog being displayed on the screen and also prevent
+        # the need to start the theme playing before changing the start point
+        if Settings.isRandomStart() and playlist.size() > 0:
+            filename = playlist[0].getfilename()
+            duration = int(playlist[0].getduration())
+
+            log("MusicThemeFiles: Duration is %d for file %s" % (duration, filename), self.debug_logging_enabled)
+
+            if duration > 10:
+                listitem = xbmcgui.ListItem()
+                # Record if the theme should start playing part-way through
+                randomStart = random.randint(0, int(duration * 0.75))
+                listitem.setProperty('StartOffset', str(randomStart))
+
+                log("MusicThemeFiles: Setting Random start of %d for %s" % (randomStart, filename), self.debug_logging_enabled)
+
+                # Remove the old item from the playlist
+                playlist.remove(filename)
+                # Add the new item at the start of the list
+                playlist.add(filename, listitem, 0)
+
+        return playlist
+
+    def shouldExcludeFromScreensaver(self, rawPath):
+        # Do not include music themes in the screensaver
+        return True
+
+    def _getThemesForActiveItem(self):
+        themes = []
+        # There could be several sections for the music library so check the different options
+        albumArtist = xbmc.getInfoLabel('ListItem.AlbumArtist')
+        log("MusicThemeFiles: AlbumArtist is %s" % albumArtist, self.debug_logging_enabled)
+
+        artist = xbmc.getInfoLabel('ListItem.Artist')
+        log("MusicThemeFiles: Artist is %s" % artist, self.debug_logging_enabled)
+
+        album = xbmc.getInfoLabel('ListItem.Album')
+        log("MusicThemeFiles: Album is %s" % album, self.debug_logging_enabled)
+
+        # Now build up the JSON command using the values we have
+        albumArtistFilter = ""
+        if (albumArtist not in [None, ""]):
+            albumArtistFilter = ', "filter": { "albumartist": "%s" }' % albumArtist
+
+        artistFilter = ""
+        if (artist not in [None, ""]):
+            artistFilter = ', "filter": { "artist": "%s" }' % artist
+
+        albumFilter = ""
+        if (album not in [None, ""]):
+            albumFilter = ', "filter": { "album": "%s" }' % album
+
+        # Check to ensure there is some music information to search for
+        if (albumArtistFilter in [None, ""]) and (artistFilter in [None, ""]) and (albumFilter in [None, ""]):
+            log("MusicThemeFiles: No ListItem information for music", self.debug_logging_enabled)
+        else:
+            cmd = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "file"]%s%s%s },"id": 1 }' % (albumArtistFilter, artistFilter, albumFilter)
+            json_query = xbmc.executeJSONRPC(cmd)
+            json_query = simplejson.loads(json_query)
+            log("*** ROB ***: json reply %s" % str(json_query))
+            if ("result" in json_query) and ('songs' in json_query['result']):
+                # Get the list of movies paths from the movie set
+                items = json_query['result']['songs']
+                for item in items:
+                    log("MusicThemeFiles: Audio Theme file: %s" % item['file'])
+                    themes.append(item['file'])
+
+        return themes

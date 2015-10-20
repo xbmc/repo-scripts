@@ -18,6 +18,7 @@ from settings import normalize_string
 from settings import WindowShowing
 
 from themeFinder import ThemeFiles
+from themeFinder import MusicThemeFiles
 from themePlayer import ThemePlayer
 
 
@@ -136,7 +137,7 @@ class TunesBackend():
                 self.stop(fastFade=True)
                 continue
 
-            if not WindowShowing.isVideoLibrary():
+            if (not WindowShowing.isVideoLibrary()) and (not WindowShowing.isMusicSection()):
                 log("TunesBackend: Video Library no longer visible", logVideoLibraryNotShowing)
                 logVideoLibraryNotShowing = False
                 # End playing cleanly (including any fade out) and then stop everything
@@ -213,11 +214,11 @@ class TunesBackend():
             return False
         if WindowShowing.isPluginPath():
             return False
-        if WindowShowing.isMovieInformation():
+        if WindowShowing.isMovieInformation() and Settings.isPlayVideoInformation():
             return True
-        if WindowShowing.isSeasons():
+        if WindowShowing.isSeasons() and Settings.isPlayTvShowSeasons():
             return True
-        if WindowShowing.isEpisodes():
+        if WindowShowing.isEpisodes() and Settings.isPlayTvShowEpisodes():
             return True
         # Only valid if wanting theme on movie list
         if WindowShowing.isMovies() and Settings.isPlayMovieList():
@@ -228,6 +229,9 @@ class TunesBackend():
         # Only valid if wanting theme on Music Video list
         if WindowShowing.isMusicVideoTitles() and Settings.isPlayMusicVideoList():
             return True
+        if WindowShowing.isMusicSection():
+            return True
+
         # Any other area is deemed to be a non play area
         return False
 
@@ -235,21 +239,22 @@ class TunesBackend():
     # currently being displayed on the screen
     def getThemes(self):
         themePath = ""
+        # Only need the theme path for videos
+        if not WindowShowing.isMusicSection():
+            # Check if the files are stored in a custom path
+            if Settings.isCustomPathEnabled():
+                if not WindowShowing.isMovies():
+                    videotitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
+                else:
+                    videotitle = xbmc.getInfoLabel("ListItem.Title")
+                videotitle = normalize_string(videotitle)
+                themePath = os_path_join(Settings.getCustomPath(), videotitle)
 
-        # Check if the files are stored in a custom path
-        if Settings.isCustomPathEnabled():
-            if not WindowShowing.isMovies():
-                videotitle = xbmc.getInfoLabel("ListItem.TVShowTitle")
+            # Looking at the TV Show information page
+            elif WindowShowing.isMovieInformation() and (WindowShowing.isTvShowTitles() or WindowShowing.isTvShows()):
+                themePath = xbmc.getInfoLabel("ListItem.FilenameAndPath")
             else:
-                videotitle = xbmc.getInfoLabel("ListItem.Title")
-            videotitle = normalize_string(videotitle)
-            themePath = os_path_join(Settings.getCustomPath(), videotitle)
-
-        # Looking at the TV Show information page
-        elif WindowShowing.isMovieInformation() and (WindowShowing.isTvShowTitles() or WindowShowing.isTvShows()):
-            themePath = xbmc.getInfoLabel("ListItem.FilenameAndPath")
-        else:
-            themePath = xbmc.getInfoLabel("ListItem.Path")
+                themePath = xbmc.getInfoLabel("ListItem.Path")
 
         # To try and reduce the amount of "noise" in the logging, where the
         # same check is logged again and again, we record if it has been
@@ -291,7 +296,10 @@ class TunesBackend():
                 # Load the previous theme
                 themefile = self.newThemeFiles
         else:
-            themefile = ThemeFiles(themePath, debug_logging_enabled=debug_logging_enabled)
+            if WindowShowing.isMusicSection():
+                themefile = MusicThemeFiles(debug_logging_enabled)
+            else:
+                themefile = ThemeFiles(themePath, debug_logging_enabled=debug_logging_enabled)
 
         return themefile
 

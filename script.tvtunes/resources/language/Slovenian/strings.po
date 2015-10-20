@@ -100,6 +100,10 @@ msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Pridobivam podatke ..."
 
+msgctxt "#32108"
+msgid "CANCELLED"
+msgstr "PREKLICANO"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmi"

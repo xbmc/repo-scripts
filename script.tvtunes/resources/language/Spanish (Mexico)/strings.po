@@ -56,6 +56,10 @@ msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Obteniendo información..."
 
+msgctxt "#32108"
+msgid "CANCELLED"
+msgstr "CANCELADO"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Películas"

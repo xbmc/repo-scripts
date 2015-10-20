@@ -1,3 +1,16 @@
+v6.0.5
+- Fix Emby auto-play when searching for themes existence
+- Add option to disable themes on Video Information, TV Seasons and TV Shows
+- Add support for playing a track when browsing the music library
+- Allow custom path to be a network share
+
+v6.0.4
+- Add file sizes to theme store
+
+v6.0.3
+- Fix custom path support
+- Add Theme Store
+
 v6.0.2
 - Stop prompting to continue when auto downloading themes
 - Do not fade out video themes

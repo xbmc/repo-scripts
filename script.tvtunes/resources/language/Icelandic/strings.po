@@ -68,6 +68,10 @@ msgctxt "#32072"
 msgid "Crossfade"
 msgstr "Krossblanda"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Ræsing"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "VILLA"
@@ -75,10 +79,6 @@ msgstr "VILLA"
 msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Sæki upplýsingar..."
-
-msgctxt "#32108"
-msgid "CANCELED"
-msgstr "HÆTT VIÐ"
 
 msgctxt "#32111"
 msgid "to:"

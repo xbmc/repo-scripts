@@ -72,6 +72,18 @@ msgctxt "#32072"
 msgid "Crossfade"
 msgstr "Çapraz geçiş"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Başlangıç"
+
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Başlangıçta Ses Düzeyini Sıfırla"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Başlandıçta Ses Düzeyini Ayarla"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmler"

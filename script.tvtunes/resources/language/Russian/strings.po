@@ -96,6 +96,10 @@ msgctxt "#32106"
 msgid "Getting information..."
 msgstr "Получение информации..."
 
+msgctxt "#32108"
+msgid "CANCELLED"
+msgstr "ОТМЕНЕНО"
+
 msgctxt "#32109"
 msgid "Operation canceled by user."
 msgstr "Операция отменена пользователем."

@@ -172,6 +172,17 @@ class WindowShowing():
         return xbmc.getCondVisibility("Window.IsVisible(shutdownmenu)")
 
     @staticmethod
+    def isMusicSection():
+        inMusicSection = False
+        # Only record being in the music section if we have it enabled in the settings
+        if Settings.isPlayMusicList():
+            if xbmc.getCondVisibility("Container.Content(albums)"):
+                inMusicSection = True
+            elif xbmc.getCondVisibility("Container.Content(artists)"):
+                inMusicSection = True
+        return inMusicSection
+
+    @staticmethod
     def isTvTunesOverrideTvShows():
         win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
         return win.getProperty("TvTunesSupported").lower() == "tvshows"
@@ -278,6 +289,7 @@ class Settings():
     TELEVISION_TUNES = 'televisiontunes.com'
     SOUNDCLOUD = 'soundcloud.com'
     GOEAR = 'goear.com'
+    THEMELIBRARY = 'themelibrary'
     PROMPT_ENGINE = 'Prompt User'
 
     # Settings for Automatically Downloading
@@ -298,13 +310,15 @@ class Settings():
     # Checks if the given file is names as a video file
     @staticmethod
     def isVideoFile(filename):
-        if filename.endswith('.mp4'):
+        if filename.lower().endswith('.mp4'):
             return True
-        if filename.endswith('.mkv'):
+        if filename.lower().endswith('.mkv'):
             return True
-        if filename.endswith('.avi'):
+        if filename.lower().endswith('.avi'):
             return True
-        if filename.endswith('.mov'):
+        if filename.lower().endswith('.mov'):
+            return True
+        if filename.lower().endswith('.m2ts'):
             return True
         return False
 
@@ -394,6 +408,8 @@ class Settings():
             fileTypes.append("avi")
         if(__addon__.getSetting("mov") == 'true'):
             fileTypes.append("mov")
+        if(__addon__.getSetting("m2ts") == 'true'):
+            fileTypes.append("m2ts")
         return '|'.join(fileTypes)
 
     @staticmethod
@@ -415,6 +431,22 @@ class Settings():
     @staticmethod
     def isPlayMusicVideoList():
         return __addon__.getSetting("musicvideolist") == 'true'
+
+    @staticmethod
+    def isPlayVideoInformation():
+        return __addon__.getSetting("videoInformation") == 'true'
+
+    @staticmethod
+    def isPlayTvShowSeasons():
+        return __addon__.getSetting("tvShowSeasons") == 'true'
+
+    @staticmethod
+    def isPlayTvShowEpisodes():
+        return __addon__.getSetting("tvShowEpisodes") == 'true'
+
+    @staticmethod
+    def isPlayMusicList():
+        return __addon__.getSetting("musiclist") == 'true'
 
     @staticmethod
     def getPlayDurationLimit():
@@ -477,6 +509,9 @@ class Settings():
             return Settings.SOUNDCLOUD
         elif index == 3:
             return Settings.GOEAR
+        elif index == 4:
+            return Settings.THEMELIBRARY
+
         # Default is to prompt the user
         return Settings.PROMPT_ENGINE
 

@@ -23,6 +23,7 @@ __addonid__ = __addon__.getAddonInfo('id')
 from settings import Settings
 from settings import log
 from settings import dir_exists
+from settings import os_path_join
 
 from themeFinder import ThemeFiles
 
@@ -43,6 +44,12 @@ class UploadThemes():
 
         # Records if the entire upload system is disabled
         self.uploadsDisabled = False
+        self.isEmbyEnabled = True
+        self.isVideoEnabled = True
+        self.isAudioEnabled = True
+        self.isTvShowsEnabled = True
+        self.isMoviesEnabled = True
+
         self.ftpArg = None
         self.userArg = None
         self.passArg = None
@@ -85,6 +92,14 @@ class UploadThemes():
     def processVideoThemes(self, jsonGet, target):
         # Only process anything if it is enabled
         if self.uploadsDisabled:
+            return
+
+        # Check if we need to upload the TV Shows
+        if (target == 'tvshows') and not self.isTvShowsEnabled:
+            return
+
+        # Check if we need to upload the movies
+        if (target == 'movies') and not self.isMoviesEnabled:
             return
 
         # Get the videos that are in the library
@@ -236,10 +251,12 @@ class UploadThemes():
 
                 videoItem['emby'] = False
                 if "plugin.video.emby" in item['file']:
+                    if not self.isEmbyEnabled:
+                        continue
                     videoItem['emby'] = True
 
                 # Get the themes if they exist
-                themeFileMgr = ThemeFiles(videoItem['file'])
+                themeFileMgr = ThemeFiles(videoItem['file'], videotitle=item['title'])
 
                 # Make sure there are themes
                 if not themeFileMgr.hasThemes():
@@ -266,7 +283,12 @@ class UploadThemes():
     def _getThemesToUpload(self, target, id, themes):
         themeList = []
         for theme in themes:
+            maxFileSize = 104857600
             if Settings.isVideoFile(theme):
+                # Check if all videos are disabled
+                if not self.isVideoEnabled:
+                    continue
+
                 # Check to see if this theme should be excluded
                 if target == 'tvshows':
                     if id in self.tvShowVideoExcludes:
@@ -277,6 +299,12 @@ class UploadThemes():
                         log("UploadThemes: Movie %s in video exclude list, skipping" % id)
                         continue
             else:
+                # Check if all videos are disabled
+                if not self.isVideoEnabled:
+                    continue
+
+                # Audio files have a smaller limit
+                maxFileSize = 20971520
                 # Check to see if this theme should be excluded
                 if target == 'tvshows':
                     if id in self.tvShowAudioExcludes:
@@ -286,6 +314,15 @@ class UploadThemes():
                     if id in self.movieAudioExcludes:
                         log("UploadThemes: Movie %s in audio exclude list, skipping" % id)
                         continue
+
+            # Check to make sure the theme file is not too large, anything over 100 meg
+            # is too large for a theme
+            stat = xbmcvfs.Stat(theme)
+            themeFileSize = stat.st_size()
+            if themeFileSize > maxFileSize:
+                log("UploadThemes: Theme %s too large %s" % (theme, themeFileSize))
+                continue
+
             # If we reach here it is not in either exclude list
             themeList.append(theme)
         return themeList
@@ -524,6 +561,36 @@ class UploadThemes():
                 self.uploadsDisabled = True
                 return
 
+            # Check to see if Emby uploads are enabled
+            isEmbyEnabledElem = uploadSettingET.find('embyenabled')
+            if (isEmbyEnabledElem is None) or (isEmbyEnabledElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for emby via online settings")
+                self.isEmbyEnabled = False
+
+            # Check if audio uploads are enabled
+            isAudioElem = uploadSettingET.find('audio')
+            if (isAudioElem is None) or (isAudioElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for audio via online settings")
+                self.isAudioEnabled = False
+
+            # Check if video uploads are enabled
+            isVideoElem = uploadSettingET.find('video')
+            if (isVideoElem is None) or (isVideoElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for videos via online settings")
+                self.isVideoEnabled = False
+
+            # Check if tv show uploads are enabled
+            isTvShowsElem = uploadSettingET.find('tvshows')
+            if (isTvShowsElem is None) or (isTvShowsElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for tvshows via online settings")
+                self.isTvShowsEnabled = False
+
+            # Check if movie uploads are enabled
+            isMoviesElem = uploadSettingET.find('movies')
+            if (isMoviesElem is None) or (isMoviesElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for movies via online settings")
+                self.isMoviesEnabled = False
+
             # Get the details for where themes are uploaded to
             ftpArgElem = uploadSettingET.find('ftp')
             userArgElem = uploadSettingET.find('username')
@@ -538,26 +605,26 @@ class UploadThemes():
             self.userArg = userArgElem.text
             self.passArg = passArgElem.text
 
-            # Get the store contents
-            remoteStore = urllib2.urlopen(storeArgElem.text)
-            storeContentStr = remoteStore.read()
+            # Get the library contents
+            remoteLibrary = urllib2.urlopen(storeArgElem.text)
+            libraryContentStr = remoteLibrary.read()
             # Closes the connection after we have read the remote settings
             try:
-                remoteStore.close()
+                remoteLibrary.close()
             except:
-                log("UploadThemes: Failed to close connection for remote store", xbmc.LOGERROR)
+                log("UploadThemes: Failed to close connection for remote library", xbmc.LOGERROR)
 
-            storeET = ET.ElementTree(ET.fromstring(storeContentStr))
+            libraryET = ET.ElementTree(ET.fromstring(libraryContentStr))
 
             # The global flag has been checks and uploads are enabled, so now get the list
             # of TV-Shows and Movies that we do not want themes for, most probably because
             # they are already in the library
-            tvshowsElem = storeET.find('tvshows')
+            tvshowsElem = libraryET.find('tvshows')
             if tvshowsElem is not None:
-                # Check all of the TV Shows in the store
+                # Check all of the TV Shows in the library
                 for tvshowElem in tvshowsElem.findall('tvshow'):
                     if tvshowElem is not None:
-                        # Check if there is an audio theme in the store
+                        # Check if there is an audio theme in the library
                         if tvshowElem.find('audiotheme') is not None:
                             self.tvShowAudioExcludes.append(tvshowElem.attrib['id'])
                             log("UploadThemes: Excluding TV Audio %s" % tvshowElem.attrib['id'])
@@ -565,12 +632,12 @@ class UploadThemes():
                             self.tvShowVideoExcludes.append(tvshowElem.attrib['id'])
                             log("UploadThemes: Excluding TV Video %s" % tvshowElem.attrib['id'])
 
-            moviesElem = storeET.find('movies')
+            moviesElem = libraryET.find('movies')
             if moviesElem is not None:
-                # Check all of the TV Shows in the store
+                # Check all of the TV Shows in the library
                 for movieElem in moviesElem.findall('movie'):
                     if movieElem is not None:
-                        # Check if there is an audio theme in the store
+                        # Check if there is an audio theme in the library
                         if movieElem.find('audiotheme') is not None:
                             self.movieAudioExcludes.append(movieElem.attrib['id'])
                             log("UploadThemes: Excluding Movie Audio %s" % movieElem.attrib['id'])
@@ -587,6 +654,9 @@ class UploadThemes():
         idValue = ""
         if year in [None, 0, "0"]:
             year = ""
+        # Does not seem to work correctly with the year at the moment
+        year = ""
+        metaget = None
         try:
             metaget = metahandlers.MetaData(preparezip=False)
             if typeTag == 'tvshows':
@@ -606,7 +676,35 @@ class UploadThemes():
         except Exception:
             idValue = ""
             log("UploadThemes: Failed to get Metahandlers ID %s" % traceback.format_exc())
+
+        if metaget is not None:
+            del metaget
+
         return idValue
+
+
+def cleanMetaHandlerDb():
+    log("UploadThemes: Cleaning Metahandler DB")
+    try:
+        metaAddon = xbmcaddon.Addon(id='script.module.metahandler')
+        metaFolder = metaAddon.getSetting('meta_folder_location')
+        metaFolder = xbmc.translatePath(metaFolder)
+        if not metaFolder:
+            metaFolder = xbmc.translatePath("special://profile/addon_data/script.module.metahandler/")
+        metaFolder = os_path_join(metaFolder, 'meta_cache')
+
+        dbLocation = os_path_join(metaFolder, 'video_cache.db')
+
+        try:
+            if xbmcvfs.exists(dbLocation):
+                log("UploadThemes: Removing %s" % dbLocation)
+                xbmcvfs.delete(dbLocation)
+        except:
+            log("UploadThemes: Failed to remove metadata DB using xbmcvfs")
+            if os.path.exists(dbLocation):
+                os.remove(dbLocation)
+    except:
+        log("UploadThemes: Failed to remove metadata DB")
 
 
 #########################
@@ -615,6 +713,11 @@ class UploadThemes():
 if __name__ == '__main__':
     log("UploadThemes: Upload themes called")
 
+    # Clear the metahandler DB - if we do not, then we do not seem to find most
+    # of the items we request IDs for
+    cleanMetaHandlerDb()
+    xbmc.sleep(1000)
+
     # We want to avoid and errors appearing on the screen, not the end of the world
     # if it fails to upload the themes
     try:
@@ -622,7 +725,8 @@ if __name__ == '__main__':
 
         # We want to process all the Videos (TV and Movies) but no need to get them all at
         # once, so start with TV and then move onto Movies later
-        uploadMgr.processVideoThemes('GetTVShows', 'tvshows')
+        if not xbmc.abortRequested:
+            uploadMgr.processVideoThemes('GetTVShows', 'tvshows')
 
         # If the system is not being shut down, move onto the movies
         if not xbmc.abortRequested:

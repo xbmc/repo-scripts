@@ -17,24 +17,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "Addon Summary"
-msgid "Retrieve and play your soundtrack themes whilst browsing your library"
+msgid "Retrieve and play your soundtrack or video themes whilst browsing your library"
 msgstr "Сваля и възпроизвежда мелодиите от вашите филми и сериали"
 
 msgctxt "Addon Description"
-msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library, when used in conjunction with a compatible skin. (Special thanks to Ppic,Frost and ronie for their early work in developing TvTunes)"
-msgstr "Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик. (Специални благодарности на Ppic, Frost и ronie за за тяната работа върху TvTunes)"
-
-msgctxt "Addon Disclaimer"
-msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
-msgstr "До авторите на облици: За информация как да интегрирате добавката прочетете http://wiki.kodi.tv/index.php?title=Add-on:TvTunes"
+msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library."
+msgstr "Скриптът ще Ви помогне да се сдобиете с мелодии от филми и сериали. Когато преглеждате инф. за даден филм или епизодите от даден сериал, съответната мелодия ще се възпроизвежда автоматично. За целта е необходимо да ползвате съвместим облик."
 
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Повтаряне на мелодията, без спиране"
-
-msgctxt "#32002"
-msgid "Lower sound value"
-msgstr "Понижаване силата на звука"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -296,6 +288,30 @@ msgctxt "#32078"
 msgid "Repeat Rules"
 msgstr "Повторение"
 
+msgctxt "#32079"
+msgid "Startup"
+msgstr "Стартиране"
+
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr "Тип аудио файлове"
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr "Тип видео файлове"
+
+msgctxt "#32091"
+msgid "Update advancedsettings.xml File"
+msgstr "Обнови файлът advancedsettings.xml"
+
+msgctxt "#32093"
+msgid "Unable to update advancedsettings.xml"
+msgstr "advancedsettings.xml не може да бъде обновен"
+
+msgctxt "#32095"
+msgid "advancedsettings.xml update complete"
+msgstr "Обновяването на advancedsettings.xml завърши"
+
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Ръчен избор на мелодия при липса на съответствие"
@@ -329,8 +345,8 @@ msgid "Searching for"
 msgstr "Търсене за"
 
 msgctxt "#32108"
-msgid "CANCELED"
-msgstr "ОТКАЗ"
+msgid "CANCELLED"
+msgstr "ОТМЕНЕНО"
 
 msgctxt "#32109"
 msgid "Operation canceled by user."
@@ -360,9 +376,9 @@ msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Резултатите от търсенето ще са непълни"
 
-msgctxt "#32116"
-msgid "You can help to get more theme on:"
-msgstr "Можете да помогнете в обогатяването на библиотеката с мелодии на адрес:"
+msgctxt "#32117"
+msgid "Failed to load registration file"
+msgstr "Зареждането на регистрационния файл се провали"
 
 msgctxt "#32118"
 msgid "Manual Search..."
@@ -379,6 +395,18 @@ msgstr "Търсене в %s..."
 msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
 msgstr "Търсене във всички сайтове (бавно търсене)"
+
+msgctxt "#32123"
+msgid "Theme Store Unavailable"
+msgstr "Магазинът за мелодии не е наличен"
+
+msgctxt "#32124"
+msgid "Theme Store Audio"
+msgstr "Магазин за аудио мелодии"
+
+msgctxt "#32125"
+msgid "Theme Store"
+msgstr "Магазин за мелодии"
 
 msgctxt "#32201"
 msgid "Movies"
