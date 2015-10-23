@@ -109,6 +109,8 @@ class MenuNavigator():
                 eBook = EBookBase.createEBookObject(fullpath)
                 title = eBook.getTitle()
                 author = eBook.getAuthor()
+                eBook.tidyUp()
+                del eBook
 
                 # Add this book to the list
                 bookDB.addBook(fullpath, title, author)
@@ -153,8 +155,11 @@ class MenuNavigator():
             readChapter = bookDetails['readchapter']
             readAll = bookDetails['complete']
 
+        eBook = EBookBase.createEBookObject(fullpath)
         # Get the chapters for this book
-        chapters = self._getChapters(fullpath)
+        chapters = self._getChapters(fullpath, eBook)
+        eBook.tidyUp()
+        del eBook
 
         foundMatchedReadChapter = False
         # Add all the chapters to the display
@@ -223,7 +228,7 @@ class MenuNavigator():
             if readerWindow.isNext():
                 xbmc.executebuiltin("ActivateWindow(busydialog)")
                 # Find the next chapter
-                chapters = self._getChapters(fullpath)
+                chapters = self._getChapters(fullpath, eBook)
                 nextChapterMatch = False
                 for chapter in chapters:
                     # Check if this is the chapter we are moving to
@@ -241,7 +246,7 @@ class MenuNavigator():
             if readerWindow.isPrevious():
                 xbmc.executebuiltin("ActivateWindow(busydialog)")
                 # Find the previous chapter
-                chapters = self._getChapters(fullpath)
+                chapters = self._getChapters(fullpath, eBook)
                 previousChapter = None
                 isFirstChapterVal = 'true'
                 for chapter in chapters:
@@ -259,22 +264,24 @@ class MenuNavigator():
                     readerWindow.updateScreen(chapter['title'], eBook.getChapterContents(readingChapter), isFirstChapter, False)
                 xbmc.executebuiltin("Dialog.Close(busydialog)")
 
+        eBook.tidyUp()
+        del eBook
+
         # If this chapter was marked as read then we need to refresh to pick up the record
         if readStatusChanged:
             xbmc.executebuiltin("Container.Refresh")
 
         del readerWindow
 
-    def _getChapters(self, fullpath):
+    def _getChapters(self, fullpath, eBook):
         log("EBooksPlugin: Listing chapters for %s" % fullpath)
         # Get the chapters for this book
-        eBook = EBookBase.createEBookObject(fullpath)
         chapters = eBook.getChapterDetails()
 
         chapterList = []
 
         previousChapterLink = ""
-        # Add all the chapters to the display
+        # Get all the chapters that will be added to the display
         for chapter in chapters:
             # Checks if this is the last chapter of the book
             isLastChapter = 'false'

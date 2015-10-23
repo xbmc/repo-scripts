@@ -38,21 +38,39 @@ from pdfminer.layout import LAParams
 
 # Generic class for handling EBook details
 class EBookBase():
-    def __init__(self, eBookFilePath):
+    def __init__(self, eBookFilePath, removeFileWhenComplete=False):
         log("EBookBase: Loading book %s" % eBookFilePath)
         self.filePath = eBookFilePath
         self.fileName = os_path_split(eBookFilePath)[-1]
+        self.isTempBookFile = removeFileWhenComplete
 
     @staticmethod
     def createEBookObject(filePath):
+        localFilePath = filePath
+        removeWhenComplete = False
+        if filePath.startswith('smb://') or filePath.startswith('nfs://'):
+            try:
+                # Copy the file to the local disk
+                justFileName = os_path_split(filePath)[-1]
+                copiedFile = os_path_join(Settings.getTempLocation(), justFileName)
+                copy = xbmcvfs.copy(filePath, copiedFile)
+                if copy:
+                    log("EBookBase: copy successful for %s" % copiedFile)
+                    localFilePath = copiedFile
+                    removeWhenComplete = True
+                else:
+                    log("EBookBase: copy failed from %s to %s" % (filePath, copiedFile))
+            except:
+                log("EBookBase: Failed to copy file %s to local directory" % filePath)
+
         bookType = None
         # Check which type of EBook it is
         if filePath.lower().endswith('.epub'):
-            bookType = EPubEBook(filePath)
+            bookType = EPubEBook(localFilePath, removeWhenComplete)
         elif filePath.lower().endswith('.mobi'):
-            bookType = MobiEBook(filePath)
+            bookType = MobiEBook(localFilePath, removeWhenComplete)
         elif filePath.lower().endswith('.pdf'):
-            bookType = PdfEBook(filePath)
+            bookType = PdfEBook(localFilePath, removeWhenComplete)
         else:
             log("EBookBase: Unknown book type for %s" % filePath)
 
@@ -76,8 +94,16 @@ class EBookBase():
         if coverTargetName in [None, ""]:
             ebook = EBookBase.createEBookObject(filePath)
             coverTargetName = ebook.extractCoverImage()
+            ebook.tidyUp()
+            del ebook
 
         return coverTargetName
+
+    def tidyUp(self):
+        # If we had to copy the file locally, make sure we delete it
+        if self.isTempBookFile:
+            if xbmcvfs.exists(self.filePath):
+                xbmcvfs.delete(self.filePath)
 
     def getTitle(self):
         return ""
@@ -186,8 +212,8 @@ class EBookBase():
 
 # Class to process the mobi formatted books
 class MobiEBook(EBookBase):
-    def __init__(self, filePath):
-        EBookBase.__init__(self, filePath)
+    def __init__(self, filePath, removeFileWhenComplete=False):
+        EBookBase.__init__(self, filePath, removeFileWhenComplete)
         self.book = None
         self.bookFallback = None
 
@@ -264,7 +290,10 @@ class MobiEBook(EBookBase):
                 log("MobiEBook: Failed to delete directory %s" % extractDir)
 
         # Extract the contents of the book so we can get the cover image
-        kindleunpack.unpackBook(self.filePath, extractDir, None, '2', True)
+        try:
+            kindleunpack.unpackBook(self.filePath, extractDir, None, '2', True)
+        except:
+            log("MobiEBook: Failed to extract cover for %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
         coverTargetName = None
         if dir_exists(extractDir):
@@ -324,7 +353,10 @@ class MobiEBook(EBookBase):
                 log("MobiEBook: Failed to delete directory %s" % extractDir)
 
         # Extract the contents of the book so we can get the cover image
-        kindleunpack.unpackBook(self.filePath, extractDir, None, '2', True)
+        try:
+            kindleunpack.unpackBook(self.filePath, extractDir, None, '2', True)
+        except:
+            log("MobiEBook: Failed to unpack book for %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
         chapterDetails = []
         if dir_exists(extractDir):
@@ -449,8 +481,11 @@ class MobiEBook(EBookBase):
             except:
                 log("MobiEBook: Failed to delete directory %s" % extractDir)
 
-        # Extract the contents of the book so we can get the cover image
-        kindleunpack.unpackBook(self.filePath, extractDir, None, '2', True)
+        # Extract the contents of the book so we can get the chapter contents
+        try:
+            kindleunpack.unpackBook(self.filePath, extractDir, None, '2', True)
+        except:
+            log("MobiEBook: Failed to unpack book for %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
         # Find the file containing the book contents
         bookFileLocation = self._findBookFile(extractDir, bookFileName)
@@ -527,8 +562,8 @@ class MobiEBook(EBookBase):
 
 # Class to process the epub formatted books
 class EPubEBook(EBookBase):
-    def __init__(self, filePath):
-        EBookBase.__init__(self, filePath)
+    def __init__(self, filePath, removeFileWhenComplete=False):
+        EBookBase.__init__(self, filePath, removeFileWhenComplete)
         self.bookFile = None
         self.book = None
 
@@ -664,8 +699,8 @@ class EPubEBook(EBookBase):
 
 # Class to process the pdf formatted books
 class PdfEBook(EBookBase):
-    def __init__(self, filePath):
-        EBookBase.__init__(self, filePath)
+    def __init__(self, filePath, removeFileWhenComplete=False):
+        EBookBase.__init__(self, filePath, removeFileWhenComplete)
         self.document = None
 
     def _getDocument(self):

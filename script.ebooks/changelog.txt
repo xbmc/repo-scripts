@@ -1,2 +1,5 @@
+v1.0.1
+- Add support for books on smb:// or nfs:// network drives
+
 v1.0.0
 - Initial Release
