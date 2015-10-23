@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <string id="32001">Subspedia has only italian TV Series subtitles. Add italian to the subtitle settings</string>
+	<string id="32002">Error. Search like example: supernatural 9x5</string>
+	<string id="32003">TVShow not found</string>
+	<string id="32004">Subs not found or not yet released</string>
 </strings>

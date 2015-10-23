@@ -13,6 +13,7 @@ import xbmcplugin
 import shutil
 import unicodedata
 import json
+import re
 from fileinput import filename
 
 __addon__ = xbmcaddon.Addon()
@@ -31,14 +32,16 @@ def Search(item):
     if 'ita' in item['3let_language'] and item['tvshow']:
         urlgetid="http://www.subspedia.tv/API/getAllSeries.php"
         urlgetsub="http://www.subspedia.tv/API/getBySerie.php?serie="
-        idserie=0
+        idserie=checkexp(item['tvshow'])
         linkdownload=""
         eptitolo=""  
         response = urllib2.urlopen(urlgetid)
         data = json.loads(response.read())
-        for series in data:
-            if item['tvshow']==series["nome_serie"]:
-                idserie=series["id_serie"]
+        if idserie==0:
+            for series in data:
+                if item['tvshow'].lower()==series['nome_serie'].lower():
+                    idserie=series["id_serie"]
+                    break
         if idserie!=0:
             urlgetsub=urlgetsub+str(idserie)
             response = urllib2.urlopen(urlgetsub)
@@ -49,6 +52,7 @@ def Search(item):
                 if (item['season']==num_stagione)and(item['episode']==num_episodio):
                     eptitolo=season["ep_titolo"]
                     linkdownload=season["link_file"]
+                    break
             if linkdownload!="":
                 log("Fetching subtitles using url %s" % linkdownload)
                 content= urllib2.urlopen(linkdownload).read()
@@ -103,9 +107,10 @@ def Search(item):
                         dirs = os.listdir(dirtemp)
                         for file in dirs:
                             filen=file.replace("subspedia","")
-                            filen=file.replace("Subspedia","")
+                            filen=filen.replace("Subspedia","")
                             filen=filen.replace(".srt","")
                             filen=filen.replace("."," ")
+                            filen=filen.replace("_"," ")
                             listitem = xbmcgui.ListItem(label="Italian",label2=filen,thumbnailImage='it')
                             listitem.setProperty( "sync",'false')                
                             listitem.setProperty('hearing_imp', 'false') # set to "true" if subtitle is for hearing impared              
@@ -121,12 +126,27 @@ def Search(item):
                         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
                 else:
                     log('Failed to download the file')
-                    return []  
+                    return []
+            else:
+                notify(__language__(32004))
+                log('Subs not found')
+        else:
+            notify(__language__(32003))
+            log('Tvshow not found')
     else:
         notify(__language__(32001))
         log('Subspedia only works with italian subs. Skipped')
+
+def checkexp(tvshow):
+    exp=[["Marvel's Agents of S.H.I.E.L.D.",5],["Marvel's Daredevil",246]]
+    for expl in exp:
+        if tvshow == expl[0]:
+            return expl[1]
+    return 0
+    
 def notify(msg):
     xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__ , msg)).encode('utf-8'))            
+
 def Download(link,type):
     subtitle_list = []
     if type=="pack":
@@ -195,8 +215,23 @@ if params['action'] == 'search':
         item['file_original_path'] = stackPath[0][8:]
   
     Search(item)  
-    
-elif params['action'] == 'download' or params['action'] == 'manualsearch':
+elif params['action'] == 'manualsearch':
+    res=re.findall('(.*?)(\d{1,3})x(\d{1,3})', urllib.unquote(params['searchstring']), re.IGNORECASE)
+    if res:
+        item = {}
+        item['tvshow']=res[0][0]
+        lres=len(item['tvshow'])
+        if item['tvshow'][lres-1:lres]==" ":
+            item['tvshow']=item['tvshow'][0:lres-1]
+        item['season']=res[0][1]
+        item['episode']=res[0][2]
+        item['3let_language']=[]
+        for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
+            item['3let_language'].append(xbmc.convertLanguage(lang,xbmc.ISO_639_2))
+        Search(item) 
+    else:
+        notify(__language__(32002))      
+elif params['action'] == 'download':
     ## we pickup all our arguments sent from def Search()
     subs = Download(params["file"],params["type"])
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
