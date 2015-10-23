@@ -221,7 +221,7 @@ class AudioBookHandler():
 
     # Runs the ffmpeg command, returning the text output, saving the cover image if
     # a target is given in the request
-    def _runFFmpegCommand(self, fullFileName, coverTargetName=None):
+    def _runFFmpegCommand(self, inputFileName, coverTargetName=None):
         # Check to see if ffmpeg is enabled
         ffmpeg = Settings.getFFmpegLocation()
 
@@ -229,7 +229,26 @@ class AudioBookHandler():
             log("AudioBookHandler: ffmpeg not enabled")
             return None
 
-        log("AudioBookHandler: Running ffmpeg for %s" % fullFileName)
+        log("AudioBookHandler: Running ffmpeg for %s" % inputFileName)
+
+        # FFmpeg will not recognise paths that start with smb:// or nfs://
+        # These paths are specific to Kodi, so we need to copy the file locally
+        # before we can run the FFmpeg command
+        copiedFile = None
+        fullFileName = inputFileName
+        if fullFileName.startswith('smb://') or fullFileName.startswith('nfs://'):
+            try:
+                # Copy the file to the local disk
+                justFileName = os_path_split(fullFileName)[-1]
+                copiedFile = os_path_join(Settings.getTempLocation(), justFileName)
+                copy = xbmcvfs.copy(fullFileName, copiedFile)
+                if copy:
+                    log("AudioBookHandler: copy successful for %s" % copiedFile)
+                    fullFileName = copiedFile
+                else:
+                    log("AudioBookHandler: copy failed from %s to %s" % (fullFileName, copiedFile))
+            except:
+                log("AudioBookHandler: Failed to copy file %s to local directory" % fullFileName)
 
         info = None
 
@@ -285,6 +304,11 @@ class AudioBookHandler():
             info = error.output
         except:
             log("AudioBookHandler: Failed to get data using ffmpeg for file %s with error %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
+
+        # If we had to copy the file locally, make sure we delete it
+        if copiedFile not in [None, ""]:
+            if xbmcvfs.exists(copiedFile):
+                xbmcvfs.delete(copiedFile)
 
         # Check if there is an image in the temporary location
         if coverTempName not in [None, ""]:
