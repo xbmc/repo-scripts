@@ -1,8 +1,9 @@
 import math
 import xbmc, xbmcgui, xbmcaddon
 
+__addon__      = xbmcaddon.Addon()
+__addonid__    = __addon__.getAddonInfo('id')
 __mainaddon__  = xbmcaddon.Addon('weather.openweathermap.extended')
-__addonid__    = __mainaddon__.getAddonInfo('id')
 
 WEATHER_WINDOW = xbmcgui.Window(12600)
 DEBUG          = __mainaddon__.getSetting('Debug')

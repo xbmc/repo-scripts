@@ -1,4 +1,4 @@
-import os, time, urllib2, threading, hashlib, shutil, gzip
+import os, sys, time, urllib2, threading, socket, hashlib, shutil, gzip
 import xbmc, xbmcvfs, xbmcaddon
 from StringIO import StringIO
 from PIL import Image
@@ -16,9 +16,11 @@ from utils import *
 
 ZOOM = int(__mainaddon__.getSetting('Zoom')) + 3
 
+socket.setdefaulttimeout(10)
 
 class Main:
     def __init__(self):
+        self.loop = 0
         set_property('Map.IsFetched', 'true')
         lat, lon = self._parse_argv()
         self._get_maps(lat, lon)
@@ -195,7 +197,8 @@ class get_tiles(threading.Thread):
             count += 1
             if MONITOR.abortRequested():
                 return
-        if failed:
+        if failed and self.loop < 10:
+            self.loop += 1
             xbmc.sleep(10000)
             self.fetch_tiles(failed, mapdir)
 

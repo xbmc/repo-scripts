@@ -1,3 +1,15 @@
+v0.0.8
+- prevent endless loop
+
+v0.0.7
+- fix missing import
+
+v0.0.6
+- specify socket timeout
+
+v0.0.5
+- use addon id for logging
+
 v0.0.4
 - don't clear window properties
 
