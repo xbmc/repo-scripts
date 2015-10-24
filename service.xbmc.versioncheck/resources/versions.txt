@@ -4,6 +4,15 @@
         "stable": [
             {
                 "major": "15",
+                "minor": "2",
+                "tag": "stable",
+                "tagversion":"",
+                "revision": "20151019-02e7013",
+                "extrainfo": "final",
+                "addon_support": "yes"
+            },
+            {
+                "major": "15",
                 "minor": "1",
                 "tag": "stable",
                 "tagversion":"",
@@ -487,6 +496,14 @@
             }
         ],
         "alpha": [
+            {
+                "major": "16",
+                "minor": "0",
+                "tag": "alpha",
+                "tagversion":"3",
+                "revision": "20151001-ca8d08c",
+                "addon_support": "yes"
+            },
             {
                 "major": "16",
                 "minor": "0",
