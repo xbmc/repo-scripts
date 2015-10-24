@@ -12,8 +12,8 @@
 		<setting type="sep" />
 		<setting label="32155" type="lsep"/>
 		<setting id="lyricwiki" type="bool" label="LyricWiki" default="true"/>
+		<setting id="genius" type="bool" label="Genius" default="true"/>
 		<setting id="lyricsmode" type="bool" label="Lyrics Mode" default="true"/>
-		<setting id="lyricstime" type="bool" label="Lyrics Time" default="true"/>
 		<setting id="darklyrics" type="bool" label="Dark Lyrics" default="true"/>
 	</category>
 	<category label="32151">

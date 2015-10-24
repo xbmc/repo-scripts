@@ -5,7 +5,7 @@ import re
 from utilities import *
 
 __title__ = 'lyricsmode'
-__priority__ = '210'
+__priority__ = '220'
 __lrc__ = False
 
 class LyricsFetcher:
