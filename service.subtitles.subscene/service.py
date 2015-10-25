@@ -301,16 +301,16 @@ def search_filename(filename, languages):
     except ValueError:
         yearval = 0
     if title and yearval > 1900:
-        search_movie(title, year, item['3let_language'], filename)
+        search_movie(title, year, languages, filename)
     else:
         match = re.search(r'\WS(?P<season>\d\d)E(?P<episode>\d\d)', title, flags=re.IGNORECASE)
         if match is not None:
             tvshow = string.strip(title[:match.start('season') - 1])
             season = string.lstrip(match.group('season'), '0')
             episode = string.lstrip(match.group('episode'), '0')
-            search_tvshow(tvshow, season, episode, item['3let_language'], filename)
+            search_tvshow(tvshow, season, episode, languages, filename)
         else:
-            search_manual(filename, item['3let_language'], filename)
+            search_manual(filename, languages, filename)
 
 
 def search(item):
@@ -323,6 +323,8 @@ def search(item):
         search_tvshow(item['tvshow'], item['season'], item['episode'], item['3let_language'], filename)
     elif item['title'] and item['year']:
         search_movie(item['title'], item['year'], item['3let_language'], filename)
+    elif item['title']:
+        search_filename(item['title'], item['3let_language'])
     else:
         search_filename(filename, item['3let_language'])
 
@@ -400,6 +402,16 @@ def download(link, episode=""):
         episode_pattern = None
         if episode != '':
             episode_pattern = re.compile(get_episode_pattern(episode), re.IGNORECASE)
+
+        for dir in xbmcvfs.listdir(tempdir)[0]:
+            for file in xbmcvfs.listdir(os.path.join(tempdir, dir))[1]:
+                if os.path.splitext(file)[1] in exts:
+                    log(__name__, 'match '+episode+' '+file)
+                    if episode_pattern and not episode_pattern.search(file):
+                        continue
+                    log(__name__, "=== returning subtitle file %s" % file)
+                    subtitle_list.append(os.path.join(tempdir, dir, file))
+
         for file in xbmcvfs.listdir(tempdir)[1]:
             if os.path.splitext(file)[1] in exts:
                 log(__name__, 'match '+episode+' '+file)

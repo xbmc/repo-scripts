@@ -1,3 +1,7 @@
+1.6.0
+- prefer title over filename for search (better handling of streaming services)
+- find subtitle files in subfolders of archives
+
 1.5.1
 - consider preferred language
 - bug fixes
