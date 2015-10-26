@@ -1,0 +1,4 @@
+0.0.2
+- fixed for some TV show
+0.0.1
+- initial release
