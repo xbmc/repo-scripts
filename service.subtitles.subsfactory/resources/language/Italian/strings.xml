@@ -2,4 +2,5 @@
 <strings>
     <string id="32001">Subsfactory ha solo sottotitoli italiani per serie TV. Aggiungi l'italiano nelle impostazioni sottotitoli</string>
 	<string id="32002">Sottotitoli non trovati</string>
+	<string id="32003">Errore. Ricerca come da esempio: supernatural 10x5</string>
 </strings>
