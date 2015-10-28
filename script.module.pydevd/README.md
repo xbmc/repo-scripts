@@ -12,7 +12,7 @@ How to use:
     <!-- addon.xml -->
     <addon id="your.addon">
         <requires>
-            <import addon="script.module.pydevd" version="3.4.1"/>
+            <import addon="script.module.pydevd" version="4.4.0"/>
         </requires>
     </addon>
     ```

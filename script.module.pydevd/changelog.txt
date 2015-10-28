@@ -1,2 +1,4 @@
+v4.4.0
+- Update Pydev version
 v3.4.1
 - Packed for XBMC
