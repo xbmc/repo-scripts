@@ -3,14 +3,9 @@ import traceback
 import warnings
 
 from _pydev_filesystem_encoding import getfilesystemencoding
-from pydev_imports import xmlrpclib
+from pydev_imports import xmlrpclib, _queue
+Queue = _queue.Queue
 from pydevd_constants import *
-
-
-try:
-    from Queue import Queue
-except:
-    from queue import Queue
 
 #This may happen in IronPython (in Python it shouldn't happen as there are
 #'fast' replacements that are used in xmlrpclib.py)
@@ -85,6 +80,10 @@ class ServerFacade(object):
 
 
     def notifyTest(self, *args):
+        new_args = []
+        for arg in args:
+            new_args.append(_encode_if_needed(arg))
+        args = tuple(new_args)
         self.notifications_queue.put_nowait(ParallelNotification('notifyTest', args))
 
 
@@ -98,9 +97,9 @@ class ServerComm(threading.Thread):
 
 
 
-    def __init__(self, notifications_queue, port):
+    def __init__(self, notifications_queue, port, daemon=False):
         threading.Thread.__init__(self)
-        self.setDaemon(False) #Wait for all the notifications to be passed before exiting!
+        self.setDaemon(daemon) # If False, wait for all the notifications to be passed before exiting!
         self.finished = False
         self.notifications_queue = notifications_queue
 
@@ -164,12 +163,12 @@ class ServerComm(threading.Thread):
 #=======================================================================================================================
 # InitializeServer
 #=======================================================================================================================
-def InitializeServer(port):
+def InitializeServer(port, daemon=False):
     if _ServerHolder.SERVER is None:
         if port is not None:
             notifications_queue = Queue()
             _ServerHolder.SERVER = ServerFacade(notifications_queue)
-            _ServerHolder.SERVER_COMM = ServerComm(notifications_queue, port)
+            _ServerHolder.SERVER_COMM = ServerComm(notifications_queue, port, daemon)
             _ServerHolder.SERVER_COMM.start()
         else:
             #Create a null server, so that we keep the interface even without any connection.
@@ -213,10 +212,11 @@ def notifyStartTest(file, test):
 
 
 def _encode_if_needed(obj):
+    # In the java side we expect strings to be ISO-8859-1 (org.python.pydev.debug.pyunit.PyUnitServer.initializeDispatches().new Dispatch() {...}.getAsStr(Object))
     if not IS_PY3K:
         if isinstance(obj, str):
             try:
-                return xmlrpclib.Binary(obj.encode('ISO-8859-1', 'xmlcharrefreplace'))
+                return xmlrpclib.Binary(obj.decode(sys.stdin.encoding).encode('ISO-8859-1', 'xmlcharrefreplace'))
             except:
                 return xmlrpclib.Binary(obj)
 
@@ -224,9 +224,15 @@ def _encode_if_needed(obj):
             return xmlrpclib.Binary(obj.encode('ISO-8859-1', 'xmlcharrefreplace'))
 
     else:
-        if isinstance(obj, str):
-            return obj.encode('ISO-8859-1', 'xmlcharrefreplace')
-
+        if isinstance(obj, str): # Unicode in py3
+            return xmlrpclib.Binary(obj.encode('ISO-8859-1', 'xmlcharrefreplace'))
+        
+        elif isinstance(obj, bytes):
+            try:
+                return xmlrpclib.Binary(obj.decode(sys.stdin.encoding).encode('ISO-8859-1', 'xmlcharrefreplace'))
+            except:
+                return xmlrpclib.Binary(obj) #bytes already
+            
     return obj
 
 

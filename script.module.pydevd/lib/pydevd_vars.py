@@ -1,25 +1,31 @@
 """ pydevd_vars deals with variables:
     resolution/conversion to XML.
 """
-from pydevd_constants import *  #@UnusedWildImport
-from types import *  #@UnusedWildImport
+import pickle
+from pydevd_constants import * #@UnusedWildImport
+from types import * #@UnusedWildImport
+
 from pydevd_custom_frames import getCustomFrame
+from pydevd_xml import *
+from _pydev_imps import _pydev_thread
+
 try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-import sys  #@Reimport
-import threading
-import pydevd_resolver
+import sys #@Reimport
+
+import _pydev_threading as threading
 import traceback
 import pydevd_save_locals
 from pydev_imports import Exec, quote, execfile
+from pydevd_utils import to_string
 
 try:
     import types
     frame_type = types.FrameType
 except:
-    frame_type = None
+    frame_type = type(sys._getframe())
 
 
 #-------------------------------------------------------------------------- defining true and false for earlier versions
@@ -34,204 +40,8 @@ except:
 #------------------------------------------------------------------------------------------------------ class for errors
 
 class VariableError(RuntimeError):pass
+
 class FrameNotFoundError(RuntimeError):pass
-
-
-#------------------------------------------------------------------------------------------------------ resolvers in map
-
-if not sys.platform.startswith("java"):
-    typeMap = [
-        #None means that it should not be treated as a compound variable
-
-        #isintance does not accept a tuple on some versions of python, so, we must declare it expanded
-        (type(None), None,),
-        (int, None),
-        (float, None),
-        (complex, None),
-        (str, None),
-        (tuple, pydevd_resolver.tupleResolver),
-        (list, pydevd_resolver.tupleResolver),
-        (dict, pydevd_resolver.dictResolver),
-    ]
-
-    try:
-        typeMap.append((long, None))
-    except:
-        pass  #not available on all python versions
-
-    try:
-        typeMap.append((unicode, None))
-    except:
-        pass  #not available on all python versions
-
-    try:
-        typeMap.append((set, pydevd_resolver.setResolver))
-    except:
-        pass  #not available on all python versions
-
-    try:
-        typeMap.append((frozenset, pydevd_resolver.setResolver))
-    except:
-        pass  #not available on all python versions
-
-    try:
-        import numpy
-        typeMap.append((numpy.ndarray, pydevd_resolver.ndarrayResolver))
-    except:
-        pass  #numpy may not be installed
-
-    if frame_type is not None:
-        typeMap.append((frame_type, pydevd_resolver.frameResolver))
-
-
-else:  #platform is java
-    from org.python import core  #@UnresolvedImport
-    typeMap = [
-        (core.PyNone, None),
-        (core.PyInteger, None),
-        (core.PyLong, None),
-        (core.PyFloat, None),
-        (core.PyComplex, None),
-        (core.PyString, None),
-        (core.PyTuple, pydevd_resolver.tupleResolver),
-        (core.PyList, pydevd_resolver.tupleResolver),
-        (core.PyDictionary, pydevd_resolver.dictResolver),
-        (core.PyStringMap, pydevd_resolver.dictResolver),
-    ]
-
-    if hasattr(core, 'PyJavaInstance'):
-        #Jython 2.5b3 removed it.
-        typeMap.append((core.PyJavaInstance, pydevd_resolver.instanceResolver))
-
-
-def getType(o):
-    """ returns a triple (typeObject, typeString, resolver
-        resolver != None means that variable is a container,
-        and should be displayed as a hierarchy.
-        Use the resolver to get its attributes.
-
-        All container objects should have a resolver.
-    """
-
-    try:
-        type_object = type(o)
-        type_name = type_object.__name__
-    except:
-        #This happens for org.python.core.InitModule
-        return 'Unable to get Type', 'Unable to get Type', None
-
-    try:
-
-        if type_name == 'org.python.core.PyJavaInstance':
-            return (type_object, type_name, pydevd_resolver.instanceResolver)
-
-        if type_name == 'org.python.core.PyArray':
-            return (type_object, type_name, pydevd_resolver.jyArrayResolver)
-
-        for t in typeMap:
-            if isinstance(o, t[0]):
-                return (type_object, type_name, t[1])
-    except:
-        traceback.print_exc()
-
-    #no match return default
-    return (type_object, type_name, pydevd_resolver.defaultResolver)
-
-
-def makeValidXmlValue(s):
-    return s.replace("&", "&amp;").replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
-
-
-def varToXML(v, name, additionalInXml=''):
-    """ single variable or dictionary to xml representation """
-    type, typeName, resolver = getType(v)
-
-    try:
-        if hasattr(v, '__class__'):
-            if v.__class__ == frame_type:
-                value = pydevd_resolver.frameResolver.getFrameName(v)
-            else:
-                try:
-                    cName = str(v.__class__)
-                    if cName.find('.') != -1:
-                        cName = cName.split('.')[-1]
-
-                    elif cName.find("'") != -1:  #does not have '.' (could be something like <type 'int'>)
-                        cName = cName[cName.index("'") + 1:]
-
-                    if cName.endswith("'>"):
-                        cName = cName[:-2]
-                except:
-                    cName = str(v.__class__)
-                value = '%s: %s' % (cName, v)
-        else:
-            value = str(v)
-    except:
-        try:
-            value = repr(v)
-        except:
-            value = 'Unable to get repr for %s' % v.__class__
-
-    xml = '<var name="%s" type="%s"' % (makeValidXmlValue(name), makeValidXmlValue(typeName))
-
-    if value:
-        #cannot be too big... communication may not handle it.
-        if len(value) > MAXIMUM_VARIABLE_REPRESENTATION_SIZE:
-            value = value[0:MAXIMUM_VARIABLE_REPRESENTATION_SIZE]
-            value += '...'
-
-        #fix to work with unicode values
-        try:
-            if not IS_PY3K:
-                if isinstance(value, unicode):
-                    value = value.encode('utf-8')
-            else:
-                if isinstance(value, bytes):
-                    value = value.encode('utf-8')
-        except TypeError:  #in java, unicode is a function
-            pass
-
-        xmlValue = ' value="%s"' % (makeValidXmlValue(quote(value, '/>_= \t')))
-    else:
-        xmlValue = ''
-
-    if resolver is not None:
-        xmlCont = ' isContainer="True"'
-    else:
-        xmlCont = ''
-
-    return ''.join((xml, xmlValue, xmlCont, additionalInXml, ' />\n'))
-
-
-if USE_PSYCO_OPTIMIZATION:
-    try:
-        import psyco
-        varToXML = psyco.proxy(varToXML)
-    except ImportError:
-        if hasattr(sys, 'exc_clear'):  #jython does not have it
-            sys.exc_clear()  #don't keep the traceback -- clients don't want to see it
-
-
-def frameVarsToXML(frame):
-    """ dumps frame variables to XML
-    <var name="var_name" scope="local" type="type" value="value"/>
-    """
-    xml = ""
-
-    keys = frame.f_locals.keys()
-    if hasattr(keys, 'sort'):
-        keys.sort()  #Python 3.0 does not have it
-    else:
-        keys = sorted(keys)  #Jython 2.1 does not have it
-
-    for k in keys:
-        try:
-            v = frame.f_locals[k]
-            xml += varToXML(v, str(k))
-        except Exception:
-            traceback.print_exc()
-            sys.stderr.write("Unexpected error, recovered safely.\n")
-    return xml
 
 def iterFrames(initialFrame):
     '''NO-YIELD VERSION: Iterates through all the frames starting at the specified frame (which will be the first returned item)'''
@@ -246,20 +56,20 @@ def iterFrames(initialFrame):
 
 def dumpFrames(thread_id):
     sys.stdout.write('dumping frames\n')
-    if thread_id != GetThreadId(threading.currentThread()) :
+    if thread_id != GetThreadId(threading.currentThread()):
         raise VariableError("findFrame: must execute on same thread")
 
     curFrame = GetFrame()
     for frame in iterFrames(curFrame):
-        sys.stdout.write('%s\n' % id(frame))
+        sys.stdout.write('%s\n' % pickle.dumps(frame))
 
 
 #===============================================================================
 # AdditionalFramesContainer
 #===============================================================================
 class AdditionalFramesContainer:
-    lock = threading.Lock()
-    additional_frames = {}  #dict of dicts
+    lock = _pydev_thread.allocate_lock()
+    additional_frames = {} #dict of dicts
 
 
 def addAdditionalFrameById(thread_id, frames_by_id):
@@ -289,6 +99,7 @@ def findFrame(thread_id, frame_id):
         if AdditionalFramesContainer.additional_frames:
             if DictContains(AdditionalFramesContainer.additional_frames, thread_id):
                 frame = AdditionalFramesContainer.additional_frames[thread_id].get(lookingFor)
+
                 if frame is not None:
                     return frame
 
@@ -341,7 +152,6 @@ def findFrame(thread_id, frame_id):
         traceback.print_exc()
         return None
 
-
 def getVariable(thread_id, frame_id, scope, attrs):
     """
     returns the value of a variable
@@ -390,8 +200,11 @@ def getVariable(thread_id, frame_id, scope, attrs):
     else:
         attrList = []
 
+    for attr in attrList:
+        attr.replace("@_@TAB_CHAR@_@", '\t')
+
     if scope == 'EXPRESSION':
-        for count in range(len(attrList)):
+        for count in xrange(len(attrList)):
             if count == 0:
                 # An Expression can be in any scope (globals/locals), therefore it needs to evaluated as an expression
                 var = evaluateExpression(thread_id, frame_id, attrList[count], False)
@@ -403,7 +216,10 @@ def getVariable(thread_id, frame_id, scope, attrs):
             var = frame.f_globals
             del attrList[0]  # globals are special, and they get a single dummy unused attribute
         else:
-            var = frame.f_locals
+            # in a frame access both locals and globals as Python does
+            var = {}
+            var.update(frame.f_globals)
+            var.update(frame.f_locals)
 
         for k in attrList:
             _type, _typeName, resolver = getType(var)
@@ -423,6 +239,21 @@ def resolveCompoundVariable(thread_id, frame_id, scope, attrs):
     except:
         sys.stderr.write('Error evaluating: thread_id: %s\nframe_id: %s\nscope: %s\nattrs: %s\n' % (
             thread_id, frame_id, scope, attrs,))
+        traceback.print_exc()
+
+
+def resolveVar(var, attrs):
+    attrList = attrs.split('\t')
+
+    for k in attrList:
+        type, _typeName, resolver = getType(var)
+
+        var = resolver.resolve(var, k)
+
+    try:
+        type, _typeName, resolver = getType(var)
+        return resolver.getDictionary(var)
+    except:
         traceback.print_exc()
 
 
@@ -449,6 +280,43 @@ def customOperation(thread_id, frame_id, scope, attrs, style, code_or_file, oper
         traceback.print_exc()
 
 
+def evalInContext(expression, globals, locals):
+    result = None
+    try:
+        result = eval(expression, globals, locals)
+    except Exception:
+        s = StringIO()
+        traceback.print_exc(file=s)
+        result = s.getvalue()
+
+        try:
+            try:
+                etype, value, tb = sys.exc_info()
+                result = value
+            finally:
+                etype = value = tb = None
+        except:
+            pass
+
+        result = ExceptionOnEvaluate(result)
+
+        # Ok, we have the initial error message, but let's see if we're dealing with a name mangling error...
+        try:
+            if '__' in expression:
+                # Try to handle '__' name mangling...
+                split = expression.split('.')
+                curr = locals.get(split[0])
+                for entry in split[1:]:
+                    if entry.startswith('__') and not hasattr(curr, entry):
+                        entry = '_%s%s' % (curr.__class__.__name__, entry)
+                    curr = getattr(curr, entry)
+
+                result = curr
+        except:
+            pass
+    return result
+
+
 def evaluateExpression(thread_id, frame_id, expression, doExec):
     '''returns the result of the evaluated expression
     @param doExec: determines if we should do an exec or an eval
@@ -456,8 +324,6 @@ def evaluateExpression(thread_id, frame_id, expression, doExec):
     frame = findFrame(thread_id, frame_id)
     if frame is None:
         return
-
-    expression = str(expression.replace('@LINE@', '\n'))
 
     #Not using frame.f_globals because of https://sourceforge.net/tracker2/?func=detail&aid=2541355&group_id=85796&atid=577329
     #(Names not resolved in generator expression in method)
@@ -467,6 +333,7 @@ def evaluateExpression(thread_id, frame_id, expression, doExec):
     updated_globals.update(frame.f_locals)  #locals later because it has precedence over the actual globals
 
     try:
+        expression = str(expression.replace('@LINE@', '\n'))
 
         if doExec:
             try:
@@ -483,35 +350,14 @@ def evaluateExpression(thread_id, frame_id, expression, doExec):
             return
 
         else:
-            result = None
-            try:
-                result = eval(expression, updated_globals, frame.f_locals)
-            except Exception:
-                s = StringIO()
-                traceback.print_exc(file=s)
-                result = s.getvalue()
-
-                try:
-                    try:
-                        etype, value, tb = sys.exc_info()
-                        result = value
-                    finally:
-                        etype = value = tb = None
-                except:
-                    pass
-
-            return result
+            return evalInContext(expression, updated_globals, frame.f_locals)
     finally:
         #Should not be kept alive if an exception happens and this frame is kept in the stack.
         del updated_globals
         del frame
 
-
-def changeAttrExpression(thread_id, frame_id, attr, expression):
+def changeAttrExpression(thread_id, frame_id, attr, expression, dbg):
     '''Changes some attribute in a given frame.
-    @note: it will not (currently) work if we're not in the topmost frame (that's a python
-    deficiency -- and it appears that there is no way of making it currently work --
-    will probably need some change to the python internals)
     '''
     frame = findFrame(thread_id, frame_id)
     if frame is None:
@@ -520,26 +366,140 @@ def changeAttrExpression(thread_id, frame_id, attr, expression):
     try:
         expression = expression.replace('@LINE@', '\n')
 
-
+        if dbg.plugin:
+            result = dbg.plugin.change_variable(frame, attr, expression)
+            if result:
+                return result
 
         if attr[:7] == "Globals":
             attr = attr[8:]
             if attr in frame.f_globals:
                 frame.f_globals[attr] = eval(expression, frame.f_globals, frame.f_locals)
+                return frame.f_globals[attr]
         else:
             if pydevd_save_locals.is_save_locals_available():
                 frame.f_locals[attr] = eval(expression, frame.f_globals, frame.f_locals)
                 pydevd_save_locals.save_locals(frame)
-                return
-            
+                return frame.f_locals[attr]
+
             #default way (only works for changing it in the topmost frame)
+            result = eval(expression, frame.f_globals, frame.f_locals)
             Exec('%s=%s' % (attr, expression), frame.f_globals, frame.f_locals)
+            return result
 
 
     except Exception:
         traceback.print_exc()
 
+MAXIMUM_ARRAY_SIZE = 100
+MAX_SLICE_SIZE = 1000
 
+def array_to_xml(array, roffset, coffset, rows, cols, format):
+    xml = ""
+    rows = min(rows, MAXIMUM_ARRAY_SIZE)
+    cols = min(cols, MAXIMUM_ARRAY_SIZE)
+
+
+    #there is no obvious rule for slicing (at least 5 choices)
+    if len(array) == 1 and (rows > 1 or cols > 1):
+        array = array[0]
+    if array.size > len(array):
+        array = array[roffset:, coffset:]
+        rows = min(rows, len(array))
+        cols = min(cols, len(array[0]))
+        if len(array) == 1:
+            array = array[0]
+    elif array.size == len(array):
+        if roffset == 0 and rows == 1:
+            array = array[coffset:]
+            cols = min(cols, len(array))
+        elif coffset == 0 and cols == 1:
+            array = array[roffset:]
+            rows = min(rows, len(array))
+
+    xml += "<arraydata rows=\"%s\" cols=\"%s\"/>" % (rows, cols)
+    for row in range(rows):
+        xml += "<row index=\"%s\"/>" % to_string(row)
+        for col in range(cols):
+            value = array
+            if rows == 1 or cols == 1:
+                if rows == 1 and cols == 1:
+                    value = array[0]
+                else:
+                    if rows == 1:
+                        dim = col
+                    else:
+                        dim = row
+                    value = array[dim]
+                    if "ndarray" in str(type(value)):
+                        value = value[0]
+            else:
+                value = array[row][col]
+            value = format % value
+            xml += varToXML(value, '')
+    return xml
+
+
+def array_to_meta_xml(array, name, format):
+    type = array.dtype.kind
+    slice = name
+    l = len(array.shape)
+
+    # initial load, compute slice
+    if format == '%':
+        if l > 2:
+            slice += '[0]' * (l - 2)
+            for r in range(l - 2):
+                array = array[0]
+        if type == 'f':
+            format = '.5f'
+        elif type == 'i' or type == 'u':
+            format = 'd'
+        else:
+            format = 's'
+    else:
+        format = format.replace('%', '')
+
+    l = len(array.shape)
+    reslice = ""
+    if l > 2:
+        raise Exception("%s has more than 2 dimensions." % slice)
+    elif l == 1:
+        # special case with 1D arrays arr[i, :] - row, but arr[:, i] - column with equal shape and ndim
+        # http://stackoverflow.com/questions/16837946/numpy-a-2-rows-1-column-file-loadtxt-returns-1row-2-columns
+        # explanation: http://stackoverflow.com/questions/15165170/how-do-i-maintain-row-column-orientation-of-vectors-in-numpy?rq=1
+        # we use kind of a hack - get information about memory from C_CONTIGUOUS
+        is_row = array.flags['C_CONTIGUOUS']
+
+        if is_row:
+            rows = 1
+            cols = min(len(array), MAX_SLICE_SIZE)
+            if cols < len(array):
+                reslice = '[0:%s]' % (cols)
+            array = array[0:cols]
+        else:
+            cols = 1
+            rows = min(len(array), MAX_SLICE_SIZE)
+            if rows < len(array):
+                reslice = '[0:%s]' % (rows)
+            array = array[0:rows]
+    elif l == 2:
+        rows = min(array.shape[-2], MAX_SLICE_SIZE)
+        cols = min(array.shape[-1], MAX_SLICE_SIZE)
+        if cols < array.shape[-1] or  rows < array.shape[-2]:
+            reslice = '[0:%s, 0:%s]' % (rows, cols)
+        array = array[0:rows, 0:cols]
+
+    #avoid slice duplication
+    if not slice.endswith(reslice):
+        slice += reslice
+
+    bounds = (0, 0)
+    if type in "biufc":
+        bounds = (array.min(), array.max())
+    xml = '<array slice=\"%s\" rows=\"%s\" cols=\"%s\" format=\"%s\" type=\"%s\" max=\"%s\" min=\"%s\"/>' % \
+           (slice, rows, cols, format, type, bounds[1], bounds[0])
+    return array, xml, rows, cols, format
 
 
 

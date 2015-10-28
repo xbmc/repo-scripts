@@ -1,24 +1,13 @@
-import os.path
 import sys
-import weakref
 import threading
 import time
-
-IS_JYTHON = sys.platform.find('java') != -1
-
-try:
-    this_file_name = __file__
-except NameError:
-    # stupid jython. plain old __file__ isnt working for some reason
-    import test_runfiles  #@UnresolvedImport - importing the module itself
-    this_file_name = test_runfiles.__file__
-
-
-desired_runfiles_path = os.path.normpath(os.path.dirname(this_file_name) + "/..")
-sys.path.insert(0, desired_runfiles_path)
-
+import os
 import unittest
-import pydevd_referrers
+try:
+    import pydevd_referrers
+except:
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+    import pydevd_referrers
 from pydev_imports import StringIO
 
 #=======================================================================================================================

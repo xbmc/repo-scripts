@@ -16,9 +16,9 @@
 from __future__ import print_function
 
 import os
+import codeop
 
 from IPython.core.error import UsageError
-from IPython.core.inputsplitter import IPythonInputSplitter
 from IPython.core.completer import IPCompleter
 from IPython.core.interactiveshell import InteractiveShell, InteractiveShellABC
 from IPython.core.usage import default_banner_parts
@@ -30,20 +30,15 @@ except ImportError:
     # Versions of IPython [0.11,1.0) had an extra hierarchy level
     from IPython.frontend.terminal.interactiveshell import TerminalInteractiveShell
 from IPython.utils.traitlets import CBool, Unicode
+from IPython.core import release
 
 from pydev_imports import xmlrpclib
 
-pydev_banner_parts = [
-    '\n',
-    'PyDev -- Python IDE for Eclipse\n',  # TODO can we get a version number in here?
-    'For help on using PyDev\'s Console see http://pydev.org/manual_adv_interactive_console.html\n',
-]
-
-default_pydev_banner_parts = default_banner_parts + pydev_banner_parts
+default_pydev_banner_parts = default_banner_parts
 
 default_pydev_banner = ''.join(default_pydev_banner_parts)
 
-def show_in_pager(self, strng):
+def show_in_pager(self, strng, *args, **kwargs):
     """ Run a string through pager """
     # On PyDev we just output the string, there are scroll bars in the console
     # to handle "paging". This is the same behaviour as when TERM==dump (see
@@ -51,7 +46,8 @@ def show_in_pager(self, strng):
     print(strng)
 
 def create_editor_hook(pydev_host, pydev_client_port):
-    def call_editor(self, filename, line=0, wait=True):
+
+    def call_editor(filename, line=0, wait=True):
         """ Open an editor in PyDev """
         if line is None:
             line = 0
@@ -60,9 +56,12 @@ def create_editor_hook(pydev_host, pydev_client_port):
         # we don't launch a process. This is more like what happens in the zmqshell
         filename = os.path.abspath(filename)
 
+        # import sys
+        # sys.__stderr__.write('Calling editor at: %s:%s\n' % (pydev_host, pydev_client_port))
+
         # Tell PyDev to open the editor
         server = xmlrpclib.Server('http://%s:%s' % (pydev_host, pydev_client_port))
-        server.OpenEditor(filename, line)
+        server.IPythonEditor(filename, str(line))
 
         if wait:
             try:
@@ -289,29 +288,80 @@ class PyDevTerminalInteractiveShell(TerminalInteractiveShell):
 InteractiveShellABC.register(PyDevTerminalInteractiveShell)  # @UndefinedVariable
 
 #=======================================================================================================================
-# PyDevFrontEnd
+# _PyDevFrontEnd
 #=======================================================================================================================
-class PyDevFrontEnd:
+class _PyDevFrontEnd:
 
-    def __init__(self, pydev_host, pydev_client_port, *args, **kwarg):
+    version = release.__version__
+
+    def __init__(self, show_banner=True):
 
         # Create and initialize our IPython instance.
         self.ipython = PyDevTerminalInteractiveShell.instance()
 
-        # Back channel to PyDev to open editors (in the future other
-        # info may go back this way. This is the same channel that is
-        # used to get stdin, see StdIn in pydev_console_utils)
-        self.ipython.set_hook('editor', create_editor_hook(pydev_host, pydev_client_port))
+        if show_banner:
+            # Display the IPython banner, this has version info and
+            # help info
+            self.ipython.show_banner()
 
-        # Create an input splitter to handle input separation
-        self.input_splitter = IPythonInputSplitter()
 
-        # Display the IPython banner, this has version info and
-        # help info
-        self.ipython.show_banner()
+        self._curr_exec_line = 0
+        self._curr_exec_lines = []
+
+
+    def update(self, globals, locals):
+        ns = self.ipython.user_ns
+
+        for ind in ['_oh', '_ih', '_dh', '_sh', 'In', 'Out', 'get_ipython', 'exit', 'quit']:
+            locals[ind] = ns[ind]
+
+        self.ipython.user_global_ns.clear()
+        self.ipython.user_global_ns.update(globals)
+        self.ipython.user_ns = locals
+
+        if hasattr(self.ipython, 'history_manager') and hasattr(self.ipython.history_manager, 'save_thread'):
+            self.ipython.history_manager.save_thread.pydev_do_not_trace = True #don't trace ipython history saving thread
 
     def complete(self, string):
-        return self.ipython.complete(None, line=string)
+        try:
+            if string:
+                return self.ipython.complete(None, line=string, cursor_pos=string.__len__())
+            else:
+                return self.ipython.complete(string, string, 0)
+        except:
+            # Silence completer exceptions
+            pass
+
+    def is_complete(self, string):
+        #Based on IPython 0.10.1
+
+        if string in ('', '\n'):
+            # Prefiltering, eg through ipython0, may return an empty
+            # string although some operations have been accomplished. We
+            # thus want to consider an empty string as a complete
+            # statement.
+            return True
+        else:
+            try:
+                # Add line returns here, to make sure that the statement is
+                # complete (except if '\' was used).
+                # This should probably be done in a different place (like
+                # maybe 'prefilter_input' method? For now, this works.
+                clean_string = string.rstrip('\n')
+                if not clean_string.endswith('\\'):
+                    clean_string += '\n\n'
+
+                is_complete = codeop.compile_command(
+                    clean_string,
+                    "<string>",
+                    "exec"
+                )
+            except Exception:
+                # XXX: Hack: return True so that the
+                # code gets executed and the error captured.
+                is_complete = True
+            return is_complete
+
 
     def getCompletions(self, text, act_tok):
         # Get completions from IPython and from PyDev and merge the results
@@ -329,6 +379,13 @@ class PyDevFrontEnd:
             ip = self.ipython
             pydev_completions = set([f[0] for f in ret])
             for ipython_completion in ipython_completions:
+
+                #PyCharm was not expecting completions with '%'...
+                #Could be fixed in the backend, but it's probably better
+                #fixing it at PyCharm.
+                #if ipython_completion.startswith('%'):
+                #    ipython_completion = ipython_completion[1:]
+
                 if ipython_completion not in pydev_completions:
                     pydev_completions.add(ipython_completion)
                     inf = ip.object_inspect(ipython_completion)
@@ -349,13 +406,43 @@ class PyDevFrontEnd:
     def getNamespace(self):
         return self.ipython.user_ns
 
+    def clearBuffer(self):
+        del self._curr_exec_lines[:]
+
     def addExec(self, line):
-        self.input_splitter.push(line)
-        if not self.input_splitter.push_accepts_more():
-            self.ipython.run_cell(self.input_splitter.source_reset(), store_history=True)
-            return False
+        if self._curr_exec_lines:
+            self._curr_exec_lines.append(line)
+
+            buf = '\n'.join(self._curr_exec_lines)
+
+            if self.is_complete(buf):
+                self._curr_exec_line += 1
+                self.ipython.run_cell(buf)
+                del self._curr_exec_lines[:]
+                return False #execute complete (no more)
+
+            return True #needs more
         else:
-            return True
+
+            if not self.is_complete(line):
+                #Did not execute
+                self._curr_exec_lines.append(line)
+                return True #needs more
+            else:
+                self._curr_exec_line += 1
+                self.ipython.run_cell(line, store_history=True)
+                #hist = self.ipython.history_manager.output_hist_reprs
+                #rep = hist.get(self._curr_exec_line, None)
+                #if rep is not None:
+                #    print(rep)
+                return False #execute complete (no more)
+
+    def is_automagic(self):
+        return self.ipython.automagic
+
+    def get_greeting_msg(self):
+        return 'PyDev console: using IPython %s\n' % self.version
+
 
 # If we have succeeded in importing this module, then monkey patch inputhook
 # in IPython to redirect to PyDev's version. This is essential to make
@@ -372,3 +459,28 @@ IPython.lib.inputhook.enable_gui = pydev_ipython.inputhook.enable_gui
 # rely on using the inputhooks directly.
 for name in pydev_ipython.inputhook.__all__:
     setattr(IPython.lib.inputhook, name, getattr(pydev_ipython.inputhook, name))
+
+
+class _PyDevFrontEndContainer:
+    _instance = None
+    _last_host_port = None
+
+def get_pydev_frontend(pydev_host, pydev_client_port, show_banner=True):
+    if _PyDevFrontEndContainer._instance is None:
+        _PyDevFrontEndContainer._instance = _PyDevFrontEnd(show_banner=show_banner)
+
+    if _PyDevFrontEndContainer._last_host_port != (pydev_host, pydev_client_port):
+        _PyDevFrontEndContainer._last_host_port = pydev_host, pydev_client_port
+
+        # Back channel to PyDev to open editors (in the future other
+        # info may go back this way. This is the same channel that is
+        # used to get stdin, see StdIn in pydev_console_utils)
+        _PyDevFrontEndContainer._instance.ipython.hooks['editor'] = create_editor_hook(pydev_host, pydev_client_port)
+
+        # Note: setting the callback directly because setting it with set_hook would actually create a chain instead
+        # of ovewriting at each new call).
+        # _PyDevFrontEndContainer._instance.ipython.set_hook('editor', create_editor_hook(pydev_host, pydev_client_port))
+
+    return _PyDevFrontEndContainer._instance
+
+    

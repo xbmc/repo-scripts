@@ -1,3 +1,4 @@
+#@PydevCodeAnalysisIgnore
 '''
 @author Fabio Zadrozny
 '''
@@ -16,25 +17,23 @@ except NameError:
     setattr(__builtin__, 'True', 1)  # Python 3.0 does not accept __builtin__.True = 1 in its syntax
     setattr(__builtin__, 'False', 0)
 
-try:
-    from java.lang import Thread
-    IS_JYTHON = True
+from pydevd_constants import IS_JYTHON
+
+if IS_JYTHON:
+    import java.lang
     SERVER_NAME = 'jycompletionserver'
     import _pydev_jy_imports_tipper  # as _pydev_imports_tipper #changed to be backward compatible with 1.5
     _pydev_imports_tipper = _pydev_jy_imports_tipper
 
-except ImportError:
+else:
     # it is python
-    IS_JYTHON = False
     SERVER_NAME = 'pycompletionserver'
-    from threading import Thread
     import _pydev_imports_tipper
 
 
-import pydev_localhost
+from _pydev_imps import _pydev_socket as socket
+
 import sys
-import time
-import traceback
 if sys.platform == "darwin":
     # See: https://sourceforge.net/projects/pydev/forums/forum/293649/topic/3454227
     try:
@@ -55,16 +54,19 @@ for name, mod in sys.modules.items():
     _sys_modules[name] = mod
 
 
+import traceback
+
+from _pydev_imps import _pydev_time as time
 
 try:
-    import StringIO  # @UnusedImport
+    import StringIO
 except:
-    import io as StringIO  # Python 3.0 @Reimport
+    import io as StringIO #Python 3.0
 
 try:
     from urllib import quote_plus, unquote_plus
 except ImportError:
-    from urllib.parse import quote_plus, unquote_plus  # Python 3.0
+    from urllib.parse import quote_plus, unquote_plus #Python 3.0
 
 INFO1 = 1
 INFO2 = 2
@@ -80,7 +82,8 @@ def dbg(s, prior):
 #        print_ >> f, s
 #        f.close()
 
-HOST = pydev_localhost.get_localhost()  # Symbolic name meaning the local host
+import pydev_localhost
+HOST = pydev_localhost.get_localhost() # Symbolic name meaning the local host
 
 MSG_KILL_SERVER = '@@KILL_SERVER_END@@'
 MSG_COMPLETIONS = '@@COMPLETIONS'
@@ -176,19 +179,21 @@ class Processor:
 
         return '%s(%s)%s' % (MSG_COMPLETIONS, ''.join(compMsg), MSG_END)
 
+class Exit(Exception):
+    pass
 
-class T(Thread):
+class CompletionServer:
 
     def __init__(self, port):
-        Thread.__init__(self)
         self.ended = False
         self.port = port
         self.socket = None  # socket to send messages.
+        self.exit_process_on_kill = True
         self.processor = Processor()
 
 
     def connectToServer(self):
-        import socket
+        from _pydev_imps import _pydev_socket as socket
 
         self.socket = s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -218,15 +223,15 @@ class T(Thread):
 
     def emulated_sendall(self, msg):
         MSGLEN = 1024 * 20
-        
+
         totalsent = 0
         while totalsent < MSGLEN:
             sent = self.socket.send(msg[totalsent:])
             if sent == 0:
                 return
             totalsent = totalsent + sent
-            
-            
+
+
     def send(self, msg):
         if not hasattr(self.socket, 'sendall'):
             #Older versions (jython 2.1)
@@ -236,8 +241,8 @@ class T(Thread):
                 self.socket.sendall(bytearray(msg, 'utf-8'))
             else:
                 self.socket.sendall(msg)
-            
-            
+
+
     def run(self):
         # Echo server program
         try:
@@ -257,7 +262,7 @@ class T(Thread):
                 while data.find(MSG_END) == -1:
                     received = self.socket.recv(BUFFER_SIZE)
                     if len(received) == 0:
-                        sys.exit(0)  # ok, connection ended
+                        raise Exit()  # ok, connection ended
                     if IS_PYTHON3K:
                         data = data + received.decode('utf-8')
                     else:
@@ -269,7 +274,7 @@ class T(Thread):
                             dbg(SERVER_NAME + ' kill message received', INFO1)
                             # break if we received kill message.
                             self.ended = True
-                            sys.exit(0)
+                            raise Exit()
 
                         dbg(SERVER_NAME + ' starting keep alive thread', INFO2)
 
@@ -316,22 +321,22 @@ class T(Thread):
                                         t = completion.type
                                         if t == 'class':
                                             t = '1'
-    
+
                                         elif t == 'function':
                                             t = '2'
-    
+
                                         elif t == 'import':
                                             t = '0'
-    
+
                                         elif t == 'keyword':
                                             continue  # Keywords are already handled in PyDev
-    
+
                                         elif t == 'statement':
                                             t = '3'
-    
+
                                         else:
                                             t = '-1'
-    
+
                                         # gen list(tuple(name, doc, args, type))
                                         lst.append((completion.name, '', '', t))
                                     self.send(self.getCompletionsMessage('empty', lst))
@@ -350,10 +355,10 @@ class T(Thread):
 
                             else:
                                 self.send(MSG_INVALID_REQUEST)
-                    except SystemExit:
+                    except Exit:
                         self.send(self.getCompletionsMessage(None, [('Exit:', 'SystemExit', '')]))
                         raise
-                    
+
                     except:
                         dbg(SERVER_NAME + ' exception occurred', ERROR)
                         s = StringIO.StringIO()
@@ -369,11 +374,12 @@ class T(Thread):
 
             self.socket.close()
             self.ended = True
-            sys.exit(0)  # connection broken
+            raise Exit()  # connection broken
 
 
-        except SystemExit:
-            raise
+        except Exit:
+            if self.exit_process_on_kill:
+                sys.exit(0)
             # No need to log SystemExit error
         except:
             s = StringIO.StringIO()
@@ -383,15 +389,13 @@ class T(Thread):
             err = s.getvalue()
             dbg(SERVER_NAME + ' received error: ' + str(err), ERROR)
             raise
-    
+
 
 
 if __name__ == '__main__':
 
     port = int(sys.argv[1])  # this is from where we want to receive messages.
 
-    t = T(port)
+    t = CompletionServer(port)
     dbg(SERVER_NAME + ' will start', INFO1)
-    t.start()
-    time.sleep(5)
-    t.join()
+    t.run()

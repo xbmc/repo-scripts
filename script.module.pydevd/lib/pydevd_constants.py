@@ -1,38 +1,32 @@
-from __future__ import nested_scopes
-
 '''
 This module holds the constants used for specifying the states of the debugger.
 '''
-
-
-DEBUG_TRACE_LEVEL = -1
-DEBUG_TRACE_MULTIPROCESSING = -1
-DEBUG_TRACE_BREAKPOINTS = -1
-
-
+from __future__ import nested_scopes
 STATE_RUN = 1
 STATE_SUSPEND = 2
+
+PYTHON_SUSPEND = 1
 
 try:
     __setFalse = False
 except:
     import __builtin__
+
     setattr(__builtin__, 'True', 1)
     setattr(__builtin__, 'False', 0)
-
-# Break debugger, if conditional breakpoint raises an exception during evaluation
-SUSPEND_ON_BREAKPOINT_EXCEPTION = True
 
 class DebugInfoHolder:
     #we have to put it here because it can be set through the command line (so, the
     #already imported references would not have it).
     DEBUG_RECORD_SOCKET_READS = False
+    DEBUG_TRACE_LEVEL = -1
+    DEBUG_TRACE_BREAKPOINTS = -1
 
 #Optimize with psyco? This gave a 50% speedup in the debugger in tests
 USE_PSYCO_OPTIMIZATION = True
 
 #Hold a reference to the original _getframe (because psyco will change that as soon as it's imported)
-import sys  #Note: the sys import must be here anyways (others depend on it)
+import sys #Note: the sys import must be here anyways (others depend on it)
 try:
     GetFrame = sys._getframe
 except AttributeError:
@@ -44,21 +38,30 @@ except AttributeError:
 #this value was raised from 200 to 1000.
 MAXIMUM_VARIABLE_REPRESENTATION_SIZE = 1000
 
-import threading
 import os
 
-_nextThreadIdLock = threading.Lock()
+import pydevd_vm_type
+
+IS_JYTHON = pydevd_vm_type.GetVmType() == pydevd_vm_type.PydevdVmType.JYTHON
+
+IS_JYTH_LESS25 = False
+if IS_JYTHON:
+    if sys.version_info[0] == 2 and sys.version_info[1] < 5:
+        IS_JYTH_LESS25 = True
 
 #=======================================================================================================================
 # Python 3?
 #=======================================================================================================================
 IS_PY3K = False
 IS_PY27 = False
+IS_PY24 = False
 try:
     if sys.version_info[0] >= 3:
         IS_PY3K = True
     elif sys.version_info[0] == 2 and sys.version_info[1] == 7:
         IS_PY27 = True
+    elif sys.version_info[0] == 2 and sys.version_info[1] == 4:
+        IS_PY24 = True
 except AttributeError:
     pass  #Not all versions have sys.version_info
 
@@ -70,6 +73,18 @@ except AttributeError:
         IS_64_BITS = struct.calcsize("P") * 8 > 32
     except:
         IS_64_BITS = False
+
+try:
+    SUPPORT_GEVENT = os.getenv('GEVENT_SUPPORT', 'False') == 'True'
+except:
+    # Jython 2.1 doesn't accept that construct
+    SUPPORT_GEVENT = False
+
+USE_LIB_COPY = SUPPORT_GEVENT and not IS_PY3K and sys.version_info[1] >= 6
+import _pydev_threading as threading
+
+from _pydev_imps import _pydev_thread
+_nextThreadIdLock = _pydev_thread.allocate_lock()
 
 #=======================================================================================================================
 # Jython?
@@ -86,12 +101,12 @@ except:
         except NameError:
             def DictContains(d, key):
                 return d.has_key(key)
-#=======================================================================================================================
-# Jython?
-#=======================================================================================================================
 try:
     DictPop = dict.pop
 except:
+    #=======================================================================================================================
+    # Jython 2.1
+    #=======================================================================================================================
     def DictPop(d, key, default=None):
         try:
             ret = d[key]
@@ -101,11 +116,64 @@ except:
             return default
 
 
+if IS_PY3K:
+    def DictKeys(d):
+        return list(d.keys())
+
+    def DictValues(d):
+        return list(d.values())
+
+    DictIterValues = dict.values
+
+    def DictIterItems(d):
+        return d.items()
+
+    def DictItems(d):
+        return list(d.items())
+
+else:
+    try:
+        DictKeys = dict.keys
+    except:
+        def DictKeys(d):
+            return d.keys()
+    
+    try:
+        DictIterValues = dict.itervalues
+    except:
+        try:
+            DictIterValues = dict.values #Older versions don't have the itervalues
+        except:
+            def DictIterValues(d):
+                return d.values()
+
+    try:
+        DictValues = dict.values
+    except:
+        def DictValues(d):
+            return d.values()
+
+    def DictIterItems(d):
+        try:
+            return d.iteritems()
+        except:
+            return d.items()
+
+    def DictItems(d):
+        return d.items()
+
+
 try:
-    xrange
+    xrange = xrange
 except:
     #Python 3k does not have it
     xrange = range
+    
+try:
+    import itertools
+    izip = itertools.izip
+except:
+    izip = zip
 
 try:
     object
