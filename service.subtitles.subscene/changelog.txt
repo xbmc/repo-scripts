@@ -1,3 +1,6 @@
+1.6.1
+- bug fix
+
 1.6.0
 - prefer title over filename for search (better handling of streaming services)
 - find subtitle files in subfolders of archives
