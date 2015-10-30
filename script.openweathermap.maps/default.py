@@ -20,10 +20,13 @@ socket.setdefaulttimeout(10)
 
 class Main:
     def __init__(self):
-        self.loop = 0
-        set_property('Map.IsFetched', 'true')
+        self._init_vars()
         lat, lon = self._parse_argv()
         self._get_maps(lat, lon)
+
+    def _init_vars(self):
+        self.loop = 0
+        set_property('Map.IsFetched', 'true')
 
     def _parse_argv(self):
         try:
