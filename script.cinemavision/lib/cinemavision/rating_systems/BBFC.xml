@@ -1,0 +1,11 @@
+<system name="BBFC">
+    <region>GB</region>
+    <rating value="185">R18</rating>
+    <rating value="180">18</rating>
+    <rating value="150">15</rating>
+    <rating value="125">12</rating>
+    <rating value="120">12A</rating>
+    <rating value="80">PG</rating>
+    <rating value="0">U</rating>
+    <rating value="0">Uc</rating>
+</system>

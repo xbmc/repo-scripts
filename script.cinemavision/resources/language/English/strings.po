@@ -1,0 +1,974 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-12-12 22:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32001"
+msgid "General"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Sequence"
+msgstr ""
+
+msgctxt "#32003"
+msgid "2D sequence"
+msgstr ""
+
+msgctxt "#32004"
+msgid "3D sequence"
+msgstr ""
+
+msgctxt "#32005"
+msgid "3D tag detection regex"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Fallback to 2D bumper"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Content"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Content path"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Update content"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Auto update when editor starts"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Content Scrapers"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Trailers: Content Folder"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Trailers: Kodi Database"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Ignore YouTube trailers"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Mark watched if movie is watched"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Trailers: Apple iTunes"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Trailers: StereoscopyNews.com"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Playback"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Hide queue editor"
+msgstr ""
+
+msgctxt "#32020"
+msgid "If only one item queued"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Allow video skipping"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Video delay (milliseconds)"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Video"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Module Defaults"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Volume (% of current)"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Trivia"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Music"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Fade in (seconds)"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Fade out (seconds)"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Format"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Duration (minutes)"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Question duration (seconds)"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Clue duration (seconds)"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Answer duration (seconds)"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Single duration (seconds)"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Transition"
+msgstr ""
+
+msgctxt "#32037"
+msgid "None"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Fade"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Slide Left"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Slide Right"
+msgstr ""
+
+msgctxt "#32041"
+msgid "Slide Up"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Slide Down"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Transition: Duration (milliseconds)"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Music: Path"
+msgstr ""
+
+msgctxt "#32045"
+msgid "Music: File"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Slide"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Directory"
+msgstr ""
+
+msgctxt "#32048"
+msgid "File"
+msgstr ""
+
+msgctxt "#32049"
+msgid "Trailers"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Prefer unwatched over priority"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Clear trailers watched status"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Source"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Single File"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Source: Content filter (scrapers)"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Source: Content order"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Newest"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Random"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Source: Directory"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Source: File"
+msgstr ""
+
+msgctxt "#32060"
+msgid "Count"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Rating limit"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Max"
+msgstr ""
+
+msgctxt "#32063"
+msgid "Match Features"
+msgstr ""
+
+msgctxt "#32064"
+msgid "Max (needs Content path set and updated)"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Match feature genres"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Filter for 3D based on feature"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Quality"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Method"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Auto-detect from source"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Choose format"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Choose file"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Fallback"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Features"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Audio Format"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Default rating system"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Default rating system (needs Content path set and updated)"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Rating bumper"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Image"
+msgstr ""
+
+msgctxt "#32079"
+msgid "Style"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Rating style selection"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Rating style"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Rating style (needs Content path set and updated)"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Actions"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Execute action on sequence pause"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Action file path"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Execute action on sequence resume"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Last"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Execute action on sequence abort"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Test"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Not Set"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32092"
+msgid "Scope (requires add-on restart)"
+msgstr ""
+
+msgctxt "#32093"
+msgid "Logging"
+msgstr ""
+
+msgctxt "#32094"
+msgid "Debug logging"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Paste my kodi.log to pastebin"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Pastebin user (necessary to paste as user)"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Delete Pastebin user key"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Debugging"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Reset content database"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Clear trailers broken status"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Extras"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Install context menu add-on"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Context menu add-on installed"
+msgstr ""
+
+
+#Sequence
+msgctxt "#32300"
+msgid "3D Intro"
+msgstr ""
+
+msgctxt "#32301"
+msgid "3D Outro"
+msgstr ""
+
+msgctxt "#32302"
+msgid "Countdown"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Courtesy"
+msgstr ""
+
+msgctxt "#32304"
+msgid "Feature Intro"
+msgstr ""
+
+msgctxt "#32305"
+msgid "Feature Outro"
+msgstr ""
+
+msgctxt "#32306"
+msgid "Intermission"
+msgstr ""
+
+msgctxt "#32307"
+msgid "Short Film"
+msgstr ""
+
+msgctxt "#32308"
+msgid "Theater Intro"
+msgstr ""
+
+msgctxt "#32309"
+msgid "Theater Outro"
+msgstr ""
+
+msgctxt "#32310"
+msgid "Trailers Intro"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Trailers Outro"
+msgstr ""
+
+msgctxt "#32312"
+msgid "Trivia Intro"
+msgstr ""
+
+msgctxt "#32313"
+msgid "Trivia Outro"
+msgstr ""
+
+msgctxt "#32314"
+msgid "Back"
+msgstr ""
+
+msgctxt "#32315"
+msgid "Skip"
+msgstr ""
+
+msgctxt "#32316"
+msgid "Feature queue is full"
+msgstr ""
+
+msgctxt "#32317"
+msgid "Feature queue is empty"
+msgstr ""
+
+msgctxt "#32318"
+msgid "Kodi Database"
+msgstr ""
+
+msgctxt "#32319"
+msgid "Scrapers"
+msgstr ""
+
+msgctxt "#32320"
+msgid "Yes"
+msgstr ""
+
+msgctxt "#32321"
+msgid "No"
+msgstr ""
+
+msgctxt "#32322"
+msgid "Default"
+msgstr ""
+
+msgctxt "#32323"
+msgid "Scrapers filter (scrapers)"
+msgstr ""
+
+msgctxt "#32324"
+msgid "Content order"
+msgstr ""
+
+msgctxt "#32325"
+msgid "Path"
+msgstr ""
+
+msgctxt "#32326"
+msgid "Content Folder"
+msgstr ""
+
+msgctxt "#32327"
+msgid "Type"
+msgstr ""
+
+msgctxt "#32328"
+msgid "Play 3D If 3D Feature"
+msgstr ""
+
+msgctxt "#32329"
+msgid "Audio Format Bumper"
+msgstr ""
+
+msgctxt "#32330"
+msgid "This action is not set or not yet applied."
+msgstr ""
+
+msgctxt "#32331"
+msgid "Command"
+msgstr ""
+
+msgctxt "#32332"
+msgid "Argument"
+msgstr ""
+
+msgctxt "#32333"
+msgid "Condition"
+msgstr ""
+
+msgctxt "#32334"
+msgid "Video Bumpers"
+msgstr ""
+
+#Dialogs, etc.
+
+msgctxt "#32500"
+msgid "Not Found"
+msgstr ""
+
+msgctxt "#32501"
+msgid "No sequences found."
+msgstr ""
+
+msgctxt "#32502"
+msgid "Choose Sequence"
+msgstr ""
+
+msgctxt "#32503"
+msgid "No Content Path"
+msgstr ""
+
+msgctxt "#32504"
+msgid "Content path not set or not applied"
+msgstr ""
+
+msgctxt "#32505"
+msgid "Loading Content"
+msgstr ""
+
+msgctxt "#32506"
+msgid "Download"
+msgstr ""
+
+msgctxt "#32507"
+msgid "Downloading demo content"
+msgstr ""
+
+msgctxt "#32508"
+msgid "No Content"
+msgstr ""
+
+msgctxt "#32509"
+msgid "No content found for current rating system."
+msgstr ""
+
+msgctxt "#32510"
+msgid "Select Style"
+msgstr ""
+
+msgctxt "#32511"
+msgid "None found"
+msgstr ""
+
+msgctxt "#32512"
+msgid "No action file(s) set"
+msgstr ""
+
+msgctxt "#32513"
+msgid "MISSING!"
+msgstr ""
+
+msgctxt "#32514"
+msgid "Parser Messages"
+msgstr ""
+
+msgctxt "#32515"
+msgid "Done"
+msgstr ""
+
+msgctxt "#32516"
+msgid "Action file(s) parsed OK"
+msgstr ""
+
+msgctxt "#32517"
+msgid "Change Path"
+msgstr ""
+
+msgctxt "#32518"
+msgid "Choose a new path or clear the current path?"
+msgstr ""
+
+msgctxt "#32519"
+msgid "Choose"
+msgstr ""
+
+msgctxt "#32520"
+msgid "Clear"
+msgstr ""
+
+msgctxt "#32521"
+msgid "Select File"
+msgstr ""
+
+msgctxt "#32522"
+msgid "No matching content found."
+msgstr ""
+
+msgctxt "#32523"
+msgid "Options"
+msgstr ""
+
+msgctxt "#32524"
+msgid "Select Directory"
+msgstr ""
+
+msgctxt "#32525"
+msgid "No Options"
+msgstr ""
+
+msgctxt "#32526"
+msgid "No options found."
+msgstr ""
+
+msgctxt "#32527"
+msgid "Confirm"
+msgstr ""
+
+msgctxt "#32528"
+msgid "Sequence was modified."
+msgstr ""
+
+msgctxt "#32529"
+msgid "Do you really want to exit without saving changes?"
+msgstr ""
+
+msgctxt "#32530"
+msgid "Add"
+msgstr ""
+
+msgctxt "#32531"
+msgid "Edit"
+msgstr ""
+
+msgctxt "#32532"
+msgid "Rename"
+msgstr ""
+
+msgctxt "#32533"
+msgid "Copy"
+msgstr ""
+
+msgctxt "#32534"
+msgid "Move"
+msgstr ""
+
+msgctxt "#32535"
+msgid "Disable"
+msgstr ""
+
+msgctxt "#32536"
+msgid "Remove"
+msgstr ""
+
+msgctxt "#32537"
+msgid "Do you really want to remove this module?"
+msgstr ""
+
+msgctxt "#32538"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "#32539"
+msgid "Enter a name for this item"
+msgstr ""
+
+msgctxt "#32540"
+msgid "Add-on settings"
+msgstr ""
+
+msgctxt "#32541"
+msgid "New"
+msgstr ""
+
+msgctxt "#32542"
+msgid "Save"
+msgstr ""
+
+msgctxt "#32543"
+msgid "Save as..."
+msgstr ""
+
+msgctxt "#32544"
+msgid "Load"
+msgstr ""
+
+msgctxt "#32545"
+msgid "Import"
+msgstr ""
+
+msgctxt "#32546"
+msgid "Export"
+msgstr ""
+
+msgctxt "#32547"
+msgid "Play"
+msgstr ""
+
+msgctxt "#32548"
+msgid "Sequence Options"
+msgstr ""
+
+msgctxt "#32549"
+msgid "Sequence is modified."
+msgstr ""
+
+msgctxt "#32550"
+msgid "This will delete all changes."
+msgstr ""
+
+msgctxt "#32551"
+msgid "Do you really want to do this?"
+msgstr ""
+
+msgctxt "#32552"
+msgid "Select Save Directory"
+msgstr ""
+
+msgctxt "#32553"
+msgid "Please set the content path in addon settings."
+msgstr ""
+
+msgctxt "#32554"
+msgid "Enter name for file"
+msgstr ""
+
+msgctxt "#32555"
+msgid "Set Default"
+msgstr ""
+
+msgctxt "#32556"
+msgid "Would you like to set this as the default for playback?"
+msgstr ""
+
+msgctxt "#32557"
+msgid "For 2D or 3D?"
+msgstr ""
+
+msgctxt "#32558"
+msgid "Missing"
+msgstr ""
+
+msgctxt "#32559"
+msgid "Previous save not found."
+msgstr ""
+
+msgctxt "#32560"
+msgid "Load the default or start a new sequence?"
+msgstr ""
+
+msgctxt "#32561"
+msgid "No Features"
+msgstr ""
+
+msgctxt "#32562"
+msgid "No movies are in the Queue."
+msgstr ""
+
+msgctxt "#32563"
+msgid "Please queue some features and try again."
+msgstr ""
+
+msgctxt "#32564"
+msgid "Removed watched status from all trailers."
+msgstr ""
+
+msgctxt "#32565"
+msgid "Removed broken status from all trailers."
+msgstr ""
+
+msgctxt "#32566"
+msgid "Would you like to paste the current old log?"
+msgstr ""
+
+msgctxt "#32567"
+msgid "Paste the old log if you are in a new session, ie. after a Kodi crash."
+msgstr ""
+
+msgctxt "#32568"
+msgid "Current"
+msgstr ""
+
+msgctxt "#32569"
+msgid "Old"
+msgstr ""
+
+msgctxt "#32570"
+msgid "No Log"
+msgstr ""
+
+msgctxt "#32571"
+msgid "That log file does not exist!"
+msgstr ""
+
+msgctxt "#32572"
+msgid "Enter Pastebin password (only needed 1st time - NOT stored)"
+msgstr ""
+
+msgctxt "#32573"
+msgid "Failed"
+msgstr ""
+
+msgctxt "#32574"
+msgid "Failed to create paste as user"
+msgstr ""
+
+msgctxt "#32575"
+msgid "Aborted"
+msgstr ""
+
+msgctxt "#32576"
+msgid "Paste aborted!"
+msgstr ""
+
+msgctxt "#32577"
+msgid "Creating paste..."
+msgstr ""
+
+msgctxt "#32578"
+msgid "Paste created at:"
+msgstr ""
+
+msgctxt "#32579"
+msgid "OK"
+msgstr ""
+
+msgctxt "#32580"
+msgid "Show QR Code"
+msgstr ""
+
+msgctxt "#32581"
+msgid "Failed to create paste:"
+msgstr ""
+
+msgctxt "#32582"
+msgid "QR Code"
+msgstr ""
+
+msgctxt "#32583"
+msgid "Creating QR code..."
+msgstr ""
+
+msgctxt "#32584"
+msgid "Database reset."
+msgstr ""
+
+msgctxt "#32585"
+msgid "User key deleted."
+msgstr ""
+
+msgctxt "#32586"
+msgid "USE DEFAULT"
+msgstr ""
+
+msgctxt "#32587"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32588"
+msgid "Apply to queue"
+msgstr ""
+
+msgctxt "#32589"
+msgid "Click an item to start a move."
+msgstr ""
+
+msgctxt "#32590"
+msgid "Click the context menu button or delete key on a keyboard to remove an item."
+msgstr ""
+
+msgctxt "#32591"
+msgid "DEMO MODE"
+msgstr ""
+
+msgctxt "#32592"
+msgid "Set Content path in settings"
+msgstr ""
+
+msgctxt "#32593"
+msgid "Execute abort action after tests"
+msgstr ""
+
+msgctxt "#32594"
+msgid "Never"
+msgstr ""
+
+msgctxt "#32595"
+msgid "Always"
+msgstr ""
+
+msgctxt "#32596"
+msgid "Ask"
+msgstr ""
+
+msgctxt "#32597"
+msgid "Cleanup"
+msgstr ""
+
+msgctxt "#32598"
+msgid "Run abort action?"
+msgstr ""
+
+msgctxt "#32599"
+msgid "Default 2D"
+msgstr ""
+
+msgctxt "#32600"
+msgid "Default 3D"
+msgstr ""
