@@ -1,5 +1,4 @@
 import json
-import threading
 from BaseHTTPServer import BaseHTTPRequestHandler
 from BaseHTTPServer import HTTPServer
 
@@ -18,38 +17,31 @@ __call_missed__				= '/call/missed'
 SAVED_VOLUME_LEVEL = 0
 
 class Main(xbmc.Monitor):
-	MyServer = None
-
 	def __init__(self):
-		xbmc.Monitor.__init__(self)
+		self.settings_changed = False
+		self._build_server()
 
-		threading.Thread(target=self.startServer).start()
+		self.run()
 
-		while not xbmc.abortRequested:
-			xbmc.sleep(500)
+	def run(self):
+		while not self.abortRequested():
+			if self.waitForAbort(1):
+				self.server.socket.close()
+				break
 
-		threading.Thread(target=self.stopServer).start()
+			if self.settings_changed:
+				self.server.socket.close()
+				self._build_server()
+				self.settings_changed = False
 
-	def onAbortRequested(self):
-		xbmc.Monitor.onAbortRequested(self)
-		threading.Thread(target=self.stopServer).start()
+			self.server.handle_request()
 
 	def onSettingsChanged(self):
-		threading.Thread(target=self.restartServer).start()
+		self.settings_changed = True
 
-	def startServer(self):
-		port = int(xbmcaddon.Addon().getSetting(variables.__setting_key_port__))
-		self.MyServer = HTTPServer(('', port), PostHandler)
-		self.MyServer.serve_forever()
-
-	def stopServer(self):
-		self.MyServer.shutdown()
-		self.MyServer.socket.close()
-
-	def restartServer(self):
-		self.stopServer()
-		self.startServer()
-
+	def _build_server(self):
+		self.server = HTTPServer(('', int(xbmcaddon.Addon().getSetting(variables.__setting_key_port__))), PostHandler)
+		self.server.socket.settimeout(1)
 
 class PostHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
