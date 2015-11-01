@@ -1,0 +1,238 @@
+Changelog for CinemaVision
+
+[- 1.0.0 -]
+
+- add:     Default 3D sequence
+- add:     You can now load the default sequences
+- fix:     Videos with multiple audio streams could sometimes fail audio format detection
+- fix:     Error caused by trailers with missing release date
+- add:     Setting in section 'General' under heading 'Extras': 'Install context menu add-on'
+
+[- 1.0.0b1 -]
+
+- fix:     When clearing action file in the module, was displaying Default()
+- add:     Localize settings strings
+- add:     Added ability to test actions from the module and addon settings
+- change:  Removed settings button in Actions: 'Check action file(s) for errors'
+- add:     Add 'Test' button for 'Pause', 'Resume' and 'Abort' action settings
+- change:  Change Action module option 'Check for errors' to 'Test'
+- change:  Sequence title now displays in the upper right background
+- add:     Addon version now displays in the upper left background
+- change:  Trivia Slides directory name changed to Trivia - will auto-rename when loading content
+- change:  Added more details to the playlist editor
+
+[- 0.0.50 -]
+
+- change:  .cvseq file format is now JSON instead of XML
+- add:     Option for action modules to check action file errors
+- add:     Option in settings in 'Action' section to check action files errors
+
+[- 0.0.49 -]
+
+- change:  Switch from demo mode to normal now works more intuitively (i.e. trailers are not lost)
+- change:  You can now set the count for all video bumper types except file
+- add:     In section 'Content' as a subsetting to 'Trailers: Kodi Database' added 'Ignore YouTube trailers'
+- add:     In section 'Content' as a subsetting to 'Trailers: Kodi Database' added 'Mark watched if movie is watched'
+
+[- 0.0.48 -]
+
+- add:     Scan Trailers directory recursively
+- change:  Heading 'Trailers Scrapers' in section 'Content' changed to 'Content Scrapers'
+- add:     Unavailable trailers will now be removed from the database when updating content
+- fix:     When trivia paused during music fade in, music would not play
+- fix:     Error when 'Enable video skips' was disabled
+- change:  'Scrapers' source for Trailers renamed to 'Content'
+- change:  'Scrapers filter (by priority)' renamed to 'Content filter (scrapers)'
+- add:     Kodi database trailers now stored with release year for ordering
+- add:     Trailer setting 'Content order' with the options 'Newest' and 'Random'
+- change:  'Scope (Restart editor to apply)' moved to advanced section and renamed 'Scope (requires add-on restart)'
+- add:     Setting 'Execute action on sequence resume' now has options Off, Last and File (default=File). Last will use the last module action file executed
+- fix:     Fade time for trivia music was being extended arbitrarily
+
+[- 0.0.47 -]
+
+- fix:     Sequence repeats/jumps when shuffle is enabled for playlists
+- fix:     Error caused when actions were included in a sequence
+
+[- 0.0.46 -]
+
+- fix:     Fix error with music enabled for trivia when locale is one that uses commas to represent a decimal point
+- fix:     iTunes trailers now will use whatever is available (such as teasers) when no trailers are available
+- fix:     Trailers that failed to resolve a URL were reducing the number of played trailers by one
+- add:     Support for scoped screens
+- fix:     Volume not being set for video bumpers unless they were set to random
+- fix:     Bug where if fewer than count+5 trailers matched, none were returned
+- add:     Added setting to 'Advanced': 'Video pre-delay (ms)' which allows adding a delay before a video plays
+
+[- 0.0.45 -]
+
+- add:     Addon now sets the following home window properties:
+           script.cinemavision.module.current = current module (ie. video, trivia, feature, trailer, audioformat)
+           script.cinemavision.module.next = next module (ie. video, trivia, feature, trailer, audioformat)
+           script.cinemavision.module.current.name
+           script.cinemavision.module.next.name
+           script.cinemavision.feature.next.title
+           script.cinemavision.feature.next.dbid
+           script.cinemavision.feature.next.dbtype
+           script.cinemavision.feature.next.path
+- change:  Changed Trailers setting 'Play unwatched trailers first' to 'Prefer unwatched over priority'
+           Note: When enabled will search unwatched by source priority then watched by source priority
+                 When disabled will search unwatched and then watched for each source by priority
+- change:  Settings in section 'General' under heading 'Content' moved to new 'Content' section
+- add:     Settings in 'Content' section under 'Scrapers (trailers)': Apple iTunes, Kodi Database, StereoscopyNews.com, Content Folder
+- add:     Detection of 3D trailers based on tag match for Kodi Database trailers
+- add:     Trailers scraper Stereoscopynews.com
+- add:     Trailers module setting 'Filter 3D based on feature'
+- change:  Removed 'Content' from Trailers setting 'Source' - added as option to Trailers Setting 'Scrapers' as 'Content Folder'
+- add:     Content trailers now checked for 3D tags
+- add:     Trailer source 'Directory' now uses 3D tags to filter files when 'Filter 3D based on feature' is enabled
+- fix:     Unified some strings between addon level and module level settings
+- change:  Trailers ratings now compared to features remaining in the queue instead of initial queue
+- change:  Re-order settings sections
+- change:  Re-order moudules in sequence editor in 'add' menu
+- change:  'Rating style selection' now defaults to random
+
+[- 0.0.44 -]
+
+- fix:     Error for video bumpers with source as directory, random set and count set greater than number of files
+- add:     When sending a log to PasteBin, you are now asked if you would like to send the current or old log
+- change:  Now ignores trivia slides in root of Trivia Slides folder when scanning for content
+- change:  Removed trailer source options: Apple iTunes and Kodi Database - replaced with: Scrapers
+- change:  Removed Trailers setting 'Fallback to KodiDB (iTunes only)'
+- add:     Added Trailers sub-setting 'Scrapers' for setting scrapers to use when source is 'Scrapers'
+- change:  Move Video Bumpers above Trailers in the sequence editor and rename to Videos
+
+[- 0.0.43 -]
+
+- fix:     Broken transitions
+- fix:     Error when playlist dialog was disabled
+
+[- 0.0.42 -]
+
+- add:     Added setting in 'Trailers' - 'Fallback to Kodi DB (iTunes only)'
+- fix:     Addon setting for limiting trailers by genre was not being used as a default
+- fix:     Trailers were always being marked as broken when selected for
+- add:     Addon setting in 'Advanced' - 'Clear trailers broken status' :)
+
+[- 0.0.41 -]
+
+- change:  iTunes trailers now gets all trailers and gives priority to most recent and unwatched, falling back to watched if necessary
+- change:  Save/Load now saves and loads to the 'Sequences' folder in the Cinemavision content path
+- add:     Import/Export loads and saves sequences to locations outside the content 'Sequence' folder
+- add:     The ability to change which sequence to use from the playlist dialog
+- change:  Default 2D/3D sequence is now set by name
+- fix:     When current sequence is modified, loading a seqence now confirms the action
+- change:  Improve the default 3D detection regex
+- add:     Loaded sequence name now shows in seqence editor
+- fix:     Skipping back to a previous bumper with an action following was just skipping to the action
+- fix:     Action files: HTTP actions with a HEADERS: line were not executing
+- add:     Action files: Added sleep://<milliseconds> command to insert a pause between actions
+
+[- 0.0.40 -]
+
+- fix:     Issue on helix where navigation was broken on sequence first load
+- add:     Videos bumpers now have friendlier names on Kodi OSD. Trailers have movie title and thumbnail
+- change:  Default 3D detection regex now uses case insensitive matching
+- fix:     Prevent switching to other windows when experience is playing
+           Note: Pressing C for playlist is not useful as the initial playlist is gone, and switching to other windows is problematic anyway
+- add:     'Volume' setting added to all applicable modules
+- fix:     Bug which in some instances caused volume to be set to 0
+- add:     Up/Down in trivia now skips forward/back 3 slides
+- fix:     Trivia sometimes stopping when navigating to it within the sequence
+- fix:     Trivia music fadeout issues when music ends while navigating slides
+
+[- 0.0.39 -]
+
+- add:     Ability to post logs via Pastebin
+- fix:     3D ratings bumpers were not able to be randomly selected
+
+[- 0.0.38 -]
+
+- add:     Added more comprehensive debug logging
+
+[- 0.0.37 -]
+
+- change:  Trailer setting 'Limit rating' moved to module as 'Rating Limit' with options for None, Max and Match features
+- add:     Trailer module subsetting 'Limit rating: Max' which allows choice of ratings from the default rating system
+- fix:     Possible fix for encoding issues when using trailers from the Kodi Database
+- fix:     Changes to database handling to hopefully prevent 'OperationalError: unable to open database file' errors
+- add:     Add 'APPLY TO QUEUE' option to playlist dialog
+- change:  Rearrange some settings sections and make wording on some settings clearer
+- add:     Added 'Content' as a source for Trailers which will play trailers in the CinemaVision 'Trailers' directory
+- fix:     Rating style setting was always showing MPAA styles
+- add:     Playlist dialog now also shows the year if available
+- add:     Ability to use context menu on a collection
+- change:  Removed xbmclogs.com option from settings (site down - for good?)
+- fix:     Possible fix for crashes with mediacodec? Needs testing
+- add:     Added the ability for skinners to pass 'movied=<id>' as an argument
+- add:     Added the ability for skinners to pass 'selction' as an argument (will play current listitem)
+- add:     Added the ability to add a line to action files for http headers -> HEADER:{"header_key":"header_value"} <-JSON string
+
+
+[- 0.0.36 -]
+
+- fix:    Rating bumper not showing when 'Style' set to 'Default' in the module
+- fix:    Improved feature rating detection
+- add:    New setting in 'Feature' - 'Default rating system'
+- add:    Recursive directory scanning for Video Bumpers, Audio Format Bumpers, Trivia and Music
+- add:    In action files, allow http data to be prepended with POST:, PUT: and DELETE: to specify method - defaults to POST
+- add:    New settings tab 'Actions'
+- add:    Settings on 'Actions' tab to specify action files for pause, resume and abort events
+- add:    Added the ability to pause trivia
+
+[- 0.0.35 -]
+
+- fix:    Error in iTunes scraper causing sequence playback to fail
+
+[- 0.0.34 -]
+
+- add:    'Advanced' section in addon settings
+- add:    'Debug logging' to 'Advanced' in addon settings
+- add:    'Send log to xbmclogs.com (via Kodi Log Uploader)' to 'Advanced' in addon settings
+- fix:    Possible fix to black screen with audio when playing a bumper video
+- fix:    When cleaning the database if an item was missing, all items of that type were removed
+- fix:    Error with some music files
+
+[- 0.0.33 -]
+
+- fix:    Queue dialog was showing : when rating was not available
+- change: 'Music' setting now shows 'None' instead of 'Off'
+- change: 'Rating limit' setting now shows 'None' instead of 'No Limit'
+- fix:    Possible fix for crash on Fire TV with MediaCodec acceleration enabled - needs testing
+- add:    New setting '3D tag detection regex' for modifying 3D detection
+- fix:    Queue dialog showing wrong text color on buttons in some skins
+- fix:    Now disables visualization and closes visualization window when trivia is playing
+- add:    Support for ratings systems added via system.xml in rating system folder
+- fix:    Fix for failure to update content when some types of audio files are present in the music folder
+
+[- 0.0.32 -]
+
+- fix:    Sequence saves on some platforms were generated with extraneous characters causing errors on load
+- fix:    When playing a sequence from the editor, the addon was asking if you wanted to set as default the temporary sequence
+- fix:    Queue dialog now allows moving items with a mouse
+- fix:    Video bumpers failed to play when 'Random' was selected and 'Directory' set as source
+- fix:    Trailers module playing repeats when source was iTunes or Kodi DB
+
+[- 0.0.31 -]
+
+- add:    Support for BBFC, DEJUS, FSK ratings systems
+- change: Improve Kodi rating parsing
+- change: Add settings category 'Playback'
+- change: Move setting 'Allow video skipping' to 'Playback' category
+- add:    Settings option 'Hide queue dialog' and subsetting 'If only one item queued'
+- add:    Support ratings 'style' sub-folders
+- add:    Feature setting 'Rating style selection' for selecting between 'random' and 'style'
+- add:    Feature subsetting 'Rating style'
+- fix:    Bug where bad iTunes trailer prevents any trailers from playing
+- add:    Now cleans content database when updating
+
+
+[- 0.0.30 -]
+
+- add:    When the experience is run with no queue, it uses the selected item
+- add:    When the user tries to update content with no content directory set, it shows a dialog saying it is not set or applied
+- change: Moved the 'Update content' and 'Auto update when editor starts' settings to under 'Content path' setting
+- add:    Set the window properties when running for skin integration
+- add:    Now logs disabled modules as disabled when building the sequence. Previously not logged at all
+- add:    Updating content is now cancelable
+- add:    Asks if you want to set the save as a default when default 2D sequence is not set or save does not match 2D/3D sequences

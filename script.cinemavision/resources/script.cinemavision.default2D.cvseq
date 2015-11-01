@@ -1,0 +1,170 @@
+{
+ "items": [
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "trivia.intro", 
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "trivia", 
+   "name": "", 
+   "settings": {}
+  }, 
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "trivia.outro", 
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "courtesy", 
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "theater.intro", 
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "trailers.intro", 
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "trailer", 
+   "name": "", 
+   "settings": {}
+  }, 
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "trailers.outro", 
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "audioformat", 
+   "name": "", 
+   "settings": {
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "feature", 
+   "name": "", 
+   "settings": {}
+  }, 
+  {
+   "enabled": true, 
+   "type": "command", 
+   "name": "", 
+   "settings": {
+    "command": "skip", 
+    "condition": "feature.queue=empty", 
+    "arg": 6
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "intermission", 
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "trivia", 
+   "name": "", 
+   "settings": {}
+  }, 
+  {
+   "enabled": true, 
+   "type": "audioformat", 
+   "name": "", 
+   "settings": {
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "feature", 
+   "name": "", 
+   "settings": {}
+  }, 
+  {
+   "enabled": true, 
+   "type": "command", 
+   "name": "", 
+   "settings": {
+    "command": "back", 
+    "condition": "feature.queue=full", 
+    "arg": 4
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "feature.outro", 
+    "play3D": true
+   }
+  }, 
+  {
+   "enabled": true, 
+   "type": "video", 
+   "name": "", 
+   "settings": {
+    "random": true, 
+    "count": 1, 
+    "vtype": "theater.outro", 
+    "play3D": true
+   }
+  }
+ ], 
+ "version": 1
+}

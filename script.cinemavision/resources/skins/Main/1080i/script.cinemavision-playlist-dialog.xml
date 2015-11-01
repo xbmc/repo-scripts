@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <defaultcontrol>201</defaultcontrol>
+    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
+    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
+    <animation effect="slide" start="0,1080" end="0,0" time="200">WindowOpen</animation>
+    <animation effect="slide" start="0,0" end="0,1080" time="200">WindowClose</animation>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <controls>
+        <control type="image">
+            <posx>-320</posx>
+            <posy>0</posy>
+            <width>2560</width>
+            <height>1080</height>
+            <texture>script.cinemavision-white_square.png</texture>
+            <colordiffuse>A0000000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        <control type="group">
+            <posx>180</posx>
+            <posy>50</posy>
+            <control type="image">
+                <posx>-20</posx>
+                <posy>-20</posy>
+                <width>1610</width>
+                <height>1020</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>60000000</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posx>-5</posx>
+                <posy>-5</posy>
+                <width>1580</width>
+                <height>990</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>FFDDDDDD</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1570</width>
+                <height>980</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>FF101010</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>1020</width>
+                <height>980</height>
+                <texture>script.cinemavision-queue-dialog-back.png</texture>
+                <colordiffuse>20FFFFFF</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+
+            <control type="list" id="300">
+                <posx>0</posx>
+                <posy>10</posy>
+                <width>1010</width>
+                <height>970</height>
+                <scrolltime>200</scrolltime>
+                <orientation>vertical</orientation>
+                <onright>201</onright>
+
+                <itemlayout height="190">
+                    <control type="image">
+                        <posx>10</posx>
+                        <posy>0</posy>
+                        <width>980</width>
+                        <height>180</height>
+                        <texture>script.cinemavision-white_square.png</texture>
+                        <colordiffuse>20FFFFFF</colordiffuse>
+                        <aspectratio>stretch</aspectratio>
+                    </control>
+                    <control type="group">
+                        <posx>10</posx>
+                        <posy>0</posy>
+                        <control type="image">
+                            <posx>15</posx>
+                            <posy>15</posy>
+                            <width>100</width>
+                            <height>150</height>
+                            <texture>$INFO[ListItem.Thumb]</texture>
+                            <aspectratio aligny="top">keep</aspectratio>
+                        </control>
+                        <control type="label">
+                            <left>135</left>
+                            <top>10</top>
+                            <width>830</width>
+                            <height>40</height>
+                            <font>font30</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>top</aligny>
+                            <label>[B]$INFO[ListItem.Label][/B]</label>
+                        </control>
+                        <control type="label">
+                            <left>135</left>
+                            <top>75</top>
+                            <width>430</width>
+                            <height>60</height>
+                            <font>font13</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>top</aligny>
+                            <label>$INFO[ListItem.Property(year),, • ]$INFO[ListItem.Label2]</label>
+                        </control>
+                        <control type="label">
+                            <left>135</left>
+                            <top>120</top>
+                            <width>615</width>
+                            <height>55</height>
+                            <font>font10</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>bottom</aligny>
+                            <label>$INFO[ListItem.Property(genres)]</label>
+                        </control>
+                        <control type="label">
+                            <left>570</left>
+                            <top>75</top>
+                            <width>400</width>
+                            <height>40</height>
+                            <font>font13</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>right</align>
+                            <aligny>top</aligny>
+                            <label>$INFO[ListItem.Property(rating)]</label>
+                        </control>
+                        <control type="image">
+                            <visible>!IsEmpty(ListItem.Property(af))</visible>
+                            <left>770</left>
+                            <top>125</top>
+                            <width>200</width>
+                            <height>40</height>
+                            <texture>logos/af/$INFO[ListItem.Property(af)].png</texture>
+                            <aspectratio align="right">keep</aspectratio>
+                        </control>
+                        <control type="group">
+                            <visible>IsEmpty(ListItem.Property(af)) + !IsEmpty(ListItem.Property(afcodec))</visible>
+                            <posx>770</posx>
+                            <posy>125</posy>
+                            <width>200</width>
+                            <height>55</height>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <width>136</width>
+                                <height>40</height>
+                                <texture>logos/af/$INFO[ListItem.Property(afcodec)].png</texture>
+                                <aspectratio align="right">keep</aspectratio>
+                            </control>
+                            <control type="image">
+                                <posx>56r</posx>
+                                <posy>0</posy>
+                                <width>56</width>
+                                <height>40</height>
+                                <texture>logos/af/$INFO[ListItem.Property(afchannels)].png</texture>
+                                <aspectratio align="right">keep</aspectratio>
+                            </control>
+                        </control>
+                        <control type="label">
+                            <visible>IsEmpty(ListItem.Property(af)) + IsEmpty(ListItem.Property(afcodec))</visible>
+                            <left>770</left>
+                            <top>125</top>
+                            <width>200</width>
+                            <height>40</height>
+                            <font>font13</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>right</align>
+                            <aligny>top</aligny>
+                            <label>[B][UPPERCASE]$INFO[ListItem.Property(codec)][/UPPERCASE]$INFO[ListItem.Property(channels), ][/B]</label>
+                        </control>
+                    </control>
+                </itemlayout>
+
+                <focusedlayout height="190">
+                     <control type="image">
+                        <visible>!Control.HasFocus(300)</visible>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>1010</width>
+                        <height>180</height>
+                        <texture>script.cinemavision-white_square.png</texture>
+                        <colordiffuse>20FFFFFF</colordiffuse>
+                        <aspectratio>stretch</aspectratio>
+                    </control>
+                    <control type="image">
+                        <visible>Control.HasFocus(300)</visible>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>1010</width>
+                        <height>180</height>
+                        <texture>script.cinemavision-white_square.png</texture>
+                        <colordiffuse>FF26539B</colordiffuse>
+                        <aspectratio>stretch</aspectratio>
+                    </control>
+                    <control type="image">
+                        <visible>!IsEmpty(ListItem.Property(moving))</visible>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>1010</width>
+                        <height>180</height>
+                        <texture>script.cinemavision-white_square.png</texture>
+                        <colordiffuse>FF00A000</colordiffuse>
+                        <aspectratio>stretch</aspectratio>
+                    </control>
+                    <control type="group">
+                        <posx>10</posx>
+                        <posy>0</posy>
+                        <control type="image">
+                            <posx>15</posx>
+                            <posy>15</posy>
+                            <width>100</width>
+                            <height>150</height>
+                            <texture>$INFO[ListItem.Thumb]</texture>
+                            <aspectratio aligny="top">keep</aspectratio>
+                        </control>
+                        <control type="label">
+                            <left>135</left>
+                            <top>10</top>
+                            <width>830</width>
+                            <height>40</height>
+                            <font>font30</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>top</aligny>
+                            <label>[B]$INFO[ListItem.Label][/B]</label>
+                        </control>
+                        <control type="label">
+                            <left>135</left>
+                            <top>75</top>
+                            <width>430</width>
+                            <height>60</height>
+                            <font>font13</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>top</aligny>
+                            <label>$INFO[ListItem.Property(year),, • ]$INFO[ListItem.Label2]</label>
+                        </control>
+                        <control type="label">
+                            <left>135</left>
+                            <top>120</top>
+                            <width>615</width>
+                            <height>55</height>
+                            <font>font10</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>bottom</aligny>
+                            <label>$INFO[ListItem.Property(genres)]</label>
+                        </control>
+                        <control type="label">
+                            <left>570</left>
+                            <top>75</top>
+                            <width>400</width>
+                            <height>40</height>
+                            <font>font13</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>right</align>
+                            <aligny>top</aligny>
+                            <label>$INFO[ListItem.Property(rating)]</label>
+                        </control>
+                        <control type="image">
+                            <visible>!IsEmpty(ListItem.Property(af))</visible>
+                            <left>770</left>
+                            <top>125</top>
+                            <width>200</width>
+                            <height>40</height>
+                            <texture>logos/af/$INFO[ListItem.Property(af)].png</texture>
+                            <aspectratio align="right">keep</aspectratio>
+                        </control>
+                        <control type="group">
+                            <visible>IsEmpty(ListItem.Property(af)) + !IsEmpty(ListItem.Property(afcodec))</visible>
+                            <posx>770</posx>
+                            <posy>125</posy>
+                            <width>200</width>
+                            <height>55</height>
+                            <control type="image">
+                                <posx>0</posx>
+                                <posy>0</posy>
+                                <width>136</width>
+                                <height>40</height>
+                                <texture>logos/af/$INFO[ListItem.Property(afcodec)].png</texture>
+                                <aspectratio align="right">keep</aspectratio>
+                            </control>
+                            <control type="image">
+                                <posx>56r</posx>
+                                <posy>0</posy>
+                                <width>56</width>
+                                <height>40</height>
+                                <texture>logos/af/$INFO[ListItem.Property(afchannels)].png</texture>
+                                <aspectratio align="right">keep</aspectratio>
+                            </control>
+                        </control>
+                        <control type="label">
+                            <visible>IsEmpty(ListItem.Property(af)) + IsEmpty(ListItem.Property(afcodec))</visible>
+                            <left>770</left>
+                            <top>125</top>
+                            <width>200</width>
+                            <height>40</height>
+                            <font>font13</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>right</align>
+                            <aligny>top</aligny>
+                            <label>[B][UPPERCASE]$INFO[ListItem.Property(codec)][/UPPERCASE]$INFO[ListItem.Property(channels), ][/B]</label>
+                        </control>
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <control type="group">
+                <posx>1000</posx>
+                <posy>0</posy>
+                <control type="image">
+                    <posx>0</posx>
+                    <posy>0</posy>
+                    <width>570</width>
+                    <height>980</height>
+                    <texture>script.cinemavision-white_square.png</texture>
+                    <colordiffuse>FF353535</colordiffuse>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+
+                <control type="image">
+                    <posx>35</posx>
+                    <posy>45</posy>
+                    <width>510</width>
+                    <height>80</height>
+                    <texture>script.cinemavision-white_square.png</texture>
+                    <colordiffuse>FF151515</colordiffuse>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="button" id="204">
+                    <enable>IntegerGreaterThan(Container(300).NumItems, 0)</enable>
+                    <posx>40</posx>
+                    <posy>50</posy>
+                    <width>500</width>
+                    <height>70</height>
+                    <label> </label>
+                    <font>font13</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <align>center</align>
+                    <texturefocus colordiffuse="FF26539B">script.cinemavision-white_square.png</texturefocus>
+                    <texturenofocus colordiffuse="FF252525">script.cinemavision-white_square.png</texturenofocus>
+                    <onleft>300</onleft>
+                    <ondown>201</ondown>
+                </control>
+
+                <control type="image">
+                    <posx>135</posx>
+                    <posy>180</posy>
+                    <width>310</width>
+                    <height>80</height>
+                    <texture>script.cinemavision-white_square.png</texture>
+                    <colordiffuse>FF151515</colordiffuse>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="button" id="201">
+                    <enable>IntegerGreaterThan(Container(300).NumItems, 0)</enable>
+                    <posx>140</posx>
+                    <posy>185</posy>
+                    <width>300</width>
+                    <height>70</height>
+                    <label>[B][UPPERCASE]$ADDON[script.cinemavision 32547][/UPPERCASE][/B]</label>
+                    <font>font13</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <align>center</align>
+                    <texturefocus colordiffuse="FF26539B">script.cinemavision-white_square.png</texturefocus>
+                    <texturenofocus colordiffuse="FF252525">script.cinemavision-white_square.png</texturenofocus>
+                    <onleft>300</onleft>
+                    <ondown>202</ondown>
+                    <onup>204</onup>
+                </control>
+
+                <control type="image">
+                    <posx>135</posx>
+                    <posy>285</posy>
+                    <width>310</width>
+                    <height>80</height>
+                    <texture>script.cinemavision-white_square.png</texture>
+                    <colordiffuse>FF151515</colordiffuse>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="button" id="202">
+                    <posx>140</posx>
+                    <posy>290</posy>
+                    <width>300</width>
+                    <height>70</height>
+                    <label>[B][UPPERCASE]$ADDON[script.cinemavision 32587][/UPPERCASE][/B]</label>
+                    <font>font13</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <align>center</align>
+                    <texturefocus colordiffuse="FF26539B">script.cinemavision-white_square.png</texturefocus>
+                    <texturenofocus colordiffuse="FF252525">script.cinemavision-white_square.png</texturenofocus>
+                    <onleft>300</onleft>
+                    <onup>201</onup>
+                    <ondown>203</ondown>
+                </control>
+
+                <control type="image">
+                    <posx>135</posx>
+                    <posy>425</posy>
+                    <width>310</width>
+                    <height>80</height>
+                    <texture>script.cinemavision-white_square.png</texture>
+                    <colordiffuse>FF151515</colordiffuse>
+                    <aspectratio>stretch</aspectratio>
+                </control>
+                <control type="button" id="203">
+                    <posx>140</posx>
+                    <posy>430</posy>
+                    <width>300</width>
+                    <height>70</height>
+                    <label>[B][UPPERCASE]$ADDON[script.cinemavision 32588][/UPPERCASE][/B]</label>
+                    <font>font13</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <align>center</align>
+                    <texturefocus colordiffuse="FF26539B">script.cinemavision-white_square.png</texturefocus>
+                    <texturenofocus colordiffuse="FF252525">script.cinemavision-white_square.png</texturenofocus>
+                    <onleft>300</onleft>
+                    <onup>202</onup>
+                </control>
+            </control>
+
+        </control>
+
+        <control type="group">
+            <posx>1220</posx>
+            <posy>645</posy>
+            <control type="image">
+                <posx>-20</posx>
+                <posy>-20</posy>
+                <width>530</width>
+                <height>385</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>60000000</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posx>-5</posx>
+                <posy>-5</posy>
+                <width>500</width>
+                <height>355</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>FFA0A0A0</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>490</width>
+                <height>345</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>FF303030</colordiffuse>
+                <aspectratio>stretch</aspectratio>
+            </control>
+            <control type="textbox">
+                <left>20</left>
+                <top>20</top>
+                <width>450</width>
+                <height>325</height>
+                <font>font16</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <label>$ADDON[script.cinemavision 32589][CR][CR]$ADDON[script.cinemavision 32590]</label>
+            </control>
+        </control>
+    </controls>
+</window>

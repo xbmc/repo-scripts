@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.cinemavision" name="CinemaVision" version="1.0.0" provider-name="CinemaVision">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.youtube.dl" version="15.318.0"/>
+        <import addon="script.module.beautifulsoup" version="3.0.8"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Create a movie theater experience in the comfort of your own home!</summary>
+        <summary lang="es">Crear una experiencia de cine en la comodidad de su propia casa!</summary>
+        <summary lang="de">Erstellen Sie ein Kinoerlebnis in den Komfort der Ihren eigenen vier Wänden!</summary>
+        <summary lang="pt-br">Crie uma experiência de cinema no conforto da sua própria casa!</summary>
+        <description lang="en">Create a sequence of trivia slides, video bumpers, trailers and more that will bring the experience of a movie theater straight to your home theater. Share your sequences, customize your content and collaborate online at CinemaVision.tv!</description>
+        <description lang="es">Crear una secuencia de diapositivas de trivia, parachoques vídeos, trailers y mucho más que traerán la experiencia de una sala de cine directamente a su cine en casa. Comparte tus secuencias, personalizar el contenido y colaborar en línea en CinemaVision.tv!</description>
+        <description lang="de">Erstellen Sie eine Sequenz von trivia Dias, Video Stoßstangen, Trailer und vieles mehr, die die Erfahrung eines Filmtheaters direkt auf Ihr Heimkino bringen wird. Teile deine Sequenzen, passen Sie Ihre Inhalte und online zusammenarbeiten bei CinemaVision.tv!</description>
+        <description lang="pt-br">Criar uma seqüência de slides trivia, pára-choques de vídeo, trailers e muito mais que trará a experiência de um cinema direto para o seu home theater. Compartilhe suas sequências, personalize o seu conteúdo e colaborar online no CinemaVision.tv!</description>
+        <disclaimer lang="en">This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. Visit the website for details.</disclaimer>
+        <disclaimer lang="es">Esta obra está bajo licencia de Creative Commons Reconocimiento - Compartir bajo la misma licencia 4.0 Internacional. Visite el sitio web para más detalles.</disclaimer>
+        <disclaimer lang="de">Diese Seite ist unter einer Creative Commons Attribution-ShareAlike 4.0 Internationale lizensiert. Besuchen Sie die Website für weitere Details.</disclaimer>
+        <disclaimer lang="pt-br">Esta obra está licenciada sob uma Licença Creative Commons Atribuição- Compartilhamento pela mesma licença 4.0 Licença Internacional . Visite o site para mais detalhes.</disclaimer>
+        <platform>all</platform>
+        <license>Creative Commons Attribution-ShareAlike 4.0 International</license>
+        <forum>http://www.cinemavision.tv/forums/</forum>
+        <website>http://www.cinemavision.tv/</website>
+        <source>https://github.com/CinemaVision/script.cinemavision</source>
+    </extension>
+</addon>

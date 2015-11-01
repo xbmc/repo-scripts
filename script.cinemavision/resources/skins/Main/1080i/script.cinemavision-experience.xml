@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<window>
+    <coordinates>
+        <system>1</system>
+        <posx>0</posx>
+        <posy>0</posy>
+    </coordinates>
+    <animation effect="zoom" end="74.074074074,74.074074074" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.40:1))">Conditional</animation>
+    <animation effect="zoom" end="75.925925926,75.925925926" center="960,540" time="0" condition="!IsEmpty(Window(10000).Property(script.cinemavision.scope.2.35:1))">Conditional</animation>
+    <controls>
+        <control type="image">
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width>
+            <height>1080</height>
+            <texture>script.cinemavision-white_square.png</texture>
+            <colordiffuse>FF000000</colordiffuse>
+            <aspectratio>stretch</aspectratio>
+        </control>
+        <control type="image" id="100">
+            <visible>IsEmpty(Window(10000).Property(script.cinemavision.hide0))</visible>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width>
+            <height>1080</height>
+            <texture>$INFO[Window(10000).Property(script.cinemavision.image0)]</texture>
+            <aspectratio>keep</aspectratio>
+        </control>
+        <control type="image" id="101">
+            <visible>!IsEmpty(Window(10000).Property(script.cinemavision.show1))</visible>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>1920</width>
+            <height>1080</height>
+            <texture>$INFO[Window(10000).Property(script.cinemavision.image1)]</texture>
+            <aspectratio>keep</aspectratio>
+        </control>
+        <control type="image">
+            <visible>!IsEmpty(Window(10000).Property(script.cinemavision.paused))</visible>
+            <posx>832</posx>
+            <posy>412</posy>
+            <width>256</width>
+            <height>256</height>
+            <texture>script.cinemavision-paused.png</texture>
+            <colordiffuse>80FFFFFF</colordiffuse>
+            <aspectratio>keep</aspectratio>
+        </control>
+        <control type="group" id="200">
+            <visible>!IsEmpty(Window(10000).Property(script.cinemavision.number))</visible>
+            <posx>1820</posx>
+            <posy>20</posy>
+            <control type="image">
+                <posx>-5</posx>
+                <posy>-5</posy>
+                <width>90</width>
+                <height>90</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>A0FFFFFF</colordiffuse>
+                <aspectratio>scale</aspectratio>
+            </control>
+            <control type="image">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>80</width>
+                <height>80</height>
+                <texture>script.cinemavision-white_square.png</texture>
+                <colordiffuse>A0000000</colordiffuse>
+                <aspectratio>scale</aspectratio>
+            </control>
+            <control type="label">
+                <posx>0</posx>
+                <posy>0</posy>
+                <width>80</width>
+                <height>80</height>
+                <font>font30</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>[B]$INFO[Window(10000).Property(script.cinemavision.number)][/B]</label>
+            </control>
+        </control>
+    </controls>
+</window>

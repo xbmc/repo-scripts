@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="32001">
+        <setting label="32002" type="lsep"/>
+        <setting id="sequence.2D"         label="32003" type="action" action="RunScript(script.cinemavision,sequence.2D)" />
+        <setting id="sequence.3D"         label="32004" type="action" action="RunScript(script.cinemavision,sequence.3D)" />
+        <setting id="3D.tag.regex"        label="32005" type="text"   default="(?i)3DSBS|3D.SBS|HSBS|H.SBS|H-SBS|[\. _]SBS[\. _]|FULL-SBS|FULL.SBS|FULLSBS|FSBS|HALF-SBS|3DTAB|3D.TAB|HTAB|H.TAB|3DOU|3D.OU|3D.HOU|[\. _]HOU[\. _]|[\. _]OU[\. _]|HALF-TAB" />
+        <setting id="bumper.fallback2D"   label="32006" type="bool"   default="false" />
+        <setting label="32101" type="lsep"/>
+        <setting id="install.CM"          label="32102" type="action" action="RunScript(script.cinemavision,install.contextMenu)" visible="!System.HasAddon(context.cinemavision)" option="close" />
+        <setting id="installed.CM"        label="32103" type="action" action="RunScript(script.cinemavision,install.contextMenu)" visible="System.HasAddon(context.cinemavision)" enable="false" />
+    </category>
+
+    <category label="32007">
+        <setting id="content.path"        label="32008" type="folder" sources="auto" option="writeable" value="" />
+        <setting id="database.update"     label="32009" type="action" action="RunScript(script.cinemavision,update.database)" option="close" />
+        <setting id="database.autoUpdate" label="32010" type="bool" default="false" subsetting="true" />
+        <setting label="32011" type="lsep"/>
+        <setting id="scraper.trailers.Content"            label="32012" type="bool" default="true" />
+        <setting id="scraper.trailers.KodiDB"             label="32013" type="bool" default="true" />
+        <setting id="scraper.trailers.KodiDB.skipYouTube" label="32014" type="bool" default="false" subsetting="true" enable="eq(-1,true)"/>
+        <setting id="scraper.trailers.KodiDB.markWatched" label="32015" type="bool" default="false" subsetting="true" enable="eq(-2,true)"/>
+        <setting id="scraper.trailers.iTunes"             label="32016" type="bool" default="true" />
+        <setting id="scraper.trailers.StereoscopyNews"    label="32017" type="bool" default="false" />
+    </category>
+
+    <category label="32018">
+        <setting id="hide.queue.dialog"        label="32019" type="bool"   default="false" />
+        <setting id="hide.queue.dialog.single" label="32020" type="bool"   default="false" subsetting="true" enable="eq(-1,true)"/>
+        <setting id="allow.video.skip"         label="32021" type="bool"   default="true" />
+        <setting id="video.preDelay"           label="32022" type="slider" default="0" range="0,100,3000" option="int" />
+    </category>
+
+    <category label="32023">
+        <setting label="32024" type="lsep"/>
+        <setting id="video.volume" label="32025" type="slider" default="100" range="1,100" option="percent" />
+    </category>
+
+    <category label="32026">
+        <setting label="32027" type="lsep"/>
+        <setting id="trivia.musicVolume"  label="32025" type="slider" default="75"  range="1,100"    option="percent" />
+        <setting id="trivia.musicFadeIn"  label="32028" type="slider" default="3.0" range="0,0.2,10" option="float" />
+        <setting id="trivia.musicFadeOut" label="32029" type="slider" default="3.0" range="0,0.2,10" option="float" />
+        <setting label="32024" type="lsep"/>
+        <setting id="trivia.format"      label="32030" type="enum"   lvalues="32046|32023"  default="0" />
+        <setting id="trivia.duration"    label="32031" type="slider" default="10" range="1,60" option="int" />
+        <setting id="trivia.qDuration"   label="32032" type="slider" default="8"  range="1,60" option="int" />
+        <setting id="trivia.cDuration"   label="32033" type="slider" default="6"  range="1,60" option="int" />
+        <setting id="trivia.aDuration"   label="32034" type="slider" default="6"  range="1,60" option="int" />
+        <setting id="trivia.sDuration"   label="32035" type="slider" default="10" range="1,60" option="int" />
+        <setting id="trivia.transition"  label="32036" type="enum"   lvalues="32037|32038|32039|32040|32041|32042"  default="1" />
+        <setting id="trivia.transitionDuration" label="32043" type="slider" default="400" range="100,100,2000" option="int" />
+        <setting id="trivia.music"       label="32027" type="enum"   lvalues="32037|32007|32047|32048" default="1" />
+        <setting id="trivia.musicDir"    label="32044"                 type="folder" sources="auto" value="" />
+        <setting id="trivia.musicFile"   label="32045"                 type="file"   sources="auto" value="" />
+    </category>
+
+    <category label="32049">
+        <setting id="trailer.preferUnwatched" label="32050" type="bool"   default="true" />
+        <setting id="trailer.CLEAR"           label="32051" type="action" action="RunScript(script.cinemavision,trailer.clearWatched)" />
+        <setting label="32024" type="lsep"/>
+        <setting id="trailer.source"       label="32052"     type="enum"      lvalues="32007|32047|32053" default="0" />
+        <setting id="trailer.scrapers"     label="32054"     type="action"    action="RunScript(script.cinemavision,trailer.scrapers)" default="Content,KodiDB,iTunes" />
+        <setting id="trailer.order"        label="32055"     type="enum"      lvalues="32056|32057" default="0" />
+        <setting id="trailer.dir"          label="32058"     type="folder"    sources="auto" value="" />
+        <setting id="trailer.file"         label="32059"     type="file"      sources="auto" value="" />
+        <setting id="trailer.count"        label="32060"     type="slider"    default="1" range="1,10" option="int" />
+        <setting id="settings.ratings.initialized2" label="" type="bool"      default="false" visible="false"/>
+        <setting id="trailer.ratingLimit"  label="32061"     type="enum"      lvalues="32037|32062|32063" default="0" />
+        <setting id="trailer.ratingMax"    label="32062"     type="fileenum"  values="$PROFILE/settings/ratings_default" subsetting="true" visible="eq(-2,true)"/>
+        <setting id="trailer.ratingMax.dummy" label="32064"  type="text"      enable="false" subsetting="true" visible="!eq(-3,true)" />
+        <setting id="trailer.limitGenre"   label="32065"     type="bool"      default="true" />
+        <setting id="trailer.filter3D"     label="32066"     type="bool"      default="true" />
+        <setting id="trailer.quality"      label="32067"     type="labelenum" values="480p|720p|1080p" default="720p" />
+        <setting id="trailer.volume"       label="32025"     type="slider"    default="100" range="1,100" option="percent" />
+    </category>
+
+    <category label="32074">
+        <setting label="32024" type="lsep"/>
+        <setting id="audioformat.method"   label="32068" type="enum" lvalues="32069|32070|32071" default="0" />
+        <setting id="audioformat.fallback" label="32072" type="enum" lvalues="32070|32071" default="0" subsetting="true" />
+        <setting id="audioformat.format"   label="32030" type="enum" values="(?i)Auro-3D|Dolby Digital|Dolby Digital Plus|Dolby TrueHD|Dolby Atmos|DTS|DTS-HD Master Audio|DTS:X|Datasat|THX|Other" default="10" subsetting="true" />
+        <setting id="audioformat.file"     label="32048" type="file" sources="auto" value="" subsetting="true" />
+        <setting id="audioformat.volume"   label="32025" type="slider" default="100" range="1,100" option="percent" />
+    </category>
+
+    <category label="32073">
+        <setting id="settings.ratings.initialized" label=""      type="bool"   default="false" visible="false"/>
+        <setting id="rating.system.default"        label="32075" type="fileenum"   values="$PROFILE/settings/ratings"  default="MPAA" mask="/" visible="eq(-1,true)"/>
+        <setting id="rating.system.default.dummy"  label="32076" type="enum"   values="32037"  default="0" visible="!eq(-2,true)" enable="false" />
+        <setting label="32024" type="lsep"/>
+        <setting id="feature.count"                label="32060" type="slider" default="1" range="1,10" option="int" />
+        <setting id="feature.ratingBumper"         label="32077" type="enum"   lvalues="32037|32023|32078"  default="1" />
+        <setting id="feature.ratingStyleSelection" label="32080" type="enum"   lvalues="32057|32079"  default="0" />
+        <setting id="feature.ratingStyle"          label="32081" type="action" default="" action="RunScript(script.cinemavision,feature.setRatingBumperStyle)" subsetting="true" visible="eq(-7,true)"/>
+        <setting id="feature.ratingStyle.dummy"    label="32082" type="enum"   lvalues="32037"  default="0" subsetting="true" visible="!eq(-8,true)" enable="false" />
+        <setting id="feature.volume"               label="32025" type="slider" default="100"  range="1,100"    option="percent" />
+    </category>
+
+    <category label="32083">
+        <setting id="action.onPause"       label="32084" type="bool"   default="false" />
+        <setting id="action.onPause.file"  label="32085" type="file"   sources="auto" value="" subsetting="true" enable="eq(-1,true)" />
+        <setting id="action.test.PAUSE"    label="32089" type="action" action="RunScript(script.cinemavision,test.actions,PAUSE)" enable="eq(-2,true) + !eq(-1,)" subsetting="true" />
+        <setting id="action.onResume"      label="32086" type="enum"   lvalues="32037|32087|32048"  default="0" />
+        <setting id="action.onResume.file" label="32085" type="file"   sources="auto" value="" subsetting="true" enable="eq(-1,2)" />
+        <setting id="action.test.RESUME"   label="32089" type="action" action="RunScript(script.cinemavision,test.actions,RESUME)" enable="eq(-2,2) + !eq(-1,)" subsetting="true" />
+        <setting id="action.onAbort"       label="32088" type="bool"   default="false" />
+        <setting id="action.onAbort.file"  label="32085" type="file"   sources="auto" value="" subsetting="true" enable="eq(-1,true)" />
+        <setting id="action.test.ABORT"    label="32089" type="action" action="RunScript(script.cinemavision,test.actions,ABORT)" enable="eq(-2,true) + !eq(-1,)" subsetting="true" />
+        <setting id="action.test.runAbort" label="32593" type="enum"   lvalues="32594|32595|32596"  default="2" enable="eq(-3,true) + !eq(-2,)" />
+
+    </category>
+
+    <category label="32091">
+        <setting id="scope"               label="32092" type="labelenum" values="16:9|2.35:1|2.40:1"  default="0" />
+        <setting label="32093" type="lsep"/>
+        <setting id="debug.log"           label="32094" type="bool"   default="false" />
+        <setting id="pastebin.paste.log"  label="32095" type="action" action="RunScript(script.cinemavision,pastebin.paste.log)" option="close"/>
+        <setting id="pastebin.user"       label="32096" type="text" default="" />
+        <setting id="pastebin.delete.key" label="32097" type="action" action="RunScript(script.cinemavision,pastebin.delete.key)" />
+        <setting label="32098" type="lsep"/>
+        <setting id="reset.database"      label="32099"  type="action" action="RunScript(script.cinemavision,reset.database)" />
+        <setting id="trailer.CLEARBROKEN" label="32100"  type="action" action="RunScript(script.cinemavision,trailer.clearBroken)" />
+    </category>
+</settings>
