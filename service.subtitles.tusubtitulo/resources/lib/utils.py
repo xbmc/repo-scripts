@@ -8,3 +8,7 @@ languages = {
 	"Italian": ("Italian", "it", "ITA", 5),
 	"Unknown": ("Unknown", "-", "???", 6),
 }
+
+alternatives = {
+  "The Flash": "The Flash 2014"
+}

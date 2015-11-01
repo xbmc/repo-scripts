@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="30001">
+    <setting label="30002" id="PROXY" type="bool" default="false" />
+    <setting label="30003" id="PROXY_PROTOCOL" type="labelenum" enable="eq(-1,true)" values="http|https|socks" />
+    <setting label="30004" id="PROXY_HOST" type="text" enable="eq(-2,true)" default="" />
+    <setting label="30005" id="PROXY_PORT" type="text" enable="eq(-3,true)" default="" />
+  </category>
+</settings>

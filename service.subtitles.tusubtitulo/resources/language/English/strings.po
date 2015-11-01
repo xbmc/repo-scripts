@@ -1,0 +1,50 @@
+# XBMC Media Center language file
+# Addon Name: TuSubtitulo Unofficial
+# Addon id: service.subtitles.tusubtitulo
+# Addon version: 1.0.2
+# Addon Provider: El_Happy
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2015-10-30 20:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "TuSubtitulo Unofficial"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Search and download subtitles from TuSubtitulo (unofficially)"
+msgstr ""
+
+msgctxt "#30000"
+msgid "TuSubtitulo Unofficial"
+msgstr ""
+
+msgctxt "#30001"
+msgid "TuSubtitulo settings"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Use proxy"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Protocol"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Host"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Port"
+msgstr ""

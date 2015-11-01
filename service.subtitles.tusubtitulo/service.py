@@ -19,11 +19,8 @@ import shutil
 import unicodedata
 
 __addon__ = xbmcaddon.Addon()
-__author__     = __addon__.getAddonInfo('author')
 __scriptid__   = __addon__.getAddonInfo('id')
-__scriptname__ = __addon__.getAddonInfo('name')
-__version__    = __addon__.getAddonInfo('version')
-__language__   = __addon__.getLocalizedString
+settings = xbmcaddon.Addon(id=__scriptid__)
 
 __cwd__        = xbmc.translatePath( __addon__.getAddonInfo('path') ).decode("utf-8")
 __profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
@@ -62,9 +59,16 @@ def Download(link, filename):
     log(__name__, "Downloadlink %s" % link)
 
     class MyOpener(urllib.FancyURLopener):
-      version = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729)"
+      version = "User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+      def __init__(self, *args):
+        urllib.FancyURLopener.__init__(self, *args)
 
-    my_urlopener = MyOpener()
+    if settings.getSetting('PROXY'):
+      proxy = {settings.getSetting('PROXY_PROTOCOL') : settings.getSetting('PROXY_PROTOCOL') + '://' + settings.getSetting('PROXY_HOST') + ':' + settings.getSetting('PROXY_PORT')}
+      my_urlopener = MyOpener(proxy)
+    else:
+      my_urlopener = MyOpener()
+
     my_urlopener.addheader('Referer', link)
     log(__name__, "Fetching subtitles using url '%s' with referer header '%s'" % (link, link))
     response = my_urlopener.open(link)

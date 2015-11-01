@@ -1,3 +1,8 @@
+1.0.2
+- Added alternative name list of series
+- Added proxy configuration
+- Added some translates
+- Clean names subtitles
 1.0.1
 - Change images without logo of TuSubtitulo
 - Added unofficial plugin concept

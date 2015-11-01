@@ -4,10 +4,14 @@
 # developed by El_Happy for use TuSubtitulo (unofficially) and XBMC.org
 
 import xbmc
+import xbmcaddon
 import re
 import urllib
 from operator import itemgetter
-from utils import languages
+from utils import languages, alternatives
+
+__scriptid__ = xbmcaddon.Addon().getAddonInfo('id')
+settings = xbmcaddon.Addon(id=__scriptid__)
 
 main_url = "http://www.tusubtitulo.com/"
 subtitle_pattern1 = "<div id=\"version\" class=\"ssdiv\">(.+?)Versi&oacute;n(.+?)<span class=\"right traduccion\">(.+?)</div>(.+?)</div>"
@@ -18,7 +22,7 @@ def log(module, msg):
 
 def search_tvshow(tvshow, season, episode, languages, filename):
 	subs = list()
-	for level in range(4):
+	for level in range(5):
 		searchstring, ttvshow, sseason, eepisode = getsearchstring(tvshow, season, episode, level)
 		url = main_url + searchstring.lower()
 		subs.extend(getallsubsforurl(url, languages, None, ttvshow, sseason, eepisode, level))
@@ -41,6 +45,12 @@ def getsearchstring(tvshow, season, episode, level):
 	if level == 3 and re.search(r'\([^)]*\)', tvshow):
 	    # Series name like "Shameless (*)" -> "Shameless"
 	    tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
+
+	if level == 4:
+			# Clean name like "Serie (*)" -> "Serie"
+			tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
+			# Search alternative name "Serie" -> "Serie 2014"
+			tvshow = alternatives[tvshow] if tvshow in alternatives else tvshow
 
 	# Build search string
 	searchstring = 'serie/' + tvshow + '/' + season + '/' + episode + '/*'
@@ -65,6 +75,8 @@ def getallsubsforurl(url, langs, file_original_path, tvshow, season, episode, le
 		filename = urllib.unquote_plus(matches.group(2))
 		filename = re.sub(r' ', '.', filename)
 		filename = re.sub(r'\s', '.', tvshow) + "." + season + "x" + episode + filename
+		filename = re.sub(r'..0.00.megabytes', '', filename)
+		filename = re.sub(r'.0.00.megabytes', '', filename)
 
 		server = filename
 		backup = filename
@@ -116,14 +128,18 @@ def getallsubsforurl(url, langs, file_original_path, tvshow, season, episode, le
 
 def geturl(url):
 	class AppURLopener(urllib.FancyURLopener):
-		version = "App/1.7"
+		version = "User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
 		def __init__(self, *args):
 			urllib.FancyURLopener.__init__(self, *args)
 		def add_referrer(self, url=None):
 			if url:
 				urllib._urlopener.addheader('Referer', url)
 
-	urllib._urlopener = AppURLopener()
+	if settings.getSetting('PROXY'):
+		proxy = {settings.getSetting('PROXY_PROTOCOL') : settings.getSetting('PROXY_PROTOCOL') + '://' + settings.getSetting('PROXY_HOST') + ':' + settings.getSetting('PROXY_PORT')}
+		urllib._urlopener = AppURLopener(proxy)
+	else:
+		urllib._urlopener = AppURLopener()
 	urllib._urlopener.add_referrer("http://www.tusubtitulo.com/")
 	try:
 		response = urllib._urlopener.open(url)
