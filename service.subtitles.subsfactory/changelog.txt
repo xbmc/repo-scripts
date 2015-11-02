@@ -1,3 +1,5 @@
+0.0.5
+- fixed for some TV show
 0.0.4
 - added manual search (example: tvshowname 1x5)
 0.0.3

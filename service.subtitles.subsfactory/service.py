@@ -60,7 +60,7 @@ def Search(item):
         log('Subsfactory only works with italian subs. Skipped')
 
 def checkexp(tvshow):
-    exp=[["Marvel's Agents of S.H.I.E.L.D.","Agents of Shield"],["Marvel's Daredevil","Daredevil"],["Marvel's Agent Carter","Agent Carter"]]
+    exp=[["Marvel's Agents of S.H.I.E.L.D.","Agents of Shield"],["Marvel's Daredevil","Daredevil"],["Marvel's Agent Carter","Agent Carter"],["Doctor Who (2005)","Doctor Who"]]
     for expl in exp:
         if tvshow == expl[0]:
             return expl[1]
