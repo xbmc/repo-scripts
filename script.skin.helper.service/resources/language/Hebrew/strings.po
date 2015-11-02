@@ -1,0 +1,365 @@
+﻿# Kodi language file
+# Addon Name: Skin Helper Service
+# Addon id: script.skin.helper.service
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: tomer953 <tomer953@gmail.com>\n"
+"Language-Team: LANGUAGE\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Favourites"
+msgstr "מועדפים"
+
+msgctxt "#32001"
+msgid "Favourite Media"
+msgstr "מדיה מהמועדפים"
+
+msgctxt "#32002"
+msgid "Next Episodes"
+msgstr "פרקים הבאים"
+
+msgctxt "#32003"
+msgid "Recommended Movies"
+msgstr "סרטים מומלצים"
+
+msgctxt "#32004"
+msgid "Recommended Media"
+msgstr "פריטים מומלצים"
+
+msgctxt "#32005"
+msgid "Recent Media"
+msgstr "פריטים חדשים"
+
+msgctxt "#32006"
+msgid "Similar Movies"
+msgstr "סרטים דומים"
+
+msgctxt "#32007"
+msgid "In progress and Recommended Media"
+msgstr "מדיה בתהליך ומדיה מומלצת"
+
+msgctxt "#32008"
+msgid "Next Episodes"
+msgstr "פרקים הבאים"
+
+msgctxt "#32009"
+msgid "Next Episodes"
+msgstr "פרקים הבאים"
+
+msgctxt "#32010"
+msgid "Next Episodes"
+msgstr "פרקים הבאים"
+
+msgctxt "#32011"
+msgid "Pick a color..."
+msgstr "בחר צבע"
+
+msgctxt "#32012"
+msgid "Color value:"
+msgstr "ערך הצבע:"
+
+msgctxt "#32013"
+msgid "None"
+msgstr "ללא"
+
+msgctxt "#32014"
+msgid "Select a color theme"
+msgstr "בחר ערכת נושא"
+
+msgctxt "#32015"
+msgid "Background overlay texture"
+msgstr "שכבת ציפוי לרקע"
+
+msgctxt "#32016"
+msgid "Browse custom image for background overlay"
+msgstr "בחר תמונה מותאמת אישית לציפוי הרקע"
+
+msgctxt "#32017"
+msgid "Enable/disable views"
+msgstr "אפשר/בטל תצוגות"
+
+msgctxt "#32018"
+msgid "Select a folder to create the backupfile"
+msgstr "בחר תיקיה ליצירת קובץ הגיבוי"
+
+msgctxt "#32019"
+msgid "Export this theme to file"
+msgstr "ייצא ערכת נושא זו לקובץ"
+
+msgctxt "#32020"
+msgid "Select skin backup file"
+msgstr "בחר קובץ גיבוי לסקין"
+
+msgctxt "#32021"
+msgid "Your colortheme is now available in the list of available themes"
+msgstr "ערכת הנושא שלך נשמרה וזמינה כעת ברשימת הערכות נושא"
+
+msgctxt "#32022"
+msgid "Color theme imported succesfully"
+msgstr "ערכת נושא הובאה בהצלחה"
+
+msgctxt "#32023"
+msgid "Enter a name for your color theme"
+msgstr "בחר שם לערכת הנושא שלך"
+
+msgctxt "#32024"
+msgid "Screenshot of color theme (optional)"
+msgstr "תמונת מסך של ערכת הנושא (לא חובה)"
+
+msgctxt "#32025"
+msgid "User defined color theme"
+msgstr "ערכת נושא מותאמת אישית"
+
+msgctxt "#32026"
+msgid "Color theme created succesfully"
+msgstr "ערכת הנושא נוצרה בהצלחה"
+
+msgctxt "#32027"
+msgid "Your colortheme is now available in the list of available themes"
+msgstr "ערכת הנושא שלך נשמרה וזמינה כעת ברשימת הערכות נושא"
+
+msgctxt "#32028"
+msgid "Backup the skin settings"
+msgstr "גבה את הגדרות הסקין"
+
+msgctxt "#32029"
+msgid "Backupfile was succesfully created!"
+msgstr "הגיבוי נוצר בהצלחה!"
+
+msgctxt "#32030"
+msgid "An error has occured creating the backup!"
+msgstr "שגיאה התרחשה במהלך הגיבוי!"
+
+msgctxt "#32031"
+msgid "Select skin backup file"
+msgstr "בחר קובץ גיבוי לסקין"
+
+msgctxt "#32032"
+msgid "Restore the skin settings"
+msgstr "שחזר את הגדרות הסקין"
+
+msgctxt "#32033"
+msgid "Restoring..."
+msgstr "משחזר..."
+
+msgctxt "#32034"
+msgid "Your backup is succesfully restored!"
+msgstr "הגיבוי שלך שוחזר בהצלחה!"
+
+msgctxt "#32035"
+msgid "An error has occured while restoring the backup"
+msgstr "שגיאה התרחשה במהלך ניסיון השחזור"
+
+msgctxt "#32036"
+msgid "Reset the skin to default settings"
+msgstr "שחזר את הסקין להגדרות ברירת מחדל"
+
+msgctxt "#32037"
+msgid "Are you sure you want to reset the skin to default settings ?"
+msgstr "האם אתה בטוח שברצונך לשחזר את הסקין להגדרות ברירת המחדל?"
+
+msgctxt "#32038"
+msgid "Global random fanart background"
+msgstr "תמונת רקע מתחלפת גלובאלית"
+
+msgctxt "#32039"
+msgid "Random movies background"
+msgstr "תמונת רקע מתחלפת מסרטים"
+
+msgctxt "#32040"
+msgid "Recent movies background"
+msgstr "תמונת רקע מתחלפת מסרטים חדשים"
+
+msgctxt "#32041"
+msgid "In progress movies background"
+msgstr "תמונת רקע מתחלפת מסרטים בתהליך"
+
+msgctxt "#32042"
+msgid "Unwatched movies background"
+msgstr "תמונת רקע מתחלפת מסרטים שלא נצפו"
+
+msgctxt "#32043"
+msgid "Random Tv Shows background"
+msgstr "תמונת רקע מתחלפת מסדרות אקראיות"
+
+msgctxt "#32044"
+msgid "Recent episodes background"
+msgstr "תמונת רקע מתחלפת מסדרות חדשות"
+
+msgctxt "#32045"
+msgid "In progress Tv Shows background"
+msgstr "תמונת רקע מתחלפת מסדרות בתהליך"
+
+msgctxt "#32046"
+msgid "Random pictures background"
+msgstr "תמונת רקע מתחלפת מתמונות"
+
+msgctxt "#32047"
+msgid "Random music videos background"
+msgstr "תמונת רקע מתחלפת מהופעות"
+
+msgctxt "#32048"
+msgid "Random music artists background"
+msgstr "תמונת רקע מתחלפת מאמני מוסיקה"
+
+msgctxt "#32049"
+msgid "Opacity"
+msgstr "שקיפות"
+
+msgctxt "#32050"
+msgid "Custom color"
+msgstr "צבע מותאם אישית"
+
+msgctxt "#32051"
+msgid "Select busy spinner"
+msgstr "בחר אנימצית טעינה"
+
+msgctxt "#32052"
+msgid "Custom single image (gif)"
+msgstr "(gif) בחר תמונה בודדת"
+
+msgctxt "#32053"
+msgid "Custom multi image (path)"
+msgstr "(path) בחר תיקיה מרובת תמונות"
+
+msgctxt "#32054"
+msgid "Select view"
+msgstr "בחר תצוגה"
+
+msgctxt "#32055"
+msgid "My TV Shows Airing today"
+msgstr "סדרות הטלויזיה שלי המשודרות היום"
+
+msgctxt "#32056"
+msgid "Configure conditional backgrounds"
+msgstr "הגדר רקעים מותנים"
+
+msgctxt "#32057"
+msgid "Setup backgrounds that will be activated on specified dates"
+msgstr "הגדר רקעים שיופעלו בתאריכים ספציפיים"
+
+msgctxt "#32058"
+msgid "Please enter a name for your conditional background"
+msgstr "בחר שם עבור הרקע המותנה שלך"
+
+msgctxt "#32059"
+msgid "Conditional background override"
+msgstr "דרוס רקע מותנה"
+
+msgctxt "#32060"
+msgid "Error while writing changes. Make sure you have filled in all fields correctly."
+msgstr "שגיאה התרחשה בשמירת השינויים. בדוק שמילאת את כל השדות כנדרש."
+
+msgctxt "#32061"
+msgid "Please select a background image"
+msgstr "אנא בחר תמונת רקע"
+
+msgctxt "#32062"
+msgid "Smart Shortcuts"
+msgstr "קיצורים חכמים"
+
+msgctxt "#32063"
+msgid "Default Widgets"
+msgstr "יישומוני ברירת מחדל"
+
+msgctxt "#32064"
+msgid "Do you want to setup a single background or a folder with multiple backgrounds ?"
+msgstr "האם ברצונך להגדיר רקע בודד או תיקיה עם מספר תמונות ?"
+
+msgctxt "#32065"
+msgid "Single"
+msgstr "בודד"
+
+msgctxt "#32066"
+msgid "Multiple"
+msgstr "מספר תמונות"
+
+msgctxt "#32067"
+msgid "Select image folder path"
+msgstr "בחר נתיב לתיקית התמונות"
+
+msgctxt "#32068"
+msgid "Please enter a filename for your backup"
+msgstr "בחר שם עבור קובץ הגיבוי"
+
+msgctxt "#32069"
+msgid "Please enter the time that this theme should be activated (hh:mm in 24-hours format)"
+msgstr "(hh:mm בתבנית של 24 שעות) אנא בחר את השעה שבה ערכת הנושא תופעל"
+
+msgctxt "#32070"
+msgid "Did you enter the time in the correct format ?"
+msgstr "האם הכנסת את השעה בתבנית הנכונה?"
+
+msgctxt "#32071"
+msgid "Activates every day at "
+msgstr "הפעל בכל יום ב-"
+
+msgctxt "#32072"
+msgid "Go to Series level"
+msgstr "עבור לרמת התוכנית"
+
+msgctxt "#32073"
+msgid "Add new condition..."
+msgstr "הוסף תנאי חדש..."
+
+msgctxt "#32074"
+msgid "Add a new condition to activate a custom background on a selected timespan"
+msgstr "הוסף תנאי חדש על-מנת להפעיל רקע מותאם אישית בזמן מוגדר"
+
+msgctxt "#32075"
+msgid "Delete or change ?"
+msgstr "למחוק או לשנות ?"
+
+msgctxt "#32076"
+msgid "Do you want to delete or change the existing entry ?"
+msgstr "האם ברצונך למחוק או לשנות את הערך הקיים ?"
+
+msgctxt "#32077"
+msgid "Change"
+msgstr "שנה"
+
+msgctxt "#32078"
+msgid "Delete"
+msgstr "מחק"
+
+msgctxt "#32079"
+msgid "Create Color Theme..."
+msgstr "צור ערכת נושא..."
+
+msgctxt "#32080"
+msgid "Create new custom color theme based on your current skin color settings."
+msgstr "צור ערכת נושא חדשה המבוססת על ההגדרות הנוכחיות שלך"
+
+msgctxt "#32081"
+msgid "Import Color Theme from file..."
+msgstr "ייבוא ערכת נושא מקובץ..."
+
+msgctxt "#32082"
+msgid "Import a colortheme from file."
+msgstr "ייבוא ערכת נושא מקובץ..."
+
+msgctxt "#32083"
+msgid "Apply this Color Theme"
+msgstr "החל ערכת נושא זו"
+
+msgctxt "#32084"
+msgid "Export this Color Theme to file"
+msgstr "ייצוא ערכת נושא זו לקובץ"
+
+msgctxt "#32085"
+msgid "Manage Color Themes"
+msgstr "ניהול ערכות נושא"
+
+msgctxt "#32086"
+msgid "In progress Media"
+msgstr "פריטים בתהליך"

@@ -1,0 +1,569 @@
+# Kodi language file
+# Addon Name: Skin Helper Service
+# Addon id: script.skin.helper.service
+# Addon Provider: marcelveldt
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#32000"
+msgid "Favourites"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Favourite Media"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Next Episodes"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Recommended Movies"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Recommended Media"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Recent Media"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Similar Movies"
+msgstr ""
+
+msgctxt "#32007"
+msgid "In progress and Recommended Media"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Next Episodes"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Next Episodes"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Next Episodes"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Pick a color..."
+msgstr ""
+
+msgctxt "#32012"
+msgid "Color value:"
+msgstr ""
+
+msgctxt "#32013"
+msgid "None"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Select a color theme"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Background overlay texture"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Browse custom image for background overlay"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Enable/disable views"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Select a folder to create the backupfile"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Export this theme to file"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Select skin backup file"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Your colortheme is now available in the list of available themes"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Color theme imported succesfully"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Enter a name for your color theme"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Screenshot of color theme (optional)"
+msgstr ""
+
+msgctxt "#32025"
+msgid "User defined color theme"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Color theme created succesfully"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Your colortheme is now available in the list of available themes"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Backup the skin settings"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Backupfile was succesfully created!"
+msgstr ""
+
+msgctxt "#32030"
+msgid "An error has occured creating the backup!"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Select skin backup file"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Restore the skin settings"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Restoring..."
+msgstr ""
+
+msgctxt "#32034"
+msgid "Your backup is succesfully restored!"
+msgstr ""
+
+msgctxt "#32035"
+msgid "An error has occured while restoring the backup"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Reset the skin to default settings"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Are you sure you want to reset the skin to default settings ?"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Global media fanart background"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Random movies background"
+msgstr ""
+
+msgctxt "#32040"
+msgid "Recent movies background"
+msgstr ""
+
+msgctxt "#32041"
+msgid "In progress movies background"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Unwatched movies background"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Random Tv Shows background"
+msgstr ""
+
+msgctxt "#32044"
+msgid "Recent episodes background"
+msgstr ""
+
+msgctxt "#32045"
+msgid "In progress Tv Shows background"
+msgstr ""
+
+msgctxt "#32046"
+msgid "Random pictures background"
+msgstr ""
+
+msgctxt "#32047"
+msgid "Random music videos background"
+msgstr ""
+
+msgctxt "#32048"
+msgid "Random music artists background"
+msgstr ""
+
+msgctxt "#32049"
+msgid "Opacity"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Custom color"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Select busy spinner"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Custom single image (gif)"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Custom multi image (path)"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Select view"
+msgstr ""
+
+msgctxt "#32055"
+msgid "My TV Shows Airing today"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Configure conditional backgrounds"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Setup backgrounds that will be activated on specified dates"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Please enter a name for your conditional background"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Conditional background override"
+msgstr ""
+
+msgctxt "#32060"
+msgid "Error while writing changes. Make sure you have filled in all fields correctly."
+msgstr ""
+
+msgctxt "#32061"
+msgid "Please select a background image"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Smart Shortcuts"
+msgstr ""
+
+msgctxt "#32063"
+msgid "Default Widgets"
+msgstr ""
+
+msgctxt "#32064"
+msgid "Do you want to setup a single background or a folder with multiple backgrounds ?"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Single"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Multiple"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Select image folder path"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Please enter a filename for your backup"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Please enter the time that this theme should be activated (hh:mm in 24-hours format)"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Did you enter the time in the correct format ?"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Activates every day at "
+msgstr ""
+
+msgctxt "#32072"
+msgid "Go to Series level"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Add new condition..."
+msgstr ""
+
+msgctxt "#32074"
+msgid "Add a new condition to activate a custom background on a selected timespan"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Delete or change ?"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Do you want to delete or change the existing entry ?"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Change"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Delete"
+msgstr ""
+
+msgctxt "#32079"
+msgid "Create Color Theme..."
+msgstr ""
+
+msgctxt "#32080"
+msgid "Create new custom color theme based on your current skin color settings."
+msgstr ""
+
+msgctxt "#32081"
+msgid "Import Color Theme from file..."
+msgstr ""
+
+msgctxt "#32082"
+msgid "Import a colortheme from file."
+msgstr ""
+
+msgctxt "#32083"
+msgid "Apply this Color Theme"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Export this Color Theme to file"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Manage Color Themes"
+msgstr ""
+
+msgctxt "#32086"
+msgid "In progress Media"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Recently added songs"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Recently played songs"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Reset persistant cache"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Are you sure you want to reset the permanent cache ? \nWarning: This will delete all contents of the folder "
+msgstr ""
+
+msgctxt "#32091"
+msgid "The action completed sucesfully"
+msgstr ""
+
+msgctxt "#32092"
+msgid "The action completed with errors"
+msgstr ""
+
+msgctxt "#32093"
+msgid "PVR Thumbs are disabled or not supported in this skin"
+msgstr ""
+
+msgctxt "#32094"
+msgid "Use TMDB for lookups"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Use extended images from Fanart.tv"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Use Google images for lookups"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Use Youtube for lookups"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Use local video Library for lookups"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Custom (recordings) folder for lookups"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Use thumb provided by PVR addon"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Download artwork for PVR Recordings"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Download artwork for PVR Guide entries"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Location of the persistant cache"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Live TV channels (with artwork)"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Live TV Recordings (with artwork)"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Channels to ignore with lookups, seperate with ;"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Ignore titles with these words, seperate with ;"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Directory structure for cache folder"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Programtitle (default)"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Channelname\\Programtitle"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Channelname - Programtitle"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Words to ignore (strip) in titles, seperate with ;"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Random PVR fanart background"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Preferred language for TMDB metadata"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Enable creation of wall/grid backgrounds"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Prefer black & white for wall backgrounds"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Random Movies Wall/Grid"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Random Artists Wall/Grid"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Random Albums Wall/Grid"
+msgstr ""
+
+msgctxt "#32120"
+msgid "PVR Artwork"
+msgstr ""
+
+msgctxt "#32121"
+msgid "Backgrounds"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Music Artwork"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Enable online lookups for music artwork"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Lookup artwork in local music folders"
+msgstr ""
+
+msgctxt "#32125"
+msgid "Download artwork to local music folders"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Reset persistant cache"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Random Tv Shows Wall/Grid"
+msgstr ""
+
+msgctxt "#32128"
+msgid "Only build the wall images once (reuse images)"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Clear cache (rebuild all wall images)"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Similar TV Shows"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Recommended albums"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Recommended songs"
+msgstr ""
+
+msgctxt "#32133"
+msgid "PVR Channel groups"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Other"
+msgstr ""
+
+msgctxt "#32135"
+msgid "Enable verbose debug logging"
+msgstr ""
+
+msgctxt "#32136"
+msgid "Max number of extrafanarts to grab for music/pvr fanart"
+msgstr ""
+
+msgctxt "#32137"
+msgid "Title's character splitter"
+msgstr ""
