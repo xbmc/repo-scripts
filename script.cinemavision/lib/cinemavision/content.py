@@ -148,11 +148,25 @@ class UserContent:
 
     # TODO: Remove
     def _fixTriviaSlidesDir(self):
-        ts = util.pathJoin(self._contentDirectory, 'Trivia Slides')
+        ts = util.pathJoin(self._contentDirectory, 'Trivia Slides' + util.getSep(self._contentDirectory))
+        util.DEBUG_LOG('Checking for the existence of {0}'.format(repr(ts)))
         if not util.vfs.exists(ts):
+            util.DEBUG_LOG("No 'Trivia Slides' directory exists")
             return
         t = util.pathJoin(self._contentDirectory, 'Trivia')
-        util.vfs.rename(ts, t)
+        success = True
+        if util.vfs.exists(t):
+            success = util.vfs.rmdir(t)
+
+        if success:
+            success = util.vfs.rename(ts, t)
+        else:
+            util.DEBUG_LOG("Failed to remove existing 'Trivia' directory")
+
+        if success:
+            util.DEBUG_LOG("Renamed 'Trivia Slides' to 'Trivia'")
+        else:
+            util.DEBUG_LOG('Failed to rename {0} to {1}'.format(repr(ts), repr(t)))
 
     def setupContentDirectory(self):
         if not self._contentDirectory:  # or util.vfs.exists(self._contentDirectory):

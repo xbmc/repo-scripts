@@ -84,7 +84,7 @@ def selectSequence():
     elif result == 'default3D':
         path = defaultSavePath(for_3D=True)
     else:
-        path = cinemavision.util.pathJoin(sequencesPath, options[idx])
+        path = cinemavision.util.pathJoin(sequencesPath, options[idx][0])
 
     return {'path': path, 'name': options[idx][1]}
 

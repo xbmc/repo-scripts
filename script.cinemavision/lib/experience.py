@@ -173,14 +173,15 @@ class KodiVolumeControl:
 
 
 class SettingControl:
-    def __init__(self, setting, log_display):
+    def __init__(self, setting, log_display, disable_value=''):
         self.setting = setting
         self.logDisplay = log_display
+        self.disableValue = disable_value
         self._originalMode = None
         self.store()
 
     def disable(self):
-        rpc.Settings.SetSettingValue(setting=self.setting, value='')
+        rpc.Settings.SetSettingValue(setting=self.setting, value=self.disableValue)
         DEBUG_LOG('{0}: DISABLED'.format(self.logDisplay))
 
     def store(self):
@@ -579,6 +580,7 @@ class ExperiencePlayer(xbmc.Player):
         self.volume = KodiVolumeControl(self.abortFlag)
         self.screensaver = SettingControl('screensaver.mode', 'Screensaver')
         self.visualization = SettingControl('musicplayer.visualisation', 'Visualization')
+        self.playGUISounds = SettingControl('audiooutput.guisoundmode', 'Play GUI sounds', disable_value=0)
         self.features = []
 
         result = rpc.Playlist.GetItems(
@@ -879,9 +881,11 @@ class ExperiencePlayer(xbmc.Player):
         kodiutil.setGlobalProperty('running', '1')
         xbmcgui.Window(10025).setProperty('CinemaExperienceRunning', 'True')
         self.initSkinVars()
+        self.playGUISounds.disable()
         try:
             return self._start(sequence_path)
         finally:
+            self.playGUISounds.restore()
             kodiutil.setGlobalProperty('running', '')
             xbmcgui.Window(10025).setProperty('CinemaExperienceRunning', '')
             self.initSkinVars()

@@ -161,8 +161,10 @@ try:
         args = list(args)
         sep = getSep(args[0])
         ret = [args.pop(0).rstrip('/\\')]
+        tail = args.pop(-1).lstrip('/\\')
         for a in args:
             ret.append(a.strip('/\\'))
+        ret.append(re.sub(r'[/\\]+', re.escape(sep), tail))
         return sep.join(ret)
 
     def isDir(path):

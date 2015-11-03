@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.cinemavision" name="CinemaVision" version="1.0.0" provider-name="CinemaVision">
+<addon id="script.cinemavision" name="CinemaVision" version="1.0.1" provider-name="CinemaVision">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.youtube.dl" version="15.318.0"/>
