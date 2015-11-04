@@ -185,25 +185,14 @@ class LastFM:
             req = urllib2.urlopen(url)
             result = req.read()
             req.close()
+        except urllib2.HTTPError, err:
+            if err.code == 403:
+                result = '{"error":9, "message":"updating session key"}'
         except:
             xbmc.executebuiltin('Notification(%s,%s,%i)' % (LANGUAGE(32011), LANGUAGE(32026), 7000))
             log('Failed to connect to Last.fm', session)
             return
         log('response %s' % result, session)
         return jsonparse(result)
-
-    def redirect( self, url ):
-        # get the redirected url
-        try:
-            spliturl = urlparse.urlparse(url,allow_fragments=True)
-            conn = httplib.HTTPConnection(spliturl.netloc)
-            path = spliturl.path
-            conn.request("GET", path)
-            res = conn.getresponse()
-            headers = dict(res.getheaders())
-            realurl = headers['location']
-            return realurl
-        except:
-            return ''
 
 lastfm = LastFM()
