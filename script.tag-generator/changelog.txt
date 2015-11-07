@@ -1,0 +1,22 @@
+v0.4
+- Kodi support (14 and 15)
+- IMDB lists now in RSS format. 
+- error handling for network problems
+- removed trakt (other addons do this now)
+- removed music
+v0.3
+- Added Trakt support for movie watchlist and custom watchlists
+- Custom Trakt lists are tagged by their name
+- Added debug mode
+- Made a pretty icon
+- code cleanup and speed tweaks
+v0.2
+- Uses JSON to write the tags so now it's much more portable. 
+- Should work for people using MySQL just fine. 
+- MUCH better progress updates, logging and error checking. 
+- Writes tags instead of playlists - much more flexible
+- Preserves existing tags and only writes as needed
+- New feature - much slower! That's just how JSON rolls I'm afraid. 
+- Background music (to comfort you while you wait)
+- Uses the xbmc "label" to make a match (no more folder name dependence)
+- Option to wipe all your tags if you want to start from scratch

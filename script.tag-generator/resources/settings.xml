@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30900">
+        <setting label="30901" type="bool" id="32011" default="true"/>
+        <setting label="30902" type="number" visible="eq(-1,true)" id="32012" default="4"/>
+              <setting type="sep"/>
+        <setting id="32030" type="bool" label="Debug" default="false"/>
+        <setting id="32015" type="bool" label="Write Stand-Up Tags" default="true"/>
+        <setting label="30903" type="text" visible="eq(-1,true)" id="32016" default="30904"/>
+    </category>
+    <category label="IMDB">
+        <setting id="32020" type="bool" label="Use IMDB" default="true"/>
+        <setting label="30905" visible="eq(-1,true)" default="1" type="enum"  id="32099" values="1|2|3|4|5"/>
+        <setting label="30906" type="text" visible="eq(-2,true)" id="32050" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="eq(-3,true)" id="32080" default="30908"/>
+        <setting label="30906" type="text" visible="gt(-3,0) + eq(-4,true)" id="32051" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="gt(-4,0) + eq(-5,true)" id="32081" default="30909"/>
+        <setting label="30906" type="text" visible="gt(-5,1) + eq(-6,true)" id="32052" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="gt(-6,1) + eq(-7,true)" id="32082" default="30910"/>
+        <setting label="30906" type="text" visible="gt(-7,2) + eq(-8,true)" id="32053" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="gt(-8,2) + eq(-9,true)" id="32083" default="30911"/>
+        <setting label="30906" type="text" visible="gt(-9,3) + eq(-10,true)" id="32054" default="http://rss.imdb.com/user/ur12345678/watchlist"/>
+        <setting label="30903" type="text" visible="gt(-10,3) + eq(-11,true)" id="32084" default="30912"/>
+    </category>
+   <!-- <category label="Trakt">
+        <setting id="32023" type="bool" label="Use Trakt Movie Watchlist" default="true"/>
+        <setting label="30903" type="text" visible="eq(-1,true)" id="32024" default="Trakt Movies"/>
+        <setting id="32029" type="bool" label="Use Custom Movie Lists" default="true"/>
+        <setting label="username" type="text" id="32025" default="" />
+        <setting label="password" type="text" option="hidden" id="32026" default="" />
+    </category>-->
+    <category label="Extras">
+        <!--<setting id="32022" type="action" label="Write Trakt Tags" action="RunScript(script.tag-generator, trakt)"/>-->
+        <setting id="32027" type="action" label="30913" action="RunScript(script.tag-generator, imdb)"/>
+        <setting id="32028" type="action" label="30914" action="RunScript(script.tag-generator, standup)"/>
+        <setting id="32017" type="action" label="30915" action="RunScript(script.tag-generator, manual)"/>
+        <setting id="32018" type="action" label="30916" action="RunScript(script.tag-generator, wipeout)"/>
+        <!--<setting id="32021" type="bool" label="Background Music" default="true"/>-->
+    </category>
+</settings>
+

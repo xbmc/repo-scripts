@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.tag-generator"
+       name="Tag Generator"
+       version="0.0.4"
+       provider-name="wellspokenman">
+  <requires>
+    <import addon="xbmc.python" version="2.19.0"/>
+    <import addon="script.module.simplejson" version="3.3.0"/>      
+  </requires>
+  <extension point="xbmc.service" library="main.py" start="login">  
+  </extension>
+  <extension point="xbmc.addon.metadata"> 
+    <platform>all</platform>
+    <summary lang="en">IMDB and Stand-up Tag Generator</summary>
+    <description lang="en">A simple script to help you create Smart Playlists from IMDB Watchlists by tagging local movies found in specified watchlists. Also creates a stand-up comedy tag based on Wikipedia comedians, as there is no genre for stand-up. Specify your IMDB watchlists then choose your desired XBMC tag for each list. Runs as a service in the background at the specified interval, and also allows for manual creation.</description>
+	<language></language>
+	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+	<forum>http://forum.kodi.tv/showthread.php?tid=140494</forum>
+	<website></website>
+	<source></source>
+	<email></email>
+  </extension>
+</addon>
