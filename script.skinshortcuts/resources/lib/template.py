@@ -376,6 +376,11 @@ class Template():
                     properties[ name ] = ""
                 continue
 
+            if tag.lower() == "mainmenuid":
+                # Special case for the ID of the main menu item
+                properties[ name ] = items.attrib.get( "id" )
+                continue
+
             if "attribute" in property.attrib and "value" not in property.attrib:
                 attrib = property.attrib.get( "attribute" ).split( "|" )
             else:
@@ -449,23 +454,40 @@ class Template():
             
             # <tag>$skinshortcuts[var]</tag> -> <tag>[value]</tag>
             # <tag>$skinshortcuts[var]</tag> -> <tag><include>[includeName]</include></tag> (property = $INCLUDE[includeName])
-            if elem.text is not None and elem.text.startswith( "$SKINSHORTCUTS[" ):
-                newValue = ""
-                if elem.text[ 15:-1 ] in properties:
-                    newValue = properties[ elem.text[ 15:-1 ] ]
-                if newValue.startswith( "$INCLUDE[" ):
-                    # Remove text property
-                    elem.text = ""
-                    # Add include element
-                    includeElement = xmltree.SubElement( elem, "include" )
-                    includeElement.text = newValue[ 9:-1 ]
-                else:
-                    # Replace the text with the property value
-                    elem.text = newValue
+            if elem.text is not None:
+                while "$SKINSHORTCUTS[" in elem.text:
+                    # Split the string into its composite parts
+                    stringStart = elem.text.split( "$SKINSHORTCUTS[", 1 )
+                    stringEnd = stringStart[ 1 ].split( "]", 1 )
+                    # stringStart[ 0 ] = Any code before the $SKINSHORTCUTS property
+                    # StringEnd[ 0 ] = The name of the $SKINSHORTCUTS property
+                    # stringEnd[ 1 ] = Any code after the $SKINSHORTCUTS property
+
+                    if stringEnd[ 0 ] in properties:
+                        if properties[ stringEnd[ 0 ] ].startswith( "$INCLUDE[" ):
+                            # Remove text property
+                            elem.text = ""
+                            # Add include element
+                            includeElement = xmltree.SubElement( elem, "include" )
+                            includeElement.text = properties[ stringEnd [ 0 ] ][ 9:-1 ]
+                        else:
+                            elem.text = stringStart[ 0 ] + properties[ stringEnd[ 0 ] ] + stringEnd[ 1 ]
+                    else:
+                        elem.text = stringStart[ 0 ] + stringEnd[ 1 ]
             
             # <tag attrib="$skinshortcuts[var]" /> -> <tag attrib="[value]" />
             for attrib in elem.attrib:
                 value = elem.attrib.get( attrib )
+                while "$SKINSHORTCUTS[" in elem.attrib.get( attrib ):
+                    # Split the string into its composite parts
+                    stringStart = elem.attrib.get( attrib ).split( "$SKINSHORTCUTS[", 1 )
+                    stringEnd = stringStart[ 1 ].split( "]", 1 )
+
+                    if stringEnd[ 0 ] in properties:
+                        elem.set( attrib, stringStart[ 0 ] + properties[ stringEnd[ 0 ] ] + stringEnd[ 1 ] )
+                    else:
+                        elem.set( attrib, stringStart[ 0 ] + stringEnd[ 1 ] )
+
                 if value.startswith( "$SKINSHORTCUTS[" ) and value[ 15:-1 ] in properties:
                     newValue = ""
                     if value[ 15:-1 ] in properties:

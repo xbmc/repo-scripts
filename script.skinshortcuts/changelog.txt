@@ -1,3 +1,24 @@
+v0.6.6
+- Template improvements
+- Widget selection improvements
+- Custom property selection improvements
+- Fix properties being applied to wrong profile
+- Just Select Widget method
+- [aqab0N] Unicode fix
+- Ability to restore deleted shortcut via 308
+- Global override adjustments
+- Fix clonebackground/clonewidgets; add cloneproperties
+- [tomer953] Remove requirement for ::ACTION:: in action override to be the only text in element
+- [tomer953] Management dialog - Insert new menu in the current location instead of add them at the end
+- [tomer953] RTL Support - reverse string before inserting them to the keyboard dialog as a workaround to a kodi bug.
+- Minor bug fixes
+
+v0.6.0
+- Version bump for Isengard repo.
+
+v0.5.4
+- Rollback for Helix repo - fixes incompatiblitly with some Helix skins.
+
 v0.5.3
 - [HitcherUK] Add shutdown timer functions
 - Support for conditional group overrides

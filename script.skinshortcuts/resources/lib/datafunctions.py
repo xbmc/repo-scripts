@@ -197,6 +197,8 @@ class DataFunctions():
                     
             # Get the action
             action = node.find( "action" )
+            if not action.text:
+                action.text = "noop"
             
             # group overrides: add an additional onclick action for a particular menu
             # this will allow you to close a modal dialog before calling any other window
@@ -263,7 +265,7 @@ class DataFunctions():
 
                             # If the action and (if provided) the group match...
                             # OR if we have a global override specified
-                            if (elem.attrib.get( "action" ) == action.text and (checkGroup == None or checkGroup == group)) or (elem.attrib.get( "action" ) == "globaloverride" and checkGroup == group):
+                            if ( elem.attrib.get( "action" ) == action.text and ( checkGroup is None or checkGroup == group ) ) or ( elem.attrib.get( "action" ) == "globaloverride" and ( checkGroup is None or checkGroup == group ) ):
                                 # Check the XBMC version matches
                                 if "version" in elem.attrib:
                                     if elem.attrib.get( "version" ) != __xbmcversion__:
@@ -279,40 +281,36 @@ class DataFunctions():
                                 # Get the new action
                                 for actions in elem.findall( "action" ):
                                     newaction = xmltree.SubElement( node, "override-action" )
-                                    if actions.text == "::ACTION::":
-                                        newaction.text = action.text
+                                    if "::ACTION::" in actions.text:
+                                        newaction.text = actions.text.replace("::ACTION::",action.text)
                                     else:
                                         newaction.text = actions.text
                                     if overrideVisibility is not None:
                                         newaction.set( "condition", overrideVisibility )
-                                        
-                                # If there's no action, and there is a visibility condition
+
+                                # Add visibility if no action specified
                                 if len( elem.findall( "action" ) ) == 0:
                                     newaction = xmltree.SubElement( node, "override-action" )
-                                    if actions.text == "::ACTION::":
-                                        newaction.text = action.text
-                                    else:
-                                        newaction.text = actions.text
+                                    newaction.text = action.text
                                     if overrideVisibility is not None:
                                         newaction.set( "condition", overrideVisibility )
                        
             # Get visibility condition of any skin-provided shortcuts
-            if hasOverriden == False and skinoverrides is not None:
+            if skinoverrides:
                 for elem in skinoverrides.findall( "shortcut" ):
                     if elem.text == action.text and "condition" in elem.attrib:
-                        if visibilityNode == None:
+                        if not visibilityNode:
                             xmltree.SubElement( node, "visibility" ).text = elem.attrib.get( "condition" )
                         else:
                             visibilityNode.text = "[" + visibilityNode.text + "] + [" + elem.attrib.get( "condition" ) + "]"
                             
             # Get any visibility conditions in the .DATA.xml file
-            if hasOverriden == False:
-                additionalVisibility = node.find( "visible" )
-                if additionalVisibility is not None:
-                    if visibilityNode == None:
-                        xmltree.SubElement( node, "visibility" ).text = additionalVisibility.text
-                    else:
-                        visibilityNode.text = "[" + visibilityNode.text + "] + [" + additionalVisibility.text + "]"
+            additionalVisibility = node.find( "visible" )
+            if additionalVisibility is not None:
+                if visibilityNode == None:
+                    xmltree.SubElement( node, "visibility" ).text = additionalVisibility.text
+                else:
+                    visibilityNode.text = "[" + visibilityNode.text + "] + [" + additionalVisibility.text + "]"
         
         return tree
         
@@ -521,6 +519,8 @@ class DataFunctions():
 
                             if elemSearch[0] == "widget:node":
                                 # Set all widget properties from the default
+                                if elem.text:
+                                    self.defaultProperties.append( [ "mainmenu", labelID, "widget", elem.attrib.get( "label" ), defaultID ] )
                                 if "label" in elem.attrib:
                                     self.defaultProperties.append( [ "mainmenu", labelID, "widgetName", elem.attrib.get( "label" ), defaultID ] )
                                 if "type" in elem.attrib:

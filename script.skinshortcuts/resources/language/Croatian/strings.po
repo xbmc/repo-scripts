@@ -121,7 +121,7 @@ msgid "Set label"
 msgstr "Postavi naslov"
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr "Postavi minijaturu"
 
 msgctxt "#32027"

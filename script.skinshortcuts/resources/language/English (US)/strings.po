@@ -121,8 +121,8 @@ msgid "Set label"
 msgstr "Set label"
 
 msgctxt "#32026"
-msgid "Set thumbail"
-msgstr "Set thumbail"
+msgid "Set thumbnail"
+msgstr "Set thumbnail"
 
 msgctxt "#32027"
 msgid "Change action"

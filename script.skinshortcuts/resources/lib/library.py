@@ -115,6 +115,7 @@ class LibraryFunctions():
                 "playlist-video":None,
                 "playlist-audio":None,
                 "addon-program":None,
+                "addon-program-plugin":None,
                 "addon-video":None,
                 "addon-audio":None,
                 "addon-image":None,
@@ -1091,6 +1092,7 @@ class LibraryFunctions():
             paths = [['special://videoplaylists/','32004','VideoLibrary'], ['special://musicplaylists/','32005','MusicLibrary'], ["special://skin/playlists/",'32059',None], ["special://skin/extras/",'32059',None]]
             for path in paths:
                 count = 0
+                if not xbmcvfs.exists(path[0]): continue
                 for root, subdirs, files in kodiwalk( path[0], stringForce = "special://skin/" ):
                     for file in files:
                         playlist = file['path']
@@ -1271,6 +1273,7 @@ class LibraryFunctions():
             log( 'Loading add-ons' )
 
             executableItems = {}
+            executablePluginItems = {}
             videoItems = {}
             audioItems = {}
             imageItems = {}
@@ -1311,31 +1314,38 @@ class LibraryFunctions():
                             if item[ "type" ] == "xbmc.python.pluginsource":
                                 path = "||BROWSE||" + item['addonid'].encode('utf-8')
                                 action = "RunAddOn(" + item['addonid'].encode('utf-8') + ")"
-                            elif contenttype == "executable":
-                                # Check if it's a program that can be run as an exectuble
-                                provides = self.hasPluginEntryPoint( item[ "path" ] )
-                                if provides is None:
-                                    continue
-                                
-                                for content in provides:
-                                    # For each content that it provides, add it to the add-ons for that type
-                                    contentData = { "video": [ "::SCRIPT::32010", videoItems ], "audio": [ "::SCRIPT::32011", audioItems ], "image": [ "::SCRIPT::32012", imageItems ], "executable": [ "::SCRIPT::32009", executableItems ] }
-                                    if content in contentData:
-                                        otherItem = self._create([path, item['name'] + "  >", contentData[ content ][ 0 ], {"icon": "DefaultAddon.png", "thumb": thumb} ])
-                                        otherItem.setProperty( "path", "||BROWSE||" + item['addonid'].encode('utf-8') )
-                                        otherItem.setProperty( "action", "RunAddOn(" + item['addonid'].encode('utf-8') + ")" )
-                                        contentData[ content ][ 1 ][ item[ "name" ] ] = otherItem                                        
 
-                            if action is not None:
                                 listitem.setProperty( "path", path )
                                 listitem.setProperty( "action", action )
                                 listitem.setLabel( listitem.getLabel() + "  >" )
 
+                                # If its executable, save it to our program plugin widget list
+                                if contenttype == "executable":
+                                    executablePluginItems[ item[ "name" ] ] = listitem
+
+                            elif contenttype == "executable":
+                                # Check if it's a program that can be run as an exectuble
+                                provides = self.hasPluginEntryPoint( item[ "path" ] )
+                                for content in provides:
+                                    # For each content that it provides, add it to the add-ons for that type
+                                    contentData = { "video": [ "::SCRIPT::32010", videoItems ], "audio": [ "::SCRIPT::32011", audioItems ], "image": [ "::SCRIPT::32012", imageItems ], "executable": [ "::SCRIPT::32009", executableItems ] }
+                                    if content in contentData:
+                                        # Add it as a plugin in the relevant category
+                                        otherItem = self._create([path, item['name'] + "  >", contentData[ content ][ 0 ], {"icon": "DefaultAddon.png", "thumb": thumb} ])
+                                        otherItem.setProperty( "path", "||BROWSE||" + item['addonid'].encode('utf-8') )
+                                        otherItem.setProperty( "action", "RunAddOn(" + item['addonid'].encode('utf-8') + ")" )
+                                        contentData[ content ][ 1 ][ item[ "name" ] ] = otherItem
+                                        # If it's executable, add it to our seperate program plugins for widgets
+                                        if content == "executable":
+                                            executablePluginItems[ item[ "name" ] ] = otherItem
+
+                            # Save the listitem
                             listitems[ item[ "name" ] ] = listitem
                             
                 if contenttype == "executable":
                     self.addToDictionary( "addon-program", self.sortDictionary( listitems ) )
-                    log( " - " + str( len( listitems ) ) + " programs found" )
+                    self.addToDictionary( "addon-program-plugin", self.sortDictionary( executablePluginItems ) )
+                    log( " - %s programs found (of which %s are plugins)" %( str( len( listitems ) ), str( len( executablePluginItems ) ) ) )
                 elif contenttype == "video":
                     self.addToDictionary( "addon-video", self.sortDictionary( listitems ) )
                     log( " - " + str( len( listitems ) ) + " video add-ons found" )
@@ -1362,18 +1372,12 @@ class LibraryFunctions():
                     # Find out what content type it provides
                     provides = extension.find( "provides" )
                     if provides is None:
-                        return None
-                    return provides.text.split( " " )
-                elif "point" in extension.attrib and extension.attrib.get( "point" ) == "xbmc.python.script":
-                    # Script entry points should be treated as executable
-                    provides = extension.find( "provides" )
-                    if provides is None:
-                        return None
+                        return []
                     return provides.text.split( " " )
 
         except:
-            return None
-        return None
+            print_exc()
+        return []
     
     def detectPluginContent(self, item):
         #based on the properties in the listitem we try to detect the content
@@ -1383,28 +1387,32 @@ class LibraryFunctions():
             # if it's missing it means this is a main directory listing and no need to scan the underlying listitems.
             return None
 
+        if not item.has_key("showtitle") and not item.has_key("artist"):
+            #these properties are only returned in the json response if we're looking at actual file content...
+            # if it's missing it means this is a main directory listing and no need to scan the underlying listitems.
+            return "files"
         if not item.has_key("showtitle") and item.has_key("artist"):
             ##### AUDIO ITEMS ####
-            if item["artist"][0] == item["title"]:
+            if item["type"] == "artist" or item["artist"][0] == item["title"]:
                 return "artists"
-            elif item["album"] == item["title"]:
+            elif item["type"] == "album" or item["album"] == item["title"]:
                 return "albums"
-            elif (item["type"] == "song" or (item["artist"] and item["album"])):
+            elif (item["type"] == "song" and not "play_album" in item["file"]) or (item["artist"] and item["album"]):
                 return "songs"
         else:    
             ##### VIDEO ITEMS ####
             if (item["showtitle"] and not item["artist"]):
                 #this is a tvshow, episode or season...
-                if (item["season"] > -1 and item["episode"] == -1):
+                if item["type"] == "season" or (item["season"] > -1 and item["episode"] == -1):
                     return "seasons"
-                elif item["season"] > -1 and item["episode"] > -1:
+                elif item["type"] == "episode" or item["season"] > -1 and item["episode"] > -1:
                     return "episodes"
                 else:
                     return "tvshows"
             elif (item["artist"]):
-                #this is a musicvideo!
+                #this is a musicvideo
                 return "musicvideos"
-            elif (item["imdbnumber"] or item["mpaa"] or item["trailer"] or item["studio"]):
+            elif item["type"] == "movie" or item["imdbnumber"] or item["mpaa"] or item["trailer"] or item["studio"]:
                 return "movies"
 
         return None
@@ -1501,11 +1509,12 @@ class LibraryFunctions():
         listings.append( listitem )
             
         
-        # Default action - create shortcut
-        createLabel = "32058"
-        if isWidget:
-            createLabel = "32100"
-        listings.append( self._get_icon_overrides( tree, self._create( ["::CREATE::", createLabel, "", {}] ), "" ) )
+        # Default action - create shortcut (do not show when we're looking at the special entries from skinhelper service)
+        if not "script.skin.helper.service" in location:
+            createLabel = "32058"
+            if isWidget:
+                createLabel = "32100"
+            listings.append( self._get_icon_overrides( tree, self._create( ["::CREATE::", createLabel, "", {}] ), "" ) )
                 
         log( "Getting %s - %s" %( dialogLabel, location ) )
             
@@ -1582,7 +1591,7 @@ class LibraryFunctions():
                     listitem.setProperty( "widget", "addon" )
                     listitem.setProperty( "widgetName", item["label"] )
                     listitem.setProperty( "widgetType", smartShortCutsData["type"] )
-                    if smartShortCutsData["type"] == "music" or smartShortCutsData["type"] == "artists" or smartShortCutsData["type"] == "albums":
+                    if smartShortCutsData["type"] == "music" or smartShortCutsData["type"] == "artists" or smartShortCutsData["type"] == "albums" or smartShortCutsData["type"] == "songs":
                         listitem.setProperty( "widgetTarget", "music" )
                     else:
                         listitem.setProperty( "widgetTarget", "video" )
@@ -1684,8 +1693,18 @@ class LibraryFunctions():
                     listitem.setProperty( "widgetTarget", "pictures" )
                     listitem.setProperty( "widgetName", dialogLabel )
                     listitem.setProperty( "widgetPath", location )
+                    
                 elif itemType == "32009":
                     action = 'ActivateWindow(10001,"' + location + '",return)'
+                    listitem.setProperty( "windowID", "10001" )
+
+                    # Add widget details
+                    listitem.setProperty( "widget", "Addon" )
+                    listitem.setProperty( "widgetType", "program" )
+                    listitem.setProperty( "widgetTarget", "programs" )
+                    listitem.setProperty( "widgetName", dialogLabel )
+                    listitem.setProperty( "widgetPath", location )
+
                 else:
                     action = "RunAddon(" + location + ")"
 

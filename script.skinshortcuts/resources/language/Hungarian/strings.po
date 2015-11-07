@@ -121,7 +121,7 @@ msgid "Set label"
 msgstr "Címke beállítás"
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr "Bélyegkép beállítás"
 
 msgctxt "#32027"

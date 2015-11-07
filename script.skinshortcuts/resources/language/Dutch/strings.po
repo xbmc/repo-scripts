@@ -121,7 +121,7 @@ msgid "Set label"
 msgstr "Stel label in"
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr "Stel miniatuur in"
 
 msgctxt "#32027"

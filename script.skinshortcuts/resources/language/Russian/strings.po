@@ -121,7 +121,7 @@ msgid "Set label"
 msgstr "Выбрать метку"
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr "Выбрать эскиз"
 
 msgctxt "#32027"

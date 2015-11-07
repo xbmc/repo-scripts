@@ -117,7 +117,7 @@ msgid "Set label"
 msgstr "Задай етикет"
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr "Задай миниатюра"
 
 msgctxt "#32027"

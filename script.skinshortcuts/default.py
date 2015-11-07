@@ -7,6 +7,7 @@ import cProfile
 import pstats
 import random
 import time
+import calendar
 from time import gmtime, strftime
 from datetime import datetime
 from traceback import print_exc
@@ -50,7 +51,7 @@ class Main:
     # MAIN ENTRY POINT
     def __init__(self):
         self._parse_argv()
-        self.WINDOW = xbmcgui.Window(10000)    
+        self.WINDOW = xbmcgui.Window(10000)
         
         # Create data and master paths if not exists
         if not xbmcvfs.exists(__datapath__):
@@ -64,7 +65,7 @@ class Main:
             xbmcgui.Dialog().ok(__addonname__, line1)
             
         if self.TYPE=="buildxml":
-            XML.buildMenu( self.MENUID, self.GROUP, self.LEVELS, self.MODE, self.OPTIONS )
+            XML.buildMenu( self.MENUID, self.GROUP, self.LEVELS, self.MODE, self.OPTIONS, self.MINITEMS )
             
         if self.TYPE=="launch":
             xbmcplugin.setResolvedUrl( handle=int( sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem() )
@@ -122,20 +123,59 @@ class Main:
                     xbmc.executebuiltin( "Skin.Reset(" + self.THUMBNAIL + ")" )
                 if self.LIST is not None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.LIST + ")" )
-                    
-        if self.TYPE=="addNode":
-            # We've been sent a node from plugin.program.video.node.editor
-            targetDir = "library://video" + self.OPTIONS[ 0 ]
+
+        if self.TYPE=="widgets":
+            # We're just going to choose a widget, and save its details to the given
+            # skin labels
             
-            icon = "DefaultShortcut.png"
-            if self.OPTIONS[ 2 ] != "None":
-                icon = self.OPTIONS[ 2 ].decode( "utf-8" )
+            if self.GROUPING:
+                if self.GROUPING.lower() == "default":
+                    selectedShortcut = LIBRARY.selectShortcut( "", custom = False, showNone = self.NONE )    
+                else:
+                    selectedShortcut = LIBRARY.selectShortcut( "", grouping = self.GROUPING, custom = False, showNone = self.NONE )
+            else:
+                selectedShortcut = LIBRARY.selectShortcut( "", grouping = "widget", custom = False, showNone = self.NONE )
             
-            result = nodefunctions.NodeFunctions().addNodeToMenu( targetDir, urllib.unquote( self.OPTIONS[ 1 ] ).decode( "utf-8" ), icon, DATA )
-            
-            if result == False:
-                # The item failed to add to the menu
-                xbmcgui.dialog().ok( __addon__.getAddonInfo( "name" ), __language__(32091) )
+            # Now set the skin strings
+            if selectedShortcut is not None and selectedShortcut.getProperty( "Path" ):
+                if self.WIDGET:
+                    if selectedShortcut.getProperty( "widget" ):
+                        xbmc.executebuiltin( "Skin.SetString(%s,%s)" %( self.WIDGET, selectedShortcut.getProperty( "widget" ) ) )
+                    else:
+                        xbmc.executebuiltin( "Skin.Reset(%s)" %( self.WIDGET ) )
+                if self.WIDGETTYPE:
+                    if selectedShortcut.getProperty( "widgetType" ):
+                        xbmc.executebuiltin( "Skin.SetString(%s,%s)" %( self.WIDGETTYPE, selectedShortcut.getProperty( "widgetType" ) ) )
+                    else:
+                        xbmc.executebuiltin( "Skin.Reset(%s)" %( self.WIDGETTYPE ) )
+                if self.WIDGETNAME:
+                    if selectedShortcut.getProperty( "widgetName" ):
+                        xbmc.executebuiltin( "Skin.SetString(%s,%s)" %( self.WIDGETNAME, selectedShortcut.getProperty( "widgetName" ) ) )
+                    else:
+                        xbmc.executebuiltin( "Skin.Reset(%s)" %( self.WIDGETNAME ) )
+                if self.WIDGETTARGET:
+                    if selectedShortcut.getProperty( "widgetTarget" ):
+                        xbmc.executebuiltin( "Skin.SetString(%s,%s)" %( self.WIDGETTARGET, selectedShortcut.getProperty( "widgetTarget" ) ) )
+                    else:
+                        xbmc.executebuiltin( "Skin.Reset(%s)" %( self.WIDGETTARGET ) )
+                if self.WIDGETPATH:
+                    if selectedShortcut.getProperty( "widgetPath" ):
+                        xbmc.executebuiltin( "Skin.SetString(%s,%s)" %( self.WIDGETPATH, urllib.unquote( selectedShortcut.getProperty( "widgetPath" ) ) ) )
+                    else:
+                        xbmc.executebuiltin( "Skin.Reset(%s)" %( self.WIDGETPATH ) )
+
+            elif selectedShortcut is not None and selectedShortcut.getLabel() == "::NONE::":
+                # Clear the skin strings
+                if self.WIDGET is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.WIDGET + ")" )
+                if self.WIDGETTYPE is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETTYPE + " )" )
+                if self.WIDGETNAME is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETNAME + ")" )
+                if self.WIDGETTARGET is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETTARGET + ")" )
+                if self.WIDGETPATH is not None:
+                    xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETPATH + ")" )
                 
         if self.TYPE=="resetall":
             # Tell XBMC not to try playing any media
@@ -176,6 +216,13 @@ class Main:
         self.LIST = params.get( "skinList", None )
         self.CUSTOM = params.get( "custom", "False" )
         self.NONE = params.get( "showNone", "False" )
+
+        self.WIDGET = params.get( "skinWidget", None )
+        self.WIDGETTYPE = params.get( "skinWidgetType", None )
+        self.WIDGETNAME = params.get( "skinWidgetName", None )
+        self.WIDGETTARGET = params.get( "skinWidgetTarget", None )
+        self.WIDGETPATH = params.get( "skinWidgetPath", None )
+
         if self.CUSTOM == "True" or self.CUSTOM == "true":
             self.CUSTOM = True
         else:
@@ -187,6 +234,7 @@ class Main:
         
         self.NOLABELS = params.get( "nolabels", "false" ).lower()
         self.OPTIONS = params.get( "options", "" ).split( "|" )
+        self.MINITEMS = int( params.get( "minitems", "0" ) )
         self.WARNING = params.get( "warning", None )
         self.DEFAULTGROUP = params.get( "defaultGroup", None )
     
@@ -211,10 +259,10 @@ class Main:
     
     def _manage_shortcuts( self, group, defaultGroup, nolabels, groupname ):
         homeWindow = xbmcgui.Window( 10000 )
-        if homeWindow.getProperty( "skinshortcuts-loading" ):
+        if homeWindow.getProperty( "skinshortcuts-loading" ) and int( calendar.timegm( gmtime() ) ) - int( homeWindow.getProperty( "skinshortcuts-loading" ) ) <= 5:
             return
 
-        homeWindow.setProperty( "skinshortcuts-loading", "True" )
+        homeWindow.setProperty( "skinshortcuts-loading", str( calendar.timegm( gmtime() ) ) )
         import gui
         ui= gui.GUI( "script-skinshortcuts.xml", __cwd__, "default", group=group, defaultGroup=defaultGroup, nolabels=nolabels, groupname=groupname )
         ui.doModal()

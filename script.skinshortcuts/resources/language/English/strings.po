@@ -121,7 +121,7 @@ msgid "Set label"
 msgstr ""
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr ""
 
 msgctxt "#32027"
@@ -129,7 +129,7 @@ msgid "Change action"
 msgstr ""
 
 msgctxt "#32028"
-msgid "Reset shortcuts"
+msgid "Restore shortcuts"
 msgstr ""
 
 msgctxt "#32029"
@@ -424,4 +424,24 @@ msgstr ""
 
 msgctxt "#32100"
 msgid "Use as widget"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Choose property"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Restore or reset?"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Restore a default shortcut"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Reset to skin defaults"
+msgstr ""
+
+msgctxt "#32105"
+msgid "There are no shortcuts to restore for this menu"
 msgstr ""

@@ -121,7 +121,7 @@ msgid "Set label"
 msgstr "设置标签"
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr "设置缩略图"
 
 msgctxt "#32027"

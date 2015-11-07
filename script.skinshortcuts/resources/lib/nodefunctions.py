@@ -287,7 +287,7 @@ class NodeFunctions():
     # Functions used to add a node to the menu #
     ############################################
 
-    def addNodeToMenu( self, node, label, icon, DATA ):
+    def addNodeToMenu( self, node, label, icon, DATA, isVideo = False ):
         # Get a list of all nodes within
         json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail"], "directory": "' + node + '", "media": "files" } }')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
@@ -332,7 +332,10 @@ class NodeFunctions():
         xmltree.SubElement( newelement, "label2" ).text = "32024" # Custom shortcut
         xmltree.SubElement( newelement, "icon" ).text = icon
         xmltree.SubElement( newelement, "thumb" )
-        xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10025," + paths[ selected ] + ",return)"
+        if isVideo:
+            xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10025," + paths[ selected ] + ",return)"
+        else:
+            xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10502," + paths[ selected ] + ",return)"
         
         DATA.indent( menuitems.getroot() )
         path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, "mainmenu.DATA.xml" ).encode('utf-8') )
@@ -348,7 +351,10 @@ class NodeFunctions():
                 xmltree.SubElement( newelement, "label2" ).text = "32024" # Custom shortcut
                 xmltree.SubElement( newelement, "icon" ).text = item[ "thumbnail" ]
                 xmltree.SubElement( newelement, "thumb" )
-                xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10025," + item[ "file" ] + ",return)"
+                if isVideo:
+                    xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10025," + item[ "file" ] + ",return)"
+                else:
+                    xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10502," + item[ "file" ] + ",return)"
                 
             DATA.indent( menuitems.getroot() )
             path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, DATA.slugify( labelID ) + ".DATA.xml" ).encode('utf-8') )

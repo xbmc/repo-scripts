@@ -121,7 +121,7 @@ msgid "Set label"
 msgstr "Setar rótulo"
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr "Setar miniatura"
 
 msgctxt "#32027"

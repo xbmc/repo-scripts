@@ -121,7 +121,7 @@ msgid "Set label"
 msgstr "Ορισμός ετικέτας"
 
 msgctxt "#32026"
-msgid "Set thumbail"
+msgid "Set thumbnail"
 msgstr "Ορισμός μικρογραφίας"
 
 msgctxt "#32027"
