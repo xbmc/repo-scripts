@@ -27,6 +27,7 @@ class NextUpInfo(xbmcgui.WindowXMLDialog):
         fanartimage = self.item['art'].get('tvshow.fanart', '')
         overview = self.item['plot']
         name = self.item['title']
+        playcount = self.item['playcount']
 
         season = self.item['season']
         episodeNum = self.item['episode']
@@ -102,6 +103,13 @@ class NextUpInfo(xbmcgui.WindowXMLDialog):
                 resolution1 = self.item['streamdetails'].get('video')
                 resolution = resolution1[0].get('height')
                 resolutionControl.setLabel(str(resolution))
+        except:
+            pass
+
+        try:
+            playcountControl = self.getControl(3018)
+            if playcountControl != None:
+                playcountControl.setLabel(str(playcount))
         except:
             pass
 

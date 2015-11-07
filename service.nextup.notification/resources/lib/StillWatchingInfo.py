@@ -33,6 +33,7 @@ class StillWatchingInfo(xbmcgui.WindowXMLDialog):
         season = self.item['season']
         episodeNum = self.item['episode']
         title = self.item['title']
+        playcount = self.item['playcount']
         # set the dialog data
         self.getControl(4000).setLabel(name)
         self.getControl(4006).setText(overview)
@@ -101,6 +102,13 @@ class StillWatchingInfo(xbmcgui.WindowXMLDialog):
             clearartControl = self.getControl(4014)
             if clearartControl is not None:
                 clearartControl.setImage(clearartimage)
+        except:
+            pass
+
+        try:
+            playcountControl = self.getControl(4018)
+            if playcountControl != None:
+                playcountControl.setLabel(str(playcount))
         except:
             pass
 

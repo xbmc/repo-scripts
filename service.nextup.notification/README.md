@@ -28,6 +28,7 @@ Skinners:
           - 3013 - Cancel Button
           - 3015 - Season Number
           - 3016 - Episode Number
+          - 3018 - Play Count
           
       - script-nextup-notification-StillWatchingInfo.xml
           - 4000 - Label
@@ -45,3 +46,4 @@ Skinners:
           - 4012 - Continue Watching Button
           - 4013 - Cancel Button
           - 4014 - TV Show ClearArt
+          - 4018 - Play Count
