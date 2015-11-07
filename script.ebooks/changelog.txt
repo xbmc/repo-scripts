@@ -1,3 +1,6 @@
+v1.1.0
+- Add support for OPDS servers
+
 v1.0.1
 - Add support for books on smb:// or nfs:// network drives
 

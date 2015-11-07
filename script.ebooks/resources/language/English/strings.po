@@ -113,5 +113,18 @@ msgid "Use White Background For Reader"
 msgstr ""
 
 msgctxt "#32023"
-msgid "Font Size"
+msgid "OPDS eBooks"
 msgstr ""
+
+msgctxt "#32024"
+msgid "Use eBooks Folder"
+msgstr ""
+
+msgctxt "#32025"
+msgid "OPDS Interface"
+msgstr ""
+
+msgctxt "#32026"
+msgid "OPDS URL"
+msgstr ""
+

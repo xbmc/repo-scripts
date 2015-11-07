@@ -29,6 +29,7 @@ from settings import os_path_join
 from textviewer import TextViewer
 from ebook import EBookBase
 from database import EbooksDB
+from opds import Opds
 
 
 ###################################################################
@@ -46,8 +47,81 @@ class MenuNavigator():
     def _build_url(self, query):
         return self.base_url + '?' + urllib.urlencode(query)
 
+    def rootMenu(self):
+        rootOpds = Settings.getOPDSLocation()
+
+        # If OPDS is not being used then just use the directory details
+        if rootOpds in [None, ""]:
+            self.showEbooksDirectory()
+            return
+
+        # Get the setting for the ebook directory
+        eBookFolder = Settings.getEbookFolder()
+
+        # If OPDS is enabled and there is no local folder set, then just use OPDS
+        if eBookFolder in [None, ""]:
+            self.opdsRootMenu()
+            return
+
+        # Both OPDS and local directory is enabled, so give the user the choice
+        url = self._build_url({'mode': 'directory', 'directory': ' '})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32005), iconImage='DefaultFolder.png')
+        li.setProperty("Fanart_Image", __fanart__)
+        li.addContextMenuItems([], replaceItems=True)
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+
+        opds = Opds()
+        iconImage = opds.getRootImage()
+        del opds
+        url = self._build_url({'mode': 'opds', 'href': ' '})
+        li = xbmcgui.ListItem(__addon__.getLocalizedString(32023), iconImage=iconImage)
+        li.setProperty("Fanart_Image", __fanart__)
+        li.addContextMenuItems([], replaceItems=True)
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+
+        xbmcplugin.endOfDirectory(self.addon_handle)
+
+    def opdsRootMenu(self):
+        log("EBooksPlugin: Getting OPDS Root Menu")
+        opds = Opds()
+        iconImage = opds.getRootImage()
+        menuContents = opds.getRoootMenuContents()
+        del opds
+
+        for title in menuContents:
+            url = self._build_url({'mode': 'opds2', 'href': menuContents[title]})
+            li = xbmcgui.ListItem(title, iconImage=iconImage)
+            li.setProperty("Fanart_Image", __fanart__)
+            li.addContextMenuItems([], replaceItems=True)
+            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+
+        xbmcplugin.endOfDirectory(self.addon_handle)
+
+    def opdsBookListing(self, href):
+        log("EBooksPlugin: Getting OPDS Book Listing for %s" % href)
+
+        opds = Opds()
+        contentList = opds.getList(href)
+
+        if opds.isBookListContent():
+            # Now display the book list
+            self._showEbooks(contentList)
+        else:
+            for entry in contentList:
+                url = self._build_url({'mode': 'opds2', 'href': entry['link']})
+                li = xbmcgui.ListItem(entry['title'], iconImage=opds.getRootImage())
+                li.setProperty("Fanart_Image", __fanart__)
+                li.addContextMenuItems([], replaceItems=True)
+                xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+
+            xbmcplugin.endOfDirectory(self.addon_handle)
+
+        del opds
+
     # Show all the EBooks that are in the eBook directory
-    def showEbooks(self, directory=None):
+    def showEbooksDirectory(self, directory=''):
+        log("EBooksPlugin: Showing eBooks for directory %s" % str(directory))
+
         # Get the setting for the ebook directory
         eBookFolder = Settings.getEbookFolder()
 
@@ -65,7 +139,7 @@ class MenuNavigator():
             Settings.setEbookFolder(eBookFolder)
 
         # We may be looking at a subdirectory
-        if directory not in [None, ""]:
+        if directory.strip() not in [None, ""]:
             eBookFolder = directory
 
         dirs, files = xbmcvfs.listdir(eBookFolder)
@@ -137,6 +211,45 @@ class MenuNavigator():
             li = xbmcgui.ListItem(displayString, iconImage=coverTargetName)
             li.setProperty("Fanart_Image", __fanart__)
             li.addContextMenuItems(self._getContextMenu(fullpath), replaceItems=True)
+            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
+
+        xbmcplugin.endOfDirectory(self.addon_handle)
+
+    # Show all the EBooks that are in the eBook directory
+    def _showEbooks(self, books):
+        # List all of the books
+        for bookDetails in books:
+            log("EBooksPlugin: Processing title: %s, author: %s, link: %s, cover: %s" % (bookDetails['title'], bookDetails['author'], bookDetails['link'], bookDetails['cover']))
+
+            # Check in the database to see if this book is already recorded
+            bookDB = EbooksDB()
+            dbBookDetails = bookDB.getBookDetails(bookDetails['link'])
+
+            isRead = False
+            if dbBookDetails in [None, ""]:
+                # Add this book to the list
+                bookDB.addBook(bookDetails['link'], bookDetails['title'], bookDetails['author'])
+            else:
+                isRead = dbBookDetails['complete']
+
+            del bookDB
+
+            displayString = bookDetails['title']
+            if bookDetails['author'] not in [None, ""]:
+                displayString = "%s - %s" % (bookDetails['author'], displayString)
+            log("EBookBase: Display title is %s for %s" % (displayString, bookDetails['link']))
+
+            if isRead:
+                displayString = '* %s' % displayString
+
+            coverTargetName = bookDetails['cover']
+            if coverTargetName in [None, ""]:
+                coverTargetName = Settings.getFallbackCoverImage()
+
+            url = self._build_url({'mode': 'chapters', 'filename': bookDetails['link'], 'cover': coverTargetName})
+            li = xbmcgui.ListItem(displayString, iconImage=coverTargetName)
+            li.setProperty("Fanart_Image", __fanart__)
+            li.addContextMenuItems(self._getContextMenu(bookDetails['link']), replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         xbmcplugin.endOfDirectory(self.addon_handle)
@@ -355,7 +468,7 @@ if __name__ == '__main__':
     if mode is None:
         log("EBooksPlugin: Mode is NONE - showing root menu")
         menuNav = MenuNavigator(base_url, addon_handle)
-        menuNav.showEbooks()
+        menuNav.rootMenu()
         del menuNav
     elif mode[0] == 'directory':
         log("EBooksPlugin: Mode is Directory")
@@ -364,7 +477,7 @@ if __name__ == '__main__':
 
         if (directory is not None) and (len(directory) > 0):
             menuNav = MenuNavigator(base_url, addon_handle)
-            menuNav.showEbooks(directory[0])
+            menuNav.showEbooksDirectory(directory[0])
             del menuNav
 
     elif mode[0] == 'chapters':
@@ -433,4 +546,21 @@ if __name__ == '__main__':
         if (filename is not None) and (len(filename) > 0):
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.markReadStatus(filename[0], link, markRead)
+            del menuNav
+
+    elif mode[0] == 'opds':
+        log("EBooksPlugin: Mode is OPDS")
+
+        menuNav = MenuNavigator(base_url, addon_handle)
+        menuNav.opdsRootMenu()
+        del menuNav
+
+    elif mode[0] == 'opds2':
+        log("EBooksPlugin: Mode is OPDS 2")
+
+        href = args.get('href', None)
+
+        if (href is not None) and (len(href) > 0):
+            menuNav = MenuNavigator(base_url, addon_handle)
+            menuNav.opdsBookListing(href[0])
             del menuNav

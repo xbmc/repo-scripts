@@ -3,6 +3,7 @@ import os
 import re
 import traceback
 import shutil
+import urllib
 import xml.etree.ElementTree as ET
 import xbmc
 import xbmcvfs
@@ -63,16 +64,30 @@ class EBookBase():
             except:
                 log("EBookBase: Failed to copy file %s to local directory" % filePath)
 
+        elif filePath.startswith('http://') or filePath.startswith('https://'):
+            log("EBookBase: Book source is %s" % filePath)
+            try:
+                justFileName = 'opds.epub'
+                if 'mobi' in filePath:
+                    justFileName = 'opds.mobi'
+                copiedFile = os_path_join(Settings.getTempLocation(), justFileName)
+                fp, h = urllib.urlretrieve(filePath, copiedFile)
+                log(h)
+                localFilePath = copiedFile
+                removeWhenComplete = True
+            except:
+                log("EBookBase: Failed to download file %s to local directory" % filePath)
+
         bookType = None
         # Check which type of EBook it is
-        if filePath.lower().endswith('.epub'):
+        if localFilePath.lower().endswith('.epub'):
             bookType = EPubEBook(localFilePath, removeWhenComplete)
-        elif filePath.lower().endswith('.mobi'):
+        elif localFilePath.lower().endswith('.mobi'):
             bookType = MobiEBook(localFilePath, removeWhenComplete)
-        elif filePath.lower().endswith('.pdf'):
+        elif localFilePath.lower().endswith('.pdf'):
             bookType = PdfEBook(localFilePath, removeWhenComplete)
         else:
-            log("EBookBase: Unknown book type for %s" % filePath)
+            log("EBookBase: Unknown book type for %s (%s)" % (filePath, localFilePath))
 
         return bookType
 

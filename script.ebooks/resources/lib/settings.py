@@ -93,10 +93,14 @@ class Settings():
 
     @staticmethod
     def getEbookFolder():
-        return __addon__.getSetting("eBooksFolder")
+        eBookFolder = None
+        if __addon__.getSetting("useEBookFolder") == 'true':
+            eBookFolder = __addon__.getSetting("eBooksFolder")
+        return eBookFolder
 
     @staticmethod
     def setEbookFolder(eBooksFolder):
+        __addon__.setSetting("useEBookFolder", 'true')
         __addon__.setSetting("eBooksFolder", eBooksFolder)
 
     @staticmethod
@@ -150,3 +154,16 @@ class Settings():
         if not dir_exists(tmpdestination):
             xbmcvfs.mkdir(tmpdestination)
         return tmpdestination
+
+    @staticmethod
+    def getOPDSLocation():
+        opdsLoc = None
+        if __addon__.getSetting("useOPDS") == 'true':
+            opdsLoc = __addon__.getSetting("opdsUrl")
+            if not opdsLoc.startswith('http'):
+                opdsLoc = "http://%s" % opdsLoc
+            if opdsLoc.endswith('/'):
+                opdsLoc = opdsLoc[:-1]
+            if opdsLoc.endswith('/opds'):
+                opdsLoc = opdsLoc[:-5]
+        return opdsLoc
