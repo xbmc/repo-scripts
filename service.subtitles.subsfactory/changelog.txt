@@ -1,3 +1,7 @@
+0.0.6
+- added new TV show exception
+- added forum link
+- bugfix
 0.0.5
 - fixed for some TV show
 0.0.4

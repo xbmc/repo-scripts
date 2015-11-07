@@ -60,7 +60,13 @@ def Search(item):
         log('Subsfactory only works with italian subs. Skipped')
 
 def checkexp(tvshow):
-    exp=[["Marvel's Agents of S.H.I.E.L.D.","Agents of Shield"],["Marvel's Daredevil","Daredevil"],["Marvel's Agent Carter","Agent Carter"],["Doctor Who (2005)","Doctor Who"]]
+    exp=[
+         ["Marvel's Agents of S.H.I.E.L.D.","Agents of Shield"],
+         ["Marvel's Daredevil","Daredevil"],
+         ["Marvel's Agent Carter","Agent Carter"],
+         ["Doctor Who (2005)","Doctor Who"],
+         ["NCIS: Los Angeles","NCIS Los Angeles"],
+         ["Castle (2009)","Castle"]]
     for expl in exp:
         if tvshow == expl[0]:
             return expl[1]
@@ -134,7 +140,7 @@ def showlist(list):
                     url = "plugin://%s/?action=download&file=%s&type=%s&si=%s" % (__scriptid__,file,"pack",si)
                     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=listitem,isFolder=False)
             else:
-                listitem = xbmcgui.ListItem(label="Italian",label2=name,thumbnailImage='it')
+                listitem = xbmcgui.ListItem(label="Italian",label2=sub[0],thumbnailImage='it')
                 listitem.setProperty( "sync",'false')                
                 listitem.setProperty('hearing_imp', 'false') # set to "true" if subtitle is for hearing impared              
                 url = "plugin://%s/?action=download&file=%s&type=%s&si=no" % (__scriptid__,local_tmp_file,"unpack")
