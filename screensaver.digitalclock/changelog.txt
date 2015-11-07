@@ -1,3 +1,9 @@
+[B]3.0.0[/B]
+- Added bounce effect for on screen movement
+
+[B]2.9.0[/B]
+- Removed xbmc.sleep and added monitor.waitForAbort
+
 [B]2.8.0[/B]
 - Changed the way screensaver deals with custom xml files
 

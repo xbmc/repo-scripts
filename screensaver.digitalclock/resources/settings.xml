@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="32001">
-		<setting label="32005" type="slider" id="stayinplace" default="10" range="5,5,60" option="int"/>
-		<setting id="timeformat" type="select" label="32006" default="0" lvalues="32007|32008|32009"/>
-		<setting id="dateformat" type="select" label="32030" default="1" lvalues="32031|32032|32033|32034"/>
-		<setting label="32020" type="bool" id="additionalinformation" default="false"/>
-		<setting label="32021" type="slider" id="infoswitch" subsetting="true" visible="eq(-1,true)" default="5" range="5,5,30" option="int"/>		
-		<setting label="32022" type="bool" id="nowplayinginfoshow" subsetting="true" visible="eq(-2,true)" default="false"/>
-		<setting label="32023" type="bool" id="weatherinfoshow" subsetting="true" visible="eq(-3,true)" default="false"/>
-		<setting id="weathericonformat" type="select" label="32040" subsetting="true" visible="eq(-4,true)" default="1" lvalues="32041|32042|32043|32044|32045"/>		
+    <category label="32000">
+        <setting label="32010" type="enum" id="movementtype" default="1" lvalues="32011|32012"/>
+		<setting label="32020" type="enum" id="movementspeed" subsetting="true" visible="eq(-1,1)" default="1" lvalues="32021|32022|32023"/>
+		<setting label="32030" type="slider" id="stayinplace" subsetting="true" visible="eq(-2,0)" default="10" range="5,5,60" option="int"/>
+		<setting id="timeformat" type="select" label="32040" default="0" lvalues="32041|32042|32043"/>
+		<setting id="dateformat" type="select" label="32050" default="1" lvalues="32051|32052|32053|32054"/>
+		<setting label="32060" type="bool" id="additionalinformation" default="false"/>
+		<setting label="32061" type="slider" id="infoswitch" subsetting="true" visible="eq(-1,true)" default="5" range="5,5,30" option="int"/>		
+		<setting label="32062" type="bool" id="nowplayinginfoshow" subsetting="true" visible="eq(-2,true)" default="false"/>
+		<setting label="32063" type="bool" id="weatherinfoshow" subsetting="true" visible="eq(-3,true)" default="false"/>
+		<setting id="weathericonformat" type="select" label="32070" subsetting="true" visible="eq(-4,true)" default="1" lvalues="32071|32072|32073|32074|32075"/>		
     </category>
-    <category label="32050">
-		<setting label="32051" type="bool" id="randomcolor" default="false"/>	
-		<setting id="hourcolor" type="select" label="32052" visible="eq(-1,false)" default="0" lvalues="32070|32071|32072|32073|32074|32075"/>
-		<setting id="coloncolor" type="select" label="32053" visible="eq(-2,false)" default="0" lvalues="32070|32071|32072|32073|32074|32075"/>
-		<setting id="minutecolor" type="select" label="32054" visible="eq(-3,false)" default="0" lvalues="32070|32071|32072|32073|32074|32075"/>
-		<setting id="ampmcolor" type="select" label="32055" visible="eq(-4,false)" default="0" lvalues="32070|32071|32072|32073|32074|32075"/>
-		<setting id="datecolor" type="select" label="32056" visible="eq(-5,false)" default="0" lvalues="32070|32071|32072|32073|32074|32075"/>
-		<setting id="informationcolor" type="select" label="32057" visible="eq(-6,false)" default="0" lvalues="32070|32071|32072|32073|32074|32075"/>
-		<setting id="weathericoncolor" type="select" label="32058" visible="eq(-7,false)" default="0" lvalues="32070|32071|32072|32073|32074|32075"/>		
-		</category>	
     <category label="32100">
-		<setting label="32101" type="bool" id="randomtr" default="false"/>
-		<setting id="hourtr" type="select" label="32102" visible="eq(-1,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125|32126|32127|32128|32129|32130"/>
-		<setting id="colontr" type="select" label="32103" visible="eq(-2,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125|32126|32127|32128|32129|32130"/>
-		<setting id="minutetr" type="select" label="32104" visible="eq(-3,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125|32126|32127|32128|32129|32130"/>
-		<setting id="ampmtr" type="select" label="32105" visible="eq(-4,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125|32126|32127|32128|32129|32130"/>
-		<setting id="datetr" type="select" label="32106" visible="eq(-5,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125|32126|32127|32128|32129|32130"/>
-		<setting id="informationtr" type="select" label="32107" visible="eq(-6,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125|32126|32127|32128|32129|32130"/>
-		<setting id="weathericontr" type="select" label="32108" visible="eq(-7,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125|32126|32127|32128|32129|32130"/>
-		</category>
+		<setting label="32101" type="bool" id="randomcolor" default="false"/>	
+		<setting id="hourcolor" type="select" label="32102" visible="eq(-1,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125"/>
+		<setting id="coloncolor" type="select" label="32103" visible="eq(-2,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125"/>
+		<setting id="minutecolor" type="select" label="32104" visible="eq(-3,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125"/>
+		<setting id="ampmcolor" type="select" label="32105" visible="eq(-4,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125"/>
+		<setting id="datecolor" type="select" label="32106" visible="eq(-5,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125"/>
+		<setting id="informationcolor" type="select" label="32107" visible="eq(-6,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125"/>
+		<setting id="weathericoncolor" type="select" label="32108" visible="eq(-7,false)" default="0" lvalues="32120|32121|32122|32123|32124|32125"/>
+		</category>	
     <category label="32150">
-		<setting id="shadowformat" type="select" label="32156" default="0" lvalues="32190|32191|32192|32193"/>	
-		<setting label="32152" type="bool" id="slideshow" default="false"/>
-		<setting label="32153" type="folder" id="folder" subsetting="true" visible="eq(-1,true)" default="images" source="auto"/>
-		<setting id="imagetimer" type="select" label="32154" subsetting="true" visible="eq(-2,true)" default="0" lvalues="32170|32171|32172|32173|32174|32175|32176|32177|32178|32179|32180|32181"/>
-		<setting label="32155" type="bool" id="randomimages" subsetting="true" visible="eq(-3,true)" default="false"/>
-		<setting id="image" type="select" label="32151" visible="eq(-4,false)" default="5" lvalues="32070|32071|32072|32073|32074|32075"/>
+		<setting label="32151" type="bool" id="randomtr" default="false"/>
+		<setting id="hourtr" type="select" label="32152" visible="eq(-1,false)" default="0" lvalues="32170|32171|32172|32173|32174|32175|32176|32177|32178|32179|32180"/>
+		<setting id="colontr" type="select" label="32153" visible="eq(-2,false)" default="0" lvalues="32170|32171|32172|32173|32174|32175|32176|32177|32178|32179|32180"/>
+		<setting id="minutetr" type="select" label="32154" visible="eq(-3,false)" default="0" lvalues="32170|32171|32172|32173|32174|32175|32176|32177|32178|32179|32180"/>
+		<setting id="ampmtr" type="select" label="32155" visible="eq(-4,false)" default="0" lvalues="32170|32171|32172|32173|32174|32175|32176|32177|32178|32179|32180"/>
+		<setting id="datetr" type="select" label="32156" visible="eq(-5,false)" default="0" lvalues="32170|32171|32172|32173|32174|32175|32176|32177|32178|32179|32180"/>
+		<setting id="informationtr" type="select" label="32157" visible="eq(-6,false)" default="0" lvalues="32170|32171|32172|32173|32174|32175|32176|32177|32178|32179|32180"/>
+		<setting id="weathericontr" type="select" label="32158" visible="eq(-7,false)" default="0" lvalues="32170|32171|32172|32173|32174|32175|32176|32177|32178|32179|32180"/>
+		</category>
+    <category label="32200">
+		<setting id="shadowformat" type="select" label="32210" default="0" lvalues="32211|32212|32213|32214"/>
+		<setting label="32220" type="bool" id="slideshow" default="false"/>
+		<setting id="image" type="select" label="32221" visible="eq(-1,false)" default="5" lvalues="32120|32121|32122|32123|32124|32125"/>			
+		<setting label="32222" type="folder" id="folder" subsetting="true" visible="eq(-2,true)" default="images" source="auto"/>
+		<setting label="32223" type="bool" id="randomimages" subsetting="true" visible="eq(-3,true)" default="false"/>
+		<setting id="imagetimer" type="select" label="32230" subsetting="true" visible="eq(-4,true)" default="0" lvalues="32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242"/>
 		</category>			
 </settings>

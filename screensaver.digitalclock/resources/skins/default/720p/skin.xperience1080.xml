@@ -9,7 +9,7 @@
 			<width>1280</width>
 			<height>720</height>
 			<fadetime>500</fadetime>
-			<aspectratio>keep</aspectratio>
+			<aspectratio>scale</aspectratio>
 		</control>
 		<control type="group" id="30002">
 			<description>Clock and Date</description>

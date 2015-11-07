@@ -62,6 +62,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.switchlimit = 2		
         self.informationtype = 0
         self.weather = 0
+        self.movementtype = int(Addon.getSetting('movementtype'))
+        self.movementspeed = int(Addon.getSetting('movementspeed'))
         self.stayinplace = int(Addon.getSetting('stayinplace'))
         self.datef=Addon.getSetting('dateformat')
         self.timef=Addon.getSetting('timeformat')
@@ -96,7 +98,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.ampm_colorcontrol = self.getControl(30108)
         self.date_colorcontrol = self.getControl(30109)
         self.information_colorcontrol = self.getControl(30111)
-        self.shadow_colorcontrol = self.getControl(30112)	
+        self.shadow_colorcontrol = self.getControl(30112)
+        self.monitor = xbmc.Monitor()
 			
 		#setting up background and slideshow
         if self.slideshowenable == 'false':
@@ -192,7 +195,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                         self.weathericon_control.setVisible(False)				
                     self.information_control.setVisible(False)					
             else:
-                self.container.setHeight(90)
+                self.container.setHeight(130)
                 self.weathericon_control.setVisible(False)					
                 self.information_control.setVisible(False)			
 				
@@ -201,14 +204,23 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 		#setting weather icon set
         self.weathericonset = ['Hide weather icon','set1','set2','set3','set4']
         self.weathericon = xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')
-        self.weathericon_control.setImage(__path__ + "\\resources\\skins\\default\\weathericons\\" + self.weathericonset[int(self.weathericonf)] + "\\" + self.weathericon + ".png")
-		
+        self.weathericon_control.setImage(os.path.join(__path__,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],self.weathericon) + ".png")
 		
 		#setting up the time format
         self.timeformat = ['%H','%I','%I']
         if self.timef == '2':
            self.ampm_control.setVisible(True)
         self.time = self.timeformat[int(self.timef)]
+		
+		#setting up movement type and wait timer	
+        if self.movementtype == 0:
+            self.waittimer = 0.5
+            self.multiplier = 2
+        else:
+            self.waittimer = 0.02
+            self.multiplier = 50
+            self.dx = random.choice([-(self.movementspeed+1),(self.movementspeed+1)])
+            self.dy = random.choice([-(self.movementspeed+1),(self.movementspeed+1)])
 		
 		#setting up the screen size
         self.screeny = 720 - self.container.getHeight()
@@ -217,29 +229,45 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 		#combining transparency and color
         self.setCTR()
         self.Display()
-        
+		
         self.DisplayTime()
         
     def DisplayTime(self):
         while not self.abort_requested:
 
 		    #checking if all weather information is available
-            if self.conditions == 'Busy':
-                self.temperature = xbmc.getInfoLabel('Weather.Temperature')
-                self.conditions = xbmc.getInfoLabel('Weather.Conditions')
-                self.weathericon = xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')		
+            if self.informationshow == 'true':
+                if (self.weather == 1 or self.weathericonf != '0'):			
+                    if xbmc.getInfoLabel('Weather.Conditions') == 'Busy':
+                        self.temperature = xbmc.getInfoLabel('Weather.Temperature')
+                        self.conditions = xbmc.getInfoLabel('Weather.Conditions')
+                        self.weathericon = xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')		
 		
             #switching information	
             self.Switch()
-		
-            #random movement
-            self.waitcounter += 1			
-            if self.waitcounter == (2*self.stayinplace):
-                new_x = random.randint(0,self.screenx)
-                new_y = random.randint(0,self.screeny)
+
+			#movement
+            if self.movementtype == 0:			
+                #random movement
+                self.waitcounter += 1			
+                if self.waitcounter == (self.multiplier*self.stayinplace):
+                    new_x = random.randint(0,self.screenx)
+                    new_y = random.randint(0,self.screeny)
+                    self.container.setPosition(new_x,new_y)
+                    self.waitcounter = 0
+                    self.setCTR()
+            else:
+                #bounce
+                self.currentposition = self.container.getPosition()
+                new_x = self.currentposition[0]+self.dx
+                new_y = self.currentposition[1]+self.dy
+                if new_x >= self.screenx or new_x <= 0:
+                    self.dx = self.dx*-1
+                    self.setCTR()					
+                if new_y >= self.screeny or new_y <= 0:
+                    self.dy = self.dy*-1
+                    self.setCTR()					
                 self.container.setPosition(new_x,new_y)
-                self.waitcounter = 0
-                self.setCTR()
 
 		    #display time
             self.Display()			
@@ -247,7 +275,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 			#slideshow
             if self.slideshowenable == 'true':
                 self.slideshowcounter +=1
-                if self.slideshowcounter == (2*self.imagetimer):
+                if self.slideshowcounter == (self.multiplier*self.imagetimer):
                     if self.randomimages =='true':
                         self.nextfile = random.randint(0,self.number)
                     self.path = self.folder + self.files[self.nextfile]
@@ -260,7 +288,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             #refresh weather information every 30 minutes
             if (self.weather == 1 or self.weathericonf != '0'):
                 self.updateweather += 1			
-                if self.updateweather == (3600):
+                if self.updateweather == (self.multiplier*1800):
                     self.temperature = xbmc.getInfoLabel('Weather.Temperature')
                     self.conditions = xbmc.getInfoLabel('Weather.Conditions')
                     self.weathericon = xbmc.getInfoLabel('Window(Weather).Property(Current.FanartCode)')					
@@ -272,7 +300,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             else:
                 self.colon_control.setVisible(False)
 
-            xbmc.sleep(500)
+            #xbmc.sleep(500)
+            self.monitor.waitForAbort(self.waittimer)
 			
         if self.abort_requested:
             self.log('Digital Clock abort_requested')
@@ -322,11 +351,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.colon_control.setLabel(" : ")   			
         self.minute_control.setLabel(datetime.now().strftime("%M"))
         self.ampm_control.setLabel(datetime.now().strftime("%p"))
-        self.date_control.setLabel(self.date)	
+        self.date_control.setLabel(self.date)
         if self.informationtype != 0:
             self.information_control.setLabel(self.information)
         if self.weathericonf != '0': 			
-            self.weathericon_control.setImage(__path__ + "\\resources\\skins\\default\\weathericons\\" + self.weathericonset[int(self.weathericonf)] + "\\" + self.weathericon + ".png")			
+            self.weathericon_control.setImage(os.path.join(__path__,"resources/skins/default/weathericons/",self.weathericonset[int(self.weathericonf)],self.weathericon) + ".png")
         self.hour_colorcontrol.setLabel(self.hourcolor)
         self.colon_colorcontrol.setLabel(self.coloncolor)   			
         self.minute_colorcontrol.setLabel(self.minutecolor)
@@ -339,7 +368,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if self.informationtype == 1:
             self.split = xbmc.getInfoLabel('MusicPlayer.Title').split(' (')		
             self.switchcounter += 1
-            if self.switchcounter == (2*self.infoswitch):
+            if self.switchcounter == (self.multiplier*self.infoswitch):
                 self.switch += 1
                 self.switchcounter = 0
                 if self.switch == self.switchlimit:
@@ -352,7 +381,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 self.information = self.temperature + ' - ' + self.conditions			
         elif self.informationtype == 2:
             self.switchcounter += 1		
-            if self.switchcounter == (2*self.infoswitch):
+            if self.switchcounter == (self.multiplier*self.infoswitch):
                 self.switch += 1
                 self.switchcounter = 0
                 if self.switch == self.switchlimit:
@@ -366,7 +395,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         elif self.informationtype == 3:
             if self.switchlimit-1 == 2:		
                 self.switchcounter += 1		
-                if self.switchcounter == (2*self.infoswitch):
+                if self.switchcounter == (self.multiplier*self.infoswitch):
                     self.switch += 1
                     self.switchcounter = 0
                     if self.switch == self.switchlimit-1:
@@ -378,7 +407,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         elif self.informationtype == 4:
             self.split = xbmc.getInfoLabel('MusicPlayer.Title').split(' - ')			
             self.switchcounter += 1		
-            if self.switchcounter == (2*self.infoswitch):
+            if self.switchcounter == (self.multiplier*self.infoswitch):
                 self.switch += 1
                 self.switchcounter = 0
                 if self.switch == self.switchlimit:
@@ -412,7 +441,7 @@ if __name__ == '__main__':
         screensaver = Screensaver("script-screensaver-digitalclock-custom.xml", xbmc.translatePath('special://skin/16x9/'), 'default')
     elif(os.path.isfile(xbmc.translatePath('special://skin/4x3Hirez/script-screensaver-digitalclock-custom.xml'))):
         screensaver = Screensaver("script-screensaver-digitalclock-custom.xml", xbmc.translatePath('special://skin/4x3Hirez/'), 'default')
-    elif(os.path.isfile(__path__ + "\\resources\\skins\\default\\720p\\" + __scriptname__)):
+    elif(os.path.isfile(os.path.join(__path__,"resources/skins/default/720p/",__scriptname__))):
         screensaver = Screensaver(__scriptname__, __path__, 'default')
     else:
         screensaver = Screensaver("skin.default.xml", __path__, 'default')	

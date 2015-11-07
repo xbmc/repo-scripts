@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="screensaver.digitalclock"
         name="Digital Clock Screensaver"
-        version="2.8.0"
+        version="3.0.0"
         provider-name="Vojislav Vlasic">
         <requires>
         	<import addon="xbmc.python" version="2.1.0"/>
