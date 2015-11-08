@@ -192,9 +192,25 @@ msgctxt "#32062"
 msgid "Next"
 msgstr "Successivo"
 
+msgctxt "#32064"
+msgid "Library Update Started"
+msgstr "Aggiornamento libreria iniziato"
+
+msgctxt "#32065"
+msgid "Library Update Already In Progress"
+msgstr "Aggiornamento libreria già in atto"
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr "Indirizzo IP non specificato"
+
 msgctxt "#32068"
 msgid "Error"
 msgstr "Errore"
+
+msgctxt "#32073"
+msgid "Failed to perform action %s"
+msgstr "Impossibile effettuare l'azione %s"
 
 msgctxt "#32100"
 msgid "Music Library"
@@ -267,3 +283,35 @@ msgstr "Sostituisci la coda"
 msgctxt "#32157"
 msgid "Update Music Library"
 msgstr "Aggiorna Libreria Musicale"
+
+msgctxt "#32202"
+msgid "No message specified"
+msgstr "Nessun messaggio specificato"
+
+msgctxt "#32204"
+msgid "Remove Saved Text"
+msgstr "Rimuovi testo salvato"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Sono le %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Oggi è %day"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Buongiorno"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Buon pomeriggio"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Buonasera"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Sono le %time"

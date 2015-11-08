@@ -29,7 +29,7 @@ class Speech():
         # The device that the speech will be sent to
         self.device = device
 
-        # Map of languages, from XBMC to Google (XBMC, Google)
+        # Map of languages, from Kodi to Google (Kodi, Google)
         # References:
         # https://developers.google.com/translate/v2/using_rest#language-params
         # http://wiki.xbmc.org/index.php?title=List_of_language_codes_%28ISO-639:1988%29
@@ -165,9 +165,10 @@ class Speech():
                 event_listener.stop()
             except:
                 log("Sonos: Failed to stop event listener: %s" % traceback.format_exc(), xbmc.LOGERROR)
-
+            del sub
             # Restore the sonos device back to it's previous state
             snap.restore()
+            del snap
         except:
             log("Speech: %s" % traceback.format_exc(), xbmc.LOGERROR)
             xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -197,7 +198,7 @@ class Speech():
     def _get_uri(self, message):
         # get the xbmc language
         xbmclang = xbmc.getLanguage(xbmc.ISO_639_1)
-        log("Speech: XBMC Language is: %s" % xbmclang)
+        log("Speech: Kodi Language is: %s" % xbmclang)
         # Get the language in the google format
         glang = self.languages.get(xbmclang, 'en')
         # Replace any characters which are place holders
@@ -211,7 +212,7 @@ class Speech():
 #        trans_URL = "x-rincon-mp3radio://speechutil.appspot.com/convert/ogg?text=%s" % msg
 #        trans_URL = "x-rincon-mp3radio://speechutil.com/convert/wav?text='%s'&file=1" % msg
 
-        trans_URI = "x-rincon-mp3radio://translate.google.com/translate_tts?tl=%s&q=%s" % (glang, msg)
+        trans_URI = "x-rincon-mp3radio://translate.google.com/translate_tts?tl=%s&q=%s&client=t" % (glang, msg)
 
         log("Speech: URI to play = %s" % trans_URI)
         return trans_URI

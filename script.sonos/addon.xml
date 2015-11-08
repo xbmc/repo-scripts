@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.sonos" name="Sonos" version="1.3.4" provider-name="robwebset">
+<addon id="script.sonos" name="Sonos" version="1.3.5" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="2.3.0"/>
@@ -30,7 +30,7 @@
 	
 		<summary lang="es">Controlador Sonos</summary>
 	
-		<summary lang="fr">Sonos Controller</summary>
+		<summary lang="fr">Contrôleur Sonos</summary>
 	
 		<summary lang="fr_CA">Contrôleur Sonos</summary>
 	
@@ -68,7 +68,7 @@
 	
 		<description lang="es">Soporta controles simples de Sonos y avisos de Kodi. Mirar Wiki para más detalles.</description>
 	
-		<description lang="fr">Supporte le contrôle simple de Sonos et les notifications à partie de Kodi. Voir le wiki pour plus de détails.</description>
+		<description lang="fr">Gère le contrôle simple de Sonos et les notifications à partie de Kodi. Voir le Wiki pour plus de détails.</description>
 	
 		<description lang="fr_CA">Prend en charge des contrôles simples et des notifications Sonos depuis Kodi. Consulter le wiki pour plus de détails.</description>
 	
@@ -100,6 +100,6 @@
 	
 		<forum>http://forum.kodi.tv/showthread.php?tid=183020</forum>
 	
-		<source>http://robwebset.googlecode.com/svn/trunk/script.sonos/</source>
+		<source>https://github.com/robwebset/script.sonos</source>
 	</extension>
 </addon>

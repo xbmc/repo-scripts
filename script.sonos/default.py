@@ -595,21 +595,19 @@ class SonosControllerWindow(BaseWindow):  # xbmcgui.WindowXMLDialog
         # track duration is zero
         if (track is not None) and (track['title'] != '') and (track['duration'] != '0:00:00'):
             # The code below gives the next track in the playlist
-            # not the next track to be played (which is the case if random)
-            if self.isRandom is False:
-                # Check if there is a next track
-                playlistPos = track['playlist_position']
-                log("SonosControllerWindow: Current track playlist position is %s" % str(playlistPos))
-                if track['playlist_position'] != "" and int(track['playlist_position']) > -1:
-                    # Also get the "Next Track" Information
-                    # 0 would be the current track
-                    nextTrackList = self.sonosDevice.get_queue(int(track['playlist_position']), 1)
+            # Check if there is a next track
+            playlistPos = track['playlist_position']
+            log("SonosControllerWindow: Current track playlist position is %s" % str(playlistPos))
+            if track['playlist_position'] != "" and int(track['playlist_position']) > -1:
+                # Also get the "Next Track" Information
+                # 0 would be the current track
+                nextTrackList = self.sonosDevice.get_queue(int(track['playlist_position']), 1)
 
-                    if (nextTrackList is not None) and (len(nextTrackList) > 0):
-                        nextTrackItem = nextTrackList[0]
-                        nextTrackCreator = nextTrackItem.creator
-                        nextTrackTitle = nextTrackItem.title
-            # If we have random play enabled, then we can not just read the nest
+                if (nextTrackList is not None) and (len(nextTrackList) > 0):
+                    nextTrackItem = nextTrackList[0]
+                    nextTrackCreator = nextTrackItem.creator
+                    nextTrackTitle = nextTrackItem.title
+            # If we have random play enabled, then we can not just read the next
             # track in the playlist, for this case we will need to see if there
             # is an event that tells us what the next track is
             elif track['lastEventDetails'] is not None:
@@ -771,6 +769,7 @@ class SonosArtistSlideshow(SonosControllerWindow):
             if lyrics is not None:
                 self.currentTrack = lyrics.populateLyrics()
                 lyrics.refresh()
+                del lyrics
 
     def isClose(self):
         # Check if the base class has detected a need to close
@@ -804,9 +803,9 @@ class SonosArtistSlideshow(SonosControllerWindow):
 
 
 # Load the Sonos keymap to make sure that volume/skip track keys do not get
-# passed to XBMC to handle. This is needed because XBMC addons can not swallow
-# events and so XBMC will perform the same operation
-# Each run we copy our keymap over, force XBMC to relaoad the keymaps, then at the end
+# passed to Kodi to handle. This is needed because Kodi addons can not swallow
+# events and so Kodi will perform the same operation
+# Each run we copy our keymap over, force Kodi to relaoad the keymaps, then at the end
 # we do the reverse - delete the custom one and reload the original setup
 class KeyMaps():
     def __init__(self):
@@ -883,10 +882,10 @@ if __name__ == '__main__':
 
                     stopScreensaver = stopScreensaver - Settings.getRefreshInterval()
                     if stopScreensaver < 0:
-                        # A bit of a hack, but we need XBMC to think a user is "doing things" so
+                        # A bit of a hack, but we need Kodi to think a user is "doing things" so
                         # that it does not start the screensaver, so we just send the message
                         # to open the Context menu - which in our case will do nothing
-                        # but it does make XBMC think the user has done something
+                        # but it does make Kodi think the user has done something
                         json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Input.ContextMenu", "id": 1}')
                         stopScreensaver = 40000
 
@@ -918,5 +917,6 @@ if __name__ == '__main__':
         # Make sure we always tidy up the keymap
         keyMapCtrl.cleanup()
         del keyMapCtrl
+        del sonosDevice
     else:
         xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32067))

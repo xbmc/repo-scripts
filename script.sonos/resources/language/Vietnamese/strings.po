@@ -16,6 +16,10 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "Địa chỉ IP"
+
 msgctxt "#32008"
 msgid "Debugging"
 msgstr "Tìm sửa lỗi"

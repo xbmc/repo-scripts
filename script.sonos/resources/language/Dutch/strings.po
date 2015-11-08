@@ -154,7 +154,7 @@ msgstr "Automatiseren"
 
 msgctxt "#32035"
 msgid "Layout"
-msgstr "Lay-out"
+msgstr "Indeling"
 
 msgctxt "#32036"
 msgid "Controller,Slideshow,Bio,Albums"
@@ -187,6 +187,10 @@ msgstr "Verberg Sonoslogo"
 msgctxt "#32043"
 msgid "Make Artist Slideshow Image Full Screen"
 msgstr "Maak artiesten diavoorstelling afbeelding volledig scherm"
+
+msgctxt "#32044"
+msgid "Launch Controller On Kodi Startup"
+msgstr "Start controller bij aanvang Kodi"
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

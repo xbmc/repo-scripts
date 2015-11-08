@@ -87,7 +87,7 @@ class SonosPlayingPopup(xbmcgui.WindowXMLDialog):
 
 
 #########################################
-# Links the Sonos Volume to that of XBMC
+# Links the Sonos Volume to that of Kodi
 #########################################
 class SonosVolumeLink():
     def __init__(self, sonosDevice):
@@ -105,7 +105,7 @@ class SonosVolumeLink():
         if not Settings.linkAudioWithSonos():
             return
 
-        # Get the current XBMC Volume
+        # Get the current Kodi Volume
         xbmcVolume, xbmcMuted = self._getXbmcVolume()
         log("SonosVolumeLink: xbmcVolume = %d, selfvol = %d" % (xbmcVolume, self.sonosVolume))
         # Check to see if it has changed, and if we need to change the sonos value
@@ -114,7 +114,7 @@ class SonosVolumeLink():
             sonosDevice.volume = xbmcVolume
             self.sonosVolume = xbmcVolume
 
-        # Check to see if XBMC has been muted
+        # Check to see if Kodi has been muted
         if (xbmcMuted != -1) and (xbmcMuted != self.sonosMuted):
             sonosDevice.mute = xbmcMuted
             self.sonosMuted = xbmcMuted
@@ -165,7 +165,7 @@ class SonosVolumeLink():
 
 
 ##############################################################
-# Automatically Pauses Sonos if XBMC starts playing something
+# Automatically Pauses Sonos if Kodi starts playing something
 ##############################################################
 class SonosAutoPause():
     def __init__(self, sonosDevice):
@@ -303,7 +303,7 @@ if __name__ == '__main__':
     if Settings.autoLaunchControllerOnStartup():
         # Launch the Sonos controller, but do not block as we have more to do as a service
         log("SonosService: Launching controller on startup")
-        xbmc.executebuiltin('XBMC.RunScript(%s)' % (os.path.join(__cwd__, "default.py")), False)
+        xbmc.executebuiltin('RunScript(%s)' % (os.path.join(__cwd__, "default.py")), False)
 
     if (not Settings.isNotificationEnabled()) and (not audioChanges) and (not Settings.autoPauseSonos()):
         log("SonosService: Notifications, Volume Link and Auto Pause are disabled, exiting service")
@@ -328,7 +328,7 @@ if __name__ == '__main__':
             # Class that handles the automatic pausing of the Sonos system
             autoPause = SonosAutoPause(sonosDevice)
 
-            # Loop until XBMC exits
+            # Loop until Kodi exits
             while (not xbmc.abortRequested):
                 # Fist check to see if the Sonos needs to be switched
                 # to line-in because media has started playing

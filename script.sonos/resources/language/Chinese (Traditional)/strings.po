@@ -16,6 +16,10 @@ msgstr ""
 "Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgctxt "#32002"
+msgid "IP Address"
+msgstr "IP 位址"
+
 msgctxt "#32008"
 msgid "Debugging"
 msgstr "除錯"

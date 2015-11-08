@@ -56,6 +56,10 @@ msgctxt "#32100"
 msgid "Music Library"
 msgstr "Biblioteca de música"
 
+msgctxt "#32101"
+msgid "Queue"
+msgstr "Cua"
+
 msgctxt "#32110"
 msgid "Artists"
 msgstr "Artistes"

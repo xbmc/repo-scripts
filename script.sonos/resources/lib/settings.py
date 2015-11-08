@@ -33,7 +33,7 @@ def os_path_join(dir, file):
     return os.path.join(dir, file)
 
 
-# Class used to supply XBMC logging to the soco scripts
+# Class used to supply Kodi logging to the soco scripts
 class SocoLogging(logging.Handler):
     def emit(self, message):
         log(message.getMessage())

@@ -188,6 +188,10 @@ msgctxt "#32043"
 msgid "Make Artist Slideshow Image Full Screen"
 msgstr "Artist Slideshow atvaizdą rodyti visame ekrane"
 
+msgctxt "#32044"
+msgid "Launch Controller On Kodi Startup"
+msgstr "Paleisti valdiklį įjungus Kodi"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "ArtistSlideshow turi būti įjungti šie nustatymai"

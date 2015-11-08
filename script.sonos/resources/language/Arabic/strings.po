@@ -32,6 +32,10 @@ msgctxt "#32012"
 msgid "Debugging"
 msgstr "التصحيح"
 
+msgctxt "#32035"
+msgid "Layout"
+msgstr "تصميم"
+
 msgctxt "#32062"
 msgid "Next"
 msgstr "التالي"

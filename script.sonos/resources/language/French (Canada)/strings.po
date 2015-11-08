@@ -30,7 +30,7 @@ msgstr "Adresse IP"
 
 msgctxt "#32003"
 msgid "Enable Notifications (Restart Required)"
-msgstr "Activer les notifications (redémarrage nécessaire)"
+msgstr "Activer les notifications (redémarrage exigé)"
 
 msgctxt "#32004"
 msgid "Display Notification For (Seconds)"
@@ -106,11 +106,11 @@ msgstr "Éviter la frappe à répétition des touches (secondes)"
 
 msgctxt "#32023"
 msgid "Link Kodi Volume With Sonos Speaker (Restart Required)"
-msgstr "Lier le volume de Kodi aux haut-parleur Sonos (redémarrage nécessaire)"
+msgstr "Lier le volume de Kodi aux haut-parleur Sonos (redémarrage exigé)"
 
 msgctxt "#32024"
 msgid "Switch Sonos To Line-In On Kodi Startup (Restart Required)"
-msgstr "Basculer les Sonos sur Entrée de ligne au démarrage de Kodi (redémarrage requis)"
+msgstr "Basculer les Sonos sur Entrée de ligne au démarrage de Kodi (redémarrage exigé)"
 
 msgctxt "#32025"
 msgid "Volume Change Increments"
@@ -134,7 +134,7 @@ msgstr "Mettre à jour l'adresse IP automatiquement lors du démarrage"
 
 msgctxt "#32030"
 msgid "Switch Sonos To Line-In On Media Start (Restart Required)"
-msgstr "Basculer les Sonos sur Entrée de ligne au démarrage du média (redémarrage requis)"
+msgstr "Basculer les Sonos sur Entrée de ligne au démarrage du média (redémarrage exigé)"
 
 msgctxt "#32031"
 msgid "Coordinator"
@@ -187,6 +187,10 @@ msgstr "Cacher le logo Sonos"
 msgctxt "#32043"
 msgid "Make Artist Slideshow Image Full Screen"
 msgstr "Image du diaporama des artistes en plein écran"
+
+msgctxt "#32044"
+msgid "Launch Controller On Kodi Startup"
+msgstr "Lancer le contrôleur au démarrage de Kodi"
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"

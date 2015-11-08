@@ -32,6 +32,10 @@ msgctxt "#32009"
 msgid "Enable debug logging"
 msgstr "显示除错信息"
 
+msgctxt "#32010"
+msgid "Speaker"
+msgstr "扬声器"
+
 msgctxt "#32011"
 msgid "Notifications"
 msgstr "通知"
@@ -44,6 +48,10 @@ msgctxt "#32015"
 msgid "Controller"
 msgstr "控制器"
 
+msgctxt "#32018"
+msgid "Plugin"
+msgstr "插件"
+
 msgctxt "#32035"
 msgid "Layout"
 msgstr "布局"
@@ -51,6 +59,10 @@ msgstr "布局"
 msgctxt "#32062"
 msgid "Next"
 msgstr "下一项"
+
+msgctxt "#32067"
+msgid "IP Address Not Set"
+msgstr "IP 地址未设置"
 
 msgctxt "#32068"
 msgid "Error"
@@ -83,3 +95,19 @@ msgstr "音轨"
 msgctxt "#32157"
 msgid "Update Music Library"
 msgstr "更新音乐资料库"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "今天是 %day"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "早上好"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "下午好"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "晚上好"

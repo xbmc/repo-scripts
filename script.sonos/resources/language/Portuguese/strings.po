@@ -188,6 +188,10 @@ msgctxt "#32043"
 msgid "Make Artist Slideshow Image Full Screen"
 msgstr "Tornar Apresentação de Diapositivos do Artista em Full Screen"
 
+msgctxt "#32044"
+msgid "Launch Controller On Kodi Startup"
+msgstr "Lançar Controlador Ao Iniciar Kodi"
+
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
 msgstr "A seguinte definição tem de estar activa em ArtistSlideshow"

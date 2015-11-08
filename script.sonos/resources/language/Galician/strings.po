@@ -200,6 +200,10 @@ msgctxt "#32114"
 msgid "Tracks"
 msgstr "Pistas"
 
+msgctxt "#32115"
+msgid "Imported Playlists"
+msgstr "Listaxes importadas"
+
 msgctxt "#32150"
 msgid "Open Sonos Player"
 msgstr "Reprodutor Open Sonos"
@@ -231,3 +235,31 @@ msgstr "Substituír Cola"
 msgctxt "#32157"
 msgid "Update Music Library"
 msgstr "Actualizar biblioteca de música"
+
+msgctxt "#32220"
+msgid "The time is %time"
+msgstr "Son as %time"
+
+msgctxt "#32221"
+msgid "Today is %day"
+msgstr "Hoxe é %day"
+
+msgctxt "#32222"
+msgid "Todays date is %date"
+msgstr "Hoxe é %date"
+
+msgctxt "#32223"
+msgid "Good Morning"
+msgstr "Bos días"
+
+msgctxt "#32224"
+msgid "Good Afternon"
+msgstr "Boas tardes"
+
+msgctxt "#32225"
+msgid "Good Evening"
+msgstr "Boas noites"
+
+msgctxt "#32226"
+msgid "The time is %time"
+msgstr "Son as %time"

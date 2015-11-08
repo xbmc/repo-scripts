@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "Debugging"
 msgstr "Debugging"
 
+msgctxt "#32015"
+msgid "Controller"
+msgstr "Controller"
+
 msgctxt "#32035"
 msgid "Layout"
 msgstr "Layout"

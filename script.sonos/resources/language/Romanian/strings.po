@@ -48,6 +48,10 @@ msgctxt "#32068"
 msgid "Error"
 msgstr "Eroare"
 
+msgctxt "#32100"
+msgid "Music Library"
+msgstr "Mediatecă audio"
+
 msgctxt "#32101"
 msgid "Queue"
 msgstr "Coadă"

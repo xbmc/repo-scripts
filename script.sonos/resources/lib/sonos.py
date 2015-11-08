@@ -214,6 +214,6 @@ class Sonos(SoCo):
             # might not be complete of upto date, only show the error once
             if Sonos.SHOWN_ERROR is not True:
                 Sonos.SHOWN_ERROR = True
-                xbmc.executebuiltin('Notification(%s, %s, 5, %s)' % (__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32063).encode('utf-8'), __icon__))
+                xbmc.executebuiltin('Notification(%s, %s, 3000, %s)' % (__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32063).encode('utf-8'), __icon__))
 
         return track
