@@ -653,7 +653,7 @@ class DVRBase(util.CronReceiver):
         items = groupItems + seriesItems
 
         if not items:
-            util.setGlobalProperty('NO_RECORDINGS',self.storageServer.getRecordingsFailed and '[COLOR 80FF0000]{0}[/COLOR]'.format(T(32829)) or T(32803))
+            util.setGlobalProperty('NO_RECORDINGS',self.storageServer.getRecordingsFailed and u'[COLOR 80FF0000]{0}[/COLOR]'.format(T(32829)) or T(32803))
         else:
             util.setGlobalProperty('NO_RECORDINGS','')
 
@@ -884,7 +884,7 @@ class DVRBase(util.CronReceiver):
             items.append(item)
 
         if not items:
-            util.setGlobalProperty('NO_RULES',self.storageServer.getRulesFailed and '[COLOR 80FF0000]{0}[/COLOR]'.format(T(32830)) or T(32804))
+            util.setGlobalProperty('NO_RULES',self.storageServer.getRulesFailed and u'[COLOR 80FF0000]{0}[/COLOR]'.format(T(32830)) or T(32804))
         else:
             util.setGlobalProperty('NO_RULES','')
 

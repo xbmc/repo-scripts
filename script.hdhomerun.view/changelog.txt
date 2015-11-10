@@ -1,3 +1,7 @@
+** 2015.11.09 **
+
+Fix for errors caused by encoding issues
+
 ** 2015.10.18 **
 
 Use new recording rules API

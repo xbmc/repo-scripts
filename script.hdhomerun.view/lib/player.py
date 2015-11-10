@@ -96,7 +96,7 @@ class HDHRPlayer(xbmc.Player):
     def playChannel(self,channel):
         url = channel.sources[0].url
         util.DEBUG_LOG('Playing from source: {0}'.format(channel.sources[0].ID))
-        title = '{0} - {1}'.format(channel.number,channel.name)
+        title = u'{0} - {1}'.format(channel.number,channel.name)
         item = xbmcgui.ListItem(title,thumbnailImage=channel.guide.icon)
         info = {'Title':  title,
                 #'Plot':   currentShow.synopsis,
