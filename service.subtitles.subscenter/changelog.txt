@@ -1,0 +1,89 @@
+3.3.3 - by CaTz (11/11/2015)
+- Optimize file release parsing
+
+3.3.2 - by CaTz (08/08/2015)
+- Fix manual search it TvShows
+
+3.3.1 - by CaTz (11/07/2015)
+- Bug fix, Handle titles that contains "." properly.
+
+3.3.0 - by CaTz 08/11/2014
+- Bug fix, add slash or backslash at the end of path (fix xbmcvfs.exists in Helix)
+- Add support for preferred language in Helix
+
+3.2.3 - by CaTz 12/08/2014
+- Bug fix with the site searching
+- Removes country identifier at the end of the title
+
+3.2.2 - by CaTz 18/05/2014
+- Bug fix with manual search
+
+3.2.1 - by CaTz 16/05/2014
+- Improvement of RLS title parsing
+
+3.2.0 - by maortal 14/05/2014
+- Performance boost replaced decode with unicode method (should be replaced again if XBMC moves to python3)
+- Fix android issues with re.sub (duo to usage of python 2.6)
+
+3.1.9 - by CaTz 11/05/2014
+- Advanced Movie Title / TV-show parsing (includes release)
+
+3.1.8 - by CaTz 09/05/2014
+- Support hebrew search
+
+3.1.7 - by CaTz 07/05/2014
+- Bug fix, url decode the manual search string
+- Added feature, parse RLS names of the shows and movies
+
+3.1.6 - by sagiben 01/04/2014
+- Fix crash due to a division of a str, adding casting to float
+
+3.1.5 - by CaTz 28/03/2014
+- Bug fix, plugin crash if there is no downloads in the site (expected to str)
+
+3.1.4 - by CaTz 23/03/2014
+- Bug fix, handle HTML entities in the content show of the website
+
+3.1.3 - by CaTz 15/03/2014
+- Change python version for Gotham
+
+3.1.2 - by CaTz 14/02/2014
+- Fix cache issues
+- Added feature, clean the cache from the settings
+
+3.1.1 - by CaTz 01/02/2014
+- Cache tv-show site`s slug to prevent future search of the same tv-show
+
+3.1.0 - by CaTz
+- Redesign the code to work as OOP
+- Fix the rating stars (now shows num of downloads from the website)
+- Calculate the sync rating with folder name or file name (the longest is more valuable)
+- Sort the subtitle list by Language -> is sync -> rating
+- Filter search result with year (if exists)
+
+3.0 - by CaTz
+- Migration to Gotham standards
+- Threshold of 2 pages in _search result
+- Using native JSON parser
+- Sort the subtitle list by rating in context of full list, (so if there was any movie that is not related, 
+	but still exists in the _search results, the full list will have the most relevant subtitles at the top)
+
+2.5 - by Maor Tal
+- support for Subscenter new website + workaround (10x to CaTz)
+
+1.5.0 - by sagiben
+- Porting service to Gotham's format, 
+  code is based on Ori Varon's addon from previous versions
+
+1.4.0 - by Ori Varon
+- Fixed key field (Thanks ILRHAES)
+
+1.3.0 - by Ori Varon
+- Fixed null values in website dictionary (changed to None).
+
+1.2.0 - by Ori Varon
+- Added key field for download URL. 
+
+1.1.0 - by Ori Varon
+- Fixed downloading of non-Hebrew subtitles.
+
