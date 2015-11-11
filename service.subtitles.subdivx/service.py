@@ -16,7 +16,7 @@ import sys
 import tempfile
 import time
 from unicodedata import normalize
-from urllib import FancyURLopener, unquote, quote_plus, urlencode
+from urllib import FancyURLopener, unquote, quote_plus, urlencode, quote
 from urlparse import parse_qs
 
 try:
@@ -88,7 +88,7 @@ SUBTITLE_RE = re.compile(r'''<a\s+class="titulo_menu_izq2?"\s+
 DETAIL_PAGE_LINK_RE = re.compile(r'<a rel="nofollow" class="detalle_link" href="http://www.subdivx.com/(?P<id>.*?)"><b>Bajar</b></a>',
                                  re.IGNORECASE | re.DOTALL | re.MULTILINE | re.UNICODE)
 
-DOWNLOAD_LINK_RE = re.compile(r'bajar.php\?id=(?P<id>.*?)&u=(?P<u>.*?)\"', re.IGNORECASE |
+DOWNLOAD_LINK_RE = re.compile(r'bajar.php\?id=(?P<id>.*?)&u=(?P<u>[^"\']+?)', re.IGNORECASE |
                               re.DOTALL | re.MULTILINE | re.UNICODE)
 
 # ==========
@@ -123,13 +123,6 @@ def get_url(url):
     return content
 
 
-def _downloads2rating(downloads):
-    rating = downloads / 1000
-    if rating > 10:
-        rating = 10
-    return rating
-
-
 def get_all_subs(searchstring, languageshort, file_orig_path):
     if languageshort != "es":
         return []
@@ -151,7 +144,6 @@ def get_all_subs(searchstring, languageshort, file_orig_path):
             downloads = int(dls)
 
             descr = groups['comment']
-            descr = descr.strip()
             # Remove new lines
             descr = re.sub('\n', ' ', descr)
             # Remove Google Ads
@@ -160,6 +152,7 @@ def get_all_subs(searchstring, languageshort, file_orig_path):
                            re.UNICODE)
             # Remove HTML tags
             descr = re.sub(r'<[^<]+?>', '', descr)
+            descr = descr.rstrip(' \t')
 
             # If our actual video file's name appears in the description
             # then set sync to True because it has better chances of its
@@ -179,7 +172,6 @@ def get_all_subs(searchstring, languageshort, file_orig_path):
                 'subdivx_id': subdivx_id.decode(PAGE_ENCODING),
                 'uploader': groups['uploader'],
                 'downloads': downloads,
-                'rating': _downloads2rating(downloads),
                 'score': int(groups['calif']),
             }
             subs_list.append(item)
@@ -187,8 +179,32 @@ def get_all_subs(searchstring, languageshort, file_orig_path):
 
     # Put subs with sync=True at the top
     subs_list = sorted(subs_list, key=lambda s: s['sync'], reverse=True)
-    log(u"Returning %s" % pformat(subs_list))
     return subs_list
+
+
+def compute_ratings(subs_list):
+    """
+    Calculate the rating figures (from zero to five) in a relative fashion
+    based on number of downloads.
+
+    This is later converted by XBMC/Kodi in a zero to five stars GUI.
+
+    Ideally, we should be able to use a smarter number instead of just the
+    download count of every subtitle but it seems in Subdivx the 'score' value
+    has no reliable value and there isn't a user ranking system in place
+    we could use to deduce the quality of a contribution.
+    """
+    max_dl_count = 0
+    for sub in subs_list:
+        dl_cnt = sub.get('downloads', 0)
+        if dl_cnt > max_dl_count:
+            max_dl_count = dl_cnt
+    for sub in subs_list:
+        if max_dl_count:
+            sub['rating'] = int((sub['downloads'] / float(max_dl_count)) * 5)
+        else:
+            sub['rating'] = 0
+    log(u"subs_list = %s" % pformat(subs_list))
 
 
 def append_subtitle(item, filename):
@@ -259,6 +275,8 @@ def Search(item):
 
     subs_list = get_all_subs(searchstring, "es", file_original_path)
 
+    compute_ratings(subs_list)
+
     for sub in subs_list:
         append_subtitle(sub, file_original_path)
 
@@ -278,7 +296,8 @@ def _wait_for_extract(workdir, base_filecount, base_mtime, limit):
         for fname in files:
             if not is_subs_file(fname):
                 continue
-            fname = fname.decode('utf-8')
+            if not isinstance(fname, unicode):
+                fname = fname.decode('utf-8')
             mtime = os.stat(pjoin(workdir, fname)).st_mtime
             if mtime > newest_mtime:
                 newest_mtime = mtime
@@ -313,7 +332,9 @@ def _handle_compressed_subs(workdir, compressed_file):
             # sure we get the newly created subtitle file
             if not is_subs_file(fname):
                 continue
-            fpath = pjoin(workdir, fname.decode("utf-8"))
+            if not isinstance(fname, unicode):
+                fname = fname.decode('utf-8')
+            fpath = pjoin(workdir, fname)
             if os.stat(fpath).st_mtime > base_mtime:
                 # unpacked file is a newly created subtitle file
                 retval = True
@@ -362,7 +383,7 @@ def Download(subdivx_id, workdir):
     """Called when subtitle download is requested from XBMC."""
     # Get the page with the subtitle link,
     # i.e. http://www.subdivx.com/X6XMjE2NDM1X-iron-man-2-2010
-    subtitle_detail_url = MAIN_SUBDIVX_URL + subdivx_id
+    subtitle_detail_url = MAIN_SUBDIVX_URL + quote(subdivx_id)
     # Fetch and scrape new intermediate page
     html_content = get_url(subtitle_detail_url)
     if html_content is None:
@@ -463,7 +484,7 @@ def get_params(argv):
 
 def debug_dump_path(victim, name):
     t = type(victim)
-    log("%s (%s): %s" % (name, t, victim))
+    xbmc.log("%s (%s): %s" % (name, t, victim), level=LOGDEBUG)
 
 
 def main():
@@ -523,9 +544,11 @@ def main():
         debug_dump_path(xbmc.translatePath(__addon__.getAddonInfo('profile')),
                         "xbmc.translatePath(__addon__.getAddonInfo('profile'))")
         debug_dump_path(__profile__, '__profile__')
+        xbmcvfs.mkdirs(__profile__)
         workdir = tempfile.mkdtemp(dir=__profile__)
         # Make sure it ends with a path separator (Kodi 14)
         workdir = workdir + os.path.sep
+        debug_dump_path(workdir, 'workdir')
         # We pickup our arguments sent from the Search() function
         subs = Download(params["id"], workdir)
         # We can return more than one subtitle for multi CD versions, for now
