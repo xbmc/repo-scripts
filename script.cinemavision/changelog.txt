@@ -1,5 +1,10 @@
 Changelog for CinemaVision
 
+[- 1.0.2 -]
+
+- change:  Improve logging and add a dialog for sequence loading errors
+- fix:     Error when testing play/resume/abort actions when the action file is not set
+
 [- 1.0.1 -]
 
 - add:     Now disables GUI sounds when playing a sequence

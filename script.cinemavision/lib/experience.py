@@ -882,10 +882,14 @@ class ExperiencePlayer(xbmc.Player):
         xbmcgui.Window(10025).setProperty('CinemaExperienceRunning', 'True')
         self.initSkinVars()
         self.playGUISounds.disable()
+        self.screensaver.disable()
+        self.visualization.disable()
         try:
             return self._start(sequence_path)
         finally:
             self.playGUISounds.restore()
+            self.screensaver.restore()
+            self.visualization.restore()
             kodiutil.setGlobalProperty('running', '')
             xbmcgui.Window(10025).setProperty('CinemaExperienceRunning', '')
             self.initSkinVars()
@@ -1091,8 +1095,6 @@ class ExperiencePlayer(xbmc.Player):
         self.window.setTransition('none')
 
         xbmc.enableNavSounds(False)
-        self.screensaver.disable()
-        self.visualization.disable()
 
         self.playMusic(image_queue)
 
@@ -1139,8 +1141,6 @@ class ExperiencePlayer(xbmc.Player):
                 else:
                     return
         finally:
-            self.screensaver.restore()
-            self.visualization.restore()
             kodiutil.setGlobalProperty('paused', '')
             xbmc.enableNavSounds(True)
             self.stopMusic(action != 'BACK' and image_queue or None)

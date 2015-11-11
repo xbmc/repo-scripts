@@ -972,3 +972,11 @@ msgstr ""
 msgctxt "#32600"
 msgid "Default 3D"
 msgstr ""
+
+msgctxt "#32601"
+msgid "ERROR"
+msgstr ""
+
+msgctxt "#32602"
+msgid "Error parsing sequence"
+msgstr ""

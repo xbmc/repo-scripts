@@ -1275,7 +1275,7 @@ class SequenceProcessor:
         self.pos += 1
         playable = self.playables[self.pos]
 
-        if playable.type == 'ACTION':
+        if playable and playable.type == 'ACTION':
             self._lastAction = playable
 
         return playable

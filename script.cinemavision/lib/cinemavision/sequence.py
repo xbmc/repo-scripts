@@ -1036,7 +1036,16 @@ def getItemsFromString(dstring):
         data = json.loads(dstring)
         return [Item.fromDict(ddict) for ddict in data['items']]
     except ValueError:
-        return getItemsFromXMLString(dstring)
+        if dstring and dstring.startswith('{'):
+            util.LOG(repr(dstring[:100]))
+            util.ERROR()
+        else:
+            try:
+                return getItemsFromXMLString(dstring)
+            except:
+                util.ERROR()
+
+    return None
 
 
 def loadSequence(path):

@@ -217,13 +217,13 @@ def testEventActions(action):
 
     if action == 'PAUSE':
         if kodiutil.getSetting('action.onPause', False):
-            path = kodiutil.getSetting('action.onPause.file').decode('utf-8')
+            path = kodiutil.getSetting('action.onPause.file', '').decode('utf-8')
     elif action == 'RESUME':
         if kodiutil.getSetting('action.onResume', 0) == 2:
-            path = kodiutil.getSetting('action.onResume.file').decode('utf-8')
+            path = kodiutil.getSetting('action.onResume.file', '').decode('utf-8')
     elif action == 'ABORT':
         if kodiutil.getSetting('action.onAbort', False):
-            path = kodiutil.getSetting('action.onAbort.file').decode('utf-8')
+            path = kodiutil.getSetting('action.onAbort.file', '').decode('utf-8')
 
     if not path:
         import xbmcgui

@@ -880,6 +880,9 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         xmlString = f.read().decode('utf-8')
         f.close()
         sItems = cinemavision.sequence.getItemsFromString(xmlString)
+        if sItems is None:
+            sItems = []
+            xbmcgui.Dialog().ok(T(32601, 'ERROR'), T(32602, 'Error parsing sequence'))
         self.sequenceControl.reset()
         self.fillSequence()
 
