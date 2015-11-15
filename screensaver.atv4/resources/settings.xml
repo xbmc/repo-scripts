@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="ScreenSavers">
+		<setting id="b1-1" type="bool" label="Hawaii by day" default="true" />
+		<setting id="b1-2" type="bool" label="London by night" default="true" />
+		<setting id="b1-3" type="bool" label="New York City by day" default="true" />
+		<setting id="b1-4" type="bool" label="San Francisco by night" default="true" />
+		<setting id="b2-1" type="bool" label="China by day" default="true" />
+		<setting id="b2-2" type="bool" label="Hawaii by day" default="true" />
+		<setting id="b2-3" type="bool" label="New York City by night" default="true" />
+		<setting id="b2-4" type="bool" label="San Francisco by night" default="true" />
+		<setting id="b3-1" type="bool" label="London by night" default="true" />
+		<setting id="b3-2" type="bool" label="New York City by day" default="true" />
+		<setting id="b3-3" type="bool" label="San Francisco by day" default="true" />
+		<setting id="b4-1" type="bool" label="Hawaii by day" default="true" />
+		<setting id="b4-2" type="bool" label="New York City by night" default="true" />
+		<setting id="b4-3" type="bool" label="San Francisco by day" default="true" />
+		<setting id="b5-1" type="bool" label="China by day" default="true" />
+		<setting id="b5-2" type="bool" label="London by day" default="true" />
+		<setting id="b5-3" type="bool" label="San Francisco by night" default="true" />
+		<setting id="b6-1" type="bool" label="China by day" default="true" />
+		<setting id="b6-2" type="bool" label="Hawaii by night" default="true" />
+		<setting id="b6-3" type="bool" label="London by day" default="true" />
+		<setting id="b6-4" type="bool" label="San Francisco by night" default="true" />
+		<setting id="b7-1" type="bool" label="Hawaii by day" default="true" />
+		<setting id="b7-2" type="bool" label="New York City by day" default="true" />
+		<setting id="b7-3" type="bool" label="San Francisco by night" default="true" />
+		<setting id="b10-4" type="bool" label="San Francisco by night" default="true" />
+		<setting id="b8-2" type="bool" label="San Francisco by day" default="true" />
+		<setting id="b8-3" type="bool" label="San Francisco by day" default="true" />
+		<setting id="b9-1" type="bool" label="Hawaii by day" default="true" />
+		<setting id="b9-2" type="bool" label="London by night" default="true" />
+		<setting id="b9-3" type="bool" label="San Francisco by day" default="true" />
+		<setting id="b10-1" type="bool" label="Hawaii by day" default="true" />
+		<setting id="b10-2" type="bool" label="New York City by night" default="true" />
+		<setting id="b10-3" type="bool" label="San Francisco by day" default="true" />
+		<setting id="b8-1" type="bool" label="Hawaii by night" default="true" />
+	</category>
+</settings>
