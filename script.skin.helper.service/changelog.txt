@@ -1,2 +1,9 @@
+v.1.0.11
+- fix some errors in music artwork
+- improvements and rework in skinshortcuts integration
+- improvements to widgets
+- fix widgets not refreshing
+- fix for Kodi Jarvis resource addons listing
+- added splash screen feature
 v.1.0.0
 - Initial repo version 

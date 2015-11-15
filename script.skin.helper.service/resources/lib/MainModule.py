@@ -261,4 +261,27 @@ def toggleKodiSetting(settingname):
     else:
         newValue = "true"
     xbmc.executeJSONRPC('{"jsonrpc":"2.0", "id":1, "method":"Settings.SetSettingValue","params":{"setting":"%s","value":%s}}' %(settingname,newValue))
-   
+     
+def show_splash(file,duration=5):
+    logMsg("show_splash --> " + file)
+    if file.lower().endswith("jpg") or file.lower().endswith("gif") or file.lower().endswith("png") or file.lower().endswith("tiff"):
+        #this is an image file
+        WINDOW.setProperty("SkinHelper.SplashScreen",file)
+        #for images we just wait for X seconds to close the splash again
+        start_time = time.time()
+        while(time.time() - start_time <= duration):
+            xbmc.sleep(500)
+    else:
+        #for video or audio we have to wait for the player to finish...
+        xbmc.Player().play(file,windowed=True)
+        xbmc.sleep(500)
+        while xbmc.getCondVisibility("Player.HasMedia"):
+            xbmc.sleep(150)
+
+    #replace startup window with home
+    startupwindow = xbmc.getInfoLabel("$INFO[System.StartupWindow]")
+    xbmc.executebuiltin("ReplaceWindow(%s)" %startupwindow)
+    
+    #startup playlist (if any)
+    AutoStartPlayList = xbmc.getInfoLabel("$ESCINFO[Skin.String(AutoStartPlayList)]")
+    if AutoStartPlayList: xbmc.executebuiltin("PlayMedia(%s)" %AutoStartPlayList)

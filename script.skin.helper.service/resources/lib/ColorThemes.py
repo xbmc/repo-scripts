@@ -317,7 +317,7 @@ def loadColorTheme(file):
             
 def get_browse_dialog(default="protocol://", heading="Browse", dlg_type=3, shares="files", mask="", use_thumbs=False, treat_as_folder=False):
     dialog = xbmcgui.Dialog()
-    value = dialog.browse(dlg_type, heading, shares, mask, use_thumbs, treat_as_folder, default)
+    value = dialog.browse(dlg_type, heading, shares, mask, use_thumbs, treat_as_folder,)
     return value
 
 def restoreColorTheme():

@@ -1,16 +1,6 @@
 # script.skin.helper.service
 a helper service for Kodi skins
 
-This is the first version of this script, currently only available as beta on Git. Once tested by a few skinners I will submit it to the official Kodi repo.
-
-If you run into any issues , have some feedback or feature requests, feel free to ask and please report bugs !
-
-Thanks all for testing!
-
-Regards,
-
-Marcel
-
 ________________________________________________________________________________________________________
 
 ### Settings for the script
@@ -77,8 +67,11 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.ListItemGenre.X) | Will return all genres of the current listitem. Start counting from 0|
 |Window(Home).Property(SkinHelper.ListItemDirectors) | Will return all directors of the current listitem seperated by [CR] |
 |Window(Home).Property(SkinHelper.ListItemSubtitles) | Will return all subtitles of the current listitem seperated by / |
+|Window(Home).Property(SkinHelper.ListItemSubtitles.Count) | Will return the number of Subtitles |
 |Window(Home).Property(SkinHelper.ListItemLanguages) | Will return all audio languages of the current listitem seperated by / |
+|Window(Home).Property(SkinHelper.ListItemLanguages.Count) | Will return the number of Languages |
 |Window(Home).Property(SkinHelper.ListItemSubtitles.X) | Will return subtitle X of the current listitem. Start counting from 0 |
+|Window(Home).Property(SkinHelper.ListItemAudioStreams.Count) | Will return the number of Audio streams |
 |Window(Home).Property(SkinHelper.ListItemAudioStreams.X) | Will return the language-codec-channels of audiostream X for the current listitem. Start counting from 0 |
 |Window(Home).Property(SkinHelper.ListItemAudioStreams.X.Language) | Will return the language of audiostream X for the current listitem. Start counting from 0 |
 |Window(Home).Property(SkinHelper.ListItemAudioStreams.X.AudioCodec) | Will return the AudioCodec of audiostream X for the current listitem. Start counting from 0 |
@@ -117,6 +110,7 @@ The script handles this logic to locate the fanart:
 
 Note: If you also want to have the Studio logo and Duration Properties for your homescreen widgets, you need to set a Window Property "SkinHelper.WidgetContainer" with the ID of your widget container:
 For example in home.xml: <onload>SetProperty(SkinHelper.WidgetContainer,301)</onload>
+
 
 #### Movie sets window properties
 If the selected listitem in the videolibrary is a movie set, some additional window properties are provided:
@@ -165,7 +159,8 @@ ________________________________________________________________________________
 
 
 #### Music library window properties
-Some additional window properties that can be used in the music library. 
+Some additional window properties that can be used in the music library.
+The artwork is detected in the music paths automatically. Also in the addon settings for the skinhelper addon, you can enable a scraper for music artwork.
 
 | property 			| description |
 | :----------------------------	| :----------- |
@@ -186,6 +181,8 @@ For example in home.xml: <onload>SetProperty(SkinHelper.WidgetContainer,301)</on
 ##### Music artwork/properties for music player
 The music properties are also available for the player:
 
+| property 			| description |
+| :----------------------------	| :----------- |
 | Window(Home).Property(SkinHelper.Player.Music.Banner) | Will return the Artist's banner image (if found). |
 | Window(Home).Property(SkinHelper.Player.Music.FanArt) | Will return the Artist's fanart image (if found). |
 | Window(Home).Property(SkinHelper.Player.Music.ClearLogo) | Will return the Artist's logo image (if found). |
@@ -244,6 +241,7 @@ Set it to 0 or clear the string to disable the backgrounds.
 | Window(Home).Property(SkinHelper.AllMoviesBackground) | Random fanart of movies in video database|
 | Window(Home).Property(SkinHelper.AllTvShowsBackground) | Random fanart of TV shows in video database|
 | Window(Home).Property(SkinHelper.AllMusicVideosBackground) | Random fanart of music videos in video database|
+| Window(Home).Property(SkinHelper.RecentMusicBackground) | Random fanart of recently added music|
 | Window(Home).Property(SkinHelper.AllMusicBackground) | Random fanart of music artists in database|
 | Window(Home).Property(SkinHelper.GlobalFanartBackground) | Random fanart of all media types|
 | Window(Home).Property(SkinHelper.InProgressMoviesBackground) | Random fanart of in progress movies|
@@ -251,6 +249,10 @@ Set it to 0 or clear the string to disable the backgrounds.
 | Window(Home).Property(SkinHelper.UnwatchedMoviesBackground) | Random fanart of unwatched movies|
 | Window(Home).Property(SkinHelper.InProgressShowsBackground) | Random fanart of in progress tv shows|
 | Window(Home).Property(SkinHelper.RecentEpisodesBackground) | Random fanart of recently added episodes|
+| Window(Home).Property(SkinHelper.GlobalFanartBackground) | Random fanart of all media types|
+| Window(Home).Property(SkinHelper.AllVideosBackground) | Random videos background (movie/show/musicvideo)|
+| Window(Home).Property(SkinHelper.RecentVideosBackground) | Recent videos background (movie or tvshow)|
+| Window(Home).Property(SkinHelper.InProgressVideosBackground) | In progress videos background (movie or tvshow)|
 | Window(Home).Property(SkinHelper.PvrBackground) | Random fanart collected by the PVR thumbs feature|
 | Window(Home).Property(SkinHelper.PicturesBackground) | Random pictures from all picture sources. By default this pulls images from all picture sources the user has configured. It is however possible to provide a custom source from which the images should be pulled from by setting Skin String: SkinHelper.CustomPicturesBackgroundPath|
 | Window(Home).Property(SkinHelper.AllMoviesBackground.Wall) | Collection of Movie fanart images (from the library) as wall prebuilt by the script|
@@ -285,6 +287,13 @@ This command will open the special search window in the script. It has a onscree
 
 ________________________________________________________________________________________________________
 
+#### Message Dialog (dialogOK)
+```
+RunScript(script.skin.helper.service,action=dialogok,header[yourheadertext],message=[your message body])
+```
+This command will open Kodi's dialog OK window with the text you supplied
+________________________________________________________________________________________________________
+
 
 
 #### Color Picker
@@ -296,16 +305,20 @@ This command will open the color picker of the script. After the user selected a
 
 In your skin you can just use the skin string to color a control, example: <textcolor>$INFO[Skin.String(defaultLabelColor)]</textcolor>
 
-Note: If you want to display the name of the selected color, add a prefix .name to your skin string.
+Notes: 
+1) If you want to display the name of the selected color, add a prefix .name to your skin string.
 For example: <label>Default color for labels: $INFO[Skin.String(defaultLabelColor.name)]</label>
 
-If you want to customize the look and feel of the color picker window, make sure to include script-skin_helper_service-ColorPicker.xml in your skin and skin it to your needs.
+2) If you want to customize the look and feel of the color picker window, make sure to include script-skin_helper_service-ColorPicker.xml in your skin and skin it to your needs.
 
-TIP: By default the colorpicker will provide a list of available colors.
+3) If you want to specify the header title of the color picker, make sure to include a label with ID 1 in the XML and add the header= parameter when you launch the script.
+For example: RunScript(script.skin.helper.service,action=colorpicker,skinstring=MySkinString,header=Set the OSD Foreground Color)
+
+4) By default the colorpicker will provide a list of available colors.
 If you want to provide that list yourself, create a file "colors.xml" in skin\extras\colors\colors.xml
 See the default colors file in the script's location, subfolder resources\colors
 
-Additional use cases of the color picker:
+##### Set a skinshortcuts property with the color
 If you want to set a Window(home) Property instead of a skin settings:
 RunScript(script.skin.helper.service,action=colorpicker,winproperty=XXX)
 
@@ -314,10 +327,27 @@ include a button in your script-skinshortcuts.xml with this onclick-action:
 
 RunScript(script.skin.helper.service,action=colorpicker,shortcutproperty=XXX)
 
+
+##### Multiple color palettes
+The color picker supports having multiple color palettes in your colors.xml.
+The structure of your colors.xml file will then be layered, like this:
+
+<colors>
+    <palette name="mypalette1">
+        <color name="color1">ffffffff</color>
+    </palette>
+</colors>
+
+If you do not create the palette sublevel in your colors.xml, the script will just display all <color> tags.
+If you have specified multiple palettes you can use a button with ID 3030 to switch between color palettes.
+Also it is possible to launch the color picker with a specific palette, in that case supply the palette= parameter when you open the picker, for example:
+
+RunScript(script.skin.helper.service,action=colorpicker,skinstring=MySkinString,palette=mypalette1)
+
 ________________________________________________________________________________________________________
 
 
-##### Webservice --> $INFO images inside list/panel containers and image lookups
+#### Webservice --> $INFO images inside list/panel containers and image lookups
 This script comes with a little web-helper service to retrieve images that are normally only available as window property and/or only available for the current focused listitem, such as the pvr artwork or music artwork.
 NOTE: The scripts webservice runs on tcp port 52307. This is currently hardcoded because there is no way to pass the port as an variable to the skin inside a list (which was the whole purpose of the webservice in the first place)
 
@@ -401,7 +431,7 @@ With this little workaround you can also use them inside containers...
 ```
 
 You provide the window property (or any other $INFO label as the title param. Note that you must replace the normal [] brackets with {}
-You can also use this approach for paths or resource images:
+At the moment it is not possible to use this approach for the new resource images addons due to a bug in Kodi: http://trac.kodi.tv/ticket/16366
 
 http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MyCustomPath)}/logo.png
 
@@ -409,6 +439,8 @@ http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MyCustomPath)}/lo
 Optional parameter: fallback --> Allows you to set a fallback image if no image was found.
 For example &amp;fallback=$INFO[ListItem.Thumb]
 
+Optional parameter: refresh --> By default the textures are cached by Kodi's texture cache which can be sticky when the underlying image was changed. Use an refresh param to force refresh.
+For example &amp;refresh=$INFO[System.Time(mm)]
 ________________________________________________________________________________________________________
 
 
@@ -509,6 +541,51 @@ You must supply the name of the setting as can be found in guisettings.xml or th
 ________________________________________________________________________________________________________
 
 
+#### Splash screen / skin intro 
+Can be used to easily provide a splash/intro option to your skin.
+Supports all media files: music, video or photo.
+
+First, set the setting somewhere in your skin settings, for example with this code:
+
+```
+control type="radiobutton">
+    <label>Enable splash screen (photo, video or music)</label>
+    <onclick condition="!Skin.String(SplashScreen)">Skin.SetFile(SplashScreen)</onclick>
+    <onclick condition="Skin.String(SplashScreen)">Skin.Reset(SplashScreen)</onclick>
+    <selected>Skin.String(SplashScreen)</selected>
+</control>
+```
+
+Secondly you have to adjust your Startup.xml from your skin to support the splash intro:
+
+```
+<onload condition="Skin.String(SplashScreen)">RunScript(script.skin.helper.service,action=splashscreen,file=$INFO[Skin.String(SplashScreen)],duration=5)</onload>
+<onload condition="!Skin.String(SplashScreen)">ReplaceWindow($INFO[System.StartupWindow])</onload>         
+```
+
+and you need to add both a videowindow and image control to your startup.xml:
+
+```
+<!-- video control for splash -->
+<control type="videowindow">
+    <width>100%</width>
+    <height>100%</height>
+</control>
+<!-- image control for splash -->
+<control type="image">
+    <width>100%</width>
+    <height>100%</height>
+    <aspectratio>keep</aspectratio>
+    <texture background="true">$INFO[Window(Home).Property(SkinHelper.SplashScreen)]</texture>
+</control>
+```
+
+Offcourse make sure to remove any other references which replaces the window...
+The duration parameter is optional, this will set the amount of seconds that an image will be shown as splash, defaults to 5 seconds if ommitted.
+Music and video files always default to play to the end before closing the splash screen.
+
+
+________________________________________________________________________________________________________
 
 #### Views selector
 ```

@@ -11,6 +11,7 @@ import time
 import datetime as dt
 import unicodedata
 import urlparse
+import xml.etree.ElementTree as xmltree
 
 try:
     import simplejson as json
@@ -50,8 +51,7 @@ def logMsg(msg, level = 1):
             print_exc()
         else: 
             xbmc.log("Skin Helper Service --> " + msg, level=xbmc.LOGNOTICE)
-        
-            
+                   
 def getContentPath(libPath):
     if "$INFO" in libPath and not "reload=" in libPath:
         libPath = libPath.replace("$INFO[Window(Home).Property(", "")
@@ -271,6 +271,11 @@ def createListItem(item):
     
     if "type" in item:
         liz.setProperty("type", item['type'])
+        
+    if "extraproperties" in item:
+        if isinstance(item["extraproperties"],dict):
+            for key,value in item["extraproperties"].iteritems():
+                liz.setProperty(key, value)
     
     if "plot" in item:
         liz.setInfo( type=itemtype, infoLabels={ "Plot": item['plot'] })
@@ -430,10 +435,10 @@ def detectPluginContent(plugin,skipscan=False):
     image = None
     contentType = None
     #load from cache first
-    cache = WINDOW.getProperty("skinhelper-widgetcontenttype")
+    cache = WINDOW.getProperty("skinhelper-widgetcontenttype").decode("utf-8")
     if cache:
         cache = eval(cache)
-        if cache and cache.has_key(plugin):
+        if cache and cache.get(plugin):
             contentType = cache[plugin][0]
             image = cache[plugin][1]
             return (contentType, image)
@@ -444,7 +449,7 @@ def detectPluginContent(plugin,skipscan=False):
         #safety check: check if no library windows are active to prevent any addons setting the view
         curWindow = xbmc.getInfoLabel("$INFO[Window.Property(xmlfile)]")
         if curWindow.endswith("Nav.xml") or curWindow == "AddonBrowser.xml" or curWindow.startswith("MyPVR"):
-            return None, None
+            skipScan = True
         
         if not skipscan:
             media_array = getJSON('Files.GetDirectory','{ "directory": "%s", "media": "files", "properties": ["title", "file", "thumbnail", "episode", "showtitle", "season", "album", "artist", "imdbnumber", "firstaired", "mpaa", "trailer", "studio", "art"], "limits": {"end":1} }' %plugin)
@@ -519,8 +524,8 @@ def detectPluginContent(plugin,skipscan=False):
     #save to cache
     cache[plugin] = (contentType,image)
     cache = repr(cache)
-    if contentType != "empty": WINDOW.setProperty("skinhelper-widgetcontenttype-persistant",cache)
-    WINDOW.setProperty("skinhelper-widgetcontenttype",cache)
+    if contentType != "empty": 
+        WINDOW.setProperty("skinhelper-widgetcontenttype",cache)
     
     #return the values
     return (contentType, getCleanImage(image))
@@ -590,7 +595,7 @@ def getCurrentContentType():
         contenttype = "seasons"
     elif xbmc.getCondVisibility("Container.Content(musicvideos)"):
         contenttype = "musicvideos"
-    elif xbmc.getCondVisibility("Container.Content(songs)"):
+    elif xbmc.getCondVisibility("Container.Content(songs) | StringCompare(Container.FolderPath,musicdb://singles/)"):
         contenttype = "songs"
     elif xbmc.getCondVisibility("Container.Content(artists)"):
         contenttype = "artists"
@@ -699,4 +704,144 @@ def unzip(zip_file,path):
         outputfile.close()
     f.close()
     logMsg("UNZIP DONE of file %s  to path %s " %(zipfile,path))
+    
+def matchStudioLogo(studiostr,studiologos):
+    #try to find a matching studio logo
+    studiologo = ""
+    studios = []
+    if "/" in studiostr:
+        studios = studiostr.split(" / ")
+    else:
+        studios.append(studiostr)
+    
+    for studio in studios:
+        studio = studio.lower()
+        #find logo normal
+        if studiologos.has_key(studio):
+            studiologo = studiologos[studio]
+        
+        if not studiologo:
+            #find logo by substituting characters
+            if " (" in studio:
+                studio = studio.split(" (")[0]
+                if studiologos.has_key(studio):
+                    studiologo = studiologos[studio]
+        
+        if not studiologo:
+            #find logo by substituting characters for pvr channels
+            if " HD" in studio:
+                studio = studio.replace(" HD","")
+            elif " " in studio:
+                studio = studio.replace(" ","")
+            if studiologos.has_key(studio):
+                studiologo = studiologos[studio]
+                
+    return studiologo
+
+def resetGlobalWidgetWindowProps():
+    WINDOW.setProperty("widgetreload2", time.strftime("%Y%m%d%H%M%S", time.gmtime()))
+    
+def resetPlayerWindowProps():
+    #reset all window props provided by the script...
+    WINDOW.setProperty("SkinHelper.Player.Music.Banner","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.ClearLogo","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.DiscArt","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.FanArt","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.Thumb","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.Info","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.TrackList","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.SongCount","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.albumCount","") 
+    WINDOW.setProperty("SkinHelper.Player.Music.AlbumList","")
+    WINDOW.setProperty("SkinHelper.Player.Music.ExtraFanArt","")
+    
+def resetMusicWidgetWindowProps():
+    #clear the cache for the music widgets
+    logMsg("Music database changed, refreshing widgets....",0)
+    WINDOW.setProperty("widgetreloadmusic", time.strftime("%Y%m%d%H%M%S", time.gmtime()))
+
+def resetVideoWidgetWindowProps():
+    #clear the cache for the video widgets
+    logMsg("Video database changed, refreshing widgets....",0)
+    WINDOW.setProperty("widgetreload", time.strftime("%Y%m%d%H%M%S", time.gmtime()))
+
+def getResourceAddonFiles(addonName,allFilesList=None):
+    # get listing of all files (eg studio logos) inside a resource image addonName
+    # listing is delivered by the addon and not read live because of some issues with listdir and resourceaddons.
+    # http://forum.kodi.tv/showthread.php?tid=246245
+    if not allFilesList: 
+        allFilesList = {}
+        
+    # read data from our permanent cache file to prevent that we have to query the resource addon
+    cachefile = os.path.join(ADDON_PATH, 'resources', addonName + '.json' ).decode("utf-8")
+    data = getDataFromCacheFile(cachefile)
+    if not data:
+        # safe data to our permanent cache file, only to be written if the resource addon changes.
+        data = listFilesInPath("resource://%s/"%addonName)
+        saveDataToCacheFile(cachefile,data)
+    
+    #return the data
+    if data:
+        for key, value in data.iteritems():
+            if not allFilesList.get(key):
+                allFilesList[key] = value
+    return allFilesList
+     
+def listFilesInPath(path, allFilesList=None):
+    #used for easy matching of studio logos
+    if not allFilesList: 
+        allFilesList = {}
+    dirs, files = xbmcvfs.listdir(path)
+    for file in files:
+        file = file.decode("utf-8")
+        name = file.split(".png")[0].lower()
+        if not allFilesList.has_key(name):
+            allFilesList[name] = path + file
+    for dir in dirs:
+        dirs2, files2 = xbmcvfs.listdir(os.path.join(path,dir)+os.sep)
+        for file in files2:
+            file = file.decode("utf-8")
+            dir = dir.decode("utf-8")
+            name = dir + "/" + file.split(".png")[0].lower()
+            if not allFilesList.has_key(name):
+                if "/" in path:
+                    sep = "/"
+                else:
+                    sep = "\\"
+                allFilesList[name] = path + dir + sep + file
+    
+    #return the list
+    return allFilesList
+   
+def getDataFromCacheFile(file):
+    data = {}
+    try:
+        if xbmcvfs.exists(file):
+            f = xbmcvfs.File(file, 'r')
+            text =  f.read().decode("utf-8")
+            f.close()
+            if text: data = eval(text)   
+    except Exception as e:
+        logMsg("ERROR in getDataFromCacheFile for file %s --> %s" %(file,str(e)), 0)
+    return data
+    
+    
+def saveDataToCacheFile(file,data):
+    #safety check: does the config directory exist?
+    if not xbmcvfs.exists(ADDON_DATA_PATH + os.sep):
+        xbmcvfs.mkdirs(ADDON_DATA_PATH)
+    try:            
+        str_data = repr(data).encode("utf-8")
+        f = xbmcvfs.File(file, 'w')
+        f.write(str_data)
+        f.close()
+    except Exception as e:
+        logMsg("ERROR in saveDataToCacheFile for file %s --> %s" %(file,str(e)), 0)
+
+def getCompareString(string):
+    #strip all kinds of chars from a string to be used in compare actions
+    string = try_encode(string)
+    string = string.lower().replace(".","").replace(" ","").replace("-","").replace("_","").replace("'","").replace("`","").replace("’","")
+    string = try_decode(string)
+    return string
     

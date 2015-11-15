@@ -35,13 +35,14 @@ class Main:
             KodiMonitor.waitForAbort(10)
         else:
             # Abort was requested while waiting. We should exit
-            xbmc.log('SKIN HELPER SERVICE --> shutdown requested !')
+            logMsg('Shutdown requested !',0)
+            WINDOW.setProperty("SkinHelper.KodiExit","True")
             #stop the extra threads
             backgroundsUpdater.stop()
             listItemMonitor.stop()
             webService.stop()
 
-xbmc.log('skin helper service version %s started' % ADDON_VERSION)
+logMsg('skin helper service version %s started' % ADDON_VERSION,0)
 Main()
-xbmc.log('skin helper service version %s stopped' % ADDON_VERSION)
+logMsg('skin helper service version %s stopped' % ADDON_VERSION,0)
 

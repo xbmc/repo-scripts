@@ -22,7 +22,7 @@ class WebService(threading.Thread):
     
     def stop(self):
         try:
-            logMsg("WebService - stop called")
+            logMsg("WebService - stop called",0)
             conn = httplib.HTTPConnection("127.0.0.1:%d" % port)
             conn.request("QUIT", "/")
             conn.getresponse()
@@ -105,15 +105,23 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
         title = params.get("title","")
         if title: title = title[0].decode("utf-8")
         fallback = params.get("fallback","")
-        if fallback: fallback = fallback[0].decode("utf-8")
+        if fallback: 
+            fallback = fallback[0].decode("utf-8")
+            if fallback.startswith("Default"): fallback = "special://skin/media/" + fallback
 
         if action == "getthumb":
             image = searchGoogleImage(title)
         
         elif action == "getvarimage":
             title = title.replace("{","[").replace("}","]")
-            image = xbmc.getInfoLabel(title)
-            
+            image_tmp = xbmc.getInfoLabel(title)
+            if xbmcvfs.exists(image_tmp):
+                if image_tmp.startswith("resource://"):
+                    #texture packed resource images are failing: http://trac.kodi.tv/ticket/16366
+                    logMsg("WebService ERROR --> resource images are currently not supported due to a bug in Kodi" ,0)
+                else:
+                    image = image_tmp
+        
         elif action == "getpvrthumb":
             channel = params.get("channel","")
             preferred_type = params.get("type","")
@@ -167,8 +175,10 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
             self.send_response(200)
             if ".jpg" in image: self.send_header('Content-type','image/jpeg')
             else: self.send_header('Content-type','image/png')
-            self.send_header('Last-Modified',WINDOW.getProperty("SkinHelper.lastUpdate"))
             logMsg("found image for request %s  --> %s" %(try_encode(self.path),try_encode(image)))
+            st = xbmcvfs.Stat(image)
+            modified = st.st_mtime()
+            self.send_header('Last-Modified',"%s" %modified)
             image = xbmcvfs.File(image)
             size = image.size()
             self.send_header('Content-Length',str(size))

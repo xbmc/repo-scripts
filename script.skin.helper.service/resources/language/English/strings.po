@@ -567,3 +567,23 @@ msgstr ""
 msgctxt "#32137"
 msgid "Title's character splitter"
 msgstr ""
+
+msgctxt "#32138"
+msgid "Random videos background (movie/show/musicvideo)"
+msgstr ""
+
+msgctxt "#32139"
+msgid "Recent videos background (movie or tvshow)"
+msgstr ""
+
+msgctxt "#32140"
+msgid "In progress videos background (movie or tvshow)"
+msgstr ""
+
+msgctxt "#32141"
+msgid "Color Palette"
+msgstr ""
+
+msgctxt "#32142"
+msgid "Recently added music"
+msgstr ""

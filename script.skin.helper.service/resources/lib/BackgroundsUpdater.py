@@ -89,30 +89,12 @@ class BackgroundsUpdater(threading.Thread):
             self.normalTaskInterval += 0.15
                                
     def saveCacheToFile(self):
-        try:
-            #safety check: does the config directory exist?
-            if not xbmcvfs.exists(ADDON_DATA_PATH + os.sep):
-                xbmcvfs.mkdir(ADDON_DATA_PATH)
-            #cache file for all backgrounds
-            temp = self.allBackgrounds
-            json.dump(temp, open(self.cachePath,'w'))
-            #cache file for smart shortcuts
-            temp = self.smartShortcuts
-            json.dump(temp, open(self.SmartShortcutsCachePath,'w'))
-        except Exception as e:
-            logMsg("ERROR in Backgroundsupdater.saveCacheToFile ! --> " + str(e), 0)
+        saveDataToCacheFile(self.cachePath,self.allBackgrounds)
+        saveDataToCacheFile(self.SmartShortcutsCachePath,self.smartShortcuts)
                        
     def getCacheFromFile(self):
-        try:
-            if xbmcvfs.exists(self.cachePath):
-                with open(self.cachePath) as data_file:    
-                    data = json.load(data_file)
-                    self.allBackgrounds = data
-            if xbmcvfs.exists(self.SmartShortcutsCachePath):
-                with open(self.SmartShortcutsCachePath) as data_file:    
-                    self.smartShortcuts = json.load(data_file)
-        except Exception as e:
-            logMsg("ERROR in Backgroundsupdater.getCacheFromFile ! --> " + str(e), 0)
+        self.allBackgrounds = getDataFromCacheFile(self.cachePath)
+        self.smartShortcuts = getDataFromCacheFile(self.SmartShortcutsCachePath)
     
     def setDayNightColorTheme(self):
         #check if a colro theme should be conditionally set
@@ -154,13 +136,14 @@ class BackgroundsUpdater(threading.Thread):
             if image:
                 if not xbmcvfs.exists(image): 
                     logMsg("Wall images cleared - starting rebuild...",0)
+                    del self.allBackgrounds[windowProp]
                 else:
                     image = getCleanImage(image)
                     WINDOW.setProperty(windowProp, image)
                     return True
                
         #load images for libPath and generate wall
-        if self.allBackgrounds.get(libPath):
+        if self.allBackgrounds.get(libPath) and not self.allBackgrounds.has_key(windowProp):
             images = []
             try:
                 images = createImageWall(self.allBackgrounds[libPath],windowProp,blackWhite,square)
@@ -360,7 +343,7 @@ class BackgroundsUpdater(threading.Thread):
                         for file in files2:
                             if "pvrdetails.xml" in file:
                                 artwork = artutils.getArtworkFromCacheFile(os.path.join(thumbdir,"pvrdetails.xml"))
-                                if artwork.get("fanart"): images.append(artwork.get("fanart"))
+                                if artwork.get("fanart") and xbmcvfs.exists(artwork.get("fanart")): images.append(artwork.get("fanart"))
                                 del artwork
                         for dir2 in dirs2:
                             thumbdir = os.path.join(dir,dir2.decode("utf-8"))
@@ -368,7 +351,7 @@ class BackgroundsUpdater(threading.Thread):
                             for file in files3:
                                if "pvrdetails.xml" in file:
                                     artwork = artutils.getArtworkFromCacheFile(os.path.join(thumbdir,"pvrdetails.xml"))
-                                    if artwork.get("fanart"): images.append(artwork.get("fanart"))
+                                    if artwork.get("fanart") and xbmcvfs.exists(artwork.get("fanart")): images.append(artwork.get("fanart"))
                                     del artwork
                 del artutils
                     
@@ -388,23 +371,20 @@ class BackgroundsUpdater(threading.Thread):
         except:
             logMsg("exception occured in getPvrBackground.... ",0)
             return None            
-    
-    def getGlobalBackground(self, fallbackImage=None):
-        #just get a random image from all the images in the cache
+            
+    def setGlobalBackground(self, windowProp, keys=[], fallbackImage=""):
+        #gets a random background from multiple other collections
         image = fallbackImage
-        randomimage = None
+        images = []
         if self.allBackgrounds:
-            #get random image from our global cache
-            images = []
-            for key in self.allBackgrounds:
-                if self.allBackgrounds.has_key(key) and not "wall" in key.lower():
-                    for background in self.allBackgrounds[key]:
-                        if background:
-                            images.append(background)
-            if images:
-                image = random.choice(images)
-            if image: WINDOW.setProperty("SkinHelper.GlobalFanartBackground", image)
-                  
+            #get images from the global cache...
+            for key, value in self.allBackgrounds.iteritems():
+                if (key in keys or windowProp == "SkinHelper.GlobalFanartBackground") and not "wall" in key.lower():
+                    images += value
+            #pick a random image from the collection of images
+            if images:  image = random.choice(images)
+            WINDOW.setProperty(windowProp, image)
+    
     def UpdateBackgrounds(self):
         
         allSmartShortcuts = []
@@ -433,14 +413,18 @@ class BackgroundsUpdater(threading.Thread):
         if xbmc.getCondVisibility("Library.HasContent(music)"):
             self.setImageFromPath("SkinHelper.AllMusicBackground","musicdb://artists/","",None)
             self.setImageFromPath("SkinHelper.AllMusicSongsBackground","musicdb://songs/",None,None,True)
+            self.setImageFromPath("SkinHelper.RecentMusicBackground","SkinHelper.RecentMusicBackground","",['AudioLibrary.GetRecentlyAddedAlbums','{ "properties": ["title","fanart"], "limits": {"end":50} }'])
         
         #tmdb backgrounds (extendedinfo)
         if xbmc.getCondVisibility("System.HasAddon(script.extendedinfo)"):
             self.setImageFromPath("SkinHelper.TopRatedMovies","plugin://script.extendedinfo/?info=topratedmovies")
             self.setImageFromPath("SkinHelper.TopRatedShows","plugin://script.extendedinfo/?info=topratedtvshows")
         
-        #global fanart background 
-        self.getGlobalBackground()
+        #global backgrounds
+        self.setGlobalBackground("SkinHelper.GlobalFanartBackground")
+        self.setGlobalBackground("SkinHelper.AllVideosBackground", [ "SkinHelper.AllMoviesBackground", "SkinHelper.AllTvShowsBackground", "SkinHelper.AllMusicVideosBackground" ])
+        self.setGlobalBackground("SkinHelper.RecentVideosBackground", [ "SkinHelper.RecentMoviesBackground", "SkinHelper.RecentEpisodesBackground" ])
+        self.setGlobalBackground("SkinHelper.InProgressVideosBackground", [ "SkinHelper.InProgressMoviesBackground", "SkinHelper.InProgressShowsBackground" ])
 
         #pictures background
         picturesbg = self.getPicturesBackground()

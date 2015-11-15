@@ -38,7 +38,7 @@ def createImageWall(images,windowProp,blackwhite=False,square=False):
     
     wallpath = "special://profile/addon_data/script.skin.helper.service/wallbackgrounds/"
     if not xbmcvfs.exists(wallpath):
-        xbmcvfs.mkdir(wallpath)
+        xbmcvfs.mkdirs(wallpath)
     
     wall_images = []
     return_images = []
