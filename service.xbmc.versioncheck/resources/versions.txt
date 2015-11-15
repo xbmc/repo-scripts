@@ -295,6 +295,14 @@
         ],
         "beta": [
             {
+                "major": "16",
+                "minor": "0",
+                "tag": "beta",
+                "tagversion":"1",
+                "revision": "20151113-9c7322e",
+                "addon_support": "yes"
+            },
+            {
                 "major": "15",
                 "minor": "0",
                 "tag": "beta",
