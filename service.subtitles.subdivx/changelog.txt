@@ -1,3 +1,6 @@
+0.2.0
+- Make intermediate page optional. Thanks Juan Redondo and Adrián Suárez.
+
 0.1.0
 - Start using minor version component so we can use micro component for
   pre-releases.

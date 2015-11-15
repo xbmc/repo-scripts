@@ -384,20 +384,20 @@ def Download(subdivx_id, workdir):
     # Get the page with the subtitle link,
     # i.e. http://www.subdivx.com/X6XMjE2NDM1X-iron-man-2-2010
     subtitle_detail_url = MAIN_SUBDIVX_URL + quote(subdivx_id)
-    # Fetch and scrape new intermediate page
+    # Fetch and scrape [new] intermediate page
     html_content = get_url(subtitle_detail_url)
     if html_content is None:
-        log(u"No content found in selected subtitle intermediate detail page",
+        log(u"No content found in selected subtitle intermediate detail/final download page",
             level=LOGFATAL)
         return []
     match = DETAIL_PAGE_LINK_RE.search(html_content)
     if match is None:
-        log(u"Expected content not found in selected subtitle intermediate detail page",
-            level=LOGFATAL)
-        return []
-    id_ = match.group('id')
-    # Fetch and scrape final page
-    html_content = get_url(MAIN_SUBDIVX_URL + id_)
+        log(u"Intermediate detail page for selected subtitle or expected content not found. Handling it as final download page",
+            level=LOGWARNING)
+    else:
+        id_ = match.group('id')
+        # Fetch and scrape final page
+        html_content = get_url(MAIN_SUBDIVX_URL + id_)
     if html_content is None:
         log(u"No content found in final download page", level=LOGFATAL)
         return []
