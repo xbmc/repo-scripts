@@ -1,0 +1,3 @@
+1.8.0
+- moved all processing to new skin helper service
+- only titan specific elements remain in this addon
