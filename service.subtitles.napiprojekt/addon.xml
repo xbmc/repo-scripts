@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.subtitles.napiprojekt"
-       name="Napiprojekt.pl"
-       version="1.0.3"
-       provider-name="CaTz">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><addon id="service.subtitles.napiprojekt" name="Napiprojekt.pl" version="1.1.0" provider-name="CaTz">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/>
     </requires>
@@ -11,10 +7,10 @@
 		<summary lang="en">Napiprojekt.pl</summary>
 		<description lang="en">Search and Download subtitles from napiprojekt.pl.</description>
 		<source>https://github.com/CaTzil/service.subtitles.napiprojekt</source>
-		<language></language>
-		<email></email>
-		<forum></forum>
-		<website></website>
+		<language> </language>
+		<email> </email>
+		<forum> </forum>
+		<website> </website>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     </extension>
 </addon>

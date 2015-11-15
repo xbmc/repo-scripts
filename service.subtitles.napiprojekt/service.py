@@ -8,14 +8,14 @@ import unicodedata
 import xbmc
 import xbmcvfs
 import xbmcaddon
-import xbmcplugin
 import xbmcgui
+import xbmcplugin
 
 try:
-    #Python 2.6 +
+    # Python 2.6 +
     from hashlib import md5
 except ImportError:
-    #Python 2.5 and earlier
+    # Python 2.5 and earlier
     from md5 import new as md5
 
 __addon__ = xbmcaddon.Addon()
@@ -30,6 +30,8 @@ __resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).dec
 __temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp', '')).decode("utf-8")
 
 sys.path.append(__resource__)
+
+from NapiProjekt import NapiProjektHelper
 
 
 def timeout(func, args=(), kwargs={}, timeout_duration=10, default=None):
@@ -58,7 +60,7 @@ def set_filehash(path, rar):
     if rar:
         path = """rar://""" + qpath + '/'
         for file in xbmcvfs.listdir(path)[1]:
-            if (file.lower().endswith(('.avi','.mkv','.mp4'))):
+            if (file.lower().endswith(('.avi', '.mkv', '.mp4'))):
                 path = path + file
                 break
 
@@ -86,46 +88,34 @@ def f(z):
 
 def Search(item):
     d = timeout(set_filehash, args=(item["file_original_path"], item["rar"]), timeout_duration=15)
+    md5hash = d.hexdigest()
+    t = f(md5hash)
+    filename = '.'.join(os.path.basename(item["file_original_path"]).split(".")[:-1])
+    helper = NapiProjektHelper(filename, md5hash)
+    results = helper.search(item, t)
 
-    for language in item["3let_language"]:
-        language = "pl" if language == "pol" else language
-        params = {
-            "l": language.upper(),
-            "f": d.hexdigest(),
-            "t": f(d.hexdigest()),
-            "v": "dreambox",
-            "kolejka": "false",
-            "nick": "",
-            "pass": "",
-            "napios": os.name
-        }
+    for result in results:
+        listitem = xbmcgui.ListItem(label=xbmc.convertLanguage(result["language"], xbmc.ENGLISH_NAME),
+                                    # language name for the found subtitle
+                                    label2=filename,  # file name for the found subtitle
+                                    iconImage="5",  # rating for the subtitle, string 0-5
+                                    thumbnailImage=xbmc.convertLanguage(result["language"], xbmc.ISO_639_1)
+                                    # language flag, ISO_639_1 language + gif extention, e.g - "en.gif"
+                                    )
+        listitem.setProperty("sync", '{0}'.format("true").lower())  # set to "true" if subtitle is matched by hash,
+        # indicates that sub is 100 Comaptible
+        listitem.setProperty("hearing_imp",
+                             '{0}'.format("false").lower())  # set to "true" if subtitle is for hearing impared
 
-        url = "http://napiprojekt.pl/unit_napisy/dl.php?" + urllib.urlencode(params)
-        subs = urllib.urlopen(url).read()
-
-        if subs[0:4] != 'NPc0':
-            file_name = '.'.join(os.path.basename(item["file_original_path"]).split(".")[:-1])
-            listitem = xbmcgui.ListItem(label=xbmc.convertLanguage(language, xbmc.ENGLISH_NAME),
-                                        # language name for the found subtitle
-                                        label2=file_name,  # file name for the found subtitle
-                                        iconImage="5",  # rating for the subtitle, string 0-5
-                                        thumbnailImage=xbmc.convertLanguage(language, xbmc.ISO_639_1)
-                                        # language flag, ISO_639_1 language + gif extention, e.g - "en.gif"
-            )
-            listitem.setProperty("sync", '{0}'.format("true").lower())  # set to "true" if subtitle is matched by hash,
-            # indicates that sub is 100 Comaptible
-            listitem.setProperty("hearing_imp",
-                                 '{0}'.format("false").lower())  # set to "true" if subtitle is for hearing impared
-
-            ## below arguments are optional, it can be used to pass any info needed in download function
-            ## anything after "action=download&" will be sent to addon once user clicks listed subtitle to download
-            url = "plugin://%s/?action=download&l=%s&f=%s&t=%s&filename=%s" % (
-            __scriptid__, params["l"], params["f"], params["t"], file_name)
-            ## add it to list, this can be done as many times as needed for all subtitles found
-            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
+        ## below arguments are optional, it can be used to pass any info needed in download function
+        ## anything after "action=download&" will be sent to addon once user clicks listed subtitle to download
+        url = "plugin://%s/?action=download&l=%s&f=%s&filename=%s" % (
+            __scriptid__, result["language"], md5hash, filename)
+        ## add it to list, this can be done as many times as needed for all subtitles found
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
 
-def Download(l, f, t, filename):
+def Download(language, hash, filename):
     subtitle_list = []
     ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     ## pass that to XBMC to copy and activate
@@ -133,26 +123,9 @@ def Download(l, f, t, filename):
         shutil.rmtree(__temp__)
     xbmcvfs.mkdirs(__temp__)
 
-    filename = os.path.join(__temp__, filename + ".srt")
-
-    params = {
-        "l": l,
-        "f": f,
-        "t": t,
-        "v": "dreambox",
-        "kolejka": "false",
-        "nick": "",
-        "pass": "",
-        "napios": os.name
-    }
-
-    url = "http://napiprojekt.pl/unit_napisy/dl.php?" + urllib.urlencode(params)
-
-    sub = urllib.urlopen(url).read()
-    with open(filename, "wb") as subFile:
-        subFile.write(sub)
-    subFile.close()
-
+    filename = os.path.join(__temp__, filename + ".zip")
+    napiHelper = NapiProjektHelper(filename, hash)
+    filename = napiHelper.download(language)
     subtitle_list.append(filename)  # this can be url, local path or network path.
 
     return subtitle_list
@@ -210,14 +183,14 @@ if params['action'] == 'search':
         item['season'] = "0"  #
         item['episode'] = item['episode'][-1:]
 
-    if ( item['file_original_path'].find("http") > -1 ):
+    if (item['file_original_path'].find("http") > -1):
         item['temp'] = True
 
-    elif ( item['file_original_path'].find("rar://") > -1 ):
+    elif (item['file_original_path'].find("rar://") > -1):
         item['rar'] = True
         item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
 
-    elif ( item['file_original_path'].find("stack://") > -1 ):
+    elif (item['file_original_path'].find("stack://") > -1):
         stackPath = item['file_original_path'].split(" , ")
         item['file_original_path'] = stackPath[0][8:]
 
@@ -225,7 +198,7 @@ if params['action'] == 'search':
 
 elif params['action'] == 'download':
     ## we pickup all our arguments sent from def Search()
-    subs = Download(params["l"], params["f"], params["t"], params["filename"])
+    subs = Download(params["l"], params["f"], params["filename"])
     ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
     for sub in subs:
         listitem = xbmcgui.ListItem(label=sub)
