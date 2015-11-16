@@ -42,7 +42,7 @@ def fullMigration():
             migrateSkinShortcuts()
         except:
             log += "TITAN SKIN --> Error while Creating backup \n"
-            print_exc():
+            print_exc()
             #reset all settings to defaults
             xbmc.executebuiltin("Skin.ResetSettings")
             xbmc.executebuiltin("RunScript(script.skinshortcuts,type=resetall&warning=false)")
