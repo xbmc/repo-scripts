@@ -416,10 +416,6 @@ msgctxt "#32098"
 msgid "TvTunes ID:"
 msgstr "TvTunes ID:"
 
-msgctxt "#32099"
-msgid "Enable Theme Store"
-msgstr "Įjungti temų saugyklą"
-
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Rodyti parinkimo dialogą, jei nepavyko sutapdinti automatiškai"
@@ -507,22 +503,6 @@ msgstr "Ieškoti naudojant %s..."
 msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
 msgstr "Paieška naudojant visus tinklapius (gali veikti lėtai)"
-
-msgctxt "#32122"
-msgid "Theme Store Registration Incorrect"
-msgstr "Temų saugyklos registracija klaidinga"
-
-msgctxt "#32123"
-msgid "Theme Store Unavailable"
-msgstr "Temų saugykla neprieinama"
-
-msgctxt "#32124"
-msgid "Theme Store Audio"
-msgstr "Temų saugyklos garsas"
-
-msgctxt "#32125"
-msgid "Theme Store"
-msgstr "Temų saugykla"
 
 msgctxt "#32201"
 msgid "Movies"

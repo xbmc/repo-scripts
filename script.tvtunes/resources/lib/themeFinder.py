@@ -677,31 +677,34 @@ class MusicThemeFiles():
         log("MusicThemeFiles: Album is %s" % album, self.debug_logging_enabled)
 
         # Now build up the JSON command using the values we have
-        albumArtistFilter = ""
+        filterValues = []
         if (albumArtist not in [None, ""]):
-            albumArtistFilter = ', "filter": { "albumartist": "%s" }' % albumArtist
+            albumArtistFilter = '{"operator": "is", "field": "albumartist", "value": "%s"}' % albumArtist
+            filterValues.append(albumArtistFilter)
 
-        artistFilter = ""
         if (artist not in [None, ""]):
-            artistFilter = ', "filter": { "artist": "%s" }' % artist
+            artistFilter = '{"operator": "is", "field": "artist", "value": "%s"}' % artist
+            filterValues.append(artistFilter)
 
-        albumFilter = ""
         if (album not in [None, ""]):
-            albumFilter = ', "filter": { "album": "%s" }' % album
+            albumFilter = '{"operator": "is", "field": "album", "value": "%s"}' % album
+            filterValues.append(albumFilter)
 
         # Check to ensure there is some music information to search for
-        if (albumArtistFilter in [None, ""]) and (artistFilter in [None, ""]) and (albumFilter in [None, ""]):
+        if len(filterValues) < 1:
             log("MusicThemeFiles: No ListItem information for music", self.debug_logging_enabled)
         else:
-            cmd = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "file"]%s%s%s },"id": 1 }' % (albumArtistFilter, artistFilter, albumFilter)
+            # Join all the filters together
+            filterStr = ', '.join(filterValues)
+            cmd = '{"jsonrpc": "2.0", "method": "AudioLibrary.GetSongs", "params": {"properties": ["title", "file"], "filter": { "and": [%s] }},"id": 1 }' % filterStr
             json_query = xbmc.executeJSONRPC(cmd)
             json_query = simplejson.loads(json_query)
-            log("*** ROB ***: json reply %s" % str(json_query))
+            log("MusicThemeFiles: json reply %s" % str(json_query), self.debug_logging_enabled)
             if ("result" in json_query) and ('songs' in json_query['result']):
                 # Get the list of movies paths from the movie set
                 items = json_query['result']['songs']
                 for item in items:
-                    log("MusicThemeFiles: Audio Theme file: %s" % item['file'])
+                    log("MusicThemeFiles: Audio Theme file: %s" % item['file'], self.debug_logging_enabled)
                     themes.append(item['file'])
 
         return themes

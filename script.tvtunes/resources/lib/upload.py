@@ -44,7 +44,6 @@ class UploadThemes():
 
         # Records if the entire upload system is disabled
         self.uploadsDisabled = False
-        self.isEmbyEnabled = True
         self.isVideoEnabled = True
         self.isAudioEnabled = True
         self.isTvShowsEnabled = True
@@ -197,10 +196,6 @@ class UploadThemes():
             videoElem = ET.Element(videoItem['type'][:-1])
             videoElem.attrib['id'] = videoItem['imdbnumber']
 
-            # Check if this file is using emby
-            if videoItem['emby']:
-                videoElem.attrib['emby'] = 'true'
-
             title = ET.SubElement(videoElem, 'title')
             title.text = videoItem['title']
             record.append(videoElem)
@@ -248,12 +243,6 @@ class UploadThemes():
                 videoItem['file'] = item['file']
                 # The name is a bit misleading, it's the ID for whatever scanner was used
                 videoItem['imdbnumber'] = item['imdbnumber']
-
-                videoItem['emby'] = False
-                if "plugin.video.emby" in item['file']:
-                    if not self.isEmbyEnabled:
-                        continue
-                    videoItem['emby'] = True
 
                 # Get the themes if they exist
                 themeFileMgr = ThemeFiles(videoItem['file'], videotitle=item['title'])
@@ -322,6 +311,9 @@ class UploadThemes():
             if themeFileSize > maxFileSize:
                 log("UploadThemes: Theme %s too large %s" % (theme, themeFileSize))
                 continue
+            if themeFileSize < 19460:
+                log("UploadThemes: Theme %s too small %s" % (theme, themeFileSize))
+                continue
 
             # If we reach here it is not in either exclude list
             themeList.append(theme)
@@ -332,9 +324,6 @@ class UploadThemes():
         fileUploaded = False
         # Get the name of the folder to store this theme in
         remoteDirName = videoItem['imdbnumber']
-        # Check if we are dealing with
-        if videoItem['emby']:
-            remoteDirName = remoteDirName + '-emby'
 
         log("UploadThemes: Checking upload for theme directory %s" % remoteDirName)
 
@@ -560,12 +549,6 @@ class UploadThemes():
                 log("UploadThemes: Uploads disabled via online settings")
                 self.uploadsDisabled = True
                 return
-
-            # Check to see if Emby uploads are enabled
-            isEmbyEnabledElem = uploadSettingET.find('embyenabled')
-            if (isEmbyEnabledElem is None) or (isEmbyEnabledElem.text != 'true'):
-                log("UploadThemes: Uploads disabled for emby via online settings")
-                self.isEmbyEnabled = False
 
             # Check if audio uploads are enabled
             isAudioElem = uploadSettingET.find('audio')

@@ -495,10 +495,6 @@ class Settings():
         return __addon__.getSetting("multiThemeDownload") == 'true'
 
     @staticmethod
-    def isMovieDownloadEnabled():
-        return __addon__.getSetting("searchMovieDownload") == 'true'
-
-    @staticmethod
     def getSearchEngine():
         index = int(__addon__.getSetting("searchSource"))
         if index == 0:

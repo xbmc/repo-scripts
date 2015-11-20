@@ -28,6 +28,10 @@ msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Tocar música repetidamente"
 
+msgctxt "#32002"
+msgid "Theme volume"
+msgstr "Volume do Tema"
+
 msgctxt "#32003"
 msgid "Use Protected SMB share"
 msgstr "Usar Partilha SMB Protegida"
@@ -147,6 +151,10 @@ msgstr "televisiontunes.com"
 msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "Block Refresh Rate Change"
+msgstr "Alteração do Ritmo de Refrescamento por Bloco"
 
 msgctxt "#32034"
 msgid "goear.com"
@@ -332,9 +340,57 @@ msgctxt "#32079"
 msgid "Startup"
 msgstr "Inicialização"
 
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Repor Volume Ao Iniciar"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Definir Volume Ao Iniciar Para"
+
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr "Tipos de Ficheiro Áudio"
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr "Tipos de Ficheiro Video"
+
+msgctxt "#32084"
+msgid "Enable Theme Playing (Restart Required)"
+msgstr "Ativar Reprodução de Tema (Requer Reinício)"
+
+msgctxt "#32085"
+msgid "When A Video Theme Exists"
+msgstr "Quando Um Tem de Video Existe"
+
+msgctxt "#32086"
+msgid "Mix With Audio Themes"
+msgstr "Misturar Com Temas de Áudio"
+
+msgctxt "#32087"
+msgid "Play Video Themes First"
+msgstr "Reproduzir Temas de Vídeo Primeiro"
+
+msgctxt "#32088"
+msgid "Only Play Video Themes"
+msgstr "Reproduzir Apenas Temas de Vídeo"
+
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Reproduzir apenas tema singular"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Repetir Tema Áudio Singular Depois de Vídeo"
+
 msgctxt "#32091"
 msgid "Update advancedsettings.xml File"
 msgstr "Actualizar o ficheiro advancedsettings.xml"
+
+msgctxt "#32092"
+msgid "This action will update the file advancedsettings.xml to ensure the TvTunes theme files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "Esta ação ira atualizar o ficheiro advancedsettings.xms para certificar que os ficheirios do team TvTunes são tratados corretamente. Certifique-se que todas as alterações são guardadas antes de executar. Continuar?"
 
 msgctxt "#32093"
 msgid "Unable to update advancedsettings.xml"
@@ -347,6 +403,18 @@ msgstr "Por favor, verifique o log para mais detalhes"
 msgctxt "#32095"
 msgid "advancedsettings.xml update complete"
 msgstr "Actualização de advancedsettings.xml concluído"
+
+msgctxt "#32096"
+msgid "Show TvTunes On Context Menu"
+msgstr "Mostrar TvTunes No Menu De Contexto"
+
+msgctxt "#32097"
+msgid "Support TvTunes Improvements"
+msgstr "Apoiar Melhoramentos TvTunes"
+
+msgctxt "#32098"
+msgid "TvTunes ID:"
+msgstr "ID TvTunes:"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
@@ -411,6 +479,14 @@ msgstr "Transferir esta música?"
 msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Resultados da procura ficarão incompletos"
+
+msgctxt "#32116"
+msgid "Load Registration File"
+msgstr "Carregar Ficheiro de Registo"
+
+msgctxt "#32117"
+msgid "Failed to load registration file"
+msgstr "Falha ao carregar ficheiro de registo"
 
 msgctxt "#32118"
 msgid "Manual Search..."

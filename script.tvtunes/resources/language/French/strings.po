@@ -22,7 +22,7 @@ msgstr "Récupérez et écoutez les génériques des séries TV"
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library."
-msgstr "Ce script vous aidera à télécharger vos génériques de série depuis www.televisiontunes.com Il les enregistrera dans un fichier theme.mp3 dans vos répertoires de série, ils seront ensuite joué lorsque vous entrerez dans la série correspondante (cette fonctionalité requiert une skin compatible)"
+msgstr "Ce script aidera à télécharger les génériques de série depuis www.televisiontunes.com. Il les enregistrera dans un fichier theme.mp3 dans les dossiers des séries, et ils seront ensuite joués à l'entrée dans la série correspondante (cette fonctionnalité requiert un thème compatible)"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -74,7 +74,7 @@ msgstr "Changer le type de fichier"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
-msgstr "Lire en fondu le thème au démarrage"
+msgstr "Lire en fondu le morceau au démarrage"
 
 msgctxt "#32014"
 msgid "Always add additional themes (no overwrite)"
@@ -122,11 +122,11 @@ msgstr "Démarrage différé du générique (secondes)"
 
 msgctxt "#32025"
 msgid "Support themes in sub directories"
-msgstr "Supporter les thèmes dans les sous-répertoires"
+msgstr "Gérer les thèmes dans des sous-dossiers"
 
 msgctxt "#32026"
 msgid "Directory Name"
-msgstr "Nom de répertoire"
+msgstr "Nom de dossier"
 
 msgctxt "#32027"
 msgid "Limit track duration when multiple themes (seconds)"
@@ -254,7 +254,7 @@ msgstr "Fanart"
 
 msgctxt "#32058"
 msgid "Thumbnail"
-msgstr "Vignette"
+msgstr "Miniature"
 
 msgctxt "#32059"
 msgid "Cast"
@@ -270,11 +270,11 @@ msgstr "Jouer des thèmes pendant l'écran de veille"
 
 msgctxt "#32062"
 msgid "Fanart,Thumbnail,Cast"
-msgstr "Fanart,Vignette,Casting"
+msgstr "Fanart,Miniature,Casting"
 
 msgctxt "#32063"
 msgid "Fanart,Thumbnail"
-msgstr "Fanart,Vignettes"
+msgstr "Fanart,Miniature"
 
 msgctxt "#32064"
 msgid "Dim Level"
@@ -282,7 +282,7 @@ msgstr "Niveau d'assombrissement"
 
 msgctxt "#32065"
 msgid "Thumbnail,Cast"
-msgstr "Vignette,Casting"
+msgstr "Miniature,Casting"
 
 msgctxt "#32066"
 msgid "Slider"
@@ -322,7 +322,7 @@ msgstr "Afficher les image seulement quand un thème existe"
 
 msgctxt "#32075"
 msgid "Play Theme Once, Show All Images"
-msgstr "Lire le thèque d'une seule fois, afficher toutes les images"
+msgstr "Lire le thème une seule fois, afficher toutes les images"
 
 msgctxt "#32076"
 msgid "Show All Images, Repeat Theme"
@@ -366,7 +366,7 @@ msgstr "Quand un thème Vidéo existe"
 
 msgctxt "#32086"
 msgid "Mix With Audio Themes"
-msgstr "Mixer avec les thèmes Audio"
+msgstr "Mélanger avec les thèmes audio"
 
 msgctxt "#32087"
 msgid "Play Video Themes First"
@@ -390,11 +390,11 @@ msgstr "Mettre à jour le fichier advancedsettings.xml"
 
 msgctxt "#32092"
 msgid "This action will update the file advancedsettings.xml to ensure the TvTunes theme files are handled correctly. Make sure any changes are saved before running. Continue?"
-msgstr "Cette action mettra à jour le fichier advancedsettings.xml pour s'assurer que les fichiers de thème TVTunes soient correctement pris en charge. Assurez-vous que vos modifications aient bien été sauvé avant de continuer. Continuer ?"
+msgstr "Cette action mettra à jour le fichier « advancedsettings.xml » pour s'assurer que les fichiers de thème TVTunes soient correctement pris en charge. S'assurer que les modifications aient bien été sauvées avant de continuer. Faut-il continuer ?"
 
 msgctxt "#32093"
 msgid "Unable to update advancedsettings.xml"
-msgstr "Impossible de mettre à jour advancedsettings.xml"
+msgstr "Impossible de mettre à jour « advancedsettings.xml »"
 
 msgctxt "#32094"
 msgid "Please check the log for more details"
@@ -404,13 +404,17 @@ msgctxt "#32095"
 msgid "advancedsettings.xml update complete"
 msgstr "Mise à jour d'advancedsettings.xml terminée"
 
+msgctxt "#32096"
+msgid "Show TvTunes On Context Menu"
+msgstr "Afficher TvTunes dans le menu contextuel"
+
+msgctxt "#32097"
+msgid "Support TvTunes Improvements"
+msgstr "Supporter les améliorations TvTunes"
+
 msgctxt "#32098"
 msgid "TvTunes ID:"
 msgstr "TvTunes ID:"
-
-msgctxt "#32099"
-msgid "Enable Theme Store"
-msgstr "Activer la boutique de thèmes"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
@@ -476,6 +480,14 @@ msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Les résultats de recherche seront incomplets"
 
+msgctxt "#32116"
+msgid "Load Registration File"
+msgstr "Charger le fichier d'inscription"
+
+msgctxt "#32117"
+msgid "Failed to load registration file"
+msgstr "Le chargement du fichier d'inscription a échoué"
+
 msgctxt "#32118"
 msgid "Manual Search..."
 msgstr "Recherche manuelle..."
@@ -486,19 +498,11 @@ msgstr "Poursuivre avec la recherche du générique suivant ?"
 
 msgctxt "#32120"
 msgid "Search Using %s..."
-msgstr "Rechercher en utilisant %s..."
+msgstr "Rechercher en utilisant %s…"
 
 msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
 msgstr "Rechercher en utilisant tous les sites (peut être lent)"
-
-msgctxt "#32123"
-msgid "Theme Store Unavailable"
-msgstr "Boutique de thèmes indisponible"
-
-msgctxt "#32125"
-msgid "Theme Store"
-msgstr "Boutique de thèmes"
 
 msgctxt "#32201"
 msgid "Movies"
@@ -522,7 +526,7 @@ msgstr "[Action] : Retrouver les thèmes manquants"
 
 msgctxt "#32206"
 msgid "You have themes that are not in themes folders."
-msgstr "Vous avez des thèmes qui ne sont pas dans le répertoire des thèmes."
+msgstr "Il y a des thèmes qui ne sont pas dans les dossiers des thèmes."
 
 msgctxt "#32207"
 msgid "Move themes into themes folder?"
@@ -546,7 +550,7 @@ msgstr "Système de fichier"
 
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
-msgstr "Erreur : Impossible de se connecter à goear.com"
+msgstr "Erreur : impossible de se connecter à goear.com"
 
 msgctxt "#32995"
 msgid "No Images found!"

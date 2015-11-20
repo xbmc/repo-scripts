@@ -28,6 +28,10 @@ msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Play theme in loop"
 
+msgctxt "#32002"
+msgid "Theme volume"
+msgstr "Theme volume"
+
 msgctxt "#32003"
 msgid "Use Protected SMB share"
 msgstr "Use Protected SMB share"
@@ -52,6 +56,10 @@ msgctxt "#32008"
 msgid "Fade tune out when exiting"
 msgstr "Fade tune out when exiting"
 
+msgctxt "#32009"
+msgid "Automatically Download Theme If"
+msgstr "Automatically Download Theme If"
+
 msgctxt "#32010"
 msgid "Shuffle multiple tracks"
 msgstr "Shuffle multiple tracks"
@@ -59,6 +67,10 @@ msgstr "Shuffle multiple tracks"
 msgctxt "#32011"
 msgid "Random start time"
 msgstr "Random start time"
+
+msgctxt "#32012"
+msgid "Change File Types"
+msgstr "Change File Types"
 
 msgctxt "#32013"
 msgid "Fade in the tune when starting"
@@ -100,6 +112,10 @@ msgctxt "#32022"
 msgid "Operations"
 msgstr "Operations"
 
+msgctxt "#32023"
+msgid "Browse Themes"
+msgstr "Browse Themes"
+
 msgctxt "#32024"
 msgid "Delay Theme Start (Seconds)"
 msgstr "Delay Theme Start (Seconds)"
@@ -124,17 +140,113 @@ msgctxt "#32029"
 msgid "Play themes when browsing Music Video list"
 msgstr "Play themes when browsing Music Video list"
 
+msgctxt "#32030"
+msgid "All"
+msgstr "All"
+
+msgctxt "#32031"
+msgid "televisiontunes.com"
+msgstr "televisiontunes.com"
+
+msgctxt "#32032"
+msgid "soundcloud.com"
+msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "Block Refresh Rate Change"
+msgstr "Block Refresh Rate Change"
+
+msgctxt "#32034"
+msgid "goear.com"
+msgstr "goear.com"
+
+msgctxt "#32035"
+msgid "Prompt User"
+msgstr "Prompt User"
+
 msgctxt "#32036"
 msgid "Never"
 msgstr "Never"
+
+msgctxt "#32037"
+msgid "Only Single Entry Found"
+msgstr "Only Single Entry Found"
+
+msgctxt "#32038"
+msgid "Priority 1 (*) Entry Found"
+msgstr "Priority 1 (*) Entry Found"
+
+msgctxt "#32039"
+msgid "Priority 1 (*) or 2 (~) Entry Found"
+msgstr "Priority 1 (*) or 2 (~) Entry Found"
 
 msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Screensaver"
 
+msgctxt "#32041"
+msgid "TableDrop"
+msgstr "TableDrop"
+
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "StarWars"
+
+msgctxt "#32043"
+msgid "RandomZoomIn"
+msgstr "RandomZoomIn"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "AppleTVLike"
+
+msgctxt "#32045"
+msgid "GridSwitch"
+msgstr "GridSwitch"
+
+msgctxt "#32046"
+msgid "Random"
+msgstr "Random"
+
+msgctxt "#32047"
+msgid "Wait Time (Seconds)"
+msgstr "Wait Time (Seconds)"
+
+msgctxt "#32048"
+msgid "Effect Time (Seconds)"
+msgstr "Effect Time (Seconds)"
+
+msgctxt "#32049"
+msgid "Columns"
+msgstr "Columns"
+
+msgctxt "#32050"
+msgid "Speed"
+msgstr "Speed"
+
+msgctxt "#32051"
+msgid "Image Concurrency"
+msgstr "Image Concurrency"
+
+msgctxt "#32052"
+msgid "Random Order"
+msgstr "Random Order"
+
+msgctxt "#32053"
+msgid "Image Source"
+msgstr "Image Source"
+
+msgctxt "#32054"
+msgid "Image Type"
+msgstr "Image Type"
+
 msgctxt "#32055"
 msgid "Folder"
 msgstr "Folder"
+
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Recursive"
 
 msgctxt "#32057"
 msgid "Fanart"
@@ -148,6 +260,46 @@ msgctxt "#32059"
 msgid "Cast"
 msgstr "Cast"
 
+msgctxt "#32060"
+msgid "Movies, TV Shows"
+msgstr "Movies, TV Shows"
+
+msgctxt "#32061"
+msgid "Play Themes During Screensaver"
+msgstr "Play Themes During Screensaver"
+
+msgctxt "#32062"
+msgid "Fanart,Thumbnail,Cast"
+msgstr "Fanart,Thumbnail,Cast"
+
+msgctxt "#32063"
+msgid "Fanart,Thumbnail"
+msgstr "Fanart,Thumbnail"
+
+msgctxt "#32064"
+msgid "Dim Level"
+msgstr "Dim Level"
+
+msgctxt "#32065"
+msgid "Thumbnail,Cast"
+msgstr "Thumbnail,Cast"
+
+msgctxt "#32066"
+msgid "Slider"
+msgstr "Slider"
+
+msgctxt "#32067"
+msgid "Slide In From"
+msgstr "Slide In From"
+
+msgctxt "#32068"
+msgid "Left"
+msgstr "Left"
+
+msgctxt "#32069"
+msgid "Right"
+msgstr "Right"
+
 msgctxt "#32070"
 msgid "Top"
 msgstr "Top"
@@ -160,13 +312,121 @@ msgctxt "#32072"
 msgid "Crossfade"
 msgstr "Crossfade"
 
+msgctxt "#32073"
+msgid "Include Artwork Downloader Images"
+msgstr "Include Artwork Downloader Images"
+
+msgctxt "#32074"
+msgid "Only Show Images When A Theme Exists"
+msgstr "Only Show Images When A Theme Exists"
+
+msgctxt "#32075"
+msgid "Play Theme Once, Show All Images"
+msgstr "Play Theme Once, Show All Images"
+
+msgctxt "#32076"
+msgid "Show All Images, Repeat Theme"
+msgstr "Show All Images, Repeat Theme"
+
+msgctxt "#32077"
+msgid "Play Theme Once, Skip Remaining Images"
+msgstr "Play Theme Once, Skip Remaining Images"
+
+msgctxt "#32078"
+msgid "Repeat Rules"
+msgstr "Repeat Rules"
+
 msgctxt "#32079"
 msgid "Startup"
 msgstr "Startup"
 
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Reset Volume On Startup"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Set Volume On Startup To"
+
+msgctxt "#32082"
+msgid "Audio File Types"
+msgstr "Audio File Types"
+
+msgctxt "#32083"
+msgid "Video File Types"
+msgstr "Video File Types"
+
+msgctxt "#32084"
+msgid "Enable Theme Playing (Restart Required)"
+msgstr "Enable Theme Playing (Restart Required)"
+
+msgctxt "#32085"
+msgid "When A Video Theme Exists"
+msgstr "When A Video Theme Exists"
+
+msgctxt "#32086"
+msgid "Mix With Audio Themes"
+msgstr "Mix With Audio Themes"
+
+msgctxt "#32087"
+msgid "Play Video Themes First"
+msgstr "Play Video Themes First"
+
+msgctxt "#32088"
+msgid "Only Play Video Themes"
+msgstr "Only Play Video Themes"
+
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Only ever play single theme"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Repeat Single Audio Theme After Video"
+
+msgctxt "#32091"
+msgid "Update advancedsettings.xml File"
+msgstr "Update advancedsettings.xml File"
+
+msgctxt "#32092"
+msgid "This action will update the file advancedsettings.xml to ensure the TvTunes theme files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "This action will update the file advancedsettings.xml to ensure the TvTunes theme files are handled correctly. Make sure any changes are saved before running. Continue?"
+
+msgctxt "#32093"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Unable to update advancedsettings.xml"
+
+msgctxt "#32094"
+msgid "Please check the log for more details"
+msgstr "Please check the log for more details"
+
+msgctxt "#32095"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml update complete"
+
+msgctxt "#32096"
+msgid "Show TvTunes On Context Menu"
+msgstr "Show TvTunes On Context Menu"
+
+msgctxt "#32097"
+msgid "Support TvTunes Improvements"
+msgstr "Support TvTunes Improvements"
+
+msgctxt "#32098"
+msgid "TvTunes ID:"
+msgstr "TvTunes ID:"
+
+msgctxt "#32100"
+msgid "Show Selection Dialog If Auto Match Fails"
+msgstr "Show Selection Dialogue If Auto Match Fails"
+
 msgctxt "#32101"
 msgid "ERROR"
 msgstr "ERROR"
+
+msgctxt "#32102"
+msgid "site unreachable"
+msgstr "site unreachable"
 
 msgctxt "#32103"
 msgid "TvTune downloader"
@@ -212,6 +472,18 @@ msgctxt "#32114"
 msgid "Download this one?"
 msgstr "Download this one?"
 
+msgctxt "#32115"
+msgid "Search results will be incomplete"
+msgstr "Search results will be incomplete"
+
+msgctxt "#32116"
+msgid "Load Registration File"
+msgstr "Load Registration File"
+
+msgctxt "#32117"
+msgid "Failed to load registration file"
+msgstr "Failed to load registration file"
+
 msgctxt "#32118"
 msgid "Manual Search..."
 msgstr "Manual Search..."
@@ -224,6 +496,10 @@ msgctxt "#32120"
 msgid "Search Using %s..."
 msgstr "Search Using %s..."
 
+msgctxt "#32121"
+msgid "Search Using All Sites (May Be Slow)"
+msgstr "Search Using All Sites (May Be Slow)"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Movies"
@@ -235,6 +511,26 @@ msgstr "TV Shows"
 msgctxt "#32203"
 msgid "Music Videos"
 msgstr "Music Videos"
+
+msgctxt "#32204"
+msgid "[Filter]: Show Only Missing Themes"
+msgstr "[Filter]: Show Only Missing Themes"
+
+msgctxt "#32205"
+msgid "[Action]: Retrieve Missing Themes"
+msgstr "[Action]: Retrieve Missing Themes"
+
+msgctxt "#32206"
+msgid "You have themes that are not in themes folders."
+msgstr "You have themes that are not in themes folders."
+
+msgctxt "#32207"
+msgid "Move themes into themes folder?"
+msgstr "Move themes into themes folder?"
+
+msgctxt "#32208"
+msgid "[Action]: Start Screensaver"
+msgstr "[Action]: Start Screensaver"
 
 msgctxt "#32991"
 msgid "Playback"
@@ -251,3 +547,7 @@ msgstr "File system"
 msgctxt "#32994"
 msgid "Error: Failed to connect to goear.com"
 msgstr "Error: Failed to connect to goear.com"
+
+msgctxt "#32995"
+msgid "No Images found!"
+msgstr "No Images found!"

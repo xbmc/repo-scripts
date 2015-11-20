@@ -40,6 +40,10 @@ msgctxt "#32055"
 msgid "Folder"
 msgstr "Folder"
 
+msgctxt "#32056"
+msgid "Recursive"
+msgstr "Rekursif"
+
 msgctxt "#32057"
 msgid "Fanart"
 msgstr "Seni Peminat"

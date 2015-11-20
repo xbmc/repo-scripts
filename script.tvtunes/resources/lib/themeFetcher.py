@@ -1204,9 +1204,9 @@ class SoundcloudListing(DefaultListing):
                         # The file size makes no difference as the stream is always limited to 128kbps
                         filesize = ""  # self._convertSize(track.original_content_size)
                         # themeURL = track.download_url or track.permalink_url
-                        themeURL = self._getDownloadLinkFromWaveform(track.waveform_url)
+                        # themeURL = self._getDownloadLinkFromWaveform(track.waveform_url)
+                        themeURL = "https://api.soundcloud.com/tracks/%s/stream?client_id=22e566527758690e6feb2b5cb300cc43" % str(track.id)
                         log("SoundcloudListing: Found %s%s (%s) %s (%s)" % (themeName, duration, themeURL, str(id), track.waveform_url))
-
                         theme = ThemeItemDetails(themeName, themeURL, duration, filesize)
                         theme_list.append(theme)
                     else:
@@ -1223,11 +1223,11 @@ class SoundcloudListing(DefaultListing):
         return theme_list
 
     # Generate the stream link from the waveform_url
-    def _getDownloadLinkFromWaveform(self, waveform_url):
-        regex = re.compile("\/([a-zA-Z0-9]+)_")
-        r = regex.search(waveform_url)
-        stream_id = r.groups()[0]
-        return "http://media.soundcloud.com/stream/%s" % str(stream_id)
+#     def _getDownloadLinkFromWaveform(self, waveform_url):
+#         regex = re.compile("\/([a-zA-Z0-9]+)_")
+#         r = regex.search(waveform_url)
+#         stream_id = r.groups()[0]
+#         return "http://media.soundcloud.com/stream/%s" % str(stream_id)
 
     # this method converts the time in milliseconds to human readable format.
     def _convertTime(self, ms):

@@ -416,10 +416,6 @@ msgctxt "#32098"
 msgid "TvTunes ID:"
 msgstr "TvTunes ID:"
 
-msgctxt "#32099"
-msgid "Enable Theme Store"
-msgstr "Activeer thema winkel"
-
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
 msgstr "Toon selectie dialoog als automatische overeenkomst mislukt"
@@ -507,22 +503,6 @@ msgstr "Zoeken gebruikt %s..."
 msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
 msgstr "Zoeken Gebruik alle Sites (Kan traag zijn)"
-
-msgctxt "#32122"
-msgid "Theme Store Registration Incorrect"
-msgstr "Thema winkel registratie niet goed"
-
-msgctxt "#32123"
-msgid "Theme Store Unavailable"
-msgstr "Thema winkel niet beschikbaar"
-
-msgctxt "#32124"
-msgid "Theme Store Audio"
-msgstr "Thema winkel geluid"
-
-msgctxt "#32125"
-msgid "Theme Store"
-msgstr "Thema winkel"
 
 msgctxt "#32201"
 msgid "Movies"

@@ -18,11 +18,11 @@ msgstr ""
 
 msgctxt "Addon Summary"
 msgid "Retrieve and play your soundtrack or video themes whilst browsing your library"
-msgstr "Pobieraj i odtwarzaj motywy muzyczne filmów i seriali"
+msgstr "Pobieraj i odtwarzaj ścieżki dźwiękowe lub motywy wideo podczas przeglądania biblioteki"
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library."
-msgstr "Dodatek TvTunes wyposażono w potężny zestaw funkcji umożliwiający pobieranie, organizowanie i odtwarzanie motywów muzycznych podczas przeglądania biblioteki Kodi, przez kompatybilne z nim skóry."
+msgstr "Dodatek TvTunes wyposażono w potężny zestaw funkcji umożliwiający pobieranie, organizowanie i odtwarzanie motywów muzycznych podczas przeglądania biblioteki Kodi."
 
 msgctxt "#32001"
 msgid "Play theme in loop"
@@ -350,7 +350,7 @@ msgstr "Ustawiaj poziom głośności po uruchomieniu na"
 
 msgctxt "#32082"
 msgid "Audio File Types"
-msgstr "Typy plików muzycznych"
+msgstr "Typy plików dźwiękowych"
 
 msgctxt "#32083"
 msgid "Video File Types"
@@ -415,10 +415,6 @@ msgstr "Wesprzyj rozwój dodatku TvTunes"
 msgctxt "#32098"
 msgid "TvTunes ID:"
 msgstr "Identyfikator TvTunes:"
-
-msgctxt "#32099"
-msgid "Enable Theme Store"
-msgstr "Aktywuj sklep motywów"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
@@ -507,22 +503,6 @@ msgstr "Wyszukaj za pomocą %s..."
 msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
 msgstr "Przeszukuj wszystkie źródła (wolne)"
-
-msgctxt "#32122"
-msgid "Theme Store Registration Incorrect"
-msgstr "Niepoprawna rejestracja w sklepie motywów"
-
-msgctxt "#32123"
-msgid "Theme Store Unavailable"
-msgstr "Sklep motywów niedostępny"
-
-msgctxt "#32124"
-msgid "Theme Store Audio"
-msgstr "Sklep motywów muzycznych"
-
-msgctxt "#32125"
-msgid "Theme Store"
-msgstr "Sklep motywów"
 
 msgctxt "#32201"
 msgid "Movies"

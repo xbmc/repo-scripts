@@ -307,6 +307,9 @@ class MenuNavigator():
 
     # Does a search for all the missing themes
     def fetchAllMissingThemes(self):
+        # It could take a little while to get the videos so show the busy dialog
+        xbmc.executebuiltin("ActivateWindow(busydialog)")
+
         tvShows = self.getVideos('GetTVShows', MenuNavigator.TVSHOWS)
         movies = self.getVideos('GetMovies', MenuNavigator.MOVIES)
         music = self.getVideos('GetMusicVideos', MenuNavigator.MUSICVIDEOS)
@@ -324,9 +327,11 @@ class MenuNavigator():
 
             if Settings.isThemeDirEnabled() and self._doesThemeExist(path, True):
                 if moveExistingThemes is None:
+                    xbmc.executebuiltin("Dialog.Close(busydialog)")
                     # Prompt user if we should move themes in the parent
                     # directory into the theme directory
                     moveExistingThemes = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32206), __addon__.getLocalizedString(32207))
+                    xbmc.executebuiltin("ActivateWindow(busydialog)")
 
                 # Check if we need to move a theme file
                 if moveExistingThemes:
@@ -341,6 +346,8 @@ class MenuNavigator():
 
             videoItem = {'title': normtitle, 'path': path.encode("utf-8"), 'originalTitle': normOriginalTitle, 'isTvShow': videoItem['isTvShow'], 'year': videoItem['year'], 'imdb': videoItem['imdb']}
             videoList.append(videoItem)
+
+        xbmc.executebuiltin("Dialog.Close(busydialog)")
 
         if len(videoList) > 0:
             TvTunesFetcher(videoList)

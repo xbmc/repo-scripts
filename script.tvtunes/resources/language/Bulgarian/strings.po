@@ -168,6 +168,14 @@ msgctxt "#32040"
 msgid "Screensaver"
 msgstr "Скрийнсейвър"
 
+msgctxt "#32042"
+msgid "StarWars"
+msgstr "Междузвездни войни"
+
+msgctxt "#32044"
+msgid "AppleTVLike"
+msgstr "Като AppleTV"
+
 msgctxt "#32046"
 msgid "Random"
 msgstr "Произволен"
@@ -278,11 +286,11 @@ msgstr "Възпроизведи веднъж и покажи всички ка�
 
 msgctxt "#32076"
 msgid "Show All Images, Repeat Theme"
-msgstr "Покажи всички картини и поваряй мелодията"
+msgstr "Покажи всички картини и повтаряй мелодията"
 
 msgctxt "#32077"
 msgid "Play Theme Once, Skip Remaining Images"
-msgstr "Въпроизведи мелодията веднъж и не показвай оставащите картини"
+msgstr "Възпроизведи мелодията веднъж и не показвай оставащите картини"
 
 msgctxt "#32078"
 msgid "Repeat Rules"
@@ -291,6 +299,14 @@ msgstr "Повторение"
 msgctxt "#32079"
 msgid "Startup"
 msgstr "Стартиране"
+
+msgctxt "#32080"
+msgid "Reset Volume On Startup"
+msgstr "Нулирай силата на звука при стартиране"
+
+msgctxt "#32081"
+msgid "Set Volume On Startup To"
+msgstr "Задай силата на звука при стартиране"
 
 msgctxt "#32082"
 msgid "Audio File Types"
@@ -308,9 +324,17 @@ msgctxt "#32093"
 msgid "Unable to update advancedsettings.xml"
 msgstr "advancedsettings.xml не може да бъде обновен"
 
+msgctxt "#32094"
+msgid "Please check the log for more details"
+msgstr "Проверете журнала за подробности."
+
 msgctxt "#32095"
 msgid "advancedsettings.xml update complete"
 msgstr "Обновяването на advancedsettings.xml завърши"
+
+msgctxt "#32098"
+msgid "TvTunes ID:"
+msgstr "TvTunes ID:"
 
 msgctxt "#32100"
 msgid "Show Selection Dialog If Auto Match Fails"
@@ -376,6 +400,10 @@ msgctxt "#32115"
 msgid "Search results will be incomplete"
 msgstr "Резултатите от търсенето ще са непълни"
 
+msgctxt "#32116"
+msgid "Load Registration File"
+msgstr "Зареди регистрационния файл"
+
 msgctxt "#32117"
 msgid "Failed to load registration file"
 msgstr "Зареждането на регистрационния файл се провали"
@@ -395,18 +423,6 @@ msgstr "Търсене в %s..."
 msgctxt "#32121"
 msgid "Search Using All Sites (May Be Slow)"
 msgstr "Търсене във всички сайтове (бавно търсене)"
-
-msgctxt "#32123"
-msgid "Theme Store Unavailable"
-msgstr "Магазинът за мелодии не е наличен"
-
-msgctxt "#32124"
-msgid "Theme Store Audio"
-msgstr "Магазин за аудио мелодии"
-
-msgctxt "#32125"
-msgid "Theme Store"
-msgstr "Магазин за мелодии"
 
 msgctxt "#32201"
 msgid "Movies"

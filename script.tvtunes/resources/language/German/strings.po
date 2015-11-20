@@ -22,11 +22,15 @@ msgstr "Hole und spiele die Titelmelodie beim Browsen der TV-Shows"
 
 msgctxt "Addon Description"
 msgid "TvTunes is equipped with powerful features that enable the fetching, organising and playing of themes whilst browsing your Kodi library."
-msgstr "Dieses Skript unterstützt das Laden, Organisieren und Abspielen von Titelmelodien deiner Filme und TV-Serien. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video Ordnern stöberst (benötigt einen kompatiblen Skin)"
+msgstr "Dieses Skript unterstützt das Laden, Organisieren und Abspielen von Titelmelodien deiner Filme und TV-Serien. Diese werden dann abgespielt, wenn du in deiner Datenbank oder den Video-Ordnern stöberst (benötigt einen kompatiblen Skin)"
 
 msgctxt "#32001"
 msgid "Play theme in loop"
 msgstr "Spiele Titelmelodie in einer Schleife"
+
+msgctxt "#32002"
+msgid "Theme volume"
+msgstr "Lautstärke der Titelmelodie"
 
 msgctxt "#32003"
 msgid "Use Protected SMB share"
@@ -147,6 +151,10 @@ msgstr "televisiontunes.com"
 msgctxt "#32032"
 msgid "soundcloud.com"
 msgstr "soundcloud.com"
+
+msgctxt "#32033"
+msgid "Block Refresh Rate Change"
+msgstr "Ändern der Bildwiederholrate verhindern"
 
 msgctxt "#32034"
 msgid "goear.com"
@@ -368,9 +376,21 @@ msgctxt "#32088"
 msgid "Only Play Video Themes"
 msgstr "Nur Video-Titelmelodien wiedergeben"
 
+msgctxt "#32089"
+msgid "Only ever play single theme"
+msgstr "Nur eine Titelmelodie wiedergeben"
+
+msgctxt "#32090"
+msgid "Repeat Single Audio Theme After Video"
+msgstr "Nach Viedeo Single Audio Theme wiederholen"
+
 msgctxt "#32091"
 msgid "Update advancedsettings.xml File"
 msgstr "Aktualisere die advancedsettings.xml-Datei"
+
+msgctxt "#32092"
+msgid "This action will update the file advancedsettings.xml to ensure the TvTunes theme files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "advancedsettings.xml wird aktualisiert das TvTunes Theme Dateien richtig verarbeitet werden können. Stellen Sie sicher das alle Änderungen gesichert wurden, bevor Sie starten. Vortfahren?"
 
 msgctxt "#32093"
 msgid "Unable to update advancedsettings.xml"

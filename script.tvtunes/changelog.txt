@@ -1,3 +1,9 @@
+v6.1.0
+- Fix Soundcloud support
+
+v6.0.6
+- Fix matching album name during music browsing
+
 v6.0.5
 - Fix Emby auto-play when searching for themes existence
 - Add option to disable themes on Video Information, TV Seasons and TV Shows
