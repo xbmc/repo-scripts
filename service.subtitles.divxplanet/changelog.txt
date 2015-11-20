@@ -1,3 +1,6 @@
+0.0.12
+- [Issue #3] Better file extraction handling
+
 0.0.11
 - Fixed searches for series that has the same name with a movie
 

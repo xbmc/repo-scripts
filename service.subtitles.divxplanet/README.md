@@ -1,9 +1,12 @@
 Divxplanet Kodi Subtitle Addon
 ======================
 
-This is an unofficial Kodi Subtitle Addon to be able to easily download subtitles from Divxplanet
+This is an unofficial Kodi Subtitle Addon to be able to easily download subtitles from Divxplanet.com (Altyazi.org)
 
 #Changelog
+**0.0.12**
+* [Issue #3] Better file extraction handling
+
 **0.0.11**
 * Fixed searches for series that has the same name with a movie
 

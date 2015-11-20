@@ -4,7 +4,6 @@ import os
 import sys
 import xbmc
 import urllib
-import xbmcvfs
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
@@ -27,10 +26,6 @@ __cwd__        = xbmc.translatePath( __addon__.getAddonInfo('path') ).decode("ut
 __profile__    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
 __resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ) ).decode("utf-8")
 __temp__       = xbmc.translatePath( os.path.join( __profile__, 'temp') ).decode("utf-8")
-
-if xbmcvfs.exists(__temp__):
-  shutil.rmtree(__temp__)
-xbmcvfs.mkdirs(__temp__)
 
 sys.path.append (__resource__)
 
@@ -74,7 +69,7 @@ def getmediaUrl(mediaArgs):
             if str(year) == "" or str(year) in result.getText():
                 return "http://altyazi.org%s" % link["href"]
         elif querytype == "dizi" and result.has_key("style") and "tv-shows" in result["style"]:
-            if (str(year) == "" or str(year) in result.getText()):
+            if str(year) == "" or str(year) in result.getText():
                     return "http://altyazi.org%s" % link["href"]
     return ""
 
@@ -224,20 +219,22 @@ def Search(item):
         br.close()
         log("Divxplanet: found %d subtitles" % (len(subtitles_list)))
 
+
 def normalizeString(str):
   return unicodedata.normalize(
          'NFKD', unicode(unicode(str, 'utf-8'))
          ).encode('ascii','ignore')
 
-def Download(link, lang, filename): #standard input
 
+def Download(link, lang, filename):  # standard input
+    dpid = re.search('sub/s/(\d+)/', link).group(1)
+    extract_path = __temp__ + '/' + dpid
     log("Divxplanet: o yoldayiz %s" % (link))
     subtitle_list = []
-    ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
-    ## pass that to XBMC to copy and activate
-    #if xbmcvfs.exists(__temp__):
-     # shutil.rmtree(__temp__)
-    #xbmcvfs.mkdirs(__temp__)
+    # Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
+    if os.path.exists(__temp__):
+        shutil.rmtree(__temp__)
+    os.makedirs(__temp__)
 
     packed = True
     dlurl = "http://altyazi.org/%s" % link
@@ -269,128 +266,102 @@ def Download(link, lang, filename): #standard input
         localName = r.info()['Content-Disposition'].split('filename=')[1]
         if localName[0] == '"' or localName[0] == "'":
             localName = localName[1:-1]
-    elif r.url != dlurl:
-        # if we were redirected, the real file name we take from the final URL
-        localName = url2name(r.url)
-
-
+    else:
+        return subtitle_list
 
     log("Divxplanet: Fetching subtitles using url %s" % (dlurl))
     local_tmp_file = os.path.join(__temp__, localName )
 
     try:
         log("Divxplanet: Saving subtitles to '%s'" % (local_tmp_file))
-        if not os.path.exists(__temp__):
-            os.makedirs(__temp__)
+        if not os.path.exists(extract_path):
+            os.makedirs(extract_path)
         local_file_handle = open(local_tmp_file, "wb")
         local_file_handle.write(br.response().get_data())
         local_file_handle.close()
     except:
-        log("Divxplanet: Failed to save subtitle to %s" % (local_tmp_file))
+        log("Divxplanet: Failed to save subtitle archive to %s" % (local_tmp_file))
     if packed:
-        files = os.listdir(__temp__)
+        files = os.listdir(extract_path)
         init_filecount = len(files)
-        max_mtime = 0
         filecount = init_filecount
         # determine the newest file from __temp__
-        for file in files:
-            if (string.split(file,'.')[-1] in ['srt','sub']):
-                mtime = os.stat(os.path.join(__temp__, file)).st_mtime
-                if mtime > max_mtime:
-                    max_mtime =  mtime
-        init_max_mtime = max_mtime
-        time.sleep(2)  # wait 2 seconds so that the unpacked files are at least 1 second newer
-        xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + __temp__ +")")
-        waittime  = 0
-        while (filecount == init_filecount) and (waittime < 20) and (init_max_mtime == max_mtime): # nothing yet extracted
-            time.sleep(1)  # wait 1 second to let the builtin function 'XBMC.extract' unpack
-            files = os.listdir(__temp__)
-            filecount = len(files)
-            # determine if there is a newer file created in __temp__ (marks that the extraction had completed)
-            for file in files:
-                if (string.split(file,'.')[-1] in ['srt','sub']):
-                    mtime = os.stat(os.path.join(__temp__, file)).st_mtime
-                    if (mtime > max_mtime):
-                        max_mtime =  mtime
-            waittime  = waittime + 1
-        if waittime == 20:
-            log("Divxplanet: Failed to unpack subtitles in '%s'" % (__temp__))
-        else:
-            log("Divxplanet: Unpacked files in '%s'" % (__temp__))
-            for file in files:
-                # there could be more subtitle files in __temp__, so make sure we get the newly created subtitle file
-                if (string.split(file, '.')[-1] in ['srt', 'sub']) and (os.stat(os.path.join(__temp__, file)).st_mtime > init_max_mtime): # unpacked file is a newly created subtitle file
-                    log("Divxplanet: Unpacked subtitles file '%s'" % (file.encode("utf-8")))
-                    subs_file = os.path.join(__temp__, file)
-                    subtitle_list.append(subs_file)
-    log("Divxplanet: Subtitles saved to '%s'" % ( local_tmp_file))
+        xbmc.executebuiltin("XBMC.Extract(" + local_tmp_file + "," + extract_path + ")", True)
+        files = os.listdir(extract_path)
+        filecount = len(files)
+        # determine if there is a newer file created in __temp__ (marks that the extraction had completed)
+        log("Divxplanet: Unpacked files in '%s'" % extract_path)
+        for f in files:
+            # there could be more subtitle files in __temp__, so make sure we get the newly created subtitle file
+            if string.split(f, '.')[-1] in ['srt', 'sub']:
+                log("Divxplanet: Unpacked subtitles file '%s'" % (f.encode("utf-8")))
+                subs_file = os.path.join(extract_path, f)
+                subtitle_list.append(subs_file)
+                log("Divxplanet: Subtitles saved to '%s'" % local_tmp_file)
     br.close()
     return subtitle_list
 
 
 def get_params():
-  param=[]
-  paramstring=sys.argv[2]
-  if len(paramstring)>=2:
-    params=paramstring
-    cleanedparams=params.replace('?','')
-    if (params[len(params)-1]=='/'):
-      params=params[0:len(params)-2]
-    pairsofparams=cleanedparams.split('&')
-    param={}
-    for i in range(len(pairsofparams)):
-      splitparams={}
-      splitparams=pairsofparams[i].split('=')
-      if (len(splitparams))==2:
-        param[splitparams[0]]=splitparams[1]
+    param = []
+    paramstring = sys.argv[2]
 
-  return param
+    if len(paramstring)>=2:
+      mparam = paramstring
+      cleanedparams = mparam.replace('?','')
+
+      if mparam[len(mparam)-1] == '/':
+          mparam = mparam[0:len(mparam)-2]
+
+      pairsofparams = cleanedparams.split('&')
+      param={}
+      for i in range(len(pairsofparams)):
+          splitparams={}
+          splitparams=pairsofparams[i].split('=')
+          if len(splitparams) == 2:
+              param[splitparams[0]]=splitparams[1]
+
+    return param
 
 params = get_params()
 
 if params['action'] == 'search':
-  item = {}
-  item['temp']               = False
-  item['rar']                = False
-  item['year']               = xbmc.getInfoLabel("VideoPlayer.Year")                           # Year
-  item['season']             = str(xbmc.getInfoLabel("VideoPlayer.Season"))                    # Season
-  item['episode']            = str(xbmc.getInfoLabel("VideoPlayer.Episode"))                   # Episode
-  item['tvshow']             = normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))   # Show
-  item['title']              = normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")) # try to get original title
-  item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path of a playing file
-  item['3let_language']      = []
-  #log("Divxplanet: %s" % xbmc.Player().getVideoInfoTag().getIMDBNumber())
+    item = {'temp': False, 'rar': False, 'year': xbmc.getInfoLabel("VideoPlayer.Year"),
+            'season': str(xbmc.getInfoLabel("VideoPlayer.Season")),
+            'episode': str(xbmc.getInfoLabel("VideoPlayer.Episode")),
+            'tvshow': normalizeString(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")),
+            'title': normalizeString(xbmc.getInfoLabel("VideoPlayer.OriginalTitle")),
+            'file_original_path': urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8')), '3let_language': []}
 
-  for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
-    item['3let_language'].append(xbmc.convertLanguage(lang,xbmc.ISO_639_2))
+    for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
+        item['3let_language'].append(xbmc.convertLanguage(lang,xbmc.ISO_639_2))
 
-  if item['title'] == "":
-    item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
+    if item['title'] == "":
+        item['title'] = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
 
-  if item['episode'].lower().find("s") > -1:                                      # Check if season is "Special"
-    item['season'] = "0"                                                          #
-    item['episode'] = item['episode'][-1:]
+    if item['episode'].lower().find("s") > -1:                                      # Check if season is "Special"
+        item['season'] = "0"                                                          #
+        item['episode'] = item['episode'][-1:]
 
-  if ( item['file_original_path'].find("http") > -1 ):
-    item['temp'] = True
+    if item['file_original_path'].find("http") > -1:
+        item['temp'] = True
+    elif item['file_original_path'].find("rar://") > -1:
+        item['rar'] = True
+        item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
+    elif item['file_original_path'].find("stack://") > -1:
+        stackPath = item['file_original_path'].split(" , ")
+        item['file_original_path'] = stackPath[0][8:]
 
-  elif ( item['file_original_path'].find("rar://") > -1 ):
-    item['rar']  = True
-    item['file_original_path'] = os.path.dirname(item['file_original_path'][6:])
-
-  elif ( item['file_original_path'].find("stack://") > -1 ):
-    stackPath = item['file_original_path'].split(" , ")
-    item['file_original_path'] = stackPath[0][8:]
-
-  Search(item)
+    Search(item)
 
 elif params['action'] == 'download':
-  ## we pickup all our arguments sent from def Search()
-  subs = Download(params["link"],params["lang"], params["description"])
-  ## we can return more than one subtitle for multi CD versions, for now we are still working out how to handle that in XBMC core
-  for sub in subs:
-    listitem = xbmcgui.ListItem(label=sub)
-    xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
+    # we pickup all our arguments sent from def Search()
 
+    subs = Download(params["link"],params["lang"], params["description"])
+    # we can return more than one subtitle for multi CD versions,
+    # for now we are still working out how to handle that in XBMC core
+    for sub in subs:
+        listitem = xbmcgui.ListItem(label=sub)
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1])) ## send end of directory to XBMC
