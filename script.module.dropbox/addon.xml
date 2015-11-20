@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.dropbox"
+       name="dropbox"
+       version="2.2.0"
+       provider-name="micah">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests" version="2.3.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Provide Dropbox Python API support</summary>
+    <description>Provide Dropbox Python API support</description>
+    <platform>all</platform>
+    <language/>
+    <license>Apache2</license>
+    <forum></forum>
+    <website></website>
+    <source>http://python-requests.org</source>
+    <email>micahgalizia AT gmail.com</email>
+  </extension>
+</addon>
