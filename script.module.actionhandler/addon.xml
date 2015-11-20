@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.actionhandler" name="ActionHandler" version="1.0.0" provider-name="Philipp Temminghoff (phil65)">
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Helper module for Event handling in WindowXMLs</summary>
+		<description lang="en">Helper module to allow mapping Actions, Onfocus and click events via decorators</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE Version 2.1, February 1999</license>
+		<source>https://github.com/phil65/script.module.actionhandler</source>
+	</extension>
+</addon>
