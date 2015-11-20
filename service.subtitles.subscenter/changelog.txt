@@ -1,3 +1,6 @@
+3.3.4 - by maortal 19/11/2015
+- Hotfix parse_rls_title function
+
 3.3.3 - by CaTz (11/11/2015)
 - Optimize file release parsing
 

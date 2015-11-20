@@ -78,11 +78,8 @@ def parse_rls_title(item):
         groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", item["tvshow"], re.I)
 
     if len(groups) > 0 and len(groups[0]) >= 3:
-        if len(groups[0]) == 3:
-            title, season, episode = groups[0]
-        else:
-            title, year, season, episode = groups[0]
-            item["year"] = str(int(year))
+        title, year, season, episode = groups[0]
+        item["year"] = str(int(year)) if len(year)==4 else year
 
         item["tvshow"] = regexHelper.sub(' ', title).strip()
         item["season"] = str(int(season))
