@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import re
 
 from .common import InfoExtractor
+from ..compat import compat_urllib_parse_urlparse
 from ..utils import (
     ExtractorError,
     qualities,
@@ -42,12 +43,11 @@ class UltimediaIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
-
         webpage = self._download_webpage(url, video_id)
 
-        deliver_url = self._search_regex(
-            r'<iframe[^>]+src="(https?://(?:www\.)?ultimedia\.com/deliver/[^"]+)"',
-            webpage, 'deliver URL')
+        deliver_url = self._proto_relative_url(self._search_regex(
+            r'<iframe[^>]+src="((?:https?:)?//(?:www\.)?ultimedia\.com/deliver/[^"]+)"',
+            webpage, 'deliver URL'), compat_urllib_parse_urlparse(url).scheme + ':')
 
         deliver_page = self._download_webpage(
             deliver_url, video_id, 'Downloading iframe page')
@@ -58,7 +58,8 @@ class UltimediaIE(InfoExtractor):
 
         player = self._parse_json(
             self._search_regex(
-                r"jwplayer\('player(?:_temp)?'\)\.setup\(({.+?})\)\.on", deliver_page, 'player'),
+                r"jwplayer\('player(?:_temp)?'\)\.setup\(({.+?})\)\.on",
+                deliver_page, 'player'),
             video_id)
 
         quality = qualities(['flash', 'html5'])
@@ -81,8 +82,8 @@ class UltimediaIE(InfoExtractor):
         title = clean_html((
             self._html_search_regex(
                 r'(?s)<div\s+id="catArticle">.+?</div>(.+?)</h1>',
-                webpage, 'title', default=None)
-            or self._search_regex(
+                webpage, 'title', default=None) or
+            self._search_regex(
                 r"var\s+nameVideo\s*=\s*'([^']+)'",
                 deliver_page, 'title')))
 

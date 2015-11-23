@@ -6,9 +6,12 @@ import re
 from .common import InfoExtractor
 from ..compat import (
     compat_str,
-    compat_urllib_request
+    compat_urllib_parse,
 )
-from ..utils import sanitize_url_path_consecutive_slashes
+from ..utils import (
+    ExtractorError,
+    sanitized_Request,
+)
 
 
 class SohuIE(InfoExtractor):
@@ -23,9 +26,7 @@ class SohuIE(InfoExtractor):
             'ext': 'mp4',
             'title': 'MV：Far East Movement《The Illest》',
         },
-        'params': {
-            'cn_verification_proxy': 'proxy.uku.im:8888'
-        }
+        'skip': 'On available in China',
     }, {
         'url': 'http://tv.sohu.com/20150305/n409385080.shtml',
         'md5': '699060e75cf58858dd47fb9c03c42cfb',
@@ -47,6 +48,7 @@ class SohuIE(InfoExtractor):
         'url': 'http://my.tv.sohu.com/pl/8384802/78910339.shtml',
         'info_dict': {
             'id': '78910339',
+            'title': '【神探苍实战秘籍】第13期 战争之影 赫卡里姆',
         },
         'playlist': [{
             'md5': 'bdbfb8f39924725e6589c146bc1883ad',
@@ -94,7 +96,7 @@ class SohuIE(InfoExtractor):
             else:
                 base_data_url = 'http://hot.vrs.sohu.com/vrs_flash.action?vid='
 
-            req = compat_urllib_request.Request(base_data_url + vid_id)
+            req = sanitized_Request(base_data_url + vid_id)
 
             cn_verification_proxy = self._downloader.params.get('cn_verification_proxy')
             if cn_verification_proxy:
@@ -110,12 +112,21 @@ class SohuIE(InfoExtractor):
 
         webpage = self._download_webpage(url, video_id)
 
-        title = self._og_search_title(webpage)
+        title = re.sub(r' - 搜狐视频$', '', self._og_search_title(webpage))
 
         vid = self._html_search_regex(
             r'var vid ?= ?["\'](\d+)["\']',
             webpage, 'video path')
         vid_data = _fetch_data(vid, mytv)
+        if vid_data['play'] != 1:
+            if vid_data.get('status') == 12:
+                raise ExtractorError(
+                    'Sohu said: There\'s something wrong in the video.',
+                    expected=True)
+            else:
+                raise ExtractorError(
+                    'Sohu said: The video is only licensed to users in Mainland China.',
+                    expected=True)
 
         formats_json = {}
         for format_id in ('nor', 'high', 'super', 'ori', 'h2644k', 'h2654k'):
@@ -132,23 +143,41 @@ class SohuIE(InfoExtractor):
             formats = []
             for format_id, format_data in formats_json.items():
                 allot = format_data['allot']
-                prot = format_data['prot']
 
                 data = format_data['data']
                 clips_url = data['clipsURL']
                 su = data['su']
 
-                part_str = self._download_webpage(
-                    'http://%s/?prot=%s&file=%s&new=%s' %
-                    (allot, prot, clips_url[i], su[i]),
-                    video_id,
-                    'Downloading %s video URL part %d of %d'
-                    % (format_id, i + 1, part_count))
+                video_url = 'newflv.sohu.ccgslb.net'
+                cdnId = None
+                retries = 0
 
-                part_info = part_str.split('|')
+                while 'newflv.sohu.ccgslb.net' in video_url:
+                    params = {
+                        'prot': 9,
+                        'file': clips_url[i],
+                        'new': su[i],
+                        'prod': 'flash',
+                    }
 
-                video_url = sanitize_url_path_consecutive_slashes(
-                    '%s%s?key=%s' % (part_info[0], su[i], part_info[3]))
+                    if cdnId is not None:
+                        params['idc'] = cdnId
+
+                    download_note = 'Downloading %s video URL part %d of %d' % (
+                        format_id, i + 1, part_count)
+
+                    if retries > 0:
+                        download_note += ' (retry #%d)' % retries
+                    part_info = self._parse_json(self._download_webpage(
+                        'http://%s/?%s' % (allot, compat_urllib_parse.urlencode(params)),
+                        video_id, download_note), video_id)
+
+                    video_url = part_info['url']
+                    cdnId = part_info.get('nid')
+
+                    retries += 1
+                    if retries > 5:
+                        raise ExtractorError('Failed to get video URL')
 
                 formats.append({
                     'url': video_url,
@@ -172,9 +201,10 @@ class SohuIE(InfoExtractor):
             info['id'] = video_id
         else:
             info = {
-                '_type': 'playlist',
+                '_type': 'multi_video',
                 'entries': playlist,
                 'id': video_id,
+                'title': title,
             }
 
         return info

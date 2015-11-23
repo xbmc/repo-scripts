@@ -1,13 +1,11 @@
 from __future__ import unicode_literals
 
-import re
-
 from .common import InfoExtractor
-from ..compat import (
-    compat_urllib_parse,
-    compat_urllib_request,
+from ..compat import compat_urllib_parse
+from ..utils import (
+    ExtractorError,
+    sanitized_Request,
 )
-from ..utils import ExtractorError
 
 
 class PrimeShareTVIE(InfoExtractor):
@@ -31,12 +29,7 @@ class PrimeShareTVIE(InfoExtractor):
         if '>File not exist<' in webpage:
             raise ExtractorError('Video %s does not exist' % video_id, expected=True)
 
-        fields = dict(re.findall(r'''(?x)<input\s+
-            type="hidden"\s+
-            name="([^"]+)"\s+
-            (?:id="[^"]+"\s+)?
-            value="([^"]*)"
-            ''', webpage))
+        fields = self._hidden_inputs(webpage)
 
         headers = {
             'Referer': url,
@@ -48,7 +41,7 @@ class PrimeShareTVIE(InfoExtractor):
             webpage, 'wait time', default=7)) + 1
         self._sleep(wait_time, video_id)
 
-        req = compat_urllib_request.Request(
+        req = sanitized_Request(
             url, compat_urllib_parse.urlencode(fields), headers)
         video_page = self._download_webpage(
             req, video_id, 'Downloading video page')

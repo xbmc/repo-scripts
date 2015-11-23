@@ -59,6 +59,7 @@ _OVERRIDE_PARAMS = {}
 _DOWNLOAD_CANCEL = False
 _DOWNLOAD_START = None
 _DOWNLOAD_DURATION = None
+
 class VideoInfo:
     """
     Represents resolved site video
