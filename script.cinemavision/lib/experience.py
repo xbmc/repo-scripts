@@ -736,21 +736,21 @@ class ExperiencePlayer(xbmc.Player):
             kodiutil.DEBUG_LOG('Selection is a collection')
             return self.addCollectionMovies()
 
-        title = xbmc.getInfoLabel('ListItem.Title')
+        title = kodiutil.infoLabel('ListItem.Title')
         if not title:
             return False
-        feature = cinemavision.sequenceprocessor.Feature(xbmc.getInfoLabel('ListItem.FileNameAndPath'))
+        feature = cinemavision.sequenceprocessor.Feature(kodiutil.infoLabel('ListItem.FileNameAndPath'))
         feature.title = title
 
-        ratingString = cvutil.ratingParser().getActualRatingFromMPAA(xbmc.getInfoLabel('ListItem.Mpaa'), debug=True)
+        ratingString = cvutil.ratingParser().getActualRatingFromMPAA(kodiutil.infoLabel('ListItem.Mpaa'), debug=True)
         if ratingString:
             feature.rating = ratingString
 
         feature.ID = kodiutil.intOrZero(xbmc.getInfoLabel('ListItem.DBID'))
         feature.dbType = xbmc.getInfoLabel('ListItem.DBTYPE')
-        feature.genres = xbmc.getInfoLabel('ListItem.Genre').split(' / ')
-        feature.thumb = xbmc.getInfoLabel('ListItem.Thumb')
-        feature.year = xbmc.getInfoLabel('ListItem.Year')
+        feature.genres = kodiutil.infoLabel('ListItem.Genre').split(' / ')
+        feature.thumb = kodiutil.infoLabel('ListItem.Thumb')
+        feature.year = kodiutil.infoLabel('ListItem.Year')
 
         try:
             feature.runtime = kodiutil.intOrZero(xbmc.getInfoLabel('ListItem.Duration')) * 60

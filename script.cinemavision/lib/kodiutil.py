@@ -52,10 +52,14 @@ def firstRun():
     LOG('FIRST RUN')
 
 
+def infoLabel(info):
+    return xbmc.getInfoLabel(info).decode('utf-8')
+
+
 def checkAPILevel():
     old = getSetting('API_LEVEL', 0)
     if not old:
-        return firstRun()
+        firstRun()
     elif old == 1:
         setSetting('from.beta', ADDON.getAddonInfo('version'))
 

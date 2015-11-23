@@ -826,6 +826,16 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
     def _save(self, full_path, temp=False):
         items = [li.dataSource for li in self.sequenceControl if li.dataSource]
+
+        if not cinemavision.sequence.sequenceHasFeature(items):
+            yes = xbmcgui.Dialog().yesno(
+                T(32603, 'No Feature'),
+                T(32604, 'Sequence does not have a feature module, which is required to play items selected in Kodi.'),
+                T(32605, 'Continue?')
+            )
+            if not yes:
+                return
+
         xmlString = cinemavision.sequence.getSaveString(items)
 
         kodiutil.DEBUG_LOG('Saving to: {0}'.format(full_path))

@@ -1014,6 +1014,13 @@ def getItem(token):
 #     return prettify(base)
 
 
+def sequenceHasFeature(items):
+    for i in items:
+        if i._type == 'feature':
+            return True
+    return False
+
+
 def getItemsFromXMLString(dstring):
     from xml.etree import ElementTree as ET
     e = ET.fromstring(dstring)
@@ -1043,6 +1050,7 @@ def getItemsFromString(dstring):
             try:
                 return getItemsFromXMLString(dstring)
             except:
+                util.LOG(repr(dstring[:100]))
                 util.ERROR()
 
     return None

@@ -980,3 +980,15 @@ msgstr ""
 msgctxt "#32602"
 msgid "Error parsing sequence"
 msgstr ""
+
+msgctxt "#32603"
+msgid "No Feature"
+msgstr ""
+
+msgctxt "#32604"
+msgid "Sequence does not have a feature module, which is required to play items selected in Kodi."
+msgstr ""
+
+msgctxt "#32605"
+msgid "Continue?"
+msgstr ""

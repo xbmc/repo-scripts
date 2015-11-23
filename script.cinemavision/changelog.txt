@@ -1,5 +1,10 @@
 Changelog for CinemaVision
 
+[- 1.0.3 -]
+
+-fix:      Encoding errors caused by non-ascii characters in genres
+-add:      Warning dialog when saving a sequence that does not contain a feature module
+
 [- 1.0.2 -]
 
 - change:  Improve logging and add a dialog for sequence loading errors
