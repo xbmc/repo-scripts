@@ -297,11 +297,11 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                     break
             items = copy.deepcopy(self.items)
 
-    def _get_items(self):
+    def _get_items(self, update=False):
 	# check if we have an image folder, else fallback to video fanart
         if self.slideshow_type == '2':
             hexfile = checksum(self.slideshow_path) # check if path has changed, so we can create a new cache at startup
-            if (not xbmcvfs.exists(CACHEFILE % hexfile)): # create a new cache if no cache exits or during the background scan
+            if (not xbmcvfs.exists(CACHEFILE % hexfile)) or update: # create a new cache if no cache exits or during the background scan
                 create_cache(self.slideshow_path, hexfile)
             self.items = self._read_cache(hexfile)
             if not self.items:
@@ -420,7 +420,7 @@ class img_update(threading.Thread):
     def run(self):
         while (not self.Monitor.abortRequested()) and (not self.stop):
             # create a fresh index as quickly as possible after slidshow started
-            self._get_items()
+            self._get_items(True)
             count = 0
             while count != 3600: # check for new images every hour
                 xbmc.sleep(1000)

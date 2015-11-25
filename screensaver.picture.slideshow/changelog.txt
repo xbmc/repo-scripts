@@ -1,3 +1,6 @@
+v3.0.1
+- fix index creation during update
+
 v3.0.0
 - bump for jarvis
 - always use image index
