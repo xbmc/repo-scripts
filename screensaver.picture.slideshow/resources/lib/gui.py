@@ -80,8 +80,6 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if self.items:
             # hide startup splash
             self._set_prop('Splash', 'hide')
-            thread = img_update(data=self._get_items)
-            thread.start()
             # start slideshow
             self._start_show(copy.deepcopy(self.items))
 
@@ -140,6 +138,9 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self._set_prop('Background', 'show')
 
     def _start_show(self, items):
+        # we need to start the update thread after the deep copy of self.items finishes
+        thread = img_update(data=self._get_items)
+        thread.start()
         # start with image 1
         cur_img = self.image1
         order = [1,2]
