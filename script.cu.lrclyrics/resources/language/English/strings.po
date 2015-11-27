@@ -137,6 +137,10 @@ msgctxt "#32160"
 msgid "Hide notifications"
 msgstr ""
 
+msgctxt "#32161"
+msgid "Remove Chinese text from lyrics"
+msgstr ""
+
 #empty strings from id 32161 to 32198
 #Skin labels
 

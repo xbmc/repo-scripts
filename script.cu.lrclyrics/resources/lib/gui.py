@@ -85,6 +85,10 @@ class MAIN():
             return lyrics
         if song.title:
             lyrics = self.find_lyrics( song )
+            if __addon__.getSetting( 'strip' ) == "true":
+                fulltext = lyrics.lyrics.decode("utf-8")
+                stripped = re.sub(ur"[\u3000-\u9fff]+", "", fulltext)
+                lyrics.lyrics = stripped.encode("utf-8")
         else:
             lyrics = Lyrics()
             lyrics.song = song

@@ -1,9 +1,9 @@
 import os
 import re
 import chardet
-from tagger import *
-from mutagen.flac import FLAC
-from mutagen.mp4 import MP4
+from mutagen_culrc.flac import FLAC
+from mutagen_culrc.mp3 import MP3
+from mutagen_culrc.mp4 import MP4
 import xbmcvfs
 from utilities import *
 
@@ -17,24 +17,22 @@ def getEmbedLyrics(song, getlrc):
     filename = song.filepath.decode("utf-8")
     ext = os.path.splitext(filename)[1].lower()
     lry = None
-    try:
-        if ext == '.mp3':
-            lry = getLyrics3(filename, getlrc)
-    except:
-        pass
-    if lry:
-        enc = chardet.detect(lry)
-        lyrics.lyrics = lry.decode(enc['encoding'])
-    else:
-        if ext == '.mp3':
-            lry = getID3Lyrics(filename, getlrc)
-        elif  ext == '.flac':
-            lry = getFlacLyrics(filename, getlrc)
-        elif  ext == '.m4a':
-            lry = getMP4Lyrics(filename, getlrc)
+    if ext == '.mp3':
+        lry = getID3Lyrics(filename, getlrc)
         if not lry:
-            return None
-        lyrics.lyrics = lry
+            try:
+                text = getLyrics3(filename, getlrc)
+                enc = chardet.detect(text)
+                lry = text.decode(enc['encoding'])
+            except:
+                pass
+    elif  ext == '.flac':
+        lry = getFlacLyrics(filename, getlrc)
+    elif  ext == '.m4a':
+        lry = getMP4Lyrics(filename, getlrc)
+    if not lry:
+        return None
+    lyrics.lyrics = lry
     return lyrics
 
 """
@@ -55,8 +53,9 @@ def getLyrics3(filename, getlrc):
         buf = f.read(5100+11)
         f.close();
         start = buf.find("LYRICSBEGIN")
-        if (getlrc and content.startswith('[')) or (not getlrc and not content.startswith('[')):
-            return buf[start+11:]
+        content = buf[start+11:]
+        if (getlrc and isLRC(content)) or (not getlrc and not isLRC(content)):
+            return content
     elif (buf == "LYRICS200"):
         """ Find Lyrics3v2 """
         f.seek(-9-6, os.SEEK_CUR)
@@ -71,21 +70,11 @@ def getLyrics3(filename, getlrc):
                 length = int(buf[3:8])
                 content = buf[8:8+length]
                 if (tag == 'LYR'):
-                    if (getlrc and content.startswith('[')) or (not getlrc and not content.startswith('[')):
+                    if (getlrc and isLRC(content)) or (not getlrc and not isLRC(content)):
                         return content
                 buf = buf[8+length:]
     f.close();
     return None
-
-def endOfString(string, utf16=False):
-    if (utf16):
-        pos = 0
-        while True:
-            pos += string[pos:].find('\x00\x00') + 1
-            if (pos % 2 == 1):
-                return pos - 1
-    else:
-        return string.find('\x00')
 
 def ms2timestamp(ms):
     mins = "0%s" % int(ms/1000/60)
@@ -99,88 +88,27 @@ Get USLT/SYLT/TXXX lyrics embed with ID3v2 format
 See: http://id3.org/id3v2.3.0
 """
 def getID3Lyrics(filename, getlrc):
-    id3 = ID3v2(filename)
-    if id3.version == 2.2:
-        sylt = "SLT"
-        uslt = "ULT"
-        txxx = "TXX"
-    else:
-        sylt = "SYLT"
-        uslt = "USLT"
-        txxx = "TXXX"
-    for tag in id3.frames:
-        if getlrc and tag.fid == sylt:
-            enc = ['latin_1','utf_16','utf_16_be','utf_8'][ord(tag.rawdata[0])]
-            lang = tag.rawdata[1:4]
-            format = tag.rawdata[4]
-            ctype = tag.rawdata[5]
-            raw = tag.rawdata[6:]
-            utf16 = bool(enc.find('16') != -1)
-            pos = endOfString(raw, utf16)
-            desc = raw[:pos]
-            if utf16:
-                pos += 1
-            content = raw[pos+1:]
-            del raw
-            lyrics = ""
-            while content != "":
-                pos = endOfString(content, utf16)
-                if (enc == 'latin_1'):
-                    enc = chardet.detect(content[:pos])['encoding']
-                text = content[:pos].decode(enc)
-                if utf16:
-                    pos += 1
-                time = content[pos+1:pos+5]
-                timems = 0
-                for x in range(4):
-                    timems += (256)**(3-x) * ord(time[x])
-                lyrics += "%s%s\r\n" % (ms2timestamp(timems), text.replace('\n','').replace('\r','').strip())
-                content = content[pos+5:]
-            return lyrics
-        elif tag.fid == txxx:
-            """
-            Frame data in rawdata[]:
-            Text encoding     $xx
-            Description       <textstring> $00 (00)
-            Value         <textstring>
-            """
-            enc = ['latin_1','utf_16','utf_16_be','utf_8'][ord(tag.rawdata[0])]
-            raw = tag.rawdata[1:]
-            utf16 = bool(enc.find('16') != -1)
-            pos = endOfString(raw, utf16)
-            desc = raw[:pos].decode(enc)
-            if utf16:
-                pos += 1
-            if (len(desc) == 6 and desc.lower() == "lyrics"):
-                lyrics = raw[pos+1:]
-                if (enc == 'latin_1'):
-                    enc = chardet.detect(lyrics)['encoding']
-                lyr = lyrics.decode(enc)
-                match1 = re.compile('\[(\d+):(\d\d)(\.\d+|)\]').search(lyr)
-                if (getlrc and match1) or ((not getlrc) and (not match1)):
-                    return lyr
-        elif tag.fid == uslt: # people also store synchronised lyrics in this tag
-            """
-            Frame data in rawdata[]:
-            Text encoding        $xx
-            Language             $xx xx xx
-            Content descriptor   <textstring> $00 (00)
-            Lyrics/text          <textstring>
-            """
-            enc = ['latin_1','utf_16','utf_16_be','utf_8'][ord(tag.rawdata[0])]
-            lang = tag.rawdata[1:4]
-            raw = tag.rawdata[4:]
-            utf16 = bool(enc.find('16') != -1)
-            pos = endOfString(raw, utf16)
-            desc = raw[:pos]
-            if utf16:
-                pos += 1
-            lyrics = raw[pos+1:]
-            if (enc == 'latin_1'):
-                enc = chardet.detect(lyrics)['encoding']
-            if (getlrc and lyrics.decode(enc).startswith('[')) or (not getlrc):
-                return lyrics.decode(enc)
-    return None
+    codecs = ['latin_1', 'utf-16', 'utf16-be', 'utf-8']
+    try:
+        data = MP3(filename)
+        for tag,value in data.iteritems():
+            if getlrc and tag.startswith('SYLT'):
+                lyr = ''
+                text = data[tag].text
+                for line in text:
+                    txt = line[0].encode("utf-8").strip()
+                    stamp = ms2timestamp(line[1])
+                    lyr += "%s%s\r\n" % (stamp, txt)
+                return lyr
+            if not getlrc and (tag.startswith('USLT') or tag.startswith('TXXX')):
+                if tag.startswith('USLT'):
+                    text = data[tag].text
+                elif tag.lower().endswith('lyrics'): # TXXX tags contain arbitrary info. only accept 'TXXX:lyrics'
+                    text = data[tag].text[0]
+                lyr = text.encode("utf-8")
+                return lyr
+    except:
+        return None
 
 def getFlacLyrics(filename, getlrc):
     try:
@@ -203,3 +131,11 @@ def getMP4Lyrics(filename, getlrc):
                 return lyr
     except:
         return None
+
+def isLRC(text):
+    # test last line if it's in lrc format: [mm:ss.xx] ....
+    lyrics = text.strip().split('\n')
+    if lyrics[-1].strip().startswith('[') and lyrics[-1].strip()[3] == ':' and lyrics[-1].strip()[5] == '.':
+        return True
+    else:
+        return False

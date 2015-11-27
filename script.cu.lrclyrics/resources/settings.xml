@@ -30,6 +30,7 @@
 		<setting id="save_subfolder_path" type="text" enable="eq(-1,true)" label="32112" default="lyrics"/>
 		<setting type="sep" />
 		<setting id="service" type="bool" label="32156" default="true"/>
+		<setting id="strip" type="bool" label="32161" default="false"/>
 		<setting id="silent" type="bool" label="32160" default="false"/>
 		<setting id="log_enabled" type="bool" label="32159" default="false"/>
 	</category>
