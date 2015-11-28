@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Titan-->
 <window>
     <defaultcontrol always="true">5</defaultcontrol>
     <controls>
@@ -8,11 +7,14 @@
 		<!-- use Container(999).ListItem to get all info -->
 		<!-- all normal listitem properties will be available -->
 		<control type="list" id="999">
-		<posx>630</posx>
-                <posy>0</posy>
-		<itemlayout />
-		<focusedlayout />
+            <posx>630</posx>
+            <posy>0</posy>
+            <itemlayout />
+            <focusedlayout />
 		</control>
+        
+        <!-- include list/container with ID 998 for cast list -->
+        <!-- include list/container with ID 997 for similar list -->
 		
         <control type="group">
 			<animation type="WindowOpen">

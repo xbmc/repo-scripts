@@ -182,7 +182,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         elif controlID == 3010:  
             #manual input
             dialog = xbmcgui.Dialog()
-            colorstring = dialog.input("Color", self.currentWindow.getProperty("colorstring"), type=xbmcgui.INPUT_ALPHANUM)
+            colorstring = dialog.input(ADDON.getLocalizedString(32012), self.currentWindow.getProperty("colorstring"), type=xbmcgui.INPUT_ALPHANUM)
             self.currentWindow.setProperty("colorname", ADDON.getLocalizedString(32050))
             self.currentWindow.setProperty("colorstring", colorstring)
             self.setOpacitySlider()

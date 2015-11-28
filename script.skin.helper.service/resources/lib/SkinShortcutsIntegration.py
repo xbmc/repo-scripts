@@ -124,7 +124,7 @@ def getWidgets(itemstoInclude = None):
     #build the widget listiing...
     for widgetType in itemstoInclude:
         if widgetType == "smartshortcuts":
-            getSmartShortcuts()
+            getSmartShortcuts(None,True)
             continue
         else:
             widgets = []
@@ -189,9 +189,11 @@ def getBackgrounds():
     
     #wall backgrounds
     globalBackgrounds.append((ADDON.getLocalizedString(32117), "SkinHelper.AllMoviesBackground.Wall"))
+    globalBackgrounds.append(("%s (%s)" %(ADDON.getLocalizedString(32117),ADDON.getLocalizedString(32156)), "SkinHelper.AllMoviesBackground.Poster.Wall"))
     globalBackgrounds.append((ADDON.getLocalizedString(32118), "SkinHelper.AllMusicBackground.Wall"))
     globalBackgrounds.append((ADDON.getLocalizedString(32119), "SkinHelper.AllMusicSongsBackground.Wall"))
     globalBackgrounds.append((ADDON.getLocalizedString(32127), "SkinHelper.AllTvShowsBackground.Wall"))
+    globalBackgrounds.append(("%s (%s)" %(ADDON.getLocalizedString(32127),ADDON.getLocalizedString(32156)), "SkinHelper.AllTvShowsBackground.Poster.Wall"))
     
     if xbmc.getCondVisibility("System.HasAddon(script.extendedinfo)"):
         globalBackgrounds.append((xbmc.getInfoLabel("$ADDON[script.extendedinfo 32046]") + " (TheMovieDB)", "SkinHelper.TopRatedMovies"))
@@ -257,6 +259,7 @@ def getAddonWidgetListing(addonShortName,skipscan=False):
     addonList.append(["script.skin.helper.service", "scriptwidgets"])
     addonList.append(["service.library.data.provider", "librarydataprovider"])
     addonList.append(["script.extendedinfo", "extendedinfo"])
+    logMsg("getAddonWidgetListing " + addonShortName)
     for addon in addonList:
         if addon[1] == addonShortName:
             logMsg("buildWidgetsListing processing: " + addon[0])
@@ -271,10 +274,6 @@ def getAddonWidgetListing(addonShortName,skipscan=False):
                 media_array = getJSON('Files.GetDirectory','{ "directory": "plugin://%s", "media": "files" }' %addon[0])
                 for item in media_array:
                     logMsg("buildWidgetsListing processing: %s - %s" %(addon[0],item["label"]))
-                    #safety check: check if no library windows are active to prevent any addons setting the view
-                    curWindow = xbmc.getInfoLabel("$INFO[Window.Property(xmlfile)]")
-                    if curWindow.endswith("Nav.xml") or curWindow == "AddonBrowser.xml" or curWindow.startswith("MyPVR"):
-                        return
                     content = item["file"]
                     #extendedinfo has some login-required widgets, skip those
                     if (addon[0] == "script.extendedinfo" and hasTMDBCredentials==False and ("info=starred" in content or "info=rated" in content or "info=account" in content)):
@@ -304,7 +303,7 @@ def getAddonWidgetListing(addonShortName,skipscan=False):
 
     return foundWidgets
     
-def getFavouritesWidgetsListing():
+def getFavouritesWidgetsListing(skipscan=False):
     #widgets from favourites
     json_result = getJSON('Favourites.GetFavourites', '{"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}')
     foundWidgets = []
@@ -326,8 +325,11 @@ def getOtherWidgetsListing(widget):
     #some other widgets (by their direct endpoint) such as smartish widgets and PVR
     foundWidgets = []
     if widget=="pvr" and xbmc.getCondVisibility("PVR.HasTVChannels"):
-        foundWidgets.append(["$LOCALIZE[19023]", "pvr://channels/tv/all channel/;reload=$INFO[Window(Home).Property(widgetreload2)]", "", "pvr"])
-        foundWidgets.append(["$LOCALIZE[19017]", "plugin://script.skin.helper.service/?action=pvrrecordings&limit=25&reload=$INFO[Window(home).Property(widgetreload2)]", "", "pvr"])   
+        foundWidgets.append(["$ADDON[script.skin.helper.service 32153]", "pvr://channels/tv/all channel/;reload=$INFO[Window(Home).Property(widgetreload2)]", "", "pvr"])
+        foundWidgets.append(["$ADDON[script.skin.helper.service 32151]", "plugin://script.skin.helper.service/?action=pvrrecordings&limit=25&reload=$INFO[Window(home).Property(widgetreload2)]", "", "pvr"])
+        foundWidgets.append(["$ADDON[script.skin.helper.service 32152]", "plugin://script.skin.helper.service/?action=nextpvrrecordings&limit=25&reload=$INFO[Window(home).Property(widgetreload2)]", "", "pvr"])
+        foundWidgets.append(["$ADDON[script.skin.helper.service 32152] (reversed)", "plugin://script.skin.helper.service/?action=nextpvrrecordings&reversed=true&limit=25&reload=$INFO[Window(home).Property(widgetreload2)]", "", "pvr"])
+        foundWidgets.append(["$ADDON[script.skin.helper.service 32154]", "plugin://script.skin.helper.service/?action=pvrtimers&limit=25&reload=$INFO[Window(home).Property(widgetreload2)]", "", "pvr"])
         #foundWidgets.append(["$ADDON[script.skin.helper.service 32133]", "plugin://script.skin.helper.service/?action=pvrchannelgroups&limit=25&reload=$INFO[Window(home).Property(widgetreload2)]", "", "pvr"])   
     if widget=="smartishwidgets" and xbmc.getCondVisibility("System.HasAddon(service.smartish.widgets) + Skin.HasSetting(enable.smartish.widgets)"):
         foundWidgets.append(["Smart(ish) Movies widget", "plugin://service.smartish.widgets?type=movies&reload=$INFO[Window.Property(smartish.movies)]", "", "movies"])

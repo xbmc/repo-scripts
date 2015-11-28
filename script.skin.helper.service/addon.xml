@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-	<addon id="script.skin.helper.service" name="Skin Helper Service" version="1.0.11" provider-name="marcelveldt">
+	<addon id="script.skin.helper.service" name="Skin Helper Service" version="1.0.20" provider-name="marcelveldt">
 	<requires>
 		<import addon="xbmc.python" version="2.13.0"/>
 		<import addon="xbmc.addon" version="12.0.0"/>
@@ -20,8 +20,16 @@
 			<visible>Container.Content(episodes) + [!Substring(Container.FolderPath,videodb://tvshows/titles,left) | Substring(Container.FolderPath,xsp=)] + [[!IsEmpty(ListItem.DBID) + !StringCompare(ListItem.DBID,-1)] | !IsEmpty(ListItem.Property(DBID))]</visible>
 		</item>
 	</extension>
+    <extension point="kodi.context.item" library="contextmenu_artwork.py">
+		<item>
+			<label>32143</label>
+            <description>PVR and Music artwork Configuration</description>
+            <visible>[[Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)] + Skin.HasSetting(SkinHelper.EnablePVRThumbs)] | [Container.Content(albums) | Container.Content(artists) | Container.Content(songs)]</visible>
+		</item>
+	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Helper service for Kodi skins</summary>
+        <description>Helper service for Kodi skins</description>
 		<language></language>
 		<platform>all</platform>
 		<license>GPL v2.0</license>

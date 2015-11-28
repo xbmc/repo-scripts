@@ -15,19 +15,25 @@ try:
 except:
     hasPilModule = False
 
-def createImageWall(images,windowProp,blackwhite=False,square=False):
+def createImageWall(images,windowProp,blackwhite=False,type="fanart"):
     if not hasPilModule:
         return []
     
     img_type = "RGBA"
     if blackwhite: img_type = "L"
     
-    if square:
+    if type=="thumbnail":
         #square images
         img_columns = 11
         img_rows = 7
         img_width = 260
         img_height = 260
+    elif type=="poster":
+        #poster images
+        img_columns = 15
+        img_rows = 5
+        img_width = 128
+        img_height = 216
     else:
         #landscaped images
         img_columns = 8
@@ -48,7 +54,7 @@ def createImageWall(images,windowProp,blackwhite=False,square=False):
         dirs, files = xbmcvfs.listdir(wallpath)
         for file in files:
             if file.startswith(windowProp):
-                return_images.append(os.path.join(wallpath.decode("utf-8"),file))
+                return_images.append({"fanart": os.path.join(wallpath.decode("utf-8"),file)})
     
     if return_images: 
         return return_images
@@ -56,7 +62,8 @@ def createImageWall(images,windowProp,blackwhite=False,square=False):
     logMsg("Building Wall background for %s - this might take a while..." %windowProp,0)
     images_required = img_columns*img_rows
     for image in images:
-        if not image.startswith("music@") and not ".mp3" in image:
+        image = image.get(type,"")
+        if image and not image.startswith("music@") and not ".mp3" in image:
             file = xbmcvfs.File(image)
             try:
                 img_obj = io.BytesIO(bytearray(file.readBytes()))
@@ -85,6 +92,6 @@ def createImageWall(images,windowProp,blackwhite=False,square=False):
                     counter += 1
 
             img_canvas.save(out_file, "JPEG")
-            return_images.append(out_file)
+            return_images.append({"fanart": out_file })
     logMsg("Building Wall background %s DONE" %windowProp,0)
     return return_images

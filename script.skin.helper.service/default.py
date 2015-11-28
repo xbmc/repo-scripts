@@ -71,7 +71,42 @@ class Main:
                 from resources.lib.SearchDialog import SearchDialog
                 searchDialog = SearchDialog("script-skin_helper_service-CustomSearch.xml", ADDON_PATH, "Default", "1080i")
                 searchDialog.doModal()
+                resultAction = searchDialog.action
                 del searchDialog
+                if resultAction:
+                    if "jsonrpc" in resultAction:
+                        xbmc.executeJSONRPC(resultAction)
+                    else:
+                        xbmc.executebuiltin(resultAction)
+            
+            elif action == "SHOWINFO":
+                xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+                from resources.lib.InfoDialog import GUI
+                item = None
+                if params.get("MOVIEID"):
+                    item = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %s, "properties": [ %s ] }' %(params.get("MOVIEID"),fields_movies))
+                    content = "movies"
+                elif params.get("EPISODEID"):
+                    item = getJSON('VideoLibrary.GetEpisodeDetails', '{ "episodeid": %s, "properties": [ %s ] }' %(params.get("EPISODEID"),fields_episodes))
+                    content = "episodes"
+                elif params.get("TVSHOWID"):
+                    item = getJSON('VideoLibrary.GetTVShowDetails', '{ "tvshowid": %s, "properties": [ %s ] }' %(params.get("TVSHOWID"),fields_tvshows))
+                    content = "tvshows"
+                if item:
+                    if item.get("streamdetails"): item["streamdetails2"] = item["streamdetails"]
+                    liz = createListItem(item)
+                    liz.setProperty("path", item.get("file"))
+                    liz.setProperty("json",repr(item))
+                    info_dialog = GUI( "script-skin_helper_service-CustomInfo.xml" , ADDON_PATH, "Default", "1080i", listitem=liz, content=content )
+                    info_dialog.doModal()
+                    resultAction = info_dialog.action
+                    del info_dialog
+                    if resultAction:
+                        if "jsonrpc" in resultAction:
+                            xbmc.executeJSONRPC(resultAction)
+                        else:
+                            xbmc.executebuiltin(resultAction)
+                xbmc.executebuiltin( "Dialog.Close(busydialog)" )
             
             elif action == "COLORPICKER":
                 from resources.lib.ColorPicker import ColorPicker
@@ -83,7 +118,7 @@ class Main:
                 propname = params.get("SHORTCUTPROPERTY","")
                 colorPicker.shortcutProperty = propname
                 colorPicker.doModal()
-                if propname:
+                if propname and not isinstance(colorPicker.result, int):
                     wid = xbmcgui.getCurrentWindowDialogId()
                     currentWindow = xbmcgui.Window( xbmcgui.getCurrentWindowDialogId() )
                     currentWindow.setProperty("customProperty",propname)
@@ -166,7 +201,13 @@ class Main:
                 headerMsg = params.get("HEADER")
                 bodyMsg = params.get("MESSAGE")
                 xbmcgui.Dialog().ok(heading=headerMsg, line1=bodyMsg)
-            
+                
+            elif action == "STRIPSTRING":
+                splitchar = params.get("SPLITCHAR")
+                string = params.get("STRING")
+                output = params.get("OUTPUT")
+                string = string.split(splitchar)[0]
+                WINDOW.setProperty(output, string)
 
 
 if (__name__ == "__main__"):

@@ -174,6 +174,31 @@ class ListItemMonitor(threading.Thread):
                     self.liLabelLast = self.liLabel
                     self.lastListItem = curListItem
                 
+                #monitor listitem props when special info active
+                elif xbmc.getCondVisibility("Window.IsActive(script-skin_helper_service-CustomInfo.xml)"):
+                    try:                
+                        self.resetWindowProps()
+                        self.setDuration(xbmc.getInfoLabel("Container(999).ListItem.Duration"))
+                        self.setStudioLogo(xbmc.getInfoLabel("Container(999).ListItem.Studio").decode('utf-8'))
+                        self.setDirector(xbmc.getInfoLabel("Container(999).ListItem.Director").decode('utf-8'))
+                        self.setGenre(xbmc.getInfoLabel("Container(999).ListItem.Genre").decode('utf-8'))
+                        self.setStreamDetails(xbmc.getInfoLabel("Container(999).ListItem.Property(dbid)"),xbmc.getInfoLabel("Container(999).ListItem.Property(contenttype)"))
+                        self.setRottenRatings(xbmc.getInfoLabel("Container(999).ListItem.Property(imdbnumber)"),xbmc.getInfoLabel("Container(999).ListItem.Property(contenttype)"))
+                        #for tv show items, trigger nextaired addon
+                        nextaired = False
+                        if xbmc.getInfoLabel("Container(999).ListItem.TvShowTitle") and xbmc.getCondVisibility("System.HasAddon(script.tv.show.next.aired)"):
+                            xbmc.executebuiltin("RunScript(script.tv.show.next.aired,tvshowtitle=%s)" %xbmc.getInfoLabel("Container(999).ListItem.TvShowTitle"))
+                            nextaired = True
+                        #wait untill the dialog is closed again
+                        while xbmc.getCondVisibility("Window.IsActive(script-skin_helper_service-CustomInfo.xml)") and not self.exit:
+                            xbmc.sleep(150)
+                        self.resetWindowProps()
+                        if nextaired:
+                            #fake show id to flush nextaired props
+                            xbmc.executebuiltin("RunScript(script.tv.show.next.aired,tvshowtitle=165628787629692696)")
+                    except Exception as e:
+                        logMsg("ERROR in LibraryMonitor HomeWidget ! --> " + str(e), 0)
+                
                 #monitor listitem props when home active
                 elif xbmc.getCondVisibility("Window.IsActive(Home) + !IsEmpty(Window(home).Property(SkinHelper.WidgetContainer))"):
                     try:                
@@ -554,7 +579,7 @@ class ListItemMonitor(threading.Thread):
             dbId = xbmc.getInfoLabel("ListItem.DBID")   
             if dbId:
                 #try to get from cache first
-                if self.moviesetCache.has_key(dbId):
+                if self.moviesetCache.get(dbId):
                     json_response = self.moviesetCache[dbId]
                 else:
                     json_response = getJSON('VideoLibrary.GetMovieSetDetails', '{"setid": %s, "properties": [ "thumbnail" ], "movies": { "properties":  [ "rating", "art", "file", "year", "director", "writer", "playcount", "genre" , "thumbnail", "runtime", "studio", "plotoutline", "plot", "country", "streamdetails"], "sort": { "order": "ascending",  "method": "year" }} }' % dbId)
@@ -854,30 +879,31 @@ class ListItemMonitor(threading.Thread):
         artwork = {}
         artist = ""
         title = ""
+        album = ""
         #get the playing item from the player...
         json_result = getJSON('Player.GetActivePlayers', '{}')
         for item in json_result:
             if item.get("type","") == "audio":
-                json_result = getJSON('Player.GetItem', '{ "playerid": %d, "properties": [ "title","albumid","artist","album" ] }' %item.get("playerid"))
-                if json_result.get("albumid") and json_result["albumid"] > 0 and json_result.get("album","") != "Singles" :
-                    #player is playing a song from the database
-                    artwork = getMusicArtworkByDbId(str(json_result["albumid"]),"albums")
-                elif json_result.get("title"):
-                    #player is playing something else, try to look it up...
+                json_result = getJSON('Player.GetItem', '{ "playerid": %d, "properties": [ "title","albumid","artist","album","displayartist" ] }' %item.get("playerid"))
+                if json_result.get("title"):
                     if json_result.get("artist"):
-                        artist = json_result.get("artist")[0]
+                        artist = json_result.get("displayartist")
                         title = json_result.get("title")
+                        album = json_result.get("album")
                     else:
-                        splitchar = None
-                        if " - " in json_result.get("title"): splitchar = " - "
-                        elif "- " in json_result.get("title"): splitchar = "- "
-                        elif " -" in json_result.get("title"): splitchar = " -"
-                        elif "-" in json_result.get("title"): splitchar = "-"
-                        if splitchar:
-                            artist = json_result.get("title").split(splitchar)[0]
-                            title = json_result.get("title").split(splitchar)[1]
-                    if artist and title: artwork = getMusicArtworkByName(artist,title)
-            break
+                        if not artist:
+                            #fix for internet streams
+                            splitchar = None
+                            if " - " in json_result.get("title"): splitchar = " - "
+                            elif "- " in json_result.get("title"): splitchar = "- "
+                            elif " -" in json_result.get("title"): splitchar = " -"
+                            elif "-" in json_result.get("title"): splitchar = "-"
+                            if splitchar:
+                                artist = json_result.get("title").split(splitchar)[0]
+                                title = json_result.get("title").split(splitchar)[1]
+                    logMsg("setMusicPlayerDetails: " + repr(json_result))
+                    if artist and title: artwork = getMusicArtworkByName(artist,title,album)
+                break
 
         #set properties
         for key, value in artwork.iteritems():
@@ -905,22 +931,26 @@ class ListItemMonitor(threading.Thread):
         for key, value in artwork.iteritems():
             WINDOW.setProperty("SkinHelper.Music." + key,value)
               
-    def setStreamDetails(self):
+    def setStreamDetails(self,dbId="",contenttype=""):
         streamdetails = {}
-        dbId = xbmc.getInfoLabel("ListItem.DBID")
+        if not dbId:
+            dbId = xbmc.getInfoLabel("ListItem.DBID")
+        if not contenttype:
+            contenttype = self.contentType
+            
         if not dbId or dbId == "-1": return
         
-        if self.streamdetailsCache.has_key(dbId+self.contentType):
+        if self.streamdetailsCache.get(dbId+contenttype):
             #get data from cache
-            streamdetails = self.streamdetailsCache[dbId+self.contentType]
+            streamdetails = self.streamdetailsCache[dbId+contenttype]
         else:
             json_result = {}
             # get data from json
-            if self.contentType == "movies" and dbId:
+            if "movies" in contenttype and dbId:
                 json_result = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %d, "properties": [ "title", "streamdetails" ] }' %int(dbId))
-            elif self.contentType == "episodes" and dbId:
+            elif contenttype == "episodes" and dbId:
                 json_result = getJSON('VideoLibrary.GetEpisodeDetails', '{ "episodeid": %d, "properties": [ "title", "streamdetails" ] }' %int(dbId))
-            elif self.contentType == "musicvideos" and dbId:
+            elif contenttype == "musicvideos" and dbId:
                 json_result = getJSON('VideoLibrary.GetMusicVideoDetails', '{ "musicvideoid": %d, "properties": [ "title", "streamdetails" ] }' %int(dbId))       
             if json_result.has_key("streamdetails"):
                 audio = json_result["streamdetails"]['audio']
@@ -973,7 +1003,7 @@ class ListItemMonitor(threading.Thread):
                 streamdetails['SkinHelper.ListItemLanguages'] = " / ".join(allLang)
                 streamdetails['SkinHelper.ListItemLanguages.Count'] = str(len(allLang))
                 
-                self.streamdetailsCache[dbId+self.contentType] = streamdetails
+                self.streamdetailsCache[dbId+contenttype] = streamdetails
                 
         if streamdetails:
             #set the window properties
@@ -1048,11 +1078,14 @@ class ListItemMonitor(threading.Thread):
                 else:
                     self.extraFanartCache[self.liPath] = ["None",[]]
 
-    def setRottenRatings(self):
-        imdbnumber = xbmc.getInfoLabel("ListItem.IMDBNumber")
+    def setRottenRatings(self,imdbnumber="",contenttype=""):
+        if not imdbnumber:
+            dbId = xbmc.getInfoLabel("ListItem.IMDBNumber")
+        if not contenttype:
+            contenttype = self.contentType
         result = None
-        if (self.contentType == "movies" or self.contentType=="setmovies") and imdbnumber:
-            if self.rottenCache.has_key(imdbnumber):
+        if (contenttype == "movies" or contenttype=="setmovies") and imdbnumber:
+            if self.rottenCache.get(imdbnumber):
                 #get data from cache
                 result = self.rottenCache[imdbnumber]
             elif not WINDOW.getProperty("SkinHelper.DisableInternetLookups"):

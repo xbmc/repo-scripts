@@ -1,3 +1,10 @@
+v.1.0.19
+- fix some minor issues with widgets
+- fix unicode issue in colorthemes feature
+- add additional pvr widgets
+- improved music artwork matching
+- add color palettes to color picker
+
 v.1.0.11
 - fix some errors in music artwork
 - improvements and rework in skinshortcuts integration

@@ -70,7 +70,7 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
     def renameColorTheme(self,file,themeNameOld):
 
         dialog = xbmcgui.Dialog()
-        themeNameNew = dialog.input('Enter a name for the theme', themeNameOld.decode('utf-8'), type=xbmcgui.INPUT_ALPHANUM).decode("utf-8")
+        themeNameNew = dialog.input(ADDON.getLocalizedString(32146), themeNameOld.decode('utf-8'), type=xbmcgui.INPUT_ALPHANUM).decode("utf-8")
         if not themeNameNew:
             return
             
@@ -295,14 +295,14 @@ def loadColorTheme(file):
                 settingslist.add(setting)
                 if skinsetting[0] == "string":
                     if skinsetting[2] is not "":
-                        xbmc.executebuiltin("Skin.SetString(%s,%s)" % (setting, skinsetting[2]))
+                        xbmc.executebuiltin("Skin.SetString(%s,%s)" % (try_encode(setting), try_encode(skinsetting[2])))
                     else:
-                        xbmc.executebuiltin("Skin.Reset(%s)" % setting)
+                        xbmc.executebuiltin("Skin.Reset(%s)" % try_encode(setting))
                 elif skinsetting[0] == "bool":
                     if skinsetting[2] == "true":
-                        xbmc.executebuiltin("Skin.SetBool(%s)" % setting)
+                        xbmc.executebuiltin("Skin.SetBool(%s)" % try_encode(setting))
                     else:
-                        xbmc.executebuiltin("Skin.Reset(%s)" % setting)
+                        xbmc.executebuiltin("Skin.Reset(%s)" % try_encode(setting))
                 xbmc.sleep(30)
     
     #change the skintheme, color and font if needed 
@@ -391,7 +391,7 @@ def createColorTheme():
 
         #read the guisettings file to get all skin settings
         import BackupRestore as backup
-        newlist = backup.getSkinSettings(["color","opacity","texture","panel"])
+        newlist = backup.getSkinSettings(["color","opacity","texture","panel","colour"])
         if newlist:
             newlist.append(("THEMENAME", themeName))
             newlist.append(("DESCRIPTION", ADDON.getLocalizedString(32025)))

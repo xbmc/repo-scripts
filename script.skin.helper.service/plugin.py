@@ -31,6 +31,8 @@ class Main:
             if genre: optionalParam = genre[0]
             browse=params.get("browse","")
             if browse: optionalParam = browse[0]
+            reversed=params.get("reversed","")
+            if reversed: optionalParam = reversed[0]
         
             if action:
                 if action == "LAUNCHPVR":
@@ -38,6 +40,7 @@ class Main:
                     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
                 elif action == "LAUNCH":
                     path = sys.argv[2].split("&path=")[1]
+                    xbmc.executebuiltin("Action(Close)")
                     xbmc.executebuiltin(path)
                     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
                 elif action == "PLAYALBUM":
@@ -68,7 +71,7 @@ class Main:
                     getCast(movie,tvshow,movieset,downloadthumbs)
                 else:
                     #get a widget listing
-                    getPluginListing(action,limit,refresh)
+                    getPluginListing(action,limit,refresh,optionalParam)
     
         else:
             #do plugin main listing...

@@ -93,12 +93,13 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
         return retval
     
     def do_HEAD(self):
-        image = self.send_headers()
+        image, multi = self.send_headers()
         if image: image.close()
         return
     
     def send_headers(self):
         image = None
+        images = None
         preferred_type = None
         params = urlparse.parse_qs(self.path)
         action = params.get("action","")[0]
@@ -140,6 +141,15 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
                 if artwork.get("thumb"): image = artwork.get("thumb")
                 if artwork.get("fanart"): image = artwork.get("fanart")
                 if artwork.get("landscape"): image = artwork.get("landscape")
+
+        elif action == "getallpvrthumb":
+            channel = params.get("channel","")
+            if channel: channel = channel[0].decode("utf-8")
+            images = getPVRThumbs(title, channel, "recordings")
+            # Ensure no unicode in images...
+            for key, value in images.iteritems():
+                images[key] = unicode(value).encode('utf-8')
+            images = urllib.urlencode(images)
         
         elif action == "getmusicart":
             dbid = params.get("dbid","")
@@ -171,7 +181,13 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
         #set fallback image if nothing else worked
         if not image and fallback: image = fallback
         
-        if image:
+        if images:
+            self.send_response(200)
+            self.send_header('Content-type','text/plaintext')
+            self.send_header('Content-Length',len(images))
+            self.end_headers()
+            return images, True
+        elif image:
             self.send_response(200)
             if ".jpg" in image: self.send_header('Content-type','image/jpeg')
             else: self.send_header('Content-type','image/png')
@@ -185,15 +201,19 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
             self.end_headers() 
         else:
             self.send_error(404)
-        return image
+        return image, None
 
     def do_GET(self):
-        image = self.send_headers()
-        if image:
+        image, multi = self.send_headers()
+        if image and not multi:
             #send the image to the client
             logMsg("WebService -- sending image for --> " + try_encode(self.path))
             self.wfile.write(image.readBytes())
             image.close()
+        elif image:
+            #send multiple images to the client (plaintext)
+            logMsg("WebService -- sending multiple images for --> " + try_encode(self.path))
+            self.wfile.write(image)
         return
 
 class StoppableHttpServer (BaseHTTPServer.HTTPServer):

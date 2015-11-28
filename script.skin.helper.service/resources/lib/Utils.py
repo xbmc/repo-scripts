@@ -96,6 +96,10 @@ def getJSON(method,params):
             return jsonobject['channels']
         elif jsonobject.has_key('recordings'):
             return jsonobject['recordings']
+        elif jsonobject.has_key('timers'):
+            return jsonobject['timers']
+        elif jsonobject.has_key('channeldetails'):
+            return jsonobject['channeldetails']    
         elif jsonobject.has_key('songs'):
             return jsonobject['songs']
         elif jsonobject.has_key('albums'):
@@ -174,6 +178,7 @@ def setAddonsettings():
     WINDOW.setProperty("SkinHelper.enableDebugLog",SETTING("enableDebugLog"))
     WINDOW.setProperty("SkinHelper.maxNumFanArts",SETTING("maxNumFanArts"))
     WINDOW.setProperty("SkinHelper.splittitlechar",SETTING("splittitlechar"))
+    WINDOW.setProperty("SkinHelper.enablePVRThumbsRecordingsOnly",SETTING("enablePVRThumbsRecordingsOnly"))
     
 def indentXML( elem, level=0 ):
     i = "\n" + level*"\t"
@@ -229,6 +234,9 @@ def createListItem(item):
     if "duration" in item:
         liz.setInfo( type=itemtype, infoLabels={ "duration": item['duration'] })
     
+    if "runtime" in item:
+        liz.setInfo( type=itemtype, infoLabels={ "duration": item['runtime'] })
+    
     if "file" in item:
         liz.setPath(item['file'])
         liz.setProperty("path", item['file'])
@@ -247,38 +255,44 @@ def createListItem(item):
     
     if "episodeid" in item:
         liz.setProperty("DBID", str(item['episodeid']))
-        liz.setInfo( type=itemtype, infoLabels={ "DBID": str(item['episodeid']) })
+        if not item.get("type"): item["type"] = "episode"
         liz.setIconImage('DefaultTVShows.png')
         
-    if "tvshowid" in item:
+    if "tvshowid" in item and not "episodeid" in item:
         liz.setProperty("DBID", str(item['tvshowid']))
-        liz.setInfo( type=itemtype, infoLabels={ "DBID": str(item['tvshowid']) })
+        if not item.get("type"): item["type"] = "tvshow"
         liz.setInfo( type=itemtype, infoLabels={ "TvShowTitle": item['label'] })
         liz.setIconImage('DefaultTVShows.png')
         
     if "songid" in item:
         liz.setProperty("DBID", str(item['songid']))
+        if not item.get("type"): item["type"] = "song"
         liz.setIconImage('DefaultAudio.png')
         
     if "movieid" in item:
         liz.setProperty("DBID", str(item['movieid']))
-        liz.setInfo( type=itemtype, infoLabels={ "DBID": str(item['movieid']) })
+        if not item.get("type"): item["type"] = "movie"
         liz.setIconImage('DefaultMovies.png')
     
     if "musicvideoid" in item:
         liz.setProperty("DBID", str(item['musicvideoid']))
+        if not item.get("type"): item["type"] = "musicvideo"
         liz.setIconImage('DefaultMusicVideos.png')
     
     if "type" in item:
         liz.setProperty("type", item['type'])
+        liz.setProperty("dbtype", item['type'])
         
     if "extraproperties" in item:
         if isinstance(item["extraproperties"],dict):
             for key,value in item["extraproperties"].iteritems():
                 liz.setProperty(key, value)
-    
     if "plot" in item:
         liz.setInfo( type=itemtype, infoLabels={ "Plot": item['plot'] })
+        
+    if "imdbnumber" in item:
+        liz.setInfo( type=itemtype, infoLabels={ "imdbnumber": item['imdbnumber'] })
+        liz.setProperty("imdbnumber", str(item['imdbnumber']))
     
     if "album_description" in item:
         liz.setProperty("Album_Description",item['album_description'])
@@ -398,7 +412,40 @@ def createListItem(item):
             for stream in value:
                 if 'video' in key: hasVideoStream = True
                 liz.addStreamInfo(key, stream)
-
+    
+    if item.get('streamdetails2',''):
+        streamdetails = item["streamdetails"]
+        audiostreams = streamdetails.get('audio',[])
+        videostreams = streamdetails.get('video',[])
+        subtitles = streamdetails.get('subtitle',[])
+        if len(videostreams) > 0:
+            stream = videostreams[0]
+            height = stream.get("height","")
+            width = stream.get("width","")
+            if height and width:
+                resolution = ""
+                if width <= 720 and height <= 480: resolution = "480"
+                elif width <= 768 and height <= 576: resolution = "576"
+                elif width <= 960 and height <= 544: resolution = "540"
+                elif width <= 1280 and height <= 720: resolution = "720"
+                elif width <= 1920 and height <= 1080: resolution = "1080"
+                elif width * height >= 6000000: resolution = "4K"
+                liz.setProperty("VideoResolution", resolution)
+            if stream.get("codec",""):
+                liz.setProperty("VideoCodec", str(stream["codec"]))    
+            if stream.get("aspect",""):
+                liz.setProperty("VideoAspect", str(round(stream["aspect"], 2))) 
+        if len(audiostreams) > 0:
+            #grab details of first audio stream
+            stream = audiostreams[0]
+            liz.setProperty("AudioCodec", stream.get('codec',''))
+            liz.setProperty("AudioChannels", str(stream.get('channels','')))
+            liz.setProperty("AudioLanguage", stream.get('language',''))
+        if len(subtitles) > 0:
+            #grab details of first subtitle
+            liz.setProperty("SubtitleLanguage", subtitles[0].get('language',''))
+    
+    
     if not hasVideoStream and "runtime" in item:
         stream = {'duration': item['runtime']}
         liz.addStreamInfo("video", stream)
@@ -432,6 +479,7 @@ def createListItem(item):
     
 def detectPluginContent(plugin,skipscan=False):
     #based on the properties in the listitem we try to detect the content
+    logMsg("detectPluginContent processing: " + plugin)
     image = None
     contentType = None
     #load from cache first
@@ -441,11 +489,13 @@ def detectPluginContent(plugin,skipscan=False):
         if cache and cache.get(plugin):
             contentType = cache[plugin][0]
             image = cache[plugin][1]
+            logMsg("detectPluginContent cache found for: " + plugin)
             return (contentType, image)
     else: cache = {}
         
     #probe path to determine content
     if not contentType:
+        logMsg("detectPluginContent cache NOT found for: " + plugin)
         #safety check: check if no library windows are active to prevent any addons setting the view
         curWindow = xbmc.getInfoLabel("$INFO[Window.Property(xmlfile)]")
         if curWindow.endswith("Nav.xml") or curWindow == "AddonBrowser.xml" or curWindow.startswith("MyPVR"):
@@ -506,26 +556,27 @@ def detectPluginContent(plugin,skipscan=False):
                         contentType = "movies"
                         break
     
-    #last resort or skipscan chosen - detect content based on the path
-    if not contentType:
-        if "movie" in plugin or "box" in plugin or "dvd" in plugin or "rentals" in plugin:
-            contentType = "movies"
-        elif "album" in plugin:
-            contentType = "albums"
-        elif "show" in plugin:
-            contentType = "tvshows"
-        elif "song" in plugin:
-            contentType = "songs"
-        elif "musicvideo" in plugin:
-            contentType = "musicvideos"
-        else:
-            contentType = "unknown"
-        
-    #save to cache
-    cache[plugin] = (contentType,image)
-    cache = repr(cache)
-    if contentType != "empty": 
-        WINDOW.setProperty("skinhelper-widgetcontenttype",cache)
+        #last resort or skipscan chosen - detect content based on the path
+        if not contentType:
+            if "movie" in plugin or "box" in plugin or "dvd" in plugin or "rentals" in plugin:
+                contentType = "movies"
+            elif "album" in plugin:
+                contentType = "albums"
+            elif "show" in plugin:
+                contentType = "tvshows"
+            elif "song" in plugin:
+                contentType = "songs"
+            elif "musicvideo" in plugin:
+                contentType = "musicvideos"
+            else:
+                contentType = "unknown"
+            
+        #save to cache
+        logMsg("detectPluginContent detected type for: %s is: %s " %(plugin,contentType))
+        cache[plugin] = (contentType,image)
+        cache = repr(cache)
+        if contentType != "empty": 
+            WINDOW.setProperty("skinhelper-widgetcontenttype",cache)
     
     #return the values
     return (contentType, getCleanImage(image))
@@ -601,9 +652,9 @@ def getCurrentContentType():
         contenttype = "artists"
     elif xbmc.getCondVisibility("Container.Content(albums)"):
         contenttype = "albums"
-    elif xbmc.getCondVisibility("Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(MyPVRSearch.xml)"):
+    elif xbmc.getCondVisibility("Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRSearch.xml)"):
         contenttype = "tvchannels"
-    elif xbmc.getCondVisibility("Window.IsActive(MyPVRRecordings.xml)"):
+    elif xbmc.getCondVisibility("Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml)"):
         contenttype = "tvrecordings"
     elif xbmc.getCondVisibility("Window.IsActive(programs) | Window.IsActive(addonbrowser)"):
         contenttype = "programs"
@@ -824,8 +875,7 @@ def getDataFromCacheFile(file):
     except Exception as e:
         logMsg("ERROR in getDataFromCacheFile for file %s --> %s" %(file,str(e)), 0)
     return data
-    
-    
+      
 def saveDataToCacheFile(file,data):
     #safety check: does the config directory exist?
     if not xbmcvfs.exists(ADDON_DATA_PATH + os.sep):
@@ -838,10 +888,12 @@ def saveDataToCacheFile(file,data):
     except Exception as e:
         logMsg("ERROR in saveDataToCacheFile for file %s --> %s" %(file,str(e)), 0)
 
-def getCompareString(string):
+def getCompareString(string,optionalreplacestring=""):
     #strip all kinds of chars from a string to be used in compare actions
     string = try_encode(string)
-    string = string.lower().replace(".","").replace(" ","").replace("-","").replace("_","").replace("'","").replace("`","").replace("’","")
+    string = string.lower().replace(".","").replace(" ","").replace("-","").replace("_","").replace("'","").replace("`","").replace("’","").replace("_new","").replace("new_","")
+    if optionalreplacestring: string = string.replace(optionalreplacestring.lower(),"")
     string = try_decode(string)
+    string = normalize_string(string)
     return string
     

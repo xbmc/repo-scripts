@@ -260,6 +260,15 @@ Set it to 0 or clear the string to disable the backgrounds.
 | Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall) | Collection of Song/Album cover images (from the library) as wall prebuilt by the script|
 | Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall) | Collection of Tv show fanart images (from the library) as wall prebuilt by the script|
 
+Additional properties available for the backgrounds (e.g. SkinHelper.AllMoviesBackground.Poster)
+
+| property 			| description |
+| :----------------------------	| :----------- |
+| Window(Home).Property(SkinHelper.BACKGROUNDNAME.poster) | Poster image for the background (if available)|
+| Window(Home).Property(SkinHelper.BACKGROUNDNAME.clearlogo) | Clearlogo image for the background (if available)|
+| Window(Home).Property(SkinHelper.BACKGROUNDNAME.landscape) | Landscape image for the background (if available)|
+| Window(Home).Property(SkinHelper.BACKGROUNDNAME.title) | Title for the background (if available)|
+
 NOTE: the generation of wall images is experimental and might have impact on the cpu while creating them (at startup only). The feature can be disabled in the addon settings.
 _______________________________________________________________________________________________________
 ________________________________________________________________________________________________________
@@ -286,6 +295,20 @@ RunScript(script.skin.helper.service,action=videosearch)
 This command will open the special search window in the script. It has a onscreen keyboard to quickly search for movies, tvshows and episodes. You can customize the look and feel of this search dialog. To do that include the files script-skin_helper_service-CustomSearch.xml and script-skin_helper_service-CustomInfo.xml in your skin and skin it to your needs.
 
 ________________________________________________________________________________________________________
+
+
+#### Special Info Dialog
+```
+RunScript(script.skin.helper.service,action=showinfo,movieid=&INFO[ListItem.DBID])
+RunScript(script.skin.helper.service,action=showinfo,tvshowid=&INFO[ListItem.DBID])
+RunScript(script.skin.helper.service,action=showinfo,episodeid=&INFO[ListItem.DBID])
+```
+It is possible to show the infodialog provided by the script (see video library search command), for example if you want to call that info screen from your widgets.
+In that case run the command above. In the info dialog will also all special properties be available from the script.
+Note that ListItem.DBID and ListItem.DBTYPE can only be used for "real" library items, for widgets provided by this script, use ListItem.Property(DBID) and ListItem.Property(type) instead.
+
+________________________________________________________________________________________________________
+
 
 #### Message Dialog (dialogOK)
 ```
@@ -537,6 +560,36 @@ You must supply the name of the setting as can be found in guisettings.xml or th
     <selected>system.getbool(lookandfeel.enablerssfeeds)</selected>
 </control>
 ```
+
+
+________________________________________________________________________________________________________
+
+#### OK dialog
+Can be used to present a simple OK dialog with a message
+
+```
+RunScript(script.skin.helper.service,action=dialogok&header=[text for header]&message=[message text])             
+```
+
+________________________________________________________________________________________________________
+
+#### Strip string
+Can be used to strip a string, the results will be stored to a window property
+
+```
+RunScript(script.skin.helper.service,action=stripstring&splitchar=[splitter text]&string=[your string]&output=[your window prop])             
+```
+
+Example:
+
+<onload>RunScript(script.skin.helper.service,action=stripstring&splitchar=.&string=$INFO[System.BuildVersion]&output=kodiversion_main)</onload>
+
+The above command will take the Kodi Buildversion Info string and split it on the "." character. The result is the main Kodi version, e.g. "15" or "16".
+You can access the result in your skin as a window property, in the above example kodiversion_main:
+$INFO[Window(Home).Property(kodiversion_main)]
+
+
+
 
 ________________________________________________________________________________________________________
 

@@ -13,7 +13,7 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
         self.settings = xbmcaddon.Addon(id='script.skin.helper.service')
-        self.cwd = self.settings.getAddonInfo('path')
+        self.cwd = ADDON_PATH
         
     def onInit(self):
         self.action_exitkeys_id = [10, 13]
@@ -39,10 +39,9 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         elif action.getId() in ACTION_SHOW_INFO:
             self.showInfo()
 
-        print action.getId()
-
-    def closeDialog(self):
+    def closeDialog(self,action=None):
         self.searchThread.stopRunning()
+        self.action = action
         self.close()
     
     def removeCharacter(self):
@@ -148,22 +147,19 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
         elif(controlID == 3110):       
             itemList = self.getControl(3110)
             item = itemList.getSelectedItem()
-            path = item.getProperty("path")
-            self.closeDialog()
-            xbmc.Player().play( path )
+            path = item.getProperty("dbid")
+            self.closeDialog('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "movieid": %s } }, "id": 1 }' % path)
         elif(controlID == 3111):
             itemList = self.getControl(3111)
             item = itemList.getSelectedItem()
             path = item.getProperty("path")
-            self.closeDialog()
-            xbmc.executebuiltin('ActivateWindow(Videos,' + path + ',return)')     
+            self.closeDialog('ActivateWindow(Videos,' + path + ',return)')  
         elif(controlID == 3112):
             itemList = self.getControl(3112)
             item = itemList.getSelectedItem()
-            path = item.getProperty("path")
-            self.closeDialog()
-            xbmc.Player().play( path )          
-        pass
+            path = item.getfilename()
+            self.closeDialog('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "file": "%s" } }, "id": 1 }' % path)
+        
 
     def addCharacter(self, char):
         searchTerm = self.searchString + char
@@ -185,27 +181,13 @@ class SearchDialog(xbmcgui.WindowXMLDialog):
             content = "episodes"
         listitem2 = createListItem(eval(listitem.getProperty("json")))
         listitem2.setProperty("path", listitem.getProperty("path"))
+        listitem2.setProperty("json", listitem.getProperty("json"))
         info_dialog = InfoDialog.GUI( "script-skin_helper_service-CustomInfo.xml" , self.cwd, "Default", "1080i", listitem=listitem2, content=content )
         info_dialog.doModal()
-        
-        if info_dialog.action is not None:
-            if info_dialog.action == 'play_movie':
-                path = listitem.getProperty('path')
-                self.closeDialog()
-                xbmc.Player().play( path )
-            elif info_dialog.action == 'play_trailer':
-                path = listitem.getProperty('trailer')
-                xbmc.Player().play( path )
-            elif info_dialog.action == 'browse_tvshow':
-                path = listitem.getProperty('path')
-                self.closeDialog()
-                xbmc.executebuiltin('ActivateWindow(Videos,' + path + ',return)')    
-            elif info_dialog.action == 'play_episode':
-                path = listitem.getProperty('path')
-                self.closeDialog()
-                xbmc.Player().play( path )
+        action = info_dialog.action
         del info_dialog
-
+        if action:
+            self.closeDialog(action)
     
 class BackgroundSearchThread(threading.Thread):
  
@@ -261,6 +243,7 @@ class BackgroundSearchThread(threading.Thread):
         # Process movies
         json_response = getJSON('VideoLibrary.GetMovies', '{"properties": [%s], "limits": {"end":50}, "sort": { "method": "label" }, "filter": {"field":"title","operator":"contains","value":"%s"} }' % (fields_movies,search))
         for item in json_response:
+            item["streamdetails2"] = item["streamdetails"]
             liz = createListItem(item)
             liz.setProperty("json",repr(item))
             movieResultsList.addItem(liz)
@@ -279,6 +262,7 @@ class BackgroundSearchThread(threading.Thread):
         # Process episodes
         json_response = getJSON('VideoLibrary.GetEpisodes', '{ "properties": [%s], "limits": {"end":50}, "sort": { "method": "title" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }' % (fields_episodes,search))
         for item in json_response:
+            item["streamdetails2"] = item["streamdetails"]
             liz = createListItem(item)
             liz.setProperty("json",repr(item))
             episodeResultsList.addItem(liz)

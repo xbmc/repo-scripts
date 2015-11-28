@@ -225,6 +225,8 @@ def restore(silent=None):
                 progressDialog = xbmcgui.DialogProgress(ADDON.getLocalizedString(32032))
                 progressDialog.create(ADDON.getLocalizedString(32032))
                 progressDialog.update(0, "unpacking backup...")
+            else:
+                xbmc.executebuiltin( "ActivateWindow(busydialog)" )
             
             #create temp path
             temp_path = xbmc.translatePath('special://temp/skinbackup/').decode("utf-8")
@@ -308,6 +310,8 @@ def restore(silent=None):
             recursiveDelete(temp_path)
             if not silent:
                 xbmcgui.Dialog().ok(ADDON.getLocalizedString(32032), ADDON.getLocalizedString(32034))
+            else:
+                xbmc.executebuiltin( "Dialog.Close(busydialog)" )
     
     except Exception as e:
         if not silent:
