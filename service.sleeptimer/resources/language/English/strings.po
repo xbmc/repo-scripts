@@ -109,3 +109,15 @@ msgid "Execute custom cmd after playback stop"
 msgctxt "#30023"
 msgid "Custom CMD"
 ""
+
+msgctxt "#30024"
+msgid "Supervision Mode"
+""
+
+msgctxt "#30025"
+msgid "Hour start (eg. 23:00)"
+""
+
+msgctxt "#30026"
+msgid "Hour supervision end (eg. 03:20)"
+""
