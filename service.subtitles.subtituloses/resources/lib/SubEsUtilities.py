@@ -12,7 +12,8 @@ import urllib
 from operator import itemgetter
 from utils import languages
 
-main_url = "http://www.subtitulos.es/"
+main_url = "http://www.tusubtitulo.com/"
+section = "serie/"
 subtitle_pattern1 = "<div id=\"version\" class=\"ssdiv\">(.+?)Versi&oacute;n(.+?)<span class=\"right traduccion\">(.+?)</div>(.+?)</div>"
 subtitle_pattern2 = "<li class='li-idioma'>(.+?)<strong>(.+?)</strong>(.+?)<li class='li-estado (.+?)</li>(.+?)<span class='descargar (.+?)</span>"
 
@@ -23,9 +24,8 @@ def search_tvshow(tvshow, season, episode, languages, filename):
 	subs = list()
 	for level in range(4):
 		searchstring, ttvshow, sseason, eepisode = getsearchstring(tvshow, season, episode, level)
-		url = main_url + searchstring.lower()
+		url = main_url + section + searchstring.lower()
 		subs.extend(getallsubsforurl(url, languages, None, ttvshow, sseason, eepisode, level))
-		
 	subs = clean_subtitles_list(subs)
 	subs = order_subtitles_list(subs)
 	return subs
@@ -46,10 +46,11 @@ def getsearchstring(tvshow, season, episode, level):
 	    tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
 
 	# Zero pad episode
-	episode = str(episode).rjust(2, '0')
+	episode = str(episode).rjust(2, '0').rstrip()
 
 	# Build search string
-	searchstring = tvshow + '/' + season + 'x' + episode
+	# Todo: The url endpoint needs a tvshow_id: {tvshow}/{season}/{episode}/{id}... for now I pass directly a string
+	searchstring = tvshow + '/' + season + '/' + episode + '/' + 'tvshow_id'
 
 	# Replace spaces with dashes
 	searchstring = re.sub(r'\s', '-', searchstring)
@@ -101,9 +102,8 @@ def getallsubsforurl(url, langs, file_original_path, tvshow, season, episode, le
 
 			id = matches.group(6)
 			id = re.sub(r'([^-]*)href="', '', id)
-			id = re.sub(r'" rel([^-]*)', '', id)
-			id = re.sub(r'" re([^-]*)', '', id)
-			id = re.sub(r'http://www.subtitulos.es/', '', id)
+			id = re.sub(r'"><img class=(.*)descargar</a>(.*)','',id)
+			id = re.sub(r'http://www.tusubtitulo.com/', '', id)
 
 			if estado.strip() == "green'>Completado".strip() and languageshort in langs:
 				subtitles_list.append({'rating': "0", 'no_files': 1, 'filename': filename, 'server': server, 'sync': False, 'id' : id, 'language_flag': languageshort + '.gif', 'language_name': languagelong, 'hearing_imp': False, 'link': main_url + id, 'lang': languageshort, 'order': order})
@@ -124,7 +124,7 @@ def geturl(url):
 				urllib._urlopener.addheader('Referer', url)
 
 	urllib._urlopener = AppURLopener()
-	urllib._urlopener.add_referrer("http://www.subtitulos.es/")
+	urllib._urlopener.add_referrer(main_url)
 	try:
 		response = urllib._urlopener.open(url)
 		content    = response.read()

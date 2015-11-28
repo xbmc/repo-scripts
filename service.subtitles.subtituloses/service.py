@@ -172,7 +172,7 @@ if params['action'] == 'search':
       mo = re.search(r'(.*) (\d+)(\d\d)', titulo) # 102 style 
     # split title in tvshow, season and episode
     if mo:
-      item['tvshow'] = mo.group(1)
+      item['tvshow'] = mo.group(1).rstrip()
       item['season'] = mo.group(2)
       item['episode'] = mo.group(3)
       log(__name__, "item %s" % item)
