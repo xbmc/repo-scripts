@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.actionhandler" name="ActionHandler" version="1.0.0" provider-name="Philipp Temminghoff (phil65)">
+<addon id="script.module.actionhandler" name="ActionHandler" version="1.0.1" provider-name="Philipp Temminghoff (phil65)">
 	<extension point="xbmc.python.module" library="lib" />
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Helper module for Event handling in WindowXMLs</summary>
