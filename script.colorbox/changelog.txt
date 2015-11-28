@@ -1,0 +1,7 @@
+v1.0.1
+- Speed up piixelate
+- Fakelight effect
+- Random color
+- Optimize
+v1.0.0
+- Initial Release
