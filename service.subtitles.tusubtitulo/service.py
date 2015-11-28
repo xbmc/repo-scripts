@@ -33,9 +33,9 @@ from TuSubUtilities import search_tvshow, log
 
 """ Called when searching for subtitles from XBMC """
 def Search(item):
-	subs = search_tvshow(item['tvshow'], item['season'], item['episode'], item['2let_language'], item['file_original_path'])
-	for sub in subs:
-		append_subtitle(sub)
+  subs = search_tvshow(item['tvshow'], item['season'], item['episode'], item['2let_language'], item['file_original_path'])
+  for sub in subs:
+    append_subtitle(sub)
 
 def append_subtitle(item):
   listitem = xbmcgui.ListItem(label=item['language_name'], label2=item['filename'], iconImage=item['rating'], thumbnailImage=item['lang'])
@@ -59,11 +59,11 @@ def Download(link, filename):
     log(__name__, "Downloadlink %s" % link)
 
     class MyOpener(urllib.FancyURLopener):
-      version = "User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+      version = "User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36"
       def __init__(self, *args):
         urllib.FancyURLopener.__init__(self, *args)
 
-    if settings.getSetting('PROXY'):
+    if settings.getSetting('PROXY') == 'true':
       proxy = {settings.getSetting('PROXY_PROTOCOL') : settings.getSetting('PROXY_PROTOCOL') + '://' + settings.getSetting('PROXY_HOST') + ':' + settings.getSetting('PROXY_PORT')}
       my_urlopener = MyOpener(proxy)
     else:
@@ -113,7 +113,7 @@ def get_params():
       splitparams=pairsofparams[i].split('=')
       if (len(splitparams))==2:
         param[splitparams[0]]=splitparams[1]
-                                
+
   return param
 
 params = get_params()
@@ -130,18 +130,18 @@ if params['action'] == 'search':
   item['file_original_path'] = urllib.unquote(xbmc.Player().getPlayingFile().decode('utf-8'))  # Full path of a playing file
   item['3let_language']      = []
   item['2let_language']      = []
-  
+
   for lang in urllib.unquote(params['languages']).decode('utf-8').split(","):
     item['3let_language'].append(xbmc.convertLanguage(lang,xbmc.ISO_639_2))
     item['2let_language'].append(xbmc.convertLanguage(lang,xbmc.ISO_639_1))
-  
+
   if item['title'] == "":
     item['title']  = normalizeString(xbmc.getInfoLabel("VideoPlayer.Title"))      # no original title, get just Title
-    
+
   if item['episode'].lower().find("s") > -1:                                      # Check if season is "Special"
     item['season'] = "0"                                                          #
     item['episode'] = item['episode'][-1:]
-  
+
   if ( item['file_original_path'].find("http") > -1 ):
     item['temp'] = True
 
@@ -174,7 +174,7 @@ if params['action'] == 'search':
       log(__name__, "item %s" % item)
     else:
       log(__name__, "could not parse tvshow name and episode number")
-  
+
   Search(item)  
 
 elif params['action'] == 'download':
@@ -184,5 +184,5 @@ elif params['action'] == 'download':
   for sub in subs:
     listitem = xbmcgui.ListItem(label=sub)
     xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
-  
+
 xbmcplugin.endOfDirectory(int(sys.argv[1])) ## send end of directory to XBMC

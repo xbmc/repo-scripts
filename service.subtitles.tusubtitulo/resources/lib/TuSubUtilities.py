@@ -22,10 +22,13 @@ def log(module, msg):
 
 def search_tvshow(tvshow, season, episode, languages, filename):
 	subs = list()
+	temp_tvshow = []
 	for level in range(5):
 		searchstring, ttvshow, sseason, eepisode = getsearchstring(tvshow, season, episode, level)
-		url = main_url + searchstring.lower()
-		subs.extend(getallsubsforurl(url, languages, None, ttvshow, sseason, eepisode, level))
+		if ttvshow not in temp_tvshow:
+			url = main_url + searchstring.lower()
+			subs.extend(getallsubsforurl(url, languages, None, ttvshow, sseason, eepisode, level))
+			temp_tvshow.append(ttvshow)
 
 	subs = clean_subtitles_list(subs)
 	subs = order_subtitles_list(subs)
@@ -35,22 +38,22 @@ def getsearchstring(tvshow, season, episode, level):
 
 	# Clean tv show name
 	if level == 1 and re.search(r'\([^)][a-zA-Z]*\)', tvshow):
-	    # Series name like "Shameless (US)" -> "Shameless US"
-	    tvshow = tvshow.replace('(', '').replace(')', '')
+		# Series name like "Shameless (US)" -> "Shameless US"
+		tvshow = tvshow.replace('(', '').replace(')', '')
 
 	if level == 2 and re.search(r'\([^)][0-9]*\)', tvshow):
-	    # Series name like "Scandal (2012)" -> "Scandal"
-	    tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
+		# Series name like "Scandal (2012)" -> "Scandal"
+		tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
 
 	if level == 3 and re.search(r'\([^)]*\)', tvshow):
-	    # Series name like "Shameless (*)" -> "Shameless"
-	    tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
+		# Series name like "Shameless (*)" -> "Shameless"
+		tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
 
-	if level == 4:
-			# Clean name like "Serie (*)" -> "Serie"
-			tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
-			# Search alternative name "Serie" -> "Serie 2014"
-			tvshow = alternatives[tvshow] if tvshow in alternatives else tvshow
+	if level == 4 and tvshow in alternatives:
+		# Clean name like "Serie (*)" -> "Serie"
+		tvshow = re.sub(r'\s\([^)]*\)', '', tvshow)
+		# Search alternative name "Serie" -> "Serie 2014"
+		tvshow = alternatives[tvshow]
 
 	# Build search string
 	searchstring = 'serie/' + tvshow + '/' + season + '/' + episode + '/*'
@@ -128,17 +131,19 @@ def getallsubsforurl(url, langs, file_original_path, tvshow, season, episode, le
 
 def geturl(url):
 	class AppURLopener(urllib.FancyURLopener):
-		version = "User-Agent=Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+		version = "User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36"
 		def __init__(self, *args):
 			urllib.FancyURLopener.__init__(self, *args)
 		def add_referrer(self, url=None):
 			if url:
 				urllib._urlopener.addheader('Referer', url)
 
-	if settings.getSetting('PROXY'):
+	if settings.getSetting('PROXY') == 'true':
+		print 'usa proxy'
 		proxy = {settings.getSetting('PROXY_PROTOCOL') : settings.getSetting('PROXY_PROTOCOL') + '://' + settings.getSetting('PROXY_HOST') + ':' + settings.getSetting('PROXY_PORT')}
 		urllib._urlopener = AppURLopener(proxy)
 	else:
+		print 'no usa proxy'
 		urllib._urlopener = AppURLopener()
 	urllib._urlopener.add_referrer("http://www.tusubtitulo.com/")
 	try:
@@ -149,14 +154,14 @@ def geturl(url):
 	return content
 
 def clean_subtitles_list(subtitles_list):
-  seen = set()
-  subs = []
-  for sub in subtitles_list:
-    filename = sub['link']
-    if filename not in seen:
-      subs.append(sub)
-      seen.add(filename)
-  return subs
+	seen = set()
+	subs = []
+	for sub in subtitles_list:
+		filename = sub['link']
+		if filename not in seen:
+			subs.append(sub)
+			seen.add(filename)
+	return subs
 
 def order_subtitles_list(subtitles_list):
 	return sorted(subtitles_list, key=itemgetter('order')) 
