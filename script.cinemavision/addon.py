@@ -15,16 +15,16 @@ if __name__ == '__main__':
         settings.clearDBBrokenStatus()
     elif arg == 'experience':
         from lib import player
-        player.begin()
+        player.begin(args=args)
     elif str(arg).startswith('movieid='):
         from lib import player
-        player.begin(movieid=arg[8:])
+        player.begin(movieid=arg[8:], args=args)
     elif str(arg).startswith('episodeid='):
         from lib import player
-        player.begin(episodeid=arg[10:])
+        player.begin(episodeid=arg[10:], args=args)
     elif arg == 'selection':
         from lib import player
-        player.begin(selection=True)
+        player.begin(selection=True, args=args)
     elif arg == 'update.database':
         from lib import cvutil
         from lib import kodiutil

@@ -636,8 +636,7 @@ class ExperiencePlayer(xbmc.Player):
         ratingString = cvutil.ratingParser().getActualRatingFromMPAA(r.get('mpaa', ''), debug=True)
         if ratingString:
             feature.rating = ratingString
-
-        feature.ID = kodiutil.intOrZero(r.get('id', 0))
+        feature.ID = kodiutil.intOrZero(r.get('movieid', r.get('episodeid', r.get('id', 0))))
         feature.dbType = r.get('type', '')
         feature.genres = r.get('genre', [])
         feature.thumb = r.get('thumbnail', '')
@@ -701,30 +700,38 @@ class ExperiencePlayer(xbmc.Player):
             else:
                 return False
 
-        if movieid:
-            movieid = kodiutil.intOrZero(movieid)
-            if not movieid:
-                return False
-
-            r = rpc.VideoLibrary.GetMovieDetails(
-                movieid=movieid, properties=['file', 'genre', 'mpaa', 'streamdetails', 'title', 'thumbnail', 'runtime', 'year']
-            )['moviedetails']
-            r['type'] = 'movie'
-        elif episodeid:
-            episodeid = kodiutil.intOrZero(episodeid)
-            if not episodeid:
-                return False
-
-            r = rpc.VideoLibrary.GetEpisodeDetails(
-                episodeid=episodeid, properties=['file', 'streamdetails', 'title', 'thumbnail', 'runtime']
-            )['episodedetails']
-            r['type'] = 'tvshow'
-        else:
-            return False
-
-        feature = self.featureFromJSON(r)
         self.features = []
-        self.features.append(feature)
+
+        if movieid:
+            for movieid in str(movieid).split('|'):  # ID could be int or \ seperated int string
+                movieid = kodiutil.intOrZero(movieid)
+                if not movieid:
+                    continue
+
+                r = rpc.VideoLibrary.GetMovieDetails(
+                    movieid=movieid,
+                    properties=['file', 'genre', 'mpaa', 'streamdetails', 'title', 'thumbnail', 'runtime', 'year']
+                )['moviedetails']
+                r['type'] = 'movie'
+
+                feature = self.featureFromJSON(r)
+                self.features.append(feature)
+        elif episodeid:
+            for episodeid in str(episodeid).split('|'):  # ID could be int or \ seperated int string
+                episodeid = kodiutil.intOrZero(episodeid)
+                if not episodeid:
+                    continue
+
+                r = rpc.VideoLibrary.GetEpisodeDetails(
+                    episodeid=episodeid,
+                    properties=['file', 'streamdetails', 'title', 'thumbnail', 'runtime']
+                )['episodedetails']
+                r['type'] = 'tvshow'
+                feature = self.featureFromJSON(r)
+                self.features.append(feature)
+
+        if not self.features:
+            return False
 
         return True
 
@@ -830,7 +837,6 @@ class ExperiencePlayer(xbmc.Player):
             item = {'episodeid': feature.ID}
         else:
             item = {'file': feature.path}
-
         rpc.Playlist.Add(playlistid=xbmc.PLAYLIST_VIDEO, item=item)
 
     def videoPreDelay(self):

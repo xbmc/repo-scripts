@@ -44,7 +44,7 @@ def featureComfirmationDialog(features):
     return pd.features, pd.sequencePath
 
 
-def begin(movieid=None, episodeid=None, selection=False):
+def begin(movieid=None, episodeid=None, selection=False, args=None):
     e = experience.ExperiencePlayer().create()
     seqPath = None
 
@@ -53,7 +53,8 @@ def begin(movieid=None, episodeid=None, selection=False):
             return showNoFeaturesDialog()
 
     if not kodiutil.getSetting('hide.queue.dialog', False) or (kodiutil.getSetting('hide.queue.dialog.single', False) and len(e.features) > 1):
-        e.features, seqPath = featureComfirmationDialog(e.features)
+        if not args or 'nodialog' not in args:
+            e.features, seqPath = featureComfirmationDialog(e.features)
 
     if not e.features:
         return

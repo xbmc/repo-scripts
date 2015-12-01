@@ -1213,7 +1213,7 @@ class SequenceProcessor:
         util.DEBUG_LOG('Processing sequence...')
         util.DEBUG_LOG('Feature count: {0}'.format(len(self.featureQueue)))
         util.DEBUG_LOG('Ratings: {0}'.format(', '.join([str(r) for r in self.ratings])))
-        util.DEBUG_LOG('Genres: {0}'.format(', '.join(self.genres)))
+        util.DEBUG_LOG('Genres: {0}'.format(repr(self.genres)))
 
         if self.featureQueue:
             util.DEBUG_LOG('\n\n' + '\n\n'.join([str(f) for f in self.featureQueue]) + '\n.')

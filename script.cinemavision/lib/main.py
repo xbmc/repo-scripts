@@ -840,9 +840,17 @@ class SequenceEditorWindow(kodigui.BaseWindow):
 
         kodiutil.DEBUG_LOG('Saving to: {0}'.format(full_path))
 
-        f = xbmcvfs.File(full_path, 'w')
-        f.write(xmlString)
-        f.close()
+        success = True
+        with cinemavision.util.vfs.File(full_path, 'w') as f:
+            success = f.write(xmlString)
+
+        if not success:
+            xbmcgui.Dialog().ok(
+                T(32573, 'Failed'),
+                T(32606, 'Failed to write sequence file!'),
+                T(32607, 'Kodi may be unable to write to this location.')
+            )
+            return
 
         if not temp:
             self.modified = False

@@ -58,7 +58,7 @@ msgid "Content Scrapers"
 msgstr ""
 
 msgctxt "#32012"
-msgid "Trailers: Content Folder"
+msgid "Trailers: CV Trailers Folder"
 msgstr ""
 
 msgctxt "#32013"
@@ -532,7 +532,7 @@ msgid "Path"
 msgstr ""
 
 msgctxt "#32326"
-msgid "Content Folder"
+msgid "CV Trailers Folder"
 msgstr ""
 
 msgctxt "#32327"
@@ -991,4 +991,12 @@ msgstr ""
 
 msgctxt "#32605"
 msgid "Continue?"
+msgstr ""
+
+msgctxt "#32606"
+msgid "Failed to write sequence file!"
+msgstr ""
+
+msgctxt "#32607"
+msgid "Kodi may be unable to write to this location."
 msgstr ""

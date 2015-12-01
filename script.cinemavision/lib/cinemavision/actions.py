@@ -180,6 +180,7 @@ class ActionFileProcessor:
         'http': HTTPCommand,
         'https': HTTPSCommand,
         'script': ScriptCommand,
+        'python': ScriptCommand,
         'addon': AddonCommand,
         'module': ModuleCommand,
         'command': CommandCommand,

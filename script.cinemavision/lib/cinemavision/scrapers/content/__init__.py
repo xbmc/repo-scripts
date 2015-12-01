@@ -20,8 +20,11 @@ class Trailer(_scrapers.Trailer):
     def is3D(self):
         return self._is3D
 
+    def getStaticURL(self):
+        return self.data.get('url')
+
     def getPlayableURL(self, res='720p'):
-        return 'plugin://plugin.video.youtube/play/?video_id={0}'.format(self.data['ID'])
+        return self.getStaticURL()
 
 
 class ContentTrailerScraper(_scrapers.Scraper):

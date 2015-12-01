@@ -536,11 +536,18 @@ class Trailer(Item):
     typeChar = 'T'
 
     _scrapers = [
-        ['Content', T(32326, 'Content Folder'), 'content'],
+        ['Content', T(32326, 'Trailers Folder'), 'content'],
         ['KodiDB', T(32318, 'Kodi Database'), 'kodidb'],
         ['iTunes', 'Apple iTunes', 'itunes'],
         ['StereoscopyNews', 'StereoscopyNews.com', 'stereoscopynews']
     ]
+
+    _settingsDisplay = {
+        'Content': T(32326, 'Trailers Folder'),
+        'KodiDB': T(32318, 'Kodi Database'),
+        'iTunes': 'Apple iTunes',
+        'StereoscopyNews': 'StereoscopyNews.com',
+    }
 
     def __init__(self):
         Item.__init__(self)
@@ -625,6 +632,13 @@ class Trailer(Item):
 
         contentScrapers = [s for t, s in util.contentScrapers() if t == 'trailers']
         return ','.join([s for s in inSettings if s in contentScrapers])
+
+    def getSettingDisplay(self, setting):
+        if setting == 'scrapers':
+            val = getattr(self, setting)
+            return u','.join([self._settingsDisplay.get(v, v) for v in val.split(',')])
+
+        return Item.getSettingDisplay(self, setting)
 
 
 ################################################################################

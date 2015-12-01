@@ -1,9 +1,20 @@
 Changelog for CinemaVision
 
+[- 1.0.4 -]
+
+- add:     Ability to pass multiple movie IDs to the addon: movieid=<id>|<id>|<id>|...
+- add:     Ability to pass nodialog to the addon to suppress the playlist editor dialog
+- fix:     Error caused when when playing movies passed via movieid arg
+- change:  Change script:// action to python:// (though script:// will still work)
+- add:     Now shows a dialog on failure to write a sequence file
+- fix:     Another error caused by non-ascii characters in genres
+- fix:     Bug causing trailers from the CV Trailers folder not to work
+- change:  'Content Folder' scraper for trailers name changed to 'CV Trailers Folder'
+
 [- 1.0.3 -]
 
--fix:      Encoding errors caused by non-ascii characters in genres
--add:      Warning dialog when saving a sequence that does not contain a feature module
+- fix:     Encoding errors caused by non-ascii characters in genres
+- add:     Warning dialog when saving a sequence that does not contain a feature module
 
 [- 1.0.2 -]
 
