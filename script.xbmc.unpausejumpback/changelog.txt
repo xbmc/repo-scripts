@@ -1,3 +1,7 @@
+2.3.4
+- fixed format of authors tag in addon.xml
+- removed the XBMC from the name
+
 2.3.3
 - added bulgarian translation - thx to NEOhidra
 
