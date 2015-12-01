@@ -1,9 +1,0 @@
-Version 0.0.3
-fix website changes
-
-Version 0.0.2
-bug fixes
-switch to a normal window
-
-Version 0.0.1
-initial testing
