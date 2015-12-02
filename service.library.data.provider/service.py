@@ -94,8 +94,10 @@ class Main:
     def _daemon(self):
         # deamon is meant to keep script running at all time
         count = 0
-        while not xbmc.abortRequested and self.WINDOW.getProperty('LibraryDataProvider_Running') == 'true':
-            xbmc.sleep(1000)
+        while not self.Monitor.abortRequested() and self.WINDOW.getProperty('LibraryDataProvider_Running') == 'true':
+            if self.Monitor.waitForAbort(1):
+                # Abort was requested while waiting. We should exit
+                break
             if not xbmc.Player().isPlayingVideo():
                 # Update random items
                 count += 1

@@ -313,67 +313,67 @@ class Main:
                                 season = "%.2d" % float(item2['season'])
                                 episodeno = "s%se%s" % (season, episode)
                                 break
-                        watched = False
-                        if item2['playcount'] >= 1:
-                            watched = True
-                        if not PLOT_ENABLE and not watched:
-                            plot = ADDON_LANGUAGE(32014)
-                        else:
-                            plot = item2['plot']
-                        if len(item['studio']) > 0:
-                            studio = item['studio'][0]
-                        else:
-                            studio = ""
-                        if "cast" in item2:
-                            cast = self._get_cast(item2['cast'])
+                            watched = False
+                            if item2['playcount'] >= 1:
+                                watched = True
+                            if not PLOT_ENABLE and not watched:
+                                plot = ADDON_LANGUAGE(32014)
+                            else:
+                                plot = item2['plot']
+                            if len(item['studio']) > 0:
+                                studio = item['studio'][0]
+                            else:
+                                studio = ""
+                            if "cast" in item2:
+                                cast = self._get_cast(item2['cast'])
 
-                        liz = xbmcgui.ListItem(item2['title'])
-                        liz.setInfo(type="Video", infoLabels={"Title": item2['title']})
-                        liz.setInfo(type="Video", infoLabels={"Episode": item2['episode']})
-                        liz.setInfo(type="Video", infoLabels={"Season": item2['season']})
-                        liz.setInfo(type="Video", infoLabels={"Studio": studio})
-                        liz.setInfo(type="Video", infoLabels={"Premiered": item2['firstaired']})
-                        liz.setInfo(type="Video", infoLabels={"Plot": plot})
-                        liz.setInfo(type="Video", infoLabels={"TVshowTitle": item2['showtitle']})
-                        liz.setInfo(type="Video", infoLabels={"Rating": str(round(float(item2['rating']), 1))})
-                        liz.setInfo(type="Video", infoLabels={"MPAA": item['mpaa']})
-                        liz.setInfo(type="Video", infoLabels={"Playcount": item2['playcount']})
-                        if "director" in item2:
-                            liz.setInfo(type="Video", infoLabels={"Director": " / ".join(item2['director'])})
-                        if "writer" in item2:
-                            liz.setInfo(type="Video", infoLabels={"Writer": " / ".join(item2['writer'])})
-                        if "cast" in item2:
-                            liz.setInfo(type="Video", infoLabels={"Cast": cast[0]})
-                            liz.setInfo(type="Video", infoLabels={"CastAndRole": cast[1]})
-                        liz.setProperty("episodeno", episodeno)
-                        liz.setProperty("resumetime", str(item2['resume']['position']))
-                        liz.setProperty("totaltime", str(item2['resume']['total']))
-                        liz.setProperty("type", ADDON_LANGUAGE(list_type))
-                        liz.setArt(item2['art'])
-                        liz.setThumbnailImage(item2['art'].get('thumb', ''))
-                        liz.setIconImage('DefaultTVShows.png')
-                        liz.setProperty("fanart_image", item2['art'].get('tvshow.fanart', ''))
-                        liz.setProperty("dbid", str(item2['episodeid']))
-                        hasVideo = False
-                        for key, value in item2['streamdetails'].iteritems():
-                            for stream in value:
-                                if 'video' in key:
-                                    hasVideo = True
-                                liz.addStreamInfo(key, stream)
+                            liz = xbmcgui.ListItem(item2['title'])
+                            liz.setInfo(type="Video", infoLabels={"Title": item2['title']})
+                            liz.setInfo(type="Video", infoLabels={"Episode": item2['episode']})
+                            liz.setInfo(type="Video", infoLabels={"Season": item2['season']})
+                            liz.setInfo(type="Video", infoLabels={"Studio": studio})
+                            liz.setInfo(type="Video", infoLabels={"Premiered": item2['firstaired']})
+                            liz.setInfo(type="Video", infoLabels={"Plot": plot})
+                            liz.setInfo(type="Video", infoLabels={"TVshowTitle": item2['showtitle']})
+                            liz.setInfo(type="Video", infoLabels={"Rating": str(round(float(item2['rating']), 1))})
+                            liz.setInfo(type="Video", infoLabels={"MPAA": item['mpaa']})
+                            liz.setInfo(type="Video", infoLabels={"Playcount": item2['playcount']})
+                            if "director" in item2:
+                                liz.setInfo(type="Video", infoLabels={"Director": " / ".join(item2['director'])})
+                            if "writer" in item2:
+                                liz.setInfo(type="Video", infoLabels={"Writer": " / ".join(item2['writer'])})
+                            if "cast" in item2:
+                                liz.setInfo(type="Video", infoLabels={"Cast": cast[0]})
+                                liz.setInfo(type="Video", infoLabels={"CastAndRole": cast[1]})
+                            liz.setProperty("episodeno", episodeno)
+                            liz.setProperty("resumetime", str(item2['resume']['position']))
+                            liz.setProperty("totaltime", str(item2['resume']['total']))
+                            liz.setProperty("type", ADDON_LANGUAGE(list_type))
+                            liz.setArt(item2['art'])
+                            liz.setThumbnailImage(item2['art'].get('thumb', ''))
+                            liz.setIconImage('DefaultTVShows.png')
+                            liz.setProperty("fanart_image", item2['art'].get('tvshow.fanart', ''))
+                            liz.setProperty("dbid", str(item2['episodeid']))
+                            hasVideo = False
+                            for key, value in item2['streamdetails'].iteritems():
+                                for stream in value:
+                                    if 'video' in key:
+                                        hasVideo = True
+                                    liz.addStreamInfo(key, stream)
 
-                        # if duration wasnt in the streaminfo try adding the scraped one
-                        if not hasVideo:
-                            stream = {'duration': item2['runtime']}
-                            liz.addStreamInfo("video", stream)
+                            # if duration wasnt in the streaminfo try adding the scraped one
+                            if not hasVideo:
+                                stream = {'duration': item2['runtime']}
+                                liz.addStreamInfo("video", stream)
 
-                        full_liz.append((item2['file'], liz, False))
+                            full_liz.append((item2['file'], liz, False))
 
-                        if date_type is not None:
-                            date_liz.append(item[date_type])
+                            if date_type is not None:
+                                date_liz.append(item[date_type])
 
-                        count += 1
-                        if count == self.LIMIT:
-                            break
+                            count += 1
+                            if count == self.LIMIT:
+                                break
                     if count == self.LIMIT:
                         break
             del json_query
