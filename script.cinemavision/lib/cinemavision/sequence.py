@@ -635,7 +635,7 @@ class Trailer(Item):
 
     def getSettingDisplay(self, setting):
         if setting == 'scrapers':
-            val = getattr(self, setting)
+            val = getattr(self, setting) or ''
             return u','.join([self._settingsDisplay.get(v, v) for v in val.split(',')])
 
         return Item.getSettingDisplay(self, setting)

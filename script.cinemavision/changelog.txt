@@ -1,5 +1,9 @@
 Changelog for CinemaVision
 
+[- 1.0.5 -]
+
+- fix:     Errors when adding a new trailer module or loading a sequence where trailer scrapers have never been set
+
 [- 1.0.4 -]
 
 - add:     Ability to pass multiple movie IDs to the addon: movieid=<id>|<id>|<id>|...
