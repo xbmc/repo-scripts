@@ -1,3 +1,6 @@
+[B]1.0.5[/B]
+- fix: update addon.xml
+
 [B]1.0.4[/B]
 - fix: writing unicode chars to file profile
 
