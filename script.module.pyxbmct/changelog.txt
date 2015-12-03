@@ -1,0 +1,11 @@
+[B]Version 1.1.5[/B]
+- Added a package-level import.
+- Changed doctsrings to Sphinx-compatible
+- Private methods now start with _
+[B]Version 1.1.4[/B]
+- Added the action code for mouse click.
+- Removed unused import.
+[B]Version 1.1.3[/B]
+- Updated addon.xml
+[B]Version 1.1.2[/B]
+- Initial release in the XBMC repo.
