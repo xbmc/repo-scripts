@@ -44,6 +44,10 @@ msgctxt "#32103"
 msgid "- Save format"
 msgstr "- Save format"
 
+msgctxt "#32104"
+msgid "%N %A - %T"
+msgstr "%N %A - %T"
+
 msgctxt "#32105"
 msgid "%A\\%T"
 msgstr "%A\\%T"
@@ -104,6 +108,10 @@ msgctxt "#32155"
 msgid "Regular lyrics scrapers"
 msgstr "Regular lyrics scrapers"
 
+msgctxt "#32156"
+msgid "Display lyrics automatically"
+msgstr "Display lyrics automatically"
+
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
 msgstr "Clean song title (remove part in brackets)"
@@ -115,6 +123,10 @@ msgstr "Script is already running!"
 msgctxt "#32159"
 msgid "Enable debug logging"
 msgstr "Enable debug logging"
+
+msgctxt "#32160"
+msgid "Hide notifications"
+msgstr "Hide notifications"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

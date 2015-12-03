@@ -1,3 +1,13 @@
+v4.1.5
+- language update
+- cleanup
+
+v4.1.4
+- fix detection of flac lyrics
+
+v4.1.3
+- fix error when clicking on a txt based lyric
+
 v4.1.2
 - update mutagen library
 

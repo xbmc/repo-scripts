@@ -5,20 +5,20 @@ import xbmc
 import xbmcaddon
 
 # Script constants 
-__addon__        = xbmcaddon.Addon()
-__addonname__    = __addon__.getAddonInfo('name')
-__addonversion__ = __addon__.getAddonInfo('version')
-__cwd__          = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
-__profile__      = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__language__     = __addon__.getLocalizedString
+ADDON        = xbmcaddon.Addon()
+ADDONNAME    = ADDON.getAddonInfo('name')
+ADDONVERSION = ADDON.getAddonInfo('version')
+CWD          = xbmc.translatePath(ADDON.getAddonInfo('path')).decode("utf-8")
+PROFILE      = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode("utf-8")
+LANGUAGE     = ADDON.getLocalizedString
 
 # Shared resources
-BASE_RESOURCE_PATH = os.path.join(__cwd__, 'resources', 'lib')
+BASE_RESOURCE_PATH = os.path.join(CWD, 'resources', 'lib')
 sys.path.append (BASE_RESOURCE_PATH)
 
 from utilities import *
 
-log('script version %s started' % __addonversion__)
+log('script version %s started' % ADDONVERSION)
 
 def culrc_run(mode):
     log('mode is %s' % mode)
@@ -30,11 +30,11 @@ def culrc_run(mode):
         WIN.setProperty('culrc.force','TRUE')
     else:
         log('script already running')
-        if __addon__.getSetting( "silent" ) == 'false':
-            xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (__addonname__ , __language__(32158), 2000)).encode('utf-8', 'ignore'))
+        if ADDON.getSetting( "silent" ) == 'false':
+            xbmc.executebuiltin((u'Notification(%s,%s,%i)' % (ADDONNAME , LANGUAGE(32158), 2000)).encode('utf-8', 'ignore'))
 
 if ( __name__ == "__main__" ):
-    service = __addon__.getSetting( "service" )
+    service = ADDON.getSetting( "service" )
     # started as a service
     if sys.argv == ['']:
         if service == "true":
@@ -47,4 +47,4 @@ if ( __name__ == "__main__" ):
             culrc_run('service')
         else:
             culrc_run('manual')
-log('script version %s ended' % __addonversion__)
+log('script version %s ended' % ADDONVERSION)

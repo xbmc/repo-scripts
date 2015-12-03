@@ -40,6 +40,10 @@ msgctxt "#32102"
 msgid "- Lyrics folder"
 msgstr "- Dosar versuri"
 
+msgctxt "#32103"
+msgid "- Save format"
+msgstr "- Format salvare"
+
 msgctxt "#32106"
 msgid "Use only filename for search"
 msgstr "Folosește numele fișierului pentru căutare"
@@ -71,6 +75,10 @@ msgstr "Scriptul rulează deja!"
 msgctxt "#32159"
 msgid "Enable debug logging"
 msgstr "Activează jurnalizare depanare"
+
+msgctxt "#32160"
+msgid "Hide notifications"
+msgstr "Ascunde notificările"
 
 msgctxt "#32199"
 msgid "CU LRC Lyrics"

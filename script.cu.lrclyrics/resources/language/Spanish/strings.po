@@ -124,6 +124,10 @@ msgctxt "#32159"
 msgid "Enable debug logging"
 msgstr "Habilitar trazas de depuración"
 
+msgctxt "#32160"
+msgid "Hide notifications"
+msgstr "Ocultar notificaciones"
+
 msgctxt "#32199"
 msgid "CU LRC Lyrics"
 msgstr "CU LRC Letras"

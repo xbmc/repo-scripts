@@ -114,7 +114,7 @@ msgstr "Показвай лириките автоматично"
 
 msgctxt "#32157"
 msgid "Clean song title (remove part in brackets)"
-msgstr "Почиствай имената на пестните (премахвай частта в скоби)"
+msgstr "Почиствай имената на песните (премахвай частта в скоби)"
 
 msgctxt "#32158"
 msgid "Script is already running!"
