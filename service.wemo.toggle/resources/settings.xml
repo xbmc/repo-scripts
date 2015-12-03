@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30011">
+        <setting type="lsep" label="30012" />
+        <setting id="ip_address" type="ipaddress" label="30000" />
+        <setting type="lsep" label="30013" />
+        <setting id="playPause_toggle" type="bool" label="30002" />
+        <setting id="startStopEnd_toggle" type="bool" label="30003" />
+        <setting type="lsep" label="30014" />
+        <setting id="movie_toggle" type="bool" label="30004" />
+        <setting id="tv_toggle" type="bool" label="30005" />
+        <setting id="unspecified_toggle" type="bool" label="30025" />
+        <setting type="lsep" label="30015" />
+        <setting id="toggle_time" type="bool" label="30006" />
+        <setting id="start_time" type="labelenum" label="30007" enable="eq(-1,true)" values="0000|0030|0100|0130|0200|0230|0300|0330|0400|0430|0500|0530|0600|0630|0700|0730|0800|0830|0900|0930|1000|1030|1100|1130|1200|1230|1300|1330|1400|1430|1500|1530|1600|1630|1700|1730|1800|1830|1900|1930|2000|2030|2100|2130|2200|2230|2300|2330" />
+        <setting id="end_time" type="labelenum" label="30008" enable="eq(-2,true)" values="0000|0030|0100|0130|0200|0230|0300|0330|0400|0430|0500|0530|0600|0630|0700|0730|0800|0830|0900|0930|1000|1030|1100|1130|1200|1230|1300|1330|1400|1430|1500|1530|1600|1630|1700|1730|1800|1830|1900|1930|2000|2030|2100|2130|2200|2230|2300|2330" />
+        <setting type="lsep" label="30016" />
+        <setting id="display_notification" type="bool" label="30009" />
+        <setting id="debug" type="bool" label="30010" />
+    </category>
+    <category label="30017">
+        <setting id="start_delay" type="number" label="30018" default="0" />
+        <setting id="toggle_startup" type="bool" label="30019" />
+        <setting id="toggle_shutdown" type="bool" label="30020" />
+        <setting id="always_off_toggle" type="bool" label="30021" />
+        <setting type="lsep" label="30022" />
+        <setting id="multiple_devices" type="bool" label="30023" />
+        <setting id="ip_address_list" type="text" label="30024" enable="eq(-1,true)" />
+        <setting id="toggle_multiple" type="bool" label="30026" enable="eq(-2,true)" />
+    </category>
+</settings>

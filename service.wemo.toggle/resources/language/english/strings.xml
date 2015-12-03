@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30011">General</string>
+    <string id="30012">WeMo</string>
+    <string id="30000">IP Address</string>
+    <string id="30013">Video Events</string>
+    <string id="30002">Play/Pause</string>
+    <string id="30003">Start/Stop/End</string>
+    <string id="30014">Video Type</string>
+    <string id="30004">Movies</string>
+    <string id="30005">TV Shows</string>
+    <string id="30015">Between hours</string>
+    <string id="30006">Enable</string>
+    <string id="30007">Start Time</string>
+    <string id="30008">End Time</string>
+    <string id="30016">Notifications</string>
+    <string id="30010">Log</string>
+    <string id="30009">Display Notifications</string>
+    <string id="30017">Misc</string>
+    <string id="30018">Delay startup in seconds</string>
+    <string id="30019">Turn switch on at startup</string>
+    <string id="30020">Turn switch off at shutdown</string>
+    <string id="30021">Always turn switch off when playback starts</string>
+    <string id="30022">Additional WeMo switches</string>
+    <string id="30023">Enable</string>
+    <string id="30024">Separate IP addresses with a semicolon: ;</string>
+    <string id="30025">Unspecified</string>
+    <string id="30026">Toggle all WeMo switches with keyboard shortcut</string>
+</strings>
