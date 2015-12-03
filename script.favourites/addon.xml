@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.favourites" name="Favourites script" version="6.0.2" provider-name="ronie|`Black">
+<addon id="script.favourites" name="Favourites script" version="6.0.3" provider-name="ronie, `Black">
 	<requires>
-		<import addon="xbmc.python" version="2.12.0"/>
+		<import addon="xbmc.python" version="2.19.0"/>
 	</requires>
 	<extension point="xbmc.python.library" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
@@ -51,7 +51,7 @@
 		<description lang="es">Usar ítems de tus favoritos de Kodi para crear menús y submenús personalizados</description>
 		<description lang="es_AR">Obtiene medios de sus favoritos en Kodi para enriquecer su menu inicio y sub carpetas con botones personalizados</description>
 		<description lang="fi">Hakee Kodin suosikeista kohteita ja populoi sillä Koti-valikon / alivalikon muokatuilla napeilla.</description>
-		<description lang="fr">Récupère l'élément depuis les favoris Kodi pour remplir le menu/sous-menu de l'accueil avec des boutons personnalisés.</description>
+		<description lang="fr">Récupère l'élément depuis les favoris Kodi pour remplir le menu/sous-menu de la page d'accueil avec des boutons personnalisés.</description>
 		<description lang="fr_CA">Récupère l'élément de vos favoris Kodi pour remplir le menu d'accueil/le sous-menu avec des boutons personnalisés.</description>
 		<description lang="gl">Obtén o elemento dos favoritos para estabelecer botóns personalizados no Menú Principal/Submenú</description>
 		<description lang="he">מייבא פריט מהמועדפים שלך לאכלוס תפריט/תת תפריט עם לחצנים מותאמים אישית במסך הבית.</description>
@@ -70,7 +70,7 @@
 		<description lang="sv">Hämtar objekt från dina Kodi-favoriter för att fylla ut hem-menyn med egna knappar.</description>
 		<description lang="zh">将 Kodi 收藏夹项目用于主界面菜单/子菜单的自定义按钮。</description>
 		<disclaimer lang="be">Needs skin support for it to be used properly</disclaimer>
-		<disclaimer lang="bg">Необходима е поддръжка на скинове за коректно показване</disclaimer>
+		<disclaimer lang="bg">Необходима е поддръжка от страна на облика за коректно функциониране</disclaimer>
 		<disclaimer lang="ca">Necessita Suport de la pell perquè sigui utilitzat correctament</disclaimer>
 		<disclaimer lang="cs">Pro správné použití je potřeba podpora skinu.</disclaimer>
 		<disclaimer lang="da">Behøver skinsupport for at blive brugt ordentligt</disclaimer>

@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32000"
 msgid "Do you want to play the playlist instead of entering?"
-msgstr "Искате ли са стартира плейлиста вместо неговото отваряне?"
+msgstr "Да се възпроизведе ли плейлиста, вместо да бъде отворен?"
 
 msgctxt "#32001"
 msgid "None (clear current settings)"
@@ -26,4 +26,4 @@ msgstr "Нищо (Почисти текущите настройки)"
 
 msgctxt "#32002"
 msgid "(no action)"
-msgstr "(без действия)"
+msgstr "(без действие)"

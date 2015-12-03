@@ -4,16 +4,16 @@ import os, sys, re
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 from xml.dom.minidom import parse
 
-__addon__        = xbmcaddon.Addon()
-__addonid__      = __addon__.getAddonInfo('id')
-__addonversion__ = __addon__.getAddonInfo('version')
-__cwd__          = __addon__.getAddonInfo('path').decode("utf-8")
-__language__     = __addon__.getLocalizedString
+ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id')
+ADDONVERSION = ADDON.getAddonInfo('version')
+CWD          = ADDON.getAddonInfo('path').decode("utf-8")
+LANGUAGE     = ADDON.getLocalizedString
 
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode("utf-8")
-    message = u'%s: %s' % (__addonid__, txt)
+    message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 class Main:
@@ -93,7 +93,7 @@ class MainGui(xbmcgui.WindowXMLDialog):
         self.getControl(5).setVisible(False)
         self.getControl(1).setLabel(xbmc.getLocalizedString(1036))
 
-        self.fav_list.addItem(xbmcgui.ListItem(__language__(32001), iconImage="DefaultAddonNone.png"))
+        self.fav_list.addItem(xbmcgui.ListItem(LANGUAGE(32001), iconImage="DefaultAddonNone.png"))
 
         for favourite in self.listing :
             listitem = xbmcgui.ListItem(favourite.attributes[ 'name' ].nodeValue)
@@ -113,7 +113,7 @@ class MainGui(xbmcgui.WindowXMLDialog):
             listitem.setProperty("Path", fav_path)
             self.fav_list.addItem(listitem)
         # add a dummy item with no action assigned
-        listitem = xbmcgui.ListItem(__language__(32002))
+        listitem = xbmcgui.ListItem(LANGUAGE(32002))
         listitem.setProperty("Path", 'noop')
         self.fav_list.addItem(listitem)
         self.setFocus(self.fav_list)
@@ -136,7 +136,7 @@ class MainGui(xbmcgui.WindowXMLDialog):
                     fav_abspath = ''
                 fav_label = self.fav_list.getSelectedItem().getLabel()
                 if 'playlists/music' in fav_path or 'playlists/video' in fav_path:
-                    retBool = xbmcgui.Dialog().yesno(xbmc.getLocalizedString(559), __language__(32000))
+                    retBool = xbmcgui.Dialog().yesno(xbmc.getLocalizedString(559), LANGUAGE(32000))
                     if retBool:
                         if 'playlists/music' in fav_path:
                             fav_path = fav_path.replace('ActivateWindow(10502,', 'PlayMedia(')
@@ -167,11 +167,11 @@ class MainGui(xbmcgui.WindowXMLDialog):
         pass
 
 def MyDialog(fav_list, fav_prop, changetitle):
-    w = MainGui("DialogSelect.xml", __cwd__, listing=fav_list, prop=fav_prop, changetitle=changetitle)
+    w = MainGui("DialogSelect.xml", CWD, listing=fav_list, prop=fav_prop, changetitle=changetitle)
     w.doModal()
     del w
 
 if (__name__ == "__main__"):
-    log('script version %s started' % __addonversion__)
+    log('script version %s started' % ADDONVERSION)
     Main()
 log('script stopped')
