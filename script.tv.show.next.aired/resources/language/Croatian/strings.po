@@ -120,6 +120,10 @@ msgctxt "#32023"
 msgid "Ignore \"Specials\" (requires a reset)"
 msgstr "Zanemari \"Posebni\" (zahtijeva ponovno pokretanje)"
 
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "Pretraži jezik na TVDB"
+
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
 msgstr "TV emisjia - Sljedeće emitiranje"

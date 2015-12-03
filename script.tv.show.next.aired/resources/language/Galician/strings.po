@@ -108,6 +108,10 @@ msgctxt "#32020"
 msgid "Advanced Options:"
 msgstr "Opcións Avanzadas:"
 
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "Buscar idioma no TVDB"
+
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
 msgstr "Serie de TV - Seguinte Emisión"

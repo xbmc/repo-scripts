@@ -52,6 +52,10 @@ msgctxt "#32006"
 msgid "Download 16:9 preview thumbs (Artwork Downloader required)"
 msgstr "הורד תמונה מקדימה ממוזערת ביחס 16:9 (נדרש Artwork Downloader)"
 
+msgctxt "#32007"
+msgid "Update the TV information now"
+msgstr "לעדכן את מידע הטלוויזיה עכשיו"
+
 msgctxt "#32008"
 msgid "Download TV information:"
 msgstr "הורדת פרטי סדרות:"
@@ -60,9 +64,17 @@ msgctxt "#32011"
 msgid "Download posters (Artwork Downloader required)"
 msgstr "הורד פוסטרים (נדרש Artwork Downloader)"
 
+msgctxt "#32012"
+msgid "**Reset all data** and update the TV information now"
+msgstr "** איפוס כל הנתונים ** ולעדכן את מידע הטלוויזיה עכשיו"
+
 msgctxt "#32013"
 msgid "Show All TV Shows for home screen (needs skin Support)"
 msgstr "הצג כל תכניות הטלוויזיה במסך הבית (נדרשת תמיכת המעטפת)"
+
+msgctxt "#32014"
+msgid "Use day-of-week and month names in dates instead of just numbers (for a skin that needs help)"
+msgstr "השתמש ביום-של-שבוע ושמות חודשים בתאריכים במקום רק מספרים (למעטפת שזקוקה לעזרה)"
 
 msgctxt "#32018"
 msgid "Yesterday"
@@ -75,6 +87,18 @@ msgstr "מדריך תכניות"
 msgctxt "#32020"
 msgid "Advanced Options:"
 msgstr "אפשרויות מתקדמות:"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "סדרות נוספים (מספרי זיהוי TVDB)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "להשמיט סדרות(מספרי זיהוי TVDB)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "חפש שפה בTVDB"
 
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
@@ -91,6 +115,10 @@ msgstr "בוטלה"
 msgctxt "#32104"
 msgid "Operation cancelled by user."
 msgstr "פעולה בוטלה ע\"י המשתמש."
+
+msgctxt "#32106"
+msgid "The update failed (we'll retry again later)."
+msgstr "העדכון נכשל (אנחנו מנסים שוב מאוחר יותר)."
 
 msgctxt "#32201"
 msgid "Returning Series"

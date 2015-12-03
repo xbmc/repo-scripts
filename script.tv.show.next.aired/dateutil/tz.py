@@ -133,9 +133,12 @@ class tzlocal(datetime.tzinfo):
                      + dt.hour * 3600
                      + dt.minute * 60
                      + dt.second) + time.timezone
-        if timestamp <= 0:
-            return False
-        return time.localtime(timestamp).tm_isdst
+        try:
+            if timestamp > 0:
+                return time.localtime(timestamp).tm_isdst
+        except ValueError:
+            pass
+        return False
 
     def __eq__(self, other):
         if not isinstance(other, tzlocal):

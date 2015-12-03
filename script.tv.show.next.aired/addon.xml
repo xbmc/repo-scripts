@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.tv.show.next.aired" name="TV Show - Next Aired" version="6.0.14" provider-name="Ppic|Frost|ronie|`Black|phil65|WayneD">
+<addon id="script.tv.show.next.aired" name="TV Show - Next Aired" version="6.0.15" provider-name="Ppic,Frost,ronie,`Black,phil65,WayneD">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.simplejson" version="2.0.10"/>
@@ -18,13 +18,13 @@
 		<summary lang="en_US">Get info for TV Shows Next Aired.</summary>
 		<summary lang="es">Obtener información de las siguientes emisiones de series.</summary>
 		<summary lang="es_MX">Obtener información de las siguientes emisiones de series.</summary>
-		<summary lang="fr">Récupère les dates de diffusions de vos séries</summary>
+		<summary lang="fr">Obtenir les prochaines dates de diffusion de vos séries TV.</summary>
 		<summary lang="fr_CA">Obtenir les infos de prochaine diffusion des séries télé.</summary>
 		<summary lang="gl">Obter a info. das Seguintes Emisións das Series de TV.</summary>
 		<summary lang="he">קבל פרטי השידור הבא של תכניות הטלוויזיה.</summary>
 		<summary lang="hr">Nabavite informacije za sljedeću emitiranu TV seriju.</summary>
 		<summary lang="hu">Információ a sorozatok következő vetítési idejéről.</summary>
-		<summary lang="it">Ottieni info per le Serie TV trasmesse prossimamente</summary>
+		<summary lang="it">Ottieni info per le Serie TV trasmesse prossimamente.</summary>
 		<summary lang="ko">TV 쇼 방송 일정을 가져옵니다.</summary>
 		<summary lang="lt">Gauti TV laidos kitos transliacijos informaciją.</summary>
 		<summary lang="nl">Ophalen info voor komende TV afleveringen.</summary>

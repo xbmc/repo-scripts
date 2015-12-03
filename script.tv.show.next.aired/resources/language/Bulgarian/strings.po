@@ -138,7 +138,7 @@ msgstr "Отменен/Приключен"
 
 msgctxt "#32203"
 msgid "TBD/On The Bubble"
-msgstr "TBD/On The Bubble"
+msgstr "Очаква се решение"
 
 msgctxt "#32204"
 msgid "In Development"

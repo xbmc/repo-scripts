@@ -104,6 +104,22 @@ msgctxt "#32019"
 msgid "TV Guide"
 msgstr "TV Guide"
 
+msgctxt "#32020"
+msgid "Advanced Options:"
+msgstr "Advanced Options:"
+
+msgctxt "#32021"
+msgid "Extra shows (TVDB ID numbers)"
+msgstr "Extra shows (TVDB ID numbers)"
+
+msgctxt "#32022"
+msgid "Omit shows (TVDB ID numbers)"
+msgstr "Omit shows (TVDB ID numbers)"
+
+msgctxt "#32024"
+msgid "Search language on TVDB"
+msgstr "Search language on TVDB"
+
 msgctxt "#32101"
 msgid "TV Show - Next Aired"
 msgstr "TV Show - Next Aired"
