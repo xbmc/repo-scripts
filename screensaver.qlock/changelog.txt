@@ -3,3 +3,9 @@ v0.0.1
 
 v0.0.2
 - fixed missing letters
+
+v0.0.3
+- Support running the screensaver from a script with RunScript()
+
+v0.0.4
+- code cleanup and small fixes

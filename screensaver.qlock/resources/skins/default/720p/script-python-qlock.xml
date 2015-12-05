@@ -76,25 +76,22 @@
 				</control>
 			</control>
 			<control type="panel">
-				<posx>15</posx>
+				<posx>-5</posx>
 				<posy>20</posy>
-				<width>550</width>
+				<width>570</width>
 				<height>500</height>
 				<onleft>-</onleft>
 				<onright>-</onright>
 				<onup>-</onup>
 				<ondown>-</ondown>
-				<viewtype label="">panel</viewtype>
-				<pagecontrol>-</pagecontrol>
-				<scrolltime>-</scrolltime>
 				<hitrect x="-10" y="-10" w="1" h="1" />
 				<itemlayout height="50" width="50">
 					<control type="label">
-						<posx>20</posx>
+						<posx>0</posx>
 						<posy>0</posy>
 						<width>50</width>
 						<height>50</height>
-						<font>font_MainMenu</font>
+						<font>font13</font>
 						<textcolor>CC555555</textcolor>
 						<selectedcolor>CC555555</selectedcolor>
 						<align>center</align>
@@ -102,11 +99,11 @@
 						<label>[B]$INFO[ListItem.Label][/B]</label>
 					</control>
 					<control type="label">
-						<posx>20</posx>
+						<posx>0</posx>
 						<posy>0</posy>
 						<width>50</width>
 						<height>50</height>
-						<font>font_MainMenu</font>
+						<font>font13</font>
 						<textcolor>CCFFFFFF</textcolor>
 						<selectedcolor>CCFFFFFF</selectedcolor>
 						<align>center</align>
