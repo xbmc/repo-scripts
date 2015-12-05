@@ -324,10 +324,10 @@ class Feature(Video):
         return 'FEATURE [ {0} ]:\n    Path: {1}\n    Rating: ({2})\n    Genres: {3}\n    3D: {4}\n    Audio: {5}'.format(
             repr(self.title),
             repr(self.path),
-            self.rating,
-            ', '.join(self.genres),
+            repr(self.rating),
+            repr(self.genres),
             self.is3D and 'Yes' or 'No',
-            self.audioFormat
+            repr(self.audioFormat)
         )
 
     @property

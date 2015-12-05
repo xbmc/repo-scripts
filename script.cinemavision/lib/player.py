@@ -51,6 +51,9 @@ def begin(movieid=None, episodeid=None, selection=False, args=None):
     if not e.hasFeatures() or selection or movieid or episodeid:
         if not e.addSelectedFeature(selection=selection, movieid=movieid, episodeid=episodeid):
             return showNoFeaturesDialog()
+    elif len(e.features) < 2 and kodiutil.getSetting('ignore.playlist.single', True) and e.selectionAvailable():
+        if not e.addSelectedFeature(selection=True):
+            return showNoFeaturesDialog()  # We shouldn't get here
 
     if not kodiutil.getSetting('hide.queue.dialog', False) or (kodiutil.getSetting('hide.queue.dialog.single', False) and len(e.features) > 1):
         if not args or 'nodialog' not in args:

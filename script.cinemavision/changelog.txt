@@ -1,5 +1,10 @@
 Changelog for CinemaVision
 
+[- 1.0.6 -]
+
+- fix:     Encoding errors when playing a sequence
+- add:     Setting in Playback section: "Ignore Kodi playlist with only one item if there is a selection" (Default: Enabled)
+
 [- 1.0.5 -]
 
 - fix:     Errors when adding a new trailer module or loading a sequence where trailer scrapers have never been set

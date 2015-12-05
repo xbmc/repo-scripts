@@ -788,6 +788,9 @@ class ExperiencePlayer(xbmc.Player):
     def hasFeatures(self):
         return bool(self.features)
 
+    def selectionAvailable(self):
+        return bool(kodiutil.intOrZero(xbmc.getInfoLabel('ListItem.DBID')))
+
     def getPathAndListItemFromVideo(self, video):
         path = video.path
 

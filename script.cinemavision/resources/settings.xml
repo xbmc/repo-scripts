@@ -27,6 +27,7 @@
     <category label="32018">
         <setting id="hide.queue.dialog"        label="32019" type="bool"   default="false" />
         <setting id="hide.queue.dialog.single" label="32020" type="bool"   default="false" subsetting="true" enable="eq(-1,true)"/>
+        <setting id="ignore.playlist.single"   label="32104" type="bool"   default="true" />
         <setting id="allow.video.skip"         label="32021" type="bool"   default="true" />
         <setting id="video.preDelay"           label="32022" type="slider" default="0" range="0,100,3000" option="int" />
     </category>

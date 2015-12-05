@@ -425,6 +425,10 @@ msgctxt "#32103"
 msgid "Context menu add-on installed"
 msgstr ""
 
+msgctxt "#32104"
+msgid "Ignore Kodi playlist with only one item if there is a selection"
+msgstr ""
+
 
 #Sequence
 msgctxt "#32300"
