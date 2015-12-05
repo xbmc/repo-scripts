@@ -3,6 +3,7 @@ script.module.t1mlib
 
 Library of support routines for t1m addons
 
+V1.0.8 use setArt instead of init parms for ListItem
 V1.0.7 cleanup for release
 V1.0.6 fix for subtitles
 V1.0.5 added getAddonCats

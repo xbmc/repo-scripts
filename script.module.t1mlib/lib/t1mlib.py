@@ -99,12 +99,12 @@ class t1mAddon(object):
       videoStream = self.defaultVidStream
       audioStream = self.defaultAudStream
       subtitleStream = self.defaultSubStream
-      liz=xbmcgui.ListItem(name, '',None, thumb)
+      liz=xbmcgui.ListItem(name)
+      liz.setArt({'thumb': thumb, 'fanart': fanart})
       liz.setInfo( 'Video', videoInfo)
       liz.addStreamInfo('video', videoStream)
       liz.addStreamInfo('audio', audioStream)
       liz.addStreamInfo('subtitle', subtitleStream)
-      liz.setProperty('fanart_image', fanart)
       if not isFolder: liz.setProperty('IsPlayable', 'true')
       u = '%s?mode=%s&name=%s' % (sys.argv[0], mode, qp(name.encode(UTF8)))
       if url != None: u = u+'&url=%s' % qp(url)
