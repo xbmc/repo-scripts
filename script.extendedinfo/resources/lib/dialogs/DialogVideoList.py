@@ -443,6 +443,8 @@ def get_tmdb_window(window_type):
             else:
                 response = get_tmdb_data(url=url,
                                          cache_days=2)
+            if not response:
+                return None
             if self.mode == "list":
                 prettyprint(response)
                 info = {"listitems": handle_tmdb_movies(results=response["items"],

@@ -78,7 +78,7 @@ def handle_lastfm_albums(results):
     if 'topalbums' in results and "album" in results['topalbums']:
         for album in results['topalbums']['album']:
             album = {'artist': album['artist']['name'],
-                     'mbid': album['mbid'],
+                     'mbid': album.get('mbid', ""),
                      'thumb': album['image'][-1]['#text'],
                      'name': album['name']}
             albums.append(album)

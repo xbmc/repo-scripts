@@ -203,6 +203,7 @@ class OnClickHandler():
 
     def __init__(self):
         self.clicks = {}
+        self.focus = {}
         self.action_maps = {}
 
     def click(self, button_ids):
@@ -230,8 +231,25 @@ class OnClickHandler():
 
         return decorator
 
+    def focus(self, button_ids):
+        def decorator(f):
+            if isinstance(button_ids, list):
+                for button_id in button_ids:
+                    self.focus[button_id] = f
+            else:
+                self.focus[button_ids] = f
+            return f
+
+        return decorator
+
     def serve(self, control_id, wnd):
         view_function = self.clicks.get(control_id)
+        if view_function:
+            self.attach_control_attribs(wnd, control_id)
+            return view_function(wnd)
+
+    def serve_focus(self, control_id, wnd):
+        view_function = self.focus.get(control_id)
         if view_function:
             self.attach_control_attribs(wnd, control_id)
             return view_function(wnd)

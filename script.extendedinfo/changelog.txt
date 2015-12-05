@@ -1,3 +1,7 @@
+v3.1.2
+- fixes for LastFM and Youtube API
+- misc fixes
+
 v3.1.1
 - hebrew fix for keyboard
 - more minor bugfixes

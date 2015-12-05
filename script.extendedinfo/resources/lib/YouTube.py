@@ -47,11 +47,12 @@ def handle_youtube_videos(results, extended=False):
             item["definition"] = ext_item['contentDetails']['definition']
             item["caption"] = ext_item['contentDetails']['caption']
             item["viewcount"] = millify(ext_item['statistics']['viewCount'])
-            item["likes"] = ext_item['statistics']['likeCount']
-            item["dislikes"] = ext_item['statistics']['dislikeCount']
-            vote_count = float(int(ext_item['statistics']['likeCount']) + int(ext_item['statistics']['dislikeCount']))
-            if vote_count > 0:
-                item["rating"] = format(float(ext_item['statistics']['likeCount']) / vote_count * 10, '.2f')
+            item["likes"] = ext_item['statistics'].get('likeCount')
+            item["dislikes"] = ext_item['statistics'].get('dislikeCount')
+            if item["likes"] and item["dislikes"]:
+                vote_count = float(int(item["likes"]) + int(item["dislikes"]))
+                if vote_count > 0:
+                    item["rating"] = format(float(item["likes"]) / vote_count * 10, '.2f')
             break
         else:
             item["duration"] = ""
