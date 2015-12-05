@@ -26,6 +26,33 @@ class Main:
             self._StartInfoActions()
         if self.control == "plugin":
             xbmcplugin.endOfDirectory(self.handle)
+        while self.daemon and not xbmc.abortRequested:
+            self.image_now = xbmc.getInfoLabel("Player.Art(thumb)")
+            self.image_now_fa = xbmc.getInfoLabel("MusicPlayer.Property(Fanart_Image)")
+            if self.image_now != self.image_prev:
+                self.image_prev = self.image_now
+                image, imagecolor = Filter_Image(self.image_now, self.radius)
+                HOME.setProperty(self.prefix + 'ImageFilter1', image)
+                HOME.setProperty(self.prefix + "ImageColor1", imagecolor)
+                image = Filter_Pixelate(self.image_now, self.pixels)
+                HOME.setProperty(self.prefix + 'ImageFilter2', image)
+                HOME.setProperty(self.prefix + "ImageColor2", Random_Color())
+                image = Filter_Posterize(self.image_now, self.bits)
+                HOME.setProperty(self.prefix + 'ImageFilter3', image)
+                HOME.setProperty(self.prefix + "ImageColor3", Random_Color())
+            if self.image_now_fa != self.image_prev_fa:
+                self.image_prev_fa = self.image_now_fa
+                image, imagecolor = Filter_Image(self.image_now_fa, self.radius)
+                HOME.setProperty(self.prefix + 'ImageFilterfa1', image)
+                HOME.setProperty(self.prefix + "ImageColorfa1", imagecolor)
+                image = Filter_Pixelate(self.image_now_fa, self.pixels)
+                HOME.setProperty(self.prefix + 'ImageFilterfa2', image)
+                HOME.setProperty(self.prefix + "ImageColorfa2", Random_Color())
+                image = Filter_Posterize(self.image_now_fa, self.bits)
+                HOME.setProperty(self.prefix + 'ImageFilterfa3', image)
+                HOME.setProperty(self.prefix + "ImageColorfa3", Random_Color())
+            else:
+                xbmc.sleep(300)
 
     def _StartInfoActions(self):
         for info in self.infos:
@@ -34,6 +61,10 @@ class Main:
             elif info == 'randomcolor':
                 imagecolor = Random_Color()
                 HOME.setProperty(self.prefix + "ImageColor", imagecolor)
+            elif info == 'bluronly':
+                HOME.clearProperty(self.prefix + 'ImageFilter')
+                image = Filter_ImageOnly(self.id, self.radius)
+                HOME.setProperty(self.prefix + 'ImageFilter', image)
             elif info == 'blur':
                 HOME.clearProperty(self.prefix + 'ImageFilter')
                 log("Blur image %s with radius %i" % (self.id, self.radius))
@@ -76,6 +107,10 @@ class Main:
         self.black = "#000000"
         self.white = "#FFFFFF"
         self.daemon = False
+        self.image_now = ""
+        self.image_now_fa = ""
+        self.image_prev = ""
+        self.image_prev_fa = ""
         self.autoclose = ""
 
     def _parse_argv(self):
@@ -91,6 +126,8 @@ class Main:
                 self.id = RemoveQuotes(arg[3:])
             elif arg.startswith('dbid='):
                 self.dbid = int(arg[5:])
+            elif arg.startswith('daemon='):
+                self.daemon = True
             elif arg.startswith('prefix='):
                 self.prefix = arg[7:]
                 if not self.prefix.endswith("."):
@@ -105,6 +142,19 @@ class Main:
                 self.black = RemoveQuotes(arg[6:])
             elif arg.startswith('white='):
                 self.white = RemoveQuotes(arg[6:])
+
+class ToolBoxMonitor(xbmc.Monitor):
+
+    def __init__(self, *args, **kwargs):
+        xbmc.Monitor.__init__(self)
+
+    def onPlayBackStarted(self):
+        pass
+        # HOME.clearProperty(self.prefix + 'ImageFilter')
+        # Notify("test", "test")
+        # image, imagecolor = Filter_Image(self.id, self.radius)
+        # HOME.setProperty(self.prefix + 'ImageFilter', image)
+        # HOME.setProperty(self.prefix + "ImageColor", imagecolor)
 
 
 if __name__ == "__main__":

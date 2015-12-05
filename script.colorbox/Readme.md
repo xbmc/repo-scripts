@@ -9,14 +9,18 @@ script.colorbox
   
   pixelate: will bulk up pixels to size requested and add black border round each pixel block
   
-  blur: will return a guassian blurred image dependant on radius supplied, larger radius means larger blur
+  blur: will return a guassian blurred image dependant on radius supplied, larger radius means larger blur + color match
+  
+  bluronly: will return a guassian blurred image dependant on radius supplied, larger radius means larger blur - no color match
   
   randomcolor: will return a random color
 
 
 - Notes:
 
-  On first use it will check and make addon cache dir. First run of an image will be slow as it is processing image, then all other calls will use a cached image for extra speed.
+  On first use it will check and make addon cache dir. First run of an image will be slow as it is processing image, then all other calls will use a cached image for extra speed. For this to happen please add this to top of Startup.xml
+
+	<onload condition="System.HasAddon(script.colorbox)">RunScript(script.colorbox,info=firstrun)</onload>
 
 
 - Usage:
@@ -28,6 +32,8 @@ script.colorbox
   RunScript(script.colorbox,info=pixelate,id='"IMAGE_TO_USE"',pixels=PIXELATION_SIZE,prefix=RETURN_IMAGE_ID)
 
   RunScript(script.colorbox,info=blur,id='"IMAGE_TO_USE"',radius=RADIUS_SIZE,prefix=RETURN_IMAGE_ID)
+
+  RunScript(script.colorbox,info=bluronly,id='"IMAGE_TO_USE"',radius=RADIUS_SIZE,prefix=RETURN_IMAGE_ID)
 
   RunScript(script.colorbox,info=randomcolor,prefix=RETURN_IMAGE_ID)
 
@@ -56,3 +62,17 @@ script.colorbox
   Window(home).Property(RETURN_IMAGE_ID.ImageColor) <- only available with 'blur' and 'randomcolor'
 
   Window(home).Property(RETURN_IMAGE_ID.ImageUpdating) <- this will be set to '1' when all operations are finished and image is ready
+  
+  Window(home).Property(ImageColor1|2|3) <- available when music playing, 1 is color from art other two are random
+  
+  Window(home).Property(ImageFilter1|2|3) <- available when music playing, 1 is blur, 2 pixel, 3 posterize
+  
+  Window(home).Property(ImageColorfa1|2|3) <- available when music playing, 1 is color from art other two are random
+  
+  Window(home).Property(ImageFilterfa1|2|3) <- available when music playing, 1 is blur, 2 pixel, 3 posterize
+  
+  
+- Daemon startup.xml (pixels etc will default if not set) will process 'Player.Art(thumb)' & 'MusicPlayer.Property(Fanart_Image)'
+
+  	<onload condition="System.HasAddon(script.colorbox)">RunScript(script.colorbox,daemon=True,pixels=20,bits=2,radius=1)</onload>
+
