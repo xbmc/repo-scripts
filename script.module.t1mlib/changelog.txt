@@ -5,3 +5,4 @@ V1.0.4 fix request headers init
 V1.0.5 added getAddonCats
 V1.0.6 fix for subtitles
 V1.0.7 cleanup for release
+V1.0.8 use setArt instead of init parms for ListItem
