@@ -18,7 +18,7 @@ msgstr ""
 
 msgctxt "#32101"
 msgid "Location setup"
-msgstr "Standort Setup"
+msgstr "Standort Konfiguration"
 
 msgctxt "#32111"
 msgid "Location 1"

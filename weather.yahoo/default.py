@@ -6,14 +6,14 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__      = xbmcaddon.Addon()
-__addonname__  = __addon__.getAddonInfo('name')
-__addonid__    = __addon__.getAddonInfo('id')
-__version__    = __addon__.getAddonInfo('version')
-__cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
+ADDON        = xbmcaddon.Addon()
+ADDONNAME    = ADDON.getAddonInfo('name')
+ADDONID      = ADDON.getAddonInfo('id')
+ADDONVERSION = ADDON.getAddonInfo('version')
+CWD          = ADDON.getAddonInfo('path').decode("utf-8")
+RESOURCE     = xbmc.translatePath( os.path.join( CWD, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 
-sys.path.append(__resource__)
+sys.path.append(RESOURCE)
 
 from utilities import *
 
@@ -28,7 +28,7 @@ socket.setdefaulttimeout(10)
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode("utf-8")
-    message = u'%s: %s' % (__addonid__, txt)
+    message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 def set_property(name, value):
@@ -37,7 +37,7 @@ def set_property(name, value):
 def refresh_locations():
     locations = 0
     for count in range(1, 4):
-        loc_name = __addon__.getSetting('Location%s' % count)
+        loc_name = ADDON.getSetting('Location%s' % count)
         if loc_name != '':
             locations += 1
         set_property('Location%s' % count, loc_name)
@@ -179,7 +179,7 @@ class MyMonitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)
 
-log('version %s started: %s' % (__version__, sys.argv))
+log('version %s started: %s' % (ADDONVERSION, sys.argv))
 
 MONITOR = MyMonitor()
 set_property('Forecast.IsFetched' , '')
@@ -191,8 +191,8 @@ set_property('36Hour.IsFetched'   , '')
 set_property('Hourly.IsFetched'   , '')
 set_property('Alerts.IsFetched'   , '')
 set_property('Map.IsFetched'      , '')
-set_property('WeatherProvider'    , __addonname__)
-set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(__cwd__, 'resources', 'banner.png')))
+set_property('WeatherProvider'    , ADDONNAME)
+set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(CWD, 'resources', 'banner.png')))
 
 if sys.argv[1].startswith('Location'):
     keyboard = xbmc.Keyboard('', xbmc.getLocalizedString(14024), False)
@@ -204,18 +204,18 @@ if sys.argv[1].startswith('Location'):
         if locs != []:
             selected = dialog.select(xbmc.getLocalizedString(396), items)
             if selected != -1:
-                __addon__.setSetting(sys.argv[1], locs[selected])
-                __addon__.setSetting(sys.argv[1] + 'id', locids[selected])
+                ADDON.setSetting(sys.argv[1], locs[selected])
+                ADDON.setSetting(sys.argv[1] + 'id', locids[selected])
                 log('selected location: %s' % locs[selected])
         else:
             log('no locations found')
-            dialog.ok(__addonname__, xbmc.getLocalizedString(284))
+            dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
 else:
-    location = __addon__.getSetting('Location%s' % sys.argv[1])
-    locationid = __addon__.getSetting('Location%sid' % sys.argv[1])
+    location = ADDON.getSetting('Location%s' % sys.argv[1])
+    locationid = ADDON.getSetting('Location%sid' % sys.argv[1])
     if (locationid == '') and (sys.argv[1] != '1'):
-        location = __addon__.getSetting('Location1')
-        locationid = __addon__.getSetting('Location1id')
+        location = ADDON.getSetting('Location1')
+        locationid = ADDON.getSetting('Location1id')
         log('trying location 1 instead')
     if not locationid == '':
         forecast(location, locationid)

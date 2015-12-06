@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.yahoo" name="Yahoo! Weather" version="3.0.7" provider-name="ronie">
+<addon id="weather.yahoo" name="Yahoo! Weather" version="3.0.8" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -21,7 +21,7 @@
 		<summary lang="es">Predicción meteorológica de yahoo.com</summary>
 		<summary lang="et">yahoo.com ilmaennustus</summary>
 		<summary lang="fi">Yahoo.com sääennuste</summary>
-		<summary lang="fr">Prévisions météo fournies par yahoo.com</summary>
+		<summary lang="fr">Prévisions météo depuis yahoo.com</summary>
 		<summary lang="fr_CA">Prévisions météorologiques de yahoo.com</summary>
 		<summary lang="gl">Predición meteorolóxica de yahoo.com</summary>
 		<summary lang="he">תחזית מזג אוויר מ-yahoo.com</summary>
@@ -85,7 +85,7 @@
 		<description lang="sl">Vremenska napoved od Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="sr_RS">Прогноза времена коју је омогућио Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="sv">Väderprognos tillhandahållen av Yahoo! Weather (http://weather.yahoo.com/)</description>
-		<description lang="tr">Hava Durumu Yahoo! Weather tarafından sağlanır (http://weather.yahoo.com/)</description>
+		<description lang="tr">Yahoo! Weather tarafından sağlana hava durumu tahmini (http://weather.yahoo.com/)</description>
 		<description lang="uk">Прогноз погоди надано Yahoo! Weather (http://weather.yahoo.com/)</description>
 		<description lang="zh">由雅虎天气提供的天气预报（http://weather.yahoo.com/）</description>
 		<disclaimer lang="af">Die gebruik van hierdie byvoeging beteken dat jy ooreengekom met die diensvoorwaardes wat op geleë is http://developer.yahoo.com/weather/#terms</disclaimer>

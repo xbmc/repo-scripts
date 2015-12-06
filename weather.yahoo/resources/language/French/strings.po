@@ -18,16 +18,16 @@ msgstr ""
 
 msgctxt "#32101"
 msgid "Location setup"
-msgstr "Configuration de l'emplacement"
+msgstr "Sélection du lieu"
 
 msgctxt "#32111"
 msgid "Location 1"
-msgstr "Emplacement 1"
+msgstr "Lieu 1"
 
 msgctxt "#32112"
 msgid "Location 2"
-msgstr "Emplacement 2"
+msgstr "Lieu 2"
 
 msgctxt "#32113"
 msgid "Location 3"
-msgstr "Emplacement 3"
+msgstr "Lieu 3"
