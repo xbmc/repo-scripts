@@ -5,19 +5,18 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__        = xbmcaddon.Addon()
-__addonid__      = __addon__.getAddonInfo('id')
-__addonversion__ = __addon__.getAddonInfo('version')
+ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id')
+ADDONVERSION = ADDON.getAddonInfo('version')
 
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode("utf-8")
-    message = u'%s: %s' % (__addonid__, txt)
+    message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 class Main:
     def __init__( self ):
-        log('version %s started' % __addonversion__ )
         self._parse_argv()
         if self.albumid:
             self._play_album()            
@@ -55,5 +54,6 @@ class Main:
             xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.GoTo", "params": { "playerid": 0, "to": %d }, "id": 1 }' % (self.tracknr - 1))        
 
 if ( __name__ == "__main__" ):
+    log('script version %s started' % ADDONVERSION)
     Main()
 log('finished')

@@ -1,3 +1,6 @@
+v2.0.2
+- cosmetics
+
 v2.0.1
 - cosmetics
 
