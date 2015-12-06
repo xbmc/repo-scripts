@@ -15,7 +15,7 @@ LANGUAGE     = __addon__.getLocalizedString
 ADDONVERSION = __addon__.getAddonInfo('version')
 CWD          = __addon__.getAddonInfo('path').decode("utf-8")
 STATUS       = __addon__.getSetting('lastfmstatus')
-DATAPATH     = xbmc.translatePath( 'special://profile/addon_data/%s' % __addonid__ ).decode("utf-8")
+DATAPATH     = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8')
 WINDOW       = xbmcgui.Window(10000)
 
 socket.setdefaulttimeout(10)

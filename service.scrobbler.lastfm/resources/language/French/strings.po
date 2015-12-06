@@ -38,7 +38,7 @@ msgstr "Mot de passe Last.fm"
 
 msgctxt "#30005"
 msgid "Confirm Love/Ban submissions"
-msgstr "Confirmer les soumissions Aimer/Bannir "
+msgstr "Confirmer les soumissions Aimer / Bannir "
 
 msgctxt "#32011"
 msgid "Last.fm"
@@ -46,11 +46,11 @@ msgstr "Last.fm"
 
 msgctxt "#32012"
 msgid "Do you want to add the current track to your loved tracks?"
-msgstr "Voulez-vous ajouter le morceau actuel à vos coups de coeur ?"
+msgstr "Faut-il ajouter la piste actuelle aux coups de cœur ?"
 
 msgctxt "#32013"
 msgid "Do you want to ban the current track?"
-msgstr "Voulez-vous bannir le morceau actuel ?"
+msgstr "Faut-il bannir la piste actuelle ?"
 
 msgctxt "#32014"
 msgid "Added to your loved tracks: '%s'."
@@ -58,7 +58,7 @@ msgstr "Ajouté à vos coups de coeur : '%s'."
 
 msgctxt "#32015"
 msgid "Could not add '%s' to your loved tracks."
-msgstr "Impossible d'ajouter '%s' à vos coups de coeur."
+msgstr "Impossible d'ajouter « %s » aux coups de cœur."
 
 msgctxt "#32016"
 msgid "Banned: '%s'."
@@ -66,7 +66,7 @@ msgstr "Banni : '%s'."
 
 msgctxt "#32017"
 msgid "Could not ban '%s'."
-msgstr "Impossible de bannir '%s'."
+msgstr "Impossible de bannir « %s »."
 
 msgctxt "#32026"
 msgid "Connect to Last.fm failed"

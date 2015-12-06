@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="service.scrobbler.lastfm" name="Last.fm" version="1.2.0" provider-name="Team-Kodi">
+<addon id="service.scrobbler.lastfm" name="Last.fm" version="1.2.1" provider-name="Team Kodi">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
 	<extension point="xbmc.service" library="scrobbler.py" start="login"/>
 	<extension point="xbmc.addon.metadata">
+		<summary lang="ca">Last.fm scrobbler</summary>
 		<summary lang="cs">Last.fm doplněk pro odesílání infa na server</summary>
 		<summary lang="de">Last.fm scrobbler</summary>
 		<summary lang="el">Υπηρεσία κοινοποίησης (scrobbler) του Last.fm</summary>
@@ -28,6 +29,7 @@
 		<summary lang="pt">Scrobbler Last.fm</summary>
 		<summary lang="pt_BR">Last.fm scrobbler</summary>
 		<summary lang="sv">Last.fm scrobbler</summary>
+		<description lang="ca">Last.fm scrobbler informarà de les cançons que has estat escoltant en Kodi a Last.fm</description>
 		<description lang="cs">The Last.fm scrobbler odešle info o právě poslouchaných písničkách na last.fm</description>
 		<description lang="de">Der Last.fm Scrobbler überträgt Informationen des Liedes, das Du hörst in Kodi, zu last.fm</description>
 		<description lang="el">Το Scrobbler του Last.fm θα υποβάλλει πληροφορίες των τραγουδιών που ακούτε στο last.fm</description>

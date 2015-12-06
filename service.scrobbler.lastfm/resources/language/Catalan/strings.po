@@ -24,6 +24,10 @@ msgctxt "#30001"
 msgid "Submit songs to Last.fm"
 msgstr "Envia les cançons a Last.fm"
 
+msgctxt "#30002"
+msgid "Submit streaming radio to Last.fm"
+msgstr "Enviar ràdio en streaming a Last.fm"
+
 msgctxt "#30003"
 msgid "Last.fm username"
 msgstr "Nom d'usuari de Last.fm"
