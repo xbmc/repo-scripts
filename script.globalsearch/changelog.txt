@@ -1,3 +1,7 @@
+v6.0.2
+- language update
+- cosmetics
+
 v6.0.1
 - update action id's for jarvis
 

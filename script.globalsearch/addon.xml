@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.globalsearch" name="Global Search" version="6.0.1" provider-name="ronie">
+<addon id="script.globalsearch" name="Global Search" version="6.0.2" provider-name="ronie">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -17,7 +17,7 @@
 		<summary lang="en_NZ">Search your library.</summary>
 		<summary lang="en_US">Search your library.</summary>
 		<summary lang="es">Busca tu biblioteca.</summary>
-		<summary lang="fr">Chercher dans votre médiathèque.</summary>
+		<summary lang="fr">Chercher dans la médiathèque.</summary>
 		<summary lang="fr_CA">Chercher dans votre bibliothèque</summary>
 		<summary lang="gl">Buscar a súa biblioteca.</summary>
 		<summary lang="he">חיפוש בספריית המדיה.</summary>
@@ -47,7 +47,7 @@
 		<description lang="en_NZ">This addon can find any item in your video and music library.</description>
 		<description lang="en_US">This addon can find any item in your video and music library.</description>
 		<description lang="es">Este complemento puede encontrar cualquier elemento en tu biblioteca de vídeo y música.</description>
-		<description lang="fr">Cette extension peut trouver tout élément dans votre vidéothèque et votre audiothèque.</description>
+		<description lang="fr">Cette extension peut trouver tout élément dans la vidéothèque et l'audiothèque.</description>
 		<description lang="fr_CA">Cet addiciel peut trouver tout élément dans votre vidéothèque et dans votre audiothèque.</description>
 		<description lang="gl">Este complemento pode atopar calquera elemento na súa biblioteca de medios.</description>
 		<description lang="he">הרחבה זו יכולה למצוא כל פריט בספריות הווידאו והמוזיקה.</description>

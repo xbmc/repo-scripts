@@ -42,6 +42,7 @@ ListItem.Property(Endtime)
 ListItem.Property(ChannelName)
 ListItem.Property(ChannelNumber)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 MOVIES (and movies by actor):
@@ -68,6 +69,7 @@ ListItem.Property(VideoAspect)
 ListItem.Property(AudioCodec)
 ListItem.Property(AudioChannels)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 TV SHOWS:
@@ -87,6 +89,7 @@ ListItem.Property(Rating)
 ListItem.Property(StarRating)
 ListItem.Property(Playcount)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 SEASONS:
@@ -97,6 +100,7 @@ ListItem.Property(Fanart)
 ListItem.Property(TvShowTitle)
 ListItem.Property(Playcount)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 EPISODES:
@@ -119,6 +123,7 @@ ListItem.Property(VideoAspect)
 ListItem.Property(AudioCodec)
 ListItem.Property(AudioChannels)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 MUSIC VIDEOS:
@@ -140,6 +145,7 @@ ListItem.Property(VideoAspect)
 ListItem.Property(AudioCodec)
 ListItem.Property(AudioChannels)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 ARTISTS:
@@ -156,6 +162,7 @@ ListItem.Property(Fanart)
 ListItem.Property(Artist_Genre)
 ListItem.Property(Artist_Description)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 ALBUMS:
@@ -174,6 +181,7 @@ ListItem.Property(Album_Type)
 ListItem.Property(Album_Mood)
 ListItem.Property(Year)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 SONGS:
@@ -191,6 +199,7 @@ ListItem.Property(Duration)
 ListItem.Property(Fanart)
 ListItem.Property(Year)
 ListItem.Property(Path)
+ListItem.Property(DBID)
 
 
 

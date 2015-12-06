@@ -40,6 +40,10 @@ msgctxt "#32005"
 msgid "Search Artists"
 msgstr "Search Artists"
 
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Search Abums"
+
 msgctxt "#32007"
 msgid "Search Songs"
 msgstr "Search Songs"
@@ -47,6 +51,10 @@ msgstr "Search Songs"
 msgctxt "#32008"
 msgid "Search Actors"
 msgstr "Search Actors"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Search EPG"
 
 msgctxt "#32101"
 msgid "Enter search string"
