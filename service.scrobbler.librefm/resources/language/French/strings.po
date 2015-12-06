@@ -42,7 +42,7 @@ msgstr "Erreur d'authentification"
 
 msgctxt "#32002"
 msgid "Invalid time, please adjust your system clock and restart Kodi"
-msgstr "Mauvaise heure, veuillez régler votre horloge système et redémarrer Kodi"
+msgstr "Mauvaise heure, merci de régler l'horloge du système et redémarrer Kodi"
 
 msgctxt "#32003"
 msgid "Please update the add-on"

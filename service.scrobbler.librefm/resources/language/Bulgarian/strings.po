@@ -42,7 +42,7 @@ msgstr "Идентификационна грешка"
 
 msgctxt "#32002"
 msgid "Invalid time, please adjust your system clock and restart Kodi"
-msgstr "Невалиден час! Моля настройте ситемния часовник и рестартирайте Kodi."
+msgstr "Невалиден час! Моля настройте системния часовник и рестартирайте Kodi."
 
 msgctxt "#32003"
 msgid "Please update the add-on"

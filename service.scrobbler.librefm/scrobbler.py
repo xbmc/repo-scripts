@@ -16,17 +16,17 @@
 import urllib, urllib2, socket, hashlib, time
 import xbmc, xbmcgui, xbmcaddon
 
-__addon__        = xbmcaddon.Addon()
-__addonid__      = __addon__.getAddonInfo('id')
-__addonversion__ = __addon__.getAddonInfo('version')
-__language__     = __addon__.getLocalizedString
+ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id')
+ADDONVERSION = ADDON.getAddonInfo('version')
+LANGUAGE     = ADDON.getLocalizedString
 
 socket.setdefaulttimeout(10)
 
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode("utf-8")
-    message = u'%s: %s' % (__addonid__, txt)
+    message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 class Main:
@@ -47,10 +47,10 @@ class Main:
     def _get_settings( self ):
         log('#DEBUG# reading settings')
         service    = []
-        LibrefmSubmitSongs = __addon__.getSetting('librefmsubmitsongs') == 'true'
-        LibrefmSubmitRadio = __addon__.getSetting('librefmsubmitradio') == 'true'
-        LibrefmUser        = __addon__.getSetting('librefmuser').lower()
-        LibrefmPass        = __addon__.getSetting('librefmpass')
+        LibrefmSubmitSongs = ADDON.getSetting('librefmsubmitsongs') == 'true'
+        LibrefmSubmitRadio = ADDON.getSetting('librefmsubmitradio') == 'true'
+        LibrefmUser        = ADDON.getSetting('librefmuser').lower()
+        LibrefmPass        = ADDON.getSetting('librefmpass')
         if (LibrefmSubmitSongs or LibrefmSubmitRadio) and LibrefmUser and LibrefmPass:
             # [service, auth-url, user, pass, submitsongs, submitradio, sessionkey, np-url, submit-url, auth-fail, failurecount, timercounter, timerexpiretime, queue]
             service = ['librefm', self.LibrefmURL, LibrefmUser, LibrefmPass, LibrefmSubmitSongs, LibrefmSubmitRadio, '', '', '', False, 0, 0, 0, []]
@@ -114,19 +114,19 @@ class Main:
             service[12] = 0
         elif data[0] == 'BANNED':
             # uh-oh
-            xbmc.executebuiltin((u'Notification(%s,%s)' % ('Scrobbler: ' + service[0], __language__(32003))).encode('utf-8', 'ignore'))
+            xbmc.executebuiltin((u'Notification(%s,%s)' % ('Scrobbler: ' + service[0], LANGUAGE(32003))).encode('utf-8', 'ignore'))
             log('%s has banned our app id' % service[0])
             # disable the service, the monitor class will pick up the changes
-            __addon__.setSetting('%ssubmitsongs' % service[0], 'false')
-            __addon__.setSetting('%ssubmitradio' % service[0], 'false')
+            ADDON.setSetting('%ssubmitsongs' % service[0], 'false')
+            ADDON.setSetting('%ssubmitradio' % service[0], 'false')
         elif data[0] == 'BADAUTH':
             # user has to change username / password
-            xbmc.executebuiltin((u'Notification(%s,%s)' % ('Scrobbler: ' + service[0], __language__(32001))).encode('utf-8', 'ignore'))
+            xbmc.executebuiltin((u'Notification(%s,%s)' % ('Scrobbler: ' + service[0], LANGUAGE(32001))).encode('utf-8', 'ignore'))
             log('%s invalid credentials' % service[0])
             service[9] = True
         elif data[0] == 'BADTIME':
             # user needs to change the system time
-            xbmc.executebuiltin((u'Notification(%s,%s)' % ('Scrobbler: ' + service[0], __language__(32002))).encode('utf-8', 'ignore'))
+            xbmc.executebuiltin((u'Notification(%s,%s)' % ('Scrobbler: ' + service[0], LANGUAGE(32002))).encode('utf-8', 'ignore'))
             log('%s invalid system time' % service[0])
             self.Exit = True
         else:
@@ -325,6 +325,6 @@ class MyMonitor(xbmc.Monitor):
         self.action()
 
 if ( __name__ == "__main__" ):
-    log('script version %s started' % __addonversion__)
+    log('script version %s started' % ADDONVERSION)
     Main()
 log('script stopped')
