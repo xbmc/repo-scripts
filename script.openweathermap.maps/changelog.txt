@@ -1,3 +1,10 @@
+v0.0.12
+- cosmetics
+
+v0.0.11
+- log script version at startup
+- specify urllib2 timeout
+
 v0.0.10
 - fix loop init
 - properly handle abortrequest in loop

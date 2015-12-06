@@ -4,17 +4,19 @@ from StringIO import StringIO
 from PIL import Image
 from PIL import ImageEnhance
 
-__addon__      = xbmcaddon.Addon()
-__mainaddon__  = xbmcaddon.Addon('weather.openweathermap.extended')
-__addonid__    = __addon__.getAddonInfo('id')
-__cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
+ADDON        = xbmcaddon.Addon()
+MAINADDON    = xbmcaddon.Addon('weather.openweathermap.extended')
+ADDONID      = ADDON.getAddonInfo('id')
+ADDONVERSION = ADDON.getAddonInfo('version')
+CWD          = ADDON.getAddonInfo('path').decode("utf-8")
+RESOURCE     = xbmc.translatePath( os.path.join( CWD, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
+PROFILE      = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
-sys.path.append(__resource__)
+sys.path.append(RESOURCE)
 
 from utils import *
 
-ZOOM = int(__mainaddon__.getSetting('Zoom')) + 3
+ZOOM = int(MAINADDON.getSetting('Zoom')) + 3
 
 socket.setdefaulttimeout(10)
 
@@ -46,12 +48,12 @@ class Main:
         temp_url = 'http://undefined.tile.openweathermap.org/map/temp/%i/%i/%i.png'
         wind_url = 'http://undefined.tile.openweathermap.org/map/wind/%i/%i/%i.png'
         pressure_url = 'http://undefined.tile.openweathermap.org/map/pressure_cntr/%i/%i/%i.png'
-        streetmapdir = xbmc.translatePath('special://profile/addon_data/%s/maps/streetmap-%s/' % (__addonid__, tag))
-        precipmapdir = xbmc.translatePath('special://profile/addon_data/%s/maps/precipmap/' % __addonid__)
-        cloudsmapdir = xbmc.translatePath('special://profile/addon_data/%s/maps/cloudsmap/' % __addonid__)
-        tempmapdir = xbmc.translatePath('special://profile/addon_data/%s/maps/tempmap/' % __addonid__)
-        windmapdir = xbmc.translatePath('special://profile/addon_data/%s/maps/windmap/' % __addonid__)
-        pressuremapdir = xbmc.translatePath('special://profile/addon_data/%s/maps/pressuremap/' % __addonid__)
+        streetmapdir = os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag)
+        precipmapdir = os.path.join(PROFILE, 'maps', 'precipmap')
+        cloudsmapdir = os.path.join(PROFILE, 'maps', 'cloudsmap')
+        tempmapdir = os.path.join(PROFILE, 'maps', 'tempmap')
+        windmapdir = os.path.join(PROFILE, 'maps', 'windmap')
+        pressuremapdir = os.path.join(PROFILE, 'maps', 'pressuremap')
         lat = float(lat)
         lon = float(lon)
         x, y = GET_TILE(lat, lon, ZOOM)
@@ -111,36 +113,36 @@ class Main:
         thread_temp.join()
         thread_wind.join()
         thread_pressure.join()
-        set_property('Map.1.Area', xbmc.translatePath('special://profile/addon_data/%s/maps/streetmap-%s/streetmap.png' % (__addonid__, tag)))
-        set_property('Map.2.Area', xbmc.translatePath('special://profile/addon_data/%s/maps/streetmap-%s/streetmap.png' % (__addonid__, tag)))
-        set_property('Map.3.Area', xbmc.translatePath('special://profile/addon_data/%s/maps/streetmap-%s/streetmap.png' % (__addonid__, tag)))
-        set_property('Map.4.Area', xbmc.translatePath('special://profile/addon_data/%s/maps/streetmap-%s/streetmap.png' % (__addonid__, tag)))
-        set_property('Map.5.Area', xbmc.translatePath('special://profile/addon_data/%s/maps/streetmap-%s/streetmap.png' % (__addonid__, tag)))
-        set_property('Map.1.Layer', xbmc.translatePath('special://profile/addon_data/%s/maps/precipmap/precipmap-%s.png' % (__addonid__, stamp)))
-        set_property('Map.2.Layer', xbmc.translatePath('special://profile/addon_data/%s/maps/cloudsmap/cloudsmap-%s.png' % (__addonid__, stamp)))
-        set_property('Map.3.Layer', xbmc.translatePath('special://profile/addon_data/%s/maps/tempmap/tempmap-%s.png' % (__addonid__, stamp)))
-        set_property('Map.4.Layer', xbmc.translatePath('special://profile/addon_data/%s/maps/windmap/windmap-%s.png' % (__addonid__, stamp)))
-        set_property('Map.5.Layer', xbmc.translatePath('special://profile/addon_data/%s/maps/pressuremap/pressuremap-%s.png' % (__addonid__, stamp)))
+        set_property('Map.1.Area', os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, 'streetmap.png'))
+        set_property('Map.2.Area', os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, 'streetmap.png'))
+        set_property('Map.3.Area', os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, 'streetmap.png'))
+        set_property('Map.4.Area', os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, 'streetmap.png'))
+        set_property('Map.5.Area', os.path.join(PROFILE, 'maps', 'streetmap-%s' % tag, 'streetmap.png'))
+        set_property('Map.1.Layer', os.path.join(PROFILE, 'maps', 'precipmap', 'precipmap-%s.png' % stamp))
+        set_property('Map.2.Layer', os.path.join(PROFILE, 'maps', 'cloudsmap', 'cloudsmap-%s.png' % stamp))
+        set_property('Map.3.Layer', os.path.join(PROFILE, 'maps', 'tempmap', 'tempmap-%s.png' % stamp))
+        set_property('Map.4.Layer', os.path.join(PROFILE, 'maps', 'windmap', 'windmap-%s.png' % stamp))
+        set_property('Map.5.Layer', os.path.join(PROFILE, 'maps', 'pressuremap', 'pressuremap-%s.png' % stamp))
         set_property('Map.1.Heading', xbmc.getLocalizedString(1448))
         set_property('Map.2.Heading', xbmc.getLocalizedString(387))
         set_property('Map.3.Heading', xbmc.getLocalizedString(1375))
         set_property('Map.4.Heading', xbmc.getLocalizedString(383))
         set_property('Map.5.Heading', xbmc.getLocalizedString(1376))
         if 'F' in TEMPUNIT:
-            set_property('Map.1.Legend' , xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'precip-in.png')))
+            set_property('Map.1.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'precip-in.png')))
         else:
-            set_property('Map.1.Legend' , xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'precip-mm.png')))
-        set_property('Map.2.Legend' , xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'clouds.png')))
+            set_property('Map.1.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'precip-mm.png')))
+        set_property('Map.2.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'clouds.png')))
         if 'F' in TEMPUNIT:
-            set_property('Map.3.Legend' , xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'temp-f.png')))
+            set_property('Map.3.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'temp-f.png')))
         else:
-            set_property('Map.3.Legend' , xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'temp-c.png')))
+            set_property('Map.3.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'temp-c.png')))
         if SPEEDUNIT == 'mph':
-            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'wind-mi.png')))
+            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-mi.png')))
         elif SPEEDUNIT == 'Beaufort':
-            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'wind-bft.png')))
+            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-bft.png')))
         else:
-            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'wind-kmh.png')))
+            set_property('Map.4.Legend' , xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'wind-kmh.png')))
         set_property('Map.5.Legend' , '')
 
 
@@ -166,7 +168,7 @@ class get_tiles(threading.Thread):
                 query = self.url % (ZOOM, img[0], img[1])
                 req = urllib2.Request(query)
                 req.add_header('Accept-encoding', 'gzip')
-                response = urllib2.urlopen(req)
+                response = urllib2.urlopen(req, timeout=10)
                 if response.info().get('Content-Encoding') == 'gzip':
                     buf = StringIO(response.read())
                     compr = gzip.GzipFile(fileobj=buf)
@@ -234,4 +236,5 @@ class MyMonitor(xbmc.Monitor):
 MONITOR = MyMonitor()
 
 if ( __name__ == "__main__" ):
+    log('script version %s started' % ADDONVERSION)
     Main()
