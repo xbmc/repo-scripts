@@ -26,11 +26,11 @@ msgstr "Dossier"
 
 msgctxt "#30002"
 msgid "Video Fanart"
-msgstr "Fanart Video"
+msgstr "Fanart vidéo"
 
 msgctxt "#30003"
 msgid "Music Fanart"
-msgstr "Fanart Musique"
+msgstr "Fanart musique"
 
 msgctxt "#30004"
 msgid "Image Folder"
@@ -54,7 +54,7 @@ msgstr "Fondu-enchaîné"
 
 msgctxt "#30009"
 msgid "Pan and zoom"
-msgstr "Pan et Zoom"
+msgstr "Panoramique et zoom"
 
 msgctxt "#30010"
 msgid "Amount of seconds to display each image"
@@ -84,21 +84,9 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Afficher les images dans un ordre aléatoire"
 
-msgctxt "#30017"
-msgid "Create image index"
-msgstr "Créer un index d'images"
-
 msgctxt "#30018"
 msgid "Use folder- and filename"
-msgstr "Utilisez dossier- et nom de fichier"
-
-msgctxt "#30019"
-msgid "Creating index"
-msgstr "Création d'index"
-
-msgctxt "#30020"
-msgid "Index created"
-msgstr "Index créé"
+msgstr "Utiliser dossier et nom de fichier"
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -119,18 +107,6 @@ msgstr "Basique"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Additionnel"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Avancé"
-
-msgctxt "#30027"
-msgid "Update index"
-msgstr "Index mis à jour"
-
-msgctxt "#30028"
-msgid "Indexing is not supported with fanart"
-msgstr "L'indexation n'est pas pris en charge avec les fanart"
 
 msgctxt "#30029"
 msgid "Display background picture"

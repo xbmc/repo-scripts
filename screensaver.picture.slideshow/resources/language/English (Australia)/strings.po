@@ -20,6 +20,10 @@ msgctxt "#30001"
 msgid "Folder"
 msgstr "Folder"
 
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Image Folder"
+
 msgctxt "#30005"
 msgid "Dim level"
 msgstr "Dim level"
@@ -39,7 +43,3 @@ msgstr "Basic"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Additional"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Advanced"

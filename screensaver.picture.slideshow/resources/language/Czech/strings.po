@@ -84,21 +84,9 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Zobrazit obrázky v náhodném pořadí"
 
-msgctxt "#30017"
-msgid "Create image index"
-msgstr "Vytvoř index obrázku"
-
 msgctxt "#30018"
 msgid "Use folder- and filename"
 msgstr "Použij složku- a jméno souboru"
-
-msgctxt "#30019"
-msgid "Creating index"
-msgstr "Vytvoření indexu"
-
-msgctxt "#30020"
-msgid "Index created"
-msgstr "Index vytvořen"
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -120,14 +108,6 @@ msgctxt "#30025"
 msgid "Additional"
 msgstr "Další"
 
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Pokročilé"
-
-msgctxt "#30027"
-msgid "Update index"
-msgstr "Update indexu"
-
-msgctxt "#30028"
-msgid "Indexing is not supported with fanart"
-msgstr "Indexování s fanartem není podporováno"
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Zobrazit obrázek na pozadí."

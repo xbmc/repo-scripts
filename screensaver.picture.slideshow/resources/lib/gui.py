@@ -25,10 +25,10 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__    = sys.modules[ '__main__' ].__addon__
-__addonid__  = sys.modules[ '__main__' ].__addonid__
-__cwd__      = sys.modules[ '__main__' ].__cwd__
-__skindir__  = xbmc.getSkinDir().decode('utf-8')
+ADDON    = sys.modules[ '__main__' ].ADDON
+ADDONID  = sys.modules[ '__main__' ].ADDONID
+CWD      = sys.modules[ '__main__' ].CWD
+SKINDIR  = xbmc.getSkinDir().decode('utf-8')
 
 # images types that can contain exif/iptc data
 EXIF_TYPES  = ('.jpg', '.jpeg', '.tif', '.tiff')
@@ -93,19 +93,19 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
     def _get_settings(self):
         # read addon settings
-        self.slideshow_type   = __addon__.getSetting('type')
-        self.slideshow_path   = __addon__.getSetting('path')
-        self.slideshow_effect = __addon__.getSetting('effect')
-        self.slideshow_time   = int(__addon__.getSetting('time'))
+        self.slideshow_type   = ADDON.getSetting('type')
+        self.slideshow_path   = ADDON.getSetting('path')
+        self.slideshow_effect = ADDON.getSetting('effect')
+        self.slideshow_time   = int(ADDON.getSetting('time'))
         # convert float to hex value usable by the skin
-        self.slideshow_dim    = hex(int('%.0f' % (float(100 - int(__addon__.getSetting('level'))) * 2.55)))[2:] + 'ffffff'
-        self.slideshow_random = __addon__.getSetting('random')
-        self.slideshow_scale  = __addon__.getSetting('scale')
-        self.slideshow_name   = __addon__.getSetting('label')
-        self.slideshow_date   = __addon__.getSetting('date')
-        self.slideshow_iptc   = __addon__.getSetting('iptc')
-        self.slideshow_music  = __addon__.getSetting('music')
-        self.slideshow_bg     = __addon__.getSetting('background')
+        self.slideshow_dim    = hex(int('%.0f' % (float(100 - int(ADDON.getSetting('level'))) * 2.55)))[2:] + 'ffffff'
+        self.slideshow_random = ADDON.getSetting('random')
+        self.slideshow_scale  = ADDON.getSetting('scale')
+        self.slideshow_name   = ADDON.getSetting('label')
+        self.slideshow_date   = ADDON.getSetting('date')
+        self.slideshow_iptc   = ADDON.getSetting('iptc')
+        self.slideshow_music  = ADDON.getSetting('music')
+        self.slideshow_bg     = ADDON.getSetting('background')
         # select which image controls from the xml we are going to use
         if self.slideshow_scale == 'false':
             self.image1 = self.getControl(1)
@@ -368,7 +368,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
     def _get_animspeed(self):
         # find the skindir
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddonDetails", "params": {"addonid": "%s", "properties": ["path", "extrainfo"]}, "id": 1}' % __skindir__)
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddonDetails", "params": {"addonid": "%s", "properties": ["path", "extrainfo"]}, "id": 1}' % SKINDIR)
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         if json_response.has_key('result') and (json_response['result'] != None) and json_response['result'].has_key('addon') and json_response['result']['addon'].has_key('path'):

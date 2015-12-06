@@ -103,7 +103,3 @@ msgstr "Themelor"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Plotsues"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Të shtuar"

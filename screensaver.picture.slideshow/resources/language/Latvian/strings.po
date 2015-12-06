@@ -55,7 +55,3 @@ msgstr "Pamata"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Papildus"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Papildus"

@@ -103,7 +103,3 @@ msgstr "Базовый"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Дополнительно"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Дополнительно"

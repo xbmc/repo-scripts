@@ -27,7 +27,3 @@ msgstr "Onemogućeno"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Osnovno"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Napredno"

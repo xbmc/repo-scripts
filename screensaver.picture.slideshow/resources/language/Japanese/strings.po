@@ -103,7 +103,3 @@ msgstr "標準"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "追加"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "高度な設定"

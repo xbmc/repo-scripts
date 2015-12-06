@@ -103,7 +103,3 @@ msgstr "Elfennol"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Ychwanegol"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Uwch"

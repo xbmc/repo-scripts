@@ -84,21 +84,9 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "ምስሎቹን በነሲብ ቅደም ተከተል ማሳያ"
 
-msgctxt "#30017"
-msgid "Create image index"
-msgstr "የምስል ማውጫ ይፍጠሩ"
-
 msgctxt "#30018"
 msgid "Use folder- and filename"
 msgstr "ፎልደር- እና የ ፋይል ስም ይጠቀሙ"
-
-msgctxt "#30019"
-msgid "Creating index"
-msgstr "ማውጫ በመፍጠር ላይ"
-
-msgctxt "#30020"
-msgid "Index created"
-msgstr "ማውጫ ተፈጥሯል"
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -119,11 +107,3 @@ msgstr "መሰረታዊ "
 msgctxt "#30025"
 msgid "Additional"
 msgstr "ተጨማሪ"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "የረቀቀ"
-
-msgctxt "#30027"
-msgid "Update index"
-msgstr "ማውጫ ማሻሻያ "

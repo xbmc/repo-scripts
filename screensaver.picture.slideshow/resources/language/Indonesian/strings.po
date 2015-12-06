@@ -39,7 +39,3 @@ msgstr "Non Aktif"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "Dasar"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Tingkat Lanjut"

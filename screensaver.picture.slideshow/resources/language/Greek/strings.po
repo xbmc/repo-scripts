@@ -84,21 +84,9 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Εμφάνιση εικόνων σε τυχαία σειρά"
 
-msgctxt "#30017"
-msgid "Create image index"
-msgstr "Δημιουργία δείκτη εικόνας"
-
 msgctxt "#30018"
 msgid "Use folder- and filename"
 msgstr "Χρήση φακέλου- και ονόματος αρχείου"
-
-msgctxt "#30019"
-msgid "Creating index"
-msgstr "Δημιουργείται ο δείκτης"
-
-msgctxt "#30020"
-msgid "Index created"
-msgstr "Ο δείκτης δημιουργήθηκε"
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -120,14 +108,6 @@ msgctxt "#30025"
 msgid "Additional"
 msgstr "Επιπρόσθετα"
 
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Για προχωρημένους"
-
-msgctxt "#30027"
-msgid "Update index"
-msgstr "Ενημέρωση δείκτη"
-
-msgctxt "#30028"
-msgid "Indexing is not supported with fanart"
-msgstr "Οι δείκτες δεν υποστηρίζονται για fanart"
+msgctxt "#30029"
+msgid "Display background picture"
+msgstr "Προβολή εικόνας παρασκηνίου"

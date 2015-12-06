@@ -103,7 +103,3 @@ msgstr "அடிப்படை"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "கூடுதலான"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "மேம்பட்ட"

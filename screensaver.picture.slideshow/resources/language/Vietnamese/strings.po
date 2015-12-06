@@ -103,7 +103,3 @@ msgstr "Cơ bản"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Thêm"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Nâng cao"

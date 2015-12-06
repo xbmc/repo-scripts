@@ -1,19 +1,19 @@
 import sys, os, re, urllib, hashlib
-import xbmc, xbmcvfs
+import xbmc, xbmcvfs, xbmcaddon
 
-__addon__    = sys.modules[ '__main__' ].__addon__
-__addonid__  = sys.modules[ '__main__' ].__addonid__
-__language__ = sys.modules[ '__main__' ].__language__
+ADDON    = sys.modules[ '__main__' ].ADDON
+ADDONID  = sys.modules[ '__main__' ].ADDONID
+LANGUAGE = sys.modules[ '__main__' ].LANGUAGE
 
 # supported image types by the screensaver
 IMAGE_TYPES = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.pcx', '.bmp', '.tga', '.ico', '.nef')
-CACHEFOLDER = xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode('utf-8')
+CACHEFOLDER = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8')
 CACHEFILE   = os.path.join(CACHEFOLDER, '%s')
 
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode('utf-8')
-    message = u'%s: %s' % (__addonid__, txt)
+    message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
 
 def checksum(path):

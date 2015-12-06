@@ -103,7 +103,3 @@ msgstr "Alap"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Hozzáadott"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Haladó"

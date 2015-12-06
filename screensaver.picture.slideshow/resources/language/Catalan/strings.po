@@ -95,7 +95,3 @@ msgstr "Bàsic"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Adicional"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Avançat"

@@ -84,21 +84,9 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "Apresentar imagens em ordem aleatória"
 
-msgctxt "#30017"
-msgid "Create image index"
-msgstr "Criar indexação de imagem"
-
 msgctxt "#30018"
 msgid "Use folder- and filename"
 msgstr "Usar pasta-e nome do arquivo"
-
-msgctxt "#30019"
-msgid "Creating index"
-msgstr "Criando indexação"
-
-msgctxt "#30020"
-msgid "Index created"
-msgstr "Indexação criada"
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -119,18 +107,6 @@ msgstr "Básico"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Adicional"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Avançado"
-
-msgctxt "#30027"
-msgid "Update index"
-msgstr "Atualizar indexação"
-
-msgctxt "#30028"
-msgid "Indexing is not supported with fanart"
-msgstr "Indexação não é suportada com fanart"
 
 msgctxt "#30029"
 msgid "Display background picture"

@@ -47,7 +47,3 @@ msgstr "معطلة"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "أساسي"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "مُتقدم"

@@ -103,7 +103,3 @@ msgstr "Simpel"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Yderligere"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Udvidet"

@@ -103,7 +103,3 @@ msgstr "Základné"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Dodatočné"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Pokročilé"

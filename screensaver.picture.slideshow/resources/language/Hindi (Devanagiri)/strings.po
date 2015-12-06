@@ -103,7 +103,3 @@ msgstr "बुनियादी"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "अतिरिक्त"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "उन्नत"

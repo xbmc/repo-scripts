@@ -103,7 +103,3 @@ msgstr "Basies"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "Addisioneel"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "Gevorderde"

@@ -35,7 +35,3 @@ msgstr "ปิดการใช้งาน"
 msgctxt "#30024"
 msgid "Basic"
 msgstr "เบื้องต้น"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "ขั้นสูง"

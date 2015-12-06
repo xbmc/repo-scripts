@@ -84,9 +84,13 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr ""
 
+#empty string with id 30017
+
 msgctxt "#30018"
 msgid "Use folder- and filename"
 msgstr ""
+
+#empty strings from id 30019 to 30020
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -107,6 +111,8 @@ msgstr ""
 msgctxt "#30025"
 msgid "Additional"
 msgstr ""
+
+#empty strings from id 30026 to 30028
 
 msgctxt "#30029"
 msgid "Display background picture"

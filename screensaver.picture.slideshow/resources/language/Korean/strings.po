@@ -84,21 +84,9 @@ msgctxt "#30016"
 msgid "Display images in random order"
 msgstr "무작위 순으로 이미지 표시"
 
-msgctxt "#30017"
-msgid "Create image index"
-msgstr "이미지 인덱스 생성"
-
 msgctxt "#30018"
 msgid "Use folder- and filename"
 msgstr "사용자 폴더 - 파일 이름"
-
-msgctxt "#30019"
-msgid "Creating index"
-msgstr "인덱스 생성"
-
-msgctxt "#30020"
-msgid "Index created"
-msgstr "인덱스 생성됨"
 
 msgctxt "#30021"
 msgid "Display picture date"
@@ -119,18 +107,6 @@ msgstr "기본"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "부가"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "고급"
-
-msgctxt "#30027"
-msgid "Update index"
-msgstr "인덱스 업데이트"
-
-msgctxt "#30028"
-msgid "Indexing is not supported with fanart"
-msgstr "팬아트에 인덱스는 지원하지 않음"
 
 msgctxt "#30029"
 msgid "Display background picture"

@@ -103,7 +103,3 @@ msgstr "基本"
 msgctxt "#30025"
 msgid "Additional"
 msgstr "額外的"
-
-msgctxt "#30026"
-msgid "Advanced"
-msgstr "進階"
