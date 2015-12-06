@@ -7,28 +7,28 @@ if sys.version_info < (2, 7):
 else:
     import json
 
-__addon__      = xbmcaddon.Addon()
-__addonname__  = __addon__.getAddonInfo('name')
-__addonid__    = __addon__.getAddonInfo('id')
-__cwd__        = __addon__.getAddonInfo('path').decode("utf-8")
-__version__    = __addon__.getAddonInfo('version')
-__language__   = __addon__.getLocalizedString
-__resource__   = xbmc.translatePath( os.path.join( __cwd__, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
+ADDON        = xbmcaddon.Addon()
+ADDONNAME    = ADDON.getAddonInfo('name')
+ADDONID      = ADDON.getAddonInfo('id')
+CWD          = ADDON.getAddonInfo('path').decode("utf-8")
+ADDONVERSION = ADDON.getAddonInfo('version')
+LANGUAGE     = ADDON.getLocalizedString
+RESOURCE     = xbmc.translatePath( os.path.join( CWD, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
 
-sys.path.append(__resource__)
+sys.path.append(RESOURCE)
 
 from utils import *
 
 APPID          = '85c6f759f3424557a309da1f875b23d6'
 BASE_URL       = 'http://api.openweathermap.org/data/2.5/%s'
-LATLON         = __addon__.getSetting('LatLon')
-WEEKEND        = __addon__.getSetting('Weekend')
-STATION        = __addon__.getSetting('Station')
-MAP            = __addon__.getSetting('Map')
+LATLON         = ADDON.getSetting('LatLon')
+WEEKEND        = ADDON.getSetting('Weekend')
+STATION        = ADDON.getSetting('Station')
+MAP            = ADDON.getSetting('Map')
 WEATHER_ICON   = xbmc.translatePath('%s.png').decode("utf-8")
 DATEFORMAT     = xbmc.getRegion('dateshort')
 TIMEFORMAT     = xbmc.getRegion('meridiem')
-LANGUAGE       = xbmc.getLanguage().lower()
+KODILANGUAGE   = xbmc.getLanguage().lower()
 MAXDAYS        = 6
 
 
@@ -54,12 +54,12 @@ def clear():
 def refresh_locations():
     locations = 0
     for count in range(1, 6):
-        loc_name = __addon__.getSetting('Location%s' % count)
+        loc_name = ADDON.getSetting('Location%s' % count)
         if loc_name != '':
             locations += 1
         else:
-            __addon__.setSetting('Location%sID' % count, '')
-            __addon__.setSetting('Location%sdeg' % count, '')
+            ADDON.setSetting('Location%sID' % count, '')
+            ADDON.setSetting('Location%sdeg' % count, '')
         set_property('Location%s' % count, loc_name)
     set_property('Locations', str(locations))
     log('available locations: %s' % str(locations))
@@ -173,7 +173,7 @@ def forecast(loc,locid,locationdeg):
             set_property('Map.%i.Heading' % count, '')
             set_property('Map.%i.Legend' % count, '')
     try:
-        lang = LANG[LANGUAGE]
+        lang = LANG[KODILANGUAGE]
         if lang == '':
             lang = 'en'
     except:
@@ -182,7 +182,7 @@ def forecast(loc,locid,locationdeg):
     if not locid.startswith('lat'):
         query = 'id=' + locid
     if STATION == 'true':
-        station_id = __addon__.getSetting('StationID')
+        station_id = ADDON.getSetting('StationID')
         station_string = 'station?id=%s&lang=%s&APPID=%s&units=metric' % (station_id, lang, APPID)
     current_string = 'weather?%s&lang=%s&APPID=%s&units=metric' % (query, lang, APPID)
     hourly_string = 'forecast?%s&lang=%s&APPID=%s&units=metric' % (query, lang, APPID)
@@ -293,10 +293,16 @@ def current_props(data,loc):
     weathercode = WEATHER_CODES[code]
     set_property('Current.Location'             , loc)
     set_property('Current.Condition'            , CAPITALIZE(data['weather'][0]['description']))
-    set_property('Current.Temperature'          , str(int(round(data['main']['temp']))))
+    if data['main'].has_key('temp'):
+        set_property('Current.Temperature'      , str(int(round(data['main']['temp']))))
+    else:
+        set_property('Current.Temperature'      , '')
     if data['wind'].has_key('speed'):
         set_property('Current.Wind'             , str(int(round(data['wind']['speed'] * 3.6))))
-        set_property('Current.FeelsLike'        , FEELS_LIKE(data['main']['temp'], data['wind']['speed'], False))
+        if data['main'].has_key('temp'):
+            set_property('Current.FeelsLike'    , FEELS_LIKE(data['main']['temp'], data['wind']['speed'], False))
+        else:
+            set_property('Current.FeelsLike'    , '')
     else:
         set_property('Current.Wind'             , '')
         set_property('Current.FeelsLike'        , '')
@@ -305,7 +311,10 @@ def current_props(data,loc):
     else:
         set_property('Current.WindDirection'    , '')
     set_property('Current.Humidity'             , str(data['main']['humidity']))
-    set_property('Current.DewPoint'             , DEW_POINT(data['main']['temp'], data['main']['humidity'], False))
+    if data['main'].has_key('temp'):
+        set_property('Current.DewPoint'         , DEW_POINT(data['main']['temp'], data['main']['humidity'], False))
+    else:
+        set_property('Current.DewPoint'         , '')
     set_property('Current.UVIndex'              , '') # not supported by openweathermap
     set_property('Current.OutlookIcon'          , '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
     set_property('Current.FanartCode'           , weathercode)
@@ -817,7 +826,7 @@ class MyMonitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)
 
-log('version %s started with argv: %s' % (__version__, sys.argv[1]))
+log('version %s started with argv: %s' % (ADDONVERSION, sys.argv[1]))
 
 MONITOR = MyMonitor()
 set_property('Forecast.IsFetched' , 'true')
@@ -828,8 +837,8 @@ set_property('Weekend.IsFetched'  , 'true')
 set_property('36Hour.IsFetched'   , 'true')
 set_property('Hourly.IsFetched'   , 'true')
 set_property('Alerts.IsFetched'   , '')
-set_property('WeatherProvider'    , __language__(32000))
-set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'banner.png')))
+set_property('WeatherProvider'    , LANGUAGE(32000))
+set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'banner.png')))
 
 if sys.argv[1].startswith('Location'):
     keyboard = xbmc.Keyboard('', xbmc.getLocalizedString(14024), False)
@@ -841,22 +850,22 @@ if sys.argv[1].startswith('Location'):
         if locations != []:
             selected = dialog.select(xbmc.getLocalizedString(396), locations)
             if selected != -1:
-                __addon__.setSetting(sys.argv[1], locations[selected].split(' - ')[0])
-                __addon__.setSetting(sys.argv[1] + 'ID', str(locationids[selected]))
-                __addon__.setSetting(sys.argv[1] + 'deg', str(locationdeg[selected]))
+                ADDON.setSetting(sys.argv[1], locations[selected].split(' - ')[0])
+                ADDON.setSetting(sys.argv[1] + 'ID', str(locationids[selected]))
+                ADDON.setSetting(sys.argv[1] + 'deg', str(locationdeg[selected]))
                 log('selected location: %s' % locations[selected])
                 log('selected location id: %s' % locationids[selected])
                 log('selected location lat/lon: %s' % locationdeg[selected])
         else:
-            dialog.ok(__addonname__, xbmc.getLocalizedString(284))
+            dialog.ok(ADDONNAME, xbmc.getLocalizedString(284))
 else:
-    location = __addon__.getSetting('Location%s' % sys.argv[1])
-    locationid = __addon__.getSetting('Location%sID' % sys.argv[1])
-    locationdeg = __addon__.getSetting('Location%sdeg' % sys.argv[1])
+    location = ADDON.getSetting('Location%s' % sys.argv[1])
+    locationid = ADDON.getSetting('Location%sID' % sys.argv[1])
+    locationdeg = ADDON.getSetting('Location%sdeg' % sys.argv[1])
     if (locationid == '') and (sys.argv[1] != '1'):
-        location = __addon__.getSetting('Location1')
-        locationid = __addon__.getSetting('Location1ID')
-        locationdeg = __addon__.getSetting('Location1deg')
+        location = ADDON.getSetting('Location1')
+        locationid = ADDON.getSetting('Location1ID')
+        locationdeg = ADDON.getSetting('Location1deg')
         log('trying location 1 instead')
     if not locationid == '':
         forecast(location, locationid, locationdeg)

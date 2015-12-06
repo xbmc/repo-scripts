@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="weather.openweathermap.extended" name="OpenWeatherMap Extended" version="3.1.1" provider-name="ronie">
+<addon id="weather.openweathermap.extended" name="OpenWeatherMap Extended" version="3.1.3" provider-name="ronie">
 	<requires>
-		<import addon="xbmc.python" version="2.20.0"/>
+		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
-		<import addon="script.openweathermap.maps" version="0.0.4"/>
-		<import addon="resource.images.weathericons.default" version="1.1.8"/>
+		<import addon="script.openweathermap.maps" version="1.0.0"/>
 	</requires>
 	<extension point="xbmc.python.weather" library="default.py"/>
 	<extension point="xbmc.addon.metadata">
@@ -43,6 +42,7 @@
 		<description lang="de">Wettervorhersage bereitgestellt durch OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="el">Η πρόγνωση καιρού παρέχεται από το OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="en">Weather forecast provided by OpenWeatherMap (http://openweathermap.org/)</description>
+		<description lang="en_NZ">Weather forecast provided by OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="en_US">Weather forecast provided by OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="es">Predicción meteorológica proporcionada por OpenWeatherMap (http://openweathermap.org/)</description>
 		<description lang="fi">Sääennusteen tarjoaa OpenWeatherMap (http://openweathermap.org/)</description>
@@ -69,8 +69,8 @@
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE Version 2</license>
-		<forum></forum>
-		<website>http://forum.kodi.tv/showthread.php?tid=207110</website>
+		<forum>http://forum.kodi.tv/showthread.php?tid=207110</forum>
+		<website></website>
 		<email></email>
 		<source>https://github.com/ronie/weather.openweathermap.extended/</source>
 	</extension>

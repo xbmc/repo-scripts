@@ -94,7 +94,7 @@ msgstr "четвъртък/петък"
 
 msgctxt "#32126"
 msgid "Use personal weather station"
-msgstr "Ползвай лична метеорологна станция"
+msgstr "Ползвай лична метеорологична станция"
 
 msgctxt "#32127"
 msgid "Station ID"

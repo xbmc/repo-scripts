@@ -16,6 +16,10 @@ msgstr ""
 "Language: is\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#32000"
+msgid "OpenWeatherMap"
+msgstr "OpenWeatherMap"
+
 msgctxt "#32101"
 msgid "Location setup"
 msgstr "Uppsetning á staðsetningu"
@@ -26,7 +30,7 @@ msgstr "Ítarlegt"
 
 msgctxt "#32103"
 msgid "Expert"
-msgstr "Ítarlegt"
+msgstr "Sérfræðingur"
 
 msgctxt "#32111"
 msgid "Location 1"
@@ -103,3 +107,7 @@ msgstr "Þysjun korts"
 msgctxt "#32129"
 msgid "Enable logging"
 msgstr "Virkja atburðaskráningu"
+
+msgctxt "#32130"
+msgid "Download weather maps"
+msgstr "Hlaða niður veðurkortum"

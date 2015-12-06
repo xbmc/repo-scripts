@@ -3,11 +3,11 @@
 import math
 import xbmc, xbmcgui, xbmcaddon
 
-__addon__      = xbmcaddon.Addon('weather.openweathermap.extended')
-__addonid__    = __addon__.getAddonInfo('id')
+ADDON      = xbmcaddon.Addon('weather.openweathermap.extended')
+ADDONID    = ADDON.getAddonInfo('id')
 
 WEATHER_WINDOW = xbmcgui.Window(12600)
-DEBUG          = __addon__.getSetting('Debug')
+DEBUG          = ADDON.getSetting('Debug')
 TEMPUNIT       = unicode(xbmc.getRegion('tempunit'),encoding='utf-8')
 SPEEDUNIT      = xbmc.getRegion('speedunit')
 
@@ -16,7 +16,7 @@ def log(txt):
     if DEBUG == 'true':
         if isinstance (txt,str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDONID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 def set_property(name, value):
