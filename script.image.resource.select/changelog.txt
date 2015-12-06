@@ -1,3 +1,6 @@
+v0.0.7
+- cosmetics
+
 v0.0.6
 - fix missing import in addon.xml
 

@@ -5,17 +5,17 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__        = xbmcaddon.Addon()
-__addonid__      = __addon__.getAddonInfo('id')
-__addonversion__ = __addon__.getAddonInfo('version')
-__cwd__          = __addon__.getAddonInfo('path').decode('utf-8')
+ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id')
+ADDONVERSION = ADDON.getAddonInfo('version')
+CWD          = ADDON.getAddonInfo('path').decode('utf-8')
 
 MULTI = ('resource.images.weatherfanart.multi', 'resource.images.weathericons.animated')
 
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode('utf-8')
-    message = u'%s: %s' % (__addonid__, txt)
+    message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message.encode('utf-8'), level=xbmc.LOGDEBUG)
 
 class Main:
@@ -52,7 +52,7 @@ class Main:
         return listitems
 
     def _select(self, addonlist, category, string):
-        w = Gui('DialogSelect.xml', __cwd__, listing=addonlist, category=category, string=string)
+        w = Gui('DialogSelect.xml', CWD, listing=addonlist, category=category, string=string)
         w.doModal()
         del w
 
@@ -106,6 +106,6 @@ class Gui(xbmcgui.WindowXMLDialog):
 
 
 if (__name__ == '__main__'):
-    log('script version %s started' % __addonversion__)
+    log('script version %s started' % ADDONVERSION)
     Main()
 log('script stopped')
