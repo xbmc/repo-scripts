@@ -1,3 +1,8 @@
+v0.3.14
+- Updated language files from Transifex
+- Cosmetics
+- Update version list
+
 v0.3.12 to 0.3.4
 - Update version list
 
