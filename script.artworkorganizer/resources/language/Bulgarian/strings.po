@@ -66,7 +66,7 @@ msgstr "Копирай банерите на сериала"
 
 msgctxt "#32014"
 msgid "Copy TV Show Posters"
-msgstr "Копирай постерите на сериала"
+msgstr "Копирай плакатите на сериала"
 
 msgctxt "#32015"
 msgid "Custom source"
@@ -94,7 +94,7 @@ msgstr "НЕ ПИПАЙТЕ, АКО НЕ ЗНАЕТЕ КАКВО ПРАВИТЕ"
 
 msgctxt "#32105"
 msgid "THIS CAN POTENTIALLY WIPE YOUR ENTIRE HARDDRIVE"
-msgstr "ТОВА НА ТЕОРИЯ МОЖЕ ДА ИЗТРИЕ ЦЕЛИЯ ВИ ТВЪРД ДИСК"
+msgstr "МОЖЕ ДА ИЗТРИЕ ЦЕЛИЯ ВИ ТВЪРД ДИСК"
 
 msgctxt "#32106"
 msgid "select which artwork should be copied"

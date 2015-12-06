@@ -18,47 +18,47 @@ msgstr ""
 
 msgctxt "#32001"
 msgid "Copy Movie Fanart"
-msgstr "Copie Films Fanart"
+msgstr "Copier le fanart de film"
 
 msgctxt "#32002"
 msgid "Copy TV Show Fanart"
-msgstr "Copie Séries TV Fanart"
+msgstr "Copier le fanart de série TV"
 
 msgctxt "#32003"
 msgid "Copy Music Video Fanart"
-msgstr "Copie Clips vidéo Fanart"
+msgstr "Copier le fanart de clips vidéo "
 
 msgctxt "#32004"
 msgid "Copy Artist Fanart"
-msgstr "Copie Artiste Fanart"
+msgstr "Copier le fanart d'artiste"
 
 msgctxt "#32005"
 msgid "Copy Movie Thumbs"
-msgstr "Copie Film Vignettes"
+msgstr "Copier les miniatures de film"
 
 msgctxt "#32007"
 msgid "Copy Season Thumbs"
-msgstr "Copie Saison Vignettes"
+msgstr "Copier les miniatures de saison"
 
 msgctxt "#32008"
 msgid "Copy Episode Thumbs"
-msgstr "Copie Épisode Vignettes"
+msgstr "Copier les miniatures d'épisode"
 
 msgctxt "#32009"
 msgid "Copy Music Video Thumbs"
-msgstr "Copie Clip vidéo Vignettes"
+msgstr "Copier les miniatures de clip vidéo"
 
 msgctxt "#32010"
 msgid "Copy Artist Thumbs"
-msgstr "Copie Artiste Vignettes"
+msgstr "Copier les miniatures d'artiste"
 
 msgctxt "#32011"
 msgid "Copy Album Thumbs"
-msgstr "Copie Album Vignettes"
+msgstr "Copier les miniatures d'album"
 
 msgctxt "#32012"
 msgid "Destination directory"
-msgstr "Répertoire de destination"
+msgstr "Dossier de destination"
 
 msgctxt "#32013"
 msgid "Copy TV Show Banners"
@@ -102,8 +102,8 @@ msgstr "sélectionner quelle illustration doit être copiée"
 
 msgctxt "#32107"
 msgid "search a custom folder for artwork"
-msgstr "chercher un répertoire personnalisé pour l'illustration"
+msgstr "chercher un dossier personnalisé pour l'illustration"
 
 msgctxt "#32108"
 msgid "select a custom folder where the addon should store the artwork"
-msgstr "sélectionner un répertoire personnalisé pour sauver les illustrations"
+msgstr "sélectionner un dossier personnalisé pour sauver les illustrations"

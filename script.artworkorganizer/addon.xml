@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.artworkorganizer" name="Artwork Organizer" version="3.0.4" provider-name="ronie">
+<addon id="script.artworkorganizer" name="Artwork Organizer" version="3.0.5" provider-name="ronie">
 	<requires>
-		<import addon="xbmc.python" version="2.12.0"/>
+		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py">
@@ -16,7 +16,7 @@
 		<summary lang="en">Copies your fanart and thumbs into a separate directories</summary>
 		<summary lang="en_US">Copies your fanart and thumbs into a separate directories</summary>
 		<summary lang="es">Copia tu Fanart y Miniaturas en carpetas independientes</summary>
-		<summary lang="fr">Copie de vos fanart et vignettes dans des répertoires distincts</summary>
+		<summary lang="fr">Copie les fanarts et miniatures dans des dossiers distincts</summary>
 		<summary lang="fr_CA">Copie vos fanarts et imagettes dans des répertoires distincts</summary>
 		<summary lang="gl">Copia o teu fanart e miniaturas en cartafoles separados</summary>
 		<summary lang="he">העתקת פאנארט ותמונות הממוזערות אל תיקיות נפרדות</summary>
@@ -43,7 +43,7 @@
 		<description lang="en_NZ">This script can be used to copy your movie, tvshow, artist and album fanart and thumbs into a separate directories.</description>
 		<description lang="en_US">This script can be used to copy your movie, tvshow, artist and album fanart and thumbs into a separate directories.</description>
 		<description lang="es">Este script te permite copiar tu fanart y miniaturas de películas, programas de tv e intérpretes en carpetas independientes.</description>
-		<description lang="fr">Ce script peut être utilisé pour copier vos film, séries tv, artiste et album fanart et vignettes dans des répertoires distincts.</description>
+		<description lang="fr">Ce script peut être utilisé pour copier les fanart et miniatures de films, séries TV, artistes et albums dans des dossiers distincts.</description>
 		<description lang="fr_CA">Ce script peut être utilisé pour copier les fanarts et imagettes de vos films, séries télé, artistes et albums dans des répertoires distincts.</description>
 		<description lang="gl">Este script pode usarse para copiar o fanart e as miniaturas do teu filme, serie, artista ou álbum en cartafoles separados.</description>
 		<description lang="he">סקריפט זה יכול לשמש להעתקת פאנארט ותמונות ממוזערות של סרט, סדרה, אמן ואלבום אל תיקיות נפרדות.</description>

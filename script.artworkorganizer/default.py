@@ -5,16 +5,16 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-__addon__ = xbmcaddon.Addon()
-__addonid__ = __addon__.getAddonInfo('id')
-__addonname__ = __addon__.getAddonInfo('name')
-__addonversion__ = __addon__.getAddonInfo('version')
-__language__ = __addon__.getLocalizedString
+ADDON = xbmcaddon.Addon()
+ADDONID = ADDON.getAddonInfo('id')
+ADDONNAME = ADDON.getAddonInfo('name')
+ADDONVERSION = ADDON.getAddonInfo('version')
+LANGUAGE = ADDON.getLocalizedString
 
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode("utf-8")
-    message = u'%s: %s' % (__addonid__, txt)
+    message = u'%s: %s' % (ADDONID, txt)
     xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 def clean_filename(filename):
@@ -33,24 +33,24 @@ class Main:
             self._copy_artwork()
 
     def _load_settings( self ):
-        self.moviefanart = __addon__.getSetting( "moviefanart" )
-        self.tvshowfanart = __addon__.getSetting( "tvshowfanart" )
-        self.musicvideofanart = __addon__.getSetting( "musicvideofanart" )
-        self.artistfanart = __addon__.getSetting( "artistfanart" )
-        self.moviethumbs = __addon__.getSetting( "moviethumbs" )
-        self.tvshowbanners = __addon__.getSetting( "tvshowbanners" )
-        self.tvshowposters = __addon__.getSetting( "tvshowposters" )
-        self.seasonthumbs = __addon__.getSetting( "seasonthumbs" )
-        self.episodethumbs = __addon__.getSetting( "episodethumbs" )
-        self.musicvideothumbs = __addon__.getSetting( "musicvideothumbs" )
-        self.artistthumbs = __addon__.getSetting( "artistthumbs" )
-        self.albumthumbs = __addon__.getSetting( "albumthumbs" )
-        self.source = __addon__.getSetting( "source" )
+        self.moviefanart = ADDON.getSetting( "moviefanart" )
+        self.tvshowfanart = ADDON.getSetting( "tvshowfanart" )
+        self.musicvideofanart = ADDON.getSetting( "musicvideofanart" )
+        self.artistfanart = ADDON.getSetting( "artistfanart" )
+        self.moviethumbs = ADDON.getSetting( "moviethumbs" )
+        self.tvshowbanners = ADDON.getSetting( "tvshowbanners" )
+        self.tvshowposters = ADDON.getSetting( "tvshowposters" )
+        self.seasonthumbs = ADDON.getSetting( "seasonthumbs" )
+        self.episodethumbs = ADDON.getSetting( "episodethumbs" )
+        self.musicvideothumbs = ADDON.getSetting( "musicvideothumbs" )
+        self.artistthumbs = ADDON.getSetting( "artistthumbs" )
+        self.albumthumbs = ADDON.getSetting( "albumthumbs" )
+        self.source = ADDON.getSetting( "source" )
         if self.source == 'true':
-            self.path = __addon__.getSetting( "path" ).decode("utf-8")
+            self.path = ADDON.getSetting( "path" ).decode("utf-8")
         else:
             self.path = ''
-        self.directory = __addon__.getSetting( "directory" ).decode("utf-8")
+        self.directory = ADDON.getSetting( "directory" ).decode("utf-8")
 
     def _init_variables( self ):
         self.moviefanartdir = 'MovieFanart'
@@ -68,7 +68,7 @@ class Main:
         self.directoriescreated = 'true'
         self.dialog = xbmcgui.DialogProgress()
         if self.directory == '':
-            self.directory = os.path.join( xbmc.translatePath( "special://profile/addon_data/" ).decode("utf-8"), __addonid__ )
+            self.directory = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')).decode('utf-8')
         if self.path != '':
             path = os.path.split( os.path.dirname( self.path ) )[1]
             self.directory = os.path.join( self.directory, path )
@@ -135,7 +135,7 @@ class Main:
                     log( 'failed to create directories' )
 
     def _copy_artwork( self ):
-        self.dialog.create( __addonname__ )
+        self.dialog.create( ADDONNAME )
         self.dialog.update(0)
         if not self.dialog.iscanceled():
             if self.moviefanart == 'true':
@@ -188,7 +188,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32001) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32001) + ': ' + str( count + 1 ) )
                 name = item['title']
                 year = str(item['year'])
                 artwork = item['fanart']
@@ -215,7 +215,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32002) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32002) + ': ' + str( count + 1 ) )
                 name = item['title']
                 artwork = item['fanart']
                 tmp_filename = name + '.jpg'
@@ -241,7 +241,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32003) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32003) + ': ' + str( count + 1 ) )
                 name = item['title']
                 artwork = item['fanart']
                 if item['artist']: # bug workaround, musicvideos can end up in the database without an artistname
@@ -271,7 +271,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32004) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32004) + ': ' + str( count + 1 ) )
                 name = item['label']
                 artwork = item['fanart']
                 tmp_filename = name + '.jpg'
@@ -297,7 +297,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32005) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32005) + ': ' + str( count + 1 ) )
                 name = item['title']
                 year = str(item['year'])
                 artwork = item['thumbnail']
@@ -324,7 +324,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32013) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32013) + ': ' + str( count + 1 ) )
                 name = item['title']
                 artwork = item['art'].get('banner')
                 tmp_filename = name + '.jpg'
@@ -350,7 +350,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32014) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32014) + ': ' + str( count + 1 ) )
                 name = item['title']
                 artwork = item['art'].get('poster')
                 tmp_filename = name + '.jpg'
@@ -388,7 +388,7 @@ class Main:
                             log('script cancelled')
                             return
                         processeditems = processeditems + 1
-                        self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32007) + ': ' + str( count + 1 ) )
+                        self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32007) + ': ' + str( count + 1 ) )
                         name = item['label']
                         tvshow = item['showtitle']
                         artwork = item['thumbnail']
@@ -415,7 +415,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32008) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32008) + ': ' + str( count + 1 ) )
                 name = item['title']
                 tvshow = item['showtitle']
                 artwork = item['thumbnail']
@@ -445,7 +445,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32009) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32009) + ': ' + str( count + 1 ) )
                 name = item['title']
                 artwork = item['thumbnail']
                 if item['artist']: # bug workaround, musicvideos can end up in the database without an artistname
@@ -475,7 +475,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32010) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32010) + ': ' + str( count + 1 ) )
                 name = item['label']
                 artwork = item['thumbnail']
                 tmp_filename = name + '.jpg'
@@ -501,7 +501,7 @@ class Main:
                     log('script cancelled')
                     return
                 processeditems = processeditems + 1
-                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), __language__(32011) + ': ' + str( count + 1 ) )
+                self.dialog.update( int( float( processeditems ) / float( totalitems ) * 100), LANGUAGE(32011) + ': ' + str( count + 1 ) )
                 name = item['title']
                 artist = item['artist'][0]
                 artwork = item['thumbnail']
@@ -516,6 +516,6 @@ class Main:
         log( 'albumthumbs copied: %s' % count )
 
 if ( __name__ == "__main__" ):
-    log('script version %s started' % __addonversion__)
+    log('script version %s started' % ADDONVERSION)
     Main()
 log('script stopped')
