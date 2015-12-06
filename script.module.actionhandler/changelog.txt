@@ -6,3 +6,7 @@
 
 - added README
 - fixed onFocus functionality
+
+1.0.2
+
+- fixed silly .gitignore error
