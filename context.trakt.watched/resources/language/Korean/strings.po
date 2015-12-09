@@ -1,7 +1,7 @@
 # Kodi Media Center language file
 # Addon Name: Trakt - Watched button
 # Addon id: context.trakt.watched
-# Addon Provider: razzeee
+# Addon Provider: Razzeee
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -17,5 +17,5 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgctxt "#32000"
-msgid "Trakt - Toggle Watched"
-msgstr "Trakt - 시청 여부 전환"
+msgid "Toggle watched on trakt"
+msgstr "Trakt에 시청/미시청 전환"
