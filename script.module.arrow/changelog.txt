@@ -1,0 +1,7 @@
+Version 0.6.0
+
+- arrow v0.6.0
+
+Version 0.5.4
+
+- arrow v0.5.4
