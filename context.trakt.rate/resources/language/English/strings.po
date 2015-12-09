@@ -1,7 +1,7 @@
 # Kodi Media Center language file
 # Addon Name: Trakt - Rating button
 # Addon id: context.trakt.rate
-# Addon Provider: razzeee
+# Addon Provider: Razzeee
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
