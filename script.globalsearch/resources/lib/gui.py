@@ -615,7 +615,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 if rating == '-1':
                     rating = ''
                 if rating != '':
-                    starrating = 'rating%.1d.png' % round(float(int(rating))/2)
+                    starrating = 'rating%.1d.png' % round(float(rating))
                 else:
                     starrating = 'rating0.png'
                 style = " / ".join(item['style'])
@@ -684,7 +684,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 track = str(item['track'])
                 playcount = str(item['playcount'])
                 rating = str(int(item['rating']))
-                starrating = 'rating%.1d.png' % int(rating)
+                starrating = 'rating%.1d.png' % round(float(rating))
                 year = str(item['year'])
                 listitem = xbmcgui.ListItem(label=song, iconImage='DefaultAlbumCover.png', thumbnailImage=thumb)
                 listitem.setProperty( "icon", thumb )
