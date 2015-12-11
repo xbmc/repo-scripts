@@ -291,7 +291,8 @@ def current_props(data,loc):
     weathercode = WEATHER_CODES[code]
     set_property('Current.Location'             , loc)
     set_property('Current.Condition'            , CAPITALIZE(data['weather'][0]['description']))
-    set_property('Current.Temperature'          , str(int(round(data['main']['temp']))))
+    if data['main'].has_key('temp'):
+        set_property('Current.Temperature'      , str(int(round(data['main']['temp']))))
     if data['wind'].has_key('speed'):
         set_property('Current.Wind'             , str(int(round(data['wind']['speed'] * 3.6))))
         set_property('Current.FeelsLike'        , FEELS_LIKE(data['main']['temp'], data['wind']['speed'], False))
@@ -303,7 +304,8 @@ def current_props(data,loc):
     else:
         set_property('Current.WindDirection'    , '')
     set_property('Current.Humidity'             , str(data['main']['humidity']))
-    set_property('Current.DewPoint'             , DEW_POINT(data['main']['temp'], data['main']['humidity'], False))
+    if data['main'].has_key('temp'):
+        set_property('Current.DewPoint'         , DEW_POINT(data['main']['temp'], data['main']['humidity'], False))
     set_property('Current.UVIndex'              , '') # not supported by openweathermap
     set_property('Current.OutlookIcon'          , '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
     set_property('Current.FanartCode'           , weathercode)

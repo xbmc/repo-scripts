@@ -1,3 +1,6 @@
+v2.0.6
+- fix crash when temp is not available
+
 v2.0.5
 - personal weather station fixes
 - fix potential crash on missing keys in api response
