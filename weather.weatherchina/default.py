@@ -18,10 +18,8 @@
 
 import os, sys, urllib2, socket, re
 import xbmcgui, xbmcaddon
-if sys.version_info < (2, 7):
-    import simplejson
-else:
-    import json as simplejson
+import datetime
+import simplejson
 
 __addon__      = xbmcaddon.Addon()
 __addonname__  = __addon__.getAddonInfo('name')
@@ -47,15 +45,6 @@ WIND_SPEED = { "0" : "0",
                "10" : "95.5",
                "11" : "110",
                "12" : "120"}
-
-# Array for translate week to number
-DAYS = { "星期一": 1,
-         "星期二": 2,
-         "星期三": 3,
-         "星期四": 4,
-         "星期五": 5,
-         "星期六": 6,
-         "星期日": 7}
 
 # Array for translate OutlookIcon index
 WEATHER_CODES = { '0' : '32',
@@ -92,11 +81,17 @@ WEATHER_CODES = { '0' : '32',
                   '31' : '23',
                   '99' : 'na'}
 
+# reserved API urls
+# http://wthrcdn.etouch.cn/WeatherApi?citykey=%s
+# http://weatherapi.market.xiaomi.com/wtr-v2/weather?cityId=%s
+
+# API urls
 GEOIP_URL       = 'http://61.4.185.48:81/g/'
 LOCATION_URL    = 'http://m.weather.com.cn/data5/city%s.xml'
-WEATHER_URL     = 'http://www.weather.com.cn/data/ks/%s.html'
-WEATHER_DAY_URL = 'http://m.weather.com.cn/atad/%s.html'
+WEATHER_URL     = 'http://weather.51wnl.com/weatherinfo/GetMoreWeather?cityCode=%s&weatherType=1'
+WEATHER_DAY_URL = 'http://weather.51wnl.com/weatherinfo/GetMoreWeather?cityCode=%s&weatherType=0'
 WEATHER_HOURLY_URL = 'http://flash.weather.com.cn/sk2/%s.xml'
+
 WEATHER_WINDOW  = xbmcgui.Window(12600)
 
 socket.setdefaulttimeout(10)
@@ -215,7 +210,7 @@ def clear():
 
 def properties1(query):
     set_property('Current.Temperature'   , query['weatherinfo']['temp'].encode('utf-8'))
-    set_property('Current.Wind'          , WIND_SPEED[query['weatherinfo']['WSE'].encode('utf-8')])
+    set_property('Current.Wind'          , WIND_SPEED[str(query['weatherinfo']['WSE'])])
     set_property('Current.WindDirection' , query['weatherinfo']['WD'].encode('utf-8'))
     set_property('Current.Humidity'      , query['weatherinfo']['SD'].rstrip('%'))
     set_property('Current.FeelsLike'     , query['weatherinfo']['temp'].encode('utf-8'))
@@ -228,9 +223,9 @@ def properties2(query):
     set_property('Current.DewPoint'      , '0')
     set_property('Current.OutlookIcon'   , '%s.png' % weathercode)
     set_property('Current.FanartCode'    , weathercode)
-    week = DAYS[query['weatherinfo']['week'].encode('utf-8')]
+    week = datetime.datetime.now().weekday() + 1
     for count in range(6):
-        img = query['weatherinfo']['img%i' % (count * 2 + 1)].encode('utf-8')
+        img = query['weatherinfo']['img%i' % (count * 2 + 2)].encode('utf-8')
         weathercode = WEATHER_CODES[img]
         day = week + count
         if day > 7: day -= 7
