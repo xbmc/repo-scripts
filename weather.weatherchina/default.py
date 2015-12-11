@@ -86,13 +86,15 @@ WEATHER_CODES = { '0' : '32',
 # http://weatherapi.market.xiaomi.com/wtr-v2/weather?cityId=%s
 
 # API urls
-GEOIP_URL       = 'http://61.4.185.48:81/g/'
+GEOIP_URL       = 'http://wgeo.weather.com.cn/ip/'
 LOCATION_URL    = 'http://m.weather.com.cn/data5/city%s.xml'
 WEATHER_URL     = 'http://weather.51wnl.com/weatherinfo/GetMoreWeather?cityCode=%s&weatherType=1'
 WEATHER_DAY_URL = 'http://weather.51wnl.com/weatherinfo/GetMoreWeather?cityCode=%s&weatherType=0'
 WEATHER_HOURLY_URL = 'http://flash.weather.com.cn/sk2/%s.xml'
 
 WEATHER_WINDOW  = xbmcgui.Window(12600)
+
+UserAgent = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
 
 socket.setdefaulttimeout(10)
 
@@ -157,9 +159,13 @@ def location(string):
 
 def geoip():
     try:
-        req = urllib2.urlopen(GEOIP_URL)
-        ret_string = req.read()
-        req.close()
+        req = urllib2.Request(GEOIP_URL)
+        req.add_header('User-Agent', UserAgent)
+        req.add_header('Accept-Encoding', 'gzip,deflate,sdch')
+        req.add_header('Referer', 'http://www.weather.com.cn/weather1d/101110101.shtml')
+        response = urllib2.urlopen(req)
+        ret_string = response.read()
+        response.close()
         log('geoip data: %s' % ret_string)
     except:
         ret_string = ''

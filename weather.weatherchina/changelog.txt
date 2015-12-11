@@ -1,3 +1,6 @@
+v1.0.3
+- url for api to get citycode with ip changed
+
 v1.0.2
 - api url changed
 
