@@ -29,6 +29,20 @@ class Main:
         while self.daemon and not xbmc.abortRequested:
             self.image_now = xbmc.getInfoLabel("Player.Art(thumb)")
             self.image_now_fa = xbmc.getInfoLabel("MusicPlayer.Property(Fanart_Image)")
+            self.image_now_cfa = xbmc.getInfoLabel("ListItem.Art(fanart)")
+            if not HOME.getProperty("cfa_ignore_set") and self.image_now_cfa != self.image_prev_cfa:
+                self.image_prev_cfa = self.image_now_cfa
+                HOME.setProperty(self.prefix + 'ImageUpdating', '0')
+                image, imagecolor = Filter_Image(self.image_now_cfa, self.radius)
+                HOME.setProperty(self.prefix + 'ImageFiltercfa1', image)
+                HOME.setProperty(self.prefix + "ImageColorcfa1", imagecolor)
+                image = Filter_Pixelate(self.image_now_cfa, self.pixels)
+                HOME.setProperty(self.prefix + 'ImageFiltercfa2', image)
+                HOME.setProperty(self.prefix + "ImageColorcfa2", Random_Color())
+                image = Filter_Posterize(self.image_now_cfa, self.bits)
+                HOME.setProperty(self.prefix + 'ImageFiltercfa3', image)
+                HOME.setProperty(self.prefix + "ImageColorcfa3", Random_Color())
+                HOME.setProperty(self.prefix + 'ImageUpdating', '1')
             if self.image_now != self.image_prev:
                 self.image_prev = self.image_now
                 image, imagecolor = Filter_Image(self.image_now, self.radius)
@@ -52,7 +66,7 @@ class Main:
                 HOME.setProperty(self.prefix + 'ImageFilterfa3', image)
                 HOME.setProperty(self.prefix + "ImageColorfa3", Random_Color())
             else:
-                xbmc.sleep(300)
+                xbmc.sleep(200)
 
     def _StartInfoActions(self):
         for info in self.infos:
@@ -104,13 +118,16 @@ class Main:
         self.radius = 5
         self.bits = 2
         self.pixels = 20
+        self.container = 518
         self.black = "#000000"
         self.white = "#FFFFFF"
         self.daemon = False
         self.image_now = ""
         self.image_now_fa = ""
+        self.image_now_cfa = ""
         self.image_prev = ""
         self.image_prev_fa = ""
+        self.image_prev_cfa = ""
         self.autoclose = ""
 
     def _parse_argv(self):
@@ -142,6 +159,8 @@ class Main:
                 self.black = RemoveQuotes(arg[6:])
             elif arg.startswith('white='):
                 self.white = RemoveQuotes(arg[6:])
+            elif arg.startswith('container='):
+                self.container = RemoveQuotes(arg[10:])
 
 class ToolBoxMonitor(xbmc.Monitor):
 

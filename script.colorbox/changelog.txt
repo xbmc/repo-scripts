@@ -1,3 +1,7 @@
+v1.0.5
+- daemon current item fanart
+v1.0.4
+- daemon music player fanart added
 v1.0.3
 - daemon added
 v1.0.2
