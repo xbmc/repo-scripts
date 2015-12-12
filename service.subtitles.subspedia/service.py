@@ -138,7 +138,7 @@ def Search(item):
         log('Subspedia only works with italian subs. Skipped')
 
 def checkexp(tvshow):
-    exp=[["Marvel's Agents of S.H.I.E.L.D.",5],["Marvel's Daredevil",246]]
+    exp=[["Marvel's Agents of S.H.I.E.L.D.",5],["Marvel's Daredevil",246],["Marvel's Jessica Jones",333]]
     for expl in exp:
         if tvshow == expl[0]:
             return expl[1]
