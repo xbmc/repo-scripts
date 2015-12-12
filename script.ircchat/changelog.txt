@@ -1,0 +1,3 @@
+Version 1.0.1
+fix addon.xml forum and wiki links
+change the author seperator for the addon.xml scraper

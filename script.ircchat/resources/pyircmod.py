@@ -193,7 +193,10 @@ class Irclib:
               "ERR_ERRONEUSNICKNAME" or returnmsg['responsetype'] == "ERR_NICKCOLLISION"):
             return returnmsg['responsetype']
           elif returnmsg['event'] == "NOTICE":
-            pass
+            # mod for twitch irc
+            if 'Login unsuccessful' in returnmsg['text']:
+                return returnmsg['text']
+            pass            
           elif returnmsg['responsetype'] == "RPL_WELCOME":
             while 1:
               returnmsg = self.getmessage()

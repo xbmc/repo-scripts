@@ -99,8 +99,7 @@
 				<onright>1242</onright>
 				<ondown>60</ondown>
 				<onclick>Skin.ToggleSetting(ColorMenu)</onclick>
-				<onclick condition="!Skin.HasSetting(ColorMenu)">SetFocus(60)</onclick>
-				<onclick condition="Skin.HasSetting(ColorMenu)">SetFocus(1260)</onclick>
+				<onclick condition="!Skin.HasSetting(ColorMenu)">SetFocus(1260)</onclick>
 				<align>center</align>
 				<aligny>top</aligny>
 				<font>font14</font>
@@ -262,9 +261,9 @@
 				<onclick condition="Stringcompare(Skin.String(ChatMenuColorString),blue)">Skin.SetString(ChatMenuColorString,forestgreen)</onclick>
 				<onclick condition="Stringcompare(Skin.String(ChatMenuColorString),darkorchid)">Skin.SetString(ChatMenuColorString,blue)</onclick>
 				<ondown>60</ondown>
-				<ondown>Skin.ToggleSetting(ColorMenu)</ondown>
+				<ondown condition="Skin.HasSetting(ColorMenu)">Skin.ToggleSetting(ColorMenu)</ondown>
 				<onup>1240</onup>
-				<onup>Skin.ToggleSetting(ColorMenu)</onup>
+				<onup condition="Skin.HasSetting(ColorMenu)">Skin.ToggleSetting(ColorMenu)</onup>
 				<animation effect="fade" start="100" end="0" time="200" condition="!Skin.HasSetting(ColorMenu)">Conditional</animation>
 				<animation effect="fade" start="0" end="100" time="200" condition="Skin.HasSetting(ColorMenu)">Conditional</animation>
 			</control>			
@@ -292,9 +291,9 @@
 				<onclick condition="Stringcompare(Skin.String(ChatMenuColorString),darkorchid)">Skin.SetString(ChatMenuColorString,gray)</onclick>
 				<onclick condition="Stringcompare(Skin.String(ChatMenuColorString),blue)">Skin.SetString(ChatMenuColorString,darkorchid)</onclick>
 				<ondown>60</ondown>
-				<ondown>Skin.ToggleSetting(ColorMenu)</ondown>
+				<ondown condition="Skin.HasSetting(ColorMenu)">Skin.ToggleSetting(ColorMenu)</ondown>
 				<onup>1240</onup>
-				<onup>Skin.ToggleSetting(ColorMenu)</onup>
+				<onup condition="Skin.HasSetting(ColorMenu)">Skin.ToggleSetting(ColorMenu)</onup>
 				<animation effect="fade" start="100" end="0" time="200" condition="!Skin.HasSetting(ColorMenu)">Conditional</animation>
 				<animation effect="fade" start="0" end="100" time="200" condition="Skin.HasSetting(ColorMenu)">Conditional</animation>
 				
@@ -403,7 +402,7 @@
 				<onup>1300</onup>
 				<ondown>1300</ondown>
 				<pagecontrol>60</pagecontrol>
-				<scrolltime tween="cubic" easing="inout">325</scrolltime>
+				<scrolltime tween="cubic" easing="out">600</scrolltime>
 				<orientation>vertical</orientation>
 									
 				<itemlayout height="25" width="350">

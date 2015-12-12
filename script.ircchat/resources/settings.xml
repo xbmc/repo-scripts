@@ -8,5 +8,4 @@
   <setting id="hostname" type="text" label="32012" default="Unknown" />
   <setting id="servername" type="text" label="32013" default="Server" />
   <setting id="port" type="text" label="32014" default="6667"/>
-  <setting id="debug" type="bool" label="32027" default="false" />
 </settings>
