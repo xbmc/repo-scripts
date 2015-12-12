@@ -1,3 +1,6 @@
+v2.0.7
+- fix another crash when temp is not available
+
 v2.0.6
 - fix crash when temp is not available
 

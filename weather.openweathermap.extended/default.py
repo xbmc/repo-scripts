@@ -295,7 +295,10 @@ def current_props(data,loc):
         set_property('Current.Temperature'      , str(int(round(data['main']['temp']))))
     if data['wind'].has_key('speed'):
         set_property('Current.Wind'             , str(int(round(data['wind']['speed'] * 3.6))))
-        set_property('Current.FeelsLike'        , FEELS_LIKE(data['main']['temp'], data['wind']['speed'], False))
+        if data['main'].has_key('temp'):
+            set_property('Current.FeelsLike'    , FEELS_LIKE(data['main']['temp'], data['wind']['speed'], False))
+        else:
+            set_property('Current.FeelsLike'    , '')
     else:
         set_property('Current.Wind'             , '')
         set_property('Current.FeelsLike'        , '')
