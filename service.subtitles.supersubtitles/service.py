@@ -67,7 +67,11 @@ RELEASERS = [
     'LOL',
     'REMARKABLE',
     'ORENJI',
-    'TLA'
+    'TLA',
+
+    '0SEC',
+    'FLEET',
+    'KILLERS'
 ]
 
 HEADERS = {'User-Agent': 'xbmc subtitle plugin'}
@@ -294,7 +298,7 @@ def search_subtitles_for_show(item, showid):
     return searchlist
 
 
-def search_subtitles(item):
+def search_subtitles(item, recursive=True):
     if not item['season'] and not item['episode']:
         debuglog("No season or episode info found for %s" % item['tvshow'])
         return None
@@ -302,13 +306,22 @@ def search_subtitles(item):
     showids = get_showids(item)
     if not showids:
         debuglog("No ids found for %s" % item['tvshow'])
-        return None
+        if recursive and normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle")):
+            debuglog("Second try: search by filename")
+            return search_subtitles(setup_tvshow_data(item, False), False)
+        else:
+            return None
 
-    searchlist = []
+    searchdict = {}
     for showid in showids:
         subtitles = search_subtitles_for_show(item, showid)
         if subtitles:
-            searchlist.extend(subtitles)
+            avg = sum(x['score'] for x in subtitles) / float(len(subtitles))
+            searchdict[(avg, showid)] = subtitles
+
+    searchlist = []
+    for key in sorted(searchdict, reverse=True):
+        searchlist.extend(searchdict[key])
 
     return searchlist
 
@@ -379,9 +392,9 @@ def download_file(item):
 
 
 def is_match(item, filename):
-    pattern = r'^.*?S?(?P<season>\d+)([x_-]|\.)*E?(?P<episode>\d+).*$'
-    match = re.search(pattern, filename, re.I)
-    if match:
+    pattern = r'S?(?P<season>\d+)([x_-]|\.)*E?(?P<episode>\d+)'
+    regexp = re.compile(pattern,  re.IGNORECASE)
+    for match in regexp.finditer(filename):
         season = int(item['season'])
         episode = int(item['episode'])
         fs = int(match.group('season'))
@@ -425,6 +438,7 @@ def download(item):
         subtitle = downloaded
 
     if subtitle:
+        debuglog("Downloaded subtitle: %s" % subtitle)
         listitem = xbmcgui.ListItem(label=subtitle)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=subtitle, listitem=listitem, isFolder=False)
         #notification(32501)
@@ -457,9 +471,9 @@ def clean_title(item):
     return None if title_match else infos
 
 
-def setup_tvshow_data(item):
+def setup_tvshow_data(item, tryVideoPlayer=True):
     tvshow = normalize_string(xbmc.getInfoLabel("VideoPlayer.TVshowtitle"))
-    if tvshow:
+    if tryVideoPlayer and tvshow:
         item['tvshow'] = tvshow
         item['season'] = str(xbmc.getInfoLabel("VideoPlayer.Season"))
         item['episode'] = str(xbmc.getInfoLabel("VideoPlayer.Episode"))

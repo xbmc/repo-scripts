@@ -1,3 +1,9 @@
+0.0.21
+- update icon and logo
+- order shows by avg score
+- fallback to filename if no sub found by VideoPlayer info
+- improve search in unpacked archives
+
 0.0.20
 - fix language name conversion
 
