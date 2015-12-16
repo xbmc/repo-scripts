@@ -12,7 +12,7 @@ class Main:
         
         #get params
         params = urlparse.parse_qs(sys.argv[2][1:].decode("utf-8"))
-        logMsg("Parameter string: %s" % sys.argv[2])
+        logMsg("Parameter string: %s" % sys.argv[2],0)
         
         if params:        
             path=params.get("path",None)
@@ -33,10 +33,25 @@ class Main:
             if browse: optionalParam = browse[0]
             reversed=params.get("reversed","")
             if reversed: optionalParam = reversed[0]
+            name=params.get("name","")
+            if name: optionalParam = name[0]
         
             if action:
                 if action == "LAUNCHPVR":
                     xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Player.Open", "params": { "item": {"channelid": %d} } }' %int(path))
+                    xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
+                if action == "PLAYRECORDING":
+                    #retrieve the recording and play as listitem to get resume working
+                    json_result = getJSON('PVR.GetRecordingDetails', '{"recordingid": %d, "properties": [ %s ]}' %(int(path),fields_pvrrecordings))
+                    if json_result:
+                        xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "recordingid": %d } }, "id": 1 }' % int(path))
+                        if json_result["resume"].get("position"):
+                            for i in range(25):
+                                if xbmc.getCondVisibility("Player.HasVideo"):
+                                    break
+                                xbmc.sleep(250)
+                            xbmc.Player().seekTime(json_result["resume"].get("position"))
+
                     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
                 elif action == "LAUNCH":
                     path = sys.argv[2].split("&path=")[1]
@@ -66,9 +81,11 @@ class Main:
                     if tvshow: tvshow = tvshow[0]
                     movieset=params.get("movieset",None)
                     if movieset: movieset = movieset[0]
+                    episode=params.get("episode",None)
+                    if episode: episode = episode[0]
                     downloadthumbs=params.get("downloadthumbs",False)
                     if downloadthumbs: downloadthumbs = downloadthumbs[0]=="true"
-                    getCast(movie,tvshow,movieset,downloadthumbs)
+                    getCast(movie,tvshow,movieset,episode,downloadthumbs)
                 else:
                     #get a widget listing
                     getPluginListing(action,limit,refresh,optionalParam)

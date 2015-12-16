@@ -1,3 +1,12 @@
+v.1.0.23
+- ADD additional tmdb budget/revenuw window properties
+- FIX music widgets sort order
+- FIX issues with cast plugin listings
+- FIX auto refresh smartshortcuts set as widgets
+- ADD skinsettings dialog
+- ADD custom info dialog to be used with widgets
+- several minor fixes
+
 v.1.0.19
 - fix some minor issues with widgets
 - fix unicode issue in colorthemes feature

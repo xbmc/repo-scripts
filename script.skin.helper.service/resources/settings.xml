@@ -5,7 +5,7 @@
         <setting id="enablePVRThumbsRecordingsOnly" type="bool" label="32155" default="false" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>
         <setting id="useTMDBLookups" type="bool" label="32094" default="true" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>
         <setting id="useFanArtTv" type="bool" label="32095" default="true" enable="eq(-1,true)" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>
-        <setting id="useGoogleLookups" type="bool" label="32096" default="true" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>
+        <setting id="useGoogleLookups" type="bool" label="32096" default="false" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>
         <setting id="useYoutubeLookups" type="bool" label="32097" default="false" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>
         <setting id="useLocalLibraryLookups" type="bool" label="32098" default="true" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>
         <setting label="32099" type="folder" id="customlookuppath" source="auto" visible="Skin.HasSetting(SkinHelper.EnablePVRThumbs)"/>

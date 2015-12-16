@@ -1,4 +1,3 @@
-from xml.dom.minidom import parse
 from Utils import *
 
       
@@ -253,6 +252,92 @@ def selectView(contenttype="other", currentView=None, displayNone=False, display
         id = allViews[selectedItem].getProperty("id")
         return id
 
+def setSkinShortCutsProperty(setting="",windowHeader="",propertyName=""):
+    curValue = xbmc.getInfoLabel("$INFO[Container(211).ListItem.Property(%s)]" %propertyName)
+    if not curValue: curValue = "None"
+    if setting:
+        (value, label) = setSkinSetting(setting, windowHeader, None, curValue)
+    else:
+        value = xbmcgui.Dialog().input(windowHeader, curValue, type=xbmcgui.INPUT_ALPHANUM)
+    if value:
+        xbmc.executebuiltin("SetProperty(customProperty,%s)" %propertyName.encode("utf-8"))
+        xbmc.executebuiltin("SetProperty(customValue,%s)" %value.encode("utf-8"))
+        xbmc.executebuiltin("SendClick(404)")
+        if setting:
+            xbmc.sleep(250)
+            xbmc.executebuiltin("SetProperty(customProperty,%s.name)" %propertyName.encode("utf-8"))
+            xbmc.executebuiltin("SetProperty(customValue,%s)" %label.encode("utf-8"))
+            xbmc.executebuiltin("SendClick(404)")
+        
+def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
+    import Dialogs as dialogs
+    curValue = xbmc.getInfoLabel("Skin.String(%s)" %setting).decode("utf-8")
+    if valueOnly: curValue = valueOnly
+    curValueLabel = xbmc.getInfoLabel("Skin.String(%s.label)" %setting).decode("utf-8")
+    useRichLayout = False
+    selectId = 0
+    itemcount = 0
+    
+    allValues = []        
+    settings_file = xbmc.translatePath( 'special://skin/extras/skinsettings.xml' ).decode("utf-8")
+    if xbmcvfs.exists( settings_file ):
+        doc = parse( settings_file )
+        listing = doc.documentElement.getElementsByTagName( 'setting' )
+        if sublevel:
+            listitem = xbmcgui.ListItem(label="..", iconImage="DefaultFolderBack.png")
+            listitem.setProperty("icon","DefaultFolderBack.png")
+            listitem.setProperty("value","||BACK||")
+            allValues.append(listitem)
+        for count, item in enumerate(listing):
+            id = item.attributes[ 'id' ].nodeValue
+            label = xbmc.getInfoLabel(item.attributes[ 'label' ].nodeValue).decode("utf-8")
+            if (not sublevel and id.lower() == setting.lower()) or (sublevel and sublevel.lower() == id.lower()):
+                value = item.attributes[ 'value' ].nodeValue
+                condition = item.attributes[ 'condition' ].nodeValue
+                icon = item.attributes[ 'icon' ].nodeValue
+                description = "[B]%s[/B][CR]" %label
+                description += item.attributes[ 'description' ].nodeValue
+                description = xbmc.getInfoLabel(description.encode("utf-8"))
+                if condition and not xbmc.getCondVisibility(condition): continue
+                if icon: useRichLayout = True
+                if icon and icon.startswith("$"): icon = xbmc.getInfoLabel(icon)
+                if curValue and (curValue.lower() == value.lower() or label.lower() == curValueLabel.lower()): selectId = itemcount
+                listitem = xbmcgui.ListItem(label=label, iconImage=icon)
+                listitem.setProperty("value",value)
+                listitem.setProperty("icon",icon)
+                listitem.setProperty("description",description)
+                listitem.setLabel2(description)
+                allValues.append(listitem)
+                itemcount +=1
+        if useRichLayout:
+            w = dialogs.DialogSelectBig( "DialogSelect.xml", ADDON_PATH, listing=allValues, windowtitle=windowHeader,multiselect=False )
+        else:
+            w = dialogs.DialogSelectSmall( "DialogSelect.xml", ADDON_PATH, listing=allValues, windowtitle=windowHeader,multiselect=False )
+        if selectId > 0 and sublevel: selectId += 1
+        w.autoFocusId = selectId
+        w.doModal()
+        selectedItem = w.result
+        del w
+        if selectedItem != -1:
+            value = allValues[selectedItem].getProperty("value")
+            label = allValues[selectedItem].getLabel()
+            description = allValues[selectedItem].getProperty("description")
+            if value.startswith("||SUBLEVEL||"):
+                sublevel = value.replace("||SUBLEVEL||","")
+                setSkinSetting(setting, windowHeader, sublevel)
+            elif value == "||BACK||":
+                setSkinSetting(setting, windowHeader)
+            else:
+                if value == "||BROWSEIMAGE||":
+                    value = xbmcgui.Dialog().browse( 2 , label, 'files')
+                if value:
+                    if valueOnly: 
+                        return (value,label)
+                    else:
+                        xbmc.executebuiltin("Skin.SetString(%s,%s)" %(setting.encode("utf-8"),value.encode("utf-8")))
+                        xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(setting.encode("utf-8"),label.encode("utf-8")))
+
+                    
 def toggleKodiSetting(settingname):
     #toggle kodi setting
     curValue = xbmc.getCondVisibility("system.getbool(%s)"%settingname)

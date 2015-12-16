@@ -37,7 +37,7 @@ class ListItemMonitor(threading.Thread):
     musicArtCache = {}
     streamdetailsCache = {}
     pvrArtCache = {}
-    rottenCache = {}
+    extendedinfocache = {}
     cachePath = os.path.join(ADDON_DATA_PATH,"librarycache.json")
     ActorImagesCachePath = os.path.join(ADDON_DATA_PATH,"actorimages.json")
     
@@ -156,7 +156,7 @@ class ListItemMonitor(threading.Thread):
                                 self.setMovieSetDetails()
                                 self.setAddonName()
                                 self.setStreamDetails()
-                                self.setRottenRatings()
+                                self.setExtendedMovieInfo()
                             except Exception as e:
                                 logMsg("ERROR in LibraryMonitor ! --> " + str(e), 0)
                         
@@ -183,7 +183,7 @@ class ListItemMonitor(threading.Thread):
                         self.setDirector(xbmc.getInfoLabel("Container(999).ListItem.Director").decode('utf-8'))
                         self.setGenre(xbmc.getInfoLabel("Container(999).ListItem.Genre").decode('utf-8'))
                         self.setStreamDetails(xbmc.getInfoLabel("Container(999).ListItem.Property(dbid)"),xbmc.getInfoLabel("Container(999).ListItem.Property(contenttype)"))
-                        self.setRottenRatings(xbmc.getInfoLabel("Container(999).ListItem.Property(imdbnumber)"),xbmc.getInfoLabel("Container(999).ListItem.Property(contenttype)"))
+                        self.setExtendedMovieInfo(xbmc.getInfoLabel("Container(999).ListItem.Property(imdbnumber)"),xbmc.getInfoLabel("Container(999).ListItem.Property(contenttype)"))
                         #for tv show items, trigger nextaired addon
                         nextaired = False
                         if xbmc.getInfoLabel("Container(999).ListItem.TvShowTitle") and xbmc.getCondVisibility("System.HasAddon(script.tv.show.next.aired)"):
@@ -295,7 +295,7 @@ class ListItemMonitor(threading.Thread):
         libraryCache = {}
         libraryCache["SetsCache"] = self.moviesetCache
         libraryCache["streamdetailsCache"] = self.streamdetailsCache
-        libraryCache["rottenCache"] = self.rottenCache
+        libraryCache["extendedinfocache"] = self.extendedinfocache
         widgetcache = WINDOW.getProperty("skinhelper-widgetcontenttype").decode("utf-8")
         if widgetcache: libraryCache["widgetcache"] = eval(widgetcache)
         saveDataToCacheFile(self.cachePath,libraryCache)
@@ -310,8 +310,8 @@ class ListItemMonitor(threading.Thread):
             self.moviesetCache = data["SetsCache"]
         if data.has_key("streamdetailsCache"):
             self.streamdetailsCache = data["streamdetailsCache"]
-        if data.has_key("rottenCache"):
-            self.rottenCache = data["rottenCache"]
+        if data.has_key("extendedinfocache"):
+            self.extendedinfocache = data["extendedinfocache"]
         if data.has_key("widgetcache"):
             WINDOW.setProperty("skinhelper-widgetcontenttype",repr(data["widgetcache"]).encode("utf-8"))
             
@@ -1078,38 +1078,74 @@ class ListItemMonitor(threading.Thread):
                 else:
                     self.extraFanartCache[self.liPath] = ["None",[]]
 
-    def setRottenRatings(self,imdbnumber="",contenttype=""):
+    def setExtendedMovieInfo(self,imdbnumber="",contenttype=""):
         if not imdbnumber:
-            dbId = xbmc.getInfoLabel("ListItem.IMDBNumber")
+            imdbnumber = xbmc.getInfoLabel("ListItem.IMDBNumber")
         if not contenttype:
             contenttype = self.contentType
-        result = None
+        result = {}
         if (contenttype == "movies" or contenttype=="setmovies") and imdbnumber:
-            if self.rottenCache.get(imdbnumber):
+            if self.extendedinfocache.get(imdbnumber):
                 #get data from cache
-                result = self.rottenCache[imdbnumber]
+                result = self.extendedinfocache[imdbnumber]
             elif not WINDOW.getProperty("SkinHelper.DisableInternetLookups"):
+            
+                #get info from OMDB 
                 url = 'http://www.omdbapi.com/?i=%s&plot=short&tomatoes=true&r=json' %imdbnumber
                 res = requests.get(url)
                 result = json.loads(res.content.decode('utf-8','replace'))
-                if result:
-                    self.rottenCache[imdbnumber] = result
+                
+                #get info from TMDB
+                url = 'http://api.themoviedb.org/3/find/%s?external_source=imdb_id&api_key=%s' %(imdbnumber,tmdb_apiKey)
+                response = requests.get(url)
+                data = json.loads(response.content.decode('utf-8','replace'))
+                if data and data.get("movie_results"):
+                    data = data.get("movie_results")
+                    if len(data) == 1:
+                        url = 'http://api.themoviedb.org/3/movie/%s?api_key=%s' %(data[0].get("id"),tmdb_apiKey)
+                        response = requests.get(url)
+                        data = json.loads(response.content.decode('utf-8','replace'))
+                        
+                        if data.get("budget","") and data.get("budget") > 0:
+                            result["budget"] = str(data.get("budget",""))
+                            mln = float(data.get("budget")) / 1000000
+                            mln = "%.1f" % mln
+                            result["budget.formatted"] = "$ %s mln." %mln.replace(".0","").replace(".",",")
+                            result["budget.mln"] = mln
+                        
+                        if data.get("revenue","") and data.get("revenue") > 0:
+                            result["revenue"] = str(data.get("revenue",""))
+                            mln = float(data.get("revenue")) / 1000000
+                            mln = "%.1f" % mln
+                            result["revenue.formatted"] = "$ %s mln." %mln.replace(".0","").replace(".",",")
+                            result["revenue.mln"] = mln
+                            
+                        result["tagline"] = data.get("tagline","")
+                        result["homepage"] = data.get("homepage","")
+                        result["status"] = data.get("status","")
+                        result["popularity"] = str(data.get("popularity",""))
+                #save to cache
+                if result: self.extendedinfocache[imdbnumber] = result
+            
+            #set the window props
             if result:
-                criticsscore = result.get('tomatoMeter',"")
-                criticconsensus = result.get('tomatoConsensus',"")
-                audiencescore = result.get('Metascore',"")
-                awards = result.get('Awards',"")
-                boxoffice = result.get('BoxOffice',"")
-                if criticsscore:
-                    WINDOW.setProperty("SkinHelper.RottenTomatoesRating",criticsscore)
-                if audiencescore:
-                    WINDOW.setProperty("SkinHelper.RottenTomatoesAudienceRating",audiencescore)
-                if criticconsensus:
-                    WINDOW.setProperty("SkinHelper.RottenTomatoesConsensus",criticconsensus)
-                if awards:
-                    WINDOW.setProperty("SkinHelper.RottenTomatoesAwards",awards)
-                if boxoffice:
-                    WINDOW.setProperty("SkinHelper.RottenTomatoesBoxOffice",boxoffice)
+                WINDOW.setProperty("SkinHelper.RottenTomatoesRating",result.get('tomatoMeter',""))
+                WINDOW.setProperty("SkinHelper.RottenTomatoesAudienceRating",result.get('Metascore',""))
+                WINDOW.setProperty("SkinHelper.RottenTomatoesConsensus",result.get('tomatoConsensus',""))
+                WINDOW.setProperty("SkinHelper.RottenTomatoesAwards",result.get('Awards',""))
+                WINDOW.setProperty("SkinHelper.RottenTomatoesBoxOffice",result.get('BoxOffice',""))
+                
+                WINDOW.setProperty("SkinHelper.TMDB.Budget",result.get('budget',""))
+                WINDOW.setProperty("SkinHelper.TMDB.Budget.formatted",result.get('budget.formatted',""))
+                WINDOW.setProperty("SkinHelper.TMDB.Budget.mln",result.get('budget.mln',""))
+                WINDOW.setProperty("SkinHelper.TMDB.revenue",result.get('revenue',""))
+                WINDOW.setProperty("SkinHelper.TMDB.revenue.formatted",result.get('revenue.formatted',""))
+                WINDOW.setProperty("SkinHelper.TMDB.revenue.mln",result.get('revenue.mln',""))
+                WINDOW.setProperty("SkinHelper.TMDB.tagline",result.get('tagline',""))
+                WINDOW.setProperty("SkinHelper.TMDB.homepage",result.get('homepage',""))
+                WINDOW.setProperty("SkinHelper.TMDB.status",result.get('status',""))
+                WINDOW.setProperty("SkinHelper.TMDB.popularity",result.get('popularity',""))
+   
 
     def focusEpisode(self):
         # monitor episodes for auto focus first unwatched - Helix only as it is included in Kodi as of Isengard by default

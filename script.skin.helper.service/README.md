@@ -82,6 +82,16 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.RottenTomatoesAudienceRating) | metascore rating from rotten tomatoes |
 |Window(Home).Property(SkinHelper.RottenTomatoesAwards) | awards for the movie |
 |Window(Home).Property(SkinHelper.RottenTomatoesBoxOffice) | amount the film made at box office |
+|Window(Home).Property(SkinHelper.TMDB.Budget) | budget spent to this movie in dollars (from tmdb)|
+|Window(Home).Property(SkinHelper.TMDB.Budget.mln) | budget spent to this movie in millions of dollars|
+|Window(Home).Property(SkinHelper.TMDB.Budget.formatted) | Same as Budget.mln but formatted as $ 123 mln.|
+|Window(Home).Property(SkinHelper.TMDB.Revenue) | revenue for this movie in dollars (from tmdb) |
+|Window(Home).Property(SkinHelper.TMDB.Revenue.mln) | Revenue for this movie in millions of dollars|
+|Window(Home).Property(SkinHelper.TMDB.Revenue.formatted) | Same as Revenue.mln but formatted as $ 123 mln.|
+|Window(Home).Property(SkinHelper.TMDB.Tagline) | tagline for this movie (from tmdb) |
+|Window(Home).Property(SkinHelper.TMDB.Homepage) | homepage for this movie (from tmdb) |
+|Window(Home).Property(SkinHelper.TMDB.Status) | status for this movie, e.g. released (from tmdb) |
+|Window(Home).Property(SkinHelper.TMDB.Popularity) | popularity for this movie (from tmdb) |
 ________________________________________________________________________________________________________
 
 
@@ -588,6 +598,41 @@ The above command will take the Kodi Buildversion Info string and split it on th
 You can access the result in your skin as a window property, in the above example kodiversion_main:
 $INFO[Window(Home).Property(kodiversion_main)]
 
+
+________________________________________________________________________________________________________
+
+#### Set skin setting
+Can be used to present a select dialog to specify a certain skin setting.
+Prevents you from creating all kinds of toggle options.
+
+
+You need to create the file skinsettings.xml in your extras folder (special://skin/extras/skinsettings.xml).
+Inside that xml file you define all options that a user can choose when setting a specific skin string.
+For example:
+```xml
+<settings>
+    <!-- home layout -->
+    <setting id="HomeLayout" value="1" label="$LOCALIZE[31309] - 1 row" condition="" icon="" description=""/>
+    <setting id="HomeLayout" value="2" label="$LOCALIZE[31309] - 2 rows" condition="" icon="" description=""/>
+    <setting id="HomeLayout" value="3" label="$LOCALIZE[31309] - 3 rows" condition="" icon="" description=""/>
+    
+    <!-- background setting -->
+    <setting id="CustomBackgroundSetting" value="default" label="$LOCALIZE[31023]" condition="" icon="special://skin/extras/backgrounds/global.jpg" description=""/>
+    <setting id="CustomBackgroundSetting" value="weather" label="$LOCALIZE[31025]" condition="" icon="$VAR[WeatherFanArtPath]$INFO[Window(Weather).Property(current.fanartCode)]/weather.jpg" description=""/>
+    <setting id="CustomBackgroundSetting" value="||BROWSEIMAGE||" label="Custom image" condition="" description=""/>
+</settings>
+```
+
+If you want to set the Skin String "HomeLayout", you can call the script like this:
+
+```
+<control type="button" id="423003">
+    <label>[B]$LOCALIZE[31121]:[/B] $INFO[Skin.String(HomeLayout.label)]</label>
+    <onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=HomeLayout,header=$LOCALIZE[31124])</onclick>
+</control>         
+```
+This will present DialogSelect with your options. Once the user makes a selection, the value will be written to the Skin String.
+Also the prefix .label will store the label from the select dialog.
 
 
 
@@ -1103,15 +1148,17 @@ ________________________________________________________________________________
 plugin://script.skin.helper.service/?action=getcast&movie=[MOVIENAME OR DBID]
 plugin://script.skin.helper.service/?action=getcast&tvshow=[TVSHOW NAME OR DBID]
 plugin://script.skin.helper.service/?action=getcast&movieset=[MOVIESET NAME OR DBID]
+plugin://script.skin.helper.service/?action=getcast&episode=[EPISODE NAME OR DBID]
 ```
 Provides the Cast list for the specified media type as a listing.
 Label = Name of the actor
 Label2 = Role
 Icon = Thumb of the actor
 
-You can use the name of the Movie or the DBID to perform the lookup.
-
+You can use the name of the item or the DBID to perform the lookup.
 There will also a Window Property be set when you use the above query to the script: SkinHelper.ListItemCast --> It will return the cast list seperated by [CR]
+
+Optional parameter: downloadthumbs=true --> will auto download any missing actor thumbs from IMDB
 ________________________________________________________________________________________________________
 ________________________________________________________________________________________________________
 

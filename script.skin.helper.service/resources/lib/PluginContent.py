@@ -123,6 +123,7 @@ def PVRRECORDINGS(limit):
                     item["art"]["thumb"] = item["art"].get("thumb")
                 item["channellogo"] = item["art"].get("channellogo","")
                 item["cast"] = None
+                item["file"] = sys.argv[0] + "?action=playrecording&path=" + str(item["recordingid"])
                 allUnSortedItems.append((item["endtime"],item))
                 
         #sort the list so we return a recently added list or recordings
@@ -245,7 +246,7 @@ def getThumb(searchphrase):
 
 def RECENTALBUMS(limit,browse=""):
     allItems = []
-    json_result = getJSON('AudioLibrary.GetRecentlyAddedAlbums', '{ "sort": { "order": "descending", "method": "dateadded" }, "properties": [ %s ], "limits":{"end":%d} }' %(fields_albums,limit))
+    json_result = getJSON('AudioLibrary.GetRecentlyAddedAlbums', '{ "properties": [ %s ], "limits":{"end":%d} }' %(fields_albums,limit))
     for item in json_result:
         item["art"] = getMusicArtworkByDbId(item["albumid"], "albums")
         item["type"] = "album"
@@ -279,7 +280,7 @@ def RECENTPLAYEDALBUMS(limit,browse=""):
 
 def RECENTPLAYEDSONGS(limit):
     allItems = []
-    json_result = getJSON('AudioLibrary.GetRecentlyPlayedSongs', '{ "sort": { "order": "descending", "method": "lastplayed" }, "properties": [ %s ], "limits":{"end":%d} }' %(fields_songs,limit))
+    json_result = getJSON('AudioLibrary.GetRecentlyPlayedSongs', '{ "properties": [ %s ], "limits":{"end":%d} }' %(fields_songs,limit))
     for item in json_result:
         item["art"] = getMusicArtworkByDbId(item["songid"], "songs")
         item["type"] = "song"
@@ -290,7 +291,7 @@ def RECENTPLAYEDSONGS(limit):
 
 def RECENTSONGS(limit):
     allItems = []
-    json_result = getJSON('AudioLibrary.GetRecentlyAddedSongs', '{ "sort": { "order": "descending", "method": "dateadded" }, "properties": [ %s ], "limits":{"end":%d} }' %(fields_songs,limit))
+    json_result = getJSON('AudioLibrary.GetRecentlyAddedSongs', '{ "properties": [ %s ], "limits":{"end":%d} }' %(fields_songs,limit))
     for item in json_result:
         item["art"] = getMusicArtworkByDbId(item["songid"], "songs")
         item["type"] = "song"
@@ -338,7 +339,6 @@ def NEXTAIREDTVSHOWS(limit):
                 json_result = getJSON('VideoLibrary.GetTvShows','{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ %s ] }' %(tvshow,fields_tvshows))
                 if len(json_result) > 0:
                     item = json_result[0]
-                    path = "videodb://tvshows/titles/%s/" %str(item["tvshowid"])
                     extraprops = {}
                     extraprops["airtime"] = WINDOW.getProperty("NextAired.%s.AirTime"%str(count)).decode("utf-8")
                     extraprops["Path"] = WINDOW.getProperty("NextAired.%s.Path"%str(count)).decode("utf-8")
@@ -375,7 +375,12 @@ def NEXTAIREDTVSHOWS(limit):
                     extraprops["Art(clearart)"] = WINDOW.getProperty("NextAired.%s.Art(clearart)"%str(count)).decode("utf-8")
                     extraprops["Art(characterart)"] = WINDOW.getProperty("NextAired.%s.Art(characterart)"%str(count)).decode("utf-8")
                     item["extraproperties"] = extraprops
-                    item["file"] = path
+                    tvshowpath = "ActivateWindow(Videos,videodb://tvshows/titles/%s/,return)" %str(item["tvshowid"])
+                    item["file"]="plugin://script.skin.helper.service?action=LAUNCH&path=" + tvshowpath
+                    item["tvshowtitle"] = WINDOW.getProperty("NextAired.%s.Label"%str(count)).decode("utf-8")
+                    item["title"] = WINDOW.getProperty("NextAired.%s.NextTitle"%str(count)).decode("utf-8")
+                    item["season"] = WINDOW.getProperty("NextAired.%s.NextSeasonNumber"%str(count)).decode("utf-8")
+                    item["episode"] = WINDOW.getProperty("NextAired.%s.NextEpisodeNumber"%str(count)).decode("utf-8")
                     allItems.append(item)
                     count += 1
                     if count == limit:
@@ -864,8 +869,29 @@ def getExtraFanArt(path):
             li = xbmcgui.ListItem(item, path=item)
             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item, listitem=li)
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
+
+def GETCASTMEDIA(limit,name=""):
+    print "getcastmedia"
+    allItems = []
+    if name:
+        json_result = getJSON('VideoLibrary.GetMovies', '{ "properties": [ %s ] }' %fields_movies)
+        for item in json_result:
+            for castmember in item["cast"]:
+                if castmember["name"].lower() == name.lower():
+                    url = "RunScript(script.skin.helper.service,action=showinfo,movieid=%s)" %item["movieid"]
+                    item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
+                    allItems.append(item)
+        json_result = getJSON('VideoLibrary.GetTvShows', '{ "properties": [ %s ] }' %fields_tvshows)
+        for item in json_result:
+            for castmember in item["cast"]:
+                if castmember["name"].lower() == name.lower():
+                    url = "RunScript(script.skin.helper.service,action=showinfo,tvshowid=%s)" %item["tvshowid"]
+                    item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
+                    allItems.append(item)
+    print allItems
+    return allItems
     
-def getCast(movie=None,tvshow=None,movieset=None,downloadThumbs=False):
+def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=False):
     itemId = None
     item = {}
     allCast = []
@@ -882,11 +908,14 @@ def getCast(movie=None,tvshow=None,movieset=None,downloadThumbs=False):
         elif movie:
             cachedataStr = "movie.castcache-" + str(movie)+str(downloadThumbs)
             itemId = int(movie)
+        elif episode:
+            cachedataStr = "episode.castcache-" + str(episode)+str(downloadThumbs)
+            itemId = int(episode)
         else:
             cachedataStr = xbmc.getInfoLabel("ListItem.Title")+xbmc.getInfoLabel("ListItem.FileNameAndPath")+str(downloadThumbs)
     except: pass
     
-    cachedata = WINDOW.getProperty(cachedataStr)
+    cachedata = WINDOW.getProperty(cachedataStr).decode("utf-8")
     if cachedata:
         #get data from cache
         cachedata = eval(cachedata)
@@ -904,19 +933,25 @@ def getCast(movie=None,tvshow=None,movieset=None,downloadThumbs=False):
             json_result = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %d, "properties": [ "title", "cast" ] }' %itemId)
             if json_result: item = json_result
         elif movie and not itemId:
-            json_result = getJSON('VideoLibrary.GetMovies', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title", "cast" ] }' %movie)
+            json_result = getJSON('VideoLibrary.GetMovies', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title", "cast" ] }' %movie.encode("utf-8"))
             if json_result: item = json_result[0]
         elif tvshow and itemId:
             json_result = getJSON('VideoLibrary.GetTVShowDetails', '{ "tvshowid": %d, "properties": [ "title", "cast" ] }' %itemId)
             if json_result: item = json_result
         elif tvshow and not itemId:
-            json_result = getJSON('VideoLibrary.GetTvShows', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title", "cast" ] }' %tvshow)
+            json_result = getJSON('VideoLibrary.GetTvShows', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title", "cast" ] }' %tvshow.encode("utf-8"))
+            if json_result: item = json_result[0]
+        elif episode and itemId:
+            json_result = getJSON('VideoLibrary.GetEpisodeDetails', '{ "episodeid": %d, "properties": [ "title", "cast" ] }' %itemId)
+            if json_result: item = json_result
+        elif episode and not itemId:
+            json_result = getJSON('VideoLibrary.GetEpisodes', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title", "cast" ] }' %episode.encode("utf-8"))
             if json_result: item = json_result[0]
         elif movieset and itemId:
             json_result = getJSON('VideoLibrary.GetMovieSetDetails', '{ "setid": %d, "properties": [ "title" ] }' %itemId)
             if json_result.has_key("movies"): moviesetmovies = json_result['movies']      
         elif movieset and not itemId:
-            json_result = getJSON('VideoLibrary.GetMovieSets', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title" ] }' %tvshow)
+            json_result = getJSON('VideoLibrary.GetMovieSets', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title" ] }' %movieset.encode("utf-8"))
             if json_result: 
                 movieset = json_result[0]
                 if movieset.has_key("movies"):
@@ -943,6 +978,7 @@ def getCast(movie=None,tvshow=None,movieset=None,downloadThumbs=False):
         #process cast for regular movie or show
         if item and item.has_key("cast"):
             for cast in item["cast"]:
+                if cast.get("thumbnail"): cast["thumbnail"] = getCleanImage(cast.get("thumbnail"))
                 if not cast.get("thumbnail") or not xbmcvfs.exists(cast.get("thumbnail")) and downloadThumbs: 
                     artwork = getOfficialArtWork(cast["name"],None,"person")
                     cast["thumbnail"] = artwork.get("thumb","")
@@ -963,6 +999,7 @@ def getCast(movie=None,tvshow=None,movieset=None,downloadThumbs=False):
                 if json_result:
                     for cast in json_result["cast"]:
                         if not cast["name"] in moviesetCastList:
+                            if cast.get("thumbnail"): cast["thumbnail"] = getCleanImage(cast.get("thumbnail"))
                             if not cast.get("thumbnail") or not xbmcvfs.exists(cast.get("thumbnail")) and downloadThumbs:
                                 artwork = getOfficialArtWork(cast["name"],None,"person")
                                 cast["thumbnail"] = artwork.get("thumb","")

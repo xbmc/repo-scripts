@@ -45,6 +45,8 @@ def addSmartShortcutDirectoryItem(entry, isFolder=True, widget=None, widget2=Non
             props["widgetType"] = widgettype
             props["widgetTarget"] = widgettarget
             props["widgetPath"] = "$INFO[Window(Home).Property(%s.content)]" %widget
+            if "plugin:" in xbmc.getInfoLabel("$INFO[Window(Home).Property(%s.content)]" %widget):
+                props["widgetPath"] = props["widgetPath"] + "&reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]"
             
         if widget2:
             widgettype = "$INFO[Window(Home).Property(%s.type)]" %widget2
@@ -59,6 +61,8 @@ def addSmartShortcutDirectoryItem(entry, isFolder=True, widget=None, widget2=Non
             props["widgetType.1"] = widgettype
             props["widgetTarget.1"] = widgettarget
             props["widgetPath.1"] = "$INFO[Window(Home).Property(%s.content)]" %widget2
+            if "plugin:" in xbmc.getInfoLabel("$INFO[Window(Home).Property(%s.content)]" %widget2):
+                props["widgetPath.1"] = props["widgetPath.1"] + "&reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]"
             
         li.setInfo( type="Video", infoLabels={ "mpaa": repr(props) })
     

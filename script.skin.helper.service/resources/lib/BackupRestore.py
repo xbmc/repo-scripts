@@ -205,13 +205,59 @@ def backup(filterString="",silent=None,promptfilename="false"):
         if not silent: xbmcgui.Dialog().ok(ADDON.getLocalizedString(32028), ADDON.getLocalizedString(32030), str(e))
     elif not silent:
         xbmcgui.Dialog().ok(ADDON.getLocalizedString(32028), ADDON.getLocalizedString(32029))
-        
-def restore(silent=None):
 
+def restoreSkinSettings(filename, progressDialog=None):
+    if xbmcvfs.exists(filename):
+        f = xbmcvfs.File(filename, 'r')
+        importstring = eval(f.read())
+        f.close()
+        xbmc.sleep(200)
+        for count, skinsetting in enumerate(importstring):
+        
+            if progressDialog:
+                if progressDialog.iscanceled():
+                    return
+            setting = skinsetting[1]
+            settingvalue = skinsetting[2]
+
+            try: setting = setting.encode('utf-8')
+            except: pass
+            
+            try: settingvalue = settingvalue.encode('utf-8')
+            except: pass
+
+            if progressDialog:
+                progressDialog.update((count * 100) / len(importstring), ADDON.getLocalizedString(32033) + ' %s' % setting.decode("utf-8"))
+
+            if skinsetting[0] == "string":
+                if settingvalue:
+                    xbmc.executebuiltin("Skin.SetString(%s,%s)" % (setting, settingvalue))
+                else:
+                    xbmc.executebuiltin("Skin.Reset(%s)" % setting)
+            elif skinsetting[0] == "bool":
+                if settingvalue == "true":
+                    xbmc.executebuiltin("Skin.SetBool(%s)" % setting)
+                else:
+                    xbmc.executebuiltin("Skin.Reset(%s)" % setting)
+            xbmc.sleep(30)
+
+def restore(silent=None):
+    #return if silent file doesn't exist
     if silent and not xbmcvfs.exists(silent):
-        logMsg("ERROR while creating backup ! --> Path invalid. Make sure you provide the FULL path, for example special://skin/extras/mybackup.zip", 0)
+        logMsg("ERROR while restoring backup ! --> Path invalid. Make sure you provide the FULL path, for example special://skin/extras/mybackup.zip", 0)
         return
-    
+    #if silent file submitted is not zipfile, treat as skinsettings only
+    if silent and not silent.lower().endswith("zip"):
+        xbmc.executebuiltin( "ActivateWindow(busydialog)" )
+        try:
+            restoreSkinSettings(silent)
+        except: logMsg("ERROR while restoring backup !",0)
+        xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+    else:
+        #perform full restore
+        restoreFull(silent)
+
+def restoreFull(silent=None):
     try:
         zip_path = silent
         progressDialog = None
@@ -266,45 +312,11 @@ def restore(silent=None):
                     logMsg("destination --> " + destfile)
                     xbmcvfs.copy(sourcefile,destfile)
                         
-            #read guisettings
-            if xbmcvfs.exists(os.path.join(temp_path, "guisettings.txt")):
-                text_file_path = os.path.join(temp_path, "guisettings.txt")
-                with open(text_file_path, 'r') as f:
-                    importstring = eval(f.read())
-            
-                xbmc.sleep(200)
-                for count, skinsetting in enumerate(importstring):
-                
-                    if progressDialog:
-                        if progressDialog.iscanceled():
-                            return
-                    setting = skinsetting[1]
-                    settingvalue = skinsetting[2]
-                    
-                    #some legacy...
-                    setting = setting.replace("TITANSKIN.helix", "").replace("TITANSKIN.", "")
+            #restore guisettings
+            skinsettingsfile = os.path.join(temp_path, "guisettings.txt")
+            if xbmcvfs.exists(skinsettingsfile):
+                restoreSkinSettings(skinsettingsfile, progressDialog)
 
-                    try: setting = setting.encode('utf-8')
-                    except: pass
-                    
-                    try: settingvalue = settingvalue.encode('utf-8')
-                    except: pass
-
-                    if progressDialog:
-                        progressDialog.update((count * 100) / len(importstring), ADDON.getLocalizedString(32033) + ' %s' % setting.decode("utf-8"))
-
-                    if skinsetting[0] == "string":
-                        if settingvalue:
-                            xbmc.executebuiltin("Skin.SetString(%s,%s)" % (setting, settingvalue))
-                        else:
-                            xbmc.executebuiltin("Skin.Reset(%s)" % setting)
-                    elif skinsetting[0] == "bool":
-                        if settingvalue == "true":
-                            xbmc.executebuiltin("Skin.SetBool(%s)" % setting)
-                        else:
-                            xbmc.executebuiltin("Skin.Reset(%s)" % setting)
-                    xbmc.sleep(30)
-            
             #cleanup temp
             xbmc.sleep(500)
             recursiveDelete(temp_path)
