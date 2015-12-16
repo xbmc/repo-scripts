@@ -1,3 +1,12 @@
+Version 1.2.2:
+      Fix minor progress bar issues
+Version 1.2.1:
+      Fix issue: #19 Do not use xbmc.sleep()
+      Fix issue: #20 Aborting a sync is not working properly
+      Fix issue: #16 Trace error better
+      Major performance improvement
+Version 1.2.0:
+      Bugfix: Fixing issue: #17 TV shows sync crashing with error invalid literal
 Version 1.1.3:
       Logging exceptions and some additional debug data
       if debug mode is enabled in user settings

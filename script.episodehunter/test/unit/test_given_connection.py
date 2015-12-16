@@ -3,7 +3,7 @@ import unittest
 import json
 
 from test.xbmc_base_test_case import XbmcBaseTestCase
-from resources.model import movie_model
+from resources.factory.movie_factory import movie_factory
 from test.test_data import xbmc_movie_result
 
 
@@ -28,7 +28,7 @@ class GivenConnection(XbmcBaseTestCase, object):
     @patch('resources.lib.helper.get_username', lambda: "username")
     @patch('resources.lib.helper.get_api_key', lambda: "key")
     def test_should_send_a_post_request_to_eh(self):
-        movies = [movie_model.create_from_xbmc(m) for m in xbmc_movie_result.get('The Hunger Games')]
+        movies = [movie_factory(m) for m in xbmc_movie_result.get('The Hunger Games')]
 
         self.connection.set_movies_watched(movies)
 
@@ -42,9 +42,8 @@ class GivenConnection(XbmcBaseTestCase, object):
                     "plays": 3,
                     "last_played": 1412964211,
                     "title": "The Hunger Games",
-                    "xbmc_id": "1",
                     "imdb_id": "tt1392170",
-                    "year": "2011"
+                    "year": 2011
                 }]}
         actually = json.loads(args[1])
         self.assertEqual(len(set(actually.keys()).difference(set(expecting.keys()))), 0)

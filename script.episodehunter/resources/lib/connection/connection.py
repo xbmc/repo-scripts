@@ -5,7 +5,6 @@ Makes all HTTP request to episodehunter.tv
 
 import json
 from resources.lib import helper
-from resources.model.series_model import Series
 
 
 class Connection(object):
@@ -34,18 +33,13 @@ class Connection(object):
 
     def set_shows_watched(self, shows):
         """ Set a several episodes for a TV show as watched """
-        # TO DO: Fix this shit
-        for s in shows:
-            assert isinstance(s, Series)
-            self.make_request(
-                '/v2/tv/watched',
-                {
-                    'tvdb_id': s.tvdb_id,
-                    'title': s.title,
-                    'year': s.year,
-                    'episodes': s.episodes
-                }
-            )
+        for show in shows:
+            self.set_show_as_watched(show)
+
+    def set_show_as_watched(self, show):
+        """ Set a show as watched on episodehunter.tv """
+        # Expecting: {'tvdb_id': Number, 'title': String, 'year': Number, 'episodes': []{season: number, episode: number}}
+        self.make_request('/v2/tv/watched', show)
 
     def get_watched_movies(self):
         """ Get watched movies from episodehunter.tv """

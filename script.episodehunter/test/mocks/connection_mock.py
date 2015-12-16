@@ -16,13 +16,11 @@ class ConnectionMock(MockBaseClass, object):
         return self.watched_movies
 
     def set_movies_watched(self, movies_seen=None):
-        movies_seen = movies_seen or []
         self._increase_called('set_movies_watched', movies_seen)
         return self._return()
 
-    def set_shows_watched(self, series_seen=None):
-        series_seen = series_seen or []
-        self._increase_called('set_series_as_watched', series_seen)
+    def set_show_as_watched(self, series_seen=None):
+        self._increase_called('set_show_as_watched', series_seen)
         return self._return()
 
     def _return(self):

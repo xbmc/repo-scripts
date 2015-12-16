@@ -8,7 +8,7 @@ from resources import config
 
 class Http(object):
 
-    def __init__(self, base_url):
+    def __init__(self, base_url=config.__BASE_URL__):
         super(Http, self).__init__()
         socket.setdefaulttimeout(config.__HTTP_TIMEOUT__)
         self.__base_url = base_url
@@ -35,7 +35,7 @@ class Http(object):
         Handel http errors
         :rtype : None
         :param error:urllib2.HTTPError
-        :raise error:urllib2.HTTPError 
+        :raise error:urllib2.HTTPError
         """
         if error.code == 403:
             try:

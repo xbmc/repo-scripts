@@ -2,9 +2,10 @@
 
 from resources.lib import helper
 from resources.lib import sync
-from resources.lib.connection import Connection
-from resources.lib.connection import Http
 from resources.lib.gui import dialog
+from resources.lib.error_reporter import report_error
+from resources.lib.connection.connection import Connection
+from resources.lib.connection.http import Http
 from resources import config
 
 
@@ -29,14 +30,12 @@ def menu():
                 try:
                     sync.Movies(connection).sync()
                 except Exception as error:
-                    helper.print_exception_information()
-                    dialog.create_error_dialog(str(error))
+                    report_error(str(error.args), str(error.message))
             elif select == 1:  # TV
                 try:
                     sync.Series(connection).sync()
                 except Exception as error:
-                    helper.print_exception_information()
-                    dialog.create_error_dialog(str(error))
+                    report_error(str(error))
             elif select == 2:  # Settings
                 helper.settings.openSettings()
 

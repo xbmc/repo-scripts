@@ -5,6 +5,7 @@
         <setting id="api_key" type="text" label="32003" default="" />
         <setting id="offline" type="bool" label="32007" default="false" />
         <setting id="debug" type="bool" label="32008" default="false" />
+        <setting id="debug_reports" type="bool" label="32055" default="false" />
     </category>
     <category label="32001"><!-- Scrobbling -->
         <setting id="scrobble_movie" type="bool" label="32004" default="true" />

@@ -3,12 +3,12 @@ import json
 import xbmc
 from resources.exceptions import SettingsExceptions, ConnectionExceptions
 from resources.lib import helper
-from resources.lib import xbmc_helper
+from resources.lib import xbmc_repository
 from resources.lib import user
 from resources.lib.gui import dialog
 from resources.lib.database import Database
-from resources.lib.connection import Connection
-from resources.lib.connection import Http
+from resources.lib.connection.connection import Connection
+from resources.lib.connection.http import Http
 from resources import config
 
 
@@ -56,14 +56,13 @@ class EHPlayer(xbmc.Player):
 
     def run(self):
         self.sync_offline_data()
-        i = 0
-        while not xbmc.abortRequested:
-            xbmc.sleep(1000)
+        monitor = xbmc.Monitor()
+
+        while not monitor.abortRequested():
+            if monitor.waitForAbort(300):
+                break
             if self.is_playing:
-                i += 1
-                if i >= 300:
-                    self.watching()
-                    i = 0
+                self.watching()
 
     def onPlayBackStarted(self):
         """
@@ -75,22 +74,22 @@ class EHPlayer(xbmc.Player):
 
         # Do we actually play a video
         if xbmc.Player().isPlayingVideo():
-            player_id = xbmc_helper.get_active_players_from_xbmc()
-            self.__current_video = xbmc_helper.get_currently_playing_from_xbmc(player_id)
+            player_id = xbmc_repository.active_player()
+            self.__current_video = xbmc_repository.currently_playing(player_id)
             if is_media(self.__current_video):
                 if not xbmc.Player().isPlayingVideo():
                     return None
 
                 if is_movie(self.__current_video):
-                    self.__media = xbmc_helper.get_movie_details_from_xbmc(self.__current_video['id'])
+                    self.__media = xbmc_repository.movie_details(self.__current_video['id'])
 
                 elif is_episode(self.__current_video):
-                    self.__media = xbmc_helper.get_episode_details_from_xbmc(self.__current_video['id'])
+                    self.__media = xbmc_repository.get_episode_details(self.__current_video['id'])
                     if self.__media is None:
                         # Did not find current episode
                         return
 
-                    series_match = xbmc_helper.get_show_details_from_xbmc(self.__media['tvshowid'])
+                    series_match = xbmc_repository.get_show_details(self.__media['tvshowid'])
                     self.__media['imdbnumber'] = series_match['imdbnumber']
                     self.__media['year'] = series_match['year']
 

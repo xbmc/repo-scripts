@@ -53,6 +53,10 @@ msgctxt "#32008"
 msgid "Debug"
 msgstr ""
 
+msgctxt "#32055"
+msgid "Send crash reports to episodehunter"
+msgstr ""
+
 #Headline menu
 
 msgctxt "#32009"
@@ -194,7 +198,7 @@ msgid "Unable to read response"
 msgstr ""
 
 msgctxt "#32043"
-msgid "Uploading shows to episodehunter.tv"
+msgid "Syncing upstream"
 msgstr ""
 
 msgctxt "#32044"
@@ -231,6 +235,18 @@ msgctxt "#32051"
 msgid "Comparing XBMC database with episodehunter.tv"
 msgstr ""
 
+msgctxt "#32056"
+msgid "Fetching watch information from episodehunter.tv"
+msgstr ""
+
 msgctxt "#32052"
-msgid "Setting episodes as seen in xbmc"
+msgid "Syncing downstream"
+msgstr ""
+
+msgctxt "#32053"
+msgid "{0} episodes has been synchronized"
+msgstr ""
+
+msgctxt "#32054"
+msgid "{0} movies has been synchronized"
 msgstr ""

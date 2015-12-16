@@ -1,8 +1,6 @@
 import xbmc
-
 import resources.lib.gui.dialog as dialog
 import resources.lib.gui.progress as progress
-import resources.lib.helper as helper
 from resources.exceptions import UserAbortExceptions
 
 
@@ -30,13 +28,10 @@ class Sync(object):
         self.progress = progress.create(msg)
         return self.progress
 
-    def progress_update(self, percent, line=None):
-        if line is None:
-            self.progress.update(percent)
-        else:
-            self.progress.update(percent, line)
+    def progress_update(self, percent, *lines):
+        self.progress.update(percent, *lines)
 
-    def is_canceled(self):
+    def check_if_canceled(self):
         if xbmc.abortRequested:
             raise SystemExit()
         if self.progress.iscanceled():
