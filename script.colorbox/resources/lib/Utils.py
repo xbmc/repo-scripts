@@ -74,7 +74,7 @@ def Filter_Image(filterimage, radius):
                     break
             except:
                 log("Could not get image for %s (try %i)" % (filterimage, i))
-                xbmc.sleep(500)
+                xbmc.sleep(300)
         if not img:
             return "", ""
         img.thumbnail((200, 200), Image.ANTIALIAS)
@@ -120,7 +120,7 @@ def Filter_ImageOnly(filterimage, radius):
                     break
             except:
                 log("Could not get image for %s (try %i)" % (filterimage, i))
-                xbmc.sleep(500)
+                xbmc.sleep(300)
         if not img:
             return ""
         img.thumbnail((200, 200), Image.ANTIALIAS)
@@ -146,8 +146,9 @@ def Filter_Pixelate(filterimage, pixels):
         img = None
         for i in range(1, 4):
             try:
-                img = Image.open(xbmc.translatePath(xbmc_cache_file))
-                if img != "":
+                if xbmcvfs.exists(xbmc_cache_file):
+                    log("image already in xbmc cache: " + xbmc_cache_file)
+                    img = Image.open(xbmc.translatePath(xbmc_cache_file))
                     break
                 elif xbmcvfs.exists(xbmc_vid_cache_file):
                     img = Image.open(xbmc.translatePath(xbmc_vid_cache_file))
@@ -160,7 +161,7 @@ def Filter_Pixelate(filterimage, pixels):
                     img = Image.open(targetfile)
                     break
             except:
-                xbmc.sleep(100)
+                xbmc.sleep(300)
         if not img:
             return ""
         img = Pixelate_Image(img,pixels)
@@ -181,8 +182,9 @@ def Filter_Fakelight(filterimage, pixels):
         img = None
         for i in range(1, 4):
             try:
-                img = Image.open(xbmc.translatePath(xbmc_cache_file))
-                if img != "":
+                if xbmcvfs.exists(xbmc_cache_file):
+                    log("image already in xbmc cache: " + xbmc_cache_file)
+                    img = Image.open(xbmc.translatePath(xbmc_cache_file))
                     break
                 elif xbmcvfs.exists(xbmc_vid_cache_file):
                     img = Image.open(xbmc.translatePath(xbmc_vid_cache_file))
@@ -195,7 +197,7 @@ def Filter_Fakelight(filterimage, pixels):
                     img = Image.open(targetfile)
                     break
             except:
-                xbmc.sleep(100)
+                xbmc.sleep(300)
         if not img:
             return ""
         img = fake_light(img,pixels)
@@ -234,7 +236,7 @@ def Filter_Twotone(filterimage, black, white):
                     break
             except:
                 log("Could not get image for %s (try %i)" % (filterimage, i))
-                xbmc.sleep(500)
+                xbmc.sleep(300)
         if not img:
             return ""
         img = image_recolorize(img,black,white)
@@ -275,7 +277,7 @@ def Filter_Posterize(filterimage, bits):
                     break
             except:
                 log("Could not get image for %s (try %i)" % (filterimage, i))
-                xbmc.sleep(500)
+                xbmc.sleep(300)
         if not img:
             return ""
         img = image_posterize(img,bits)

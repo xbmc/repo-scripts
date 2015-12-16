@@ -66,7 +66,7 @@ class Main:
                 HOME.setProperty(self.prefix + 'ImageFilterfa3', image)
                 HOME.setProperty(self.prefix + "ImageColorfa3", Random_Color())
             else:
-                xbmc.sleep(200)
+                xbmc.sleep(300)
 
     def _StartInfoActions(self):
         for info in self.infos:
@@ -162,7 +162,7 @@ class Main:
             elif arg.startswith('container='):
                 self.container = RemoveQuotes(arg[10:])
 
-class ToolBoxMonitor(xbmc.Monitor):
+class ColorBoxMonitor(xbmc.Monitor):
 
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)

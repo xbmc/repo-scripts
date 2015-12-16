@@ -1,3 +1,5 @@
+v1.0.6
+- bugfix
 v1.0.5
 - daemon current item fanart
 v1.0.4
