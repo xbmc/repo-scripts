@@ -1,3 +1,12 @@
+v1.0.0
+- Enable 'Get More...' installation of widget providers
+- Return to using json to enable/disable Kodi debug logging
+- Jarvis shortcut changes
+- Load skin-playlists from subdirectories
+- Ability to set custom property fallback value
+- Cleanup
+- Minor fixes
+
 v0.6.6
 - Template improvements
 - Widget selection improvements

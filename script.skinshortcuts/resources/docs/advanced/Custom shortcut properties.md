@@ -45,7 +45,9 @@ Note:- showNone defaults to True, imageBrowse defaults to False
 
 You can then define multiple options for the user to be able to select from:-
 
-#### Set defaults
+## Set defaults
+
+#### For a specific shortcut
 
 You can set a shortcut to have a custom property by default with the propertydefault elements:-
 
@@ -60,7 +62,21 @@ You can set a shortcut to have a custom property by default with the propertydef
 
 These will be applied when the user first switches to your skin, or when they reset all shortcuts.
 
-#### Let user choose a property
+#### For all shortcuts without a user set property
+
+You can set what value should be used for all shortcuts in a given group, if the user hasn't selected an alternative value:-
+
+`<propertyfallback group="[GroupName]"" property="[Property]">[Property Value]</propertyfallback>`
+
+| Property | Optional | Description |
+| :------: | :------: | ----------- |
+| `[GroupName]` | Yes | The group that the labelID must be in, for example "movies". If omitted, the property will be apply to items in the main menu. |
+| `[Property]` | | The property of the shortcut that will be set |
+| `[Property Value]` | | The default value of the property |
+
+Note:- This will be applied to all shortcuts when the menu is built, and will show in the management dialog, but the fallback property will not be saved as part of the skins .properties file.
+
+## Let user choose a property
 
 If using a `<propertySettings />` you can define the ID of the button that will allow the user to select the custom property. Just include a button with the ID you specify in your Management Dialog..
 

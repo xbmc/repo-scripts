@@ -55,6 +55,7 @@ class DataFunctions():
 
         self.widgetNameAndType = {}
         self.backgroundName = {}
+        self.fallbackProperties = {}
 
         self.currentProperties = None
         self.defaultProperties = None
@@ -203,13 +204,12 @@ class DataFunctions():
             # group overrides: add an additional onclick action for a particular menu
             # this will allow you to close a modal dialog before calling any other window
             # http://forum.kodi.tv/showthread.php?tid=224683
-            if skinoverrides != None:
-                allGroupOverrides = skinoverrides.findall( "groupoverride" )
-                for override in allGroupOverrides:
-                    if override.attrib.get( "group" ) == group:
-                        newaction = xmltree.SubElement( node, "additional-action" )
-                        newaction.text = override.text
-                        newaction.set( "condition", override.attrib.get( "condition" ) )
+            allGroupOverrides = skinoverrides.findall( "groupoverride" )
+            for override in allGroupOverrides:
+                if override.attrib.get( "group" ) == group:
+                    newaction = xmltree.SubElement( node, "additional-action" )
+                    newaction.text = override.text
+                    newaction.set( "condition", override.attrib.get( "condition" ) )
             
             # Generate the labelID
             labelID = self._get_labelID( self.local( node.find( "label" ).text )[3].replace( " ", "" ).lower(), action.text )
@@ -253,56 +253,54 @@ class DataFunctions():
             overrideTrees = [useroverrides, skinoverrides]
             hasOverriden = False
             for overrideTree in overrideTrees:
-                if tree is not None:
-                    if hasOverriden == True:
-                        continue
-                    if overrideTree is not None:
-                        for elem in overrideTree.findall( "override" ):
-                            # Retrieve group property
-                            checkGroup = None
-                            if "group" in elem.attrib:
-                                checkGroup = elem.attrib.get( "group" )
+                if hasOverriden == True:
+                    continue
+                if overrideTree is not None:
+                    for elem in overrideTree.findall( "override" ):
+                        # Retrieve group property
+                        checkGroup = None
+                        if "group" in elem.attrib:
+                            checkGroup = elem.attrib.get( "group" )
 
-                            # If the action and (if provided) the group match...
-                            # OR if we have a global override specified
-                            if ( elem.attrib.get( "action" ) == action.text and ( checkGroup is None or checkGroup == group ) ) or ( elem.attrib.get( "action" ) == "globaloverride" and ( checkGroup is None or checkGroup == group ) ):
-                                # Check the XBMC version matches
-                                if "version" in elem.attrib:
-                                    if elem.attrib.get( "version" ) != __xbmcversion__:
-                                        continue
-                                    
-                                hasOverriden = True
-                                # Get the visibility condition
-                                condition = elem.find( "condition" )
-                                overrideVisibility = None
-                                if condition is not None:
-                                    overrideVisibility = condition.text
+                        # If the action and (if provided) the group match...
+                        # OR if we have a global override specified
+                        if ( elem.attrib.get( "action" ) == action.text and ( checkGroup is None or checkGroup == group ) ) or ( elem.attrib.get( "action" ) == "globaloverride" and ( checkGroup is None or checkGroup == group ) ):
+                            # Check the XBMC version matches
+                            if "version" in elem.attrib:
+                                if elem.attrib.get( "version" ) != __xbmcversion__:
+                                    continue
                                 
-                                # Get the new action
-                                for actions in elem.findall( "action" ):
-                                    newaction = xmltree.SubElement( node, "override-action" )
-                                    if "::ACTION::" in actions.text:
-                                        newaction.text = actions.text.replace("::ACTION::",action.text)
-                                    else:
-                                        newaction.text = actions.text
-                                    if overrideVisibility is not None:
-                                        newaction.set( "condition", overrideVisibility )
+                            hasOverriden = True
+                            # Get the visibility condition
+                            condition = elem.find( "condition" )
+                            overrideVisibility = None
+                            if condition is not None:
+                                overrideVisibility = condition.text
+                            
+                            # Get the new action
+                            for actions in elem.findall( "action" ):
+                                newaction = xmltree.SubElement( node, "override-action" )
+                                if "::ACTION::" in actions.text:
+                                    newaction.text = actions.text.replace("::ACTION::",action.text)
+                                else:
+                                    newaction.text = actions.text
+                                if overrideVisibility is not None:
+                                    newaction.set( "condition", overrideVisibility )
 
-                                # Add visibility if no action specified
-                                if len( elem.findall( "action" ) ) == 0:
-                                    newaction = xmltree.SubElement( node, "override-action" )
-                                    newaction.text = action.text
-                                    if overrideVisibility is not None:
-                                        newaction.set( "condition", overrideVisibility )
+                            # Add visibility if no action specified
+                            if len( elem.findall( "action" ) ) == 0:
+                                newaction = xmltree.SubElement( node, "override-action" )
+                                newaction.text = action.text
+                                if overrideVisibility is not None:
+                                    newaction.set( "condition", overrideVisibility )
                        
             # Get visibility condition of any skin-provided shortcuts
-            if skinoverrides:
-                for elem in skinoverrides.findall( "shortcut" ):
-                    if elem.text == action.text and "condition" in elem.attrib:
-                        if not visibilityNode:
-                            xmltree.SubElement( node, "visibility" ).text = elem.attrib.get( "condition" )
-                        else:
-                            visibilityNode.text = "[" + visibilityNode.text + "] + [" + elem.attrib.get( "condition" ) + "]"
+            for elem in skinoverrides.findall( "shortcut" ):
+                if elem.text == action.text and "condition" in elem.attrib:
+                    if not visibilityNode:
+                        xmltree.SubElement( node, "visibility" ).text = elem.attrib.get( "condition" )
+                    else:
+                        visibilityNode.text = "[" + visibilityNode.text + "] + [" + elem.attrib.get( "condition" ) + "]"
                             
             # Get any visibility conditions in the .DATA.xml file
             additionalVisibility = node.find( "visible" )
@@ -319,8 +317,6 @@ class DataFunctions():
         # Once the tree is built, it sends them to _process_shortcuts for any overrides, etc, then adds them to the menu tree
         
         tree = self._get_overrides_skin()
-        if tree is None:
-            return
             
         # Get an array of all actions currently in the menu
         actions = []
@@ -406,8 +402,9 @@ class DataFunctions():
                 self._save_hash( overridePath, xbmcvfs.File( overridePath ).read() )
             else:
                 self._save_hash( overridePath, None )
-            self.overrides[ "script" ] = None
-            return None
+            tree = xmltree.ElementTree( xmltree.Element( "overrides" ) )
+            self.overrides[ "script" ] = tree
+            return tree
 
     def _get_overrides_skin( self ):
         # Get overrides.xml provided by skin 
@@ -426,8 +423,9 @@ class DataFunctions():
                 self._save_hash( overridePath, xbmcvfs.File( overridePath ).read() )
             else:
                 self._save_hash( overridePath, None )
-            self.overrides[ "skin" ] = None
-            return None
+            tree = xmltree.ElementTree( xmltree.Element( "overrides" ) )
+            self.overrides[ "skin" ] = tree
+            return tree
 
     def _get_overrides_user( self, profileDir = "special://profile" ):
         # Get overrides.xml provided by user
@@ -446,8 +444,9 @@ class DataFunctions():
                 self._save_hash( overridePath, xbmcvfs.File( overridePath ).read() )
             else:
                 self._save_hash( overridePath, None )
-            self.overrides[ "user" ] = None
-            return None
+            tree = xmltree.ElementTree( xmltree.Element( "overrides" ) )
+            self.overrides[ "user" ] = tree
+            return tree
 
 
     def _get_additionalproperties( self, profileDir ):
@@ -479,108 +478,117 @@ class DataFunctions():
             
         # Load skin defaults (in case we need them...)
         tree = self._get_overrides_skin()
-        if tree is not None:
-            for elemSearch in [["widget", tree.findall( "widgetdefault" )], ["widget:node", tree.findall( "widgetdefaultnode" )], ["background", tree.findall( "backgrounddefault" )], ["custom", tree.findall( "propertydefault" )] ]:
-                for elem in elemSearch[1]:
-                    # Get labelID and defaultID
-                    labelID = elem.attrib.get( "labelID" )
-                    defaultID = labelID
-                    if "defaultID" in elem.attrib:
-                        defaultID = elem.attrib.get( "defaultID" )
+        for elemSearch in [["widget", tree.findall( "widgetdefault" )], ["widget:node", tree.findall( "widgetdefaultnode" )], ["background", tree.findall( "backgrounddefault" )], ["custom", tree.findall( "propertydefault" )] ]:
+            for elem in elemSearch[1]:
+                # Get labelID and defaultID
+                labelID = elem.attrib.get( "labelID" )
+                defaultID = labelID
+                if "defaultID" in elem.attrib:
+                    defaultID = elem.attrib.get( "defaultID" )
 
-                    if elemSearch[0] == "custom":
-                        # Custom property
-                        if "group" not in elem.attrib:
-                            self.defaultProperties.append( ["mainmenu", labelID, elem.attrib.get( 'property' ), elem.text, defaultID ] )
-                        else:
-                            self.defaultProperties.append( [elem.attrib.get( "group" ), labelID, elem.attrib.get( 'property' ), elem.text, defaultID ] )
+                if elemSearch[0] == "custom":
+                    # Custom property
+                    if "group" not in elem.attrib:
+                        self.defaultProperties.append( ["mainmenu", labelID, elem.attrib.get( 'property' ), elem.text, defaultID ] )
                     else:
-                        # Widget or background
-                        if "group" not in elem.attrib:
-                            self.defaultProperties.append( [ "mainmenu", labelID, elemSearch[ 0 ].split( ":" )[ 0 ], elem.text, defaultID ] )
+                        self.defaultProperties.append( [elem.attrib.get( "group" ), labelID, elem.attrib.get( 'property' ), elem.text, defaultID ] )
+                else:
+                    # Widget or background
+                    if "group" not in elem.attrib:
+                        self.defaultProperties.append( [ "mainmenu", labelID, elemSearch[ 0 ].split( ":" )[ 0 ], elem.text, defaultID ] )
+                        
+                        if elemSearch[ 0 ] == "background":
+                            # Get and set the background name
+                            backgroundName = self._getBackgroundName( elem.text )
+                            if backgroundName is not None:
+                                self.defaultProperties.append( [ "mainmenu", labelID, "backgroundName", backgroundName, defaultID ] )
                             
-                            if elemSearch[ 0 ] == "background":
-                                # Get and set the background name
-                                backgroundName = self._getBackgroundName( elem.text )
-                                if backgroundName is not None:
-                                    self.defaultProperties.append( [ "mainmenu", labelID, "backgroundName", backgroundName, defaultID ] )
-                                
-                            if elemSearch[0] == "widget":
-                                # Get and set widget type and name
-                                widgetDetails = self._getWidgetNameAndType( elem.text )
-                                if widgetDetails is not None:
-                                    self.defaultProperties.append( [ "mainmenu", labelID, "widgetName", widgetDetails[ "name" ], defaultID ] )
-                                    if "type" in widgetDetails:
-                                        self.defaultProperties.append( [ "mainmenu", labelID, "widgetType", widgetDetails[ "type" ], defaultID ] )
-                                    if "path" in widgetDetails:
-                                        self.defaultProperties.append( [ "mainmenu", labelID, "widgetPath", widgetDetails[ "path" ], defaultID ] )
-                                    if "target" in widgetDetails:
-                                        self.defaultProperties.append( [ "mainmenu", labelID, "widgetTarget", widgetDetails[ "target" ], defaultID ] )
+                        if elemSearch[0] == "widget":
+                            # Get and set widget type and name
+                            widgetDetails = self._getWidgetNameAndType( elem.text )
+                            if widgetDetails is not None:
+                                self.defaultProperties.append( [ "mainmenu", labelID, "widgetName", widgetDetails[ "name" ], defaultID ] )
+                                if "type" in widgetDetails:
+                                    self.defaultProperties.append( [ "mainmenu", labelID, "widgetType", widgetDetails[ "type" ], defaultID ] )
+                                if "path" in widgetDetails:
+                                    self.defaultProperties.append( [ "mainmenu", labelID, "widgetPath", widgetDetails[ "path" ], defaultID ] )
+                                if "target" in widgetDetails:
+                                    self.defaultProperties.append( [ "mainmenu", labelID, "widgetTarget", widgetDetails[ "target" ], defaultID ] )
 
-                            if elemSearch[0] == "widget:node":
-                                # Set all widget properties from the default
-                                if elem.text:
-                                    self.defaultProperties.append( [ "mainmenu", labelID, "widget", elem.attrib.get( "label" ), defaultID ] )
-                                if "label" in elem.attrib:
-                                    self.defaultProperties.append( [ "mainmenu", labelID, "widgetName", elem.attrib.get( "label" ), defaultID ] )
-                                if "type" in elem.attrib:
-                                    self.defaultProperties.append( [ "mainmenu", labelID, "widgetType", elem.attrib.get( "type" ), defaultID ] )
-                                if "path" in elem.attrib:
-                                    self.defaultProperties.append( [ "mainmenu", labelID, "widgetPath", elem.attrib.get( "path" ), defaultID ] )
-                                if "target" in elem.attrib:
-                                    self.defaultProperties.append( [ "mainmenu", labelID, "widgetTarget", elem.attrib.get( "target" ), defaultID ] )
-                        else:
-                            self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, elemSearch[ 0 ].split( ":" )[ 0 ], elem.text, defaultID ] )
-                            
-                            if elemSearch[ 0 ] == "background":
-                                # Get and set the background name
-                                backgroundName = self._getBackgroundName( elem.text )
-                                if backgroundName is not None:
-                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "backgroundName", backgroundName, defaultID ] )
-                            
-                            if elemSearch[0] == "widget":
-                                # Get and set widget type and name
-                                widgetDetails = self._getWidgetNameAndType( elem.text )
-                                if widgetDetails is not None:
-                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetName", widgetDetails[ "name" ], defaultID ] )
-                                    if "type" in widgetDetails:
-                                        self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetType", widgetDetails[ "type" ], defaultID ] )
-                                    if "path" in widgetDetails:
-                                        self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetPath", widgetDetails[ "path" ], defaultID ] )
-                                    if "target" in widgetDetails:
-                                        self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetTarget", widgetDetails[ "target" ], defaultID ] )
+                        if elemSearch[0] == "widget:node":
+                            # Set all widget properties from the default
+                            if elem.text:
+                                self.defaultProperties.append( [ "mainmenu", labelID, "widget", elem.attrib.get( "label" ), defaultID ] )
+                            if "label" in elem.attrib:
+                                self.defaultProperties.append( [ "mainmenu", labelID, "widgetName", elem.attrib.get( "label" ), defaultID ] )
+                            if "type" in elem.attrib:
+                                self.defaultProperties.append( [ "mainmenu", labelID, "widgetType", elem.attrib.get( "type" ), defaultID ] )
+                            if "path" in elem.attrib:
+                                self.defaultProperties.append( [ "mainmenu", labelID, "widgetPath", elem.attrib.get( "path" ), defaultID ] )
+                            if "target" in elem.attrib:
+                                self.defaultProperties.append( [ "mainmenu", labelID, "widgetTarget", elem.attrib.get( "target" ), defaultID ] )
+                    else:
+                        self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, elemSearch[ 0 ].split( ":" )[ 0 ], elem.text, defaultID ] )
+                        
+                        if elemSearch[ 0 ] == "background":
+                            # Get and set the background name
+                            backgroundName = self._getBackgroundName( elem.text )
+                            if backgroundName is not None:
+                                self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "backgroundName", backgroundName, defaultID ] )
+                        
+                        if elemSearch[0] == "widget":
+                            # Get and set widget type and name
+                            widgetDetails = self._getWidgetNameAndType( elem.text )
+                            if widgetDetails is not None:
+                                self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetName", widgetDetails[ "name" ], defaultID ] )
+                                if "type" in widgetDetails:
+                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetType", widgetDetails[ "type" ], defaultID ] )
+                                if "path" in widgetDetails:
+                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetPath", widgetDetails[ "path" ], defaultID ] )
+                                if "target" in widgetDetails:
+                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetTarget", widgetDetails[ "target" ], defaultID ] )
 
-                            if elemSearch[ 0 ] == "widget:node":
-                                # Set all widget properties from the default
-                                if "label" in elem.attrib:
-                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetName", elem.attrib.get( "label" ), defaultID ] )
-                                if "type" in elem.attrib:
-                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetType", elem.attrib.get( "type" ), defaultID ] )
-                                if "path" in elem.attrib:
-                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetPath", elem.attrib.get( "path" ), defaultID ] )
-                                if "target" in elem.attrib:
-                                    self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetTarget", elem.attrib.get( "target" ), defaultID ] )
+                        if elemSearch[ 0 ] == "widget:node":
+                            # Set all widget properties from the default
+                            if "label" in elem.attrib:
+                                self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetName", elem.attrib.get( "label" ), defaultID ] )
+                            if "type" in elem.attrib:
+                                self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetType", elem.attrib.get( "type" ), defaultID ] )
+                            if "path" in elem.attrib:
+                                self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetPath", elem.attrib.get( "path" ), defaultID ] )
+                            if "target" in elem.attrib:
+                                self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetTarget", elem.attrib.get( "target" ), defaultID ] )
                                         
         returnVal = [ self.currentProperties, self.defaultProperties ]
         return returnVal
+
+    def _getCustomPropertyFallbacks( self, group ):
+        if group in self.fallbackProperties:
+            return self.fallbackProperties[ group ]
+        propertyFallbacks = {}
+        tree = self._get_overrides_skin()
+        for elem in tree.findall( "propertyfallback" ):
+            if ("group" not in elem.attrib and group == "mainmenu") or elem.attrib.get("group") == group:
+                propertyFallbacks[ elem.attrib.get( "property" ) ] = elem.text
+        self.fallbackProperties[ group ] = propertyFallbacks
+        return propertyFallbacks
         
     def _getWidgetNameAndType( self, widgetID ):
         if widgetID in self.widgetNameAndType:
             return self.widgetNameAndType[ widgetID ]
 
         tree = self._get_overrides_skin()
-        if tree is not None:
-            for elem in tree.findall( "widget" ):
-                if elem.text == widgetID:
-                    widgetInfo = { "name": elem.attrib.get( "label" ) }
-                    if "type" in elem.attrib:
-                        widgetInfo[ "type" ] = elem.attrib.get( "type" )
-                    if "path" in elem.attrib:
-                        widgetInfo[ "path" ] = elem.attrib.get( "path" )
-                    if "target" in elem.attrib:
-                        widgetInfo[ "target" ] = elem.attrib.get( "target" )
-                    self.widgetNameAndType[ widgetID ] = widgetInfo
-                    return widgetInfo
+        for elem in tree.findall( "widget" ):
+            if elem.text == widgetID:
+                widgetInfo = { "name": elem.attrib.get( "label" ) }
+                if "type" in elem.attrib:
+                    widgetInfo[ "type" ] = elem.attrib.get( "type" )
+                if "path" in elem.attrib:
+                    widgetInfo[ "path" ] = elem.attrib.get( "path" )
+                if "target" in elem.attrib:
+                    widgetInfo[ "target" ] = elem.attrib.get( "target" )
+                self.widgetNameAndType[ widgetID ] = widgetInfo
+                return widgetInfo
                         
         self.widgetNameAndType[ widgetID ] = None
         return None
@@ -590,12 +598,11 @@ class DataFunctions():
             return self.backgroundName[ backgroundID ]
 
         tree = self._get_overrides_skin()
-        if tree is not None:
-            for elem in tree.findall( "background" ):
-                if elem.text == backgroundID:
-                    returnString = elem.attrib.get( "label" )
-                    self.backgroundName[ backgroundID ] = returnString
-                    return returnString
+        for elem in tree.findall( "background" ):
+            if elem.text == backgroundID:
+                returnString = elem.attrib.get( "label" )
+                self.backgroundName[ backgroundID ] = returnString
+                return returnString
                         
         self.backgroundName[ backgroundID ] = None
         return None
@@ -603,11 +610,10 @@ class DataFunctions():
     def _reset_backgroundandwidgets( self ):
         # This function resets all skin properties used to identify if specific backgrounds or widgets are active
         tree = self._get_overrides_skin()
-        if tree is not None:
-            for elem in tree.findall( "widget" ):
-                xbmc.executebuiltin( "Skin.Reset(skinshortcuts-widget-" + elem.text + ")" )
-            for elem in tree.findall( "background" ):
-                xbmc.executebuiltin( "Skin.Reset(skinshortcuts-background-" + elem.text + ")" )
+        for elem in tree.findall( "widget" ):
+            xbmc.executebuiltin( "Skin.Reset(skinshortcuts-widget-" + elem.text + ")" )
+        for elem in tree.findall( "background" ):
+            xbmc.executebuiltin( "Skin.Reset(skinshortcuts-background-" + elem.text + ")" )
                 
     
     def createNiceName ( self, item ):
@@ -640,34 +646,49 @@ class DataFunctions():
             return item.lower( ).replace( " ", "" )
             
     def checkVisibility ( self, action ):
-        action = action.lower().replace( " ", "" )
-        
         # Return whether mainmenu items should be displayed
-        if action == "activatewindow(weather)":
-            return "!IsEmpty(Weather.Plugin)"
-        elif action.startswith( "activatewindowandfocus(mypvr" ) or action.startswith( "playpvr" ):
-            return "system.getbool(pvrmanager.enabled)"
-        elif action.startswith( "activatewindow(videos,movie" ):
-            return "Library.HasContent(Movies)"
-        elif action.startswith( "activatewindow(videos,recentlyaddedmovies" ):
-            return "Library.HasContent(Movies)"
-        elif action.startswith( "activatewindow(videos,tvshow" ) or action.startswith( "activatewindow(videos,tvshow" ):
-            return "Library.HasContent(TVShows)"
-        elif action.startswith( "activatewindow(videos,recentlyaddedepisodes" ):
-            return "Library.HasContent(TVShows)"
-        elif action.startswith( "activatewindow(videos,musicvideo" ):
-            return "Library.HasContent(MusicVideos)"
+        action = action.lower().replace( " ", "" )
+
+        # Video node visibility
+        if action.startswith( "activatewindow(videos,videodb://" ) or action.startswith( "activatewindow(10025,videodb://" ) or action.startswith( "activatewindow(videos,library://video/" ) or action.startswith( "activatewindow(10025,library://video/" ):
+            path = action.split( "," )
+            if path[ 1 ].endswith( ")" ):
+                path[ 1 ] = path[ 1 ][:-1]
+            return NODE.get_visibility( path[ 1 ] )
+
+        # Audio node visibility - Isengard and earlier
+        elif action.startswith( "activatewindow(musiclibrary,musicdb://" ) or action.startswith( "activatewindow(10502,musicdb://" ) or action.startswith( "activatewindow(musiclibrary,library://music/" ) or action.startswith( "activatewindow(10502,library://music/" ):
+            path = action.split( "," )
+            if path[ 1 ].endswith( ")" ):
+                path[ 1 ] = path[ 1 ][:-1]
+            return NODE.get_visibility( path[ 1 ] )
+
+        # Audio node visibility - Additional checks for Jarvis and later
+        # (Note when cleaning up in the future, some of the Isengard checks - those with window 10502 - are still valid...)
+        elif action.startswith( "activatewindow(music,musicdb://" ) or action.startswith( "activatewindow(music,library://music/" ):
+            path = action.split( "," )
+            if path[ 1 ].endswith( ")" ):
+                path[ 1 ] = path[ 1 ][:-1]
+            return NODE.get_visibility( path[ 1 ] )
+
+        # Isengard and earlier music library
         elif action.startswith( "activatewindow(musiclibrary,addons" ):
             return ""
         elif action.startswith( "activatewindow(musiclibrary,musicvideo" ):
             return "Library.HasContent(MusicVideos)"
-        elif action.startswith( "activatewindow(videos,recentlyaddedmusicvideos" ):
-            return "Library.HasContent(MusicVideos)"
         elif action.startswith( "activatewindow(musiclibrary," ):
             return "Library.HasContent(Music)"
-        elif action == "xbmc.playdvd()":
-            return "System.HasMediaDVD"
-            
+
+        # Jarvis and later music library
+        elif action.startswith( "activatewindow(music,addons" ) or action.startswith( "activatewindow(music,files" ):
+            return ""
+        elif action.startswith( "activatewindow(music,musicvideo" ):
+            return "Library.HasContent(MusicVideos)"
+        elif action == "activatewindow(music)" or action.startswith( "activatewindow(music,root" ):
+            return ""
+        elif action.startswith( "activatewindow(music,"):
+            return "Library.HasContent(Music)"
+
         # Power menu visibilities
         elif action == "quit()" or action == "quit":
             return "System.ShowExitButton"
@@ -691,27 +712,35 @@ class DataFunctions():
             return "System.HasShutdown +!System.IsInhibit"
         elif action == "inhibitidleshutdown(false)":
             return "System.HasShutdown + System.IsInhibit"
-            
-        # New Helix visibility conditions
+        elif action == "restartapp":
+            return "[System.Platform.Windows | System.Platform.Linux] +! System.Platform.Linux.RaspberryPi"
+
+        # General visibilities
+        elif action == "activatewindow(weather)":
+            return "!IsEmpty(Weather.Plugin)"
+        elif action.startswith( "activatewindowandfocus(mypvr" ) or action.startswith( "playpvr" ):
+            return "system.getbool(pvrmanager.enabled)"
         elif action.startswith( "activatewindow(tv" ):
             return "PVR.HasTVChannels"
         elif action.startswith( "activatewindow(radio" ):
             return "PVR.HasRadioChannels"
+        elif action.startswith( "activatewindow(videos,movie" ):
+            return "Library.HasContent(Movies)"
+        elif action.startswith( "activatewindow(videos,recentlyaddedmovies" ):
+            return "Library.HasContent(Movies)"
+        elif action.startswith( "activatewindow(videos,tvshow" ) or action.startswith( "activatewindow(videos,tvshow" ):
+            return "Library.HasContent(TVShows)"
+        elif action.startswith( "activatewindow(videos,recentlyaddedepisodes" ):
+            return "Library.HasContent(TVShows)"
+        elif action.startswith( "activatewindow(videos,musicvideo" ):
+            return "Library.HasContent(MusicVideos)"
+        elif action.startswith( "activatewindow(videos,recentlyaddedmusicvideos" ):
+            return "Library.HasContent(MusicVideos)"
+        elif action == "xbmc.playdvd()":
+            return "System.HasMediaDVD"
+        elif action.startswith( "activatewindow(eventlog" ):
+            return "system.getbool(eventlog.enabled)"
             
-        # Video node visibility
-        elif action.startswith( "activatewindow(videos,videodb://" ) or action.startswith( "activatewindow(10025,videodb://" ) or action.startswith( "activatewindow(Videos,library://video/" ) or action.startswith( "activatewindow(10025,library://video/" ):
-            path = action.split( "," )
-            if path[ 1 ].endswith( ")" ):
-                path[ 1 ] = path[ 1 ][:-1]
-            return NODE.get_visibility( path[ 1 ] )
-
-        # Audio node visibility
-        elif action.startswith( "activatewindow(musiclibrary,musicdb://" ) or action.startswith( "activatewindow(10502,musicdb://" ) or action.startswith( "activatewindow(MusicLibrary,library://music/" ) or action.startswith( "activatewindow(10502,library://music/" ):
-            path = action.split( "," )
-            if path[ 1 ].endswith( ")" ):
-                path[ 1 ] = path[ 1 ][:-1]
-            return NODE.get_visibility( path[ 1 ] )
-        
         return ""
 
 
@@ -735,7 +764,7 @@ class DataFunctions():
             findAttrib = "condition"
 
         for tree in trees:
-            if tree is None or tree.find( "versionEquivalency" ) is None:
+            if tree.find( "versionEquivalency" ) is None:
                 continue
             for elem in tree.find( "versionEquivalency" ).findall( findElem ):
                 if elem.attrib.get( findAttrib ) is not None and elem.attrib.get( findAttrib ).lower() != action.lower():
@@ -1008,3 +1037,16 @@ class DataFunctions():
         else:
             # Not an 'ActivateWindow' - return the onclick
             return onclick
+
+    def upgradeAction( self, action ):
+        # This function looks for actions used in a previous version of Kodi, and upgrades them to the current action
+
+        # Jarvis music changes
+        if action.lower() == "activatewindow(musicfiles)" and int( __xbmcversion__ ) >= 16:
+            return "ActivateWindow(Music,Files,Return)"
+
+        if action.lower().startswith("activatewindow(musiclibrary") and int( __xbmcversion__ ) >= 16:
+            return "ActivateWindow(Music," + action.split( ",", 1 )[ 1 ]
+
+        # No matching upgrade
+        return action

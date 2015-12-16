@@ -28,6 +28,10 @@
 		<shortcutEquivalent version="14" action="ActivateWindow(RadioTimers)">All</shortcutEquivalent>
 		<shortcutEquivalent version="14" action="ActivateWindow(RadioSearch)">All</shortcutEquivalent>
 
+		<!-- Music Files -->
+		<shortcutEquivalent version="13" action="ActivateWindow(MusicFiles)">15</shortcutEquivalent>
+		<shortcutEquivalent version="16" action="ActivateWindow(Music,Files,Return)">All</shortcutEquivalent>
+
 	</versionEquivalency>
 
 
@@ -170,6 +174,8 @@
 	<widget-groupings>
         <!-- script.skin.helper.service default widgets -->
         <shortcut label="$ADDON[script.skin.helper.service 32063]" type="32010" condition="System.HasAddon(script.skin.helper.service)">||BROWSE||script.skin.helper.service/?action=widgets&amp;path=skinplaylists,librarydataprovider,scriptwidgets,extendedinfo,smartshortcuts,pvr,smartishwidgets</shortcut>
+
+        <shortcut label="32107" type="32010" condition="!System.HasAddon(script.skin.helper.service)">::INSTALL::script.skin.helper.service</shortcut>
 	
         <content>widgets</content>
 		<node label="32030">

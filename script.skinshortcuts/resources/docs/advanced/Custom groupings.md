@@ -39,14 +39,15 @@ You can also add individual shortcuts directly into the groupings with a `<short
 
 #### `<shortcut />` element - widget
 
-`<shortcut label="[label]" type="[type]" icon="[icon]" widget="[widget]" widgetType="[widgetType]" widgetTarget="[widgetTarget]">[widgetPath]</shortcut>`
+`<shortcut label="[label]" type="[type]" icon="[icon]" widget="[widget]" widgetName="[widgetName]" widgetType="[widgetType]" widgetTarget="[widgetTarget]">[widgetPath]</shortcut>`
 
 | Property | Optional | Description |
 | :------: | :-------: | ----------- |
-| `[label]` | | The label that will be shown to the user, and set as the widgetName property |
+| `[label]` | | The label that will be shown to the user |
 | `[type]` | Yes | The type of widget, this will be displayed to the user as label2 |
 | `[icon]` | Yes | The icon that will be displayed to the user |
 | `[widget]` | Yes | The value that will be set as the widget property |
+| `[widgetName]` | Yes | THe value that will be set at the widgetName property. If ommitted, widgetName will be set to `[label]` |
 | `[widgetType]` | Yes | The value that will be set as the widgetType property |
 | `[widgetTarget]` | Yes | The value that will be set as the widgetTarget property |
 | `[widgetPath]` |  | The value that will be set as the widgetPath property |

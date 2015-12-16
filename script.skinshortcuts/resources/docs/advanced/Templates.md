@@ -191,6 +191,75 @@ You can retrieve the id of the main menu item and place it into a property:-
 
 Once the property has been set, you can use `$SKINSHORTCUTS[propertyName]` in either an attribute or the value of any Kodi GUI element. It will be replaced with the value of the property.
 
+#### Moving properties to an include using $PARAM (KODI 15+)
+
+You can move any `$SKINSHORTCUTS[propertyName]` to an include inside your skin's xml files using `$PARAM[paramName]`.
+For more informations about params : [Use params in includes](http://kodi.wiki/view/Skinning_Manual#Use_params_in_includes).
+
+When using `$PARAM[paramName]` in your skin's xml, it will be automatically replaced by the corresponding `$SKINSHORTCUTS[propertyName]` you set.
+
+```
+<other include="[include]">
+	<property attribute=="[attributeName]|[attributeValue]" tag="[tag]" name="[propertyName]"/>
+	<controls>
+		<control type="group">
+			<skinshortcuts>visibility</skinshortcuts>
+			<include name="[myskinInclude]">
+				<param name="[paramName]" value="$SKINSHORTCUTS[propertyName]" />
+			</include>
+		</control>
+	</controls>
+</other>
+```
+
+| Property | Optional | Description |
+| :------: | :------: | ----------- |
+| `[attributeName]|[attributeValue]` | Yes | The element must have an attribute with the name `[attributeName]` and the value `[attributeValue]` |
+| `[tag]` | | The main menu must have an element with this tag |
+| `[propertyName]` | | The main menu must have an element with this tag |
+| `[myskinInclude]` | | The given name of your include inside skin's xml files |
+| `[paramName]` | | The given name of your param inside skin's xml files |
+| `$SKINSHORTCUTS[propertyName]` | | This will be replaced by the value of a matched <property /> element |
+
+For example, to move a dynamic id, content and target, you can use the following code as template :
+
+```
+<other include="MyHomeInclude">
+    <property attribute="name|widgetPath" tag="property" name="path"/>
+    <property attribute="name|widgetTarget" tag="property" name="target"/>
+    <property name="target"/>
+    <property name="id" tag="mainmenuid" />
+	<controls>
+		<control type="group">
+			<skinshortcuts>visibility</skinshortcuts>
+			<include name="MyIncludesInclude">
+				<param name="Id" value="80$SKINSHORTCUTS[id]" />
+                <param name="Target" value="$SKINSHORTCUTS[target]" />
+                <param name="Path" value="$SKINSHORTCUTS[path]" />
+			</include>
+		</control>
+	</controls>
+</other>
+```
+
+NOTE - `$PARAM[Id]` has here the value `80$SKINSHORTCUTS[id]` : This will return for item n° 10 the value `8010`. It's useful when using the same container for multiple contents since an include doesn't refresh.
+You can then use the properties moved to params inside an includes file (includes.xml or wathever name you used) like :
+
+```
+<include name="MyincludesInclude">
+	<control type="panel" id="$PARAM[Id]">
+		...
+		<itemlayout>
+		...
+		</itemlayout>
+		<focusedlayout>
+		...
+		</focusedlayout>
+		<content target="$PARAM[Target]">$PARAM[Path]</content>
+	</control>
+</include>
+```
+
 ## A simple example
 
 This example builds the sub menu in a template, so the sub menu for each main menu item is in its own list with visible/hidden animation.

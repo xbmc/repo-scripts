@@ -111,8 +111,7 @@ class XMLFunctions():
             if weEnabledSystemDebug or weEnabledScriptDebug:
                 # Disable any logging we enabled
                 if weEnabledSystemDebug:
-                    xbmc.executebuiltin( "ToggleDebug" )
-                    # json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":false} } ' )
+                    json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":false} } ' )
                 if weEnabledScriptDebug:
                     __addon__.setSetting( "enable_logging", "false" )
                     
@@ -137,7 +136,7 @@ class XMLFunctions():
                     for item in json_response['result']['settings']:
                         if item["id"] == "debug.showloginfo":
                             if item["value"] == False:
-                                xbmc.executebuiltin( "ToggleDebug" )
+                                json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method":"Settings.setSettingValue", "params": {"setting":"debug.showloginfo", "value":true} } ' )
                                 enabledSystemDebug = True
 
                 if __addon__.getSetting( "enable_logging" ) != "true":
@@ -292,12 +291,11 @@ class XMLFunctions():
         # Get any shortcuts we're checking for
         self.checkForShortcuts = []
         overridestree = DATA._get_overrides_skin()
-        if overridestree is not None:
-            checkForShorctcutsOverrides = overridestree.getroot().findall( "checkforshortcut" )
-            for checkForShortcutOverride in checkForShorctcutsOverrides:
-                if "property" in checkForShortcutOverride.attrib:
-                    # Add this to the list of shortcuts we'll check for
-                    self.checkForShortcuts.append( ( checkForShortcutOverride.text.lower(), checkForShortcutOverride.attrib.get( "property" ), "False" ) )
+        checkForShorctcutsOverrides = overridestree.getroot().findall( "checkforshortcut" )
+        for checkForShortcutOverride in checkForShorctcutsOverrides:
+            if "property" in checkForShortcutOverride.attrib:
+                # Add this to the list of shortcuts we'll check for
+                self.checkForShortcuts.append( ( checkForShortcutOverride.text.lower(), checkForShortcutOverride.attrib.get( "property" ), "False" ) )
         
         mainmenuTree = xmltree.SubElement( root, "include" )
         mainmenuTree.set( "name", "skinshortcuts-mainmenu" )
@@ -499,7 +497,12 @@ class XMLFunctions():
                         justmenuTreeB.append( menuitemCopy )
 
                         if buildMode == "single":
-                            allmenuTree.append( copy.deepcopy( menuitemCopy ) )
+                            # Add the property 'submenuVisibility'
+                            allmenuTreeCopy = copy.deepcopy( menuitemCopy )
+                            submenuVisibility = xmltree.SubElement( allmenuTreeCopy, "property" )
+                            submenuVisibility.set( "name", "submenuVisibility" )
+                            submenuVisibility.text = DATA.slugify( submenuVisibilityName, convertInteger=True )
+                            allmenuTree.append( allmenuTreeCopy )
 
                         menuitemCopy = copy.deepcopy( menuitem )
                         visibilityElement = menuitemCopy.find( "visible" )
@@ -514,22 +517,21 @@ class XMLFunctions():
             if self.hasSettings == False:
                 # Check if the overrides asks for a forced settings...
                 overridestree = DATA._get_overrides_skin()
-                if overridestree is not None:
-                    forceSettings = overridestree.getroot().find( "forcesettings" )
-                    if forceSettings is not None:
-                        # We want a settings option to be added
+                forceSettings = overridestree.getroot().find( "forcesettings" )
+                if forceSettings is not None:
+                    # We want a settings option to be added
+                    newelement = xmltree.SubElement( mainmenuTree, "item" )
+                    xmltree.SubElement( newelement, "label" ).text = "$LOCALIZE[10004]"
+                    xmltree.SubElement( newelement, "icon" ).text = "DefaultShortcut.png"
+                    xmltree.SubElement( newelement, "onclick" ).text = "ActivateWindow(settings)" 
+                    xmltree.SubElement( newelement, "visible" ).text = profile[1]
+                    
+                    if buildMode == "single":
                         newelement = xmltree.SubElement( mainmenuTree, "item" )
                         xmltree.SubElement( newelement, "label" ).text = "$LOCALIZE[10004]"
                         xmltree.SubElement( newelement, "icon" ).text = "DefaultShortcut.png"
                         xmltree.SubElement( newelement, "onclick" ).text = "ActivateWindow(settings)" 
                         xmltree.SubElement( newelement, "visible" ).text = profile[1]
-                        
-                        if buildMode == "single":
-                            newelement = xmltree.SubElement( mainmenuTree, "item" )
-                            xmltree.SubElement( newelement, "label" ).text = "$LOCALIZE[10004]"
-                            xmltree.SubElement( newelement, "icon" ).text = "DefaultShortcut.png"
-                            xmltree.SubElement( newelement, "onclick" ).text = "ActivateWindow(settings)" 
-                            xmltree.SubElement( newelement, "visible" ).text = profile[1]
                             
             if len( self.checkForShortcuts ) != 0:
                 # Add a value to the variable for all checkForShortcuts
@@ -636,12 +638,16 @@ class XMLFunctions():
             self.MAINWIDGET = {}
             self.MAINBACKGROUND = {}
             self.MAINPROPERTIES = {}
+
+        # Get fallback custom properties
+        foundProperties = []
         
         # Additional properties
+        allProps = []
         properties = eval( item.find( "additional-properties" ).text )
         if len( properties ) != 0:
-            repr( properties )
             for property in properties:
+                allProps.append(property[0])
                 if property[0] == "node.visible":
                     visibleProperty = xmltree.SubElement( newelement, "visible" )
                     visibleProperty.text = try_decode( property[1] )                    
@@ -668,13 +674,13 @@ class XMLFunctions():
                         if "clonewidgets" in options:
                             widgetProperties = [ "widget", "widgetName", "widgetType", "widgetTarget", "widgetPath", "widgetPlaylist" ]
                             if property[0] in widgetProperties:
-                                self.MAINWIDGET[ property[0] ] = property[1]
+                                self.MAINWIDGET[ property[0] ] = DATA.local( property[1] )[ 2 ]
                         if "clonebackgrounds" in options:
                             backgroundProperties = [ "background", "backgroundName", "backgroundPlaylist", "backgroundPlaylistName" ]
                             if property[0] in backgroundProperties:
-                                self.MAINBACKGROUND[ property[0] ] = property[1]
+                                self.MAINBACKGROUND[ property[0] ] = DATA.local( property[1] )[ 2 ]
                         if "cloneproperties" in options:
-                            self.MAINPROPERTIES[ property[0] ] = property[1]
+                            self.MAINPROPERTIES[ property[0] ] = DATA.local( property[1] )[ 2 ]
 
                     # For backwards compatibility, save widgetPlaylist as widgetPath too
                     if property[ 0 ] == "widgetPlaylist":
@@ -684,6 +690,14 @@ class XMLFunctions():
                             additionalproperty.text = DATA.local( property[1].decode( "utf-8" ) )[1]
                         except:
                             additionalproperty.text = DATA.local( property[1] )[1]
+
+        # Add fallback custom property values
+        fallbackProperties = DATA._getCustomPropertyFallbacks( groupName )
+        for key in fallbackProperties:
+            if key not in allProps:
+                additionalproperty = xmltree.SubElement( newelement, "property" )
+                additionalproperty.set( "name", key.decode( "utf-8" ) )
+                additionalproperty.text = DATA.local( fallbackProperties[ key ] )[1]
         
         # Primary visibility
         visibility = item.find( "visibility" )
@@ -705,6 +719,10 @@ class XMLFunctions():
             
         for onclick in onclicks:
             onclickelement = xmltree.SubElement( newelement, "onclick" )
+
+            # Updrage action if necessary
+            onclick.text = DATA.upgradeAction( onclick.text )
+
             # PVR Action
             if onclick.text.startswith( "pvr-channel://" ):
                 # PVR action
@@ -729,14 +747,14 @@ class XMLFunctions():
                 onclickelement.text = onclick.text
                 
             # Also add it as a path property
-            if not self.propertyExists( "path", newelement ):
+            if not self.propertyExists( "path", newelement ) and not "path" in allProps:
                 # we only add the path property if there isn't already one in the list because it has to be unique in Kodi lists
                 pathelement = xmltree.SubElement( newelement, "property" )
                 pathelement.set( "name", "path" )
                 pathelement.text = onclickelement.text
             
             # Get 'list' property (the action property of an ActivateWindow shortcut)
-            if not self.propertyExists( "list", newelement ):
+            if not self.propertyExists( "list", newelement ) and not "list" in allProps:
                 # we only add the list property if there isn't already one in the list because it has to be unique in Kodi lists
                 listElement = xmltree.SubElement( newelement, "property" )
                 listElement.set( "name", "list" )
@@ -825,22 +843,21 @@ class XMLFunctions():
         overrides = DATA._get_overrides_skin()
         propertyPatterns = {}
         
-        if overrides is not None:
-            propertyPatternElements = overrides.getroot().findall("propertypattern")
-            for propertyPatternElement in propertyPatternElements:
-                propertyName = propertyPatternElement.get("property")
-                propertyGroup = propertyPatternElement.get("group")
+        propertyPatternElements = overrides.getroot().findall("propertypattern")
+        for propertyPatternElement in propertyPatternElements:
+            propertyName = propertyPatternElement.get("property")
+            propertyGroup = propertyPatternElement.get("group")
+          
+            if not propertyName or not propertyGroup or propertyGroup != group or not propertyPatternElement.text:
+                continue
               
-                if not propertyName or not propertyGroup or propertyGroup != group or not propertyPatternElement.text:
-                    continue
-                  
-                propertyLabelID = propertyPatternElement.get("labelID")
-                if not propertyLabelID:
-                    if propertyName not in propertyPatterns:
-                        propertyPatterns[propertyName] = [propertyPatternElement.text, False]
-                elif propertyLabelID == labelID:
-                    if propertyName not in propertyPatterns or propertyPatterns[propertyName][1] == False:
-                        propertyPatterns[propertyName] = [propertyPatternElement.text, True]
+            propertyLabelID = propertyPatternElement.get("labelID")
+            if not propertyLabelID:
+                if propertyName not in propertyPatterns:
+                    propertyPatterns[propertyName] = [propertyPatternElement.text, False]
+            elif propertyLabelID == labelID:
+                if propertyName not in propertyPatterns or propertyPatterns[propertyName][1] == False:
+                    propertyPatterns[propertyName] = [propertyPatternElement.text, True]
 
         return propertyPatterns
     

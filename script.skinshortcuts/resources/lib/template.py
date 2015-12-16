@@ -284,11 +284,14 @@ class Template():
                             for visible in profileMatch.findall( "visible" ):
                                 if visible.text == visibilityCondition:
                                     # The condition is already there
-                                    return previous
+                                    foundInPrevious = True
                             
                             # We didn't find it, so add it
                             xmltree.SubElement( profileMatch, "visible" ).text = visibilityCondition
-                            return previous
+                            foundInPrevious = True
+
+                    if foundInPrevious == True:
+                        break
                             
                     # We didn't find this profile, so add it
                     newElement = xmltree.SubElement( previous, "skinshortcuts-profile" )

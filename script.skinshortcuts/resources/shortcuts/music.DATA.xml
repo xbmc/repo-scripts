@@ -54,6 +54,15 @@
 		<icon>DefaultFolder.png</icon>
 		<thumb />
 		<action>ActivateWindow(MusicFiles)</action>
+		<version>13</version>
+	</shortcut>
+	<shortcut>
+		<label>744</label>
+		<label2>32019</label2>
+		<icon>DefaultFolder.png</icon>
+		<thumb />
+		<action>ActivateWindow(Music,Files,Return)</action>
+		<version>16</version>
 	</shortcut>
 	<shortcut>
 		<label>15100</label>

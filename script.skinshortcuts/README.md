@@ -1,11 +1,19 @@
-#Skin Shortcuts - 0.6.6
+#Skin Shortcuts - 1.0.0
 
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
 ## What's New for Skinners
 
-#### Version 0.6.6 - repo version
+#### Version 1.0.0 - repo version
+
+- Ability for users to install additional widget providers - [Read More on customising when this is available to users](./resources/docs/advanced/Managing widgets.md#default-widgets-from-skin-helper-service)
+- Jarvis changes to music shortcuts - Please be aware that the shortcuts used to access various areas of the music library have changed. Skin Shortcuts will do its best to update any actions to the Jarvis version when the menu is built, but if this doesn't work (or if you are using the 'Just Select' method) the user may need to reset the action for these shortcuts.
+- Skin playlists will now additionally be correctly loaded from subdirectories on all platforms
+- Ability to set a fallback value for a custom property, used if the user hasn't selected a vlue - [Read More](./resources/docs/advanced/Custom shortcut properties.md#for-all-shortcuts-without-a-user-set-property)
+- Ability to set widgetName property separately from label using `<shortcut />` elements in a custom groupings - [Read More](./resources/docs/advanced/Custom groupings.md#shortcut--element---widget) - and when defining available widgets [Read More](./resources/docs/advanced/Managing widgets.md#defining-available-widgets)
+
+#### Version 0.6.6 - previous repo version
 
 - Ability to include multiple $SKINSHORTCUT[] elements and other text in an element when using templates
 - Ability to assign menu item ID to a property when using templates
