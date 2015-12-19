@@ -72,7 +72,7 @@ def do_next_check( iTimeToWait ):
 
 def get_kodi_time():
     am_pm = xbmc.getInfoLabel('System.Time(xx)').lower()
-    system_time = xbmc.getInfoLabel('System.Time')
+    system_time = xbmc.getInfoLabel('System.Time(hh:mm)')
     hour = system_time.split(':')[0]
     minute = system_time.split(':')[1]
     if am_pm == 'pm':
@@ -168,8 +168,8 @@ class service:
                         _log ( "DEBUG: max_time_in_minutes before calculation: " + str(max_time_in_minutes) )
 
                     if next_check == 'true':
-                        # add "diff_betwenn_idle_and_check_time" to "idle_time_in_minutes"
-                        idle_time_in_minutes += int(diff_betwenn_idle_and_check_time)
+                        # add "diff_between_idle_and_check_time" to "idle_time_in_minutes"
+                        idle_time_in_minutes += int(diff_between_idle_and_check_time)
 
                     if debug == 'true' and max_time_in_minutes == -1:
                         _log ( "DEBUG: max_time_in_minutes after calculation: " + str(max_time_in_minutes) )
@@ -193,7 +193,7 @@ class service:
                                 _log ( "DEBUG: enable_video is true" )
                                 print_act_playing_file()
                             what_is_playing = "video"
-                            max_time_in_minutes = maxaudio_time_in_minutes
+                            max_time_in_minutes = maxvideo_time_in_minutes
                         else:
                             if debug == 'true':
                                 _log ( "DEBUG: Player is playing Video, but check is disabled" )

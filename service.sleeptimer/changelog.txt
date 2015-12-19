@@ -1,3 +1,6 @@
+2.0.5 - 19/12/2015
+-Bug fixing - thanks joshjowen
+
 2.0.3 - 21/11/2015
 -Enable sleeptimer only for given time interval
 
