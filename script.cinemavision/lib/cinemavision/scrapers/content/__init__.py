@@ -10,7 +10,7 @@ class Trailer(_scrapers.Trailer):
 
     @property
     def ID(self):
-        return 'content:{0}'.format(self.data['ID'])
+        return u'content:{0}'.format(self.data['ID'])
 
     @property
     def title(self):

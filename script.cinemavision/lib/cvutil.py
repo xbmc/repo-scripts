@@ -58,6 +58,9 @@ def getSequencePath(for_3D=False, with_name=False):
 def selectSequence():
     import xbmcgui
 
+    default2D = 2
+    default3D = 3
+
     contentPath = kodiutil.getSetting('content.path')
     if not contentPath:
         xbmcgui.Dialog().ok(T(32500, 'Not Found'), ' ', T(32501, 'No sequences found.'))
@@ -65,9 +68,9 @@ def selectSequence():
 
     sequencesPath = cinemavision.util.pathJoin(contentPath, 'Sequences')
     options = cinemavision.util.vfs.listdir(sequencesPath)
-    options = [(n, n[:-6]) for n in options]
-    options.append(('default2D', u'[ {0} ]'.format(T(32599, 'Default 2D'))))
-    options.append(('default3D', u'[ {0} ]'.format(T(32600, 'Default 3D'))))
+    options = [(n, n[:-6]) for n in options if n.endswith('.cvseq')]
+    options.append((default2D, u'[ {0} ]'.format(T(32599, 'Default 2D'))))
+    options.append((default3D, u'[ {0} ]'.format(T(32600, 'Default 3D'))))
 
     if not options:
         xbmcgui.Dialog().ok(T(32500, 'Not Found'), ' ', T(32501, 'No sequences found.'))
@@ -79,9 +82,9 @@ def selectSequence():
 
     result = options[idx][0]
 
-    if result == 'default2D':
+    if result == default2D:
         path = defaultSavePath()
-    elif result == 'default3D':
+    elif result == default3D:
         path = defaultSavePath(for_3D=True)
     else:
         path = cinemavision.util.pathJoin(sequencesPath, options[idx][0])
@@ -230,7 +233,7 @@ def evalActionFile(paths, test=True):
 
     messages = []
 
-    abortPath = kodiutil.getSetting('action.onAbort.file').decode('utf-8')
+    abortPath = kodiutil.getSetting('action.onAbort.file')
     if not kodiutil.getSetting('action.onAbort', False):
         abortPath = None
 

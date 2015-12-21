@@ -451,6 +451,9 @@ class FeatureHandler:
     @DB.session
     def getRatingBumper(self, sItem, feature, image=False):
         try:
+            if not feature.rating:
+                return None
+
             if sItem.getLive('ratingStyleSelection') == 'style':
                 return DB.RatingsBumpers.select().where(
                     (DB.RatingsBumpers.system == feature.rating.system) &
@@ -1076,7 +1079,7 @@ class AudioFormatHandler:
                             (DB.AudioFormatBumpers.format == caller.nextQueuedFeature.audioFormat) & (DB.AudioFormatBumpers.is3D == is3D)
                         )]
                     )
-                    util.DEBUG_LOG('    - Detect: Using bumper based on feature codec info ({0})'.format(caller.nextQueuedFeature.title))
+                    util.DEBUG_LOG('    - Detect: Using bumper based on feature codec info ({0})'.format(repr(caller.nextQueuedFeature.title)))
                 except IndexError:
                     util.DEBUG_LOG('    - Detect: No codec matches!')
                     if is3D and util.getSettingDefault('bumper.fallback2D'):
@@ -1084,7 +1087,9 @@ class AudioFormatHandler:
                             bumper = random.choice(
                                 [x for x in DB.AudioFormatBumpers.select().where(DB.AudioFormatBumpers.format == caller.nextQueuedFeature.audioFormat)]
                             )
-                            util.DEBUG_LOG('    - Using bumper based on feature codec info and falling back to 2D ({0})'.format(caller.nextQueuedFeature.title))
+                            util.DEBUG_LOG(
+                                '    - Using bumper based on feature codec info and falling back to 2D ({0})'.format(repr(caller.nextQueuedFeature.title))
+                            )
                         except IndexError:
                             pass
             else:
@@ -1110,7 +1115,7 @@ class AudioFormatHandler:
                 if is3D and util.getSettingDefault('bumper.fallback2D'):
                     try:
                         bumper = random.choice([x for x in DB.AudioFormatBumpers.select().where(DB.AudioFormatBumpers.format == format_)])
-                        util.DEBUG_LOG('    - Using bumper based on format setting and falling back to 2D ({0})'.format(caller.nextQueuedFeature.title))
+                        util.DEBUG_LOG('    - Using bumper based on format setting and falling back to 2D ({0})'.format(repr(caller.nextQueuedFeature.title)))
                     except IndexError:
                         pass
         if (
@@ -1120,7 +1125,7 @@ class AudioFormatHandler:
                 )
             )
         ):
-            util.DEBUG_LOG('    - File: Using bumper based on setting ({0})'.format(caller.nextQueuedFeature.title))
+            util.DEBUG_LOG('    - File: Using bumper based on setting ({0})'.format(repr(caller.nextQueuedFeature.title)))
             return [Video(sItem.getLive('file'), volume=sItem.getLive('volume')).fromModule(sItem)]
 
         if bumper:

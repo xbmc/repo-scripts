@@ -110,7 +110,7 @@ try:
 
         def listdir(self, path):
             lists = xbmcvfs.listdir(path)
-            return lists[0] + lists[1]
+            return [x.decode('utf-8') for x in lists[0] + lists[1]]
 
         class File(xbmcvfs.File):
             def __init__(self, *args, **kwargs):
@@ -348,6 +348,10 @@ def listFilePaths(path):
         if not isDir(full):
             ret.append(full)
     return ret
+
+
+def strRepr(str_obj):
+    return repr(str_obj).lstrip('u').strip("'")
 
 
 def datetimeTotalSeconds(td):

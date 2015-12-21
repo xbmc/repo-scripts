@@ -1,4 +1,5 @@
 import _scrapers
+from .. import util
 
 _SOURCES = {
     'itunes': 'iTunes',
@@ -43,8 +44,12 @@ def updateTrailers(source=None):
 
 
 def getPlayableURL(ID, quality=None, source=None, url=None):
-    scraper = getScraper(source)
-    if not scraper:
+    try:
+        scraper = getScraper(source)
+        if not scraper:
+            return None
+    except:
+        util.ERROR()
         return None
 
     return scraper.getPlayableURL(ID, quality, url)

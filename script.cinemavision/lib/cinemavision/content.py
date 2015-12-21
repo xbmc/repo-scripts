@@ -270,7 +270,7 @@ class UserContent:
 
     def addBumper(self, model, sub, path, type_name, sub_name, type_, sub_default, sub_val=None, prefix=None):
         for v in util.vfs.listdir(path):
-            vpath = os.path.join(path, v)
+            vpath = util.pathJoin(path, v)
 
             if util.isDir(vpath):
                 if sub_name:
@@ -306,9 +306,9 @@ class UserContent:
             if sub_name:
                 sub_val = sub_val or sub_default
                 defaults[sub_name] = sub_val
-                self.log('Loading {0} ({1} - {2}): [ {3}{4} ]'.format(model.__name__, sub, sub_val, name, is3D and ': 3D' or ''))
+                self.log('Loading {0} ({1} - {2}): [ {3}{4} ]'.format(model.__name__, sub, sub_val, util.strRepr(name), is3D and ': 3D' or ''))
             else:
-                self.log('Loading {0} ({1}): [ {2}{3} ]'.format(model.__name__, sub, name, is3D and ': 3D' or ''))
+                self.log('Loading {0} ({1}): [ {2}{3} ]'.format(model.__name__, sub, util.strRepr(name), is3D and ': 3D' or ''))
 
             model.get_or_create(
                 path=vpath,

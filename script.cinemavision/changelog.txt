@@ -1,5 +1,12 @@
 Changelog for CinemaVision
 
+[- 1.0.7 -]
+
+- fix:     Various encoding errors
+- fix:     Fatal error when resolving a trailer's playable URL
+- fix:     Error playing sequence when a feature has no rating
+- fix:     Error when testing an action file when the abort action is not set
+
 [- 1.0.6 -]
 
 - fix:     Encoding errors when playing a sequence

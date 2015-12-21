@@ -281,7 +281,7 @@ class ActionFileProcessor:
                     if name in self.commandClasses:
                         command = self.commandClasses[name](data)
                     else:
-                        self.parseError(u'Unrecognized command protocol: {0}'.format(name), line, lineno)
+                        self.parseError(u'Unrecognized command protocol: {0}'.format(repr(name)), line, lineno)
                         return
             else:
                 if command:

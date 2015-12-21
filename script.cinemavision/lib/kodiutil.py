@@ -74,7 +74,7 @@ def strRepr(str_obj):
 
 
 def getSetting(key, default=None):
-    setting = ADDON.getSetting(key)
+    setting = ADDON.getSetting(key).decode('utf-8')
     return _processSetting(setting, default)
 
 
