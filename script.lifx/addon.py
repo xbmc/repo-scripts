@@ -49,9 +49,6 @@ def get_bulb_ip ():
 	return addr[0];
 
 
-addon       = xbmcaddon.Addon()
-addonname   = addon.getAddonInfo('name')
-
 capture = xbmc.RenderCapture()
 capture.capture(32, 32, xbmc.CAPTURE_FLAG_CONTINUOUS)
 
@@ -64,11 +61,10 @@ s.connect((host, port))
 
 while not xbmc.abortRequested:
 	xbmc.sleep(100)
-	capture.waitForCaptureStateChangeEvent(100);
 	if capture.getCaptureState() == xbmc.CAPTURE_STATE_DONE:
 		width = capture.getWidth();
 		height = capture.getHeight();
-		pixels = capture.getImage();
+		pixels = capture.getImage(1000);
 
 		red = [];
 		green = [];
