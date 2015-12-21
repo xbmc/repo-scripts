@@ -1,3 +1,6 @@
+v1.2.0
+- personal api key
+
 v1.1.4
 - better handling of missing keys
 

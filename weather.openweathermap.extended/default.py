@@ -19,7 +19,7 @@ sys.path.append(__resource__)
 
 from utils import *
 
-APPID          = '85c6f759f3424557a309da1f875b23d6'
+APPID          = __addon__.getSetting('API')
 BASE_URL       = 'http://api.openweathermap.org/data/2.5/%s'
 LATLON         = __addon__.getSetting('LatLon')
 WEEKEND        = __addon__.getSetting('Weekend')
@@ -802,7 +802,14 @@ set_property('Alerts.IsFetched'   , '')
 set_property('WeatherProvider'    , __addonname__)
 set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(__cwd__, 'resources', 'graphics', 'banner.png')))
 
-if sys.argv[1].startswith('Location'):
+if not APPID:
+    if __addon__.getSetting('Notified') != 'true':
+        dialog = xbmcgui.Dialog()
+        confirmed = dialog.ok(__addonname__, __language__(32131),__language__(32132),__language__(32133))
+        if confirmed:
+            __addon__.setSetting('Notified', 'true')
+elif sys.argv[1].startswith('Location'):
+    log('api key: %s' % APPID)
     keyboard = xbmc.Keyboard('', xbmc.getLocalizedString(14024), False)
     keyboard.doModal()
     if (keyboard.isConfirmed() and keyboard.getText() != ''):
@@ -821,6 +828,7 @@ if sys.argv[1].startswith('Location'):
         else:
             dialog.ok(__addonname__, xbmc.getLocalizedString(284))
 else:
+    log('api key: %s' % APPID)
     location = __addon__.getSetting('Location%s' % sys.argv[1])
     locationid = __addon__.getSetting('Location%sID' % sys.argv[1])
     locationdeg = __addon__.getSetting('Location%sdeg' % sys.argv[1])
