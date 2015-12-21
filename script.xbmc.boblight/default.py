@@ -42,6 +42,8 @@ log( "[%s] - Version: %s Started" % (__scriptname__,__version__))
 capture_width  = 32
 capture_height = 32
 settings       = settings()
+capture        = xbmc.RenderCapture()
+useLegacyApi   = True
 
 class MyPlayer( xbmc.Player ):
   def __init__( self, *args, **kwargs ):
@@ -64,6 +66,8 @@ class MyPlayer( xbmc.Player ):
   def onPlayBackStarted( self ):
     self.playing = True
     myPlayerChanged( 'start' )
+    if not useLegacyApi:
+      capture.capture(capture_width, capture_height)
   
   def isPlaying( self ):
     return self.playing
@@ -203,8 +207,9 @@ def run_boblight():
   player_monitor = MyPlayer()
   player_monitor.playing = xbmc.Player().isPlaying()
   if main.startup() == 0:
-    capture        = xbmc.RenderCapture()
-    capture.capture(capture_width, capture_height, xbmc.CAPTURE_FLAG_CONTINUOUS)
+    if useLegacyApi:
+      capture.capture(capture_width, capture_height, xbmc.CAPTURE_FLAG_CONTINUOUS)
+
     while not xbmc.abortRequested:
       xbmc.sleep(100)
       if not settings.bobdisable:
@@ -216,11 +221,22 @@ def run_boblight():
           settings.reconnect = False
           
         if not settings.staticBobActive:
-          capture.waitForCaptureStateChangeEvent(1000)
-          if capture.getCaptureState() == xbmc.CAPTURE_STATE_DONE and player_monitor.isPlaying():
+          startReadOut = False
+          if useLegacyApi:
+            capture.waitForCaptureStateChangeEvent(1000)
+            if capture.getCaptureState() == xbmc.CAPTURE_STATE_DONE and player_monitor.isPlaying():
+              startReadOut = True 
+          else:
+            pixels = capture.getImage(1000)
+            if len(pixels) > 0 and player_monitor.isPlaying():
+              startReadOut = True
+
+          if startReadOut:
             width = capture.getWidth();
             height = capture.getHeight();
-            pixels = capture.getImage();
+            if useLegacyApi:
+              pixels = capture.getImage(1000)
+
             bob.bob_setscanrange(width, height)
             rgb = (c_int * 3)()
             for y in range(height):
@@ -249,6 +265,10 @@ def localize(id):
     return __language__(id).encode('utf-8','ignore')
 
 if ( __name__ == "__main__" ):
+  try:
+    capture.getCaptureState()
+  except AttributeError:
+    useLegacyApi = False
   run_boblight()
   bob.bob_set_priority(255) # we are shutting down, kill the LEDs     
   bob.bob_destroy()
