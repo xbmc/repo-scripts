@@ -49,8 +49,11 @@ def get_bulb_ip ():
 	return addr[0];
 
 
+useLegacyApi   = True
 capture = xbmc.RenderCapture()
-capture.capture(32, 32, xbmc.CAPTURE_FLAG_CONTINUOUS)
+
+if useLegacyApi:
+	capture.capture(32, 32, xbmc.CAPTURE_FLAG_CONTINUOUS)
 
 host = get_bulb_ip()
 port = 56700
@@ -59,12 +62,27 @@ s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 s.connect((host, port))
 
+class PlayerMonitor( xbmc.Player ):
+	def __init__( self, *args, **kwargs ):
+		xbmc.Player.__init__( self )
+
+	def onPlayBackStarted( self ):
+		if not useLegacyApi:
+			capture.capture(32, 32)
+
+
+
 while not xbmc.abortRequested:
 	xbmc.sleep(100)
 	if capture.getCaptureState() == xbmc.CAPTURE_STATE_DONE:
 		width = capture.getWidth();
 		height = capture.getHeight();
 		pixels = capture.getImage(1000);
+
+		if useLegacyApi:
+			capture.waitForCaptureStateChangeEvent(1000)
+			
+		pixels = capture.getImage(1000)
 
 		red = [];
 		green = [];
@@ -108,3 +126,12 @@ while not xbmc.abortRequested:
 			print "Caught exception socket.error"
 
 s.close()
+
+if ( __name__ == "__main__" ):
+
+	player_monitor = PlayerMonitor()
+
+	try:
+		capture.getCaptureState()
+	except AttributeError:
+		useLegacyApi = False
