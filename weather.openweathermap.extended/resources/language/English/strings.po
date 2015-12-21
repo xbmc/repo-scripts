@@ -32,7 +32,7 @@ msgstr ""
 
 msgctxt "#32110"
 msgid "API key"
-msgstr "
+msgstr ""
 
 msgctxt "#32111"
 msgid "Location 1"
