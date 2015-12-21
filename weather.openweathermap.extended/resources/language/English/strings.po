@@ -28,7 +28,11 @@ msgctxt "#32103"
 msgid "Expert"
 msgstr ""
 
-#empty strings from id 32102 to 32110
+#empty strings from id 32102 to 32109
+
+msgctxt "#32110"
+msgid "API key"
+msgstr "
 
 msgctxt "#32111"
 msgid "Location 1"
@@ -104,4 +108,16 @@ msgstr ""
 
 msgctxt "#32129"
 msgid "Enable logging"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Get an api key at: http://openweathermap.org/appid"
+msgstr ""
+
+msgctxt "#32132"
+msgid "and enter it in the addon settings,"
+msgstr ""
+
+msgctxt "#32133"
+msgid "or disable this addon."
 msgstr ""
