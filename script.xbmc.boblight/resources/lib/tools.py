@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 '''
-    Boblight for XBMC
+    Boblight for Kodi
     Copyright (C) 2012 Team XBMC
 
     This program is free software: you can redistribute it and/or modify
@@ -74,6 +74,8 @@ def get_platform():
     platform = "win32"
   elif  xbmc.getCondVisibility('system.platform.ios'):
     platform = "ios"
+  elif  xbmc.getCondVisibility('system.platform.tvos'):
+    platform = "tvos"
   elif  xbmc.getCondVisibility('system.platform.android'):
     if os.uname()[4].startswith("arm"):
       platform = "android"
@@ -88,6 +90,8 @@ def get_libname(platform):
     return "libboblight-osx.0.dylib"
   elif platform == "ios":
     return "libboblight-ios.0.dylib"
+  elif platform == "tvos":
+    return "libboblight-tvos.0.dylib"
   elif platform == "win32":
     return "libboblight-win32.0.dll"
   elif platform == "android" or platform == "androidx86":
@@ -106,5 +110,7 @@ def get_libpath(platform):
     return get_libname(platform)
   elif platform == 'android' or platform == 'androidx86':
     return "/data/data/org.xbmc.kodi/files/%s" % (get_libname(platform),)
+  elif platform == 'tvos':
+    return "%s/system/%s" % (xbmc.translatePath("special://xbmc"),get_libname(platform),)
   else:
     return __libbasepath__ % (get_libname(platform),)  
