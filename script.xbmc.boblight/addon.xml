@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.xbmc.boblight" name="XBMC Boblight" version="2.0.14" provider-name="bobo1on1, Memphiz">
+<addon id="script.xbmc.boblight" name="Kodi Boblight" version="2.0.15" provider-name="bobo1on1, Memphiz">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
   <extension point="xbmc.service" library="default.py" start="login"></extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="ca">Connecta la sortida del XBMC a boblight</summary>
-    <summary lang="de">Verbinde XBMC Ausgabe mit boblight</summary>
-    <summary lang="el">Σύνδεση της εξόδου XBMC στο boblight.</summary>
-    <summary lang="en">Connect XBMC output to boblight.</summary>
-    <summary lang="es">Conecte la salida de boblight a XBMC</summary>
-    <summary lang="gl">Conectar a saída do XBMC a boblight.</summary>
-    <summary lang="he">חבר פלט XBMC ל-Boblight.</summary>
-    <summary lang="hr">Poveži XBMC izlaz s boblight.</summary>
-    <summary lang="hu">XBMC kimenetének boblight-hoz kapcsolása.</summary>
-    <summary lang="it">Connetti l'output di XBMC a boblight.</summary>
-    <summary lang="ko">XBMC 출력을 boblight에 연결</summary>
-    <summary lang="nl">verbind met XBMC output naar boblight.</summary>
-    <summary lang="pl">Podłącz wyjście XBMC do boblight.</summary>
-    <summary lang="pt">Ligar saída do XBMC a boblight.</summary>
-    <description lang="ca">Connecta la sortida del XBMC a un mòdul extern de boblight</description>
-    <description lang="de">Verbinde XBMC Ausgabe mit boblight Backend</description>
-    <description lang="el">Σύνδεση της εξόδου XBMC στο backend του boblight.</description>
-    <description lang="en">Connect XBMC output to boblight backend.</description>
-    <description lang="gl">Conectar a saída do XBMC ao motor de boblight.</description>
-    <description lang="he">חבר פלט XBMC לשרת Boblight.</description>
-    <description lang="hr">Poveži XBMC izlaz s boblight pozadinski.</description>
-    <description lang="hu">XBMC kimenetének boblight háttérszolgáltatáshoz kapcsolása.</description>
-    <description lang="it">Connetti l'output di XBMC al backend di boblight.</description>
-    <description lang="ko">XBMC 출력을 boblight 백엔드에 연결</description>
-    <description lang="nl">Verbind XBMC output naar boblight backend.</description>
-    <description lang="pl">Podłącz wyjście XBMC do konsoli boblight.</description>
-    <description lang="pt">Ligar saída do XBMC à backend boblight.</description>
+    <summary lang="ca">Connecta la sortida del Kodi a boblight</summary>
+    <summary lang="de">Verbinde Kodi Ausgabe mit boblight</summary>
+    <summary lang="el">Σύνδεση της εξόδου Kodi στο boblight.</summary>
+    <summary lang="en">Connect Kodi output to boblight.</summary>
+    <summary lang="es">Conecte la salida de boblight a Kodi</summary>
+    <summary lang="gl">Conectar a saída do Kodi a boblight.</summary>
+    <summary lang="he">חבר פלט Kodi ל-Boblight.</summary>
+    <summary lang="hr">Poveži Kodi izlaz s boblight.</summary>
+    <summary lang="hu">Kodi kimenetének boblight-hoz kapcsolása.</summary>
+    <summary lang="it">Connetti l'output di Kodi a boblight.</summary>
+    <summary lang="ko">Kodi 출력을 boblight에 연결</summary>
+    <summary lang="nl">verbind met Kodi output naar boblight.</summary>
+    <summary lang="pl">Podłącz wyjście Kodi do boblight.</summary>
+    <summary lang="pt">Ligar saída do Kodi a boblight.</summary>
+    <description lang="ca">Connecta la sortida del Kodi a un mòdul extern de boblight</description>
+    <description lang="de">Verbinde Kodi Ausgabe mit boblight Backend</description>
+    <description lang="el">Σύνδεση της εξόδου Kodi στο backend του boblight.</description>
+    <description lang="en">Connect Kodi output to boblight backend.</description>
+    <description lang="gl">Conectar a saída do Kodi ao motor de boblight.</description>
+    <description lang="he">חבר פלט Kodi לשרת Boblight.</description>
+    <description lang="hr">Poveži Kodi izlaz s boblight pozadinski.</description>
+    <description lang="hu">Kodi kimenetének boblight háttérszolgáltatáshoz kapcsolása.</description>
+    <description lang="it">Connetti l'output di Kodi al backend di boblight.</description>
+    <description lang="ko">Kodi 출력을 boblight 백엔드에 연결</description>
+    <description lang="nl">Verbind Kodi output naar boblight backend.</description>
+    <description lang="pl">Podłącz wyjście Kodi do konsoli boblight.</description>
+    <description lang="pt">Ligar saída do Kodi à backend boblight.</description>
     <disclaimer lang="ca">Necessites tindre el binari correcte perquè el complement funcioni</disclaimer>
     <disclaimer lang="de">Du musst das korrekte Binary Addon installiert haben, damit diese Funktion unterstützt wird.</disclaimer>
     <disclaimer lang="el">Χρειάζεται να έχετε εγκατεστημένο ένα κατάλληλο δυαδικό πρόσθετο για να δουλέψει.</disclaimer>
@@ -48,7 +48,7 @@
     <platform>all</platform>
     <website>http://code.google.com/p/boblight/</website>
     <source>https://github.com/bobo1on1/script.xbmc.boblight</source>
-    <forum>http://forum.xbmc.org/showthread.php?tid=116331</forum>
+    <forum>http://forum.kodi.tv/showthread.php?tid=116331</forum>
     <email></email>
   </extension>
 </addon>

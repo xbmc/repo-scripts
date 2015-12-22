@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 '''
-    Boblight for XBMC
+    Boblight for Kodi
     Copyright (C) 2012 Team XBMC
 
     This program is free software: you can redistribute it and/or modify
