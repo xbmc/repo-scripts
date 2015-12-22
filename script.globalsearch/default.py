@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, urllib
 import xbmc, xbmcaddon
 
 ADDON        = xbmcaddon.Addon()
@@ -15,15 +15,19 @@ if ( __name__ == "__main__" ):
     searchstring = None
     try:
         params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
-        searchstring = params.get("searchstring")
-        searchstring = urllib.unquote_plus(searchstring)
     except:
+        params = {}
+    searchstring = params.get("searchstring",'')
+    searchstring = urllib.unquote_plus(searchstring)
+    if searchstring == '':
         keyboard = xbmc.Keyboard( '', LANGUAGE(32101), False )
         keyboard.doModal()
         if ( keyboard.isConfirmed() ):
             searchstring = keyboard.getText()
+    else:
+        del params['searchstring']
     if searchstring:
         import gui
-        ui = gui.GUI( "script-globalsearch-main.xml", CWD, "Default", searchstring=searchstring )
+        ui = gui.GUI( "script-globalsearch-main.xml", CWD, "Default", searchstring=searchstring, params=params )
         ui.doModal()
         del ui

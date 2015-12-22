@@ -26,8 +26,9 @@ def log(txt):
 
 class GUI( xbmcgui.WindowXMLDialog ):
     def __init__( self, *args, **kwargs ):
-        # some sanitize work for search string: strip the input and escape some chars
+        # some sanitize work for search string: strip the input and replace some chars
         self.searchstring = kwargs[ "searchstring" ].replace('(', '[(]').replace(')', '[)]').replace('+', '[+]').strip()
+        self.params = kwargs[ "params" ]
         log('script version %s started' % ADDONVERSION)
         self.nextsearch = False
 
@@ -104,10 +105,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
             self.getControl( 221 ).reset()
 
     def _parse_argv( self ):
-        try:
-            self.params = dict( arg.split( "=" ) for arg in sys.argv[ 1 ].split( "&" ) )
-        except:
-            self.params = {}
         self.movies = self.params.get( "movies", "" )
         self.tvshows = self.params.get( "tvshows", "" )
         self.episodes = self.params.get( "episodes", "" )
