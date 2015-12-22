@@ -19,7 +19,7 @@ VI.  Available window properties
 ------------------
 The addon can be run in two ways:
 - the user executes the addon
-- the script executes the addon: RunScript(script.globalsearch)
+- the addon is executed by another addon/skin: RunScript(script.globalsearch,searchstring=foo)
 
 You can specify which categories should be searched (this overrides the user preferences set in the addon settings):
 RunScript(script.globalsearch,movies=true)
