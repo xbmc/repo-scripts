@@ -31,40 +31,49 @@ class Main:
             self.image_now_fa = xbmc.getInfoLabel("MusicPlayer.Property(Fanart_Image)")
             self.image_now_cfa = xbmc.getInfoLabel("ListItem.Art(fanart)")
             if not HOME.getProperty("cfa_ignore_set") and self.image_now_cfa != self.image_prev_cfa:
-                self.image_prev_cfa = self.image_now_cfa
-                HOME.setProperty(self.prefix + 'ImageUpdating', '0')
-                image, imagecolor = Filter_Image(self.image_now_cfa, self.radius)
-                HOME.setProperty(self.prefix + 'ImageFiltercfa1', image)
-                HOME.setProperty(self.prefix + "ImageColorcfa1", imagecolor)
-                image = Filter_Pixelate(self.image_now_cfa, self.pixels)
-                HOME.setProperty(self.prefix + 'ImageFiltercfa2', image)
-                HOME.setProperty(self.prefix + "ImageColorcfa2", Random_Color())
-                image = Filter_Posterize(self.image_now_cfa, self.bits)
-                HOME.setProperty(self.prefix + 'ImageFiltercfa3', image)
-                HOME.setProperty(self.prefix + "ImageColorcfa3", Random_Color())
-                HOME.setProperty(self.prefix + 'ImageUpdating', '1')
-            if self.image_now != self.image_prev:
-                self.image_prev = self.image_now
-                image, imagecolor = Filter_Image(self.image_now, self.radius)
-                HOME.setProperty(self.prefix + 'ImageFilter1', image)
-                HOME.setProperty(self.prefix + "ImageColor1", imagecolor)
-                image = Filter_Pixelate(self.image_now, self.pixels)
-                HOME.setProperty(self.prefix + 'ImageFilter2', image)
-                HOME.setProperty(self.prefix + "ImageColor2", Random_Color())
-                image = Filter_Posterize(self.image_now, self.bits)
-                HOME.setProperty(self.prefix + 'ImageFilter3', image)
-                HOME.setProperty(self.prefix + "ImageColor3", Random_Color())
-            if self.image_now_fa != self.image_prev_fa:
-                self.image_prev_fa = self.image_now_fa
-                image, imagecolor = Filter_Image(self.image_now_fa, self.radius)
-                HOME.setProperty(self.prefix + 'ImageFilterfa1', image)
-                HOME.setProperty(self.prefix + "ImageColorfa1", imagecolor)
-                image = Filter_Pixelate(self.image_now_fa, self.pixels)
-                HOME.setProperty(self.prefix + 'ImageFilterfa2', image)
-                HOME.setProperty(self.prefix + "ImageColorfa2", Random_Color())
-                image = Filter_Posterize(self.image_now_fa, self.bits)
-                HOME.setProperty(self.prefix + 'ImageFilterfa3', image)
-                HOME.setProperty(self.prefix + "ImageColorfa3", Random_Color())
+                try:
+                    self.image_prev_cfa = self.image_now_cfa
+                    HOME.setProperty(self.prefix + 'ImageUpdating', '0')
+                    image, imagecolor = Filter_Image(self.image_now_cfa, self.radius)
+                    HOME.setProperty(self.prefix + 'ImageFiltercfa1', image)
+                    HOME.setProperty(self.prefix + "ImageColorcfa1", imagecolor)
+                    image = Filter_Pixelate(self.image_now_cfa, self.pixels)
+                    HOME.setProperty(self.prefix + 'ImageFiltercfa2', image)
+                    HOME.setProperty(self.prefix + "ImageColorcfa2", Random_Color())
+                    image = Filter_Posterize(self.image_now_cfa, self.bits)
+                    HOME.setProperty(self.prefix + 'ImageFiltercfa3', image)
+                    HOME.setProperty(self.prefix + "ImageColorcfa3", Random_Color())
+                    HOME.setProperty(self.prefix + 'ImageUpdating', '1')
+                except:
+                    log("Could not process image for daemon")
+            if self.image_now != self.image_prev and xbmc.Player().isPlayingAudio():
+                try:
+                    self.image_prev = self.image_now
+                    image, imagecolor = Filter_Image(self.image_now, self.radius)
+                    HOME.setProperty(self.prefix + 'ImageFilter1', image)
+                    HOME.setProperty(self.prefix + "ImageColor1", imagecolor)
+                    image = Filter_Pixelate(self.image_now, self.pixels)
+                    HOME.setProperty(self.prefix + 'ImageFilter2', image)
+                    HOME.setProperty(self.prefix + "ImageColor2", Random_Color())
+                    image = Filter_Posterize(self.image_now, self.bits)
+                    HOME.setProperty(self.prefix + 'ImageFilter3', image)
+                    HOME.setProperty(self.prefix + "ImageColor3", Random_Color())
+                except:
+                    log("Could not process image for daemon")
+            if self.image_now_fa != self.image_prev_fa and xbmc.Player().isPlayingAudio():
+                try:
+                    self.image_prev_fa = self.image_now_fa
+                    image, imagecolor = Filter_Image(self.image_now_fa, self.radius)
+                    HOME.setProperty(self.prefix + 'ImageFilterfa1', image)
+                    HOME.setProperty(self.prefix + "ImageColorfa1", imagecolor)
+                    image = Filter_Pixelate(self.image_now_fa, self.pixels)
+                    HOME.setProperty(self.prefix + 'ImageFilterfa2', image)
+                    HOME.setProperty(self.prefix + "ImageColorfa2", Random_Color())
+                    image = Filter_Posterize(self.image_now_fa, self.bits)
+                    HOME.setProperty(self.prefix + 'ImageFilterfa3', image)
+                    HOME.setProperty(self.prefix + "ImageColorfa3", Random_Color())
+                except:
+                    log("Could not process image for daemon")
             else:
                 xbmc.sleep(300)
 

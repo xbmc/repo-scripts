@@ -1,3 +1,5 @@
+v1.0.7
+- check if audio for player daemon ops
 v1.0.6
 - bugfix
 v1.0.5
