@@ -1,0 +1,5 @@
+v1.0.1
+- Remove 'EN' from <language> tag in addon.xml
+
+v1.0.0
+- Initial release

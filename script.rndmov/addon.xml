@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.rndmov" name="Random Movie" version="1.0.1" provider-name="pdnagilum">
+    <requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="addon.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Play Random Movie</summary>
+    <summary lang="no">Spill av tilfeldig film</summary>
+		<description lang="en">Play a random movie from your Kodi library. Choose from all, watched, or unwatched.</description>
+    <description lang="no">Spill en tilfeldig film fra film bibliteket i Kodi. Velg fra alle, sette, eller usette.</description>
+		<license>MIT License</license>
+		<language></language>
+		<source>https://github.com/nagilum/script.rndmov</source>
+		<email>pdnagilum@gmail.com</email>
+	</extension>
+</addon>

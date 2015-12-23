@@ -1,0 +1,46 @@
+# XBMC Media Center language file
+# Addon Name: Random Movie
+# Addon id: script.rndmov
+# Addon Provider: pdnagilum
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: pdnagilum@gmail.com\n"
+"POT-Creation-Date: 2015-12-16 22:00\n"
+"PO-Revision-Date: 2015-12-16 22:00\n"
+"Last-Translator: pdnagilum\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#Add-on messages id=32001 to 32007
+
+msgctxt "#32001"
+msgid "General"
+msgstr "Generelt"
+
+msgctxt "#32002"
+msgid "From which list of movies do you wish to randomize?"
+msgstr "Fra hvilken liste med filmer ønsker du å velge tilfeldig fra?"
+
+msgctxt "#32003"
+msgid "Ask each time the addon in launched"
+msgstr "Spør hver gang tillegget starter"
+
+msgctxt "#32004"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#32005"
+msgid "Watched"
+msgstr "Sette"
+
+msgctxt "#32006"
+msgid "Unwatched"
+msgstr "Usette"
+
+msgctxt "#32007"
+msgid "Cancel"
+msgstr "Avbryt"
