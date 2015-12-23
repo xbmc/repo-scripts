@@ -33,18 +33,20 @@ __temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp', '')), 'u
 cache = StorageServer.StorageServer(__scriptname__, int(24 * 364 / 2))  # 6 months
 regexHelper = re.compile('\W+', re.UNICODE)
 
+
 # ===============================================================================
 # Private utility functions
 # ===============================================================================
 def normalizeString(str):
     return unicodedata.normalize(
-        'NFKD', unicode(unicode(str, 'utf-8'))
+            'NFKD', unicode(unicode(str, 'utf-8'))
     ).encode('utf-8', 'ignore')
 
 
 def clean_title(item):
-    title = os.path.splitext(item["title"])
-    tvshow = os.path.splitext(item["tvshow"])
+    title = os.path.splitext(os.path.basename(item["title"]))
+    tvshow = os.path.splitext(os.path.basename(item["tvshow"]))
+
     if len(title) > 1:
         if re.match(r'^\.[a-z]{2,4}$', title[1], re.IGNORECASE):
             item["title"] = title[0]
@@ -69,17 +71,17 @@ def clean_title(item):
 
 
 def parse_rls_title(item):
-    item["title"] = regexHelper.sub(' ', item["title"])
-    item["tvshow"] = regexHelper.sub(' ', item["tvshow"])
+    title = regexHelper.sub(' ', item["title"])
+    tvshow = regexHelper.sub(' ', item["tvshow"])
 
-    groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", item["title"], re.I)
+    groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", title, re.I)
 
     if len(groups) == 0:
-        groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", item["tvshow"], re.I)
+        groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", tvshow, re.I)
 
     if len(groups) > 0 and len(groups[0]) >= 3:
         title, year, season, episode = groups[0]
-        item["year"] = str(int(year)) if len(year)==4 else year
+        item["year"] = str(int(year)) if len(year) == 4 else year
 
         item["tvshow"] = regexHelper.sub(' ', title).strip()
         item["season"] = str(int(season))
@@ -101,7 +103,7 @@ def log(module, msg):
 
 
 def get_cache_key(prefix="", str=""):
-    str = regexHelper.sub('_', str).lower()
+    str = re.sub(r'[\'\(\)\.\-\]\[ ]+', '_', str).lower()
     return prefix + '_' + str
 
 
@@ -155,8 +157,8 @@ class SubtitleHelper:
                 return results  # return empty set
 
             urls = re.findall(
-                u'<a href="viewseries\.php\?id=(\d+)[^"]+" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div>',
-                search_result)
+                    u'<a href="viewseries\.php\?id=(\d+)[^"]+" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div>',
+                    search_result)
 
             results = self._filter_urls(urls, search_string, item)
             if results:
@@ -180,8 +182,8 @@ class SubtitleHelper:
             return results  # return empty set
 
         urls = re.findall(
-            u'<a href="view\.php\?id=(\d+)[^"]+" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div><span class="smtext">(\d{4})</span>',
-            search_result)
+                u'<a href="view\.php\?id=(\d+)[^"]+" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div><span class="smtext">(\d{4})</span>',
+                search_result)
 
         results = self._filter_urls(urls, search_string, item)
         return results
@@ -297,7 +299,7 @@ class SubtitleHelper:
                                     episode_found = True
 
                                     url = self.BASE_URL + "/getajax.php?" + urllib.urlencode(
-                                        {"episodedetails": episode_id})
+                                            {"episodedetails": episode_id})
                                     subtitle_page = self._is_logged_in(url)
 
                                     x, i = self._retrive_subtitles(subtitle_page, item)
@@ -324,31 +326,31 @@ class SubtitleHelper:
         total_downloads = 0
         if page is not None:
             found_subtitles = re.findall(
-                "downloadsubtitle\.php\?id=(?P<fid>\d*).*?subt_lang.*?title=\"(?P<language>.*?)\".*?subtitle_title.*?title=\"(?P<title>.*?)\">.*?>(?P<downloads>[^ ]+) הורדות",
-                page)
+                    "downloadsubtitle\.php\?id=(?P<fid>\d*).*?subt_lang.*?title=\"(?P<language>.*?)\".*?subtitle_title.*?title=\"(?P<title>.*?)\">.*?>(?P<downloads>[^ ]+) הורדות",
+                    page)
             for (subtitle_id, language, title, downloads) in found_subtitles:
                 if xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2) in item[
                     "3let_language"]:
                     subtitle_rate = self._calc_rating(title, item["file_original_path"])
                     total_downloads += int(downloads.replace(",", ""))
                     ret.append(
-                        {'lang_index': item["3let_language"].index(
-                            xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2)),
-                         'filename': title,
-                         'link': subtitle_id,
-                         'language_name': xbmc.convertLanguage(heb_to_eng(language),
-                                                               xbmc.ENGLISH_NAME),
-                         'language_flag': xbmc.convertLanguage(heb_to_eng(language),
-                                                               xbmc.ISO_639_1),
-                         'id': subtitle_id,
-                         'rating': int(downloads.replace(",", "")),
-                         'sync': subtitle_rate >= 3.8,
-                         'hearing_imp': 0,
-                         'is_preferred':
-                             xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2) == item['preferredlanguage']
-                        })
+                            {'lang_index': item["3let_language"].index(
+                                    xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2)),
+                                'filename': title,
+                                'link': subtitle_id,
+                                'language_name': xbmc.convertLanguage(heb_to_eng(language),
+                                                                      xbmc.ENGLISH_NAME),
+                                'language_flag': xbmc.convertLanguage(heb_to_eng(language),
+                                                                      xbmc.ISO_639_1),
+                                'id': subtitle_id,
+                                'rating': int(downloads.replace(",", "")),
+                                'sync': subtitle_rate >= 3.8,
+                                'hearing_imp': 0,
+                                'is_preferred':
+                                    xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2) == item[
+                                        'preferredlanguage']
+                            })
         return ret, total_downloads
-
 
     def _calc_rating(self, subsfile, file_original_path):
         file_name = os.path.basename(file_original_path)

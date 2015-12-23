@@ -1,3 +1,9 @@
+4.3.8 - by CaTz (22/12/2015)
+- Fix cache collisions issues
+
+4.3.7 - by CaTz (19/12/2015)
+- Fix parsing & hebrew issues
+
 4.3.6 - by maortal 19/11/2015
 - Hotfix parse_rls_title function
 
