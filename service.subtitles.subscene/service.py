@@ -14,6 +14,8 @@ import re
 import string
 import difflib
 import HTMLParser
+from operator import itemgetter
+
 
 __addon__ = xbmcaddon.Addon()
 __author__ = __addon__.getAddonInfo('author')
@@ -32,6 +34,12 @@ sys.path.append(__resource__)
 from SubsceneUtilities import log, geturl, get_language_codes, subscene_languages, get_episode_pattern
 
 main_url = "http://subscene.com"
+
+aliases = {
+    "marvels agents of shield" : "Agents of Shield",
+    "marvels agents of s.h.i.e.l.d" : "Agents of Shield",
+    "marvels jessica jones": "Jessica Jones"
+}
 
 # Seasons as strings for searching
 seasons = ["Specials", "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"]
@@ -64,7 +72,7 @@ xbmcvfs.mkdirs(__temp__)
 
 
 def find_movie(content, title, year):
-    found_urls = []
+    found_urls = {}
     found_movies = []
 
     h = HTMLParser.HTMLParser()
@@ -72,15 +80,23 @@ def find_movie(content, title, year):
         log(__name__, secmatches.group('section'))
         for matches in re.finditer(movie_season_pattern, secmatches.group('content'), re.IGNORECASE | re.DOTALL):
             if matches.group('link') in found_urls:
+                if secmatches.group('section') == 'close':
+                    found_movies[found_urls[matches.group('link')]]['is_close'] = True
+                if secmatches.group('section') == 'exact':
+                    found_movies[found_urls[matches.group('link')]]['is_exact'] = True
                 continue
-            found_urls.append(matches.group('link'))
+            found_urls[matches.group('link')] = len(found_movies)
 
             found_title = matches.group('title')
             found_title = h.unescape(found_title)
             log(__name__, "Found movie on search page: %s (%s)" % (found_title, matches.group('year')))
             found_movies.append(
-                {'t': string.lower(found_title), 'y': int(matches.group('year')), 's': secmatches.group('section'),
-                 'l': matches.group('link')})
+                {'t': string.lower(found_title),
+                 'y': int(matches.group('year')),
+                 'is_exact': secmatches.group('section') == 'exact',
+                 'is_close': secmatches.group('section') == 'close',
+                 'l': matches.group('link'),
+                 'c': int(matches.group('numsubtitles'))})
 
     year = int(year)
     title = string.lower(title)
@@ -99,10 +115,19 @@ def find_movie(content, title, year):
                 return movie['l']
 
     # Priority 3: "Exact" match according to search result page
+    close_movies = []
     for movie in found_movies:
-        if movie["s"] == "exact":
+        if movie['is_exact']:
             log(__name__, "Using 'Exact' match: %s (%s)" % (movie['t'], movie['y']))
             return movie['l']
+        if movie['is_close']:
+            close_movies.append(movie)
+
+    # Priority 4: "Close" match according to search result page
+    if len(close_movies) > 0:
+        close_movies = sorted(close_movies, key=itemgetter('c'), reverse=True)
+        log(__name__, "Using 'Close' match: %s (%s)" % (close_movies[0]['t'], close_movies[0]['y']))
+        return close_movies[0]['l']
 
     return None
 
@@ -217,7 +242,7 @@ def getallsubs(url, allowed_languages, filename="", episode=""):
                 sync = True
 
             if episode != "":
-                log(__name__, "match: "+subtitle_name)
+                # log(__name__, "match: "+subtitle_name)
                 if episode_regex.search(subtitle_name):
                     subtitles.append({'rating': rating, 'filename': subtitle_name, 'sync': sync, 'link': link,
                                       'lang': language_info, 'hearing_imp': hearing_imp, 'comment': comment})
@@ -271,6 +296,12 @@ def search_movie(title, year, languages, filename):
 
 def search_tvshow(tvshow, season, episode, languages, filename):
     tvshow = prepare_search_string(tvshow)
+
+    tvshow_lookup = tvshow.lower().replace("'", "").strip(".")
+    if tvshow_lookup in aliases:
+        log(__name__, 'found alias for "%s"' % tvshow_lookup)
+        tvshow = aliases[tvshow_lookup]
+
     search_string = tvshow + " - " + seasons[int(season)] + " Season"
 
     log(__name__, "Search tvshow = %s" % search_string)
@@ -300,17 +331,16 @@ def search_filename(filename, languages):
         yearval = int(year)
     except ValueError:
         yearval = 0
-    if title and yearval > 1900:
+    match = re.search(r'\WS(?P<season>\d\d)E(?P<episode>\d\d)', filename, flags=re.IGNORECASE)
+    if match is not None:
+        tvshow = string.strip(title[:match.start('season') - 1])
+        season = string.lstrip(match.group('season'), '0')
+        episode = string.lstrip(match.group('episode'), '0')
+        search_tvshow(tvshow, season, episode, languages, filename)
+    elif title and yearval > 1900:
         search_movie(title, year, languages, filename)
     else:
-        match = re.search(r'\WS(?P<season>\d\d)E(?P<episode>\d\d)', title, flags=re.IGNORECASE)
-        if match is not None:
-            tvshow = string.strip(title[:match.start('season') - 1])
-            season = string.lstrip(match.group('season'), '0')
-            episode = string.lstrip(match.group('episode'), '0')
-            search_tvshow(tvshow, season, episode, languages, filename)
-        else:
-            search_manual(filename, languages, filename)
+        search_manual(filename, languages, filename)
 
 
 def search(item):

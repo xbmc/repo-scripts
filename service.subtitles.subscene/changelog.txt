@@ -1,13 +1,10 @@
-1.6.1
-- bug fix
+1.7.0
+- improved title matching
 
 1.6.0
 - prefer title over filename for search (better handling of streaming services)
 - find subtitle files in subfolders of archives
-
-1.5.1
 - consider preferred language
-- bug fixes
 
 1.5.0
 - improved performance
@@ -15,9 +12,6 @@
 - removed support for languages with nearly no uploads on subscene
 - better title detection (release year can be one off)
 - better episode detection (allows episode markers in 1x01 format)
-
-1.1.2
-- bug fix for temp folder issues
 
 1.1.0
 - added uploader comments to download selection
