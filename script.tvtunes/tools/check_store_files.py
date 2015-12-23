@@ -5,7 +5,9 @@ import os
 # gets all the themes in the library, keyed off of the theme filename
 def collectItems(rootDir, userlist, cleanLib=False):
     # Now add each user entry into the list
-    mediaIds = os.listdir(rootDir)
+    mediaIds = []
+    if os.path.exists(rootDir):
+        mediaIds = os.listdir(rootDir)
 
     print "Number of %s is %d" % (rootDir, len(mediaIds))
 

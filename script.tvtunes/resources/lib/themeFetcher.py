@@ -30,12 +30,20 @@ from settings import dir_exists
 from library import ThemeLibrary
 import soundcloud
 
+try:
+    from metahandler import metahandlers
+except Exception:
+    log("ThemeLibrary: metahandler Import Failed %s" % traceback.format_exc(), xbmc.LOGERROR)
+
 
 #################################
 # Core TvTunes Scraper class
 #################################
 class TvTunesFetcher():
-    def __init__(self, videoList):
+    def __init__(self, videoList, incAudioThemes=True, incVideoThemes=True):
+        self.includeAudio = incAudioThemes
+        self.includeVideo = incVideoThemes
+
         # Set up the addon directories if they do not already exist
         if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")):
             xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8"))
@@ -128,6 +136,15 @@ class TvTunesFetcher():
         theme_url = themeDetails.getMediaURL()
         log("download: %s" % theme_url)
 
+        fileType = ".mp3"
+        # For video files check what type they are
+        if Settings.isVideoFile(theme_url):
+            fileExt = os.path.splitext(theme_url)[1]
+            # If this is a file, then get it's parent directory
+            # Also limit file extensions to a maximum of 4 characters
+            if fileExt is not None and fileExt != "" and len(fileExt) < 5:
+                fileType = fileExt
+
         # Check for custom theme directory
         if Settings.isThemeDirEnabled():
             themeDir = os_path_join(path, Settings.getThemeDirectory())
@@ -147,7 +164,7 @@ class TvTunesFetcher():
 
         log("target directory: %s" % path)
 
-        theme_file = self.getNextThemeFileName(path)
+        theme_file = self.getNextThemeFileName(path, fileType)
         tmpdestination = xbmc.translatePath('special://profile/addon_data/%s/temp/%s' % (__addonid__, theme_file)).decode("utf-8")
         destination = os_path_join(path, theme_file)
 
@@ -243,16 +260,19 @@ class TvTunesFetcher():
         # Check if the search engine being used is GoEar
         if self.searchEngine == Settings.GOEAR:
             # Goeear is selected
-            searchListing = GoearListing()
+            searchListing = GoearListing(self.includeAudio, self.includeVideo)
         elif self.searchEngine == Settings.SOUNDCLOUD:
             # Soundcloud is selected
-            searchListing = SoundcloudListing()
+            searchListing = SoundcloudListing(self.includeAudio, self.includeVideo)
         elif self.searchEngine == Settings.TELEVISION_TUNES:
             # Television Tunes
-            searchListing = TelevisionTunesListing()
+            searchListing = TelevisionTunesListing(self.includeAudio, self.includeVideo)
         elif self.searchEngine == Settings.THEMELIBRARY:
             # Theme Library Selected
-            searchListing = ThemeLibraryListing()
+            searchListing = ThemeLibraryListing(self.includeAudio, self.includeVideo)
+        elif self.searchEngine == Settings.PLEXLIBRARY:
+            # Plex Library Selected
+            searchListing = PlexLibraryListing(self.includeAudio, self.includeVideo)
 
         # Check the special case where we use all the engines
         if self.searchEngine == Settings.ALL_ENGINES:
@@ -260,13 +280,14 @@ class TvTunesFetcher():
             # We do not want them doing this search all the time!
             self.searchEngine = Settings.getSearchEngine()
 
-            themeLibraryList = ThemeLibraryListing().themeSearch(showname, alternativeTitle, isTvShow=isTvShow, year=year, imdb=imdb, showProgressDialog=showProgressDialog)
-            tvtunesList = TelevisionTunesListing().themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
-            goearList = GoearListing().themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
-            soundcloudList = SoundcloudListing().themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+            themeLibraryList = ThemeLibraryListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, isTvShow=isTvShow, year=year, imdb=imdb, showProgressDialog=showProgressDialog)
+            plexLibraryList = PlexLibraryListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, isTvShow=isTvShow, year=year, imdb=imdb, showProgressDialog=showProgressDialog)
+            tvtunesList = TelevisionTunesListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+            goearList = GoearListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+            soundcloudList = SoundcloudListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
 
             # Join all the entries into one list
-            theme_list = themeLibraryList + tvtunesList + goearList + soundcloudList
+            theme_list = themeLibraryList + plexLibraryList + tvtunesList + goearList + soundcloudList
             # Now sort the list
             theme_list.sort()
         else:
@@ -279,13 +300,13 @@ class TvTunesFetcher():
         return theme_list
 
     # Calculates the next filename to use when downloading multiple themes
-    def getNextThemeFileName(self, path):
-        themeFileName = "theme.mp3"
-        if Settings.isMultiThemesSupported() and xbmcvfs.exists(os_path_join(path, "theme.mp3")):
+    def getNextThemeFileName(self, path, fileType=".mp3"):
+        themeFileName = "theme" + fileType
+        if Settings.isMultiThemesSupported() and xbmcvfs.exists(os_path_join(path, "theme" + fileType)):
             idVal = 1
-            while xbmcvfs.exists(os_path_join(path, "theme" + str(idVal) + ".mp3")):
+            while xbmcvfs.exists(os_path_join(path, "theme" + str(idVal) + fileType)):
                 idVal = idVal + 1
-            themeFileName = "theme" + str(idVal) + ".mp3"
+            themeFileName = "theme" + str(idVal) + fileType
         log("Next Theme Filename = " + themeFileName)
         return themeFileName
 
@@ -294,11 +315,12 @@ class TvTunesFetcher():
         displayList = []
         # Add the theme library first
         displayList.insert(0, __language__(32125))
-        displayList.insert(1, Settings.TELEVISION_TUNES)
-        displayList.insert(2, Settings.SOUNDCLOUD)
-        displayList.insert(3, Settings.GOEAR)
+        displayList.insert(1, __language__(32132))
+        displayList.insert(2, Settings.TELEVISION_TUNES)
+        displayList.insert(3, Settings.SOUNDCLOUD)
+        displayList.insert(4, Settings.GOEAR)
 
-        manualSearchOffset = 4
+        manualSearchOffset = 5
 
         displayList.insert(manualSearchOffset, "** %s **" % __language__(32121))
 
@@ -317,13 +339,15 @@ class TvTunesFetcher():
         else:
             if select == 0:
                 self.searchEngine = Settings.THEMELIBRARY
-            if (select == 1) or (select == (manualSearchOffset + 1)):
+            elif select == 1:
+                self.searchEngine = Settings.PLEXLIBRARY
+            if (select == 2) or (select == (manualSearchOffset + 1)):
                 self.searchEngine = Settings.TELEVISION_TUNES
-            elif (select == 2) or (select == (manualSearchOffset + 2)):
+            elif (select == 3) or (select == (manualSearchOffset + 2)):
                 self.searchEngine = Settings.SOUNDCLOUD
-            elif (select == 3) or (select == (manualSearchOffset + 3)):
+            elif (select == 4) or (select == (manualSearchOffset + 3)):
                 self.searchEngine = Settings.GOEAR
-            elif (select == 4):
+            elif (select == 5):
                 self.searchEngine = Settings.ALL_ENGINES
 
             # Record if this is a manual search
@@ -495,6 +519,10 @@ class ProgressDialog(DummyProgressDialog):
 # Class to define the interface for listings from websites
 ###########################################################
 class DefaultListing():
+    def __init__(self, incAudioThemes=True, incVideoThemes=True):
+        self.includeAudio = incAudioThemes
+        self.includeVideo = incVideoThemes
+
     # Perform the search for the theme (Manual search)
     def search(self, showname, showProgressDialog=True):
         progressDialog = DummyProgressDialog(showname)
@@ -832,6 +860,10 @@ class TelevisionTunesListing(DefaultListing):
 
     # Perform the search for the theme
     def _search(self, showname, progressDialog):
+        # Only Audio is supported by this scraper
+        if not self.includeAudio:
+            return []
+
         search_url = "http://www.televisiontunes.com/search.php?q=%s"
 
         log("TelevisionTunesListing: Search for %s" % showname)
@@ -932,6 +964,10 @@ class TelevisionTunesItemDetails(ThemeItemDetails):
 class GoearListing(DefaultListing):
     # Perform the search for the theme
     def _search(self, name, progressDialog):
+        # Only Audio is supported by this scraper
+        if not self.includeAudio:
+            return []
+
         baseUrl = "http://www.goear.com/search/"
         # User - instead of spaces
         searchName = name.replace(" ", "-")
@@ -1160,6 +1196,10 @@ class SoundcloudListing(DefaultListing):
     def _search(self, showname, progressDialog):
         log("SoundcloudListing: Search for %s" % showname)
 
+        # Only Audio is supported by this scraper
+        if not self.includeAudio:
+            return []
+
         theme_list = []
 
         numTracksInBatch = 200   # set it to a value to start the loop for the first time
@@ -1263,7 +1303,7 @@ class ThemeLibraryListing(DefaultListing):
         themeLibrary = ThemeLibrary()
         progressDialog.updateProgress(25)
 
-        themeDetails = themeLibrary.getThemes(name, isTvShow, year, imdb)
+        themeDetails = themeLibrary.getThemes(name, isTvShow, year, imdb, self.includeAudio, self.includeVideo)
         del themeLibrary
 
         progressDialog.updateProgress(50)
@@ -1299,7 +1339,7 @@ class ThemeLibraryListing(DefaultListing):
     def _search(self, showname, progressDialog):
         return []
 
-    # We don't add any appendices for Television Tunes search
+    # We don't add any appendices for theme library search
     def getSearchAppendices(self):
         return []
 
@@ -1313,3 +1353,113 @@ class ThemeLibraryListing(DefaultListing):
             log("ThemeLibraryListing: Failed to convert size")
 
         return displayStr
+
+
+#################################################
+# Searches Plex Library for themes
+#################################################
+class PlexLibraryListing(DefaultListing):
+    def themeSearch(self, name, alternativeTitle=None, isTvShow=None, year=None, imdb=None, showProgressDialog=True):
+        progressDialog = DummyProgressDialog(name)
+        if showProgressDialog:
+            progressDialog = ProgressDialog(name)
+
+        # Check the details that have been passed in for a match against the Database
+        checkedId = self._getMetaHandlersID(isTvShow, name, year)
+        progressDialog.updateProgress(25)
+
+        # Get the details from the plex library
+        log("PlexLibraryListing: Searching for theme with id: %s" % checkedId)
+        themeUrls = []
+        if checkedId not in [None, ""]:
+            validURL = self._getValidUrl(checkedId)
+            if validURL not in [None, ""]:
+                themeUrls.append(validURL)
+
+        progressDialog.updateProgress(50)
+
+        # If the passed in imdb value is not the same as the one we found, try that as well
+        if imdb not in [None, ""]:
+            if checkedId != imdb:
+                log("PlexLibraryListing: ID comparison, Original = %s, checked = %s" % (imdb, checkedId))
+                validURL = self._getValidUrl(imdb)
+                if validURL not in [None, ""]:
+                    themeUrls.append(validURL)
+
+        progressDialog.updateProgress(75)
+
+        themeDetailsList = []
+        themeNum = 0
+        for themeUrl in themeUrls:
+            title = ""
+            themeNum = themeNum + 1
+            title = "%s %d" % (__language__(32131), themeNum)
+
+            theme = ThemeItemDetails(title, themeUrl)
+            theme.setPriority(1)
+            themeDetailsList.append(theme)
+
+        # If there is a progress dialog, make sure it is closed
+        progressDialog.updateProgress(100)
+        progressDialog.closeProgress()
+
+        return themeDetailsList
+
+    # Perform the search for the theme
+    def _search(self, showname, progressDialog):
+        return []
+
+    # We don't add any appendices for Plex Library search
+    def getSearchAppendices(self):
+        return []
+
+    def _getValidUrl(self, videoId):
+        if videoId in [None, ""]:
+            return None
+
+        url = "http://tvthemes.plexapp.com/%s.mp3" % videoId
+
+        try:
+            # Check to see if this is actually a link that exists
+            request = urllib2.Request(url)
+            request.get_method = lambda: 'HEAD'
+            urllib2.urlopen(request)
+            log("PlexLibraryListing: Theme exists at URL = %s" % url)
+        except urllib2.HTTPError:
+            log("PlexLibraryListing: No theme exists at URL = %s" % url)
+            url = None
+
+        return url
+
+    # Uses metahandlers to get the TV ID
+    def _getMetaHandlersID(self, isTvShow, title, year=""):
+        idValue = ""
+        if year in [None, 0, "0"]:
+            year = ""
+        # Does not seem to work correctly with the year at the moment
+        year = ""
+        metaget = None
+        try:
+            metaget = metahandlers.MetaData(preparezip=False)
+            if isTvShow:
+                idValue = metaget.get_meta('tvshow', title, year=str(year))['tvdb_id']
+            else:
+                idValue = metaget.get_meta('movie', title, year=str(year))['imdb_id']
+
+            # Check if we have no id returned, and we added in a year
+            if (idValue in [None, ""]) and (year not in [None, ""]):
+                if isTvShow:
+                    idValue = metaget.get_meta('tvshow', title)['tvdb_id']
+                else:
+                    idValue = metaget.get_meta('movie', title)['imdb_id']
+
+            if not idValue:
+                idValue = ""
+        except Exception:
+            idValue = ""
+            log("PlexLibraryListing: Failed to get Metahandlers ID %s" % traceback.format_exc())
+
+        if metaget is not None:
+            del metaget
+
+        return idValue

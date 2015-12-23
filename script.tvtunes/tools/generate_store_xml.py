@@ -37,6 +37,8 @@ def prettify(elem):
 if __name__ == '__main__':
     print "About to generate tvtunes-store.xml"
 
+    shouldOpenWindows = False
+
     # Construct the XML handler
     root = ET.Element('tvtunesStore')
     enabledElem = ET.SubElement(root, 'enabled')
@@ -45,9 +47,12 @@ if __name__ == '__main__':
     moviesElem = ET.SubElement(root, 'movies')
 
     # Now add each tv show into the list
-    tvShowIds = os.listdir('tvshows')
+    tvShowIds = []
+    if os.path.exists('tvshows'):
+        tvShowIds = os.listdir('tvshows')
 
     print "Number of TV Shows is %d" % len(tvShowIds)
+    openWindows = 0
 
     for tvShowId in tvShowIds:
         # Get the contents of the directory
@@ -91,9 +96,15 @@ if __name__ == '__main__':
 
         if numThemes > 1:
             print "TvShow %s has %d themes" % (themesDir, numThemes)
+            if shouldOpenWindows and (openWindows < 10):
+                windowsDir = "start %s\\%s" % ('tvshows', tvShowId)
+                os.system(windowsDir)
+                openWindows = openWindows + 1
 
     # Now add each tv show into the list
-    movieIds = os.listdir('movies')
+    movieIds = []
+    if os.path.exists('movies'):
+        movieIds = os.listdir('movies')
 
     print "Number of Movies is %d" % len(movieIds)
 
@@ -145,6 +156,10 @@ if __name__ == '__main__':
 
         if numThemes > 1:
             print "Movie %s has %d themes" % (themesDir, numThemes)
+            if shouldOpenWindows and (openWindows < 10):
+                windowsDir = "start %s\\%s" % ('movies', movieId)
+                os.system(windowsDir)
+                openWindows = openWindows + 1
 
     # Now create the file for the Store
     fileContent = prettify(root)

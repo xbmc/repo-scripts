@@ -548,7 +548,15 @@ msgctxt "#32130"
 msgid "Play themes when browsing Music Library"
 msgstr ""
 
-#empty strings from id 32131 to 32200
+msgctxt "#32131"
+msgid "Plex Theme"
+msgstr ""
+
+msgctxt "#32132"
+msgid "Plex Library"
+msgstr ""
+
+#empty strings from id 32133 to 32200
 
 msgctxt "#32201"
 msgid "Movies"
@@ -567,7 +575,7 @@ msgid "[Filter]: Show Only Missing Themes"
 msgstr ""
 
 msgctxt "#32205"
-msgid "[Action]: Retrieve Missing Themes"
+msgid "[Action]: Retrieve Missing Audio Themes"
 msgstr ""
 
 msgctxt "#32206"
@@ -582,7 +590,12 @@ msgctxt "#32208"
 msgid "[Action]: Start Screensaver"
 msgstr ""
 
-#empty strings from id 32209 to 32990
+msgctxt "#32209"
+msgid "[Action]: Retrieve Missing Video Themes"
+msgstr ""
+
+
+#empty strings from id 32210 to 32990
 
 msgctxt "#32991"
 msgid "Playback"

@@ -139,7 +139,7 @@ class ThemeLibrary():
 
         return True
 
-    def getThemes(self, title, isTvShow, year, imdb):
+    def getThemes(self, title, isTvShow, year, imdb, includeAudio=True, includeVideo=True):
         if not self.loadLibraryContents():
             # Failed to load the library content
             xbmcgui.Dialog().ok(__addon__.getLocalizedString(32101), __addon__.getLocalizedString(32123))
@@ -152,23 +152,29 @@ class ThemeLibrary():
 
         themeUrls = {}
         if checkedId not in ["", None]:
-            (themeUrl, size) = self._getAudioTheme(checkedId, isTvShow)
-            if themeUrl not in ["", None]:
-                themeUrls[themeUrl] = size
-            (vidThemeUrl, vidSize) = self._getVideoTheme(checkedId, isTvShow)
-            if vidThemeUrl not in ["", None]:
-                themeUrls[vidThemeUrl] = vidSize
+            if includeAudio:
+                (themeUrl, size) = self._getAudioTheme(checkedId, isTvShow)
+                if themeUrl not in ["", None]:
+                    themeUrls[themeUrl] = size
+            # Only get the video theme if it is required
+            if includeVideo:
+                (vidThemeUrl, vidSize) = self._getVideoTheme(checkedId, isTvShow)
+                if vidThemeUrl not in ["", None]:
+                    themeUrls[vidThemeUrl] = vidSize
 
         if imdb not in [None, ""]:
             if checkedId != imdb:
                 log("ThemeLibrary: ID comparison, Original = %s, checked = %s" % (imdb, checkedId))
                 # Also get the theme for database ID
-                (themeUrl, size) = self._getAudioTheme(imdb, isTvShow)
-                if themeUrl not in ["", None]:
-                    themeUrls[themeUrl] = size
-                (vidThemeUrl, vidSize) = self._getVideoTheme(imdb, isTvShow)
-                if vidThemeUrl not in ["", None]:
-                    themeUrls[vidThemeUrl] = vidSize
+                if includeAudio:
+                    (themeUrl, size) = self._getAudioTheme(imdb, isTvShow)
+                    if themeUrl not in ["", None]:
+                        themeUrls[themeUrl] = size
+                # Only get the video theme if it is required
+                if includeVideo:
+                    (vidThemeUrl, vidSize) = self._getVideoTheme(imdb, isTvShow)
+                    if vidThemeUrl not in ["", None]:
+                        themeUrls[vidThemeUrl] = vidSize
 
         return themeUrls
 

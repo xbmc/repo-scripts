@@ -103,12 +103,22 @@ class MenuNavigator():
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         # Action: Retrieve missing themes
-        url = self._build_url({'mode': 'action', 'actiontype': 'RetrieveMissingThemes'})
+        url = self._build_url({'mode': 'action', 'actiontype': 'RetrieveMissingAudioThemes'})
         filterTitle = "  %s" % __addon__.getLocalizedString(32205)
         li = xbmcgui.ListItem(filterTitle, iconImage=__icon__)
         li.setProperty("Fanart_Image", __fanart__)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
+
+        # Action: Retrieve missing themes
+        # Add the moment only the Theme Library supports videos
+        if Settings.getSearchEngine() in [Settings.ALL_ENGINES, Settings.THEMELIBRARY]:
+            url = self._build_url({'mode': 'action', 'actiontype': 'RetrieveMissingVideoThemes'})
+            filterTitle = "  %s" % __addon__.getLocalizedString(32209)
+            li = xbmcgui.ListItem(filterTitle, iconImage=__icon__)
+            li.setProperty("Fanart_Image", __fanart__)
+            li.addContextMenuItems([], replaceItems=True)
+            xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         # Action: Start Screensaver
         url = self._build_url({'mode': 'screensaver', 'actiontype': 'StartScreensaver'})
@@ -207,7 +217,7 @@ class MenuNavigator():
         return Videolist
 
     # Checks if a theme exists in a directory
-    def _doesThemeExist(self, directory, checkParent=False):
+    def _doesThemeExist(self, directory, checkParent=False, incAudioThemes=True, incVideoThemes=True):
         log("doesThemeExist: Checking directory: %s" % directory)
         # Check for custom theme directory
         if Settings.isThemeDirEnabled():
@@ -233,7 +243,14 @@ class MenuNavigator():
         # check if the directory exists before searching
         if dir_exists(directory):
             # Generate the regex
-            themeFileRegEx = Settings.getThemeFileRegEx()
+            audioOnly = False
+            videoOnly = False
+            if not incAudioThemes:
+                videoOnly = True
+            if not incVideoThemes:
+                audioOnly = True
+
+            themeFileRegEx = Settings.getThemeFileRegEx(audioOnly=audioOnly, videoOnly=videoOnly)
 
             dirs, files = list_dir(directory)
             for aFile in files:
@@ -306,7 +323,7 @@ class MenuNavigator():
             xbmc.sleep(5)
 
     # Does a search for all the missing themes
-    def fetchAllMissingThemes(self):
+    def fetchMissingThemes(self, incAudioThemes=True, incVideoThemes=False):
         # It could take a little while to get the videos so show the busy dialog
         xbmc.executebuiltin("ActivateWindow(busydialog)")
 
@@ -322,10 +339,10 @@ class MenuNavigator():
             # Get the path where the theme should be stored
             path = self.getPathForVideoItem(videoItem)
             # Skip items that already have themes
-            if self._doesThemeExist(path):
+            if self._doesThemeExist(path, False, incAudioThemes, incVideoThemes):
                 continue
 
-            if Settings.isThemeDirEnabled() and self._doesThemeExist(path, True):
+            if Settings.isThemeDirEnabled() and self._doesThemeExist(path, True, incAudioThemes, incVideoThemes):
                 if moveExistingThemes is None:
                     xbmc.executebuiltin("Dialog.Close(busydialog)")
                     # Prompt user if we should move themes in the parent
@@ -350,7 +367,8 @@ class MenuNavigator():
         xbmc.executebuiltin("Dialog.Close(busydialog)")
 
         if len(videoList) > 0:
-            TvTunesFetcher(videoList)
+            fetcher = TvTunesFetcher(videoList, incAudioThemes, incVideoThemes)
+            del fetcher
 
     # Moves a theme that is not in a theme folder to a theme folder
     def _moveToThemeFolder(self, directory):
@@ -479,9 +497,19 @@ if __name__ == '__main__':
     elif mode[0] == 'action':
         log("TvTunesPlugin: Mode is ACTION")
 
+        incAudio = False
+        incVideo = False
+
+        actionType = args.get('actiontype', None)
+        if actionType is not None:
+            if actionType[0] in ['RetrieveMissingAudioThemes']:
+                incAudio = True
+            if actionType[0] in ['RetrieveMissingVideoThemes']:
+                incVideo = True
+
         # Only one action at the moment
         menuNav = MenuNavigator(base_url, addon_handle)
-        menuNav.fetchAllMissingThemes()
+        menuNav.fetchMissingThemes(incAudio, incVideo)
         del menuNav
 
     elif mode[0] == 'screensaver':

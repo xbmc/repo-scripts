@@ -290,6 +290,7 @@ class Settings():
     SOUNDCLOUD = 'soundcloud.com'
     GOEAR = 'goear.com'
     THEMELIBRARY = 'themelibrary'
+    PLEXLIBRARY = 'plexlibrary'
     PROMPT_ENGINE = 'Prompt User'
 
     # Settings for Automatically Downloading
@@ -370,22 +371,26 @@ class Settings():
 
     # Calculates the regular expression to use to search for theme files
     @staticmethod
-    def getThemeFileRegEx(searchDir=None, extensionOnly=False, audioOnly=False):
-        fileTypes = "mp3"  # mp3 is the default that is always supported
-        if(__addon__.getSetting("wma") == 'true'):
-            fileTypes = fileTypes + "|wma"
-        if(__addon__.getSetting("flac") == 'true'):
-            fileTypes = fileTypes + "|flac"
-        if(__addon__.getSetting("m4a") == 'true'):
-            fileTypes = fileTypes + "|m4a"
-        if(__addon__.getSetting("wav") == 'true'):
-            fileTypes = fileTypes + "|wav"
-        if(__addon__.getSetting("wav") == 'true'):
-            fileTypes = fileTypes + "|wav"
+    def getThemeFileRegEx(searchDir=None, extensionOnly=False, audioOnly=False, videoOnly=False):
+        fileTypes = ""
+        if not videoOnly:
+            fileTypes = "mp3"  # mp3 is the default that is always supported
+            if(__addon__.getSetting("wma") == 'true'):
+                fileTypes = fileTypes + "|wma"
+            if(__addon__.getSetting("flac") == 'true'):
+                fileTypes = fileTypes + "|flac"
+            if(__addon__.getSetting("m4a") == 'true'):
+                fileTypes = fileTypes + "|m4a"
+            if(__addon__.getSetting("wav") == 'true'):
+                fileTypes = fileTypes + "|wav"
+            if(__addon__.getSetting("wav") == 'true'):
+                fileTypes = fileTypes + "|wav"
         if not audioOnly:
             videoFileTypes = Settings.getVideoThemeFileExtensions()
             if videoFileTypes not in [None, ""]:
-                fileTypes = fileTypes + '|' + videoFileTypes
+                if len(fileTypes) > 0:
+                    fileTypes = fileTypes + '|'
+                fileTypes = fileTypes + videoFileTypes
         themeRegEx = '(theme[ _A-Za-z0-9.-]*.(' + fileTypes + ')$)'
         # If using the directory method then remove the requirement to have "theme" in the name
         if (searchDir is not None) and Settings.isThemeDirEnabled():
@@ -507,6 +512,8 @@ class Settings():
             return Settings.GOEAR
         elif index == 4:
             return Settings.THEMELIBRARY
+        elif index == 5:
+            return Settings.PLEXLIBRARY
 
         # Default is to prompt the user
         return Settings.PROMPT_ENGINE
