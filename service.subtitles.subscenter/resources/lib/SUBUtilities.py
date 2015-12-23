@@ -33,18 +33,20 @@ __temp__ = unicode(xbmc.translatePath(os.path.join(__profile__, 'temp', '')), 'u
 cache = StorageServer.StorageServer(__scriptname__, int(24 * 364 / 2))  # 6 months
 regexHelper = re.compile('\W+', re.UNICODE)
 
+
 # ===============================================================================
 # Private utility functions
-#===============================================================================
+# ===============================================================================
 def normalizeString(str):
     return unicodedata.normalize(
-        'NFKD', unicode(unicode(str, 'utf-8'))
+            'NFKD', unicode(unicode(str, 'utf-8'))
     ).encode('utf-8', 'ignore')
 
 
 def clean_title(item):
-    title = os.path.splitext(item["title"])
-    tvshow = os.path.splitext(item["tvshow"])
+    title = os.path.splitext(os.path.basename(item["title"]))
+    tvshow = os.path.splitext(os.path.basename(item["tvshow"]))
+
     if len(title) > 1:
         if re.match(r'^\.[a-z]{2,4}$', title[1], re.IGNORECASE):
             item["title"] = title[0]
@@ -69,17 +71,17 @@ def clean_title(item):
 
 
 def parse_rls_title(item):
-    item["title"] = regexHelper.sub(' ', item["title"])
-    item["tvshow"] = regexHelper.sub(' ', item["tvshow"])
+    title = regexHelper.sub(' ', item["title"])
+    tvshow = regexHelper.sub(' ', item["tvshow"])
 
-    groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", item["title"], re.I)
+    groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", title, re.I)
 
     if len(groups) == 0:
-        groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", item["tvshow"], re.I)
+        groups = re.findall(r"(.*?) (\d{4})? ?(?:s|season|)(\d{1,2})(?:e|episode|x|\n)(\d{1,2})", tvshow, re.I)
 
     if len(groups) > 0 and len(groups[0]) >= 3:
         title, year, season, episode = groups[0]
-        item["year"] = str(int(year)) if len(year)==4 else year
+        item["year"] = str(int(year)) if len(year) == 4 else year
 
         item["tvshow"] = regexHelper.sub(' ', title).strip()
         item["season"] = str(int(season))
@@ -101,13 +103,13 @@ def clear_cache():
     xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(32004))).encode('utf-8'))
 
 
+def get_cache_key(prefix="", str=""):
+    str = re.sub(r'[\'\(\)\.\-\]\[ ]+', '_', str).lower()
+    return prefix + str
+
+
 def log(module, msg):
     xbmc.log((u"### [%s] - %s" % (module, msg,)).encode('utf-8'), level=xbmc.LOGDEBUG)
-
-
-def get_cache_key(prefix="", str=""):
-    str = regexHelper.sub('_', str).lower()
-    return prefix + str
 
 
 class SubscenterHelper:
@@ -152,7 +154,6 @@ class SubscenterHelper:
                 cache.set(cache_key, repr(results))
 
         return results
-
 
     def _filter_urls(self, urls, search_string, item):
         filtered = []
@@ -204,19 +205,20 @@ class SubscenterHelper:
                                     subtitle_rate = self._calc_rating(title, item["file_original_path"])
                                     total_downloads += current["downloaded"]
                                     ret.append(
-                                        {'lang_index': item["3let_language"].index(
-                                            xbmc.convertLanguage(language, xbmc.ISO_639_2)),
-                                         'filename': title,
-                                         'link': current["key"],
-                                         'language_name': xbmc.convertLanguage(language, xbmc.ENGLISH_NAME),
-                                         'language_flag': language,
-                                         'id': current["id"],
-                                         'rating': str(current["downloaded"]),
-                                         'sync': subtitle_rate >= 3.8,
-                                         'hearing_imp': current["hearing_impaired"] > 0,
-                                         'is_preferred':
-                                             xbmc.convertLanguage(language, xbmc.ISO_639_2) == item['preferredlanguage']
-                                        })
+                                            {'lang_index': item["3let_language"].index(
+                                                    xbmc.convertLanguage(language, xbmc.ISO_639_2)),
+                                                'filename': title,
+                                                'link': current["key"],
+                                                'language_name': xbmc.convertLanguage(language, xbmc.ENGLISH_NAME),
+                                                'language_flag': language,
+                                                'id': current["id"],
+                                                'rating': str(current["downloaded"]),
+                                                'sync': subtitle_rate >= 3.8,
+                                                'hearing_imp': current["hearing_impaired"] > 0,
+                                                'is_preferred':
+                                                    xbmc.convertLanguage(language, xbmc.ISO_639_2) == item[
+                                                        'preferredlanguage']
+                                            })
         # Fix the rating
         if total_downloads:
             for it in ret:
