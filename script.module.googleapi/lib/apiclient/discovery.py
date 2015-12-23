@@ -28,13 +28,17 @@ __all__ = [
     'key2param',
     ]
 
-from six import StringIO
+from six import BytesIO
+from six.moves import http_client
 from six.moves.urllib.parse import urlencode, urlparse, urljoin, \
   urlunparse, parse_qsl
 
 # Standard library imports
 import copy
-from email.generator import Generator
+try:
+  from email.generator import BytesGenerator
+except ImportError:
+  from email.generator import Generator as BytesGenerator
 from email.mime.multipart import MIMEMultipart
 from email.mime.nonmultipart import MIMENonMultipart
 import json
@@ -56,6 +60,7 @@ from apiclient.errors import MediaUploadSizeError
 from apiclient.errors import UnacceptableMimeTypeError
 from apiclient.errors import UnknownApiNameOrVersion
 from apiclient.errors import UnknownFileType
+from apiclient.http import BatchHttpRequest
 from apiclient.http import HttpRequest
 from apiclient.http import MediaFileUpload
 from apiclient.http import MediaUpload
@@ -100,6 +105,10 @@ STACK_QUERY_PARAMETER_DEFAULT_VALUE = {'type': 'string', 'location': 'query'}
 # Library-specific reserved words beyond Python keywords.
 RESERVED_WORDS = frozenset(['body'])
 
+# patch _write_lines to avoid munging '\r' into '\n'
+# ( https://bugs.python.org/issue18886 https://bugs.python.org/issue19003 )
+class _BytesGenerator(BytesGenerator):
+  _write_lines = BytesGenerator.write
 
 def fix_method_name(name):
   """Fix method names to avoid reserved word conflicts.
@@ -148,7 +157,9 @@ def build(serviceName,
           developerKey=None,
           model=None,
           requestBuilder=HttpRequest,
-          credentials=None):
+          credentials=None,
+          cache_discovery=True,
+          cache=None):
   """Construct a Resource for interacting with an API.
 
   Construct a Resource object for interacting with an API. The serviceName and
@@ -170,6 +181,9 @@ def build(serviceName,
       request.
     credentials: oauth2client.Credentials, credentials to be used for
       authentication.
+    cache_discovery: Boolean, whether or not to cache the discovery doc.
+    cache: googleapiclient.discovery_cache.base.CacheBase, an optional
+      cache object for the discovery documents.
 
   Returns:
     A Resource object with methods for interacting with the service.
@@ -184,22 +198,58 @@ def build(serviceName,
 
   requested_url = uritemplate.expand(discoveryServiceUrl, params)
 
+  try:
+    content = _retrieve_discovery_doc(requested_url, http, cache_discovery,
+                                      cache)
+  except HttpError as e:
+    if e.resp.status == http_client.NOT_FOUND:
+      raise UnknownApiNameOrVersion("name: %s  version: %s" % (serviceName,
+                                                               version))
+    else:
+      raise e
+
+  return build_from_document(content, base=discoveryServiceUrl, http=http,
+      developerKey=developerKey, model=model, requestBuilder=requestBuilder,
+      credentials=credentials)
+
+
+def _retrieve_discovery_doc(url, http, cache_discovery, cache=None):
+  """Retrieves the discovery_doc from cache or the internet.
+
+  Args:
+    url: string, the URL of the discovery document.
+    http: httplib2.Http, An instance of httplib2.Http or something that acts
+      like it through which HTTP requests will be made.
+    cache_discovery: Boolean, whether or not to cache the discovery doc.
+    cache: googleapiclient.discovery_cache.base.Cache, an optional cache
+      object for the discovery documents.
+
+  Returns:
+    A unicode string representation of the discovery document.
+  """
+  if cache_discovery:
+    from . import discovery_cache
+    from .discovery_cache import base
+    if cache is None:
+      cache = discovery_cache.autodetect()
+    if cache:
+      content = cache.get(url)
+      if content:
+        return content
+
+  actual_url = url
   # REMOTE_ADDR is defined by the CGI spec [RFC3875] as the environment
   # variable that contains the network address of the client sending the
   # request. If it exists then add that to the request for the discovery
   # document to avoid exceeding the quota on discovery requests.
   if 'REMOTE_ADDR' in os.environ:
-    requested_url = _add_query_parameter(requested_url, 'userIp',
-                                         os.environ['REMOTE_ADDR'])
-  logger.info('URL being requested: GET %s' % requested_url)
+    actual_url = _add_query_parameter(url, 'userIp', os.environ['REMOTE_ADDR'])
+  logger.info('URL being requested: GET %s', actual_url)
 
-  resp, content = http.request(requested_url)
+  resp, content = http.request(actual_url)
 
-  if resp.status == 404:
-    raise UnknownApiNameOrVersion("name: %s  version: %s" % (serviceName,
-                                                            version))
   if resp.status >= 400:
-    raise HttpError(resp, content, uri=requested_url)
+    raise HttpError(resp, content, uri=actual_url)
 
   try:
     content = content.decode('utf-8')
@@ -211,10 +261,9 @@ def build(serviceName,
   except ValueError as e:
     logger.error('Failed to parse as JSON: ' + content)
     raise InvalidJsonError()
-
-  return build_from_document(content, base=discoveryServiceUrl, http=http,
-      developerKey=developerKey, model=model, requestBuilder=requestBuilder,
-      credentials=credentials)
+  if cache_discovery and cache:
+    cache.set(url, content)
+  return content
 
 
 @positional(1)
@@ -252,6 +301,9 @@ def build_from_document(
   Returns:
     A Resource object with methods for interacting with the service.
   """
+
+  if http is None:
+    http = httplib2.Http()
 
   # future is no longer used.
   future = {}
@@ -752,8 +804,8 @@ def createMethod(methodName, methodDesc, rootDesc, schema):
           msgRoot.attach(msg)
           # encode the body: note that we can't use `as_string`, because
           # it plays games with `From ` lines.
-          fp = StringIO()
-          g = Generator(fp, mangle_from_=False)
+          fp = BytesIO()
+          g = _BytesGenerator(fp, mangle_from_=False)
           g.flatten(msgRoot, unixfrom=False)
           body = fp.getvalue()
 
@@ -853,7 +905,7 @@ Returns:
     # Retrieve nextPageToken from previous_response
     # Use as pageToken in previous_request to create new request.
 
-    if 'nextPageToken' not in previous_response:
+    if 'nextPageToken' not in previous_response or not previous_response['nextPageToken']:
       return None
 
     request = copy.copy(previous_request)
@@ -950,6 +1002,27 @@ class Resource(object):
     self._add_next_methods(self._resourceDesc, self._schema)
 
   def _add_basic_methods(self, resourceDesc, rootDesc, schema):
+    # If this is the root Resource, add a new_batch_http_request() method.
+    if resourceDesc == rootDesc:
+      batch_uri = '%s%s' % (
+        rootDesc['rootUrl'], rootDesc.get('batchPath', 'batch'))
+      def new_batch_http_request(callback=None):
+        """Create a BatchHttpRequest object based on the discovery document.
+
+        Args:
+          callback: callable, A callback to be called for each response, of the
+            form callback(id, response, exception). The first parameter is the
+            request id, and the second is the deserialized response object. The
+            third is an apiclient.errors.HttpError exception object if an HTTP
+            error occurred while processing the request, or None if no error
+            occurred.
+
+        Returns:
+          A BatchHttpRequest object based on the discovery document.
+        """
+        return BatchHttpRequest(callback=callback, batch_uri=batch_uri)
+      self._set_dynamic_attr('new_batch_http_request', new_batch_http_request)
+
     # Add basic methods to Resource
     if 'methods' in resourceDesc:
       for methodName, methodDesc in six.iteritems(resourceDesc['methods']):

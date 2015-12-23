@@ -1,0 +1,7 @@
+1.4.2
+
+updated to googleapi 1.4.2
+
+1.4.0
+
+initial verion based on googleapi 1.4.0
