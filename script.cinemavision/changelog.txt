@@ -1,5 +1,9 @@
 Changelog for CinemaVision
 
+[- 1.0.8 -]
+
+- fix:     Various encoding errors when loading content
+
 [- 1.0.7 -]
 
 - fix:     Various encoding errors

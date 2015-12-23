@@ -143,13 +143,13 @@ class UserContent:
                 sub = util.pathJoin(current, branch)
                 if util.vfs.exists(sub):
                     continue
-                util.DEBUG_LOG('Creating: {0}'.format(repr(sub)))
+                util.DEBUG_LOG('Creating: {0}'.format(util.strRepr(sub)))
                 util.vfs.mkdirs(sub)
 
     # TODO: Remove
     def _fixTriviaSlidesDir(self):
         ts = util.pathJoin(self._contentDirectory, 'Trivia Slides' + util.getSep(self._contentDirectory))
-        util.DEBUG_LOG('Checking for the existence of {0}'.format(repr(ts)))
+        util.DEBUG_LOG('Checking for the existence of {0}'.format(util.strRepr(ts)))
         if not util.vfs.exists(ts):
             util.DEBUG_LOG("No 'Trivia Slides' directory exists")
             return
@@ -166,7 +166,7 @@ class UserContent:
         if success:
             util.DEBUG_LOG("Renamed 'Trivia Slides' to 'Trivia'")
         else:
-            util.DEBUG_LOG('Failed to rename {0} to {1}'.format(repr(ts), repr(t)))
+            util.DEBUG_LOG('Failed to rename {0} to {1}'.format(util.strRepr(ts), util.strRepr(t)))
 
     def setupContentDirectory(self):
         if not self._contentDirectory:  # or util.vfs.exists(self._contentDirectory):
@@ -184,7 +184,7 @@ class UserContent:
                 if not util.vfs.exists(path):
                     cleaned = True
                     b.delete_instance()
-                    self.log('{0} Missing: {1} - REMOVED'.format(repr(name), repr(path)))
+                    self.log('{0} Missing: {1} - REMOVED'.format(util.strRepr(name), util.strRepr(path)))
 
         if not cleaned:
             self.log('Database clean - unchanged')
@@ -216,12 +216,12 @@ class UserContent:
             path = os.path.join(basePath, sub)
             if util.isDir(path):
                 if sub.startswith('_Exclude'):
-                    util.DEBUG_LOG('SKIPPING EXCLUDED DIR: {0}'.format(sub))
+                    util.DEBUG_LOG('SKIPPING EXCLUDED DIR: {0}'.format(util.strRepr(sub)))
                     continue
             else:
                 continue
 
-            self.log('Processing trivia: {0}'.format(os.path.basename(path)))
+            self.log('Processing trivia: {0}'.format(util.strRepr(os.path.basename(path))))
             self.triviaDirectoryHandler(path, prefix=sub)
 
     def loadAudioFormatBumpers(self):
@@ -259,7 +259,7 @@ class UserContent:
                 continue
 
             if sub.startswith('_Exclude'):
-                util.DEBUG_LOG('SKIPPING EXCLUDED DIR: {0}'.format(sub))
+                util.DEBUG_LOG('SKIPPING EXCLUDED DIR: {0}'.format(util.strRepr(sub)))
                 continue
 
             if util.vfs.exists(util.pathJoin(path, 'system.xml')):  # For ratings
@@ -306,9 +306,9 @@ class UserContent:
             if sub_name:
                 sub_val = sub_val or sub_default
                 defaults[sub_name] = sub_val
-                self.log('Loading {0} ({1} - {2}): [ {3}{4} ]'.format(model.__name__, sub, sub_val, util.strRepr(name), is3D and ': 3D' or ''))
+                self.log('Loading {0} ({1} - {2}): [ {3}{4} ]'.format(model.__name__, util.strRepr(sub), sub_val, util.strRepr(name), is3D and ': 3D' or ''))
             else:
-                self.log('Loading {0} ({1}): [ {2}{3} ]'.format(model.__name__, sub, util.strRepr(name), is3D and ': 3D' or ''))
+                self.log('Loading {0} ({1}): [ {2}{3} ]'.format(model.__name__, util.strRepr(sub), util.strRepr(name), is3D and ': 3D' or ''))
 
             model.get_or_create(
                 path=vpath,
@@ -429,7 +429,7 @@ class MusicHandler:
 
             try:
                 DB.Song.get(DB.Song.path == path)
-                self.owner.log('Loading Song (exists): [ {0} ]'.format(name))
+                self.owner.log('Loading Song (exists): [ {0} ]'.format(util.strRepr(name)))
             except DB.peewee.DoesNotExist:
                 data = None
                 try:
@@ -439,7 +439,7 @@ class MusicHandler:
 
                 if data:
                     duration = data.info.length
-                    self.owner.log('Loading Song (new): [ {0} ({1}) ]'.format(name, data.info.pprint()))
+                    self.owner.log('Loading Song (new): [ {0} ({1}) ]'.format(util.strRepr(name), data.info.pprint()))
                 else:
                     duration = 0
                 DB.Song.create(
@@ -456,7 +456,7 @@ class MusicHandler:
             if not util.vfs.exists(path):
                 cleaned = True
                 s.delete_instance()
-                self.owner.log('Song Missing: {0} - REMOVED'.format(path))
+                self.owner.log('Song Missing: {0} - REMOVED'.format(util.strRepr(path)))
 
         return cleaned
 
@@ -572,14 +572,14 @@ class TriviaDirectoryHandler:
 
             if questionPath:
                 ttype = 'QA'
-                self._callback('Loading Trivia(QA): [ {0} ]'.format(name))
+                self._callback('Loading Trivia(QA): [ {0} ]'.format(util.strRepr(name)))
             else:
                 ttype = 'fact'
-                self._callback('Loading Trivia(single): [ {0} ]'.format(name))
+                self._callback('Loading Trivia(single): [ {0} ]'.format(util.strRepr(name)))
 
             defaults = {
                     'type': ttype,
-                    'TID': '{0}:{1}'.format(prefix, name),
+                    'TID': u'{0}:{1}'.format(prefix, name),
                     'name': name,
                     'rating': rating,
                     'questionPath': questionPath
@@ -610,7 +610,7 @@ class TriviaDirectoryHandler:
 
         try:
             DB.Trivia.get(DB.Trivia.answerPath == path)
-            self._callback('Loading Trivia (exists): [ {0} ]'.format(name))
+            self._callback('Loading Trivia (exists): [ {0} ]'.format(util.strRepr(name)))
         except DB.peewee.DoesNotExist:
             if ext.lower() in util.videoExtensions:
                 ttype = 'video'
@@ -620,11 +620,11 @@ class TriviaDirectoryHandler:
                 if metadata:
                     durationDT = metadata.get('duration')
                     duration = durationDT and util.datetimeTotalSeconds(durationDT) or 0
-                self._callback('Loading Trivia (video): [ {0} ({1}) ]'.format(name, durationDT))
+                self._callback('Loading Trivia (video): [ {0} ({1}) ]'.format(util.strRepr(name), durationDT))
 
             elif ext.lower() in util.imageExtensions:
                 ttype = 'fact'
-                self._callback('Loading Trivia (single): [ {0} ]'.format(name))
+                self._callback('Loading Trivia (single): [ {0} ]'.format(util.strRepr(name)))
             else:
                 return
 
@@ -632,7 +632,7 @@ class TriviaDirectoryHandler:
                     answerPath=path,
                     defaults={
                         'type': ttype,
-                        'TID': '{0}:{1}'.format(pack, name),
+                        'TID': u'{0}:{1}'.format(pack, name),
                         'name': name,
                         'duration': duration
                     }
@@ -652,6 +652,6 @@ class TriviaDirectoryHandler:
             if not util.vfs.exists(path):
                 cleaned = True
                 t.delete_instance()
-                self._callback('Trivia Missing: {0} - REMOVED'.format(path))
+                self._callback('Trivia Missing: {0} - REMOVED'.format(util.strRepr(path)))
 
         return cleaned
