@@ -275,10 +275,18 @@ def current_props(data,loc):
     weathercode = WEATHER_CODES[code]
     set_property('Current.Location'             , loc)
     set_property('Current.Condition'            , CAPITALIZE(data['weather'][0]['description']))
-    set_property('Current.Temperature'          , str(int(round(data['main']['temp']))))
+    if data['main'].has_key('temp'):
+        set_property('Current.Temperature'      , str(int(round(data['main']['temp']))))
+    else:
+        set_property('Current.Temperature'      , '')
     if data['wind'].has_key('speed'):
         set_property('Current.Wind'             , str(int(round(data['wind']['speed'] * 3.6))))
+    else:
+        set_property('Current.Wind'             , '')
+    if data['wind'].has_key('speed') and data['main'].has_key('temp'):
         set_property('Current.FeelsLike'        , FEELS_LIKE(int(round(data['main']['temp'])), int(round(data['wind']['speed'])), 'C'))
+    else:
+        set_property('Current.FeelsLike'        , '')
     if data['wind'].has_key('deg'):
         set_property('Current.WindDirection'    , xbmc.getLocalizedString(WIND_DIR(int(round(data['wind']['deg'])))))
     set_property('Current.Humidity'             , str(data['main']['humidity']))
@@ -290,8 +298,10 @@ def current_props(data,loc):
     set_property('Current.Cloudiness'           , str(data['clouds']['all']) + '%')
     set_property('Current.ShortOutlook'         , data['weather'][0]['main'])
     if 'F' in TEMPUNIT:
-        set_property('Current.LowTemperature'       , str(int(round(data['main']['temp_min'] * 1.8 + 32))) + TEMPUNIT)
-        set_property('Current.HighTemperature'      , str(int(round(data['main']['temp_max'] * 1.8 + 32))) + TEMPUNIT)
+        if data['main'].has_key('temp_min'):
+            set_property('Current.LowTemperature'   , str(int(round(data['main']['temp_min'] * 1.8 + 32))) + TEMPUNIT)
+        if data['main'].has_key('temp_max'):
+            set_property('Current.HighTemperature'  , str(int(round(data['main']['temp_max'] * 1.8 + 32))) + TEMPUNIT)
         set_property('Current.Pressure'             , str(round(data['main']['pressure'] / 33.86 ,2)) + ' in')
         if data['main'].has_key('sea_level'):
             set_property('Current.SeaLevel'         , str(round(data['main']['sea_level'] / 33.86 ,2)) + ' in')
@@ -314,8 +324,10 @@ def current_props(data,loc):
         precip = rain + snow
         set_property('Current.Precipitation'        , str(round(precip *  0.04 ,2)) + ' in')
     else:
-        set_property('Current.LowTemperature'       , str(int(round(data['main']['temp_min']))) + TEMPUNIT)
-        set_property('Current.HighTemperature'      , str(int(round(data['main']['temp_max']))) + TEMPUNIT)
+        if data['main'].has_key('temp_min'):
+            set_property('Current.LowTemperature'   , str(int(round(data['main']['temp_min']))) + TEMPUNIT)
+        if data['main'].has_key('temp_max'):
+            set_property('Current.HighTemperature'  , str(int(round(data['main']['temp_max']))) + TEMPUNIT)
         set_property('Current.Pressure'             , str(data['main']['pressure']) + ' mb')
         if data['main'].has_key('sea_level'):
             set_property('Current.SeaLevel'         , str(data['main']['sea_level']) + ' mb')
@@ -367,8 +379,14 @@ def daily_props(data):
             code = code + 'n'
         weathercode = WEATHER_CODES[code]
         set_property('Day%i.Title'              % count, get_weekday(item['dt'], 's'))
-        set_property('Day%i.HighTemp'           % count, str(int(round(item['temp']['max']))))
-        set_property('Day%i.LowTemp'            % count, str(int(round(item['temp']['min']))))
+        if item['temp'].has_key('max'):
+            set_property('Day%i.HighTemp'       % count, str(int(round(item['temp']['max']))))
+        else:
+            set_property('Day%i.HighTemp'       % count, '')
+        if item['temp'].has_key('max'):
+            set_property('Day%i.LowTemp'        % count, str(int(round(item['temp']['min']))))
+        else:
+            set_property('Day%i.LowTemp'        % count, '')
         set_property('Day%i.Outlook'            % count, CAPITALIZE(item['weather'][0]['description']))
         set_property('Day%i.OutlookIcon'        % count, '%s.png' % weathercode)
         set_property('Day%i.FanartCode'         % count, weathercode)
