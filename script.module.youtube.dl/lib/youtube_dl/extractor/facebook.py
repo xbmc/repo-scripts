@@ -7,11 +7,11 @@ import socket
 from .common import InfoExtractor
 from ..compat import (
     compat_http_client,
-    compat_str,
     compat_urllib_error,
     compat_urllib_parse_unquote,
 )
 from ..utils import (
+    error_to_compat_str,
     ExtractorError,
     limit_length,
     sanitized_Request,
@@ -116,7 +116,7 @@ class FacebookIE(InfoExtractor):
             if re.search(r'id="checkpointSubmitButton"', check_response) is not None:
                 self._downloader.report_warning('Unable to confirm login, you have to login in your brower and authorize the login.')
         except (compat_urllib_error.URLError, compat_http_client.HTTPException, socket.error) as err:
-            self._downloader.report_warning('unable to log in: %s' % compat_str(err))
+            self._downloader.report_warning('unable to log in: %s' % error_to_compat_str(err))
             return
 
     def _real_initialize(self):
@@ -164,7 +164,7 @@ class FacebookIE(InfoExtractor):
         if not video_title:
             video_title = self._html_search_regex(
                 r'(?s)<span class="fbPhotosPhotoCaption".*?id="fbPhotoPageCaption"><span class="hasCaption">(.*?)</span>',
-                webpage, 'alternative title', fatal=False)
+                webpage, 'alternative title', default=None)
             video_title = limit_length(video_title, 80)
         if not video_title:
             video_title = 'Facebook video #%s' % video_id
