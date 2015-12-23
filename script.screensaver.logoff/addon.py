@@ -1,7 +1,7 @@
 import xbmc
 
-class logoff(xbmc.Monitor):
-        xbmc.executebuiltin("System.Logoff()")
+def logoff():
+	xbmc.executebuiltin("System.Logoff()")
 
-mylogoff = logoff()
-del mylogoff
+if not xbmc.Player().isPlayingAudio():
+	logoff()
