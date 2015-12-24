@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import os, sys, time, urllib2, unicodedata
-import xbmc, xbmcgui, xbmcaddon
+import os, sys, time, urllib2, unicodedata, random
+import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 if sys.version_info < (2, 7):
     import simplejson as json
 else:
@@ -14,12 +14,14 @@ CWD          = ADDON.getAddonInfo('path').decode("utf-8")
 ADDONVERSION = ADDON.getAddonInfo('version')
 LANGUAGE     = ADDON.getLocalizedString
 RESOURCE     = xbmc.translatePath( os.path.join( CWD, 'resources', 'lib' ).encode("utf-8") ).decode("utf-8")
+PROFILE      = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
 sys.path.append(RESOURCE)
 
 from utils import *
 
-APPID          = '85c6f759f3424557a309da1f875b23d6'
+LIMIT          = False
+APPID          = ADDON.getSetting('API')
 BASE_URL       = 'http://api.openweathermap.org/data/2.5/%s'
 LATLON         = ADDON.getSetting('LatLon')
 WEEKEND        = ADDON.getSetting('Weekend')
@@ -30,6 +32,7 @@ DATEFORMAT     = xbmc.getRegion('dateshort')
 TIMEFORMAT     = xbmc.getRegion('meridiem')
 KODILANGUAGE   = xbmc.getLanguage().lower()
 MAXDAYS        = 6
+CACHEDIR       = os.path.join(PROFILE, 'cache')
 
 
 def clear():
@@ -64,7 +67,10 @@ def refresh_locations():
     set_property('Locations', str(locations))
     log('available locations: %s' % str(locations))
 
-def get_data(search_string):
+def get_data(search_string, item):
+    if LIMIT and item != 'location':
+        data = get_cache(item)
+        return data
     url = BASE_URL % search_string
     try:
         req = urllib2.urlopen(url)
@@ -72,9 +78,19 @@ def get_data(search_string):
         req.close()
     except:
         response = ''
+    if response != '':
+        path = os.path.join(CACHEDIR, item)
+        xbmcvfs.File(path, 'w').write(response)
     return response
 
+def get_cache(item):
+    path = os.path.join(CACHEDIR, item)
+    data = xbmcvfs.File(path).read()
+    return data
+
 def convert_date(stamp):
+    if str(stamp).startswith('-'):
+        return ''
     date_time = time.localtime(stamp)
     if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
         localdate = time.strftime('%d-%m-%Y', date_time)
@@ -128,7 +144,7 @@ def location(string):
     loc = unicodedata.normalize('NFKD', unicode(string, 'utf-8')).encode('ascii','ignore')
     log('searching for location: %s' % loc)
     search_string = 'find?q=%s&type=like&APPID=%s' % (urllib2.quote(loc), APPID)
-    query = get_data(search_string)
+    query = get_data(search_string, 'location')
     log('location data: %s' % query)
     try:
         data = json.loads(query)
@@ -161,6 +177,8 @@ def forecast(loc,locid,locationdeg):
     log('weather location id: %s' % locid)
     log('weather location name: %s' % loc)
     log('weather location deg: %s' % locationdeg)
+    if LIMIT:
+        log('using cached data')
     if MAP == 'true' and xbmc.getCondVisibility('System.HasAddon(script.openweathermap.maps)'):
         lat = float(eval(locationdeg)[0])
         lon = float(eval(locationdeg)[1])
@@ -190,7 +208,7 @@ def forecast(loc,locid,locationdeg):
     retry = 0
     failed = False
     while (retry < 6) and (not MONITOR.abortRequested()):
-        current_data = get_data(current_string)
+        current_data = get_data(current_string, 'current')
         log('current data: %s' % current_data)
         if current_data != '':
             retry = 6
@@ -213,7 +231,7 @@ def forecast(loc,locid,locationdeg):
     else:
         clear()
     if STATION == 'true':
-        station_data = get_data(station_string)
+        station_data = get_data(station_string, 'station')
         log('station data: %s' % station_data)
         try:
             station_weather = json.loads(station_data)
@@ -222,7 +240,7 @@ def forecast(loc,locid,locationdeg):
             station_weather = ''
         if station_weather != '' and not station_weather.has_key('message'):
             station_props(station_weather,loc)
-    daily_data = get_data(daily_string)
+    daily_data = get_data(daily_string, 'daily')
     log('daily data: %s' % daily_data)
     try:
         daily_weather = json.loads(daily_data)
@@ -232,7 +250,7 @@ def forecast(loc,locid,locationdeg):
     daynum = ''
     if daily_weather != '' and daily_weather.has_key('cod') and not daily_weather['cod'] == '404':
         daynum = daily_props(daily_weather)
-    hourly_data = get_data(hourly_string)
+    hourly_data = get_data(hourly_string, 'hourly')
     log('hourly data: %s' % hourly_data)
     try:
         hourly_weather = json.loads(hourly_data)
@@ -254,7 +272,7 @@ def station_props(data,loc):
     if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('deg'):
         set_property('Current.WindDirection'    , xbmc.getLocalizedString(WIND_DIR(int(round(data['last']['wind']['deg'])))))
     try:
-        set_property('Current.FeelsLike'        , FEELS_LIKE(data['last']['main']['temp'] -273, data['last']['wind']['speed'], False)) # api values are in K
+        set_property('Current.FeelsLike'        , FEELS_LIKE(data['last']['main']['temp'] -273, data['last']['wind']['speed'] * 3.6, data['last']['main']['humidity'], False)) # api values are in K
     except:
         pass
     if data.has_key('last') and data['last'].has_key('calc') and data['last']['calc'].has_key('dewpoint'):
@@ -300,7 +318,7 @@ def current_props(data,loc):
     if data['wind'].has_key('speed'):
         set_property('Current.Wind'             , str(int(round(data['wind']['speed'] * 3.6))))
         if data['main'].has_key('temp'):
-            set_property('Current.FeelsLike'    , FEELS_LIKE(data['main']['temp'], data['wind']['speed'], False))
+            set_property('Current.FeelsLike'    , FEELS_LIKE(data['main']['temp'], data['wind']['speed'] * 3.6, data['main']['humidity'], False))
         else:
             set_property('Current.FeelsLike'    , '')
     else:
@@ -408,8 +426,14 @@ def current_props(data,loc):
     set_property('Forecast.Latitude'            , str(data['coord']['lat']))
     set_property('Forecast.Longitude'           , str(data['coord']['lon']))
     set_property('Forecast.Updated'             , convert_date(data['dt']))
-    set_property('Today.Sunrise'                , convert_date(data['sys']['sunrise']).split('  ')[0])
-    set_property('Today.Sunset'                 , convert_date(data['sys']['sunset']).split('  ')[0])
+    try:
+        set_property('Today.Sunrise'            , convert_date(data['sys']['sunrise']).split('  ')[0])
+    except:
+        set_property('Today.Sunrise'            , '')
+    try:
+        set_property('Today.Sunset'             , convert_date(data['sys']['sunset']).split('  ')[0])
+    except:
+        set_property('Today.Sunset'            , '')
 
 def daily_props(data):
 # standard properties
@@ -455,7 +479,7 @@ def daily_props(data):
         set_property('Daily.%i.TempNight'       % (count+1), TEMP(item['temp']['night']) + TEMPUNIT)
         set_property('Daily.%i.HighTemperature' % (count+1), TEMP(item['temp']['max']) + TEMPUNIT)
         set_property('Daily.%i.LowTemperature'  % (count+1), TEMP(item['temp']['min']) + TEMPUNIT)
-        set_property('Daily.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['temp']['day'], item['speed']) + TEMPUNIT)
+        set_property('Daily.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['temp']['day'], item['speed'] * 3.6, item['humidity']) + TEMPUNIT)
         set_property('Daily.%i.DewPoint'        % (count+1), DEW_POINT(item['temp']['day'], item['humidity']) + TEMPUNIT)
         if 'F' in TEMPUNIT:
             set_property('Daily.%i.Pressure'        % (count+1), str(round(item['pressure'] / 33.86 ,2)) + ' in')
@@ -532,7 +556,7 @@ def daily_props(data):
             set_property('Weekend.%i.HighTemperature' % (count+1), TEMP(item['temp']['max']) + TEMPUNIT)
             set_property('Weekend.%i.LowTemperature'  % (count+1), TEMP(item['temp']['min']) + TEMPUNIT)
             set_property('Weekend.%i.DewPoint'        % (count+1), DEW_POINT(item['temp']['day'], item['humidity']) + TEMPUNIT)
-            set_property('Weekend.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['temp']['day'], item['speed']) + TEMPUNIT)
+            set_property('Weekend.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['temp']['day'], item['speed'] * 3.6, item['humidity']) + TEMPUNIT)
             if 'F' in TEMPUNIT:
                 set_property('Weekend.%i.Pressure'        % (count+1), str(round(item['pressure'] / 33.86 ,2)) + ' in')
                 rain = 0
@@ -600,7 +624,7 @@ def daily_props(data):
         set_property('36Hour.%i.Temperature'     % (count+1), TEMP(item['temp']['day']) + TEMPUNIT)
         set_property('36Hour.%i.HighTemperature' % (count+1), TEMP(item['temp']['max']) + TEMPUNIT)
         set_property('36Hour.%i.LowTemperature'  % (count+1), TEMP(item['temp']['min']) + TEMPUNIT)
-        set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['temp']['day'], item['speed']) + TEMPUNIT)
+        set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['temp']['day'], item['speed'] * 3.6, item['humidity']) + TEMPUNIT)
         set_property('36Hour.%i.DewPoint'        % (count+1), DEW_POINT(item['temp']['day'], item['humidity']) + TEMPUNIT)
         if 'F' in TEMPUNIT:
             set_property('36Hour.%i.Pressure'        % (count+1), str(round(item['pressure'] / 33.86 ,2)) + ' in')
@@ -683,7 +707,7 @@ def hourly_props(data, daynum):
         set_property('Hourly.%i.DewPoint'            % (count+1), DEW_POINT(item['main']['temp'], item['main']['humidity']) + TEMPUNIT)
         if item['wind'].has_key('speed'):
             set_property('Hourly.%i.WindSpeed'       % (count+1), SPEED(item['wind']['speed']) + SPEEDUNIT)
-            set_property('Hourly.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed']) + TEMPUNIT)
+            set_property('Hourly.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed'] * 3.6, item['main']['humidity']) + TEMPUNIT)
         else:
             set_property('Hourly.%i.WindSpeed'       % (count+1), '')
             set_property('Hourly.%i.FeelsLike'       % (count+1), '')
@@ -778,7 +802,7 @@ def hourly_props(data, daynum):
                     set_property('36Hour.%i.WindDegree'      % (count+1), '')
                 if item['wind'].has_key('speed'):
                     set_property('36Hour.%i.WindSpeed'       % (count+1), SPEED(item['wind']['speed']) + SPEEDUNIT)
-                    set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed']) + TEMPUNIT)
+                    set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed'] * 3.6, item['main']['humidity']) + TEMPUNIT)
                 else:
                     set_property('36Hour.%i.WindSpeed'       % (count+1), '')
                     set_property('36Hour.%i.FeelsLike'       % (count+1), '')
@@ -840,6 +864,27 @@ set_property('Alerts.IsFetched'   , '')
 set_property('WeatherProvider'    , LANGUAGE(32000))
 set_property('WeatherProviderLogo', xbmc.translatePath(os.path.join(CWD, 'resources', 'graphics', 'banner.png')))
 
+if APPID == '':
+    random.seed()
+    APPID = random.choice(KEYS)
+    LIMIT = True
+
+log('key: %s' % APPID)
+
+if not xbmcvfs.exists(CACHEDIR):
+    xbmcvfs.mkdirs(CACHEDIR)
+
+if not sys.argv[1].startswith('Location') and LIMIT:
+    oldloc = ADDON.getSetting('oldloc')
+    curloc = ADDON.getSetting('Location%sID' % sys.argv[1])
+    if (oldloc == '0') or (oldloc != curloc):
+        LIMIT = False
+    elif oldloc == curloc:
+        oldtime = int(ADDON.getSetting('oldtime'))
+        newtime = int(time.time())
+        if (newtime - oldtime) > 3540:
+            LIMIT = False
+
 if sys.argv[1].startswith('Location'):
     keyboard = xbmc.Keyboard('', xbmc.getLocalizedString(14024), False)
     keyboard.doModal()
@@ -868,6 +913,8 @@ else:
         locationdeg = ADDON.getSetting('Location1deg')
         log('trying location 1 instead')
     if not locationid == '':
+        ADDON.setSetting('oldloc', str(locationid))
+        ADDON.setSetting('oldtime', str(int(time.time())))
         forecast(location, locationid, locationdeg)
     else:
         log('no location provided')

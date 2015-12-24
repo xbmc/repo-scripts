@@ -11,6 +11,11 @@
 		<setting id="Location3ID" type="text" visible="false" default=""/>
 		<setting id="Location4ID" type="text" visible="false" default=""/>
 		<setting id="Location5ID" type="text" visible="false" default=""/>
+		<setting type="sep"/>
+		<setting label="32134" type="lsep"/>
+		<setting id="API" label="32110" type="text" default=""/>
+		<setting id="oldloc" type="text" visible="false" default="0"/>
+		<setting id="oldtime" type="text" visible="false" default="0"/>
 	</category>
 	<category label="32102">
 		<setting id="Weekend" label="32122" type="enum" lvalues="32123|32124|32125" default="0"/>
