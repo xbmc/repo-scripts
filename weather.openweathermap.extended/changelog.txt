@@ -1,3 +1,6 @@
+v3.2.1
+- fix invalid import (again)
+
 v3.2.0
 - add option for personal api key
 - add caching
