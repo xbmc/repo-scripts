@@ -862,7 +862,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         listitem.setProperty( "plot", plot )
                         listitem.setProperty( "starttime", starttime )
                         listitem.setProperty( "endtime", endtime )
-                        listitem.setProperty( "duration", duration )
+                        listitem.setProperty( "duration", str(duration) )
                         listitem.setProperty( "channelname", channelname )
                         listitem.setProperty( "channelnumber", str(channelnumber) )
                         listitem.setProperty( "path", path )
