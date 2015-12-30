@@ -1,0 +1,18 @@
+﻿[B]1.0.1[/B]
+
+- Updated the version for the official Kodi repository.
+
+[B]1.0.0[/B]
+
+- Updated the dependencies according to the XBMC Gotham requirements.
+- Updated the fanart and the version.
+
+[B]1.0.0~beta1[/B]
+
+- Renamed the script (script.revolve.helper -> script.revolve.service).
+
+[B]0.0.1[/B]
+
+- Moved the script from the Revolve-skin to a separate add-on (and added default.py).
+- Added a random number generator function.
+
