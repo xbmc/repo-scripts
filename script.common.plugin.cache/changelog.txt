@@ -1,3 +1,6 @@
+[B]Version 2.5.6[/B]
+- fixed common cache not starting on ios/tvos when socket path is to long by using AF_INET instead of AF_POSIX
+
 [B]Version 2.5.5[/B]
 - Fix ascii error with non UTF-8 characters on print statement
 
