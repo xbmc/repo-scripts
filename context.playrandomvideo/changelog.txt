@@ -1,0 +1,11 @@
+v1.0.4 (2015-12-20)
+- Cleanup before official repo inclusion
+v1.0.3 (2015-11-08)
+- Hide for unsupported list types
+v1.0.2 (2015-09-20)
+- Get label from script.playrandomvideos
+v1.0.1 (2015-09-15)
+- Fix add-on metadata
+- Pass label to script properly (fixes TV Actors/Studios/Tags)
+v1.0.0 (2015-09-11)
+- Initial release
