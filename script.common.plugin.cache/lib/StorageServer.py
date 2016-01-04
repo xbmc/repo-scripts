@@ -127,22 +127,29 @@ class StorageServer():
         else:
             return self.xbmc.abortRequested
         return False
+        
+    def _usePosixSockets(self):
+      if self.platform == "win32" or xbmc.getCondVisibility('system.platform.android') or xbmc.getCondVisibility('system.platform.ios') or xbmc.getCondVisibility('system.platform.tvos'):
+        return False
+      else:
+        return True
 
     def _sock_init(self, check_stale=False):
         self._log("", 2)
         if not self.socket or check_stale:
             self._log("Checking", 4)
-            if self.platform == "win32" or xbmc.getCondVisibility('system.platform.android'):
-                self._log("Windows/Android", 4)
-                port = self.settings.getSetting("port")
-                self.socket = ("127.0.0.1", int(port))
-            else:
+
+            if self._usePosixSockets():
                 self._log("POSIX", 4)
                 self.socket = os.path.join(self.xbmc.translatePath('special://temp/').decode("utf-8"), 'commoncache.socket')
                 #self.socket = os.path.join(self.xbmc.translatePath(self.settings.getAddonInfo("profile")).decode("utf-8"), 'commoncache.socket')
                 if self.xbmcvfs.exists(self.socket) and check_stale:
                     self._log("Deleting stale socket file : " + self.socket)
                     self.xbmcvfs.delete(self.socket)
+            else:
+                self._log("Non-POSIX", 4)
+                port = self.settings.getSetting("port")
+                self.socket = ("127.0.0.1", int(port))
 
         self._log("Done: " + repr(self.socket), 2)
 
@@ -197,10 +204,10 @@ class StorageServer():
         if not self._startDB():
             self._startDB()
 
-        if self.platform == "win32" or xbmc.getCondVisibility('system.platform.android'):
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        else:
+        if self._usePosixSockets():
             sock = socket.socket(socket.AF_UNIX)
+        else:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         try:
             sock.bind(self.socket)
@@ -252,7 +259,7 @@ class StorageServer():
         self._log("Closing down")
         sock.close()
         # self.conn.close()
-        if not self.platform == "win32" and not xbmc.getCondVisibility('system.platform.android'):
+        if not self._usePosixSockets():
             if self.xbmcvfs.exists(self.socket):
                 self._log("Deleting socket file")
                 self.xbmcvfs.delete(self.socket)
@@ -644,10 +651,11 @@ class StorageServer():
     def _connect(self):
         self._log("", 3)
         self._sock_init()
-        if self.platform == "win32" or xbmc.getCondVisibility('system.platform.android'):
-            self.soccon = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        else:
+
+        if self._usePosixSockets():
             self.soccon = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        else:
+            self.soccon = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         connected = False
         try:
