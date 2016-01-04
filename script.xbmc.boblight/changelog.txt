@@ -1,3 +1,6 @@
+2.0.16
+- fixed detection of arm64 android platform and download the right shared library for it
+
 2.0.15
 - rebrand from XBMC Boblight to Kodi Boblight
 - added tvos support

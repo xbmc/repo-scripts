@@ -77,7 +77,7 @@ def get_platform():
   elif  xbmc.getCondVisibility('system.platform.tvos'):
     platform = "tvos"
   elif  xbmc.getCondVisibility('system.platform.android'):
-    if os.uname()[4].startswith("arm"):
+    if os.uname()[4].startswith("arm") or os.uname()[4].startswith("aarch64"):
       platform = "android"
     else:
       platform = "androidx86"
