@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.t9.search" name="T9 search dialog" version="1.0.0" provider-name="phil65">
+  <requires>
+    <import addon="xbmc.python" version="2.24.0" />
+    <import addon="script.module.actionhandler" version="1.0.1"/>
+    <import addon="script.module.autocompletion" version="1.0.0"/>
+    <import addon="script.module.simplejson" version="3.3.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">T9 search dialog including AutoCompletion (to be used by add-ons)</summary>
+    <description lang="en">T9 search dialog including AutoCompletion (to be used by add-ons)</description>
+    <disclaimer lang="en"></disclaimer>
+    <language></language>
+	<platform>all</platform>
+	<license>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</license>
+	<forum>-</forum>
+	<source>https://github.com/phil65/script.module.t9.search</source>
+	<email>phil65@kodi.tv</email>
+  </extension>
+</addon>
