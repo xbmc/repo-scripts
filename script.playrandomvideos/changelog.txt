@@ -1,0 +1,15 @@
+v1.0.1 (2015-12-22)
+- Small text changes
+v1.0.0 (2015-12-20)
+- Localize setting options
+- Rework files to limit list based on # of directories
+- Use simplejson if not running Python 2.7
+- Other cleanup before official repo inclusion
+v0.7.0 (2015-11-08)
+- Ignore plugin paths for now
+v0.6.0 (2015-09-20)
+- Add unwatched/watched filter
+v0.5.1 (2015-09-15)
+- Try blacklisting some troublesome plugin paths
+v0.5.0 (2015-09-11)
+- Initial WIP release

@@ -1,0 +1,33 @@
+# Kodi Media Center language file
+# Addon Name: Play Random Videos
+# Addon id: script.playrandomvideo
+msgid ""
+msgstr ""
+
+# Commands
+msgctxt "#32100"
+msgid "Play Random"
+msgstr ""
+
+# Headings
+msgctxt "#32010"
+msgid "Filter random selection by watched status"
+msgstr ""
+
+# Settings
+#  heading
+msgctxt "#32900"
+msgid "Watched Filters"
+msgstr ""
+
+msgctxt "#32901"
+msgid "Filter movies by:"
+msgstr ""
+
+msgctxt "#32902"
+msgid "Filter TV shows by:"
+msgstr ""
+
+msgctxt "#32903"
+msgid "Filter music videos by:"
+msgstr ""
