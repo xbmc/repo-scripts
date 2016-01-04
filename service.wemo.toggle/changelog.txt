@@ -1,3 +1,9 @@
+2015-12-31
+    -bumped Python version for isengard repo submission
+2015-12-23
+    -removed language tag from addon.xml
+    -credit
+        Razze - http://forum.kodi.tv/showthread.php?tid=215291&pid=2194348#pid2194348
 2015-11-29
     -bugfix for toggle
     -updated strings in addon settings
