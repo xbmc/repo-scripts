@@ -23,6 +23,10 @@
 import listitem, urlhandler
 from xbmcutil import plugin, storageDB
 from fastjson import load
+from base64 import b64decode
+
+# Key
+APIKEY = b64decode("Rh1UiBVOpd1RwYWR3RzMDlEbwdXclR3d1xGVjJlY0I1Q5NVY6lUQ"[::-1])
 
 class YTPlaylistVideos(listitem.VirtualFS):
 	@plugin.error_handler
@@ -43,16 +47,23 @@ class YTPlaylistVideos(listitem.VirtualFS):
 		elif "channelid" in _plugin:
 			channelID = _plugin.pop("channelid")
 			playlistID = _plugin.getSetting(channelID)
-			if not playlistID: playlistID = Gdata.Channels(id=channelID)[1]
+			if not playlistID:
+				playlistID = Gdata.Channels(id=channelID)[1]
+				_plugin.setSetting(channelID, playlistID)
 		
 		# Fetch Playlist ID using Channel Name
 		elif "channelname" in _plugin:
 			channelName = _plugin.pop("channelname")
 			channelID = _plugin.getSetting(channelName)
-			if not channelID: playlistID = Gdata.Channels(forUsername=channelName)[1]
+			if not channelID: 
+				channelID, playlistID = Gdata.Channels(forUsername=channelName)
+				_plugin.setSetting(channelName,channelID)
+				_plugin.setSetting(channelID,playlistID)
 			else:
 				playlistID = _plugin.getSetting(channelID)
-				if not playlistID: playlistID = Gdata.Channels(id=channelID)[1]
+				if not playlistID:
+					playlistID = Gdata.Channels(id=channelID)[1]
+					_plugin.setSetting(channelID,playlistID)
 		
 		# Return List of Videos
 		return Gdata.PlaylistItems(playlistID)
@@ -208,7 +219,7 @@ class YoutubeAPI:
 		
 		# Fetch categorys ID Maps
 		self.categorysMap = categorysMap = CategoryFile()
-		self.videoData = videoData = VideoFile()
+		self.videoData = videoData = VideoFile("%s.json" % queries["playlistId"] if "playlistId" in queries else "video-data.json")
 		self.unmapedCats = []
 		channelIDs = []
 		
@@ -315,7 +326,7 @@ class YoutubeAPI:
 	
 	def set_default_queries(self, kargs={}):
 		# Set querie parameters
-		if not "key" in kargs: kargs["key"] = u"AIzaSyCR4bRcTluwteqwplIC34wEf0GWi9PbSXQ"
+		if not "key" in kargs: kargs["key"] = APIKEY
 		if not "maxResults" in kargs: kargs["maxResults"] = u"50"
 		if not "prettyPrint" in kargs: kargs["prettyPrint"] = u"false"
 		return kargs
@@ -365,14 +376,20 @@ class YoutubeAPI:
 		else: videoData.close()
 
 class CategoryFile(storageDB.dictStorage):
-	def __init__(self):
+	def __init__(self, filename="ytcategorys.json"):
 		# Create and set saved searches data path
 		_plugin = plugin
-		filePath = _plugin.os.path.join(_plugin.getGlobalProfile(), "ytcategorys.json")
-		super(CategoryFile, self).__init__(filePath)
+		_osPath = _plugin.os.path
+		systemCats = _osPath.join(_plugin.getGlobalPath(), u"resources", filename)
+		userCats = _osPath.join(plugin.getGlobalProfile(), filename)
+		if _osPath.isfile(systemCats) and not _osPath.isfile(userCats):
+			__import__("shutil").move(systemCats, userCats)
+			super(CategoryFile, self).__init__(userCats)
+		else:
+			super(CategoryFile, self).__init__(userCats)
 
 class VideoFile(storageDB.dictStorage):
-	def __init__(self):
+	def __init__(self, filename):
 		# Create and set saved searches data path
-		filePath = plugin.os.path.join(plugin.getProfile(), u"video-data.json")
+		filePath = plugin.os.path.join(plugin.getProfile(), filename)
 		super(VideoFile, self).__init__(filePath)

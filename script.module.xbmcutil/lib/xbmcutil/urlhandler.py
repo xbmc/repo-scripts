@@ -336,6 +336,9 @@ class CacheHandler(urllib2.BaseHandler):
 		self.maxAge = maxAge
 		self.redirect = False
 		self.url = asUrl
+		
+		# Fetch Disable-Cache Setting
+		self.disableCache = plugin.getSetting("disable-cache") == "true"
 	
 	def default_open(self, request):
 		'''
@@ -347,6 +350,7 @@ class CacheHandler(urllib2.BaseHandler):
 		
 		# Create Url Hash
 		if self.redirect is False:
+			_plugin = plugin
 			if self.url: url = self.url
 			else:
 				url = request.get_full_url()
@@ -355,26 +359,29 @@ class CacheHandler(urllib2.BaseHandler):
 			
 			# Create Cache Path
 			urlHash = md5(url).hexdigest()
-			plugin.debug("UrlHash = %s" % urlHash)
-			self.CachePath = CachePath = os.path.join(plugin.getProfile(), "urlcache", urlHash + u".%s")
+			_plugin.debug("UrlHash = %s" % urlHash)
+			self.CachePath = CachePath = os.path.join(_plugin.getProfile(), "urlcache", urlHash + u".%s")
 			
 			# Check Status of Cache
 			if CachedResponse.exists(CachePath):
+				# If disable Cache is True then remove old cache and return
+				if self.disableCache is True: return CachedResponse.remove(CachePath)
+				
 				# If Refresh Param Exists Then Reset 
-				if "refresh" in plugin: CachedResponse.reset(CachePath, (0,0))
-				maxAge = self.maxAge
+				elif "refresh" in _plugin: CachedResponse.reset(CachePath, (0,0))
 				
 				# Check if Cache is Valid and return Cached Response if valid
+				maxAge = self.maxAge
 				if not maxAge == 0:
 					if maxAge == -1 or CachedResponse.isValid(CachePath, maxAge):
-						plugin.notice("Cached")
+						_plugin.notice("Cached")
 						try: return CachedResponse(CachePath)
-						except plugin.CacheError as e:
+						except _plugin.CacheError as e:
 							CachedResponse.remove(self.CachePath)
-							plugin.error(e.debugMsg)
+							_plugin.error(e.debugMsg)
 							return None
 					else:
-						plugin.notice("Cache Not Valid")
+						_plugin.notice("Cache Not Valid")
 				
 				# Set If-Modified-Since & If-None-Match Headers
 				cacheHeaders = CachedResponse.loadHeaders(CachePath)
@@ -385,13 +392,13 @@ class CacheHandler(urllib2.BaseHandler):
 					# Add If-None-Match Etag to Request Headers
 					request.add_header("If-None-Match", cacheHeaders["ETag"])
 			else:
-				plugin.debug("Cache Not Found")
+				_plugin.debug("Cache Not Found")
 	
 	def http_response(self, request, response):
 		''' Store Server Response into Cache '''
 		# Save response to cache and return it if status is 200 else return response untouched
 		self.redirect = False
-		if response.code is 200 and not response.info().get("X-Local-Cache") == "HIT":
+		if response.code is 200 and self.disableCache is False and not response.info().get("X-Local-Cache") == "HIT":
 			try:
 				CachedResponse.store_in_cache(self.CachePath, response)
 				return CachedResponse(self.CachePath)
@@ -509,12 +516,6 @@ class CachedResponse(StringIO.StringIO):
 		# Read in Both Body and Header Responses
 		StringIO.StringIO.__init__(self, self.readFile(cachePath % u"body"))
 		self.headers = self.loadHeaders(cachePath)
-		
-		# Fix Bug for Now. Can be Removed after 2015-03-24
-		if "X-Cache" in self.headers:
-			del self.headers["X-Cache"]
-			self.headers["X-Local-Cache"] = "HIT"
-			plugin.debug("Replaceing X-Cache with X-Local-Cache")
 		
 		# Set Response Codes
 		self.url = self.headers["X-Location"]

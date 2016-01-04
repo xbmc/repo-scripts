@@ -1,3 +1,14 @@
+TODO:
+- Add code to fetch kodi setting for "Ignore articles when sorting (e.g "the")" So to auto set the sort methods to use "title" sort or "the titte" sort
+
+[B]Version 3.0.2[/B] 2016-01-04
+- Added option to disable url caching from the add-on settings.
+- Changed Youtube API handler to cache the channels playlist IDs
+- Changed related context to alway update listings
+- Removed bug Fix for the old cache error. Not Needed anymore and stoped some sites from caching
+- Removed dailymotion video resolver
+- And Logs of small changes as well
+
 [B]Version 3.0.1[/B] 2015-02-22
 - Fix bug with old cache that is still valid causing a decompression error
 

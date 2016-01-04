@@ -138,7 +138,8 @@ class Addon(object):
 	
 	def translatePath(self, path):
 		""" Return translated special paths as unicode """
-		return self.xbmc.translatePath(path).decode("utf8")
+		if path[:10] == "special://": return self.xbmc.translatePath(path).decode("utf8")
+		else: return path
 
 class Dialog(object):
 	def dialogSelect(self, heading, list, autoclose=0):
@@ -195,7 +196,7 @@ class Info(Addon, Dialog):
 	_suppressErrors = False
 	_traceback = None
 	_xbmcvfs = None
-	_devmode = False
+	_devmode = True
 	_profile = None
 	_gprofile = None
 	
@@ -356,7 +357,7 @@ class Info(Addon, Dialog):
 		unquoter = self.urllib.unquote_plus
 		for part in params[params.find("?")+1:].split("&"):
 			try: key, value = part.split("=",1)
-			except: pass
+			except: continue
 			else:
 				if not asList: qDict[key.lower()] = unquoter(value).decode("utf8")
 				else: qDict[key.lower()] = [unquoter(segment).decode("utf8") for segment in value.split(",")]

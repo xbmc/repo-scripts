@@ -204,7 +204,7 @@ class VideoParser:
 		"""
 		
 		# Black list of site the are no longer usefull
-		blackList = ("platform.twitter.com", "google.com", "megavideo.com", "myspace.com")
+		blackList = ("www.googletagmanager.com", "platform.twitter.com", "google.com", "megavideo.com", "myspace.com")
 		
 		# Filter Video Sources
 		filterd = []
@@ -324,67 +324,12 @@ class youtube_com(object):
 	@check_arg(u"Youtube Playlist")
 	def decode_playlist(self, arg):
 		# Initialize Gdata API
-		Gdata = self.api.YoutubeAPI(arg)
+		Gdata = self.api.YoutubeAPI()
 		
 		# Fetch list of urls and listiems
 		return [{"url":url, "item":listitem} for url, listitem, isfolder in Gdata.PlaylistItems(arg, loop=True)]
 
 class youtu_be(youtube_com): pass
-
-#######################################################################################
-
-class dailymotion_com(object):
-	'''
-	Takes a video id from a DailyMotion video page url, or takes a complete url 
-	to a DailyMotion swf and returns the url to the actual video resource.
-	Raises videoResolver Error if no match is found.
-	
-	>>> dailymotion_com.decode('http://www.dailymotion.com/video/x162i8b_top-10-video-games-with-great-stories_videogames')
-	'http://proxy-13.dailymotion.com/sec(e8b6ec3b1050ca92a370bbda2fc3528e)/frag(3)/video/118/066/70660811_mp4_h264_aac_hq_2.flv'
-	
-	>>> dailymotion_com.decode('x162i8b')
-	'http://proxy-13.dailymotion.com/sec(e8b6ec3b1050ca92a370bbda2fc3528e)/frag(3)/video/118/066/70660811_mp4_h264_aac_hq_2.flv'
-	'''
-	__metaclass__ = Plugin
-	def __init__(self, priority=96):
-		self.priority = priority
-	
-	def strip(self, scheme, netloc, path, query, fragment, returnID=False):
-		if "video/" in path.lower():
-			videoID = path[path.rfind(u"/")+1:].split(u"_",1)[0]
-			if returnID: return videoID
-			else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "priority":self.priority}
-		else:
-			plugin.notice("Unable to Strip out video id from dailymotion.com source url")
-			return None
-	
-	@check_arg(u"DailyMotion")
-	def decode(self, arg):
-		# Fetch Redirected Url
-		url = u"http://www.dailymotion.com/embed/video/%s" % arg
-		handle = urlhandler.HttpHandler()
-		handle.add_response_handler()
-		with handle.open(url) as resp:
-			sourceCode = resp.read().decode("utf-8")
-		
-		# Fetch list of Urls
-		sourceCode = re.findall('var info = (\{.+?\}),\s\s', sourceCode)[0]
-		Sources = dict([[part for part in match if part] for match in re.findall('"(stream_h264_url)":"(\S+?)",|"(stream_h264_ld_url)":"(\S+?)",|"(stream_h264_hq_url)":"(\S+?)",|"(stream_h264_hd_url)":"(\S+?)",|"(stream_h264_hd1080_url)":"(\S+?)",', sourceCode)])
-		if not Sources: raise plugin.videoResolver(plugin.getstr(33077), "Unable to Find Video Url")
-		
-		# Fetch Video Quality
-		Quality = plugin.getSetting("quality")
-		if  Quality == u"1080p": Quality = 5
-		elif Quality == u"720p": Quality = 4
-		else: Quality = 3
-		
-		# Return Available Format
-		for res in (u"stream_h264_hd1080_url", u"stream_h264_hd_url", u"stream_h264_hq_url", u"stream_h264_ld_url", u"stream_h264_url")[-(Quality):]:
-			if res in Sources: return {"url":Sources[res].replace(u"\\/", u"/")}
-			else: continue
-		
-		# Fallback to any quality if unable to find format
-		return Sources[Sources.keys()[0]].replace(u"\\/", u"/")
 
 #######################################################################################
 
@@ -539,10 +484,10 @@ class vimeo_com(object):
 		if returnID: return videoID
 		else: return {"domain":netloc, "vodepid":videoID, "function":self.decode, "priority":self.priority}
 	
-	@check_arg(u"Veehd")
+	@check_arg(u"Vimeo")
 	def decode(self, arg):
 		# Create Url String and Download HTML Page
-		url = u"http://player.vimeo.com/video/%s" % arg
+		url = u"https://player.vimeo.com/video/%s" % arg
 		handle = urlhandler.HttpHandler()
 		handle.add_response_handler()
 		with handle.open(url) as resp:

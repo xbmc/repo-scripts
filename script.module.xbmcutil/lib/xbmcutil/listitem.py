@@ -70,47 +70,48 @@ class ListItem(plugin.xbmcgui.ListItem):
 		self.imagePaths = {"fanart":self._fanartImage}
 		self.contextMenu = []
 	
-	def setLabel(self, label):
+	def setLabel(self, label, bold=False):
 		""" Sets the listitem's label """
+		if bold: label = "[B]%s[/B]" % label
 		self.infoLabels["title"] = label
 		self._selfObject.setLabel(self, label)
 	
 	def getLabel(self):
-		""" Returns the listitem label as a unicode string"""
+		""" Returns the listitem label as a unicode string """
 		return self._selfObject.getLabel(self).decode("utf8")
 	
 	def setPlot(self, value):
-		""" Set plot info : string or unicode"""
+		""" Set plot info : string or unicode """
 		self.infoLabels["plot"] = value
 	
 	def setSize(self, value):
-		""" Set size info : string or unicode"""
-		self.infoLabels["size"] = value
+		""" Set size info : string digit or long integer """
+		self.infoLabels["size"] = long(value)
 		self._sortAdd(4) # sort_method_size
 	
 	def setGenre(self, value):
-		""" Set genre info : string or unicode"""
+		""" Set genre info : string or unicode """
 		self.infoLabels["genre"] = value
 		self._sortAdd(15) # sort_method_genre
 	
 	def setStudio(self, value):
-		""" Set studio info : string or unicode"""
+		""" Set studio info : string or unicode """
 		self.infoLabels["studio"] = value
 		self._sortAdd(31) # sort_method_studio_ignore_the
 	
 	def setCount(self, value):
-		""" Set count info : string or unicode"""
+		""" Set count info : string digit or integer """
 		self.infoLabels["count"] = int(value)
 		self._sortAdd(20) # sort_method_program_count
 	
 	def setRating(self, value):
-		""" Set rating info : string or unicode"""
-		self.infoLabels["rating"] = value
+		""" Set rating info : string Float or Float """
+		self.infoLabels["rating"] = float(value)
 		self._sortAdd(18) # sort_method_video_rating
 	
 	def setEpisode(self, value):
-		""" Set episode info : string or unicode"""
-		self.infoLabels["episode"] = value
+		""" Set episode info : string digit or integer """
+		self.infoLabels["episode"] = int(value)
 		self._sortAdd(22) # sort_method_episode
 	
 	def setDate(self, date, dateFormat):
@@ -189,12 +190,12 @@ class ListItem(plugin.xbmcgui.ListItem):
 	def setInfoDict(self, key=None, value=None, **kwargs):
 		""" Sets infolabels key and value """
 		if key and value: self.infoLabels[key] = value
-		if kwargs: self.infoLabels.update(kwargs)
+		elif kwargs: self.infoLabels.update(kwargs)
 	
 	def setParamDict(self, key=None, value=None, **kwargs):
 		""" Sets urlParam key and value """
 		if key and value: self.urlParams[key] = value
-		if kwargs: self.urlParams.update(kwargs)
+		elif kwargs: self.urlParams.update(kwargs)
 	
 	def setIdentifier(self, identifier):
 		""" Sets Unique Identifier for Watched Flags """
@@ -227,6 +228,7 @@ class ListItem(plugin.xbmcgui.ListItem):
 	def addRelatedContext(self, **params):
 		""" Adds a context menu item to link to related videos """
 		if not "action" in params: params["action"] = "Related"
+		if not "updatelisting" in params: params["updatelisting"] = "true"
 		command = "XBMC.Container.Update(%s?%s)" % (self._handleZero, self._urlencode(params))
 		self.contextMenu.append((self._strRelated, command))
 	
@@ -337,8 +339,8 @@ class ListItem(plugin.xbmcgui.ListItem):
 			label: string - Lable of Listitem
 		"""
 		listitem = cls()
-		if label: listitem.setLabel(u"[B]%s[/B]" % label)
-		else: listitem.setLabel(u"[B]%s[/B]" % cls._plugin.getuni(137)) # 137 = Search
+		if label: listitem.setLabel(label, bold=True)
+		else: listitem.setLabel(cls._plugin.getuni(137), bold=True) # 137 = Search
 		listitem.imagePaths["thumb"] = cls._imageGlobal % u"search.png"
 		listitem.urlParams.update({"action":"system.search", "forwarding":forwarding, "url":url})
 		VirtualFS._extraItems.append(listitem.getListitemTuple(False))
@@ -425,7 +427,6 @@ class VirtualFS(object):
 		# Set UpdateListing Flag for Content Refresh
 		if "refresh" in self._plugin:
 			self.updateListing = True
-			self.cacheToDisc = True
 		elif "updatelisting" in self._plugin:
 			self.updateListing = True
 		elif "cachetodisc" in self._plugin:
@@ -467,6 +468,7 @@ class VirtualFS(object):
 			callingObj = self._plugin.xbmcplugin.addSortMethod
 			sortMethods = self._sortMethods if self._sortMethods else sorted(ListItem._sortMethods)
 			for sortMethod in sortMethods: callingObj(handle, sortMethod)
+			self._plugin.debug(sortMethods)
 			
 			# Guess Content Type and set View Mode
 			isFolder = self._vidCounter < (len(self._extraItems) / 2)
