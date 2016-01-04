@@ -36,6 +36,7 @@ class Service():
         monitor = xbmc.Monitor()
         
         lastFile = None
+        lastUnwatchedFile = None
         while not monitor.abortRequested():
             # check every 5 sec
             if monitor.waitForAbort(5):
@@ -52,6 +53,8 @@ class Service():
                     addonSettings = xbmcaddon.Addon(id='service.nextup.notification')
                     notificationtime = addonSettings.getSetting("autoPlaySeasonTime")
                     nextUpDisabled = addonSettings.getSetting("disableNextUp") == "true"
+                    randomunwatchedtime = addonSettings.getSetting("displayRandomUnwatchedTime")
+                    displayrandomunwatched = addonSettings.getSetting("displayRandomUnwatched") == "true"
 
                     if xbmcgui.Window(10000).getProperty("PseudoTVRunning") != "True" and not nextUpDisabled:
                         if (totalTime - playTime <= int(notificationtime) and (
@@ -60,6 +63,13 @@ class Service():
                             self.logMsg("Calling autoplayback totaltime - playtime is %s" % (totalTime - playTime), 2)
                             player.autoPlayPlayback()
                             self.logMsg("Netflix style autoplay succeeded.", 2)
+                        self.logMsg("playtime is %s" % (int(playTime)), 2)
+                        self.logMsg("randomunwatchedtime is %s" % (int(randomunwatchedtime)), 2)
+                        if (int(playTime) >= int(randomunwatchedtime)) and displayrandomunwatched and (
+                                        lastUnwatchedFile is None or lastUnwatchedFile != currentFile):
+                            self.logMsg("Calling display unwatched playtime is %s" % (playTime), 2)
+                            lastUnwatchedFile = currentFile
+                            player.displayRandomUnwatched()
 
                 except Exception as e:
                     self.logMsg("Exception in Playback Monitor Service: %s" % e)

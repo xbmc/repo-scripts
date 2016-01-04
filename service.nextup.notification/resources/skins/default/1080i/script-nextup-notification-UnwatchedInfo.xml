@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<zorder>0</zorder>
+	<controls>
+		<control type="group">
+			<right>10</right>
+			<bottom>10</bottom>
+			<width>600</width>
+			<height>339</height>
+			<control type="group">
+				<control type="image">
+					<animation effect="fade" start="100" end="97" time="200" condition="true">Conditional</animation>
+					<texture border="5" colordiffuse="ff000000">box.png</texture>
+				</control>
+				<control type="group">
+					<left>5</left>
+					<right>5</right>
+					<control type="image" id="5004" description="clearlogo">
+						<width>100%</width>
+						<height>210</height>
+						<aspectratio align="center" aligny="bottom">keep</aspectratio>
+					</control>
+					<control type="label" description="Title" id="5000">
+						<width>100%</width>
+						<top>220</top>
+						<align>center</align>
+						<height>40</height>
+						<font>font13</font>
+						<textcolor>FF00a2e0</textcolor>
+					</control>
+					<control type="label" description="episode/season" id="5002">
+						<width>100%</width>
+						<top>260</top>
+						<align>center</align>
+						<height>40</height>
+						<font>font12</font>
+						<textcolor>FF00a2e0</textcolor>
+					</control>
+					<control type="image">
+						<top>57</top>
+						<width>26</width>
+						<height>26</height>
+						<aspect>keep</aspect>
+						<texture>imdb.png</texture>
+						<visible>Control.IsVisible(5003)</visible>
+					</control>
+					<control type="label" id="5003" description="rating">
+						<left>35</left>
+						<width>100%</width>
+						<top>50</top>
+						<height>40</height>
+						<font>font12</font>
+						<textcolor>B3dddddd</textcolor>
+						<visible>false</visible>
+					</control>
+					<control type="textbox" description="Plot" id="5001">
+						<visible>false</visible>
+					</control>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

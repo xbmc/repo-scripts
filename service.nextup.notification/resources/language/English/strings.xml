@@ -13,4 +13,6 @@
     <string id="30012">Still there? Press Continue Watching to watch the next episode</string>
     <string id="30013">Include watched episodes</string>
     <string id="30014">Disable NextUp (restart required)</string>
+    <string id="30015">The number of seconds before displaying random unwatched notification</string>
+    <string id="30016">Display random unwatched notification</string>
 </strings>

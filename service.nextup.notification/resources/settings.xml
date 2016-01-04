@@ -5,6 +5,8 @@
         <setting id="autoPlayMode" type="enum" label="30005" values="Play|Don't Play" default="0"/>
         <setting id="playedInARow" type="number" label="30009" default="3" visible="true" enable="true"/>
         <setting id="includeWatched" type="bool" label="30013" default="false" visible="true" enable="true"/>
+        <setting id="displayRandomUnwatched" type="bool" label="30016" default="false" visible="true" enable="true"/>
+        <setting id="displayRandomUnwatchedTime" type="number" label="30015" default="600" visible="eq(-1,true)" enable="true"/>
     </category>
     <category label="30004">
         <setting id="disableNextUp" type="bool" label="30014" default="false" visible="true" enable="true"/>
