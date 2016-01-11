@@ -298,6 +298,22 @@
                 "major": "16",
                 "minor": "0",
                 "tag": "beta",
+                "tagversion":"5",
+                "revision": "20160110-9d9a153",
+                "addon_support": "yes"
+            },
+            {
+                "major": "16",
+                "minor": "0",
+                "tag": "beta",
+                "tagversion":"4",
+                "revision": "20151213-a724f29",
+                "addon_support": "yes"
+            },
+            {
+                "major": "16",
+                "minor": "0",
+                "tag": "beta",
                 "tagversion":"3",
                 "revision": "20151205-85a0a13",
                 "addon_support": "yes"
