@@ -151,7 +151,7 @@ class RandomPlayer(object):
             return self._get_randomepisodes(watchmode=path['watchmode'])
         elif path_len == 3:
             category_id = path['path'][2]
-            return self._get_randomepisodes_by_category(category, category_id, path['label'], watchmode=path['watchmode'])
+            return self._get_randomepisodes_by_category(category, category_id, path.get('label'), watchmode=path['watchmode'])
         else: # Nested TV show selected
             tvshow_id = path['path'][3] if path_len > 4 else None
             season = path['path'][4] if path_len > 5 else None

@@ -1,3 +1,5 @@
+v1.0.2 (2016-01-10)
+- Fix the default settings
 v1.0.1 (2015-12-22)
 - Small text changes
 v1.0.0 (2015-12-20)

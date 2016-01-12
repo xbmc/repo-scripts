@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.playrandomvideos" name="Play Random Videos" version="1.0.1" provider-name="rmrector">
+<addon id="script.playrandomvideos" name="Play Random Videos" version="1.0.2" provider-name="rmrector">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0" />
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -7,7 +7,7 @@
 	<extension point="xbmc.python.script" library="script.py" />
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Plays random videos from all sorts of lists.</summary>
-		<description lang="en">This script can play random episodes from TV shows, movies from genres/sets/years/tags, and videos from playlists, the filesystem, and just about anything else, other than plugins.</description>
+		<description lang="en">This add-on can quickly play random episodes from TV shows, movies from genres/sets/years/tags, and videos from playlists, the filesystem, and just about anything else, other than plugins.</description>
 		<disclaimer lang="en">This add-on does not directly add functionality on its own and must be supported by skins or other add-ons. Try the Context item 'Play Random Video' add-on for quick access from the context menu.</disclaimer>
 		<platform>all</platform>
 		<source>https://github.com/rmrector/script.playrandomvideos</source>
