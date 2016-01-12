@@ -206,6 +206,16 @@ class AudioBookHandler():
             # Get the name that the cached cover will have been stored as
             targetSrc, bookExt = os.path.splitext(fileName)
 
+            # Make sure both are utf-8 when comparing
+            try:
+                coverSrc = coverSrc.encode("utf-8")
+            except:
+                pass
+            try:
+                targetSrc = targetSrc.encode("utf-8")
+            except:
+                pass
+
             if targetSrc == coverSrc:
                 cachedCover = os_path_join(Settings.getCoverCacheLocation(), aFile)
                 log("AudioBookHandler: Cached cover found: %s" % cachedCover)
@@ -280,6 +290,10 @@ class AudioBookHandler():
                     ffmpegCmd[4] = ffmpegCmd[4].encode(locale.getpreferredencoding())
                 except:
                     log("AudioBookHandler: Failed file system encoding ffmpeg command 2, using default")
+                    try:
+                        ffmpegCmd[4] = ffmpegCmd[4].decode().encode(locale.getpreferredencoding())
+                    except:
+                        log("AudioBookHandler: Failed file system encoding ffmpeg command 3, using default")
 
             # Add the output image to the command line if it is needed
             if coverTempName is not None:

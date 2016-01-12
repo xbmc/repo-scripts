@@ -85,7 +85,10 @@ class MenuNavigator():
 
             log("AudioBooksPlugin: Adding directory %s" % dir)
 
-            displayName = "[%s]" % dir
+            try:
+                displayName = "[%s]" % dir.encode("utf-8")
+            except:
+                displayName = "[%s]" % dir
             try:
                 fullDir = fullDir.encode("utf-8")
             except:
@@ -126,7 +129,16 @@ class MenuNavigator():
                     isRead = True
 
             displayString = title
-            log("AudioBooksPlugin: Display title is %s for %s" % (displayString, audioBookFile))
+            try:
+                displayString = title.encode("utf-8")
+            except:
+                displayString = title
+
+            try:
+                log("AudioBooksPlugin: Display title is %s for %s" % (displayString, audioBookFile))
+            except:
+                # No need to have an error for logging
+                pass
 
             if isRead:
                 displayString = '* %s' % displayString
@@ -192,7 +204,10 @@ class MenuNavigator():
             url = self._build_url({'mode': 'play', 'filename': audioBookHandler.getFile(True), 'startTime': audioBookHandler.getChapterStart(chapterNum), 'chapter': chapterNum})
 
             # Check if the current position means that this chapter has already been played
-            displayString = chapter['title']
+            try:
+                displayString = chapter['title'].encode("utf-8")
+            except:
+                displayString = chapter['title']
 
             # Check if we need to add a number at the start of the chapter
             if Settings.autoNumberChapters() and (len(displayString) > 0):
