@@ -33,7 +33,7 @@ class ThemeLibrary():
 
         # Read the registration file for the library details
         try:
-            tvtunesRegStr = "PHR2dHVuZXNTdG9yZVJlZz4gICAgPGNvbmZpZz5odHRwOi8vd3d3LmRlYWRseWR1Y2suY29tL3R2dHVuZXMtc3RvcmUtY29uZmlnLnhtbDwvY29uZmlnPjwvdHZ0dW5lc1N0b3JlUmVnPg=="
+            tvtunesRegStr = "PHR2dHVuZXNTdG9yZVJlZz4gICAgPGNvbmZpZz5odHRwOi8vc2l0ZXMuZ29vZ2xlLmNvbS9zaXRlL3JvYndlYnNldC90dnR1bmVzLXN0b3JlLWNvbmZpZy54bWw8L2NvbmZpZz48L3R2dHVuZXNTdG9yZVJlZz4="
 
             # Get the library configuration from the registration file
             tvtunesRegET = ET.ElementTree(ET.fromstring(base64.b64decode(tvtunesRegStr)))

@@ -1,3 +1,7 @@
+v6.1.2
+- Continue searching if one theme fetcher fails when all enabled in settings
+- Update Theme Library Config
+
 v6.1.1
 - Add Plex Library Support
 - Add option to only scan for missing audio or video themes

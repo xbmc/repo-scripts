@@ -281,10 +281,30 @@ class TvTunesFetcher():
             self.searchEngine = Settings.getSearchEngine()
 
             themeLibraryList = ThemeLibraryListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, isTvShow=isTvShow, year=year, imdb=imdb, showProgressDialog=showProgressDialog)
-            plexLibraryList = PlexLibraryListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, isTvShow=isTvShow, year=year, imdb=imdb, showProgressDialog=showProgressDialog)
-            tvtunesList = TelevisionTunesListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
-            goearList = GoearListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
-            soundcloudList = SoundcloudListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+
+            plexLibraryList = []
+            try:
+                plexLibraryList = PlexLibraryListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, isTvShow=isTvShow, year=year, imdb=imdb, showProgressDialog=showProgressDialog)
+            except:
+                log("searchThemeList: (Plex) %s" % traceback.format_exc(), xbmc.LOGERROR)
+
+            tvtunesList = []
+            try:
+                tvtunesList = TelevisionTunesListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+            except:
+                log("searchThemeList: (TV Tunes) %s" % traceback.format_exc(), xbmc.LOGERROR)
+
+            goearList = []
+            try:
+                goearList = GoearListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+            except:
+                log("searchThemeList: (Goear) %s" % traceback.format_exc(), xbmc.LOGERROR)
+
+            soundcloudList = []
+            try:
+                soundcloudList = SoundcloudListing(self.includeAudio, self.includeVideo).themeSearch(showname, alternativeTitle, showProgressDialog=showProgressDialog)
+            except:
+                log("searchThemeList: (Soundcloud) %s" % traceback.format_exc(), xbmc.LOGERROR)
 
             # Join all the entries into one list
             theme_list = themeLibraryList + plexLibraryList + tvtunesList + goearList + soundcloudList
