@@ -36,7 +36,7 @@
 		<setting id="shadowformat" type="select" label="32210" default="0" lvalues="32211|32212|32213|32214"/>
 		<setting label="32220" type="bool" id="slideshow" default="false"/>
 		<setting id="image" type="select" label="32221" visible="eq(-1,false)" default="5" lvalues="32120|32121|32122|32123|32124|32125"/>			
-		<setting label="32222" type="folder" id="folder" subsetting="true" visible="eq(-2,true)" default="images" source="auto"/>
+		<setting label="32222" type="folder" id="folder" subsetting="true" visible="eq(-2,true)" default="images" source="pictures"/>
 		<setting label="32223" type="bool" id="randomimages" subsetting="true" visible="eq(-3,true)" default="false"/>
 		<setting id="imagetimer" type="select" label="32230" subsetting="true" visible="eq(-4,true)" default="0" lvalues="32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242"/>
 		</category>			

@@ -1,3 +1,6 @@
+[B]3.1.0[/B]
+- Added support for OSMC skin
+
 [B]3.0.0[/B]
 - Added bounce effect for on screen movement
 

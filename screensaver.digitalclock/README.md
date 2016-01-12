@@ -58,29 +58,30 @@ If the skin is not on the list screensaver will use default font names from conf
 - Aeon Nox 5
 - Aeon MQ5
 - Aeon MQ6
-- Amber (Works, we're just waiting for the skin update)
-- AppTV (Works, we're just waiting for the skin update)
+- Amber
+- AppTV
 - Arctic: Zephyr (Works but it still doesn't have the proper font - contacted the developer)
 - Avalon
 - Back Row
 - Bello
 - Black Glass Nova
-- Box (Works but it still doesn't have the proper font - contacted the developer)
+- Box
 - Chroma
-- Cirrus Extended (Works, we're just waiting for the skin update)
+- Cirrus Extended
 - Confluence
-- Conq (Works but it still doesn't have the proper font - contacted the developer)
+- Conq
 - Eminence (Works but it still doesn't have the proper font - contacted the developer)
 - Maximinimalism (Works, we're just waiting for the skin update)
 - Metropolis
 - Mimic
 - Nebula
 - Neon
+- OSMC
 - Rapier
 - Refocus (Works but it still doesn't have the proper font - contacted the developer)
 - Retouched
 - Sio2 (Works, we're just waiting for the skin update)
-- Titan
+- Titan (Has additional options!)
 - Transparency
 - Xperience1080
 
