@@ -1,3 +1,10 @@
+1.1.0
+
+- No results when keyboard with hidden input is active
+- big code rework
+- added bing as provider
+- fixed localdict provider
+
 1.0.0
 
 - Initial release

@@ -16,80 +16,148 @@ import simplejson
 
 ADDON = xbmcaddon.Addon()
 SETTING = ADDON.getSetting
-ADDON_PATH = ADDON.getAddonInfo('path').decode("utf-8")
+ADDON_PATH = os.path.join(os.path.dirname(__file__), "..")
 ADDON_ID = ADDON.getAddonInfo('id')
 ADDON_DATA_PATH = xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID).decode("utf-8")
+HEADERS = {'User-agent': 'Mozilla/5.0'}
 
 
-def get_autocomplete_items(search_str):
+def get_autocomplete_items(search_str, limit=10):
     """
-    get dict list with autocomplete labels from google
+    get dict list with autocomplete
     """
+    if xbmc.getCondVisibility("System.HasHiddenInput"):
+        return []
     if SETTING("autocomplete_provider") == "youtube":
-        return get_google_autocomplete_items(search_str, True)
+        provider = GoogleProvider(youtube=True)
     elif SETTING("autocomplete_provider") == "google":
-        return get_google_autocomplete_items(search_str)
+        provider = GoogleProvider()
+    elif SETTING("autocomplete_provider") == "bing":
+        provider = BingProvider()
     else:
-        return get_common_words_autocomplete_items(search_str)
+        provider = LocalDictProvider()
+    provider.limit = limit
+    return provider.get_predictions(search_str)
 
 
-def get_google_autocomplete_items(search_str, youtube=False):
-    """
-    get dict list with autocomplete labels from google
-    """
-    if not search_str:
-        return []
-    listitems = []
-    headers = {'User-agent': 'Mozilla/5.0'}
-    base_url = "http://clients1.google.com/complete/"
-    url = "search?hl=%s&q=%s&json=t&client=serp" % (SETTING("autocomplete_lang"), urllib.quote_plus(search_str))
-    if youtube:
-        url += "&ds=yt"
-    result = get_JSON_response(url=base_url + url,
-                               headers=headers,
-                               folder="Google")
-    if not result or len(result) <= 1:
-        return []
-    for item in result[1]:
-        if is_hebrew(item):
-            search_str = item[::-1]
-        else:
-            search_str = item
-        li = {"label": item,
-              "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
-        listitems.append(li)
-    return listitems
+class BaseProvider(object):
+
+    def __init__(self, *args, **kwargs):
+        self.limit = 99
+
+    def get_predictions(self, search_str):
+        pass
+
+    def prep_search_str(self, text):
+        if type(text) != unicode:
+            text = text.decode('utf-8')
+        for chr in text:
+            if ord(chr) >= 1488 and ord(chr) <= 1514:
+                return text[::-1]
+        return text
+
+    def get_prediction_listitems(self, search_str):
+        for item in self.get_predictions(search_str):
+            li = {"label": item,
+                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
+            yield li
 
 
-def is_hebrew(text):
-    if type(text) != unicode:
-        text = text.decode('utf-8')
-    for chr in text:
-        if ord(chr) >= 1488 and ord(chr) <= 1514:
-            return True
-    return False
+class GoogleProvider(BaseProvider):
 
+    def __init__(self, *args, **kwargs):
+        self.youtube = kwargs.get("youtube", False)
 
-def get_common_words_autocomplete_items(search_str):
-    """
-    get dict list with autocomplete labels from locally saved lists
-    """
-    listitems = []
-    k = search_str.rfind(" ")
-    if k >= 0:
-        search_str = search_str[k + 1:]
-    path = os.path.join(ADDON_PATH, "resources", "data", "common_%s.txt" % SETTING("autocomplete_lang_local"))
-    log(path)
-    with codecs.open(path, encoding="utf8") as f:
-        for i, line in enumerate(f.readlines()):
-            if not line.startswith(search_str) or len(line) <= 2:
-                continue
-            li = {"label": line,
-                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % line}
+    def get_predictions(self, search_str):
+        """
+        get dict list with autocomplete labels from google
+        """
+        if not search_str:
+            return []
+        listitems = []
+        result = self.fetch_data(search_str)
+        for i, item in enumerate(result):
+            search_str = self.prep_search_str(item)
+            li = {"label": item,
+                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
             listitems.append(li)
-            if len(listitems) > 10:
+            if i > self.limit:
                 break
-    return listitems
+        return listitems
+
+    def fetch_data(self, search_str):
+        base_url = "http://clients1.google.com/complete/"
+        url = "search?hl=%s&q=%s&json=t&client=serp" % (SETTING("autocomplete_lang"), urllib.quote_plus(search_str))
+        if self.youtube:
+            url += "&ds=yt"
+        result = get_JSON_response(url=base_url + url,
+                                   headers=HEADERS,
+                                   folder="Google")
+        if not result or len(result) <= 1:
+            return []
+        else:
+            return result[1]
+
+
+class BingProvider(BaseProvider):
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def get_predictions(self, search_str):
+        """
+        get dict list with autocomplete labels from bing
+        """
+        if not search_str:
+            return []
+        listitems = []
+        result = self.fetch_data(search_str)
+        log(result)
+        for i, item in enumerate(result):
+            search_str = self.prep_search_str(item)
+            li = {"label": item,
+                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
+            listitems.append(li)
+            if i > self.limit:
+                break
+        return listitems
+
+    def fetch_data(self, search_str):
+        base_url = "http://api.bing.com/osjson.aspx?"
+        url = "query=%s" % (urllib.quote_plus(search_str))
+        result = get_JSON_response(url=base_url + url,
+                                   headers=HEADERS,
+                                   folder="Bing")
+        if not result:
+            return []
+        else:
+            return result[1]
+
+
+class LocalDictProvider(BaseProvider):
+
+    def __init__(self, *args, **kwargs):
+        self.limit = 99
+
+    def get_predictions(self, search_str):
+        """
+        get dict list with autocomplete labels from locally saved lists
+        """
+        listitems = []
+        k = search_str.rfind(" ")
+        if k >= 0:
+            search_str = search_str[k + 1:]
+        path = os.path.join(ADDON_PATH, "resources", "data", "common_%s.txt" % SETTING("autocomplete_lang_local"))
+        with codecs.open(path, encoding="utf8") as f:
+            for i, line in enumerate(f.readlines()):
+                if not line.startswith(search_str) or len(line) <= 2:
+                    continue
+                li = {"label": line,
+                      "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % line}
+                listitems.append(li)
+                if len(listitems) > self.limit:
+                    break
+        return listitems
 
 
 def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
