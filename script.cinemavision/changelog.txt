@@ -1,5 +1,9 @@
 Changelog for CinemaVision
 
+[- 1.0.9 -]
+
+- fix:     Trailers with source 'Directory' were not being filtered for video files only
+
 [- 1.0.8 -]
 
 - fix:     Various encoding errors when loading content

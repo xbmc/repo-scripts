@@ -903,7 +903,7 @@ class TrailerHandler:
             return []
 
         try:
-            files = util.vfs.listdir(path)
+            files = [f for f in util.vfs.listdir(path) if os.path.splitext(f)[-1].lower() in util.videoExtensions]
             if self.sItem.getLive('filter3D'):
                 files = [f for f in files if self.caller.nextQueuedFeature.is3D == util.pathIs3D(f)]
             files = random.sample(files, min((count, len(files))))
