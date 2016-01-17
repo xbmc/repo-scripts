@@ -180,11 +180,12 @@ class MenuNavigator():
 
     # Do a lookup in the database for the given type of videos
     def getVideos(self, jsonGet, target):
-        origTitleRequest = ', "originaltitle"'
+        origTitleRequest = ', "imdbnumber", "originaltitle"'
         if target == MenuNavigator.MUSICVIDEOS:
             origTitleRequest = ''
 
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "file", "thumbnail", "fanart", "imdbnumber", "year"%s], "sort": { "method": "title" } }, "id": 1}' % (jsonGet, origTitleRequest))
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "file", "thumbnail", "fanart", "year"%s], "sort": { "method": "title" } }, "id": 1}' % (jsonGet, origTitleRequest))
+#        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "file", "thumbnail", "fanart", "imdbnumber", "year"%s], "sort": { "method": "title" } }, "id": 1}' % (jsonGet, origTitleRequest))
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
         log(json_response)
@@ -195,7 +196,6 @@ class MenuNavigator():
                 videoItem['title'] = item['title']
                 # The file is actually the path for a TV Show, the video file for movies
                 videoItem['file'] = item['file']
-                videoItem['imdb'] = item['imdbnumber']
                 videoItem['year'] = item['year']
 
                 videoItem['isTvShow'] = False
@@ -212,6 +212,11 @@ class MenuNavigator():
                     videoItem['originaltitle'] = item['originaltitle']
                 else:
                     videoItem['originaltitle'] = None
+
+                if 'imdbnumber' in item:
+                    videoItem['imdb'] = item['imdbnumber']
+                else:
+                    videoItem['imdb'] = None
 
                 Videolist.append(videoItem)
         return Videolist
@@ -324,12 +329,35 @@ class MenuNavigator():
 
     # Does a search for all the missing themes
     def fetchMissingThemes(self, incAudioThemes=True, incVideoThemes=False):
+        # Prompt the user to see if they want all the themes or just some
+        # of them
+        displayList = []
+        displayList.append(__addon__.getLocalizedString(32210))
+        displayList.append(__addon__.getLocalizedString(32211))
+        displayList.append(__addon__.getLocalizedString(32212))
+        displayList.append(__addon__.getLocalizedString(32213))
+
+        # Show the list to the user
+        select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32105), displayList)
+        if select < 0:
+            log("fetchMissingThemes: Cancelled by user")
+            return
+
         # It could take a little while to get the videos so show the busy dialog
         xbmc.executebuiltin("ActivateWindow(busydialog)")
 
-        tvShows = self.getVideos('GetTVShows', MenuNavigator.TVSHOWS)
-        movies = self.getVideos('GetMovies', MenuNavigator.MOVIES)
-        music = self.getVideos('GetMusicVideos', MenuNavigator.MUSICVIDEOS)
+        tvShows = []
+        if (select == 0) or (select == 1):
+            log("fetchMissingThemes: Checking TV Shows")
+            tvShows = self.getVideos('GetTVShows', MenuNavigator.TVSHOWS)
+        movies = []
+        if (select == 0) or (select == 2):
+            log("fetchMissingThemes: Checking Movies")
+            movies = self.getVideos('GetMovies', MenuNavigator.MOVIES)
+        music = []
+        if (select == 0) or (select == 3):
+            log("fetchMissingThemes: Checking Music Videos")
+            music = self.getVideos('GetMusicVideos', MenuNavigator.MUSICVIDEOS)
 
         videoList = []
 

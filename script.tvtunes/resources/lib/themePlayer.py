@@ -260,6 +260,13 @@ class ThemePlayer(xbmc.Player):
 
     # Graceful end of the playing, will fade if set to do so
     def endPlaying(self, fastFade=False, slowFade=False):
+        # If we are stopping audio and we do not have a value for the original volume
+        # then it means we are stopping something that we did not start, this means that
+        # before we do anything like fade the volume out we should get the current
+        # volume and store it as the base level
+        if self.original_volume < 0:
+            self.original_volume = self._getVolume()
+
         if self.isPlayingAudio() and Settings.isFadeOut():
             cur_vol = self._getVolume()
 

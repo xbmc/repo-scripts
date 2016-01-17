@@ -184,13 +184,29 @@ class WindowShowing():
 
     @staticmethod
     def isTvTunesOverrideTvShows():
-        win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
-        return win.getProperty("TvTunesSupported").lower() == "tvshows"
+        isOverride = False
+        try:
+            # If there is a problem with a skin where there is no current window Id, avoid the exception
+            win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
+            if win.getProperty("TvTunesSupported").lower() == "tvshows":
+                isOverride = True
+        except:
+            isOverride = False
+
+        return isOverride
 
     @staticmethod
     def isTvTunesOverrideMovie():
-        win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
-        return win.getProperty("TvTunesSupported").lower() == "movies"
+        isOverride = False
+        try:
+            # If there is a problem with a skin where there is no current window Id, avoid the exception
+            win = xbmcgui.Window(xbmcgui.getCurrentWindowId())
+            if win.getProperty("TvTunesSupported").lower() == "movies":
+                isOverride = True
+        except:
+            isOverride = False
+
+        return isOverride
 
     @staticmethod
     def isTvTunesOverrideContinuePlaying():

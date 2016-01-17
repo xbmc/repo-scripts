@@ -594,8 +594,23 @@ msgctxt "#32209"
 msgid "[Action]: Retrieve Missing Video Themes"
 msgstr ""
 
+msgctxt "#32210"
+msgid "Retrieve All Missing Themes"
+msgstr ""
 
-#empty strings from id 32210 to 32990
+msgctxt "#32211"
+msgid "Retrieve Missing TV Themes Only"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Retrieve Missing Movie Themes Only"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Retrieve Missing Music Video Themes Only"
+msgstr ""
+
+#empty strings from id 32214 to 32990
 
 msgctxt "#32991"
 msgid "Playback"

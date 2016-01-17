@@ -1,3 +1,7 @@
+v6.1.3
+- Restore volume correctly when audio already playing
+- Allow auto download for just TV, Movies or Music Videos
+
 v6.1.2
 - Continue searching if one theme fetcher fails when all enabled in settings
 - Update Theme Library Config
