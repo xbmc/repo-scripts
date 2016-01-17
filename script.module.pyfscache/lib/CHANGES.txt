@@ -1,0 +1,21 @@
+2015-01-29 Removed configobj dependency from setup.py.
+           Also from Makefile, which imports as an .inc.
+           Thanks to anentropic for pointing out this issue
+           with setuptools. Released 0.9.12.
+
+2013-04-16 Fixed testing suite where it automatically made a
+           'test-cache' directory upon every import of pyfscache.
+           Released 0.9.11.
+
+2013-03-07 Included testing module accidentally excluded from previous
+           releases. Added $(VERMODULE) to Makefile test dependencies.
+           Released 0.9.10.
+
+2013-03-05 Improved and slightly expanded documentation, including
+           docstrings. Changed keying slightly to allow for caching
+           of more diverse types of functions. Created LifetimeError
+           for negative or zero lifetimes when creating an FSCache.
+           Released 0.9.9.
+
+2013-03-04 Intial release 0.9.8.
+
