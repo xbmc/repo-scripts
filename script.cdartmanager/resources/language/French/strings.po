@@ -1,0 +1,791 @@
+# XBMC Media Center language file
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# giftie <giftie61@hotmail.com>, 2012
+# thebluepotato <jonas.zaugg@yahoo.com>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: cdART Manager\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2012-07-03 05:24+0000\n"
+"PO-Revision-Date: 2013-04-29 08:35+0000\n"
+"Last-Translator: giftie <giftie61@hotmail.com>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/cdART_Manager_XBMC_ADDON/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#32000"
+msgid "Recognized Artists"
+msgstr "Artistes Reconnus"
+
+msgctxt "#32001"
+msgid "Album cdARTs"
+msgstr "Album cdARTs"
+
+msgctxt "#32002"
+msgid "Select Artist"
+msgstr "Choisir l'Artiste"
+
+msgctxt "#32003"
+msgid "Album Cover Arts"
+msgstr "Jaquettes d'Album"
+
+msgctxt "#32004"
+msgid "Automatic Download"
+msgstr "Téléchargement Automatique"
+
+msgctxt "#32005"
+msgid "Save Local cdART List"
+msgstr "Sauvegarde liste des cdARTs locaux"
+
+msgctxt "#32006"
+msgid "Artist Fanarts"
+msgstr "Wallpaper d'Artistes"
+
+msgctxt "#32007"
+msgid "Local Album Artists: %s"
+msgstr "Artistes Locaux: %s"
+
+msgctxt "#32008"
+msgid "Local cdARTs: %s"
+msgstr "cdARTs Locaux: %s"
+
+msgctxt "#32009"
+msgid "Artist ClearLOGOs"
+msgstr "Logos des Artistes"
+
+msgctxt "#32010"
+msgid "Local Discs: %s"
+msgstr "Disques Locaux: %s"
+
+msgctxt "#32011"
+msgid "Advanced"
+msgstr "Avance"
+
+msgctxt "#32012"
+msgid "Refresh Addon Database"
+msgstr "Rafraichir la BDD du Programme"
+
+msgctxt "#32013"
+msgid "Clean XBMC's Music Library"
+msgstr "Nettoyer la bibliothèque musicale de XBMC"
+
+msgctxt "#32014"
+msgid "Update XBMC's Music Library"
+msgstr "Mettre la bibliothèque musicale de XBMC à jour"
+
+msgctxt "#32015"
+msgid "Delete Addon's Database?"
+msgstr "Suppression de la BDD du Programme?"
+
+msgctxt "#32016"
+msgid "Disc:"
+msgstr "Disque:"
+
+msgctxt "#32017"
+msgid "Local cdART List saving folder"
+msgstr "Dossier de sauvegarde de la liste des cdARTS locaux"
+
+msgctxt "#32018"
+msgid "cdART  Backup folder"
+msgstr "Dossier de Sauvegarde des cdARTs"
+
+msgctxt "#32019"
+msgid "Backup saving format: "
+msgstr "Format de la sauvegarde: "
+
+msgctxt "#32020"
+msgid "Retrieving Music Database"
+msgstr "Recuperation de la BDD Musicale"
+
+msgctxt "#32021"
+msgid "Creating Addon Database"
+msgstr "Creation de la BDD du Programme"
+
+msgctxt "#32022"
+msgid "Choose Available cdART"
+msgstr "Choisissez un cdART disponible"
+
+msgctxt "#32023"
+msgid "Download Successful!"
+msgstr "Succes du Telechargement!"
+
+msgctxt "#32024"
+msgid "Artwork Downloaded!"
+msgstr "Artwork Telecharge!"
+
+msgctxt "#32025"
+msgid "Check file paths-Artwork Not Downloaded"
+msgstr "Verifier le chemin des fichiers-Artwork Non Telecharge"
+
+msgctxt "#32026"
+msgid "Download Error Occured!"
+msgstr "Erreur produite lors du telechargement!"
+
+msgctxt "#32027"
+msgid "Artwork Not Download!"
+msgstr "Artwork Non telecharge!"
+
+msgctxt "#32028"
+msgid "Download aborted!"
+msgstr "Telechargement annule!"
+
+msgctxt "#32029"
+msgid "No Artwork found?"
+msgstr "Aucun Artwork trouve?"
+
+msgctxt "#32030"
+msgid "Please contribute! Upload your Artwork"
+msgstr "Merci de contribuer! Envoyez vos Artworks"
+
+msgctxt "#32031"
+msgid "On fanart.tv"
+msgstr "Sur fanart.tv"
+
+msgctxt "#32032"
+msgid "Choose an Artist"
+msgstr "Choisir un Artiste"
+
+msgctxt "#32033"
+msgid "Not Found on fanart.tv"
+msgstr "Non trouve sur fanart.tv"
+
+msgctxt "#32034"
+msgid "No Artwork found for"
+msgstr "Aucun Artwork trouve pour"
+
+msgctxt "#32035"
+msgid " *DOWNLOADING Artwork* "
+msgstr "*TÉLÉCHARGEMENT des artworks*"
+
+msgctxt "#32036"
+msgid "Music folder path(for Artwork)"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Getting local artists"
+msgstr "Recupération des Artistes locaux"
+
+msgctxt "#32038"
+msgid "Artist: "
+msgstr "Artiste: "
+
+msgctxt "#32039"
+msgid "Album: "
+msgstr "Album: "
+
+msgctxt "#32040"
+msgid "Completed"
+msgstr "Termine"
+
+msgctxt "#32041"
+msgid "New Artwork downloaded"
+msgstr "Nouveaux Artworks Telecharges"
+
+msgctxt "#32042"
+msgid "cdART Manager"
+msgstr "cdART Manager"
+
+#. string insert for local artist
+msgctxt "#32043"
+msgid "Local Artists:"
+msgstr "Artistes Locaux:"
+
+#. string insert for local cdARTs
+msgctxt "#32044"
+msgid "Local cdARTs:"
+msgstr "cdARTs Locaux:"
+
+#. string insert for local albums
+msgctxt "#32045"
+msgid "Local Discs:"
+msgstr "Disques Locaux:"
+
+msgctxt "#32046"
+msgid "Automatic Downloading Artwork"
+msgstr "Telechargement Automatique de l'Artwork"
+
+msgctxt "#32047"
+msgid "Downloading..."
+msgstr "En cours de Telechargement..."
+
+msgctxt "#32048"
+msgid "Retrieving Recognized Artist List...."
+msgstr "Recuperation de la liste des Artistes Reconnus..."
+
+msgctxt "#32049"
+msgid "Artists Matched: %s"
+msgstr "Artistes Correspondants: %s"
+
+msgctxt "#32050"
+msgid "Database setup aborted..."
+msgstr "Configuration de la BDD annule..."
+
+msgctxt "#32051"
+msgid "Addon Database is crucial to script!"
+msgstr "La BDD du Programme est crucial pour le script!"
+
+msgctxt "#32052"
+msgid "Please go to the Advanced Menu and"
+msgstr "Merci d'aller dans le Menu Avance et"
+
+msgctxt "#32053"
+msgid "Refresh Addon Database"
+msgstr "Rafraichir la BDD du Programme"
+
+msgctxt "#32054"
+msgid "/Artist/Album.png"
+msgstr "/Artist/Album.png"
+
+msgctxt "#32055"
+msgid "/artist - album.png"
+msgstr "/artist - album.png"
+
+msgctxt "#32056"
+msgid "cdARTs Copied"
+msgstr "cdARTs Copies"
+
+msgctxt "#32057"
+msgid "Finished Copying cdARTs"
+msgstr "Copie des cdARTs terminee"
+
+msgctxt "#32058"
+msgid "cdARTs Stored in"
+msgstr "cdARTs enregistres dans"
+
+msgctxt "#32059"
+msgid " cdARTs Copied"
+msgstr " cdARTs Copies"
+
+msgctxt "#32060"
+msgid "Copying cdARTs..."
+msgstr "Copie des cdARTs en cours..."
+
+msgctxt "#32061"
+msgid "cdART Backup"
+msgstr "Sauvegarde cdART"
+
+msgctxt "#32062"
+msgid "Path for missing.txt file"
+msgstr "Chemin du fichier missing.txt"
+
+msgctxt "#32063"
+msgid "Copy Unique Local cdARTs"
+msgstr "Copier les cdARTS uniques locaux"
+
+msgctxt "#32064"
+msgid "Unique cdARTS folder: %s"
+msgstr "Dossier des cdARTS Uniques: %s"
+
+msgctxt "#32065"
+msgid "Comparing Local and Online cdARTs..."
+msgstr "Comparaison des cdARTs locaux et en ligne..."
+
+msgctxt "#32066"
+msgid "Error connecting to fanart.tv, Socket Timed out"
+msgstr "Erreur lors de la connexion a fanart.tv, Timeout du Socket"
+
+msgctxt "#32067"
+msgid "Backup cdART Files"
+msgstr "Sauvegarde des cdARTs"
+
+msgctxt "#32068"
+msgid "Restore From Backup"
+msgstr "Restaurer depuis la Sauvegarde"
+
+msgctxt "#32069"
+msgid "Restoring cdARTs from backup..."
+msgstr "Restauration en cours des cdARTs depuis la sauvegarde..."
+
+msgctxt "#32070"
+msgid "cdARTs Restored from backup folder"
+msgstr "cdARTs restaures depuis le dossier de Sauvegarde"
+
+msgctxt "#32071"
+msgid "Settings have not been setup!"
+msgstr "Les reglages n'ont pas ete definis!"
+
+msgctxt "#32072"
+msgid "Please go to Settings menu..."
+msgstr "Merci d'aller dans le menu Reglages..."
+
+msgctxt "#32073"
+msgid "Then Advanced: Refresh Addon Database"
+msgstr "Puis Avance: Rafraichir la BDD du Programme"
+
+msgctxt "#32074"
+msgid "Copy cdART to Backup Folder"
+msgstr "Copier les cdARTs dans le dossier de Sauvegarde"
+
+msgctxt "#32075"
+msgid "Delete cdART"
+msgstr "Supprimer le cdART"
+
+msgctxt "#32076"
+msgid "Copy To Unique Folder For Upload"
+msgstr "Copie dans le dossier Unique pour Envoi"
+
+msgctxt "#32077"
+msgid "Custom Label Colors"
+msgstr "Couleurs personnalisees des etiquettes"
+
+msgctxt "#32078"
+msgid "Green"
+msgstr "Vert"
+
+msgctxt "#32079"
+msgid "Blue"
+msgstr "Bleu"
+
+msgctxt "#32080"
+msgid "Red"
+msgstr "Rouge"
+
+msgctxt "#32081"
+msgid "Yellow"
+msgstr "Jaune"
+
+msgctxt "#32082"
+msgid "Orange"
+msgstr "Orange"
+
+msgctxt "#32083"
+msgid "White"
+msgstr "Blanc"
+
+msgctxt "#32084"
+msgid "Cyan"
+msgstr "Cyan"
+
+msgctxt "#32085"
+msgid "Violet"
+msgstr "Violet"
+
+msgctxt "#32086"
+msgid "Pink"
+msgstr "Rose"
+
+msgctxt "#32087"
+msgid "   Recognized Artists Color"
+msgstr "   Couleur des Artistes Reconnus"
+
+msgctxt "#32088"
+msgid "   Unrecognized Artists Color"
+msgstr "   Couleur des Artistes Non Reconnus"
+
+msgctxt "#32089"
+msgid "   fanart.tv Albums Match Color"
+msgstr "   Couleur des Albums correspondants sur fanart.tv"
+
+msgctxt "#32090"
+msgid "   Local Albums Match Color"
+msgstr "   Couleur des Albums locaux correspondants"
+
+msgctxt "#32091"
+msgid "   Local and fanart.tv Match Color"
+msgstr "   Couleur des correspondances Locales et fanart.tv"
+
+msgctxt "#32092"
+msgid "   Unmatched Album Color"
+msgstr "   Couleur des Albums sans correspondance"
+
+msgctxt "#32093"
+msgid "   Local cdART List Color"
+msgstr "   Couleur de la liste des cdARTS locaux"
+
+msgctxt "#32094"
+msgid "Enable custom colors for labels"
+msgstr "Couleurs personnalisees pour les etiquettes"
+
+msgctxt "#32095"
+msgid "File Folders"
+msgstr "Dossiers de destination"
+
+msgctxt "#32096"
+msgid "Duplicates Found"
+msgstr "Doublons trouves"
+
+msgctxt "#32097"
+msgid "    Resize Unique cdARTs?"
+msgstr "Redimensionner les cdARTs uniques?"
+
+msgctxt "#32098"
+msgid "Local cdART List"
+msgstr "Liste des cdARTs Locaux"
+
+msgctxt "#32099"
+msgid "Build Addon Database in background"
+msgstr "Créer la base de données du module en arrière-plan"
+
+msgctxt "#32100"
+msgid "Local Album Count"
+msgstr "Nombre d'albums"
+
+msgctxt "#32101"
+msgid "Sorting Album Artists"
+msgstr "Tri Alphabetique des Artistes"
+
+msgctxt "#32102"
+msgid "Retrieving Local Database"
+msgstr "Recuperation de la BDD locale"
+
+msgctxt "#32103"
+msgid "Saving Missing Artwork List"
+msgstr "Sauvegarde la liste des Artworks manquants"
+
+msgctxt "#32104"
+msgid "Uploading Missing cdART List to website"
+msgstr "Transfert de la liste des cdARTs manquants sur le site"
+
+msgctxt "#32105"
+msgid "Retrieving Album Details"
+msgstr "Recuperation des details de l'Album"
+
+msgctxt "#32106"
+msgid "Overwrite low-res existing cdARTs"
+msgstr "Ecraser les cdARTs existants en basse resolution"
+
+msgctxt "#32108"
+msgid "Database too old"
+msgstr "BDD trop vieille"
+
+msgctxt "#32109"
+msgid "Do you want to Rebuild?"
+msgstr "Souhaitez-vous reconstruire?"
+
+msgctxt "#32110"
+msgid "Problem Accessing Folder, Script Exiting"
+msgstr "Probleme pour acceder au dossier, sortie du script"
+
+msgctxt "#32111"
+msgid "Downloaded Artwork"
+msgstr "Artworks Telecharges"
+
+msgctxt "#32112"
+msgid "Updating Thumbnails and Fanarts"
+msgstr "MAJ des Fanarts et des Miniatures"
+
+msgctxt "#32113"
+msgid "Finished updating Thumbnails and Fanarts"
+msgstr "MAJ terminee des Fanarts et Miniatures"
+
+msgctxt "#32114"
+msgid "Check Database MBID's to be current during an Update"
+msgstr "Verifie que les MBIDs de la BDD sont identiques aux derniers de Musicbrainz"
+
+msgctxt "#32115"
+msgid "Notify while in Background mode"
+msgstr "Notifier en mode arrière-plan"
+
+msgctxt "#32116"
+msgid "Notify At End of Background Database Build(displayed for 2 seconds)"
+msgstr "Notifier a la fin de la construction de la BDD (affichee pendant 2 secondes)"
+
+msgctxt "#32117"
+msgid "Database Building completed"
+msgstr "Construction de la BDD terminee"
+
+msgctxt "#32118"
+msgid "Background Database building in progress...  Exiting Script..."
+msgstr "Construction de la BDD en arriere-plan en cours... Sortie du script..."
+
+msgctxt "#32119"
+msgid "Stopping Background Database Building"
+msgstr "Arret de la construction de la BDD en arriere-plan"
+
+msgctxt "#32120"
+msgid "All Artists"
+msgstr "Tous les Artistes"
+
+msgctxt "#32121"
+msgid "Album Artists"
+msgstr "Artistes d'Album"
+
+msgctxt "#32122"
+msgid "Edit Artist"
+msgstr "Editer l'Artiste"
+
+msgctxt "#32123"
+msgid "Backup Database"
+msgstr "Sauvegarde de la BDD"
+
+msgctxt "#32124"
+msgid "Retrieving All Local Artists"
+msgstr "Recuperation de tous les Artistes Locaux"
+
+msgctxt "#32125"
+msgid "Artist ID: "
+msgstr "ID de l'Artiste: "
+
+msgctxt "#32126"
+msgid "Modify Addon Database"
+msgstr "Modifier la base de données du module"
+
+msgctxt "#32127"
+msgid "Edit Album"
+msgstr "Editer l'Album"
+
+msgctxt "#32128"
+msgid "MusicBrainz Search Limit"
+msgstr "Limite de recherche sur MusicBrainz atteinte"
+
+msgctxt "#32129"
+msgid "Update Database"
+msgstr "MAJ de la BDD"
+
+msgctxt "#32130"
+msgid "XBMC Music Database missing..."
+msgstr "Bibliotheque Musicale de XBMC manquante..."
+
+msgctxt "#32131"
+msgid "Please insure Music Library is built."
+msgstr "Merci de verifier que la bibliotheque musicale est construite."
+
+msgctxt "#32132"
+msgid "Updating Missing MusicBrainz Artist's IDs"
+msgstr "MAJ des MBIDs manquants pour les Artistes"
+
+msgctxt "#32133"
+msgid "Updating Missing MusicBrainz Album/Artist ID's"
+msgstr "MAJ des MBIDs manquants pour les Albums/Artistes"
+
+msgctxt "#32134"
+msgid "Updating Addon Database"
+msgstr "MAJ de la BDD du Programme"
+
+msgctxt "#32135"
+msgid "Updating Addon Database - Local Artists"
+msgstr "MAJ de la BDD du Programme - Artistes Locaux"
+
+msgctxt "#32136"
+msgid ""
+"Enable MusicBrainz ID update during Addon Database update(for missing IDs)"
+msgstr "MAJ des MBIDs lors de la MAJ de la BDD (pour les IDs manquants)"
+
+msgctxt "#32137"
+msgid "Artist"
+msgstr "Artiste"
+
+msgctxt "#32138"
+msgid "Album"
+msgstr "Album"
+
+msgctxt "#32139"
+msgid "Successfully backed up Addon Database"
+msgstr "Succes de la sauvegarde de la BDD du Programme"
+
+msgctxt "#32140"
+msgid "Old Database version found..."
+msgstr "Ancienne version de la BDD trouvee..."
+
+msgctxt "#32141"
+msgid "Would you like to add Local Artists to Addon Database?"
+msgstr "Souhaitez-vous que les artistes locaux soient ajoutes a la BDD du programme?"
+
+msgctxt "#32142"
+msgid "Add all artists to Database during Database build or update?"
+msgstr "Ajouter les artistes lors de la construction ou la maj de la BDD?"
+
+msgctxt "#32143"
+msgid "Extra Settings"
+msgstr "Reglages Supplémentaires"
+
+msgctxt "#32144"
+msgid "Artist Thumbs"
+msgstr "Vignettes Artistes"
+
+msgctxt "#32145"
+msgid "Update XBMC Thumbnails and Fanarts"
+msgstr "Mettre a jour les Fanarts et les Vignettes de XBMC"
+
+msgctxt "#32146"
+msgid "Settings"
+msgstr "Reglages"
+
+msgctxt "#32147"
+msgid "Exit"
+msgstr "Quitter"
+
+msgctxt "#32148"
+msgid "(this can take a long time to complete)"
+msgstr "(cela peut prendre un certain temps a se terminer)"
+
+msgctxt "#32149"
+msgid "Checking Artist MBIDs"
+msgstr "Verifier les MBIDs des Artistes"
+
+msgctxt "#32150"
+msgid "Checking Album MBIDs"
+msgstr "Verifier les MBIDS des Albums MBIDs"
+
+msgctxt "#32151"
+msgid "Find Missing MBIDs"
+msgstr "Trouvers les MBIDs manquants"
+
+msgctxt "#32152"
+msgid "Refresh MBIDs"
+msgstr "Rafraichir les MBIDs"
+
+msgctxt "#32153"
+msgid "Change MBID"
+msgstr "Changer le MBID"
+
+msgctxt "#32154"
+msgid "Check All MBIDs"
+msgstr "Verifier tous les MBIDs"
+
+msgctxt "#32155"
+msgid "Enter MBID"
+msgstr "Entrer le MBID"
+
+msgctxt "#32156"
+msgid "Select from search(manual entry)"
+msgstr "Choisir a partir de la recherche(Entree Manuelle)"
+
+msgctxt "#32157"
+msgid "Select from search(automatic)"
+msgstr "Choisir a partir de la recherche(Automatique)"
+
+msgctxt "#32158"
+msgid "Enable saving of missing.txt file"
+msgstr "Enregistrement du fichier missing.txt"
+
+msgctxt "#32159"
+msgid "Enter Artist MBID - Including dashes(36 Characters)"
+msgstr "Entrer le MBID de l'artiste - Tirets inclus(36 caracteres)"
+
+msgctxt "#32160"
+msgid "Please Enter 36 Characters including dashes"
+msgstr "Merci d'entrer 36 caracteres, tirets inclus"
+
+msgctxt "#32161"
+msgid "Do you want to re-enter?"
+msgstr "Souhaitez-vous le re-saisir?"
+
+msgctxt "#32162"
+msgid "Is this MBID Correct?"
+msgstr "Est-ce que le MBID est correct?"
+
+msgctxt "#32163"
+msgid "Are you sure you want to delete MBID?"
+msgstr "Etes-vous sure de vouloir supprimer le MBID?"
+
+msgctxt "#32164"
+msgid "Enter Artist name to search"
+msgstr "Entrer le nom de l'artiste a chercher"
+
+msgctxt "#32165"
+msgid "Enter Album title to search"
+msgstr "Entrer le titre de l'album a chercher"
+
+msgctxt "#32166"
+msgid "Select Album"
+msgstr "Choisir Album"
+
+msgctxt "#32167"
+msgid "Enter Album MBID - Including dashes(36 Characters)"
+msgstr "Entrer Album MBID - Avec les tirets (36 Caracteres)"
+
+msgctxt "#32168"
+msgid "Artist Banners"
+msgstr "Bannières d'artistes"
+
+msgctxt "#32169"
+msgid "400px X 155px"
+msgstr "400px X 155px"
+
+msgctxt "#32170"
+msgid "800px X 310px"
+msgstr "800px X 310px"
+
+msgctxt "#32171"
+msgid "Enable HD Music LOGOs"
+msgstr "Autoriser les logos de musique HD"
+
+msgctxt "#32172"
+msgid "Backup addon database during update"
+msgstr "Sauvegarder la base de données du module durant une mise à jour"
+
+msgctxt "#32173"
+msgid ""
+"Number of days to cache fanart.tv data(The Scheduler)[CR]Cache gets cleared "
+"with manual use of cdART Manager"
+msgstr "Nombre de jours de mise en cache des données de fanart.tv (TheScheduler)[CR]Le cache est vidé lors de l'emploi manuel de cdART Manager"
+
+msgctxt "#32174"
+msgid "Number of possible MBID matches:"
+msgstr "Nombre de correspondances MBID possibles:"
+
+msgctxt "#32175"
+msgid "Enable replacement of illegal filename characters in artist names"
+msgstr "Autoriser le remplacement de caractères de fichiers illégaux dans les noms d'artistes"
+
+msgctxt "#32176"
+msgid "   illegal characters to replace"
+msgstr "caractères illégaux à remplacer"
+
+msgctxt "#32177"
+msgid "   replacement character"
+msgstr "caractère de remplacement"
+
+msgctxt "#32178"
+msgid "Yes"
+msgstr "Oui"
+
+msgctxt "#32179"
+msgid "No"
+msgstr "Non"
+
+msgctxt "#32180"
+msgid "    change trailing periods to replacement character"
+msgstr "substituer les points de suspension par le caractère de remplacement"
+
+msgctxt "#32181"
+msgid "There is an error in Settings."
+msgstr ""
+
+msgctxt "#32182"
+msgid "Please check your settings and save settings[CR](press OK in settings)"
+msgstr ""
+
+msgctxt "#32183"
+msgid "Limit number Extrafanarts"
+msgstr ""
+
+msgctxt "#32184"
+msgid "    Extrafanart Limit:"
+msgstr ""
+
+msgctxt "#32185"
+msgid "Checking fanart.tv for new artwork..."
+msgstr ""
+
+msgctxt "#32186"
+msgid "Updating Database to new version..."
+msgstr ""
+
+msgctxt "#32187"
+msgid "Checking fanart.tv for artwork..."
+msgstr ""
+
+msgctxt "#32188"
+msgid "Use http://musicbrainz.org as the MusicBrainz Server"
+msgstr ""
+
+msgctxt "#32189"
+msgid "     Url path to MusicBrainz Server(example - http://192.168.1.20)"
+msgstr ""
+
+msgctxt "#32190"
+msgid "     Delay between MusicBrainz Server requests(100's of Milliseconds)"
+msgstr ""
+
+msgctxt "#32191"
+msgid "Refresh fanart.tv data"
+msgstr ""
