@@ -388,7 +388,7 @@ class Template():
                 attrib = property.attrib.get( "attribute" ).split( "|" )
             else:
                 attrib = property.attrib.get( "attribute" ).split( "|" )
-                value = property.attrib.get( "value" )
+                value = property.attrib.get( "value" ).split( "|" )
                 
             # Let's get looking for any items that match
             for item in items.findall( tag ):
@@ -404,7 +404,7 @@ class Template():
                     # The item doesn't have a value to match
                     continue
                         
-                if value is not None and item.text != value:
+                if value is not None and item.text not in value:
                     # The value doesn't match
                     continue
                     

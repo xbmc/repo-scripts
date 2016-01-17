@@ -233,6 +233,11 @@ class XMLFunctions():
                     if profilelist != hash[1]:
                         log( "Profiles have changes" )
                         return True
+                elif hash[0] == "::MUSICCONTENT::":
+                    # Check if Library.HasContent(Music) has changed
+                    if xbmc.getCondVisibility( "Library.HasContent(Music)" ) != hash[1]:
+                        log( "Whether there is music in the library has changed" )
+                        return True
                 elif hash[0] == "::LANGUAGE::":
                     # We no longer need to rebuild on a system language change
                     pass
@@ -275,6 +280,8 @@ class XMLFunctions():
         hashlist.list.append( ["::PROFILELIST::", profilelist] )
         hashlist.list.append( ["::SCRIPTVER::", __addonversion__] )
         hashlist.list.append( ["::XBMCVER::", __xbmcversion__] )
+        if int( __xbmcversion__ ) <= 15:
+            hashlist.list.append( ["::MUSICCONTENT::", xbmc.getCondVisibility( "Library.HasContent(Music)" ) ] )
         
         # Clear any skin settings for backgrounds and widgets
         DATA._reset_backgroundandwidgets()

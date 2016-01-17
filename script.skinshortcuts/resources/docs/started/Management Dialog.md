@@ -91,4 +91,12 @@ By default, GUI 308 offers the user the choice to either restore a default short
 `<alwaysRestore>True</alwaysRestore>` - gui 308 will automatically show the restore a shortcut dialog
 `<alwaysReset>True</alwaysReset>` - gui 308 will automatically reset all shortcuts to skin defaults
 
+#### Custom focus on back
+
+By default, any attempt to go 'back' will close the management dialog. You may wish to override this behaviour on a control-by-control basis by including the following in the [the skins overrides.xml file](../advanced/overrides.md):-
+
+<onback to="[id to focus]">[id currently focused]</onback>
+
+where [id currently focused] is the id of control you are specifying the onback behaviour for and [id to focus] is the id of the control that will be focused.
+
 ***Quick links*** - [Readme](../../../README.md) - [Getting Started](./Getting Started.md) - [Advanced Usage](../advanced/Advanced Usage.md)

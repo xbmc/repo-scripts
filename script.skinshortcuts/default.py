@@ -8,6 +8,7 @@ import pstats
 import random
 import time
 import calendar
+import thread
 from time import gmtime, strftime
 from datetime import datetime
 from traceback import print_exc
@@ -83,6 +84,9 @@ class Main:
         if self.TYPE=="shortcuts":
             # We're just going to choose a shortcut, and save its details to the given
             # skin labels
+
+            # Load library shortcuts in thread
+            thread.start_new_thread( LIBRARY.loadAllLibrary, () )
             
             if self.GROUPING is not None:
                 selectedShortcut = LIBRARY.selectShortcut( "", grouping = self.GROUPING, custom = self.CUSTOM, showNone = self.NONE )
@@ -127,6 +131,9 @@ class Main:
         if self.TYPE=="widgets":
             # We're just going to choose a widget, and save its details to the given
             # skin labels
+
+            # Load library shortcuts in thread
+            thread.start_new_thread( LIBRARY.loadAllLibrary, () )
             
             if self.GROUPING:
                 if self.GROUPING.lower() == "default":

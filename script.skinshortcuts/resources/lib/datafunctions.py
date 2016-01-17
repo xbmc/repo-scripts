@@ -452,7 +452,7 @@ class DataFunctions():
     def _get_additionalproperties( self, profileDir ):
         # Load all saved properties (widgets, backgrounds, custom properties)
 
-        if self.currentProperties:
+        if self.currentProperties is not None:
             return[ self.currentProperties, self.defaultProperties ]
             
         self.currentProperties = []
@@ -474,7 +474,9 @@ class DataFunctions():
                     # listProperty[3] = property value
                     self.currentProperties.append( [listProperty[0], listProperty[1], listProperty[2], listProperty[3]] )
             except:
-                pass
+                self.currentProperties = [ None ]
+        else:
+            self.currentProperties = [ None ]
             
         # Load skin defaults (in case we need them...)
         tree = self._get_overrides_skin()
@@ -798,7 +800,7 @@ class DataFunctions():
         #  allProperties[0] = Saved properties
         #  allProperties[1] = Default properties
         
-        if isUserShortcuts:
+        if isUserShortcuts and ( len( allProperties[ 0 ] ) == 0 or allProperties[ 0 ][ 0 ] is not None ):
             currentProperties = allProperties[0]
             
         # Loop through the current properties, looking for the current item
@@ -1041,12 +1043,50 @@ class DataFunctions():
     def upgradeAction( self, action ):
         # This function looks for actions used in a previous version of Kodi, and upgrades them to the current action
 
-        # Jarvis music changes
+        # Isengard + earlier music addons
+        if int( __xbmcversion__ ) <= 15:
+            # Shortcut to addon section
+            if action.lower().startswith( "activatewindow(musiclibrary,addons" ) and xbmc.getCondVisibility( "!Library.HasContent(Music)" ):
+                return( "ActivateWindow(MusicFiles,Addons,return)" )
+            elif action.lower().startswith( "activatewindow(10502,addons" ) and xbmc.getCondVisibility( "!Library.HasContent(Music)" ):
+                return( "ActivateWindow(10501,Addons,return)" )
+            elif action.lower().startswith( "activatewindow(musicfiles,addons" ) and xbmc.getCondVisibility( "Library.HasContent(Music)" ):
+                return( "ActivateWindow(MusicLibrary,Addons,return)" )
+            elif action.lower().startswith( "activatewindow(10501,addons" ) and xbmc.getCondVisibility( "Library.HasContent(Music)" ):
+                return( "ActivateWindow(10502,Addons,return)" )
+
+            # Shortcut to a specific addon
+            if "plugin://" in action.lower():
+                if action.lower().startswith( "activatewindow(musiclibrary" ) and xbmc.getCondVisibility( "!Library.HasContent(Music)" ):
+                    return self.buildReplacementMusicAddonAction( action, "MusicFiles" )
+                elif action.lower().startswith( "activatewindow(10502" ) and xbmc.getCondVisibility( "!Library.HasContent(Music)" ):
+                    return self.buildReplacementMusicAddonAction( action, "10501" )
+                elif action.lower().startswith( "activatewindow(musicfiles" ) and xbmc.getCondVisibility( "Library.HasContent(Music)" ):
+                    return self.buildReplacementMusicAddonAction( action, "MusicLibrary" )
+                elif action.lower().startswith( "activatewindow(10501" ) and xbmc.getCondVisibility( "Library.HasContent(Music)" ):
+                    return self.buildReplacementMusicAddonAction( action, "10502" )
+
+
+        # Jarvis + later music windows
         if action.lower() == "activatewindow(musicfiles)" and int( __xbmcversion__ ) >= 16:
             return "ActivateWindow(Music,Files,Return)"
+
+        if "," not in action: return action
 
         if action.lower().startswith("activatewindow(musiclibrary") and int( __xbmcversion__ ) >= 16:
             return "ActivateWindow(Music," + action.split( ",", 1 )[ 1 ]
 
         # No matching upgrade
         return action
+
+    def buildReplacementMusicAddonAction( self, action, window ):
+        # Builds a replacement action for an Isengard or earlier shortcut to a specific music addon
+        splitAction = action.split( "," )
+        # [0] = ActivateWindow([window]
+        # [1] = "plugin://plugin.name/path?params"
+        # [2] = return)
+        
+        if len(splitAction) == 2:
+            return "ActivateWindow(%s,%s)" %( window, splitAction[ 1 ] )
+        else:
+            return "ActivateWindow(%s,%s,return)" %( window, splitAction[ 1 ] )

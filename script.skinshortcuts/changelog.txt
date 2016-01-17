@@ -1,3 +1,10 @@
+v1.0.2
+- Fix for music addon shortcuts on Isengard
+- New artwork - thanks schimi2k
+- Template improvements
+- Management dialog improvements
+- Minor fixes
+
 v1.0.0
 - Enable 'Get More...' installation of widget providers
 - Return to using json to enable/disable Kodi debug logging

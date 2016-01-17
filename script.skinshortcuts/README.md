@@ -1,30 +1,22 @@
-#Skin Shortcuts - 1.0.0
+#Skin Shortcuts - 1.0.2
 
 script.skinshortcuts was written with the intention of making user customizable shortcuts on the home page easier for skinners.
 
 
 ## What's New for Skinners
 
-#### Version 1.0.0 - repo version
+#### Version 1.0.2 - repo version
+
+- Ability to match multiple values when setting a property in a template - [Read More](./resources/docs/advanced/Templates.md#set-a-property-based-on-the-value-of-a-main-menu-item)
+- Ability to specify an 'onback' value for specific controls in management dialog - [Read More](./resources/docs/started/Management Dialog.md#custom-focus-on-back)
+
+#### Version 1.0.0 - previous repo version
 
 - Ability for users to install additional widget providers - [Read More on customising when this is available to users](./resources/docs/advanced/Managing widgets.md#default-widgets-from-skin-helper-service)
 - Jarvis changes to music shortcuts - Please be aware that the shortcuts used to access various areas of the music library have changed. Skin Shortcuts will do its best to update any actions to the Jarvis version when the menu is built, but if this doesn't work (or if you are using the 'Just Select' method) the user may need to reset the action for these shortcuts.
 - Skin playlists will now additionally be correctly loaded from subdirectories on all platforms
 - Ability to set a fallback value for a custom property, used if the user hasn't selected a vlue - [Read More](./resources/docs/advanced/Custom shortcut properties.md#for-all-shortcuts-without-a-user-set-property)
 - Ability to set widgetName property separately from label using `<shortcut />` elements in a custom groupings - [Read More](./resources/docs/advanced/Custom groupings.md#shortcut--element---widget) - and when defining available widgets [Read More](./resources/docs/advanced/Managing widgets.md#defining-available-widgets)
-
-#### Version 0.6.6 - previous repo version
-
-- Ability to include multiple $SKINSHORTCUT[] elements and other text in an element when using templates
-- Ability to assign menu item ID to a property when using templates
-- New <content>addon-program-plugin</content> for groupings and related widget-selection support
-- More options for setting a custom property - [Read More](./resources/docs/advanced/Custom shortcut properties.md#set-options)
-- New 'Just Select Widget' method - [Read More](./resources/docs/advanced/Just Select.md#just-select-widgets)
-- Behaviour change - skin will now ask users to edit widgetName after setting widget. [Read how to prevent](./resources/docs/advanced/Managing widgets.md#prevent-user-editing-widgetname)
-- Ability to use a Management Dialog buttonID to set custom property. [Read More](./resources/docs/advanced/Custom shortcut properties.md#notes)
-- Label change - GUI 308's label (32028) has changed from "Reset shortcuts" to "Restore shortcuts" to highlight additional functionality. [Read how to override](./resources/docs/started/Management Dialog.md#always-reset-shortcuts-with-gui-308)
-- Remove requirement to include an `<action>` element and the `group=` attribute in a global action override.
-- Behaviour change - when overriding actions, any action specified in the .DATA.xml file or by an additional shortcut will still by applied to the shortcut 
  
 ## With Thanks - Because their names don't deserve to be at the bottom :)
 
@@ -32,6 +24,7 @@ script.skinshortcuts was written with the intention of making user customizable 
 - Equally huge thanks to Ronie and 'Black, for their favourites code used in this script
 - More huge thanks to BigNoid, for the ability to edit shortcuts, and Jeroen, for so many suggestions each of which just made the script better.
 - The thanks remain absolutely huge to the translaters on Transifex for localising the script
+- There almost isn't enough thanks for schimi2k for the icon and fanart
 - Everyone who has contributed even one idea or line of code
 - And the biggest thanks of all to Annie and my family, for feature suggestions, testing and shouting at me when I broke things
 

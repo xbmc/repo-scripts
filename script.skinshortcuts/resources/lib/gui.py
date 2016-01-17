@@ -76,6 +76,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         self.widgetPlaylists = False
         self.widgetPlaylistsType = None
         self.widgetRename = True
+        self.onBack = {}
 
         # Has skin overriden GUI 308
         self.alwaysReset = False
@@ -794,6 +795,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
         elem = tree.find( "defaultwidgetsGetMore" )
         if elem is not None and elem.text.lower() == "false":
             LIBRARY.skinhelperWidgetInstall = False
+
+        # Are there any controls we don't close the window on 'back' for?
+        for elem in tree.findall( "onback" ):
+            self.onBack[ int( elem.text ) ] = int( elem.attrib.get( "to" ) )
 
     def _load_customPropertyButtons( self ):
         # Load a list of addition button IDs we'll handle for setting additional properties
@@ -2002,7 +2007,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
     # ====================
     
     def onAction( self, action ):
+        currentFocus = self.getFocusId()
         if action.getId() in ACTION_CANCEL_DIALOG:
+            if currentFocus and currentFocus in self.onBack:
+                self.setFocusId( self.onBack[ currentFocus ] )
+                return
             self._save_shortcuts()
             xbmcgui.Window(self.window_id).clearProperty('groupname')
             self._close()

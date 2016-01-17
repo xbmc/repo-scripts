@@ -155,7 +155,7 @@ You can set a property to a custom value, dependant on what the value of a prope
 | `[name]` | | The name of the property you are setting |
 | `[tag]` | Yes | The main menu must have an element with this tag
 | `[attributeName]|[attributeValue]` | Yes | The element must have an attribute with the name `[attributeName]` and the value `[attributeValue]` |
-| `[textValue]` | Yes | The elment must have this value|
+| `[textValue]` | Yes | The elment must have this value - you may match against multiple values by splitting them with a pipe - `|` - symbol |
 | `[propertyValue]` | Yes | What you are setting the property to. |
 
 For example, to set `$SKINSHORTCUTS[artwork]` to `ListItem.Art(tvshow.poster)` for the following main menu property:-
