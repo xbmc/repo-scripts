@@ -121,7 +121,7 @@ def query_Film(name, imdb, file_original_path):
 
 def query(searchurl, file_original_path):
   sublinks = []
-  socket.setdefaulttimeout(3)
+  socket.setdefaulttimeout(10)
   log(__name__, "search='%s', addon_version=%s" % (searchurl, __version__))
   request = urllib2.Request(searchurl, headers=req_headers)
   request.add_header('Pragma', 'no-cache')
