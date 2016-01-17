@@ -203,11 +203,12 @@ def newthread (url)  :
       folge,untertitel_qualitaet,untertitel_release,untertitel_link,lang_array=get_content(contentEN,"en")
       if video['episode']:
         for folge_zeile in range(0, len(folge), 1):
-          if  folge[folge_zeile]=="SP":
-              folge[folge_zeile]=0
-          if int(folge[folge_zeile]) == int(video['episode']):
-              addLink("Staffel "+ video['season'] + " Folge "+video['episode']+" "+ untertitel_release[folge_zeile]+" ( "+ untertitel_qualitaet[folge_zeile] + " ) ", untertitel_link[folge_zeile], "download", duration="", desc="", genre='',lang=lang_array[folge_zeile])          
-              gefunden=1
+          try:
+             if int(folge[folge_zeile]) == int(video['episode']):
+                addLink("Staffel "+ video['season'] + " Folge "+video['episode']+" "+ untertitel_release[folge_zeile]+" ( "+ untertitel_qualitaet[folge_zeile] + " ) ", untertitel_link[folge_zeile], "download", duration="", desc="", genre='',lang=lang_array[folge_zeile])          
+                gefunden=1
+          except ValueError:
+               pass
     # Wenn nichts gefunden wurde alle anzeigen 
     if gefunden==0 :
           for folgenr in range(0, len(folgede), 1):
