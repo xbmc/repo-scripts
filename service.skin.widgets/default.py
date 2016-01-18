@@ -629,6 +629,10 @@ class Main:
                     home_update = False
                 elif self.RECENTITEMS_HOME_UPDATE == 'true' and not home_update and xbmcgui.getCurrentWindowId() != 10000:
                     home_update = True
+        else:
+            self.Monitor.update_listitems = None
+            self.Monitor.update_settings = None
+            self.Player.action = None
 
     def _clear_properties(self, request):
         count = 0
