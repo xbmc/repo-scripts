@@ -273,6 +273,10 @@ class MyPlayer(xbmc.Player):
             try:
                 artist = title.split(' - ')[0]
                 title = title.split(' - ')[1]
+                if artist[2] == '.' and title[-4] == '.':
+                   # assume file without tags %N. %A - %T.ext
+                   artist = artist[3:].strip()
+                   title = title[:-4].strip()
                 log('extracted artist: ' + artist, SESSION)
                 log('extracted title: ' + title, SESSION)
             except:
