@@ -18,7 +18,7 @@
 	</category>
 	<category label="32151">
 		<setting id="read_filename" type="bool" label="32106" default="false"/>
-		<setting id="read_filename_format" type="enum" label="32107" default="0" lvalues="32108|32109|32110|32104" />
+		<setting id="read_filename_format" type="enum" label="32107" default="0" lvalues="32108|32109|32110|32104|32114" />
 		<setting id="clean_title" type="bool" label="32157" default="false"/>
 		<setting type="sep" />
 		<setting id="save_lyrics1" type="bool" label="32101" default="true"/>
