@@ -151,10 +151,10 @@ def location(string):
     except:
         log('failed to parse location data')
         data = ''
-    if data != '' and data.has_key('list'):
+    if data != '' and 'list' in data:
         for item in data['list']:
             if item['name'] == '': # bug? test by searching for california
-                location = UPPERCASE(string)
+                location = string.title()
             else:
                 location   = item['name']
             locationid = item['id']
@@ -226,7 +226,7 @@ def forecast(loc,locid,locationdeg):
                 log('fatal, giving up')
                 clear()
                 return
-    if current_weather != '' and current_weather.has_key('cod') and not current_weather['cod'] == '404':
+    if current_weather != '' and 'cod' in current_weather and not current_weather['cod'] == '404':
         current_props(current_weather,loc)
     else:
         clear()
@@ -238,7 +238,7 @@ def forecast(loc,locid,locationdeg):
         except:
             log('parsing station data failed')
             station_weather = ''
-        if station_weather != '' and not station_weather.has_key('message'):
+        if station_weather != '' and not 'message' in station_weather:
             station_props(station_weather,loc)
     daily_data = get_data(daily_string, 'daily')
     log('daily data: %s' % daily_data)
@@ -248,7 +248,7 @@ def forecast(loc,locid,locationdeg):
         log('parsing daily data failed')
         daily_weather = ''
     daynum = ''
-    if daily_weather != '' and daily_weather.has_key('cod') and not daily_weather['cod'] == '404':
+    if daily_weather != '' and 'cod' in daily_weather and not daily_weather['cod'] == '404':
         daynum = daily_props(daily_weather)
     hourly_data = get_data(hourly_string, 'hourly')
     log('hourly data: %s' % hourly_data)
@@ -257,25 +257,27 @@ def forecast(loc,locid,locationdeg):
     except:
         log('parsing hourly data failed')
         hourly_weather = ''
-    if hourly_weather != '' and hourly_weather.has_key('cod') and not hourly_weather['cod'] == '404':
+    if hourly_weather != '' and 'cod' in hourly_weather and not hourly_weather['cod'] == '404':
         hourly_props(hourly_weather, daynum)
 
 def station_props(data,loc):
 # standard properties
     set_property('Current.Location'             , loc)
-    if data.has_key('last') and data['last'].has_key('main') and data['last']['main'].has_key('temp'):
-        set_property('Current.Temperature'      , str(int(round(data['last']['main']['temp'])) - 273)) # api values are in K
-    if data.has_key('last') and data['last'].has_key('main') and data['last']['main'].has_key('humidity'):
-        set_property('Current.Humidity'         , str(data['last']['main']['humidity']))
-    if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('speed'):
+    if not 'last' in data:
+        return
+    if 'main' in data['last']:
+        set_property('Current.Humidity'         , str(data['last']['main'].get('humidity','')))
+        if 'temp' in data['last']['main']:
+            set_property('Current.Temperature'  , str(int(round(data['last']['main']['temp'])) - 273)) # api values are in K
+    if 'wind' in data['last'] and 'speed' in data['last']['wind']:
         set_property('Current.Wind'             , str(int(round(data['last']['wind']['speed'] * 3.6))))
-    if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('deg'):
+    if 'wind' in data['last'] and 'deg' in data['last']['wind']:
         set_property('Current.WindDirection'    , xbmc.getLocalizedString(WIND_DIR(int(round(data['last']['wind']['deg'])))))
     try:
         set_property('Current.FeelsLike'        , FEELS_LIKE(data['last']['main']['temp'] -273, data['last']['wind']['speed'] * 3.6, data['last']['main']['humidity'], False)) # api values are in K
     except:
         pass
-    if data.has_key('last') and data['last'].has_key('calc') and data['last']['calc'].has_key('dewpoint'):
+    if 'calc' in data['last'] and 'dewpoint' in data['last']['calc']:
         if data['last']['main']['temp'] - data['last']['calc']['dewpoint'] > 100:
             set_property('Current.DewPoint'     , str(int(round(data['last']['calc']['dewpoint'])))) # api values are in C
         else:
@@ -287,16 +289,16 @@ def station_props(data,loc):
             pass
     #set_property('Current.UVIndex'              , '') # no idea how the api returns it, use data from current_props()
 # extended properties
-    if data.has_key('last') and data['last'].has_key('clouds') and data['last']['clouds'][0] != '':
-        set_property('Current.Cloudiness'       , data['last']['clouds'][0]['condition'])
-    if data.has_key('last') and data['last'].has_key('wind') and data['last']['wind'].has_key('gust'):
+    if 'clouds' in data['last']:
+        set_property('Current.Cloudiness'       , data['last']['clouds'][0].get('condition',''))
+    if 'wind' in data['last'] and 'gust' in data['last']['wind']:
         set_property('Current.WindGust'         , SPEED(data['last']['wind']['gust']) + SPEEDUNIT)
-    if data.has_key('last') and data['last'].has_key('rain') and data['last']['rain'].has_key('1h'):
+    if 'rain' in data['last'] and '1h' in data['last']['rain']:
         if 'F' in TEMPUNIT:
             set_property('Current.Precipitation', str(round(data['last']['rain']['1h'] *  0.04 ,2)) + ' in')
         else:
             set_property('Current.Precipitation', str(int(round(data['last']['rain']['1h']))) + ' mm')
-    if data.has_key('last') and data['last'].has_key('main') and data['last']['main'].has_key('pressure'):
+    if 'main' in data['last'] and 'pressure' in data['last']['main']:
         if 'F' in TEMPUNIT:
             set_property('Current.Pressure'     , str(round(data['last']['main']['pressure'] / 33.86 ,2)) + ' in')
         else:
@@ -304,75 +306,73 @@ def station_props(data,loc):
 
 def current_props(data,loc):
 # standard properties
-    code = str(data['weather'][0]['id'])
-    icon = data['weather'][0]['icon']
+    code = str(data['weather'][0].get('id',''))
+    icon = data['weather'][0].get('icon','')
     if icon.endswith('n'):
         code = code + 'n'
     weathercode = WEATHER_CODES[code]
     set_property('Current.Location'             , loc)
-    set_property('Current.Condition'            , CAPITALIZE(data['weather'][0]['description']))
-    if data['main'].has_key('temp'):
+    set_property('Current.Condition'            , data['weather'][0].get('description','').title())
+    if 'temp' in data['main']:
         set_property('Current.Temperature'      , str(int(round(data['main']['temp']))))
+        set_property('Current.DewPoint'         , DEW_POINT(data['main']['temp'], data['main']['humidity'], False))
     else:
         set_property('Current.Temperature'      , '')
-    if data['wind'].has_key('speed'):
+        set_property('Current.DewPoint'         , '')
+    if 'speed' in data['wind']:
         set_property('Current.Wind'             , str(int(round(data['wind']['speed'] * 3.6))))
-        if data['main'].has_key('temp'):
+        if 'temp' in data['main']:
             set_property('Current.FeelsLike'    , FEELS_LIKE(data['main']['temp'], data['wind']['speed'] * 3.6, data['main']['humidity'], False))
         else:
             set_property('Current.FeelsLike'    , '')
     else:
         set_property('Current.Wind'             , '')
         set_property('Current.FeelsLike'        , '')
-    if data['wind'].has_key('deg'):
+    if 'deg' in data['wind']:
         set_property('Current.WindDirection'    , xbmc.getLocalizedString(WIND_DIR(int(round(data['wind']['deg'])))))
     else:
         set_property('Current.WindDirection'    , '')
-    set_property('Current.Humidity'             , str(data['main']['humidity']))
-    if data['main'].has_key('temp'):
-        set_property('Current.DewPoint'         , DEW_POINT(data['main']['temp'], data['main']['humidity'], False))
-    else:
-        set_property('Current.DewPoint'         , '')
+    set_property('Current.Humidity'             , str(data['main'].get('humidity','')))
     set_property('Current.UVIndex'              , '') # not supported by openweathermap
     set_property('Current.OutlookIcon'          , '%s.png' % weathercode) # xbmc translates it to Current.ConditionIcon
     set_property('Current.FanartCode'           , weathercode)
     set_property('Location'                     , loc)
-    set_property('Updated'                      , convert_date(data['dt']))
+    set_property('Updated'                      , convert_date(data.get('dt','')))
 # extended properties
-    set_property('Current.Cloudiness'           , str(data['clouds']['all']) + '%')
-    set_property('Current.ShortOutlook'         , data['weather'][0]['main'])
-    if data['main'].has_key('temp_min'):
+    set_property('Current.Cloudiness'           , str(data['clouds'].get('all','')) + '%')
+    set_property('Current.ShortOutlook'         , FORECAST.get(data['weather'][0].get('main','').title(), data['weather'][0].get('main','').title()))
+    if 'temp_min' in data['main']:
         set_property('Current.LowTemperature'   , TEMP(data['main']['temp_min']) + TEMPUNIT)
     else:
         set_property('Current.LowTemperature'   , '')
-    if data['main'].has_key('temp_max'):
+    if 'temp_max' in data['main']:
         set_property('Current.HighTemperature'  , TEMP(data['main']['temp_max']) + TEMPUNIT)
     else:
         set_property('Current.HighTemperature'  , '')
     if 'F' in TEMPUNIT:
         set_property('Current.Pressure'         , str(round(data['main']['pressure'] / 33.86 ,2)) + ' in')
-        if data['main'].has_key('sea_level'):
+        if 'sea_level' in data['main']:
             set_property('Current.SeaLevel'     , str(round(data['main']['sea_level'] / 33.86 ,2)) + ' in')
         else:
             set_property('Current.SeaLevel'     , '')
-        if data['main'].has_key('grnd_level'):
+        if 'grnd_level' in data['main']:
             set_property('Current.GroundLevel'  , str(round(data['main']['grnd_level'] / 33.86 ,2)) + ' in')
         else:
             set_property('Current.GroundLevel'  , '')
         rain = 0
         snow = 0
-        if data.has_key('rain'):
-            if data['rain'].has_key('1h'):
+        if 'rain' in data:
+            if '1h' in data['rain']:
                 rain = data['rain']['1h']
-            elif data['rain'].has_key('3h'):
+            elif '3h' in data['rain']:
                 rain = data['rain']['3h']
             set_property('Current.Rain'         , str(round(rain *  0.04 ,2)) + ' in')
         else:
             set_property('Current.Rain'         , '')
-        if data.has_key('snow'):
-            if data['snow'].has_key('1h'):
+        if 'snow' in data:
+            if '1h' in data['snow']:
                 snow = data['snow']['1h']
-            elif data['snow'].has_key('3h'):
+            elif '3h' in data['snow']:
                 snow = data['snow']['3h']
             set_property('Current.Snow'         , str(round(snow *  0.04 ,2)) + ' in')
         else:
@@ -380,99 +380,93 @@ def current_props(data,loc):
         precip = rain + snow
         set_property('Current.Precipitation'    , str(round(precip *  0.04 ,2)) + ' in')
     else:
-        set_property('Current.Pressure'         , str(data['main']['pressure']) + ' mb')
-        if data['main'].has_key('sea_level'):
-            set_property('Current.SeaLevel'     , str(data['main']['sea_level']) + ' mb')
-        else:
-            set_property('Current.SeaLevelSnow' , '')
-        if data['main'].has_key('grnd_level'):
-            set_property('Current.GroundLevel'  , str(data['main']['grnd_level']) + ' mb')
-        else:
-            set_property('Current.GroundLevel'  , '')
+        set_property('Current.Pressure'         , str(data['main'].get('pressure','')) + ' mb')
+        set_property('Current.SeaLevel'     , str(data['main'].get('sea_level','')) + ' mb')
+        set_property('Current.GroundLevel'  , str(data['main'].get('grnd_level','')) + ' mb')
         rain = 0
         snow = 0
-        if data.has_key('rain'):
-            if data['rain'].has_key('1h'):
+        if 'rain' in data:
+            if '1h' in data['rain']:
                 rain = data['rain']['1h']
-            elif data['rain'].has_key('3h'):
+            elif '3h' in data['rain']:
                 rain = data['rain']['3h']
             set_property('Current.Rain'         , str(int(round(rain))) + ' mm')
         else:
             set_property('Current.Rain'         , '')
-        if data.has_key('snow'):
-            if data['snow'].has_key('1h'):
+        if 'snow' in  data:
+            if '1h' in data['snow']:
                 snow = data['snow']['1h']
-            elif data['snow'].has_key('3h'):
+            elif '3h' in data['snow']:
                 snow = data['snow']['3h']
             set_property('Current.Snow'         , str(int(round(snow))) + ' mm')
         else:
             set_property('Current.Snow'         , '')
         precip = rain + snow
         set_property('Current.Precipitation'    , str(int(round(precip))) + ' mm')
-    if data['wind'].has_key('gust'):
+    if 'gust' in data['wind']:
         set_property('Current.WindGust'         , SPEED(data['wind']['gust']) + SPEEDUNIT)
     else:
         set_property('Current.WindGust'         , '')
-    if data['wind'].has_key('var_beg'):
+    if 'var_beg' in data['wind']:
         set_property('Current.WindDirStart'     , xbmc.getLocalizedString(WIND_DIR(data['wind']['var_beg'])))
     else:
         set_property('Current.WindDirStart'     , '')
-    if data['wind'].has_key('var_end'):
+    if 'var_end' in data['wind']:
         set_property('Current.WindDirEnd'       , xbmc.getLocalizedString(WIND_DIR(data['wind']['var_end'])))
     else:
         set_property('Current.WindDirEnd'       , '')
-    set_property('Forecast.City'                , data['name'])
-    set_property('Forecast.Country'             , data['sys']['country'])
-    set_property('Forecast.Latitude'            , str(data['coord']['lat']))
-    set_property('Forecast.Longitude'           , str(data['coord']['lon']))
-    set_property('Forecast.Updated'             , convert_date(data['dt']))
+    set_property('Forecast.City'                , data.get('name',''))
+    set_property('Forecast.Country'             , data['sys'].get('country',''))
+    set_property('Forecast.Latitude'            , str(data['coord'].get('lat','')))
+    set_property('Forecast.Longitude'           , str(data['coord'].get('lon','')))
+    set_property('Forecast.Updated'             , convert_date(data.get('dt','')))
     try:
-        set_property('Today.Sunrise'            , convert_date(data['sys']['sunrise']).split('  ')[0])
+        set_property('Today.Sunrise'            , convert_date(data['sys'].get('sunrise','')).split('  ')[0])
     except:
         set_property('Today.Sunrise'            , '')
     try:
-        set_property('Today.Sunset'             , convert_date(data['sys']['sunset']).split('  ')[0])
+        set_property('Today.Sunset'             , convert_date(data['sys'].get('sunset','')).split('  ')[0])
     except:
         set_property('Today.Sunset'            , '')
 
 def daily_props(data):
 # standard properties
     for count, item in enumerate(data['list']):
-        code = str(item['weather'][0]['id'])
-        icon = item['weather'][0]['icon']
+        code = str(item['weather'][0].get('id',''))
+        icon = item['weather'][0].get('icon','')
         if icon.endswith('n'):
             code = code + 'n'
         weathercode = WEATHER_CODES[code]
-        set_property('Day%i.Title'              % count, get_weekday(item['dt'], 's'))
+        set_property('Day%i.Title'              % count, get_weekday(item.get('dt',''), 'l'))
         set_property('Day%i.HighTemp'           % count, str(int(round(item['temp']['max']))))
         set_property('Day%i.LowTemp'            % count, str(int(round(item['temp']['min']))))
-        set_property('Day%i.Outlook'            % count, CAPITALIZE(item['weather'][0]['description']))
+        set_property('Day%i.Outlook'            % count, item['weather'][0].get('description','').title())
         set_property('Day%i.OutlookIcon'        % count, '%s.png' % weathercode)
         set_property('Day%i.FanartCode'         % count, weathercode)
         if count == MAXDAYS:
             break
 # extended properties
     for count, item in enumerate(data['list']):
-        code = str(item['weather'][0]['id'])
-        icon = item['weather'][0]['icon']
+        code = str(item['weather'][0].get('id',''))
+        icon = item['weather'][0].get('icon','')
         if icon.endswith('n'):
             code = code + 'n'
         weathercode = WEATHER_CODES[code]
-        set_property('Daily.%i.LongDay'         % (count+1), get_weekday(item['dt'], 'l'))
-        set_property('Daily.%i.ShortDay'        % (count+1), get_weekday(item['dt'], 's'))
+        set_property('Daily.%i.LongDay'         % (count+1), get_weekday(item.get('dt',''), 'l'))
+        set_property('Daily.%i.ShortDay'        % (count+1), get_weekday(item.get('dt',''), 's'))
         if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
-            set_property('Daily.%i.LongDate'    % (count+1), get_month(item['dt'], 'dl'))
-            set_property('Daily.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ds'))
+            set_property('Daily.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'dl'))
+            set_property('Daily.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ds'))
         else:
-            set_property('Daily.%i.LongDate'    % (count+1), get_month(item['dt'], 'ml'))
-            set_property('Daily.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ms'))
-        set_property('Daily.%i.Outlook'         % (count+1), CAPITALIZE(item['weather'][0]['description']))
-        set_property('Daily.%i.ShortOutlook'    % (count+1), item['weather'][0]['main'])
+            set_property('Daily.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'ml'))
+            set_property('Daily.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ms'))
+        set_property('Daily.%i.Outlook'         % (count+1), FORECAST.get(item['weather'][0].get('description','').title(), item['weather'][0].get('description','').title()))
+        set_property('Daily.%i.ShortOutlook'    % (count+1), FORECAST.get(item['weather'][0].get('main','').title(), item['weather'][0].get('main','').title()))
         set_property('Daily.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
         set_property('Daily.%i.FanartCode'      % (count+1), weathercode)
         set_property('Daily.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(int(round(WIND_DIR(item['deg'])))))
-        set_property('Daily.%i.WindDegree'      % (count+1), str(item['deg']) + u'°')
-        set_property('Daily.%i.Humidity'        % (count+1), str(item['humidity']) + '%')
+        set_property('Daily.%i.WindDegree'      % (count+1), str(item.get('deg','')) + u'°')
+        set_property('Daily.%i.Humidity'        % (count+1), str(item.get('humidity','')) + '%')
         set_property('Daily.%i.TempMorn'        % (count+1), TEMP(item['temp']['morn']) + TEMPUNIT)
         set_property('Daily.%i.TempDay'         % (count+1), TEMP(item['temp']['day']) + TEMPUNIT)
         set_property('Daily.%i.TempEve'         % (count+1), TEMP(item['temp']['eve']) + TEMPUNIT)
@@ -485,12 +479,12 @@ def daily_props(data):
             set_property('Daily.%i.Pressure'        % (count+1), str(round(item['pressure'] / 33.86 ,2)) + ' in')
             rain = 0
             snow = 0
-            if item.has_key('rain'):
+            if 'rain' in item:
                 rain = item['rain']
                 set_property('Daily.%i.Rain'        % (count+1), str(round(rain * 0.04 ,2)) + ' in')
             else:
                 set_property('Daily.%i.Rain'        % (count+1), '')
-            if item.has_key('snow'):
+            if 'snow' in item:
                 snow = item['snow']
                 set_property('Daily.%i.Snow'        % (count+1), str(round(snow * 0.04 ,2)) + ' in')
             else:
@@ -498,15 +492,15 @@ def daily_props(data):
             precip = rain + snow
             set_property('Daily.%i.Precipitation'   % (count+1), str(round(precip * 0.04 ,2)) + ' in')
         else:
-            set_property('Daily.%i.Pressure'        % (count+1), str(item['pressure']) + ' mb')
+            set_property('Daily.%i.Pressure'        % (count+1), str(item.get('pressure','')) + ' mb')
             rain = 0
             snow = 0
-            if item.has_key('rain'):
+            if 'rain' in item:
                 rain = item['rain']
                 set_property('Daily.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
             else:
                 set_property('Daily.%i.Rain'        % (count+1), '')
-            if item.has_key('snow'):
+            if 'snow' in item:
                 snow = item['snow']
                 set_property('Daily.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
             else:
@@ -514,11 +508,11 @@ def daily_props(data):
             precip = rain + snow
             set_property('Daily.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
         set_property('Daily.%i.WindSpeed'           % (count+1), SPEED(item['speed']) + SPEEDUNIT)
-        if item.has_key('gust'): 
+        if 'gust' in item: 
             set_property('Daily.%i.WindGust'        % (count+1), SPEED(item['gust']) + SPEEDUNIT)
         else:
             set_property('Daily.%i.WindGust'        % (count+1), '')
-        set_property('Daily.%i.Cloudiness'          % (count+1), str(item['clouds']) + '%')
+        set_property('Daily.%i.Cloudiness'          % (count+1), str(item.get('clouds','')) + '%')
     if WEEKEND == '2':
         weekend = [4,5]
     elif WEEKEND == '1':
@@ -527,28 +521,28 @@ def daily_props(data):
         weekend = [6,0]
     count = 0
     for item in (data['list']):
-        if get_weekday(item['dt'], 'x') in weekend:
-            code = str(item['weather'][0]['id'])
-            icon = item['weather'][0]['icon']
+        if get_weekday(item.get('dt',''), 'x') in weekend:
+            code = str(item['weather'][0].get('id',''))
+            icon = item['weather'][0].get('icon','')
             if icon.endswith('n'):
                 code = code + 'n'
             weathercode = WEATHER_CODES[code]
-            set_property('Weekend.%i.LongDay'         % (count+1), get_weekday(item['dt'], 'l'))
-            set_property('Weekend.%i.ShortDay'        % (count+1), get_weekday(item['dt'], 's'))
+            set_property('Weekend.%i.LongDay'         % (count+1), get_weekday(item.get('dt',''), 'l'))
+            set_property('Weekend.%i.ShortDay'        % (count+1), get_weekday(item.get('dt',''), 's'))
             if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
-                set_property('Weekend.%i.LongDate'    % (count+1), get_month(item['dt'], 'dl'))
-                set_property('Weekend.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ds'))
+                set_property('Weekend.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'dl'))
+                set_property('Weekend.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ds'))
             else:
-                set_property('Weekend.%i.LongDate'    % (count+1), get_month(item['dt'], 'ml'))
-                set_property('Weekend.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ms'))
-            set_property('Weekend.%i.Outlook'         % (count+1), CAPITALIZE(item['weather'][0]['description']))
-            set_property('Weekend.%i.ShortOutlook'    % (count+1), item['weather'][0]['main'])
+                set_property('Weekend.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'ml'))
+                set_property('Weekend.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ms'))
+            set_property('Weekend.%i.Outlook'         % (count+1), FORECAST.get(item['weather'][0].get('description','').title(), item['weather'][0].get('description','').title()))
+            set_property('Weekend.%i.ShortOutlook'    % (count+1), FORECAST.get(item['weather'][0].get('main','').title(), item['weather'][0].get('main','').title()))
             set_property('Weekend.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
             set_property('Weekend.%i.FanartCode'      % (count+1), weathercode)
             set_property('Weekend.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(int(round(WIND_DIR(item['deg'])))))
-            set_property('Weekend.%i.WindDegree'      % (count+1), str(item['deg']) + u'°')
-            set_property('Weekend.%i.Humidity'        % (count+1), str(item['humidity']) + '%')
-            set_property('Weekend.%i.Cloudiness'      % (count+1), str(item['clouds']) + '%')
+            set_property('Weekend.%i.WindDegree'      % (count+1), str(item.get('deg','')) + u'°')
+            set_property('Weekend.%i.Humidity'        % (count+1), str(item.get('humidity','')) + '%')
+            set_property('Weekend.%i.Cloudiness'      % (count+1), str(item.get('clouds','')) + '%')
             set_property('Weekend.%i.TempMorn'        % (count+1), TEMP(item['temp']['morn']) + TEMPUNIT)
             set_property('Weekend.%i.TempDay'         % (count+1), TEMP(item['temp']['day']) + TEMPUNIT)
             set_property('Weekend.%i.TempEve'         % (count+1), TEMP(item['temp']['eve']) + TEMPUNIT)
@@ -561,12 +555,12 @@ def daily_props(data):
                 set_property('Weekend.%i.Pressure'        % (count+1), str(round(item['pressure'] / 33.86 ,2)) + ' in')
                 rain = 0
                 snow = 0
-                if item.has_key('rain'):
+                if 'rain' in item:
                     rain = item['rain']
                     set_property('Weekend.%i.Rain'        % (count+1), str(round(rain * 0.04 ,2)) + ' in')
                 else:
                     set_property('Weekend.%i.Rain'        % (count+1), '')
-                if item.has_key('snow'):
+                if 'snow' in item:
                     snow = item['snow']
                     set_property('Weekend.%i.Snow'        % (count+1), str(round(snow * 0.04 ,2)) + ' in')
                 else:
@@ -577,12 +571,12 @@ def daily_props(data):
                 set_property('Weekend.%i.Pressure'        % (count+1), str(item['pressure']) + ' mb')
                 rain = 0
                 snow = 0
-                if item.has_key('rain'):
+                if'rain' in  item:
                     rain = item['rain']
                     set_property('Weekend.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
                 else:
                     set_property('Weekend.%i.Rain'        % (count+1), '')
-                if item.has_key('snow'):
+                if 'snow' in item:
                     snow = item['snow']
                     set_property('Weekend.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
                 else:
@@ -590,7 +584,7 @@ def daily_props(data):
                 precip = rain + snow
                 set_property('Weekend.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
             set_property('Weekend.%i.WindSpeed'           % (count+1), SPEED(item['speed']) + SPEEDUNIT)
-            if item.has_key('gust'): 
+            if 'gust' in item: 
                 set_property('Weekend.%i.WindGust'        % (count+1), SPEED(item['gust']) + SPEEDUNIT)
             else:
                 set_property('Weekend.%i.WindGust'        % (count+1), '')
@@ -601,26 +595,26 @@ def daily_props(data):
     for item in (data['list']):
         if count == 1:
            count = 2
-        code = str(item['weather'][0]['id'])
-        icon = item['weather'][0]['icon']
+        code = str(item['weather'][0].get('id',''))
+        icon = item['weather'][0].get('icon','')
         if icon.endswith('n'):
             code = code + 'n'
         weathercode = WEATHER_CODES[code]
-        set_property('36Hour.%i.LongDay'         % (count+1), get_weekday(item['dt'], 'l'))
-        set_property('36Hour.%i.ShortDay'        % (count+1), get_weekday(item['dt'], 's'))
+        set_property('36Hour.%i.LongDay'         % (count+1), get_weekday(item.get('dt',''), 'l'))
+        set_property('36Hour.%i.ShortDay'        % (count+1), get_weekday(item.get('dt',''), 's'))
         if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
-            set_property('36Hour.%i.LongDate'    % (count+1), get_month(item['dt'], 'dl'))
-            set_property('36Hour.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ds'))
+            set_property('36Hour.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'dl'))
+            set_property('36Hour.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ds'))
         else:
-            set_property('36Hour.%i.LongDate'    % (count+1), get_month(item['dt'], 'ml'))
-            set_property('36Hour.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ms'))
-        set_property('36Hour.%i.Outlook'         % (count+1), CAPITALIZE(item['weather'][0]['description']))
-        set_property('36Hour.%i.ShortOutlook'    % (count+1), item['weather'][0]['main'])
+            set_property('36Hour.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'ml'))
+            set_property('36Hour.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ms'))
+        set_property('36Hour.%i.Outlook'         % (count+1), FORECAST.get(item['weather'][0].get('description','').title(), item['weather'][0].get('description','').title()))
+        set_property('36Hour.%i.ShortOutlook'    % (count+1), FORECAST.get(item['weather'][0].get('main','').title(), item['weather'][0].get('main','').title()))
         set_property('36Hour.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
         set_property('36Hour.%i.FanartCode'      % (count+1), weathercode)
         set_property('36Hour.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(int(round(WIND_DIR(item['deg'])))))
-        set_property('36Hour.%i.WindDegree'      % (count+1), str(item['deg']) + u'°')
-        set_property('36Hour.%i.Humidity'        % (count+1), str(item['humidity']) + '%')
+        set_property('36Hour.%i.WindDegree'      % (count+1), str(item.get('deg','')) + u'°')
+        set_property('36Hour.%i.Humidity'        % (count+1), str(item.get('humidity','')) + '%')
         set_property('36Hour.%i.Temperature'     % (count+1), TEMP(item['temp']['day']) + TEMPUNIT)
         set_property('36Hour.%i.HighTemperature' % (count+1), TEMP(item['temp']['max']) + TEMPUNIT)
         set_property('36Hour.%i.LowTemperature'  % (count+1), TEMP(item['temp']['min']) + TEMPUNIT)
@@ -630,12 +624,12 @@ def daily_props(data):
             set_property('36Hour.%i.Pressure'        % (count+1), str(round(item['pressure'] / 33.86 ,2)) + ' in')
             rain = 0
             snow = 0
-            if item.has_key('rain'):
+            if 'rain' in item:
                 rain = item['rain']
                 set_property('36Hour.%i.Rain'        % (count+1), str(round(rain * 0.04 ,2)) + ' in')
             else:
                 set_property('36Hour.%i.Rain'        % (count+1), '')
-            if item.has_key('snow'):
+            if 'snow' in item:
                 snow = item['snow']
                 set_property('36Hour.%i.Snow'        % (count+1), str(round(snow * 0.04 ,2)) + ' in')
             else:
@@ -643,15 +637,15 @@ def daily_props(data):
             precip = rain + snow
             set_property('36Hour.%i.Precipitation'   % (count+1), str(round(precip * 0.04 ,2)) + ' in')
         else:
-            set_property('36Hour.%i.Pressure'        % (count+1), str(item['pressure']) + ' mb')
+            set_property('36Hour.%i.Pressure'        % (count+1), str(item.get('pressure','')) + ' mb')
             rain = 0
             snow = 0
-            if item.has_key('rain'):
+            if 'rain' in item:
                 rain = item['rain']
                 set_property('36Hour.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
             else:
                 set_property('36Hour.%i.Rain'        % (count+1), '')
-            if item.has_key('snow'):
+            if 'snow' in item:
                 snow = item['snow']
                 set_property('36Hour.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
             else:
@@ -659,11 +653,11 @@ def daily_props(data):
             precip = rain + snow
             set_property('36Hour.%i.Precipitation'   % (count+1), str(int(round(precip))) + ' mm')
         set_property('36Hour.%i.WindSpeed'           % (count+1), SPEED(item['speed']) + SPEEDUNIT)
-        if item.has_key('gust'): 
+        if 'gust' in item: 
             set_property('36Hour.%i.WindGust'        % (count+1), SPEED(item['gust']) + SPEEDUNIT)
         else:
             set_property('36Hour.%i.WindGust'        % (count+1), '')
-        set_property('36Hour.%i.Cloudiness'          % (count+1), str(item['clouds']) + '%')
+        set_property('36Hour.%i.Cloudiness'          % (count+1), str(item.get('clouds','')) + '%')
         if count == 0:
             set_property('36Hour.%i.Heading'         % (count+1), xbmc.getLocalizedString(33006))
         else:
@@ -677,62 +671,62 @@ def daily_props(data):
 def hourly_props(data, daynum):
 # extended properties
     for count, item in enumerate(data['list']):
-        code = str(item['weather'][0]['id'])
-        icon = item['weather'][0]['icon']
+        code = str(item['weather'][0].get('id',''))
+        icon = item['weather'][0].get('icon','')
         if icon.endswith('n'):
             code = code + 'n'
         weathercode = WEATHER_CODES[code]
-        set_property('Hourly.%i.Time'            % (count+1), get_time(item['dt']))
+        set_property('Hourly.%i.Time'            % (count+1), get_time(item.get('dt','')))
         if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
-            set_property('Hourly.%i.LongDate'    % (count+1), get_month(item['dt'], 'dl'))
-            set_property('Hourly.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ds'))
+            set_property('Hourly.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'dl'))
+            set_property('Hourly.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ds'))
         else:
-            set_property('Hourly.%i.LongDate'    % (count+1), get_month(item['dt'], 'ml'))
-            set_property('Hourly.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ms'))
-        set_property('Hourly.%i.Outlook'         % (count+1), CAPITALIZE(item['weather'][0]['description']))
-        set_property('Hourly.%i.ShortOutlook'    % (count+1), item['weather'][0]['main'])
+            set_property('Hourly.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'ml'))
+            set_property('Hourly.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ms'))
+        set_property('Hourly.%i.Outlook'         % (count+1), FORECAST.get(item['weather'][0].get('description','').title(), item['weather'][0].get('description','').title()))
+        set_property('Hourly.%i.ShortOutlook'    % (count+1), FORECAST.get(item['weather'][0].get('main','').title(), item['weather'][0].get('main','').title()))
         set_property('Hourly.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
         set_property('Hourly.%i.FanartCode'      % (count+1), weathercode)
-        set_property('Hourly.%i.Humidity'        % (count+1), str(item['main']['humidity']) + '%')
-        if item['wind'].has_key('deg'):
+        set_property('Hourly.%i.Humidity'        % (count+1), str(item['main'].get('humidity','')) + '%')
+        if 'deg' in item['wind']:
             set_property('Hourly.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
-            set_property('Hourly.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
+            set_property('Hourly.%i.WindDegree'      % (count+1), str(item['wind'].get('deg','')) + u'°')
         else:
             set_property('Hourly.%i.WindDirection'   % (count+1), '')
             set_property('Hourly.%i.WindDegree'      % (count+1), '')
-        set_property('Hourly.%i.Cloudiness'          % (count+1), str(item['clouds']['all']) + '%')
+        set_property('Hourly.%i.Cloudiness'          % (count+1), str(item['clouds'].get('all','')) + '%')
         set_property('Hourly.%i.Temperature'         % (count+1), TEMP(item['main']['temp']) + TEMPUNIT)
         set_property('Hourly.%i.HighTemperature'     % (count+1), TEMP(item['main']['temp_max']) + TEMPUNIT)
         set_property('Hourly.%i.LowTemperature'      % (count+1), TEMP(item['main']['temp_min']) + TEMPUNIT)
         set_property('Hourly.%i.DewPoint'            % (count+1), DEW_POINT(item['main']['temp'], item['main']['humidity']) + TEMPUNIT)
-        if item['wind'].has_key('speed'):
+        if 'speed' in item['wind']:
             set_property('Hourly.%i.WindSpeed'       % (count+1), SPEED(item['wind']['speed']) + SPEEDUNIT)
             set_property('Hourly.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed'] * 3.6, item['main']['humidity']) + TEMPUNIT)
         else:
             set_property('Hourly.%i.WindSpeed'       % (count+1), '')
             set_property('Hourly.%i.FeelsLike'       % (count+1), '')
-        if item['wind'].has_key('gust'):
+        if 'gust' in item['wind']:
             set_property('Hourly.%i.WindGust'        % (count+1), SPEED(item['wind']['gust']) + SPEEDUNIT)
         else:
             set_property('Hourly.%i.WindGust'        % (count+1), '')
         if 'F' in TEMPUNIT:
             set_property('Hourly.%i.Pressure'        % (count+1), str(round(item['main']['pressure'] / 33.86 ,2)) + ' in')
-            if item['main'].has_key('sea_level'):
+            if 'sea_level' in item['main']:
                 set_property('Hourly.%i.SeaLevel'    % (count+1), str(round(item['main']['sea_level'] / 33.86 ,2)) + ' in')
             else:
                 set_property('Hourly.%i.SeaLevel'    % (count+1), '')
-            if item['main'].has_key('grnd_level'):
+            if 'grnd_level' in item['main']:
                 set_property('Hourly.%i.GroundLevel' % (count+1), str(round(item['main']['grnd_level'] / 33.86 ,2)) + ' in')
             else:
                 set_property('Hourly.%i.GroundLevel' % (count+1), '')
             rain = 0
             snow = 0
-            if item.has_key('rain') and item['rain'].has_key('3h'):
+            if 'rain' in item and '3h' in item['rain']:
                 rain = item['rain']['3h']
                 set_property('Hourly.%i.Rain'        % (count+1), str(round(rain *  0.04 ,2)) + ' in')
             else:
                 set_property('Hourly.%i.Rain'        % (count+1), '')
-            if item.has_key('snow') and item['snow'].has_key('3h'):
+            if 'snow' in item and '3h' in item['snow']:
                 snow = item['snow']['3h']
                 set_property('Hourly.%i.Snow'        % (count+1), str(round(snow *  0.04 ,2)) + ' in')
             else:
@@ -740,23 +734,23 @@ def hourly_props(data, daynum):
             precip = rain + snow
             set_property('Hourly.%i.Precipitation'   % (count+1), str(round(precip *  0.04 ,2)) + ' in')
         else:
-            set_property('Hourly.%i.Pressure'        % (count+1), str(item['main']['pressure']) + ' mb')
-            if item['main'].has_key('sea_level'):
-                set_property('Hourly.%i.SeaLevel'    % (count+1), str(item['main']['sea_level']) + ' mb')
+            set_property('Hourly.%i.Pressure'        % (count+1), str(item['main'].get('pressure','')) + ' mb')
+            if 'sea_level' in item['main']:
+                set_property('Hourly.%i.SeaLevel'    % (count+1), str(item['main'].get('sea_level','')) + ' mb')
             else:
                 set_property('Hourly.%i.SeaLevel'    % (count+1), '')
-            if item['main'].has_key('grnd_level'):
-                set_property('Hourly.%i.GroundLevel' % (count+1), str(item['main']['grnd_level']) + ' mb')
+            if 'grnd_level' in item['main']:
+                set_property('Hourly.%i.GroundLevel' % (count+1), str(item['main'].get('grnd_level','')) + ' mb')
             else:
                 set_property('Hourly.%i.GroundLevel' % (count+1), '')
             rain = 0
             snow = 0
-            if item.has_key('rain') and item['rain'].has_key('3h'):
+            if 'rain' in item and '3h' in item['rain']:
                 rain = item['rain']['3h']
                 set_property('Hourly.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
             else:
                 set_property('Hourly.%i.Rain'        % (count+1), '')
-            if item.has_key('snow') and item['snow'].has_key('3h'):
+            if 'snow' in item and '3h' in item['snow']:
                 snow = item['snow']['3h']
                 set_property('Hourly.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
             else:
@@ -767,46 +761,46 @@ def hourly_props(data, daynum):
     if daynum == '':
         return
     for item in (data['list']):
-        day_num = get_month(item['dt'], 'ds').split(' ')[0]
+        day_num = get_month(item.get('dt',''), 'ds').split(' ')[0]
         if day_num == daynum:
-            day_time = get_time(item['dt'])[0:2].lstrip('0').rstrip(':')
+            day_time = get_time(item.get('dt',''))[0:2].lstrip('0').rstrip(':')
             if day_time == '':
                 day_time = 0
             if int(day_time) > 2:
-                code = str(item['weather'][0]['id'])
-                icon = item['weather'][0]['icon']
+                code = str(item['weather'][0].get('id',''))
+                icon = item['weather'][0].get('icon','')
                 if icon.endswith('n'):
                     code = code + 'n'
                 weathercode = WEATHER_CODES[code]
-                set_property('36Hour.%i.Time'            % (count+1), get_time(item['dt']))
+                set_property('36Hour.%i.Time'            % (count+1), get_time(item.get('dt','')))
                 if DATEFORMAT[1] == 'd' or DATEFORMAT[0] == 'D':
-                    set_property('36Hour.%i.LongDate'    % (count+1), get_month(item['dt'], 'dl'))
-                    set_property('36Hour.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ds'))
+                    set_property('36Hour.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'dl'))
+                    set_property('36Hour.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ds'))
                 else:
-                    set_property('36Hour.%i.LongDate'    % (count+1), get_month(item['dt'], 'ml'))
-                    set_property('36Hour.%i.ShortDate'   % (count+1), get_month(item['dt'], 'ms'))
-                set_property('36Hour.%i.Outlook'         % (count+1), CAPITALIZE(item['weather'][0]['description']))
-                set_property('36Hour.%i.ShortOutlook'    % (count+1), item['weather'][0]['main'])
+                    set_property('36Hour.%i.LongDate'    % (count+1), get_month(item.get('dt',''), 'ml'))
+                    set_property('36Hour.%i.ShortDate'   % (count+1), get_month(item.get('dt',''), 'ms'))
+                set_property('36Hour.%i.Outlook'         % (count+1), FORECAST.get(item['weather'][0].get('description','').title(), item['weather'][0].get('description','').title()))
+                set_property('36Hour.%i.ShortOutlook'    % (count+1), FORECAST.get(item['weather'][0].get('main','').title(), item['weather'][0].get('main','').title()))
                 set_property('36Hour.%i.OutlookIcon'     % (count+1), WEATHER_ICON % weathercode)
                 set_property('36Hour.%i.FanartCode'      % (count+1), weathercode)
-                set_property('36Hour.%i.Humidity'        % (count+1), str(item['main']['humidity']) + '%')
-                set_property('36Hour.%i.Cloudiness'      % (count+1), str(item['clouds']['all']) + '%')
+                set_property('36Hour.%i.Humidity'        % (count+1), str(item['main'].get('humidity','')) + '%')
+                set_property('36Hour.%i.Cloudiness'      % (count+1), str(item['clouds'].get('all','')) + '%')
                 set_property('36Hour.%i.Temperature'     % (count+1), TEMP(item['main']['temp']) + TEMPUNIT)
                 set_property('36Hour.%i.HighTemperature' % (count+1), TEMP(item['main']['temp_max']) + TEMPUNIT)
                 set_property('36Hour.%i.LowTemperature'  % (count+1), TEMP(item['main']['temp_min']) + TEMPUNIT)
                 set_property('36Hour.%i.DewPoint'        % (count+1), DEW_POINT(item['main']['temp'], item['main']['humidity']) + TEMPUNIT)
-                if item['wind'].has_key('deg'):
+                if 'deg' in item['wind']:
                     set_property('36Hour.%i.WindDirection'   % (count+1), xbmc.getLocalizedString(WIND_DIR(int(round(item['wind']['deg'])))))
-                    set_property('36Hour.%i.WindDegree'      % (count+1), str(item['wind']['deg']) + u'°')
+                    set_property('36Hour.%i.WindDegree'      % (count+1), str(item['wind'].get('deg','')) + u'°')
                 else:
                     set_property('36Hour.%i.WindDegree'      % (count+1), '')
-                if item['wind'].has_key('speed'):
+                if 'speed' in item['wind']:
                     set_property('36Hour.%i.WindSpeed'       % (count+1), SPEED(item['wind']['speed']) + SPEEDUNIT)
                     set_property('36Hour.%i.FeelsLike'       % (count+1), FEELS_LIKE(item['main']['temp'], item['wind']['speed'] * 3.6, item['main']['humidity']) + TEMPUNIT)
                 else:
                     set_property('36Hour.%i.WindSpeed'       % (count+1), '')
                     set_property('36Hour.%i.FeelsLike'       % (count+1), '')
-                if item['wind'].has_key('gust'):
+                if 'gust' in item['wind']:
                     set_property('36Hour.%i.WindGust'        % (count+1), SPEED(item['wind']['gust']) + SPEEDUNIT)
                 else:
                     set_property('36Hour.%i.WindGust'        % (count+1), '')
@@ -814,12 +808,12 @@ def hourly_props(data, daynum):
                     set_property('36Hour.%i.Pressure'        % (count+1), str(round(item['main']['pressure'] / 33.86 ,2)) + ' in')
                     rain = 0
                     snow = 0
-                    if item.has_key('rain') and item['rain'].has_key('3h'):
+                    if 'rain' in item and '3h' in item['rain']:
                         rain = item['rain']['3h']
                         set_property('36Hour.%i.Rain'        % (count+1), str(round(rain *  0.04 ,2)) + ' in')
                     else:
                         set_property('36Hour.%i.Rain'        % (count+1), '')
-                    if item.has_key('snow') and item['snow'].has_key('3h'):
+                    if 'snow' in item and '3h' in item['snow']:
                         snow = item['snow']['3h']
                         set_property('36Hour.%i.Snow'        % (count+1), str(round(snow *  0.04 ,2)) + ' in')
                     else:
@@ -827,15 +821,15 @@ def hourly_props(data, daynum):
                     precip = rain + snow
                     set_property('36Hour.%i.Precipitation'   % (count+1), str(round(precip *  0.04 ,2)) + ' in')
                 else:
-                    set_property('36Hour.%i.Pressure'        % (count+1), str(item['main']['pressure']) + ' mb')
+                    set_property('36Hour.%i.Pressure'        % (count+1), str(item['main'].get('pressure','')) + ' mb')
                     rain = 0
                     snow = 0
-                    if item.has_key('rain') and item['rain'].has_key('3h'):
+                    if 'rain' in item and '3h' in item['rain']:
                         rain = item['rain']['3h']
                         set_property('36Hour.%i.Rain'        % (count+1), str(int(round(rain))) + ' mm')
                     else:
                         set_property('36Hour.%i.Rain'        % (count+1), '')
-                    if item.has_key('snow') and item['snow'].has_key('3h'):
+                    if 'snow' in item and '3h' in item['snow']:
                         snow = item['snow']['3h']
                         set_property('36Hour.%i.Snow'        % (count+1), str(int(round(snow))) + ' mm')
                     else:

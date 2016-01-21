@@ -135,3 +135,309 @@ msgstr ""
 msgctxt "#32134"
 msgid "Recommended: get an api key at: http://openweathermap.org/appid"
 msgstr ""
+
+#empty strings from id 32135 to 32200
+
+msgctxt "#32201"
+msgid "Thunderstorm With Light Rain"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Thunderstorm With Rain"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Thunderstorm With Heavy Rain"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Light Thunderstorm"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Thunderstorm"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Heavy Thunderstorm"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Ragged Thunderstorm"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Thunderstorm With Light Drizzle"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Thunderstorm With Drizzle"
+msgstr ""
+
+msgctxt "#32210"
+msgid "Thunderstorm With Heavy Drizzle"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Light Intensity Drizzle"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Drizzle"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Heavy Intensity Drizzle"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Light Intensity Drizzle Rain"
+msgstr ""
+
+msgctxt "#32215"
+msgid "Drizzle Rain"
+msgstr ""
+
+msgctxt "#32216"
+msgid "Heavy Intensity Drizzle Rain"
+msgstr ""
+
+msgctxt "#32217"
+msgid "Shower Rain And Drizzle"
+msgstr ""
+
+msgctxt "#32218"
+msgid "Heavy Shower Rain And Drizzle"
+msgstr ""
+
+msgctxt "#32219"
+msgid "Shower Drizzle"
+msgstr ""
+
+msgctxt "#32220"
+msgid "Light Rain"
+msgstr ""
+
+msgctxt "#32221"
+msgid "Moderate Rain"
+msgstr ""
+
+msgctxt "#32222"
+msgid "Heavy Intensity Rain"
+msgstr ""
+
+msgctxt "#32223"
+msgid "Very Heavy Rain"
+msgstr ""
+
+msgctxt "#32224"
+msgid "Extreme Rain"
+msgstr ""
+
+msgctxt "#32225"
+msgid "Freezing Rain"
+msgstr ""
+
+msgctxt "#32226"
+msgid "Light Intensity Shower Rain"
+msgstr ""
+
+msgctxt "#32227"
+msgid "Shower Rain"
+msgstr ""
+
+msgctxt "#32228"
+msgid "Heavy Intensity Shower Rain"
+msgstr ""
+
+msgctxt "#32229"
+msgid "Ragged Shower Rain"
+msgstr ""
+
+msgctxt "#32230"
+msgid "Light Snow"
+msgstr ""
+
+msgctxt "#32231"
+msgid "Snow"
+msgstr ""
+
+msgctxt "#32232"
+msgid "Heavy Snow"
+msgstr ""
+
+msgctxt "#32233"
+msgid "Sleet"
+msgstr ""
+
+msgctxt "#32234"
+msgid "Shower Sleet"
+msgstr ""
+
+msgctxt "#32235"
+msgid "Light Rain And Snow"
+msgstr ""
+
+msgctxt "#32236"
+msgid "Rain And Snow"
+msgstr ""
+
+msgctxt "#32237"
+msgid "Light Shower Snow"
+msgstr ""
+
+msgctxt "#32238"
+msgid "Shower Snow"
+msgstr ""
+
+msgctxt "#32239"
+msgid "Heavy Shower Snow"
+msgstr ""
+
+msgctxt "#32240"
+msgid "Mist"
+msgstr ""
+
+msgctxt "#32241"
+msgid "Smoke"
+msgstr ""
+
+msgctxt "#32242"
+msgid "Haze"
+msgstr ""
+
+msgctxt "#32243"
+msgid "Sand, Dust Whirls"
+msgstr ""
+
+msgctxt "#32244"
+msgid "Fog"
+msgstr ""
+
+msgctxt "#32245"
+msgid "Sand"
+msgstr ""
+
+msgctxt "#32246"
+msgid "Dust"
+msgstr ""
+
+msgctxt "#32247"
+msgid "Volcanic Ash"
+msgstr ""
+
+msgctxt "#32248"
+msgid "Squalls"
+msgstr ""
+
+msgctxt "#32249"
+msgid "Tornado"
+msgstr ""
+
+msgctxt "#32250"
+msgid "Clear Sky"
+msgstr ""
+
+msgctxt "#32251"
+msgid "Few Clouds"
+msgstr ""
+
+msgctxt "#32252"
+msgid "Scattered Clouds"
+msgstr ""
+
+msgctxt "#32253"
+msgid "Broken Clouds"
+msgstr ""
+
+msgctxt "#32254"
+msgid "Overcast Clouds"
+msgstr ""
+
+msgctxt "#32255"
+msgid "Tornado"
+msgstr ""
+
+msgctxt "#32256"
+msgid "Tropical Storm"
+msgstr ""
+
+msgctxt "#32257"
+msgid "Hurricane"
+msgstr ""
+
+msgctxt "#32258"
+msgid "Cold"
+msgstr ""
+
+msgctxt "#32259"
+msgid "Hot"
+msgstr ""
+
+msgctxt "#32260"
+msgid "Windy"
+msgstr ""
+
+msgctxt "#32261"
+msgid "Hail"
+msgstr ""
+
+msgctxt "#32262"
+msgid "Calm"
+msgstr ""
+
+msgctxt "#32263"
+msgid "Light Breeze"
+msgstr ""
+
+msgctxt "#32264"
+msgid "Gentle Breeze"
+msgstr ""
+
+msgctxt "#32265"
+msgid "Moderate Breeze"
+msgstr ""
+
+msgctxt "#32266"
+msgid "Fresh Breeze"
+msgstr ""
+
+msgctxt "#32267"
+msgid "Strong Breeze"
+msgstr ""
+
+msgctxt "#32268"
+msgid "High Wind, Near Gale"
+msgstr ""
+
+msgctxt "#32269"
+msgid "Gale"
+msgstr ""
+
+msgctxt "#32270"
+msgid "Severe Gale"
+msgstr ""
+
+msgctxt "#32271"
+msgid "Storm"
+msgstr ""
+
+msgctxt "#32272"
+msgid "Violent Storm"
+msgstr ""
+
+msgctxt "#32273"
+msgid "Hurricane"
+msgstr ""
+
+msgctxt "#32274"
+msgid "Clear"
+msgstr ""
+
+msgctxt "#32275"
+msgid "Clouds"
+msgstr ""
+
+msgctxt "#32276"
+msgid "Rain"
+msgstr ""

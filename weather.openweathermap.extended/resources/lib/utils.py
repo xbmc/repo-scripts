@@ -5,6 +5,7 @@ import xbmc, xbmcgui, xbmcaddon
 
 ADDON      = xbmcaddon.Addon()
 ADDONID    = ADDON.getAddonInfo('id')
+LANGUAGE   = ADDON.getLocalizedString
 
 WEATHER_WINDOW = xbmcgui.Window(12600)
 DEBUG          = ADDON.getSetting('Debug')
@@ -304,6 +305,83 @@ WEEK_DAY_SHORT = { '0' : 47,
                    '5' : 45,
                    '6' : 46 }
 
+FORECAST = { 'Thunderstorm With Light Rain': LANGUAGE(32201),
+             'Thunderstorm With Rain': LANGUAGE(32202),
+             'Thunderstorm With Heavy Rain': LANGUAGE(32203),
+             'Light Thunderstorm': LANGUAGE(32204),
+             'Thunderstorm': LANGUAGE(32205),
+             'Heavy Thunderstorm': LANGUAGE(32206),
+             'Ragged Thunderstorm': LANGUAGE(32207),
+             'Thunderstorm With Light Drizzle': LANGUAGE(32208),
+             'Thunderstorm With Drizzle': LANGUAGE(32209),
+             'Thunderstorm With Heavy Drizzle': LANGUAGE(32210),
+             'Light Intensity Drizzle': LANGUAGE(32211),
+             'Drizzle': LANGUAGE(32212),
+             'Heavy Intensity Drizzle': LANGUAGE(32213),
+             'Light Intensity Drizzle Rain': LANGUAGE(32214),
+             'Drizzle Rain': LANGUAGE(32215),
+             'Heavy Intensity Drizzle Rain': LANGUAGE(32216),
+             'Shower Rain And Drizzle': LANGUAGE(32217),
+             'Heavy Shower Rain And Drizzle': LANGUAGE(32218),
+             'Shower Drizzle': LANGUAGE(32219),
+             'Light Rain': LANGUAGE(32220),
+             'Moderate Rain': LANGUAGE(32221),
+             'Heavy Intensity Rain': LANGUAGE(32222),
+             'Very Heavy Rain': LANGUAGE(32223),
+             'Extreme Rain': LANGUAGE(32224),
+             'Freezing Rain': LANGUAGE(32225),
+             'Light Intensity Shower Rain': LANGUAGE(32226),
+             'Shower Rain': LANGUAGE(32227),
+             'Heavy Intensity Shower Rain': LANGUAGE(32228),
+             'Ragged Shower Rain': LANGUAGE(32229),
+             'Light Snow': LANGUAGE(32230),
+             'Snow': LANGUAGE(32231),
+             'Heavy Snow': LANGUAGE(32232),
+             'Sleet': LANGUAGE(32233),
+             'Shower Sleet': LANGUAGE(32234),
+             'Light Rain And Snow': LANGUAGE(32235),
+             'Rain And Snow': LANGUAGE(32236),
+             'Light Shower Snow': LANGUAGE(32237),
+             'Shower Snow': LANGUAGE(32238),
+             'Heavy Shower Snow': LANGUAGE(32239),
+             'Mist': LANGUAGE(32240),
+             'Smoke': LANGUAGE(32241),
+             'Haze': LANGUAGE(32242),
+             'Sand, Dust Whirls': LANGUAGE(32243),
+             'Fog': LANGUAGE(32244),
+             'Sand': LANGUAGE(32245),
+             'Dust': LANGUAGE(32246),
+             'Volcanic Ash': LANGUAGE(32247),
+             'Squalls': LANGUAGE(32248),
+             'Tornado': LANGUAGE(32249),
+             'Clear Sky': LANGUAGE(32250),
+             'Few Clouds': LANGUAGE(32251),
+             'Scattered Clouds': LANGUAGE(32252),
+             'Broken Clouds': LANGUAGE(32253),
+             'Overcast Clouds': LANGUAGE(32254),
+             'Tornado': LANGUAGE(32255),
+             'Tropical Storm': LANGUAGE(32256),
+             'Hurricane': LANGUAGE(32257),
+             'Cold': LANGUAGE(32258),
+             'Hot': LANGUAGE(32259),
+             'Windy': LANGUAGE(32260),
+             'Hail': LANGUAGE(32261),
+             'Calm': LANGUAGE(32262),
+             'Light Breeze': LANGUAGE(32263),
+             'Gentle Breeze': LANGUAGE(32264),
+             'Moderate Breeze': LANGUAGE(32265),
+             'Fresh Breeze': LANGUAGE(32266),
+             'Strong Breeze': LANGUAGE(32267),
+             'High Wind, Near Gale': LANGUAGE(32268),
+             'Gale': LANGUAGE(32269),
+             'Severe Gale': LANGUAGE(32270),
+             'Storm': LANGUAGE(32271),
+             'Violent Storm': LANGUAGE(32272),
+             'Hurricane': LANGUAGE(32273),
+             'Clear': LANGUAGE(32274),
+             'Clouds': LANGUAGE(32275),
+             'Rain': LANGUAGE(32276) }
+
 def SPEED(mps):
     if SPEEDUNIT == 'km/h':
         speed = mps * 3.6
@@ -452,15 +530,3 @@ def DEW_POINT(Tc=0, RH=93, minRH=( 0, 0.075 )[ 0 ], ext=True):
         return TEMP( DewPoint )
     else:
         return str(int(round(DewPoint)))
-
-def CAPITALIZE(string):
-    string = string[0].upper() + string[1:]
-    return string
-
-def UPPERCASE(string):
-    words = []
-    for word in string.split(' '):
-        word = word[0].upper() + word[1:]
-        words.append(word)
-    string = ' '.join(words)
-    return string
