@@ -299,22 +299,28 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             items = copy.deepcopy(self.items)
 
     def _get_items(self, update=False):
-	# check if we have an image folder, else fallback to video fanart
+        log('slideshow type: %s' % self.slideshow_type)
+        self.pathfail = False
+	    # check if we have an image folder, else fallback to video fanart
         if self.slideshow_type == '2':
             hexfile = checksum(self.slideshow_path) # check if path has changed, so we can create a new cache at startup
+            log('image path: %s' % self.slideshow_path)
+            log('update: %s' % update)
             if (not xbmcvfs.exists(CACHEFILE % hexfile)) or update: # create a new cache if no cache exits or during the background scan
+                log('create cache')
                 create_cache(self.slideshow_path, hexfile)
             self.items = self._read_cache(hexfile)
+            log('items: %s' % len(self.items))
             if not self.items:
-                self.slideshow_type = '0'
-	# video fanart
-        if self.slideshow_type == '0':
+                self.pathfail = True
+	    # video fanart
+        if self.slideshow_type == '0' or self.pathfail:
             methods = [('VideoLibrary.GetMovies', 'movies'), ('VideoLibrary.GetTVShows', 'tvshows')]
-	# music fanart
+	    # music fanart
         elif self.slideshow_type == '1':
             methods = [('AudioLibrary.GetArtists', 'artists')]
         # query the db
-        if not self.slideshow_type == '2':
+        if not self.slideshow_type == '2' or self.pathfail:
             self.items = []
             for method in methods:
                 json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "' + method[0] + '", "params": {"properties": ["fanart"]}, "id": 1}')

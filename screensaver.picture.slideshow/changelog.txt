@@ -1,3 +1,9 @@
+v3.1.0
+- option to exclude dirs/files using pictureexcludes in advancedsettings.xml
+
+v3.0.4
+- fix cache creation when an empty cache file is present.
+
 v3.0.3
 - language update
 - cosmetics
