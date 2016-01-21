@@ -407,7 +407,7 @@ def load(filename):
   Helper function that simply pickle loads the first object
   from the file named by `filename`.
   """
-  f = open(filename, 'r')
+  f = open(filename, 'rb')
   obj = cPickle.load(f)
   f.close()
   return obj
@@ -417,7 +417,7 @@ def dump(obj, filename):
   Helper function that simply pickle dumps the object
   into the file named by `filename`.
   """
-  f = open(filename, 'w')
+  f = open(filename, 'wb')
   cPickle.dump(obj, f, cPickle.HIGHEST_PROTOCOL)
   f.close()
 
