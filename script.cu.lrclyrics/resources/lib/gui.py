@@ -28,8 +28,8 @@ class MAIN():
     def setup_main(self):
         self.fetchedLyrics = []
         self.current_lyrics = Lyrics()
-        self.MyPlayer = MyPlayer(function=self.myPlayerChanged)
-        self.Monitor = MyMonitor(function = self.update_settings)
+        self.MyPlayer = MyPlayer(function=self.myPlayerChanged, clear=self.clear)
+        self.Monitor = MyMonitor(function=self.update_settings)
 
     def cleanup_main(self):
         # Clean up the monitor and Player classes on exit
@@ -74,6 +74,9 @@ class MAIN():
                 self.current_lyrics = Lyrics()
             xbmc.sleep(1000)
         WIN.clearProperty('culrc.quit')
+        WIN.clearProperty('culrc.lyrics')
+        WIN.clearProperty('culrc.source')
+        WIN.clearProperty('culrc.haslist')
         WIN.clearProperty('culrc.running')
 
     def get_lyrics(self, song):
@@ -86,9 +89,13 @@ class MAIN():
         if song.title:
             lyrics = self.find_lyrics( song )
             if ADDON.getSetting( 'strip' ) == "true":
-                fulltext = lyrics.lyrics.decode("utf-8")
-                stripped = re.sub(ur"[\u3000-\u9fff]+", "", fulltext)
-                lyrics.lyrics = stripped.encode("utf-8")
+                if isinstance (lyrics.lyrics,str):
+                    fulltext = lyrics.lyrics.decode("utf-8")
+                else:
+                    fulltext = lyrics.lyrics
+                strip_k = re.sub(ur"[\u1100-\u11ff]+", "", fulltext)
+                strip_c = re.sub(ur"[\u3000-\u9fff]+", "", strip_k)
+                lyrics.lyrics = strip_c.encode("utf-8")
         else:
             lyrics = Lyrics()
             lyrics.song = song
@@ -274,6 +281,12 @@ class MAIN():
             self.mode = 'manual'
             # quit the script is mode was changed from service to manual
             WIN.setProperty('culrc.quit', 'TRUE')
+
+    def clear(self):
+        WIN.clearProperty('culrc.lyrics')
+        WIN.clearProperty('culrc.source')
+        WIN.clearProperty('culrc.haslist')
+
 
 class guiThread(threading.Thread):
     def __init__(self, *args, **kwargs):
@@ -517,10 +530,15 @@ class MyPlayer(xbmc.Player):
     def __init__(self, *args, **kwargs):
         xbmc.Player.__init__(self)
         self.function = kwargs["function"]
+        self.clear = kwargs["clear"]
 
     def onPlayBackStarted(self):
+        self.clear()
         if xbmc.getCondVisibility("Window.IsVisible(12006)"):
             self.function()
+
+    def onPlayBackStopped(self):
+        self.clear()
 
 class MyMonitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):

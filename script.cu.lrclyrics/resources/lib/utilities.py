@@ -10,7 +10,7 @@ else:
     import json as simplejson
 
 ADDON     = sys.modules[ "__main__" ].ADDON
-ADDONNAME = sys.modules[ "__main__" ].ADDONNAME
+ADDONID   = sys.modules[ "__main__" ].ADDONID
 PROFILE   = sys.modules[ "__main__" ].PROFILE
 CWD       = sys.modules[ "__main__" ].CWD
 
@@ -24,7 +24,7 @@ def log(txt):
     if (ADDON.getSetting( "log_enabled" ) == "true"):
         if isinstance (txt,str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (ADDONNAME, txt)
+        message = u'%s: %s' % (ADDONID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
 
 def deAccent(str):
@@ -55,20 +55,24 @@ def get_artist_from_filename(filename):
         if ( ADDON.getSetting( "read_filename_format" ) == "0" ):
             artist = basename.split( "-", 1 )[ 0 ].strip()
             title = os.path.splitext( basename.split( "-", 1 )[ 1 ].strip() )[ 0 ]
-        # Artist/Album/title.ext or Artist/Album/Track title.ext
+        # Artist/Album/title.ext or Artist/Album/Track (-) title.ext
         elif ( ADDON.getSetting( "read_filename_format" ) in ( "1", "2", ) ):
             artist = os.path.basename( os.path.split( os.path.split( filename )[ 0 ] )[ 0 ] )
             # Artist/Album/title.ext
             if ( ADDON.getSetting( "read_filename_format" ) == "1" ):
                 title = os.path.splitext( basename )[ 0 ]
-            # Artist/Album/Track title.ext
+            # Artist/Album/Track (-) title.ext
             elif ( ADDON.getSetting( "read_filename_format" ) == "2" ):
-                title = os.path.splitext( basename )[ 0 ].split( " ", 1 )[ 1 ]
+                title = os.path.splitext( basename )[ 0 ].split( " ", 1 )[ 1 ].lstrip('-').strip()
         # Track Artist - title.ext
         elif ( ADDON.getSetting( "read_filename_format" ) == "3" ):
             at = basename.split( " ", 1 )[ 1 ].strip()
             artist = at.split( "-", 1 )[ 0 ].strip()
             title = os.path.splitext( at.split( "-", 1 )[ 1 ].strip() )[ 0 ]
+        # Track - Artist - title.ext
+        elif ( ADDON.getSetting( "read_filename_format" ) == "4" ):
+            artist = basename.split( "-", 2 )[ 1 ].strip()
+            title = os.path.splitext( basename.split( "-", 2 )[ 2 ].strip() )[ 0 ]
     except:
         # invalid format selected
         log( "failed to get artist and title from filename" )
@@ -150,6 +154,11 @@ class Song:
             song.filepath = xbmc.getInfoLabel('Player.Filenameandpath')
         song.title = xbmc.getInfoLabel( "MusicPlayer%s.Title" % offset_str).replace( "\\", " & " ).replace( "/", " & " ).replace("  "," ").replace(":","-").strip('.')
         song.artist = xbmc.getInfoLabel( "MusicPlayer%s.Artist" % offset_str).replace( "\\", " & " ).replace( "/", " & " ).replace("  "," ").replace(":","-").strip('.')
+        # some third party addons may insert the tracknumber in the song title
+        regex = re.compile('\d\d\.\s')
+        match = regex.match(song.title)
+        if match:
+            song.title = song.title[4:]
 
         if not song.artist and not xbmc.getInfoLabel("MusicPlayer.TimeRemaining"):
             # no artist and infinite playing time ? We probably listen to a radio

@@ -40,7 +40,7 @@ msgstr ""
 #Settings labels
 
 msgctxt "#32101"
-msgid "Save lyrics to lyrics folder"
+msgid "Search and save lyrics in separate lyrics folder"
 msgstr ""
 
 msgctxt "#32102"
@@ -48,7 +48,7 @@ msgid "- Lyrics folder"
 msgstr ""
 
 msgctxt "#32103"
-msgid "- Save format"
+msgid "- Filename format"
 msgstr ""
 
 msgctxt "#32104"
@@ -76,22 +76,42 @@ msgid "%A\\%B\\%T"
 msgstr ""
 
 msgctxt "#32110"
-msgid "%A\\%B\\%N %T"
+msgid "%A\\%B\\%N (-) %T"
 msgstr ""
 
 msgctxt "#32111"
-msgid "Same name lyrics saved in sub folder"
+msgid "Lyrics are in a subfolder"
 msgstr ""
 
 msgctxt "#32112"
-msgid "- Sub folder name"
+msgid "- Subfolder name"
 msgstr ""
 
 msgctxt "#32113"
-msgid "Save lyrics to song folder"
+msgid "Search and save lyrics in song folder"
 msgstr ""
 
-#empty strings from id 32114 to 32149
+msgctxt "#32114"
+msgid "%N - %A - %T"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Display options"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Search options"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Lyrics files"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Debugging"
+msgstr ""
+
+#empty strings from id 32119 to 32149
 
 msgctxt "#32150"
 msgid "Scrapers"
@@ -138,7 +158,7 @@ msgid "Hide notifications"
 msgstr ""
 
 msgctxt "#32161"
-msgid "Remove Chinese text from lyrics"
+msgid "Remove Chinese/Korean text from lyrics"
 msgstr ""
 
 #empty strings from id 32161 to 32198

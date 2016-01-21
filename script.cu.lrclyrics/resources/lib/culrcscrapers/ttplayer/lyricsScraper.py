@@ -153,7 +153,6 @@ class LyricsFetcher:
                    sys.exc_info()[ 1 ]
                    ))
             return None
-
         links_query = re.compile('<lrc id=\"(.*?)\" artist=\"(.*?)\" title=\"(.*?)\"></lrc>')
         urls = re.findall(links_query, Page)
         links = []
@@ -186,6 +185,14 @@ class LyricsFetcher:
                    sys.exc_info()[ 1 ]
                    ))
             return None
-        if Page.startswith('['):
+        # ttplayer occasionally returns incorrect lyrics. if we have an 'ar' tag with a value we can check if the artist matches
+        if Page.startswith('[ti:'):
+            check = Page.split('\n')
+            if check[1][0:4] == '[ar:' and not check[1][4:-1] == '':
+                if (difflib.SequenceMatcher(None, artist.lower(), check[1][4:-1].lower()).ratio() > 0.8):
+                    return Page
+            else:
+                return Page
+        elif Page.startswith('['):
             return Page
         return ''

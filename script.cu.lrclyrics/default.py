@@ -6,6 +6,7 @@ import xbmcaddon
 
 # Script constants 
 ADDON        = xbmcaddon.Addon()
+ADDONID      = ADDON.getAddonInfo('id')
 ADDONNAME    = ADDON.getAddonInfo('name')
 ADDONVERSION = ADDON.getAddonInfo('version')
 CWD          = xbmc.translatePath(ADDON.getAddonInfo('path')).decode("utf-8")

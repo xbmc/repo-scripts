@@ -1,3 +1,16 @@
+v4.1.9
+- clear culrc.lyrics window property when needed
+
+v4.1.8
+- try to strip tacknumber from song title
+
+v4.1.7
+- fix for %A/%B/%N - %T
+- also strip korean text
+
+v4.1.6
+- add another file naming template
+
 v4.1.5
 - language update
 - cleanup
