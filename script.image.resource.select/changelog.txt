@@ -1,3 +1,6 @@
+v0.0.8
+- change none label to skin default
+
 v0.0.7
 - cosmetics
 

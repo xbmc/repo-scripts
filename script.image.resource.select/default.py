@@ -69,7 +69,7 @@ class Gui(xbmcgui.WindowXMLDialog):
         self.getControl(3).setVisible(False)
         self.getControl(1).setLabel(xbmc.getLocalizedString(20464) % xbmc.getLocalizedString(536))
         self.button.setLabel(xbmc.getLocalizedString(21452))
-        listitem = xbmcgui.ListItem(label=xbmc.getLocalizedString(231), iconImage='DefaultAddonNone.png')
+        listitem = xbmcgui.ListItem(label=xbmc.getLocalizedString(15109), iconImage='DefaultAddon.png')
         self.container.addItem(listitem)
         self.container.addItems(self.listing)
         self.setFocus(self.container)
