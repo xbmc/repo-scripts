@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window id="3001">
+    <defaultcontrol>302</defaultcontrol>
+    <animation effect="fade" time="350">WindowOpen</animation>
+    <animation effect="fade" time="350">WindowClose</animation>
+    <zorder>1</zorder>
+ 	<coordinates>
+		<system>1</system>
+		<posx>240</posx>
+		<posy>35</posy>
+	</coordinates>
+    <controls>
+        <control type="image" id="101">
+            <description>Background</description>
+            <width>800</width>
+            <height>650</height>
+            <visible>true</visible>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <texture border="40">DialogBack.png</texture>
+        </control>
+        <control type="image" id="102">
+            <description>Dialog Header image</description>
+            <posx>20</posx>
+            <posy>10</posy>
+            <width>780</width>
+            <height>50</height>
+            <texture>dialogheader.png</texture>
+        </control>
+        <control type="image" id="103">
+            <description>Separator</description>
+            <posx>40</posx>
+            <posy>560</posy>
+            <width>780</width>
+            <height>2</height>
+            <texture>separator.png</texture>
+        </control>
+        <control type="label" id="201">
+            <description>Window Title</description>
+            <posx>50</posx>
+            <posy>25</posy>
+            <width>700</width>
+            <height>20</height>
+            <aligny>center</aligny>
+        </control>
+
+		<control type="list" id="202">
+			<posx>40</posx>
+			<posy>70</posy>
+			<width>780</width>
+			<height>500</height>
+			<visible>true</visible>
+			<autoscroll>false</autoscroll>
+			<orientation>vertical</orientation>
+			<content>
+			    <item>
+			        <visible>!IsEmpty(Window(home).Property(Suitability.1.Section))</visible>
+			        <label>$INFO[Window(home).Property(Suitability.1.Section)]</label>
+			        <thumb>$INFO[Window(home).Property(Suitability.1.Rating)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window(home).Property(Suitability.2.Section))</visible>
+			        <label>$INFO[Window(home).Property(Suitability.2.Section)]</label>
+			        <thumb>$INFO[Window(home).Property(Suitability.2.Rating)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window(home).Property(Suitability.3.Section))</visible>
+			        <label>$INFO[Window(home).Property(Suitability.3.Section)]</label>
+			        <thumb>$INFO[Window(home).Property(Suitability.3.Rating)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window(home).Property(Suitability.4.Section))</visible>
+			        <label>$INFO[Window(home).Property(Suitability.4.Section)]</label>
+			        <thumb>$INFO[Window(home).Property(Suitability.4.Rating)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window(home).Property(Suitability.5.Section))</visible>
+			        <label>$INFO[Window(home).Property(Suitability.5.Section)]</label>
+			        <thumb>$INFO[Window(home).Property(Suitability.5.Rating)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window(home).Property(Suitability.6.Section))</visible>
+			        <label>$INFO[Window(home).Property(Suitability.6.Section)]</label>
+			        <thumb>$INFO[Window(home).Property(Suitability.6.Rating)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window(home).Property(Suitability.7.Section))</visible>
+			        <label>$INFO[Window(home).Property(Suitability.7.Section)]</label>
+			        <thumb>$INFO[Window(home).Property(Suitability.7.Rating)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			    <item>
+			        <visible>!IsEmpty(Window(home).Property(Suitability.8.Section))</visible>
+			        <label>$INFO[Window(home).Property(Suitability.8.Section)]</label>
+			        <thumb>$INFO[Window(home).Property(Suitability.8.Rating)]</thumb>
+					<onclick>-</onclick>
+			    </item>
+			</content>
+			<itemlayout height="60" width="780">
+                <control type="label">
+						<description>Description</description>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>500</width>
+                        <height>58</height>
+                        <font>font14</font>
+                        <aligny>center</aligny>
+                        <align>left</align>
+						<wrapmultiline>true</wrapmultiline>
+                        <info>ListItem.Label</info>
+                </control>
+                <control type="image">
+                        <posx>400</posx>
+                        <posy>0</posy>
+                        <width>300</width>
+                        <height>58</height>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <aspectratio>keep</aspectratio>
+                        <info>ListItem.Icon</info>
+                </control>
+            </itemlayout>
+			<focusedlayout height="60" width="780">
+                <control type="label">
+						<description>Description</description>
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>400</width>
+                        <height>58</height>
+                        <font>font14</font>
+                        <aligny>center</aligny>
+                        <align>left</align>
+						<wrapmultiline>true</wrapmultiline>
+                        <info>ListItem.Label</info>
+                </control>
+                <control type="image">
+                        <posx>400</posx>
+                        <posy>0</posy>
+                        <width>300</width>
+                        <height>58</height>
+                        <aligny>center</aligny>
+                        <align>left</align>
+                        <aspectratio>keep</aspectratio>
+                        <info>ListItem.Icon</info>
+                </control>
+			</focusedlayout>
+		</control>
+
+        <control type="button" id="301">
+            <description>Details Button</description>
+            <posx>30</posx>
+            <posy>580</posy>
+            <width>220</width>
+            <height>40</height>
+            <align>center</align>
+            <label>$ADDON[script.suitability 32013]</label>
+			<font>font12</font>
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>302</onright>
+            <onleft>303</onleft>
+            <onup>301</onup>
+            <ondown>301</ondown>
+        </control>
+        <control type="button" id="302">
+            <description>Close Button</description>
+            <posx>280</posx>
+            <posy>580</posy>
+            <width>220</width>
+            <height>40</height>
+            <align>center</align>
+            <label>$ADDON[script.suitability 32006]</label>
+			<font>font12</font>
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>303</onright>
+            <onleft>301</onleft>
+            <onup>302</onup>
+            <ondown>302</ondown>
+        </control>
+        <control type="button" id="303">
+            <description>Switch Button</description>
+            <posx>530</posx>
+            <posy>580</posy>
+            <width>220</width>
+            <height>40</height>
+            <align>center</align>
+            <label>$ADDON[script.suitability 32009]</label>
+			<font>font12</font>
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>301</onright>
+            <onleft>302</onleft>
+            <onup>303</onup>
+            <ondown>303</ondown>
+        </control>
+    </controls>
+</window>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32001">
+		<setting id="defaultSource" type="enum" label="32007" lvalues="32008|32009|32024|32025" default="0" />
+		<setting id="defaultViewer" type="enum" label="32014" lvalues="32012|32013" default="0" />
+		<setting id="showOnContextMenu" type="bool" label="32023" default="true"/>
+    	<setting label="32002" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32003" default="false"/>
+		<setting label="32015" type="lsep"/>
+		<setting label="32016" type="action" action="RunScript($CWD/confupdate.py)"/>
+	</category>
+	<category label="32026">
+		<setting id="commonSenseMediaPosition" type="enum" label="32008" lvalues="32027|32028|32029|32030|32031" default="1" />
+		<setting id="kidsInMindPosition" type="enum" label="32009" lvalues="32027|32028|32029|32030|32031" default="2" />
+		<setting id="doveFoundationPosition" type="enum" label="32024" lvalues="32027|32028|32029|32030|32031" default="3" />
+		<setting id="movieGuideOrgPosition" type="enum" label="32025" lvalues="32027|32028|32029|32030|32031" default="4" />
+	</category>
+</settings>
