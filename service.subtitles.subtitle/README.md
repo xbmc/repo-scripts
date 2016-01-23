@@ -1,4 +1,4 @@
 service.subtitles.subtitle
 ==================
 
-XBMC Subtitle.co.il subtitle service for Gotham
+Ktuvit.com subtitle service for KODI. 

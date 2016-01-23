@@ -152,12 +152,12 @@ class SubtitleHelper:
 
         if not results:
             query = {"q": search_string.encode("utf-8").lower(), "cs": "series"}
-            search_result = self.urlHandler.request(self.BASE_URL + "/browse.php?" + urllib.urlencode(query))
+            search_result = self.urlHandler.request(self.BASE_URL + "/browse.php", query)
             if search_result is None:
                 return results  # return empty set
 
             urls = re.findall(
-                    u'<a href="viewseries\.php\?id=(\d+)[^"]+" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div>',
+                    u'<a href="(?P<url>/tt\d+/[^/]+/)[^"]*" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div>',
                     search_result)
 
             results = self._filter_urls(urls, search_string, item)
@@ -177,12 +177,12 @@ class SubtitleHelper:
             query["fy"] = int(item["year"]) - 1
             query["uy"] = int(item["year"]) + 1
 
-        search_result = self.urlHandler.request(self.BASE_URL + "/browse.php?" + urllib.urlencode(query))
+        search_result = self.urlHandler.request(self.BASE_URL + "/browse.php", query)
         if search_result is None:
             return results  # return empty set
 
         urls = re.findall(
-                u'<a href="view\.php\?id=(\d+)[^"]+" itemprop="url">([^<]+)</a></div><div style="direction:ltr;" class="smtext">([^<]+)</div><span class="smtext">(\d{4})</span>',
+                u'<a href="/tt1(?P<id>\d+)/[^"]+" itemprop="url">(?P<heb_name>[^<]+)</a></div><div style="direction:ltr;" class="smtext">(?P<eng_name>[^<]+)</div><span class="smtext">(?P<year>\d{4})</span>',
                 search_result)
 
         results = self._filter_urls(urls, search_string, item)
@@ -215,7 +215,7 @@ class SubtitleHelper:
                                      (int(item["year"]) - 1) <= int(year) <= (int(item["year"]) + 1)):
                     filtered.append({"name": eng_name, "id": id, "year": year})
         else:
-            for (id, heb_name, eng_name) in urls:
+            for (url, heb_name, eng_name) in urls:
                 eng_name = unicode(eng_name, 'utf-8')
                 heb_name = unicode(heb_name, 'utf-8')
 
@@ -227,7 +227,7 @@ class SubtitleHelper:
 
                 if (search_string.startswith(eng_name) or eng_name.startswith(search_string) or
                         search_string.startswith(heb_name) or heb_name.startswith(search_string)):
-                    filtered.append({"name": eng_name, "id": id})
+                    filtered.append({"name": eng_name, "url": urllib.quote(url)})
 
         log(__scriptname__, "filtered: %s" % filtered)
         return filtered
@@ -236,8 +236,7 @@ class SubtitleHelper:
         ret = []
         total_downloads = 0
         for result in search_results:
-            url = self.BASE_URL + "/view.php?" + urllib.urlencode({"id": result["id"], "m": "subtitles"})
-            subtitle_page = self._is_logged_in(url)
+            subtitle_page = self._is_logged_in(self.BASE_URL + "/getajax.php", {"moviedetailssubtitles": result["id"]})
             x, i = self._retrive_subtitles(subtitle_page, item)
             total_downloads += i
             ret += x
@@ -258,8 +257,7 @@ class SubtitleHelper:
             subtitle_page = cache.get(cache_key_season)
             if not subtitle_page:
                 used_cached_seasons = False
-                url = self.BASE_URL + "/viewseries.php?" + urllib.urlencode({"id": result["id"], "m": "subtitles"})
-                subtitle_page = self._is_logged_in(url)
+                subtitle_page = self._is_logged_in(self.BASE_URL + result["url"])
                 if subtitle_page is not None:
                     # Retrieve the requested season
                     subtitle_page = re.findall("seasonlink_(\d+)[^>]+>(\d+)</a>", subtitle_page)
@@ -281,8 +279,8 @@ class SubtitleHelper:
                         if not found_episodes:
                             used_cached_episodes = False
                             # Retrieve the requested episode
-                            url = self.BASE_URL + "/getajax.php?" + urllib.urlencode({"seasonid": season_id})
-                            subtitle_page = self.urlHandler.request(url)
+                            url = self.BASE_URL + "/getajax.php"
+                            subtitle_page = self.urlHandler.request(url, {"seasonid": season_id})
                             if subtitle_page is not None:
                                 found_episodes = re.findall("episodelink_(\d+)[^>]+>(\d+)</a>", subtitle_page)
 
@@ -298,9 +296,8 @@ class SubtitleHelper:
                                 if episode_num == item["episode"]:
                                     episode_found = True
 
-                                    url = self.BASE_URL + "/getajax.php?" + urllib.urlencode(
-                                            {"episodedetails": episode_id})
-                                    subtitle_page = self._is_logged_in(url)
+                                    subtitle_page = self._is_logged_in(self.BASE_URL + "/getajax.php",
+                                                                       {"episodedetails": episode_id})
 
                                     x, i = self._retrive_subtitles(subtitle_page, item)
                                     total_downloads += i
@@ -326,11 +323,10 @@ class SubtitleHelper:
         total_downloads = 0
         if page is not None:
             found_subtitles = re.findall(
-                    "downloadsubtitle\.php\?id=(?P<fid>\d*).*?subt_lang.*?title=\"(?P<language>.*?)\".*?subtitle_title.*?title=\"(?P<title>.*?)\">.*?>(?P<downloads>[^ ]+) הורדות",
-                    page)
+                "downloadsubtitle\.php\?id=(?P<fid>\d*).*?subt_lang.*?title=\"(?P<language>.*?)\".*?subtitle_title.*?title=\"(?P<title>.*?)\">.*?>(?P<downloads>[^ ]+) הורדות",
+                page)
             for (subtitle_id, language, title, downloads) in found_subtitles:
-                if xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2) in item[
-                    "3let_language"]:
+                if xbmc.convertLanguage(heb_to_eng(language), xbmc.ISO_639_2) in item["3let_language"]:
                     subtitle_rate = self._calc_rating(title, item["file_original_path"])
                     total_downloads += int(downloads.replace(",", ""))
                     ret.append(
@@ -385,9 +381,7 @@ class SubtitleHelper:
             shutil.rmtree(__temp__)
         xbmcvfs.mkdirs(__temp__)
 
-        query = {"id": id}
-        url = self.BASE_URL + "/downloadsubtitle.php?" + urllib.urlencode(query)
-        f = self.urlHandler.request(url)
+        f = self.urlHandler.request(self.BASE_URL + "/downloadsubtitle.php", {"id": id})
 
         with open(zip_filename, "wb") as subFile:
             subFile.write(f)
@@ -396,21 +390,21 @@ class SubtitleHelper:
 
         xbmc.executebuiltin(('XBMC.Extract("%s","%s")' % (zip_filename, __temp__,)).encode('utf-8'), True)
 
-    def _is_logged_in(self, url):
-        content = self.urlHandler.request(url)
-        if content is not None and (
-                    re.search(r'friends\.php', content) or not re.search(r'login\.php', content)):  # check if logged in
+    def _is_logged_in(self, url, query_string=None):
+        content = self.urlHandler.request(url, query_string)
+
+        if content is not None and content.find('עליך להיות משתמש כדי לצפות בתוכן זה') == -1:  # check if logged in
             return content
         elif self.login():
-            return self.urlHandler.request(url)
+            return self.urlHandler.request(url, query_string)
         else:
             return None
 
     def login(self):
         email = __addon__.getSetting("SUBemail")
         password = __addon__.getSetting("SUBpassword")
-        query = {'email': email, 'password': password, 'Login': 'התחבר'}
-        content = self.urlHandler.request(self.BASE_URL + "/login.php", query)
+        post_data = {'email': email, 'password': password, 'Login': 'התחבר'}
+        content = self.urlHandler.request(self.BASE_URL + "/login.php", None, post_data)
         if re.search(r'<form action="/login\.php"', content):
             xbmc.executebuiltin((u'Notification(%s,%s)' % (__scriptname__, __language__(32005))).encode('utf-8'))
             return None
@@ -432,15 +426,18 @@ class URLHandler():
                                   ('Pragma', 'no-cache'),
                                   ('Cache-Control', 'no-cache'),
                                   ('User-Agent',
-                                   'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0')]
+                                   'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36')]
 
-    def request(self, url, data=None, decode_zlib=True, ajax=False, referer=None, cookie=None):
+    def request(self, url, query_string=None, data=None, decode_zlib=True, ajax=False, referrer=None, cookie=None):
         if data is not None:
             data = urllib.urlencode(data)
+        if query_string is not None:
+            query_string = urllib.urlencode(query_string)
+            url += "?" + query_string
         if ajax:
             self.opener.addheaders += [('X-Requested-With', 'XMLHttpRequest')]
-        if referer is not None:
-            self.opener.addheaders += [('Referer', referer)]
+        if referrer is not None:
+            self.opener.addheaders += [('Referrer', referrer)]
         if cookie is not None:
             self.opener.addheaders += [('Cookie', cookie)]
 

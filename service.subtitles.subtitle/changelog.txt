@@ -1,3 +1,7 @@
+4.4.0 - by CaTz (22/01/2016)
+- Change addon name to Ktuvit.com
+- Fix url changes
+
 4.3.8 - by CaTz (22/12/2015)
 - Fix cache collisions issues
 
