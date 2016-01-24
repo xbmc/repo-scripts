@@ -1,4 +1,7 @@
 v0.0.31
+- Remove unneeded dependency
+
+v0.0.31
 - Fix circular reference warnings on shutdown
 
 v0.0.30
