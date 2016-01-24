@@ -1,3 +1,6 @@
+version 1.0.3
+  - Fixed wrong description
+
 version 1.0.2
   - Updated language files from Transifex
 
