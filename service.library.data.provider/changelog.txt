@@ -1,4 +1,7 @@
 [B]0.1.3[/B]
+- Added missing 'director" property for recommended episodes.
+
+[B]0.1.3[/B]
 - Fixed bug in recommended episodes.
 
 [B]0.1.2[/B]

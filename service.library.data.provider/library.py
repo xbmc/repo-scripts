@@ -117,6 +117,7 @@ class LibraryFunctions():
                             "streamdetails",
                             "firstaired",
                             "runtime",
+                            "director",
                             "writer",
                             "cast",
                             "dateadded",
