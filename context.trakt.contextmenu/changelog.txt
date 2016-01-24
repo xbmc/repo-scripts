@@ -1,2 +1,5 @@
+v1.0.1
+- Fixed wrong description.
+
 v1.0.0
 - Initial Release.
