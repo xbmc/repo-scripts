@@ -1,3 +1,6 @@
+v3.1.1
+- added random seed function
+
 v3.1.0
 - option to exclude dirs/files using pictureexcludes in advancedsettings.xml
 

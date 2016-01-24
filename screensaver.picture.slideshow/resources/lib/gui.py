@@ -332,6 +332,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                             self.items.append([item['fanart'], item['label']])
         # randomize
         if self.slideshow_random == 'true':
+            random.seed()
             random.shuffle(self.items, random.random)
         return self.items
 
