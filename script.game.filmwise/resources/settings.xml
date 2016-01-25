@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32001">
+		<setting id="lastViewedUrl" type="text" visible="false" option="hidden" label="latest quiz when last loaded" default="" />
+		<setting id="saveUserAnswers" type="bool" label="32011" default="true"/>
+		<setting id="notifyNewQuiz" type="bool" label="32012" default="true"/>
+		<setting id="autoOpenNewQuiz" enable="eq(-1,true)" visible="eq(-1,true)" subsetting="true" type="bool" label="32014" default="false"/>
+		<setting label="32010" type="lsep"/>
+		<setting label="32008" type="action" action="RunScript($CWD/deletedb.py)"/>
+		<setting label="32002" type="lsep"/>
+		<setting id="logEnabled" type="bool" label="32003" default="false"/>
+	</category>
+</settings>
