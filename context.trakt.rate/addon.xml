@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="context.trakt.rate" name="Trakt - Rating button" version="1.0.2" provider-name="Razzeee">
+<addon id="context.trakt.rate" name="Trakt - Rating button" version="1.0.3" provider-name="Razzeee">
   <requires>
     <import addon="xbmc.python" version="2.20.0"/>
     <import addon="script.trakt" version="3.0.2"/>
@@ -29,26 +29,8 @@
     <summary lang="pl">Dodaje przycisk 'Trakt - Oceń' do menu kontekstowego biblioteki</summary>
     <summary lang="pt">Adicionar botão de classificação ao menu de contexto na biblioteca</summary>
     <summary lang="pt_BR">Adicionar botão de avaliação do Trakt para o menu de contexto na biblioteca</summary>
-    <description lang="de">Trakt-Schaltfläche für Gesehene zum Kontextmenü in der Bibliothek hinzufügen. Benötigt script.trakt installiert und aktiviert.</description>
-    <description lang="en">Add Trakt watched button to context menu in library. Needs script.trakt installed and activated.</description>
-    <description lang="en_NZ">Add Trakt watched button to context menu in library. Needs script.trakt installed and activated.</description>
-    <description lang="en_US">Add Trakt watched button to context menu in library. Needs script.trakt installed and activated.</description>
-    <description lang="fr">Ajoute le bouton Trakt Vu au menu contextuel de la médiathèque. Nécessite l'installation et l'activation de script.trakt.</description>
-    <description lang="fr_CA">Ajouter un bouton d'évaluation Trakt au menu contextuel de la vidéothèque. Script.trakt doit être installé et activé.</description>
-    <description lang="gl">Engadir o botón de 'visto' no menú contextual da biblioteca. É necesario ter instalado e activado script.trakt</description>
-    <description lang="he">הוסף כפתור נצפה של Trakt לתפריט הצדדי בספריה. צריך את התוסף Trakt מותקן ומופעל.</description>
-    <description lang="hr">Dodaj tipku Trakt odgledano u kontekstni izbornik zbirke. Potrebno je instalirati i aktivirati script.trakt .</description>
-    <description lang="hu">Trakt értékelés gomb a menüben. A script.trakt telepítése és aktiválása szükséges hozzá.</description>
-    <description lang="it">Aggiunge l'opzione "Già visto" di Trakt al menu' contestuale della libreria. Necessita di script.trakt installato ed attivato.</description>
-    <description lang="ko">라이브러리 컨텍스트 메뉴에 Trakt 시청한 버튼을 추가합니다. script.trakt 애드온 설치가 필요합니다.</description>
-    <description lang="lt">Pridėti Trakt.tv peržiūrėjimo būsenos mygtuką į bibliotekos kontekstinį meniu. Reikia, kad būtų įdiegtas ir aktyvuotas script.trakt.</description>
-    <description lang="nl">Voeg Trakt waardering knop naar context menu in bibliotheek. Vereist dat script.trakt is geïnstalleerd en geactiveerd.</description>
-    <description lang="no">Legg til Trakt har-sett knapp i bibliotekets hurtigmeny. Script.trakt må være installert og aktivert.</description>
-    <description lang="pl">Dodaje przycisk 'Trakt - Oceń' do menu kontekstowego biblioteki. Wymaga zainstalowanego i aktywnego dodatku Trakt.</description>
-    <description lang="pt">Adicionar botão Visto do Trakt para o menu de contexto. É necessário ter instalado e ativo o script.trakt.</description>
-    <description lang="pt_BR">Adicionar botão de avaliação do Trakt para o menu de contexto na biblioteca. Necessita o script Trakt instalado e ativado.</description>
-    <platform>all</platform>
+    <description lang="en">Add Trakt rating button to the context menu in your library.</description>
     <forum></forum>
-    <source></source>
+    <source>https://github.com/Razzeee/context.trakt.rate</source>
   </extension>
 </addon>
