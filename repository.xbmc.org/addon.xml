@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="repository.xbmc.org"
 		name="Kodi Add-on repository"
-		version="2.1.33"
+		version="2.1.34"
 		provider-name="XBMC Foundation">
   <requires>
     <import addon="xbmc.addon" version="12.0.0"/>
+    <import addon="xbmc.gui" version="5.3.0"/>
   </requires>
 	<extension point="xbmc.addon.repository"
 		name="Official XBMC.org Add-on Repository">
