@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="Common Services" description="">
+	  <setting id="AutoUpdate" type="bool" default="true" label="Auto check for addons update" visible=""/>
+	  <setting id="AutoUpdate2" type="select" default="60m" label="Timing" values="60|90|120|150|180" visible="eq(-1,true)"/>
+	  <setting type="lsep" label="32042"/>
+	  <setting id="Library_On" type="bool" default="false" label="Auto Library Update/Clean" visible="true"/>
+	  <setting type="lsep" label=""/>
+	  <setting type="lsep" label="32041"/>
+	  <setting id="VolumeLevel" type="select" default="-" label="32015" values="-|40|50|60|70|80|90|100" visible="true"/>
+	  <setting type="lsep" label=""/>
+	</category>
+	
+	<category label="Remote">
+	  <setting type="lsep" label="Control your OpenELEC with TV remote"/>
+	  <setting type="action" action="RunScript(script.featherence.service,,?mode=27&amp;value=1)" label="Setup Remote" option="close" visible=""/>
+	  <setting id="Remote_Name" type="text" default="" label="Remote_Name" visible="true"/>
+	  <setting id="Remote_Name2" type="text" default="" label="Remote_Name2" visible="false"/>
+	  
+	  <setting id="Remote_LastDate" type="text" default="" label="Remote_LastDate" visible="false"/>
+	  <setting id="Remote_Support" type="bool" default="" label="Remote_Support" visible="false"/>
+	  <setting id="Remote_TestingTime" type="slider" range="5,30" default="10" label="Remote_TestingTime" option="int" visible="true"/>
+	</category>
+	
+	<category label="Widget">
+	  <setting type="lsep" label="to be used with featherence skin"/>
+	  <setting id="widget_enable" type="bool" default="true" label="Enable Widget" visible="true"/>
+	  <setting type="action" action="RunScript(script.featherence.service,,?mode=23&amp;value=1)" label="Launch widget now" option="close" visible="eq(-1,true)"/>
+	  <setting label="32013" type="bool" id="plot_enable" default="true"/>
+	  <setting label="32001" type="bool" id="recommended_enable" default="true"/>
+	  <setting label="32002" type="bool" id="randomitems_enable" default="true"/>
+      <setting label="32011" type="bool" id="randomitems_unplayed" subsetting="true" default="true" enable="eq(-1,true)"/>
+      <setting label="32005" type="bool" id="randomitems_seasonfolders" subsetting="true" default="true" enable="eq(-2,true)"/>
+	  <setting label="32009" type="bool" id="recentitems_enable" default="true"/>
+      <setting label="32011" type="bool" id="recentitems_unplayed" subsetting="true" default="true" enable="eq(-1,true)"/>
+	</category>
+	
+	<category label="Tools" description="">
+		<setting type="lsep" label=""/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=6&amp;value=1)" label="Ping" visible="System.Platform.Windows | System.Platform.Linux | System.Platform.Linux.RaspberryPi"/>
+		<setting type="lsep" label="Total Mouse offer an easy access to your taskbar from within Kodi." visible="System.Platform.Windows + false"/>
+		<setting type="bool" id="TotalMouse" default="false" label="Enable Total Mouse" visible="System.Platform.Windows + false"/>
+		<setting type="lsep" label="32040" visible="eq(-1,true) + false"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=101&amp;value=1)" label="Launch Total Mouse script" option="close" visible="System.Platform.Windows + false"/>
+	    <setting type="lsep" label=""/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=31&amp;value=Custom)" label="Read file and display results" option="close" visible="true"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=46)" label="OverClock PI" visible="System.Platform.Linux.RaspberryPi + System.HasAddon(service.openelec.settings)"/>
+		<setting type="lsep" label="84" visible="System.Platform.Linux | System.Platform.Linux.RaspberryPi"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=63)" label="Texture & DB Removal" visible=""/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=21&amp;value=1)" label="Auto Setup Movies Scraper" option="close" visible="false"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=21&amp;value=2)" label="Auto Setup TVshows Scraper" option="close" visible="false"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=18&amp;value=1)" label="Copy preconfigurated Keymaps" visible=""/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=18&amp;value=2)" label="Copy preconfigurated samba.conf" visible="System.HasAddon(service.openelec.settings)"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=18&amp;value=3)" label="Copy preconfigurated settings.xml for service.openelec.settings" visible="System.HasAddon(service.openelec.settings)"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=19)" label="advancedSettings.xml" visible="false"/>
+	</category>
+	
+	<category label="About" description="About">
+		<setting type="lsep" label=""/>
+		<setting type="lsep" label="[B][COLOR=yellow]Featherence[/COLOR][/B][CR]"/>
+		<setting type="lsep" label="[B][COLOR=blue]Facebook[/COLOR][/B]: www.facebook.com/groups/featherence[CR]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=512&amp;value=1)" label="Featherence Facebook Group Website" option="close" visible="true"/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32048] $ADDON[script.featherence.service 32049]" visible="true"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=7)" label="Post on Facebook!" option="close" visible=""/>
+		<setting type="lsep" label="[B][COLOR=blue]YouTube[/COLOR][/B]: www.youtube.com/user/finalmakerr[CR]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=32&amp;value=3)" label="Featherence YouTube Channel" option="close" visible="true"/>
+		<setting type="lsep" label="[B][COLOR=blue]Github[/COLOR][/B]: www.github.com/finalmakerr/featherence[CR]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=512&amp;value=2)" label="Featherence Github Server" option="close" visible="true"/>
+		<setting type="lsep" label="[CR]$ADDON[script.featherence.service 32044]"/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32045]"/>
+		<setting type="lsep" label=""/>
+	</category>
+	
+	<category label="Debug">
+	  <setting id="Debug_Email" type="text" default="" label="Gmail Email" visible="false"/>
+	  <setting id="Debug_Password" type="text" default="" label="Gmail Password" visible="false" option="hidden"/>
+	  <setting type="lsep" label="Turn it ON _ONLY_ if you're aware of the risks!![CR]" visible="false"/>
+	  <setting id="Debug_PasswordKeeper" type="bool" default="false" label="Save Facebook Password for future use" visible="false"/>
+	  <setting id="Debug_Title" type="text" default="" label="Debug_Title" visible="false"/>
+	  <setting id="Debug_Message" type="text" default="" label="Debug_Message" visible="false"/>
+	  <setting type="lsep" label=""/>
+	  <setting type="lsep" label="You better keep the DEBUG button off if you're not a developer!"/>
+	  <setting id="admin" type="bool" default="false" label="Debug" visible="true"/>
+	  <setting type="lsep" label=""/>
+	  <!--<setting id="listappend" type="bool" default="false" label="Debug" visible="true"/>-->
+	  
+	  
+	  <setting id="Skin_UpdateDate" type="text" default="" label="Skin_UpdateDate" visible="false"/>
+	  <setting id="Skin_UpdateLog" type="bool" default="true" label="Skin_UpdateLog" visible="false"/>
+	  <setting id="Skin_Version" type="text" default="" label="Skin_Version" visible="false"/>
+	  <setting id="General_DownloadON" type="bool" default="false" label="General_DownloadON" visible="false"/>
+		
+	  <setting type="lsep" label=""/>
+	</category>
+</settings>

@@ -1,0 +1,51 @@
+
+<keymap>
+	<global>
+		<keyboard>
+			<!--<Delete mod="ctrl,alt">reboot</Delete>-->
+			<a mod="ctrl">noop</a> 
+			<b description="ActivateWindow(TVTimers)">noop</b>
+			<d mod="ctrl,shift" description="מצב מומחה">RunScript(script.featherence.service,,?mode=32&amp;value=0)</d>
+			<e mod="ctrl,shift" description="שפה">SetGUILanguage(English)</e>
+			<e></e>
+			<f></f>
+			<f mod="ctrl,shift" description="הגדרות כפתורי בית">Skin.ToggleSetting(Performance)</f>
+			<h mod="ctrl,shift" description="שפה">SetGUILanguage(Hebrew)</h>
+			<k mod="ctrl,shift" description="">Action(reloadkeymaps)</k>
+			<k mod="ctrl,alt" description="">Action(reloadkeymaps)</k>
+			<!--<l mod="ctrl">activatewindow(1117)</l>-->
+			<l mod="ctrl,shift" description="עיצוב חלון בית">activatewindow(1117)</l>
+			<o mod="ctrl">noop</o>
+			<p mod="ctrl,shift" description="containerfolderpath">RunScript(script.featherence.service,,?mode=32&amp;value=1)</p>
+			<q description="Queue">noop</q>
+			<!--<q mod="ctrl">RestartApp</q>-->
+			<q mod="ctrl,shift" description="אתחול מהיר">RestartApp</q>
+			<r description="Rewind">noop</r>
+			<r mod="ctrl,alt" description="אתחול סקין">ReloadSkin(skin.HTPT)</r>
+			<r mod="ctrl,shift" description="אתחול סקין">ReloadSkin(skin.HTPT)</r>
+			<s>noop</s>
+			<s mod="ctrl,shift" description="הגדרות מעטפת">activatewindow(skinsettings)</s>
+			<s mod="ctrl,alt" description="הגדרות מעטפת">activatewindow(skinsettings)</s>
+			<t mod="ctrl">noop</t>
+			<t mod="ctrl,shift">noop</t>
+			<w mod="ctrl,shift" description="הגדרות כפתורי בית">RunScript(script.featherence.service,,?mode=218&amp;value=view)</w>
+			<w mod="ctrl,alt" description="הגדרות כפתורי בית">RunScript(script.featherence.service,,?mode=218&amp;value=view)</w>
+			<x>noop</x>
+			<z>noop</z>
+		</keyboard>
+	</global>
+	<FullscreenVideo>
+		<keyboard>
+			<j>SubtitleDelayMinus</j>
+			<k>SubtitleDelayPlus</k>
+		</keyboard>
+	</FullscreenVideo>
+	<FullscreenLiveTV>
+      <keyboard>
+        <left description="PreviousChannelGroup">noop</left>
+        <right description="NextChannelGroup">noop</right>
+        <up description="ChannelUp">noop</up>
+        <down description="ChannelDown">noop</down>
+      </keyboard>
+    </FullscreenLiveTV>
+</keymap>

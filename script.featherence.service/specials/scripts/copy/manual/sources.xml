@@ -1,0 +1,77 @@
+<sources>
+    <programs>
+        <default pathversion="1"></default>
+    </programs>
+    <video>
+        <default pathversion="1"></default>
+        <source>
+            <name>ספרייה</name>
+            <path pathversion="1">special://userdata/library/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+		<source>
+            <name>התקנים חיצוניים</name>
+            <path pathversion="1">var/media/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </video>
+    <music>
+        <default pathversion="1"></default>
+        <source>
+            <name>ספרייה</name>
+            <path pathversion="1">special://userdata/library/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+		<source>
+            <name>התקנים חיצוניים</name>
+            <path pathversion="1">/var/media/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <!--<source>
+            <name>ספרייה</name>
+            <path pathversion="1">special://userdata/myHTPT/</path>
+            <allowsharing>true</allowsharing>
+        </source>-->
+    </music>
+    <pictures>
+        <default pathversion="1"></default>
+		<source>
+            <name>ספרייה</name>
+            <path pathversion="1">special://userdata/library/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+		<source>
+            <name>התקנים חיצוניים</name>
+            <path pathversion="1">var/media/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </pictures>
+    <files>
+        <default pathversion="1"></default>
+        <source>
+            <name>!fusion.xbmchub.com</name>
+            <path pathversion="1">http://fusion.xbmchub.com/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>!xfinity.xunitytalk.com</name>
+            <path pathversion="1">http://xfinity.xunitytalk.com/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>!SuperRepo</name>
+            <path pathversion="1">http://srp.nu/</path>
+            <allowsharing>true</allowsharing>
+        </source>		
+        <source>
+            <name>ספרייה</name>
+            <path pathversion="1">special://userdata/library/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+		<source>
+            <name>התקנים חיצוניים</name>
+            <path pathversion="1">var/media/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </files>
+</sources>
