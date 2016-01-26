@@ -49,10 +49,6 @@
 		<setting type="action" action="RunScript(script.featherence.service,,?mode=63)" label="Texture & DB Removal" visible=""/>
 		<setting type="action" action="RunScript(script.featherence.service,,?mode=21&amp;value=1)" label="Auto Setup Movies Scraper" option="close" visible="false"/>
 		<setting type="action" action="RunScript(script.featherence.service,,?mode=21&amp;value=2)" label="Auto Setup TVshows Scraper" option="close" visible="false"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=18&amp;value=1)" label="Copy preconfigurated Keymaps" visible=""/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=18&amp;value=2)" label="Copy preconfigurated samba.conf" visible="System.HasAddon(service.openelec.settings)"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=18&amp;value=3)" label="Copy preconfigurated settings.xml for service.openelec.settings" visible="System.HasAddon(service.openelec.settings)"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=19)" label="advancedSettings.xml" visible="false"/>
 	</category>
 	
 	<category label="About" description="About">

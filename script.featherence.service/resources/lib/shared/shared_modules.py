@@ -1590,36 +1590,6 @@ def installaddonP(admin, addon, update=True):
 		elif "9" in printpoint: pass
 		else: printpoint = printpoint + "7"
 	
-	elif addon == 'script.pulsar.torrentz-mc':
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			fileID = getfileID(addon+".zip")
-			DownloadFile("https://github.com/mancuniancol/script.pulsar.torrentz-mc/raw/master/script.pulsar.torrentz-mc-3.0.3.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'script.pulsar.thepiratebay-mc': #FIXED PATH *MASTER
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			fileID = getfileID(addon+".zip")
-			DownloadFile("https://github.com/mancuniancol/script.pulsar.thepiratebay-mc/archive/master.zip", addon + "-master.zip", packages_path, addons_path, silent=True)
-			movefiles(os.path.join(addons_path, 'script.module.simplejson-master'), os.path.join(addons_path, addon))
-			if os.path.exists(addons_path + addon + "-master") or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'script.pulsar.kickass-mc': #FIXED PATH *MASTER
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			fileID = getfileID(addon+".zip")
-			DownloadFile("https://github.com/mancuniancol/script.pulsar.kickass-mc/archive/master.zip", addon + "-master.zip", packages_path, addons_path, silent=True)
-			movefiles(os.path.join(addons_path, 'script.module.simplejson-master'), os.path.join(addons_path, addon))
-			if os.path.exists(addons_path + addon + "-master") or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	
 	elif addon == 'browser.chromium-browser':
 		'''5.8'''
 		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
@@ -1630,7 +1600,6 @@ def installaddonP(admin, addon, update=True):
 		elif "9" in printpoint: pass
 		else: printpoint = printpoint + "7"
 	
-	
 	elif addon == 'browser.chromium':
 		'''6.0'''
 		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
@@ -1640,42 +1609,12 @@ def installaddonP(admin, addon, update=True):
 			else: printpoint = printpoint + "9"
 		elif "9" in printpoint: pass
 		else: printpoint = printpoint + "7"
-	
-	elif addon == 'plugin.program.advanced.launcher':
-		
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			fileID = getfileID(addon+".zip")
-			DownloadFile("https://www.dropbox.com/s/"+fileID+"/"+addon+".zip?dl=1", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'repository.lambda':
-		
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			fileID = getfileID(addon+".zip")
-			DownloadFile("https://www.dropbox.com/s/"+fileID+"/"+addon+".zip?dl=1", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
+
 	elif addon == 'plugin.video.extreme.com':
 		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
 			fileID = getfileID(addon+".zip")
 			DownloadFile("http://mirrors.superrepo.org/v5/addons/plugin.video.extreme.com/plugin.video.extreme.com-1.0.5.zip", packages_path, addons_path, silent=True)
 			if os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'script.skin.helper.service': #FIXED PATH *MASTER
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			fileID = getfileID(addon+".zip")
-			DownloadFile("https://github.com/marcelveldt/script.skin.helper.service/archive/master.zip", addon + "-master.zip", packages_path, addons_path, silent=True)
-			movefiles(os.path.join(addons_path, 'script.skin.helper.service-master'), os.path.join(addons_path, addon))
-			if os.path.exists(addons_path + addon + "-master") or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
 			else: printpoint = printpoint + "9"
 		elif "9" in printpoint: pass
 		else: printpoint = printpoint + "7"
@@ -1735,41 +1674,6 @@ def installaddonP(admin, addon, update=True):
 			else: printpoint = printpoint + "9"
 		elif "9" in printpoint: pass
 		else: printpoint = printpoint + "7"
-	
-	elif addon == 'repository.natko1412': #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon(repo.natko1412)') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("https://offshoregit.com/natko1412/zips/repo.natko1412/repo.natko1412-2.0.0.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			#movefiles(os.path.join(addons_path, 'repository.natko1412'), os.path.join(addons_path, addon))
-			if os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'plugin.video.bbts': #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("https://raw.githubusercontent.com/kodil/kodil/master/repo/plugin.video.bbts/plugin.video.bbts-0.1.4.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			movefiles(os.path.join(addons_path, 'repository.natko1412'), os.path.join(addons_path, addon))
-			if os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'plugin.video.pulsar': #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("https://github.com/steeve/plugin.video.pulsar/releases/download/v0.6.1/plugin.video.pulsar-0.6.1.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'program.plexus': #FIXED PATH *MASTER
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("https://github.com/enen92/program.plexus/archive/master.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			movefiles(os.path.join(addons_path, 'program.plexus-master'), os.path.join(addons_path, addon))
-			if os.path.exists(addons_path + addon + "-master") or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
 
 	elif addon == 'plugin.video.smithsonian': #FIXED PATH *MASTER
 		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
@@ -1780,58 +1684,9 @@ def installaddonP(admin, addon, update=True):
 		elif "9" in printpoint: pass
 		else: printpoint = printpoint + "7"
 	
-	elif addon == 'plugin.video.marvin': #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("http://thebeastkodi.uk/myrepo/plugin.video.marvin.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
 	elif addon == 'script.extendedinfo': #FIXED PATH
 		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
 			DownloadFile("http://ftp.vim.org/ftp/mediaplayer/xbmc/addons/helix/script.extendedinfo/script.extendedinfo-3.1.2.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'plugin.video.thewiz.wall': #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("http://ftp.vim.org/ftp/mediaplayer/xbmc/addons/helix/script.extendedinfo/script.extendedinfo-3.1.2.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'plugin.video.OperationRobocopUltimate': #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("https://github.com/hmemar/husham.com/raw/master/zip/plugin.video.OperationRobocopUltimate/plugin.video.OperationRobocopUltimate-1.9.667.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'plugin.video.adryanlist':
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			fileID = getfileID(addon+".zip")
-			DownloadFile("https://www.dropbox.com/s/"+fileID+"/"+addon+".zip?dl=1", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'repository.NJMSoccer': #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("http://njmweb.we.bs/NJMSoccer/repository.NJMSoccer-0.1.0.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	
-	elif addon == 'repository.tknorris.beta': #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("https://github.com/tknorris/tknorris-beta-repo/raw/master/zips/repository.tknorris.beta/repository.tknorris.beta-1.0.5.zip", addon + ".zip", packages_path, addons_path, silent=True)
 			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
 			else: printpoint = printpoint + "9"
 		elif "9" in printpoint: pass
@@ -1882,13 +1737,6 @@ def installaddonP(admin, addon, update=True):
 	elif 'plugin.video.supercartoons' in addon: #FIXED PATH
 		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
 			DownloadFile("https://raw.github.com/spoyser/spoyser-repo/master/zips/plugin.video.supercartoons/plugin.video.supercartoons-1.0.14.zip", addon + ".zip", packages_path, addons_path, silent=True)
-			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
-			else: printpoint = printpoint + "9"
-		elif "9" in printpoint: pass
-		else: printpoint = printpoint + "7"
-	elif 'plugin.video.movixws' in addon: #FIXED PATH
-		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
-			DownloadFile("https://github.com/cubicle-vdo/xbmc-israel/raw/master/repo/plugin.video.movixws/plugin.video.movixws-1.2.4.zip", addon + ".zip", packages_path, addons_path, silent=True)
 			if os.path.exists(addons_path + addon) or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
 			else: printpoint = printpoint + "9"
 		elif "9" in printpoint: pass
