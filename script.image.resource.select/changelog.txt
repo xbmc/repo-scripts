@@ -1,3 +1,6 @@
+v0.0.9
+- parse info.xml
+
 v0.0.8
 - change none label to skin default
 
