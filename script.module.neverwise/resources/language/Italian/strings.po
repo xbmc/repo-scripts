@@ -29,5 +29,13 @@ msgid "Video not available."
 msgstr "Video non disponibile."
 
 msgctxt "#33003"
-msgid "No items found in this section."
-msgstr "Nessun elemento trovato in questa sezione."
+msgid "Server response error."
+msgstr "Errore risposta del server."
+
+msgctxt "#33004"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#33005"
+msgid "Audio"
+msgstr "Audio"

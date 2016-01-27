@@ -1,5 +1,6 @@
 #!/usr/bin/python
-import re, sys, urllib, urllib2, urlparse, xbmcplugin, xbmcgui, xbmcaddon, BeautifulSoup, CommonFunctions, gzip, StringIO
+import sys, urllib, urllib2, urlparse, xbmcplugin, xbmcgui, xbmcaddon, gzip, StringIO, json
+from BeautifulSoup import BeautifulSoup
 
 class Util(object):
 
@@ -8,36 +9,73 @@ class Util(object):
 
 
   @staticmethod
-  def getHtml(url, showErrorDialog = False):
-    bsHtml = None
-    req = urllib2.Request(url, headers = { 'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:40.0) Gecko/20100101 Firefox/40.0' })
-    req.add_header('Accept-Encoding', 'gzip, deflate')
+  def getResponseJson(url, headers = {}):
 
+    result = Util.getResponse(url, headers)
+
+    if result.isSucceeded and len(result.body) > 0:
+      result.body = json.loads(result.body)
+    else:
+      result.isSucceeded = False
+
+    return result
+
+  @staticmethod
+  def getResponseBS(url, headers = {}):
+
+    result = Util.getResponseForRegEx(url, headers)
+
+    if result.isSucceeded:
+      result.body = BeautifulSoup(result.body, convertEntities = BeautifulSoup.HTML_ENTITIES) # For BS 3, in BS 4, entities get decoded automatically.
+
+    return result
+
+  @staticmethod
+  def getResponseForRegEx(url, headers = {}):
+
+    result = Util.getResponse(url, headers)
+
+    if result.isSucceeded:
+      result.body = result.body.replace('\t', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace('" />', '"/>')
+      while result.body.find('  ') > -1: result.body = result.body.replace('  ', ' ')
+
+    return result
+
+  @staticmethod
+  def getResponse(url, headers = {}):
+
+    defaultHeaders = {
+      'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0',
+      'Accept-Encoding' : 'gzip, deflate'
+    }
+
+    for key, value in defaultHeaders.iteritems():
+      if key not in headers:
+        headers[key] = value
+
+    req = urllib2.Request(url, headers = headers)
+
+    result = Response()
     try:
       response = urllib2.urlopen(req)
     except:
-      bsHtml = None
+      result.isSucceeded = False
+      Util.showConnectionErrorDialog()
     else:
-      bsHtml = response.read()
+      result.body = response.read()
       ce = response.info().get('Content-Encoding')
       if ce == 'gzip':
-        bsHtml = gzip.GzipFile(fileobj = StringIO.StringIO(bsHtml)).read()
+        result.body = gzip.GzipFile(fileobj = StringIO.StringIO(result.body)).read()
       elif ce == 'deflate':
-        bsHtml = zlib.decompress(bsHtml)
+        result.body = zlib.decompress(result.body)
 
       response.close()
 
-      if bsHtml.find(b'\0') > -1: # null bytes, if there's, the response is wrong.
-        bsHtml = None
+      if result.body.find(b'\0') > -1: # null bytes, if there's, the response is wrong.
+        result.isSucceeded = False
+        Util.showResponseErrorDialog()
 
-    if bsHtml != None:
-      bsHtml = bsHtml.replace('\t', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace('" />', '"/>')
-      while bsHtml.find('  ') > -1: bsHtml = bsHtml.replace('  ', ' ')
-      bsHtml = BeautifulSoup.BeautifulSoup(bsHtml)
-    elif showErrorDialog:
-      Util.showConnectionErrorDialog()
-
-    return bsHtml
+    return result
 
 
   @staticmethod
@@ -51,22 +89,13 @@ class Util(object):
 
 
   @staticmethod
+  def showResponseErrorDialog():
+    xbmcgui.Dialog().ok(Util._addonName, Util.getTranslation(33003, Util._idPlugin))
+
+
+  @staticmethod
   def getTranslation(translationId, addonId = ''):
-    return xbmcaddon.Addon(addonId).getLocalizedString(translationId).encode('utf-8')
-
-
-  @staticmethod
-  def normalizeText(text):
-    if isinstance(text, str):
-      text = text.decode('utf-8')
-    return CommonFunctions.replaceHTMLCodes(text).strip()
-
-
-  @staticmethod
-  def trimTags(html):
-    html = re.sub('<script.+?>.+?</script>', '', html)
-    html = re.sub('<script>.+?</script>', '', html)
-    return re.sub('<.+?>', '', html)
+    return xbmcaddon.Addon(addonId).getLocalizedString(translationId)
 
 
   # Convert parameters encoded in a URL to a dict.
@@ -111,9 +140,15 @@ class Util(object):
 
 
   @staticmethod
-  def createItemPage(pageNum):
+  def createNextPageItem(handle, pageNum, urlDictParams):
     title = '{0} {1} >'.format(Util.getTranslation(33000, Util._idPlugin), pageNum)
-    return Util.createListItem(title)
+    xbmcplugin.addDirectoryItem(handle, Util.formatUrl(urlDictParams), Util.createListItem(title, thumbnailImage = 'DefaultVideoPlaylists.png'), True)
+
+
+  @staticmethod
+  def createAudioVideoItems(handle):
+    xbmcplugin.addDirectoryItem(handle, Util.formatUrl({ 'content_type' : 'video' }), Util.createListItem(Util.getTranslation(33004, Util._idPlugin), thumbnailImage = 'DefaultMovies.png'), True)
+    xbmcplugin.addDirectoryItem(handle, Util.formatUrl({ 'content_type' : 'audio' }), Util.createListItem(Util.getTranslation(33005, Util._idPlugin), thumbnailImage = 'DefaultMusicSongs.png'), True)
 
 
   @staticmethod
@@ -133,3 +168,8 @@ class Util(object):
   def playStream(handle, label, thumbnailImage = None, path = None, streamtype = None, infolabels = None):
     li = Util.createListItem(label, thumbnailImage = thumbnailImage, path = path, streamtype = streamtype, infolabels = infolabels)
     xbmcplugin.setResolvedUrl(handle, True, li)
+
+
+class Response(object):
+  body = None
+  isSucceeded = True

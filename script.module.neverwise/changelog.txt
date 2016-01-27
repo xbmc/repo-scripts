@@ -1,3 +1,9 @@
+[B]Version 1.0.6[/B]
+- Removed functions normalizeText and trimTags.
+- createItemPage now is createNextPageItem.
+- Added function createAudioVideoItems.
+- getHtml function has been divided in getResponseJson, getResponseBS, getResponseForRegEx and getResponse.
+
 [B]Version 1.0.5[/B]
 - Updated formatUrl function.
 - Added encodeDict function.
