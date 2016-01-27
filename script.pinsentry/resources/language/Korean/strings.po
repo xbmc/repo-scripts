@@ -72,6 +72,18 @@ msgctxt "#32012"
 msgid "None"
 msgstr "없음"
 
+msgctxt "#32013"
+msgid "Off"
+msgstr "끔"
+
+msgctxt "#32014"
+msgid "On"
+msgstr "켬"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "사용자"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "백스페이스"

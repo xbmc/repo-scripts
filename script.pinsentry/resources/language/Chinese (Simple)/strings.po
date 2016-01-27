@@ -32,6 +32,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "无"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "用户"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "退格"
@@ -87,3 +91,11 @@ msgstr "电影设置"
 msgctxt "#32205"
 msgid "Music Videos"
 msgstr "音乐电视"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "荷兰"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "丹麦"

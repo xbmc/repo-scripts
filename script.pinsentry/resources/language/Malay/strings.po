@@ -28,6 +28,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Tiada"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Pengguna"
+
 msgctxt "#32102"
 msgid "Done"
 msgstr "OK"

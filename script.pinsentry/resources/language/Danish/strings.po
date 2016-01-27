@@ -32,6 +32,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Intet"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Bruger"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Tilbage"

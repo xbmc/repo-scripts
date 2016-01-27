@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Ningún"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Usuario"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Borrar"
@@ -91,3 +95,51 @@ msgstr "Series de TV"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "Conxunto de Filmes"
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "Alemaña"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "Irlanda"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "Holanda"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "Australia"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "Brasil"
+
+msgctxt "#32308"
+msgid "Hungary"
+msgstr "Hungría"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "Dinamarca"
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr "Noruega"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "Suecia"
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr "Finlandia"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "Canadá"
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr "Quebec"

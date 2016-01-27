@@ -576,6 +576,60 @@ class NavigationRestrictions():
             self.canChangeSettings = False
             PinSentry.displayInvalidPinMessage(securityLevel)
 
+    # Checks to see if the PinSentry addons screen has been opened
+    def checkSystemSettings(self):
+        # Check if the system restriction is enabled
+        if not Settings.isActiveSystemSettings():
+            return
+
+        # Check to see if the main system settings has been selected
+        systemSettings = xbmc.getCondVisibility("Window.IsActive(10004)")
+        addonBrowser = xbmc.getCondVisibility("Window.IsActive(10040)")
+        profiles = xbmc.getCondVisibility("Window.IsActive(10034)")
+
+        # Check if we are in any of the restricted sections
+        if not systemSettings and not addonBrowser and not profiles:
+            log("NavigationRestrictions: Not is restricted system settings")
+            return
+
+        # If we have already allowed the user to change settings, no need to check again
+        # Check if we are still in the allowed time limit to edit
+        if int(time.time()) < self.canChangeSettings:
+            return
+
+        # Need to make sure this user has access to change the settings
+        pinDB = PinSentryDB()
+        securityLevel = pinDB.getPluginSecurityLevel('PinSentry')
+        del pinDB
+
+        if securityLevel < 1:
+            # If the user hasn't reset the permissions, then set it to the highest
+            # security level available
+            securityLevel = Settings.getSettingsSecurityLevel()
+            log("NavigationRestrictions: Settings screen requires security level %d" % securityLevel)
+
+        # Check if we have already cached the pin number and at which level
+        if PinSentry.getCachedPinLevel() >= securityLevel:
+            log("NavigationRestrictions: Already cached pin at level %d, allowing access" % PinSentry.getCachedPinLevel())
+            return
+
+        # Before we prompt the user we need to close the dialog, otherwise the pin
+        # dialog will appear behind it
+        xbmc.executebuiltin("Dialog.Close(all, true)", True)
+
+        # Prompt the user for the pin, returns True if they knew it
+        if PinSentry.promptUserForPin(securityLevel):
+            log("NavigationRestrictions: Allowed access to settings")
+            # Allow the user 5 minutes to change the settings
+            self.canChangeSettings = int(time.time()) + 300
+            xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32110).encode('utf-8'), __icon__, 3000, False)
+        else:
+            log("NavigationRestrictions: Not allowed access to settings which has security level %d" % securityLevel)
+            self.canChangeSettings = False
+            PinSentry.displayInvalidPinMessage(securityLevel)
+            # Return the user to the home page as they should not be here
+            xbmc.executebuiltin("ActivateWindow(home)", True)
+
     def checkFileSources(self):
         # Check if the user has navigated into a file source
         navPath = xbmc.getInfoLabel("Container.FolderPath")
@@ -880,6 +934,7 @@ if __name__ == '__main__':
             # permissions using the PinSentry plugin
             navRestrictions.checkPlugins()
             navRestrictions.checkSettings()
+            navRestrictions.checkSystemSettings()
 
     log("Stopping Pin Sentry Service")
     del userCtrl

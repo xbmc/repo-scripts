@@ -88,6 +88,86 @@ msgctxt "#32016"
 msgid "Remember Pin For (Minutes)"
 msgstr "Atsiminti PIN (minutėmis)"
 
+msgctxt "#32017"
+msgid "Block Movies Without A Classification"
+msgstr "Blokuoti filmus be klasifikacijos"
+
+msgctxt "#32018"
+msgid "Block TV Shows Without A Classification"
+msgstr "Blokuoti TV laidas be klasifikacijos"
+
+msgctxt "#32019"
+msgid "Highlight Videos Not Protected By Classifications"
+msgstr "Paryškinti filmus neapsaugotus klasifikacijos"
+
+msgctxt "#32020"
+msgid "Number Of Security Levels"
+msgstr "Saugumo lygių skaičius"
+
+msgctxt "#32021"
+msgid "Set Pin For Security Level"
+msgstr "Nustatyti saugumo lygio PIN"
+
+msgctxt "#32022"
+msgid "Show Security Level On Permissions Screen"
+msgstr "Rodyti saugumo lygį leidimų ekrane"
+
+msgctxt "#32023"
+msgid "Allow Direction Keys In Pin Code"
+msgstr "Leisti rodyklių mygtukus PIN kode"
+
+msgctxt "#32024"
+msgid "*** NOT SET ***"
+msgstr "*** NENUSTATYTA ***"
+
+msgctxt "#32025"
+msgid "Time Limits"
+msgstr "Laiko apribojimas"
+
+msgctxt "#32026"
+msgid "Number Of Limited Users"
+msgstr "Ribotų vartotojų skaičius"
+
+msgctxt "#32027"
+msgid "Unrestricted User Access Settings"
+msgstr "Neapribotos vartotojo prieigos nustatymai"
+
+msgctxt "#32028"
+msgid "User 1 Access Settings"
+msgstr "Vartotojo 1 prieigos nustatymai"
+
+msgctxt "#32029"
+msgid "User 2 Access Settings"
+msgstr "Vartotojo 2 prieigos nustatymai"
+
+msgctxt "#32030"
+msgid "User 3 Access Settings"
+msgstr "Vartotojo 3 prieigos nustatymai"
+
+msgctxt "#32031"
+msgid "User 4 Access Settings"
+msgstr "Vartotojo 4 prieigos nustatymai"
+
+msgctxt "#32032"
+msgid "User 5 Access Settings"
+msgstr "Vartotojo 5 prieigos nustatymai"
+
+msgctxt "#32033"
+msgid "Daily Viewing Allowance (Minutes)"
+msgstr "Dienos žiūrėjimo limitas (minutėmis)"
+
+msgctxt "#32034"
+msgid "Warn User When Remaining Time Is (Minutes)"
+msgstr "Įspėti vartotoją, kai likęs laikas yra (minutėmis)"
+
+msgctxt "#32035"
+msgid "Users Name"
+msgstr "Vartotojų vardai"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "Vartotojas"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Atgal"
@@ -131,6 +211,10 @@ msgstr "Leidžiama keisti nustatymus"
 msgctxt "#32111"
 msgid "Only Restrict File Sources During Navigation"
 msgstr "Apriboti failų šaltinius tik navigacijos metu"
+
+msgctxt "#32112"
+msgid "Entered pin clashes with an existing pin."
+msgstr "Įvestas PIN kodas siejasi su esamu PIN."
 
 msgctxt "#32113"
 msgid "Clean Database"
@@ -196,6 +280,30 @@ msgctxt "#32128"
 msgid "Plugins"
 msgstr "Papildiniai"
 
+msgctxt "#32129"
+msgid "Retry?"
+msgstr "Bandyti dar kartą?"
+
+msgctxt "#32130"
+msgid "Current time outside users viewing times"
+msgstr "Dabartinis laikas yra už vartotojo žiūrėjimo laiko ribų"
+
+msgctxt "#32131"
+msgid "Allowance Remaining (Minutes)"
+msgstr "Likęs laikas (minutėmis)"
+
+msgctxt "#32132"
+msgid "Access Allowed Between"
+msgstr "Prieiga leidžiama tarp"
+
+msgctxt "#32133"
+msgid "Viewing allowance has been exceeded"
+msgstr "Žiūrėjimo limitas buvo viršytas"
+
+msgctxt "#32134"
+msgid "minutes remaining"
+msgstr "minučių liko"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmai"
@@ -227,3 +335,75 @@ msgstr "Filmų klasifikacija"
 msgctxt "#32208"
 msgid "TV Classifications"
 msgstr "TV klasifikacija"
+
+msgctxt "#32209"
+msgid "Clear All Security"
+msgstr "Išvalyti visus saugumo nustatymus"
+
+msgctxt "#32210"
+msgid "Apply Security To All"
+msgstr "Pritaikyti saugumo nustatymus viskam"
+
+msgctxt "#32211"
+msgid "Security Level"
+msgstr "Saugumo lygis"
+
+msgctxt "#32212"
+msgid "Remove Classification Restriction"
+msgstr "Pašalinti klasifikacijos apribojimus"
+
+msgctxt "#32301"
+msgid "UK"
+msgstr "JK"
+
+msgctxt "#32302"
+msgid "USA"
+msgstr "JAV"
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "Vokietija"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "Airija"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "Nyderlandai"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "Australija"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "Brazilija"
+
+msgctxt "#32308"
+msgid "Hungary"
+msgstr "Vangrija"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "Danija"
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr "Norvegija"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "Švedija"
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr "Suomija"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "Kanada"
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr "Kvebekas"

@@ -40,6 +40,10 @@ msgctxt "#32014"
 msgid "On"
 msgstr "開啟"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "用戶"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "退格"
@@ -87,3 +91,27 @@ msgstr "電視劇"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "電影集"
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "德國"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "愛爾蘭"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "澳大利亞"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "巴西"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "瑞典"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "加拿大"

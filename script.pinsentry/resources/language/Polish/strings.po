@@ -88,6 +88,86 @@ msgctxt "#32016"
 msgid "Remember Pin For (Minutes)"
 msgstr "Pamiętaj kod PIN przez (minuty)"
 
+msgctxt "#32017"
+msgid "Block Movies Without A Classification"
+msgstr "Blokuj filmy bez kategorii wiekowej"
+
+msgctxt "#32018"
+msgid "Block TV Shows Without A Classification"
+msgstr "Blokuj seriale bez kategorii wiekowej"
+
+msgctxt "#32019"
+msgid "Highlight Videos Not Protected By Classifications"
+msgstr "Zaznaczaj pozycje wideo niechronione przez kategorie wiekowe"
+
+msgctxt "#32020"
+msgid "Number Of Security Levels"
+msgstr "Liczba poziomów bezpieczeństwa"
+
+msgctxt "#32021"
+msgid "Set Pin For Security Level"
+msgstr "Ustaw kod PIN dla poziomu bezpieczeństwa"
+
+msgctxt "#32022"
+msgid "Show Security Level On Permissions Screen"
+msgstr "Pokazuj poziom bezpieczeństwa na ekranie uprawnień"
+
+msgctxt "#32023"
+msgid "Allow Direction Keys In Pin Code"
+msgstr "Dopuszczaj klawiszy kursora w kodzie PIN"
+
+msgctxt "#32024"
+msgid "*** NOT SET ***"
+msgstr "*** NIEUSTAWIONO ***"
+
+msgctxt "#32025"
+msgid "Time Limits"
+msgstr "Limity czasu"
+
+msgctxt "#32026"
+msgid "Number Of Limited Users"
+msgstr "Liczba limitowanych użytkowników"
+
+msgctxt "#32027"
+msgid "Unrestricted User Access Settings"
+msgstr "Ustawienia nieograniczonego dostępu"
+
+msgctxt "#32028"
+msgid "User 1 Access Settings"
+msgstr "Użytkownik 1 Ustawienia dostępu"
+
+msgctxt "#32029"
+msgid "User 2 Access Settings"
+msgstr "Użytkownik 2 Ustawienia dostępu"
+
+msgctxt "#32030"
+msgid "User 3 Access Settings"
+msgstr "Użytkownik 3 Ustawienia dostępu"
+
+msgctxt "#32031"
+msgid "User 4 Access Settings"
+msgstr "Użytkownik 4 Ustawienia dostępu"
+
+msgctxt "#32032"
+msgid "User 5 Access Settings"
+msgstr "Użytkownik 5 Ustawienia dostępu"
+
+msgctxt "#32033"
+msgid "Daily Viewing Allowance (Minutes)"
+msgstr "Dziennik przydział czasu oglądania (minuty)"
+
+msgctxt "#32034"
+msgid "Warn User When Remaining Time Is (Minutes)"
+msgstr "Ostrzegaj użytkownika, gdy pozostało czasu (minuty)"
+
+msgctxt "#32035"
+msgid "Users Name"
+msgstr "Użytkownik"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "Użytkownik"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Cofnięcie"
@@ -131,6 +211,10 @@ msgstr "Dozwolona zmiana ustawień"
 msgctxt "#32111"
 msgid "Only Restrict File Sources During Navigation"
 msgstr "Ograniczaj dostęp do źródeł mediów tylko podczas nawigacji"
+
+msgctxt "#32112"
+msgid "Entered pin clashes with an existing pin."
+msgstr "Wprowadzony kod PIN koliduje z istniejącym."
 
 msgctxt "#32113"
 msgid "Clean Database"
@@ -196,6 +280,30 @@ msgctxt "#32128"
 msgid "Plugins"
 msgstr "Wtyczki"
 
+msgctxt "#32129"
+msgid "Retry?"
+msgstr "Ponowić?"
+
+msgctxt "#32130"
+msgid "Current time outside users viewing times"
+msgstr "Aktualny czas oglądania zewnętrznych użytkowników"
+
+msgctxt "#32131"
+msgid "Allowance Remaining (Minutes)"
+msgstr "Pozostały przydział (minuty)"
+
+msgctxt "#32132"
+msgid "Access Allowed Between"
+msgstr "Dostęp dozwolony pomiędzy"
+
+msgctxt "#32133"
+msgid "Viewing allowance has been exceeded"
+msgstr "Przekroczono przydział czasu oglądania"
+
+msgctxt "#32134"
+msgid "minutes remaining"
+msgstr "pozostało minut"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmy"
@@ -227,3 +335,75 @@ msgstr "Kategorie wiekowe filmów"
 msgctxt "#32208"
 msgid "TV Classifications"
 msgstr "Kategorie wiekowe seriali"
+
+msgctxt "#32209"
+msgid "Clear All Security"
+msgstr "Wyczyść ustawienia bezpieczeństwa"
+
+msgctxt "#32210"
+msgid "Apply Security To All"
+msgstr "Zastosuj ustawienia bezpieczeństwa wszędzie"
+
+msgctxt "#32211"
+msgid "Security Level"
+msgstr "Poziom bezpieczeństwa"
+
+msgctxt "#32212"
+msgid "Remove Classification Restriction"
+msgstr "Usuń ograniczenia wiekowe"
+
+msgctxt "#32301"
+msgid "UK"
+msgstr "Wielka Brytania"
+
+msgctxt "#32302"
+msgid "USA"
+msgstr "Stany Zjednoczone"
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "Niemcy"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "Irlandia"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "Holandia"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "Australia"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "Brazylia"
+
+msgctxt "#32308"
+msgid "Hungary"
+msgstr "Węgry"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "Dania"
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr "Norwegia"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "Szwecja"
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr "Finlandia"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "Kanada"
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr "Quebec"

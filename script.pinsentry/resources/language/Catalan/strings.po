@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Cap"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Usuari"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Retrocés"

@@ -306,7 +306,11 @@ msgctxt "#32134"
 msgid "minutes remaining"
 msgstr ""
 
-#empty strings from id 32135 to 32200
+msgctxt "#32135"
+msgid "System Settings"
+msgstr ""
+
+#empty strings from id 32136 to 32200
 
 msgctxt "#32201"
 msgid "Movies"

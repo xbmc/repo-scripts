@@ -44,6 +44,10 @@ msgctxt "#32115"
 msgid "Advanced"
 msgstr "Gelişmiş"
 
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Başlangıç Zamanı"
+
 msgctxt "#32118"
 msgid "End Time"
 msgstr "Bitiş Zamanı"

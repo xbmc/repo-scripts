@@ -32,6 +32,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Nav"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Lietotājs"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Backspace"

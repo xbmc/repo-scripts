@@ -32,6 +32,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Žiadne"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Užívateľ"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Vymazať"

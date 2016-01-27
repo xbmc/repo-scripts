@@ -67,3 +67,7 @@ msgstr "Dodaci"
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Filmovi"
+
+msgctxt "#32202"
+msgid "TV Shows"
+msgstr "TV SERIJE"

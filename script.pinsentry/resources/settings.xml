@@ -22,6 +22,7 @@
 		<setting id="activityVideoPlaying" type="bool" label="32126" default="true" />
 		<setting id="activityNavigation" type="bool" label="32127" default="true" />
 		<setting id="activityPlugins" type="bool" label="32128" default="true" />
+		<setting id="activitySystemSettings" type="bool" label="32135" default="false" />
 		<setting id="activityFileSource" type="bool" label="32204" default="true" />
 		<setting id="activityFileSourceNavigationOnly" type="bool" subsetting="true" visible="eq(-1,true)" enable="eq(-3,true)" label="32111" default="false" />
 		<setting id="defaultMoviesWithoutClassification" type="enum" label="32017" lvalues="32013|32014" default="0" />

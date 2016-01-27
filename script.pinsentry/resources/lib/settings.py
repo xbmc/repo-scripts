@@ -490,6 +490,10 @@ class Settings():
         return __addon__.getSetting("activityPlugins") == 'true'
 
     @staticmethod
+    def isActiveSystemSettings():
+        return __addon__.getSetting("activitySystemSettings") == 'true'
+
+    @staticmethod
     def isActiveFileSource():
         return __addon__.getSetting("activityFileSource") == 'true'
 

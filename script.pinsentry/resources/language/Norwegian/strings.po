@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Ingen"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Bruker"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Tilbake"
@@ -83,3 +87,7 @@ msgstr "TV-Serier"
 msgctxt "#32203"
 msgid "Movie Sets"
 msgstr "Filmsett"
+
+msgctxt "#32205"
+msgid "Music Videos"
+msgstr "Musikkvideoer"

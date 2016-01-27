@@ -88,6 +88,86 @@ msgctxt "#32016"
 msgid "Remember Pin For (Minutes)"
 msgstr "Mémoriser le NIP pendant (minutes)"
 
+msgctxt "#32017"
+msgid "Block Movies Without A Classification"
+msgstr "Bloquer les films sans classification"
+
+msgctxt "#32018"
+msgid "Block TV Shows Without A Classification"
+msgstr "Bloquer les émissions télé sans classification"
+
+msgctxt "#32019"
+msgid "Highlight Videos Not Protected By Classifications"
+msgstr "Mettre en surbrillance les vidéos non protégées par des classifications"
+
+msgctxt "#32020"
+msgid "Number Of Security Levels"
+msgstr "Nombre de niveaux de sécurité"
+
+msgctxt "#32021"
+msgid "Set Pin For Security Level"
+msgstr "Définir un NIP pour le niveau de sécurité"
+
+msgctxt "#32022"
+msgid "Show Security Level On Permissions Screen"
+msgstr "Montrer le niveau de sécurité sur l'écran des permissions"
+
+msgctxt "#32023"
+msgid "Allow Direction Keys In Pin Code"
+msgstr "Permettre les touches directionnelles dans le NIP"
+
+msgctxt "#32024"
+msgid "*** NOT SET ***"
+msgstr "*** NON DÉFINI ***"
+
+msgctxt "#32025"
+msgid "Time Limits"
+msgstr "Limites de temps"
+
+msgctxt "#32026"
+msgid "Number Of Limited Users"
+msgstr "Nombre d'utilisateurs limités"
+
+msgctxt "#32027"
+msgid "Unrestricted User Access Settings"
+msgstr "Paramètres d'accès utilisateur sans restriction"
+
+msgctxt "#32028"
+msgid "User 1 Access Settings"
+msgstr "Paramètres d'accès utilisateur 1"
+
+msgctxt "#32029"
+msgid "User 2 Access Settings"
+msgstr "Paramètres d'accès utilisateur 2"
+
+msgctxt "#32030"
+msgid "User 3 Access Settings"
+msgstr "Paramètres d'accès utilisateur 3"
+
+msgctxt "#32031"
+msgid "User 4 Access Settings"
+msgstr "Paramètres d'accès utilisateur 4"
+
+msgctxt "#32032"
+msgid "User 5 Access Settings"
+msgstr "Paramètres d'accès utilisateur 5"
+
+msgctxt "#32033"
+msgid "Daily Viewing Allowance (Minutes)"
+msgstr "Durée de visionnement journalière permise (en minutes)"
+
+msgctxt "#32034"
+msgid "Warn User When Remaining Time Is (Minutes)"
+msgstr "Avertir l'utilisateur quand il reste x minutes"
+
+msgctxt "#32035"
+msgid "Users Name"
+msgstr "Nom des utilisateurs"
+
+msgctxt "#32036"
+msgid "User"
+msgstr "Utilisateur"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Retour arrière"
@@ -131,6 +211,10 @@ msgstr "Changement des paramètres autorisé"
 msgctxt "#32111"
 msgid "Only Restrict File Sources During Navigation"
 msgstr "Ne restreindre les sources de fichiers que pendant la navigation"
+
+msgctxt "#32112"
+msgid "Entered pin clashes with an existing pin."
+msgstr "Le NIP saisi est en conflit avec un NIP existant."
 
 msgctxt "#32113"
 msgid "Clean Database"
@@ -196,6 +280,30 @@ msgctxt "#32128"
 msgid "Plugins"
 msgstr "Plugiciels"
 
+msgctxt "#32129"
+msgid "Retry?"
+msgstr "Ressayer?"
+
+msgctxt "#32130"
+msgid "Current time outside users viewing times"
+msgstr "Heure actuelle en dehors des heures de visionnement des utilisateurs"
+
+msgctxt "#32131"
+msgid "Allowance Remaining (Minutes)"
+msgstr "Durée permise restante (en minutes)"
+
+msgctxt "#32132"
+msgid "Access Allowed Between"
+msgstr "Accès permis entre"
+
+msgctxt "#32133"
+msgid "Viewing allowance has been exceeded"
+msgstr "La durée de visionnement permise est dépassée"
+
+msgctxt "#32134"
+msgid "minutes remaining"
+msgstr "minutes restantes"
+
 msgctxt "#32201"
 msgid "Movies"
 msgstr "Films"
@@ -227,3 +335,75 @@ msgstr "Classements des films"
 msgctxt "#32208"
 msgid "TV Classifications"
 msgstr "Classements télé"
+
+msgctxt "#32209"
+msgid "Clear All Security"
+msgstr "Effacer toute la sécurité"
+
+msgctxt "#32210"
+msgid "Apply Security To All"
+msgstr "Application globale de la sécurité"
+
+msgctxt "#32211"
+msgid "Security Level"
+msgstr "Niveau de sécurité"
+
+msgctxt "#32212"
+msgid "Remove Classification Restriction"
+msgstr "Retirer la restriction de classification"
+
+msgctxt "#32301"
+msgid "UK"
+msgstr "GB"
+
+msgctxt "#32302"
+msgid "USA"
+msgstr "É.-U."
+
+msgctxt "#32303"
+msgid "Germany"
+msgstr "Allemagne"
+
+msgctxt "#32304"
+msgid "Ireland"
+msgstr "Irlande"
+
+msgctxt "#32305"
+msgid "Netherlands"
+msgstr "Pays-Bas"
+
+msgctxt "#32306"
+msgid "Australia"
+msgstr "Australie"
+
+msgctxt "#32307"
+msgid "Brazil"
+msgstr "Brésil"
+
+msgctxt "#32308"
+msgid "Hungary"
+msgstr "Hongrie"
+
+msgctxt "#32309"
+msgid "Denmark"
+msgstr "Danemark"
+
+msgctxt "#32310"
+msgid "Norway"
+msgstr "Norvège"
+
+msgctxt "#32311"
+msgid "Sweden"
+msgstr "Suède"
+
+msgctxt "#32312"
+msgid "Finland"
+msgstr "Finlande"
+
+msgctxt "#32313"
+msgid "Canada"
+msgstr "Canada"
+
+msgctxt "#32314"
+msgid "Quebec"
+msgstr "Québec"

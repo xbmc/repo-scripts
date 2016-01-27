@@ -36,6 +36,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Nessuno"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Utente"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Cancella"
@@ -51,6 +55,10 @@ msgstr "Svuota il database"
 msgctxt "#32115"
 msgid "Advanced"
 msgstr "Avanzate"
+
+msgctxt "#32117"
+msgid "Start Time"
+msgstr "Ora Avvio"
 
 msgctxt "#32118"
 msgid "End Time"

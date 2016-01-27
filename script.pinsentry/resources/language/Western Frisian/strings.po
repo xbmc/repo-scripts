@@ -20,6 +20,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "Gjin"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "Brûker"
+
 msgctxt "#32120"
 msgid "Background"
 msgstr "Eftergrûn"

@@ -32,6 +32,10 @@ msgctxt "#32012"
 msgid "None"
 msgstr "None"
 
+msgctxt "#32036"
+msgid "User"
+msgstr "User"
+
 msgctxt "#32101"
 msgid "Backspace"
 msgstr "Backspace"
