@@ -3,6 +3,7 @@
 import sys
 import xbmc
 
+import baselibrary
 import xbmclibrary
 
 FUNCTIONNAME = 'Revolve/PopulateSubmenuFromSkinVariables'
@@ -28,16 +29,8 @@ def copyProperties(sourcemask, targetmask, targetwindow):
 def execute(arguments):
     if len(arguments) > 2:
         sourcemask = arguments[2]
-
-        if len(arguments) > 3:
-            targetmask = arguments[3]
-        else:
-            targetmask = DEFAULTTARGETMASK
-        
-        if len(arguments) > 4:
-            targetwindow = arguments[4]
-        else:
-            targetwindow = DEFAULTTARGETWINDOW
+        targetmask = baselibrary.extractArgument(arguments, 3, DEFAULTTARGETMASK)
+        targetwindow = baselibrary.extractArgument(arguments, 4, DEFAULTTARGETWINDOW)
         
         copyProperties(sourcemask, targetmask, targetwindow)
     else:

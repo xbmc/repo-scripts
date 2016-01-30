@@ -77,7 +77,7 @@ def getItemFromSkinSetting(skinsetting):
 
 def getBooleanItemFromSkinSetting(skinsetting):
     item = getItemFromInfoLabel('Skin.HasSetting(' + skinsetting + ')')
-    if item == '':
+    if item != 'True':
         item = 'False'
     return item
 
@@ -97,9 +97,21 @@ def setItemToProperty(property, item, window):
     else:
         xbmc.executebuiltin('ClearProperty(' + property + ',' + window + ')')
     
+def setItemToLockedProperty(property, item, window):
+    if item != '':
+        xbmc.executebuiltin('SetProperty(' + property + ',' + escapeValue(item) + ',' + window + ')', True)
+    else:
+        xbmc.executebuiltin('ClearProperty(' + property + ',' + window + ')', True)
+    
 def setItemToSkinSetting(skinsetting, item):
     if item != '':
         xbmc.executebuiltin('Skin.SetString(' + skinsetting + ',' + escapeValue(item) + ')')
+    else:
+        xbmc.executebuiltin('Skin.Reset(' + skinsetting + ')')
+    
+def setBooleanItemToSkinSetting(skinsetting, item):
+    if item == 'True':
+        xbmc.executebuiltin('Skin.SetBool(' + skinsetting + ')')
     else:
         xbmc.executebuiltin('Skin.Reset(' + skinsetting + ')')
     
@@ -113,7 +125,22 @@ def copyBooleanSkinSettingToProperty(skinsetting, property, window):
     item = getBooleanItemFromSkinSetting(skinsetting)
     setItemToProperty(property, item, window)
 
-    
+def swapProperties(property, otherproperty, window):
+    item = getItemFromProperty(property, window)
+    setItemToProperty(property, getItemFromProperty(otherproperty, window), window)
+    setItemToProperty(otherproperty, item, window)
+
+def swapSkinSettings(skinsetting, otherskinsetting):
+    item = getItemFromSkinSetting(skinsetting)
+    setItemToSkinSetting(skinsetting, getItemFromSkinSetting(otherskinsetting))
+    setItemToSkinSetting(otherskinsetting, item)
+
+def swapBooleanSkinSettings(skinsetting, otherskinsetting):
+    item = getBooleanItemFromSkinSetting(skinsetting)
+    setBooleanItemToSkinSetting(skinsetting, getBooleanItemFromSkinSetting(otherskinsetting))
+    setBooleanItemToSkinSetting(otherskinsetting, item)
+
+   
 # File Methods
 
 def translatePath(filename):

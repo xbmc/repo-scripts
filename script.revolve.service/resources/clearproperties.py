@@ -3,6 +3,7 @@
 import sys
 import xbmc
 
+import baselibrary
 import xbmclibrary
 
 FUNCTIONNAME = 'Revolve/ClearProperties'
@@ -21,14 +22,7 @@ def clearPropertiesByMask(targetmask, targetwindow):
         xbmclibrary.clearProperty(targetbase + '.Action', targetwindow)
 
 def execute(arguments):
-    if len(arguments) > 2:
-        targetmask = arguments[2]
-    else:
-        targetmask = DEFAULTTARGETMASK
-    
-    if len(arguments) > 3:
-        targetwindow = arguments[3]
-    else:
-        targetwindow = DEFAULTTARGETWINDOW
+    targetmask = baselibrary.extractArgument(arguments, 2, DEFAULTTARGETMASK)
+    targetwindow = baselibrary.extractArgument(arguments, 3, DEFAULTTARGETWINDOW)
     
     clearPropertiesByMask(targetmask, targetwindow)

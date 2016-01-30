@@ -7,6 +7,7 @@ import resources.populatestaticitemsfromhomeproperties as populatestaticitemsfro
 import resources.populatesubmenufromskinvariables as populatesubmenufromskinvariables
 import resources.clearproperties as clearproperties
 import resources.fillpropertyfromtextfile as fillpropertyfromtextfile
+import resources.swapmenuoptions as swapmenuoptions
 import resources.generaterandomnumber as generaterandomnumber
 
 SCRIPTNAME = 'Revolve/Main'
@@ -24,6 +25,8 @@ if len(sys.argv) > 1:
             clearproperties.execute(sys.argv)
         elif function == "FillPropertyFromTextFile":
             fillpropertyfromtextfile.execute(sys.argv)
+        elif function == "SwapMenuOptions":
+            swapmenuoptions.execute(sys.argv)
         elif function == "GenerateRandomNumber":
             generaterandomnumber.execute(sys.argv)
         else:

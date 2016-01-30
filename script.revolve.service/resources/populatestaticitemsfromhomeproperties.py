@@ -3,6 +3,7 @@
 import sys
 import xbmc
 
+import baselibrary
 import xbmclibrary
 
 FUNCTIONNAME = 'Revolve/PopulateStaticItemsFromHomeProperties'
@@ -108,17 +109,9 @@ def copyProperties(sourcemask, targetmask, targetwindow):
 def execute(arguments):        
     if len(arguments) > 2:
         sourcemask = arguments[2]
+        targetmask = baselibrary.extractArgument(arguments, 3, DEFAULTTARGETMASK)
+        targetwindow = baselibrary.extractArgument(arguments, 4, DEFAULTTARGETWINDOW)
 
-        if len(arguments) > 3:
-            targetmask = arguments[3]
-        else:
-            targetmask = DEFAULTTARGETMASK
-        
-        if len(arguments) > 4:
-            targetwindow = arguments[4]
-        else:
-            targetwindow = DEFAULTTARGETWINDOW
-        
         copyProperties(sourcemask, targetmask, targetwindow)
     else:
         xbmclibrary.writeErrorMessage(FUNCTIONNAME, FUNCTIONNAME + ' terminates: Missing argument(s) in call to script.')	

@@ -4,6 +4,7 @@ import random
 import sys
 import xbmc
 
+import baselibrary
 import xbmclibrary
 
 FUNCTIONNAME = 'Revolve/GenerateRandomNumber'
@@ -14,11 +15,7 @@ def execute(arguments):
         minimumvalue = sys.argv[2]
         maximumvalue = sys.argv[3]
         targetproperty = sys.argv[4]
-        
-        if len(sys.argv) > 5:
-            targetwindow = sys.argv[5]
-        else:
-            targetwindow = DEFAULTTARGETWINDOW
+        targetwindow = baselibrary.extractArgument(arguments, 5, DEFAULTTARGETWINDOW)
         
         randomvalue = randint(minimumvalue, maximumvalue)
         xbmclibrary.setItemToProperty(targetproperty, randomvalue, targetwindow)
