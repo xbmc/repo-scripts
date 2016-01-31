@@ -26,11 +26,11 @@ msgstr "Débogage"
 
 msgctxt "#32003"
 msgid "Enable debug logging"
-msgstr "Activer le mode debug"
+msgstr "Activer la journalisation du débogage"
 
 msgctxt "#32004"
 msgid "Video Selection"
-msgstr "Sélection de vidéo"
+msgstr "Sélection des vidéos"
 
 msgctxt "#32005"
 msgid "VideoScreensaver"
@@ -50,15 +50,15 @@ msgstr "Lancer l'économiseur d'écran au démarrage"
 
 msgctxt "#32020"
 msgid "Preset Video"
-msgstr "Préréglage Vidéo"
+msgstr "Présélection vidéo"
 
 msgctxt "#32021"
 msgid "User Defined"
-msgstr "Défini par l'utilisateur"
+msgstr "Définie par l'utilisateur"
 
 msgctxt "#32022"
 msgid "Selected Screensaver"
-msgstr "Économiseur d'écran choisi"
+msgstr "Économiseur d'écran sélectionné"
 
 msgctxt "#32023"
 msgid "Use All Files In A Folder"
@@ -66,11 +66,11 @@ msgstr "Utiliser tous les fichiers dans un dossier"
 
 msgctxt "#32024"
 msgid "Repeat Type For Multiple Files"
-msgstr "Répéter le Type pour plusieurs fichiers"
+msgstr "Répéter le type pour plusieurs fichiers"
 
 msgctxt "#32025"
 msgid "Repeat All"
-msgstr "Tout Répéter"
+msgstr "Tout répéter"
 
 msgctxt "#32026"
 msgid "Repeat One"
@@ -82,7 +82,7 @@ msgstr "Paramètres de planification"
 
 msgctxt "#32028"
 msgid "Off"
-msgstr "Non"
+msgstr "Désactivé"
 
 msgctxt "#32029"
 msgid "Settings"
@@ -98,11 +98,11 @@ msgstr "Fichier de paramètres de planification"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
-msgstr "Rétablir / Télécharger les fichiers vidéos prédéfini"
+msgstr "Établir / Télécharger le fichier de présélection vidéo"
 
 msgctxt "#32051"
 msgid "Select Video File"
-msgstr "Choisir un fichier Vidéo"
+msgstr "Sélectionner un fichier vidéo"
 
 msgctxt "#32052"
 msgid "Show Time"
@@ -110,7 +110,7 @@ msgstr "Afficher l'heure"
 
 msgctxt "#32053"
 msgid "Start Video At Random Point"
-msgstr "Commencer la lecture à un moment aléatoire"
+msgstr "Commencer la lecture à un moment au hasard"
 
 msgctxt "#32054"
 msgid "Select Videos Folder"
@@ -118,15 +118,15 @@ msgstr "Choix du dossier vidéo"
 
 msgctxt "#32055"
 msgid "Prevent Screensaver Starting If Playing Media"
-msgstr "Empêcher l'Économiseur d'écran de se lancer lors de la lecture d'un média"
+msgstr "Empêcher l'économiseur d'écran de se lancer lors de la lecture d'un média"
 
 msgctxt "#32056"
 msgid "Change Volume When Screensaver Starts"
-msgstr "Changer le volume quand l'Économiseur d'écran démarre"
+msgstr "Changer le volume quand l'économiseur d'écran démarre"
 
 msgctxt "#32057"
 msgid "Set Volume To"
-msgstr "Volume à"
+msgstr "Mettre le volume à"
 
 msgctxt "#32058"
 msgid "Dim Level"
@@ -134,11 +134,11 @@ msgstr "Niveau d'assombrissement"
 
 msgctxt "#32059"
 msgid "Stop Screensaver Automatically"
-msgstr "Arrêt automatique de l'Économiseur d'écran"
+msgstr "Arrêter automatiquement l'économiseur d'écran"
 
 msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
-msgstr "Arrêter l'Économiseur d'écran après (en minutes)"
+msgstr "Arrêter l'économiseur d'écran après (minutes)"
 
 msgctxt "#32061"
 msgid "Reset Volume On Startup"
@@ -162,7 +162,7 @@ msgstr "Heure de fin"
 
 msgctxt "#32066"
 msgid "Schedule"
-msgstr "Planifier"
+msgstr "Planification"
 
 msgctxt "#32067"
 msgid "Number Of Schedule Rules"
@@ -318,7 +318,7 @@ msgstr "Clock 2 - [1.3Go] - 360p"
 
 msgctxt "#32200"
 msgid "Overlay Image"
-msgstr "Image en Overlay"
+msgstr "Image en superposition"
 
 msgctxt "#32201"
 msgid "Select Overlay Image File"
@@ -326,7 +326,7 @@ msgstr "Sélectionner le fichier d'image de superposition"
 
 msgctxt "#32202"
 msgid "None"
-msgstr "Aucun"
+msgstr "Aucune"
 
 msgctxt "#32203"
 msgid "User Defined"
@@ -346,19 +346,19 @@ msgstr "Cadre de fenêtre 2"
 
 msgctxt "#32300"
 msgid "Screensaver File Is Not Valid"
-msgstr "Fichier d'économiseur d'écran invalide"
+msgstr "Fichier d'économiseur d'écran incorrect"
 
 msgctxt "#32301"
 msgid "The following default video already exists"
-msgstr "La vidéo par défaut suivante existes déjà"
+msgstr "La vidéo par défaut suivante existe déjà"
 
 msgctxt "#32302"
 msgid "Reuse this file?"
-msgstr "Réutiliser ce fichier ?"
+msgstr "Faut-il réutiliser ce fichier ?"
 
 msgctxt "#32303"
 msgid "Downloading Screensaver Video File"
-msgstr "Téléchargement du fichier vidéo de l'Économiseur d'écran"
+msgstr "Téléchargement du fichier vidéo de l'économiseur d'écran"
 
 msgctxt "#32304"
 msgid "This option will use all videos already downloaded"
@@ -374,4 +374,4 @@ msgstr "Échec du téléchargement du fichier vidéo"
 
 msgctxt "#32307"
 msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
-msgstr "Ceci peut être du à un dépassement de la bande passante du serveur. Veuillez essayer à nouveau demain"
+msgstr "Ceci peut être du à un dépassement de la bande passante du serveur. Merci d'essayer à nouveau demain"

@@ -40,36 +40,41 @@
     	<setting label="32068" type="lsep" visible="gt(-1,0) + eq(-3,1)"/>
 		<setting id="rule1StartTime" visible="gt(-2,0) + eq(-4,1)" subsetting="true" type="time" label="32064" default="00:00"/>
 		<setting id="rule1EndTime" visible="gt(-3,0) + eq(-5,1)" subsetting="true" type="time" label="32065" default="23:59"/>
-		<setting id="rule1VideoFile" label="32051" subsetting="true" visible="gt(-4,0) + eq(-6,1)" type="video" value=""/>
-		<setting id="rule1OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-5,0) + eq(-7,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
-		<setting id="rule1OverlayFile" label="32200" subsetting="true" visible="gt(-6,0) + eq(-1,4) + eq(-8,1)" type="image"/>
+		<setting id="rule1Day" label="32073" subsetting="true" visible="gt(-4,0) + eq(-6,1)" type="enum" lvalues="32074|32075|32076|32077|32078|32079|32080|32081" default="0"/>
+		<setting id="rule1VideoFile" label="32051" subsetting="true" visible="gt(-5,0) + eq(-7,1)" type="video" value=""/>
+		<setting id="rule1OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-6,0) + eq(-8,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
+		<setting id="rule1OverlayFile" label="32200" subsetting="true" visible="gt(-7,0) + eq(-1,4) + eq(-9,1)" type="image"/>
 
-    	<setting label="32069" type="lsep" visible="gt(-7,1) + eq(-9,1)"/>
-		<setting id="rule2StartTime" visible="gt(-8,1) + eq(-10,1)" subsetting="true" type="time" label="32064" default="00:00"/>
-		<setting id="rule2EndTime" visible="gt(-9,1) + eq(-11,1)" subsetting="true" type="time" label="32065" default="23:59"/>
-		<setting id="rule2VideoFile" label="32051" subsetting="true" visible="gt(-10,1) + eq(-12,1)" type="video" value=""/>
-		<setting id="rule2OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-11,1) + eq(-13,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
-		<setting id="rule2OverlayFile" label="32200" subsetting="true" visible="gt(-12,1) + eq(-1,4) + eq(-14,1)" type="image"/>
+    	<setting label="32069" type="lsep" visible="gt(-8,1) + eq(-10,1)"/>
+		<setting id="rule2StartTime" visible="gt(-9,1) + eq(-11,1)" subsetting="true" type="time" label="32064" default="00:00"/>
+		<setting id="rule2EndTime" visible="gt(-10,1) + eq(-12,1)" subsetting="true" type="time" label="32065" default="23:59"/>
+		<setting id="rule2Day" label="32073" subsetting="true" visible="gt(-11,1) + eq(-13,1)" type="enum" lvalues="32074|32075|32076|32077|32078|32079|32080|32081" default="0"/>
+		<setting id="rule2VideoFile" label="32051" subsetting="true" visible="gt(-12,1) + eq(-14,1)" type="video" value=""/>
+		<setting id="rule2OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-13,1) + eq(-15,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
+		<setting id="rule2OverlayFile" label="32200" subsetting="true" visible="gt(-14,1) + eq(-1,4) + eq(-16,1)" type="image"/>
 
-    	<setting label="32070" type="lsep" visible="gt(-13,2) + eq(-15,1)"/>
-		<setting id="rule3StartTime" visible="gt(-14,2) + eq(-16,1)" subsetting="true" type="time" label="32064" default="00:00"/>
-		<setting id="rule3EndTime" visible="gt(-15,2) + eq(-17,1)" subsetting="true" type="time" label="32065" default="23:59"/>
-		<setting id="rule3VideoFile" label="32051" subsetting="true" visible="gt(-16,2) + eq(-18,1)" type="video" value=""/>
-		<setting id="rule3OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-17,2) + eq(-19,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
-		<setting id="rule3OverlayFile" label="32200" subsetting="true" visible="gt(-18,2) + eq(-1,4) + eq(-20,1)" type="image"/>
+    	<setting label="32070" type="lsep" visible="gt(-15,2) + eq(-17,1)"/>
+		<setting id="rule3StartTime" visible="gt(-16,2) + eq(-18,1)" subsetting="true" type="time" label="32064" default="00:00"/>
+		<setting id="rule3EndTime" visible="gt(-17,2) + eq(-19,1)" subsetting="true" type="time" label="32065" default="23:59"/>
+		<setting id="rule3Day" label="32073" subsetting="true" visible="gt(-18,2) + eq(-20,1)" type="enum" lvalues="32074|32075|32076|32077|32078|32079|32080|32081" default="0"/>
+		<setting id="rule3VideoFile" label="32051" subsetting="true" visible="gt(-19,2) + eq(-21,1)" type="video" value=""/>
+		<setting id="rule3OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-20,2) + eq(-22,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
+		<setting id="rule3OverlayFile" label="32200" subsetting="true" visible="gt(-21,2) + eq(-1,4) + eq(-23,1)" type="image"/>
 
-    	<setting label="32071" type="lsep" visible="gt(-19,3) + eq(-21,1)"/>
-		<setting id="rule4StartTime" visible="gt(-20,3) + eq(-22,1)" subsetting="true" type="time" label="32064" default="00:00"/>
-		<setting id="rule4EndTime" visible="gt(-21,3) + eq(-23,1)" subsetting="true" type="time" label="32065" default="23:59"/>
-		<setting id="rule4VideoFile" label="32051" subsetting="true" visible="gt(-22,3) + eq(-24,1)" type="video" value=""/>
-		<setting id="rule4OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-23,3) + eq(-25,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
-		<setting id="rule4OverlayFile" label="32200" subsetting="true" visible="gt(-24,3) + eq(-1,4) + eq(-26,1)" type="image"/>
+    	<setting label="32071" type="lsep" visible="gt(-22,3) + eq(-24,1)"/>
+		<setting id="rule4StartTime" visible="gt(-23,3) + eq(-25,1)" subsetting="true" type="time" label="32064" default="00:00"/>
+		<setting id="rule4EndTime" visible="gt(-24,3) + eq(-26,1)" subsetting="true" type="time" label="32065" default="23:59"/>
+		<setting id="rule4Day" label="32073" subsetting="true" visible="gt(-25,3) + eq(-27,1)" type="enum" lvalues="32074|32075|32076|32077|32078|32079|32080|32081" default="0"/>
+		<setting id="rule4VideoFile" label="32051" subsetting="true" visible="gt(-26,3) + eq(-28,1)" type="video" value=""/>
+		<setting id="rule4OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-27,3) + eq(-29,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
+		<setting id="rule4OverlayFile" label="32200" subsetting="true" visible="gt(-28,3) + eq(-1,4) + eq(-30,1)" type="image"/>
 
-    	<setting label="32072" type="lsep" visible="gt(-25,4) + eq(-27,1)"/>
-		<setting id="rule5StartTime" visible="gt(-26,4) + eq(-28,1)" subsetting="true" type="time" label="32064" default="00:00"/>
-		<setting id="rule5EndTime" visible="gt(-27,4) + eq(-29,1)" subsetting="true" type="time" label="32065" default="23:59"/>
-		<setting id="rule5VideoFile" label="32051" subsetting="true" visible="gt(-28,4) + eq(-30,1)" type="video" value=""/>
-		<setting id="rule5OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-29,4) + eq(-31,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
-		<setting id="rule5OverlayFile" label="32200" subsetting="true" visible="gt(-30,4) + eq(-1,4) + eq(-32,1)" type="image"/>
+    	<setting label="32072" type="lsep" visible="gt(-29,4) + eq(-31,1)"/>
+		<setting id="rule5StartTime" visible="gt(-30,4) + eq(-32,1)" subsetting="true" type="time" label="32064" default="00:00"/>
+		<setting id="rule5EndTime" visible="gt(-31,4) + eq(-33,1)" subsetting="true" type="time" label="32065" default="23:59"/>
+		<setting id="rule5Day" label="32073" subsetting="true" visible="gt(-32,4) + eq(-34,1)" type="enum" lvalues="32074|32075|32076|32077|32078|32079|32080|32081" default="0"/>
+		<setting id="rule5VideoFile" label="32051" subsetting="true" visible="gt(-33,4) + eq(-35,1)" type="video" value=""/>
+		<setting id="rule5OverlayImage" subsetting="true" type="enum" label="32200" visible="gt(-34,4) + eq(-36,1)" lvalues="32202|32204|32205|32206|32203" default="0"/>
+		<setting id="rule5OverlayFile" label="32200" subsetting="true" visible="gt(-35,4) + eq(-1,4) + eq(-37,1)" type="image"/>
 	</category>
 </settings>

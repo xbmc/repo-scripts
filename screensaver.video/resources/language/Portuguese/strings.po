@@ -128,6 +128,14 @@ msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Parar Protector de Ecrã Após (Minutos)"
 
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Repor Volume Ao Iniciar"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Definir Volume Ao Iniciar Para"
+
 msgctxt "#32065"
 msgid "End Time"
 msgstr "Hora de término"

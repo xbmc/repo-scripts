@@ -44,6 +44,10 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Avvio"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Esegui Screensaver All'Avvio"
+
 msgctxt "#32020"
 msgid "Preset Video"
 msgstr "Preferenza Video"
@@ -72,6 +76,10 @@ msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Ripeti uno"
 
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Impostazioni Pianificazione"
+
 msgctxt "#32028"
 msgid "Off"
 msgstr "Off"
@@ -83,6 +91,10 @@ msgstr "Impostazioni"
 msgctxt "#32030"
 msgid "File"
 msgstr "File"
+
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "File Impostazioni Pianificazione"
 
 msgctxt "#32050"
 msgid "Set/Download Preset Video File"
@@ -140,6 +152,10 @@ msgctxt "#32063"
 msgid "Use Audio Engine Suspend For 0 Volume"
 msgstr "Usa Sospensione Engine Audio Per Volume 0"
 
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Ora Avvio"
+
 msgctxt "#32065"
 msgid "End Time"
 msgstr "Orario fine riproduzione"
@@ -147,6 +163,30 @@ msgstr "Orario fine riproduzione"
 msgctxt "#32066"
 msgid "Schedule"
 msgstr "Palinsesto"
+
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Numero Regole Pianificazione"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Regola 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Regola 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Regola 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Regola 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Regola 5"
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

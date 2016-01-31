@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="screensaver.video" name="VideoScreensaver" version="1.2.1" provider-name="robwebset">
+<addon id="screensaver.video" name="VideoScreensaver" version="1.3.0" provider-name="robwebset">
 	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="xbmc.python" version="2.14.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
 	<extension point="xbmc.ui.screensaver" library="default.py"/>
@@ -37,9 +37,10 @@
 		<description lang="de">Spielt beim Start des Bildschirmschoners ein Video ab. Dies kann ein benutzerdefiniertes oder eines der eingebauten Videos sein</description>
 		<description lang="el">Αναπαράγει ένα βίντεο όταν ξεκινάει η προφύλαξη οθόνης. Αυτό μπορεί να είναι ένα δικό σας βίντεο, ή ένα από τα ενσωματωμένα.</description>
 		<description lang="en">Plays a video when the screensaver starts, this can be a custom video or one of the built in videos</description>
+		<description lang="en_NZ">Plays a video when the screensaver starts, this can be a custom video or one of the built in videos</description>
 		<description lang="en_US">Plays a video when the screensaver starts, this can be a custom video or one of the built in videos</description>
 		<description lang="es">Reproduce un vídeo cuando el salva pantallas inicia, este vídeo puede ser un vídeo personalizado o uno de los vídeos pre cargados.</description>
-		<description lang="fr">Jouer une vidéo quand l'économiseur d'écran démarre, cela peut-être une vidéo personnelle ou une vidéo déjà incluse</description>
+		<description lang="fr">Cette extension joue une vidéo quand l'économiseur d'écran démarre. Cela peut-être une vidéo personnelle ou une des vidéos déjà pré-inclues.</description>
 		<description lang="fr_CA">Lit un fichier vidéo au démarrage de l'économiseur d'écran, pouvant être une vidéo personnalisée ou une des vidéos intégrées</description>
 		<description lang="gl">Reproduce un vídeo ao activar o protector de pantalla, pode ser un vídeo personalizado ou un dos predefinidos</description>
 		<description lang="he">משחק וידאו כאשר שומר המסך מתחיל, זה יכול להיות וידאו מותאם אישית או אחד שנבנה בקטעי וידאו</description>

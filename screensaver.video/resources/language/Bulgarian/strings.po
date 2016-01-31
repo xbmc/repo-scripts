@@ -132,6 +132,14 @@ msgctxt "#32060"
 msgid "Stop Screensaver After (Minutes)"
 msgstr "Спирай скрийсейвъра след (мин)"
 
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Нулирай силата на звука при стартиране"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Задай силата на звука при стартиране"
+
 msgctxt "#32064"
 msgid "Start Time"
 msgstr "Начален час"
@@ -255,6 +263,10 @@ msgstr "Сняг 2 - [677MB] - 1080p"
 msgctxt "#32122"
 msgid "Snow 3 - [1.2GB] - 720p"
 msgstr "Сняг 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Мелница 1 - [549MB] - 1080p"
 
 msgctxt "#32124"
 msgid "Aquarium 4 - [780MB] - 720p"

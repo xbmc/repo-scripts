@@ -208,7 +208,43 @@ msgctxt "#32072"
 msgid "Rule 5"
 msgstr ""
 
-#empty strings from id 32073 to 32099
+msgctxt "#32073"
+msgid "Day"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Every Day"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#32079"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Sunday"
+msgstr ""
+
+#empty strings from id 32082 to 32099
 
 msgctxt "#32100"
 msgid "*** All Downloaded Videos ***"

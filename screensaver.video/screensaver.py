@@ -453,6 +453,15 @@ class Scheduler(object):
         localTime = time.localtime()
         currentTime = (localTime.tm_hour * 60) + localTime.tm_min
 
+        # Get the current day of the week
+        # 0 = Monday 6 = Sunday
+        today = localTime.tm_wday
+        log("*** ROB ***: Today is %d" % today)
+        # Make sure that the day returned is within our expected list
+        if today not in Settings.DAY_TYPE:
+            log("Schedule: Unknown day today %d, setting to everyday" % today)
+            today = Settings.EVERY_DAY
+
         # Check if we need to refresh the schedule details from the file
         # in case they have changed
         if Settings.getScheduleSetting() == Settings.SCHEDULE_FILE:
@@ -477,12 +486,25 @@ class Scheduler(object):
         # Check the scheduled items to see if any cover the current time
         for item in self.scheduleDetails:
             if (item['start'] <= currentTime) and (item['end'] >= currentTime):
-                return item['id']
+                # Make sure this is for the current day
+                if (today == Settings.EVERY_DAY) or (item['day'] in [Settings.EVERY_DAY, today]):
+                    return item['id']
             # Check for the case where the time laps over midnight
             if item['start'] > item['end']:
                 if (currentTime >= item['start']) or (currentTime <= item['end']):
-                    return item['id']
-
+                    # Check to see if we are restricting to day
+                    if (today == Settings.EVERY_DAY) or (item['day'] == Settings.EVERY_DAY):
+                        return item['id']
+                    else:
+                        if (currentTime >= item['start']) and (item['day'] in [Settings.EVERY_DAY, today]):
+                            return item['id']
+                        else:
+                            # The day is set for the start of the time interval
+                            # so if we go over to the next day we need to update
+                            # what the expected day is
+                            nextDay = Settings.getNextDay(item['day'])
+                            if (currentTime <= item['end']) and (item['day'] in [Settings.EVERY_DAY, nextDay]):
+                                return item['id']
         return -1
 
     # Get the video for a given Id
@@ -521,8 +543,9 @@ class Scheduler(object):
                     overlayFile = Settings.getRuleOverlayFile(itemNum)
                     startTime = Settings.getRuleStartTime(itemNum)
                     endTime = Settings.getRuleEndTime(itemNum)
-                    log("Schedule: Item %d (Start:%d, End:%d) contains video %s" % (itemNum, startTime, endTime, videoFile))
-                    details = {'id': itemNum, 'start': startTime, 'end': endTime, 'video': videoFile, 'overlay': overlayFile}
+                    day = Settings.getRuleDay(itemNum)
+                    log("Schedule: Item %d (Start:%d, End:%d, Day: %d) contains video %s" % (itemNum, startTime, endTime, day, videoFile))
+                    details = {'id': itemNum, 'start': startTime, 'end': endTime, 'day': day, 'video': videoFile, 'overlay': overlayFile}
                     self.scheduleDetails.append(details)
                 else:
                     log("Schedule: File does not exist: %s" % videoFile)
@@ -583,6 +606,7 @@ class Scheduler(object):
                         overlayFile = ruleElem.get('overlay', None)
                         startTime = self._convertTimeToMinutes(ruleElem.get('start', "00:00"))
                         endTime = self._convertTimeToMinutes(ruleElem.get('end', "00:00"))
+                        day = self._convertDayFormat(ruleElem.get('day', None))
 
                     if (videoFile not in [None, ""]) and (startTime not in [None, ""]) and (endTime not in [None, ""]):
                         # Make it a full path if it is not already
@@ -597,7 +621,7 @@ class Scheduler(object):
                         # os.path.isfile as it will return false even if it is a file
                         # (A bit of a shame - but that's the way it is)
                         if videoFile.startswith("smb://") or os_path_isfile(videoFile):
-                            details = {'id': itemNum, 'start': startTime, 'end': endTime, 'video': videoFile, 'overlay': overlayFile}
+                            details = {'id': itemNum, 'start': startTime, 'end': endTime, 'day': day, 'video': videoFile, 'overlay': overlayFile}
                             self.scheduleDetails.append(details)
                         else:
                             log("Schedule: File does not exist: %s" % videoFile)
@@ -621,6 +645,27 @@ class Scheduler(object):
             log("Schedule: Incorrect time format: %s" % strTime)
             return None
         return (int(strTimeSplit[0]) * 60) + int(strTimeSplit[1])
+
+    def _convertDayFormat(self, dayStr):
+        if dayStr in [None, ""]:
+            log("Schedule: Day not set")
+            return Settings.EVERY_DAY
+        day = Settings.EVERY_DAY
+        if dayStr.lower() == "monday":
+            day = Settings.MONDAY
+        elif dayStr.lower() == "tuesday":
+            day = Settings.TUESDAY
+        elif dayStr.lower() == "wednesday":
+            day = Settings.WEDNESDAY
+        elif dayStr.lower() == "thursday":
+            day = Settings.THURSDAY
+        elif dayStr.lower() == "friday":
+            day = Settings.FRIDAY
+        elif dayStr.lower() == "saturday":
+            day = Settings.SATURDAY
+        elif dayStr.lower() == "sunday":
+            day = Settings.SUNDAY
+        return day
 
 
 ##################################

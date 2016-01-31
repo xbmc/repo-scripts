@@ -148,6 +148,10 @@ msgctxt "#32062"
 msgid "Set Volume On Startup To"
 msgstr "Lautstärke beim Starten festlegen auf"
 
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Audio-Engine bei Lautstärke 0 stummschalten"
+
 msgctxt "#32064"
 msgid "Start Time"
 msgstr "Startzeit"

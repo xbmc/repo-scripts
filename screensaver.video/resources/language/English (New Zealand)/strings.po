@@ -32,6 +32,10 @@ msgctxt "#32004"
 msgid "Video Selection"
 msgstr "Video Selection"
 
+msgctxt "#32005"
+msgid "VideoScreensaver"
+msgstr "VideoScreensaver"
+
 msgctxt "#32006"
 msgid "Configuration"
 msgstr "Configuration"
@@ -40,6 +44,30 @@ msgctxt "#32007"
 msgid "Startup"
 msgstr "Startup"
 
+msgctxt "#32008"
+msgid "Launch Screensaver On Startup"
+msgstr "Launch Screensaver On Startup"
+
+msgctxt "#32020"
+msgid "Preset Video"
+msgstr "Preset Video"
+
+msgctxt "#32021"
+msgid "User Defined"
+msgstr "User Defined"
+
+msgctxt "#32022"
+msgid "Selected Screensaver"
+msgstr "Selected Screensaver"
+
+msgctxt "#32023"
+msgid "Use All Files In A Folder"
+msgstr "Use All Files In A Folder"
+
+msgctxt "#32024"
+msgid "Repeat Type For Multiple Files"
+msgstr "Repeat Type For Multiple Files"
+
 msgctxt "#32025"
 msgid "Repeat All"
 msgstr "Repeat All"
@@ -47,6 +75,10 @@ msgstr "Repeat All"
 msgctxt "#32026"
 msgid "Repeat One"
 msgstr "Repeat One"
+
+msgctxt "#32027"
+msgid "Schedule Settings"
+msgstr "Schedule Settings"
 
 msgctxt "#32028"
 msgid "Off"
@@ -60,6 +92,70 @@ msgctxt "#32030"
 msgid "File"
 msgstr "File"
 
+msgctxt "#32031"
+msgid "Schedule Settings File"
+msgstr "Schedule Settings File"
+
+msgctxt "#32050"
+msgid "Set/Download Preset Video File"
+msgstr "Set/Download Preset Video File"
+
+msgctxt "#32051"
+msgid "Select Video File"
+msgstr "Select Video File"
+
+msgctxt "#32052"
+msgid "Show Time"
+msgstr "Show Time"
+
+msgctxt "#32053"
+msgid "Start Video At Random Point"
+msgstr "Start Video At Random Point"
+
+msgctxt "#32054"
+msgid "Select Videos Folder"
+msgstr "Select Videos Folder"
+
+msgctxt "#32055"
+msgid "Prevent Screensaver Starting If Playing Media"
+msgstr "Prevent Screensaver Starting If Playing Media"
+
+msgctxt "#32056"
+msgid "Change Volume When Screensaver Starts"
+msgstr "Change Volume When Screensaver Starts"
+
+msgctxt "#32057"
+msgid "Set Volume To"
+msgstr "Set Volume To"
+
+msgctxt "#32058"
+msgid "Dim Level"
+msgstr "Dim Level"
+
+msgctxt "#32059"
+msgid "Stop Screensaver Automatically"
+msgstr "Stop Screensaver Automatically"
+
+msgctxt "#32060"
+msgid "Stop Screensaver After (Minutes)"
+msgstr "Stop Screensaver After (Minutes)"
+
+msgctxt "#32061"
+msgid "Reset Volume On Startup"
+msgstr "Reset Volume On Startup"
+
+msgctxt "#32062"
+msgid "Set Volume On Startup To"
+msgstr "Set Volume On Startup To"
+
+msgctxt "#32063"
+msgid "Use Audio Engine Suspend For 0 Volume"
+msgstr "Use Audio Engine Suspend For 0 Volume"
+
+msgctxt "#32064"
+msgid "Start Time"
+msgstr "Start Time"
+
 msgctxt "#32065"
 msgid "End Time"
 msgstr "End Time"
@@ -68,6 +164,214 @@ msgctxt "#32066"
 msgid "Schedule"
 msgstr "Schedule"
 
+msgctxt "#32067"
+msgid "Number Of Schedule Rules"
+msgstr "Number Of Schedule Rules"
+
+msgctxt "#32068"
+msgid "Rule 1"
+msgstr "Rule 1"
+
+msgctxt "#32069"
+msgid "Rule 2"
+msgstr "Rule 2"
+
+msgctxt "#32070"
+msgid "Rule 3"
+msgstr "Rule 3"
+
+msgctxt "#32071"
+msgid "Rule 4"
+msgstr "Rule 4"
+
+msgctxt "#32072"
+msgid "Rule 5"
+msgstr "Rule 5"
+
+msgctxt "#32100"
+msgid "*** All Downloaded Videos ***"
+msgstr "*** All Downloaded Videos ***"
+
+msgctxt "#32101"
+msgid "Aquarium 1  - [846MB] - 400p"
+msgstr "Aquarium 1  - [846MB] - 400p"
+
+msgctxt "#32102"
+msgid "Aquarium 2  - [2.7GB] - 720p"
+msgstr "Aquarium 2  - [2.7GB] - 720p"
+
+msgctxt "#32103"
+msgid "Fireplace 1 - [965MB] - 720p"
+msgstr "Fireplace 1 - [965MB] - 720p"
+
+msgctxt "#32104"
+msgid "Fireplace 2 - [827MB] - 480p"
+msgstr "Fireplace 2 - [827MB] - 480p"
+
+msgctxt "#32105"
+msgid "Fireplace 3 - [2.1GB] - 1080p"
+msgstr "Fireplace 3 - [2.1GB] - 1080p"
+
+msgctxt "#32106"
+msgid "Aquarium 3  - [2.4GB] - 720p"
+msgstr "Aquarium 3  - [2.4GB] - 720p"
+
+msgctxt "#32107"
+msgid "Fireplace 4 - [2.7GB] - 720p"
+msgstr "Fireplace 4 - [2.7GB] - 720p"
+
+msgctxt "#32108"
+msgid "Space 1 - [970MB] - 720p"
+msgstr "Space 1 - [970MB] - 720p"
+
+msgctxt "#32109"
+msgid "Beach 1 - [2.5GB] - 720p"
+msgstr "Beach 1 - [2.5GB] - 720p"
+
+msgctxt "#32110"
+msgid "Beach 2 - [838MB] - 720p"
+msgstr "Beach 2 - [838MB] - 720p"
+
+msgctxt "#32111"
+msgid "Matrix 1 - [909MB] - 720p"
+msgstr "Matrix 1 - [909MB] - 720p"
+
+msgctxt "#32112"
+msgid "Space 2 - [563MB] - 1080p"
+msgstr "Space 2 - [563MB] - 1080p"
+
+msgctxt "#32113"
+msgid "Woodland 1 - [1.3GB] - 720p"
+msgstr "Woodland 1 - [1.3GB] - 720p"
+
+msgctxt "#32114"
+msgid "Star Trek TNG 1 - [54MB] - 720p"
+msgstr "Star Trek TNG 1 - [54MB] - 720p"
+
+msgctxt "#32115"
+msgid "Retro Sci-Fi 1 - [200MB] - 1080p"
+msgstr "Retro Sci-Fi 1 - [200MB] - 1080p"
+
+msgctxt "#32116"
+msgid "Waterfall 1 - [1.3GB] - 720p"
+msgstr "Waterfall 1 - [1.3GB] - 720p"
+
+msgctxt "#32117"
+msgid "Waterfall 2 - [1.3GB] - 720p"
+msgstr "Waterfall 2 - [1.3GB] - 720p"
+
+msgctxt "#32118"
+msgid "Waterfall 3 - [2.4GB] - 720p"
+msgstr "Waterfall 3 - [2.4GB] - 720p"
+
+msgctxt "#32119"
+msgid "Beach 3 - [3.4GB] - 720p"
+msgstr "Beach 3 - [3.4GB] - 720p"
+
+msgctxt "#32120"
+msgid "Snow 1 - [1.3GB] - 720p"
+msgstr "Snow 1 - [1.3GB] - 720p"
+
+msgctxt "#32121"
+msgid "Snow 2 - [677MB] - 1080p"
+msgstr "Snow 2 - [677MB] - 1080p"
+
+msgctxt "#32122"
+msgid "Snow 3 - [1.2GB] - 720p"
+msgstr "Snow 3 - [1.2GB] - 720p"
+
+msgctxt "#32123"
+msgid "Watermill 1 - [549MB] - 1080p"
+msgstr "Watermill 1 - [549MB] - 1080p"
+
+msgctxt "#32124"
+msgid "Aquarium 4 - [780MB] - 720p"
+msgstr "Aquarium 4 - [780MB] - 720p"
+
+msgctxt "#32125"
+msgid "Christmas 1 - [777MB] - 1080p"
+msgstr "Christmas 1 - [777MB] - 1080p"
+
+msgctxt "#32126"
+msgid "Johnny Castaway 1 - [75MB] - 480p"
+msgstr "Johnny Castaway 1 - [75MB] - 480p"
+
+msgctxt "#32127"
+msgid "Ocean 1 - [1.1GB] - 720p"
+msgstr "Ocean 1 - [1.1GB] - 720p"
+
+msgctxt "#32128"
+msgid "Aquarium 5 - [3.0GB] - 720p"
+msgstr "Aquarium 5 - [3.0GB] - 720p"
+
+msgctxt "#32129"
+msgid "Space 3 - [2.2GB] - 720p"
+msgstr "Space 3 - [2.2GB] - 720p"
+
+msgctxt "#32130"
+msgid "Clock 1 - [1.5GB] - 720p"
+msgstr "Clock 1 - [1.5GB] - 720p"
+
+msgctxt "#32131"
+msgid "Clock 2 - [1.3GB] - 360p"
+msgstr "Clock 2 - [1.3GB] - 360p"
+
+msgctxt "#32200"
+msgid "Overlay Image"
+msgstr "Overlay Image"
+
+msgctxt "#32201"
+msgid "Select Overlay Image File"
+msgstr "Select Overlay Image File"
+
 msgctxt "#32202"
 msgid "None"
 msgstr "None"
+
+msgctxt "#32203"
+msgid "User Defined"
+msgstr "User Defined"
+
+msgctxt "#32204"
+msgid "Picture Frame 1"
+msgstr "Picture Frame 1"
+
+msgctxt "#32205"
+msgid "Window Frame 1"
+msgstr "Window Frame 1"
+
+msgctxt "#32206"
+msgid "Window Frame 2"
+msgstr "Window Frame 2"
+
+msgctxt "#32300"
+msgid "Screensaver File Is Not Valid"
+msgstr "Screensaver File Is Not Valid"
+
+msgctxt "#32301"
+msgid "The following default video already exists"
+msgstr "The following default video already exists"
+
+msgctxt "#32302"
+msgid "Reuse this file?"
+msgstr "Reuse this file?"
+
+msgctxt "#32303"
+msgid "Downloading Screensaver Video File"
+msgstr "Downloading Screensaver Video File"
+
+msgctxt "#32304"
+msgid "This option will use all videos already downloaded"
+msgstr "This option will use all videos already downloaded"
+
+msgctxt "#32305"
+msgid "Each video required should be downloaded individually first"
+msgstr "Each video required should be downloaded individually first"
+
+msgctxt "#32306"
+msgid "Failed to download video file"
+msgstr "Failed to download video file"
+
+msgctxt "#32307"
+msgid "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"
+msgstr "This may be due to the server bandwidth limit being exceeded, please try again tomorrow"

@@ -111,6 +111,15 @@ class Settings():
     SCHEDULE_SETTINGS = 1
     SCHEDULE_FILE = 2
 
+    EVERY_DAY = -1
+    MONDAY = 0
+    TUESDAY = 1
+    WEDNESDAY = 2
+    THURSDAY = 3
+    FRIDAY = 4
+    SATURDAY = 5
+    SUNDAY = 6
+
     # Locations:
     # ozibox.com
     #    Aquarium001.mkv
@@ -208,6 +217,17 @@ class Settings():
         'PictureFrame1.png',
         'WindowFrame1.png',
         'WindowFrame2.png',
+    )
+
+    DAY_TYPE = (
+        EVERY_DAY,
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY,
+        THURSDAY,
+        FRIDAY,
+        SATURDAY,
+        SUNDAY
     )
 
     @staticmethod
@@ -416,8 +436,7 @@ class Settings():
                 return __addon__.getSetting(overlayFileTag).decode("utf-8")
             else:
                 return Settings.OVERLAY_IMAGES[overlayId]
-        else:
-            return None
+        return None
 
     @staticmethod
     def getRuleStartTime(ruleId):
@@ -436,3 +455,24 @@ class Settings():
         endTimeSplit = endTimeStr.split(':')
         endTime = (int(endTimeSplit[0]) * 60) + int(endTimeSplit[1])
         return endTime
+
+    @staticmethod
+    def getRuleDay(ruleId):
+        dayTag = "rule%dDay" % ruleId
+
+        if __addon__.getSetting(dayTag):
+            dayId = int(__addon__.getSetting(dayTag))
+            if dayId >= len(Settings.DAY_TYPE):
+                return Settings.EVERY_DAY
+            else:
+                return Settings.DAY_TYPE[dayId]
+        return Settings.EVERY_DAY
+
+    @staticmethod
+    def getNextDay(currentDay):
+        nextDay = Settings.MONDAY
+        # We know the days are sequential so we can just add one to the value
+        # If we were at Sunday (The end of the list), then we need to go to the Monday
+        if currentDay != Settings.SUNDAY:
+            nextDay = currentDay + 1
+        return nextDay
