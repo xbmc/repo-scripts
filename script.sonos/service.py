@@ -5,6 +5,7 @@ import traceback
 import xbmc
 import xbmcaddon
 import xbmcgui
+import xbmcvfs
 
 # Add JSON support for queries
 if sys.version_info < (2, 7):
@@ -164,6 +165,88 @@ class SonosVolumeLink():
                 self.xbmcPlayingProcessed = False
 
 
+#########################################
+# Redirects the volume controls to Sonos
+#########################################
+class SonosVolumeRedirect():
+    def __init__(self, sonosDevice):
+        self.sonosDevice = sonosDevice
+        self.KEYMAP_PATH = xbmc.translatePath(os.path.join(__resource__, "keymaps"))
+        self.KEYMAPSOURCEFILE = os.path.join(self.KEYMAP_PATH, "sonos_volume_keymap.xml")
+        self.KEYMAPDESTFILE = os.path.join(xbmc.translatePath('special://userdata/keymaps'), "sonos_volume_keymap.xml")
+
+        if Settings.redirectVolumeControls():
+            self._enableKeymap()
+        else:
+            self._cleanupKeymap()
+
+    def checkVolumeChange(self):
+        # Check to see if the Sonos Volume Redirect is Enabled
+        if not Settings.redirectVolumeControls():
+            return
+
+        redirect = xbmcgui.Window(10000).getProperty("SonosVolumeRedirect")
+
+        while redirect not in [None, ""]:
+            xbmcgui.Window(10000).clearProperty("SonosVolumeRedirect")
+
+            volumeChange = 0
+            volumeChangeDisplay = 32068
+            isMute = False
+            if redirect.lower() == "up":
+                volumeChange = Settings.getVolumeChangeIncrements()
+                volumeChangeDisplay = 32075
+            elif redirect.lower() == "down":
+                volumeChange = Settings.getVolumeChangeIncrements() * -1
+                volumeChangeDisplay = 32076
+            elif redirect.lower() == "mute":
+                isMute = True
+
+            log("SonosVolumeRedirect: Changing by %d" % volumeChange)
+
+            # Check to see if it has changed, and if we need to change the sonos value
+            if isMute:
+                displayVal = 32077
+                # Check the current muted state
+                if sonosDevice.mute:
+                    sonosDevice.mute = False
+                    displayVal = 32078
+                else:
+                    sonosDevice.mute = True
+                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), __addon__.getLocalizedString(displayVal), __icon__, 500, False)
+            elif volumeChange != 0:
+                sonosDevice.volume = sonosDevice.volume + volumeChange
+                displayMsg = "%s %d" % (__addon__.getLocalizedString(volumeChangeDisplay), sonosDevice.volume)
+                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), displayMsg, __icon__, 500, False)
+
+            redirect = xbmcgui.Window(10000).getProperty("SonosVolumeRedirect")
+
+    def cleanup(self):
+        if Settings.redirectVolumeControls():
+            self._cleanupKeymap()
+
+    # Copies the Sonos keymap to the correct location and loads it
+    def _enableKeymap(self):
+        try:
+            xbmcvfs.copy(self.KEYMAPSOURCEFILE, self.KEYMAPDESTFILE)
+            xbmc.executebuiltin('Action(reloadkeymaps)')
+            log("SonosVolumeRedirect: Installed custom keymap")
+        except:
+            log("SonosVolumeRedirect: Failed to copy & load custom keymap: %s" % traceback.format_exc(), xbmc.LOGERROR)
+
+    # Removes the Sonos keymap
+    def _cleanupKeymap(self):
+        if xbmcvfs.exists(self.KEYMAPDESTFILE):
+            try:
+                xbmcvfs.delete(self.KEYMAPDESTFILE)
+                log("SonosVolumeRedirect: Removed custom keymap")
+            except:
+                log("SonosVolumeRedirect: Failed to remove & load custom keymap: %s" % traceback.format_exc(), xbmc.LOGERROR)
+
+            # Force a re-load
+            xbmc.executebuiltin('Action(reloadkeymaps)')
+
+
 ##############################################################
 # Automatically Pauses Sonos if Kodi starts playing something
 ##############################################################
@@ -305,7 +388,7 @@ if __name__ == '__main__':
         log("SonosService: Launching controller on startup")
         xbmc.executebuiltin('RunScript(%s)' % (os.path.join(__cwd__, "default.py")), False)
 
-    if (not Settings.isNotificationEnabled()) and (not audioChanges) and (not Settings.autoPauseSonos()):
+    if (not Settings.isNotificationEnabled()) and (not audioChanges) and (not Settings.autoPauseSonos()) and (not Settings.redirectVolumeControls()):
         log("SonosService: Notifications, Volume Link and Auto Pause are disabled, exiting service")
     else:
         sonosDevice = Sonos.createSonosDevice()
@@ -325,6 +408,9 @@ if __name__ == '__main__':
             # Class to deal with sync of the volume
             volumeLink = SonosVolumeLink(sonosDevice)
 
+            # Class to deal with redirecting the volume
+            redirectVolume = SonosVolumeRedirect(sonosDevice)
+
             # Class that handles the automatic pausing of the Sonos system
             autoPause = SonosAutoPause(sonosDevice)
 
@@ -336,6 +422,9 @@ if __name__ == '__main__':
 
                 # Make sure the volume matches
                 volumeLink.updateSonosVolume()
+
+                # Check if a volume change has been made
+                redirectVolume.checkVolumeChange()
 
                 # Now check to see if the Sonos system needs pausing
                 autoPause.check()
@@ -405,6 +494,8 @@ if __name__ == '__main__':
                 xbmc.sleep(1000)
                 timeUntilNextCheck = timeUntilNextCheck - 1
 
+            redirectVolume.cleanup()
+            del redirectVolume
             del volumeLink
             del autoPause
     log("Sonos: Stopping service")

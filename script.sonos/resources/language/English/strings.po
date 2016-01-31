@@ -88,7 +88,9 @@ msgctxt "#32016"
 msgid "Controller Refresh Interval (Seconds)"
 msgstr ""
 
-#empty string with id 32017
+msgctxt "#32017"
+msgid "Redirect Volume Controls To Sonos"
+msgstr ""
 
 msgctxt "#32018"
 msgid "Plugin"
@@ -256,7 +258,27 @@ msgctxt "#32073"
 msgid "Failed to perform action %s"
 msgstr ""
 
-#empty strings from id 32074 to 32099
+msgctxt "#32074"
+msgid "Volume Changed"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Increased To"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Decreased To"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Mute On"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Mute Off"
+msgstr ""
+
+#empty strings from id 32079 to 32099
 
 msgctxt "#32100"
 msgid "Music Library"

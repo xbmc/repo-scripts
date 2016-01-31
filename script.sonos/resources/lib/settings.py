@@ -157,6 +157,10 @@ class Settings():
         return __addon__.getSetting("linkAudioWithSonos") == 'true'
 
     @staticmethod
+    def redirectVolumeControls():
+        return __addon__.getSetting("redirectVolumeControls") == 'true'
+
+    @staticmethod
     def switchSonosToLineIn():
         return __addon__.getSetting("switchSonosToLineIn") == 'true'
 
