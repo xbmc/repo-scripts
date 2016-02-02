@@ -22,7 +22,7 @@ Foo.multi will tell you if the resource addon should be used with a multiimage c
 
 
 example usage:
-- RunScript(script.image.resource.select,property=Foo&studiologos;type=resource.images.studios)
+- RunScript(script.image.resource.select,property=studiologos&amp;type=resource.images.studios)
 - $INFO[Skin.String(studiologos.name)]
 - $INFO[Skin.String(studiologos.path)]
 - $INFO[Skin.String(studiologos.ext)]
