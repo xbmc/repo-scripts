@@ -97,6 +97,8 @@ class Main:
         while not self.Monitor.abortRequested() and self.WINDOW.getProperty('LibraryDataProvider_Running') == 'true':
             if self.Monitor.waitForAbort(1):
                 # Abort was requested while waiting. We should exit
+                self.Monitor.update_listitems = None
+                self.Player.action = None
                 break
             if not xbmc.Player().isPlayingVideo():
                 # Update random items
