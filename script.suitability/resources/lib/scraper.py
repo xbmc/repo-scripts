@@ -114,6 +114,7 @@ class Scrapper():
         # Replace any quotes or other escape characters
         plainText = plainText.replace('&quote;', '"')
         plainText = plainText.replace('&nbsp;', ' ')
+        plainText = plainText.replace('&#039;', "'")
         plainText = plainText.replace('&amp;', '&')
 
         # Need to remove double tags as they are not handled very well when
@@ -199,7 +200,7 @@ class KidsInMindScraper(Scrapper):
         for entries in searchResults:
             for link in entries.findAll('a'):
                 # Get the link
-                movieName = link.string
+                movieName = self._convertHtmlIntoKodiText(link.string)
                 movieUrl = link['href']
                 searchMatches.append({"name": movieName, "link": movieUrl})
                 log("KidsInMindScraper: Initial Search Match: %s {%s}" % (movieName, movieUrl))
@@ -272,7 +273,7 @@ class CommonSenseMediaScraper(Scrapper):
         for entries in searchResults:
             for link in entries.findAll('a'):
                 # Get the link
-                movieName = link.string
+                movieName = self._convertHtmlIntoKodiText(link.string)
                 movieUrl = "https://www.commonsensemedia.org%s" % link['href']
                 searchMatches.append({"name": movieName, "link": movieUrl})
                 log("CommonSenseMediaScraper: Initial Search Match: %s {%s}" % (movieName, movieUrl))
@@ -378,7 +379,7 @@ class DoveFoundationScraper(Scrapper):
         for entries in searchResults:
             for link in entries.findAll('a'):
                 # Get the link
-                movieName = link.string
+                movieName = self._convertHtmlIntoKodiText(link.string)
                 movieUrl = link['href']
                 searchMatches.append({"name": movieName, "link": movieUrl})
                 log("DoveFoundationScraper: Initial Search Match: %s {%s}" % (movieName, movieUrl))
@@ -476,7 +477,7 @@ class MovieGuideOrgScraper(Scrapper):
         for entries in searchResults:
             for link in entries.findAll('a'):
                 # Get the link
-                movieName = link.string
+                movieName = self._convertHtmlIntoKodiText(link.string)
                 try:
                     movieName = movieName.encode('ascii', 'ignore')
                 except:
