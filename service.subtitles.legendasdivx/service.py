@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.2.3
+# Service LegendasDivx.com version 0.2.4
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -46,7 +46,7 @@ __descon__ = __addon__.getSetting( 'DESC' )
 __search__ = __addon__.getSetting( 'SEARCH' )
 debug = __addon__.getSetting( 'DEBUG' )
 
-main_url = "https://www.legendasdivx.com/"
+main_url = "https://www.legendasdivx.pt/"
 debug_pretext = "LegendasDivx"
 #SEARCH_PAGE_URL = main_url + "modules.php?name=Downloads&file=jz&d_op=search_next&order=&form_cat=28&page=%(page)s&query=%(query)s"
 
@@ -402,12 +402,12 @@ def Download(id, filename):
     subtitles_list = []
     username = __addon__.getSetting( 'LDuser' )
     password = __addon__.getSetting( 'LDpass' )
-    login_postdata = urllib.urlencode({'username' : username, 'user_password' : password, 'op' : 'login'})
+    login_postdata = urllib.urlencode({'username' : username, 'password' : password, 'login' : 'Login', 'sid' : ''})
     cj = cookielib.CookieJar()
     my_opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
     my_opener.addheaders = [('Referer', main_url + 'modules.php?name=Your_Account')]
     urllib2.install_opener(my_opener)
-    request = urllib2.Request(main_url + 'modules.php?name=Your_Account', login_postdata)
+    request = urllib2.Request(main_url + 'forum/ucp.php?mode=login', login_postdata)
     response = urllib2.urlopen(request).read()
     content = my_opener.open(main_url + 'modules.php?name=Downloads&d_op=getit&lid=' + id + '&username=' + username)
     content = content.read()

@@ -1,3 +1,6 @@
+0.2.4
+- Changes to the new authorization system.
+- Changed domain to legendasdivx.pt.
 0.2.3
 - Missing endpoints updated.
 0.2.2
