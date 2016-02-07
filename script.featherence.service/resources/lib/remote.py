@@ -45,7 +45,7 @@ def setRemote_Name(Remote_Name, Remote_TestingTime, remotes_path):
 	returned, value = dialogselect(addonString(32026).encode('utf-8') + space + "(" + str(Remote_Name) + ")", list,0)
 
 	if returned == -1 or returned == 0:
-		if not remotebutton: dialogok(localize(16200), "", "", "") #Abort/Exit
+		pass
 	elif returned == 1: cleartable() #None
 	else:
 		'''------------------------------

@@ -1,6 +1,6 @@
 import xbmc, xbmcaddon, sys, os
 
-from shared_variables import str2, space, space2, addondata_path
+from shared_variables import  space, space2, addondata_path
 
 getsetting         = xbmcaddon.Addon().getSetting
 
@@ -12,10 +12,12 @@ addonPath          = xbmcaddon.Addon().getAddonInfo("path")
 addonFanart        = xbmcaddon.Addon().getAddonInfo("fanart")
 addonVersion       = xbmcaddon.Addon().getAddonInfo("version")
 
-addonName2 = str2 + space + "Featherence"
+addonName2 = "Featherence"
 printfirst = addonName + ": !@# "
 try: pluginhandle = int(sys.argv[1])
 except: pluginhandle = ""
+
+containerfolderpath = xbmc.getInfoLabel('Container.FolderPath')
 '''---------------------------'''
 General_AutoView = getsetting('General_AutoView')
 General_TVModeShuffle = getsetting('General_TVModeShuffle')
@@ -40,7 +42,6 @@ except:
 	Search_History = ""
 	Search_Limit = ""
 	General_TVModeQuality = "0"
-
 Search_History_file = os.path.join(addondata_path, addonID, 'Search_History.txt')
 
 Addon_ShowLog = getsetting('Addon_ShowLog')

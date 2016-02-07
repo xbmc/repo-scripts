@@ -163,7 +163,7 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False):
                         del c
 
                     f.close()
-                    print '%s download complete' % (dest)
+                    #print '%s download complete' % (dest)
                     if not xbmc.Player().isPlaying() and silent != True:
                         xbmcgui.Dialog().ok(title, dest, '' , 'Download finished')
                     return "ok"

@@ -5,121 +5,42 @@ from variables import *
 from shared_modules import *
 
 def mode0(admin, name, printpoint):
-	'''------------------------------
-	---TEST--------------------------
-	------------------------------'''
-	#addon = ''
-	#installaddon(admin, addon, update=False)
-	#installaddonP(admin, addon, update=False)
-	#returned = dialogyesno(localize(79516) + '[CR]blablablasssssssssssssssssss', localize(78,addon='script.featherence.service') + localize(75775)) #User settings
-	#dialogok('asdasdsakdsalfd;gke;gwekfeaf[CR]asdasdsakdsalfd','dsafamlg;ewmfefsaf','dsafldmlemfwqfewfvasdfvdaf','sdafdglvnlerflqemfafcasfcaafasfsghgs')
-	#option = localize(24056,[librarydatalocaldatestr]) #str24056.encode('utf-8') % (librarydatalocaldatestr)
-	#print option
-	#xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=31&value=header&value2=test&value3=Z:\kodi.log)')
-	#xbmc.executebuiltin('Skin.ResetSettings')
-	#xbmc.executebuiltin('ActivateWindow(videoplaylist)')
-	#mode5('', admin, name, printpoint)
-	#dp = xbmcgui.DialogProgress()
-	#dp.create("featherence Texture-Cache-Removal", "Removing Datebase", "why are we here?[CR]test is here ssssssssssssssssssssssssssssssssssssssssssssssssssss ")
-	#terminal('killall -9 kodi.bin',desc="", remote=True)
-	#from debug2 import *
-	#from debug3 import *
-	#subject = 'test'
-	#text = 'test2'
-	file = 'C:\\Users\\gal\\AppData\\Roaming\\Kodi\\1941146-1920x1080-[DesktopNexus.com]_.jpg'
-	#file = to_unicode(file)
-	#file = ""
-	#upload_file2(file)
-	#sendMail(Debug_Email, Debug_Password, subject, text, file)
-	#setSkin_UpdateLog(admin, Skin_Version, Skin_UpdateDate, datenowS, force=True)
-	folder_ = 'Featherence'
-	path_ = os.path.join(featherenceserviceaddondata_media_path, folder_, '')
-	if os.path.exists(path_):
-		returned_ = dialogyesno('%s Folder found!' % (folder_), 'Choose YES to proceed (Optional)')
-		if returned_ != 'skip':
-			copyfiles(path_, home_path)
+	'''test'''
+	pass
 	
 def mode5(value, admin, name, printpoint):
-	'''------------------------------
-	---demon-------------------------
-	------------------------------'''
-	AutoUpdate = getsetting('AutoUpdate')
-	AutoUpdate2 = getsetting('AutoUpdate2')
-	Library_On = getsetting('Library_On')
+	'''startup'''
+	Remote_Name = getsetting('Remote_Name')
+	Remote_Support = getsetting('Remote_Support')
+	if Remote_Name != "" and Remote_Name != 'None' and Remote_Support == 'true':
+		xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=27&value=0)')
 	
-	if AutoUpdate == 'true':
-		printpoint = printpoint + '1'
-		try:
-			test = int(AutoUpdate2) + 1
-		except:
-			AutoUpdate2 = '60'
-			setsetting('AutoUpdate2','60')
-		xbmc.executebuiltin('UpdateAddonRepos')
-		xbmc.executebuiltin('UpdateLocalAddons')
+	try:
+		VolumeLevel = int(xbmcaddon.Addon(addonID).getSetting('VolumeLevel'))
+		xbmc.executebuiltin('SetVolume('+str(VolumeLevel)+')')
+	except: pass
 	
-	if xbmc.getCondVisibility('!IntegerGreaterThan(System.Uptime,5)'):
-		'''one time at startup'''
-		Remote_Name = getsetting('Remote_Name')
-		Remote_Support = getsetting('Remote_Support')
-		if Remote_Name != "" and Remote_Name != 'None' and Remote_Support == 'true':
-			xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=27&value=0)')
+	addon = 'plugin.video.featherence.docu'
+	if xbmc.getCondVisibility('System.HasAddon('+addon+')'): setsetting_custom1(addon, 'Addon_UpdateLog', "true")
 		
-		#mode101('1',admin, 'TotalMouse')
+	addon = 'plugin.video.featherence.kids'
+	if xbmc.getCondVisibility('System.HasAddon('+addon+')'): setsetting_custom1(addon, 'Addon_UpdateLog', "true")
+
+	addon = 'plugin.video.featherence.gopro'
+	if xbmc.getCondVisibility('System.HasAddon('+addon+')'): setsetting_custom1(addon, 'Addon_UpdateLog', "true")
+
+	addon = 'plugin.video.featherence.music'
+	if xbmc.getCondVisibility('System.HasAddon('+addon+')'): setsetting_custom1(addon, 'Addon_UpdateLog', "true")
+	
+	if xbmc.getSkinDir() == 'skin.featherence':
+		mode215('_',admin,'','')
+		setsetting_custom1('script.featherence.service','Skin_UpdateLog',"true")
+		Skin_UpdateLog = 'true'
+		xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=23&value=)')
+		setSkin_Update(admin, datenowS, Skin_Version, Skin_UpdateDate, Skin_UpdateLog)
 		
-		try:
-			VolumeLevel = int(xbmcaddon.Addon(addonID).getSetting('VolumeLevel'))
-			xbmc.executebuiltin('SetVolume('+str(VolumeLevel)+')')
-		except: pass
-		
-		addon = 'plugin.video.featherence.docu'
-		if xbmc.getCondVisibility('System.HasAddon('+addon+')'): setsetting_custom1(addon, 'Addon_UpdateLog', "true")
-			
-		addon = 'plugin.video.featherence.kids'
-		if xbmc.getCondVisibility('System.HasAddon('+addon+')'): setsetting_custom1(addon, 'Addon_UpdateLog', "true")
-
-		addon = 'plugin.video.featherence.gopro'
-		if xbmc.getCondVisibility('System.HasAddon('+addon+')'): setsetting_custom1(addon, 'Addon_UpdateLog', "true")
-
-		addon = 'plugin.video.featherence.music'
-		if xbmc.getCondVisibility('System.HasAddon('+addon+')'): setsetting_custom1(addon, 'Addon_UpdateLog', "true")
-		
-		installaddonP(admin, 'repository.featherence')
-		
-		if xbmc.getSkinDir() == 'skin.featherence':
-			mode215('_',admin,'','')
-			setsetting_custom1('script.featherence.service','Skin_UpdateLog',"true")
-			Skin_UpdateLog = 'true'
-			installaddonP(admin, 'script.module.simplejson')
-			xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=23&value=)')
-			setSkin_Update(admin, datenowS, Skin_Version, Skin_UpdateDate, Skin_UpdateLog)
-			
-			installaddonP(admin, 'resource.images.weathericons.outline')
-			installaddonP(admin, 'resource.images.weatherfanart.single')
-			
-	else:
-		'''multitime but not on startup'''
-		if Library_On == 'true':
-			printpoint = printpoint + '2'
-			LibraryUpdate(admin, datenowS, Library_On, Library_CleanDate, Library_UpdateDate)
-
-	if AutoUpdate == 'true' or Library_On == 'true':
-		xbmc.executebuiltin('AlarmClock(demon,RunScript(script.featherence.service,,?mode=5),'+str(AutoUpdate2)+',silent)') #demon
-
-def mode6(admin, name, printpoint):
-	'''------------------------------
-	---connectioncheck---------------
-	------------------------------'''
-	name = "?"
-	connectioncheck(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode7(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode7(admin, name, printpoint)
-	'''---------------------------'''
+		installaddon('resource.images.weathericons.outline')
+		installaddon('resource.images.weatherfanart.single')
 	
 def mode8(admin, name, printpoint):
 	'''------------------------------
@@ -278,10 +199,6 @@ def mode9(admin, name):
 		
 		dialogsubtitlesW = xbmc.getCondVisibility('Window.IsVisible(DialogSubtitles.xml)')
 		if dialogsubtitlesW:
-			if not controlgroup70hasfocus0 and not xbmc.getCondVisibility('System.GetBool(subtitles.pauseonsearch)'):
-				if systemidle3 and playerpaused: xbmc.executebuiltin('Action(Play)')
-				elif not systemidle3 and not playerpaused: xbmc.executebuiltin('Action(Pause)')
-				'''---------------------------'''
 			xbmc.sleep(1000)
 			'''---------------------------'''
 			count += 1
@@ -289,17 +206,13 @@ def mode9(admin, name):
 			else: countidle = 0
 			'''---------------------------'''
 	
-	systemidle1 = xbmc.getCondVisibility('System.IdleTime(1)')
-	systemidle7 = xbmc.getCondVisibility('System.IdleTime(7)')
-	
-	if systemidle1 and not systemidle7:
+	if xbmc.getCondVisibility('System.IdleTime(1)') and not xbmc.getCondVisibility('System.IdleTime(7)'):
 		'''------------------------------
 		---SET-NEW-SUBTITLE--------------
 		------------------------------'''
 		setProperty('TEMP2', localize(24110), type="home")
 		property_dialogsubtitles = xbmc.getInfoLabel('Window(home).Property(DialogSubtitles)')
-		setProperty('DialogSubtitles2', property_dialogsubtitles, type="home")
-		if property_dialogsubtitles2 != "": setSubHisotry(admin, property_dialogsubtitles, property_dialogsubtitles2, property_dialogsubtitlesna1, property_dialogsubtitlesna2, property_dialogsubtitlesna3, property_dialogsubtitlesna4, property_dialogsubtitlesna5, property_dialogsubtitlesna6, property_dialogsubtitlesna7, property_dialogsubtitlesna8, property_dialogsubtitlesna9, property_dialogsubtitlesna10)
+		if property_dialogsubtitles != "": setSubHisotry(admin, property_dialogsubtitles, property_dialogsubtitles2, property_dialogsubtitlesna1, property_dialogsubtitlesna2, property_dialogsubtitlesna3, property_dialogsubtitlesna4, property_dialogsubtitlesna5, property_dialogsubtitlesna6, property_dialogsubtitlesna7, property_dialogsubtitlesna8, property_dialogsubtitlesna9, property_dialogsubtitlesna10, subL)
 		if property_subtitleservice != controlgetlabel100 and controlgetlabel100 != "": setProperty('Subtitle_Service', controlgetlabel100, type="home")
 		'''---------------------------'''
 		
@@ -307,22 +220,21 @@ def mode9(admin, name):
 	setProperty('DialogSubtitles', "", type="home")
 	setProperty('TEMP2', "", type="home")
 	
-	playerpaused = xbmc.getCondVisibility('Player.Paused')
-	if playerpaused: xbmc.executebuiltin('Action(Play)')
+	if xbmc.getCondVisibility('Player.Paused'): xbmc.executebuiltin('Action(Play)')
 	'''---------------------------'''
 	
 	if property_dialogsubtitlesna6 and not property_dialogsubtitlesna7:
 		'''------------------------------
 		---SHOW-TIPS---------------------
 		------------------------------'''
-		playerpaused = xbmc.getCondVisibility('Player.Paused')
-		if not playerpaused: xbmc.executebuiltin('Action(Pause)')
+		if not xbmc.getCondVisibility('Player.Paused'): xbmc.executebuiltin('Action(Pause)')
 		header = '[COLOR=yellow]' + xbmc.getInfoLabel('$LOCALIZE[78946]') + '[/COLOR]'
 		message2 = xbmc.getInfoLabel('$LOCALIZE[78945]')
 		w = TextViewer_Dialog('DialogTextViewer.xml', "", header=header, text=message2)
 		w.doModal()
 		'''---------------------------'''
-		
+	
+	setProperty('DialogSubtitles',"",type="home")
 	'''------------------------------
 	---PRINT-END---------------------
 	------------------------------'''
@@ -330,23 +242,28 @@ def mode9(admin, name):
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 	'''---------------------------'''
 
-def setSubHisotry(admin, property_dialogsubtitles, property_dialogsubtitles2, property_dialogsubtitlesna1, property_dialogsubtitlesna2, property_dialogsubtitlesna3, property_dialogsubtitlesna4, property_dialogsubtitlesna5, property_dialogsubtitlesna6, property_dialogsubtitlesna7, property_dialogsubtitlesna8, property_dialogsubtitlesna9, property_dialogsubtitlesna10):
-	if property_dialogsubtitles != "":
+def setSubHisotry(admin, property_dialogsubtitles, property_dialogsubtitles2, property_dialogsubtitlesna1, property_dialogsubtitlesna2, property_dialogsubtitlesna3, property_dialogsubtitlesna4, property_dialogsubtitlesna5, property_dialogsubtitlesna6, property_dialogsubtitlesna7, property_dialogsubtitlesna8, property_dialogsubtitlesna9, property_dialogsubtitlesna10, subL):
+	if property_dialogsubtitles != "" and not property_dialogsubtitles in subL:
 		for i in range(1,11):
 			if xbmc.getInfoLabel('Window(home).Property(DialogSubtitlesNA'+str(i)+')') == "":
 				setProperty('DialogSubtitlesNA' +str(i), property_dialogsubtitles, type="home")
 				break
 	
 	xbmc.sleep(1000)
-	setCurrent_Subtitle(admin, property_dialogsubtitles, property_dialogsubtitles2, property_dialogsubtitlesna1, property_dialogsubtitlesna2, property_dialogsubtitlesna3, property_dialogsubtitlesna4, property_dialogsubtitlesna5, property_dialogsubtitlesna6, property_dialogsubtitlesna7, property_dialogsubtitlesna8, property_dialogsubtitlesna9, property_dialogsubtitlesna10)
+	setCurrent_Subtitle(admin, property_dialogsubtitles, property_dialogsubtitles2, property_dialogsubtitlesna1, property_dialogsubtitlesna2, property_dialogsubtitlesna3, property_dialogsubtitlesna4, property_dialogsubtitlesna5, property_dialogsubtitlesna6, property_dialogsubtitlesna7, property_dialogsubtitlesna8, property_dialogsubtitlesna9, property_dialogsubtitlesna10, subL)
 	'''---------------------------'''
 	
-def setCurrent_Subtitle(admin, property_dialogsubtitles, property_dialogsubtitles2, property_dialogsubtitlesna1, property_dialogsubtitlesna2, property_dialogsubtitlesna3, property_dialogsubtitlesna4, property_dialogsubtitlesna5, property_dialogsubtitlesna6, property_dialogsubtitlesna7, property_dialogsubtitlesna8, property_dialogsubtitlesna9, property_dialogsubtitlesna10):
-	for i in range(0,11):
-		if i == 0: setProperty('DialogSubtitles', property_dialogsubtitles, type="home")
-		else: setProperty('DialogSubtitles' +str(i), xbmc.getInfoLabel('Window(home).Property(DialogSubtitlesNA'+str(i)+')'), type="home")
-		'''---------------------------'''
-		
+def setCurrent_Subtitle(admin, property_dialogsubtitles, property_dialogsubtitles2, property_dialogsubtitlesna1, property_dialogsubtitlesna2, property_dialogsubtitlesna3, property_dialogsubtitlesna4, property_dialogsubtitlesna5, property_dialogsubtitlesna6, property_dialogsubtitlesna7, property_dialogsubtitlesna8, property_dialogsubtitlesna9, property_dialogsubtitlesna10, subL):
+	setProperty('DialogSubtitles2', property_dialogsubtitles, type="home")
+	'''---------------------------'''
+
+def ClearSubHisotry():
+	setProperty('DialogSubtitles',"",type="home")
+	setProperty('DialogSubtitles2',"",type="home")
+	for i in range(1,11):
+		setProperty('DialogSubtitlesNA'+str(i),"",type="home")
+
+				
 def setPlayerInfo(admin):
 	type = None
 	videoplayercontentEPISODE = xbmc.getCondVisibility('VideoPlayer.Content(episodes)')
@@ -377,6 +294,7 @@ def setPlayerInfo(admin):
 			elif seasonN > 10 and episodeN > 10: input = videoplayertvshowtitle + " " + 'S' + videoplayerseason + 'E' + videoplayerepisode
 			elif seasonN > 10 and episodeN < 10: input = videoplayertvshowtitle + " " + 'S' + videoplayerseason + 'E0' + videoplayerepisode
 			elif seasonN < 10 and episodeN > 10: input = videoplayertvshowtitle + " " + 'S0' + videoplayerseason + 'E' + videoplayerepisode
+			else: input = playertitle
 			'''---------------------------'''
 		else: input = playertitle
 		
@@ -422,7 +340,9 @@ def mode10(admin, name, printpoint):
 		if xbmc.getInfoLabel('Window(home).Property(VideoPlayer.Title)') != "":
 			if xbmcaddon.Addon('script.featherence.service').getSetting('widget_enable') == 'true':
 				if not xbmc.getCondVisibility('IntegerGreatherThan(VideoPlayer.PlaylistLength,1)'):
-					printpoint = printpoint + "5"
+					pass #printpoint = printpoint + "5"
+		
+		ClearSubHisotry()
 		setProperty('mode10', "", type="home")
 		setProperty('VideoPlayer.Title', "", type="home")
 		if '5' in printpoint:
@@ -431,139 +351,6 @@ def mode10(admin, name, printpoint):
 			xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=23)')
 		
 
-def mode12(admin, name, printpoint):
-	'''------------------------------
-	---UPDATE-LIVE-TV-PVR------------
-	------------------------------'''
-	addon = 'plugin.video.israelive'
-	if xbmc.getCondVisibility('System.HasAddon('+addon+')'):
-		notification("UPDATE-LIVE-TV-PVR","","",1000)
-
-		path = os.path.join(addondata_path, 'plugin.video.israelive', '')
-		removefiles(path)
-		path = os.path.join(database_path, 'Epg8.db')
-		removefiles(path)
-		xbmc.sleep(1000)
-		xbmc.executebuiltin('RunScript(plugin.video.israelive,,mode=32)') #Update IPTVSimple settings
-		xbmc.sleep(500)
-		xbmc.executebuiltin('RunScript(plugin.video.israelive,,mode=34)') #REFRESH ALL SETTINGS
-		'''---------------------------'''
-	else: notification_common("5")
-	'''---------------------------'''
-
-def mode13(admin, name, printpoint):
-	'''------------------------------
-	---SubtitleButton_Country--------
-	------------------------------'''
-	videoplayersubtitleslanguage = xbmc.getInfoLabel('VideoPlayer.SubtitlesLanguage') ; videoplayersubtitleslanguage_ = ""
-	if videoplayersubtitleslanguage != "":
-		len_ = len(videoplayersubtitleslanguage)
-		if str(len_) != '2':
-			if str(len_) == '3':
-				videoplayersubtitleslanguage_ = videoplayersubtitleslanguage[:-1]
-				
-		xbmc.executebuiltin('SetProperty(SubtitleButton.Country,'+videoplayersubtitleslanguage_+',home)')
-		'''---------------------------'''
-	text = "videoplayersubtitleslanguage" + space2 + str(videoplayersubtitleslanguage) + space + "videoplayersubtitleslanguage_" + space2 + str(videoplayersubtitleslanguage_)
-	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
-	
-def mode14(admin, name, printpoint):
-	'''------------------------------
-	---------------------------------
-	------------------------------'''
-	pass
-	
-def mode15(value, admin, name, printpoint):
-	'''------------------------------
-	---CopyFiles-Tweak---------------
-	------------------------------'''
-	source = "" ; target = ""
-	if '|' in value:
-		source = find_string(value, "", '|')
-		source = source.replace('|',"")
-		target = find_string(value, '|', "")
-		target = target.replace('|',"")
-
-		copyfiles(source, target, chmod="", mount=False)
-		
-	else: pass
-	
-	text = 'source' + space2 + str(source) + newline + 'target' + space2 + str(target)
-	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
-	
-	'''---------------------------'''
-	
-def mode16(admin, name, printpoint):
-	'''------------------------------
-	---------------------------------
-	------------------------------'''
-	pass
-
-def mode17(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-
-def mode18(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-
-def mode19(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-	
-def mode21(value, admin, name, printpoint):
-	'''------------------------------
-	---SCRAPER-AUTO-SETUP------------
-	------------------------------'''
-	returned = setPath(0)
-	if returned != "":
-		if value == '1':
-			'''------------------------------
-			---MOVIES------------------------
-			------------------------------'''
-			#printpoint2 = "" ; printpoint2 = doFix_100_0(printpoint2, "100")
-			printpoint2 = "" ; printpoint2 = doFix_100_0(printpoint2, "100")
-			
-			if not "9" in printpoint2 and "0" in printpoint2:
-				dialogok(localize(78985) + '[CR]' + '[COLOR=yellow]' + str74550.encode('utf-8') % (localize(342)) + '[/COLOR]', '$LOCALIZE[78983]', '$LOCALIZE[78982]',"")
-				returned = dialogyesno(localize(78985), '[COLOR=yellow]' + str74550.encode('utf-8') % (localize(342)) + '[/COLOR]' + '[CR]' + localize(78981)) #Manual fix is available ,
-				if returned == 'ok': printpoint2 = doFix_100(admin, "100", TEMP)
-				else: printpoint2 = printpoint2 + "8"
-				'''---------------------------'''
-				if "7" in printpoint2:
-					dialogok(localize(78986) + '[CR]' + '[COLOR=yellow]' + str74550.encode('utf-8') % (localize(342)) + '[/COLOR]',localize(75209,s=[localize(342)]), '$LOCALIZE[75208]', "")
-					'''---------------------------'''
-				elif "9" in printpoint2: dialogok(localize(78974) + '[CR]' + '[COLOR=yellow]' + str74550.encode('utf-8') % (localize(342)) + '[/COLOR]',"", '$LOCALIZE[75210]', "") #Fix failed, Add movies to library
-				'''---------------------------'''
-		elif value == '2':
-			'''------------------------------
-			---TVSHOWS-----------------------
-			------------------------------'''
-			printpoint2 = "" ; printpoint2 = doFix_100_0(printpoint2, "101")
-			addon = 'metadata.tvdb.com'
-			if not xbmc.getCondVisibility('System.HasAddon('+ addon +')'): installaddon(admin, addon, "")
-			printpoint2 = "" ; printpoint2 = doFix_100_0(printpoint2, "101", TEMP)
-			'''---------------------------'''
-			if not "9" in printpoint2 and "0" in printpoint2:
-				dialogok(localize(78985) + '[CR]' + '[COLOR=yellow]' + str74550.encode('utf-8') % (str20343.encode('utf-8')) + '[/COLOR]', '$LOCALIZE[78983]', '$LOCALIZE[78982]',"")
-				returned = dialogyesno(localize(78985), '[COLOR=yellow]' + str74550.encode('utf-8') % (str20343.encode('utf-8')) + '[/COLOR]' + '[CR]' + localize(78981)) #Manual fix is available ,
-				if returned == 'ok': printpoint2 = doFix_100(admin, "101")
-				else: printpoint2 = printpoint2 + "8"
-				'''---------------------------'''
-				if "7" in printpoint2:
-					dialogok(localize(78986) + '[CR]' + '[COLOR=yellow]' + str74550.encode('utf-8') % (str20343.encode('utf-8')) + '[/COLOR]',localize(75209,s=[localize(20343)]), '$LOCALIZE[75208]', "")
-					'''---------------------------'''
-				elif "9" in printpoint2: dialogok(localize(78974) + '[CR]' + '[COLOR=yellow]' + str74550.encode('utf-8') % (str20343.encode('utf-8')) + '[/COLOR]',"", '$LOCALIZE[75210]', "") #Fix failed, Add movies to library
-				'''---------------------------'''
 def mode22(value, admin, name, printpoint, ScreenSaver_Music):
 	'''------------------------------
 	---ScreenSaver_Music-------------
@@ -577,14 +364,6 @@ def mode22(value, admin, name, printpoint, ScreenSaver_Music):
 			returned2 = dialogyesno('Remove Current Path?',screensavermusic)
 			if returned2 == 'ok': setSkinSetting('0','screensavermusic',"")
 			'''---------------------------'''
-
-def mode24(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode24(admin, name, printpoint)
-	'''---------------------------'''
 
 def mode25(value, admin, name, printpoint):
 	'''------------------------------
@@ -605,16 +384,6 @@ def mode25(value, admin, name, printpoint):
 		for x in playlist:
 			pl.add(x)
 		xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(pl)
-		
-
-def mode26(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode26(admin, name, printpoint)
-	'''---------------------------'''
-
 
 def mode28(value, admin, name, printpoint):
 	'''------------------------------
@@ -702,9 +471,17 @@ def mode29(value, command, header, exit, name, printpoint):
 	'commandL ' + space2 + str(commandL) + newline + extra
 	printlog(title=name, printpoint=printpoint, text=text2, level=0, option="")
 	
-def mode30(admin, name):
-	pass
-
+def mode30(input, header, option, action, set1, addon, name, printpoint):
+	'''------------------------------
+	---Dialog-Keyboard-Skin----------
+	------------------------------'''
+	if action != "":
+		'''same time action (pre)'''
+		xbmc.executebuiltin('AlarmClock(mode30,'+action+',00:01,silent)')
+	try: option += 1
+	except: option = 0
+	dialogkeyboard(input, header, option, "", set1=set1, addon=addon, force=True)
+	
 def mode31(value, value2, value3, value4, admin, name, printpoint):
 	'''------------------------------
 	---diaogtextviewer---------------
@@ -830,7 +607,8 @@ def mode32(value, admin, name, printpoint):
 		pass
 		
 	elif value == '5':
-		ReloadSkin(admin)
+		ReloadSkin(admin,force=False)
+		#ReloadSkin(admin)
 	
 	elif value == '40':
 		addon = 'plugin.video.featherence.kids'
@@ -839,39 +617,6 @@ def mode32(value, admin, name, printpoint):
 			General_Language2 = xbmcaddon.Addon(addon).getSetting('General_Language2') ; General_Language2 = str(General_Language2)
 			dialogok(addonString_servicefeatherence(32086).encode('utf-8') % (General_Language2),addonString_servicefeatherence(32087).encode('utf-8'),"",addonString_servicefeatherence(32088).encode('utf-8'),line1c="yellow")
 		
-def mode33(admin, name, printpoint):
-	'''------------------------------
-	---?--------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-
-def mode34(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode34(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode35(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode35(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode36(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode36(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode37(admin, name, printpoint):
-	pass
 		
 def mode40(value, admin, name, printpoint):
 	'''------------------------------
@@ -891,6 +636,7 @@ def mode40(value, admin, name, printpoint):
 	if printpoint == '1':
 		xbmc.executebuiltin('Skin.ResetSettings') ; xbmc.sleep(500)
 		Custom1000(name,1,'This action may take a while.. be patient!',30)
+		playerhasmedia = xbmc.getCondVisibility('Player.HasMedia')
 		if playerhasmedia: xbmc.executebuiltin('Action(Stop)')
 		
 		count = 0
@@ -909,232 +655,7 @@ def mode41(admin, name, printpoint):
 	------------------------------'''
 	if systemplatformandroid: terminal('am start -a android.intent.action.MAIN -n com.android.settings/.Settings',name)
 	elif systemplatformwindows: terminal('rundll32.exe van.dll,RunVAN',name)
-	else: oewindow('Network')
-	'''---------------------------'''
-
-def mode43(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode43(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode44(admin, name):
-	'''------------------------------
-	---OVERCLOCK---------------------
-	------------------------------'''
-	if not systemplatformlinuxraspberrypi: notification_common("22")
-	else:
-		printpoint = ""
-		list = ['-> (Exit)','Status','OverClocking'] #,'Stability Test'
-		
-		returned, value = dialogselect('$LOCALIZE[74433]',list,0)
-
-		if returned == -1:
-			printpoint = printpoint + "9"
-			#notification_common("9")
-		elif returned == 0: printpoint = printpoint + "8"
-		elif returned == 1:
-			'''------------------------------
-			---STATUS------------------------
-			------------------------------'''
-			config_file = '/flash/config.txt'
-			if not os.path.exists(config_file): dialogok("config.txt is missing!", "" ,"" ,"")
-			else:
-				output = catfile('/flash/config.txt')
-				diaogtextviewer(config_file, output)
-				'''---------------------------'''
-		elif returned == 2: mode46(admin, 'OVERCLOCKING')
-
-def mode45(admin, name):
-	'''------------------------------
-	---STABILITY-TEST----------------
-	------------------------------'''
-	path = os.path.join(addonPath, 'specials', 'scripts', 'stabilitytest.sh')
-	os.system('sh '+path+'')
-	#xbmc
-
-def mode46(admin,name):
-	'''------------------------------
-	---OVERCLOCKING------------------
-	------------------------------'''
-	printpoint = ""
-	addon = 'script.openelec.rpi.config'
-	if not xbmc.getCondVisibility('System.HasAddon('+ addon +')'):
-		installaddon(admin, addon, update=True)
-	else: xbmc.executebuiltin('RunScript('+addon+')')
-	
-def mode47(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode47(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode48(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode48(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode49(admin, name, printpoint):
-	'''------------------------------
-	---SCRAPER-FIX-------------------
-	------------------------------'''
-	setsetting_custom1('script.featherence.service.fix','Fix_100',"true")
-	setsetting_custom1('script.featherence.service.fix','Fix_101',"true")
-	
-	xbmc.executebuiltin('ActivateWindow(0)')
-	xbmc.sleep(500)
-	notification_common("2")
-	xbmc.executebuiltin('RunScript(script.featherence.service.fix,,?mode=3)')	
-	
-	
-def mode50(admin, name, printpoint):
-	'''------------------------------
-	---SOFT-RESTART------------------
-	------------------------------'''
-	custom = 'f1'
-	killall(admin, custom)
-	'''---------------------------'''
-
-def mode51(admin, name, printpoint):
-	'''------------------------------
-	---RESTART-----------------------
-	------------------------------'''
-	custom = 'r1'
-	killall(admin, custom)
-	'''---------------------------'''
-
-def mode52(admin, name, printpoint):
-	'''------------------------------
-	---SUSPEND-----------------------
-	------------------------------'''
-	xbmc.sleep(1000)
-	xbmc.executebuiltin('XBMC.Suspend()')
-	'''---------------------------'''
-
-def mode53(admin, name, printpoint):
-	'''------------------------------
-	---POWEROFF----------------------
-	------------------------------'''
-	#notification(startupmessage2,id1str,"",5000)
-	custom = 's1'
-	killall(admin, custom)
-	'''---------------------------'''
-
-def mode54(admin, name, printpoint):
-	'''------------------------------
-	---QUIT--------------------------
-	------------------------------'''
-	if xbmc.getSkinDir() == 'skin.featherence': custom = 'q1'
-	else: custom = 'q'
-	xbmc.sleep(500)
-	killall(admin, custom)
-	#notification(startupmessage2,id1str,"",5000)
-	'''---------------------------'''
-
-def mode57(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode57(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode58(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode58(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode60(admin, name, printpoint):
-	'''------------------------------
-	---?--------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-
-def mode61(admin, name, printpoint):
-	'''------------------------------
-	---?--------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-	
-def mode62(admin, name, printpoint):
-	'''------------------------------
-	---?--------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-	
-
-def mode63(admin, name):
-	'''------------------------------
-	---Texture-Cache-Removal---------
-	------------------------------'''
-	returned = dialogyesno("Are you sure?", "Doing so will delete your database and thumbnails folder!")
-	if returned == "ok":
-		dp = xbmcgui.DialogProgress()
-		dp.create("featherence Texture-Cache-Removal", "Removing Datebase", " ")
-		removefiles(database_path)
-		dp.update(20,"Removing Thumbnails"," ")
-		removefiles(thumbnails_path,dialogprogress=20)
-		if os.path.exists(thumbnails_path): message = 'Error'
-		else: message = addonString(33300).encode('utf-8')
-		dp.update(90,message," ")
-		xbmc.sleep(1000)
-		dp.update(100,message," ")
-		dp.close
-		if not os.path.exists(thumbnails_path) and not os.path.exists(database_path): dialogok("Reboot Required!", "Click OK", "", "")
-		else: dialogok("Couldn't remove thumbnails / database folder", "You should remove them manualy or reboot and retry!", "", "")
-		#xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=50)')
-		
-	else: notification_common("9")
-
-def mode64(value, admin, name, printpoint):
-	'''------------------------------
-	---Extract from file-------------
-	------------------------------'''
-	pass
-
-def mode65(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode65(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode66(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode66(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode67(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode67(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode68(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode68(admin, name, printpoint)
+	elif systemplatformlinux and xbmc.getCondVisiblity('System.HasAddon(service.openelec.settings)'): xbmc.executebuiltin('RunScript(service.openelec.settings)')
 	'''---------------------------'''
 
 def mode69(value, admin, name, printpoint):
@@ -1240,6 +761,7 @@ def mode70(value, admin, name, printpoint, property_temp):
 		else: pass
 		
 		if input != "":
+			dialogselectW = xbmc.getCondVisibility('Window.IsVisible(DialogSelect.xml)')
 			if dialogselectW:
 				xbmc.executebuiltin('dialog.close(selectdialog)') ; xbmc.sleep(500)
 			
@@ -1257,7 +779,7 @@ def mode70(value, admin, name, printpoint, property_temp):
 			'''---------------------------'''
 	else:
 		printpoint = printpoint + "9"
-		installaddon(admin, addon, update=True)
+		installaddon(addon, update=True)
 	
 	text = "input" + space2 + input + newline + \
 	"INFO" + space2 + "listitemlabel" + space2 + listitemlabel + newline + "listitemtvshowtitle" + space2 + listitemtvshowtitle + newline + \
@@ -1267,1002 +789,6 @@ def mode70(value, admin, name, printpoint, property_temp):
 	"listitemdirector" + space2 + listitemdirector + newline + \
 	"listitemwriter" + space2 + listitemwriter
 	printlog(title=name, printpoint=printpoint, text=text, level=1, option="")
-	'''---------------------------'''
-
-def mode71(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode71(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode72(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode72(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode73(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode73(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode74(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode74(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode75(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode75(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode76(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode76(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode77(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode77(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode78(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode78(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode79(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode79(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode80(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode80(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode81(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode81(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode82(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode82(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode83(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode83(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode84(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode84(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode85(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode85(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode86(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode86(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode87(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode87(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode88(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode88(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode89(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode89(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode90(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode90(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode91(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode91(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode92(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode92(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode93(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode93(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode101(value, admin, name):
-	'''------------------------------
-	---TOTAL-MOUSE-------------------
-	------------------------------'''
-	xbmc.sleep(200)
-	TotalMouse = getsetting('TotalMouse')
-	path = os.path.join(featherenceservice_path, 'specials', 'tools', 'EAT_gil900.exe')
-	if '0' in value:
-		if TotalMouse == 'true':
-			setsetting('TotalMouse','false')
-			TotalMouse = 'false'
-		else:
-			setsetting('TotalMouse','true')
-			TotalMouse = "true"
-		xbmc.sleep(100)
-		
-	if systemplatformwindows:
-		if os.path.exists(path):
-			terminal('TASKKILL /im EAT_gil900.exe /f',"EAT-end") ; xbmc.sleep(200) ; terminal('TASKKILL /im EAT_gil900.exe /f',"EAT-end") ; xbmc.sleep(200)
-			if TotalMouse == "true":
-				terminal('"'+path+'"', 'EAT-start')
-				if '0' in value: notification("TotalMouse by gil900", "Enabled!", "", 2000) ; xbmc.sleep(1000)
-			else:
-				if '0' in value: notification('Total Mouse is not active!','','',1000)
-				'''---------------------------'''
-		else: notification_common("26")
-	else: notification('OS not supported!','','',1000)
-
-def mode102(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode102(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode103(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode103(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode104(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode104(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode105(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode105(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode106(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode106(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode107(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode107(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode108(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode108(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode109(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode109(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode110(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode110(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode111(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode111(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode112(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode112(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode113(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode113(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode114(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode114(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode115(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode115(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode116(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode116(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode117(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode117(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode118(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode118(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode119(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode119(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode120(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode120(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode121(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode121(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode122(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode122(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode123(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode123(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode124(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode124(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode125(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode125(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode126(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode126(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode127(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode127(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode128(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode128(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode129(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode129(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode130(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode130(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode131(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode131(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode132(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode132(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode133(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode133(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode134(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode134(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode135(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode135(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode136(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode136(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode137(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode137(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode138(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode138(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode139(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode139(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode140(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode140(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode141(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode141(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode142(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode142(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode143(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode143(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode144(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode144(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode145(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode145(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode146(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode146(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode147(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode147(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode148(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode148(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode149(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode149(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode150(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode150(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode151(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode151(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode152(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode152(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode153(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode153(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode154(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode154(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode155(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode155(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode156(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode156(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode157(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode157(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode158(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode158(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode159(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode159(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode160(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode160(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode161(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode161(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode162(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode162(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode163(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode163(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode164(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode164(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode165(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode165(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode166(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode166(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode167(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode167(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode168(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode168(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode169(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode169(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode170(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode170(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode171(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode171(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode172(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode172(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode173(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode173(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode174(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode174(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode175(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode175(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode176(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode176(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode177(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode177(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode178(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode178(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode179(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode179(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode180(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode180(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode181(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode181(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode182(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode182(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode183(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode183(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode184(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode184(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode185(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode185(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode186(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode186(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode187(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode187(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode188(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode188(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode189(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode189(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode190(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode190(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode191(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode191(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode192(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode192(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode193(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode193(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode194(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode194(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode195(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode195(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode196(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode196(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode197(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode197(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode198(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode198(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode199(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode199(admin, name, printpoint)
 	'''---------------------------'''
 	
 def mode200(value, admin, name, printpoint):
@@ -2303,6 +829,7 @@ def mode200(value, admin, name, printpoint):
 	'''---------------------------'''
 
 def Custom1000(title="", progress="", comment="", autoclose=""):
+	libraryisscanningvideo = xbmc.getCondVisibility('Library.IsScanningVideo')
 	if libraryisscanningvideo: xbmc.executebuiltin('UpdateLibrary(video)')
 	xbmc.executebuiltin('SetProperty(1000title,'+title+',home)')
 	xbmc.executebuiltin('SetProperty(1000progress,'+str(progress)+',home)')
@@ -2319,10 +846,7 @@ def Custom1000(title="", progress="", comment="", autoclose=""):
 	text = 'title' + space2 + str(title)
 	printlog(title='Custom1000', printpoint=printpoint, text=text, level=0, option="")
 	
-def getRandomColors(admin):
-	#colors_file = os.path.join(skin_path, 'media', 'buttons', 'colors', 'colors.xml')
-	#infile_colors_ = read_from_file(colors_file, silent=True)
-	
+def getRandomColors(admin):	
 	returned, value1 = getRandom("0", min=0, max=70, percent=50)
 	returned, value2 = getRandom("0", min=0, max=70, percent=50)
 	returned, value3 = getRandom("0", min=0, max=70, percent=50)
@@ -2593,46 +1117,6 @@ def mode202(value, admin, name, printpoint):
 	'property_temp' + space2 + str(property_temp)
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 	'''---------------------------'''
-		
-def mode204(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode204(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode206(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode206(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode207(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode207(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode208(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode208(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode209(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode209(admin, name, printpoint)
-	'''---------------------------'''
 
 def mode210(value, admin, name, printpoint):
 	'''------------------------------
@@ -2726,8 +1210,9 @@ def mode210(value, admin, name, printpoint):
 					setSkinSetting('0','label'+x,label_T.get('label'+y))
 					setSkinSetting('0','action'+x,str(action_T.get('action'+y)))
 					setSkinSetting('0','icon'+x,str(icon_T.get('icon'+y)))
+					setSkinSetting('0','background'+x,str(backgroundT.get('background'+y)))
 					
-					#extra = extra + newline + label_T.get('label'+y)
+					#extra = extra + newline + label_T.get('label'+y)	
 					#extra = extra + newline + 'label_' + space2 + label_
 					#extra = extra + newline + action_T.get('action'+y)
 					#extra = extra + newline + icon_T.get('icon'+y)
@@ -2884,6 +1369,7 @@ def mode212(value, admin, name, printpoint):
 				#setSkinSetting('0','id' + x,"")
 				setSkinSetting('0','icon' + x,"")
 				setSkinSetting('0','action' + x,"")
+				setSkinSetting('0','background' + x,"")
 				printpoint = printpoint + "7"
 		
 	
@@ -2903,68 +1389,6 @@ def mode212(value, admin, name, printpoint):
 	"property_subbuttonid_" + space2 + str(property_subbuttonid_) + space + "property_subbuttonname" + space2 + str(property_subbuttonname) + newline + \
 	extra
 	'''---------------------------'''
-	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
-
-def mode213(value, admin, name, printpoint):
-	'''------------------------------
-	---Includes_HomeContent----------
-	------------------------------'''
-	list = [] ; i = 0 ; x = 0
-	
-	returned_Dialog, returned_Header, returned_Message = checkDialog(admin)
-	if returned_Dialog != "": printpoint = printpoint + "9"
-	
-	elif value == '1' or value == '2':
-		'''homeW/customhomecustomizerW'''
-		if custom1138W or custom1139W or custom1175W or custom1173W or homeW: printpoint = printpoint + "9"
-		x = xbmc.getInfoLabel('Container(9000).ListItem('+str(i)+').Label')
-		y = xbmc.getInfoLabel('Container(9000).NumItems')
-
-	elif value == '3':
-		'''customhomecustomizer2W'''
-		if custom1138W or custom1139W or custom1175W or custom1173W: printpoint = printpoint + "9"
-		x = xbmc.getInfoLabel('Container(51).ListItem('+str(i)+').Label')
-		y = xbmc.getInfoLabel('Container(51).NumItems')
-	
-	elif value == '4':
-		'''Home'''
-		x = 'N/A'
-		y = 'N/A'
-		
-	try: test = int(y)
-	except: y = 0
-	
-	if value == '1':
-		if int(y) < 2:
-			'''set default buttons'''
-			printpoint = printpoint + "5"
-			mode215('_', admin, name, "")
-	
-	if "9" in printpoint: pass
-	elif (value == '1' or value == '2' or value == '3') and xbmc.getInfoLabel('$VAR[background]') == "" and reloadskin_check == "": printpoint = printpoint + "7A"
-	elif value == '4' and xbmc.getCondVisibility('IsEmpty(Control.GetLabel(111))') and xbmc.getCondVisibility('!Control.IsVisible(7021)') and reloadskin_check == "": printpoint = printpoint + "7B"
-	elif (x == "" or y == ""):
-		'''ReloadSkin - Fix Bug'''
-		count = 0
-		for i in range(-5,5):
-			count += 1
-			x = xbmc.getInfoLabel('Container(9000).ListItem('+str(i)+').Label') + xbmc.getInfoLabel('Container(51).ListItem('+str(i)+').Label') + xbmc.getInfoLabel('Container(50).ListItem('+str(i)+').Label')
-			list.append(x)
-			if x != '' and x != 'Test': break
-	
-		if count > 7:
-			printpoint = printpoint + "7D"
-	
-	else:
-		pass
-	
-	if "7" in printpoint and not playerhasvideo: ReloadSkin(admin)
-	
-	text = "value" + space2 + str(value) + space + newline + \
-	"x" + space2 + str(x) + space + "y" + space2 + str(y) + space + newline + \
-	"list" + space2 + str(list) + newline + \
-	"$VAR[background]" + space2 + str(xbmc.getInfoLabel('$VAR[background]')) + space + "$VAR[MainBackgroundTexture]" + space2 + str(xbmc.getInfoLabel('$VAR[MainBackgroundTexture]')) + newline + \
-	"reloadskin_check" + space2 + str(reloadskin_check)
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 
 def mode214(value, admin, name, printpoint):
@@ -2998,13 +1422,8 @@ def mode214(value, admin, name, printpoint):
 					elif returned_len == 7: returned = 'f' + returned
 					elif returned_len == 6: returned = 'ff' + returned
 				
-				path = os.path.join(skin_path, 'media', 'buttons', 'colors', str(returned) + '.png')
-				if os.path.exists(path):
-					if str(returned) == currentbuttoncolor: pass
-					else:
-						setProperty('SelectedColor', str(returned), type="home")
-						notification('New color selected!', str(returned), '', 1000)
-				else: notification('Color is not available!', str(path), '', 6000)
+				setProperty('SelectedColor', str(returned), type="home")
+				notification('New color selected!', str(returned), '', 1000)
 	
 		text = text + newline + 'returned' + space2 + str(returned) + space + 'returned_len' + space2 + str(returned_len) + space + 'returned1' + space2 + str(returned1) + newline + \
 		'path' + space2 + str(path) + newline + \
@@ -3070,7 +1489,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None:
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(19023))
-			setSkinSetting('0','action'+id,'RunScript(script.featherence.service,,?mode=517&value=0)')
+			setSkinSetting('0','action'+id,'ActivateWindow(TVChannels)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/LiveTV.png')
 			'''---------------------------'''
 	
@@ -3081,7 +1500,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(73220))
-			setSkinSetting('0','action'+id,'RunScript(script.featherence.service,,?mode=515&value=0)')
+			setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.kids,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/kids.png')
 			'''---------------------------'''	
 			
@@ -3092,7 +1511,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(2))
-			setSkinSetting('0','action'+id,'RunScript(script.featherence.service,,?mode=514&value=0)')
+			setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.music,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/music.png')
 			'''---------------------------'''
 	
@@ -3136,7 +1555,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 3:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(15016))
-			setSkinSetting('0','action'+id,'RunScript(script.featherence.service,,?mode=510&value=0)')
+			setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.program.featherence.emu,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/games.png')
 			'''---------------------------'''	
 
@@ -3148,7 +1567,7 @@ def mode215(value, admin, name, printpoint):
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(78942))
 			#setSkinSetting('0','action'+id,'RunScript(script.featherence.service,,?mode=519&value=0)')
-			setSkinSetting('0','action'+id,'RunAddon(plugin.video.featherence.docu)')
+			setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.docu,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/animals.png')
 			'''---------------------------'''
 	
@@ -3163,9 +1582,28 @@ def mode218(value, admin, name, printpoint):
 	------------------------------'''	
 	message = ""
 	if "view" in value:
-		myweatherW = xbmc.getCondVisibility('Window.IsVisible(MyWeather.xml)')
+		dialogfullscreeninfoW = xbmc.getCondVisibility('Window.IsVisible(DialogFullScreenInfo.xml)')
 		dialogsubtitlesW = xbmc.getCondVisibility('Window.IsVisible(DialogSubtitles.xml)')
-		if myweatherW:
+		myweatherW = xbmc.getCondVisibility('Window.IsVisible(MyWeather.xml)')
+		playerpaused = xbmc.getCondVisibility('Player.Paused')
+		if dialogfullscreeninfoW and playerpaused:
+			message = message + newline + "VideoPlayer.Duration" + space2 + xbmc.getInfoLabel('VideoPlayer.Duration')
+			message = message + newline + "TopVideoInformation1" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation1)')
+			message = message + newline + "VideoPlayer.Year" + space2 + xbmc.getInfoLabel('VideoPlayer.Year')
+			message = message + newline + "TopVideoInformation2" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation2)')
+			message = message + newline + "VideoPlayer.Rating" + space2 + xbmc.getInfoLabel('VideoPlayer.Rating')
+			message = message + newline + "TopVideoInformation3" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation3)')
+			message = message + newline + "VideoPlayer.Plot" + space2 + xbmc.getInfoLabel('VideoPlayer.Plot')
+			message = message + newline + "TopVideoInformation5" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation5)')
+			
+			message = message + newline + "VideoPlayer.Genre" + space2 + xbmc.getInfoLabel('VideoPlayer.Genre')
+			message = message + newline + "TopVideoInformation6" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation6)')
+			message = message + newline + "VideoPlayer.Tagline" + space2 + xbmc.getInfoLabel('VideoPlayer.Tagline')
+			message = message + newline + "TopVideoInformation7" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation7)')
+			message = message + newline + "VideoPlayer.TVShowTitle" + space2 + xbmc.getInfoLabel('VideoPlayer.TVShowTitle')
+			message = message + newline + "TopVideoInformation8" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation8)')
+			
+		elif myweatherW:
 			message = message + newline + "Day0 Title" + space2 + xbmc.getInfoLabel('Window.Property(Day0.Title)')
 			message = message + newline + "Day1 Title" + space2 + xbmc.getInfoLabel('Window.Property(Day1.Title)')
 			message = message + newline + "Day2 Title" + space2 + xbmc.getInfoLabel('Window.Property(Day2.Title)')
@@ -3192,6 +1630,8 @@ def mode218(value, admin, name, printpoint):
 			message = message + newline + "scriptfeatherenceservice_random5" + space2 + scriptfeatherenceservice_random5
 			message = message + newline + "scriptfeatherenceservice_randomL" + space2 + str(scriptfeatherenceservice_randomL)
 			message = message + newline + '---------------------------'
+			#message = message + newline + "ListItem.Property(id)" + space2 + xbmc.getInfoLabel('Container(9000).ListItemNoWrap(0).Property(id)')
+			#message = message + newline + "ListItem.Property(id)" + space2 + xbmc.getInfoLabel('ListItem.Property(id)')
 			message = message + newline + "Button.ID" + space2 + property_buttonid
 			message = message + newline + "Button.ID_" + space2 + property_buttonid_
 			message = message + newline + "Button.Name" + space2 + property_buttonname
@@ -3211,6 +1651,7 @@ def mode218(value, admin, name, printpoint):
 			message = message + newline + "property_mode10" + space2 + property_mode10
 			message = message + newline + "ViewsSettings" + space2 + xbmc.getInfoLabel('Window(home).Property(ViewsSettings)')
 			message = message + newline + '---------------------------'
+			message = message + newline + "SelectedColor" + space2 + xbmc.getInfoLabel('Window(home).Property(SelectedColor)')
 			message = message + newline + "ListItemYear" + space2 + xbmc.getInfoLabel('Window(home).Property(ListItemYear)')
 			message = message + newline + "ListItemGenre" + space2 + xbmc.getInfoLabel('Window(home).Property(ListItemGenre)')
 			message = message + newline + "ListItemRating" + space2 + xbmc.getInfoLabel('Window(home).Property(ListItemRating)')
@@ -3240,93 +1681,12 @@ def mode218(value, admin, name, printpoint):
 		header = name
 		diaogtextviewer(header,message)
 							
-def mode220(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode220(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode221(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode221(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode222(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode222(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode223(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode223(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode224(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode224(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode225(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode225(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode226(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode226(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode227(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode227(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode228(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode228(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode229(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode229(admin, name, printpoint)
-	'''---------------------------'''
-	
 def mode231(value, admin, name, printpoint):
 	'''------------------------------
 	---INSTALL-ADDON-----------------
 	------------------------------'''
 	notification_common("24")
-	addon = value
-	installaddon(admin, addon, update=True)
+	installaddon(value, update=True)
 	'''---------------------------'''
 
 def mode232(value, admin, name, printpoint):
@@ -3335,14 +1695,9 @@ def mode232(value, admin, name, printpoint):
 	------------------------------'''
 	id1 = "" ; id2 = "" ; extra = "" ; TypeError = ""
 	if printpoint != "": printpoint = printpoint + "_"
-
-	addon1 = installaddonP(admin, 'script.skinshortcuts', update=True)
-	addon2 = installaddonP(admin, 'script.module.unidecode', update=True)
 	
-	if '9' in addon1 or '9' in addon2:
-		notification_common("24") ; xbmc.sleep(3000)
-		if '9' in addon1: notification('script.skinshortcuts','','',2000)
-		elif '9' in addon2: notification('script.module.unidecode','','',2000)
+	if not xbmc.getCondVisibility('System.HasAddon(script.skinshortcuts)'):
+		addon1 = installaddon('script.skinshortcuts', update=True)
 	else:
 		printpoint = printpoint + "0"
 		try:
@@ -3362,7 +1717,7 @@ def mode232(value, admin, name, printpoint):
 			if custom1175W and not custom1138W:
 				'''Main Action'''
 				printpoint = printpoint + "x1"
-				xbmc.executebuiltin('RunScript(script.skinshortcuts,type=shortcuts&custom=False&showNone=True&skinLabel=label'+id1+'&skinAction=action'+id1+'&skinList=[skinList]&skinType=[skinType]&skinThumbnail=icon'+id1+')')
+				xbmc.executebuiltin('RunScript(script.skinshortcuts,type=shortcuts&custom=True&showNone=True&skinLabel=label'+id1+'&skinAction=action'+id1+'&skinList=[skinList]&skinType=[skinType]&skinThumbnail=icon'+id1+')')
 			elif custom1138W:	
 				'''Sub Action'''
 				printpoint = printpoint + "x2"
@@ -3395,6 +1750,7 @@ def mode233(value, admin, name, printpoint):
 	printpoint = ""
 	x = "" ; y = property_buttonid_ ; path = "" ; x2_ = ""
 	if '0' in value:
+		printpoint = printpoint + '0'
 		y = property_subbuttonid_
 		value = value.replace('0',"",1)
 	
@@ -3402,7 +1758,7 @@ def mode233(value, admin, name, printpoint):
 		'''Add-Fanart'''
 		name = localize(20441)
 		x = 'background'
-		y = property_buttonid
+		if not '0' in printpoint: y = property_buttonid
 		nolabel=localize(20438)
 		yeslabel=localize(20441)
 	
@@ -3470,7 +1826,10 @@ def mode235(value, admin, name, printpoint):
 	------------------------------'''
 	if property_temp == 'background':
 		printpoint = printpoint + '1'
-		if property_buttonid != "":
+		if property_subbuttonid_ != "":
+			printpoint = printpoint + '4'
+			setSkinSetting('0',property_temp+str(property_subbuttonid_),"")
+		elif property_buttonid != "":
 			setSkinSetting('0',property_temp+str(property_buttonid),"")
 			printpoint = printpoint + '2'
 			'''---------------------------'''
@@ -3478,8 +1837,7 @@ def mode235(value, admin, name, printpoint):
 		printpoint = printpoint + '3'
 		if property_subbuttonid_ != "":
 			printpoint = printpoint + '4'
-			setSkinSetting('0',property_temp+str(property_buttonid_)+'_'+str(property_subbuttonid_),"")
-			mode215(property_subbuttonid_, admin, '', '')
+			setSkinSetting('0',property_temp+str(property_subbuttonid_),"")
 		elif property_buttonid_ != "":
 			printpoint = printpoint + '5'
 			setSkinSetting('0',property_temp+str(property_buttonid_),"")
@@ -3491,2099 +1849,6 @@ def mode235(value, admin, name, printpoint):
 	
 	text = 'property_temp' + space2 + str(property_temp) + space + 'property_buttonid' + space2 + str(property_buttonid)
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
-	
-def mode236(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode236(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode237(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode237(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode238(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode238(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode239(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode239(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode240(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode240(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode241(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode241(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode242(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode242(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode243(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode243(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode244(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode244(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode245(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode245(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode246(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode246(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode247(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode247(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode248(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode248(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode249(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode249(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode250(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode250(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode251(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode251(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode252(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode252(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode253(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode253(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode254(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode254(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode255(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode255(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode256(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode256(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode257(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode257(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode258(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode258(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode259(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode259(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode260(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode260(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode261(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode261(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode262(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode262(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode263(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode263(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode264(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode264(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode265(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode265(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode266(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode266(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode267(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode267(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode268(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode268(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode269(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode269(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode270(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode270(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode271(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode271(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode272(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode272(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode273(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode273(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode274(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode274(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode275(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode275(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode276(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode276(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode277(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode277(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode278(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode278(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode279(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode279(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode280(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode280(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode281(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode281(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode282(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode282(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode283(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode283(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode284(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode284(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode285(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode285(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode286(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode286(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode287(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode287(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode288(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode288(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode289(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode289(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode290(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode290(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode291(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode291(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode292(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode292(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode293(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode293(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode294(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode294(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode295(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode295(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode296(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode296(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode297(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode297(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode298(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode298(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode299(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode299(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode300(admin, name, printpoint):
-	'''------------------------------
-	---SEARCH-SDAROT-TV--------------
-	------------------------------'''
-	xbmc.executebuiltin('Control.SetFocus(50)')
-	url = 'plugin://plugin.video.sdarot.tv/?mode=6&name=%5bCOLOR%20red%5d%20%d7%97%d7%a4%d7%a9%20%20%5b%2fCOLOR%5d&url=http%3a%2f%2fwww.sdarot.wf%2fsearch'
-	ActivateWindow("1", 'plugin.video.sdarot.tv', url, 'return0', wait=False)
-	'''---------------------------'''
-
-def mode305(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode305(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode306(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode306(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode307(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode307(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode308(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode308(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode309(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode309(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode310(admin, name, printpoint):
-	pass
-
-def mode313(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-
-def mode314(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode314(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode315(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode315(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode316(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode316(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode317(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode317(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode318(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode318(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode319(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode319(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode320(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode320(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode321(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode321(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode322(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode322(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode323(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode323(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode324(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode324(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode325(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode325(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode326(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode326(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode327(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode327(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode328(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode328(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode329(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode329(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode330(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode330(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode331(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode331(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode332(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode332(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode333(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode333(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode334(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode334(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode335(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode335(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode336(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode336(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode337(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode337(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode338(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode338(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode339(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode339(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode340(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode340(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode341(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode341(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode342(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode342(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode343(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode343(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode344(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode344(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode345(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode345(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode346(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode346(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode347(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode347(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode348(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode348(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode349(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode349(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode352(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode352(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode353(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode353(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode354(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode354(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode355(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode355(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode356(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode356(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode357(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode357(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode358(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode358(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode359(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode359(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode360(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode360(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode361(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode361(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode362(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode362(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode363(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode363(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode364(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode364(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode365(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode365(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode366(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode366(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode367(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode367(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode368(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode368(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode369(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode369(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode370(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode370(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode371(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode371(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode372(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode372(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode373(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode373(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode374(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode374(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode375(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode375(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode376(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode376(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode377(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode377(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode378(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode378(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode379(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode379(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode380(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode380(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode381(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode381(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode382(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode382(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode383(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode383(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode384(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode384(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode385(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode385(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode386(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode386(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode387(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode387(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode388(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode388(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode389(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode389(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode390(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode390(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode391(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode391(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode392(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode392(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode393(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode393(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode394(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode394(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode395(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode395(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode396(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode396(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode397(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode397(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode398(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode398(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode399(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode399(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode400(admin, name):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode400(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode401(admin,name):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode401(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode402(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode402(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode403(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode403(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode404(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode404(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode405(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode405(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode406(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode406(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode407(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode407(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode408(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode408(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode409(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode409(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode410(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode440(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode411(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode411(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode412(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode412(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode413(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode413(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode414(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode414(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode415(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode415(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode416(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode416(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode417(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode417(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode418(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode418(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode419(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode419(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode420(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode420(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode421(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode421(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode422(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode422(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode423(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode423(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode424(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode424(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode425(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode425(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode426(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode426(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode427(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode427(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode428(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode428(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode429(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode429(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode430(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode430(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode431(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode431(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode432(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode432(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode433(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode433(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode434(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode434(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode435(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode435(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode436(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode436(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode437(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode437(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode438(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode438(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode439(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode439(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode440(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode440(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode441(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode441(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode442(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode442(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode443(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode443(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode444(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode444(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode445(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode445(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode446(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode446(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode447(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode447(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode448(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode448(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode449(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode449(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode450(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode450(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode451(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode451(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode452(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode452(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode453(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode453(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode454(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode454(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode455(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode455(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode456(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode456(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode457(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode457(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode458(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode458(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode459(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode459(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode460(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode460(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode461(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode461(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode462(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode462(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode463(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode463(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode464(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode464(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode465(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode465(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode466(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode466(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode467(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode467(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode468(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode468(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode469(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode469(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode470(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode470(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode471(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode471(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode472(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode472(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode473(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode473(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode474(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode474(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode475(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode475(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode476(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode476(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode477(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode477(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode478(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode478(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode479(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode479(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode480(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode480(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode481(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode481(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode482(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode482(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode483(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode483(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode484(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode484(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode485(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode485(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode486(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode486(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode487(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode487(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode488(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode488(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode489(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode489(admin, name, printpoint)
-	'''---------------------------'''
-	
-def mode490(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = ""
-	mode490(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode491(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode491(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode492(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode492(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode493(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode493(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode494(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode494(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode495(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode495(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode496(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode496(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode497(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode497(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode498(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	name = "?"
-	mode498(admin, name, printpoint)
-	'''---------------------------'''
-
-def mode499(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-
-def mode500(admin, name, printpoint):
-	'''------------------------------
-	---?-----------------------------
-	------------------------------'''
-	pass
-	'''---------------------------'''
-			
-def mode510(value, admin, name, printpoint):
-	'''------------------------------
-	---GAMES-BUTTON------------------
-	------------------------------'''
-	if value == '0':
-		name2 = localize(15016)
-
-		#returned = supportcheck(name2, [], 70, platform="13456")
-		returned = 'ok'
-		if returned == "ok":
-			addon = 'plugin.program.advanced.launcher'
-			if xbmc.getCondVisibility('System.HasAddon('+ addon +')'):
-				printpoint = printpoint + "7"
-				'''---------------------------'''
-			else:
-				installaddonP(admin, addon)
-				'''---------------------------'''
-			
-			addon = 'script.featherence.emu'
-			if xbmc.getCondVisibility('System.HasAddon('+ addon +')'):
-				printpoint = printpoint + "7"
-				'''---------------------------'''
-			else:
-				installaddon(admin, addon, update=True)
-				'''---------------------------'''
-			
-			if "77" in printpoint:
-				if not os.path.exists(os.path.join(addons_path,'emulator.retroarch')) and admin3 != 'true':
-					file = "emu_featherence.zip"
-					fileID = getfileID(file)
-					DownloadFile("https://www.dropbox.com/s/"+fileID+"/emu_featherence.zip?dl=1", file, temp_path, addons_path)
-					if os.path.exists(os.path.join(addons_path,'emulator.retroarch')): dialogok("Reboot required", "In order to start playing games, you should reboot your device", "", "")
-				else: xbmc.executebuiltin('RunScript(script.featherence.emu,,?mode=7)')
-				'''---------------------------'''
-	elif value == '1':
-		'''------------------------------
-		---GAMER-TV----------------------
-		------------------------------'''
-		addon = 'plugin.video.g4tv'
-		if xbmc.getCondVisibility('System.HasAddon('+ addon +')'):
-			xbmc.executebuiltin('RunAddon('+ addon +')')
-			'''---------------------------'''
-		else: installaddon(admin, addon, update=True)
 
 def mode512(value, admin, name, printpoint):
 	'''------------------------------
@@ -5600,145 +1865,25 @@ def mode512(value, admin, name, printpoint):
 	name = localize(443)
 	if systemplatformwindows: terminal('start /max '+url+'','')
 	elif systemplatformandroid: terminal('adb shell am start -a android.intent.action.VIEW -d '+url+'','')
-	elif systemplatformlinux:
-		#returned = supportcheck(name, ["A","B"], 1, Intel=True, platform="456")
-		returned = 'ok'
-		if returned == "ok":
-			returned = dialogyesno(addonString(32715).encode('utf-8'),addonString(32716).encode('utf-8'))
-			if returned == "ok":
-				addon = 'browser.chromium'
-				if xbmc.getCondVisibility('System.HasAddon('+ addon +')'):
-					notification(addonString(32717).encode('utf-8'), addonString(32718).encode('utf-8').encode('utf-8'), "", 4000)
-					settingschange('SystemSettings','input.enablemouse','1','no',localize(14094),localize(21369))
-					xbmc.sleep(1000)
-					xbmc.executebuiltin('RunAddon(browser.chromium)')
-					'''---------------------------'''
-				else: installaddon(admin, addon, update=True)
-			else:
-				notification_common("8")
+	elif systemplatformlinux: xbmc.executebuiltin('RunAddon(browser.chromium)')
 	else: notification_common('25')
 
-def mode517(value, admin, name, printpoint):
-	'''------------------------------
-	---LIVE-TV-BUTTON----------------
-	------------------------------'''
-	if '0' in value:
-		extra = "" ; TypeError = ""
-		containerfolderpath = xbmc.getInfoLabel('Container.FolderPath')
-		if xbmc.getCondVisibility('System.GetBool(pvrmanager.enabled)'):
-			printoint = printpoint + "1"
-			xbmc.executebuiltin('ActivateWindow(TVChannels)')
-			xbmc.sleep(1000)
-			mypvrchannels = xbmc.getCondVisibility('Window.IsVisible(MyPVRChannels.xml)')
-			count = 0
-			while count < 10 and not mypvrchannels and not xbmc.abortRequested:
-				xbmc.sleep(100)
-				count += 1
-				mypvrchannels = xbmc.getCondVisibility('Window.IsVisible(MyPVRChannels.xml)')
-				xbmc.sleep(100)
-			if mypvrchannels:
-				containerfoldername = xbmc.getInfoLabel('Container.FolderName')
-				containernumitems = xbmc.getInfoLabel('Container.NumItems')
-				try:
-					if int(containernumitems) < 2: printpoint = printpoint + "8"
-					elif containerfoldername != localize(19287): pass #dialogok('[COLOR=yellow]' + '$LOCALIZE[19051]' + '[/COLOR]', localize(79548, s=[containernumitems]), localize(79549), "")
-				except Exception, TypeError: extra = extra + newline + "TypeError" + space2 + str(TypeError)
 
-			else: printpoint = printpoint + "9"
-			if "8" in printpoint or "9" in printpoint:
-				xbmc.executebuiltin('RunAddon(plugin.video.israelive)')
-				dialogkaitoastW = xbmc.getCondVisibility('Window.IsVisible(DialogKaiToast.xml)')
-				count = 0
-				while count < 10 and not dialogkaitoastW and not xbmc.abortRequested:
-					count += 1
-					xbmc.sleep(200)
-					dialogkaitoastW = xbmc.getCondVisibility('Window.IsVisible(DialogKaiToast.xml)')
-				if count == 10:
-					xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=12)')		
-		else:
-			printpoint = printpoint + "2"
-			returned = ActivateWindow("0", 'plugin.video.israelive', 'plugin://plugin.video.israelive/', 1, wait=True)
-			if not "ok" in returned:
-				printpoint = printpoint + "6"
-				returned = ActivateWindow("1", 'plugin.video.israelive', 'plugin://plugin.video.israelive/', 1, wait=True)
-			if "ok" in returned:
-				printpoint = printpoint + "7"
-				pass
-			containernumitems = xbmc.getInfoLabel('Container.NumItems')
-			containerfolderpath = xbmc.getInfoLabel('Container.FolderPath')
-			systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
 
-		text = "containernumitems" + space2 + str(containernumitems) + space + "containerfolderpath" + space2 + containerfolderpath + extra
-		printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
-		'''---------------------------'''
-	elif '1' in value: mode521('0', admin, name, printpoint)
 
-def LibraryUpdate(admin, datenowS, Library_On, Library_CleanDate, Library_UpdateDate):
-	name = 'LibraryUpdate' ; extra = "" ; printpoint = "" ; TypeError = ""
-
-	libraryisscanningvideo = xbmc.getCondVisibility('Library.IsScanningVideo')
-	'''---------------------------'''
-	if Library_On == "true":
-		systemidle3600 = xbmc.getCondVisibility('System.IdleTime(3600)')
-		if not systemidle3600: printpoint = printpoint + '9'
-		else:
-			'''---------------------------'''
-			if Library_CleanDate != "" and datenowS != "":
-				import datetime as dt
-				datenowD = stringtodate(datenowS,'%Y-%m-%d')
-				Library_CleanDateD = stringtodate(Library_CleanDate,'%Y-%m-%d')
-				Library_CleanDate2D = Library_CleanDateD + dt.timedelta(days=7)
-				'''---------------------------'''
-				if datenowD > Library_CleanDate2D: printpoint = printpoint + "7"
-				'''---------------------------'''
-			else: printpoint = printpoint + "7"
-			
-			if "7" in printpoint:
-				xbmc.executebuiltin('CleanLibrary(video)')
-				setsetting('Library_CleanDate',datenowS)
-				'''---------------------------'''
-
-			elif Library_CleanDate == datenowS: printpoint = printpoint + "1"
-			
-			else:
-				if libraryisscanningvideo: printpoint = printpoint + "6"
-				elif datenowS != Library_UpdateDate:
-					printpoint = printpoint + "7"
-					setsetting('Library_UpdateDate',datenowS)
-					xbmc.executebuiltin('UpdateLibrary(video)')
-					'''---------------------------'''
-				else:
-					printpoint = printpoint + "9"
-					'''---------------------------'''
-			
-		'''------------------------------
-		---PRINT-END---------------------
-		------------------------------'''
-		text = "Library_UpdateDate" + space2 + str(Library_UpdateDate) + space + "Library_CleanDate" + space2 + str(Library_CleanDate) + space + extra
-		printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
-		'''---------------------------'''
 
 def videoplayertweak(admin,playerhasvideo):
 	if playerhasvideo:
-		#if admin: xbmc.executebuiltin('Notification(Admin,fix bug with subtitles (1),1000)')
-		playerfolderpath = xbmc.getInfoLabel('Player.FolderPath')
+		
 		videoplayersubtitlesenabled = xbmc.getInfoLabel('VideoPlayer.SubtitlesEnabled')
 		videoplayerhassubtitles = xbmc.getInfoLabel('VideoPlayer.HasSubtitles')
-		'''fix bug with subtitles'''
-		if videoplayerhassubtitles and videoplayersubtitlesenabled:
-			fix = 'no'
-			if '.sdarot.w' in playerfolderpath: fix = 'yes'
-			elif xbmc.getCondVisibility('!VideoPlayer.Content(Movies)') and xbmc.getCondVisibility('!VideoPlayer.Content(Episodes)') and xbmc.getCondVisibility('IsEmpty(VideoPlayer.Year)') and xbmc.getCondVisibility('IsEmpty(VideoPlayer.Plot)') and xbmc.getCondVisibility('!SubString(Player.Title,S0)') and xbmc.getCondVisibility('!SubString(Player.Title,S1)') and xbmc.getCondVisibility('!SubString(VideoPlayer.Title,TNPB)') and xbmc.getCondVisibility('!SubString(VideoPlayer.Title,Staael)') and xbmc.getCondVisibility('!SubString(Player.Filename,YIFY)'): fix = 'yes'
-			if fix == 'yes':
-				#if admin: xbmc.executebuiltin('Notification(Admin,fix bug with subtitles,1000)')
-				xbmc.executebuiltin('Action(ShowSubtitles)')
-				'''---------------------------'''
 				
-		'''video osd auto close'''
+		
 		videoosd = xbmc.getCondVisibility('Window.IsVisible(VideoOSD.xml)')
 		systemidle10 = xbmc.getCondVisibility('System.IdleTime(10)')
 		videoosdsettingsW = xbmc.getCondVisibility('Window.IsVisible(VideoOSDSettings.xml)')
 		if videoosd and systemidle10 and not videoosdsettingsW:
+			'''video osd auto close'''
 			subtitleosdbutton = xbmc.getCondVisibility('Control.HasFocus(703)') #subtitleosdbutton
 			volumeosdbutton = xbmc.getCondVisibility('Control.HasFocus(707)') #volumeosdbutton
 			dialogpvrchannelsosd = xbmc.getCondVisibility('Window.IsVisible(DialogPVRChannelsOSD.xml)')
@@ -5748,8 +1893,7 @@ def videoplayertweak(admin,playerhasvideo):
 				xbmc.executebuiltin('Dialog.Close(VideoOSD.xml)')
 				'''---------------------------'''
 			else:
-				systemidle20 = xbmc.getCondVisibility('System.IdleTime(20)')
-				if systemidle20: xbmc.executebuiltin('Dialog.Close(VideoOSD.xml)')
+				if xbmc.getCondVisibility('System.IdleTime(20)'): xbmc.executebuiltin('Dialog.Close(VideoOSD.xml)')
 				'''---------------------------'''
 
 def getPing(output):
@@ -5861,7 +2005,7 @@ def setSkin_Update(admin, datenowS, Skin_Version, Skin_UpdateDate, Skin_UpdateLo
 	'''------------------------------
 	---CHECK-FOR-SKIN-UPDATE---------
 	------------------------------'''
-	name = 'setSkin_Update' ; printpoint = "" ; returned_Dialog = ""
+	name = 'setSkin_Update' ; printpoint = ""
 	Skin_Version2 = xbmc.getInfoLabel('System.AddonVersion(skin.featherence)')
 	
 	if datenowS == "" or datenowS == None: printpoint = printpoint + '9'
@@ -5879,11 +2023,9 @@ def setSkin_Update(admin, datenowS, Skin_Version, Skin_UpdateDate, Skin_UpdateLo
 		
 		if Skin_UpdateLog == 'true':
 			printpoint = printpoint + '3'
-			returned_Dialog, returned_Header, returned_Message = checkDialog(admin)
-			if returned_Dialog == "":
-				printpoint = printpoint + '7'
-				setsetting('Skin_UpdateLog',"false")
-				setSkin_UpdateLog(admin, Skin_Version2, Skin_UpdateDate, datenowS)
+			printpoint = printpoint + '7'
+			setsetting('Skin_UpdateLog',"false")
+			setSkin_UpdateLog(admin, Skin_Version2, Skin_UpdateDate, datenowS)
 		else:
 			printpoint = printpoint + '8'
 			
@@ -5891,8 +2033,7 @@ def setSkin_Update(admin, datenowS, Skin_Version, Skin_UpdateDate, Skin_UpdateLo
 	"Skin_Version2" + space2 + str(Skin_Version2) + newline + \
 	"datenowS" + space2 + str(datenowS) + newline + \
 	"Skin_UpdateDate" + space2 + str(Skin_UpdateDate) + newline + \
-	"Skin_UpdateLog" + space2 + str(Skin_UpdateLog) + newline + \
-	"returned_Dialog" + space2 + str(returned_Dialog)
+	"Skin_UpdateLog" + space2 + str(Skin_UpdateLog)
 	'''---------------------------'''
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 	
@@ -5920,12 +2061,13 @@ def setSkin_UpdateLog(admin, Skin_Version, Skin_UpdateDate, datenowS, force=Fals
 		else: number2S = "0"
 		number2N = int(number2S)
 		'''---------------------------'''
-		if number2N == 0: header = '[COLOR=yellow]' + localize(79201) + space + localize(33006) + " - " + Skin_Version + '[/COLOR]'
-		elif number2N == 1: header = '[COLOR=green]' + localize(79201) + space + addonString_servicefeatherence(5).encode('utf-8') + " - " + Skin_Version + '[/COLOR]'
-		elif number2N <= 7: header = '[COLOR=purple]' + localize(79201) + space + addonString_servicefeatherence(6).encode('utf-8') + " - " + Skin_Version + '[/COLOR]'
+		if number2N == 0: header = '[COLOR=yellow]' + localize(31418) + space + localize(33006) + " - " + Skin_Version + '[/COLOR]'
+		elif number2N == 1: header = '[COLOR=green]' + localize(31418) + space + addonString_servicefeatherence(5).encode('utf-8') + " - " + Skin_Version + '[/COLOR]'
+		elif number2N <= 7: header = '[COLOR=purple]' + localize(31418) + space + addonString_servicefeatherence(6).encode('utf-8') + " - " + Skin_Version + '[/COLOR]'
 		elif force == True: header = addonString(32091).encode('utf-8') + space + space5 + Skin_Version
 		else: header = ""
 		'''---------------------------'''
+		skinlog_file = os.path.join(addons_path,'skin.featherence','changelog.txt')
 		if os.path.exists(skinlog_file):
 			printpoint = printpoint + "5"
 			log = open(skinlog_file, 'r')
@@ -5953,367 +2095,3 @@ def setSkin_UpdateLog(admin, Skin_Version, Skin_UpdateDate, datenowS, force=Fals
 	"number2S" + space2 + str(number2S)
 	'''---------------------------'''
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
-
-def doFix_100(admin, custom, TEMP):
-	'''---------------------------'''
-	if custom == "100": dialogok(localize(78971)+ '[CR]' + '[COLOR=yellow]' + str74550.encode('utf-8') % (localize(342)) + '[/COLOR]', '$LOCALIZE[78972]', '$LOCALIZE[78973]', '$LOCALIZE[78980]')
-	elif custom == "101": dialogok(localize(78971)+ '[CR]' + '[COLOR=yellow]' + str74550.encode('utf-8') % (str36903.encode('utf-8')) + '[/COLOR]', '$LOCALIZE[78972]', '$LOCALIZE[78973]', '$LOCALIZE[78980]')
-	libraryisscanningvideo = xbmc.getCondVisibility('Library.IsScanningVideo')
-	if libraryisscanningvideo: xbmc.executebuiltin('UpdateLibrary(video)')
-	#if not systemplatformwindows: UserBlock("ON")
-	setSkinSetting("1",'Admin',"true")
-	printpoint = "" ; extra = ""
-	'''---------------------------'''
-	xbmc.executebuiltin('ActivateWindow(10025,'+TEMP+',return)')
-	xbmc.sleep(500)
-	xbmc.executebuiltin('Container.SetViewMode(50)')
-	notification_common(custom)
-	printpoint = doFix_100A(printpoint, custom, TEMP)
-	'''---------------------------'''
-	if not "9" in printpoint: printpoint = doFix_100I(printpoint, custom)
-	'''---------------------------'''	
-	if not "9" in printpoint: printpoint = doFix_100M(printpoint, custom)
-	'''---------------------------'''
-	if not "9" in printpoint and "C" in printpoint: printpoint = doFix_100A(printpoint, custom, TEMP)
-	'''---------------------------'''
-	if not "9" in printpoint and "C" in printpoint: printpoint = doFix_100I(printpoint, custom)
-	'''---------------------------'''	
-	if not "9" in printpoint and "C" in printpoint: printpoint = doFix_100M(printpoint, custom)
-	'''---------------------------'''
-	if not "9" in printpoint: 
-		xbmc.sleep(1000)
-		dialogkaitoastW = xbmc.getCondVisibility('Window.IsVisible(DialogKaiToast.xml)')
-		count = 0
-		count2 = 0
-		while count < 10 and dialogkaitoastW and count2 > -2 and not "9" in printpoint and not xbmc.abortRequested:
-			count += 1
-			xbmc.sleep(500)
-			dialogkaitoastW = xbmc.getCondVisibility('Window.IsVisible(DialogKaiToast.xml)')
-			xbmc.sleep(500)
-			if count == 1: printpoint = printpoint + "6"
-			if dialogkaitoastW: count2 += 1
-			elif count2 > 0: count2 += -1
-			if count == 10:
-				printpoint = printpoint + "9"
-				extra = extra + "error_count=10"
-				'''---------------------------'''
-	if not "9" in printpoint: printpoint = printpoint + "7"
-	
-	'''---------------------------'''
-	dialogcontentsettingsW = xbmc.getCondVisibility('Window.IsVisible(DialogContentSettings.xml)')
-	if dialogcontentsettingsW: xbmc.executebuiltin('Action(Close)')
-	xbmc.sleep(500)
-	xbmc.executebuiltin('ReplaceWindow(Home)')
-	setSkinSetting("1",'Admin',"false")
-	#if not systemplatformwindows: UserBlock("OFF")
-	'''---------------------------'''
-	
-	'''------------------------------
-	---PRINT-END---------------------
-	------------------------------'''
-	#extra = newline + "localize(107)" + space2 + localize(107) + space + "localize107" + space2 + localize(107) + space + "xbmc.getInfoLabel('$LOCALIZE[107]')" + space2 + xbmc.getInfoLabel('$LOCALIZE[107]')
-	text = "systemcurrentcontrol" + space2 + systemcurrentcontrol + space + "custom" + space2 + str(custom) + extra
-	printlog(title='doFix_100', printpoint=printpoint, text=text, level=0, option="")
-	'''---------------------------'''
-	return printpoint
-
-def doFix_100_0(printpoint, custom):
-	'''---------------------------'''
-	xbmc.executebuiltin("UpdateLocalAddons") ; xbmc.sleep(2000)
-	if custom == "100": x = xbmc.getCondVisibility('System.HasAddon(metadata.universal)')
-	elif custom == "101": x = xbmc.getCondVisibility('System.HasAddon(metadata.tvdb.com)')
-	connected = xbmc.getInfoLabel('Skin.HasSetting(Connected)')
-	xbmc.sleep(500)
-	'''---------------------------'''
-	if custom == "100": list = [os.path.exists(addons_path + 'metadata.universal'), os.path.exists(addons_path + 'metadata.common.impa.com'), os.path.exists(addons_path + 'metadata.common.port.hu'), os.path.exists(addons_path + 'metadata.common.movieposterdb.com'), os.path.exists(addons_path + 'metadata.common.rt.com'), os.path.exists(addons_path + 'metadata.common.trakt.tv')]
-	elif custom == "101": list = [os.path.exists(addons_path + 'metadata.common.imdb.com')]
-	listS = str(list)
-	'''---------------------------'''
-	if printpoint == "remove" or ("False" in listS and "True" in listS):
-		'''------------------------------
-		---metadata.universal------------
-		------------------------------'''
-		printpoint = printpoint + "9"
-		if admin: notification_common(custom)
-		addonsL = []
-		if custom == "100":
-			addonsL.append('metadata.common.impa.com')
-			addonsL.append('metadata.common.movieposterdb.com')
-			addonsL.append('metadata.common.ofdb.de')
-			addonsL.append('metadata.common.port.hu')
-			addonsL.append('metadata.common.rt.com')
-			addonsL.append('metadata.common.trakt.tv')
-			addonsL.append('metadata.universal')
-			'''---------------------------'''
-		elif custom == "101":
-			#addonsL.append('metadata.tvdb.com')
-			addonsL.append('metadata.common.imdb.com')
-			'''---------------------------'''
-		removeaddons(addonsL,"13")
-		#xbmc.executebuiltin("UpdateLocalAddons")
-		#xbmc.executebuiltin("UpdateAddonRepos")
-		xbmc.sleep(4000)
-		
-	elif connected and not "False" in listS and x:
-		printpoint = printpoint + "0"
-		'''---------------------------'''
-	text = "listS" + space2 + listS	 + space + "custom" + space2 + str(custom) + space
-	printlog(title='doFix_100_0', printpoint=printpoint, text=text, level=0, option="")
-	'''---------------------------'''
-	return printpoint
-
-def doFix_100A(printpoint, custom, TEMP):
-	xbmc.sleep(200)
-	containerfolderpath = xbmc.getInfoLabel('Container.FolderPath')
-	count = 0
-	while count < 10 and containerfolderpath != TEMP and not "9" in printpoint and not xbmc.abortRequested:
-		'''------------------------------
-		---containerfolderpath-----------
-		------------------------------'''
-		xbmc.sleep(100)
-		count += 1
-		if count > 5 and TEMP in containerfolderpath: xbmc.executebuiltin('Action(Back)') ; xbmc.sleep(200)
-		containerfolderpath = xbmc.getInfoLabel('Container.FolderPath')
-		xbmc.sleep(100)
-		if count == 1: printpoint = printpoint + "A"
-		if count == 10: printpoint = printpoint + "9"
-		'''---------------------------'''
-		
-	if not "9" in printpoint:
-		'''------------------------------
-		---ContextMenu-------------------
-		------------------------------'''
-		xbmc.executebuiltin('Action(PageUp)')
-		xbmc.sleep(200)
-		systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
-		if custom == "100": x = "[movies]"
-		elif custom == "101": x = "[tvshows]"
-		else:
-			x = "" ; printpoint = printpoint + "9"
-		
-		count = 0
-		while count < 10 and systemcurrentcontrol != x and not "9" in printpoint and not xbmc.abortRequested:
-			count += 1
-			systemcurrentcontrol = findin_systemcurrentcontrol("0",x,100,'Action(Down)','Action(ContextMenu)')
-			if count == 1: printpoint = printpoint + "B"
-			if count == 10: printpoint = printpoint + "9"
-			'''---------------------------'''
-		if not "9" in printpoint:
-			count = 0
-			while count < 10 and not xbmc.abortRequested: 
-				count += 1
-				xbmc.sleep(40)
-				if count <= 7: xbmc.executebuiltin('Action(Up)')
-				else:
-					if count == 8: printpoint = printpoint + "8"
-					xbmc.executebuiltin('Action(Down)')
-					'''---------------------------'''
-			
-		xbmc.sleep(200)
-		systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
-		count = 0
-		while count < 10 and systemcurrentcontrol != str20442 and not "9" in printpoint and not xbmc.abortRequested:
-			'''------------------------------
-			---Change-content----------------
-			------------------------------'''
-			count += 1
-			countS = str(count)
-			'''---------------------------'''
-			systemcurrentcontrol = findin_systemcurrentcontrol("0",str20442,100,'Action(Down)','Action(Select)') #Change content
-			'''---------------------------'''
-			if systemcurrentcontrol == str20442: printpoint = printpoint + "C"
-			'''---------------------------'''
-			
-		if count == 10:
-			count = 0
-			while count < 10 and not xbmc.abortRequested: 
-				count += 1
-				if count <= 7: xbmc.executebuiltin('Action(Up)')
-				else: xbmc.executebuiltin('Action(Down)')
-				'''---------------------------'''
-			
-			xbmc.sleep(200)
-			systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
-			count = 0
-			while count < 10 and systemcurrentcontrol != str20333 and not "9" in printpoint and not xbmc.abortRequested:
-				'''------------------------------
-				---Set-content-------------------
-				------------------------------'''
-				count += 1
-				countS = str(count)
-				'''---------------------------'''
-				systemcurrentcontrol = findin_systemcurrentcontrol("0",str20333,100,'Action(Down)','Action(Select)') #Set content
-				'''---------------------------'''
-				if systemcurrentcontrol == str20333: printpoint = printpoint + "D"
-				if count == 10: printpoint = printpoint + "9" + space3 + systemcurrentcontrol
-				'''---------------------------'''
-		
-		dialogcontentsettingsW = xbmc.getCondVisibility('Window.IsVisible(DialogContentSettings.xml)')
-		count = 0
-		while count < 10 and not dialogcontentsettingsW and not "9" in printpoint and not xbmc.abortRequested:
-			'''------------------------------
-			---dialogcontentsettingsW--------
-			------------------------------'''
-			count += 1
-			xbmc.sleep(100)
-			dialogcontentsettingsW = xbmc.getCondVisibility('Window.IsVisible(DialogContentSettings.xml)')
-			xbmc.sleep(100)
-			if count == 1: printpoint = printpoint + "E"
-			if count == 10: printpoint = printpoint + "9" + space3 + systemcurrentcontrol
-			'''---------------------------'''
-		
-		controlhasfocus20 = xbmc.getCondVisibility('Control.HasFocus(20)')
-		count = 0
-		while count < 10 and not controlhasfocus20 and not "9" in printpoint and not xbmc.abortRequested:
-			'''------------------------------
-			---controlhasfocus20-------------
-			------------------------------'''
-			count += 1
-			controlhasfocus20 = findin_controlhasfocus("0",20,100,'Control.SetFocus(20)',"")
-			if count == 1: printpoint = printpoint + "F"
-			if count == 10: printpoint = printpoint + "9"
-			'''---------------------------'''
-				
-	'''---------------------------'''
-	return printpoint
-
-def doFix_100I(printpoint, custom):
-	xbmc.sleep(500)
-	systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
-	if "C" in printpoint and not "M" in printpoint:
-		'''------------------------------
-		---Change-content----------------
-		------------------------------'''
-		count = 0
-		while count < 10 and (not localize(231) in systemcurrentcontrol or not localize(16018) in systemcurrentcontrol) and not "9" in printpoint and not xbmc.abortRequested:
-			count += 1
-			if count < 5: systemcurrentcontrol = findin_systemcurrentcontrol("1",localize(231),100,'Action(Select)','Action(Down)')
-			elif count >=5: systemcurrentcontrol = findin_systemcurrentcontrol("1",localize(16018),100,'Action(Select)','Action(Down)')
-			if count == 1: printpoint = printpoint + "I"
-			if count == 10: printpoint = printpoint + "9"
-			'''---------------------------'''
-		
-	elif "D" in printpoint or "M" in printpoint:
-		'''------------------------------
-		---Set-content-------------------
-		------------------------------'''
-		count = 0
-		if custom == "100": x = localize(342) ; y = str36901.encode('utf-8') ; z = "Universal Movie Scraper"
-		elif custom == "101": x = str36903.encode('utf-8') ; y = str36903.encode('utf-8') ; z = "The TVDB"
-		else: x = "" ; y = "" ; z = ""
-		while count < 10 and (not x in systemcurrentcontrol and not y in systemcurrentcontrol) and not "9" in printpoint and not xbmc.abortRequested:
-			count += 1
-			if count < 5: systemcurrentcontrol = findin_systemcurrentcontrol("1",x,100,'Action(Select)','Action(Down)')
-			elif count >=5: systemcurrentcontrol = findin_systemcurrentcontrol("1",y,100,'Action(Select)','Action(Down)')
-			if count == 1: printpoint = printpoint + "Q"
-			if count == 10: printpoint = printpoint + "9"
-			'''---------------------------'''
-
-		'''---------------------------'''
-		xbmc.executebuiltin('Control.SetFocus(20)')
-		xbmc.sleep(200)
-		systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
-		count = 0
-		while count < 10 and not z in systemcurrentcontrol and not "9" in printpoint and not xbmc.abortRequested:
-			'''------------------------------
-			---SCRAPER-NAME------------------
-			------------------------------'''
-			count += 1
-			systemcurrentcontrol = findin_systemcurrentcontrol("1",z,300,'Action(Down)','Action(Select)')
-			if z in systemcurrentcontrol: xbmc.executebuiltin('Action(Select)')
-			if count == 5: xbmc.executebuiltin('Control.SetFocus(20)')
-			if count == 1: printpoint = printpoint + "R"
-			if count == 10: printpoint = printpoint + "9"
-			'''---------------------------'''
-		
-		if custom == "100":
-			xbmc.sleep(400)
-			systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
-			count = 0
-			while count < 10 and (not str20329 in systemcurrentcontrol or not "(*)" in systemcurrentcontrol) and not "9" in printpoint and not xbmc.abortRequested:
-				'''------------------------------
-				---Movies are in separate folders that match the movie title - ON
-				------------------------------'''
-				count += 1
-				systemcurrentcontrol = findin_systemcurrentcontrol("1",str20329,400,'Action(Down)','')
-				if count == 1: printpoint = printpoint + "S"
-				if count == 10: printpoint = printpoint + "9"
-				if str20329 in systemcurrentcontrol: systemcurrentcontrol = findin_systemcurrentcontrol("1","(*)",400,'Action(Select)','')
-				'''---------------------------'''
-				
-			xbmc.sleep(400)
-			systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
-			count = 0
-			while count < 10 and (not str20346.encode('utf-8') in systemcurrentcontrol or "(*)" in systemcurrentcontrol) and not "9" in printpoint and not xbmc.abortRequested:
-				'''------------------------------
-				---Scan recursively - OFF--------
-				------------------------------'''
-				count += 1
-				systemcurrentcontrol = findin_systemcurrentcontrol("1",str20346.encode('utf-8'),400,'Action(Down)','')
-				if count == 1: printpoint = printpoint + "T"
-				if count == 10: printpoint = printpoint + "9"
-				if str20346.encode('utf-8') in systemcurrentcontrol: systemcurrentcontrol = findin_systemcurrentcontrol("1","( )",400,'Action(Select)','')
-				'''---------------------------'''
-				
-			'''count = 0
-			while count < 10 and (systemcurrentcontrol != localize(186) or systemcurrentcontrol != localize(12321)) and not "9" in printpoint and not xbmc.abortRequested:
-				count += 1
-				if count < 4: xbmc.executebuiltin('Action(Down)')
-				if count < 5: systemcurrentcontrol = findin_systemcurrentcontrol("0",localize(186),100,'Action(Left)','Action(Select)')
-				elif count >=5: systemcurrentcontrol = findin_systemcurrentcontrol("0",localize(12321),100,'Action(Left)','Action(Select)')
-				if count == 1: printpoint = printpoint + "J"
-				if count == 10: printpoint = printpoint + "9"'''
-
-	if not "9" in printpoint:
-		dialogcontentsettingsW = xbmc.getCondVisibility('Window.IsVisible(DialogContentSettings.xml)')
-		controlhasfocus28 = xbmc.getCondVisibility('Control.HasFocus(28)')
-		count = 0
-		while count < 10 and not controlhasfocus28 and dialogcontentsettingsW and not "9" in printpoint and not xbmc.abortRequested:
-			'''------------------------------
-			---controlhasfocus28-------------
-			------------------------------'''
-			count += 1
-			dialogcontentsettingsW = xbmc.getCondVisibility('Window.IsVisible(DialogContentSettings.xml)')
-			controlhasfocus28 = findin_controlhasfocus("0",28,400,'Control.SetFocus(28)','Action(Select)')
-			if count == 1: printpoint = printpoint + "J"
-			if count == 10: printpoint = printpoint + "9"
-			'''---------------------------'''
-		
-	'''---------------------------'''
-	return printpoint
-	
-def doFix_100M(printpoint, custom):
-	systemcurrentcontrol = xbmc.getInfoLabel('System.CurrentControl')
-	xbmc.sleep(1000)
-	dialogyesnoW = xbmc.getCondVisibility('Window.IsVisible(DialogYesNo.xml)')
-	if dialogyesnoW:
-		controlhasfocus11 = xbmc.getCondVisibility('Control.HasFocus(11)')
-		count = 0
-		while count < 10 and (count == 0 or not controlhasfocus11) and not "9" in printpoint and not xbmc.abortRequested:
-			count += 1
-			#systemcurrentcontrol = findin_systemcurrentcontrol("0",localize(107),100,'Action(Down)','Action(Select)')
-			controlhasfocus11 = findin_controlhasfocus("0",11,100,'Action(Down)','Action(Select)')
-			if count == 1: printpoint = printpoint + "M"
-			if count == 10: printpoint = printpoint + "9"
-			'''---------------------------'''
-		xbmc.sleep(1000)
-		dialogprogressW = xbmc.getCondVisibility('Window.IsVisible(DialogProgress.xml)')
-		count = 0
-		count2 = 0
-		while count < 500 and dialogprogressW and count2 > -2 and not "9" in printpoint and not xbmc.abortRequested:
-			count += 1
-			xbmc.sleep(1000)
-			dialogprogressW = xbmc.getCondVisibility('Window.IsVisible(DialogProgress.xml)')
-			xbmc.sleep(1000)
-			if count == 1:
-				printpoint = printpoint + "N"
-				notification_common(custom)
-			if not dialogprogressW: count2 += -1
-			elif count2 < 0: count2 += 1
-			if count == 500:
-				printpoint = printpoint + "9"
-				extra = extra + "error_count=500"
-				'''---------------------------'''
-			
-	'''---------------------------'''
-	return printpoint

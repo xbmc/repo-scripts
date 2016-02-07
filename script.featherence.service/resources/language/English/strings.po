@@ -294,10 +294,6 @@ msgctxt "#72
 msgid "Enable secondary fanart for general use.[CR]Not related to movies/tvshows/home views."
 msgstr "הפעל פאנארט משני בשימוש כללי.[CR]לא קשור לסרטים/סדרות/תצוגת בית."
 
-msgctxt "#76
-msgid "Show side menu"
-msgstr "הצג תפריט צד"
-
 msgctxt "#77
 msgid "By"
 msgstr "לפי"
@@ -325,14 +321,6 @@ msgstr "בחר קובץ וידאו אשר יתנגן עם פתיחת המכשי�
 msgctxt "#83
 msgid "Play video in a full screen."
 msgstr "נגן וידאו במסך מלא."
-
-msgctxt "#84
-msgid "Choose this button if you want to clean your cache since day 1.[CR]This option will also remove your database folder.[CR][CR]Choose this option in order to obtain extra space on your device or start fresh.[/COLOR]"
-msgstr "בחר בכפתור זה אם ברצונך לנקות את כל התמונות והרקעים שהורדו למכשירך.[CR]הפעולה גם תסיר את בסיסי הנתונים עבור סרטים, סדרות, מוזיקה וטלוויזיה חיה.[CR][CR][COLOR=red]השתמש באפשרות זו בכדי לפנות מקום במכשיר או בכדי להקים בסיסי נתונים חדשים.[/COLOR]"
-
-msgctxt "#85
-msgid "Free YouTube search"
-msgstr "חיפוש חופשי ביו-טיוב"
 
 msgctxt "#86
 msgid "New %s Button.."
@@ -506,8 +494,8 @@ msgstr "לידיעתך ניתן לשנות את ההגדרה בכל עת בכפ�
 
 #Others addons settings
 msgctxt "#32040
-msgid "Usage: Swift your mouse down to activate the taskbar."
-msgstr "שימוש: הזז את העכבר למטה במהירות להצגת שורת המשימות."
+msgid ""
+msgstr ""
 
 msgctxt "#32041
 msgid "Setup default volume level on startup."
@@ -710,7 +698,7 @@ msgstr "בחר "כן" להמשך"
 
 msgctxt "#32099
 msgid "Watch varied of videos about %s."
-msgstr "צפה במגוון תכנים בנושא -%s".
+msgstr "צפה במגוון תכנים בנושא -%s."
 
 msgctxt "#32100
 msgid "Your email provider isn't supported."
@@ -1911,22 +1899,6 @@ msgstr ""
 msgctxt "#32399
 msgid ""
 msgstr ""
-
-msgctxt "#32715"
-msgid "Warning: Internet Browsing"
-msgstr "אזהרה: גלישה באינטרנט"
-
-msgctxt "#32716"
-msgid "VERIFY YOU HAVE A KEYBOARD BEFORE PROCEEDING!"
-msgstr "אנא וודא שיש ברשותך עכבר/מקלדת לפני האישור!"
-
-msgctxt "#32717"
-msgid "Use the following keys in order to return:"
-msgstr "[COLOR=yellow]השתמש במקשים הבאים בכדי לסגור גלישה:[/COLOR]"
-
-msgctxt "#32718"
-msgid "ESC / ALT-TAB / ALT+F4"
-msgstr "ESC / ALT-TAB / ALT+F4"
 
 #Smart Playlist
 

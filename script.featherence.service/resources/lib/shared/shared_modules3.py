@@ -7,14 +7,17 @@ from variables import *
 #from modules import *
 from shared_modules import *
 
-'''plugins'''
+'''
+shared_modules3 is used for Kodi's plugins.
+Import the module and input the addDir in your addon module.py file.
+'''
 def addDir(name, url, mode, iconimage, desc, num, viewtype, fanart=""):
 	url2 = url ; printpoint = "" ; returned = "" ; extra = "" ; name2 = "" ; iconimage2 = "" ; desc2 = ""
 	if '$LOCALIZE' in name or '$ADDON' in name: name = xbmc.getInfoLabel(name)
 	if '$LOCALIZE' in desc or '$ADDON' in desc: desc = xbmc.getInfoLabel(desc)
 	
 	if num == None: num = ""
-	if '&getAPIdata=' in num:
+	if '&getAPIdata=' in str(num):
 		finalurl_, id_L, playlist_L, title_L, thumb_L, desc_L, fanart_L = apimaster(num, name, iconimage, desc, fanart, playlist=[], onlydata=True)
 		if 'getAPIdata' in name and title_L != []: name = title_L[0]
 		if 'getAPIdata' in iconimage and thumb_L != []: iconimage = thumb_L[0]
@@ -241,6 +244,10 @@ def addDir(name, url, mode, iconimage, desc, num, viewtype, fanart=""):
 			ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
 			returned = ok
 			'''---------------------------'''
+		elif mode == 44:
+			liz.addContextMenuItems(items=menu, replaceItems=True)
+			ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
+			returned = ok
 		elif mode == 200 or mode == 90:
 			liz.addContextMenuItems(items=menu, replaceItems=True)
 			ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
@@ -270,6 +277,7 @@ def menu_list(custom, menu, addonID, url, name, iconimage, desc, num, viewtype, 
 	return menu
 	
 def checkRandom(url):
+	'''Check if random has been choosed then create a random playlist of the current view'''
 	printpoint = "" ; i = "" ; returned = ""
 	#extra = extra + newline + 'scriptfeatherenceservice_random' + space2 + str(xbmc.getInfoLabel('Window(home).Property(script.featherence.service_random)'))
 	if xbmc.getInfoLabel('Window(home).Property(script.featherence.service_random)') != "":
@@ -325,60 +333,8 @@ def get_params():
 							
 	return param
 	
-def ListLive(url, mode, num, viewtype, fanart):
-	#addDir('[COLOR=yellow]' + str79520.encode('utf-8') + '[/COLOR]',url,12,addonMediaPath + "190.png",str79526.encode('utf-8'),'1',"") #Quick-Play
-	link = OPEN_URL(url)
-	link=unescape(link)
-	print printfirst + "link" + space2 + link
-	matches1=re.compile('pe=(.*?)#',re.I+re.M+re.U+re.S).findall(link)
-	#print str(matches1[0]) + '\n'
-	for match in matches1 :
-		#print "match=" + str(match)
-		match=match+'#'
-		if match.find('playlist') != 0 :
-			'''------------------------------
-			---url---------------------------
-			------------------------------'''
-			regex='name=(.*?)URL=(.*?)#'
-			matches=re.compile(regex,re.I+re.M+re.U+re.S).findall(match)
-			#print str(matches)
-			for name,url in matches:
-				thumb = "" ; description = ""
-				i=name.find('thumb')
-				i2=name.find('description')
-				if i>0:
-					thumb=name[i+6:]
-					name=name[0:i]
-					description = name[i2+11:]
-					#print printfirst + "name" + space2 + name + space + "thumb" + space2 + thumb + space + "description" + space2 + description
-		
-				addDir(name, url, mode, thumb, description, num, viewtype, fanart)
-		else:
-			'''------------------------------
-			---.plx--------------------------
-			------------------------------'''
-			regex='name=(.*?)URL=(.*?).plx'
-			matches=re.compile(regex,re.I+re.M+re.U+re.S).findall(match)
-			for name,url in matches:
-				thumb=''
-				i=name.find('thumb')
-				i2=name.find('description')
-				if i>0:
-					thumb=name[i+6:]
-					name=name[0:i]
-					description = name[i2+11:]
-				url=url+'.plx'
-				if name.find('Radio') < 0 :
-					addDir('[COLOR blue]'+name+'[/COLOR]',url,7,thumb,description,'1',"")
-					
-	'''------------------------------
-	---PRINT-END---------------------
-	------------------------------'''
-	text = "matches1" + space2 + str(matches1)
-	printlog(title='ListLive', printpoint="", text=text, level=0, option="")
-	'''---------------------------'''
-
 def clean_commonsearch(x):
+	'''Used when searching in YouTube'''
 	y = x ; printpoint = ""
 	if "commonsearch" in y:
 		printpoint = printpoint + '1'
@@ -439,6 +395,7 @@ def clean_commonsearch(x):
 	return y
 
 def LocalSearch(mode, name, url, iconimage, desc, num, viewtype, fanart):
+	'''Read lines of a file like .txt and use each line as a YouTube search.'''
 	printpoint = "" ; admin = xbmc.getInfoLabel('Skin.HasSetting(Admin)') ; value = "" ; url2 = ""
 	url2 = read_from_file(url, silent=True, lines=True, retry=True, printpoint="", addlines='&custom_se=', createlist=False)
 	text = 'url2' + space2 + str(url2)
@@ -446,6 +403,7 @@ def LocalSearch(mode, name, url, iconimage, desc, num, viewtype, fanart):
 	TvMode2(addonID, mode, name, url2, iconimage, desc, num, viewtype, fanart)
 		
 def YoutubeSearch(name, url, desc, num, viewtype):
+	'''Search in YouTube command'''
 	printpoint = "" ; value = ""
 	#print 'blablabla ' + str(name)
 	if url == None or url == 'None': url = ""
@@ -496,6 +454,7 @@ def YoutubeSearch(name, url, desc, num, viewtype):
 	'''---------------------------'''
 	
 def ListPlaylist2(name, url, iconimage, desc, num, viewtype, fanart):
+	'''View playlists'''
 	printpoint = "" ; extra = "" ; TypeError = ""
 	if '&dailymotion_pl=' in url:
 		finalurl_, id_L, playlist_L, title_L, thumb_L, desc_L, fanart_L = apimaster(url, name, iconimage, desc, fanart, playlist=[], onlydata=False)
@@ -537,34 +496,30 @@ def PlayVideos(name, mode, url, iconimage, desc, num, fanart):
 	if 'plugin.' in num:
 		if not xbmc.getCondVisibility('System.HasAddon('+ num +')') or not os.path.exists(os.path.join(addons_path, num)):
 			notification_common("24")
-			installaddon(admin, num, update=True)
+			installaddon(num, update=True)
 			xbmc.sleep(2000)
 	
 	if '&dailymotion_id=' in url:
-		if 1 + 1 == 3:
-			url = url.replace("&dailymotion_id=","")
-			returned = dailymotion_test(url)
-		else:
-			addon = "plugin.video.dailymotion_com"
-			if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(os.path.join(addons_path, addon)):
-				installaddonP(admin, addon) ; xbmc.sleep(1000)
-				
-			url = url.replace("&dailymotion_id=","")
-			xbmc.executebuiltin('PlayMedia(plugin://plugin.video.dailymotion_com/?url='+url+'&mode=playVideo)')
+		addon = "plugin.video.dailymotion_com"
+		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(os.path.join(addons_path, addon)):
+			installaddon(addon) ; xbmc.sleep(1000)
 			
-			if 1 + 1 == 3:
-				url = 'https://api.dailymotion.com/video/'+ url +''
-				link = OPEN_URL(url)
-				prms=json.loads(link)
-				
-				title = str(prms['title'].encode('utf-8'))#.decode('utf-8')
-				id = str(prms['id'].encode('utf-8'))#.decode('utf-8')
-				channel = str(prms['channel'].encode('utf-8'))#.decode('utf-8')
-				#name = str(prms['feed'][u'entry'][i][ u'media$group'][u'media$title'][u'$t'].encode('utf-8')).decode('utf-8')
-				finalurl='http://www.dailymotion.com/video/'+id+'_'+title+'_'+channel
-				finalurl = finalurl.replace(space,"-")
-				finalurl = 'http://www.dailymotion.com/video/x3bik3i_atlas-unfolded-new-york-city_music'
-				print 'link :' + str(link) + newline + 'prms:' + str(prms) + newline + 'title:' + str(title) + newline + 'id' + space2 + str(id) + newline + 'finalurl' + space2 + str(finalurl)
+		url = url.replace("&dailymotion_id=","")
+		xbmc.executebuiltin('PlayMedia(plugin://plugin.video.dailymotion_com/?url='+url+'&mode=playVideo)')
+		
+		if 1 + 1 == 3:
+			url = 'https://api.dailymotion.com/video/'+ url +''
+			link = OPEN_URL(url)
+			prms=json.loads(link)
+			
+			title = str(prms['title'].encode('utf-8'))#.decode('utf-8')
+			id = str(prms['id'].encode('utf-8'))#.decode('utf-8')
+			channel = str(prms['channel'].encode('utf-8'))#.decode('utf-8')
+			#name = str(prms['feed'][u'entry'][i][ u'media$group'][u'media$title'][u'$t'].encode('utf-8')).decode('utf-8')
+			finalurl='http://www.dailymotion.com/video/'+id+'_'+title+'_'+channel
+			finalurl = finalurl.replace(space,"-")
+			finalurl = 'http://www.dailymotion.com/video/x3bik3i_atlas-unfolded-new-york-city_music'
+			print 'link :' + str(link) + newline + 'prms:' + str(prms) + newline + 'title:' + str(title) + newline + 'id' + space2 + str(id) + newline + 'finalurl' + space2 + str(finalurl)
 				
 	elif '&youtube_id=' in url:
 		url = url.replace("&youtube_id=","")
@@ -600,6 +555,7 @@ def YOULink(mname, url, thumb, desc):
 		return ok
 		
 def MultiVideos(addonID, mode, name, url, iconimage, desc, num, viewtype, fanart):
+	'''read a list of urls, read thier API, put the required mode for each and play or view them'''
 	printpoint = "" ; i = 0 ; i2 = 0 ; extra = "" ; desc = str(desc)
 	#print 'testtt ' + fanart
 	pl = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
@@ -868,6 +824,7 @@ def MultiVideos(addonID, mode, name, url, iconimage, desc, num, viewtype, fanart
 	return mode
 
 def MultiVideos_play(finalurl, pl, playlist, printpoint, General_TVModeShuffle, mode):
+	'''Prepare the first available video in the playlist'''
 	count = 0 ; finalurlN = 0 ; printpoint2 = ""
 	playlistN = int(len(playlist))
 	if finalurl != "" and finalurl != []:
@@ -912,6 +869,7 @@ def MultiVideos_play(finalurl, pl, playlist, printpoint, General_TVModeShuffle, 
 	return pl, playlist, printpoint
 
 def MultiVideos_play2(finalurl, pl, playlist, printpoint):
+	'''Play the first available video in the playlist'''
 	count = 0 ; printpoint2 = "" ; numOfItems2 = 0
 	
 	pl.add(finalurl)
@@ -923,7 +881,7 @@ def MultiVideos_play2(finalurl, pl, playlist, printpoint):
 		if 'plugin://' in finalurl:
 			printpoint2 = printpoint2 + '3'
 			plugin = regex_from_to(finalurl, 'plugin://', '/', excluding=True)
-			installaddon(admin, plugin, update=True)
+			installaddon(plugin, update=True)
 		xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(pl) ; xbmc.sleep(2000)
 		playerhasvideo = xbmc.getCondVisibility('Player.HasVideo') ; dialogokW = xbmc.getCondVisibility('Window.IsVisible(DialogOK.xml)') ; dialogbusyW = xbmc.getCondVisibility('Window.IsVisible(DialogBusy.xml)') ; dialogprogressW = xbmc.getCondVisibility('Window.IsVisible(DialogProgress.xml)')
 		while count < 20 and not playerhasvideo and not dialogokW and not xbmc.abortRequested:
@@ -989,63 +947,9 @@ def sdarot_(x):
 	'season_id' + space2 + str(season_id)
 	printlog(title='sdarot_', printpoint="", text=text, level=0, option="")
 	return x, z, summary, mode_, series_name, season_id
-
-def getStreamUrl_DailyMotion(url):
-	printpoint = "" ; returned = "" ; cc = "" ; get_json_code = ""
-	url = 'http://www.dailymotion.com/embed/video/' + url
-	link = OPEN_URL(url)
-	if link.find('"statusCode":410') > 0 or link.find('"statusCode":403') > 0:
-		notification('Video is not available!','DailyMotion','',2000)
-	else:
-		get_json_code = re.compile(r'dmp\.create\(document\.getElementById\(\'player\'\),\s*([^;]+)').findall(link)[0]
-		get_json_code = get_json_code[:len(get_json_code)-1]
-		cc = json.loads(get_json_code)['metadata']['qualities']
-		
-		if '1080' in cc.keys():
-			returned = cc['1080'][0]['url']
-		elif '720' in cc.keys():
-			returned = cc['720'][0]['url']
-		elif '480' in cc.keys():
-			returned = cc['480'][0]['url']
-		elif '380' in cc.keys():
-			returned = cc['380'][0]['url']
-		elif '240' in cc.keys():
-			returned = cc['240'][0]['url']
-		elif 'auto' in cc.keys():
-			returned = cc['auto'][0]['url']
-		else: notification('No Playable link found!','DailyMotion','',2000)
-
-	text = 'returned' + space2 + str(returned) + newline + \
-	'get_json_code' + space2 + str(get_json_code) + newline + \
-	'cc' + space2 + str(cc) + newline + \
-	'url' + space2 + str(url) + newline + \
-	'link' + space2 + str(link)
-	
-	printlog(title="getStreamUrl_DailyMotion", printpoint=printpoint, text=text, level=0, option="")
-	
-	return returned
-	
-def dailymotion_test(url):
-	#url = 'x3iijfg'
-	url2 = getStreamUrl_DailyMotion(url)
-	listitem = xbmcgui.ListItem(path=url2)
-	
-	if listitem != "": xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, listitem)
-	
-	#xbmc.executebuiltin('PlayMedia(str(listitem))')
-	print 'int(sys.argv[1]) ' + str(int(sys.argv[1])) + newline + 'listitem' + space2 + str(listitem)
-	return listitem
-	#
-	#link = OPEN_URL(url)
-	#prms=json.loads(link)
-	#http://www.dailymotion.com/services/oembed?url=<VIDEO_URL>
-	
-	#xbmc.executebuiltin('PlayMedia(http://www.dailymotion.com/services/oembed?url='+str(url)+')')
 	
 def apimaster(x, title="", thumb="", desc="", fanart="", playlist=[], addonID=addonID, onlydata=True):
-	'''Error may occured at anytime'''
-	'''Make sure to use exception upon running this module'''
-	
+	'''return API information for YouTube and DailyMotion'''
 	'''playlist_L = store new videos from x'''
 	'''playlist = store up to date videos for comparision'''
 	#addonID=addonID
@@ -1341,7 +1245,6 @@ def apimaster(x, title="", thumb="", desc="", fanart="", playlist=[], addonID=ad
 	totalpages = (numOfItems2 / pagesize) + 1
 	nextpage = page + 1
 	
-	#if totalpages > page: addDir('[COLOR=yellow]' + localize(33078) + '[/COLOR]',x,13,"special://skin/media/DefaultVideo2.png",str79528.encode('utf-8'),str(nextpage),50) #Next Page
 	if onlydata == True and not '9' in printpoint:
 		if id_L == []:
 			pass
@@ -1421,61 +1324,6 @@ def apimaster2(playlist, id_, id_L, finalurl_, playlist_L, title_, title_L, titl
 	
 	return id_L, playlist_L, title_L, thumb_L, desc_L, fanart_L, count, invalid__, duplicates__
 
-def RanFromPlayList(playlistid):
-	random.seed()
-	url='https://gdata.youtube.com/feeds/api/playlists/'+playlistid+'?alt=json&max-results=50'
-	link = OPEN_URL(url)
-	prms=json.loads(link)
-	numOfItems=int(prms['feed'][u'openSearch$totalResults'][u'$t']) #if bigger than 50 needs  to add more result
-	if numOfItems >1 :
-		link = OPEN_URL(url)
-		prms=json.loads(link)
-		if numOfItems>49:
-			numOfItems=49
-		i=random.randint(1, numOfItems-1)
-		#print str (len(prms['feed'][u'entry']))  +"and i="+ str(i)
-		try:
-			urlPlaylist= str(prms['feed'][u'entry'][i][ u'media$group'][u'media$player'][0][u'url'])
-			match=re.compile('www.youtube.com/watch\?v\=(.*?)\&f').findall(urlPlaylist)
-			finalurl="plugin://plugin.video.youtube/play/?video_id="+match[0]+"&hd=1" #finalurl="plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid="+match[0]+"&hd=1"
-			title= str(prms['feed'][u'entry'][i][ u'media$group'][u'media$title'][u'$t'].encode('utf-8')).decode('utf-8')
-			thumb =str(prms['feed'][u'entry'][i][ u'media$group'][u'media$thumbnail'][2][u'url'])
-			desc= str(prms['feed'][u'entry'][i][ u'media$group'][u'media$description'][u'$t'].encode('utf-8')).decode('utf-8')
-		except :
-			 return "","","",""  # private video from youtube
-		'''liz = xbmcgui.ListItem(title, iconImage="DefaultVideo.png", thumbnailImage=thumb)
-		liz.setInfo( type="Video", infoLabels={ "Title": title} )
-		liz.setProperty("IsPlayable","true")
-		pl = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-		pl.clear()
-		pl.add(finalurl, liz)'''
-		#xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(pl)
-		return finalurl,title,thumb,desc
-	else:
-		return "","","",""
-
-def myView(type):
-	name = 'myView' ; value = ""
-	admin = xbmc.getInfoLabel('Skin.HasSetting(Admin)')
-	if type == "A":
-		if xbmc.getSkinDir() != "skin.featherence":
-			try: value = int(General_AutoView_A)
-			except: value = ""
-		else: value = "50"
-		
-	elif type == "B":
-		if xbmc.getSkinDir() != "skin.featherence":
-			try: value = int(General_AutoView_B)
-			except: value = ""
-	elif type == "C":
-		if xbmc.getSkinDir() != "skin.featherence":
-			try: value = int(General_AutoView_C)
-			except: value = ""
-
-	text = "type" + space2 + str(type) + space + "value" + space2 + str(value)
-	printlog(title=name, printpoint="", text=text, level=0, option="")
-	return value
-
 def setView(content, viewType, containerfolderpath2):
 	'''set content type so library shows more views and info'''
 	name = 'setView' ; printpoint = ""
@@ -1508,25 +1356,6 @@ def setView(content, viewType, containerfolderpath2):
 	"containerfolderpath2" + space2 + containerfolderpath2
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 	'''---------------------------'''
-
-def ShowFromUser(user):
-	'''reads  user names from my subscriptions'''
-	murl='https://gdata.youtube.com/feeds/api/users/'+user+'/shows?alt=json&start-index=1&max-results=50&v=2'
-	resultJSON = json.loads(OPEN_URL(murl))
-	shows=resultJSON['feed']['entry']
-	#print shows[1]
-	hasNext= True
-	while hasNext:
-		shows=resultJSON['feed']['entry']
-		for  i in range (0, len(shows)) :
-			showApiUrl=shows[i]['link'][1]['href']
-			showApiUrl=showApiUrl[:-4]+'/content?v=2&alt=json'
-			showName=shows[i]['title']['$t'].encode('utf-8')
-			image= shows[i]['media$group']['media$thumbnail'][-1]['url']
-			addDir(showName,showApiUrl,14,image,'','1',"")
-		hasNext= resultJSON['feed']['link'][-1]['rel'].lower()=='next'
-		if hasNext:
-			resultJSON = json.loads(OPEN_URL(resultJSON['feed']['link'][-1]['href']))
 			
 def TVMode_check(admin, url, playlists):
 	printpoint = ""
@@ -1617,7 +1446,7 @@ def update_view(url, num, viewtype, ok=True):
 	if 'plugin.' in num:
 		if not xbmc.getCondVisibility('System.HasAddon('+ num +')') or not os.path.exists(os.path.join(addons_path, num)):
 			notification_common("24")
-			installaddon(admin, num, update=True)
+			installaddon(num, update=True)
 			xbmc.sleep(2000)
 	
 	if '&activatewindow=' in url:
@@ -1646,7 +1475,7 @@ def play_view(url, num, viewtype):
 	if 'plugin.' in num:
 		if not xbmc.getCondVisibility('System.HasAddon('+ num +')') or not os.path.exists(os.path.join(addons_path, num)):
 			notification_common("24")
-			installaddon(admin, num, update=True)
+			installaddon(num, update=True)
 			xbmc.sleep(2000)
 	ok = True
 	xbmc.executebuiltin('PlayMedia(%s)' % url )
@@ -1654,63 +1483,41 @@ def play_view(url, num, viewtype):
 	printlog(title='update_view', printpoint="", text=text, level=0, option="")
 	return ok	
 
-def unescape(text):
-	try:            
-		rep = {"&nbsp;": " ",
-			   "\n": "",
-			   "\t": "",
-			   "\r":"",
-			   "&#39;":"",
-			   "&quot;":"\""
-			   }
-		for s, r in rep.items():
-			text = text.replace(s, r)
-			
-		# remove html comments
-		text = re.sub(r"<!--.+?-->", "", text)    
-			
-	except TypeError:
-		pass
-
-	return text
-
 def urlcheck(url, ping=False, timeout=7):
 	import urllib2
 	name = "urlcheck" ; printpoint = "" ; returned = "" ; extra = "" ; TypeError = "" ; response_ = ""
 	
-	
-	try:
-		#urllib2.urlopen(url)
-		request = urllib2.Request(url)
-		response = urllib2.urlopen(request, timeout=timeout)
-		response_ = response
-		#content = response.read()
-		#f = urllib2.urlopen(url)
-		#f.fp._sock.recv=None # hacky avoidance
-		response.close()
-		del response
-		printpoint = printpoint + "7"
-		
-	except urllib2.HTTPError, e: 
-		extra = extra + newline + str(e.code) + space + str(e)
-		printpoint = printpoint + "8"
-	except urllib2.URLError, e:
-		extra = extra + newline + str(e.args) + space + str(e)
-		printpoint = printpoint + "9"
-	except Exception, TypeError:
-		printpoint = printpoint + "9"
-		extra = extra + newline + "TypeError" + space2 + str(TypeError)
-		if 'The read operation timed out' in TypeError: returned = 'timeout'
+	if url == None or url == "":
+		url = ""
+		printpoint = printpoint + '9'
+	else:
+		try:
+			#urllib2.urlopen(url)
+			request = urllib2.Request(url)
+			response = urllib2.urlopen(request, timeout=timeout)
+			response_ = response
+			#content = response.read()
+			#f = urllib2.urlopen(url)
+			#f.fp._sock.recv=None # hacky avoidance
+			response.close()
+			del response
+			printpoint = printpoint + "7"
 			
-	if not "7" in printpoint:
-		if ping == True:
-			if systemplatformwindows: output = terminal('ping '+url+' -n 1',"Connected2")
-			else: output = terminal('ping -W 1 -w 1 -4 -q '+url+'',"Connected")
-			if (not systemplatformwindows and ("1 packets received" in output or not "100% packet loss" in output)) or (systemplatformwindows and ("Received = 1" in output or not "100% loss" in output)): printpoint = printpoint + "7"
-			
-		elif 'Forbidden' in extra:
-			printpoint = printpoint + '7'
-			
+		except urllib2.HTTPError, e: 
+			extra = extra + newline + str(e.code) + space + str(e)
+			printpoint = printpoint + "8"
+		except urllib2.URLError, e:
+			extra = extra + newline + str(e.args) + space + str(e)
+			printpoint = printpoint + "9"
+		except Exception, TypeError:
+			printpoint = printpoint + "9"
+			extra = extra + newline + "TypeError" + space2 + str(TypeError)
+			if 'The read operation timed out' in TypeError: returned = 'timeout'
+				
+		if not "7" in printpoint:				
+			if 'Forbidden' in extra:
+				printpoint = printpoint + '7'
+				
 	if "UKY3scPIMd8" in url: printpoint = printpoint + "6"
 	elif "7" in printpoint: returned = "ok" # or 'Forbidden' in extra
 	else: returned = 'error'
@@ -1793,10 +1600,7 @@ def setCustomFanart(addon, mode, admin, name, printpoint):
 	text = 'addon' + space2 + str(addon) + space + 'mode' + space2 + str(mode) + space + 'x' + space2 + str(x) + newline
 	printlog(title='setCustomFanart', printpoint=printpoint, text=text, level=0, option="")
 	
-def setaddonFanart(fanart, Fanart_Enable, Fanart_EnableCustom): #Fanart_EnableExtra
-	#admin = xbmc.getInfoLabel('Skin.HasSetting(Admin)')
-	#admin2 = xbmc.getInfoLabel('Skin.HasSetting(Admin2)')
-	#admin3 = xbmc.getInfoLabel('Skin.HasSetting(Admin3)')
+def setaddonFanart(fanart, Fanart_Enable, Fanart_EnableCustom):
 	returned = "" ; printpoint = "" ; TypeError = "" ; extra = ""
 	try:
 		Fanart_Enable = getsetting('Fanart_Enable')
@@ -1841,6 +1645,7 @@ def getAddonFanart(category, custom="", default="", urlcheck_=False):
 			returned = custom
 			
 	if returned == "" and not '7' in printpoint:
+		printpoint = printpoint + '1'
 		if Fanart_EnableCustom != "true" and default == "":
 			returned = addonFanart
 			printpoint = printpoint + "8"
@@ -1950,11 +1755,8 @@ def getAddonFanart(category, custom="", default="", urlcheck_=False):
 					printpoint = printpoint + "9d"
 		
 		elif default != "" and not '7' in printpoint:
-			valid = urlcheck(default, ping=False, timeout=1)
-			
-			if 'ok' in valid:
-				printpoint = printpoint + "7"
-				returned = default
+			printpoint = printpoint + '5'
+			returned, returned2 = TranslatePath(default, filename=True, urlcheck_=True)
 		else:
 			printpoint = printpoint + "9"
 			
@@ -1975,6 +1777,181 @@ def getAddonFanart(category, custom="", default="", urlcheck_=False):
 	"category_path" + space2 + str(category_path) + extra
 	printlog(title='getAddonFanart', printpoint=printpoint, text=text, level=0, option="")
 	return returned
+
+def checkAddon_Update(admin, Addon_Update, Addon_Version, addonVersion, Addon_UpdateDate, Addon_UpdateLog, Addon_ShowLog, Addon_ShowLog2, VerReset=""):
+	TypeError = "" ; extra = "" ; name = 'checkAddon_Update' ; printpoint = ""
+	
+	if Addon_Update != "true" or (Addon_Update == "true" and Addon_Version == addonVersion):
+		'''------------------------------
+		---Addon_Update-(NEW-ONLY)--------
+		------------------------------'''
+		Addon_Update = setAddon_Update(admin, addonVersion, Addon_Version, Addon_Update)
+		'''---------------------------'''
+	
+	if Addon_Update == "true":
+		'''------------------------------
+		---setAddon_Version---------------
+		------------------------------'''
+		Addon_Version = setAddon_Version(admin, addonVersion, Addon_Version, VerReset)
+		'''---------------------------'''
+		
+	if Addon_Update == "true" or Addon_UpdateDate == "":
+		'''------------------------------
+		---setAddon_UpdateDate-(NEW-ONLY)-
+		------------------------------'''
+		Addon_UpdateDate = setAddon_UpdateDate(admin, addonVersion, Addon_Version, Addon_Update, Addon_UpdateDate)
+		'''---------------------------'''
+	
+	if Addon_Version == addonVersion and Addon_UpdateLog == "true" and Addon_UpdateDate != "":
+		'''------------------------------
+		---Addon_UpdateLog----------------
+		------------------------------'''
+		dialogokW = xbmc.getCondVisibility('Window.IsVisible(DialogOk.xml)')
+		dialogselectW = xbmc.getCondVisibility('Window.IsVisible(DialogSelect.xml)')
+		dialogprogressW = xbmc.getCondVisibility('Window.IsVisible(DialogProgress.xml)')
+		dialogbusyW = xbmc.getCondVisibility('Window.IsVisible(DialogBusy.xml)')
+		dialogtextviewerW = xbmc.getCondVisibility('Window.IsVisible(DialogTextViewer.xml)')
+		startupW = xbmc.getCondVisibility('Window.IsVisible(Startup.xml)')
+		custom1191W = xbmc.getCondVisibility('Window.IsVisible(Custom1191.xml)')
+		if not dialogokW and not dialogselectW and not dialogprogressW and not dialogbusyW and not startupW and not dialogtextviewerW and not custom1191W:
+			if datenowS != "":
+				setAddon_UpdateLog(admin, Addon_Version, Addon_UpdateDate, Addon_ShowLog, Addon_ShowLog2, datenowS)
+				'''---------------------------'''
+	
+	'''------------------------------
+	---PRINT-END---------------------
+	------------------------------'''
+	text = "checkAddon_Update" + space2 + "Addon_Update" + space2 + Addon_Update + space + "Addon_Version" + space2 + Addon_Version + space + "addonVersion" + space2 + addonVersion + space + "Addon_UpdateDate" + space2 + Addon_UpdateDate + space + "Addon_UpdateLog" + space2 + Addon_UpdateLog
+	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+	'''---------------------------'''
+				
+def setAddon_Update(admin, addonVersion, Addon_Version, Addon_Update):
+	'''Compare addon version to check if it's been updated'''
+	name = 'setAddon_Update' ; printpoint = ""
+	Addon_Update2 = Addon_Update
+	if Addon_Version != addonVersion and Addon_Update == "false":
+		Addon_Update2 = "true"
+		setsetting('Addon_UpdateLog',"true")
+		'''---------------------------'''
+	else:
+		Addon_Update2 = "false"
+		'''---------------------------'''
+		
+	if Addon_Update != Addon_Update2: setsetting('Addon_Update',Addon_Update2)
+	'''---------------------------'''
+		
+	'''------------------------------
+	---PRINT-END---------------------
+	------------------------------'''
+	text = "setAddon_Update" + space2 + Addon_Update + " - " + Addon_Update2
+	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+	'''---------------------------'''	
+	return Addon_Update2
+
+def setAddon_Version(admin, addonVersion, Addon_Version, VerReset=""):
+	'''set the new version in settings.xml'''
+	name = 'setAddon_Version' ; printpoint = ""
+	Addon_Version2 = Addon_Version
+	'''---------------------------'''
+	if Addon_Version != addonVersion:
+		Addon_Version2 = addonVersion
+		setsetting('Addon_Version',Addon_Version2)
+		
+	'''------------------------------
+	---PRINT-END---------------------
+	------------------------------'''
+	text = "setAddon_Version" + space2 + Addon_Version + " - " + Addon_Version2 + space + 'VerReset' + space2 + str(VerReset)
+	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+	'''---------------------------'''
+	return Addon_Version2
+		
+def setAddon_UpdateDate(admin, addonVersion, Addon_Version, Addon_Update, Addon_UpdateDate):
+	'''set the current update date'''
+	from variables import datenowS
+	name = 'setAddon_UpdateDate' ; printpoint = ""
+	Addon_UpdateDate2 = Addon_UpdateDate
+	'''---------------------------'''
+	if Addon_UpdateDate != datenowS:
+		Addon_UpdateDate2 = datenowS
+		setsetting('Addon_UpdateDate',Addon_UpdateDate2)
+		'''---------------------------'''
+
+	'''------------------------------
+	---PRINT-END---------------------
+	------------------------------'''
+	text = "setAddon_UpdateDate" + space2 + Addon_UpdateDate + " - " + Addon_UpdateDate2
+	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+	'''---------------------------'''
+	return Addon_UpdateDate2
+	
+def setAddon_UpdateLog(admin, Addon_Version, Addon_UpdateDate, Addon_ShowLog, Addon_ShowLog2, datenowS):	
+	'''show a changelog if that option enabled'''
+	name = 'setAddon_UpdateLog' ; printpoint = ""
+	if Addon_ShowLog == "true":
+		from variables import addonID, addonName2
+		printpoint = "" ; TypeError = "" ; extra = ""
+		number2S = ""
+		datenowD = stringtodate(datenowS,'%Y-%m-%d')
+		datedifferenceD = stringtodate(Addon_UpdateDate,'%Y-%m-%d')
+		datedifferenceS = str(datedifferenceD)
+		if "error" in [datenowD, datedifferenceD]: printpoint = printpoint + "9"
+		try:
+			number2 = datenowD - datedifferenceD
+			number2S = str(number2)
+			printpoint = printpoint + "2"
+			'''---------------------------'''
+		except Exception, TypeError:
+			extra = extra + newline + "TypeError" + space2 + str(TypeError)
+			printpoint = printpoint + "9"
+			'''---------------------------'''
+		try:
+			Addon_ShowLog2 = int(Addon_ShowLog2)
+			Addon_ShowLog2 = str(Addon_ShowLog2)
+			printpoint = printpoint + "3"
+			'''---------------------------'''
+		except Exception, TypeError:
+			extra = extra + newline + "TypeError" + space2 + str(TypeError)
+			Addon_ShowLog2 = "1"
+			printpoint = printpoint + "4"
+			'''---------------------------'''
+		if not "9" in printpoint:
+			printpoint = printpoint + "5"
+			if "day," in number2S: number2S = number2S.replace(" day, 0:00:00","",1)
+			elif "days," in number2S: number2S = number2S.replace(" days, 0:00:00","",1)
+			else: number2S = "0"
+			number2N = int(number2S)
+			'''---------------------------'''
+			#header = '[COLOR=yellow]' + addonString(304).encode('utf-8') + " - " + addonVersion + '[/COLOR]'
+			if number2N == 0: header = '[COLOR=yellow]' + localize(24065) + space + localize(33006) + space5 + Addon_Version + '[/COLOR]'
+			elif number2N == 1: header = '[COLOR=green]' + localize(24065) + space + addonString_servicefeatherence(5).encode('utf-8') + space5 + Addon_Version + '[/COLOR]'
+			elif number2N <= 7: header = '[COLOR=purple]' + localize(24065) + space + addonString_servicefeatherence(6).encode('utf-8') + space5 + Addon_Version + '[/COLOR]'
+			else: header = ""
+			'''---------------------------'''
+			if number2N <= int(Addon_ShowLog2):
+				printpoint = printpoint + "7"
+				log = open(addonPath + "/" + 'changelog.txt', 'rb')
+				message2 = log.read()
+				log.close()
+				message2S = str(message2)
+				message3 = message2[0:8000]
+				message3 = '"' + message3 + '"'
+				message3S = str(message3)
+				if header != "":
+					w = TextViewer_Dialog('DialogTextViewer.xml', "", header=header, text=message2)
+					w.doModal()
+					'''---------------------------'''
+			else: printpoint = printpoint + "8"
+	#setsetting('Addon_UpdateLog',"false")
+	setsetting_custom1(addonID, 'Addon_UpdateLog', "false")
+		
+	text = "Addon_UpdateDate" + space2 + str(Addon_UpdateDate) + newline + \
+	"datenowS" + space2 + str(datenowS) + newline + \
+	"number2S" + space2 + str(number2S) + newline + \
+	"Addon_UpdateLog" + space2 + str(Addon_UpdateLog) + newline + \
+	"Addon_ShowLog" + space2 + str(Addon_ShowLog) + newline + \
+	"Addon_ShowLog2" + space2 + str(Addon_ShowLog2)
+	'''---------------------------'''
+	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 	
 def pluginend(admin):
 	try: from modules import *
@@ -2056,23 +2033,7 @@ def pluginend(admin):
 			VerReset = ""
 			#if addonID == 'plugin.video.featherence.music' and Addon_Version == '0.0.17': VerReset = "true"
 			checkAddon_Update(admin, Addon_Update, Addon_Version, addonVersion, Addon_UpdateDate, Addon_UpdateLog, Addon_ShowLog, Addon_ShowLog2, VerReset)
-			if Addon_UpdateLog == "true" or 1 + 1 == 3:
-				if addonID == 'plugin.video.featherence.kids':
-					if systemlanguage != "Hebrew" and systemlanguage != "English": notification("This addon does not support "+str(systemlanguage)+" yet","...","",2000)
-					else: pass
-					if systemlanguage == "Hebrew":
-						installaddonP(admin, 'repository.xbmc-israel', update=True)
-						'''---------------------------'''
-				if addonID == 'plugin.video.featherence.docu':
-					if systemlanguage != "Hebrew" and systemlanguage != "English": notification("This addon does not support "+str(systemlanguage)+" yet","...","",2000)
-					else: pass
-					if systemlanguage == "Hebrew":
-						installaddonP(admin, 'repository.xbmc-israel', update=True)
-						'''---------------------------'''
-				elif addonID == 'plugin.video.featherence.music':
-					if systemlanguage != "Hebrew" and systemlanguage != "English": notification("This addon does not support "+str(systemlanguage)+" yet","...","",2000)
-					else: pass
-				
+			if Addon_UpdateLog == "true" or 1 + 1 == 3:				
 				list = []
 				list.append(addonString_servicefeatherence(32060).encode('utf-8')) #Would you like thanks us? Would love to hear you!
 				list.append(addonString_servicefeatherence(32061).encode('utf-8')) #Do you want to contribute?
@@ -2102,7 +2063,7 @@ def pluginend(admin):
 	elif mode == 6:
 		mode = MultiVideos(addonID, mode, name, url, iconimage, desc, num, viewtype, fanart)
 	elif mode == 7:
-		ListLive(url, mode, num, viewtype, fanart)
+		pass
 	elif mode == 8:
 		update_view(url, num, viewtype)
 	elif mode == 9:
@@ -2111,18 +2072,17 @@ def pluginend(admin):
 		mode = 4
 		PlayVideos(name, mode, url, iconimage, desc, num, fanart)
 	elif mode == 11:
-		pass #YOULinkAll(url)
+		pass
 	elif mode == 12:
 		PlayVideos(name, mode, url, iconimage, desc, num, fanart)
 	elif mode == 13:
-		#ListPlaylist(url, num)
 		ListPlaylist2(name, url, iconimage, desc, num, viewtype, fanart)
 	elif mode == 14:       
-		pass #SeasonsFromShow(url)
+		pass
 	elif mode == 15:
 		pass
 	elif mode == 16:       
-		ShowFromUser(url)
+		pass
 	elif mode == 17:
 		mode = TvMode2(addonID, mode, name, url, iconimage, desc, num, viewtype, fanart)
 	elif mode == 18:
@@ -2144,6 +2104,8 @@ def pluginend(admin):
 		Search_Menu(mode, name, url, iconimage, desc, num, viewtype, fanart)
 	
 	elif mode == 40:
+		pass
+	elif mode == 44:
 		pass
 	elif mode == 90:
 		if General_Language != url and url != "":
@@ -2235,6 +2197,8 @@ def pluginend(admin):
 		CATEGORIES139(name, iconimage, desc, fanart)
 	elif mode == 200:
 		CATEGORIES200()
+	elif mode == 999:
+		CATEGORIES999()
 	
 	#10101+ = SUB-CATEGORIES2
 	elif mode == 10001:
@@ -2548,9 +2512,14 @@ def pluginend(admin):
 		
 		#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TITLE, name)
 		printpoint = printpoint + "S"
-	if mode != 17 and mode != 5 and mode != 21 and mode != 4 and mode != 9 and mode != 13 and mode != 3: # and mode != 20
+	if mode == 44:
+		xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
+		xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+	elif mode != 17 and mode != 5 and mode != 21 and mode != 4 and mode != 9 and mode != 13 and mode != 3: # and mode != 20
+		printpoint = printpoint + "7"		
 		xbmcplugin.endOfDirectory(int(sys.argv[1]))
-		printpoint = printpoint + "7"
+		
+		
 	
 	'''------------------------------
 	---PRINT-END---------------------
@@ -2558,24 +2527,18 @@ def pluginend(admin):
 	printlog(title='pluginend', printpoint=printpoint, text=extra, level=0, option="")
 	'''---------------------------'''
 	return url, name, mode, iconimage, desc, num, viewtype, fanart
-	
-	
+		
 def pluginend2(admin, url, containerfolderpath, viewtype):
 	printpoint = "" ; count = 0 ; countmax = 10 ; url = str(url) ; containerfolderpath2 = ""
-	returned_Dialog, returned_Header, returned_Message = checkDialog(admin)
 	
-	#xbmc.sleep(1000) #TIME FOR DIALOGBUSY
-	'''------------------------------
-	---countmax-ADJUST---------------
-	------------------------------'''
-	if "plugin.video.10qtv" in url: countmax = 40
-	'''---------------------------'''
-	
-	while (count < countmax and (returned_Dialog == "dialogbusyW" or returned_Dialog == "dialogprogressW")) or (count < 2 and returned_Dialog == "") and not xbmc.abortRequested:
+	dialogprogressW = xbmc.getCondVisibility('Window.IsVisible(DialogProgress.xml)')
+	dialogbusyW = xbmc.getCondVisibility('Window.IsVisible(DialogBusy.xml)')
+	while count < countmax and (dialogbusyW or dialogprogressW or count < 2) and not xbmc.abortRequested:
 		count += 1
 		if count == 1: printpoint = printpoint + "1"
 		xbmc.sleep(500)
-		returned_Dialog, returned_Header, returned_Message = checkDialog(admin)
+		dialogprogressW = xbmc.getCondVisibility('Window.IsVisible(DialogProgress.xml)')
+		dialogbusyW = xbmc.getCondVisibility('Window.IsVisible(DialogBusy.xml)')
 		'''---------------------------'''
 		
 	if count < countmax:
@@ -2583,16 +2546,8 @@ def pluginend2(admin, url, containerfolderpath, viewtype):
 		if count == 0: xbmc.sleep(1000)
 		else: xbmc.sleep(500)
 		containerfolderpath2 = xbmc.getInfoLabel('Container.FolderPath')
-		if viewtype == None:
-			'''------------------------------
-			---viewtype-ADJUST---------------
-			------------------------------'''
-			printpoint = printpoint + "3"
-			if containerfolderpath2 == 'plugin://'+addonID+'/?&': printpoint = printpoint + "4" ; viewtype = 50
-			elif "http://nickjr.walla.co.il/" in url: viewtype = 50
-			elif ("plugin.video.gozlan.me" in url or "plugin.video.seretil" in url or "plugin.video.supercartoons" in url or "plugin.video.sdarot.tv" in url or "seretil.me" in url): viewtype = 58
-			'''---------------------------'''
-		if containerfolderpath != containerfolderpath2 or "4" in printpoint: #GAL CHECK THIS! #containerfolderpath2 == "plugin://"+addonID+"/"
+
+		if containerfolderpath != containerfolderpath2 or "4" in printpoint:
 			printpoint = printpoint + "5"
 			setView('', viewtype, containerfolderpath2)
 			'''---------------------------'''
@@ -2600,7 +2555,7 @@ def pluginend2(admin, url, containerfolderpath, viewtype):
 	'''------------------------------
 	---PRINT-END---------------------
 	------------------------------'''
-	text = "count" + space2 + str(count) + space + "returned_Dialog" + space2 + returned_Dialog + space + "containerfolderpath/2" + newline + \
+	text = "count" + space2 + str(count) + space + "containerfolderpath/2" + newline + \
 	str(containerfolderpath) + newline + \
 	str(containerfolderpath2) + newline + \
 	"url" + space2 + str(url)
@@ -2609,7 +2564,7 @@ def pluginend2(admin, url, containerfolderpath, viewtype):
 
 	
 def getCustom_Playlist(admin):
-	'''Get the next new Item ID'''
+	'''Get the next new Item ID of a user favourite'''
 	returned = "" ; printpoint = ""
 	if Custom_Playlist1_ID  == "": returned = 'Custom_Playlist1_ID'
 	elif Custom_Playlist2_ID  == "": returned = 'Custom_Playlist2_ID'
@@ -2644,6 +2599,7 @@ def getCustom_Playlist2(value):
 	return returned
 
 def setCustom_Playlist_ID(Custom_Playlist_ID, New_ID, mode, url, name, num, viewtype):
+	'''Revise user input url'''
 	printpoint = "" ; extra = "" ; extra2 = "" ; New_Type = "" ; New_ID_ = "" ; New_IDL = "" ; DuplicatedL = [] ; IgnoredL = []
 	Custom_Playlist_ID_ = getsetting(Custom_Playlist_ID)
 	Custom_Playlist_ID_L = Custom_Playlist_ID_.split(',')
@@ -2761,7 +2717,7 @@ def setCustom_Playlist_ID(Custom_Playlist_ID, New_ID, mode, url, name, num, view
 
 def AdvancedCustom(mode, name, url, thumb, desc, num, viewtype, fanart):
 	'''------------------------------
-	---Save and Load your addon-design
+	---Backup/Restore-My-Addon-------
 	------------------------------'''
 	printpoint = "" ; extra = "" ; formula = "" ; formula_ = "" ; path = "" ; file = "" ; returned = "" ; returned2 = ""; returned3 = "" ; y = "s" ; custommediaL = [] ; list2_ = [] ; list2 = [] ; filesT_ = []
 	
@@ -3064,6 +3020,7 @@ def AddCustom(mode, name, url, iconimage, desc, num, viewtype, fanart):
 	'''---------------------------'''
 	
 def CheckMoveCustom(name, num):
+	'''Prepare reposition of customized buttons'''
 	extra = "" ; printpoint = "" ; down = "" ; up = ""
 	
 	'''---------------------------'''
@@ -3198,7 +3155,7 @@ def cleanfanartCustom(fanart):
 	return fanart
 	
 def MoveCustom(mode, name, url, iconimage, desc, num, viewtype, fanart):
-	'''23'''
+	'''Reposition customized buttons'''
 	printpoint = ""
 	'''---------------------------'''
 	if not "__" in num: printpoint = printpoint + "9"
@@ -3547,10 +3504,9 @@ def ManageCustom(mode, name, url, thumb, desc, num, viewtype, fanart):
 	printlog(title="ManageCustom", printpoint=printpoint, text=text, level=2, option="")
 
 def getLists(mode, name, url, iconimage, desc, num, viewtype, fanart):
-	
+	'''Gather videos in Play Random'''
 	count = 0
 	setProperty('script.featherence.service_random', "true", type="home")
-	#returned = ActivateWindow('0', addonID, containerfolderpath, 0, wait=True)
 	xbmc.executebuiltin('Container.Refresh') ; xbmc.sleep(2000)
 	dialogbusyW = xbmc.getCondVisibility('Window.IsVisible(DialogBusy.xml)')
 	while count < 20 and dialogbusyW and not xbmc.abortRequested:
@@ -3563,11 +3519,14 @@ def getLists(mode, name, url, iconimage, desc, num, viewtype, fanart):
 	
 	setProperty('script.featherence.service_random', "", type="home")
 	xbmc.executebuiltin('RunScript(script.featherence.service,,?mode=17&value='+addonID+')')
-	#print 'getLists: ' + 'scriptfeatherenceservice_randomL' + space2 + str(scriptfeatherenceservice_randomL)
 
-def CATEGORIES_RANDOM():
+def	CATEGORIES999():
+	'''testing'''
+	pass
+	
+def CATEGORIES_RANDOM(background="", default="", custom=""):
 	'''אקראי'''
-	addDir('-' + localize(590),list,1,featherenceserviceicons_path + 'random.png',addonString_servicefeatherence(8).encode('utf-8'),'1',"", "") #אקראי
+	addDir('-' + localize(590),list,1,featherenceserviceicons_path + 'random.png',addonString_servicefeatherence(8).encode('utf-8'),'1',"", getAddonFanart(background, default=default, custom=custom))
 
 def CATEGORIES_SEARCH(mode=3, name='-' + localize(137), url="", num=""):
 	'''חיפוש'''

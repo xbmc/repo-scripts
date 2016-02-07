@@ -71,7 +71,7 @@ class SendDebug:
 								file = to_utf8(file)
 								
 						#Debug_Message = Debug_Title + newline + newline + Debug_Message + newline + newline + file
-						Debug_Message = newline + Debug_Message + newline + newline + file
+						Debug_Message = newline + str(Debug_Message) + newline + newline + str(file)
 
 						'''send debug prompt'''
 						returned = dialogyesno(addonString(32098), addonString(32097))

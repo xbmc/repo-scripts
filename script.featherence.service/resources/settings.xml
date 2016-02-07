@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-	<category label="Common Services" description="">
-	  <setting id="AutoUpdate" type="bool" default="true" label="Auto check for addons update" visible=""/>
-	  <setting id="AutoUpdate2" type="select" default="60m" label="Timing" values="60|90|120|150|180" visible="eq(-1,true)"/>
-	  <setting type="lsep" label="32042"/>
-	  <setting id="Library_On" type="bool" default="false" label="Auto Library Update/Clean" visible="true"/>
-	  <setting type="lsep" label=""/>
-	  <setting type="lsep" label="32041"/>
-	  <setting id="VolumeLevel" type="select" default="-" label="32015" values="-|40|50|60|70|80|90|100" visible="true"/>
-	  <setting type="lsep" label=""/>
+    <category label="About" description="About">
+		<setting type="lsep" label=""/>
+		<setting type="lsep" label="[B][COLOR=yellow]Featherence[/COLOR][/B][CR]"/>
+		<setting type="lsep" label="[B][COLOR=blue]Facebook[/COLOR][/B]: www.facebook.com/groups/featherence[CR]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=512&amp;value=1)" label="Featherence Facebook Group Website" option="close" visible="true"/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32048] $ADDON[script.featherence.service 32049]" visible="true"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=7)" label="Post on Facebook!" option="close" visible=""/>
+		<setting type="lsep" label="[B][COLOR=blue]YouTube[/COLOR][/B]: www.youtube.com/user/finalmakerr[CR]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=32&amp;value=3)" label="Featherence YouTube Channel" option="close" visible="true"/>
+		<setting type="lsep" label="[B][COLOR=blue]Github[/COLOR][/B]: www.github.com/finalmakerr/featherence[CR]"/>
+		<setting type="action" action="RunScript(script.featherence.service,,?mode=512&amp;value=2)" label="Featherence Github Server" option="close" visible="true"/>
+		<setting type="lsep" label="[CR]$ADDON[script.featherence.service 32044]"/>
+		<setting type="lsep" label="$ADDON[script.featherence.service 32045]"/>
+		<setting type="lsep" label=""/>
 	</category>
 	
 	<category label="Remote">
@@ -37,34 +42,10 @@
 	
 	<category label="Tools" description="">
 		<setting type="lsep" label=""/>
+		<setting type="lsep" label="32041"/>
+	    <setting id="VolumeLevel" type="select" default="-" label="32015" values="-|40|50|60|70|80|90|100" visible="true"/>
 		<setting type="action" action="RunScript(script.featherence.service,,?mode=6&amp;value=1)" label="Ping" visible="System.Platform.Windows | System.Platform.Linux | System.Platform.Linux.RaspberryPi"/>
-		<setting type="lsep" label="Total Mouse offer an easy access to your taskbar from within Kodi." visible="System.Platform.Windows + false"/>
-		<setting type="bool" id="TotalMouse" default="false" label="Enable Total Mouse" visible="System.Platform.Windows + false"/>
-		<setting type="lsep" label="32040" visible="eq(-1,true) + false"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=101&amp;value=1)" label="Launch Total Mouse script" option="close" visible="System.Platform.Windows + false"/>
-	    <setting type="lsep" label=""/>
 		<setting type="action" action="RunScript(script.featherence.service,,?mode=31&amp;value=Custom)" label="Read file and display results" option="close" visible="true"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=46)" label="OverClock PI" visible="System.Platform.Linux.RaspberryPi + System.HasAddon(service.openelec.settings)"/>
-		<setting type="lsep" label="84" visible="System.Platform.Linux | System.Platform.Linux.RaspberryPi"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=63)" label="Texture & DB Removal" visible=""/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=21&amp;value=1)" label="Auto Setup Movies Scraper" option="close" visible="false"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=21&amp;value=2)" label="Auto Setup TVshows Scraper" option="close" visible="false"/>
-	</category>
-	
-	<category label="About" description="About">
-		<setting type="lsep" label=""/>
-		<setting type="lsep" label="[B][COLOR=yellow]Featherence[/COLOR][/B][CR]"/>
-		<setting type="lsep" label="[B][COLOR=blue]Facebook[/COLOR][/B]: www.facebook.com/groups/featherence[CR]"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=512&amp;value=1)" label="Featherence Facebook Group Website" option="close" visible="true"/>
-		<setting type="lsep" label="$ADDON[script.featherence.service 32048] $ADDON[script.featherence.service 32049]" visible="true"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=7)" label="Post on Facebook!" option="close" visible=""/>
-		<setting type="lsep" label="[B][COLOR=blue]YouTube[/COLOR][/B]: www.youtube.com/user/finalmakerr[CR]"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=32&amp;value=3)" label="Featherence YouTube Channel" option="close" visible="true"/>
-		<setting type="lsep" label="[B][COLOR=blue]Github[/COLOR][/B]: www.github.com/finalmakerr/featherence[CR]"/>
-		<setting type="action" action="RunScript(script.featherence.service,,?mode=512&amp;value=2)" label="Featherence Github Server" option="close" visible="true"/>
-		<setting type="lsep" label="[CR]$ADDON[script.featherence.service 32044]"/>
-		<setting type="lsep" label="$ADDON[script.featherence.service 32045]"/>
-		<setting type="lsep" label=""/>
 	</category>
 	
 	<category label="Debug">
@@ -84,7 +65,6 @@
 	  <setting id="Skin_UpdateDate" type="text" default="" label="Skin_UpdateDate" visible="false"/>
 	  <setting id="Skin_UpdateLog" type="bool" default="true" label="Skin_UpdateLog" visible="false"/>
 	  <setting id="Skin_Version" type="text" default="" label="Skin_Version" visible="false"/>
-	  <setting id="General_DownloadON" type="bool" default="false" label="General_DownloadON" visible="false"/>
 		
 	  <setting type="lsep" label=""/>
 	</category>

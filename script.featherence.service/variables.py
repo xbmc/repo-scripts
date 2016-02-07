@@ -34,10 +34,7 @@ printfirst = addonName + ": !@# "
 Skin_UpdateDate = getsetting('Skin_UpdateDate')
 Skin_UpdateLog = getsetting('Skin_UpdateLog')
 Skin_Version = getsetting('Skin_Version')
-'''---------------------------'''
-Library_On = getsetting('Library_On')
-Library_UpdateDate = getsetting('Library_UpdateDate')
-Library_CleanDate = getsetting('Library_CleanDate')
+
 ScreenSaver_Music = getsetting('ScreenSaver_Music')
 '''---------------------------'''
 A10 = [0, 10, 20, 30, 40, 50 , 60]
