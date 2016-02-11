@@ -45,7 +45,7 @@ class Util(object):
   def getResponse(url, headers = {}):
 
     defaultHeaders = {
-      'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:43.0) Gecko/20100101 Firefox/43.0',
+      'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:44.0) Gecko/20100101 Firefox/44.0',
       'Accept-Encoding' : 'gzip, deflate'
     }
 
@@ -57,7 +57,7 @@ class Util(object):
 
     result = Response()
     try:
-      response = urllib2.urlopen(req)
+      response = urllib2.urlopen(req, timeout = 60)
     except:
       result.isSucceeded = False
       Util.showConnectionErrorDialog()
