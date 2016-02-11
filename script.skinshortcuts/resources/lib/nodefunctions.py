@@ -125,7 +125,7 @@ class NodeFunctions():
 
             if isFolder:
                 # Add it to our list of nodes
-                nodes[ int( index ) ] = [ label, icon, origFolder.decode( "utf-8" ), "folder", origIndex, mediaType ]
+                nodes[ int( index ) ] = [ label, icon, origFolder, "folder", origIndex, mediaType ]
             else:
                 # Check for a path
                 path = root.find( "path" )
@@ -287,44 +287,102 @@ class NodeFunctions():
     # Functions used to add a node to the menu #
     ############################################
 
-    def addNodeToMenu( self, node, label, icon, DATA, isVideo = False ):
-        # Get a list of all nodes within
-        json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail"], "directory": "' + node + '", "media": "files" } }')
+    def addToMenu( self, path, label, icon, content, window, DATA ):
+        log( repr( window ) )
+        log( repr( path ) )
+        log( repr( content ) )
+        # Show a waiting dialog
+        dialog = xbmcgui.DialogProgress()
+        dialog.create( path, __language__( 32063 ) )
+
+        # Work out if it's a single item, or a node
+        isNode = False
+        json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "id": 0, "method": "Files.GetDirectory", "params": { "properties": ["title", "file", "thumbnail"], "directory": "' + path + '", "media": "files" } }')
         json_query = unicode(json_query, 'utf-8', errors='ignore')
         json_response = simplejson.loads(json_query)
-        
+
         labels = []
         paths = []
+        nodePaths = []
         
         # Add all directories returned by the json query
         if json_response.has_key('result') and json_response['result'].has_key('files') and json_response['result']['files'] is not None:
+            labels = [ __language__(32058) ]
+            paths = [ "ActivateWindow(%s,%s,return)" %( window, path ) ]
             for item in json_response['result']['files']:
-                labels.append( item[ "label" ] )
-                paths.append( item[ "file" ] )
+                if item[ "filetype" ] == "directory":
+                    isNode = True
+                    labels.append( item[ "label" ] )
+                    nodePaths.append( "ActivateWindow(%s,%s,return)" %( window, item[ "file" ] ) )
         else:
             log( "Invalid JSON response returned" )
-            return False
-        
-        # If there were some items returned by the JSON...
-        if len( paths ) != 0:
-            # Show a select dialog so the user can pick the default action
-            selected = xbmcgui.Dialog().select( __language__( 32095 ), labels )
-            
-            if selected == -1 or selected is None:
-                # User cancelled
-                return True
-            
-        # We have all the information we need from the user to add the node to the menu :)
-        
-        # Load existing main menu items
-        menuitems = DATA._get_shortcuts( "mainmenu" )
+
+        # Add actions based on content
+        if content == "albums":
+            labels.append( "Play" )
+            paths.append( "RunScript(script.skinshortcuts,type=launchalbum&album=%s)" %( self.extractID( path ) ) )
+        if window == 10002:
+            labels.append( "Slideshow" )
+            paths.append( "SlideShow(%s,notrandom)" %( path ) )
+            labels.append( "Slideshow (random)" )
+            paths.append( "SlideShow(%s,random)" %( path ) )
+            labels.append( "Slideshow (recursive)" )
+            paths.append( "SlideShow(%s,recursive,notrandom)" %( path ) )
+            labels.append( "Slideshow (recursive, random)" )
+            paths.append( "SlideShow(%s,recursive,random)" %( path ) )
+        if path.endswith( ".xsp" ):
+            labels.append( "Play" )
+            paths.append( "PlayMedia(%s)" %( path ) )
+
+        allMenuItems = [ xbmcgui.ListItem(label=__language__( 32112 )) ] # Main menu
+        allLabelIDs = [ "mainmenu" ]
+        if isNode:
+            allMenuItems.append( xbmcgui.ListItem(label=__language__( 32113 ) ) ) # Main menu + autofill submenu
+            allLabelIDs.append( "mainmenu" )
+
+        # Get main menu items
+        menuitems = DATA._get_shortcuts( "mainmenu", processShortcuts = False )
         DATA._clear_labelID()
         for menuitem in menuitems.findall( "shortcut" ):
-            # Get existing items labelID's/
-            DATA._get_labelID( DATA.local( menuitem.find( "label" ).text )[3], menuitem.find( "action" ).text )
+            # Get existing items labelID's
+            allMenuItems.append( xbmcgui.ListItem(label=DATA.local( menuitem.find( "label" ).text )[2], iconImage=menuitem.find( "icon" ).text) )
+            allLabelIDs.append( DATA._get_labelID( DATA.local( menuitem.find( "label" ).text )[3], menuitem.find( "action" ).text ) )
+
+        # Close progress dialog
+        dialog.close()
+
+        # Show a select dialog so the user can pick where in the menu to add the item
+        w = ShowDialog( "DialogSelect.xml", __cwd__, listing=allMenuItems, windowtitle=__language__( 32114 ) )
+        w.doModal()
+        selectedMenu = w.result
+        del w
+        
+        if selectedMenu == -1 or selectedMenu is None:
+            # User cancelled
+            return
+
+        action = paths[ 0 ]
+        if isNode and selectedMenu == 1:
+            # We're auto-filling submenu, so add all sub-nodes as possible default actions
+            paths = paths + nodePaths
+
+        if len( paths ) > 1:
+            # There are multiple actions to choose from
+            selectedAction = xbmcgui.Dialog().select( __language__( 32095 ), labels )
+            
+            if selectedAction == -1 or selectedAction is None:
+                # User cancelled
+                return True
+
+            action = paths[ selectedAction ]
+
+        # Add the shortcut to the menu the user has selected
+        # Load existing main menu items
+        menuitems = DATA._get_shortcuts( allLabelIDs[ selectedMenu ], processShortcuts = False )
+        DATA._clear_labelID()
             
         # Generate a new labelID
-        labelID = DATA._get_labelID( label, paths[ selected ] )
+        newLabelID = DATA._get_labelID( label, action )
         
         # Write the updated mainmenu.DATA.xml
         newelement = xmltree.SubElement( menuitems.getroot(), "shortcut" )
@@ -332,32 +390,27 @@ class NodeFunctions():
         xmltree.SubElement( newelement, "label2" ).text = "32024" # Custom shortcut
         xmltree.SubElement( newelement, "icon" ).text = icon
         xmltree.SubElement( newelement, "thumb" )
-        if isVideo:
-            xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10025," + paths[ selected ] + ",return)"
-        else:
-            xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10502," + paths[ selected ] + ",return)"
+        xmltree.SubElement( newelement, "action" ).text = action
         
         DATA.indent( menuitems.getroot() )
-        path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, "mainmenu.DATA.xml" ).encode('utf-8') )
+        path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, "%s.DATA.xml" %( DATA.slugify( allLabelIDs[ selectedMenu ], True ) ) ).encode('utf-8') )
         menuitems.write( path, encoding="UTF-8" )
-        
-        if len( paths ) != 0:
-            # Write the new [labelID].DATA.xml
+
+        if isNode and selectedMenu == 1:
+            # We're also going to write a submenu
             menuitems = xmltree.ElementTree( xmltree.Element( "shortcuts" ) )
             
             for item in json_response['result']['files']:
-                newelement = xmltree.SubElement( menuitems.getroot(), "shortcut" )
-                xmltree.SubElement( newelement, "label" ).text = item[ "label" ]
-                xmltree.SubElement( newelement, "label2" ).text = "32024" # Custom shortcut
-                xmltree.SubElement( newelement, "icon" ).text = item[ "thumbnail" ]
-                xmltree.SubElement( newelement, "thumb" )
-                if isVideo:
-                    xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10025," + item[ "file" ] + ",return)"
-                else:
-                    xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(10502," + item[ "file" ] + ",return)"
+                if item[ "filetype" ] == "directory":
+                    newelement = xmltree.SubElement( menuitems.getroot(), "shortcut" )
+                    xmltree.SubElement( newelement, "label" ).text = item[ "label" ]
+                    xmltree.SubElement( newelement, "label2" ).text = "32024" # Custom shortcut
+                    xmltree.SubElement( newelement, "icon" ).text = item[ "thumbnail" ]
+                    xmltree.SubElement( newelement, "thumb" )
+                    xmltree.SubElement( newelement, "action" ).text = "ActivateWindow(%s,%s,return)" %( window, item[ "file" ] )
                 
             DATA.indent( menuitems.getroot() )
-            path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, DATA.slugify( labelID ) + ".DATA.xml" ).encode('utf-8') )
+            path = xbmc.translatePath( os.path.join( "special://profile", "addon_data", __addonid__, DATA.slugify( newLabelID, True ) + ".DATA.xml" ).encode('utf-8') )
             menuitems.write( path, encoding="UTF-8" )
         
         # Mark that the menu needs to be rebuilt
@@ -365,5 +418,65 @@ class NodeFunctions():
         
         # And tell the user it all worked
         xbmcgui.Dialog().ok( __addon__.getAddonInfo( "name" ), __language__(32090) )
-        
-        return True
+
+    def extractID( self, path ):
+        # Extract the ID of an item from its path
+        itemID = path
+        if "?" in itemID:
+            itemID = itemID.rsplit( "?", 1 )[ 0 ]
+        if itemID.endswith( "/" ): itemID = itemID[ :-1 ]
+        itemID = itemID.rsplit( "/", 1 )[ 1 ]
+        return itemID
+
+# ============================
+# === PRETTY SELECT DIALOG ===
+# ============================
+            
+class ShowDialog( xbmcgui.WindowXMLDialog ):
+    def __init__( self, *args, **kwargs ):
+        xbmcgui.WindowXMLDialog.__init__( self )
+        self.listing = kwargs.get( "listing" )
+        self.windowtitle = kwargs.get( "windowtitle" )
+        self.getmore = kwargs.get( "getmore" )
+        self.result = -1
+
+    def onInit(self):
+        try:
+            self.fav_list = self.getControl(6)
+            self.getControl(3).setVisible(False)
+        except:
+            print_exc()
+            self.fav_list = self.getControl(3)
+
+        if self.getmore == True:
+            self.getControl(5).setLabel(xbmc.getLocalizedString(21452))
+        else:
+            self.getControl(5).setVisible(False)
+        self.getControl(1).setLabel(self.windowtitle)
+
+        for item in self.listing :
+            listitem = xbmcgui.ListItem(label=item.getLabel(), label2=item.getLabel2(), iconImage=item.getProperty( "icon" ), thumbnailImage=item.getProperty( "thumbnail" ))
+            listitem.setProperty( "Addon.Summary", item.getLabel2() )
+            self.fav_list.addItem( listitem )
+
+        self.setFocus(self.fav_list)
+
+    def onAction(self, action):
+        if action.getId() in ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, ):
+            self.result = -1
+            self.close()
+
+    def onClick(self, controlID):
+        if controlID == 5:
+            self.result = -2
+        elif controlID == 6 or controlID == 3:
+            num = self.fav_list.getSelectedPosition()
+            self.result = num
+        else:
+            self.result = -1
+
+        self.close()
+
+    def onFocus(self, controlID):
+        pass
+

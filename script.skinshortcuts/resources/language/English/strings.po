@@ -113,7 +113,7 @@ msgid "Timers"
 msgstr ""
 
 msgctxt "#32024"
-msgid "Custom shortcut"
+msgid "Custom item"
 msgstr ""
 
 msgctxt "#32025"
@@ -129,7 +129,7 @@ msgid "Change action"
 msgstr ""
 
 msgctxt "#32028"
-msgid "Restore shortcuts"
+msgid "Restore menu items"
 msgstr ""
 
 msgctxt "#32029"
@@ -153,7 +153,7 @@ msgid "Eject tray"
 msgstr ""
 
 msgctxt "#32034"
-msgid "Common Shortcut"
+msgid "Common menu item"
 msgstr ""
 
 msgctxt "#32035"
@@ -167,11 +167,11 @@ msgid "Choose shortcuts for ::MENUNAME::"
 msgstr ""
 
 msgctxt "#32037"
-msgid "Reset all shortcuts"
+msgid "Reset all menu items"
 msgstr ""
 
 msgctxt "#32038"
-msgid "Are you sure you want to reset all shortcuts back to default?"
+msgid "Are you sure you want to reset all menu items back to default?"
 msgstr ""
 
 #. ::MENUNAME:: is used internally and should NOT be translated :)
@@ -213,7 +213,7 @@ msgid "Update audio library"
 msgstr ""
 
 msgctxt "#32048"
-msgid "Choose shortcut"
+msgid "Choose item for menu"
 msgstr ""
 
 msgctxt "#32049"
@@ -253,7 +253,7 @@ msgid "Kodi Commands"
 msgstr ""
 
 msgctxt "#32058"
-msgid "Create shortcut to here"
+msgid "Create menu item to here"
 msgstr ""
 
 msgctxt "#32059"
@@ -277,11 +277,11 @@ msgid "Getting directory listing..."
 msgstr ""
 
 msgctxt "#32064"
-msgid "No Shortcuts"
+msgid "No available items"
 msgstr ""
 
 msgctxt "#32065"
-msgid "There are no shortcuts available for the category that you choose."
+msgid "There are no available items to choose from for the category that you choose."
 msgstr ""
 
 msgctxt "#32066"
@@ -403,7 +403,7 @@ msgid "Install Kodi Log Uploader add-on to easily provide a debug log."
 msgstr ""
 
 msgctxt "#32095"
-msgid "Choose default action for main menu item"
+msgid "Choose default action for menu item"
 msgstr ""
 
 msgctxt "#32096"
@@ -435,7 +435,7 @@ msgid "Restore or reset?"
 msgstr ""
 
 msgctxt "#32103"
-msgid "Restore a default shortcut"
+msgid "Restore an original menu item"
 msgstr ""
 
 msgctxt "#32104"
@@ -443,7 +443,7 @@ msgid "Reset to skin defaults"
 msgstr ""
 
 msgctxt "#32105"
-msgid "There are no shortcuts to restore for this menu"
+msgid "There are no menu items to restore for this menu"
 msgstr ""
 
 msgctxt "#32106"
@@ -456,4 +456,28 @@ msgstr ""
 
 msgctxt "#32108"
 msgid "Party mode (music videos)"
+msgstr ""
+
+msgctxt "#32109"
+msgid "No menus from compatible skins found to import"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Import menu from skin"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Shared menu"
+msgstr ""
+
+msgctxt "#32112"
+msgid "New item on the main menu"
+msgstr ""
+
+msgctxt "#32113"
+msgid "New item on the main menu (autofill submenu items)"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Where should menu item be created"
 msgstr ""

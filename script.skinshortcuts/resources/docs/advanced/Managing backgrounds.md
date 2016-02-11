@@ -6,12 +6,13 @@ Skin Shortcuts can be used to let the user select a background for a menu item. 
 
 You can provide a number of default background options in your [overrides.xml](./overrides.md) file.
 
-`<background label="[Label]" condition="[Condition]">[backgroundID]</background>`
+`<background label="[Label]" icon="[Icon]" condition="[Condition]">[backgroundID]</background>`
 
 | Property | Optional | Description |
 | :------: | :------: | ----------- |
 | `[Label]` | | The display name of the background (can be a localised string) |
-| `[Condition]` | Yes | [Optional] Boolean condition that must be true for the background to show in the management dialogs Background Select (evaluated when management dialog is loaded) |
+| `[Icon]` | Yes | The icon that will be displayed in the management dialogs Background Select. If omitted, the `backgroundID` will be used if it is the path to a valid image |
+| `[Condition]` | Yes | Boolean condition that must be true for the background to show in the management dialogs Background Select (evaluated when management dialog is loaded) |
 | `[backgroundID]` | | A string you use to identify the background |
 
 #### Let the user browse for a background image

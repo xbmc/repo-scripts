@@ -56,9 +56,15 @@ class DataFunctions():
         self.widgetNameAndType = {}
         self.backgroundName = {}
         self.fallbackProperties = {}
+        self.fallbackRequires = {}
+        self.propertyRequires = None
+        self.templateOnlyProperties = None
 
         self.currentProperties = None
         self.defaultProperties = None
+
+        self.propertyInformation = { "fallbackProperties": {}, "fallbacks": {},
+                "otherProperties": [], "requires": None, "templateOnly": None }
         
     
     def _get_labelID( self, labelID, action, getDefaultID = False, includeAddOnID = True ):
@@ -124,7 +130,7 @@ class DataFunctions():
         self.labelIDList.pop()
     
                 
-    def _get_shortcuts( self, group, defaultGroup = None, isXML = False, profileDir = None, defaultsOnly = False ):
+    def _get_shortcuts( self, group, defaultGroup = None, isXML = False, profileDir = None, defaultsOnly = False, processShortcuts = True ):
         # This will load the shortcut file
         # Additionally, if the override files haven't been loaded, we'll load them too
         log( "Loading shortcuts for group " + group )
@@ -132,12 +138,12 @@ class DataFunctions():
         if profileDir is None:
             profileDir = xbmc.translatePath( "special://profile/" ).decode( "utf-8" )
         
-        userShortcuts = os.path.join( profileDir, "addon_data", __addonid__, self.slugify( group ) + ".DATA.xml" )#.encode('utf-8')
-        skinShortcuts = os.path.join( __skinpath__ , self.slugify( group ) + ".DATA.xml")#.encode('utf-8')
-        defaultShortcuts = os.path.join( __defaultpath__ , self.slugify( group ) + ".DATA.xml" )#.encode('utf-8')
+        userShortcuts = os.path.join( profileDir, "addon_data", __addonid__, self.slugify( group, True ) + ".DATA.xml" )
+        skinShortcuts = os.path.join( __skinpath__ , self.slugify( group ) + ".DATA.xml")
+        defaultShortcuts = os.path.join( __defaultpath__ , self.slugify( group ) + ".DATA.xml" )
         if defaultGroup is not None:
-            skinShortcuts = os.path.join( __skinpath__ , self.slugify( defaultGroup ) + ".DATA.xml")#.encode('utf-8')    
-            defaultShortcuts = os.path.join( __defaultpath__ , self.slugify( defaultGroup ) + ".DATA.xml" )#.encode('utf-8')
+            skinShortcuts = os.path.join( __skinpath__ , self.slugify( defaultGroup ) + ".DATA.xml")
+            defaultShortcuts = os.path.join( __defaultpath__ , self.slugify( defaultGroup ) + ".DATA.xml" )
 
         if defaultsOnly:
             paths = [skinShortcuts, defaultShortcuts ]
@@ -146,14 +152,13 @@ class DataFunctions():
         
         for path in paths:
             path = try_decode( path )
-                
             tree = None
             if xbmcvfs.exists( path ):
                 file = xbmcvfs.File( path ).read()
                 self._save_hash( path, file )
                 tree = xmltree.parse( path )
             
-            if tree is not None:
+            if tree is not None and processShortcuts:
                 # If this is a user-selected list of shortcuts...
                 if path == userShortcuts:
                     if group == "mainmenu":
@@ -165,8 +170,12 @@ class DataFunctions():
                     if group == "mainmenu":
                         self._get_skin_required( tree, group, profileDir )
                     self._process_shortcuts( tree, group, profileDir )
-                                        
-                log( " - Loaded file " + path ) 
+
+                log( " - Loaded file " + path )
+                return tree
+            elif tree is not None:
+                log( " - Loaded file " + path )
+                log( " - Returning unprocessed shortcuts" )
                 return tree
             else:
                 self._save_hash( path, None )
@@ -229,8 +238,30 @@ class DataFunctions():
                     self._pop_labelID()
                     continue
                     
-            # Check that any skin-required shortcut matches current skin
-            xmltree.SubElement( node, "additional-properties" ).text = repr( self.checkAdditionalProperties( group, labelID, defaultID, isUserShortcuts, profileDir ) )
+            # Load additional properties
+            additionalProperties = self.checkAdditionalProperties( group, labelID, defaultID, isUserShortcuts, profileDir )
+
+            # If icon and thumbnail are in the additional properties, overwrite anything in the .DATA.xml file
+            # and remove them from the additional properties
+            for additionalProperty in additionalProperties:
+                if additionalProperty[ 0 ] == "icon":
+                    node.find( "icon" ).text = additionalProperty[ 1 ]
+                    additionalProperties.remove( additionalProperty )
+                    break
+
+            if node.find( "thumb" ) is None:
+                xmltree.SubElement( node, "thumb" ).text = ""
+            for additionalProperty in additionalProperties:
+                if additionalProperty[ 0 ] == "thumb":
+                    node.find( "thumb" ).text = additionalProperty[ 1 ]
+                    additionalProperties.remove( additionalProperty )
+                    break
+
+            xmltree.SubElement( node, "additional-properties" ).text = repr( additionalProperties )
+
+            iconNode = node.find( "icon" )
+            if iconNode.text is None or iconNode.text == "":
+                iconNode.text = "DefaultShortcut.png"
                         
             # Get a skin-overriden icon
             overridenIcon = self._get_icon_overrides( skinoverrides, node.find( "icon" ).text, group, labelID )
@@ -434,7 +465,7 @@ class DataFunctions():
 
         overridePath = os.path.join( profileDir, "overrides.xml" )
         try:
-            tree = xmltree.parse( overridePath )
+            tree = xmltree.parse( xbmc.translatePath( overridePath ) )
             self._save_hash( overridePath, xbmcvfs.File( overridePath ).read() )
             self.overrides[ "user" ] = tree
             return tree
@@ -472,6 +503,11 @@ class DataFunctions():
                     # listProperty[1] = labelID
                     # listProperty[2] = property name
                     # listProperty[3] = property value
+
+                    # If listProperty[3] starts with $SKIN, it's from an older version of the script
+                    # so quickly run it through the local function to remove the unecessary localisation
+                    if listProperty[3].startswith( "$SKIN["):
+                        listProperty[3] = self.local( listProperty[3] )[3]
                     self.currentProperties.append( [listProperty[0], listProperty[1], listProperty[2], listProperty[3]] )
             except:
                 self.currentProperties = [ None ]
@@ -560,20 +596,85 @@ class DataFunctions():
                                 self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetPath", elem.attrib.get( "path" ), defaultID ] )
                             if "target" in elem.attrib:
                                 self.defaultProperties.append( [ elem.attrib.get( "group" ), labelID, "widgetTarget", elem.attrib.get( "target" ), defaultID ] )
+
+        # Load icons out of mainmenu.DATA.xml
+        path = os.path.join( __skinpath__ , "mainmenu.DATA.xml")
+        if xbmcvfs.exists( path ):
+            file = xbmcvfs.File( path ).read()
+            self._save_hash( path, file )
+            tree = xmltree.parse( path )
+            for node in tree.getroot().findall( "shortcut" ):
+                label = self.local( node.find( "label" ).text )[3].replace( " ", "" ).lower()
+                action = node.find( "action.text" )
+                labelID = self._get_labelID( label, action, getDefaultID = True )
+                self.defaultProperties.append( [ "mainmenu", labelID, "icon", node.find( "icon" ).text ] )
                                         
         returnVal = [ self.currentProperties, self.defaultProperties ]
         return returnVal
 
     def _getCustomPropertyFallbacks( self, group ):
-        if group in self.fallbackProperties:
-            return self.fallbackProperties[ group ]
-        propertyFallbacks = {}
+        if group in self.propertyInformation[ "fallbacks" ]:
+            # We've already loaded everything, return it all
+            return( self.propertyInformation[ "fallbackProperties" ][ group ], self.propertyInformation[ "fallbacks" ][ group ] )
+
+        # Get skin overrides
         tree = self._get_overrides_skin()
+
+        # Find all fallbacks
+        fallbackProperties = []
+        fallbacks = {}
         for elem in tree.findall( "propertyfallback" ):
             if ("group" not in elem.attrib and group == "mainmenu") or elem.attrib.get("group") == group:
-                propertyFallbacks[ elem.attrib.get( "property" ) ] = elem.text
-        self.fallbackProperties[ group ] = propertyFallbacks
-        return propertyFallbacks
+                # This is a fallback for the group we've been asked for
+                propertyName = elem.attrib.get( "property" )
+                if propertyName not in fallbackProperties:
+                    # Save the property name in the order in which we processed it
+                    fallbackProperties.append( propertyName )
+                if propertyName not in fallbacks.keys():
+                    # Create an empty list to hold fallbacks for this property
+                    fallbacks[ propertyName ] = []
+                # Check whether any attribute/value pair has to match for this fallback
+                attribName = None
+                attribValue = None
+                if "attribute" in elem.attrib and "value" in elem.attrib:
+                    # This particular property is a matched property
+                    attribName = elem.attrib.get( "attribute" )
+                    attribValue = elem.attrib.get( "value" )
+                # Save details
+                fallbacks[ propertyName ].append( ( elem.text, attribName, attribValue ) )
+        # Save all the results for this group
+        self.propertyInformation[ "fallbackProperties" ][ group ] = fallbackProperties
+        self.propertyInformation[ "fallbacks" ][ group ] = fallbacks
+        
+        return( self.propertyInformation[ "fallbackProperties" ][ group ], self.propertyInformation[ "fallbacks" ][ group ] )
+
+    def _getPropertyRequires( self ):
+        if self.propertyInformation[ "requires" ] is not None:
+            # We've already loaded requires and templateOnly properties, return eveything
+            return( self.propertyInformation[ "otherProperties" ], self.propertyInformation[ "requires" ], self.propertyInformation[ "templateOnly" ] )
+
+        # Get skin overrides
+        tree = self._get_overrides_skin()
+
+        # Find all property requirements
+        requires = {}
+        templateOnly = []
+        for elem in tree.findall( "propertySettings" ):
+            propertyName = elem.attrib.get( "property" )
+            if propertyName not in self.propertyInformation[ "otherProperties" ]:
+                # Save the property name in the order in which we processed it
+                self.propertyInformation[ "otherProperties" ].append( propertyName )
+            if "requires" in elem.attrib:
+                # This property requires another to be present
+                requires[ propertyName ] = elem.attrib.get( "requires" )
+            if "templateonly" in elem.attrib and elem.attrib.get( "templateonly" ).lower() == "true":
+                # This property is only used by the template, and should not be written to the main menu
+                templateOnly.append( propertyName )
+        # Save all the results
+        self.propertyInformation[ "requires" ] = requires
+        self.propertyInformation[ "templateOnly" ] = templateOnly
+        
+        return( self.propertyInformation[ "otherProperties" ], self.propertyInformation[ "requires" ], self.propertyInformation[ "templateOnly" ] )
         
     def _getWidgetNameAndType( self, widgetID ):
         if widgetID in self.widgetNameAndType:
@@ -720,11 +821,11 @@ class DataFunctions():
         # General visibilities
         elif action == "activatewindow(weather)":
             return "!IsEmpty(Weather.Plugin)"
-        elif action.startswith( "activatewindowandfocus(mypvr" ) or action.startswith( "playpvr" ):
+        elif action.startswith( "activatewindowandfocus(mypvr" ) or action.startswith( "playpvr" ) and __addon__.getSetting( "donthidepvr" ) == "false":
             return "system.getbool(pvrmanager.enabled)"
-        elif action.startswith( "activatewindow(tv" ):
+        elif action.startswith( "activatewindow(tv" ) and __addon__.getSetting( "donthidepvr" ) == "false":
             return "PVR.HasTVChannels"
-        elif action.startswith( "activatewindow(radio" ):
+        elif action.startswith( "activatewindow(radio" ) and __addon__.getSetting( "donthidepvr" ) == "false":
             return "PVR.HasRadioChannels"
         elif action.startswith( "activatewindow(videos,movie" ):
             return "Library.HasContent(Movies)"
@@ -790,7 +891,7 @@ class DataFunctions():
         return False
         
     def checkAdditionalProperties( self, group, labelID, defaultID, isUserShortcuts, profileDir ):
-        # Return any additional properties, including widgets and backgrounds
+        # Return any additional properties, including widgets, backgrounds, icons and thumbnails
         allProperties = self._get_additionalproperties( profileDir )
         currentProperties = allProperties[1]
         
@@ -832,8 +933,105 @@ class DataFunctions():
                         return [ elem.text ]
 
         return None
+
+
+    def checkIfMenusShared( self ):
+        # Check if the user has asked for their menus not to be shared
+        if __addon__.getSetting( "shared_menu" ).lower() == "false":
+            return False
+        return True
+
+    def getSharedSkinList( self ):
+        # This will return a list of skins the user can import the menu from
+        skinNames = []
+        skinFiles = []
+        for files in xbmcvfs.listdir( __datapath__ ):
+            # Try deleting all shortcuts
+            if files:
+                for file in files:
+                    if file.endswith( ".hash" ) and not file.startswith( "%s-" %( xbmc.getSkinDir() ) ):
+                        canImport, skinName = self.parseHashFile( os.path.join( __datapath__, file.decode( 'utf-8' ) ).encode( 'utf-8' ) )
+                        if canImport == True:
+                            skinNames.append( skinName )
+                    elif file.endswith( ".DATA.xml" ) and not file.startswith( "%s-" %( xbmc.getSkinDir() ) ):
+                        skinFiles.append( file )
+
+        # Remove any files which start with one of the skin names
+        removeSkins = []
+        removeFiles = []
+        for skinName in skinNames:
+            matched = False
+            for skinFile in skinFiles:
+                if skinFile.startswith( "%s-" %( skinName ) ):
+                    if matched == False:
+                        matched = True
+                    removeFiles.append( skinFile )
+            if matched == False:
+                # This skin doesn't have a custom menu
+                removeSkins.append( skinName )
+
+        skinNames = [x for x in skinNames if x not in removeSkins]
+        skinFiles = [x for x in skinFiles if x not in removeFiles]
+
+        # If there are any files left in skinFiles, we have a shared menu
+        if len( skinFiles ) != 0:
+            skinNames.insert( 0, __language__(32111) )
+
+        return (skinNames, skinFiles)
+
+    def getFilesForSkin( self, skinName ):
+        # This will return a list of all menu files for a particular skin
+        skinFiles = []
+        for files in xbmcvfs.listdir( __datapath__ ):
+            # Try deleting all shortcuts
+            if files:
+                for file in files:
+                    if file.endswith( ".DATA.xml" ) and file.startswith( "%s-" % ( skinName ) ):
+                        skinFiles.append( file )
+
+        return skinFiles
+
+
+    def parseHashFile( self, file ):
+        try:
+            hashes = ast.literal_eval( xbmcvfs.File( file ).read() )
+        except:
+            # There is no hash list, return False
+            return( False, "" )
+
+        canImport = False
+        skinName = None
+        for hash in hashes:
+            if hash[0] == "::FULLMENU::":
+                canImport = True
+                if skinName:
+                    return( True, skinName )
+            if hash[0] == "::SKINDIR::":
+                skinName = hash[1]
+                if canImport == True:
+                    return( True, skinName )
         
-        
+        return( canImport, skinName )
+
+    def importSkinMenu( self, files, skinName = None ):
+        # This function copies one skins menus to another
+        for oldFile in files:
+            if skinName:
+                newFile = oldFile.replace( skinName, xbmc.getSkinDir() )
+            else:
+                newFile = "%s-%s" %( xbmc.getSkinDir(), oldFile )
+            oldPath = os.path.join( __datapath__, oldFile.decode( 'utf-8' ) ).encode( 'utf-8' )
+            newPath = os.path.join( __datapath__, newFile.decode( 'utf-8' ) ).encode( 'utf-8' )
+
+            # Copy file
+            xbmcvfs.copy( oldPath, newPath )
+
+        # Delete any .properties file
+        propFile = os.path.join( __datapath__, "%s.properties" %( xbmc.getSkinDir() ) ).encode( 'utf-8' )
+        if xbmcvfs.exists( propFile ):
+            xbmcvfs.delete( propFile )
+
+
     def _save_hash( self, filename, file ):
         if file is not None:
             hasher = hashlib.md5()
@@ -921,6 +1119,7 @@ class DataFunctions():
                 
         # This isn't anything we can localize, just return it (in triplicate ;))
         return[ data, data, data, data ]
+
     def smart_truncate(string, max_length=0, word_boundaries=False, separator=' '):
         string = string.strip(separator)
 
@@ -946,7 +1145,7 @@ class DataFunctions():
             truncated = string[:max_length]
         return truncated.strip(separator)
 
-    def slugify(self, text, entities=True, decimal=True, hexadecimal=True, max_length=0, word_boundary=False, separator='-', convertInteger=False):
+    def slugify(self, text, userShortcuts=False, entities=True, decimal=True, hexadecimal=True, max_length=0, word_boundary=False, separator='-', convertInteger=False):
         # Handle integers
         if convertInteger and text.isdigit():
             text = "NUM-" + text
@@ -998,6 +1197,10 @@ class DataFunctions():
 
         if separator != '-':
             text = text.replace('-', separator)
+
+        # If this is a shortcut file (.DATA.xml) and user shortcuts aren't shared, add the skin dir
+        if userShortcuts == True and self.checkIfMenusShared() == False:
+            text = "%s-%s" %( xbmc.getSkinDir(), text )
 
         return text
 

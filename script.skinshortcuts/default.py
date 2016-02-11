@@ -38,6 +38,7 @@ import xmlfunctions, datafunctions, library, nodefunctions
 XML = xmlfunctions.XMLFunctions()
 DATA = datafunctions.DataFunctions()
 LIBRARY = library.LibraryFunctions()
+NODE = nodefunctions.NodeFunctions()
 
 hashlist = []
 
@@ -183,6 +184,13 @@ class Main:
                     xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETTARGET + ")" )
                 if self.WIDGETPATH is not None:
                     xbmc.executebuiltin( "Skin.Reset(" + self.WIDGETPATH + ")" )
+
+        if self.TYPE=="context":
+            # Context menu addon asking us to add a folder to the menu
+            if not xbmc.getCondVisibility( "Skin.HasSetting(SkinShortcuts-FullMenu)" ):
+                line1 = "The skin you are using does not support adding items directly to the main menu"
+                xbmcgui.Dialog().ok(__addonname__, line1)
+            NODE.addToMenu( self.CONTEXTFILENAME, self.CONTEXTLABEL, self.CONTEXTICON, self.CONTEXTCONTENT, self.CONTEXTWINDOW, DATA )
                 
         if self.TYPE=="resetall":
             # Tell XBMC not to try playing any media
@@ -244,6 +252,13 @@ class Main:
         self.MINITEMS = int( params.get( "minitems", "0" ) )
         self.WARNING = params.get( "warning", None )
         self.DEFAULTGROUP = params.get( "defaultGroup", None )
+
+        # Properties from context menu addon
+        self.CONTEXTFILENAME = params.get( "filename", "" )
+        self.CONTEXTLABEL = params.get( "label", "" )
+        self.CONTEXTICON = params.get( "icon", "" )
+        self.CONTEXTCONTENT = params.get( "content", "" )
+        self.CONTEXTWINDOW = params.get( "window", "" )
     
     
     # -----------------
@@ -287,7 +302,6 @@ class Main:
         
     def _reset_all_shortcuts( self ):
         log( "### Resetting all shortcuts" )
-        log( repr( self.WARNING) )
         dialog = xbmcgui.Dialog()
         
         shouldRun = None
@@ -299,18 +313,31 @@ class Main:
             shouldRun = dialog.yesno( __language__( 32037 ), __language__( 32038 ) )
         
         if shouldRun:
+            isShared = DATA.checkIfMenusShared()
+            log( repr( isShared ) )
             for files in xbmcvfs.listdir( __datapath__ ):
                 # Try deleting all shortcuts
                 if files:
                     for file in files:
-                        if file != "settings.xml":
+                        deleteFile = False
+                        if file == "settings.xml":
+                            continue
+                        if isShared:
+                            deleteFile = True
+                        elif file.startswith( xbmc.getSkinDir() ) and ( file.endswith( ".properties" ) or file.endswith( ".DATA.xml" ) ):
+                            deleteFile = True
+
+                        #if file != "settings.xml" and ( not isShared or file.startswith( "%s-" %( xbmc.getSkinDir() ) ) ) or file == "%s.properties" %( xbmc.getSkinDir() ):
+                        if deleteFile:
                             file_path = os.path.join( __datapath__, file.decode( 'utf-8' ) ).encode( 'utf-8' )
                             if xbmcvfs.exists( file_path ):
                                 try:
                                     xbmcvfs.delete( file_path )
                                 except:
                                     print_exc()
-                                    log( "### ERROR could not delete file %s" % file[0] )
+                                    log( "### ERROR could not delete file %s" % file )
+                        else:
+                            log( "Not deleting file %s" %[ file ] )
         
             # Update home window property (used to automatically refresh type=settings)
             xbmcgui.Window( 10000 ).setProperty( "skinshortcuts",strftime( "%Y%m%d%H%M%S",gmtime() ) )   

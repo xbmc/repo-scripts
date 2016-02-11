@@ -69,6 +69,11 @@ The `<controls />` element must be included. Put your gui xml within.
 			</kodi>
 		</your>
 	</controls>
+	<variables>
+		<variable name="customvariable">
+			<value condition="SKINSHORTCUTS[propertyName]">$SKINSHORTCUTS[propertyName]</value>
+		</variable>
+	</variables>
 </other>
 ```
 
@@ -81,7 +86,9 @@ The `<controls />` element must be included. Put your gui xml within.
 | `<skinshortcuts>visibility</skinshortcuts>` | Yes | This will be replaced with a visibility condition based on the focus of the main menu |
 | `$SKINSHORTCUTS[propertyName]` | Yes | This will be replaced by the value of a matched <property /> element |
 
-The `<controls />` element must be included. Put your gui xml within.
+The `<controls />` element is where you put your Kodi GUI xml that should be built by the template.
+
+The `<variables />` element is where you define any variables that should be built by the template. At least one of them must be included. You must include the `<variable>` element, with as many `<value>` sub-elements as needed.
 
 One Other template will be built for each main menu item per [include]. Use different [include]'s to build multiple Other templates.
 

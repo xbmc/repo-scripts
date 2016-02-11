@@ -358,38 +358,98 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 
         # Additional properties
         additionalProperties = item.find( "additional-properties" )
-        backgroundName = None
-        backgroundPlaylistName = None
-        foundProperties = []
         if additionalProperties is not None:
             listitem.setProperty( "additionalListItemProperties", additionalProperties.text )
-            for property in eval( additionalProperties.text ):
-                foundProperties.append( property[ 0 ] )
-                if property[1].startswith("$") and not property[ 1 ].startswith( "$SKIN" ):
-                    #Translate some listItem properties if needed so they're displayed correctly in the gui
-                    listitem.setProperty(property[0],xbmc.getInfoLabel(property[1]))
-                else:
-                    listitem.setProperty( property[0], DATA.local( property[1] )[2] )
-                
-                # if this is backgroundName or backgroundPlaylistName, keep them so we can localise them properly
-                if property[0] == "backgroundName":
-                    backgroundName = property[1]
-                if property[1] == "backgroundPlaylistName":
-                    backgroundPlaylistName = property[1]
-                    
-            # If we've kept backgroundName, localise it with the updated playlist name
-            if backgroundName is not None and backgroundPlaylistName is not None:
-                listitem.setProperty( "backgroundName", DATA.local( backgroundName )[2].replace( "::PLAYLIST::", backgroundPlaylistName ) )
         else:
             listitem.setProperty( "additionalListItemProperties", "[]" )
-
-        # Add fallback custom property values
-        fallbackProperties = DATA._getCustomPropertyFallbacks( self.group )
-        for key in fallbackProperties:
-            if key not in foundProperties:
-                listitem.setProperty( key.decode( "utf-8" ), DATA.local( fallbackProperties[ key ] )[2] )
+        self._add_additional_properties( listitem )
                 
         return [ isVisible, listitem ]
+
+    def _add_additional_properties( self, listitem ):
+        allProps = {}
+        backgroundName = None
+        backgroundPlaylistName = None
+
+        # If there's a list of current properties, remove them from the listitem
+        currentProperties = listitem.getProperty( "skinshortcuts-allproperties" )
+        if currentProperties != "":
+            currentProperties = eval( currentProperties)
+        else:
+            currentProperties = {}
+
+        # Process all custom properties
+        customProperties = listitem.getProperty( "additionalListItemProperties" )
+        if customProperties != "":
+            customProperties = eval( customProperties )
+            for customProperty in customProperties:
+                if customProperty[1].startswith("$") and not customProperty[ 1 ].startswith( "$SKIN" ):
+                    #Translate some listItem properties if needed so they're displayed correctly in the gui
+                    allProps[ customProperty[ 0 ] ] = xbmc.getInfoLabel( customProperty[ 1 ] )
+                else:
+                    allProps[ customProperty[ 0 ] ] = DATA.local( customProperty[ 1 ] )[ 2 ]
+                    if customProperty[ 1 ].isdigit():
+                        allProps[ "%s-NUM" %( customProperty[ 0 ] ) ] = customProperty[ 1 ]
+                
+                # if this is backgroundName or backgroundPlaylistName, keep them so we can localise them properly
+                if customProperty[0] == "backgroundName":
+                    backgroundName = customProperty[1]
+                if customProperty[1] == "backgroundPlaylistName":
+                    backgroundPlaylistName = customProperty[1]
+                
+        # If we've kept backgroundName, localise it with the updated playlist name
+        if backgroundName is not None and backgroundPlaylistName is not None:
+            allProps[ "backgroundName" ] = DATA.local( backgroundName )[2].replace( "::PLAYLIST::", backgroundPlaylistName )
+
+        # Get fallback properties
+        fallbackProperties, fallbacks = DATA._getCustomPropertyFallbacks( self.group )
+
+        # Add fallback properties
+        for key in fallbackProperties:
+            if key not in allProps.keys():
+                # Check whether we have a fallback for the value
+                for propertyMatch in fallbacks[ key ]:
+                    matches = False
+                    if propertyMatch[ 1 ] is None:
+                        # This has no conditions, so it matched
+                        matches = True
+                    elif propertyMatch[ 1 ] in allProps.keys() and allProps[ propertyMatch[ 1 ] ] == propertyMatch[ 2 ]:
+                        matches = True
+
+                    if matches:
+                        allProps[ key ] = propertyMatch[ 0 ]
+                        break
+
+        # Get property requirements
+        otherProperties, requires, templateOnly = DATA._getPropertyRequires()
+
+        # Remove any properties whose requirements haven't been met
+        for key in otherProperties:
+            if key in allProps.keys() and key in requires.keys() and requires[ key ] not in allProps.keys():
+                # This properties requirements aren't met
+                allProps.pop( key )
+                if "%s-NUM" %( key ) in allProps.keys():
+                    allProps.pop( "%s-NUM" %( key ) )
+
+        # Save the new properties
+        listitem.setProperty( "skinshortcuts-allproperties", repr( allProps ) )
+        added, removed, changed = self.DictDiffer( allProps, currentProperties )
+        for key in added:
+            listitem.setProperty( key, allProps[ key ] )
+        for key in removed:
+            if key not in allProps.keys(): continue
+            listitem.setProperty( key, None )
+        for key in changed:
+            listitem.setProperty( key, allProps[ key ] )
+
+    def DictDiffer( self, current_dict, past_dict ):
+        # Get differences between dictionaries
+        self.current_dict, self.past_dict = current_dict, past_dict
+        set_current, set_past = set(current_dict.keys()), set(past_dict.keys())
+        intersect = set_current.intersection(set_past)
+
+        #       Added                    Removed               Changed
+        return( set_current - intersect, set_past - intersect, set(o for o in intersect if past_dict[o] != current_dict[o]) )
 
     def _get_icon_overrides( self, listitem, setToDefault = True, labelID = None ):
         # Start by getting the labelID
@@ -568,9 +628,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                             icon = listitem.getProperty( "original-icon" )
                         else:
                             icon = listitem.getProperty( "icon" )
-                        
+
+                    thumb = listitem.getProperty( "thumbnail" )
+                    
                     xmltree.SubElement( shortcut, "icon" ).text = try_decode( icon )
-                    xmltree.SubElement( shortcut, "thumb" ).text = try_decode( listitem.getProperty( "thumbnail" ) )
+                    xmltree.SubElement( shortcut, "thumb" ).text = try_decode( thumb )
                     
                     # Action
                     xmltree.SubElement( shortcut, "action" ).text = try_decode( listitem.getProperty( "path" ) )
@@ -585,11 +647,16 @@ class GUI( xbmcgui.WindowXMLDialog ):
                     
                     # Additional properties
                     if listitem.getProperty( "additionalListItemProperties" ):
-                        properties.append( [ newlabelID, eval( listitem.getProperty( "additionalListItemProperties" ) ) ] )
+                        additionalProperties = eval( listitem.getProperty( "additionalListItemProperties" ) )
+                        if icon != "":
+                            additionalProperties.append( [ "icon", icon ] )
+                        if thumb != "":
+                            additionalProperties.append( [ "thumb", thumb ] )
+                        properties.append( [ newlabelID, additionalProperties ] )
                         
             # Save the shortcuts
             DATA.indent( root )
-            path = os.path.join( __datapath__ , DATA.slugify( self.group ) + ".DATA.xml" )
+            path = os.path.join( __datapath__ , DATA.slugify( self.group, True ) + ".DATA.xml" )
             path = try_decode( path )
             
             tree.write( path.replace( ".shortcuts", ".DATA.xml" ), encoding="UTF-8"  )
@@ -621,11 +688,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # Make the change (0 - the main sub-menu, 1-5 - additional submenus )
                 for i in range( 0, 6 ):
                     if i == 0:
-                        paths = [[os.path.join( __datapath__, DATA.slugify( labelIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Move"], [os.path.join( __skinpath__, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( __defaultpath__, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [None, "New"]]
-                        target = os.path.join( __datapath__, DATA.slugify( labelIDTo ) + ".DATA.xml" ).encode( "utf-8" )
+                        paths = [[os.path.join( __datapath__, DATA.slugify( labelIDFrom, True ) + ".DATA.xml" ).encode( "utf-8" ), "Move"], [os.path.join( __skinpath__, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( __defaultpath__, DATA.slugify( defaultIDFrom ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [None, "New"]]
+                        target = os.path.join( __datapath__, DATA.slugify( labelIDTo, True ) + ".DATA.xml" ).encode( "utf-8" )
                     else:
-                        paths = [[os.path.join( __datapath__, DATA.slugify( labelIDFrom ) + "." + str( i ) + ".DATA,xml" ).encode( "utf-8" ), "Move"], [os.path.join( __skinpath__, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( __defaultpath__, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"]]
-                        target = os.path.join( __datapath__, DATA.slugify( labelIDTo ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" )
+                        paths = [[os.path.join( __datapath__, DATA.slugify( labelIDFrom, True ) + "." + str( i ) + ".DATA,xml" ).encode( "utf-8" ), "Move"], [os.path.join( __skinpath__, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"], [os.path.join( __defaultpath__, DATA.slugify( defaultIDFrom ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" ), "Copy"]]
+                        target = os.path.join( __datapath__, DATA.slugify( labelIDTo, True ) + "." + str( i ) + ".DATA.xml" ).encode( "utf-8" )
                         
                     target = try_decode( target )
                     
@@ -636,30 +703,29 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         if path[1] == "New":
                             tree = xmltree.ElementTree( xmltree.Element( "shortcuts" ) )
                             tree.write( target, encoding="UTF-8"  )
+                            log( "Creating empty file - %s" %( target ) )
                             break
                             
                         elif xbmcvfs.exists( path[0] ):
                             # The XML file exists
                             if path[1] == "Move":
-                                # Move the original to the target path
-                                log( "### Moving " + path[0] + " > " + target )
-                                xbmcvfs.rename( path[0], target )
+                                if path[0] != target:
+                                    # Move the original to the target path
+                                    log( "Moving " + path[0] + " > " + target )
+                                    xbmcvfs.rename( path[0], target )
                             else:
                                 # We're copying the file (actually, we'll re-write the file without
-                                # any LOCKED elements)
+                                # any LOCKED elements and with icons/thumbs adjusted to absolute paths)
                                 newtree = xmltree.parse( path[0] )
                                 for newnode in newtree.getroot().findall( "shortcut" ):
                                     searchNode = newnode.find( "locked" )
                                     if searchNode is not None:
                                         newnode.remove( searchNode )
-                                    #searchNode = newnode.find( "defaultID" )
-                                    #if searchNode is not None:
-                                    #    newnode.remove( searchNode )
                                         
                                 # Write it to the target
                                 DATA.indent( newtree.getroot() )
                                 newtree.write( target, encoding="utf-8" )
-                                log( "### Copying " + path[0] + " > " + target )
+                                log( "Copying " + path[0] + " > " + target )
                             break
                         
                 labelIDChanges.pop( 0 )
@@ -718,10 +784,8 @@ class GUI( xbmcgui.WindowXMLDialog ):
     
     def _load_overrides( self ):
         # Load various overrides from the skin, most notably backgrounds and thumbnails
-        self.backgrounds = []
-        self.backgroundsPretty = {}
-        self.thumbnails = []
-        self.thumbnailsPretty = {}
+        self.backgrounds = "LOADING"
+        self.thumbnails = "LOADING"
         
         # Load skin overrides
         tree = DATA._get_overrides_skin()
@@ -733,23 +797,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if "type" in elem.attrib:
                 self.widgetPlaylistsType = elem.attrib.get( "type" )
                 
-        # Get backgrounds
-        elems = tree.findall('background')
-        for elem in elems:
-            if "condition" in elem.attrib:
-                if not xbmc.getCondVisibility( elem.attrib.get( "condition" ) ):
-                    continue
-            
-            if elem.text.startswith("||BROWSE||"):
-                #we want to include images from a VFS path...
-                images = LIBRARY.getImagesFromVfsPath(elem.text.replace("||BROWSE||",""))
-                for image in images:
-                    self.backgrounds.append( [image[0], image[1] ] )
-                    self.backgroundsPretty[image[0]] = image[1]  
-            else:
-                self.backgrounds.append( [elem.text, DATA.local( elem.attrib.get( 'label' ) )[2] ] )
-                self.backgroundsPretty[elem.text] = DATA.local( elem.attrib.get( 'label' ) )[2]
-            
+        # Get backgrounds and thumbnails - we do this in a separate thread as the json used to load VFS paths
+        # is very expensive
+        thread.start_new_thread( self._load_backgrounds_thumbnails, () )
+
         # Should we allow the user to browse for background images...
         elem = tree.find('backgroundBrowse')
         if elem is not None and elem.text == "True":
@@ -757,23 +808,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
             if "default" in elem.attrib:
                 self.backgroundBrowseDefault = elem.attrib.get( "default" )
 
-        # Get thumbnails
-        elems = tree.findall('thumbnail')
-        for elem in elems:
-            if "condition" in elem.attrib:
-                if not xbmc.getCondVisibility( elem.attrib.get( "condition" ) ):
-                    continue
-                    
-            if elem.text.startswith("||BROWSE||"):
-                #we want to include images from a VFS path...
-                images = LIBRARY.getImagesFromVfsPath(elem.text.replace("||BROWSE||",""))
-                for image in images:
-                    self.thumbnails.append( [image[0], image[1] ] )
-                    self.thumbnailsPretty[image[0]] = image[1]
-            else:
-                self.thumbnails.append( [elem.text, DATA.local( elem.attrib.get( 'label' ) )[2] ] )
-                self.thumbnailsPretty[elem.text] = DATA.local( elem.attrib.get( 'label' ) )[2]
-        
+        # Find the default thumbnail browse directory
         elem = tree.find("thumbnailBrowseDefault")
         if elem is not None and len(elem.text) > 0:
             self.thumbnailBrowseDefault = elem.text
@@ -799,6 +834,50 @@ class GUI( xbmcgui.WindowXMLDialog ):
         # Are there any controls we don't close the window on 'back' for?
         for elem in tree.findall( "onback" ):
             self.onBack[ int( elem.text ) ] = int( elem.attrib.get( "to" ) )
+
+    def _load_backgrounds_thumbnails( self ):
+        # Load backgrounds (done in background thread)
+        backgrounds = []
+        thumbnails = []
+
+        # Load skin overrides
+        tree = DATA._get_overrides_skin()
+        
+        # Get backgrounds
+        elems = tree.findall('background')
+        for elem in elems:
+            if "condition" in elem.attrib:
+                if not xbmc.getCondVisibility( elem.attrib.get( "condition" ) ):
+                    continue
+            
+            if "icon" in elem.attrib:
+                backgrounds.append( [elem.attrib.get( "icon" ), DATA.local( elem.attrib.get( 'label' ) )[2] ] )
+            elif elem.text.startswith("||BROWSE||"):
+                #we want to include images from a VFS path...
+                images = LIBRARY.getImagesFromVfsPath(elem.text.replace("||BROWSE||",""))
+                for image in images:
+                    backgrounds.append( [image[0], image[1] ] )
+            else:
+                backgrounds.append( [elem.text, DATA.local( elem.attrib.get( 'label' ) )[2] ] )
+
+        self.backgrounds = backgrounds
+
+        # Get thumbnails
+        elems = tree.findall('thumbnail')
+        for elem in elems:
+            if "condition" in elem.attrib:
+                if not xbmc.getCondVisibility( elem.attrib.get( "condition" ) ):
+                    continue
+                    
+            if elem.text.startswith("||BROWSE||"):
+                #we want to include images from a VFS path...
+                images = LIBRARY.getImagesFromVfsPath(elem.text.replace("||BROWSE||",""))
+                for image in images:
+                    thumbnails.append( [image[0], image[1] ] )
+            else:
+                thumbnails.append( [elem.text, DATA.local( elem.attrib.get( 'label' ) )[2] ] )
+
+        self.thumbnails = thumbnails
 
     def _load_customPropertyButtons( self ):
         # Load a list of addition button IDs we'll handle for setting additional properties
@@ -917,11 +996,10 @@ class GUI( xbmcgui.WindowXMLDialog ):
             # Set default label and action
             listitem = xbmcgui.ListItem( __language__(32013) )
             listitem.setProperty( "Path", 'noop' )
+            listitem.setProperty( "additionalListItemProperties", "[]" )
 
             # Add fallback custom property values
-            fallbackProperties = DATA._getCustomPropertyFallbacks( self.group )
-            for key in fallbackProperties:
-                listitem.setProperty( key.decode( "utf-8" ), DATA.local( fallbackProperties[ key ] )[2] )
+            self._add_additional_properties( listitem )
             
             # Add new item to both displayed list and list kept in memory
             self.allListItems.insert( orderIndex, listitem )
@@ -1123,7 +1201,11 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 response = 0
             else:
                 # No skin override, so let user decide to restore or reset
-                response = xbmcgui.Dialog().select( __language__(32102), [ __language__(32103), __language__(32104) ] )
+                if not DATA.checkIfMenusShared():
+                    # Also offer to import from another skin
+                    response = xbmcgui.Dialog().select( __language__(32102), [ __language__(32103), __language__(32104), "Import from compatible skin" ] )
+                else:
+                    response = xbmcgui.Dialog().select( __language__(32102), [ __language__(32103), __language__(32104) ] )
             
             if response == -1:
                 # User cancelled
@@ -1173,7 +1255,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 self.changeMade = True
                 self._display_listitems()
 
-            else:
+            elif response == 1:
                 # We're going to reset all the shortcuts
                 self.changeMade = True
                 
@@ -1188,6 +1270,40 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 # Call the load shortcuts function, but add that we don't want
                 # previously saved user shortcuts
                 self.load_shortcuts( False )
+
+            else:
+                # We're going to offer to import menus from another compatible skin
+                skinList, sharedFiles = DATA.getSharedSkinList()
+                
+                if len( skinList ) == 0:
+                    xbmcgui.Dialog().ok( __language__(32110), __language__(32109) )
+                    return
+
+                # Let the user select a shortcut to restore
+                importMenu = xbmcgui.Dialog().select( __language__(32110), skinList )
+
+                if importMenu == -1:
+                    # User cancelled
+                    return
+
+                # Delete any auto-generated source playlists
+                for x in range(0, self.getControl( 211 ).size()):
+                    LIBRARY._delete_playlist( self.getControl( 211 ).getListItem( x ).getProperty( "path" ) )
+
+                if importMenu == 0 and not len( sharedFiles ) == 0:
+                    # User has chosen to import the shared menu
+                    DATA.importSkinMenu( sharedFiles )
+                else:
+                    # User has chosen to import from a particular skin
+                    DATA.importSkinMenu( DATA.getFilesForSkin( skinList[ importMenu ] ), skinList[ importMenu ] )
+
+                self.getControl( 211 ).reset()
+                
+                self.allListItems = []
+                
+                # Call the load shortcuts function
+                self.load_shortcuts( True )
+
                 
         elif controlID == 309:
             # Choose widget
@@ -1360,9 +1476,17 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 backgroundLabel = [__language__(32053)]
                 backgroundPretty = [ LIBRARY._create(["", __language__(32053), "", { "icon": "DefaultAddonNone.png" }] ) ]
 
+            # Wait to ensure that all backgrounds are loaded
+            count = 0
+            while self.backgrounds == "LOADING" and count < 20:
+                if xbmc.Monitor().waitForAbort(0.1):
+                    return
+                count = count + 1
+            if self.backgrounds == "LOADING":
+                self.backgrounds = []
+
             # Get the default background for this item
             defaultBackground = self.find_default( "background", listitem.getProperty( "labelID" ), listitem.getProperty( "defaultID" ) )
-            log( repr( defaultBackground ) )
             
             # Generate list of backgrounds for the dialog
             for key in self.backgrounds:
@@ -1383,19 +1507,15 @@ class GUI( xbmcgui.WindowXMLDialog ):
                         virtualImage = xbmc.getInfoLabel(virtualImage)
 
                     if defaultBackground == key[ 0 ]:
-                        backgroundLabel.append( key[1] + " (%s)" %( __language__(32050) ) )
-                        if xbmc.skinHasImage( key[ 0 ] ) or virtualImage:
-                            usePrettyDialog = True
-                            backgroundPretty.append( LIBRARY._create(["", key[ 1 ] + " (%s)" %( __language__(32050) ), "", { "icon":  key[ 0 ] } ] ) )
-                        else:
-                            backgroundPretty.append( LIBRARY._create(["", key[ 1 ] + " (%s)" %( __language__(32050) ), "", {} ] ) )
+                        label = "%s (%s)" %( key[ 1 ], __language__( 32050 ) )
                     else:
-                        backgroundLabel.append( key[1] )
-                        if xbmc.skinHasImage( key[ 0 ] ) or virtualImage:
-                            usePrettyDialog = True
-                            backgroundPretty.append( LIBRARY._create(["", key[ 1 ], "", { "icon": key[ 0 ] } ] ) )
-                        else:
-                            backgroundPretty.append( LIBRARY._create(["", key[ 1 ], "", {} ] ) )
+                        label = key[ 1 ]
+                    backgroundLabel.append( label )
+                    if xbmc.skinHasImage( key[ 0 ] ) or virtualImage:
+                        usePrettyDialog = True
+                        backgroundPretty.append( LIBRARY._create(["", label, "", { "icon":  key[ 0 ] } ] ) )
+                    else:
+                        backgroundPretty.append( LIBRARY._create(["", label, "", {} ] ) )
             
             if usePrettyDialog:
                 w = library.ShowDialog( "DialogSelect.xml", __cwd__, listing=backgroundPretty, windowtitle=__language__(32045) )
@@ -1461,6 +1581,15 @@ class GUI( xbmcgui.WindowXMLDialog ):
             # Create lists for the select dialog
             thumbnail = [""]                     
             thumbnailLabel = [LIBRARY._create(["", __language__(32096), "", {}] )]
+
+            # Ensure thumbnails have been loaded
+            count = 0
+            while self.thumbnails == "LOADING" and count < 20:
+                if xbmc.Monitor().waitForAbort(0.1):
+                    return
+                count = count + 1
+            if self.thumbnails == "LOADING":
+                self.thumbnails = []
             
             # Generate list of thumbnails for the dialog
             for key in self.thumbnails:
@@ -1835,11 +1964,6 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitemCopy.setProperty( "visible-condition", listitem.getProperty( "visible-condition" ) )
             if listitem.getProperty( "additionalListItemProperties" ):
                 listitemCopy.setProperty( "additionalListItemProperties", listitem.getProperty( "additionalListItemProperties" ) )
-                listitemProperties = eval( listitem.getProperty( "additionalListItemProperties" ) )
-                
-                for listitemProperty in listitemProperties:
-                    foundProperties.append( listitemProperty[ 0 ] )
-                    listitemCopy.setProperty( listitemProperty[0], DATA.local( listitemProperty[1] )[2] )
         else:
             # Set these from the original item we were passed (this will keep original labelID and additional properties
             # in tact)
@@ -1848,17 +1972,9 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitemCopy.setProperty( "visible-condition", originallistitem.getProperty( "visible-condition" ) )
             if originallistitem.getProperty( "additionalListItemProperties" ):
                 listitemCopy.setProperty( "additionalListItemProperties", originallistitem.getProperty( "additionalListItemProperties" ) )
-                listitemProperties = eval( originallistitem.getProperty( "additionalListItemProperties" ) )
-                
-                for listitemProperty in listitemProperties:
-                    foundProperties.append( listitemProperty[ 0 ] )
-                    listitemCopy.setProperty( listitemProperty[0], DATA.local(listitemProperty[1] )[2] )
 
-        # Add fallback custom property values
-        fallbackProperties = DATA._getCustomPropertyFallbacks( self.group )
-        for key in fallbackProperties:
-            if key not in foundProperties:
-                listitemCopy.setProperty( key.decode( "utf-8" ), DATA.local( fallbackProperties[ key ] )[2] )
+        # Add custom properties
+        self._add_additional_properties( listitemCopy )
                 
         return listitemCopy
                 
@@ -1883,8 +1999,12 @@ class GUI( xbmcgui.WindowXMLDialog ):
                 listitem.setProperty( propertyName, xbmc.getInfoLabel(propertyValue) )
             else:
                 listitem.setProperty( propertyName, DATA.local( propertyValue )[2] )
+                if propertyValue.isdigit():
+                    listitem.setProperty( "%s-NUM" %( propertyName ), propertyValue )
             
         listitem.setProperty( "additionalListItemProperties", repr( properties ) )
+
+        self._add_additional_properties( listitem )
         
     def _remove_additionalproperty( self, listitem, propertyName ):
         # Remove an item from the additional properties of a user item
@@ -1895,12 +2015,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
             hasProperties = True
         
         for property in properties:
-            if property[0] == propertyName:
+            if property[0] == propertyName or "%s-NUM" %( property[0] ) == "%s-NUM" %( propertyName ):
                 properties.remove( property )
+                listitem.setProperty( property[0], None )
         
         listitem.setProperty( "additionalListItemProperties", repr( properties ) )
-            
-        listitem.setProperty( propertyName, None )
+
+        self._add_additional_properties( listitem )
     
     def warnonremoval( self, item ):
         # This function will warn the user before they modify a settings link
@@ -1921,6 +2042,13 @@ class GUI( xbmcgui.WindowXMLDialog ):
     
     def find_defaultBackground( self, labelID, defaultID ):
         # This function finds the default background, including properties
+        count = 0
+        while self.backgrounds == "LOADING" and count < 20:
+            if xbmc.Monitor().waitForAbort(0.1):
+                return
+            count = count + 1
+        if self.backgrounds == "LOADING":
+            self.backgrounds = []
         result = {}
         defaultBackground = self.find_default( "background", labelID, defaultID )
         if defaultBackground:
@@ -1993,7 +2121,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _set_label( self, listitem, label ):
         # Update the label, local string and labelID
         listitem.setLabel( label )
-        listitem.setProperty( "localizedString", "" )
+        listitem.setProperty( "localizedString", None )
             
         LIBRARY._rename_playlist( listitem.getProperty( "path" ), label )
             

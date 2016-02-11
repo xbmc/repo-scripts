@@ -1,3 +1,15 @@
+v1.0.6
+- Option not to share menus between skins; never hide PVR shortcuts
+- Icons and thumbs are saved on a per-skin basis
+- mtime of files is used to determine if they have changed
+- New icon element for background overrides
+- Support building variables in templates
+- Add conditional custom property fallback override
+- Add requires and templateOnly elements to properties
+- Various language changes
+- Speed improvements
+- Minor fixes
+
 v1.0.2
 - Fix for music addon shortcuts on Isengard
 - New artwork - thanks schimi2k
