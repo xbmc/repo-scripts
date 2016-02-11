@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-	<addon id="script.skin.helper.service" name="Skin Helper Service" version="1.0.23" provider-name="marcelveldt">
+	<addon id="script.skin.helper.service" name="Skin Helper Service" version="1.0.40" provider-name="marcelveldt">
 	<requires>
 		<import addon="xbmc.python" version="2.13.0"/>
 		<import addon="xbmc.addon" version="12.0.0"/>
 		<import addon="script.module.pil" version="1.1.7"/>
 		<import addon="script.module.requests" version="2.3.0"/>
         <import addon="script.module.simplejson" version="3.3.0"/>
+        <import addon="script.module.beautifulsoup" version="3.0.8" />
 	</requires>
 	
     <extension point="xbmc.python.library" library="default.py" />
@@ -17,7 +18,7 @@
 		<item>
 			<label>32072</label>
             <description>Display Series level button in next/recent/in progress episodes listings</description>
-			<visible>Container.Content(episodes) + [!Substring(Container.FolderPath,videodb://tvshows/titles,left) | Substring(Container.FolderPath,xsp=)] + [[!IsEmpty(ListItem.DBID) + !StringCompare(ListItem.DBID,-1)] | !IsEmpty(ListItem.Property(DBID))]</visible>
+			<visible>Container.Content(episodes) + !StringCompare(Container.ListItem(0).TvShowTitle,Container.ListItem(1).TvShowTitle)</visible>
 		</item>
 	</extension>
     <extension point="kodi.context.item" library="contextmenu_artwork.py">
@@ -33,8 +34,8 @@
 		<language></language>
 		<platform>all</platform>
 		<license>GPL v2.0</license>
-		<forum></forum>
+		<forum>http://forum.kodi.tv/showthread.php?tid=235676</forum>
 		<website></website>
-		<source></source>
+		<source>https://github.com/marcelveldt/script.skin.helper.service</source>
 	</extension>
 </addon>

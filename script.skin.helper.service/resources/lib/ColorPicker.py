@@ -40,22 +40,24 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         self.colorsList.addItem(listitem)
         
     def createColorSwatchImage(self, colorstring):
-        paths = []
-        paths.append(os.path.join(ADDON_PATH, 'resources', 'colors' ,colorstring + ".png"))
-        if xbmcvfs.exists( "special://skin/extras/colors/colors.xml" ):
-            paths.append(os.path.join(xbmc.translatePath("special://skin/extras/colors/").decode("utf-8") ,colorstring + ".png"))
-        for colorImageFile in paths:
-            if not xbmcvfs.exists(colorImageFile) and hasPilModule:
-                try:
-                    colorstring = colorstring.strip()
-                    if colorstring[0] == '#': colorstring = colorstring[1:]
-                    a, r, g, b = colorstring[:2], colorstring[2:4], colorstring[4:6], colorstring[6:]
-                    a, r, g, b = [int(n, 16) for n in (a, r, g, b)]
-                    color = (r, g, b, a)
-                    im = Image.new("RGBA", (16, 16), color)
-                    im.save(colorImageFile)
-                except:
-                    logMsg("ERROR in createColorSwatchImage for colorstring: " + colorstring, 0)
+        colorImageFile = ""
+        if colorstring:
+            paths = []
+            paths.append(os.path.join(ADDON_PATH, 'resources', 'colors' ,colorstring + ".png"))
+            if xbmcvfs.exists( "special://skin/extras/colors/colors.xml" ):
+                paths.append(os.path.join(xbmc.translatePath("special://skin/extras/colors/").decode("utf-8") ,colorstring + ".png"))
+            for colorImageFile in paths:
+                if not xbmcvfs.exists(colorImageFile) and hasPilModule:
+                    try:
+                        colorstring = colorstring.strip()
+                        if colorstring[0] == '#': colorstring = colorstring[1:]
+                        a, r, g, b = colorstring[:2], colorstring[2:4], colorstring[4:6], colorstring[6:]
+                        a, r, g, b = [int(n, 16) for n in (a, r, g, b)]
+                        color = (r, g, b, a)
+                        im = Image.new("RGBA", (16, 16), color)
+                        im.save(colorImageFile)
+                    except:
+                        logMsg("ERROR in createColorSwatchImage for colorstring: " + colorstring, 0)
         return colorImageFile
     
     def buildColorsList(self):
@@ -119,9 +121,21 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         except: pass
         
         #get current color that is stored in the skin setting
+        curvalue = ""
+        curvalue_name = ""
         if self.skinString:
-            self.currentWindow.setProperty("colorstring", xbmc.getInfoLabel("Skin.String(" + self.skinString + ')'))
-            self.currentWindow.setProperty("colorname", xbmc.getInfoLabel("Skin.String(" + self.skinString + '.name)'))
+            curvalue = xbmc.getInfoLabel("Skin.String(" + self.skinString + ')')
+            curvalue_name = xbmc.getInfoLabel("Skin.String(" + self.skinString + '.name)')
+        if self.winProperty:
+            curvalue = WINDOW.getProperty(self.winProperty)
+            curvalue_name = xbmc.getInfoLabel(self.winProperty + '.name)')
+        if curvalue:
+            self.currentWindow.setProperty("colorstring", curvalue)
+            if curvalue != curvalue_name:
+                self.currentWindow.setProperty("colorname", curvalue_name)
+            self.currentWindow.setProperty("current.colorstring", curvalue)
+            if curvalue != curvalue_name:
+                self.currentWindow.setProperty("current.colorname", curvalue_name)
         
         #load colors in the list
         self.loadColorsForPalette(self.activePalette)
@@ -133,6 +147,8 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             #no color setup so we just focus the colorslist
             self.currentWindow.setFocusId(3110)
             self.colorsList.selectItem(0)
+            self.currentWindow.setProperty("colorstring", self.colorsList.getSelectedItem().getProperty("colorstring"))
+            self.currentWindow.setProperty("colorname", self.colorsList.getSelectedItem().getLabel())
         
         #set opacity slider
         if self.currentWindow.getProperty("colorstring"):
@@ -150,6 +166,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
         ACTION_PARENT_DIR = 9
         
         if action.getId() in ACTION_CANCEL_DIALOG:
+            self.setColorSetting(restoreprevious=True)
             self.closeDialog()
         else:
             if self.currentWindow.getFocusId() == 3110:
@@ -157,7 +174,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
                 colorstring = item.getProperty("colorstring")
                 self.currentWindow.setProperty("colorstring",colorstring)
                 self.currentWindow.setProperty("colorname",item.getLabel())
-                self.setOpacitySlider()                
+                self.setOpacitySlider()
 
     def closeDialog(self):
         self.close()
@@ -171,14 +188,37 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
                 a = 100.0 * a / 255
                 self.getControl( 3015 ).setPercent( float(a) )
         except: pass
-        
+    
+    def setColorSetting(self,restoreprevious=False):
+        #save the selected color to the skin setting
+        if restoreprevious:
+            colorname = self.currentWindow.getProperty("current.colorname")
+            colorstring = self.currentWindow.getProperty("current.colorstring")
+        else:
+            colorname = self.currentWindow.getProperty("colorname")
+            colorstring = self.currentWindow.getProperty("colorstring")
+        if not colorname: colorname = colorstring
+        self.createColorSwatchImage(colorstring)
+        if self.skinString and (not colorstring or colorstring == "None"):
+            xbmc.executebuiltin("Skin.SetString(%s.name, %s)" %(self.skinString, ADDON.getLocalizedString(32013)))
+            xbmc.executebuiltin("Skin.SetString(%s, None)" %self.skinString)
+            xbmc.executebuiltin("Skin.Reset(%s.base)" %self.skinString)
+        if self.skinString and colorstring:
+            xbmc.executebuiltin("Skin.SetString(%s.name, %s)" %(self.skinString,colorname))
+            colorbase = "ff" + colorstring[2:]
+            xbmc.executebuiltin("Skin.SetString(%s, %s)" %(self.skinString,colorstring))
+            xbmc.executebuiltin("Skin.SetString(%s.base, %s)" %(self.skinString ,colorbase))
+        elif self.winProperty and colorstring:
+            WINDOW.setProperty(self.winProperty, colorstring)
+            WINDOW.setProperty(self.winProperty + ".name", colorname)
+    
     def onClick(self, controlID):
         colorname = self.currentWindow.getProperty("colorname")
         colorstring = self.currentWindow.getProperty("colorstring")
-        if not colorname: colorname = colorstring
-        if controlID == 3110:       
+        if controlID == 3110:
             self.currentWindow.setFocusId(3012)
             self.currentWindow.setProperty("color_chosen","true")
+            self.setColorSetting()
         elif controlID == 3010:  
             #manual input
             dialog = xbmcgui.Dialog()
@@ -186,26 +226,17 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
             self.currentWindow.setProperty("colorname", ADDON.getLocalizedString(32050))
             self.currentWindow.setProperty("colorstring", colorstring)
             self.setOpacitySlider()
+            self.setColorSetting()
         elif controlID == 3011:
             # none button
-            colorname = ADDON.getLocalizedString(32013)
-            xbmc.executebuiltin("Skin.SetString(" + self.skinString + '.name,'+ colorname + ')')
-            xbmc.executebuiltin("Skin.SetString(" + self.skinString + ',None)')
-            xbmc.executebuiltin("Skin.Reset(" + self.skinString + '.base)')
+            self.currentWindow.setProperty("colorstring", "")
+            self.setColorSetting()
             self.closeDialog()
         elif controlID == 3012:
             #save button clicked
-            self.createColorSwatchImage(colorstring)
-            if self.skinString and colorstring:
-                xbmc.executebuiltin("Skin.SetString(" + self.skinString + '.name,'+ colorname + ')')
-                colorbase = "ff" + colorstring[2:]
-                xbmc.executebuiltin("Skin.SetString(" + self.skinString + ','+ colorstring + ')')
-                xbmc.executebuiltin("Skin.SetString(" + self.skinString + '.base,'+ colorbase + ')')
+            if self.skinString or self.winProperty:
                 self.closeDialog()
-            elif self.winProperty and colorstring:
-                WINDOW.setProperty(self.winProperty, colorstring)
-                WINDOW.setProperty(self.winProperty + ".name", colorname)
-            elif self.shortcutProperty and colorstring:
+            elif self.shortcutProperty:
                 self.result = (colorstring,colorname)
                 self.closeDialog()
           
@@ -221,6 +252,7 @@ class ColorPicker(xbmcgui.WindowXMLDialog):
                 color = (a, r, g, b)
                 colorstringvalue = '%02x%02x%02x%02x' % color
                 self.currentWindow.setProperty("colorstring",colorstringvalue)
+                self.setColorSetting()
             except: pass
             
         elif controlID == 3030:

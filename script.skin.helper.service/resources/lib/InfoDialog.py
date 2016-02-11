@@ -1,6 +1,6 @@
 import sys, re
 import xbmc, xbmcgui, xbmcvfs
-from ArtworkUtils import *
+import ArtworkUtils as artutils
 import PluginContent as plugincontent
 import threading
 
@@ -118,7 +118,7 @@ class BackgroundInfoThread(threading.Thread):
             for cast in castlst:
                 if not self.active: break
                 if not cast.get("thumbnail") or not xbmcvfs.exists(cast.get("thumbnail")) and downloadThumbs: 
-                    artwork = getOfficialArtWork(cast["name"],None,"person")
+                    artwork = artutils.getTmdbDetails(cast["name"],None,"person")
                     cast["thumbnail"] = artwork.get("thumb","")
                 liz = xbmcgui.ListItem(label=cast["name"],label2=cast["role"],iconImage=cast.get("thumbnail"))
                 liz.setProperty('path', "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%cast["name"])

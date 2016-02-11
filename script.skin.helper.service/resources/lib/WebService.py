@@ -5,10 +5,10 @@ import SimpleHTTPServer, BaseHTTPServer, httplib
 import threading
 import thread
 from Utils import *
-from ArtworkUtils import *
+import ArtworkUtils as artutils
 
 #port is hardcoded as there is no way in Kodi to pass a INFO-label inside a panel, 
-#otherwise the portnumber could be passed to the skin though a skin setting or window prop
+#otherwise the portnumber could be passed to the skin through a skin setting or window prop
 port = 52307
 
 class WebService(threading.Thread):
@@ -28,13 +28,13 @@ class WebService(threading.Thread):
             conn.getresponse()
             self.exit = True
             self.event.set()
-        except Exception as e: logMsg("WebServer exception occurred " + str(e))
+        except Exception as e: logMsg("WebServer exception occurred " + str(e),0)
 
     def run(self):
         try:
             server = StoppableHttpServer(('127.0.0.1', port), StoppableHttpRequestHandler)
             server.serve_forever()
-        except Exception as e: logMsg("WebServer exception occurred " + str(e))
+        except Exception as e: logMsg("WebServer exception occurred " + str(e),0)
             
 
 
@@ -111,7 +111,7 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
             if fallback.startswith("Default"): fallback = "special://skin/media/" + fallback
 
         if action == "getthumb":
-            image = searchGoogleImage(title)
+            image = artutils.searchThumb(title)
         
         elif action == "getvarimage":
             title = title.replace("{","[").replace("}","]")
@@ -130,7 +130,7 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
             if preferred_type: preferred_type = preferred_type[0]
             if xbmc.getCondVisibility("Window.IsActive(MyPVRRecordings.xml)"): type = "recordings"
             else: type = "channels"
-            artwork = getPVRThumbs(title, channel, type)
+            artwork = artutils.getPVRThumbs(title, channel, type)
             if preferred_type:
                 preferred_types = preferred_type.split(",")
                 for preftype in preferred_types:
@@ -145,15 +145,13 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
         elif action == "getallpvrthumb":
             channel = params.get("channel","")
             if channel: channel = channel[0].decode("utf-8")
-            images = getPVRThumbs(title, channel, "recordings")
+            images = artutils.getPVRThumbs(title, channel, "recordings")
             # Ensure no unicode in images...
             for key, value in images.iteritems():
                 images[key] = unicode(value).encode('utf-8')
             images = urllib.urlencode(images)
         
         elif action == "getmusicart":
-            dbid = params.get("dbid","")
-            if dbid: dbid = dbid[0]
             preferred_type = params.get("type","")
             if preferred_type: preferred_type = preferred_type[0]
             artist = params.get("artist","")
@@ -162,12 +160,7 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
             if album: album = album[0]
             track = params.get("track","")
             if track: track = track[0]
-            contenttype = params.get("contenttype","")
-            if contenttype: contenttype = contenttype[0]
-            if dbid and contenttype:
-                artwork = getMusicArtworkByDbId(dbid, contenttype)
-            else:
-                artwork = getMusicArtworkByName(artist, track, album)
+            artwork = artutils.getMusicArtwork(artist, album, track)
             if preferred_type:
                 preferred_types = preferred_type.split(",")
                 for preftype in preferred_types:

@@ -455,7 +455,7 @@ class _MusicbrainzHttpRequest(compat.Request):
 
 # Core (internal) functions for calling the MB API.
 
-def _safe_read(opener, req, body=None, max_retries=4, retry_delay_delta=2.0):
+def _safe_read(opener, req, body=None, max_retries=6, retry_delay_delta=2.0):
 	"""Open an HTTP request with a given URL opener and (optionally) a
 	request body. Transient errors lead to retries.  Permanent errors
 	and repeated errors are translated into a small set of handleable

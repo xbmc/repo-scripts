@@ -21,7 +21,7 @@
     </category>
     <category label="32121">
         <setting id="enablewallbackgrounds" type="bool" label="32115" default="true" visible="Skin.String(SkinHelper.RandomFanartDelay) + !Skin.String(SkinHelper.RandomFanartDelay,0)"/>
-        <setting id="preferBWwallbackgrounds" type="bool" label="32116" default="false" visible="eq(-1,true) + Skin.String(SkinHelper.RandomFanartDelay) + !Skin.String(SkinHelper.RandomFanartDelay,0)"/>
+        <setting id="maxNumWallImages" type="number" label="32160" default="20"/>
         <setting id="reuseWallBackgrounds" type="bool" label="32128" default="true" visible="eq(-2,true) + Skin.String(SkinHelper.RandomFanartDelay) + !Skin.String(SkinHelper.RandomFanartDelay,0)"/>
         <setting label="32129" type="action" action="RunScript(script.skin.helper.service,action=RESETCACHE,path=wallbackgrounds)"/>
     </category>
@@ -29,7 +29,9 @@
         <setting id="enableMusicArtScraper" type="bool" label="32123" default="true"/>
         <setting id="enableLocalMusicArtLookup" type="bool" label="32124" default="true"/>
         <setting id="downloadMusicArt" type="bool" label="32125" default="false" visible="eq(-1,true)"/>
+        <setting id="preferOnlineMusicArt" type="bool" label="32159" default="false" visible="eq(-1,true)"/>
         <setting label="32126" type="action" action="RunScript(script.skin.helper.service,action=RESETCACHE,path=music)"/>
+        <setting label="Precache all artwork" type="action" action="RunScript(script.skin.helper.service,action=CACHEALLMUSICART)" option="close"/>
     </category>
     <category label="32134">
         <setting id="enableDebugLog" type="bool" label="32135" default="false"/>

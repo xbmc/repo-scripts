@@ -466,7 +466,7 @@ msgstr "Nome de Canal - Título do Programa"
 
 msgctxt "#32112"
 msgid "Words to ignore (strip) in titles, seperate with ;"
-msgstr "Palavras para ignorar (strip) em títulos, separados com ;"
+msgstr "Palavras para ignorar (cortar) em títulos, separados com ;"
 
 msgctxt "#32113"
 msgid "Random PVR fanart background"
@@ -498,7 +498,7 @@ msgstr "Parede/Grid para Álbuns Randômicos"
 
 msgctxt "#32120"
 msgid "PVR Artwork"
-msgstr "Artes PVR"
+msgstr "PVR Artes"
 
 msgctxt "#32121"
 msgid "Backgrounds"
@@ -506,7 +506,7 @@ msgstr "Panos de Fundo"
 
 msgctxt "#32122"
 msgid "Music Artwork"
-msgstr "Artes Música"
+msgstr "Música Artes"
 
 msgctxt "#32123"
 msgid "Enable online lookups for music artwork"
@@ -582,7 +582,7 @@ msgstr "Pano de fundo de vídeos em progresso (filme ou seriado)"
 
 msgctxt "#32141"
 msgid "Color Palette"
-msgstr "Palete de Cores"
+msgstr "Paleta de Cores"
 
 msgctxt "#32142"
 msgid "Recently added music"
@@ -643,3 +643,15 @@ msgstr "Ativar artes em PVR para Agendamentos/Gravações somente"
 msgctxt "#32156"
 msgid "Posters"
 msgstr "Pôsteres"
+
+msgctxt "#32157"
+msgid "Precache all music artwork"
+msgstr "Precache de todas as artes de músicas"
+
+msgctxt "#32158"
+msgid "Are you sure you want to continue? This can take some time, depending on your collection size."
+msgstr "Tem certeza que deseja continuar? isto pode levar algum tempo, dependendo do tamanho de sua coleção."
+
+msgctxt "#32159"
+msgid "Allow existing artwork to be overwritten with better quality"
+msgstr "Permitir que artes existentes sejam sobrepostas com artes de melhor qualidade"

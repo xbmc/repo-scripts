@@ -10,7 +10,7 @@ def getSkinSettings(filter=None):
     else:
         #workaround - reload skin to get guisettings
         xbmc.executebuiltin("Reloadskin")
-        xbmc.sleep(1500)
+        xbmc.Monitor().waitForAbort(1.5)
         guisettings_path = xbmc.translatePath('special://profile/addon_data/%s/settings.xml' %xbmc.getSkinDir()).decode("utf-8")
     if xbmcvfs.exists(guisettings_path):
         logMsg("guisettings.xml found")
@@ -99,10 +99,13 @@ def backup(filterString="",silent=None,promptfilename="false"):
                     for file in files:
                         sourcefile = skinshortcuts_path_source + file.decode("utf-8")
                         destfile = skinshortcuts_path + file.decode("utf-8")
+                        if xbmc.getCondVisibility("SubString(Skin.String(skinshortcuts-sharedmenu),false)"):
+                            # User is not sharing menu, so strip the skin name out of the destination file
+                            destfile = destfile.replace("%s." %(xbmc.getSkinDir()), "")
                         logMsg("source --> " + sourcefile)
                         logMsg("destination --> " + destfile)
 
-                        if file.endswith(".DATA.xml"):
+                        if file.endswith(".DATA.xml") and (not xbmc.getCondVisibility("SubString(Skin.String(skinshortcuts-sharedmenu),false)") or file.startswith(xbmc.getSkinDir())):
                             xbmcvfs.copy(sourcefile,destfile)
                             #parse shortcuts file and look for any images - if found copy them to addon folder
                             doc = parse( destfile )
@@ -297,10 +300,6 @@ def restoreFull(silent=None):
                 
                 skinshortcuts_path_source = temp_path + "skinshortcuts/"
                 skinshortcuts_path_dest = xbmc.translatePath('special://profile/addon_data/script.skinshortcuts/').decode("utf-8")
-                
-                if xbmcvfs.exists(skinshortcuts_path_dest):
-                   recursiveDelete(skinshortcuts_path_dest)
-                xbmcvfs.mkdir(skinshortcuts_path_dest)
             
                 dirs, files = xbmcvfs.listdir(skinshortcuts_path_source.encode("utf-8"))
                 for file in files:
@@ -308,8 +307,12 @@ def restoreFull(silent=None):
                     destfile = skinshortcuts_path_dest.encode("utf-8") + file  
                     if file == "SKINPROPERTIES.properties":
                         destfile = skinshortcuts_path_dest + file.replace("SKINPROPERTIES",xbmc.getSkinDir())
+                    elif xbmc.getCondVisibility("SubString(Skin.String(skinshortcuts-sharedmenu),false)"):
+                        destfile = "%s-" %(xbmc.getSkinDir())
                     logMsg("source --> " + sourcefile)
                     logMsg("destination --> " + destfile)
+                    if xbmcvfs.exists(destfile):
+                        xbmcvfs.delete(destfile)
                     xbmcvfs.copy(sourcefile,destfile)
                         
             #restore guisettings
@@ -318,7 +321,7 @@ def restoreFull(silent=None):
                 restoreSkinSettings(skinsettingsfile, progressDialog)
 
             #cleanup temp
-            xbmc.sleep(500)
+            xbmc.Monitor().waitForAbort(0.5)
             recursiveDelete(temp_path)
             if not silent:
                 xbmcgui.Dialog().ok(ADDON.getLocalizedString(32032), ADDON.getLocalizedString(32034))

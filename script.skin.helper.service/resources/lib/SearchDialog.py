@@ -1,6 +1,5 @@
 import threading
 import InfoDialog
-
 from Utils import *
 
 class SearchDialog(xbmcgui.WindowXMLDialog):
@@ -218,7 +217,7 @@ class BackgroundSearchThread(threading.Thread):
                 lastSearchString = currentSearch
                 self.doSearch(currentSearch)
 
-            xbmc.sleep(2000)
+            xbmc.Monitor().waitForAbort(2)
 
         
     def doSearch(self, searchTerm):
@@ -243,7 +242,7 @@ class BackgroundSearchThread(threading.Thread):
         # Process movies
         json_response = getJSON('VideoLibrary.GetMovies', '{"properties": [%s], "limits": {"end":50}, "sort": { "method": "label" }, "filter": {"field":"title","operator":"contains","value":"%s"} }' % (fields_movies,search))
         for item in json_response:
-            item["streamdetails2"] = item["streamdetails"]
+            item = prepareListItem(item)
             liz = createListItem(item)
             liz.setProperty("json",repr(item))
             movieResultsList.addItem(liz)
@@ -251,6 +250,7 @@ class BackgroundSearchThread(threading.Thread):
         # Process TV Shows
         json_response = getJSON('VideoLibrary.GetTVShows', '{"properties": [%s], "limits": {"end":50}, "sort": { "method": "label" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }' % (fields_tvshows,search))
         for item in json_response:
+            item = prepareListItem(item)
             liz = createListItem(item)
             tvshowid = str(item['tvshowid'])
             path = 'videodb://tvshows/titles/' + tvshowid + '/'
@@ -262,8 +262,6 @@ class BackgroundSearchThread(threading.Thread):
         # Process episodes
         json_response = getJSON('VideoLibrary.GetEpisodes', '{ "properties": [%s], "limits": {"end":50}, "sort": { "method": "title" }, "filter": {"field": "title", "operator": "contains", "value": "%s"} }' % (fields_episodes,search))
         for item in json_response:
-            item["streamdetails2"] = item["streamdetails"]
-            liz = createListItem(item)
+            item = prepareListItem(item)
             liz.setProperty("json",repr(item))
             episodeResultsList.addItem(liz)
-                

@@ -266,9 +266,16 @@ Set it to 0 or clear the string to disable the backgrounds.
 | Window(Home).Property(SkinHelper.PvrBackground) | Random fanart collected by the PVR thumbs feature|
 | Window(Home).Property(SkinHelper.PicturesBackground) | Random pictures from all picture sources. By default this pulls images from all picture sources the user has configured. It is however possible to provide a custom source from which the images should be pulled from by setting Skin String: SkinHelper.CustomPicturesBackgroundPath|
 | Window(Home).Property(SkinHelper.AllMoviesBackground.Wall) | Collection of Movie fanart images (from the library) as wall prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllMoviesBackground.Wall.BW) | Collection of Movie fanart images (from the library) as wall (black and white) prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllMoviesBackground.Poster.Wall) | Collection of Movie poster images (from the library) as wall prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllMoviesBackground.Poster.Wall.BW) | Collection of Movie poster images (from the library) as wall (black and white) prebuilt by the script|
 | Window(Home).Property(SkinHelper.AllMusicBackground.Wall) | Collection of Artist fanart images (from the library) as wall prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllMusicBackground.Wall.BW) | Collection of Artist fanart images (from the library) as wall (black and white) prebuilt by the script|
 | Window(Home).Property(SkinHelper.AllMusicSongsBackground.Wall) | Collection of Song/Album cover images (from the library) as wall prebuilt by the script|
 | Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall) | Collection of Tv show fanart images (from the library) as wall prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall.BW) | Collection of Tv show fanart images (from the library) as wall (black and white) prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall.Poster) | Collection of Tv show poster images (from the library) as wall prebuilt by the script|
+| Window(Home).Property(SkinHelper.AllTvShowsBackground.Wall.Poster.BW) | Collection of Tv show poster images (from the library) as wall (black and white) prebuilt by the script|
 
 Additional properties available for the backgrounds (e.g. SkinHelper.AllMoviesBackground.Poster)
 
@@ -280,7 +287,72 @@ Additional properties available for the backgrounds (e.g. SkinHelper.AllMoviesBa
 | Window(Home).Property(SkinHelper.BACKGROUNDNAME.title) | Title for the background (if available)|
 
 NOTE: the generation of wall images is experimental and might have impact on the cpu while creating them (at startup only). The feature can be disabled in the addon settings.
-_______________________________________________________________________________________________________
+
+
+#### Individual random images for creating image walls yourself in your skin
+If you want to create a wall with images yourself in your skin and you need randomly changing images, there is a way to let the script provide these images for you.
+
+First of all you need to enable this by setting the delay in a skin string: Skin.SetString(SkinHelper.WallImagesDelay, 10)
+0 disables the feature completely, any other number controls the amount of seconds that the wall will rotate a random image.
+
+Secondly you will have to enable the generation of wall images for each SkinHelper provided background by setting a skin string:
+Skin.SetString(BACKGROUNDNAME.EnableWallImages, 20)
+This value controls the number of images that should be provided by the script, if empty or 0 there will be no images generated.
+Once both the global delay and the item-specific limit skinstrings are set, the images will be available like this: 
+Window(Home).Property(BACKGROUNDNAME.Wall.X) (where X is the number of the image, start counting from 0)
+
+You should be able to enable the wall-images feature for any rotating skinhelper background, including those from the smart shortcuts.
+Also note that the additional properties will also be available e.g. Window(Home).Property(SkinHelper.AllMoviesBackground.Wall.1.Poster)
+
+Examples...
+
+To get a collection of 10 images from the AllMoviesBackground provided by skinhelper:
+
+Skin.SetString(SkinHelper.AllMoviesBackground.EnableWallImages, 10)
+
+And to get e.g. fanart image 5 from the collection: Window(Home).Property(SkinHelper.AllMoviesBackground.Wall.5)
+
+Or the poster: Window(Home).Property(SkinHelper.AllMoviesBackground.Wall.5.Poster)
+
+
+
+Or to get the images for one of the plex smart shortcuts:
+Skin.SetString(plexbmc.0.image.EnableWallImages, 10)  --> enable it for 10 images
+
+And to get for example the first fanart image of the collection: Window(Home).Property(plexbmc.0.image.Wall.0)
+
+
+Last example, get the images for playlists (smart shortcuts for playlists should be enabled!)
+
+Skin.SetString(playlist.0.image.EnableWallImages, 10)  --> enable it for the first playlist and we want 10 images
+
+And to get for example the second fanart image of the collection: Window(Home).Property(playlist.0.image.Wall.1)
+
+
+The dynamic backgrounds for the smartshortcuts (e.g. playlist.X.image) should be set individually.
+
+It should be pretty safe if you just enable them for all available options, the script checks if the smartshortcuts actually exists.
+
+So ,you should be fine if you do this:
+
+Skin.SetString(playlist.0.image.EnableWallImages, 10)
+
+Skin.SetString(playlist.1.image.EnableWallImages, 10)
+
+Skin.SetString(playlist.2.image.EnableWallImages, 10)
+
+Skin.SetString(playlist.3.image.EnableWallImages, 10)
+
+etc. etc.
+
+
+CAUTION: The script uses the already cached in memory collections of images to provide you the individual images to build your wall, it does add a little overhead but it should not be noticeable.
+What you do have to realize is that if you show for example a wall of 20 fanart images in your skin, all 20 fanart images will be cached by Kodi in memory, this WILL impact the performance.
+You might run into problems when using this approach on a low powered platform such as the Raspberry Pi.
+
+To have the least impact on performance as possible, you can use the prebuilt wall images that are provided by this script.
+These are already resized into 1 image so that Kodi will only have to load 1 fanart image in memory.
+
 ________________________________________________________________________________________________________
 
 ### Tools and actions provided by the script
@@ -309,9 +381,9 @@ ________________________________________________________________________________
 
 #### Special Info Dialog
 ```
-RunScript(script.skin.helper.service,action=showinfo,movieid=&INFO[ListItem.DBID])
-RunScript(script.skin.helper.service,action=showinfo,tvshowid=&INFO[ListItem.DBID])
-RunScript(script.skin.helper.service,action=showinfo,episodeid=&INFO[ListItem.DBID])
+RunScript(script.skin.helper.service,action=showinfo,movieid=&amp;INFO[ListItem.DBID])
+RunScript(script.skin.helper.service,action=showinfo,tvshowid=&amp;INFO[ListItem.DBID])
+RunScript(script.skin.helper.service,action=showinfo,episodeid=&amp;INFO[ListItem.DBID])
 ```
 It is possible to show the infodialog provided by the script (see video library search command), for example if you want to call that info screen from your widgets.
 In that case run the command above. In the info dialog will also all special properties be available from the script.
@@ -325,6 +397,14 @@ ________________________________________________________________________________
 RunScript(script.skin.helper.service,action=dialogok,header[yourheadertext],message=[your message body])
 ```
 This command will open Kodi's dialog OK window with the text you supplied
+________________________________________________________________________________________________________
+
+
+#### Message Dialog (textviewer)
+```
+RunScript(script.skin.helper.service,action=textviewer,header[yourheadertext],message=[your message body])
+```
+This command will open Kodi's TextViewer window with the text you supplied (NOTE: textviewer is available as of Kodi Jarvis 16)
 ________________________________________________________________________________________________________
 
 
@@ -364,13 +444,13 @@ RunScript(script.skin.helper.service,action=colorpicker,shortcutproperty=XXX)
 ##### Multiple color palettes
 The color picker supports having multiple color palettes in your colors.xml.
 The structure of your colors.xml file will then be layered, like this:
-
+'''xml
 <colors>
     <palette name="mypalette1">
         <color name="color1">ffffffff</color>
     </palette>
 </colors>
-
+'''
 If you do not create the palette sublevel in your colors.xml, the script will just display all <color> tags.
 If you have specified multiple palettes you can use a button with ID 3030 to switch between color palettes.
 Also it is possible to launch the color picker with a specific palette, in that case supply the palette= parameter when you open the picker, for example:
@@ -426,31 +506,15 @@ You can use this to have the music artwork inside a list/panel container.
 ```xml
 <control type="image">
     <!--music artwork-->
-    <texture background="true">http://localhost:52307/getmusicart&amp;dbid=$INFO[Listitem.DBID]&amp;type=banner,clearlogo,discart&amp;contenttype=artists</texture>
+    <texture background="true">http://localhost:52307/getmusicart&amp;artist=$INFO[Listitem.Artist]&amp;track=$INFO[Listitem.Title]&amp;album=$INFO[Listitem.Album]&amp;type=banner,clearlogo,discart</texture>
 </control>
 ```
-The argument to pass is the DBID of the listitem and you must also supply the type= argument to provide the type of image that should be returned.
+The arguments to pass are album, track and artist. You can supply all of them or just a selection (e.g. artist+album)
 Possibilities are banner, clearlogo and discart for music artwork. Fanart and album thumb should be provided by Kodi itself.
-You also need to specify the contenttype for the container: artists, albums or songs
 
 Optional parameter: fallback --> Allows you to set a fallback image if no image was found.
 For example &amp;fallback=$INFO[ListItem.Thumb]
 
-Alternative to get the music artwork --> provide artist name and trackname:
-```xml
-<control type="image">
-    <!--music artwork-->
-    <texture background="true">http://localhost:52307/getmusicart&amp;artist=$INFO[Listitem.Artist]&amp;track=$INFO[Listitem.Title]&amp;type=banner,clearlogo,discart</texture>
-</control>
-```
-
-Alternative to get the music artwork --> provide artist name and albumname:
-```xml
-<control type="image">
-    <!--music artwork-->
-    <texture background="true">http://localhost:52307/getmusicart&amp;artist=$INFO[Listitem.Artist]&amp;album=$INFO[Listitem.Album]&amp;type=banner,clearlogo,discart</texture>
-</control>
-```
 
 ##### Image from skin string or window property inside a panel
 Normally $INFO window properties or skin string can't be used inside a container.
@@ -571,35 +635,43 @@ You must supply the name of the setting as can be found in guisettings.xml or th
 </control>
 ```
 
-
-________________________________________________________________________________________________________
-
-#### OK dialog
-Can be used to present a simple OK dialog with a message
-
-```
-RunScript(script.skin.helper.service,action=dialogok&header=[text for header]&message=[message text])             
-```
-
 ________________________________________________________________________________________________________
 
 #### Strip string
-Can be used to strip a string, the results will be stored to a window property
+Can be used to strip/split a string, the results will be stored to a window property.
 
 ```
-RunScript(script.skin.helper.service,action=stripstring&splitchar=[splitter text]&string=[your string]&output=[your window prop])             
+RunScript(script.skin.helper.service,action=stripstring,splitchar=[splitter text],string=[your string],output=[your window prop])             
 ```
 
 Example:
 
-<onload>RunScript(script.skin.helper.service,action=stripstring&splitchar=.&string=$INFO[System.BuildVersion]&output=kodiversion_main)</onload>
+<onload>RunScript(script.skin.helper.service,action=stripstrin,splitchar=.,string=$INFO[System.BuildVersion],output=kodiversion_main)</onload>
 
 The above command will take the Kodi Buildversion Info string and split it on the "." character. The result is the main Kodi version, e.g. "15" or "16".
 You can access the result in your skin as a window property, in the above example kodiversion_main:
 $INFO[Window(Home).Property(kodiversion_main)]
 
+Optional argument: index
+Used to specify which part to return after splitting the string, start counting at 0|
+For example:
+
+<onload>RunScript(script.skin.helper.service,action=stripstrin,splitchar=#,string=this#is#a#test,output=kodiversion_main,index=1)</onload>
+will return "is" in the result
 
 ________________________________________________________________________________________________________
+
+
+#### Check if file exists
+```
+RunScript(script.skin.helper.service,action=fileexists&amp;file=[filenamepath]&amp;skinstring=[skinstring to store the result]&amp;windowprop=[windowprop to store the result])
+```
+This command will check the filesystem if a particular file exists and will write the results to either a skin string or window property.
+If the file exists, the result will be written as EXISTS in the property or skinstring, if it doesn't exist, the property/string will be empty.
+________________________________________________________________________________________________________
+
+
+
 
 #### Set skin setting
 Can be used to present a select dialog to specify a certain skin setting.
@@ -721,8 +793,10 @@ RunScript(script.skin.helper.service,action=enableviews)
 This will present a selection dialog to the user to enable (or disable) views. It uses the views.xml file to display the available views (see above). When a view is disabled it will be hidden from the view selection dialog. Also, a Skin String will be set so you can check in your skin if the view has been disabled (and not include it or set a visiblity condition).
 The name of the Skin String that will be set by the script is: SkinHelper.View.Disabled.[VIEWID] where [VIEWID] is the numerical ID of the view.
 
-Example: <include condition="!Skin.HasSetting(SkinHelper.View.Disabled.55)">View_55_BannerList</include>
-
+Example: 
+```xml
+<include condition="!Skin.HasSetting(SkinHelper.View.Disabled.55)">View_55_BannerList</include>
+```
 ________________________________________________________________________________________________________
 
 
@@ -924,14 +998,10 @@ ________________________________________________________________________________
 The script also has a plugin entrypoint to provide some dynamic content that can be used for example in widgets.
 use the parameter [LIMIT] to define the number of items to show in the list. defaults to 25 if the parameter is not supplied.
 
-```
-Important Note: If you want to use these commands in the skinshortcuts overrides.xml,
-you have to replace & with &amp;
-```
 
 #####Next Episodes
 ```
-plugin://script.skin.helper.service/?action=nextepisodes&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload)]
+plugin://script.skin.helper.service/?action=nextepisodes&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload)]
 ```
 Provides a list of the nextup episodes. This can be the first episode in progress from a tv show or the next unwatched from a in progress show.
 Note: the reload parameter is needed to auto refresh the widget when the content has changed.
@@ -940,7 +1010,7 @@ ________________________________________________________________________________
 
 #####Recommended Movies
 ```
-plugin://script.skin.helper.service/?action=recommendedmovies&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload)]
+plugin://script.skin.helper.service/?action=recommendedmovies&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload)]
 ```
 Provides a list of the in progress movies AND recommended movies based on rating.
 Note: the reload parameter is needed to auto refresh the widget when the content has changed.
@@ -949,7 +1019,7 @@ ________________________________________________________________________________
 
 #####Recommended Media
 ```
-plugin://script.skin.helper.service/?action=recommendedmedia&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=recommendedmedia&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 Provides a list of recommended media (movies, tv shows, music)
 Note: You can optionally provide the reload= parameter if you want to refresh the widget on library changes.
@@ -958,7 +1028,7 @@ ________________________________________________________________________________
 
 #####Recent albums
 ```
-plugin://script.skin.helper.service/?action=recentalbums&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreloadmusic)]
+plugin://script.skin.helper.service/?action=recentalbums&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]
 ```
 Provides a list of recently added albums, including the artwork provided by this script as ListItem.Art(xxxx)
 Note: You can optionally provide the reload= parameter if you want to refresh the widget on library changes.
@@ -968,7 +1038,7 @@ ________________________________________________________________________________
 
 #####Recently played albums
 ```
-plugin://script.skin.helper.service/?action=recentplayedalbums&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreloadmusic)]
+plugin://script.skin.helper.service/?action=recentplayedalbums&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]
 ```
 Provides a list of recently played albums, including the artwork provided by this script as ListItem.Art(xxxx)
 Note: You can optionally provide the reload= parameter if you want to refresh the widget on library changes.
@@ -978,7 +1048,7 @@ ________________________________________________________________________________
 
 #####Recommended albums
 ```
-plugin://script.skin.helper.service/?action=recommendedalbums&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreloadmusic)]
+plugin://script.skin.helper.service/?action=recommendedalbums&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]
 ```
 Provides a list of recommended albums, including the artwork provided by this script as ListItem.Art(xxxx)
 Note: You can optionally provide the reload= parameter if you want to refresh the widget on library changes.
@@ -988,7 +1058,7 @@ ________________________________________________________________________________
 
 #####Recent songs
 ```
-plugin://script.skin.helper.service/?action=recentsongs&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreloadmusic)]
+plugin://script.skin.helper.service/?action=recentsongs&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]
 ```
 Provides a list of recently added songs, including the artwork provided by this script as ListItem.Art(xxxx)
 Note: You can optionally provide the reload= parameter if you want to refresh the widget on library changes.
@@ -996,7 +1066,7 @@ ________________________________________________________________________________
 
 #####Recently played songs
 ```
-plugin://script.skin.helper.service/?action=recentplayedsongs&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreloadmusic)]
+plugin://script.skin.helper.service/?action=recentplayedsongs&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]
 ```
 Provides a list of recently played songs, including the artwork provided by this script as ListItem.Art(xxxx)
 Note: You can optionally provide the reload= parameter if you want to refresh the widget on library changes.
@@ -1004,7 +1074,7 @@ ________________________________________________________________________________
 
 #####Recommended songs
 ```
-plugin://script.skin.helper.service/?action=recommendedsongs&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreloadmusic)]
+plugin://script.skin.helper.service/?action=recommendedsongs&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreloadmusic)]
 ```
 Provides a list of recommended songs, including the artwork provided by this script as ListItem.Art(xxxx)
 Note: You can optionally provide the reload= parameter if you want to refresh the widget on library changes.
@@ -1012,7 +1082,7 @@ ________________________________________________________________________________
 
 #####Recent Media
 ```
-plugin://script.skin.helper.service/?action=recentmedia&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=recentmedia&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 Provides a list of recently added media (movies, tv shows, music, tv recordings, musicvideos)
 Note: You can optionally provide the reload= parameter if you want to refresh the widget on library changes.
@@ -1022,7 +1092,7 @@ ________________________________________________________________________________
 
 #####Similar Movies (because you watched...)
 ```
-plugin://script.skin.helper.service/?action=similarmovies&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=similarmovies&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 This will provide a list with movies that are similar to a random watched movie from the library.
 TIP: The listitem provided by this list will have a property "similartitle" which contains the movie from which this list is generated. That way you can create a "Because you watched $INFO[Container.ListItem.Property(originaltitle)]" label....
@@ -1032,14 +1102,14 @@ The above command will create a similar movies listing based on a random watched
 If you want to specify the movie to base the request on yourself you can optionally specify the imdb id to the script:
 
 ```
-plugin://script.skin.helper.service/?action=similarmovies&imdbid=[IMDBID]&limit=[LIMIT]
+plugin://script.skin.helper.service/?action=similarmovies&amp;imdbid=[IMDBID]&amp;limit=[LIMIT]
 ```
 
 ________________________________________________________________________________________________________
 
 #####Similar Tv Shows (because you watched...)
 ```
-plugin://script.skin.helper.service/?action=similarshows&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=similarshows&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 This will provide a list with TV shows that are similar to a random in progress show from the library.
 TIP: The listitem provided by this list will have a property "similartitle" which contains the movie from which this list is generated. That way you can create a "Because you watched $INFO[Container.ListItem.Property(originaltitle)]" label....
@@ -1049,14 +1119,14 @@ The above command will create a similar shows listing based on a random in progr
 If you want to specify the show to base the request on yourself you can optionally specify the imdb/tvdb id to the script:
 
 ```
-plugin://script.skin.helper.service/?action=similarshows&imdbid=[IMDBID]&limit=[LIMIT]
+plugin://script.skin.helper.service/?action=similarshows&amp;imdbid=[IMDBID]&amp;limit=[LIMIT]
 ```
 
 ________________________________________________________________________________________________________
 
 #####Top rated Movies in genre
 ```
-plugin://script.skin.helper.service/?action=moviesforgenre&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=moviesforgenre&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 This will provide a list with movies that for a random genre from the library.
 TIP: The listitem provided by this list will have a property "genretitle" which contains the movie from which this list is generated.
@@ -1066,7 +1136,7 @@ ________________________________________________________________________________
 
 #####Top rated tvshows in genre
 ```
-plugin://script.skin.helper.service/?action=showsforgenre&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=showsforgenre&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 This will provide a list with tvshows for a random genre from the library.
 TIP: The listitem provided by this list will have a property "genretitle" which contains the movie from which this list is generated.
@@ -1077,7 +1147,7 @@ ________________________________________________________________________________
 
 #####In progress Media
 ```
-plugin://script.skin.helper.service/?action=inprogressmedia&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload)]
+plugin://script.skin.helper.service/?action=inprogressmedia&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload)]
 ```
 Provides a list of all in progress media (movies, tv shows, music, musicvideos)
 Note: the reload parameter is needed to auto refresh the widget when the content has changed.
@@ -1087,7 +1157,7 @@ ________________________________________________________________________________
 
 #####In progress and Recommended Media
 ```
-plugin://script.skin.helper.service/?action=inprogressandrecommendedmedia&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload)]
+plugin://script.skin.helper.service/?action=inprogressandrecommendedmedia&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload)]
 ```
 This combines in progress media and recommended media, usefull to prevent an empty widget when no items are in progress.
 Note: the reload parameter is needed to auto refresh the widget when the content has changed.
@@ -1096,7 +1166,7 @@ ________________________________________________________________________________
 
 #####Favourite Media
 ```
-plugin://script.skin.helper.service/?action=favouritemedia&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=favouritemedia&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 Provides a list of all media items that are added as favourite (movies, tv shows, songs, musicvideos)
 Note: By providing the reload-parameter set to the widgetreload2 property, the widget will be updated every 10 minutes.
@@ -1105,7 +1175,7 @@ ________________________________________________________________________________
 
 #####My TV Shows Airing today
 ```
-plugin://script.skin.helper.service/?action=nextairedtvshows&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=nextairedtvshows&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 Provides a list of the shows from the library that are airing today - requires script.tv.show.next.aired
 The listitems will have the properties as described here: http://kodi.wiki/view/Add-on:TV_Show_-_Next_Aired#Airing_today
@@ -1117,7 +1187,7 @@ ________________________________________________________________________________
 
 #####PVR TV Channels widget
 ```
-plugin://script.skin.helper.service/?action=pvrchannels&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=pvrchannels&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 Provides the Kodi TV channels as list content, enriched with the artwork provided by this script (where possible).
 Note: By providing the reload-parameter set to the widgetreload2 property, the widget will be updated every 10 minutes.
@@ -1126,7 +1196,7 @@ ________________________________________________________________________________
 
 #####PVR Latest Recordings widget
 ```
-plugin://script.skin.helper.service/?action=pvrrecordings&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=pvrrecordings&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 Provides the Kodi TV Recordings (sorted by date) as list content, enriched with the artwork provided by this script (where possible).
 Note: By providing the reload-parameter set to the widgetreload2 property, the widget will be updated every 10 minutes.
@@ -1136,7 +1206,7 @@ ________________________________________________________________________________
 
 #####Favourites
 ```
-plugin://script.skin.helper.service/?action=favourites&limit=[LIMIT]&reload=$INFO[Window(Home).Property(widgetreload2)]
+plugin://script.skin.helper.service/?action=favourites&amp;limit=[LIMIT]&amp;reload=$INFO[Window(Home).Property(widgetreload2)]
 ```
 Provides the Kodi favourites as list content.
 Note: By providing the reload-parameter set to the widgetreload2 property, the widget will be updated every 10 minutes.
@@ -1145,10 +1215,10 @@ ________________________________________________________________________________
 
 #####Cast Details
 ```
-plugin://script.skin.helper.service/?action=getcast&movie=[MOVIENAME OR DBID]
-plugin://script.skin.helper.service/?action=getcast&tvshow=[TVSHOW NAME OR DBID]
-plugin://script.skin.helper.service/?action=getcast&movieset=[MOVIESET NAME OR DBID]
-plugin://script.skin.helper.service/?action=getcast&episode=[EPISODE NAME OR DBID]
+plugin://script.skin.helper.service/?action=getcast&amp;movie=[MOVIENAME OR DBID]
+plugin://script.skin.helper.service/?action=getcast&amp;tvshow=[TVSHOW NAME OR DBID]
+plugin://script.skin.helper.service/?action=getcast&amp;movieset=[MOVIESET NAME OR DBID]
+plugin://script.skin.helper.service/?action=getcast&amp;episode=[EPISODE NAME OR DBID]
 ```
 Provides the Cast list for the specified media type as a listing.
 Label = Name of the actor

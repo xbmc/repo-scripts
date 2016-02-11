@@ -4,39 +4,64 @@
 from xml.dom.minidom import parse
 from operator import itemgetter
 from Utils import *
-from ArtworkUtils import *
+import ArtworkUtils as artutils
 
 
 def getPluginListing(action,limit,refresh=None,optionalParam=None):
     #general method to get a widget/plugin listing and check cache etc.
     count = 0
     allItems = []
-    
+    cachePath = os.path.join(ADDON_DATA_PATH,"widgetcache-%s.json" %action)
     #get params for each action
-    if "EPISODES" in action: type = "episodes"
-    elif "MOVIE" in action: type = "movies"
-    elif "SHOW" in action: type = "tvshows"
-    elif "MEDIA" in action: type = "movies"
-    elif "PVR" in action: type = "episodes"
-    elif "ALBUM" in action: type = "albums"
-    elif "SONG" in action: type = "songs"
+    if "EPISODES" in action: 
+        type = "episodes"
+        refresh = WINDOW.getProperty("widgetreload-episodes")
+    elif "MOVIE" in action: 
+        type = "movies"
+        refresh = WINDOW.getProperty("widgetreload-movies")
+    elif "SHOW" in action: 
+        type = "tvshows"
+        refresh = WINDOW.getProperty("widgetreload-tvshows")
+    elif "MEDIA" in action: 
+        type = "movies"
+    elif "PVR" in action: 
+        type = "episodes"
+    elif "ALBUM" in action: 
+        type = "albums"
+    elif "SONG" in action: 
+        type = "songs"
     else: type = "files"
+    
+    cacheStr = "skinhelper-%s-%s-%s-%s" %(action,limit,optionalParam,refresh)
+    
     #set widget content type
     xbmcplugin.setContent(int(sys.argv[1]), type)
     
     #try to get from cache first...
-    cacheStr=""
-    if refresh: 
-        cacheStr = "skinhelper-%s-%s-%s-%s" %(action,limit,optionalParam,refresh)
-        cache = WINDOW.getProperty(cacheStr).decode("utf-8")
-        if cache: allItems = eval(cache)
+    cache = WINDOW.getProperty(cacheStr).decode("utf-8")
+    if cache and refresh:
+        logMsg("getPluginListing-%s-%s-%s-%s -- got data from cache" %(action,limit,optionalParam,refresh))
+        allItems = eval(cache)
+    
+    #get from persistant cache on first boot
+    if not cache and not WINDOW.getProperty("firstrun-"+cacheStr):
+        logMsg("getPluginListing-%s-%s-%s-%s -- initial start, load cache from file" %(action,limit,optionalParam,refresh))
+        allItems = getDataFromCacheFile(cachePath)
+        if refresh:
+            WINDOW.setProperty(cacheStr, repr(allItems).encode("utf-8"))
+            WINDOW.setProperty("firstrun-"+cacheStr,"done")
     
     #Call the correct method to get the content from json when no cache
-    if not allItems:
+    if not allItems or action == "FAVOURITES":
+        logMsg("getPluginListing-%s-%s-%s-%s -- no cache, quering json api to get items" %(action,limit,optionalParam,refresh))
         if optionalParam:
             allItems = eval(action)(limit,optionalParam)
         else:
             allItems = eval(action)(limit)
+        #save the cache
+        allItems = prepareListItems(allItems)
+        WINDOW.setProperty(cacheStr, repr(allItems).encode("utf-8"))
+        saveDataToCacheFile(cachePath,allItems)
     
     #fill that listing...
     for item in allItems:
@@ -49,9 +74,6 @@ def getPluginListing(action,limit,refresh=None,optionalParam=None):
     #end directory listing
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
     
-    #save the cache
-    WINDOW.setProperty(cacheStr, repr(allItems).encode("utf-8"))
-
 def addDirectoryItem(label, path, folder=True):
     li = xbmcgui.ListItem(label, path=path)
     li.setThumbnailImage("special://home/addons/script.skin.helper.service/icon.png")
@@ -79,32 +101,11 @@ def doMainListing():
     addDirectoryItem(ADDON.getLocalizedString(32132), "plugin://script.skin.helper.service/?action=recommendedsongs&limit=100")
     if xbmc.getCondVisibility("System.HasAddon(script.tv.show.next.aired)"):
         addDirectoryItem(ADDON.getLocalizedString(32055), "plugin://script.skin.helper.service/?action=nextairedtvshows&limit=100")
-
+    
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-       
+    
 def FAVOURITES(limit):
-    allItems = []
-    xbmcplugin.setContent(int(sys.argv[1]), 'files')
-    fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
-    if xbmcvfs.exists( fav_file ):
-        doc = parse( fav_file )
-        listing = doc.documentElement.getElementsByTagName( 'favourite' )
-        for count, favourite in enumerate(listing):
-            label = ""
-            image = "DefaultFile.png"
-            for (name, value) in favourite.attributes.items():
-                if name == "name":
-                    label = value
-                if name == "thumb":
-                    image = value
-            path = favourite.childNodes [ 0 ].nodeValue
-            path="plugin://script.skin.helper.service/?action=launch&path=" + path
-            li = {"title": label, "thumbnail":image, "file":path}
-            li["extraproperties"] = {"IsPlayable": "false"}
-            allItems.append(li)
-            if count == limit:
-                break
-    return allItems
+    return FAVOURITEMEDIA(limit,True)
 
 def PVRRECORDINGS(limit):
     allItems = []
@@ -118,9 +119,7 @@ def PVRRECORDINGS(limit):
             if item["playcount"] == 0 and not ("mythtv" in pvr_backend.lower() and "/livetv/" in item.get("file","").lower()):
                 channelname = item["channel"]
                 item["channel"] = channelname
-                item["art"] = getPVRThumbs(item["title"], channelname, "recordings")
-                if item.get("art") and item["art"].get("thumb"):
-                    item["art"]["thumb"] = item["art"].get("thumb")
+                item["art"] = artutils.getPVRThumbs(item["title"], channelname, "recordings")
                 item["channellogo"] = item["art"].get("channellogo","")
                 item["cast"] = None
                 item["file"] = sys.argv[0] + "?action=playrecording&path=" + str(item["recordingid"])
@@ -145,8 +144,7 @@ def NEXTPVRRECORDINGS(limit,reversed="false"):
             #exclude live tv items from recordings list (mythtv hack)
             if not (item.get("directory") and item["directory"] in allTitles) and item["playcount"] == 0 and not ("mythtv" in pvr_backend.lower() and "/livetv/" in item.get("file","").lower()):
                 channelname = item["channel"]
-                item["channel"] = channelname
-                item["art"] = getPVRThumbs(item["title"], channelname, "recordings")
+                item["art"] = artutils.getPVRThumbs(item["title"], channelname, "recordings")
                 item["channellogo"] = item["art"].get("channellogo","")
                 item["cast"] = None
                 allUnSortedItems.append((item["endtime"],item))
@@ -172,7 +170,7 @@ def PVRTIMERS(limit):
             channel_details = getJSON('PVR.GetChannelDetails', '{ "channelid": %d}' %item["channelid"])
             channelname = channel_details.get("label","")
             item["channel"] = channelname
-            item["art"] = getPVRThumbs(item["title"], channelname, "recordings")
+            item["art"] = artutils.getPVRThumbs(item["title"], channelname, "recordings")
             item["channellogo"] = item["art"].get("channellogo","")
             if not item.get("plot"): item["plot"] = item.get("summary","")
             allUnSortedItems.append((item["starttime"],item))
@@ -195,7 +193,7 @@ def PVRCHANNELS(limit):
         if channel.has_key('broadcastnow'):
             #channel with epg data
             item = channel['broadcastnow']
-            item["art"] = getPVRThumbs(item["title"], channelname, "channels")
+            item["art"] = artutils.getPVRThumbs(item["title"], channelname, "channels")
             if not channelicon: channelicon = item["art"].get("channelicon")
         else:
             #channel without epg
@@ -235,7 +233,7 @@ def getThumb(searchphrase):
     
     while xbmc.getCondVisibility("Container.Scrolling") or WINDOW.getProperty("getthumbbusy")=="busy":
         xbmc.sleep(150)
-    image = searchThumb(searchphrase)
+    image = artutils.searchThumb(searchphrase)
     if image:
         WINDOW.setProperty("SkinHelper.ListItemThumb",image)
     else:
@@ -248,7 +246,7 @@ def RECENTALBUMS(limit,browse=""):
     allItems = []
     json_result = getJSON('AudioLibrary.GetRecentlyAddedAlbums', '{ "properties": [ %s ], "limits":{"end":%d} }' %(fields_albums,limit))
     for item in json_result:
-        item["art"] = getMusicArtworkByDbId(item["albumid"], "albums")
+        item["art"] = artutils.getMusicArtwork(item["displayartist"], item["label"])
         item["type"] = "album"
         item["extraproperties"] = {"extrafanart": item["art"].get("extrafanart",""), "tracklist":item["art"].get("tracklist","")}
         item['album_description'] = item["art"].get("info","")
@@ -265,7 +263,7 @@ def RECENTPLAYEDALBUMS(limit,browse=""):
     allItems = []
     json_result = getJSON('AudioLibrary.GetRecentlyPlayedAlbums', '{ "sort": { "order": "descending", "method": "lastplayed" }, "properties": [ %s ], "limits":{"end":%d} }' %(fields_albums,limit))
     for item in json_result:
-        item["art"] = getMusicArtworkByDbId(item["albumid"], "albums")
+        item["art"] = artutils.getMusicArtwork(item["displayartist"], item["label"])
         item["type"] = "album"
         item["extraproperties"] = {"extrafanart": item["art"].get("extrafanart",""), "tracklist":item["art"].get("tracklist","")}
         item['album_description'] = item["art"].get("info","")
@@ -282,7 +280,7 @@ def RECENTPLAYEDSONGS(limit):
     allItems = []
     json_result = getJSON('AudioLibrary.GetRecentlyPlayedSongs', '{ "properties": [ %s ], "limits":{"end":%d} }' %(fields_songs,limit))
     for item in json_result:
-        item["art"] = getMusicArtworkByDbId(item["songid"], "songs")
+        item["art"] = artutils.getMusicArtwork(item["displayartist"], item["album"])
         item["type"] = "song"
         item["extraproperties"] = {"extrafanart": item["art"].get("extrafanart",""), "tracklist":item["art"].get("tracklist","")}
         item['album_description'] = item["art"].get("info","")
@@ -293,7 +291,7 @@ def RECENTSONGS(limit):
     allItems = []
     json_result = getJSON('AudioLibrary.GetRecentlyAddedSongs', '{ "properties": [ %s ], "limits":{"end":%d} }' %(fields_songs,limit))
     for item in json_result:
-        item["art"] = getMusicArtworkByDbId(item["songid"], "songs")
+        item["art"] = artutils.getMusicArtwork(item["displayartist"], item["album"])
         item["type"] = "song"
         item["extraproperties"] = {"extrafanart": item["art"].get("extrafanart",""), "tracklist":item["art"].get("tracklist","")}
         item['album_description'] = item["art"].get("info","")
@@ -398,6 +396,25 @@ def RECOMMENDEDMOVIES(limit):
             break
         allItems.append(item)
         numitems +=1
+    
+    #plex in progress
+    if WINDOW.getProperty("plexbmc.0.title"):
+        nodes = []
+        for i in range(50):
+            key = "plexbmc.%s.ondeck"%(str(i))
+            path = WINDOW.getProperty(key + ".content")
+            label = WINDOW.getProperty(key + ".title")
+            type = WINDOW.getProperty("plexbmc.%s.type"%(str(i)))
+            if not label: break
+            else:
+                if "movie" in type:
+                    json_result = getJSON('Files.GetDirectory', '{ "directory": "%s", "media": "files", "properties": [ %s ] }' %(path,fields_files))
+                    for item in json_result:
+                        if numitems >= limit:
+                            break
+                        allItems.append(item)
+                        numitems +=1
+    
     # Fill the list with random items with a score higher then 7
     json_result = getJSON('VideoLibrary.GetMovies','{ "sort": { "order": "descending", "method": "random" }, "filter": {"and": [{"operator":"is", "field":"playcount", "value":"0"},{"operator":"greaterthan", "field":"rating", "value":"7"}]}, "properties": [ %s ] }' %fields_movies)
     # If we found any, find the oldest unwatched show for each one.
@@ -406,6 +423,25 @@ def RECOMMENDEDMOVIES(limit):
             break
         allItems.append(item)
         numitems +=1
+        
+    #plex recommended
+    if WINDOW.getProperty("plexbmc.0.title"):
+        for i in range(50):
+            key = "plexbmc.%s.ondeck"%(str(i))
+            path = WINDOW.getProperty(key + ".unwatched")
+            label = WINDOW.getProperty(key + ".title")
+            type = WINDOW.getProperty("plexbmc.%s.type"%(str(i)))
+            if not label: break
+            if "movie" in type:
+                json_result = getJSON('Files.GetDirectory', '{ "directory": "%s", "media": "files", "properties": [ %s ] }' %(path,fields_files))
+                for item in json_result:
+                    rating = item["rating"]
+                    if rating > 7:
+                        if numitems >= limit:
+                            break
+                        allItems.append(item)
+                        numitems +=1    
+        
     return allItems
 
 def RECOMMENDEDALBUMS(limit,browse=False):
@@ -429,7 +465,7 @@ def RECOMMENDEDALBUMS(limit,browse=False):
             for item in json_result:
                 if count == limit: break
                 if not item["title"] in allTitles and not item["title"] == similartitle and genre in item["genre"]:
-                    item["art"] = getMusicArtworkByDbId(item["albumid"], "albums")
+                    item["art"] = artutils.getMusicArtwork(item["displayartist"], item["label"])
                     item["type"] = "album"
                     item["extraproperties"] = {"extrafanart": item["art"].get("extrafanart",""), "tracklist":item["art"].get("tracklist","")}
                     item['album_description'] = item["art"].get("info","")
@@ -470,7 +506,7 @@ def RECOMMENDEDSONGS(limit):
             for item in json_result:
                 if count == limit: break
                 if not item["title"] in allTitles and not item["title"] == similartitle:
-                    item["art"] = getMusicArtworkByDbId(item["songid"], "songs")
+                    item["art"] = artutils.getMusicArtwork(item["displayartist"], item["album"])
                     item["type"] = "song"
                     item["extraproperties"] = {"extrafanart": item["art"].get("extrafanart",""), "tracklist":item["art"].get("tracklist","")}
                     item['album_description'] = item["art"].get("info","")
@@ -640,6 +676,20 @@ def buildRecommendedMediaListing(limit,ondeckContent=False,recommendedContent=Tr
                     allOndeckItems.append((lastplayed,item))
                     allTitles.append(item["title"])
         
+        #plex in progress
+        if WINDOW.getProperty("plexbmc.0.title"):
+            for i in range(50):
+                key = "plexbmc.%s.ondeck"%(str(i))
+                path = WINDOW.getProperty(key + ".content")
+                label = WINDOW.getProperty(key + ".title")
+                if not path: break
+                json_result = getJSON('Files.GetDirectory', '{ "directory": "%s", "media": "files", "properties": [ %s ] }' %(path,fields_files))
+                for item in json_result:
+                    lastplayed = item["lastplayed"]
+                    if not item["title"] in allTitles:
+                        allOndeckItems.append((lastplayed,item))
+                        allTitles.append(item["title"])
+
         # Get a list of all the in-progress Movies
         json_result = getJSON('VideoLibrary.GetMovies', '{ "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ %s ] }' %fields_movies)
         for item in json_result:
@@ -673,14 +723,14 @@ def buildRecommendedMediaListing(limit,ondeckContent=False,recommendedContent=Tr
                 allTitles.append(item["title"])
 
         # NextUp episodes
-        json_result = getJSON('VideoLibrary.GetTVShows', '{ "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title" ] }')
-        for item in json_result:
-            json_query2 = getJSON('VideoLibrary.GetEpisodes', '{ "tvshowid": %d, "sort": {"method":"episode"}, "filter": {"and": [ {"field": "playcount", "operator": "lessthan", "value":"1"}, {"field": "season", "operator": "greaterthan", "value": "0"} ]}, "properties": [ %s ], "limits":{"end":1}}' %(item['tvshowid'], fields_episodes))
+        json_result = getJSON('VideoLibrary.GetTVShows', '{ "sort": { "order": "descending", "method": "lastplayed" }, "filter": {"and": [{"operator":"true", "field":"inprogress", "value":""}]}, "properties": [ "title", "lastplayed" ] }')
+        for show in json_result:
+            json_query2 = getJSON('VideoLibrary.GetEpisodes', '{ "tvshowid": %d, "sort": {"method":"episode"}, "filter": {"and": [ {"field": "playcount", "operator": "lessthan", "value":"1"}, {"field": "season", "operator": "greaterthan", "value": "0"} ]}, "properties": [ %s ], "limits":{"end":1}}' %(show['tvshowid'], fields_episodes))
             for item in json_query2:
-                lastplayed = item["lastplayed"]
+                lastplayed = sorted([show["lastplayed"], item["dateadded"]], reverse=True)[0]
                 if not item["title"] in allTitles:
                     allOndeckItems.append((lastplayed,item))
-                    allTitles.append(item["title"])         
+                    allTitles.append(item["title"])
         
         #sort the list with in progress items by lastplayed date   
         allItems = sorted(allOndeckItems,key=itemgetter(0),reverse=True)
@@ -709,6 +759,22 @@ def buildRecommendedMediaListing(limit,ondeckContent=False,recommendedContent=Tr
                     item["tvshowtitle"] = item["title"]
                     allRecommendedItems.append((rating,item))
                     allTitles.append(item["title"])
+                    
+        #plex recommended
+        if WINDOW.getProperty("plexbmc.0.title"):
+            for i in range(50):
+                key = "plexbmc.%s.unwatched"%(str(i))
+                path = WINDOW.getProperty(key + ".content")
+                label = WINDOW.getProperty(key + ".title")
+                type = WINDOW.getProperty("plexbmc.%s.type"%(str(i)))
+                if not label: break
+                if "movie" in type or "show" in type:
+                    json_result = getJSON('Files.GetDirectory', '{ "directory": "%s", "media": "files", "properties": [ %s ] }' %(path,fields_files))
+                    for item in json_result:
+                        rating = item["rating"]
+                        if not item["title"] in allTitles and rating > 7:
+                            allOndeckItems.append((rating,item))
+                            allTitles.append(item["title"])
                     
         #sort the list with recommended items by rating 
         allItems += sorted(allRecommendedItems,key=itemgetter(0),reverse=True)
@@ -772,6 +838,22 @@ def RECENTMEDIA(limit):
             allItems.append((lastplayed,item))
             allTitles.append(item["title"])
     
+    #recent plex items
+    if WINDOW.getProperty("plexbmc.0.title"):
+        nodes = []
+        for i in range(50):
+            key = "plexbmc.%s.recent"%(str(i))
+            path = WINDOW.getProperty(key + ".content")
+            label = WINDOW.getProperty(key + ".title")
+            type = WINDOW.getProperty("plexbmc.%s.type"%(str(i)))
+            if not label: break
+            json_result = getJSON('Files.GetDirectory', '{ "directory": "%s", "media": "files", "properties": [ %s ] }' %(path,fields_files))
+            for item in json_result:
+                dateadded = item["dateadded"]
+                if not item["title"] in allTitles:
+                    allItems.append((dateadded,item))
+                    allTitles.append(item["title"])
+    
     #sort the list with in recent items by lastplayed date   
     allItems = sorted(allItems,key=itemgetter(0),reverse=True)
     if allItems: WINDOW.setProperty("skinhelper-recentmedia", repr(allItems))
@@ -782,27 +864,29 @@ def RECENTMEDIA(limit):
         allItemsDef.append(item[1])
     return allItemsDef
 
-def FAVOURITEMEDIA(limit):
+def FAVOURITEMEDIA(limit,AllKodiFavsOnly=False):
     count = 0
     allItems = []
-    #netflix favorites
-    if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc) + Skin.HasSetting(SmartShortcuts.netflix)") and WINDOW.getProperty("netflixready") == "ready":
-        json_result = getJSON('Files.GetDirectory', '{ "directory": "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_38", "media": "files", "properties": [ %s ] }' %fields_files)
-        for item in json_result:
-            allItems.append(item)
     
-    #emby favorites
-    if xbmc.getCondVisibility("System.HasAddon(plugin.video.emby) + Skin.HasSetting(SmartShortcuts.emby)"):
-        json_result = getJSON('VideoLibrary.GetMovies', '{ "filter": {"operator":"contains", "field":"tag", "value":"Favorite movies"}, "properties": [ %s ] }' %fields_movies)
-        for item in json_result:
-            allItems.append(item)
+    if not AllKodiFavsOnly:
+        #netflix favorites
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc) + Skin.HasSetting(SmartShortcuts.netflix)") and WINDOW.getProperty("netflixready") == "ready":
+            json_result = getJSON('Files.GetDirectory', '{ "directory": "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_38", "media": "files", "properties": [ %s ] }' %fields_files)
+            for item in json_result:
+                allItems.append(item)
         
-        json_result = getJSON('VideoLibrary.GetTvShows', '{ "filter": {"operator":"contains", "field":"tag", "value":"Favorite tvshows"}, "properties": [ %s ] }' %fields_tvshows)
-        for item in json_result:
-            tvshowpath = "ActivateWindow(Videos,videodb://tvshows/titles/%s/,return)" %str(item["tvshowid"])
-            tvshowpath="plugin://script.skin.helper.service?action=launch&path=" + tvshowpath
-            item["file"] == tvshowpath
-            allItems.append(item)
+        #emby favorites
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.emby) + Skin.HasSetting(SmartShortcuts.emby)"):
+            json_result = getJSON('VideoLibrary.GetMovies', '{ "filter": {"operator":"contains", "field":"tag", "value":"Favorite movies"}, "properties": [ %s ] }' %fields_movies)
+            for item in json_result:
+                allItems.append(item)
+            
+            json_result = getJSON('VideoLibrary.GetTvShows', '{ "filter": {"operator":"contains", "field":"tag", "value":"Favorite tvshows"}, "properties": [ %s ] }' %fields_tvshows)
+            for item in json_result:
+                tvshowpath = "ActivateWindow(Videos,videodb://tvshows/titles/%s/,return)" %str(item["tvshowid"])
+                tvshowpath="plugin://script.skin.helper.service?action=launch&path=" + tvshowpath
+                item["file"] == tvshowpath
+                allItems.append(item)
     
     #Kodi favourites
     json_result = getJSON('Favourites.GetFavourites', '{"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}')
@@ -857,12 +941,33 @@ def FAVOURITEMEDIA(limit):
                     if item['file'] == path:
                         matchFound = True
                         allItems.append(item)
-                    
+        if not matchFound and AllKodiFavsOnly:
+            #add unknown item in the result...
+            if fav.get("type") == "window":
+                path = 'ActivateWindow(%s,"%s",return)' %(fav.get("window",""),fav.get("windowparameter",""))
+                path="plugin://script.skin.helper.service/?action=launch&path=" + path
+            elif fav.get("type") == "script":
+                path='plugin://script.skin.helper.service/?action=launch&path=RunScript("%s")' %fav.get("path")
+            else:
+                path = fav.get("path")
+            if not fav.get("label"): fav["label"] = fav.get("title")
+            if not fav.get("title"): fav["label"] = fav.get("label")
+            item = {"label": fav.get("label"), "title": fav.get("title"), "thumbnail":fav.get("thumbnail"), "file":path}
+            if fav.get("thumbnail").endswith("icon.png") and xbmcvfs.exists(fav.get("thumbnail").replace("icon.png","fanart.jpg")):
+                item["art"] = {"landscape": fav.get("thumbnail"), "poster": fav.get("thumbnail"), "fanart": fav.get("thumbnail").replace("icon.png","fanart.jpg")}
+            item["extraproperties"] = {"IsPlayable": "false"}
+            allItems.append(item)
+            
     return allItems
     
 def getExtraFanArt(path):
     #get extrafanarts by passing an artwork cache xml file
-    artwork = getArtworkFromCacheFile(path)
+    if not xbmcvfs.exists(path):
+        filepart = path.split("/")[-1]
+        path = path.replace(filepart,"") + normalize_string(filepart)
+        if not xbmcvfs.exists(path):
+            logMsg("getExtraFanArt FAILED for path: %s" %path,0)
+    artwork = artutils.getArtworkFromCacheFile(path)
     if artwork.get("extrafanarts"):
         extrafanart = eval( artwork.get("extrafanarts") )
         for item in extrafanart:
@@ -871,7 +976,6 @@ def getExtraFanArt(path):
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
 def GETCASTMEDIA(limit,name=""):
-    print "getcastmedia"
     allItems = []
     if name:
         json_result = getJSON('VideoLibrary.GetMovies', '{ "properties": [ %s ] }' %fields_movies)
@@ -888,7 +992,6 @@ def GETCASTMEDIA(limit,name=""):
                     url = "RunScript(script.skin.helper.service,action=showinfo,tvshowid=%s)" %item["tvshowid"]
                     item["file"] = "plugin://script.skin.helper.service/?action=launch&path=" + url
                     allItems.append(item)
-    print allItems
     return allItems
     
 def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=False):
@@ -896,7 +999,6 @@ def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=Fal
     item = {}
     allCast = []
     castNames = list()
-    moviesetmovies = None
     cachedataStr = ""
     try:
         if movieset:
@@ -911,109 +1013,91 @@ def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=Fal
         elif episode:
             cachedataStr = "episode.castcache-" + str(episode)+str(downloadThumbs)
             itemId = int(episode)
-        else:
+        elif not (movie or tvshow or episode or movieset) and xbmc.getCondVisibility("Window.IsActive(DialogVideoInfo.xml)"):
             cachedataStr = xbmc.getInfoLabel("ListItem.Title")+xbmc.getInfoLabel("ListItem.FileNameAndPath")+str(downloadThumbs)
     except: pass
     
     cachedata = WINDOW.getProperty(cachedataStr).decode("utf-8")
     if cachedata:
         #get data from cache
-        cachedata = eval(cachedata)
-        for cast in cachedata:
-            liz = xbmcgui.ListItem(label=cast[0],label2=cast[1],iconImage=cast[2])
-            liz.setProperty('IsPlayable', 'false')
-            url = "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%cast[0]
-            path="plugin://script.skin.helper.service/?action=launch&path=" + url
-            castNames.append(cast[0])
-            liz.setThumbnailImage(cast[2])
-            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=liz, isFolder=False)
+        allCast = eval(cachedata)
     else:
+        
         #retrieve data from json api...
         if movie and itemId:
             json_result = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %d, "properties": [ "title", "cast" ] }' %itemId)
-            if json_result: item = json_result
+            if json_result and json_result.get("cast"): allCast = json_result.get("cast")
         elif movie and not itemId:
             json_result = getJSON('VideoLibrary.GetMovies', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title", "cast" ] }' %movie.encode("utf-8"))
-            if json_result: item = json_result[0]
+            if json_result and json_result[0].get("cast"): allCast = json_result[0].get("cast")
         elif tvshow and itemId:
             json_result = getJSON('VideoLibrary.GetTVShowDetails', '{ "tvshowid": %d, "properties": [ "title", "cast" ] }' %itemId)
-            if json_result: item = json_result
+            if json_result and json_result.get("cast"): allCast = json_result.get("cast")
         elif tvshow and not itemId:
             json_result = getJSON('VideoLibrary.GetTvShows', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title", "cast" ] }' %tvshow.encode("utf-8"))
-            if json_result: item = json_result[0]
+            if json_result and json_result[0].get("cast"): allCast = json_result[0].get("cast")
         elif episode and itemId:
             json_result = getJSON('VideoLibrary.GetEpisodeDetails', '{ "episodeid": %d, "properties": [ "title", "cast" ] }' %itemId)
-            if json_result: item = json_result
+            if json_result and json_result.get("cast"): allCast = json_result.get("cast")
         elif episode and not itemId:
             json_result = getJSON('VideoLibrary.GetEpisodes', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title", "cast" ] }' %episode.encode("utf-8"))
-            if json_result: item = json_result[0]
-        elif movieset and itemId:
-            json_result = getJSON('VideoLibrary.GetMovieSetDetails', '{ "setid": %d, "properties": [ "title" ] }' %itemId)
-            if json_result.has_key("movies"): moviesetmovies = json_result['movies']      
-        elif movieset and not itemId:
-            json_result = getJSON('VideoLibrary.GetMovieSets', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title" ] }' %movieset.encode("utf-8"))
-            if json_result: 
-                movieset = json_result[0]
-                if movieset.has_key("movies"):
-                    moviesetmovies = movieset['movies']
-        else:
-            #no item provided, try to grab the cast list from container 50 (dialogvideoinfo)
+            if json_result and json_result[0].get("cast"): allCast = json_result[0].get("cast")
+        elif movieset:
+            moviesetmovies = []
+            if itemId:
+                json_result = getJSON('VideoLibrary.GetMovieSetDetails', '{ "setid": %d, "properties": [ "title" ] }' %itemId)
+                if json_result.has_key("movies"): moviesetmovies = json_result['movies']
+            elif not itemId:
+                json_result = getJSON('VideoLibrary.GetMovieSets', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title" ] }' %movieset.encode("utf-8"))
+                if json_result: moviesetmovies = json_result[0]['movies']
+            if moviesetmovies:
+                for setmovie in moviesetmovies:
+                    json_result = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %d, "properties": [ "title", "cast" ] }' %setmovie["movieid"])
+                    if json_result and json_result.get("cast"): allCast += json_result.get("cast")
+        
+        #no item provided, try to grab the cast list from container 50 (dialogvideoinfo)
+        elif not (movie or tvshow or episode or movieset) and xbmc.getCondVisibility("Window.IsActive(DialogVideoInfo.xml)"):
             for i in range(250):
                 label = xbmc.getInfoLabel("Container(50).ListItemNoWrap(%s).Label" %i).decode("utf-8")
                 if not label: break
                 label2 = xbmc.getInfoLabel("Container(50).ListItemNoWrap(%s).Label2" %i).decode("utf-8")
                 thumb = getCleanImage( xbmc.getInfoLabel("Container(50).ListItemNoWrap(%s).Thumb" %i).decode("utf-8") )
-                if not thumb or not xbmcvfs.exists(thumb) and downloadThumbs: 
-                    artwork = getOfficialArtWork(label,None,"person")
-                    thumb = artwork.get("thumb","")
-                url = "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%label
-                path="plugin://script.skin.helper.service/?action=launch&path=" + url
-                liz = xbmcgui.ListItem(label=label,label2=label2,iconImage=thumb)
-                liz.setProperty('IsPlayable', 'false')
-                liz.setThumbnailImage(thumb)
-                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=liz, isFolder=False)
-                allCast.append([label,label2,thumb])
+                allCast.append( { "name": label, "role": label2, "thumbnail": thumb } )
+        else:
+            #no id or title provided, skip...
+            allCast = []
                 
+        #lookup tmdb if item is requested that is not in local db
+        tmdbdetails = {}
+        if movie and not allCast and not itemId:
+            tmdbdetails = artutils.getTmdbDetails(movie,None,"movie",True)
+        elif tvshow and not allCast and not itemId:
+            tmdbdetails = artutils.getTmdbDetails(tvshow,None,"tv",True)
+        if tmdbdetails:
+            allCast = tmdbdetails.get("cast")
         
-        #process cast for regular movie or show
-        if item and item.has_key("cast"):
-            for cast in item["cast"]:
+        
+        #optional: download missing actor thumbs
+        if allCast and downloadThumbs:
+            for cast in allCast:
                 if cast.get("thumbnail"): cast["thumbnail"] = getCleanImage(cast.get("thumbnail"))
-                if not cast.get("thumbnail") or not xbmcvfs.exists(cast.get("thumbnail")) and downloadThumbs: 
-                    artwork = getOfficialArtWork(cast["name"],None,"person")
+                if not cast.get("thumbnail"): 
+                    artwork = artutils.getTmdbDetails(cast["name"],None,"person")
                     cast["thumbnail"] = artwork.get("thumb","")
-                liz = xbmcgui.ListItem(label=cast["name"],label2=cast["role"],iconImage=cast.get("thumbnail"))
-                allCast.append([cast["name"],cast["role"],cast.get("thumbnail","")])
-                castNames.append(cast["name"])
-                url = "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%cast["name"]
-                path="plugin://script.skin.helper.service/?action=launch&path=" + url
-                liz.setProperty('IsPlayable', 'false')
-                liz.setThumbnailImage(cast.get("thumbnail"))
-                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=liz, isFolder=False)
-        
-        #process cast for all movies in a movieset
-        elif moviesetmovies:
-            moviesetCastList = []
-            for setmovie in moviesetmovies:
-                json_result = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %d, "properties": [ "title", "cast" ] }' %setmovie["movieid"])
-                if json_result:
-                    for cast in json_result["cast"]:
-                        if not cast["name"] in moviesetCastList:
-                            if cast.get("thumbnail"): cast["thumbnail"] = getCleanImage(cast.get("thumbnail"))
-                            if not cast.get("thumbnail") or not xbmcvfs.exists(cast.get("thumbnail")) and downloadThumbs:
-                                artwork = getOfficialArtWork(cast["name"],None,"person")
-                                cast["thumbnail"] = artwork.get("thumb","")
-                            liz = xbmcgui.ListItem(label=cast["name"],label2=cast["role"],iconImage=cast.get("thumbnail",""))
-                            allCast.append([cast["name"],cast["role"],cast["thumbnail"]])
-                            castNames.append(cast["name"])
-                            url = "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%cast["name"]
-                            path="plugin://script.skin.helper.service/?action=launch&path=" + url
-                            liz.setProperty('IsPlayable', 'false')
-                            liz.setThumbnailImage(cast.get("thumbnail"))
-                            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=liz, isFolder=False)
-                            moviesetCastList.append(cast["name"])
-            
+
+        #save to cache    
         WINDOW.setProperty(cachedataStr,repr(allCast))
+    
+    #process listing with the results...
+    for cast in allCast:
+        if cast.get("name") not in castNames:
+            liz = xbmcgui.ListItem(label=cast.get("name"),label2=cast.get("role"),iconImage=cast.get("thumbnail"))
+            liz.setProperty('IsPlayable', 'false')
+            url = "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%cast.get("name")
+            path="plugin://script.skin.helper.service/?action=launch&path=" + url
+            castNames.append(cast.get("name"))
+            liz.setThumbnailImage(cast.get("thumbnail"))
+            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=path, listitem=liz, isFolder=False)
     
     WINDOW.setProperty('SkinHelper.ListItemCast', "[CR]".join(castNames))
     

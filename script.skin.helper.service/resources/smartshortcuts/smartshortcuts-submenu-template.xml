@@ -90,4 +90,13 @@
 		<action>$INFO[Window(Home).Property(WINDOWPROP.ondeck.path)]</action>
         <visible>!IsEmpty(Window(Home).Property(WINDOWPROP.ondeck.path))</visible>
 	</shortcut>
+    <shortcut>
+		<defaultID>$INFO[Window(Home).Property(WINDOWPROP.recommended.title)]</defaultID>
+		<label>$INFO[Window(Home).Property(WINDOWPROP.recommended.title)]</label>
+		<label2>Video Add-ons</label2>
+        <icon>ICONIMAGE</icon>
+		<thumb>$INFO[Window(Home).Property(WINDOWPROP.recommended.image)]</thumb>
+		<action>$INFO[Window(Home).Property(WINDOWPROP.recommended.path)]</action>
+        <visible>!IsEmpty(Window(Home).Property(WINDOWPROP.recommended.path))</visible>
+	</shortcut>
 </shortcuts>

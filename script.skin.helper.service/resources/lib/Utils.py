@@ -30,6 +30,7 @@ KODI_VERSION  = int(xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0])
 WINDOW = xbmcgui.Window(10000)
 SETTING = ADDON.getSetting
 KODILANGUAGE = xbmc.getLanguage(xbmc.ISO_639_1)
+sys.path.append(xbmc.translatePath(os.path.join(ADDON_PATH, 'resources', 'lib')).decode('utf-8'))
 
 fields_base = '"dateadded", "file", "lastplayed","plot", "title", "art", "playcount",'
 fields_file = fields_base + '"streamdetails", "director", "resume", "runtime",'
@@ -38,7 +39,7 @@ fields_tvshows = fields_base + '"sorttitle", "mpaa", "premiered", "year", "episo
 fields_episodes = fields_file + '"cast", "productioncode", "rating", "votes", "episode", "showtitle", "tvshowid", "season", "firstaired", "writer", "originaltitle"'
 fields_musicvideos = fields_file + '"genre", "artist", "tag", "album", "track", "studio", "year"'
 fields_files = fields_file + fields_movies + ", " + fields_tvshows + ", " + fields_episodes
-fields_songs = '"artist", "title", "rating", "fanart", "thumbnail", "duration", "playcount", "comment", "file", "album", "lastplayed", "genre"'
+fields_songs = '"artist","displayartist", "title", "rating", "fanart", "thumbnail", "duration", "playcount", "comment", "file", "album", "lastplayed", "genre", "musicbrainzartistid", "track"'
 fields_albums = '"title", "fanart", "thumbnail", "genre", "displayartist", "artist", "genreid", "musicbrainzalbumartistid", "year", "rating", "artistid", "musicbrainzalbumid", "theme", "description", "type", "style", "playcount", "albumlabel", "mood"'
 fields_pvrrecordings = '"art", "channel", "directory", "endtime", "file", "genre", "icon", "playcount", "plot", "plotoutline", "resume", "runtime", "starttime", "streamurl", "title"'
 KodiArtTypes = [ ("thumb","thumb.jpg"),("poster","poster.jpg"),("fanart","fanart.jpg"),("banner","banner.jpg"),("landscape","landscape.jpg"),("clearlogo","logo.png"),("clearart","clearart.png"),("channellogo","channellogo.png"),("discart","disc.png"),("discart","cdart.png"),("extrafanart","extrafanart/"),("characterart","characterart.png"),("folder","folder.jpg") ]
@@ -64,7 +65,14 @@ def getContentPath(libPath):
             libPath = libPath.replace(",return","/")
             libPath = libPath.replace(", return","/")
         else:
-            libPath = libPath.split(",",1)[1]
+            if ", " in libPath:
+                libPath = libPath.split(", ",1)[1]
+            elif " , " in libPath:
+                libPath = libPath.split(" , ",1)[1]
+            elif " ," in libPath:
+                libPath = libPath.split(", ",1)[1]
+            elif "," in libPath:
+                libPath = libPath.split(",",1)[1]
             libPath = libPath.replace(",return","")
             libPath = libPath.replace(", return","")
         
@@ -113,11 +121,8 @@ def getJSON(method,params):
             return jsonobject['albumdetails']
         elif jsonobject.has_key('artistdetails'):
             return jsonobject['artistdetails']
-        elif jsonobject.has_key('favourites'):
-            if jsonobject['favourites']:
-                return jsonobject['favourites']
-            else:
-                return {}
+        elif jsonobject.get('favourites'):
+            return jsonobject['favourites']
         elif jsonobject.has_key('tvshowdetails'):
             return jsonobject['tvshowdetails']
         elif jsonobject.has_key('episodedetails'):
@@ -134,11 +139,8 @@ def getJSON(method,params):
             return jsonobject['artists']
         elif jsonobject.has_key('channelgroups'):
             return jsonobject['channelgroups']
-        elif jsonobject.has_key('sources'):
-            if jsonobject['sources']:
-                return jsonobject['sources']
-            else:
-                return {}
+        elif jsonobject.get('sources'):
+            return jsonobject['sources']
         elif jsonobject.has_key('addons'):
             return jsonobject['addons']
         elif jsonobject.has_key('item'):
@@ -174,7 +176,6 @@ def setAddonsettings():
     WINDOW.setProperty("SkinHelper.directory_structure",SETTING("directory_structure"))
     WINDOW.setProperty("SkinHelper.lastUpdate","%s" %datetime.now())    
     WINDOW.setProperty("SkinHelper.enablewallbackgrounds",SETTING("enablewallbackgrounds"))
-    WINDOW.setProperty("SkinHelper.preferBWwallbackgrounds",SETTING("preferBWwallbackgrounds"))
     WINDOW.setProperty("SkinHelper.enableMusicArtScraper",SETTING("enableMusicArtScraper"))
     WINDOW.setProperty("SkinHelper.downloadMusicArt",SETTING("downloadMusicArt"))
     WINDOW.setProperty("SkinHelper.enableLocalMusicArtLookup",SETTING("enableLocalMusicArtLookup"))
@@ -182,6 +183,7 @@ def setAddonsettings():
     WINDOW.setProperty("SkinHelper.maxNumFanArts",SETTING("maxNumFanArts"))
     WINDOW.setProperty("SkinHelper.splittitlechar",SETTING("splittitlechar"))
     WINDOW.setProperty("SkinHelper.enablePVRThumbsRecordingsOnly",SETTING("enablePVRThumbsRecordingsOnly"))
+    WINDOW.setProperty("SkinHelper.preferOnlineMusicArt",SETTING("preferOnlineMusicArt"))
     
 def indentXML( elem, level=0 ):
     i = "\n" + level*"\t"
@@ -223,7 +225,8 @@ def setSkinVersion():
     except Exception as e:
         logMsg("Error in setSkinVersion --> " + str(e), 0)
  
-def correctSkinSettings():     
+def correctSkinSettings():
+    #correct any special skin settings
     settings_file = xbmc.translatePath( 'special://skin/extras/skinsettings.xml' ).decode("utf-8")
     if xbmcvfs.exists( settings_file ):
         doc = parse( settings_file )
@@ -231,215 +234,195 @@ def correctSkinSettings():
         for count, item in enumerate(listing):
             id = item.attributes[ 'id' ].nodeValue
             value = item.attributes[ 'value' ].nodeValue
-            curvalue = xbmc.getInfoLabel("Skin.String(%s)" %id.encode("utf-8"))
+            curvalue = xbmc.getInfoLabel("Skin.String(%s)" %id.encode("utf-8")).decode("utf-8")
+            label = xbmc.getInfoLabel(item.attributes[ 'label' ].nodeValue).decode("utf-8")
+            additionalactions = item.getElementsByTagName( 'onselect' )
+            try: default = item.attributes[ 'default' ].nodeValue
+            except: default = ""
+            
+            #skip submenu level itself, this happens when a setting id also exists as a submenu value for an item
+            skip = False
+            for count3, item3 in enumerate(listing):
+                if item3.attributes[ 'value' ].nodeValue == "||SUBLEVEL||" + id:
+                    skip = True
+            if skip: continue
+            
+            #enumerate sublevel if needed
             if value.startswith("||SUBLEVEL||"):
                 sublevel = value.replace("||SUBLEVEL||","")
                 for count2, item2 in enumerate(listing):
                     if item2.attributes[ 'id' ].nodeValue == sublevel:
-                        if item2.attributes[ 'value' ].nodeValue.lower() == curvalue.lower():
+                        try: subdefault = item2.attributes[ 'default' ].nodeValue
+                        except: subdefault = ""
+                        #match in sublevel or default found in sublevel values
+                        if (item2.attributes[ 'value' ].nodeValue.lower() == curvalue.lower()) or (not curvalue and subdefault=="true"):
                             label = xbmc.getInfoLabel(item2.attributes[ 'label' ].nodeValue).decode("utf-8")
-                            xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(id.encode("utf-8"),label.encode("utf-8")))
+                            value = item2.attributes[ 'value' ].nodeValue
+                            default = subdefault
+                            additionalactions = item2.getElementsByTagName( 'onselect' )
+                            break
+            #only correct the label
             if value and value.lower() == curvalue.lower():
-                label = xbmc.getInfoLabel(item.attributes[ 'label' ].nodeValue).decode("utf-8")
                 xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(id.encode("utf-8"),label.encode("utf-8")))
+            #set the default value if current value is empty
+            if not curvalue and default=="true":
+                xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(id.encode("utf-8"),label.encode("utf-8")))
+                xbmc.executebuiltin("Skin.SetString(%s,%s)" %(id.encode("utf-8"),value.encode("utf-8")))
+                #additional onselect actions
+                for action in additionalactions:
+                    condition = action.attributes[ 'condition' ].nodeValue
+                    if condition and not xbmc.getCondVisibility(condition): continue
+                    command = action.firstChild.nodeValue
+                    if "$" in command: command = xbmc.getInfoLabel(command)
+                    xbmc.executebuiltin(command)
  
 def createListItem(item):
 
-    itemtype = "Video"
-    if "type" in item:
-        if "artist" in item["type"] or "song" in item["type"] or "album" in item["type"]:
-            itemtype = "Music"
-
-    liz = xbmcgui.ListItem(item['title'])
-    liz.setInfo( type=itemtype, infoLabels={ "Title": item['title'] })
+    liz = xbmcgui.ListItem(label=item.get("label",""),label2=item.get("label2",""))
     liz.setProperty('IsPlayable', 'true')
-    season = None
-    episode = None
+    liz.setPath(item.get('file'))
     
-    if "duration" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "duration": item['duration'] })
+    nodetype = "Video"
+    if item.get("type","") in ["song","album","artist"]:
+        nodetype = "Music"
     
-    if "runtime" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "duration": item['runtime'] })
-    
-    if "file" in item:
-        liz.setPath(item['file'])
-        liz.setProperty("path", item['file'])
-    
-    if "episode" in item:
-        episode = "%.2d" % float(item['episode'])
-        liz.setInfo( type=itemtype, infoLabels={ "Episode": item['episode'] })
-    
-    if "season" in item:
-        season = "%.2d" % float(item['season'])
-        liz.setInfo( type=itemtype, infoLabels={ "Season": item['season'] })
+    #extra properties
+    for key, value in item.get("extraproperties",{}).iteritems():
+        liz.setProperty(key, value)
         
-    if season and episode:
-        episodeno = "s%se%s" %(season,episode)
-        liz.setProperty("episodeno", episodeno)
-    
-    if "episodeid" in item:
-        liz.setProperty("DBID", str(item['episodeid']))
-        if not item.get("type"): item["type"] = "episode"
-        liz.setIconImage('DefaultTVShows.png')
-        
-    if "tvshowid" in item and not "episodeid" in item:
-        liz.setProperty("DBID", str(item['tvshowid']))
-        if not item.get("type"): item["type"] = "tvshow"
-        liz.setInfo( type=itemtype, infoLabels={ "TvShowTitle": item['label'] })
-        liz.setIconImage('DefaultTVShows.png')
-        
-    if "songid" in item:
-        liz.setProperty("DBID", str(item['songid']))
-        if not item.get("type"): item["type"] = "song"
-        liz.setIconImage('DefaultAudio.png')
-        
-    if "movieid" in item:
-        liz.setProperty("DBID", str(item['movieid']))
-        if not item.get("type"): item["type"] = "movie"
-        liz.setIconImage('DefaultMovies.png')
-    
-    if "musicvideoid" in item:
-        liz.setProperty("DBID", str(item['musicvideoid']))
-        if not item.get("type"): item["type"] = "musicvideo"
-        liz.setIconImage('DefaultMusicVideos.png')
-    
-    if "type" in item:
-        liz.setProperty("type", item['type'])
-        liz.setProperty("dbtype", item['type'])
-        
-    if "extraproperties" in item:
-        if isinstance(item["extraproperties"],dict):
-            for key,value in item["extraproperties"].iteritems():
-                liz.setProperty(key, value)
-    if "plot" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "Plot": item['plot'] })
-        
-    if "imdbnumber" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "imdbnumber": item['imdbnumber'] })
-        liz.setProperty("imdbnumber", str(item['imdbnumber']))
-    
-    if "album_description" in item:
-        liz.setProperty("Album_Description",item['album_description'])
-    
-    if "artist" in item:
-        if itemtype == "Music":
-            liz.setInfo( type=itemtype, infoLabels={ "Artist": " / ".join(item['artist']) })
-        else:
-            liz.setInfo( type=itemtype, infoLabels={ "Artist": item['artist'] })
-        
-    if "votes" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "votes": item['votes'] })
-    
-    if "trailer" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "trailer": item['trailer'] })
-        liz.setProperty("trailer", item['trailer'])
-        
-    if "dateadded" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "dateadded": item['dateadded'] })
-        
-    if "album" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "album": item['album'] })
-        
-    if "plotoutline" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "plotoutline ": item['plotoutline'] })
-        
-    if "studio" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "studio": " / ".join(item['studio']) })
-        
-    if "playcount" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "playcount": item['playcount'] })
-        
-    if "mpaa" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "mpaa": item['mpaa'] })
-        
-    if "tagline" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "tagline": item['tagline'] })
-    
-    if "showtitle" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "TVshowTitle": item['showtitle'] })
-    
-    if "rating" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "Rating": str(round(float(item['rating']),1)) })
-    
-    if "playcount" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "Playcount": item['playcount'] })
-    
-    if "director" in item:
-        director = item['director']
-        if isinstance(director, list): director = " / ".join(director)
-        liz.setInfo( type=itemtype, infoLabels={ "Director": director })
-    
-    if "writer" in item:
-        writer = item['writer']
-        if isinstance(writer, list): writer = " / ".join(writer)
-        liz.setInfo( type=itemtype, infoLabels={ "Writer": writer })
-    
-    if "genre" in item:
-        genre = item['genre']
-        if isinstance(genre, list): genre = " / ".join(genre)
-        liz.setInfo( type=itemtype, infoLabels={ "genre": genre })
-        
-    if "year" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "year": item['year'] })
-    
-    if "firstaired" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "premiered": item['firstaired'] })
+    #video infolabels
+    if nodetype == "Video":
+        infolabels = { 
+            "title": item.get("title"),
+            "size": item.get("size"),
+            "genre": item.get("genre"),
+            "year": item.get("year"),
+            "top250": item.get("top250"),
+            "tracknumber": item.get("tracknumber"),
+            "rating": item.get("rating"),
+            "playcount": item.get("playcount"),
+            "overlay": item.get("overlay"),
+            "cast": item.get("cast"),
+            "castandrole": item.get("castandrole"),
+            "director": item.get("director"),
+            "mpaa": item.get("mpaa"),
+            "plot": item.get("plot"),
+            "plotoutline": item.get("plotoutline"),
+            "originaltitle": item.get("originaltitle"),
+            "sorttitle": item.get("sorttitle"),
+            "duration": item.get("duration"),
+            "studio": item.get("studio"),
+            "tagline": item.get("tagline"),
+            "writer": item.get("writer"),
+            "tvshowtitle": item.get("tvshowtitle"),
+            "premiered": item.get("premiered"),
+            "status": item.get("status"),
+            "code": item.get("imdbnumber"),
+            "aired": item.get("aired"),
+            "credits": item.get("credits"),
+            "album": item.get("album"),
+            "artist": item.get("artist"),
+            "votes": item.get("votes"),
+            "trailer": item.get("trailer"),
+            "progress": item.get('progresspercentage')
+        }
+        if item.get("date"): infolabels["date"] = item.get("date")
+        if item.get("lastplayed"): infolabels["lastplayed"] = item.get("lastplayed")
+        if item.get("dateadded"): infolabels["dateadded"] = item.get("dateadded")
+        if item.get("type") == "episode":
+            infolabels["season"] = item.get("season")
+            infolabels["episode"] = item.get("episode")
 
-    if "premiered" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "premiered": item['premiered'] })
+        liz.setInfo( type="Video", infoLabels=infolabels)
+        #streamdetails
+        if item.get("streamdetails"):
+            liz.addStreamInfo("video", item["streamdetails"].get("video",{}))
+            liz.addStreamInfo("audio", item["streamdetails"].get("audio",{}))
+            liz.addStreamInfo("subtitle", item["streamdetails"].get("subtitle",{}))       
         
-    if "cast" in item:
-        if item["cast"]:
-            listCast = []
-            listCastAndRole = []
-            for castmember in item["cast"]:
+    #music infolabels
+    if nodetype == "Music":
+        infolabels = { 
+            "title": item.get("title"),
+            "size": item.get("size"),
+            "genre": item.get("genre"),
+            "year": item.get("year"),
+            "tracknumber": item.get("track"),
+            "album": item.get("album"),
+            "artist": " / ".join(item.get('artist')),
+            "rating": str(item.get("rating",0)),
+            "lyrics": item.get("lyrics"),
+            "playcount": item.get("playcount")
+        }
+        if item.get("date"): infolabels["date"] = item.get("date")
+        if item.get("duration"): infolabels["duration"] = item.get("duration")
+        if item.get("lastplayed"): infolabels["lastplayed"] = item.get("lastplayed")
+        liz.setInfo( type="Music", infoLabels=infolabels)
+    
+    #artwork
+    if item.get("art"):
+        liz.setArt( item.get("art"))
+    if item.get("icon"):
+        liz.setIconImage(item.get('icon'))
+    if item.get("thumbnail"):
+        liz.setThumbnailImage(item.get('thumbnail'))
+
+    return liz
+
+def prepareListItems(items):
+    newlist = []
+    for item in items:
+        newlist.append(prepareListItem(item))
+    return newlist
+    
+def prepareListItem(item):
+    #fix values returned from json to be used as listitem values
+    properties = item.get("extraproperties",{})
+    
+    #set type
+    for idvar in [ ('episode','DefaultTVShows.png'),('tvshow','DefaultTVShows.png'),('movie','DefaultMovies.png'),('song','DefaultAudio.png'),('musicvideo','DefaultMusicVideos.png') ]:
+        if item.get(idvar[0] + "id"):
+            properties["DBID"] = str(item.get(idvar[0] + "id"))
+            if not item.get("type"): item["type"] = idvar[0]
+            if not item.get("icon"): item["icon"] = idvar[1]
+            break
+    
+    #general properties
+    if item.get('genre') and isinstance(item.get('genre'), list): item["genre"] = " / ".join(item.get('genre'))
+    if item.get('studio') and isinstance(item.get('studio'), list): item["studio"] = " / ".join(item.get('studio'))
+    if item.get('writer') and isinstance(item.get('writer'), list): item["writer"] = " / ".join(item.get('writer'))
+    if item.get('director') and isinstance(item.get('director'), list): item["director"] = " / ".join(item.get('director'))
+    if not isinstance(item.get('artist'), list) and item.get('artist'): item["artist"] = [item.get('artist')]
+    if not item.get('artist'): item["artist"] = []
+    if item.get('type') == "album" and not item.get('album'): item['album'] = item.get('label')
+    if not item.get("duration") and item.get("runtime"): item["duration"] = item.get("runtime")
+    if not item.get("tvshowtitle") and item.get("showtitle"): item["tvshowtitle"] = item.get("showtitle")
+    if not item.get("premiered") and item.get("firstaired"): item["premiered"] = item.get("firstaired")
+    if not properties.get("imdbnumber") and item.get("imdbnumber"): properties["imdbnumber"] = item.get("imdbnumber")
+    properties["dbtype"] = item.get("type")
+    properties["type"] = item.get("type")
+    properties["path"] = item.get("file")
+
+    #cast
+    listCast = []
+    listCastAndRole = []
+    if item.get("cast"):
+        for castmember in item.get("cast"):
+            if castmember:
                 listCast.append( castmember["name"] )
-                listCastAndRole.append( (castmember["name"], castmember["role"]) ) 
-            cast = [listCast, listCastAndRole]
-            liz.setInfo( type=itemtype, infoLabels={ "Cast": cast[0] })
-            liz.setInfo( type=itemtype, infoLabels={ "CastAndRole": cast[1] })
+                listCastAndRole.append( (castmember["name"], castmember["role"]) )
+    item["cast"] = listCast
+    item["castandrole"] = listCastAndRole
     
-    if "resume" in item:
-        liz.setProperty("resumetime", str(item['resume']['position']))
-        liz.setProperty("totaltime", str(item['resume']['total']))
-        liz.setProperty('StartOffset', str(item['resume']['position']))
+    if item.get("season") and item.get("episode"):
+        properties["episodeno"] = "s%se%s" %(item.get("season"),item.get("episode"))
+    if item.get("resume"):
+        properties["resumetime"] = str(item['resume']['position'])
+        properties["totaltime"] = str(item['resume']['total'])
+        properties['StartOffset'] = str(item['resume']['position'])
     
-    if "art" in item:
-        art = item['art']
-        if art and not art.get("fanart") and art.get("tvshow.fanart"):
-            art["fanart"] = art.get("tvshow.fanart")
-        if art and not art.get("poster") and art.get("tvshow.poster"):
-            art["poster"] = art.get("tvshow.poster")
-        if art and not art.get("clearlogo") and art.get("tvshow.clearlogo"):
-            art["clearlogo"] = art.get("tvshow.clearlogo")
-        if art and not art.get("landscape") and art.get("tvshow.landscape"):
-            art["landscape"] = art.get("tvshow.landscape")
-        thumb = None
-        if item['art'].get('thumb',''): thumb = item['art'].get('thumb','')
-        elif item.get('icon',''): thumb = item.get('icon','')
-        elif item['art'].get('poster',''): thumb = item['art'].get('poster','')
-        liz.setThumbnailImage(thumb)
-    else:
-        art = []
-        if "fanart" in item:
-            art.append(("fanart",item["fanart"]))
-        if "thumbnail" in item:
-            art.append(("thumb",item["thumbnail"]))
-            liz.setThumbnailImage(item["thumbnail"])
-        elif "icon" in item:
-            art.append(("thumb",item["icon"]))
-            liz.setIconImage(item["icon"])
-    liz.setArt(art)
-    
-    hasVideoStream = False
-    if "streamdetails" in item:
-        for key, value in item['streamdetails'].iteritems():
-            for stream in value:
-                if 'video' in key: hasVideoStream = True
-                liz.addStreamInfo(key, stream)
-    
-    if item.get('streamdetails2',''):
+    #streamdetails
+    if item.get("streamdetails"):
         streamdetails = item["streamdetails"]
         audiostreams = streamdetails.get('audio',[])
         videostreams = streamdetails.get('video',[])
@@ -456,52 +439,67 @@ def createListItem(item):
                 elif width <= 1280 and height <= 720: resolution = "720"
                 elif width <= 1920 and height <= 1080: resolution = "1080"
                 elif width * height >= 6000000: resolution = "4K"
-                liz.setProperty("VideoResolution", resolution)
-            if stream.get("codec",""):
-                liz.setProperty("VideoCodec", str(stream["codec"]))    
+                properties["VideoResolution"] = resolution
+            if stream.get("codec",""):   
+                properties["VideoCodec"] = str(stream["codec"])
             if stream.get("aspect",""):
-                liz.setProperty("VideoAspect", str(round(stream["aspect"], 2))) 
+                properties["VideoAspect"] = str(round(stream["aspect"], 2))
+            item["streamdetails"]["video"] = stream
+        
+        #grab details of first audio stream
         if len(audiostreams) > 0:
-            #grab details of first audio stream
             stream = audiostreams[0]
-            liz.setProperty("AudioCodec", stream.get('codec',''))
-            liz.setProperty("AudioChannels", str(stream.get('channels','')))
-            liz.setProperty("AudioLanguage", stream.get('language',''))
+            properties["AudioCodec"] = stream.get('codec','')
+            properties["AudioChannels"] = str(stream.get('channels',''))
+            properties["AudioLanguage"] = stream.get('language','')
+            item["streamdetails"]["audio"] = stream
+        
+        #grab details of first subtitle
         if len(subtitles) > 0:
-            #grab details of first subtitle
-            liz.setProperty("SubtitleLanguage", subtitles[0].get('language',''))
+            properties["SubtitleLanguage"] = subtitles[0].get('language','')
+            item["streamdetails"]["subtitle"] = subtitles[0]
+    else:
+        item["streamdetails"] = {}
+        item["streamdetails"]["video"] =  {'duration': item.get('duration',0)}
     
-    
-    if not hasVideoStream and "runtime" in item:
-        stream = {'duration': item['runtime']}
-        liz.addStreamInfo("video", stream)
+    #additional music properties
+    if item.get('album_description'):
+        properties["Album_Description"] = item.get('album_description')
     
     #pvr properties
-    if "progresspercentage" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "Progress": item['progresspercentage'] })
-    if "starttime" in item:
+    if item.get("starttime"):
         starttime = getLocalDateTimeFromUtc(item['starttime'])
-        liz.setProperty("StartTime", starttime[1])
-        liz.setProperty("StartDate", starttime[0])
         endtime = getLocalDateTimeFromUtc(item['endtime'])
-        liz.setProperty("EndTime", endtime[1])
-        liz.setProperty("EndDate", endtime[0])
+        properties["StartTime"] = starttime[1]
+        properties["StartDate"] = starttime[0]
+        properties["EndTime"] = endtime[1]
+        properties["EndDate"] = endtime[0]
         fulldate = starttime[0] + " " + starttime[1] + "-" + endtime[1]
-        liz.setProperty("Date",fulldate )
-    if "channellogo" in item:
-        liz.setProperty("ChannelIcon", item['channellogo'])
-        liz.setProperty("ChannelLogo", item['channellogo'])
-    if "episodename" in item:
-        liz.setProperty("EpisodeName", item['episodename'])
-        liz.setInfo( type=itemtype, infoLabels={ "EpisodeName": item['episodename'] })
-    if "channel" in item:
-        liz.setInfo( type=itemtype, infoLabels={ "Channel": item['channel'] })
-        liz.setInfo( type=itemtype, infoLabels={ "ChannelName": item['channel'] })
-        liz.setProperty("ChannelName", item['channel'])
-        liz.setProperty("Channel", item['channel'])
-        liz.setLabel2(item['channel'])
-        
-    return liz
+        properties["Date"] = fulldate
+    if item.get("channellogo"): properties["channellogo"] = item.get("channellogo","")
+    if item.get("channellogo"): properties["channelicon"] = item.get("channellogo","")
+    if item.get("episodename"): properties["episodename"] = item.get("episodename","")
+    if item.get("channel"): properties["channel"] = item.get("channel","")
+    if item.get("channel"): item["label2"] = item.get("channel","")
+    
+    #artwork
+    art = item.get("art",{})
+    if item.get("type") == "episode":
+        if not art.get("fanart") and art.get("tvshow.fanart"):
+            art["fanart"] = art.get("tvshow.fanart")
+        if not art.get("poster") and art.get("tvshow.poster"):
+            art["poster"] = art.get("tvshow.poster")
+        if not art.get("clearlogo") and art.get("tvshow.clearlogo"):
+            art["clearlogo"] = art.get("tvshow.clearlogo")
+        if not art.get("landscape") and art.get("tvshow.landscape"):
+            art["landscape"] = art.get("tvshow.landscape")
+    if not art.get("fanart") and item.get('fanart'): art["fanart"] = item.get('fanart')
+    if not art.get("thumb") and item.get('thumbnail'): art["thumb"] = item.get('thumbnail')
+    if not art.get("thumb") and item.get('icon'): art["thumb"] = item.get('icon')
+    
+    #return the result
+    item["extraproperties"] = properties
+    return item
     
 def detectPluginContent(plugin,skipscan=False):
     #based on the properties in the listitem we try to detect the content
@@ -624,21 +622,13 @@ def getLocalDateTimeFromUtc(timestring):
         return (timestring,timestring)
 
 def double_urlencode(text):
-   """double URL-encode a given 'text'.  Do not return the 'variablename=' portion."""
-
    text = single_urlencode(text)
    text = single_urlencode(text)
-
    return text
 
 def single_urlencode(text):
-   """single URL-encode a given 'text'.  Do not return the 'variablename=' portion."""
-
-   blah = urllib.urlencode({'blahblahblah':text})
-
-   #we know the length of the 'blahblahblah=' is equal to 13.  This lets us avoid any messy string matches
+   blah = urllib.urlencode({'blahblahblah':try_encode(text)})
    blah = blah[13:]
-
    return blah
 
 def createSmartShortcutSubmenu(windowProp,iconimage):
@@ -657,14 +647,15 @@ def createSmartShortcutSubmenu(windowProp,iconimage):
         logMsg("ERROR in createSmartShortcutSubmenu ! --> " + str(e), 0)
 
 def getCurrentContentType():
-    contenttype=""
+    contenttype = ""
+    
     if xbmc.getCondVisibility("Container.Content(episodes)"):
         contenttype = "episodes"
     elif xbmc.getCondVisibility("Container.Content(movies) + !substring(Container.FolderPath,setid=)"):
         contenttype = "movies"  
     elif xbmc.getCondVisibility("[Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + !substring(Container.FolderPath,setid=)"):
         contenttype = "sets"
-    elif xbmc.getCondVisibility("substring(Container.FolderPath,?setid=)"):
+    elif xbmc.getCondVisibility("substring(Container.FolderPath,setid=)"):
         contenttype = "setmovies" 
     elif xbmc.getCondVisibility("Container.Content(tvshows)"):
         contenttype = "tvshows"
@@ -690,6 +681,19 @@ def getCurrentContentType():
         contenttype = "genres"
     elif xbmc.getCondVisibility("Container.Content(files)"):
         contenttype = "files"
+    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, movie) | StringCompare(ListItem.Property(DBTYPE), movie)"):
+        contenttype = "movies"
+    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, tvshow) | StringCompare(ListItem.Property(DBTYPE), tvshow)"):
+        contenttype = "tvshows"
+    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, episode) | StringCompare(ListItem.Property(DBTYPE), episode)"):
+        contenttype = "episodes"
+    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, musicvideo) | StringCompare(ListItem.Property(DBTYPE), musicvideo)"):
+        contenttype = "musicvideos"
+    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, musicvideo) | StringCompare(ListItem.Property(DBTYPE), musicvideo)"):
+        contenttype = "musicvideos"
+    elif xbmc.getCondVisibility("!IsEmpty(Container.Content)"):     
+        contenttype = xbmc.getInfoLabel("Container.Content")
+    
     WINDOW.setProperty("contenttype",contenttype)
     return contenttype
          
@@ -712,6 +716,7 @@ def normalize_string(text):
     text = text.replace('|', "")
     text = text.replace('(', "")
     text = text.replace(')', "")
+    text = text.replace("\"","")
     text = text.strip()
     text = text.rstrip('.')
     text = unicodedata.normalize('NFKD', try_decode(text))
@@ -832,15 +837,50 @@ def resetPlayerWindowProps():
     WINDOW.setProperty("SkinHelper.Player.Music.AlbumList","")
     WINDOW.setProperty("SkinHelper.Player.Music.ExtraFanArt","")
     
-def resetMusicWidgetWindowProps():
+def resetMusicWidgetWindowProps(data="",resetAll=False):
     #clear the cache for the music widgets
-    logMsg("Music database changed, refreshing widgets....",0)
+    WINDOW.setProperty("resetMusicArtCache","reset")
     WINDOW.setProperty("widgetreloadmusic", time.strftime("%Y%m%d%H%M%S", time.gmtime()))
+    
+    #clear the cache for the music widgets
+    type = "unknown"
+    if data:
+        data = eval(data.replace("true","True").replace("false","False"))
+        type = data["item"]["type"]
 
-def resetVideoWidgetWindowProps():
+    if (type in ["song","artist","album"] or resetAll) and not WINDOW.getProperty("skinhelper-refreshmusicwidgetsbusy"):
+        logMsg("Music database changed - type: %s - resetAll: %s, refreshing widgets...." %(type,resetAll))
+        WINDOW.setProperty("skinhelper-refreshmusicwidgetsbusy","busy")
+        if resetAll: WINDOW.setProperty("resetMusicArtCache","reset")
+        timestr = time.strftime("%Y%m%d%H%M%S", time.gmtime())
+        WINDOW.setProperty("widgetreloadmusic", timestr)
+        #add sleep to prevent same action within time period
+        xbmc.Monitor().waitForAbort(2)
+        WINDOW.clearProperty("skinhelper-refreshmusicwidgetsbusy")
+    
+def resetVideoWidgetWindowProps(data="",resetAll=False):
     #clear the cache for the video widgets
-    logMsg("Video database changed, refreshing widgets....",0)
-    WINDOW.setProperty("widgetreload", time.strftime("%Y%m%d%H%M%S", time.gmtime()))
+    type = "unknown"
+    if data:
+        data = eval(data.replace("true","True").replace("false","False"))
+        type = data["item"]["type"]
+
+    if (type in ["movie","tvshow","episode"] or resetAll) and not WINDOW.getProperty("skinhelper-refreshvideowidgetsbusy"):
+        logMsg("Video database changed - type: %s - resetAll: %s, refreshing widgets...." %(type,resetAll),0)
+        WINDOW.setProperty("skinhelper-refreshvideowidgetsbusy","busy")
+        if resetAll: WINDOW.setProperty("resetVideoDbCache","reset")
+        timestr = time.strftime("%Y%m%d%H%M%S", time.gmtime())
+        WINDOW.setProperty("widgetreload", timestr)
+        #reset specific widgets, based on item that is updated
+        if resetAll or type=="movie":
+            WINDOW.setProperty("widgetreload-movies", timestr)
+        if resetAll or type=="episode":
+            WINDOW.setProperty("widgetreload-episodes", timestr)
+        if resetAll or type=="tvshow":
+            WINDOW.setProperty("widgetreload-tvshows", timestr)
+        #add sleep to prevent same action within time period
+        xbmc.Monitor().waitForAbort(2)
+        WINDOW.clearProperty("skinhelper-refreshvideowidgetsbusy")
 
 def getResourceAddonFiles(addonName,allFilesList=None):
     # get listing of all files (eg studio logos) inside a resource image addonName

@@ -1,6 +1,5 @@
 from Utils import *
-
-      
+     
 def musicSearch():
     xbmc.executebuiltin( "ActivateWindow(MusicLibrary)" )
     xbmc.executebuiltin( "SendClick(8)" )
@@ -149,10 +148,11 @@ def setForcedView(contenttype):
     currentView = xbmc.getInfoLabel("Skin.String(SkinHelper.ForcedViews.%s)" %contenttype)
     if not currentView:
         currentView = "0"
-    selectedItem = selectView(contenttype, currentView, True, True)
+    viewid, viewlabel = selectView(contenttype, currentView, True)
     
-    if selectedItem != -1 and selectedItem != None:
-        xbmc.executebuiltin("Skin.SetString(SkinHelper.ForcedViews.%s,%s)" %(contenttype, selectedItem))
+    if viewid != None:
+        xbmc.executebuiltin("Skin.SetString(SkinHelper.ForcedViews.%s,%s)" %(contenttype, viewid))
+        xbmc.executebuiltin("Skin.SetString(SkinHelper.ForcedViews.%s.label,%s)" %(contenttype, viewlabel))
     
 def setView():
     #sets the selected viewmode for the container
@@ -160,25 +160,27 @@ def setView():
     
     #get current content type
     contenttype = getCurrentContentType()
+    if not contenttype: contenttype = "files"
         
     currentView = xbmc.getInfoLabel("Container.Viewmode").decode("utf-8")
-    selectedItem = selectView(contenttype, currentView)
+    viewid, viewlabel = selectView(contenttype, currentView)
     currentForcedView = xbmc.getInfoLabel("Skin.String(SkinHelper.ForcedViews.%s)" %contenttype)
     
-    #also store forced view    
-    if contenttype and currentForcedView and currentForcedView != "None" and xbmc.getCondVisibility("Skin.HasSetting(SkinHelper.ForcedViews.Enabled)"):
-        xbmc.executebuiltin("Skin.SetString(SkinHelper.ForcedViews.%s,%s)" %(contenttype, selectedItem))
-        WINDOW.setProperty("SkinHelper.ForcedView",selectedItem)
-        if not xbmc.getCondVisibility("Control.HasFocus(%s)" %currentForcedView):
-            xbmc.sleep(100)
-            xbmc.executebuiltin("Container.SetViewMode(%s)" %selectedItem)
-            xbmc.executebuiltin("SetFocus(%s)" %selectedItem)
-    else:
-        WINDOW.clearProperty("SkinHelper.ForcedView")
-    
-    #set view
-    if selectedItem != -1 and selectedItem != None:
-        xbmc.executebuiltin("Container.SetViewMode(%s)" %selectedItem)
+    if viewid != None:
+        #also store forced view    
+        if contenttype and currentForcedView and currentForcedView != "None" and xbmc.getCondVisibility("Skin.HasSetting(SkinHelper.ForcedViews.Enabled)"):
+            xbmc.executebuiltin("Skin.SetString(SkinHelper.ForcedViews.%s,%s)" %(contenttype, viewid))
+            xbmc.executebuiltin("Skin.SetString(SkinHelper.ForcedViews.%s.label,%s)" %(contenttype, viewlabel))
+            WINDOW.setProperty("SkinHelper.ForcedView",viewid)
+            if not xbmc.getCondVisibility("Control.HasFocus(%s)" %currentForcedView):
+                xbmc.sleep(100)
+                xbmc.executebuiltin("Container.SetViewMode(%s)" %viewid)
+                xbmc.executebuiltin("SetFocus(%s)" %viewid)
+        else:
+            WINDOW.clearProperty("SkinHelper.ForcedView")
+        
+        #set view
+        xbmc.executebuiltin("Container.SetViewMode(%s)" %viewid)
     
 def searchYouTube(title,windowHeader=""):
     xbmc.executebuiltin( "ActivateWindow(busydialog)" )
@@ -211,10 +213,11 @@ def searchYouTube(title,windowHeader=""):
         path = allResults[selectedItem].getProperty("path")
         xbmc.executebuiltin("PlayMedia(%s)" %path)
             
-def selectView(contenttype="other", currentView=None, displayNone=False, displayViewId=False):
+def selectView(contenttype="other", currentView=None, displayNone=False):
     import Dialogs as dialogs
     currentViewSelectId = None
-
+    id = None
+    label = ""
     allViews = []
     if displayNone:
         listitem = xbmcgui.ListItem(label="None")
@@ -229,8 +232,7 @@ def selectView(contenttype="other", currentView=None, displayNone=False, display
         for count, view in enumerate(listing):
             label = xbmc.getLocalizedString(int(view.attributes[ 'languageid' ].nodeValue)).encode("utf-8").decode("utf-8")
             id = view.attributes[ 'value' ].nodeValue
-            if displayViewId:
-                label = label + " (" + str(id) + ")"
+            desc = label + " (" + str(id) + ")"
             type = view.attributes[ 'type' ].nodeValue.lower()
             if label.lower() == currentView.lower() or id == currentView:
                 currentViewSelectId = itemcount
@@ -238,7 +240,7 @@ def selectView(contenttype="other", currentView=None, displayNone=False, display
                     currentViewSelectId += 1
             if (type == "all" or contenttype.lower() in type) and not xbmc.getCondVisibility("Skin.HasSetting(SkinHelper.View.Disabled.%s)" %id):
                 image = "special://skin/extras/viewthumbs/%s.jpg" %id
-                listitem = xbmcgui.ListItem(label=label, iconImage=image)
+                listitem = xbmcgui.ListItem(label=label, label2=desc, iconImage=image)
                 listitem.setProperty("id",id)
                 listitem.setProperty("icon",image)
                 allViews.append(listitem)
@@ -250,16 +252,25 @@ def selectView(contenttype="other", currentView=None, displayNone=False, display
     del w
     if selectedItem != -1:
         id = allViews[selectedItem].getProperty("id")
-        return id
+        label = allViews[selectedItem].getLabel()
+    return (id,label)
 
+def waitForSkinShortcutsWindow():
+    #wait untill skinshortcuts is active window (because of any animations that may have been applied)
+    for i in range(40):
+        if not (xbmc.getCondVisibility("Window.IsActive(DialogSelect.xml) | Window.IsActive(script-skin_helper_service-ColorPicker.xml) | Window.IsActive(DialogKeyboard.xml)")):
+            break
+        else: xbmc.sleep(100)
+        
 def setSkinShortCutsProperty(setting="",windowHeader="",propertyName=""):
-    curValue = xbmc.getInfoLabel("$INFO[Container(211).ListItem.Property(%s)]" %propertyName)
+    curValue = xbmc.getInfoLabel("$INFO[Container(211).ListItem.Property(%s)]" %propertyName).decode("utf-8")
     if not curValue: curValue = "None"
     if setting:
         (value, label) = setSkinSetting(setting, windowHeader, None, curValue)
     else:
-        value = xbmcgui.Dialog().input(windowHeader, curValue, type=xbmcgui.INPUT_ALPHANUM)
+        value = xbmcgui.Dialog().input(windowHeader, curValue, type=xbmcgui.INPUT_ALPHANUM).decode("utf-8")
     if value:
+        waitForSkinShortcutsWindow()
         xbmc.executebuiltin("SetProperty(customProperty,%s)" %propertyName.encode("utf-8"))
         xbmc.executebuiltin("SetProperty(customValue,%s)" %value.encode("utf-8"))
         xbmc.executebuiltin("SendClick(404)")
@@ -290,13 +301,13 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
             allValues.append(listitem)
         for count, item in enumerate(listing):
             id = item.attributes[ 'id' ].nodeValue
+            if id.startswith("$"): id = xbmc.getInfoLabel(id).decode("utf-8")
             label = xbmc.getInfoLabel(item.attributes[ 'label' ].nodeValue).decode("utf-8")
             if (not sublevel and id.lower() == setting.lower()) or (sublevel and sublevel.lower() == id.lower()):
                 value = item.attributes[ 'value' ].nodeValue
                 condition = item.attributes[ 'condition' ].nodeValue
                 icon = item.attributes[ 'icon' ].nodeValue
-                description = "[B]%s[/B][CR]" %label
-                description += item.attributes[ 'description' ].nodeValue
+                description = item.attributes[ 'description' ].nodeValue
                 description = xbmc.getInfoLabel(description.encode("utf-8"))
                 if condition and not xbmc.getCondVisibility(condition): continue
                 if icon: useRichLayout = True
@@ -307,6 +318,15 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
                 listitem.setProperty("icon",icon)
                 listitem.setProperty("description",description)
                 listitem.setLabel2(description)
+                #additional onselect actions
+                additionalactions = []
+                for action in item.getElementsByTagName( 'onselect' ):
+                    condition = action.attributes[ 'condition' ].nodeValue
+                    if condition and not xbmc.getCondVisibility(condition): continue
+                    command = action.firstChild.nodeValue
+                    if "$" in command: command = xbmc.getInfoLabel(command)
+                    additionalactions.append(command)
+                listitem.setProperty("additionalactions"," || ".join(additionalactions))
                 allValues.append(listitem)
                 itemcount +=1
         if useRichLayout:
@@ -319,8 +339,8 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
         selectedItem = w.result
         del w
         if selectedItem != -1:
-            value = allValues[selectedItem].getProperty("value")
-            label = allValues[selectedItem].getLabel()
+            value = try_decode( allValues[selectedItem].getProperty("value") )
+            label = try_decode( allValues[selectedItem].getLabel() )
             description = allValues[selectedItem].getProperty("description")
             if value.startswith("||SUBLEVEL||"):
                 sublevel = value.replace("||SUBLEVEL||","")
@@ -329,14 +349,19 @@ def setSkinSetting(setting="", windowHeader="", sublevel="", valueOnly=""):
                 setSkinSetting(setting, windowHeader)
             else:
                 if value == "||BROWSEIMAGE||":
-                    value = xbmcgui.Dialog().browse( 2 , label, 'files')
+                    if xbmcgui.Dialog().yesno( label, ADDON.getLocalizedString(32064), yeslabel=ADDON.getLocalizedString(32065), nolabel=ADDON.getLocalizedString(32066) ):
+                        value = xbmcgui.Dialog().browse( 2 , label, 'files')
+                    else: value = xbmcgui.Dialog().browse( 0 , ADDON.getLocalizedString(32067), 'files')
                 if value:
                     if valueOnly: 
                         return (value,label)
                     else:
                         xbmc.executebuiltin("Skin.SetString(%s,%s)" %(setting.encode("utf-8"),value.encode("utf-8")))
                         xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(setting.encode("utf-8"),label.encode("utf-8")))
-
+                        additionalactions = allValues[selectedItem].getProperty("additionalactions").split(" || ")
+                        for action in additionalactions:
+                            xbmc.executebuiltin(action)
+        else: return (None,None)
                     
 def toggleKodiSetting(settingname):
     #toggle kodi setting

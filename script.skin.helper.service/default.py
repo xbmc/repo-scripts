@@ -3,6 +3,7 @@
 
 #from resources.lib.Utils import *
 from resources.lib.MainModule import *
+monitor = xbmc.Monitor()
 
 class Main:
     
@@ -104,9 +105,8 @@ class Main:
                     item = getJSON('VideoLibrary.GetTVShowDetails', '{ "tvshowid": %s, "properties": [ %s ] }' %(params.get("TVSHOWID"),fields_tvshows))
                     content = "tvshows"
                 if item:
-                    if item.get("streamdetails"): item["streamdetails2"] = item["streamdetails"]
+                    liz = prepareListItem(item)
                     liz = createListItem(item)
-                    liz.setProperty("path", item.get("file"))
                     liz.setProperty("json",repr(item))
                     info_dialog = GUI( "script-skin_helper_service-CustomInfo.xml" , ADDON_PATH, "Default", "1080i", listitem=liz, content=content )
                     info_dialog.doModal()
@@ -130,7 +130,8 @@ class Main:
                 colorPicker.shortcutProperty = propname
                 colorPicker.doModal()
                 if propname and not isinstance(colorPicker.result, int):
-                    wid = xbmcgui.getCurrentWindowDialogId()
+                    waitForSkinShortcutsWindow()
+                    xbmc.sleep(400)
                     currentWindow = xbmcgui.Window( xbmcgui.getCurrentWindowDialogId() )
                     currentWindow.setProperty("customProperty",propname)
                     currentWindow.setProperty("customValue",colorPicker.result[0])
@@ -167,6 +168,11 @@ class Main:
             
             elif action == "BUSYTEXTURE":    
                 selectBusyTexture()
+                
+            elif action == "CACHEALLMUSICART": 
+                import resources.lib.ArtworkUtils as artworkutils
+                artworkutils.preCacheAllMusicArt()
+                del artworkutils
 
             elif action == "RESETCACHE":
                 path = params.get("PATH")
@@ -207,20 +213,54 @@ class Main:
             elif action == "RESET":
                 import resources.lib.BackupRestore as backup
                 backup.reset()
-                xbmc.sleep(2000)
+                monitor.waitForAbort(2)
                 setSkinVersion()
             
             elif action == "DIALOGOK":
                 headerMsg = params.get("HEADER")
                 bodyMsg = params.get("MESSAGE")
+                if bodyMsg.startswith(" "): bodyMsg = bodyMsg[1:]
+                if headerMsg.startswith(" "): headerMsg = headerMsg[1:]
                 xbmcgui.Dialog().ok(heading=headerMsg, line1=bodyMsg)
                 
+            elif action == "TEXTVIEWER":
+                headerMsg = params.get("HEADER","")
+                bodyMsg = params.get("MESSAGE","")
+                if bodyMsg.startswith(" "): bodyMsg = bodyMsg[1:]
+                if headerMsg.startswith(" "): headerMsg = headerMsg[1:]
+                xbmcgui.Dialog().textviewer(headerMsg, bodyMsg)
+
+            elif action == "FILEEXISTS":
+                filename = params.get("FILE")
+                skinstring = params.get("SKINSTRING")
+                windowprop = params.get("WINDOWPROP")
+                if xbmcvfs.exists(filename):
+                    if windowprop:
+                        WINDOW.setProperty(windowprop,"exists")
+                    if skinstring:
+                        xbmc.executebuiltin("Skin.SetString(%s,exists)" %skinstring)
+                else:
+                    if windowprop:
+                        WINDOW.clearProperty(windowprop)
+                    if skinstring:
+                        xbmc.executebuiltin("Skin.Reset(%s)" %skinstring)
+            
             elif action == "STRIPSTRING":
                 splitchar = params.get("SPLITCHAR")
                 string = params.get("STRING")
                 output = params.get("OUTPUT")
-                string = string.split(splitchar)[0]
+                index = params.get("INDEX",0)
+                string = string.split(splitchar)[int(index)]
                 WINDOW.setProperty(output, string)
+                
+            elif action == "GETPLAYERFILENAME":
+                output = params.get("OUTPUT")
+                filename = xbmc.getInfoLabel("Player.FileNameAndPath")
+                if not filename: filename = xbmc.getInfoLabel("Player.FileName")
+                if "filename=" in filename:
+                    url_params = dict(urlparse.parse_qsl(filename))
+                    filename = url_params.get("filename")
+                WINDOW.setProperty(output, filename)
 
 
 if (__name__ == "__main__"):

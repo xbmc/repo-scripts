@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from resources.lib.Utils import *
-from resources.lib.ArtworkUtils import *
+import resources.lib.ArtworkUtils as artworkutils
 
 #Kodi contextmenu item to configure the artwork 
 if __name__ == '__main__':
@@ -25,10 +25,10 @@ if __name__ == '__main__':
         ret = xbmcgui.Dialog().select(header, options)
         if ret == 0:
             #Refresh item (auto lookup)
-            artwork = getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
+            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
         elif ret == 1:
             #Refresh item (manual lookup)
-            artwork = getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=True)
+            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=True)
         elif ret == 2:
             #Add channel to ignore list
             ignorechannels = WINDOW.getProperty("SkinHelper.ignorechannels").decode("utf-8")
@@ -36,7 +36,7 @@ if __name__ == '__main__':
             ignorechannels += channel
             ADDON.setSetting("ignorechannels",ignorechannels)
             WINDOW.setProperty("SkinHelper.ignorechannels",ignorechannels)
-            artwork = getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
+            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
         elif ret == 3:
             #Add title to ignore list
             ignoretitles = WINDOW.getProperty("SkinHelper.ignoretitles").decode("utf-8")
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             ignoretitles += title
             ADDON.setSetting("ignoretitles",ignoretitles)
             WINDOW.setProperty("SkinHelper.ignoretitles",ignoretitles)
-            artwork = getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
+            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
         elif ret == 4:
             #Open addon settings
             xbmc.executebuiltin("Addon.OpenSettings(script.skin.helper.service)")
@@ -76,15 +76,39 @@ if __name__ == '__main__':
         
         logMsg("Context menu artwork settings for PVR artwork",0)
         options=[]
+        options.append(ADDON.getLocalizedString(32144)) #Refresh item (auto lookup)
+        options.append(ADDON.getLocalizedString(32157)) #cache all artwork
         options.append(ADDON.getLocalizedString(32148)) #Open addon settings
         header = ADDON.getLocalizedString(32143) + " - " + ADDON.getLocalizedString(32122)
         ret = xbmcgui.Dialog().select(header, options)
         if ret == 0:
+            #refresh item
+            
+            #clear properties
+            WINDOW.setProperty("resetMusicArtCache","reset")
+            WINDOW.clearProperty("SkinHelper.Music.Banner") 
+            WINDOW.clearProperty("SkinHelper.Music.ClearLogo") 
+            WINDOW.clearProperty("SkinHelper.Music.DiscArt")
+            WINDOW.clearProperty("SkinHelper.Music.FanArt")
+            WINDOW.clearProperty("SkinHelper.Music.Thumb")
+            WINDOW.clearProperty("SkinHelper.Music.Info")
+            WINDOW.clearProperty("SkinHelper.Music.TrackList")
+            WINDOW.clearProperty("SkinHelper.Music.SongCount")
+            WINDOW.clearProperty("SkinHelper.Music.albumCount")
+            WINDOW.clearProperty("SkinHelper.Music.AlbumList")
+            WINDOW.clearProperty("SkinHelper.Music.ExtraFanArt")
+            
+            artwork = artworkutils.getMusicArtwork(xbmc.getInfoLabel("ListItem.Artist").decode('utf-8'),xbmc.getInfoLabel("ListItem.Album").decode('utf-8'),xbmc.getInfoLabel("ListItem.Title").decode('utf-8'),ignoreCache=True)
+            #set new properties
+            for key, value in artwork.iteritems():
+                WINDOW.setProperty("SkinHelper.PVR." + key,value)
+        
+        if ret == 1:
+            #cache all artwork
+            ret = xbmcgui.Dialog().yesno(heading=ADDON.getLocalizedString(32157), line1=ADDON.getLocalizedString(32158))
+            if ret:
+                artworkutils.preCacheAllMusicArt(skipOnCache=True)
+        
+        if ret == 2:
             #Open addon settings
             xbmc.executebuiltin("Addon.OpenSettings(script.skin.helper.service)")
-    
-    
-    
-    
-    
-    

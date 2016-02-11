@@ -1,18 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from resources.lib.PluginContent import *
-from resources.lib.SkinShortcutsIntegration import *
+import resources.lib.PluginContent as plugincontent
+import resources.lib.SkinShortcutsIntegration as skinshortcuts
+import urlparse
+import xbmcgui,xbmcplugin
 enableProfiling = False
 
 class Main:
     
     def __init__(self):
         
-        logMsg('started loading pluginentry')
+        plugincontent.logMsg('started loading pluginentry')
         
         #get params
         params = urlparse.parse_qs(sys.argv[2][1:].decode("utf-8"))
-        logMsg("Parameter string: %s" % sys.argv[2],0)
+        plugincontent.logMsg("Parameter string: %s" % sys.argv[2])
         
         if params:        
             path=params.get("path",None)
@@ -22,19 +24,6 @@ class Main:
             else: limit = 25
             action=params.get("action",None)
             if action: action = action[0].upper()
-            refresh=params.get("refresh",None)
-            if refresh: refresh = refresh[0].upper()
-            optionalParam = None
-            imdbid=params.get("imdbid","")
-            if imdbid: optionalParam = imdbid[0]
-            genre=params.get("genre","")
-            if genre: optionalParam = genre[0]
-            browse=params.get("browse","")
-            if browse: optionalParam = browse[0]
-            reversed=params.get("reversed","")
-            if reversed: optionalParam = reversed[0]
-            name=params.get("name","")
-            if name: optionalParam = name[0]
         
             if action:
                 if action == "LAUNCHPVR":
@@ -42,7 +31,7 @@ class Main:
                     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
                 if action == "PLAYRECORDING":
                     #retrieve the recording and play as listitem to get resume working
-                    json_result = getJSON('PVR.GetRecordingDetails', '{"recordingid": %d, "properties": [ %s ]}' %(int(path),fields_pvrrecordings))
+                    json_result = plugincontent.getJSON('PVR.GetRecordingDetails', '{"recordingid": %d, "properties": [ %s ]}' %(int(path),fields_pvrrecordings))
                     if json_result:
                         xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "recordingid": %d } }, "id": 1 }' % int(path))
                         if json_result["resume"].get("position"):
@@ -61,19 +50,16 @@ class Main:
                 elif action == "PLAYALBUM":
                     xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "albumid": %d } }, "id": 1 }' % int(path))
                     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
-
                 elif action == "SMARTSHORTCUTS":
-                    getSmartShortcuts(path)
+                    skinshortcuts.getSmartShortcuts(path)
                 elif action == "BACKGROUNDS":
-                    getBackgrounds()
+                    skinshortcuts.getBackgrounds()
                 elif action == "WIDGETS":
-                    getWidgets(path)
+                    skinshortcuts.getWidgets(path)
                 elif action == "GETTHUMB":
-                    getThumb(path)
+                    plugincontent.getThumb(path)
                 elif action == "EXTRAFANART":
-                    getExtraFanArt(path)
-                elif action == "WIDGETS":
-                    getWidgets(path)
+                    plugincontent.getExtraFanArt(path)
                 elif action == "GETCAST":
                     movie=params.get("movie",None)
                     if movie: movie = movie[0]
@@ -85,19 +71,31 @@ class Main:
                     if episode: episode = episode[0]
                     downloadthumbs=params.get("downloadthumbs",False)
                     if downloadthumbs: downloadthumbs = downloadthumbs[0]=="true"
-                    getCast(movie,tvshow,movieset,episode,downloadthumbs)
+                    plugincontent.getCast(movie,tvshow,movieset,episode,downloadthumbs)
                 else:
                     #get a widget listing
-                    getPluginListing(action,limit,refresh,optionalParam)
+                    refresh=params.get("reload",None)
+                    if refresh: refresh = refresh[0].upper()
+                    optionalParam = None
+                    imdbid=params.get("imdbid","")
+                    if imdbid: optionalParam = imdbid[0]
+                    genre=params.get("genre","")
+                    if genre: optionalParam = genre[0]
+                    browse=params.get("browse","")
+                    if browse: optionalParam = browse[0]
+                    reversed=params.get("reversed","")
+                    if reversed: optionalParam = reversed[0]
+                    name=params.get("name","")
+                    if name: optionalParam = name[0]
+                    plugincontent.getPluginListing(action,limit,refresh,optionalParam)
     
         else:
             #do plugin main listing...
-            doMainListing()
+            plugincontent.doMainListing()
 
 if (__name__ == "__main__"):
     try:
-        if not WINDOW.getProperty("SkinHelper.KodiExit"):
-        
+        if not plugincontent.WINDOW.getProperty("SkinHelper.KodiExit"):
             if enableProfiling:
                 import cProfile
                 import pstats
@@ -106,11 +104,12 @@ if (__name__ == "__main__"):
                 filename = os.path.join( ADDON_DATA_PATH, strftime( "%Y%m%d%H%M%S",gmtime() ) + "-" + str( random.randrange(0,100000) ) + ".log" )
                 cProfile.run( 'Main()', filename )
                 stream = open( filename + ".txt", 'w')
+                stream.write(sys.argv[2])
                 p = pstats.Stats( filename, stream = stream )
                 p.sort_stats( "cumulative" )
                 p.print_stats()
             else:
                 Main()
     except Exception as e:
-        logMsg("Error in plugin.py --> " + str(e),0)
-logMsg('finished loading pluginentry')
+        plugincontent.logMsg("Error in plugin.py --> " + str(e),0)
+plugincontent.logMsg('finished loading pluginentry')

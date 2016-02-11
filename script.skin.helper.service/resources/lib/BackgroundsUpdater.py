@@ -3,12 +3,11 @@
 
 import threading
 import random
-from xml.dom.minidom import parse
-import xml.etree.ElementTree as xmltree
+import io
 import base64
 import ConditionalBackgrounds as conditionalBackgrounds
+import ArtworkUtils as artutils
 from Utils import *
-from ImageWall import *
 
 class BackgroundsUpdater(threading.Thread):
     
@@ -20,19 +19,26 @@ class BackgroundsUpdater(threading.Thread):
     smartShortcuts = {}
     cachePath = None
     SmartShortcutsCachePath = None
-    normalTaskInterval = 30
-    refreshSmartshortcuts = False
+    backgroundsTaskInterval = 30
+    wallTaskInterval = 30
+    daynightThemeTaskInterval = 30
+    backgroundDelay = 0
+    wallImagesDelay = 0
     lastWindow = None
+    manualWallsLoaded = list()
+    manualWalls = {}
+    skinShortcutsActive = False
     
     def __init__(self, *args):
-        self.lastPicturesPath = xbmc.getInfoLabel("skin.string(SkinHelper.PicturesBackgroundPath)")
+        self.lastPicturesPath = xbmc.getInfoLabel("skin.string(SkinHelper.PicturesBackgroundPath)").decode("utf-8")
         self.cachePath = os.path.join(ADDON_DATA_PATH,"AllBackgrounds.json")
         self.SmartShortcutsCachePath = os.path.join(ADDON_DATA_PATH,"smartshotcutscache.json")
+        self.monitor = xbmc.Monitor()
 
         logMsg("BackgroundsUpdater - started")
         self.event =  threading.Event()
-        threading.Thread.__init__(self, *args)    
-    
+        threading.Thread.__init__(self, *args)
+
     def stop(self):
         logMsg("BackgroundsUpdater - stop called",0)
         self.saveCacheToFile()
@@ -44,48 +50,83 @@ class BackgroundsUpdater(threading.Thread):
         #first run get backgrounds immediately from filebased cache and reset the cache in memory to populate all images from scratch
         try:
             self.getCacheFromFile()
+            self.getSkinConfig()
             self.UpdateBackgrounds()
+            self.updateWallImages()
         except Exception as e:
             logMsg("ERROR in BackgroundsUpdater ! --> " + str(e), 0)
-            
         
+        #clear images cache once to get some fresh images
         self.allBackgrounds = {}
         self.smartShortcuts = {}
          
         while (self.exit != True):
+        
+            # Update Day/Night theme if enabled
+            if (self.daynightThemeTaskInterval >= 30):
+                self.daynightThemeTaskInterval = 0
+                try:
+                    self.setDayNightColorTheme()
+                except Exception as e:
+                    logMsg("ERROR in setDayNightColorTheme ! --> " + str(e), 0)
             
+            #Process backgrounds
             if xbmc.getCondVisibility("![Window.IsActive(fullscreenvideo) | Window.IsActive(script.pseudotv.TVOverlay.xml) | Window.IsActive(script.pseudotv.live.TVOverlay.xml)] | Window.IsActive(script.pseudotv.live.EPG.xml)") and xbmc.getInfoLabel("skin.string(SkinHelper.RandomFanartDelay)"):
 
-                try:
-                    backgroundDelay = int(xbmc.getInfoLabel("skin.string(SkinHelper.RandomFanartDelay)"))
-                except:
-                    backgroundDelay = 0
-                
                 # force refresh smart shortcuts when skin settings launched (so user sees any newly added smartshortcuts)
-                currentWindow = xbmc.getInfoLabel("$INFO[Window.Property(xmlfile)]")
-                if ("skinshortcuts.xml" in currentWindow or "SkinSettings" in currentWindow) and currentWindow != self.lastWindow and self.refreshSmartshortcuts == False:
-                    self.lastWindow = currentWindow
-                    self.refreshSmartshortcuts = True
-                    try:
-                        self.UpdateBackgrounds()
-                    except Exception as e:
-                        logMsg("ERROR in UpdateBackgrounds ! --> " + str(e), 0)
-                        
-                
-                # Update home backgrounds every interval (default 60 seconds)
-                if backgroundDelay != 0:
-                    if (self.normalTaskInterval >= backgroundDelay):
-                        self.normalTaskInterval = 0
+                if xbmc.getCondVisibility("Window.IsActive(script-skinshortcuts.xml) | Window.IsActive(SkinSettings)"):
+                    if not self.skinShortcutsActive:
+                        try: self.UpdateBackgrounds(refreshSmartshortcuts=True)
+                        except Exception as e: logMsg("ERROR in UpdateBackgrounds ! --> " + str(e), 0)
+                        self.skinShortcutsActive = True
+                else: self.skinShortcutsActive = False      
+
+                # Update home backgrounds every interval (if enabled by skinner)
+                if self.backgroundDelay != 0:
+                    if (self.backgroundsTaskInterval >= self.backgroundDelay):
+                        self.backgroundsTaskInterval = 0
                         try:
                             self.UpdateBackgrounds()
                             self.setDayNightColorTheme()
+                            self.getSkinConfig()
                         except Exception as e:
                             logMsg("ERROR in UpdateBackgrounds ! --> " + str(e), 0)
                             
-            
-            xbmc.sleep(150)
-            self.normalTaskInterval += 0.15
-                               
+                # Update manual wall images - if enabled by the skinner
+                if self.wallImagesDelay != 0:
+                    if (self.wallTaskInterval >= self.wallImagesDelay):
+                        self.wallTaskInterval = 0
+                        try:
+                            self.updateWallImages()
+                        except Exception as e:
+                            logMsg("ERROR in UpdateBackgrounds.updateWallImages ! --> " + str(e), 0)
+                            
+            self.monitor.waitForAbort(1)
+            self.backgroundsTaskInterval += 1
+            self.wallTaskInterval += 1
+            self.daynightThemeTaskInterval += 1
+    
+    def getSkinConfig(self):
+        #gets the settings for the script as set by the skinner..
+        try: self.backgroundDelay = int(xbmc.getInfoLabel("Skin.String(SkinHelper.RandomFanartDelay)"))
+        except: self.backgroundDelay = 0
+        
+        try: 
+            wallImagesDelay = xbmc.getInfoLabel("Skin.String(SkinHelper.WallImagesDelay)")
+            if wallImagesDelay:
+                self.wallImagesDelay = int(wallImagesDelay)
+                #enumerate through all background collections to check wether we should want a wall collection provided
+                #store in memory so wo do not have to query the skin settings too often
+                if self.wallImagesDelay != 0:
+                    for key, value in self.allBackgrounds.iteritems():
+                        if value:
+                            limitrange = xbmc.getInfoLabel("Skin.String(%s.EnableWallImages)" %key)
+                            if limitrange:
+                                self.manualWalls[key] = int(limitrange)
+        except Exception as e:
+            logMsg("ERROR in UpdateBackgrounds.getSkinConfig ! --> " + str(e), 0)
+            self.wallImagesDelay = 0
+    
     def saveCacheToFile(self):
         saveDataToCacheFile(self.cachePath,self.allBackgrounds)
         saveDataToCacheFile(self.SmartShortcutsCachePath,self.smartShortcuts)
@@ -96,7 +137,7 @@ class BackgroundsUpdater(threading.Thread):
     
     def setDayNightColorTheme(self):
         #check if a colro theme should be conditionally set
-        if xbmc.getCondVisibility("Skin.HasSetting(SkinHelper.EnableDayNightThemes)"):
+        if xbmc.getCondVisibility("Skin.HasSetting(SkinHelper.EnableDayNightThemes) + Skin.String(SkinHelper.ColorTheme.Day.time) + Skin.String(SkinHelper.ColorTheme.Night.time)"):
             try:
                 daytime = xbmc.getInfoLabel("Skin.String(SkinHelper.ColorTheme.Day.time)")
                 daytime = datetime(*(time.strptime(daytime, "%H:%M")[0:6])).time()
@@ -122,44 +163,73 @@ class BackgroundsUpdater(threading.Thread):
     
     def setWallImageFromPath(self, windowProp, libPath, type="fanart"):
         image = None
-        blackWhite = False
-        if WINDOW.getProperty("SkinHelper.enablewallbackgrounds") != "true" or self.exit:
-            return
-        if WINDOW.getProperty("SkinHelper.preferBWwallbackgrounds") == "true":
-            windowProp = "BW_" + windowProp
+        windowPropBW = windowProp + ".BW"
         
-        #load from cache    
+        #load wall from cache    
         if self.allBackgrounds.get(windowProp):
             image = random.choice(self.allBackgrounds[windowProp])
-            image = image.get("fanart","")
-            if image:
-                if not xbmcvfs.exists(image): 
+            if image.get("wall"):
+                if not xbmcvfs.exists(image.get("wall")): 
                     logMsg("Wall images cleared - starting rebuild...",0)
                     del self.allBackgrounds[windowProp]
                 else:
-                    image = image
-                    WINDOW.setProperty(windowProp, image)
+                    WINDOW.setProperty(windowProp, image.get("wall"))
+                    WINDOW.setProperty(windowPropBW, image.get("wallbw"))
                     return True
                
         #load images for libPath and generate wall
-        if self.allBackgrounds.get(libPath) and not self.allBackgrounds.has_key(windowProp):
+        if self.allBackgrounds.get(libPath):
             images = []
             try:
-                images = createImageWall(self.allBackgrounds[libPath],windowProp,blackWhite,type)
+                images = self.createImageWall(self.allBackgrounds[libPath],windowProp,type)
             except Exception as e:
                 logMsg("ERROR in createImageWall ! --> " + str(e), 0)
             self.allBackgrounds[windowProp] = images
             if images:
                 image = random.choice(images)
                 if image:
-                    image = image.get("fanart","")
-                    WINDOW.setProperty(windowProp, image)
-                
+                    WINDOW.setProperty(windowProp, image.get("wall",""))
+                    WINDOW.setProperty(windowPropBW, image.get("wallbw",""))
+    
+    def setManualWallFromPath(self, windowProp, numItems=20):
+        #only continue if the cache is prefilled
+        if self.allBackgrounds.get(windowProp):
+            if windowProp in self.manualWallsLoaded:
+                #only refresh one random image...
+                image = random.choice(self.allBackgrounds[windowProp])
+                if image:
+                    for key, value in image.iteritems():
+                        if key == "fanart": WINDOW.setProperty("%s.Wall.%s" %(windowProp,random.randint(0, numItems)), value)
+                        else: WINDOW.setProperty("%s.Wall.%s.%s" %(windowProp,random.randint(0, numItems),key), value)
+            else:
+                #first run: set all images
+                for i in range(numItems):
+                    image = random.choice(self.allBackgrounds[windowProp])
+                    if image:
+                        for key, value in image.iteritems():
+                            if key == "fanart": WINDOW.setProperty("%s.Wall.%s" %(windowProp,i), value)
+                            else: WINDOW.setProperty("%s.Wall.%s.%s" %(windowProp,i,key), value)
+                    self.manualWallsLoaded.append(windowProp)
+    
+    def updateWallImages(self):
+        #manual wall images, provides a collection of images which are randomly changing
+        if self.wallImagesDelay == 0 or not self.manualWalls:
+            return
+        
+        #we have a list stored in memory for the wall collections the skinner wants to be generated
+        for key, value in self.manualWalls.iteritems():
+            self.setManualWallFromPath(key, value)
+
     def setImageFromPath(self, windowProp, libPath, fallbackImage="", customJson=None):
         if self.exit:
             return False
             
         libPath = getContentPath(libPath)
+        
+        #special treatment for emby nodes...
+        if "plugin.video.emby" in libPath and "browsecontent" in libPath and not "filter" in libPath:
+            libPath = libPath + "&filter=random"
+        
         logMsg("getting images for path " + libPath)
 
         #is path in the temporary blacklist ?
@@ -172,9 +242,9 @@ class BackgroundsUpdater(threading.Thread):
         images = []
                
         #cache entry exists and cache is not expired, load cache entry
-        if self.allBackgrounds.has_key(libPath):
+        if self.allBackgrounds.has_key(windowProp):
             logMsg("load random image from the cache file... " + libPath)
-            image = random.choice(self.allBackgrounds[libPath])
+            image = random.choice(self.allBackgrounds[windowProp])
             if image:
                 for key, value in image.iteritems():
                     if key == "fanart": WINDOW.setProperty(windowProp, value)
@@ -193,7 +263,7 @@ class BackgroundsUpdater(threading.Thread):
             if customJson:
                 media_array = getJSON(customJson[0],customJson[1])
             else:
-                media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art","thumbnail"], "directory": "%s", "media": "files", "limits": {"end":250}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }' %libPath)
+                media_array = getJSON('Files.GetDirectory','{ "properties": ["title","art","thumbnail","fanart","album","artist"], "directory": "%s", "media": "files", "limits": {"end":250}, "sort": { "order": "ascending", "method": "random", "ignorearticle": true } }' %libPath)
             if media_array:
                 for media in media_array:
                     image = {}
@@ -210,9 +280,15 @@ class BackgroundsUpdater(threading.Thread):
                         if media['art'].get('clearlogo'): image["clearlogo"] = media['art']['clearlogo']
                     elif media.get('fanart') and not media['title'].lower() == "next page":
                         image["fanart"] = media['fanart']
+                    if not image and "musicdb" in libPath:
+                        logMsg("get music artwork for libpath: %s  - artist: %s  - album: %s" %(libPath,media.get('artist',''),media.get('album','')))
+                        if isinstance(media.get('artist'), list) and len(media.get('artist')) > 0: artist = media.get('artist')[0]
+                        else: artist = media.get('artist','')
+                        image = artutils.getMusicArtwork(artist,media.get('album',''))
                     if image:
                         image["title"] = media['title']
                         images.append(image)
+                    
             else:
                 logMsg("media array empty or error so add this path to blacklist..." + libPath)
                 #add path to temporary blacklist
@@ -221,7 +297,7 @@ class BackgroundsUpdater(threading.Thread):
 
         #all is fine, we have some images to randomize and return one
         if images:
-            self.allBackgrounds[libPath] = images
+            self.allBackgrounds[windowProp] = images
             random.shuffle(images)
             image = images[0]
             for key, value in image.iteritems():
@@ -236,25 +312,22 @@ class BackgroundsUpdater(threading.Thread):
         return False
 
     def setPicturesBackground(self,windowProp):
-        logMsg("setting pictures background...")
-        customPath = xbmc.getInfoLabel("skin.string(SkinHelper.CustomPicturesBackgroundPath)")
+        customPath = xbmc.getInfoLabel("skin.string(SkinHelper.CustomPicturesBackgroundPath)").decode("utf-8")
+        
+        #flush cache if custompath changed
         if (self.lastPicturesPath != customPath):
-            if (self.allBackgrounds.has_key("pictures")):
-                logMsg("path has changed for pictures - clearing cache...")
-                del self.allBackgrounds["pictures"]
-            
-        self.lastPicturesPath = customPath
+            self.allBackgrounds[windowProp] = []
+            self.lastPicturesPath = customPath
 
         try:
-            if (self.allBackgrounds.has_key("pictures")):
-                #get random image from our global cache file
-                if self.allBackgrounds["pictures"]:
-                    image = random.choice(self.allBackgrounds["pictures"])
-                    if image:
-                        for key, value in image.iteritems():
-                            if key == "fanart": WINDOW.setProperty(windowProp, value)
-                            else: WINDOW.setProperty(windowProp + "." + key, value)
-                    return True 
+            #get random image from cache
+            if self.allBackgrounds.get(windowProp):
+                image = random.choice(self.allBackgrounds[windowProp])
+                if image:
+                    for key, value in image.iteritems():
+                        if key == "fanart": WINDOW.setProperty(windowProp, value)
+                        else: WINDOW.setProperty(windowProp + "." + key, value)
+                return 
             else:
                 #load the pictures from the custom path or from all picture sources
                 images = []
@@ -264,11 +337,11 @@ class BackgroundsUpdater(threading.Thread):
                     dirs, files = xbmcvfs.listdir(customPath)
                     #pick all images from path
                     for file in files:
-                        if file.endswith(".jpg") or file.endswith(".png") or file.endswith(".JPG") or file.endswith(".PNG"):
-                            image = os.path.join(customPath,file.decode("utf-8","ignore"))
-                            images.append({"fanart": image, "title": file})
+                        if file.lower().endswith(".jpg") or file.lower().endswith(".png"):
+                            image = os.path.join(customPath,file.decode("utf-8"))
+                            images.append({"fanart": image, "title": file.decode("utf-8")})
                 else:
-                    #load picture sources
+                    #load pictures from all sources
                     media_array = getJSON('Files.GetSources','{"media": "pictures"}')
                     for source in media_array:
                         if source.has_key('file'):
@@ -307,31 +380,28 @@ class BackgroundsUpdater(threading.Thread):
                                             count += 1
                 
                 #store images in the cache
-                self.allBackgrounds["pictures"] = images
+                self.allBackgrounds[windowProp] = images
                 
                 # return a random image
-                if images != []:
+                if images:
                     random.shuffle(images)
                     image = images[0]
                     for key, value in image.iteritems():
                         if key == "fanart": WINDOW.setProperty(windowProp, value)
                         else: WINDOW.setProperty(windowProp + "." + key, value)
-                    return True
                 else:
                     logMsg("image sources array or cache empty so skipping image-sources background untill next restart")
-                    return True
         #if something fails, return None
         except:
-            logMsg("exception occured in getPicturesBackground.... ",0)
-            return False            
+            logMsg("exception occured in getPicturesBackground.... ",0)           
     
     def setPvrBackground(self,windowProp):
         logMsg("setting pvr background...")
         try:
-            if (self.allBackgrounds.has_key("pvrfanart")):
+            if (self.allBackgrounds.has_key(windowProp)):
                 #get random image from our global cache file
-                if self.allBackgrounds["pvrfanart"]:
-                    image = random.choice(self.allBackgrounds["pvrfanart"])
+                if self.allBackgrounds[windowProp]:
+                    image = random.choice(self.allBackgrounds[windowProp])
                     if image:
                         for key, value in image.iteritems():
                             if key == "fanart": WINDOW.setProperty(windowProp, value)
@@ -347,7 +417,7 @@ class BackgroundsUpdater(threading.Thread):
                 for path in paths:
                     dirs, files = xbmcvfs.listdir(path)
                     for dir in dirs:
-                        dir = dir.decode("utf-8")
+                        dir = try_decode(dir)
                         thumbdir = os.path.join(path,dir)
                         dirs2, files2 = xbmcvfs.listdir(thumbdir)
                         for file in files2:
@@ -368,7 +438,7 @@ class BackgroundsUpdater(threading.Thread):
                 del artutils
                     
                 #store images in the cache
-                self.allBackgrounds["pvrfanart"] = images
+                self.allBackgrounds[windowProp] = images
                 
                 # return a random image
                 if images != []:
@@ -403,9 +473,12 @@ class BackgroundsUpdater(threading.Thread):
                     if key == "fanart": WINDOW.setProperty(windowProp, value)
                     else: WINDOW.setProperty(windowProp + "." + key, value)
     
-    def UpdateBackgrounds(self):
+    def UpdateBackgrounds(self,refreshSmartshortcuts=False):
         
         allSmartShortcuts = []
+        
+        if self.backgroundDelay == 0:
+            return
         
         #conditional background
         WINDOW.setProperty("SkinHelper.ConditionalBackground", conditionalBackgrounds.getActiveConditionalBackground())
@@ -429,8 +502,8 @@ class BackgroundsUpdater(threading.Thread):
         
         #all music
         if xbmc.getCondVisibility("Library.HasContent(music)"):
-            self.setImageFromPath("SkinHelper.AllMusicBackground","musicdb://artists/","",None)
-            self.setImageFromPath("SkinHelper.AllMusicSongsBackground","musicdb://songs/",None,None)
+            self.setImageFromPath("SkinHelper.AllMusicBackground","musicdb://artists/")
+            self.setImageFromPath("SkinHelper.AllMusicSongsBackground","musicdb://songs/")
             self.setImageFromPath("SkinHelper.RecentMusicBackground","SkinHelper.RecentMusicBackground","",['AudioLibrary.GetRecentlyAddedAlbums','{ "properties": ["title","fanart"], "limits": {"end":50} }'])
         
         #tmdb backgrounds (extendedinfo)
@@ -454,7 +527,7 @@ class BackgroundsUpdater(threading.Thread):
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.emby) + Skin.HasSetting(SmartShortcuts.emby)"):
             logMsg("Processing smart shortcuts for emby nodes.... ")
             
-            if self.smartShortcuts.has_key("emby") and not self.refreshSmartshortcuts:
+            if self.smartShortcuts.has_key("emby") and not refreshSmartshortcuts:
                 logMsg("get emby entries from cache.... ")
                 nodes = self.smartShortcuts["emby"]
                 for node in nodes:
@@ -470,7 +543,7 @@ class BackgroundsUpdater(threading.Thread):
                 logMsg("no cache - Get emby entries from file.... ")            
                
                 embyProperty = WINDOW.getProperty("emby.nodes.total")
-                contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes"]
+                contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes", "recommended"]
                 if embyProperty:
                     nodes = []
                     totalNodes = int(embyProperty)
@@ -491,7 +564,7 @@ class BackgroundsUpdater(threading.Thread):
         #smart shortcuts --> playlists
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.playlists)"):
             logMsg("Processing smart shortcuts for playlists.... ")
-            if self.smartShortcuts.has_key("playlists") and not self.refreshSmartshortcuts:
+            if self.smartShortcuts.has_key("playlists") and not refreshSmartshortcuts:
                 logMsg("get playlist entries from cache.... ")
                 playlists = self.smartShortcuts["playlists"]
                 for playlist in playlists:
@@ -545,7 +618,7 @@ class BackgroundsUpdater(threading.Thread):
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.favorites)"):
             logMsg("Processing smart shortcuts for favourites.... ")
             try:
-                if self.smartShortcuts.has_key("favourites") and not self.refreshSmartshortcuts:
+                if self.smartShortcuts.has_key("favourites") and not refreshSmartshortcuts:
                     logMsg("get favourites entries from cache.... ")
                     favourites = self.smartShortcuts["favourites"]
                     for favourite in favourites:
@@ -592,7 +665,7 @@ class BackgroundsUpdater(threading.Thread):
             nodes = []
             logMsg("Processing smart shortcuts for plex nodes.... ")
             
-            if self.smartShortcuts.has_key("plex") and not self.refreshSmartshortcuts:
+            if self.smartShortcuts.get("plex") and not refreshSmartshortcuts:
                 logMsg("get plex entries from cache.... ")
                 nodes = self.smartShortcuts["plex"]
                 for node in nodes:
@@ -639,7 +712,7 @@ class BackgroundsUpdater(threading.Thread):
         #smart shortcuts --> netflix nodes
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc) + Skin.HasSetting(SmartShortcuts.netflix)") and WINDOW.getProperty("netflixready") == "ready":
             
-            if self.smartShortcuts.has_key("netflix") and not self.refreshSmartshortcuts:
+            if self.smartShortcuts.has_key("netflix") and not refreshSmartshortcuts:
                 logMsg("get netflix entries from cache.... ")
                 nodes = self.smartShortcuts["netflix"]
                 for node in nodes:
@@ -815,15 +888,120 @@ class BackgroundsUpdater(threading.Thread):
             WINDOW.setProperty("allSmartShortcuts", repr(allSmartShortcuts))
         elif self.smartShortcuts.has_key("allSmartShortcuts"):
             WINDOW.setProperty("allSmartShortcuts", repr(self.smartShortcuts["allSmartShortcuts"]))
-        
-        self.refreshSmartshortcuts = False        
+      
                 
         #wall backgrounds
         self.setWallImageFromPath("SkinHelper.AllMoviesBackground.Wall","SkinHelper.AllMoviesBackground")
         self.setWallImageFromPath("SkinHelper.AllMoviesBackground.Poster.Wall","SkinHelper.AllMoviesBackground","poster")
-        self.setWallImageFromPath("SkinHelper.AllMusicBackground.Wall","musicdb://artists/")
-        self.setWallImageFromPath("SkinHelper.AllMusicSongsBackground.Wall","musicdb://songs/","thumbnail")
+        self.setWallImageFromPath("SkinHelper.AllMusicBackground.Wall","SkinHelper.AllMusicBackground")
+        self.setWallImageFromPath("SkinHelper.AllMusicSongsBackground.Wall","SkinHelper.AllMusicSongsBackground","thumbnail")
         self.setWallImageFromPath("SkinHelper.AllTvShowsBackground.Wall","SkinHelper.AllTvShowsBackground")
         self.setWallImageFromPath("SkinHelper.AllTvShowsBackground.Poster.Wall","SkinHelper.AllTvShowsBackground","poster")
                 
+    def createImageWall(self,images,windowProp,type="fanart"):
+        
+        if SETTING("maxNumWallImages"):
+            numWallImages = int(SETTING("maxNumWallImages"))
+        else: 
+            logMsg("Building WALL background disabled",0)
+            return []
+        
+        #PIL fails on Android devices ?
+        hasPilModule = True
+        try:
+            from PIL import Image
+            im = Image.new("RGB", (1, 1))
+            del im
+        except:
+            hasPilModule = False
+        
+        if not hasPilModule:
+            logMsg("Building WALL background skipped - no PIL module present on this system!",0)
+            return []
+        
+        if type=="thumbnail":
+            #square images
+            img_columns = 11
+            img_rows = 7
+            img_width = 260
+            img_height = 260
+        elif type=="poster":
+            #poster images
+            img_columns = 15
+            img_rows = 5
+            img_width = 128
+            img_height = 216
+        else:
+            #landscaped images
+            img_columns = 8
+            img_rows = 8
+            img_width = 240
+            img_height = 135
+        size = img_width, img_height
+        
+        wallpath = "special://profile/addon_data/script.skin.helper.service/wallbackgrounds/"
+        if not xbmcvfs.exists(wallpath):
+            xbmcvfs.mkdirs(wallpath)
+        
+        wall_images = []
+        return_images = []
+
+        if SETTING("reuseWallBackgrounds") == "true":
+            #reuse the existing images - do not rebuild
+            dirs, files = xbmcvfs.listdir(wallpath)
+            for file in files:
+                image = {}
+                #return color and bw image combined - only if both are found
+                if file.startswith(windowProp + "_BW.") and xbmcvfs.exists(os.path.join(wallpath.decode("utf-8"),file.replace("_BW",""))):
+                    return_images.append({"wallbw": os.path.join(wallpath.decode("utf-8"),file), "wall": os.path.join(wallpath.decode("utf-8"),file.replace("_BW",""))})
+        
+        #build wall images if we do not already have (enough) images
+        if len(return_images) < numWallImages: 
+            #build the wall images
+            logMsg("Building Wall background for %s - this might take a while..." %windowProp,0)
+            images_required = img_columns*img_rows
+            for image in images:
+                image = image.get(type,"")
+                if image and not image.startswith("music@") and not ".mp3" in image:
+                    file = xbmcvfs.File(image)
+                    try:
+                        img_obj = io.BytesIO(bytearray(file.readBytes()))
+                        img = Image.open(img_obj)
+                        img = img.resize(size)
+                        wall_images.append(img)
+                    except: pass
+                    finally: file.close()
+            if wall_images:
+                #duplicate images if we don't have enough
                 
+                while len(wall_images) < images_required:
+                    wall_images += wall_images
+                    
+                for i in range(numWallImages):
+                    random.shuffle(wall_images)
+                    img_canvas = Image.new("RGBA", (img_width * img_columns, img_height * img_rows))
+                    counter = 0
+                    for x in range(img_rows):
+                        for y in range(img_columns):
+                            img_canvas.paste(wall_images[counter], (y * img_width, x * img_height))
+                            counter += 1
+                    
+                    #save the files..
+                    out_file = xbmc.translatePath(os.path.join(wallpath.decode("utf-8"),windowProp + "." + str(i) + ".jpg")).decode("utf-8")
+                    if xbmcvfs.exists(out_file): 
+                        xbmcvfs.delete(out_file)
+                        xbmc.sleep(500)
+                    img_canvas.save(out_file, "JPEG")
+                    
+                    out_file_bw = xbmc.translatePath(os.path.join(wallpath.decode("utf-8"),windowProp + "_BW." + str(i) + ".jpg")).decode("utf-8")
+                    if xbmcvfs.exists(out_file_bw): 
+                        xbmcvfs.delete(out_file_bw)
+                        xbmc.sleep(500)
+                    img_canvas_bw = img_canvas.convert("L")
+                    img_canvas_bw.save(out_file_bw, "JPEG")
+                    
+                    #add our images to the dict
+                    return_images.append({"wall": out_file, "wallbw": out_file_bw })
+                
+        logMsg("Building Wall background %s DONE" %windowProp,0)
+        return return_images         

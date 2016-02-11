@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from Utils import *
 
 #This file contains methods to connect skinhelper to skinshortcuts for smartshortcuts, widgets and backgrounds
@@ -71,7 +70,7 @@ def addSmartShortcutDirectoryItem(entry, isFolder=True, widget=None, widget2=Non
 
 def addSmartShortcutsSublevel(entry):
     if "emby" in entry:
-        contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes"]
+        contentStrings = ["", ".recent", ".inprogress", ".unwatched", ".recentepisodes", ".inprogressepisodes", ".nextepisodes", ".recommended"]
     elif "plex" in entry:
         contentStrings = ["", ".ondeck", ".recent", ".unwatched"]
     elif "netflix" in entry:
@@ -93,6 +92,9 @@ def addSmartShortcutsSublevel(entry):
             elif type == "tvshows" and "emby" in entry:
                 widget = entry + ".nextepisodes"
                 widget2 = entry + ".recent"
+            elif (type == "homevideos" or type == "photos") and "emby" in entry:
+                widget = entry + ".recent"
+                widget2 = entry + ".recommended"
             else:
                 widget = entry
         if xbmc.getInfoLabel("$INFO[Window(Home).Property(%s.path)]" %key):
@@ -193,11 +195,20 @@ def getBackgrounds():
     
     #wall backgrounds
     globalBackgrounds.append((ADDON.getLocalizedString(32117), "SkinHelper.AllMoviesBackground.Wall"))
+    globalBackgrounds.append(("%s - %s" %(ADDON.getLocalizedString(32117),ADDON.getLocalizedString(32161)), "SkinHelper.AllMoviesBackground.Wall.BW"))
     globalBackgrounds.append(("%s (%s)" %(ADDON.getLocalizedString(32117),ADDON.getLocalizedString(32156)), "SkinHelper.AllMoviesBackground.Poster.Wall"))
+    globalBackgrounds.append(("%s (%s) - %s" %(ADDON.getLocalizedString(32117),ADDON.getLocalizedString(32156),ADDON.getLocalizedString(32161)), "SkinHelper.AllMoviesBackground.Poster.Wall.BW"))
+    
     globalBackgrounds.append((ADDON.getLocalizedString(32118), "SkinHelper.AllMusicBackground.Wall"))
+    globalBackgrounds.append(("%s - %s" %(ADDON.getLocalizedString(32127),ADDON.getLocalizedString(32161)), "SkinHelper.AllMusicBackground.Wall.BW"))
+    
     globalBackgrounds.append((ADDON.getLocalizedString(32119), "SkinHelper.AllMusicSongsBackground.Wall"))
+    globalBackgrounds.append(("%s - %s" %(ADDON.getLocalizedString(32119),ADDON.getLocalizedString(32161)), "SkinHelper.AllMusicSongsBackground.Wall.BW"))
+    
     globalBackgrounds.append((ADDON.getLocalizedString(32127), "SkinHelper.AllTvShowsBackground.Wall"))
+    globalBackgrounds.append(("%s - %s" %(ADDON.getLocalizedString(32127),ADDON.getLocalizedString(32161)), "SkinHelper.AllTvShowsBackground.Wall.BW"))
     globalBackgrounds.append(("%s (%s)" %(ADDON.getLocalizedString(32127),ADDON.getLocalizedString(32156)), "SkinHelper.AllTvShowsBackground.Poster.Wall"))
+    globalBackgrounds.append(("%s (%s) - %s" %(ADDON.getLocalizedString(32127),ADDON.getLocalizedString(32156),ADDON.getLocalizedString(32161)), "SkinHelper.AllTvShowsBackground.Poster.Wall.BW"))
     
     if xbmc.getCondVisibility("System.HasAddon(script.extendedinfo)"):
         globalBackgrounds.append((xbmc.getInfoLabel("$ADDON[script.extendedinfo 32046]") + " (TheMovieDB)", "SkinHelper.TopRatedMovies"))
@@ -286,8 +297,8 @@ def getAddonWidgetListing(addonShortName,skipscan=False):
                     if not "reload=" in content and (addon[0] == "script.skin.helper.service" or addon[0] == "service.library.data.provider"):
                         if "albums" in content or "songs" in content:
                             reloadstr = "&reload=$INFO[Window(Home).Property(widgetreloadmusic)]"
-                        elif "pvr" in content or "media" in content and not "progress" in content:
-                            reloadstr = "&reload=$INFO[Window(Home).Property(widgetreload2)]"
+                        elif ("pvr" in content or "media" in content or "favourite" in content) and not "progress" in content:
+                            reloadstr = "&reload=$INFO[Window(Home).Property(widgetreload)]$INFO[Window(Home).Property(widgetreload2)]"
                         else:
                             reloadstr = "&reload=$INFO[Window(Home).Property(widgetreload)]"
                         content = content + reloadstr

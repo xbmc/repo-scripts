@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from resources.lib.Utils import *
+import resources.lib.Utils as utils
 from resources.lib.BackgroundsUpdater import BackgroundsUpdater
 from resources.lib.ListItemMonitor import ListItemMonitor
 from resources.lib.KodiMonitor import Kodi_Monitor
 from resources.lib.WebService import WebService
-
+import xbmc
 
 
 class Main:
@@ -29,20 +29,20 @@ class Main:
             #set skin info
             currentSkin = xbmc.getSkinDir()
             if lastSkin != currentSkin:
-                setSkinVersion()
+                utils.setSkinVersion()
                 lastSkin = currentSkin
             
             KodiMonitor.waitForAbort(10)
         else:
             # Abort was requested while waiting. We should exit
-            logMsg('Shutdown requested !',0)
-            WINDOW.setProperty("SkinHelper.KodiExit","True")
+            utils.logMsg('Shutdown requested !',0)
+            utils.WINDOW.setProperty("SkinHelper.KodiExit","True")
             #stop the extra threads
             backgroundsUpdater.stop()
             listItemMonitor.stop()
             webService.stop()
 
-logMsg('skin helper service version %s started' % ADDON_VERSION,0)
+utils.logMsg('skin helper service version %s started' % utils.ADDON_VERSION,0)
 Main()
-logMsg('skin helper service version %s stopped' % ADDON_VERSION,0)
+utils.logMsg('skin helper service version %s stopped' % utils.ADDON_VERSION,0)
 

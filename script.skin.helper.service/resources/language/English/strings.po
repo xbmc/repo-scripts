@@ -643,3 +643,23 @@ msgstr ""
 msgctxt "#32156"
 msgid "Posters"
 msgstr ""
+
+msgctxt "#32157"
+msgid "Precache all music artwork"
+msgstr ""
+
+msgctxt "#32158"
+msgid "Are you sure you want to continue? This can take some time, depending on your collection size."
+msgstr ""
+
+msgctxt "#32159"
+msgid "Allow existing artwork to be overwritten with better quality"
+msgstr ""
+
+msgctxt "#32160"
+msgid "Maximum number of wall images to create for each background"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Black & White"
+msgstr ""

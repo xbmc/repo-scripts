@@ -20,20 +20,21 @@ class ColorThemes(xbmcgui.WindowXMLDialog):
         selectedTheme = item.getLabel()
         #set a day/night theme 
         if self.daynight:
-            currenttimevalue = xbmc.getInfoLabel("Skin.String(SkinHelper.ColorTheme.%s.time)" %self.daynight)
+            currenttimevalue = xbmc.getInfoLabel("Skin.String(SkinHelper.ColorTheme.%s.time)" %self.daynight).decode("utf-8")
             if not currenttimevalue:
                 if self.daynight == "night": currenttimevalue = "20:00"
                 else: currenttimevalue = "07:00"
-            timevalue = xbmcgui.Dialog().input(ADDON.getLocalizedString(32069),currenttimevalue, type=xbmcgui.INPUT_ALPHANUM)
+            timevalue = xbmcgui.Dialog().input(ADDON.getLocalizedString(32069),currenttimevalue, type=xbmcgui.INPUT_ALPHANUM).decode("utf-8")
             
             try:
                 #check if the time is valid
                 dt = datetime(*(time.strptime(timevalue, "%H:%M")[0:6]))
-                xbmc.executebuiltin("Skin.SetString(SkinHelper.ColorTheme.%s.theme,%s)" % (self.daynight,selectedTheme))
-                xbmc.executebuiltin("Skin.SetString(SkinHelper.ColorTheme.%s.time,%s)" % (self.daynight,timevalue))
-                xbmc.executebuiltin("Skin.SetString(SkinHelper.ColorTheme.%s,%s  (%s %s))" % (self.daynight,selectedTheme,ADDON.getLocalizedString(32071),timevalue))
-                xbmc.executebuiltin("Skin.SetString(SkinHelper.ColorTheme.%s.file,%s)" % (self.daynight,item.getProperty("filename")))
+                xbmc.executebuiltin(try_encode("Skin.SetString(SkinHelper.ColorTheme.%s.theme,%s)" % (self.daynight,selectedTheme)))
+                xbmc.executebuiltin(try_encode("Skin.SetString(SkinHelper.ColorTheme.%s.time,%s)" % (self.daynight,timevalue)))
+                xbmc.executebuiltin(try_encode("Skin.SetString(SkinHelper.ColorTheme.%s,%s  (%s %s))" % (self.daynight,selectedTheme,ADDON.getLocalizedString(32071),timevalue)))
+                xbmc.executebuiltin(try_encode("Skin.SetString(SkinHelper.ColorTheme.%s.file,%s)" % (self.daynight,item.getProperty("filename"))))
             except:
+                print_exc()
                 xbmcgui.Dialog().ok(xbmc.getLocalizedString(329), ADDON.getLocalizedString(32070))
 
         self.closeDialog()
@@ -283,7 +284,7 @@ def loadColorTheme(file):
         elif skinsetting[0] == "THEMENAME":
             xbmc.executebuiltin("Skin.SetString(SkinHelper.LastColorTheme,%s)" % skinsetting[1])
         elif skinsetting[0] == "DESCRIPTION":
-            xbmc.executebuiltin("Skin.SetString(SkinHelper.LastColorTheme.Description,%s)" % skinsetting[1].decode('utf-8'))
+            xbmc.executebuiltin("Skin.SetString(SkinHelper.LastColorTheme.Description,%s)" % try_encode(skinsetting[1]))
         elif skinsetting[1].startswith("SkinHelper.ColorTheme"): continue
         else:    
             #some legacy..
