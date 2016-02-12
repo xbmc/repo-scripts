@@ -1,3 +1,6 @@
+v5.0.2
+- fix dewpoint calculation
+
 v5.0.1
 - download maps instead of providing remote url
 

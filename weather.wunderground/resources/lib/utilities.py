@@ -233,7 +233,7 @@ def HEAT_INDEX(T, R):
     return FeelsLike
 
 #### thanks to FrostBox @ http://forum.kodi.tv/showthread.php?tid=114637&pid=937168#pid937168
-def DEW_POINT(Tc=0, RH=93, minRH=( 0, 0.075 )[ 0 ], ext=''):
+def DEW_POINT(Tc=0, RH=93, ext='', minRH=( 0, 0.075 )[ 0 ]):
     Es = 6.11 * 10.0**( 7.5 * Tc / ( 237.7 + Tc ) )
     RH = RH or minRH
     E = ( RH * Es ) / 100

@@ -20,7 +20,10 @@ import os, sys, socket, unicodedata, urllib2, time, gzip
 from datetime import date
 from StringIO import StringIO
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
-import json
+if sys.version_info < (2, 7):
+    import simplejson as json
+else:
+    import json
 
 ADDON      = xbmcaddon.Addon()
 ADDONNAME  = ADDON.getAddonInfo('name')
