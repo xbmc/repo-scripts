@@ -1,3 +1,10 @@
+v3.2.5
+- don't capitalize forecast text
+
+v3.2.4
+- fix capitalization
+- fix dewpoint calculation
+
 v3.2.3
 - add forecast strings to language file
 
