@@ -12,7 +12,6 @@
 			<posy>-10</posy>
 			<width>1</width>
 			<height>1</height>
-			<visible>false</visible>
 			<itemlayout width="1" height="1"/>
 			<focusedlayout width="1" height="1"/>
 		</control>
