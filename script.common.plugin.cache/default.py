@@ -27,7 +27,7 @@ dbglevel = 3
 
 
 def run():
-    sys.path = [settings.getAddonInfo('path') + "/lib"] + sys.path
+    sys.path = [settings.getAddonInfo('path').decode('utf-8') + "/lib"] + sys.path
     import StorageServer
     s = StorageServer.StorageServer(False)
     print " StorageServer Module loaded RUN"
