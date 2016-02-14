@@ -149,6 +149,7 @@ def CreateZip(src, dst, filteron=[], filteroff=[], level=10000, append=False, Zi
 def TranslatePath(x, filename=True, urlcheck_=False):
 	name = 'TranslatePath' ; printpoint = "" ; returned = "" ; returned2 = "" ; TypeError = "" ; extra = ""
 	if x == None: x = ""
+	returned = x
 	
 	if systemplatformwindows: slash = '\\'
 	else: slash = '/'
@@ -180,16 +181,15 @@ def TranslatePath(x, filename=True, urlcheck_=False):
 			
 		returned2 = x
 	
-	elif os.path.exists(x):
-		returned = x
+	if os.path.exists(returned):
 		printpoint = printpoint + '5'
 		
 		list = [temp_path, addons_path, xbmc_path, userdata_path, thumbnails_path, database_path]
 		list2 = ['special://temp/', 'special://home/addons/', 'special://xbmc/',  'special://userdata/',  'special://thumbnails/',  'special://database/']
 		i = 0
 		for y in list:
-			if y in x:
-				returned2 = x.replace(y, list2[i])
+			if y in returned:
+				returned2 = returned.replace(y, list2[i])
 				returned2 = returned2.replace('\\','/')
 				break
 			i += 1
@@ -346,28 +346,40 @@ def localize(value, s=[], addon=None):
 	text = "value" + space2 + str(value) + space + 's' + space2 + str(s) + space + 'addon' + space2 + str(addon) + space + "returned" + space2 + str(returned) + space + extra
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 	return returned
-	
-def DownloadFile(url, filename, downloadpath, extractpath, silent=False):
+
+def DownloadFile(url, filename, downloadpath, extractpath, silent=False, percentinfo=""):
 	name = 'DownloadFile' ; printpoint = "" ; TypeError = "" ; extra = "" ; returned = ""
 	downloadpath2 = os.path.join(downloadpath, filename)
-
-
-	printpoint = printpoint + "1"
-	from commondownloader import *
 	
-	returned = doDownload(url, downloadpath2, filename, "", "", "", silent=silent)
-	try: test = 1
-	except Exception, TypeError:
-		extra = extra + newline + "TypeError" + space2 + str(TypeError)
-		returned = str(TypeError)
-	
-	if returned == "ok":
-		printpoint = printpoint + "3"
-		ExtractAll(downloadpath2, extractpath)
-	if downloadpath2 != downloadpath:
-		printpoint = printpoint + "4"
-		removefiles(downloadpath2)
+	if 'https://www.dropbox.com/s//' in url: printpoint = printpoint + '9'
+	else:
+		scriptfeatherenceservice_downloading = xbmc.getInfoLabel('Window(home).Property(script.featherence.service_downloading)')
+		printpoint = printpoint + "1"
+		from commondownloader import *
+		
+		if scriptfeatherenceservice_downloading != "":
+			returned = "skip"
+			notification_common("23")
+			xbmc.executebuiltin('AlarmClock(scriptfeatherenceservice_downloading,ClearProperty(script.featherence.service_downloading,home),10,silent)')
+		else:
+			if xbmc.getCondVisibility('System.HasAlarm(scriptfeatherenceservice_downloading)'): xbmc.executebuiltin('CancelAlarm(scriptfeatherenceservice_downloading)')
+			setProperty('script.featherence.service_downloading', 'true', type="home")
+			returned = doDownload(url, downloadpath2, filename, "", "", "", silent=silent, percentinfo=percentinfo)
 			
+			try: test = 1
+			except Exception, TypeError:
+				extra = extra + newline + "TypeError" + space2 + str(TypeError)
+				returned = str(TypeError)
+			
+			if returned == "ok":
+				printpoint = printpoint + "3"
+				ExtractAll(downloadpath2, extractpath)
+			if downloadpath2 != downloadpath:
+				printpoint = printpoint + "4"
+				removefiles(downloadpath2)
+			
+			setProperty('script.featherence.service_downloading', '', type="home")
+		
 	'''------------------------------
 	---PRINT-END---------------------
 	------------------------------'''
@@ -520,12 +532,13 @@ def CleanString2(x, comma=False):
 	'''---------------------------'''
 	return x2
 		
-def setPath(type=0,mask="", folderpath=""):
+def setPath(type=0,mask="", folderpath="", original=True):
 	returned = "" ; count = 0
 	if mask == 'pic': mask = '.jpg|.jpeg|.JPEG|.bmp|.gif|.GIF|.png|.PNG'
 	elif mask == 'music': mask = '.mp3|.flac|.wav|.m3u'
 	if type == 0: xbmc.executebuiltin('Skin.SetPath(TEMP)')
 	elif type == 1: xbmc.executebuiltin('Skin.SetFile(TEMP,'+mask+','+folderpath+')')
+	elif type == 2: xbmc.executebuiltin('Skin.SetImage(TEMP,'+mask+','+folderpath+')')
 	xbmc.sleep(500); dialogfilebrowserW = xbmc.getCondVisibility('Window.IsVisible(FileBrowser.xml)')
 	
 	while count < 10 and not dialogfilebrowserW and not xbmc.abortRequested:
@@ -537,12 +550,13 @@ def setPath(type=0,mask="", folderpath=""):
 		xbmc.sleep(1000)
 		dialogfilebrowserW = xbmc.getCondVisibility('Window.IsVisible(FileBrowser.xml)')
 		
-	xbmc.sleep(500)	
+	xbmc.sleep(500)
 	TEMP = xbmc.getInfoLabel('Skin.String(TEMP)')
-	TEMP2 = os.path.join(xbmc.translatePath(TEMP).decode("utf-8"))
-	if TEMP == "": notification_common("3")
-	elif not os.path.exists(TEMP) and not os.path.exists(TEMP2): notification_common("6")
-	else: returned = TEMP
+	x2, x2_ = TranslatePath(TEMP, filename=True)
+
+	if x2 == "": notification_common("6")
+	elif original == True or x2_ == "": returned = x2
+	elif original == False: returned = x2_
 	
 	return returned
 	
@@ -872,7 +886,7 @@ def installaddon(addonid2, update=True):
 	if not xbmc.getCondVisibility('System.HasAddon('+ addonid2 +')') and not os.path.exists(addons_path + addonid2):
 		printpoint = printpoint + "1"
 		if update == True: notification_common("24")
-		printpoint2 = installaddonP(admin, addonid2, update=update)
+		printpoint2 = installaddonP(addonid2, update=update)
 			
 	else: printpoint = printpoint + '7'
 	if '1' in printpoint:
@@ -915,6 +929,15 @@ def installaddonP(addon, update=True):
 		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
 			DownloadFile("https://www.dropbox.com/s/fffcc2barlwyeuo/"+addon+".zip?dl=1", addon + ".zip", packages_path, addons_path, silent=True)
 			if os.path.exists(addons_path + addon): printpoint = printpoint + "5"
+			else: printpoint = printpoint + "9"
+		elif "9" in printpoint: pass
+		else: printpoint = printpoint + "7"
+	
+	elif addon == 'script.skinshortcuts': #FIXED PATH *MASTER
+		if not xbmc.getCondVisibility('System.HasAddon('+ addon +')') or not os.path.exists(addons_path + addon) and not "9" in printpoint:
+			DownloadFile("https://github.com/BigNoid/script.skinshortcuts/archive/master.zip", addon + "-master.zip", packages_path, addons_path, silent=True)
+			movefiles(os.path.join(addons_path, 'script.skinshortcuts-master'), os.path.join(addons_path, addon))
+			if os.path.exists(addons_path + addon + "-master") or os.path.exists(addons_path + addon): printpoint = printpoint + "5"
 			else: printpoint = printpoint + "9"
 		elif "9" in printpoint: pass
 		else: printpoint = printpoint + "7"
@@ -1021,8 +1044,12 @@ def removefiles(path, filteroff=[], dialogprogress=""):
 						except Exception, TypeError: extra = extra + newline + "TypeError" + space2 + str(TypeError)
 				if dialogprogress != "": dp.close
 			elif os.path.exists(path):
-				os.remove(path)
-				printpoint = printpoint + "7"
+				try:
+					os.remove(path)
+					printpoint = printpoint + "7"
+				except Exception, TypeError:
+					#if 'The process cannot access the file because it is being used by another process' in TypeError or "global name 'error' is not defined" in TypeError:
+					pass
 			else:
 				printpoint = printpoint + "A"
 				
@@ -1110,17 +1137,12 @@ def copyfiles(source, target):
 def notification_common(custom):
 	if custom == "2": notification(addonString_servicefeatherence(11).encode('utf-8'),addonString_servicefeatherence(10).encode('utf-8'),"",4000) #processing, please wait
 	elif custom == "3": notification(localize(257),localize(106) + space + localize(504),"",2000) #Error, Not Empty!
-	elif custom == "4": notification('$LOCALIZE[79508]','$LOCALIZE[79376]',"",2000) #Check network connection!...
-	elif custom == "5": notification('$LOCALIZE[79512]','$LOCALIZE[21451]',"",2000) #Check internet connection!...
+	elif custom == "4": notification('$ADDON[script.featherence.service 32401]','',"",2000) #Check network connection!...
+	elif custom == "5": notification('$ADDON[script.featherence.service 32400]','$LOCALIZE[21451]',"",2000) #Check internet connection!...
 	elif custom == "6": notification('Invalid Path','...',"",2000)
-	elif custom == "7": notification('$LOCALIZE[79494]',addonString_servicefeatherence(10).encode('utf-8'),"",2000) #HODAH NIHNESHET
 	elif custom == "8": notification('$LOCALIZE[16200]',"","",2000) #HAPEULA BUTLA
 	elif custom == "9": notification('$LOCALIZE[16200]',addonString_servicefeatherence(19).encode('utf-8'),"",2000) #HAPEULA BUTLA, LO BUTZHU SINUHIM
-	elif custom == "10": notification('$LOCALIZE[79496]','$LOCALIZE[79497]' + "   -   " + '$LOCALIZE[79081]',"",4000) #AFSARUT ZOT NIMZET BEPITHU...
-	elif custom == "11": notification(localize(257), '$LOCALIZE[79078]', "", 1000)   #ERROR | NASE SHENIT KAHET
-	elif custom == "12": notification('$LOCALIZE[78959]',addonString_servicefeatherence(10).encode('utf-8'),"",7000) #MATKIN HARHAVOT
 	elif custom == "13": notification('$LOCALIZE[79072]',"...","",2000) #HAPEULA ISTAIMA BEHATZLAHA!
-	elif custom == "14": notification('$LOCALIZE[74999]',"","",2000) #***Automatic Action***
 	elif custom == "15":
 		playlistlength = xbmc.getInfoLabel('Playlist.Length(video)')
 		playlistposition = xbmc.getInfoLabel('Playlist.Position(video)')
@@ -1129,13 +1151,10 @@ def notification_common(custom):
 	elif custom == "16": notification("Downloading Files...","","",4000) #
 	
 	elif custom == "17": notification(localize(257),'$LOCALIZE[1446]',"",2000) #Error, Unknown
-	elif custom == "18": notification('$LOCALIZE[79594]', '', "", 1000)   #
 	elif custom == "19": notification('$LOCALIZE[16200]','$LOCALIZE[77877]',"",2000) #HAPEULA BUTLA, HAMISTAMES ITAREV BEAMZA APEHULA
-	elif custom == "20": notification('$LOCALIZE[79531]',"","",2000) #The system issued an automatic abort
-	elif custom == "21": notification('$LOCALIZE[79505]',addonString_servicefeatherence(10).encode('utf-8'),"",4000) #The system is processing for solution...
-	elif custom == "22": notification('$LOCALIZE[75062]','',"",4000) #The system is processing for solution...
-	elif custom == "23": notification(localize(78929), localize(78980),"",4000) #Active download in background
-	elif custom == "24": notification(localize(79195), localize(79154),"",2000) #Addon is missing! Trying to download addon
+	elif custom == "22": notification(addonString_servicefeatherence(32407).encode('utf-8'),'',"",4000) #The system is processing for solution...
+	elif custom == "23": notification(addonString_servicefeatherence(32406).encode('utf-8'), addonString_servicefeatherence(32405).encode('utf-8'),"",4000) #Active download in background
+	elif custom == "24": notification(addonString_servicefeatherence(32402).encode('utf-8'), addonString_servicefeatherence(32403).encode('utf-8'),"",2000) #Addon is missing! Trying to download addon
 	elif custom == "25": notification('OS not supported!','',2000) #Addon is missing! Trying to download addon
 	elif custom == "26": notification('File is missing!', "","",2000)
 	elif custom == "27": notification(addonString_servicefeatherence(32100).encode('utf-8'), addonString_servicefeatherence(32101).encode('utf-8'),"",2000) #Your email provider isn't supported.
@@ -1240,9 +1259,9 @@ def regex_from_to(text, from_string, to_string, excluding=True):
 	
 	r = to_utf8(r)
 	#text = text.encode('utf-8')
-	if excluding == True or r == "": text = "from_string" + space2 + str(from_string) + space + "to_string" + space2 + str(to_string) + space + "r" + space2 + to_unicode(r) + space + "text" + space2 + to_unicode(text) + space + extra
-	else: text = "regex_from_to" + space2 + "from_string" + space2 + "r" + space2 + str(r) + space + "text" + space2 + str(text) + space + extra
-	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+	if excluding == True or r == "": text2 = "from_string" + space2 + str(from_string) + space + "to_string" + space2 + str(to_string) + space + "r" + space2 + to_unicode(r) + space + extra
+	else: text2 = "regex_from_to" + space2 + "from_string" + space2 + "r" + space2 + str(r) + space + extra
+	printlog(title=name, printpoint=printpoint, text=text2, level=0, option="")
 	return str(r)
 
 def to_utf8(text):
@@ -1269,7 +1288,7 @@ def replace_word(infile,old_word,new_word, infile_="", LineR=False , LineClean=F
 			'''replace all'''
 			printpoint = printpoint + "2" #if infile_ == "" or infile_ == None: 
 			infile_ = read_from_file(infile, lines=False)
-			value=infile_.replace(old_word,new_word)
+			value=infile_.replace(to_utf8(old_word),to_utf8(new_word))
 			'''---------------------------'''
 		else:
 			'''replace each line'''
@@ -1388,10 +1407,10 @@ def setSkinSetting(custom,set1,set1v, force=False):
 		---PRINT-END---------------------
 		------------------------------'''
 		if setting1 != set1v or force == True:
-			text = custom + space + set1 + space2 + setting1 + " - " + set1v + space + \
-			newline + "localize(20122)" + space2 + localize(20122)
+			text = custom + space + set1 + space2 + setting1 + " - " + set1v #newline + "localize(20122)" + space2 + to_utf8(localize(20122))
 			'''---------------------------'''
-			printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+			try: printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
+			except Exception, TypeError: printlog(title=name, printpoint=printpoint, text='TypeError: ' + str(TypeError), level=0, option="")
 
 def setsetting_custom1(addon,set1,set1v):
 	'''------------------------------

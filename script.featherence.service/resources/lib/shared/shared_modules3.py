@@ -2197,6 +2197,9 @@ def pluginend(admin):
 		CATEGORIES139(name, iconimage, desc, fanart)
 	elif mode == 200:
 		CATEGORIES200()
+	elif mode == 201:
+		xbmc.executebuiltin(url)
+		sys.exit(0)
 	elif mode == 999:
 		CATEGORIES999()
 	

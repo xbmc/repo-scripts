@@ -153,7 +153,7 @@ elif mode == 24:
 				'''---------------------------'''
 			else:
 				xbmc.executebuiltin('ActivateWindow(videos,plugin://plugin.video.youtube/?path=/root/search&amp;feed=search&amp;search='+value_title+' '+value_year+' Movie Trailer;,return)')
-				notification(localize(79600), value_title, '', 3000)
+				notification('No trailer found.', value_title, '', 3000)
 		else:
 			xbmc.executebuiltin('PlayMedia('+value_file+')')
 				
@@ -302,7 +302,7 @@ elif mode == 40:
 	'''------------------------------
 	---Reset-Skin-Settings-----------
 	------------------------------'''
-	name = localize(79517)
+	name = localize(31803)
 	mode40(value, admin, name, printpoint)
 	'''---------------------------'''
 

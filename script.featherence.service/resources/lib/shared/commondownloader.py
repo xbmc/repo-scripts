@@ -76,9 +76,13 @@ def download(url, dest, title=None, referer=None, agent=None, cookie=None, silen
     xbmc.executebuiltin(cmd)
 
 
-def doDownload(url, dest, title, referer, agent, cookie, silent=False):
+def doDownload(url, dest, title, referer, agent, cookie, silent=False, percentinfo=10):
     admin = xbmc.getInfoLabel('Skin.HasSetting(Admin)')
+    try: test = percentinfo + 1
+    except: percentinfo = 10
 	#unquote parameters
+    xbmc.executebuiltin('ActivateWindow(busydialog)')
+    xbmc.executebuiltin('AlarmClock(busydialog,Dialog.Close(busydialog),00:05,silent)')
     url     = urllib.unquote_plus(url)
     dest    = urllib.unquote_plus(dest)
     title   = urllib.unquote_plus(title)
@@ -89,7 +93,9 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False):
     file = dest.rsplit(os.sep, 1)[-1]
 
     resp = getResponse(url, 0, referer, agent, cookie, silent)
-
+    
+    xbmc.executebuiltin('Dialog.Close(busydialog)')
+	
     if not resp:
         if silent != True or admin: xbmcgui.Dialog().ok(title, dest, 'Download failed', 'No response from server')
         return "skip"
@@ -146,7 +152,7 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False):
 
 				print 'Download percent : %s %s %dMB downloaded : %sMB File Size : %sMB' % (str(percent)+'%', dest, mb, downloaded / 1000000, content / 1000000)
 
-				notify += 10
+				notify += percentinfo
 
         chunk = None
         error = False
@@ -216,7 +222,7 @@ def doDownload(url, dest, title, referer, agent, cookie, silent=False):
                 chunks  = []
                 #create new response
                 print 'Download resumed (%d) %s' % (resume, dest)
-                resp = getResponse(url, total, referer, agent, cookie)
+                resp = getResponse(url, total, referer, agent, cookie, silent)
             else:
                 #use existing response
                 pass

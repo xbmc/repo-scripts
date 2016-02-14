@@ -60,6 +60,7 @@ featherenceservice_addondata_path = os.path.join(addondata_path,'script.feathere
 featherenceserviceaddondata_media_path = os.path.join(featherenceservice_addondata_path, 'media', '')
 featherenceservice_path = os.path.join(addons_path,'script.featherence.service','')
 featherenceserviceicons_path = os.path.join(featherenceservice_path, 'resources', 'icons', '')
+featherenceserviceicons_path_ = os.path.join('special://home/addons/', 'script.featherence.service', 'resources', 'icons', '')
 
 systemlanguage = xbmc.getInfoLabel('System.Language')
 '''---------------------------'''

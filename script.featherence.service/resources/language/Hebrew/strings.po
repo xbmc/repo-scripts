@@ -1900,6 +1900,34 @@ msgctxt "#32399
 msgid ""
 msgstr ""
 
+msgctxt "#32400
+msgid "Check internet connection!"
+msgstr "בדוק חיבור אינטרנט!"
+
+msgctxt "#32401
+msgid "Check network connection!"
+msgstr "בדוק חיבור רשת!"
+
+msgctxt "#32402
+msgid "Addon is missing!"
+msgstr "הרחבה לא קיימת!"
+
+msgctxt "#32403
+msgid "Trying to download addon"
+msgstr "מנסה להוריד הרחבה"
+
+msgctxt "#32405
+msgid "Please wait few minutes in patient."
+msgstr "אנא המתן מספר דק' בסבלנות.""
+
+msgctxt "#32406
+msgid "Active download in background"
+msgstr "הורדה פעילה ברקע"
+
+msgctxt "#32407
+msgid "No support for this OS"
+msgstr "אין תמיכה במערכת הפעלה זו"
+
 #Smart Playlist
 
 msgctxt "#32800

@@ -47,6 +47,8 @@ def mode8(admin, name, printpoint):
 	---SMART-SUBTITLE-SEARCH---------
 	------------------------------'''
 	input = xbmc.getInfoLabel('Window(home).Property(VideoPlayer.Title)')
+	if input == "":
+		input = xbmc.getInfoLabel('VideoPlayer.Title')
 	if input != "":
 		xbmc.executebuiltin('SendClick(160)')
 		dialogkeyboard = xbmc.getCondVisibility('Window.IsVisible(DialogKeyboard.xml)')
@@ -223,17 +225,6 @@ def mode9(admin, name):
 	if xbmc.getCondVisibility('Player.Paused'): xbmc.executebuiltin('Action(Play)')
 	'''---------------------------'''
 	
-	if property_dialogsubtitlesna6 and not property_dialogsubtitlesna7:
-		'''------------------------------
-		---SHOW-TIPS---------------------
-		------------------------------'''
-		if not xbmc.getCondVisibility('Player.Paused'): xbmc.executebuiltin('Action(Pause)')
-		header = '[COLOR=yellow]' + xbmc.getInfoLabel('$LOCALIZE[78946]') + '[/COLOR]'
-		message2 = xbmc.getInfoLabel('$LOCALIZE[78945]')
-		w = TextViewer_Dialog('DialogTextViewer.xml', "", header=header, text=message2)
-		w.doModal()
-		'''---------------------------'''
-	
 	setProperty('DialogSubtitles',"",type="home")
 	'''------------------------------
 	---PRINT-END---------------------
@@ -266,6 +257,7 @@ def ClearSubHisotry():
 				
 def setPlayerInfo(admin):
 	type = None
+	playertitle = xbmc.getInfoLabel('Player.Title')
 	videoplayercontentEPISODE = xbmc.getCondVisibility('VideoPlayer.Content(episodes)')
 	videoplayercontentMOVIE = xbmc.getCondVisibility('VideoPlayer.Content(movies)')
 	videoplayercountry = xbmc.getInfoLabel('VideoPlayer.Country')
@@ -783,7 +775,7 @@ def mode70(value, admin, name, printpoint, property_temp):
 	
 	text = "input" + space2 + input + newline + \
 	"INFO" + space2 + "listitemlabel" + space2 + listitemlabel + newline + "listitemtvshowtitle" + space2 + listitemtvshowtitle + newline + \
-	"listitemtitle" + space2 + listitemtitle + newline + "listitemimdbnumber" + space2 + listitemimdbnumber + newline + "listitemdbid" + space2 + listitemdbid + newline + \
+	"listitemtitle" + space2 + listitemtitle + newline + "listitemdbid" + space2 + listitemdbid + newline + \
 	'listitemseason' + space2 + str(listitemseason) + newline + \
 	"containerfolderpath" + space2 + containerfolderpath + newline + "property_temp" + space2 + property_temp + space + "property_temp_" + space2 + str(property_temp_) + newline + \
 	"listitemdirector" + space2 + listitemdirector + newline + \
@@ -1466,7 +1458,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None:
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(342))
-			setSkinSetting('0','action'+id,'ActivateWindow(Videos,MovieTitles,return)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(Videos,MovieTitles,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/movies.png')		
 			'''---------------------------'''
 	
@@ -1478,7 +1470,7 @@ def mode215(value, admin, name, printpoint):
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(20343))
 			
-			setSkinSetting('0','action'+id,'ActivateWindow(VideoLibrary,TVShowTitles,return)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(VideoLibrary,TVShowTitles,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/tvshows.png')
 			'''---------------------------'''
 
@@ -1489,7 +1481,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None:
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(19023))
-			setSkinSetting('0','action'+id,'ActivateWindow(TVChannels)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(TVChannels)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/LiveTV.png')
 			'''---------------------------'''
 	
@@ -1500,7 +1492,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(73220))
-			setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.kids,return)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.kids,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/kids.png')
 			'''---------------------------'''	
 			
@@ -1511,7 +1503,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(2))
-			setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.music,return)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.music,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/music.png')
 			'''---------------------------'''
 	
@@ -1522,7 +1514,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 2:
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(1036))
-			setSkinSetting('0','action'+id,'ActivateWindow(134)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(134)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/star.png')
 			'''---------------------------'''	
 	
@@ -1533,7 +1525,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(1))
-			setSkinSetting('0','action'+id,'ActivateWindow(Pictures)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(Pictures)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/pictures.png')
 			'''---------------------------'''
 	
@@ -1544,7 +1536,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(8))
-			setSkinSetting('0','action'+id,'ActivateWindow(MyWeather.xml)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(MyWeather.xml)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/weather.png')
 			'''---------------------------'''
 			
@@ -1555,7 +1547,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 3:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(15016))
-			setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.program.featherence.emu,return)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.program.featherence.emu,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/games.png')
 			'''---------------------------'''	
 
@@ -1566,8 +1558,7 @@ def mode215(value, admin, name, printpoint):
 		if id != "" and id != None and 1 + 1 == 2:	
 			label = labelT.get('label'+str(id)) ; icon = iconT.get('icon'+str(id))
 			if label == "" or label == "..." or value == 'RESET' or value == 'LABEL': setSkinSetting('0','label'+id,localize(78942))
-			#setSkinSetting('0','action'+id,'RunScript(script.featherence.service,,?mode=519&value=0)')
-			setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.docu,return)')
+			if not defaultactionbuttons: setSkinSetting('0','action'+id,'ActivateWindow(10025,plugin://plugin.video.featherence.docu,return)')
 			if icon == "" or value == 'RESET': setSkinSetting('0','icon'+id,'special://home/addons/script.featherence.service/resources/icons/animals.png')
 			'''---------------------------'''
 	
@@ -1600,7 +1591,7 @@ def mode218(value, admin, name, printpoint):
 			message = message + newline + "TopVideoInformation6" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation6)')
 			message = message + newline + "VideoPlayer.Tagline" + space2 + xbmc.getInfoLabel('VideoPlayer.Tagline')
 			message = message + newline + "TopVideoInformation7" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation7)')
-			message = message + newline + "VideoPlayer.TVShowTitle" + space2 + xbmc.getInfoLabel('VideoPlayer.TVShowTitle')
+			message = message + newline + "VideoPlayer.Title" + space2 + xbmc.getInfoLabel('VideoPlayer.Title')
 			message = message + newline + "TopVideoInformation8" + space2 + xbmc.getInfoLabel('Window(home).Property(TopVideoInformation8)')
 			
 		elif myweatherW:
@@ -1727,18 +1718,24 @@ def mode232(value, admin, name, printpoint):
 			
 			if "x" in printpoint:
 				'''wait'''
-				xbmc.sleep(4000)
+				xbmc.sleep(5000)
 				dialogselectW = xbmc.getCondVisibility('Window.IsVisible(DialogSelect.xml)')
-				while dialogselectW and not xbmc.abortRequested:
+				dialogprogressW = xbmc.getCondVisibility('Window.IsVisible(DialogProgress.xml)')
+				while (dialogselectW or dialogprogressW) and not xbmc.abortRequested:
 					xbmc.sleep(1000)
 					dialogselectW = xbmc.getCondVisibility('Window.IsVisible(DialogSelect.xml)')
+					dialogprogressW = xbmc.getCondVisibility('Window.IsVisible(DialogProgress.xml)')
 					'''---------------------------'''
 				xbmc.sleep(500) ; xlabel = xbmc.getInfoLabel('Skin.String(label'+id1+')')
 				if xlabel == "":
 					setSkinSetting('0','label'+id1,'...')
-					if 'x1' in printpoint and not '_' in id1: setSkinSetting('0','label'+id1+'_90','...')
+					if 'x1' in printpoint and not '_' in id1: setSkinSetting('0','label'+id1,'...')
 				else:
-					if 'x1' in printpoint and not '_' in id1: setSkinSetting('0','label'+id1+'_90',str(xlabel))
+					if 'x1' in printpoint and not '_' in id1: setSkinSetting('0','label'+id1,str(xlabel))
+				
+				xicon = xbmc.getInfoLabel('Skin.String(icon'+id1+')')
+				x, x_ = TranslatePath(xicon, filename=True, urlcheck_=False)
+				setSkinSetting('0','icon'+id1,x_)
 					
 	text = "value" + space2 + str(value) + space + "property_buttonid" + space2 + str(property_buttonid) + newline + \
 	"id1" + space2 + str(id1) + space + "id2" + space2 + str(id2) + newline + \
@@ -1747,7 +1744,7 @@ def mode232(value, admin, name, printpoint):
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 			
 def mode233(value, admin, name, printpoint):
-	printpoint = ""
+	printpoint = "" ; returned_ = ""
 	x = "" ; y = property_buttonid_ ; path = "" ; x2_ = ""
 	if '0' in value:
 		printpoint = printpoint + '0'
@@ -1797,10 +1794,13 @@ def mode233(value, admin, name, printpoint):
 				x_ = xbmc.getInfoLabel('Skin.String(background'+y+')')
 				x2, x2_ = TranslatePath(x_, filename=False)
 				
-				if os.path.exists(x2): path = x2
+				if os.path.exists(x2_): path = x2_
+				elif os.path.exists(x2): path = x2
 				elif os.path.exists(custombackgroundspath): path = custombackgroundspath
-				else: path = featherenceserviceicons_path
-				xbmc.executebuiltin('Skin.SetImage(background'+y+',,'+path+')')
+				else: path = featherenceserviceicons_path_
+				#xbmc.executebuiltin('Skin.SetImage(background'+y+',,'+path+')')
+				returned_ = setPath(type=2,mask="pic", folderpath=path, original=False) ; xbmc.sleep(500) ; property_temp2 = xbmc.getInfoLabel('Window(home).Property(TEMP2)')
+				if property_temp2 == 'ok': setSkinSetting('0','background'+y,str(returned_))
 				
 			elif '2' in value:
 				printpoint = printpoint + '5'
@@ -1808,22 +1808,29 @@ def mode233(value, admin, name, printpoint):
 				x_ = xbmc.getInfoLabel('Skin.String(icon'+y+')')
 				x2, x2_ = TranslatePath(x_, filename=False)
 				
-				if os.path.exists(x2): path = x2
+				if os.path.exists(x2_): path = x2_
+				elif os.path.exists(x2): path = x2
 				elif os.path.exists(customiconspath): path = customiconspath
-				else: path = featherenceserviceicons_path
-				xbmc.executebuiltin('Skin.SetImage(icon'+y+',,'+path+')')
-				
+				else: path = featherenceserviceicons_path_
+				#xbmc.executebuiltin('Skin.SetImage(icon'+y+',,'+path+')')
+				returned_ = setPath(type=2,mask="pic", folderpath=path, original=False) ; xbmc.sleep(500) ; property_temp2 = xbmc.getInfoLabel('Window(home).Property(TEMP2)')
+				if property_temp2 == 'ok': setSkinSetting('0','icon'+y,str(returned_))
 			else: printpoint = printpoint + '9'
+			
+			setProperty('TEMP', '', type="home")
+			setProperty('TEMP2', '', type="home")
 			
 	text = 'value' + space2 + str(value) + space + 'path' + space2 + str(path) + newline + \
 	'name' + space2 + str(name) + newline + \
-	'x2_' + space2 + str(x2_)
+	'x2_' + space2 + str(x2_) + newline + \
+	'property_temp2' + space2 + str(property_temp2)
 	printlog(title='mode233', printpoint=printpoint, text=text, level=0, option="")
 
 def mode235(value, admin, name, printpoint):
 	'''------------------------------
 	---Default-Icon/Background-------
 	------------------------------'''
+	setProperty('TEMP2', 'default', type="home") ; xbmc.executebuiltin('Dialog.Close(filebrowser)')
 	if property_temp == 'background':
 		printpoint = printpoint + '1'
 		if property_subbuttonid_ != "":
@@ -1845,9 +1852,12 @@ def mode235(value, admin, name, printpoint):
 	
 	else: printpoint = printpoint + '6'
 	
-	xbmc.executebuiltin('Dialog.Close(filebrowser)')
+	xbmc.sleep(500)
 	
-	text = 'property_temp' + space2 + str(property_temp) + space + 'property_buttonid' + space2 + str(property_buttonid)
+	text = 'property_temp' + space2 + str(property_temp) + newline + \
+	'property_buttonid' + space2 + str(property_buttonid) + newline + \
+	'property_temp2' + space2 + str(property_temp2)
+	
 	printlog(title=name, printpoint=printpoint, text=text, level=0, option="")
 
 def mode512(value, admin, name, printpoint):
