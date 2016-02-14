@@ -459,7 +459,19 @@ class ListItemMonitor(threading.Thread):
             media_array = getJSON('PVR.GetChannels','{"channelgroupid": "alltv" }' )
             for item in media_array:
                 allTvChannelsCount += 1
-            WINDOW.setProperty("SkinHelper.TotalTVChannels",str(allTvChannelsCount))        
+            WINDOW.setProperty("SkinHelper.TotalTVChannels",str(allTvChannelsCount))
+        
+        #GET MOVIE SETS COUNT
+        allMovieSetsCount = 0
+        allMoviesInSetCount = 0
+        media_array = getJSON('VideoLibrary.GetMovieSets','{}' )
+        for item in media_array:
+            allMovieSetsCount += 1
+            media_array2 = getJSON('VideoLibrary.GetMovieSetDetails','{"setid": %s}' %item["setid"])
+            for item in media_array2:
+                allMoviesInSetCount +=1
+        WINDOW.setProperty("SkinHelper.TotalMovieSets",str(allMovieSetsCount))
+        WINDOW.setProperty("SkinHelper.TotalMoviesInSets",str(allMoviesInSetCount))
 
         #GET RADIO CHANNELS COUNT
         if xbmc.getCondVisibility("Pvr.HasRadioChannels"):

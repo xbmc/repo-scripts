@@ -42,7 +42,9 @@ class Main:
             elif action == "SEARCHYOUTUBE":
                 title = params.get("TITLE",None)
                 windowHeader = params.get("HEADER","")
-                searchYouTube(title,windowHeader)
+                autoplay = params.get("AUTOPLAY","")
+                windowed = params.get("WINDOWED","")
+                searchYouTube(title,windowHeader,autoplay,windowed)
             
             elif action == "SETFOCUS":
                 control = params.get("CONTROL",None)

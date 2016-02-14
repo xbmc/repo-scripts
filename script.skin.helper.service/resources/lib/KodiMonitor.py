@@ -34,6 +34,7 @@ class Kodi_Monitor(xbmc.Monitor):
         
         if method == "Player.OnStop":
             utils.WINDOW.clearProperty("Skinhelper.PlayerPlaying")
+            utils.WINDOW.clearProperty("TrailerPlaying")
             utils.resetPlayerWindowProps()
             utils.resetVideoWidgetWindowProps(data)
             utils.resetMusicWidgetWindowProps(data)

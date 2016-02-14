@@ -860,12 +860,14 @@ def resetMusicWidgetWindowProps(data="",resetAll=False):
     
 def resetVideoWidgetWindowProps(data="",resetAll=False):
     #clear the cache for the video widgets
+    print "resetVideoWidgetWindowProps"
+    print data
     type = "unknown"
     if data:
         data = eval(data.replace("true","True").replace("false","False"))
         type = data["item"]["type"]
 
-    if (type in ["movie","tvshow","episode"] or resetAll) and not WINDOW.getProperty("skinhelper-refreshvideowidgetsbusy"):
+    if (type in ["movie","tvshow","episode"] and not WINDOW.getProperty("skinhelper-refreshvideowidgetsbusy")) or resetAll:
         logMsg("Video database changed - type: %s - resetAll: %s, refreshing widgets...." %(type,resetAll),0)
         WINDOW.setProperty("skinhelper-refreshvideowidgetsbusy","busy")
         if resetAll: WINDOW.setProperty("resetVideoDbCache","reset")

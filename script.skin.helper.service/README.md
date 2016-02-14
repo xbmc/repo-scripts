@@ -50,6 +50,8 @@ ________________________________________________________________________________
 |Window(Home).Property(SkinHelper.TotalFavourites) | total number of favourites |
 |Window(Home).Property(SkinHelper.TotalTVChannels) | total number of TV channels in the PVR |
 |Window(Home).Property(SkinHelper.TotalRadioChannels) | total number of Radio channels in the PVR |
+|Window(Home).Property(SkinHelper.TotalMovieSets) | total number of Movie sets in the library |
+|Window(Home).Property(SkinHelper.TotalMoviesInSets) | total number of Movies belonging to moviesets |
 ________________________________________________________________________________________________________
 #### Video library window properties
 Some additional window properties that can be used in the video library. 
@@ -565,6 +567,10 @@ example 2: Search for artist videos in DialogAlbumInfo.xml
 ```
 RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[ListItem.Artist], header=Videos for $INFO[ListItem.Artist])             
 ```
+
+Optional parameters:
+windowed=true --> plays the selected video windowed instead of fullscreen
+autoplay=true --> just automatically play the first video that is found (no dialog is shown)
 
 ________________________________________________________________________________________________________
 

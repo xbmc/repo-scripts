@@ -44,13 +44,13 @@ def getPluginListing(action,limit,refresh=None,optionalParam=None):
         allItems = eval(cache)
     
     #get from persistant cache on first boot
-    if not cache and not WINDOW.getProperty("firstrun-"+cacheStr):
+    if not cache and not WINDOW.getProperty("firstrun-"+action):
+        WINDOW.setProperty("firstrun-"+action,"done")
         logMsg("getPluginListing-%s-%s-%s-%s -- initial start, load cache from file" %(action,limit,optionalParam,refresh))
         allItems = getDataFromCacheFile(cachePath)
         if refresh:
             WINDOW.setProperty(cacheStr, repr(allItems).encode("utf-8"))
-            WINDOW.setProperty("firstrun-"+cacheStr,"done")
-    
+            
     #Call the correct method to get the content from json when no cache
     if not allItems or action == "FAVOURITES":
         logMsg("getPluginListing-%s-%s-%s-%s -- no cache, quering json api to get items" %(action,limit,optionalParam,refresh))
