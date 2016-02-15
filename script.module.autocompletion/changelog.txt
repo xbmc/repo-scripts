@@ -1,3 +1,7 @@
+1.1.2
+
+- move some stuff out of this lib (to the places they belong to)
+
 1.1.1
 
 - fix wrong reference to extendedinfo script
