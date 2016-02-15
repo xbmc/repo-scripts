@@ -1,3 +1,7 @@
+1.1.1
+
+- fix wrong reference to extendedinfo script
+
 1.1.0
 
 - No results when keyboard with hidden input is active
