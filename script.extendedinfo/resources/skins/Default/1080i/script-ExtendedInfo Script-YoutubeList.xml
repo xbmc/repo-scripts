@@ -5,6 +5,7 @@
     <onload condition="IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,$VAR[AreaColorVar],home)</onload>-->
     <onunload>ClearProperty(WindowColor,home)</onunload>
     <defaultcontrol always="true">500</defaultcontrol>
+    <views>500</views>
     <controls>
         <control type="image">
             <texture background="true" fallback="common/white.png" colordiffuse="FFAAAAAA">$INFO[Container(500).ListItem.Thumb]</texture>
@@ -57,9 +58,9 @@
                     <animation effect="fade" time="200">Hidden</animation>
                     <texture colordiffuse="$INFO[Window(home).Property(WindowColor)]" border="40">buttons/roundedbutton-focus.png</texture>
                     <animation effect="slide" end="0,410" time="300" tween="cubic" easing="inout" condition="Container(500).Row(1)">Conditional</animation>
-                    <animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(3)">Conditional</animation>
-                    <animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(3) | Container(500).Column(2)">Conditional</animation>
-                    <animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(3) | Container(500).Column(2) | Container(500).Column(1)">Conditional</animation>
+                    <animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,2)">Conditional</animation>
+                    <animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,1)">Conditional</animation>
+                    <animation effect="slide" end="440,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,0)">Conditional</animation>
                 </control>
             </control>
             <control type="panel" id="500">

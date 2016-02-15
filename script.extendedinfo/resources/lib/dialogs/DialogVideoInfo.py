@@ -6,52 +6,50 @@
 import xbmc
 import xbmcgui
 from ..Utils import *
-from ..TheMovieDB import *
-from ..omdb import *
-from ..ImageTools import *
+from .. import TheMovieDB
+from .. import omdb
+from .. import ImageTools
 import threading
 from DialogBaseInfo import DialogBaseInfo
 from ..WindowManager import wm
 from ActionHandler import ActionHandler
-from .. import VideoPlayer
+from ..VideoPlayer import PLAYER
 
-PLAYER = VideoPlayer.VideoPlayer()
 ch = ActionHandler()
 
 
-def get_movie_window(window_type):
+def get_window(window_type):
 
     class DialogVideoInfo(DialogBaseInfo, window_type):
 
         def __init__(self, *args, **kwargs):
             super(DialogVideoInfo, self).__init__(*args, **kwargs)
             self.type = "Movie"
-            data = extended_movie_info(movie_id=kwargs.get('id'),
-                                       dbid=self.dbid)
+            data = TheMovieDB.extended_movie_info(movie_id=kwargs.get('id'),
+                                                  dbid=self.dbid)
             if not data:
                 return None
             self.info, self.data, self.account_states = data
             sets_thread = SetItemsThread(self.info["SetId"])
-            self.omdb_thread = FunctionThread(get_omdb_movie_info, self.info["imdb_id"])
-            lists_thread = FunctionThread(self.sort_lists, self.data["lists"])
-            filter_thread = FilterImageThread(self.info.get("thumb", ""), 25)
-            for thread in [self.omdb_thread, sets_thread, lists_thread, filter_thread]:
+            self.omdb_thread = FunctionThread(omdb.get_movie_info, self.info["imdb_id"])
+            filter_thread = ImageTools.FilterImageThread(self.info.get("thumb", ""), 25)
+            for thread in [self.omdb_thread, sets_thread, filter_thread]:
                 thread.start()
             if "dbid" not in self.info:
                 self.info['poster'] = get_file(self.info.get("poster", ""))
+            lists = self.sort_lists(self.data["lists"])
             sets_thread.join()
             self.setinfo = sets_thread.setinfo
             self.data["similar"] = [i for i in self.data["similar"] if i["id"] not in sets_thread.id_list]
             filter_thread.join()
             self.info['ImageFilter'] = filter_thread.image
             self.info['ImageColor'] = filter_thread.imagecolor
-            lists_thread.join()
             self.listitems = [(1000, self.data["actors"]),
                               (150, self.data["similar"]),
                               (250, sets_thread.listitems),
-                              (450, lists_thread.listitems),
+                              (450, lists),
                               (550, self.data["studios"]),
-                              (650, merge_with_cert_desc(self.data["releases"], "movie")),
+                              (650, TheMovieDB.merge_with_cert_desc(self.data["releases"], "movie")),
                               (750, merge_dict_lists(self.data["crew"])),
                               (850, self.data["genres"]),
                               (950, self.data["keywords"]),
@@ -84,7 +82,7 @@ def get_movie_window(window_type):
         @ch.action("contextmenu", 250)
         def add_movie_to_account(self):
             movie_id = self.listitem.getProperty("id")
-            add_movie_to_list(movie_id)
+            TheMovieDB.add_movie_to_list(movie_id)
 
         @ch.click(1000)
         @ch.click(750)
@@ -101,8 +99,14 @@ def get_movie_window(window_type):
 
         @ch.click(10)
         def play_trailer(self):
-            PLAYER.play_youtube_video(youtube_id=youtube_id,
-                                      listitem=self.getControl(1150).getListItem(0).getProperty("youtube_id"),
+            PLAYER.play_youtube_video(youtube_id=self.getControl(1150).getListItem(0).getProperty("youtube_id"),
+                                      window=self)
+
+        @ch.click(350)
+        @ch.click(1150)
+        def play_youtube_video(self):
+            PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
+                                      listitem=self.listitem,
                                       window=self)
 
         @ch.click(550)
@@ -161,13 +165,13 @@ def get_movie_window(window_type):
             wm.open_video_list(prev_window=self,
                                mode="list",
                                list_id=self.listitem.getProperty("id"),
-                               filter_label=self.listitem.getLabel())
+                               filter_label=self.listitem.getLabel().decode("utf-8"))
 
         @ch.click(6002)
         def show_list_dialog(self):
             listitems = [LANG(32134), LANG(32135)]
             xbmc.executebuiltin("ActivateWindow(busydialog)")
-            account_lists = get_account_lists()
+            account_lists = TheMovieDB.get_account_lists()
             for item in account_lists:
                 listitems.append("%s (%i)" % (item["name"], item["item_count"]))
             xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -194,13 +198,13 @@ def get_movie_window(window_type):
 
         @ch.click(6001)
         def set_rating_dialog(self):
-            if set_rating_prompt("movie", self.info["id"]):
+            if TheMovieDB.set_rating_prompt("movie", self.info["id"]):
                 self.update_states()
 
         @ch.click(6005)
         def add_to_list_dialog(self):
             xbmc.executebuiltin("ActivateWindow(busydialog)")
-            account_lists = get_account_lists()
+            account_lists = TheMovieDB.get_account_lists()
             listitems = ["%s (%i)" % (i["name"], i["item_count"]) for i in account_lists]
             listitems.insert(0, LANG(32139))
             listitems.append(LANG(32138))
@@ -212,22 +216,22 @@ def get_movie_window(window_type):
                                                   type=xbmcgui.INPUT_ALPHANUM)
                 if not listname:
                     return None
-                list_id = create_list(listname)
+                list_id = TheMovieDB.create_list(listname)
                 xbmc.sleep(1000)
-                change_list_status(list_id=list_id,
-                                   movie_id=self.info["id"],
-                                   status=True)
+                TheMovieDB.change_list_status(list_id=list_id,
+                                              movie_id=self.info["id"],
+                                              status=True)
             elif index == len(listitems) - 1:
                 self.remove_list_dialog(account_lists)
             elif index > 0:
-                change_list_status(account_lists[index - 1]["id"], self.info["id"], True)
+                TheMovieDB.change_list_status(account_lists[index - 1]["id"], self.info["id"], True)
                 self.update_states()
 
         @ch.click(6003)
         def change_list_status(self):
-            change_fav_status(media_id=self.info["id"],
-                              media_type="movie",
-                              status=str(not bool(self.account_states["favorite"])).lower())
+            TheMovieDB.change_fav_status(media_id=self.info["id"],
+                                         media_type="movie",
+                                         status=str(not bool(self.account_states["favorite"])).lower())
             self.update_states()
 
         @ch.click(6006)
@@ -272,7 +276,7 @@ def get_movie_window(window_type):
         def sort_lists(self, lists):
             if not self.logged_in:
                 return lists
-            account_list = get_account_lists(10)  # use caching here, forceupdate everywhere else
+            account_list = TheMovieDB.get_account_lists(10)  # use caching here, forceupdate everywhere else
             id_list = [item["id"] for item in account_list]
             own_lists = [item for item in lists if item["id"] in id_list]
             own_lists = [dict({"account": "True"}, **item) for item in own_lists]
@@ -281,14 +285,14 @@ def get_movie_window(window_type):
 
         def update_states(self):
             xbmc.sleep(2000)  # delay because MovieDB takes some time to update
-            _, __, self.account_states = extended_movie_info(self.info["id"], self.dbid, 0)
+            _, __, self.account_states = TheMovieDB.extended_movie_info(self.info["id"], self.dbid, 0)
             super(DialogVideoInfo, self).update_states()
 
         def remove_list_dialog(self, account_lists):
             listitems = ["%s (%i)" % (d["name"], d["item_count"]) for d in account_lists]
             index = xbmcgui.Dialog().select(LANG(32138), listitems)
             if index >= 0:
-                remove_list(account_lists[index]["id"])
+                TheMovieDB.remove_list(account_lists[index]["id"])
                 self.update_states()
 
         @run_async
@@ -306,7 +310,7 @@ def get_movie_window(window_type):
 
         def run(self):
             if self.set_id:
-                self.listitems, self.setinfo = get_set_movies(self.set_id)
+                self.listitems, self.setinfo = TheMovieDB.get_set_movies(self.set_id)
                 self.id_list = [item["id"] for item in self.listitems]
             else:
                 self.id_list = []

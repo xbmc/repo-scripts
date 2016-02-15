@@ -4,12 +4,14 @@
 # This program is Free Software see LICENSE file for details
 
 from Utils import *
+import urllib
 
 YT_KEY = 'AIzaSyB-BOZ_o09NLVwq_lMskvvj1olDkFI4JK0'
 BASE_URL = "https://www.googleapis.com/youtube/v3/"
+PLUGIN_BASE = "plugin://script.extendedinfo/?info="
 
 
-def handle_youtube_videos(results, extended=False):
+def handle_videos(results, extended=False):
     videos = []
     for item in results:
         thumb = ""
@@ -21,8 +23,8 @@ def handle_youtube_videos(results, extended=False):
             video_id = item["snippet"]["resourceId"]["videoId"]
         video = {'thumb': thumb,
                  'youtube_id': video_id,
-                 'Play': 'plugin://script.extendedinfo/?info=youtubevideo&&id=%s' % video_id,
-                 'path': 'plugin://script.extendedinfo/?info=youtubevideo&&id=%s' % video_id,
+                 'Play': PLUGIN_BASE + 'youtubevideo&&id=%s' % video_id,
+                 'path': PLUGIN_BASE + 'youtubevideo&&id=%s' % video_id,
                  'Description': item["snippet"]["description"],
                  'title': item["snippet"]["title"],
                  'channel_title': item["snippet"]["channelTitle"],
@@ -31,14 +33,13 @@ def handle_youtube_videos(results, extended=False):
         videos.append(video)
     if not extended:
         return videos
-    video_ids = [item["youtube_id"] for item in videos]
-    url = "videos?id=%s&part=contentDetails%%2Cstatistics&key=%s" % (",".join(video_ids), YT_KEY)
-    ext_results = get_JSON_response(url=BASE_URL + url,
-                                    cache_days=0.5,
-                                    folder="YouTube")
+    params = {"part": "contentDetails,statistics",
+              "id": ",".join([i["youtube_id"] for i in videos])}
+    ext_results = get_data(method="videos",
+                           params=params)
     if not ext_results:
         return videos
-    for i, item in enumerate(videos):
+    for item in videos:
         for ext_item in ext_results["items"]:
             if not item["youtube_id"] == ext_item['id']:
                 continue
@@ -59,7 +60,7 @@ def handle_youtube_videos(results, extended=False):
     return videos
 
 
-def handle_youtube_playlists(results):
+def handle_playlists(results):
     playlists = []
     for item in results:
         thumb = ""
@@ -71,27 +72,26 @@ def handle_youtube_playlists(results):
             playlist_id = item["snippet"]["resourceId"]["playlistId"]
         playlist = {'thumb': thumb,
                     'youtube_id': playlist_id,
-                    'Play': 'plugin://script.extendedinfo/?info=youtubeplaylist&&id=%s' % playlist_id,
-                    'path': 'plugin://script.extendedinfo/?info=youtubeplaylist&&id=%s' % playlist_id,
+                    'Play': PLUGIN_BASE + 'youtubeplaylist&&id=%s' % playlist_id,
+                    'path': PLUGIN_BASE + 'youtubeplaylist&&id=%s' % playlist_id,
                     'title': item["snippet"]["title"],
                     'description': item["snippet"]["description"],
                     'channel_title': item["snippet"]["channelTitle"],
                     'live': item["snippet"]["liveBroadcastContent"].replace("none", ""),
                     'Date': item["snippet"]["publishedAt"].replace("T", " ").replace(".000Z", "")[:-3]}
         playlists.append(playlist)
-    playlist_ids = [item["youtube_id"] for item in playlists]
-    url = "playlists?id=%s&part=contentDetails&key=%s" % (",".join(playlist_ids), YT_KEY)
-    ext_results = get_JSON_response(url=BASE_URL + url,
-                                    cache_days=0.5,
-                                    folder="YouTube")
-    for i, item in enumerate(playlists):
+    params = {"id": ",".join([i["youtube_id"] for i in playlists]),
+              "part": "contentDetails"}
+    ext_results = get_data(method="playlists",
+                           params=params)
+    for item in playlists:
         for ext_item in ext_results["items"]:
             if item["youtube_id"] == ext_item['id']:
                 item["itemcount"] = ext_item['contentDetails']['itemCount']
     return playlists
 
 
-def handle_youtube_channels(results):
+def handle_channels(results):
     channels = []
     for item in results:
         thumb = ""
@@ -103,18 +103,18 @@ def handle_youtube_channels(results):
             channel_id = item["snippet"]["resourceId"]["channelId"]
         channel = {'thumb': thumb,
                    'youtube_id': channel_id,
-                   'Play': 'plugin://script.extendedinfo/?info=youtubechannel&&id=%s' % channel_id,
-                   'path': 'plugin://script.extendedinfo/?info=youtubechannel&&id=%s' % channel_id,
+                   'Play': PLUGIN_BASE + 'youtubechannel&&id=%s' % channel_id,
+                   'path': PLUGIN_BASE + 'youtubechannel&&id=%s' % channel_id,
                    'Description': item["snippet"]["description"],
                    'title': item["snippet"]["title"],
                    'Date': item["snippet"]["publishedAt"].replace("T", " ").replace(".000Z", "")[:-3]}
         channels.append(channel)
     channel_ids = [item["youtube_id"] for item in channels]
-    url = "channels?id=%s&part=contentDetails%%2Cstatistics%%2CbrandingSettings&key=%s" % (",".join(channel_ids), YT_KEY)
-    ext_results = get_JSON_response(url=BASE_URL + url,
-                                    cache_days=0.5,
-                                    folder="YouTube")
-    for i, item in enumerate(channels):
+    params = {"id": ",".join(channel_ids),
+              "part": "contentDetails,statistics,brandingSettings"}
+    ext_results = get_data(method="channels",
+                           params=params)
+    for item in channels:
         for ext_item in ext_results["items"]:
             if item["youtube_id"] == ext_item['id']:
                 item["itemcount"] = ext_item['statistics']['videoCount']
@@ -122,53 +122,63 @@ def handle_youtube_channels(results):
     return channels
 
 
-def search_youtube(search_str="", hd="", orderby="relevance", limit=40, extended=False, page="", filter_str="", media_type="video"):
-    if page:
-        page = "&pageToken=%s" % page
-    if hd and not hd == "false":
-        hd = "&hd=true"
-    else:
-        hd = ""
-    search_str = "&q=%s" % url_quote(search_str.replace('"', ''))
-    url = 'search?part=id%%2Csnippet&type=%s%s%s&order=%s&%skey=%s%s&maxResults=%i' % (media_type, page, search_str, orderby, filter_str, YT_KEY, hd, int(limit))
-    results = get_JSON_response(url=BASE_URL + url,
-                                cache_days=0.5,
-                                folder="YouTube")
+def get_data(method, params={}, cache_days=0.5):
+    params["key"] = YT_KEY
+    # params = {k: v for k, v in params.items() if v}
+    params = dict((k, v) for (k, v) in params.iteritems() if v)
+    params = dict((k, unicode(v).encode('utf-8')) for (k, v) in params.iteritems())
+    url = "{base_url}{method}?{params}".format(base_url=BASE_URL,
+                                               method=method,
+                                               params=urllib.urlencode(params))
+    return get_JSON_response(url=url,
+                             cache_days=cache_days,
+                             folder="YouTube")
+
+
+def search(search_str="", hd="", orderby="relevance", limit=40, extended=True, page="", filters={}, media_type="video"):
+    params = {"part": "id,snippet",
+              "maxResults": int(limit),
+              "type": media_type,
+              "order": orderby,
+              "pageToken": page,
+              "hd": str(hd and not hd == "false"),
+              "q": search_str.replace('"', '')}
+    params = merge_dicts(params, filters)
+    results = get_data(method="search",
+                       params=params)
     if media_type == "video":
-        videos = handle_youtube_videos(results["items"], extended=True)
+        listitems = handle_videos(results["items"], extended=extended)
     elif media_type == "playlist":
-        videos = handle_youtube_playlists(results["items"])
+        listitems = handle_playlists(results["items"])
     elif media_type == "channel":
-        videos = handle_youtube_channels(results["items"])
-    if videos:
-        info = {"listitems": videos,
-                "results_per_page": results["pageInfo"]["resultsPerPage"],
-                "total_results": results["pageInfo"]["totalResults"],
-                "next_page_token": results.get("nextPageToken", ""),
-                "prev_page_token": results.get("prevPageToken", ""),
-                }
-        return info
-    else:
+        listitems = handle_channels(results["items"])
+    if not listitems:
         return {}
+    return {"listitems": listitems,
+            "results_per_page": results["pageInfo"]["resultsPerPage"],
+            "total_results": results["pageInfo"]["totalResults"],
+            "next_page_token": results.get("nextPageToken", ""),
+            "prev_page_token": results.get("prevPageToken", "")}
 
 
-def get_youtube_playlist_videos(playlist_id=""):
-    url = 'playlistItems?part=id%%2Csnippet&maxResults=50&playlistId=%s&key=%s' % (playlist_id, YT_KEY)
-    results = get_JSON_response(url=BASE_URL + url,
-                                cache_days=0.5,
-                                folder="YouTube")
-    if results:
-        return handle_youtube_videos(results["items"])
-    else:
+def get_playlist_videos(playlist_id=""):
+    if not playlist_id:
         return []
+    params = {"part": "id,snippet",
+              "maxResults": "50",
+              "playlistId": playlist_id}
+    results = get_data(method="playlistItems",
+                       params=params)
+    if not results:
+        return []
+    return handle_videos(results["items"])
 
 
-def get_youtube_user_playlists(username=""):
-    url = 'channels?part=contentDetails&forUsername=%s&key=%s' % (username, YT_KEY)
-    results = get_JSON_response(url=BASE_URL + url,
-                                cache_days=0.5,
-                                folder="YouTube")
-    if results["items"]:
-        return results["items"][0]["contentDetails"]["relatedPlaylists"]
-    else:
+def get_user_playlists(username=""):
+    params = {"part": "contentDetails",
+              "forUsername": username}
+    results = get_data(method="channels",
+                       params=params)
+    if not results["items"]:
         return None
+    return results["items"][0]["contentDetails"]["relatedPlaylists"]

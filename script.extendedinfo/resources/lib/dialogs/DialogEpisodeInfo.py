@@ -4,19 +4,19 @@
 # This program is Free Software see LICENSE file for details
 
 import xbmc
+import xbmcgui
 from ..Utils import *
-from ..TheMovieDB import *
-from ..ImageTools import *
+from .. import TheMovieDB
+from .. import ImageTools
 from DialogBaseInfo import DialogBaseInfo
 from ..WindowManager import wm
 from ActionHandler import ActionHandler
-from .. import VideoPlayer
+from ..VideoPlayer import PLAYER
 
-PLAYER = VideoPlayer.VideoPlayer()
 ch = ActionHandler()
 
 
-def get_episode_window(window_type):
+def get_window(window_type):
 
     class DialogEpisodeInfo(DialogBaseInfo, window_type):
 
@@ -25,14 +25,14 @@ def get_episode_window(window_type):
             super(DialogEpisodeInfo, self).__init__(*args, **kwargs)
             self.type = "Episode"
             self.tvshow_id = kwargs.get('show_id')
-            data = extended_episode_info(tvshow_id=self.tvshow_id,
-                                         season=kwargs.get('season'),
-                                         episode=kwargs.get('episode'))
+            data = TheMovieDB.extended_episode_info(tvshow_id=self.tvshow_id,
+                                                    season=kwargs.get('season'),
+                                                    episode=kwargs.get('episode'))
             if not data:
                 return None
             self.info, self.data, self.account_states = data
-            self.info['ImageFilter'], self.info['ImageColor'] = filter_image(input_img=self.info.get("thumb", ""),
-                                                                             radius=25)
+            self.info['ImageFilter'], self.info['ImageColor'] = ImageTools.filter_image(input_img=self.info.get("thumb", ""),
+                                                                                        radius=25)
             self.listitems = [(1000, self.data["actors"] + self.data["guest_stars"]),
                               (750, self.data["crew"]),
                               (1150, self.data["videos"]),
@@ -65,24 +65,30 @@ def get_episode_window(window_type):
 
         @ch.click(6001)
         def set_rating_dialog(self):
-            if set_rating_prompt(media_type="episode",
-                                 media_id=[self.tvshow_id, self.info["season"], self.info["episode"]]):
+            if TheMovieDB.set_rating_prompt(media_type="episode",
+                                            media_id=[self.tvshow_id, self.info["season"], self.info["episode"]]):
                 self.update_states()
 
         @ch.click(6006)
         def open_rating_list(self):
             xbmc.executebuiltin("ActivateWindow(busydialog)")
-            listitems = get_rated_media_items("tv/episodes")
+            listitems = TheMovieDB.get_rated_media_items("tv/episodes")
             xbmc.executebuiltin("Dialog.Close(busydialog)")
             wm.open_video_list(prev_window=self,
                                listitems=listitems)
 
+        @ch.click(1150)
+        def play_youtube_video(self):
+            PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
+                                      listitem=self.listitem,
+                                      window=self)
+
         def update_states(self):
             xbmc.sleep(2000)  # delay because MovieDB takes some time to update
-            _, __, self.account_states = extended_episode_info(tvshow_id=self.tvshow_id,
-                                                               season=self.info["season"],
-                                                               episode=self.info["episode"],
-                                                               cache_time=0)
+            _, __, self.account_states = TheMovieDB.extended_episode_info(tvshow_id=self.tvshow_id,
+                                                                          season=self.info["season"],
+                                                                          episode=self.info["episode"],
+                                                                          cache_time=0)
             super(DialogEpisodeInfo, self).update_states()
 
     return DialogEpisodeInfo

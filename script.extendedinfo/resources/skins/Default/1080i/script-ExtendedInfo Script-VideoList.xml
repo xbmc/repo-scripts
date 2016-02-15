@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
     <onload condition="IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,FFFFFFFF,home)</onload>
+    <views>500</views>
     <!--
          <onload condition="IsEmpty(Window(home).Property(WindowColor))">SetProperty(WindowColor,$VAR[AreaColorVar],home)</onload> -->
     <onunload>ClearProperty(WindowColor,home)</onunload>
@@ -56,10 +57,10 @@
                     <animation effect="fade" time="200">Hidden</animation>
                     <texture colordiffuse="$INFO[Window(home).Property(WindowColor)]" border="40">buttons/roundedbutton-focus.png</texture>
                     <animation effect="slide" end="0,420" time="300" tween="cubic" easing="inout" condition="Container(500).Row(1)">Conditional</animation>
-                    <animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(4)">Conditional</animation>
-                    <animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(4) | Container(500).Column(3)">Conditional</animation>
-                    <animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(4) | Container(500).Column(3) | Container(500).Column(2)">Conditional</animation>
-                    <animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="Container(500).Column(4) | Container(500).Column(3) | Container(500).Column(2) | Container(500).Column(1)">Conditional</animation>
+                    <animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,3)">Conditional</animation>
+                    <animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,2)">Conditional</animation>
+                    <animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,1)">Conditional</animation>
+                    <animation effect="slide" end="350,0" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,0)">Conditional</animation>
                 </control>
                 <control type="image">
                     <posx>465</posx>
@@ -73,12 +74,12 @@
                     <animation effect="fade" time="320" delay="200">Visible</animation>
                     <animation effect="fade" time="200">Hidden</animation>
                     <texture colordiffuse="$INFO[Window(home).Property(WindowColor)]" border="40">buttons/roundedbutton-focus.png</texture>
-                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6)">Conditional</animation>
-                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6) | Container(500).Row(5)">Conditional</animation>
-                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6) | Container(500).Row(5) | Container(500).Row(4)">Conditional</animation>
-                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6) | Container(500).Row(5) | Container(500).Row(4) | Container(500).Row(3)">Conditional</animation>
-                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6) | Container(500).Row(5) | Container(500).Row(4) | Container(500).Row(3) | Container(500).Row(2)">Conditional</animation>
-                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="Container(500).Row(6) | Container(500).Row(5) | Container(500).Row(4) | Container(500).Row(3) | Container(500).Row(2) | Container(500).Row(1)">Conditional</animation>
+                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,5)">Conditional</animation>
+                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,4)">Conditional</animation>
+                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,3)">Conditional</animation>
+                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,2)">Conditional</animation>
+                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,1)">Conditional</animation>
+                    <animation effect="slide" end="0,161" time="300" tween="cubic" easing="inout" condition="IntegerGreaterThan(Container(500).Column,0)">Conditional</animation>
                 </control>
             </control>
             <control type="image">

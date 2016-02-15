@@ -7,12 +7,13 @@ import xbmc
 import xbmcgui
 from WindowManager import wm
 from Utils import *
+import YDStreamExtractor
 
 
 class VideoPlayer(xbmc.Player):
 
     def __init__(self, *args, **kwargs):
-        xbmc.Player.__init__(self)
+        super(VideoPlayer, self).__init__()
         self.stopped = False
 
     def onPlayBackEnded(self):
@@ -53,7 +54,6 @@ class VideoPlayer(xbmc.Player):
 
     @busy_dialog
     def youtube_info_by_id(self, youtube_id):
-        import YDStreamExtractor
         vid = YDStreamExtractor.getVideoInfo(youtube_id,
                                              quality=1)
         if not vid:
@@ -70,3 +70,5 @@ class VideoPlayer(xbmc.Player):
         while not self.stopped:
             xbmc.sleep(200)
         self.stopped = False
+
+PLAYER = VideoPlayer()

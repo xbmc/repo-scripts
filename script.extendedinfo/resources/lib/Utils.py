@@ -13,11 +13,10 @@ import urllib2
 import os
 import time
 import hashlib
-import simplejson
+import simplejson as json
 import re
 import threading
 import datetime
-import codecs
 from functools import wraps
 
 ADDON = xbmcaddon.Addon()
@@ -133,77 +132,7 @@ def check_version():
                             line2=LANG(32141))
 
 
-def get_autocomplete_items(search_str):
-    """
-    get dict list with autocomplete labels from google
-    """
-    if SETTING("autocomplete_provider") == "youtube":
-        return get_google_autocomplete_items(search_str, True)
-    elif SETTING("autocomplete_provider") == "google":
-        return get_google_autocomplete_items(search_str)
-    else:
-        return get_common_words_autocomplete_items(search_str)
-
-
-def get_google_autocomplete_items(search_str, youtube=False):
-    """
-    get dict list with autocomplete labels from google
-    """
-    if not search_str:
-        return []
-    listitems = []
-    headers = {'User-agent': 'Mozilla/5.0'}
-    base_url = "http://clients1.google.com/complete/"
-    url = "search?hl=%s&q=%s&json=t&client=serp" % (SETTING("autocomplete_lang"), urllib.quote_plus(search_str))
-    if youtube:
-        url += "&ds=yt"
-    result = get_JSON_response(url=base_url + url,
-                               headers=headers,
-                               folder="Google")
-    if not result or len(result) <= 1:
-        return []
-    for item in result[1]:
-        if is_hebrew(item):
-            search_str = item[::-1]
-        else:
-            search_str = item
-        li = {"label": item,
-              "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
-        listitems.append(li)
-    return listitems
-
-
-def is_hebrew(text):
-    if type(text) != unicode:
-        text = text.decode('utf-8')
-    for chr in text:
-        if ord(chr) >= 1488 and ord(chr) <= 1514:
-            return True
-    return False
-
-
-def get_common_words_autocomplete_items(search_str):
-    """
-    get dict list with autocomplete labels from locally saved lists
-    """
-    listitems = []
-    k = search_str.rfind(" ")
-    if k >= 0:
-        search_str = search_str[k + 1:]
-    path = os.path.join(ADDON_PATH, "resources", "data", "common_%s.txt" % SETTING("autocomplete_lang_local"))
-    with codecs.open(path, encoding="utf8") as f:
-        for i, line in enumerate(f.readlines()):
-            if not line.startswith(search_str) or len(line) <= 2:
-                continue
-            li = {"label": line,
-                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % line}
-            listitems.append(li)
-            if len(listitems) > 10:
-                break
-    return listitems
-
-
-def widget_selectdialog(filter=None, string_prefix="widget"):
+def widget_selectdialog(filter=None, prefix="widget"):
     """
     show dialog including all video media lists (for widget selection)
     and set strings PREFIX.path and PREFIX.label with chosen values
@@ -255,17 +184,8 @@ def widget_selectdialog(filter=None, string_prefix="widget"):
     ret = xbmcgui.Dialog().select(LANG(32151), labels)
     if ret > -1:
         notify(keywords[ret])
-        xbmc.executebuiltin("Skin.SetString(%s.path,plugin://script.extendedinfo?info=%s)" % (string_prefix, keywords[ret]))
-        xbmc.executebuiltin("Skin.SetString(%s.label,%s)" % (string_prefix, labels[ret]))
-
-
-class SettingsMonitor(xbmc.Monitor):
-
-    def __init__(self):
-        xbmc.Monitor.__init__(self)
-
-    def onSettingsChanged(self):
-        xbmc.sleep(300)
+        set_skin_string("%s.path" % prefix, "plugin://script.extendedinfo?info=%s" % keywords[ret])
+        set_skin_string("%s.label" % prefix, labels[ret])
 
 
 def calculate_age(born, died=False):
@@ -307,13 +227,13 @@ def get_playlist_stats(path):
         end_index = path.rfind("/") + 1
     if (start_index > 0) and (end_index > 0):
         playlist_path = path[start_index:end_index]
-        json_response = get_kodi_json(method="Files.GetDirectory",
-                                      params='{"directory": "%s", "media": "video", "properties": ["playcount", "resume"]}' % playlist_path)
-        if "result" in json_response:
+        data = get_kodi_json(method="Files.GetDirectory",
+                             params='{"directory": "%s", "media": "video", "properties": ["playcount", "resume"]}' % playlist_path)
+        if "result" in data:
             played = 0
             in_progress = 0
-            numitems = json_response["result"]["limits"]["total"]
-            for item in json_response["result"]["files"]:
+            numitems = data["result"]["limits"]["total"]
+            for item in data["result"]["files"]:
                 if "playcount" in item:
                     if item["playcount"] > 0:
                         played += 1
@@ -331,31 +251,31 @@ def get_sort_letters(path, focused_letter):
     and put it into home window property "LetterList"
     """
     listitems = []
-    letter_list = []
+    letters = []
     HOME.clearProperty("LetterList")
     if SETTING("FolderPath") == path:
-        letter_list = SETTING("LetterList").split()
+        letters = SETTING("LetterList").split()
     elif path:
-        json_response = get_kodi_json(method="Files.GetDirectory",
-                                      params='{"directory": "%s", "media": "files"}' % path)
-        if "result" in json_response and "files" in json_response["result"]:
-            for movie in json_response["result"]["files"]:
+        data = get_kodi_json(method="Files.GetDirectory",
+                             params='{"directory": "%s", "media": "files"}' % path)
+        if "result" in data and "files" in data["result"]:
+            for movie in data["result"]["files"]:
                 cleaned_label = movie["label"].replace("The ", "")
                 if cleaned_label:
                     sortletter = cleaned_label[0]
-                    if sortletter not in letter_list:
-                        letter_list.append(sortletter)
-        ADDON.setSetting("LetterList", " ".join(letter_list))
+                    if sortletter not in letters:
+                        letters.append(sortletter)
+        ADDON.setSetting("LetterList", " ".join(letters))
         ADDON.setSetting("FolderPath", path)
-    HOME.setProperty("LetterList", "".join(letter_list))
-    if not letter_list or not focused_letter:
+    HOME.setProperty("LetterList", "".join(letters))
+    if not letters or not focused_letter:
         return None
     start_ord = ord("A")
     for i in range(0, 26):
         letter = chr(start_ord + i)
         if letter == focused_letter:
             label = "[B][COLOR FFFF3333]%s[/COLOR][/B]" % letter
-        elif letter in letter_list:
+        elif letter in letters:
             label = letter
         else:
             label = "[COLOR 55FFFFFF]%s[/COLOR]" % letter
@@ -383,11 +303,6 @@ def media_streamdetails(filename, streamdetails):
     info = {}
     video = streamdetails['video']
     audio = streamdetails['audio']
-    info['VideoCodec'] = ''
-    info['VideoAspect'] = ''
-    info['VideoResolution'] = ''
-    info['AudioCodec'] = ''
-    info['AudioChannels'] = ''
     if video:
         if (video[0]['width'] <= 720 and video[0]['height'] <= 480):
             info['VideoResolution'] = "480"
@@ -414,10 +329,10 @@ def media_streamdetails(filename, streamdetails):
             info['VideoAspect'] = "2.20"
         else:
             info['VideoAspect'] = "2.35"
-    elif (('dvd') in filename and not ('hddvd' or 'hd-dvd') in filename) or (filename.endswith('.vob' or '.ifo')):
-        info['VideoResolution'] = '576'
     elif (('bluray' or 'blu-ray' or 'brrip' or 'bdrip' or 'hddvd' or 'hd-dvd') in filename):
         info['VideoResolution'] = '1080'
+    elif ('dvd' in filename) or (filename.endswith('.vob' or '.ifo')):
+        info['VideoResolution'] = '576'
     if audio:
         info['AudioCodec'] = audio[0]['codec']
         info['AudioChannels'] = audio[0]['channels']
@@ -464,15 +379,14 @@ def get_http(url=None, headers=False):
     """
     succeed = 0
     if not headers:
-        headers = {'User-agent': 'XBMC/14.0 ( phil65@kodi.tv )'}
+        headers = {'User-agent': 'XBMC/16.0 ( phil65@kodi.tv )'}
     request = urllib2.Request(url)
     for (key, value) in headers.iteritems():
         request.add_header(key, value)
     while (succeed < 2) and (not xbmc.abortRequested):
         try:
             response = urllib2.urlopen(request, timeout=3)
-            data = response.read()
-            return data
+            return response.read()
         except:
             log("get_http: could not get data from %s" % url)
             xbmc.sleep(1000)
@@ -495,7 +409,7 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
     prop_time = HOME.getProperty(hashed_url + "_timestamp")
     if prop_time and now - float(prop_time) < cache_seconds:
         try:
-            prop = simplejson.loads(HOME.getProperty(hashed_url))
+            prop = json.loads(HOME.getProperty(hashed_url))
             log("prop load for %s. time: %f" % (url, time.time() - now))
             if prop:
                 return prop
@@ -507,7 +421,7 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
     else:
         response = get_http(url, headers)
         try:
-            results = simplejson.loads(response)
+            results = json.loads(response)
             log("download %s. time: %f" % (url, time.time() - now))
             save_to_file(results, hashed_url, cache_path)
         except:
@@ -519,7 +433,7 @@ def get_JSON_response(url="", cache_days=7.0, folder=False, headers=False):
                 results = []
     if results:
         HOME.setProperty(hashed_url + "_timestamp", str(now))
-        HOME.setProperty(hashed_url, simplejson.dumps(results))
+        HOME.setProperty(hashed_url, json.dumps(results))
         return results
     else:
         return []
@@ -595,8 +509,7 @@ def get_favs_by_type(fav_type):
     """
     returns dict list containing favourites with type *fav_type
     """
-    favs = get_favs()
-    return [fav for fav in favs if fav["Type"] == fav_type]
+    return [fav for fav in get_favs() if fav["Type"] == fav_type]
 
 
 def get_fav_path(fav):
@@ -615,18 +528,17 @@ def get_favs():
     returns dict list containing favourites
     """
     items = []
-    json_response = get_kodi_json(method="Favourites.GetFavourites",
-                                  params='{"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}')
-    if "result" not in json_response or json_response["result"]["limits"]["total"] == 0:
+    data = get_kodi_json(method="Favourites.GetFavourites",
+                         params='{"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}')
+    if "result" not in data or data["result"]["limits"]["total"] == 0:
         return []
-    for fav in json_response["result"]["favourites"]:
+    for fav in data["result"]["favourites"]:
         path = get_fav_path(fav)
-        newitem = {'Label': fav["title"],
-                   'thumb': fav["thumbnail"],
-                   'Type': fav["type"],
-                   'Builtin': path,
-                   'path': "plugin://script.extendedinfo/?info=action&&id=" + path}
-        items.append(newitem)
+        items.append({'Label': fav["title"],
+                      'thumb': fav["thumbnail"],
+                      'Type': fav["type"],
+                      'Builtin': path,
+                      'path': "plugin://script.extendedinfo/?info=action&&id=" + path})
     return items
 
 
@@ -637,25 +549,31 @@ def get_icon_panel(number):
     items = []
     offset = number * 5 - 5
     for i in range(1, 6):
-        infopanel_path = xbmc.getInfoLabel("Skin.String(IconPanelItem%i.Path)" % (i + offset))
-        newitem = {'Label': xbmc.getInfoLabel("Skin.String(IconPanelItem%i.Label)" % (i + offset)).decode("utf-8"),
-                   'path': "plugin://script.extendedinfo/?info=action&&id=" + infopanel_path.decode("utf-8"),
-                   'thumb': xbmc.getInfoLabel("Skin.String(IconPanelItem%i.Icon)" % (i + offset)).decode("utf-8"),
-                   'id': "IconPanelitem%i" % (i + offset),
-                   'Type': xbmc.getInfoLabel("Skin.String(IconPanelItem%i.Type)" % (i + offset)).decode("utf-8")}
-        items.append(newitem)
+        infopanel_path = get_skin_string("IconPanelItem%i.Path" % (i + offset))
+        items.append({'Label': get_skin_string("IconPanelItem%i.Label" % (i + offset)),
+                      'path': "plugin://script.extendedinfo/?info=action&&id=" + infopanel_path.decode("utf-8"),
+                      'thumb': get_skin_string("IconPanelItem%i.Icon" % (i + offset)),
+                      'id': "IconPanelitem%i" % (i + offset),
+                      'Type': get_skin_string("IconPanelItem%i.Type" % (i + offset))})
     return items
+
+
+def get_skin_string(name):
+    return xbmc.getInfoLabel("Skin.String(%s)").decode("utf-8")
+
+
+def set_skin_string(name, value):
+    xbmc.executebuiltin("Skin.SetString(%s, %s)" % (name, value))
 
 
 def get_weather_images():
     items = []
     for i in range(1, 6):
-        newitem = {'Label': "bla",
-                   'path': "plugin://script.extendedinfo/?info=action&&id=SetFocus(22222)",
-                   'thumb': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Area)" % i),
-                   'Layer': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Layer)" % i),
-                   'Legend': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Legend)" % i)}
-        items.append(newitem)
+        items.append({'Label': "bla",
+                      'path': "plugin://script.extendedinfo/?info=action&&id=SetFocus(22222)",
+                      'thumb': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Area)" % i),
+                      'Layer': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Layer)" % i),
+                      'Legend': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Legend)" % i)})
     return items
 
 
@@ -668,9 +586,7 @@ def log(txt):
 
 
 def get_browse_dialog(default="", heading=LANG(1024), dlg_type=3, shares="files", mask="", use_thumbs=False, treat_as_folder=False):
-    dialog = xbmcgui.Dialog()
-    value = dialog.browse(dlg_type, heading, shares, mask, use_thumbs, treat_as_folder, default)
-    return value
+    return xbmcgui.Dialog().browse(dlg_type, heading, shares, mask, use_thumbs, treat_as_folder, default)
 
 
 def save_to_file(content, filename, path=""):
@@ -685,7 +601,7 @@ def save_to_file(content, filename, path=""):
         text_file_path = os.path.join(path, filename + ".txt")
     now = time.time()
     text_file = xbmcvfs.File(text_file_path, "w")
-    simplejson.dump(content, text_file)
+    json.dump(content, text_file)
     text_file.close()
     log("saved textfile %s. Time: %f" % (text_file_path, time.time() - now))
     return True
@@ -703,7 +619,7 @@ def read_from_file(path="", raw=False):
         with open(path) as f:
             log("opened textfile %s." % (path))
             if not raw:
-                result = simplejson.load(f)
+                result = json.load(f)
             else:
                 result = f.read()
         return result
@@ -742,14 +658,14 @@ def notify(header="", message="", icon=ADDON_ICON, time=5000, sound=True):
 def get_kodi_json(method, params):
     json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "%s", "params": %s, "id": 1}' % (method, params))
     json_query = unicode(json_query, 'utf-8', errors='ignore')
-    return simplejson.loads(json_query)
+    return json.loads(json_query)
 
 
 def prettyprint(string):
-    log(simplejson.dumps(string,
-                         sort_keys=True,
-                         indent=4,
-                         separators=(',', ': ')))
+    log(json.dumps(string,
+                   sort_keys=True,
+                   indent=4,
+                   separators=(',', ': ')))
 
 
 def pass_dict_to_skin(data=None, prefix="", debug=False, precache=False, window_id=10000):
@@ -763,31 +679,31 @@ def pass_dict_to_skin(data=None, prefix="", debug=False, precache=False, window_
             continue
         value = unicode(value)
         if precache:
-            if value.startswith("http") and (value.endswith(".jpg") or value.endswith(".png")):
+            if value.startswith("http") and value.endswith((".jpg", ".png")):
                 if value not in image_requests and value:
                     thread = GetFileThread(value)
                     threads += [thread]
                     thread.start()
                     image_requests.append(value)
-        window.setProperty('%s%s' % (prefix, str(key)), value)
+        window.setProperty('%s%s' % (prefix, key), value)
         if debug:
-            log('%s%s' % (prefix, str(key)) + value)
+            log('%s%s' % (prefix, key) + value)
     for x in threads:
         x.join()
 
 
 def merge_dict_lists(items, key="job"):
-    crew_id_list = []
-    crew_list = []
+    crew_ids = []
+    crews = []
     for item in items:
-        if item["id"] not in crew_id_list:
-            crew_id_list.append(item["id"])
-            crew_list.append(item)
+        if item["id"] not in crew_ids:
+            crew_ids.append(item["id"])
+            crews.append(item)
         else:
-            index = crew_id_list.index(item["id"])
-            if key in crew_list[index]:
-                crew_list[index][key] = crew_list[index][key] + " / " + item[key]
-    return crew_list
+            index = crew_ids.index(item["id"])
+            if key in crews[index]:
+                crews[index][key] = crews[index][key] + " / " + item[key]
+    return crews
 
 
 def pass_list_to_skin(name="", data=[], prefix="", handle=None, limit=False):
@@ -800,10 +716,10 @@ def pass_list_to_skin(name="", data=[], prefix="", handle=None, limit=False):
     if data:
         HOME.setProperty(name + ".Count", str(len(data)))
         items = create_listitems(data)
-        itemlist = [(item.getProperty("path"), item, bool(item.getProperty("directory"))) for item in items]
+        items = [(i.getProperty("path"), i, bool(i.getProperty("directory"))) for i in items]
         xbmcplugin.addDirectoryItems(handle=handle,
-                                     items=itemlist,
-                                     totalItems=len(itemlist))
+                                     items=items,
+                                     totalItems=len(items))
     xbmcplugin.endOfDirectory(handle)
 
 
@@ -845,7 +761,7 @@ def create_listitems(data=None, preload_images=0):
                 continue
             value = unicode(value)
             if count < preload_images:
-                if value.startswith("http://") and (value.endswith(".jpg") or value.endswith(".png")):
+                if value.startswith("http://") and value.endswith((".jpg", ".png")):
                     if value not in image_requests:
                         thread = GetFileThread(value)
                         threads += [thread]
