@@ -5,18 +5,18 @@
 
 import xbmcgui
 from ..Utils import *
-from ..ImageTools import *
-from ..TheMovieDB import *
+from .. import ImageTools
+from .. import TheMovieDB
 from DialogBaseInfo import DialogBaseInfo
 from ..WindowManager import wm
-from .. import VideoPlayer
+from ..VideoPlayer import PLAYER
 from ActionHandler import ActionHandler
 
-PLAYER = VideoPlayer.VideoPlayer()
+
 ch = ActionHandler()
 
 
-def get_actor_window(window_type):
+def get_window(window_type):
 
     class DialogActorInfo(DialogBaseInfo, window_type):
 
@@ -24,12 +24,12 @@ def get_actor_window(window_type):
             super(DialogActorInfo, self).__init__(*args, **kwargs)
             self.id = kwargs.get('id', False)
             self.type = "Actor"
-            data = extended_actor_info(actor_id=self.id)
+            data = TheMovieDB.extended_actor_info(actor_id=self.id)
             if not data:
                 return None
             self.info, self.data = data
-            self.info['ImageFilter'], self.info['ImageColor'] = filter_image(input_img=self.info.get("thumb", ""),
-                                                                             radius=25)
+            self.info['ImageFilter'], self.info['ImageColor'] = ImageTools.filter_image(input_img=self.info.get("thumb", ""),
+                                                                                        radius=25)
             self.listitems = [(150, self.data["movie_roles"]),
                               (250, self.data["tvshow_roles"]),
                               (450, self.data["images"]),
@@ -66,7 +66,7 @@ def get_actor_window(window_type):
                                                 list=[LANG(32148), LANG(32147)])
             if selection == 0:
                 wm.open_tvshow_info(prev_window=self,
-                                    tvshow_id=self.listitem.getProperty("id"),
+                                    tmdb_id=self.listitem.getProperty("id"),
                                     dbid=self.listitem.getProperty("dbid"))
             if selection == 1:
                 self.open_credit_dialog(credit_id=self.listitem.getProperty("credit_id"))
@@ -75,8 +75,8 @@ def get_actor_window(window_type):
         @ch.click(750)
         def open_image(self):
             listitems = next((v for (i, v) in self.listitems if i == self.control_id), None)
-            index = self.control.getSelectedPosition()
-            pos = wm.open_slideshow(listitems=listitems, index=index)
+            pos = wm.open_slideshow(listitems=listitems,
+                                    index=self.control.getSelectedPosition())
             self.control.selectItem(pos)
 
         @ch.click(350)
@@ -93,7 +93,6 @@ def get_actor_window(window_type):
         @ch.action("contextmenu", 150)
         @ch.action("contextmenu", 550)
         def add_movie_to_account(self):
-            movie_id = self.listitem.getProperty("id")
-            add_movie_to_list(movie_id)
+            TheMovieDB.add_movie_to_list(self.listitem.getProperty("id"))
 
     return DialogActorInfo

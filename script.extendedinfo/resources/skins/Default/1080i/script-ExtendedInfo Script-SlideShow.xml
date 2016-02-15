@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-    <defaultcontrol always="true">10001</defaultcontrol>
+    <defaultcontrol always="true">5000</defaultcontrol>
     <allowoverlay>no</allowoverlay>
     <controls>
         <control type="image">
@@ -18,7 +18,7 @@
             <posy>503</posy>
             <width>100</width>
             <height>100</height>
-            <visible>!Container(10001).OnScrollPrevious + !Container(10001).OnScrollNext</visible>
+            <visible>!Container(5000).OnScrollPrevious + !Container(5000).OnScrollNext</visible>
             <animation effect="fade" time="320" delay="400">Visible</animation>
             <animation effect="rotate" end="-360" center="auto" time="2000" loop="true" reversible="false" condition="true">Conditional</animation>
             <texture colordiffuse="FFFAFAFA">spinner.png</texture>
@@ -29,19 +29,19 @@
             <posy>518</posy>
             <width>70</width>
             <height>70</height>
-            <visible>!Container(10001).OnScrollPrevious + !Container(10001).OnScrollNext</visible>
+            <visible>!Container(5000).OnScrollPrevious + !Container(5000).OnScrollNext</visible>
             <animation effect="fade" time="320" delay="400">Visible</animation>
             <animation effect="rotate" end="360" center="auto" time="2000" loop="true" reversible="false" condition="true">Conditional</animation>
             <texture flipx="true" colordiffuse="FFFAFAFA">spinner.png</texture>
             <animation effect="fade" start="70" time="1200" condition="true" pulse="true">Conditional</animation>
         </control>
-        <control type="list" id="10001">
+        <control type="list" id="5000">
             <left>-90</left>
             <top>0</top>
             <width>2100</width>
             <height>1080</height>
-            <onleft>10001</onleft>
-            <onright>10001</onright>
+            <onleft>5000</onleft>
+            <onright>5000</onright>
             <ondown>9001</ondown>
             <animation effect="fade" start="0" end="100" time="300" tween="sine">WindowOpen</animation>
             <animation effect="fade" end="100" time="200" tween="sine">WindowClose</animation>

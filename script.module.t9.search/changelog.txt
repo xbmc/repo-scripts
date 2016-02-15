@@ -1,2 +1,7 @@
+v1.0.1
+- fix decoding error
+- added small readme
+- attach final search string to T9Search instance
+
 v1.0.0
 Initial Release.

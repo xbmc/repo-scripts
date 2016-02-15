@@ -8,7 +8,8 @@ import xbmc
 import xbmcvfs
 import os
 from Utils import *
-from PIL import Image, ImageFilter
+import PIL.Image
+import PIL.ImageFilter
 
 THUMBS_CACHE_PATH = xbmc.translatePath("special://profile/Thumbnails/Video")
 ADDON_DATA_PATH_IMAGES = os.path.join(ADDON_DATA_PATH, "images")
@@ -33,15 +34,15 @@ def filter_image(input_img, radius):
             try:
                 if xbmcvfs.exists(xbmc_cache_file):
                     log("image already in xbmc cache: " + xbmc_cache_file)
-                    img = Image.open(xbmc.translatePath(xbmc_cache_file))
+                    img = PIL.Image.open(xbmc.translatePath(xbmc_cache_file))
                     break
                 elif xbmcvfs.exists(xbmc_vid_cache_file):
                     log("image already in xbmc video cache: " + xbmc_vid_cache_file)
-                    img = Image.open(xbmc.translatePath(xbmc_vid_cache_file))
+                    img = PIL.Image.open(xbmc.translatePath(xbmc_vid_cache_file))
                     break
                 else:
                     xbmcvfs.copy(unicode(input_img, 'utf-8', errors='ignore'), targetfile)
-                    img = Image.open(targetfile)
+                    img = PIL.Image.open(targetfile)
                     break
             except:
                 log("Could not get image for %s (try %i)" % (input_img, i))
@@ -49,7 +50,7 @@ def filter_image(input_img, radius):
         if not img:
             return "", ""
         try:
-            img.thumbnail((200, 200), Image.ANTIALIAS)
+            img.thumbnail((200, 200), PIL.Image.ANTIALIAS)
             img = img.convert('RGB')
             imgfilter = MyGaussianBlur(radius=radius)
             img = img.filter(imgfilter)
@@ -59,7 +60,7 @@ def filter_image(input_img, radius):
             return "", ""
     else:
         log("blurred img already created: " + targetfile)
-        img = Image.open(targetfile)
+        img = PIL.Image.open(targetfile)
     imagecolor = get_colors(img)
     return targetfile, imagecolor
 
@@ -103,19 +104,19 @@ def get_colors(img):
             b += data[x][2]
             counter += 1
     if counter > 0:
-        rAvg = int(r/counter)
-        gAvg = int(g/counter)
-        bAvg = int(b/counter)
-        Avg = (rAvg + gAvg + bAvg) / 3
-        minBrightness = 130
-        if Avg < minBrightness:
-            Diff = minBrightness - Avg
-            for color in [rAvg, gAvg, bAvg]:
-                if color <= (255 - Diff):
-                    color += Diff
+        r_avg = int(r/counter)
+        g_avg = int(g/counter)
+        b_avg = int(b/counter)
+        avg = (r_avg + g_avg + b_avg) / 3
+        min_brightness = 130
+        if avg < min_brightness:
+            diff = min_brightness - avg
+            for color in [r_avg, g_avg, b_avg]:
+                if color <= (255 - diff):
+                    color += diff
                 else:
                     color = 255
-        imagecolor = "FF%s%s%s" % (format(rAvg, '02x'), format(gAvg, '02x'), format(bAvg, '02x'))
+        imagecolor = "FF%s%s%s" % (format(r_avg, '02x'), format(g_avg, '02x'), format(b_avg, '02x'))
     else:
         imagecolor = "FFF0F0F0"
     log("Average Color: " + imagecolor)
@@ -138,7 +139,7 @@ class FilterImageThread(threading.Thread):
             log("exception. probably android PIL issue.")
 
 
-class MyGaussianBlur(ImageFilter.Filter):
+class MyGaussianBlur(PIL.ImageFilter.Filter):
     name = "GaussianBlur"
 
     def __init__(self, radius=2):

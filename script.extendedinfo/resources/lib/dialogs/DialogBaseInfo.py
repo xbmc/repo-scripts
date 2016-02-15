@@ -6,11 +6,10 @@
 import xbmc
 import xbmcgui
 from ..Utils import *
-from ..TheMovieDB import *
+from .. import TheMovieDB as tmdb
 from ..WindowManager import wm
 from ActionHandler import ActionHandler
-from .. import VideoPlayer
-PLAYER = VideoPlayer.VideoPlayer()
+from .. import YouTube
 ch = ActionHandler()
 
 
@@ -20,9 +19,10 @@ class DialogBaseInfo(object):
 
     def __init__(self, *args, **kwargs):
         super(DialogBaseInfo, self).__init__(*args, **kwargs)
-        self.logged_in = check_login()
+        self.logged_in = tmdb.Login.check_login()
         self.dbid = kwargs.get('dbid')
         self.bouncing = False
+        self.last_focus = None
         self.data = None
         self.yt_listitems = []
         self.info = {}
@@ -31,8 +31,11 @@ class DialogBaseInfo(object):
         super(DialogBaseInfo, self).onInit()
         HOME.setProperty("ImageColor", self.info.get('ImageColor', ""))
         self.window = xbmcgui.Window(self.window_id)
-        self.window.setProperty("type", self.type)
-        self.window.setProperty("tmdb_logged_in", self.logged_in)
+        self.setProperty("type", self.type)
+        if self.logged_in:
+            self.setProperty("tmdb_logged_in", "true")
+        else:
+            self.clearProperty("tmdb_logged_in")
         # present for jurialmunkey
         HOME.setProperty("ExtendedInfo_fanart", self.info.get("fanart", ""))
 
@@ -47,21 +50,18 @@ class DialogBaseInfo(object):
             if not self.bouncing:
                 self.bounce("up")
             self.setFocusId(self.last_focus)
-            self.last_focus = control_id
         elif control_id == 20001:
             if not self.bouncing:
                 self.bounce("down")
             self.setFocusId(self.last_focus)
-            self.last_focus = control_id
-        else:
-            self.last_focus = control_id
+        self.last_focus = control_id
 
     @run_async
     def bounce(self, identifier):
         self.bouncing = True
-        self.window.setProperty("Bounce.%s" % identifier, "true")
+        self.setProperty("Bounce.%s" % identifier, "true")
         xbmc.sleep(200)
-        self.window.clearProperty("Bounce.%s" % identifier)
+        self.clearProperty("Bounce.%s" % identifier)
         self.bouncing = False
 
     def fill_lists(self):
@@ -72,19 +72,11 @@ class DialogBaseInfo(object):
             except:
                 log("Notice: No container with id %i available" % container_id)
 
-    @ch.click(350)
-    @ch.click(1150)
-    def play_youtube_video(self):
-        PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
-                                  listitem=self.listitem,
-                                  window=self)
-
     @ch.click(1250)
     @ch.click(1350)
     def open_image(self):
-        listitems = next((v for (i, v) in self.listitems if i == self.control_id), None)
-        index = self.control.getSelectedPosition()
-        pos = wm.open_slideshow(listitems=listitems, index=index)
+        pos = wm.open_slideshow(listitems=next((v for (i, v) in self.listitems if i == self.control_id)),
+                                index=self.control.getSelectedPosition())
         self.control.selectItem(pos)
 
     @ch.action("contextmenu", 1250)
@@ -94,9 +86,8 @@ class DialogBaseInfo(object):
         selection = xbmcgui.Dialog().select(heading=LANG(22080),
                                             list=[LANG(32006)])
         if selection == 0:
-            path = self.listitem.getProperty("original")
             media_type = self.window.getProperty("type")
-            params = '"art": {"poster": "%s"}' % path
+            params = '"art": {"poster": "%s"}' % self.listitem.getProperty("original")
             get_kodi_json(method="VideoLibrary.Set%sDetails" % media_type,
                           params='{ %s, "%sid":%s }' % (params, media_type.lower(), self.info['dbid']))
 
@@ -107,9 +98,8 @@ class DialogBaseInfo(object):
         selection = xbmcgui.Dialog().select(heading=LANG(22080),
                                             list=[LANG(32007)])
         if selection == 0:
-            path = self.listitem.getProperty("original")
             media_type = self.window.getProperty("type")
-            params = '"art": {"fanart": "%s"}' % path
+            params = '"art": {"fanart": "%s"}' % self.listitem.getProperty("original")
             get_kodi_json(method="VideoLibrary.Set%sDetails" % media_type,
                           params='{ %s, "%sid":%s }' % (params, media_type.lower(), self.info['dbid']))
 
@@ -119,9 +109,8 @@ class DialogBaseInfo(object):
         selection = xbmcgui.Dialog().select(heading=LANG(22080),
                                             list=[LANG(33003)])
         if selection == 0:
-            youtube_id = self.listitem.getProperty("youtube_id")
             import YDStreamExtractor
-            vid = YDStreamExtractor.getVideoInfo(youtube_id,
+            vid = YDStreamExtractor.getVideoInfo(self.listitem.getProperty("youtube_id"),
                                                  quality=1)
             YDStreamExtractor.handleDownload(vid)
 
@@ -145,7 +134,7 @@ class DialogBaseInfo(object):
             youtube_list = self.getControl(350)
         except:
             return None
-        result = search_youtube(search_str, limit=15)
+        result = YouTube.search(search_str, limit=15)
         if not self.yt_listitems:
             self.yt_listitems = result.get("listitems", [])
             if "videos" in self.data:
@@ -155,12 +144,12 @@ class DialogBaseInfo(object):
         youtube_list.addItems(create_listitems(self.yt_listitems))
 
     def open_credit_dialog(self, credit_id):
-        info = get_credit_info(credit_id)
+        info = tmdb.get_credit_info(credit_id)
         listitems = []
         if "seasons" in info["media"]:
-            listitems += handle_tmdb_seasons(info["media"]["seasons"])
+            listitems += tmdb.handle_seasons(info["media"]["seasons"])
         if "episodes" in info["media"]:
-            listitems += handle_tmdb_episodes(info["media"]["episodes"])
+            listitems += tmdb.handle_episodes(info["media"]["episodes"])
         if not listitems:
             listitems += [{"label": LANG(19055)}]
         listitem, index = wm.open_selectdialog(listitems=listitems)
@@ -177,5 +166,5 @@ class DialogBaseInfo(object):
     def update_states(self):
         if not self.account_states:
             return None
-        pass_dict_to_skin(data=get_account_props(self.account_states),
+        pass_dict_to_skin(data=tmdb.get_account_props(self.account_states),
                           window_id=self.window_id)

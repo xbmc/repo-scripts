@@ -15,10 +15,22 @@ class Main:
 
     def __init__(self):
         xbmc.log("version %s started" % ADDON_VERSION)
-        xbmc.executebuiltin('SetProperty(extendedinfo_running,True,home)')
+        HOME.setProperty("extendedinfo_running", "true")
         self._parse_argv()
-        if self.infos:
-            start_info_actions(self.infos, self.params)
+        for info in self.infos:
+            listitems = start_info_actions(info, self.params)
+            xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_TITLE)
+            xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_VIDEO_YEAR)
+            xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_DURATION)
+            if info.endswith("shows"):
+                xbmcplugin.setContent(self.handle, 'episodes')
+            else:
+                xbmcplugin.setContent(self.handle, 'movies')
+            pass_list_to_skin(name=info,
+                              data=listitems,
+                              prefix=self.params.get("prefix", ""),
+                              handle=self.handle,
+                              limit=self.params.get("limit", 20))
         else:
             movie = {"intheaters": "%s [I](RottenTomatoes)[/I]" % LANG(32042),
                      "boxoffice": "%s [I](RottenTomatoes)[/I]" % LANG(32055),
@@ -51,7 +63,7 @@ class Main:
                       "ratedtvshows": "%s [I](TheMovieDB)[/I]" % LANG(32145),
                       }
 
-            xbmcplugin.setContent(self.handle, 'files')
+            xbmcplugin.setContent(self.handle, '')
 
             # url = 'plugin://script.extendedinfo?info=extendedinfo&&id=233'
             # li = xbmcgui.ListItem('TheMovieDB database browser', iconImage='DefaultMovies.png')
@@ -63,7 +75,7 @@ class Main:
                 xbmcplugin.addDirectoryItem(handle=self.handle, url=url,
                                             listitem=li, isFolder=True)
             xbmcplugin.endOfDirectory(self.handle)
-        xbmc.executebuiltin('ClearProperty(extendedinfo_running,home)')
+        HOME.clearProperty("extendedinfo_running")
 
     def _parse_argv(self):
         args = sys.argv[2][1:]

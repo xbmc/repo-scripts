@@ -6,7 +6,7 @@
 import xbmc
 import xbmcgui
 from ..Utils import *
-from ..TheMovieDB import *
+from .. import TheMovieDB as tmdb
 from DialogBaseList import DialogBaseList
 from ..WindowManager import wm
 from ActionHandler import ActionHandler
@@ -34,7 +34,7 @@ TRANSLATIONS = {"movie": LANG(20338),
 include_adult = SETTING("include_adults").lower()
 
 
-def get_tmdb_window(window_type):
+def get_window(window_type):
 
     class DialogVideoList(DialogBaseList, window_type):
 
@@ -46,7 +46,7 @@ def get_tmdb_window(window_type):
             self.sort = kwargs.get('sort', "popularity")
             self.sort_label = kwargs.get('sort_label', LANG(32110))
             self.order = kwargs.get('order', "desc")
-            self.logged_in = check_login()
+            self.logged_in = tmdb.Login.check_login()
             if self.listitem_list:
                 self.listitems = create_listitems(self.listitem_list)
                 self.total_items = len(self.listitem_list)
@@ -63,27 +63,11 @@ def get_tmdb_window(window_type):
 
         def update_ui(self):
             super(DialogVideoList, self).update_ui()
-            self.window.setProperty("Type", TRANSLATIONS[self.type])
-            if self.type == "tv":
-                self.window.getControl(5006).setVisible(False)
-                self.window.getControl(5008).setVisible(False)
-                self.window.getControl(5009).setVisible(False)
-                self.window.getControl(5010).setVisible(False)
-            else:
-                self.window.getControl(5006).setVisible(True)
-                self.window.getControl(5008).setVisible(True)
-                self.window.getControl(5009).setVisible(True)
-                self.window.getControl(5010).setVisible(True)
-
-        def go_to_next_page(self):
-            self.get_column()
-            if self.page < self.total_pages:
-                self.page += 1
-
-        def go_to_prev_page(self):
-            self.get_column()
-            if self.page > 1:
-                self.page -= 1
+            self.setProperty("Type", TRANSLATIONS[self.type])
+            self.getControl(5006).setVisible(self.type != "tv")
+            self.getControl(5008).setVisible(self.type != "tv")
+            self.getControl(5009).setVisible(self.type != "tv")
+            self.getControl(5010).setVisible(self.type != "tv")
 
         @ch.action("contextmenu", 500)
         def context_menu(self):
@@ -101,29 +85,28 @@ def get_tmdb_window(window_type):
             selection = xbmcgui.Dialog().select(heading=LANG(32151),
                                                 list=listitems)
             if selection == 0:
-                if set_rating_prompt(self.type, item_id):
+                if tmdb.set_rating_prompt(self.type, item_id):
                     xbmc.sleep(2000)
                     self.update(force_update=True)
-                    self.getControl(500).selectItem(self.position)
+                    self.setCurrentListPosition(self.position)
             elif selection == 1:
-                change_fav_status(media_id=item_id,
-                                  media_type=self.type,
-                                  status="true")
+                tmdb.change_fav_status(media_id=item_id,
+                                       media_type=self.type,
+                                       status="true")
             elif selection == 2:
                 self.list_dialog(item_id)
             elif selection == 3:
-                change_list_status(list_id=self.list_id,
-                                   movie_id=item_id,
-                                   status=False)
+                tmdb.change_list_status(list_id=self.list_id,
+                                        movie_id=item_id,
+                                        status=False)
                 self.update(force_update=True)
-                self.getControl(500).selectItem(self.position)
+                self.setCurrentListPosition(self.position)
 
         def list_dialog(self, movie_id):
             xbmc.executebuiltin("ActivateWindow(busydialog)")
             listitems = [LANG(32139)]
-            account_lists = get_account_lists()
-            for item in account_lists:
-                listitems.append("%s (%i)" % (item["name"], item["item_count"]))
+            account_lists = tmdb.get_account_lists()
+            listitems += ["%s (%i)" % (i["name"], i["item_count"]) for i in account_lists]
             listitems.append(LANG(32138))
             xbmc.executebuiltin("Dialog.Close(busydialog)")
             index = xbmcgui.Dialog().select(heading=LANG(32136),
@@ -132,17 +115,17 @@ def get_tmdb_window(window_type):
                 listname = xbmcgui.Dialog().input(heading=LANG(32137),
                                                   type=xbmcgui.INPUT_ALPHANUM)
                 if listname:
-                    list_id = create_list(listname)
+                    list_id = tmdb.create_list(listname)
                     xbmc.sleep(1000)
-                    change_list_status(list_id=list_id,
-                                       movie_id=movie_id,
-                                       status=True)
+                    tmdb.change_list_status(list_id=list_id,
+                                            movie_id=movie_id,
+                                            status=True)
             elif index == len(listitems) - 1:
                 self.remove_list_dialog(account_lists)
             elif index > 0:
-                change_list_status(list_id=account_lists[index - 1]["id"],
-                                   movie_id=movie_id,
-                                   status=True)
+                tmdb.change_list_status(list_id=account_lists[index - 1]["id"],
+                                        movie_id=movie_id,
+                                        status=True)
 
         @ch.click(5001)
         def get_sort_type(self):
@@ -150,8 +133,8 @@ def get_tmdb_window(window_type):
                 sort_key = self.mode
             else:
                 sort_key = self.type
-            listitems = [key for key in SORTS[sort_key].values()]
-            sort_strings = [value for value in SORTS[sort_key].keys()]
+            listitems = [k for k in self.SORTS[sort_key].values()]
+            sort_strings = [v for v in self.SORTS[sort_key].keys()]
             index = xbmcgui.Dialog().select(heading=LANG(32104),
                                             list=listitems)
             if index == -1:
@@ -165,19 +148,9 @@ def get_tmdb_window(window_type):
             self.sort_label = listitems[index]
             self.update()
 
-        def add_filter(self, key, value, typelabel, label):
-            if ".gte" in key or ".lte" in key:
-                super(DialogVideoList, self).add_filter(key=key,
-                                                        value=value,
-                                                        typelabel=typelabel,
-                                                        label=label,
-                                                        force_overwrite=True)
-            else:
-                super(DialogVideoList, self).add_filter(key=key,
-                                                        value=value,
-                                                        typelabel=typelabel,
-                                                        label=label,
-                                                        force_overwrite=False)
+        def add_filter(self, **kwargs):
+            super(DialogVideoList, self).add_filter(force_overwrite=".gte" in kwargs["key"] or ".lte" in kwargs["key"],
+                                                    **kwargs)
 
         @ch.click(5004)
         def toggle_order(self):
@@ -210,9 +183,8 @@ def get_tmdb_window(window_type):
                     listitems.append(LANG(32134))
             xbmc.executebuiltin("ActivateWindow(busydialog)")
             if self.logged_in:
-                account_lists = get_account_lists()
-                for item in account_lists:
-                    listitems.append("%s (%i)" % (item["name"], item["item_count"]))
+                account_lists = tmdb.get_account_lists()
+                listitems += ["%s (%i)" % (i["name"], i["item_count"]) for i in account_lists]
             xbmc.executebuiltin("Dialog.Close(busydialog)")
             index = xbmcgui.Dialog().select(heading=LANG(32136),
                                             list=listitems)
@@ -244,14 +216,20 @@ def get_tmdb_window(window_type):
 
         @ch.click(5002)
         def set_genre_filter(self):
-            response = get_tmdb_data("genre/%s/list?language=%s&" % (self.type, SETTING("LanguageID")), 10)
-            id_list = [item["id"] for item in response["genres"]]
-            label_list = [item["name"] for item in response["genres"]]
+            params = {"language": SETTING("LanguageID")}
+            response = tmdb.get_data(url="genre/%s/list" % (self.type),
+                                     params=params,
+                                     cache_days=10)
+            ids = [item["id"] for item in response["genres"]]
+            labels = [item["name"] for item in response["genres"]]
             index = xbmcgui.Dialog().select(heading=LANG(32151),
-                                            list=label_list)
+                                            list=labels)
             if index == -1:
                 return None
-            self.add_filter("with_genres", str(id_list[index]), LANG(135), label_list[index])
+            self.add_filter(key="with_genres",
+                            value=str(ids[index]),
+                            typelabel=LANG(135),
+                            label=labels[index])
             self.mode = "filter"
             self.page = 1
             self.update()
@@ -268,9 +246,15 @@ def get_tmdb_window(window_type):
                                             type=xbmcgui.INPUT_NUMERIC)
             if result:
                 if ret:
-                    self.add_filter("vote_count.%s" % "lte", result, LANG(32111), " < " + result)
+                    self.add_filter(key="vote_count.%s" % "lte",
+                                    value=result,
+                                    typelabel=LANG(32111),
+                                    label=" < " + result)
                 else:
-                    self.add_filter("vote_count.%s" % "gte", result, LANG(32111), " > " + result)
+                    self.add_filter(key="vote_count.%s" % "gte",
+                                    value=result,
+                                    typelabel=LANG(32111),
+                                    label=" > " + result)
                 self.mode = "filter"
                 self.page = 1
                 self.update()
@@ -294,9 +278,15 @@ def get_tmdb_window(window_type):
                 value = "%s-01-01" % result
                 label = " > " + result
             if self.type == "tv":
-                self.add_filter("first_air_date.%s" % order, value, LANG(20416), label)
+                self.add_filter(key="first_air_date.%s" % order,
+                                value=value,
+                                typelabel=LANG(20416),
+                                label=label)
             else:
-                self.add_filter("primary_release_date.%s" % order, value, LANG(345), label)
+                self.add_filter(key="primary_release_date.%s" % order,
+                                value=value,
+                                typelabel=LANG(345),
+                                label=label)
             self.mode = "filter"
             self.page = 1
             self.update()
@@ -307,10 +297,13 @@ def get_tmdb_window(window_type):
                                             type=xbmcgui.INPUT_ALPHANUM)
             if not result or result == -1:
                 return None
-            response = get_person_info(result)
+            response = tmdb.get_person_info(result)
             if not response:
                 return None
-            self.add_filter("with_people", str(response["id"]), LANG(32156), response["name"])
+            self.add_filter(key="with_people",
+                            value=str(response["id"]),
+                            typelabel=LANG(32156),
+                            label=response["name"])
             self.mode = "filter"
             self.page = 1
             self.update()
@@ -323,7 +316,7 @@ def get_tmdb_window(window_type):
                 self.type = media_type
             if self.type == "tv":
                 wm.open_tvshow_info(prev_window=self,
-                                    tvshow_id=self.listitem.getProperty("id"),
+                                    tmdb_id=self.listitem.getProperty("id"),
                                     dbid=self.listitem.getProperty("dbid"))
             elif self.type == "person":
                 wm.open_actor_info(prev_window=self,
@@ -339,7 +332,7 @@ def get_tmdb_window(window_type):
                                             type=xbmcgui.INPUT_ALPHANUM)
             if not result or result < 0:
                 return None
-            response = search_company(result)
+            response = tmdb.search_company(result)
             if len(response) > 1:
                 selection = xbmcgui.Dialog().select(heading=LANG(32151),
                                                     list=[item["name"] for item in response])
@@ -363,31 +356,40 @@ def get_tmdb_window(window_type):
                                             type=xbmcgui.INPUT_ALPHANUM)
             if not result or result == -1:
                 return None
-            response = get_keyword_id(result)
+            response = tmdb.get_keyword_id(result)
             if not response:
                 return None
-            self.add_filter("with_keywords", str(response["id"]), LANG(32114), response["name"])
+            self.add_filter(key="with_keywords",
+                            value=str(response["id"]),
+                            typelabel=LANG(32114),
+                            label=response["name"])
             self.mode = "filter"
             self.page = 1
             self.update()
 
         @ch.click(5006)
         def set_certification_filter(self):
-            response = get_certification_list(self.type)
-            country_list = [key for key in response.keys()]
+            response = tmdb.get_certification_list(self.type)
+            countries = [key for key in response.keys()]
             index = xbmcgui.Dialog().select(heading=LANG(21879),
-                                            list=country_list)
+                                            list=countries)
             if index == -1:
                 return None
-            country = country_list[index]
-            cert_list = ["%s  -  %s" % (i["certification"], i["meaning"]) for i in response[country]]
+            country = countries[index]
+            certs = ["%s  -  %s" % (i["certification"], i["meaning"]) for i in response[country]]
             index = xbmcgui.Dialog().select(heading=LANG(32151),
-                                            list=cert_list)
+                                            list=certs)
             if index == -1:
                 return None
-            cert = cert_list[index].split("  -  ")[0]
-            self.add_filter("certification_country", country, LANG(32153), country)
-            self.add_filter("certification", cert, LANG(32127), cert)
+            cert = certs[index].split("  -  ")[0]
+            self.add_filter(key="certification_country",
+                            value=country,
+                            typelabel=LANG(32153),
+                            label=country)
+            self.add_filter(key="certification",
+                            value=cert,
+                            typelabel=LANG(32127),
+                            label=cert)
             self.page = 1
             self.mode = "filter"
             self.update()
@@ -403,51 +405,70 @@ def get_tmdb_window(window_type):
                 rated = LANG(32135)
                 starred = LANG(32134)
             if self.mode == "search":
-                url = "search/multi?query=%s&page=%i&include_adult=%s&" % (urllib.quote_plus(self.search_str), self.page, include_adult)
+                params = {"query": self.search_str,
+                          "include_adult": include_adult,
+                          "page": self.page}
+                url = "search/multi"
                 if self.search_str:
                     self.filter_label = LANG(32146) % self.search_str
                 else:
                     self.filter_label = ""
             elif self.mode == "list":
-                url = "list/%s?language=%s&" % (str(self.list_id), SETTING("LanguageID"))
+                params = {"language": SETTING("LanguageID")}
+                url = "list/%s" % (self.list_id)
                 # self.filter_label = LANG(32036)
             elif self.mode == "favorites":
-                url = "account/%s/favorite/%s?language=%s&page=%i&session_id=%s&sort_by=%s&" % (get_account_info(), temp, SETTING("LanguageID"), self.page, get_session_id(), sort_by)
+                params = {"sort_by": sort_by,
+                          "language": SETTING("LanguageID"),
+                          "page": self.page,
+                          "session_id": tmdb.Login.get_session_id()}
+                url = "account/%s/favorite/%s" % (tmdb.Login.get_account_id(), temp)
                 self.filter_label = starred
             elif self.mode == "rating":
                 force = True  # workaround, should be updated after setting rating
                 if self.logged_in:
-                    session_id = get_session_id()
+                    session_id = tmdb.Login.get_session_id()
                     if not session_id:
                         notify("Could not get session id")
                         return {"listitems": [],
                                 "results_per_page": 0,
                                 "total_results": 0}
-                    url = "account/%s/rated/%s?language=%s&page=%i&session_id=%s&sort_by=%s&" % (get_account_info(), temp, SETTING("LanguageID"), self.page, session_id, sort_by)
+                    params = {"sort_by": sort_by,
+                              "language": SETTING("LanguageID"),
+                              "page": self.page,
+                              "session_id": session_id}
+                    url = "account/%s/rated/%s" % (tmdb.Login.get_account_id(), temp)
                 else:
-                    session_id = get_guest_session_id()
+                    session_id = tmdb.Login.get_guest_session_id()
                     if not session_id:
                         notify("Could not get session id")
                         return {"listitems": [],
                                 "results_per_page": 0,
                                 "total_results": 0}
-                    url = "guest_session/%s/rated_movies?language=%s&" % (session_id, SETTING("LanguageID"))
+                    params = {"language": SETTING("LanguageID")}
+                    url = "guest_session/%s/rated_movies" % (session_id)
                 self.filter_label = rated
             else:
-                self.set_filter_url()
                 self.set_filter_label()
-                url = "discover/%s?sort_by=%s&%slanguage=%s&page=%i&include_adult=%s&" % (self.type, sort_by, self.filter_url, SETTING("LanguageID"), self.page, include_adult)
+                params = {"sort_by": sort_by,
+                          "language": SETTING("LanguageID"),
+                          "page": self.page,
+                          "include_adult": include_adult}
+                filters = {item["type"]: item["id"] for item in self.filters}
+                params = merge_dicts(params, filters)
+                url = "discover/%s" % (self.type)
             if force:
-                response = get_tmdb_data(url=url,
+                response = tmdb.get_data(url=url,
+                                         params=params,
                                          cache_days=0)
             else:
-                response = get_tmdb_data(url=url,
+                response = tmdb.get_data(url=url,
+                                         params=params,
                                          cache_days=2)
             if not response:
                 return None
             if self.mode == "list":
-                prettyprint(response)
-                info = {"listitems": handle_tmdb_movies(results=response["items"],
+                info = {"listitems": tmdb.handle_movies(results=response["items"],
                                                         local_first=True,
                                                         sortkey=None),
                         "results_per_page": 1,
@@ -461,13 +482,13 @@ def get_tmdb_window(window_type):
             if not response["results"]:
                 notify(LANG(284))
             if self.mode == "search":
-                listitems = handle_tmdb_multi_search(response["results"])
+                listitems = tmdb.handle_multi_search(response["results"])
             elif self.type == "movie":
-                listitems = handle_tmdb_movies(results=response["results"],
+                listitems = tmdb.handle_movies(results=response["results"],
                                                local_first=False,
                                                sortkey=None)
             else:
-                listitems = handle_tmdb_tvshows(results=response["results"],
+                listitems = tmdb.handle_tvshows(results=response["results"],
                                                 local_first=False,
                                                 sortkey=None)
             info = {"listitems": listitems,

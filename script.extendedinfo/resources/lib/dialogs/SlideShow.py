@@ -9,6 +9,7 @@ from .BaseClasses import DialogXML
 
 class SlideShow(DialogXML):
     ACTION_PREVIOUS_MENU = [9, 92, 10]
+    C_LIST_PICTURES = 5000
 
     def __init__(self, *args, **kwargs):
         self.imagelist = kwargs.get('listitems')
@@ -19,12 +20,11 @@ class SlideShow(DialogXML):
     def onInit(self):
         super(SlideShow, self).onInit()
         if self.imagelist:
-            self.getControl(10001).addItems(create_listitems(self.imagelist))
-            self.getControl(10001).selectItem(self.index)
-            self.setFocusId(10001)
-            xbmc.executebuiltin("SetFocus(10001)")
+            self.getControl(self.C_LIST_PICTURES).addItems(create_listitems(self.imagelist))
+            self.getControl(self.C_LIST_PICTURES).selectItem(self.index)
+            self.setFocusId(self.C_LIST_PICTURES)
 
     def onAction(self, action):
         if action in self.ACTION_PREVIOUS_MENU:
-            self.position = self.getControl(10001).getSelectedPosition()
+            self.position = self.getControl(self.C_LIST_PICTURES).getSelectedPosition()
             self.close()

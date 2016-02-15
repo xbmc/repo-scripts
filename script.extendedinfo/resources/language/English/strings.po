@@ -11,10 +11,10 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 msgctxt "Addon Summary"
@@ -23,11 +23,9 @@ msgstr ""
 
 msgctxt "Addon Description"
 msgid ""
-"This script offers various possibilities to display online content inside "
-"skins. Used services are themoviedb.org, theaudiodb.org, rottentomatoes.com,"
-" Trakt.TV and a lot more. Can also be used for importing / exporting skin "
-"settings, adding additional fanart stuff to library and cooking eggs. Needs "
-"skin support for most functions."
+"This script offers various possibilities to display online content inside skins. Used services are themoviedb.org, "
+"theaudiodb.org, rottentomatoes.com, Trakt.TV and a lot more. Can also be used for importing / exporting skin settings,"
+" adding additional fanart stuff to library and cooking eggs. Needs skin support for most functions."
 msgstr ""
 
 msgctxt "#32000"
@@ -111,8 +109,7 @@ msgctxt "#32019"
 msgid "Job"
 msgstr ""
 
-#: \resources\skins\Default\1080i\script-ExtendedInfo
-#: Script-DialogInfo.xml:118
+#: \resources\skins\Default\1080i\script-ExtendedInfo Script-DialogInfo.xml:118
 msgctxt "#32020"
 msgid "Age"
 msgstr ""
@@ -295,14 +292,12 @@ msgctxt "#32059"
 msgid "Added movie to CouchPotato"
 msgstr ""
 
-#: \resources\lib\DialogYoutubeList.py:35
-#: \resources\lib\DialogYoutubeList.py:124
+#: \resources\lib\DialogYoutubeList.py:35 \resources\lib\DialogYoutubeList.py:124
 msgctxt "#32060"
 msgid "Relevance"
 msgstr ""
 
-#: \resources\skins\Default\1080i\script-ExtendedInfo
-#: Script-YoutubeList.xml:113
+#: \resources\skins\Default\1080i\script-ExtendedInfo Script-YoutubeList.xml:113
 msgctxt "#32061"
 msgid "views"
 msgstr ""
@@ -327,8 +322,7 @@ msgctxt "#32065"
 msgid "One year"
 msgstr ""
 
-#: \resources\skins\Default\1080i\script-ExtendedInfo
-#: Script-YoutubeList.xml:518
+#: \resources\skins\Default\1080i\script-ExtendedInfo Script-YoutubeList.xml:518
 msgctxt "#32066"
 msgid "2D / 3D"
 msgstr ""
@@ -348,8 +342,7 @@ msgctxt "#32069"
 msgid "Show similar videos"
 msgstr ""
 
-#: \resources\lib\VideoPlayer.py:56 \resources\lib\DialogVideoInfo.py:133
-#: \resources\lib\DialogVideoInfo.py:145
+#: \resources\lib\VideoPlayer.py:56 \resources\lib\DialogVideoInfo.py:133 \resources\lib\DialogVideoInfo.py:145
 msgctxt "#32070"
 msgid "Youtube video"
 msgstr ""
@@ -407,6 +400,16 @@ msgstr ""
 #: \resources\lib\dialogs\DialogYoutubeList.py:211
 msgctxt "#32081"
 msgid "More videos from"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-ExtendedInfo Script-DialogVideoInfo.xml:2925
+msgctxt "#32082"
+msgid "votes"
+msgstr ""
+
+#: /resources/lib/TheMovieDB.py:266
+msgctxt "#32083"
+msgid "Add movie to list"
 msgstr ""
 
 msgctxt "#32099"
@@ -581,8 +584,7 @@ msgid "For all features enter your TMDB credentials in addon settings. "
 msgstr ""
 
 msgctxt "#32141"
-msgid ""
-"This product uses the TMDb API but is not endorsed or certified by TMDb."
+msgid "This product uses the TMDb API but is not endorsed or certified by TMDb."
 msgstr ""
 
 msgctxt "#32142"

@@ -4,18 +4,17 @@
 # This program is Free Software see LICENSE file for details
 
 from ..Utils import *
-from ..TheMovieDB import *
-from ..ImageTools import *
+from .. import TheMovieDB
+from .. import ImageTools
 from DialogBaseInfo import DialogBaseInfo
 from ..WindowManager import wm
 from ActionHandler import ActionHandler
-from .. import VideoPlayer
+from ..VideoPlayer import PLAYER
 
 ch = ActionHandler()
-PLAYER = VideoPlayer.VideoPlayer()
 
 
-def get_season_window(window_type):
+def get_window(window_type):
 
     class DialogSeasonInfo(DialogBaseInfo, window_type):
 
@@ -23,15 +22,15 @@ def get_season_window(window_type):
             super(DialogSeasonInfo, self).__init__(*args, **kwargs)
             self.type = "Season"
             self.tvshow_id = kwargs.get('id')
-            data = extended_season_info(tvshow_id=self.tvshow_id,
-                                        season_number=kwargs.get('season'))
+            data = TheMovieDB.extended_season_info(tvshow_id=self.tvshow_id,
+                                                   season_number=kwargs.get('season'))
             if not data:
                 return None
             self.info, self.data = data
             if "dbid" not in self.info:  # need to add comparing for seasons
                 self.info['poster'] = get_file(url=self.info.get("poster", ""))
-            self.info['ImageFilter'], self.info['ImageColor'] = filter_image(input_img=self.info.get("poster", ""),
-                                                                             radius=25)
+            self.info['ImageFilter'], self.info['ImageColor'] = ImageTools.filter_image(input_img=self.info.get("poster", ""),
+                                                                                        radius=25)
             self.listitems = [(1000, self.data["actors"]),
                               (750, self.data["crew"]),
                               (2000, self.data["episodes"]),
@@ -68,5 +67,11 @@ def get_season_window(window_type):
         def open_text(self):
             xbmcgui.Dialog().textviewer(heading=LANG(32037),
                                         text=self.info["Plot"])
+
+        @ch.click(1150)
+        def play_youtube_video(self):
+            PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
+                                      listitem=self.listitem,
+                                      window=self)
 
     return DialogSeasonInfo

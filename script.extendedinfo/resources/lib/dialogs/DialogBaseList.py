@@ -6,23 +6,23 @@
 import xbmc
 import xbmcgui
 from ..Utils import *
-from ..TheMovieDB import *
 from ..WindowManager import wm
 from T9Search import T9Search
 from ActionHandler import ActionHandler
-from .. import VideoPlayer
 
-PLAYER = VideoPlayer.VideoPlayer()
 ch = ActionHandler()
 
+C_BUTTON_SEARCH = 6000
+C_BUTTON_RESET_FILTERS = 5005
+C_LIST_MAIN = 500
 
 class DialogBaseList(object):
 
     def __init__(self, *args, **kwargs):
         super(DialogBaseList, self).__init__(*args, **kwargs)
         self.listitem_list = kwargs.get('listitems', None)
-        self.search_str = kwargs.get('search_str', "")
-        self.filter_label = kwargs.get("filter_label", "")
+        self.search_str = kwargs.get('search_str', "").decode("utf-8")
+        self.filter_label = kwargs.get("filter_label", "").decode("utf-8")
         self.mode = kwargs.get("mode", "filter")
         self.filters = kwargs.get('filters', [])
         self.color = kwargs.get('color', "FFAAAAAA")
@@ -31,20 +31,23 @@ class DialogBaseList(object):
         self.last_position = 0
         self.total_pages = 1
         self.total_items = 0
+        self.page_token = ""
+        self.next_page_token = ""
+        self.prev_page_token = ""
 
     def onInit(self):
         super(DialogBaseList, self).onInit()
         HOME.setProperty("WindowColor", self.color)
-        self.window.setProperty("WindowColor", self.color)
+        self.setProperty("WindowColor", self.color)
         if SETTING("alt_browser_layout") == "true":
-            self.window.setProperty("alt_layout", "true")
+            self.setProperty("alt_layout", "true")
         self.update_ui()
         xbmc.sleep(200)
         if self.total_items > 0:
-            xbmc.executebuiltin("SetFocus(500)")
-            self.getControl(500).selectItem(self.last_position)
+            self.setFocusId(C_LIST_MAIN)
+            self.setCurrentListPosition(self.last_position)
         else:
-            xbmc.executebuiltin("SetFocus(6000)")
+            self.setFocusId(C_BUTTON_SEARCH)
 
     @ch.action("parentdir", "*")
     @ch.action("parentfolder", "*")
@@ -65,7 +68,7 @@ class DialogBaseList(object):
     @ch.action("up", "*")
     @ch.action("down", "*")
     def save_position(self):
-        self.position = self.getControl(500).getSelectedPosition()
+        self.position = self.getCurrentListPosition()
 
     def onAction(self, action):
         ch.serve_action(action, self.getFocusId(), self)
@@ -79,12 +82,12 @@ class DialogBaseList(object):
         if self.page != old_page:
             self.update()
 
-    @ch.click(5005)
+    @ch.click(C_BUTTON_RESET_FILTERS)
     def reset_filters(self):
         if len(self.filters) > 1:
             listitems = ["%s: %s" % (f["typelabel"], f["label"]) for f in self.filters]
             listitems.append(LANG(32078))
-            index = xbmcgui.Dialog().select(heading=ADDON.getLocalizedString(32077),
+            index = xbmcgui.Dialog().select(heading=LANG(32077),
                                             list=listitems)
             if index == -1:
                 return None
@@ -98,15 +101,13 @@ class DialogBaseList(object):
         self.mode = "filter"
         self.update()
 
-    @ch.click(6000)
+    @ch.click(C_BUTTON_SEARCH)
     def open_search(self):
-        dialog = T9Search(u'script-%s-T9Search.xml' % ADDON_NAME, ADDON_PATH,
-                          call=self.search,
-                          start_value="",
-                          history=self.__class__.__name__ + ".search")
-        dialog.doModal()
+        T9Search(call=self.search,
+                 start_value="",
+                 history=self.__class__.__name__ + ".search")
         if self.total_items > 0:
-            self.setFocusId(500)
+            self.setFocusId(C_LIST_MAIN)
 
     def onClick(self, control_id):
         ch.serve(control_id, self)
@@ -121,59 +122,64 @@ class DialogBaseList(object):
         self.update_content()
         self.update_ui()
 
-    def set_filter_url(self):
-        filter_list = []
-        for item in self.filters:
-            filter_list.append("%s=%s" % (item["type"], item["id"]))
-        self.filter_url = "&".join(filter_list)
-        if self.filter_url:
-            self.filter_url += "&"
-
     def set_filter_label(self):
-        filter_list = []
+        filters = []
         for item in self.filters:
             filter_label = item["label"].replace("|", " | ").replace(",", " + ")
-            filter_list.append("[COLOR FFAAAAAA]%s:[/COLOR] %s" % (item["typelabel"], filter_label))
-        self.filter_label = "  -  ".join(filter_list)
+            filters.append("[COLOR FFAAAAAA]%s:[/COLOR] %s" % (item["typelabel"], filter_label))
+        self.filter_label = "  -  ".join(filters)
 
-    def update_content(self, add=False, force_update=False):
-        if add:
-            self.old_items = self.listitems
-        else:
-            self.old_items = []
+    def update_content(self, force_update=False):
         data = self.fetch_data(force=force_update)
+        if not data:
+            return None
         self.listitems = data.get("listitems", [])
         self.total_pages = data.get("results_per_page", "")
         self.total_items = data.get("total_results", "")
         self.next_page_token = data.get("next_page_token", "")
         self.prev_page_token = data.get("prev_page_token", "")
-        self.listitems = self.old_items + create_listitems(self.listitems)
+        self.listitems = create_listitems(self.listitems)
 
     def update_ui(self):
-        if not self.listitems and self.getFocusId() == 500:
-            self.setFocusId(6000)
-        self.getControl(500).reset()
+        if not self.listitems and self.getFocusId() == C_LIST_MAIN:
+            self.setFocusId(C_BUTTON_SEARCH)
+        self.clearList()
         if self.listitems:
-            self.getControl(500).addItems(self.listitems)
+            for item in self.listitems:
+                self.addItem(item)
             if self.column is not None:
-                self.getControl(500).selectItem(self.column)
-        self.window.setProperty("TotalPages", str(self.total_pages))
-        self.window.setProperty("TotalItems", str(self.total_items))
-        self.window.setProperty("CurrentPage", str(self.page))
-        self.window.setProperty("Filter_Label", self.filter_label)
-        self.window.setProperty("Sort_Label", self.sort_label)
+                self.setCurrentListPosition(self.column)
+        self.setProperty("TotalPages", str(self.total_pages))
+        self.setProperty("TotalItems", str(self.total_items))
+        self.setProperty("CurrentPage", str(self.page))
+        self.setProperty("Filter_Label", self.filter_label)
+        self.setProperty("Sort_Label", self.sort_label)
         if self.page == self.total_pages:
-            self.window.clearProperty("ArrowDown")
+            self.clearProperty("ArrowDown")
         else:
-            self.window.setProperty("ArrowDown", "True")
+            self.setProperty("ArrowDown", "True")
         if self.page > 1:
-            self.window.setProperty("ArrowUp", "True")
+            self.setProperty("ArrowUp", "True")
         else:
-            self.window.clearProperty("ArrowUp")
+            self.clearProperty("ArrowUp")
         if self.order == "asc":
-            self.window.setProperty("Order_Label", LANG(584))
+            self.setProperty("Order_Label", LANG(584))
         else:
-            self.window.setProperty("Order_Label", LANG(585))
+            self.setProperty("Order_Label", LANG(585))
+
+    def go_to_next_page(self):
+        self.get_column()
+        if self.page < self.total_pages:
+            self.page += 1
+            self.prev_page_token = self.page_token
+            self.page_token = self.next_page_token
+
+    def go_to_prev_page(self):
+        self.get_column()
+        if self.page > 1:
+            self.page -= 1
+            self.next_page_token = self.page_token
+            self.page_token = self.prev_page_token
 
     def get_column(self):
         for i in range(0, 10):
@@ -187,6 +193,8 @@ class DialogBaseList(object):
         self.update_ui()
 
     def add_filter(self, key, value, typelabel, label, force_overwrite=False):
+        if not value:
+            return False
         index = -1
         new_filter = {"id": value,
                       "type": key,
@@ -198,8 +206,6 @@ class DialogBaseList(object):
             if item["type"] == key:
                 index = i
                 break
-        if not value:
-            return False
         if index == -1:
             self.filters.append(new_filter)
             return None

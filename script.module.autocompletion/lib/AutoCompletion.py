@@ -22,20 +22,20 @@ ADDON_DATA_PATH = xbmc.translatePath("special://profile/addon_data/%s" % ADDON_I
 HEADERS = {'User-agent': 'Mozilla/5.0'}
 
 
-def get_autocomplete_items(search_str, limit=10):
+def get_autocomplete_items(search_str, limit=10, provider=None):
     """
     get dict list with autocomplete
     """
     if xbmc.getCondVisibility("System.HasHiddenInput"):
         return []
     if SETTING("autocomplete_provider") == "youtube":
-        provider = GoogleProvider(youtube=True)
+        provider = GoogleProvider(youtube=True, limit=limit)
     elif SETTING("autocomplete_provider") == "google":
-        provider = GoogleProvider()
+        provider = GoogleProvider(limit=limit)
     elif SETTING("autocomplete_provider") == "bing":
-        provider = BingProvider()
+        provider = BingProvider(limit=limit)
     else:
-        provider = LocalDictProvider()
+        provider = LocalDictProvider(limit=limit)
     provider.limit = limit
     return provider.get_predictions(search_str)
 
@@ -43,7 +43,7 @@ def get_autocomplete_items(search_str, limit=10):
 class BaseProvider(object):
 
     def __init__(self, *args, **kwargs):
-        self.limit = 99
+        self.limit = kwargs.get("limit", 10)
 
     def get_predictions(self, search_str):
         pass
@@ -59,13 +59,14 @@ class BaseProvider(object):
     def get_prediction_listitems(self, search_str):
         for item in self.get_predictions(search_str):
             li = {"label": item,
-                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
+                  "path": "plugin://script.module.autocompletion/?info=selectautocomplete&&id=%s" % search_str}
             yield li
 
 
 class GoogleProvider(BaseProvider):
 
     def __init__(self, *args, **kwargs):
+        super(GoogleProvider, self).__init__(*args, **kwargs)
         self.youtube = kwargs.get("youtube", False)
 
     def get_predictions(self, search_str):
@@ -79,7 +80,7 @@ class GoogleProvider(BaseProvider):
         for i, item in enumerate(result):
             search_str = self.prep_search_str(item)
             li = {"label": item,
-                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
+                  "path": "plugin://script.module.autocompletion/?info=selectautocomplete&&id=%s" % search_str}
             listitems.append(li)
             if i > self.limit:
                 break
@@ -102,7 +103,7 @@ class GoogleProvider(BaseProvider):
 class BingProvider(BaseProvider):
 
     def __init__(self, *args, **kwargs):
-        pass
+        super(BingProvider, self).__init__(*args, **kwargs)
 
     def get_predictions(self, search_str):
         """
@@ -112,11 +113,10 @@ class BingProvider(BaseProvider):
             return []
         listitems = []
         result = self.fetch_data(search_str)
-        log(result)
         for i, item in enumerate(result):
             search_str = self.prep_search_str(item)
             li = {"label": item,
-                  "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % search_str}
+                  "path": "plugin://script.module.autocompletion/?info=selectautocomplete&&id=%s" % search_str}
             listitems.append(li)
             if i > self.limit:
                 break
@@ -137,7 +137,7 @@ class BingProvider(BaseProvider):
 class LocalDictProvider(BaseProvider):
 
     def __init__(self, *args, **kwargs):
-        self.limit = 99
+        super(LocalDictProvider, self).__init__(*args, **kwargs)
 
     def get_predictions(self, search_str):
         """
@@ -153,7 +153,7 @@ class LocalDictProvider(BaseProvider):
                 if not line.startswith(search_str) or len(line) <= 2:
                     continue
                 li = {"label": line,
-                      "path": "plugin://script.extendedinfo/?info=selectautocomplete&&id=%s" % line}
+                      "path": "plugin://script.module.autocompletion/?info=selectautocomplete&&id=%s" % line}
                 listitems.append(li)
                 if len(listitems) > self.limit:
                     break
@@ -225,11 +225,10 @@ def read_from_file(path="", raw=False):
     try:
         with open(path) as f:
             log("opened textfile %s." % (path))
-            if not raw:
-                result = simplejson.load(f)
+            if raw:
+                return f.read()
             else:
-                result = f.read()
-        return result
+                return simplejson.load(f)
     except:
         log("failed to load textfile: " + path)
         return False

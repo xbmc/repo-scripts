@@ -5,13 +5,11 @@
 
 import re
 import random
-import urllib
 import xbmc
 from Utils import *
 import datetime
 
 # TVRAGE_KEY = 'VBp9BuIr5iOiBeWCFRMG'
-BANDSINTOWN_KEY = 'xbmc_open_source_media_center'
 
 
 def get_xkcd_images():
@@ -26,8 +24,7 @@ def get_xkcd_images():
             base_url = 'http://xkcd.com/'
             url = '%i/info.0.json' % random.randrange(1, 1190)
             results = get_JSON_response(base_url + url, 9999, folder="XKCD")
-            item = {'Image': results["img"],
-                    'thumb': results["img"],
+            item = {'thumb': results["img"],
                     'path': "plugin://script.extendedinfo?info=setfocus",
                     'poster': results["img"],
                     'title': results["title"],
@@ -54,8 +51,7 @@ def get_cyanide_images():
         if response:
             keyword = re.search("<meta property=\"og:image\".*?content=\"([^\"]*)\"", response).group(1)
             url = re.search("<meta property=\"og:url\".*?content=\"([^\"]*)\"", response).group(1)
-            newitem = {'Image': keyword,
-                       'thumb': keyword,
+            newitem = {'thumb': keyword,
                        'path': "plugin://script.extendedinfo?info=setfocus",
                        'poster': keyword,
                        'title': url}
@@ -68,16 +64,15 @@ def get_cyanide_images():
 
 def get_babe_images(single=False):
     now = datetime.datetime.now()
-    if single is True:
-        filename = "babe%ix%ix%i" % (now.month, now.day, now.year)
-    else:
-        filename = "babes%ix%ix%i" % (now.month, now.day, now.year)
+    filename = "babe%ix%ix%i" % (now.month, now.day, now.year)
+    if single:
+        filename= "single" + filename
     path = xbmc.translatePath(os.path.join(ADDON_DATA_PATH, "Babes", filename + ".txt"))
     if xbmcvfs.exists(path):
         return read_from_file(path)
     items = []
     for i in range(1, 10):
-        if single is True:
+        if single:
             month = now.month
             day = now.day
             image = i
@@ -95,54 +90,3 @@ def get_babe_images(single=False):
                  filename=filename,
                  path=os.path.join(ADDON_DATA_PATH, "Babes"))
     return items
-
-
-def handle_bandsintown_events(results):
-    events = []
-    for event in results:
-        try:
-            venue = event['venue']
-            artists = ''
-            for art in event["artists"]:
-                artists = artists + ' / ' + art['name']
-                artists = artists.replace(" / ", "", 1)
-            event = {'date': event['datetime'].replace("T", " - ").replace(":00", "", 1),
-                     'city': venue['city'],
-                     'lat': venue['latitude'],
-                     'lon': venue['longitude'],
-                     'id': venue['id'],
-                     'url': venue['url'],
-                     'name': venue['name'],
-                     'region': venue['region'],
-                     'country': venue['country'],
-                     'artists': artists}
-            events.append(event)
-        except Exception as e:
-            log("Exception in handle_bandsintown_events")
-            log(e)
-            prettyprint(event)
-    return events
-
-
-def get_artist_near_events(artists):  # not possible with api 2.0
-    artist_str = ''
-    count = 0
-    for art in artists:
-        artist = art['artist']
-        try:
-            artist = urllib.quote(artist)
-        except:
-            artist = urllib.quote(artist.encode("utf-8"))
-        if count < 49:
-            if len(artist_str) > 0:
-                artist_str = artist_str + '&'
-            artist_str = artist_str + 'artists[]=' + artist
-            count += 1
-    base_url = 'http://api.bandsintown.com/events/search?format=json&location=use_geoip&radius=50&per_page=100&api_version=2.0'
-    url = '&%sapp_id=%s' % (artist_str, BANDSINTOWN_KEY)
-    results = get_JSON_response(base_url + url, folder="BandsInTown")
-    if results:
-        return handle_bandsintown_events(results)
-    log("get_artist_near_events: Could not get data from " + url)
-    log(results)
-    return []

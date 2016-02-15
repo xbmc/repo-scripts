@@ -219,7 +219,7 @@
                                     <align>center</align>
                                     <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                     <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-                                    <font>font13</font>
+                                    <font>font12</font>
                                     <textcolor>FF999999</textcolor>
                                     <focusedcolor>FFFAFAFA</focusedcolor>
                                     <onleft>9</onleft>
@@ -261,7 +261,7 @@
                                 <align>center</align>
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-                                <font>font13</font>
+                                <font>font12</font>
                                 <textcolor>FF999999</textcolor>
                                 <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
@@ -286,7 +286,7 @@
                                 <align>center</align>
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-                                <font>font13</font>
+                                <font>font12</font>
                                 <textcolor>FF999999</textcolor>
                                 <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
@@ -310,7 +310,7 @@
                                 <align>center</align>
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-                                <font>font13</font>
+                                <font>font12</font>
                                 <textcolor>FF999999</textcolor>
                                 <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
@@ -334,7 +334,7 @@
                                 <align>center</align>
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-                                <font>font13</font>
+                                <font>font12</font>
                                 <textcolor>FF999999</textcolor>
                                 <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
@@ -353,7 +353,7 @@
                                 <align>center</align>
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-                                <font>font13</font>
+                                <font>font12</font>
                                 <textcolor>FF999999</textcolor>
                                 <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
@@ -378,7 +378,7 @@
                                 <align>center</align>
                                 <texturefocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-focus.png</texturefocus>
                                 <texturenofocus border="40" colordiffuse="$INFO[Window(home).Property(ImageColor)]">buttons/roundedbutton-nofocus.png</texturenofocus>
-                                <font>font13</font>
+                                <font>font12</font>
                                 <textcolor>FF999999</textcolor>
                                 <focusedcolor>FFFAFAFA</focusedcolor>
                                 <aligny>bottom</aligny>
@@ -694,7 +694,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$LOCALIZE[206]$INFO[Container(1000).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -828,7 +828,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32115]$INFO[Container(750).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -1021,7 +1021,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32116]$INFO[Container(150).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -1080,7 +1080,7 @@
                                         </control>
                                         <control type="image">
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>59</width>
                                             <height>25</height>
                                             <texture>common/black.png</texture>
                                             <animation effect="fade" end="60" time="0" condition="true">Conditional</animation>
@@ -1167,7 +1167,7 @@
                                         </control>
                                         <control type="image">
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>59</width>
                                             <height>25</height>
                                             <texture>common/black.png</texture>
                                             <animation effect="fade" end="60" time="0" condition="true">Conditional</animation>
@@ -1228,7 +1228,7 @@
                             <width>1900</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$INFO[Window.Property(set.label)]$INFO[Container(250).NumItems, (,)]</label>
                         </control>
                         <control type="textbox">
@@ -1261,7 +1261,7 @@
                             <width>1900</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$LOCALIZE[33054]$INFO[Container(250).NumItems, (,)]</label>
                             <visible>IsEmpty(Window.Property(set.label))</visible>
                         </control>
@@ -1328,7 +1328,7 @@
                                         </control>
                                         <control type="image">
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>59</width>
                                             <height>25</height>
                                             <texture>common/black.png</texture>
                                             <animation effect="fade" end="60" time="0" condition="true">Conditional</animation>
@@ -1406,7 +1406,7 @@
                                         </control>
                                         <control type="image">
                                             <posy>310</posy>
-                                            <width>54</width>
+                                            <width>59</width>
                                             <height>25</height>
                                             <texture>common/black.png</texture>
                                             <animation effect="fade" end="60" time="0" condition="true">Conditional</animation>
@@ -1448,7 +1448,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32117]$INFO[Container(1150).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -1581,7 +1581,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32118]$INFO[Container(350).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -1711,7 +1711,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$LOCALIZE[20388]$INFO[Container(550).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -1764,7 +1764,7 @@
                                         <posx>50</posx>
                                         <width>273</width>
                                         <height>100</height>
-                                        <texture fallback="resource://resource.images.studios.white/default-studio.png">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</texture>
+                                        <texture fallback="flags/source/default.png">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</texture>
                                         <aspectratio aligny="center" align="center">keep</aspectratio>
                                     </control>
                                     <control type="textbox">
@@ -1801,7 +1801,7 @@
                                         <posx>50</posx>
                                         <width>273</width>
                                         <height>100</height>
-                                        <texture fallback="resource://resource.images.studios.white/default-studio.png">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</texture>
+                                        <texture fallback="flags/source/default.png">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</texture>
                                         <aspectratio aligny="center" align="center">keep</aspectratio>
                                     </control>
                                     <control type="textbox">
@@ -1828,7 +1828,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32152]$INFO[Container(1450).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -1881,7 +1881,7 @@
                                         <posx>30</posx>
                                         <width>313</width>
                                         <height>100</height>
-                                        <texture fallback="flags/studios/default-studio.png">$INFO[ListItem.Label,flags/studios/,.png]</texture>
+                                        <texture fallback="flags/source/default.png">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</texture>
                                         <aspectratio aligny="center" align="center">keep</aspectratio>
                                     </control>
                                     <control type="textbox">
@@ -1918,7 +1918,7 @@
                                         <posx>30</posx>
                                         <width>313</width>
                                         <height>100</height>
-                                        <texture fallback="flags/studios/default-studio.png">$INFO[ListItem.Label,flags/studios/,.png]</texture>
+                                        <texture fallback="flags/source/default.png">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</texture>
                                         <aspectratio aligny="center" align="center">keep</aspectratio>
                                     </control>
                                     <control type="textbox">
@@ -1945,7 +1945,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32168]$INFO[Container(650).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -2069,7 +2069,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$LOCALIZE[135]$INFO[Container(850).NumItems, (,)]</label>
                         </control>
                         <control type="panel" id="850">
@@ -2153,7 +2153,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32167]$INFO[Container(1050).NumItems, (,)]</label>
                         </control>
                         <control type="panel" id="1050">
@@ -2236,7 +2236,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$LOCALIZE[21861]$INFO[Container(950).NumItems, (,)]</label>
                         </control>
                         <control type="panel" id="950">
@@ -2319,7 +2319,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32119]$INFO[Container(1250).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -2426,7 +2426,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$LOCALIZE[20445]$INFO[Container(1350).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -2533,7 +2533,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32026]$INFO[Container(450).NumItems, (,)]</label>
                         </control>
                         <control type="image">
@@ -2701,7 +2701,7 @@
                             <width>500</width>
                             <height>25</height>
                             <aligny>center</aligny>
-                            <font>font14</font>
+                            <font>font13</font>
                             <label>$ADDON[script.extendedinfo 32025] $INFO[Container(2000).NumItems,(,)]</label>
                         </control>
                         <control type="panel" id="2000">
@@ -2922,7 +2922,7 @@
                                     <height>38</height>
                                     <align>center</align>
                                     <aligny>center</aligny>
-                                    <label fallback="563">$INFO[Window.Property(Votes),, $LOCALIZE[20350]]</label>
+                                    <label fallback="563">$INFO[Window.Property(Votes),, $ADDON[script.extendedinfo 32082]]</label>
                                     <font>font10</font>
                                 </control>
                             </control>
