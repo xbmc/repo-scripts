@@ -244,14 +244,14 @@ class ActionHandler():
 
     def serve(self, control_id, wnd):
         view_function = self.clicks.get(control_id)
+        self.attach_control_attribs(wnd, control_id)
         if view_function:
-            self.attach_control_attribs(wnd, control_id)
             return view_function(wnd)
 
     def serve_focus(self, control_id, wnd):
         view_function = self.focus_actions.get(control_id)
+        self.attach_control_attribs(wnd, control_id)
         if view_function:
-            self.attach_control_attribs(wnd, control_id)
             return view_function(wnd)
 
     def serve_action(self, action, control_id, wnd):
@@ -275,5 +275,7 @@ class ActionHandler():
             wnd.control = None
         try:
             wnd.listitem = wnd.control.getSelectedItem()
+            if not wnd.listitem:
+                wnd.listitem = wnd.getListItem(wnd.getCurrentListPosition())
         except:
             wnd.listitem = None

@@ -1,12 +1,18 @@
-1.0.0
+1.0.3
 
-- Initial release
+- fixed usage for MediaWindows
+
+1.0.2
+
+- fixed silly .gitignore error
 
 1.0.1
 
 - added README
 - fixed onFocus functionality
 
-1.0.2
+1.0.0
 
-- fixed silly .gitignore error
+- Initial release
+
+
