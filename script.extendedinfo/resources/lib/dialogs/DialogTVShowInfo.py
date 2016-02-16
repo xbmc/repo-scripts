@@ -188,6 +188,12 @@ def get_tvshow_window(window_type):
                                text=self.info["Plot"],
                                color=self.info['ImageColor'])
 
+        @ch.click(1150)
+        def play_youtube_video(self):
+            PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
+                                      listitem=self.listitem,
+                                      window=self)
+
         def update_states(self):
             xbmc.sleep(2000)  # delay because MovieDB takes some time to update
             _, __, self.account_states = extended_tvshow_info(tvshow_id=self.info["id"],

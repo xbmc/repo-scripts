@@ -184,7 +184,7 @@ def get_certification_list(media_type):
 
 def add_movie_to_list(movie_id):
     selection = xbmcgui.Dialog().select(heading=LANG(22080),
-                                        list=["Add movie to list"])
+                                        list=[LANG(32083)])
     if selection == 0:
         account_lists = get_account_lists()
         listitems = ["%s (%i)" % (i["name"], i["item_count"]) for i in account_lists]
@@ -417,9 +417,9 @@ def handle_tmdb_seasons(results):
         season_number = str(fetch(season, 'season_number'))
         artwork = get_image_urls(poster=season.get("poster_path"))
         if season_number == "0":
-            title = "Specials"
+            title = LANG(20381)
         else:
-            title = "Season %s" % season_number
+            title = "%s %s" % (LANG(20373), season_number)
         listitem = {'media_type': "season",
                     'title': title,
                     'season': season_number,
@@ -861,9 +861,9 @@ def extended_season_info(tvshow_id, season_number):
     if response.get("name", False):
         title = response["name"]
     elif season_number == "0":
-        title = "Specials"
+        title = LANG(20381)
     else:
-        title = "Season %s" % season_number
+        title = "%s %s" % (LANG(20373), season_number)
     season = {'SeasonDescription': clean_text(response["overview"]),
               'Plot': clean_text(response["overview"]),
               'TVShowTitle': fetch(tvshow, 'name'),

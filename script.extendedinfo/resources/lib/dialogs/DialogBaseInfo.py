@@ -72,13 +72,6 @@ class DialogBaseInfo(object):
             except:
                 log("Notice: No container with id %i available" % container_id)
 
-    @ch.click(350)
-    @ch.click(1150)
-    def play_youtube_video(self):
-        PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
-                                  listitem=self.listitem,
-                                  window=self)
-
     @ch.click(1250)
     @ch.click(1350)
     def open_image(self):

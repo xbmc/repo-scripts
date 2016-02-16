@@ -71,4 +71,10 @@ def get_season_window(window_type):
                                text=self.info["Plot"],
                                color=self.info['ImageColor'])
 
+        @ch.click(1150)
+        def play_youtube_video(self):
+            PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
+                                      listitem=self.listitem,
+                                      window=self)
+
     return DialogSeasonInfo

@@ -102,8 +102,14 @@ def get_movie_window(window_type):
 
         @ch.click(10)
         def play_trailer(self):
-            PLAYER.play_youtube_video(youtube_id=youtube_id,
-                                      listitem=self.getControl(1150).getListItem(0).getProperty("youtube_id"),
+            PLAYER.play_youtube_video(youtube_id=self.getControl(1150).getListItem(0).getProperty("youtube_id"),
+                                      window=self)
+
+        @ch.click(350)
+        @ch.click(1150)
+        def play_youtube_video(self):
+            PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
+                                      listitem=self.listitem,
                                       window=self)
 
         @ch.click(550)
