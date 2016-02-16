@@ -21,7 +21,7 @@ def get_rottentomatoes_movies(movietype):
             imdb_id = str(item["alternate_ids"]["imdb"])
         else:
             imdb_id = ""
-        poster = "http://" + item["posters"]["original"].replace("tmb", "ori")[64:]
+        poster = "http://content6.flixster.com/" + item["posters"]["original"][93:]
         if SETTING("infodialog_onclick") != "false":
             path = 'plugin://script.extendedinfo/?info=extendedinfo&&imdb_id=%s' % imdb_id
         else:
