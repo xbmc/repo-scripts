@@ -3,6 +3,8 @@ script.module.t1mlib
 
 Library of support routines for t1m addons
 
+V1.0.14 another unicode fix
+V1.0.13 fix outfile.close()
 V1.0.12 added post to getRequest
 V1.0.11 add doFunction
 V1.0.10 subtitle dxfp - > srt cleanup
