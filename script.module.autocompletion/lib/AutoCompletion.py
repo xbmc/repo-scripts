@@ -59,7 +59,7 @@ class BaseProvider(object):
     def get_prediction_listitems(self, search_str):
         for item in self.get_predictions(search_str):
             li = {"label": item,
-                  "path": "plugin://script.module.autocompletion/?info=selectautocomplete&&id=%s" % search_str}
+                  "search_string": search_str}
             yield li
 
 
@@ -75,16 +75,15 @@ class GoogleProvider(BaseProvider):
         """
         if not search_str:
             return []
-        listitems = []
+        items = []
         result = self.fetch_data(search_str)
         for i, item in enumerate(result):
-            search_str = self.prep_search_str(item)
             li = {"label": item,
-                  "path": "plugin://script.module.autocompletion/?info=selectautocomplete&&id=%s" % search_str}
-            listitems.append(li)
+                  "search_string": self.prep_search_str(item)}
+            items.append(li)
             if i > self.limit:
                 break
-        return listitems
+        return items
 
     def fetch_data(self, search_str):
         base_url = "http://clients1.google.com/complete/"
@@ -111,16 +110,15 @@ class BingProvider(BaseProvider):
         """
         if not search_str:
             return []
-        listitems = []
+        items = []
         result = self.fetch_data(search_str)
         for i, item in enumerate(result):
-            search_str = self.prep_search_str(item)
             li = {"label": item,
-                  "path": "plugin://script.module.autocompletion/?info=selectautocomplete&&id=%s" % search_str}
-            listitems.append(li)
+                  "search_string": self.prep_search_str(item)}
+            items.append(li)
             if i > self.limit:
                 break
-        return listitems
+        return items
 
     def fetch_data(self, search_str):
         base_url = "http://api.bing.com/osjson.aspx?"
@@ -153,7 +151,7 @@ class LocalDictProvider(BaseProvider):
                 if not line.startswith(search_str) or len(line) <= 2:
                     continue
                 li = {"label": line,
-                      "path": "plugin://script.module.autocompletion/?info=selectautocomplete&&id=%s" % line}
+                      "search_string": line}
                 listitems.append(li)
                 if len(listitems) > self.limit:
                     break
