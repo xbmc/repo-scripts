@@ -93,7 +93,7 @@ class t1mAddon(object):
     if self.addon.getSetting('enable_meta') != 'true': return
     with open(self.metafile, 'w') as outfile:
         json.dump(meta, outfile)
-    outfile.close
+    outfile.close()
     self.addon.setSetting(id='init_meta', value='false')
       
   def addMenuItem(self, name, mode, ilist=[], url=None, thumb=None, fanart=None, 
@@ -110,7 +110,9 @@ class t1mAddon(object):
       liz.addStreamInfo('subtitle', subtitleStream)
       if cm != None : liz.addContextMenuItems(cm)
       if not isFolder: liz.setProperty('IsPlayable', 'true')
-      u = '%s?mode=%s&name=%s' % (sys.argv[0], mode, qp(name.encode(UTF8)))
+#      u = '%s?mode=%s&name=%s' % (sys.argv[0], mode, qp(name.encode(UTF8,errors='ignore')))
+      u = '%s?mode=%s' % (sys.argv[0], mode)
+
       if url != None: u = u+'&url=%s' % qp(url)
       ilist.append((u, liz, isFolder))
       return(ilist)
