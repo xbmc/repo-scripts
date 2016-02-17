@@ -22,8 +22,7 @@ HEADERS = {
     'User-agent': 'XBMC/16.0 ( phil65@kodi.tv )'
 }
 base_url = "http://image.tmdb.org/t/p/"
-poster_size = "w500"
-fanart_size = "w1280"
+POSTER_SIZE = "w500"
 include_adult = SETTING("include_adults").lower()
 if SETTING("use_https"):
     URL_BASE = "https://api.themoviedb.org/3/"
@@ -37,6 +36,13 @@ ALL_SEASON_PROPS = "videos,images,external_ids,credits"
 ALL_EPISODE_PROPS = "account_states,credits,external_ids,images,rating,videos"
 
 PLUGIN_BASE = "plugin://script.extendedinfo/?info="
+
+release_types = {1: "Premiere",
+                 2: "Theatrical (limited)",
+                 3: "Theatrical",
+                 4: "Digital",
+                 5: "Physical",
+                 6: "TV"}
 
 
 class SettingsMonitor(xbmc.Monitor):
@@ -413,6 +419,7 @@ def handle_misc(results):
     listitems = []
     for item in results:
         artwork = get_image_urls(poster=item.get("poster_path"))
+        description = clean_text(fetch(item, 'description'))
         listitem = {'title': clean_text(fetch(item, 'name')),
                     'certification': fetch(item, 'certification') + fetch(item, 'rating'),
                     'item_count': fetch(item, 'item_count'),
@@ -425,7 +432,8 @@ def handle_misc(results):
                     'content': clean_text(fetch(item, 'content')),
                     'id': fetch(item, 'id'),
                     'url': fetch(item, 'url'),
-                    'Description': clean_text(fetch(item, 'description'))}
+                    'Description': description,
+                    'Plot': description}
         listitem.update(artwork)
         listitems.append(listitem)
     return listitems
@@ -504,7 +512,7 @@ def handle_images(results):
                  'iso_639_1': fetch(item, "iso_639_1")}
         if item.get("media"):
             image['title'] = fetch(item["media"], "title")
-            image['mediaposter'] = base_url + poster_size + fetch(item["media"], "poster_path")
+            image['mediaposter'] = base_url + POSTER_SIZE + fetch(item["media"], "poster_path")
         image.update(artwork)
         images.append(image)
     return images
@@ -613,7 +621,6 @@ def get_company_data(company_id):
     if not company_id:
         return []
     response = get_data(url="company/%s/movies" % (company_id),
-                        params=params,
                         cache_days=30)
     if response and "results" in response:
         return handle_movies(response["results"])

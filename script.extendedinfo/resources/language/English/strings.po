@@ -412,6 +412,11 @@ msgctxt "#32083"
 msgid "Add movie to list"
 msgstr ""
 
+#: /resources/settings.xml:7
+msgctxt "#32084"
+msgid "Use classic keyboard for search"
+msgstr ""
+
 msgctxt "#32099"
 msgid "Include porn stars"
 msgstr ""
