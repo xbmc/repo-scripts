@@ -208,7 +208,8 @@ class LibraryFunctions():
 
         return unicode(rv, 'utf-8', errors='ignore')
 
-    # These functions default to random items, but by sorting differently they'll also be used for recent items
+    # These functions default to random items.
+    # By sorting differently they'll also be used for recent items.
     def _fetch_random_movies(self, useCache=False, sort=False, prefix="randommovies"):
         unplayed_flag = self.RANDOMITEMS_UNPLAYED if prefix == "randommovies" else self.RECENTITEMS_UNPLAYED
 
@@ -217,15 +218,18 @@ class LibraryFunctions():
         return self._fetch_items(useCache, prefix, query_random_movies)
 
     def _fetch_random_episodes(self, useCache=False, sort=False, prefix="randomepisodes"):
-        unplayed_flag = self.RANDOMITEMS_UNPLAYED if prefix == "randomepisodes" else self.RECENTITEMS_UNPLAYED
+        unplayed_flag = self.RANDOMITEMS_UNPLAYED if prefix == "randommovies" else self.RECENTITEMS_UNPLAYED
 
         def query_randomepisodes():
-            return self.json_query("VideoLibrary.GetEpisodes", unplayed=unplayed_flag, include_specials=self.INCLUDE_SPECIALS, properties=self.tvepisode_properties, sort=sort)
+            return self.json_query("VideoLibrary.GetEpisodes", unplayed=unplayed_flag,
+                                   include_specials=self.INCLUDE_SPECIALS,
+                                   properties=self.tvepisode_properties, sort=sort)
         return self._fetch_items(useCache, prefix, query_randomepisodes)
 
     def _fetch_random_songs(self, useCache=False, sort=False):
         def query_randomsongs():
-            return self.json_query("AudioLibrary.GetSongs", unplayed=self.RANDOMITEMS_UNPLAYED, properties=self.music_properties, sort=sort)
+            return self.json_query("AudioLibrary.GetSongs", unplayed=self.RANDOMITEMS_UNPLAYED,
+                                   properties=self.music_properties, sort=sort)
         return self._fetch_items(useCache, "randomsongs", query_randomsongs)
 
     def _fetch_random_albums(self, useCache=False, sort=False, prefix="randomalbums"):
@@ -237,10 +241,11 @@ class LibraryFunctions():
         unplayed_flag = self.RANDOMITEMS_UNPLAYED if prefix == "randommusicvideos" else self.RECENTITEMS_UNPLAYED
 
         def query_musicvideos():
-            return self.json_query("VideoLibrary.GetMusicVideos", unplayed=unplayed_flag, properties=self.musicvideo_properties, sort=sort)
+            return self.json_query("VideoLibrary.GetMusicVideos", unplayed=unplayed_flag,
+                                   properties=self.musicvideo_properties, sort=sort)
         return self._fetch_items(useCache, prefix, query_musicvideos)
 
-    # _fetch_recent_* is just the same as the random ones except for sorting
+    # _fetch_recent_* is the same as the random ones except for sorting
     def _fetch_recent_movies(self, useCache=False):
         return self._fetch_random_movies(useCache, sort=self.recent_sort, prefix="recentmovies")
 
@@ -256,14 +261,19 @@ class LibraryFunctions():
     # Recommended movies: movies that are in progress
     def _fetch_recommended_movies(self, useCache=False):
         def query_recommended_movies():
-            return self.json_query("VideoLibrary.GetMovies", properties=self.movie_properties, query_filter=self.inprogress_filter)
+            return self.json_query("VideoLibrary.GetMovies", properties=self.movie_properties,
+                                   query_filter=self.inprogress_filter)
         return self._fetch_items(useCache, "recommendedmovies", query_recommended_movies)
 
     # Recommended episodes: Earliest unwatched episode from in-progress shows
     def _fetch_recommended_episodes(self, useCache=False):
         def query_recommended_episodes():
             # First we get a list of all the in-progress TV shows.
-            json_query_string = self.json_query("VideoLibrary.GetTVShows", unplayed=True, properties=self.tvshow_properties, sort={"order": "descending", "method": "lastplayed"}, query_filter=self.inprogress_filter)
+            json_query_string = self.json_query("VideoLibrary.GetTVShows", unplayed=True,
+                                                properties=self.tvshow_properties,
+                                                sort={"order": "descending",
+                                                      "method": "lastplayed"},
+                                                query_filter=self.inprogress_filter)
             json_query = json.loads(json_query_string)
 
             # If we found any, find the oldest unwatched show for each one.
@@ -271,46 +281,61 @@ class LibraryFunctions():
                 for item in json_query['result']['tvshows']:
                     if xbmc.abortRequested:
                         break
-                    json_query2 = self.json_query("VideoLibrary.GetEpisodes", unplayed=True, include_specials=self.INCLUDE_SPECIALS, properties=self.tvepisode_properties,
-                                                  sort={"method": "episode"}, limit=1, params={"tvshowid": item['tvshowid']})
-                    self.WINDOW.setProperty("recommended-episodes-data-%d" % item['tvshowid'], json_query2)
+                    json_query2 = self.json_query("VideoLibrary.GetEpisodes", unplayed=True,
+                                                  include_specials=self.INCLUDE_SPECIALS,
+                                                  properties=self.tvepisode_properties,
+                                                  sort={"method": "episode"}, limit=1,
+                                                  params={"tvshowid": item['tvshowid']})
+                    self.WINDOW.setProperty("recommended-episodes-data-%d"
+                                            % item['tvshowid'], json_query2)
             return json_query_string
         return self._fetch_items(useCache, "recommendedepisodes", query_recommended_episodes)
 
     # Recommended albums are just the most-played ones
     def _fetch_recommended_albums(self, useCache=False):
         def query_recommended():
-            return self.json_query("AudioLibrary.GetAlbums", properties=self.album_properties, sort={"order": "descending", "method": "playcount"})
+            return self.json_query("AudioLibrary.GetAlbums", properties=self.album_properties,
+                                   sort={"order": "descending", "method": "playcount"})
         return self._fetch_items(useCache, "recommendedalbums", query_recommended)
 
-    def _fetch_recommended_musicvideos(self, useCache=False):
-        def query_recommended_musicvideos():
-            return self.json_query("VideoLibrary.GetMusicVideos", properties=self.musicvideo_properties, query_filter=self.inprogress_filter)
-        return self._fetch_items(useCache, "recommendedmusicvideos", query_recommended_musicvideos)
-
-    # Favourite episodes are the oldest unwatched episodes from shows that are in your favourites list
+    # Favourite episodes are the oldest unwatched episodes
+    # from shows that are in your favourites list
     def _fetch_favourite_episodes(self, useCache=False):
         def query_favourite():
-            # Get all favourites and all unwatched shows, and store their intersection in fav_unwatched
-            favs = json.loads(self.json_query("Favourites.GetFavourites", unplayed=False, properties=[], sort=None, query_filter=None, limit=None))
+            # Get all favourites and all unwatched shows
+            # store their intersection in fav_unwatched
+            favs = json.loads(self.json_query("Favourites.GetFavourites", unplayed=False,
+                                              properties=[], sort=None, query_filter=None, limit=None))
             if favs['result']['favourites'] is None:
                 return None
-            shows = json.loads(self.json_query("VideoLibrary.GetTVShows", unplayed=True, properties=self.tvshow_properties, limit=None))
+            shows = json.loads(self.json_query("VideoLibrary.GetTVShows", unplayed=True,
+                                               properties=self.tvshow_properties, limit=None))
             if "result" not in shows or 'tvshows' not in shows['result']:
                 return None
-            fav_unwatched = [show for show in shows['result']['tvshows'] if show['title'] in set([fav['title'] for fav in favs['result']['favourites'] if fav['type'] == 'window'])]
+            fav_unwatched = [show for show in shows['result']['tvshows']
+                             if show['title'] in set([fav['title']
+                                                     for fav in favs['result']['favourites']
+                                                     if fav['type'] == 'window'])]
 
             # Skeleton return data, to be built out below...
-            rv = {u'jsonrpc': u'2.0', u'id': 1, u'result': {u'tvshows': [], u'limits': {u'start': 0, u'total': 0, u'end': 0}}}
-            # Find the oldest unwatched episode for each fav_unwatched, and add it to the rv; store data in a per-show property
+            rv = {u'jsonrpc': u'2.0', u'id': 1, u'result': {u'tvshows': [],
+                  u'limits': {u'start': 0, u'total': 0, u'end': 0}}}
+            # Find the oldest unwatched episode for each fav_unwatched
+            # Add it to the rv; store data in a per-show property
             for fav in fav_unwatched:
-                show_info_string = self.json_query("VideoLibrary.GetEpisodes", unplayed=True, include_specials=self.INCLUDE_SPECIALS, properties=self.tvepisode_properties, params={"tvshowid": fav['tvshowid']}, sort={"method": "episode"}, limit=1, query_filter=self.unplayed_filter)
+                show_info_string = self.json_query("VideoLibrary.GetEpisodes", unplayed=True,
+                                                   include_specials=self.INCLUDE_SPECIALS,
+                                                   properties=self.tvepisode_properties,
+                                                   params={"tvshowid": fav['tvshowid']},
+                                                   sort={"method": "episode"}, limit=1,
+                                                   query_filter=self.unplayed_filter)
                 show_info = json.loads(show_info_string)
                 if show_info['result']['limits']['total'] > 0:
                     rv['result']['tvshows'].append(fav)
                     rv['result']['limits']['total'] += 1
                     rv['result']['limits']['end'] += 1
-                    self.WINDOW.setProperty("favouriteepisodes-data-%d" % fav['tvshowid'], show_info_string)
+                    self.WINDOW.setProperty("favouriteepisodes-data-%d"
+                                            % fav['tvshowid'], show_info_string)
 
             return unicode(json.dumps(rv), 'utf-8', errors='ignore')
         return self._fetch_items(useCache, prefix="favouriteepisodes", queryFunc=query_favourite)

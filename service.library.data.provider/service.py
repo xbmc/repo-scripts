@@ -86,7 +86,6 @@ class Main:
         LIBRARY._fetch_recommended_movies()
         LIBRARY._fetch_recommended_episodes()
         LIBRARY._fetch_recommended_albums()
-        LIBRARY._fetch_recommended_musicvideos()
 
     def _fetch_favourite(self):
         LIBRARY._fetch_favourite_episodes()
@@ -97,6 +96,8 @@ class Main:
         while not self.Monitor.abortRequested() and self.WINDOW.getProperty('LibraryDataProvider_Running') == 'true':
             if self.Monitor.waitForAbort(1):
                 # Abort was requested while waiting. We should exit
+                self.Monitor.update_listitems = None
+                self.Player.action = None
                 break
             if not xbmc.Player().isPlayingVideo():
                 # Update random items
@@ -124,7 +125,6 @@ class Main:
             LIBRARY._fetch_recommended_albums()
             LIBRARY._fetch_recent_albums()
         elif type == 'musicvideo':
-            LIBRARY._fetch_recommended_musicvideos()
             LIBRARY._fetch_recent_musicvideos()
 
 
@@ -167,7 +167,9 @@ class Widgets_Player(xbmc.Player):
             elif xbmc.getCondVisibility('VideoPlayer.Content(episodes)'):
                 # Check for tv show title and season
                 # to make sure it's really an episode
-                if xbmc.getInfoLabel('VideoPlayer.Season') != "" and xbmc.getInfoLabel('VideoPlayer.TVShowTitle') != "":
+                title = xbmc.getInfoLabel('VideoPlayer.TVShowTitle')
+                season = xbmc.getInfoLabel('VideoPlayer.Season')
+                if title and season:
                     self.type = "episode"
             elif xbmc.getCondVisibility('VideoPlayer.Content(musicvideos)'):
                 self.type = "musicvideo"
