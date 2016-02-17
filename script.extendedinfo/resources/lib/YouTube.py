@@ -5,6 +5,7 @@
 
 from Utils import *
 import urllib
+import itertools
 
 YT_KEY = 'AIzaSyB-BOZ_o09NLVwq_lMskvvj1olDkFI4JK0'
 BASE_URL = "https://www.googleapis.com/youtube/v3/"
@@ -84,10 +85,9 @@ def handle_playlists(results):
               "part": "contentDetails"}
     ext_results = get_data(method="playlists",
                            params=params)
-    for item in playlists:
-        for ext_item in ext_results["items"]:
-            if item["youtube_id"] == ext_item['id']:
-                item["itemcount"] = ext_item['contentDetails']['itemCount']
+    for item, ext_item in itertools.product(playlists, ext_results["items"]):
+        if item["youtube_id"] == ext_item['id']:
+            item["itemcount"] = ext_item['contentDetails']['itemCount']
     return playlists
 
 
@@ -114,11 +114,10 @@ def handle_channels(results):
               "part": "contentDetails,statistics,brandingSettings"}
     ext_results = get_data(method="channels",
                            params=params)
-    for item in channels:
-        for ext_item in ext_results["items"]:
-            if item["youtube_id"] == ext_item['id']:
-                item["itemcount"] = ext_item['statistics']['videoCount']
-                item["fanart"] = ext_item["brandingSettings"]["image"].get("bannerTvMediumImageUrl", "")
+    for item, ext_item in itertools.product(channels, ext_results["items"]):
+        if item["youtube_id"] == ext_item['id']:
+            item["itemcount"] = ext_item['statistics']['videoCount']
+            item["fanart"] = ext_item["brandingSettings"]["image"].get("bannerTvMediumImageUrl", "")
     return channels
 
 

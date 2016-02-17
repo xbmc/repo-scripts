@@ -72,10 +72,7 @@ def get_window(window_type):
         @ch.action("contextmenu", 500)
         def context_menu(self):
             item_id = self.listitem.getProperty("id")
-            if self.type == "tv":
-                listitems = [LANG(32169)]
-            else:
-                listitems = [LANG(32113)]
+            listitems = [LANG(32169)] if self.type == "tv" else [LANG(32113)]
             if self.logged_in:
                 listitems += [LANG(14076)]
                 if not self.type == "tv":
@@ -149,15 +146,12 @@ def get_window(window_type):
             self.update()
 
         def add_filter(self, **kwargs):
-            super(DialogVideoList, self).add_filter(force_overwrite=".gte" in kwargs["key"] or ".lte" in kwargs["key"],
+            super(DialogVideoList, self).add_filter(force_overwrite=kwargs["key"].endswith((".gte", ".lte")),
                                                     **kwargs)
 
         @ch.click(5004)
         def toggle_order(self):
-            if self.order == "asc":
-                self.order = "desc"
-            else:
-                self.order = "asc"
+            self.order = "desc" if self.order == "asc" else "asc"
             self.update()
 
         @ch.click(5007)
@@ -165,10 +159,7 @@ def get_window(window_type):
             self.filters = []
             self.page = 1
             self.mode = "filter"
-            if self.type == "tv":
-                self.type = "movie"
-            else:
-                self.type = "tv"
+            self.type = "movie" if self.type == "tv" else "tv"
             self.update()
 
         @ch.click(7000)
@@ -409,10 +400,7 @@ def get_window(window_type):
                           "include_adult": include_adult,
                           "page": self.page}
                 url = "search/multi"
-                if self.search_str:
-                    self.filter_label = LANG(32146) % self.search_str
-                else:
-                    self.filter_label = ""
+                self.filter_label = LANG(32146) % self.search_str if self.search_str else ""
             elif self.mode == "list":
                 params = {"language": SETTING("LanguageID")}
                 url = "list/%s" % (self.list_id)

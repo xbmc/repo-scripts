@@ -4,6 +4,7 @@
 <!--         <setting type="sep"/> -->
         <setting label="32163" type="bool" id="infodialog_onclick" default="true"/>
         <setting label="32005" type="bool" id="window_mode" default="false"/>
+        <setting label="32084" type="bool" id="classic_search" default="false"/>
         <setting label="32164" type="action" action="RunScript(script.extendedinfo,info=deletecache)"/>
     </category>
     <category label="TheMovieDB">

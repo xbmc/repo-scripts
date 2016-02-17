@@ -1,3 +1,10 @@
+v4.5.1
+- fix tmdb company info call
+- fix LastFM error for artists without mbid
+- API Changes: several calls have changed. Please check readme.
+- removed Cyanide & Happiness and XKCD webcomics (now separate add-ons)
+- add option to use classic search instead of T9
+
 v4.5.0
 - big code rework
 - RottenTomatoes poster fix

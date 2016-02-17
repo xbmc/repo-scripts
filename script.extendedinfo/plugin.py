@@ -23,26 +23,32 @@ class Main:
             xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_VIDEO_YEAR)
             xbmcplugin.addSortMethod(self.handle, xbmcplugin.SORT_METHOD_DURATION)
             if info.endswith("shows"):
+                xbmcplugin.setContent(self.handle, 'tvshows')
+            elif info.endswith("episodes"):
                 xbmcplugin.setContent(self.handle, 'episodes')
-            else:
+            elif info.endswith("movies"):
                 xbmcplugin.setContent(self.handle, 'movies')
+            elif info.endswith("lists"):
+                xbmcplugin.setContent(self.handle, 'sets')
+            else:
+                xbmcplugin.setContent(self.handle, '')
             pass_list_to_skin(name=info,
                               data=listitems,
                               prefix=self.params.get("prefix", ""),
                               handle=self.handle,
                               limit=self.params.get("limit", 20))
         else:
-            movie = {"intheaters": "%s [I](RottenTomatoes)[/I]" % LANG(32042),
-                     "boxoffice": "%s [I](RottenTomatoes)[/I]" % LANG(32055),
-                     "opening": "%s [I](RottenTomatoes)[/I]" % LANG(32048),
-                     "comingsoon": "%s [I](RottenTomatoes)[/I]" % LANG(32043),
-                     "toprentals": "%s [I](RottenTomatoes)[/I]" % LANG(32056),
-                     "currentdvdreleases": "%s [I](RottenTomatoes)[/I]" % LANG(32049),
-                     "newdvdreleases": "%s [I](RottenTomatoes)[/I]" % LANG(32053),
-                     "upcomingdvds": "%s [I](RottenTomatoes)[/I]" % LANG(32054),
+            movie = {"intheatermovies": "%s [I](RottenTomatoes)[/I]" % LANG(32042),
+                     "boxofficemovies": "%s [I](RottenTomatoes)[/I]" % LANG(32055),
+                     "openingmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32048),
+                     "comingsoonmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32043),
+                     "toprentalmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32056),
+                     "currentdvdmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32049),
+                     "newdvdmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32053),
+                     "upcomingdvdmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32054),
                      # tmdb
-                     "incinemas": "%s [I](TheMovieDB)[/I]" % LANG(32042),
-                     "upcoming": "%s [I](TheMovieDB)[/I]" % LANG(32043),
+                     "incinemamovies": "%s [I](TheMovieDB)[/I]" % LANG(32042),
+                     "upcomingmovies": "%s [I](TheMovieDB)[/I]" % LANG(32043),
                      "topratedmovies": "%s [I](TheMovieDB)[/I]" % LANG(32046),
                      "popularmovies": "%s [I](TheMovieDB)[/I]" % LANG(32044),
                      "accountlists": "%s [I](TheMovieDB)[/I]" % LANG(32045),
@@ -52,8 +58,8 @@ class Main:
                      "starredmovies": "%s [I](TheMovieDB)[/I]" % LANG(32134),
                      "ratedmovies": "%s [I](TheMovieDB)[/I]" % LANG(32135),
                      }
-            tvshow = {"airingshows": "%s [I](Trakt.tv)[/I]" % LANG(32028),
-                      "premiereshows": "%s [I](Trakt.tv)[/I]" % LANG(32029),
+            tvshow = {"airingepisodes": "%s [I](Trakt.tv)[/I]" % LANG(32028),
+                      "premiereepisodes": "%s [I](Trakt.tv)[/I]" % LANG(32029),
                       "trendingshows": "%s [I](Trakt.tv)[/I]" % LANG(32032),
                       "airingtodaytvshows": "%s [I](TheMovieDB)[/I]" % LANG(32038),
                       "onairtvshows": "%s [I](TheMovieDB)[/I]" % LANG(32039),
