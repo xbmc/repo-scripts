@@ -1,0 +1,39 @@
+Version 2.5.2
+
+- trakt.py Version 2.5.2
+
+Version 2.5.1
+
+- trakt.py Version 2.5.1
+
+Version 2.4.1
+
+- trakt.py Version 2.4.1
+
+Version 2.3.3
+
+- trakt.py ac86ab644e5900df388f236f8ffdf8413fcf5248
+
+Version 2.3.2
+
+- trakt.py 480dbe963ee0c92c1d77b271da000c9f3fbfe9b9
+
+Version 2.3.1
+
+- trakt.py 472bb02986e44bebdb33c7ff17a73a06df0853e2
+
+Version 2.3.0
+
+- trakt.py 1ad4fcfdcbce30b0714880ac39372642942fe4dc
+
+Version 2.2.1-beta
+
+- trakt.py e680cf330f0ed7fc7cfea4318cefdbec551dbfc0
+
+Version 2.2.0
+
+- trakt.py d1391819e485c29283bd59fa1e50e0af44a75ffd
+
+Version 2.1.1-beta
+
+- trakt.py 0edc50575e3764950660e3426e6981b5a9a33f72
