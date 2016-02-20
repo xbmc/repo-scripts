@@ -1,0 +1,848 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window type="window">
+    <controls>
+
+        <control type="image">
+            <description>Background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <colordiffuse>FF555555</colordiffuse>
+            <aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+            <width>1280</width>
+            <height>720</height>
+            <texture>fanartfootball.jpg</texture>
+        </control>
+
+        <control type="image">
+            <description>image</description>
+            <posx>0</posx>
+            <posy>10</posy>
+            <aspectratio scalediffuse="false" align="center" aligny="top">keep</aspectratio>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <width>200</width>
+            <texture>logotsdb2.png</texture>
+        </control>       
+
+        <control type="textbox">
+            <description>Clock</description>
+            <posx>840</posx>
+            <posy>10</posy>
+            <width>420</width>
+            <visible>true</visible>
+            <align>right</align>
+            <aligny>top</aligny>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <font>font30_title</font>
+            <textcolor>white</textcolor>
+            <shadowcolor>88000000</shadowcolor>
+            <label>$INFO[System.Time]</label>
+        </control>
+
+    <!--Busy control-->
+		<control type="image">
+			<description>Busy animation</description>
+			<posx>450</posx>
+			<posy>300</posy>
+			<width>150</width>
+			<height>150</height>
+			<texture>goal.png</texture>
+			<aspectratio>keep</aspectratio>
+			<animation effect="rotate" start="0" end="360" center="525,375" time="1200" loop="true" condition="true">conditional</animation>
+			<visible>!IsEmpty(Window(home).Property(loading))</visible>
+		</control>
+		
+		<control type="label">
+			<top>330</top>
+			<left>400</left>
+			<width>650</width>
+			<height>90</height>
+			<font>font35_title</font>
+			<textcolor>FFF0F0F0</textcolor>
+			<aligny>center</aligny>
+			<align>center</align>
+			<label>$ADDON[script.screensaver.football.panel 32010]</label>
+			<visible>!IsEmpty(Window(home).Property(loading))</visible>
+		</control>
+
+    <!-- No livegames available -->
+    <control type="group">
+	    <control type="image">
+			<posy>60</posy>
+			<posx>20</posx>
+			<width>920</width>
+			<height>580</height>
+			<fadetime>400</fadetime>
+			<visible>!IsEmpty(Window(home).Property(no-games))</visible>
+			<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+		</control>
+		<control type="image" id="32505">
+			<posy>80</posy>
+			<posx>40</posx>
+			<width>878</width>
+			<height>500</height>
+			<fadetime>400</fadetime>
+			<visible>!IsEmpty(Window(home).Property(no-games))</visible>
+			<texture></texture>
+		</control>
+		<control type="textbox">
+			<width>600</width>
+			<height>30</height>
+			<posx>300</posx>
+			<posy>585</posy>
+			<align>right</align>
+			<fadetime>400</fadetime>
+			<visible>!IsEmpty(Window(home).Property(no-games))</visible>
+			<font>font12_title</font>
+			<textcolor>FFF0F0F0</textcolor>
+			<label>$ADDON[script.screensaver.football.panel 32011]</label>
+		</control>
+	</control>
+
+    <!-- RSS Tick -->
+    <control type="image">
+		<posy>630</posy>
+		<posx>0</posx>
+		<width>1280</width>
+		<height>100</height>
+		<fadetime>400</fadetime>
+		<visible>!IsEmpty(Window(home).Property(has-rss))</visible>
+		<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+	</control>
+    <control type="label" id="32504">
+       <posx>20</posx>
+       <posy>655</posy>
+       <width>1230</width>
+       <height>40</height>
+       <font>font35_title</font>
+       <selectedcolor>green</selectedcolor>
+       <align>center</align>
+       <scroll>true</scroll>
+       <scrollspeed>50</scrollspeed>
+       <fadetime>400</fadetime>
+       <visible>!IsEmpty(Window(home).Property(has-rss))</visible>
+       <label></label>
+    </control>
+    
+
+
+    <!-- League tables -->
+    <control type="group">
+		<control type="image">
+			<posy>40</posy>
+			<posx>940</posx>
+			<width>340</width>
+			<height>600</height>
+			<visible>!IsEmpty(Window(home).Property(has-tables))</visible>
+			<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+			<fadetime>400</fadetime>
+		</control>
+		<control type="image" id="32503">
+			<posx>1015</posx>
+			<visible>!IsEmpty(Window(home).Property(has-tables))</visible>
+			<posy>60</posy>
+			<width>180</width>
+			<height>60</height>
+			<texture></texture>
+			<fadetime>400</fadetime>
+		</control>
+		<control type="list" id="32552">
+			<posx>970</posx>
+			<posy>120</posy>
+			<width>320</width>
+			<height>485</height>
+			<autoscroll>true</autoscroll>
+			<visible>!IsEmpty(Window(home).Property(has-tables))</visible>
+			<scrolltime tween="sine" easing="out">900</scrolltime>
+			<orientation>vertical</orientation>
+			<preloaditems>2</preloaditems>
+			<fadetime>400</fadetime>
+			<itemlayout height="62" width="380">
+				<control type="group">
+					<control type="image">
+						<posy>0</posy>
+						<width>50</width>
+						<height>50</height>
+						<texture>$INFO[ListItem.Thumb]</texture>
+						<fadetime>400</fadetime>
+					</control>
+					<control type="textbox">
+						<width>200</width>
+						<height>25</height>
+						<posx>60</posx>
+						<posy>12</posy>
+						<align>left</align>
+						<font>font12_title</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<info>ListItem.Label</info>
+						<fadetime>400</fadetime>
+					</control>
+					<control type="textbox">
+						<width>40</width>
+						<height>30</height>
+						<posx>250</posx>
+						<posy>12</posy>
+						<align>left</align>
+						<font>font12_title</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(points)]</label>
+						<fadetime>400</fadetime>
+					</control>
+				</control>
+			</itemlayout>
+			<focusedlayout height="62" width="380">
+				<control type="group">
+					<control type="image">
+						<posy>0</posy>
+						<width>50</width>
+						<height>50</height>
+						<texture>$INFO[ListItem.Thumb]</texture>
+						<fadetime>400</fadetime>
+					</control>
+					<control type="textbox">
+						<width>200</width>
+						<height>25</height>
+						<posx>60</posx>
+						<posy>12</posy>
+						<align>left</align>
+						<font>font12_title</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<info>ListItem.Label</info>
+						<fadetime>400</fadetime>
+					</control>
+					<control type="textbox">
+						<width>40</width>
+						<height>30</height>
+						<posx>250</posx>
+						<posy>12</posy>
+						<align>left</align>
+						<font>font12_title</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(points)]</label>
+						<fadetime>400</fadetime>
+					</control>
+				</control>
+			</focusedlayout>
+		</control>
+	</control>
+        
+	<!-- Livescores -->
+
+	<control type="group">
+	
+		<control type="list" id="32500">
+			<posx>0</posx>
+			<posy>60</posy>
+			<width>940</width>
+			<height>500</height>
+			<autoscroll>true</autoscroll>
+			<scrolltime tween="sine" easing="out">4000</scrolltime>
+			<orientation>horizontal</orientation>
+			<preloaditems>2</preloaditems>
+			<fadetime>400</fadetime>
+			<itemlayout height="260" width="480">
+				<control type="image">
+					<posx>0</posx>
+					<width>480</width>
+					<height>260</height>
+					<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+				</control>
+				<control type="group">
+					<posx>30</posx>
+					<posy>18</posy>
+					<control type="image">
+						<posx>170</posx>
+						<posy>40</posy>
+						<width>15</width>
+						<height>15</height>
+						<texture>$INFO[ListItem.Property(status)]</texture>
+						<aspectratio aligny="center">scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>80</width>
+						<height>20</height>
+						<posx>180</posx>
+						<posy>38</posy>
+						<align>center</align>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(minute)]</label>
+					</control>
+					<control type="label">
+						<width>80</width>
+						<height>20</height>
+						<posx>180</posx>
+						<posy>58</posy>
+						<align>center</align>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(starttime)]</label>
+					</control>
+					<control type="textbox">
+						<width>420</width>
+						<height>100</height>
+						<posx>0</posx>
+						<posy>5</posy>
+						<align>center</align>
+						<font>font12</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(league_and_round)]</label>
+					</control>
+					<control type="image">
+						<posx>20</posx>
+						<posy>50</posy>
+						<width>130</width>
+						<height>130</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Property(home_team_logo)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>280</posx>
+						<posy>50</posy>
+						<width>130</width>
+						<height>130</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Property(away_team_logo)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="textbox">
+						<width>420</width>
+						<height>100</height>
+						<posx>10</posx>
+						<posy>80</posy>
+						<align>center</align>
+						<font>font35_title</font>
+						<textcolor>gold</textcolor>
+						<label>$INFO[ListItem.Property(result)]</label>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>180</posy>
+						<width>30</width>
+						<height>30</height>
+						<visible></visible>
+						<texture>$INFO[ListItem.Property(has_home_goals)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>170</width>
+						<height>100</height>
+						<posx>43</posx>
+						<posy>185</posy>
+						<align>left</align>
+						<scroll>true</scroll>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(home_goal_details)]</label>
+					</control>
+					<control type="image">
+						<posx>160</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(home_redcard1)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>180</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(home_redcard2)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>230</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(away_redcard1)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>250</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(away_redcard2)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>230</posx>
+						<posy>180</posy>
+						<width>30</width>
+						<height>30</height>
+						<texture>$INFO[ListItem.Property(has_away_goals)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>150</width>
+						<height>100</height>
+						<posx>263</posx>
+						<posy>185</posy>
+						<align>left</align>
+						<scroll>true</scroll>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(away_goal_details)]</label>
+					</control>
+				</control>
+			</itemlayout>
+			<focusedlayout height="300" width="480">
+				<control type="image">
+					<posx>0</posx>
+					<width>480</width>
+					<height>260</height>
+					<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+				</control>
+				<control type="group">
+					<posx>30</posx>
+					<posy>18</posy>
+					<control type="image">
+						<posx>170</posx>
+						<posy>40</posy>
+						<width>15</width>
+						<height>15</height>
+						<texture>$INFO[ListItem.Property(status)]</texture>
+						<aspectratio aligny="center">scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>80</width>
+						<height>20</height>
+						<posx>180</posx>
+						<posy>38</posy>
+						<align>center</align>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(minute)]</label>
+					</control>
+					<control type="label">
+						<width>80</width>
+						<height>20</height>
+						<posx>180</posx>
+						<posy>58</posy>
+						<align>center</align>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(starttime)]</label>
+					</control>
+					<control type="textbox">
+						<width>420</width>
+						<height>100</height>
+						<posx>0</posx>
+						<posy>5</posy>
+						<align>center</align>
+						<font>font12</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(league_and_round)]</label>
+					</control>
+					<control type="image">
+						<posx>20</posx>
+						<posy>50</posy>
+						<width>130</width>
+						<height>130</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Property(home_team_logo)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>280</posx>
+						<posy>50</posy>
+						<width>130</width>
+						<height>130</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Property(away_team_logo)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="textbox">
+						<width>420</width>
+						<height>100</height>
+						<posx>10</posx>
+						<posy>80</posy>
+						<align>center</align>
+						<font>font35_title</font>
+						<textcolor>gold</textcolor>
+						<label>$INFO[ListItem.Property(result)]</label>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>180</posy>
+						<width>30</width>
+						<height>30</height>
+						<visible></visible>
+						<texture>$INFO[ListItem.Property(has_home_goals)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>170</width>
+						<height>100</height>
+						<posx>43</posx>
+						<posy>185</posy>
+						<align>left</align>
+						<scroll>true</scroll>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(home_goal_details)]</label>
+					</control>
+					<control type="image">
+						<posx>160</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(home_redcard1)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>180</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(home_redcard2)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>230</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(away_redcard1)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>250</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(away_redcard2)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>230</posx>
+						<posy>180</posy>
+						<width>30</width>
+						<height>30</height>
+						<texture>$INFO[ListItem.Property(has_away_goals)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>150</width>
+						<height>100</height>
+						<posx>263</posx>
+						<posy>185</posy>
+						<align>left</align>
+						<scroll>true</scroll>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(away_goal_details)]</label>
+					</control>
+				</control>
+			</focusedlayout>
+		</control>
+	
+		<control type="list" id="32501">
+			<posx>0</posx>
+			<posy>350</posy>
+			<width>940</width>
+			<height>500</height>
+			<autoscroll>true</autoscroll>
+			<scrolltime tween="sine" easing="out">4000</scrolltime>
+			<orientation>horizontal</orientation>
+			<preloaditems>2</preloaditems>
+			<itemlayout height="260" width="480">
+				<control type="image">
+					<posx>0</posx>
+					<width>480</width>
+					<height>260</height>
+					<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+				</control>
+				<control type="group">
+					<posx>30</posx>
+					<posy>18</posy>
+					<control type="image">
+						<posx>170</posx>
+						<posy>40</posy>
+						<width>15</width>
+						<height>15</height>
+						<texture>$INFO[ListItem.Property(status)]</texture>
+						<aspectratio aligny="center">scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>80</width>
+						<height>20</height>
+						<posx>180</posx>
+						<posy>38</posy>
+						<align>center</align>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(minute)]</label>
+					</control>
+					<control type="label">
+						<width>80</width>
+						<height>20</height>
+						<posx>180</posx>
+						<posy>58</posy>
+						<align>center</align>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(starttime)]</label>
+					</control>
+					<control type="textbox">
+						<width>420</width>
+						<height>100</height>
+						<posx>0</posx>
+						<posy>5</posy>
+						<align>center</align>
+						<font>font12</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(league_and_round)]</label>
+					</control>
+					<control type="image">
+						<posx>20</posx>
+						<posy>50</posy>
+						<width>130</width>
+						<height>130</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Property(home_team_logo)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>280</posx>
+						<posy>50</posy>
+						<width>130</width>
+						<height>130</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Property(away_team_logo)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="textbox">
+						<width>420</width>
+						<height>100</height>
+						<posx>10</posx>
+						<posy>80</posy>
+						<align>center</align>
+						<font>font35_title</font>
+						<textcolor>gold</textcolor>
+						<label>$INFO[ListItem.Property(result)]</label>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>180</posy>
+						<width>30</width>
+						<height>30</height>
+						<visible></visible>
+						<texture>$INFO[ListItem.Property(has_home_goals)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>170</width>
+						<height>100</height>
+						<posx>43</posx>
+						<posy>185</posy>
+						<align>left</align>
+						<scroll>true</scroll>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(home_goal_details)]</label>
+					</control>
+					<control type="image">
+						<posx>160</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(home_redcard1)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>180</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(home_redcard2)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>230</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(away_redcard1)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>250</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(away_redcard2)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>230</posx>
+						<posy>180</posy>
+						<width>30</width>
+						<height>30</height>
+						<texture>$INFO[ListItem.Property(has_away_goals)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>150</width>
+						<height>100</height>
+						<posx>263</posx>
+						<posy>185</posy>
+						<align>left</align>
+						<scroll>true</scroll>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(away_goal_details)]</label>
+					</control>
+				</control>
+			</itemlayout>
+			<focusedlayout height="300" width="480">
+				<control type="image">
+					<posx>0</posx>
+					<width>480</width>
+					<height>260</height>
+					<texture border="40">buttons/roundedbutton-nofocus.png</texture>
+				</control>
+				<control type="group">
+					<posx>30</posx>
+					<posy>18</posy>
+					<control type="image">
+						<posx>170</posx>
+						<posy>40</posy>
+						<width>15</width>
+						<height>15</height>
+						<texture>$INFO[ListItem.Property(status)]</texture>
+						<aspectratio aligny="center">scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>80</width>
+						<height>20</height>
+						<posx>180</posx>
+						<posy>38</posy>
+						<align>center</align>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(minute)]</label>
+					</control>
+					<control type="label">
+						<width>80</width>
+						<height>20</height>
+						<posx>180</posx>
+						<posy>58</posy>
+						<align>center</align>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(starttime)]</label>
+					</control>
+					<control type="textbox">
+						<width>420</width>
+						<height>100</height>
+						<posx>0</posx>
+						<posy>5</posy>
+						<align>center</align>
+						<font>font12</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(league_and_round)]</label>
+					</control>
+					<control type="image">
+						<posx>20</posx>
+						<posy>50</posy>
+						<width>130</width>
+						<height>130</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Property(home_team_logo)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>280</posx>
+						<posy>50</posy>
+						<width>130</width>
+						<height>130</height>
+						<texture background="true" fallback="DefaultVideo.png">$INFO[ListItem.Property(away_team_logo)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="textbox">
+						<width>420</width>
+						<height>100</height>
+						<posx>10</posx>
+						<posy>80</posy>
+						<align>center</align>
+						<font>font35_title</font>
+						<textcolor>gold</textcolor>
+						<label>$INFO[ListItem.Property(result)]</label>
+					</control>
+					<control type="image">
+						<posx>10</posx>
+						<posy>180</posy>
+						<width>30</width>
+						<height>30</height>
+						<visible></visible>
+						<texture>$INFO[ListItem.Property(has_home_goals)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>170</width>
+						<height>100</height>
+						<posx>43</posx>
+						<posy>185</posy>
+						<align>left</align>
+						<scroll>true</scroll>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(home_goal_details)]</label>
+					</control>
+					<control type="image">
+						<posx>160</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(home_redcard1)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>180</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(home_redcard2)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>230</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(away_redcard1)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>250</posx>
+						<posy>125</posy>
+						<width>25</width>
+						<height>25</height>
+						<texture>$INFO[ListItem.Property(away_redcard2)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="image">
+						<posx>230</posx>
+						<posy>180</posy>
+						<width>30</width>
+						<height>30</height>
+						<texture>$INFO[ListItem.Property(has_away_goals)]</texture>
+						<fadetime>0</fadetime>
+					</control>
+					<control type="label">
+						<width>150</width>
+						<height>100</height>
+						<posx>263</posx>
+						<posy>185</posy>
+						<align>left</align>
+						<scroll>true</scroll>
+						<font>font10</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<label>$INFO[ListItem.Property(away_goal_details)]</label>
+					</control>
+				</control>
+			</focusedlayout>
+		</control>
+	</control>		
+   </controls>
+</window>

@@ -1,0 +1,77 @@
+# Kodi Media Center language file
+# Addon Name: Football Panel
+# Addon id: script.screensaver.football.panel
+# Addon Provider: enen92
+msgid ""
+msgstr ""
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "Football Panel"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Livescores"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Ignore Leagues"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Livescores update time (min)"
+msgstr ""
+
+msgctxt "#32004"
+msgid "League Tables"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Tables update time (min)"
+msgstr ""
+
+msgctxt "#32006"
+msgid "RSS"
+msgstr ""
+
+msgctxt "#32007"
+msgid "RSS Url"
+msgstr ""
+
+msgctxt "#32008"
+msgid "RSS update time (min)"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Leagues ignored successfully saved."
+msgstr ""
+
+msgctxt "#32010"
+msgid "LOADING..."
+msgstr ""
+
+msgctxt "#32011"
+msgid "No live games at the moment..."
+msgstr ""
+
+msgctxt "#32012"
+msgid "Timezone"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Hide not started"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Hide finished"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Use alternative team name"
+msgstr ""
