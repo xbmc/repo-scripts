@@ -1,0 +1,6 @@
+[B]Version 1.0.0 - 28/1/2016[/B]
+-Module re-written from scratch
+
+[B]Version 0.0.1 - 23/1/2015[/B]
+-First beta version of the module
+

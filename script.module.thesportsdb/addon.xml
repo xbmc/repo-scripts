@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.module.thesportsdb" name="The Sports DB" version="1.0.1" provider-name="enen92,Zag">
+  <requires>
+    <import addon="xbmc.python" version="2.20.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <website>http://www.thecocktaildb.com/</website>
+	<source>https://github.com/enen92/script.module.thesportsdb</source>
+	<forum>http://forum.kodi.tv/showthread.php?tid=258129</forum>
+    <summary lang="en">Python module for thesportsdb.com</summary>
+    <description lang="en">A collection of python methods to wrap the thesportsdb.com API calls</description>
+  </extension>
+</addon>
