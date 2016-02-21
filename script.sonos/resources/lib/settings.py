@@ -184,3 +184,7 @@ class Settings():
     @staticmethod
     def autoLaunchControllerOnStartup():
         return __addon__.getSetting("autoLaunchControllerOnStartup") == 'true'
+
+    @staticmethod
+    def getChecksPerSecond():
+        return int(float(__addon__.getSetting("checksPerSecond")))

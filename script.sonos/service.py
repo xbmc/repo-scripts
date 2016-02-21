@@ -217,7 +217,7 @@ class SonosVolumeRedirect():
             elif volumeChange != 0:
                 sonosDevice.volume = sonosDevice.volume + volumeChange
                 displayMsg = "%s %d" % (__addon__.getLocalizedString(volumeChangeDisplay), sonosDevice.volume)
-                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), displayMsg, __icon__, 500, False)
+                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), displayMsg, __icon__, 500 / Settings.getChecksPerSecond(), False)
 
             redirect = xbmcgui.Window(10000).getProperty("SonosVolumeRedirect")
 
@@ -395,7 +395,7 @@ if __name__ == '__main__':
 
         # Make sure a Sonos speaker was found
         if sonosDevice is not None:
-            timeUntilNextCheck = Settings.getNotificationCheckFrequency()
+            timeUntilNextCheck = Settings.getNotificationCheckFrequency() * Settings.getChecksPerSecond()
 
             log("SonosService: Notification Check Frequency = %d" % timeUntilNextCheck)
 
@@ -488,10 +488,10 @@ if __name__ == '__main__':
                         justStartedService = False
 
                     # Reset the timer for the next check
-                    timeUntilNextCheck = Settings.getNotificationCheckFrequency()
+                    timeUntilNextCheck = Settings.getNotificationCheckFrequency() * Settings.getChecksPerSecond()
 
                 # Increment the timer and sleep for a second before the next check
-                xbmc.sleep(1000)
+                xbmc.sleep(1000 / Settings.getChecksPerSecond())
                 timeUntilNextCheck = timeUntilNextCheck - 1
 
             redirectVolume.cleanup()

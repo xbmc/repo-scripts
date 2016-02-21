@@ -1,4 +1,7 @@
-v1.4.0 (2015-01-31)
+v1.4.1 (2016-02-21)
+- Add option to have the background service make checks more than once a second
+
+v1.4.0 (2016-01-31)
 - Add option to allow volume control to be redirected to Sonos
 
 v1.3.5 (2015-11-09)

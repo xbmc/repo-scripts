@@ -25,6 +25,7 @@
 		<setting id="autoPauseSonos" enable="eq(-3,false) + eq(-2,false) + eq(-1,false)" type="bool" label="32026" default="false"/>
 		<setting id="autoResumeSonos" subsetting="true" enable="eq(-1,true)" label="32027" type="slider" default="0" range="0,3,60" option="int"/>
 		<setting id="autoLaunchControllerOnStartup" type="bool" label="32044" default="false"/>
+		<setting id="checksPerSecond" label="32045" type="slider" default="1" range="1,1,10" option="int"/>
 	</category>
 	<category label="32018">
 		<setting id="batchSize" label="32019" type="slider" default="100" range="10,10,486" option="int"/>

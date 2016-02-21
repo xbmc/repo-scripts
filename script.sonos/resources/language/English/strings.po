@@ -89,7 +89,7 @@ msgid "Controller Refresh Interval (Seconds)"
 msgstr ""
 
 msgctxt "#32017"
-msgid "Redirect Volume Controls To Sonos"
+msgid "Redirect Volume Controls To Sonos (Restart Required)"
 msgstr ""
 
 msgctxt "#32018"
@@ -200,7 +200,11 @@ msgctxt "#32044"
 msgid "Launch Controller On Kodi Startup"
 msgstr ""
 
-#empty strings from id 32045 to 32059
+msgctxt "#32045"
+msgid "Status Checks Per Second (Restart Required)"
+msgstr ""
+
+#empty strings from id 32046 to 32059
 
 msgctxt "#32060"
 msgid "The following setting in ArtistSlideshow must be enabled"
