@@ -31,7 +31,7 @@ class DelayedStartTheme():
         self.anchorTime = 0
 
     def shouldStartPlaying(self, themes):
-        delaySeconds = Settings.getStartDelaySeconds()
+        delaySeconds = Settings.getStartDelaySeconds(themes.getThemeLocations()[0])
 
         # Check is the start playing should be delayed
         if delaySeconds < 1:

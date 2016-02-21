@@ -327,6 +327,8 @@ class Settings():
     # Checks if the given file is names as a video file
     @staticmethod
     def isVideoFile(filename):
+        if filename in [None, ""]:
+            return False
         if filename.lower().endswith('.mp4'):
             return True
         if filename.lower().endswith('.mkv'):
@@ -484,7 +486,10 @@ class Settings():
 
     # Check the delay start value
     @staticmethod
-    def getStartDelaySeconds():
+    def getStartDelaySeconds(themeFile=None):
+        # check if this is a video file as the delay may be different
+        if Settings.isVideoFile(themeFile):
+            return int(float(__addon__.getSetting("delayVideoStart")))
         return int(float(__addon__.getSetting("delayStart")))
 
     @staticmethod

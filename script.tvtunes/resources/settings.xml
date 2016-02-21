@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<category label="32105">
-		<setting id="tvtunesId" enable="false" type="text" label="32098 " default="" />
+		<setting id="tvtunesId" visible="false" option="hidden" enable="false" type="text" label="32098 " default="" />
 		<setting id="enableThemePlaying" type="bool" label="32084" default="true"/>
 		<setting id="movielist" type="bool" label="32016" default="false"/>
 		<setting id="tvlist" type="bool" label="32017" default="false"/>
@@ -15,6 +15,7 @@
 		<setting id="loop" type="bool" label="32001" default="false"/>
 		<setting id="volume" label="32002" type="slider" default="0" range="0,1,100" option="int" />
 		<setting id="delayStart" label="32024" type="slider" default="0" range="0,1,60" option="int" />
+		<setting id="delayVideoStart" label="32133" type="slider" default="0" range="0,1,60" option="int" />
 		<setting id="endafter" label="32021" type="slider" default="0" range="0,1,60" option="int" />
 		<setting id="fadeOut" type="bool" label="32008" default="true"/>
 		<setting id="fadeIn" type="bool" label="32013" default="false"/>

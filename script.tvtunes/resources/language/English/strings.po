@@ -121,7 +121,7 @@ msgid "Browse Themes"
 msgstr ""
 
 msgctxt "#32024"
-msgid "Delay Theme Start (Seconds)"
+msgid "Delay Audio Theme Start (Seconds)"
 msgstr ""
 
 msgctxt "#32025"
@@ -556,7 +556,11 @@ msgctxt "#32132"
 msgid "Plex Library"
 msgstr ""
 
-#empty strings from id 32133 to 32200
+msgctxt "#32133"
+msgid "Delay Video Theme Start (Seconds)"
+msgstr ""
+
+#empty strings from id 32134 to 32200
 
 msgctxt "#32201"
 msgid "Movies"
