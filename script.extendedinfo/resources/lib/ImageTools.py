@@ -89,36 +89,30 @@ def get_colors(img):
         return "FFF0F0F0"
     data = []
     for x in range(width/2):
-        for y in range(height/2):
-            cpixel = pixels[x*2, y*2]
-            data.append(cpixel)
+        data += [pixels[x*2, y*2] for y in range(height/2)]
     r = 0
     g = 0
     b = 0
     counter = 0
     for x in range(len(data)):
         brightness = data[x][0] + data[x][1] + data[x][2]
-        if brightness > 150 and brightness < 720:
+        if 150 < brightness < 720:
             r += data[x][0]
             g += data[x][1]
             b += data[x][2]
             counter += 1
-    if counter > 0:
-        r_avg = int(r/counter)
-        g_avg = int(g/counter)
-        b_avg = int(b/counter)
-        avg = (r_avg + g_avg + b_avg) / 3
-        min_brightness = 130
-        if avg < min_brightness:
-            diff = min_brightness - avg
-            for color in [r_avg, g_avg, b_avg]:
-                if color <= (255 - diff):
-                    color += diff
-                else:
-                    color = 255
-        imagecolor = "FF%s%s%s" % (format(r_avg, '02x'), format(g_avg, '02x'), format(b_avg, '02x'))
-    else:
-        imagecolor = "FFF0F0F0"
+    if counter == 0:
+        return "FFF0F0F0"
+    r_avg = int(r/counter)
+    g_avg = int(g/counter)
+    b_avg = int(b/counter)
+    avg = (r_avg + g_avg + b_avg) / 3
+    min_brightness = 130
+    if avg < min_brightness:
+        diff = min_brightness - avg
+        for color in [r_avg, g_avg, b_avg]:
+            color = color + diff if color <= (255 - diff) else 255
+    imagecolor = "FF%s%s%s" % (format(r_avg, '02x'), format(g_avg, '02x'), format(b_avg, '02x'))
     log("Average Color: " + imagecolor)
     return imagecolor
 

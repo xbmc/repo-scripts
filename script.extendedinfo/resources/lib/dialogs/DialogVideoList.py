@@ -11,6 +11,11 @@ from DialogBaseList import DialogBaseList
 from ..WindowManager import wm
 from ActionHandler import ActionHandler
 
+C_MAIN_LIST = 500
+C_BUTTON_SORT = 5001
+C_BUTTON_ORDER = 5004
+C_BUTTON_ACCOUNT = 7000
+
 ch = ActionHandler()
 
 SORTS = {"movie": {"popularity": LANG(32110),
@@ -69,7 +74,7 @@ def get_window(window_type):
             self.getControl(5009).setVisible(self.type != "tv")
             self.getControl(5010).setVisible(self.type != "tv")
 
-        @ch.action("contextmenu", 500)
+        @ch.action("contextmenu", C_MAIN_LIST)
         def context_menu(self):
             item_id = self.listitem.getProperty("id")
             listitems = [LANG(32169)] if self.type == "tv" else [LANG(32113)]
@@ -124,12 +129,9 @@ def get_window(window_type):
                                         movie_id=movie_id,
                                         status=True)
 
-        @ch.click(5001)
+        @ch.click(C_BUTTON_SORT)
         def get_sort_type(self):
-            if self.mode in ["favorites", "rating", "list"]:
-                sort_key = self.mode
-            else:
-                sort_key = self.type
+            sort_key = self.mode if self.mode in ["favorites", "rating", "list"] else self.type
             listitems = [k for k in self.SORTS[sort_key].values()]
             sort_strings = [v for v in self.SORTS[sort_key].keys()]
             index = xbmcgui.Dialog().select(heading=LANG(32104),
@@ -149,7 +151,7 @@ def get_window(window_type):
             super(DialogVideoList, self).add_filter(force_overwrite=kwargs["key"].endswith((".gte", ".lte")),
                                                     **kwargs)
 
-        @ch.click(5004)
+        @ch.click(C_BUTTON_ORDER)
         def toggle_order(self):
             self.order = "desc" if self.order == "asc" else "asc"
             self.update()
@@ -162,7 +164,7 @@ def get_window(window_type):
             self.type = "movie" if self.type == "tv" else "tv"
             self.update()
 
-        @ch.click(7000)
+        @ch.click(C_BUTTON_ACCOUNT)
         def open_account_menu(self):
             if self.type == "tv":
                 listitems = [LANG(32145)]
@@ -236,16 +238,10 @@ def get_window(window_type):
             result = xbmcgui.Dialog().input(heading=LANG(32111),
                                             type=xbmcgui.INPUT_NUMERIC)
             if result:
-                if ret:
-                    self.add_filter(key="vote_count.%s" % "lte",
-                                    value=result,
-                                    typelabel=LANG(32111),
-                                    label=" < " + result)
-                else:
-                    self.add_filter(key="vote_count.%s" % "gte",
-                                    value=result,
-                                    typelabel=LANG(32111),
-                                    label=" > " + result)
+                self.add_filter(key="vote_count.lte" if ret else "vote_count.gte",
+                                value=result,
+                                typelabel=LANG(32111),
+                                label=" < " + result if ret else " > " + result)
                 self.mode = "filter"
                 self.page = 1
                 self.update()
@@ -299,17 +295,15 @@ def get_window(window_type):
             self.page = 1
             self.update()
 
-        @ch.click(500)
+        @ch.click(C_MAIN_LIST)
         def open_media(self):
             self.last_position = self.control.getSelectedPosition()
             media_type = self.listitem.getProperty("media_type")
-            if media_type:
-                self.type = media_type
-            if self.type == "tv":
+            if media_type == "tv":
                 wm.open_tvshow_info(prev_window=self,
                                     tmdb_id=self.listitem.getProperty("id"),
                                     dbid=self.listitem.getProperty("dbid"))
-            elif self.type == "person":
+            elif media_type == "person":
                 wm.open_actor_info(prev_window=self,
                                    actor_id=self.listitem.getProperty("id"))
             else:
@@ -442,17 +436,12 @@ def get_window(window_type):
                           "language": SETTING("LanguageID"),
                           "page": self.page,
                           "include_adult": include_adult}
-                filters = {item["type"]: item["id"] for item in self.filters}
+                filters = dict((item["type"], item["id"]) for item in self.filters)
                 params = merge_dicts(params, filters)
                 url = "discover/%s" % (self.type)
-            if force:
-                response = tmdb.get_data(url=url,
-                                         params=params,
-                                         cache_days=0)
-            else:
-                response = tmdb.get_data(url=url,
-                                         params=params,
-                                         cache_days=2)
+            response = tmdb.get_data(url=url,
+                                     params=params,
+                                     cache_days=0 if force else 2)
             if not response:
                 return None
             if self.mode == "list":

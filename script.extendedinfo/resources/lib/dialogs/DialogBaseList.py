@@ -53,7 +53,7 @@ class DialogBaseList(object):
     @ch.action("parentdir", "*")
     @ch.action("parentfolder", "*")
     def previous_menu(self):
-        onback = self.window.getProperty("%i_onback" % self.control_id)
+        onback = self.getProperty("%i_onback" % self.control_id)
         if onback:
             xbmc.executebuiltin(onback)
         else:
@@ -108,7 +108,7 @@ class DialogBaseList(object):
             result = xbmcgui.Dialog().input(heading=LANG(16017),
                                             type=xbmcgui.INPUT_ALPHANUM)
             if result and result > -1:
-                self.search(result)
+                self.search(result.decode("utf-8"))
         else:
             T9Search(call=self.search,
                      start_value="",
@@ -202,13 +202,13 @@ class DialogBaseList(object):
     def add_filter(self, key, value, typelabel, label, force_overwrite=False):
         if not value:
             return False
-        index = -1
         new_filter = {"id": value,
                       "type": key,
                       "typelabel": typelabel,
                       "label": label}
         if new_filter in self.filters:
             return False
+        index = -1
         for i, item in enumerate(self.filters):
             if item["type"] == key:
                 index = i
@@ -217,17 +217,16 @@ class DialogBaseList(object):
             self.filters.append(new_filter)
             return None
         if force_overwrite:
-            self.filters[index]["id"] = urllib.quote_plus(str(value))
+            self.filters[index]["id"] = str(value)
             self.filters[index]["label"] = str(label)
             return None
-        dialog = xbmcgui.Dialog()
-        ret = dialog.yesno(heading=LANG(587),
-                           line1=LANG(32106),
-                           nolabel="OR",
-                           yeslabel="AND")
+        ret = xbmcgui.Dialog().yesno(heading=LANG(587),
+                                     line1=LANG(32106),
+                                     nolabel="OR",
+                                     yeslabel="AND")
         if ret:
-            self.filters[index]["id"] = self.filters[index]["id"] + "," + urllib.quote_plus(str(value))
-            self.filters[index]["label"] = self.filters[index]["label"] + "," + label
+            self.filters[index]["id"] += ",%s" % value
+            self.filters[index]["label"] += ",%s" % label
         else:
-            self.filters[index]["id"] = self.filters[index]["id"] + "|" + urllib.quote_plus(str(value))
-            self.filters[index]["label"] = self.filters[index]["label"] + "|" + label
+            self.filters[index]["id"] += "|%s" % value
+            self.filters[index]["label"] += "|%s" % label

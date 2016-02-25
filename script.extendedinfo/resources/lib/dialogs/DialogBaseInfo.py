@@ -86,7 +86,7 @@ class DialogBaseInfo(object):
         selection = xbmcgui.Dialog().select(heading=LANG(22080),
                                             list=[LANG(32006)])
         if selection == 0:
-            media_type = self.window.getProperty("type")
+            media_type = self.getProperty("type")
             params = '"art": {"poster": "%s"}' % self.listitem.getProperty("original")
             get_kodi_json(method="VideoLibrary.Set%sDetails" % media_type,
                           params='{ %s, "%sid":%s }' % (params, media_type.lower(), self.info['dbid']))
@@ -98,7 +98,7 @@ class DialogBaseInfo(object):
         selection = xbmcgui.Dialog().select(heading=LANG(22080),
                                             list=[LANG(32007)])
         if selection == 0:
-            media_type = self.window.getProperty("type")
+            media_type = self.getProperty("type")
             params = '"art": {"fanart": "%s"}' % self.listitem.getProperty("original")
             get_kodi_json(method="VideoLibrary.Set%sDetails" % media_type,
                           params='{ %s, "%sid":%s }' % (params, media_type.lower(), self.info['dbid']))
@@ -117,7 +117,7 @@ class DialogBaseInfo(object):
     @ch.action("parentdir", "*")
     @ch.action("parentfolder", "*")
     def previous_menu(self):
-        onback = self.window.getProperty("%i_onback" % self.control_id)
+        onback = self.getProperty("%i_onback" % self.control_id)
         if onback:
             xbmc.executebuiltin(onback)
         else:

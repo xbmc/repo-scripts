@@ -596,72 +596,84 @@
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.1),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.1))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.2),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.2))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.3),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.3))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.4),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.4))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.5),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.5))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.6),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.6))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.7),flags/language/,.png]</texture>
                                         <aspectratio>keep</aspectratio>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.7))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.8),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.8))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.9),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.9))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.10),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.10))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.11),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.11))</visible>
                                     </control>
                                     <control type="image">
                                         <width>28</width>
                                         <height>28</height>
                                         <aspectratio>keep</aspectratio>
                                         <texture>$INFO[Window.Property(SubtitleLanguage.12),flags/language/,.png]</texture>
+                                        <visible>!IsEmpty(Window.Property(SubtitleLanguage.12))</visible>
                                     </control>
                                 </control>
                             </control>
@@ -1080,7 +1092,7 @@
                                         </control>
                                         <control type="image">
                                             <posy>310</posy>
-                                            <width>59</width>
+                                            <width>63</width>
                                             <height>25</height>
                                             <texture>common/black.png</texture>
                                             <animation effect="fade" end="60" time="0" condition="true">Conditional</animation>
@@ -1167,7 +1179,7 @@
                                         </control>
                                         <control type="image">
                                             <posy>310</posy>
-                                            <width>59</width>
+                                            <width>63</width>
                                             <height>25</height>
                                             <texture>common/black.png</texture>
                                             <animation effect="fade" end="60" time="0" condition="true">Conditional</animation>
@@ -1328,7 +1340,7 @@
                                         </control>
                                         <control type="image">
                                             <posy>310</posy>
-                                            <width>59</width>
+                                            <width>63</width>
                                             <height>25</height>
                                             <texture>common/black.png</texture>
                                             <animation effect="fade" end="60" time="0" condition="true">Conditional</animation>
@@ -1406,7 +1418,7 @@
                                         </control>
                                         <control type="image">
                                             <posy>310</posy>
-                                            <width>59</width>
+                                            <width>63</width>
                                             <height>25</height>
                                             <texture>common/black.png</texture>
                                             <animation effect="fade" end="60" time="0" condition="true">Conditional</animation>
