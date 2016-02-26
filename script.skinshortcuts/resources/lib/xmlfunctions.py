@@ -239,10 +239,6 @@ class XMLFunctions():
                     if profilelist != hash[1]:
                         log( "Profiles have changes" )
                         return True
-                elif hash[0] == "::MUSICCONTENT::":
-                    # Check if Library.HasContent(Music) has changed
-                    if xbmc.getCondVisibility( "Library.HasContent(Music)" ) != hash[1]:
-                        log( "Whether there is music in the library has changed" )
                 elif hash[0] == "::HIDEPVR::":
                     checkedPVRVis = True
                     if __addon__.getSetting( "donthidepvr" ) != hash[1]:
@@ -307,8 +303,6 @@ class XMLFunctions():
         hashlist.list.append( ["::PROFILELIST::", profilelist] )
         hashlist.list.append( ["::SCRIPTVER::", __addonversion__] )
         hashlist.list.append( ["::XBMCVER::", __xbmcversion__] )
-        if int( __xbmcversion__ ) <= 15:
-            hashlist.list.append( ["::MUSICCONTENT::", xbmc.getCondVisibility( "Library.HasContent(Music)" ) ] )
         hashlist.list.append( ["::HIDEPVR::",  __addon__.getSetting( "donthidepvr" )] )
         hashlist.list.append( ["::SHARED::", __addon__.getSetting( "shared_menu" )] )
         hashlist.list.append( ["::SKINDIR::", xbmc.getSkinDir()] )
@@ -324,6 +318,7 @@ class XMLFunctions():
         # Create a Template object and pass it the root
         Template = template.Template()
         Template.includes = root
+        Template.progress = progress
         
         # Get any shortcuts we're checking for
         self.checkForShortcuts = []
@@ -409,13 +404,19 @@ class XMLFunctions():
                 break
                 
             itemidmainmenu = 0
-            percent = profilePercent / len( menuitems )
-            
+            if len( Template.otherTemplates ) == 0:
+                percent = profilePercent / len( menuitems )
+            else:
+                percent = float( profilePercent ) / float( len( menuitems ) * 2 )
+            Template.percent = percent * ( len( menuitems ) )
+
             i = 0
             for item in menuitems:
                 i += 1
                 itemidmainmenu += 1
-                progress.update( ( profilePercent * profileCount) + percent * i )
+                currentProgress = ( profilePercent * profileCount ) + ( percent * i )
+                progress.update( int( currentProgress ) )
+                Template.current = currentProgress
                 submenuDefaultID = None
 
                 if not isinstance( item, basestring ):

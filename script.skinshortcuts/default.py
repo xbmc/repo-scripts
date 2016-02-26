@@ -254,7 +254,7 @@ class Main:
         self.DEFAULTGROUP = params.get( "defaultGroup", None )
 
         # Properties from context menu addon
-        self.CONTEXTFILENAME = params.get( "filename", "" )
+        self.CONTEXTFILENAME = urllib.unquote( params.get( "filename", "" ) )
         self.CONTEXTLABEL = params.get( "label", "" )
         self.CONTEXTICON = params.get( "icon", "" )
         self.CONTEXTCONTENT = params.get( "content", "" )

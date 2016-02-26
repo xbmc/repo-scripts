@@ -8,6 +8,7 @@ from xml.dom.minidom import parse
 from traceback import print_exc
 from htmlentitydefs import name2codepoint
 from unidecode import unidecode
+from unicodeutils import try_decode
 
 if sys.version_info < (2, 7):
     import simplejson
@@ -289,6 +290,7 @@ class NodeFunctions():
 
     def addToMenu( self, path, label, icon, content, window, DATA ):
         log( repr( window ) )
+        log( repr( label ) )
         log( repr( path ) )
         log( repr( content ) )
         # Show a waiting dialog
@@ -304,6 +306,11 @@ class NodeFunctions():
         labels = []
         paths = []
         nodePaths = []
+
+        # Now we've retrieved the path, decode everything for writing
+        path = try_decode( path )
+        label = try_decode( label )
+        icon = try_decode( icon )
         
         # Add all directories returned by the json query
         if json_response.has_key('result') and json_response['result'].has_key('files') and json_response['result']['files'] is not None:
@@ -453,6 +460,13 @@ class ShowDialog( xbmcgui.WindowXMLDialog ):
         else:
             self.getControl(5).setVisible(False)
         self.getControl(1).setLabel(self.windowtitle)
+
+        # Set Cancel label (Kodi 17+)
+        if int( __xbmcversion__ ) >= 17:
+            try:
+                self.getControl(7).setLabel(xbmc.getLocalizedString(222))
+            except:
+                log( "Unable to set label for control 7" )
 
         for item in self.listing :
             listitem = xbmcgui.ListItem(label=item.getLabel(), label2=item.getLabel2(), iconImage=item.getProperty( "icon" ), thumbnailImage=item.getProperty( "thumbnail" ))

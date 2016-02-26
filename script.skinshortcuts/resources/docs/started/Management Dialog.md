@@ -52,7 +52,7 @@ For this method, the shortcuts are shown in control 111. Controls 102 and 103 ch
 
 In this method, control 401 is used to launch the select dialog
 
-## labels and label2's
+## label and label2
 
 By default, if no label is specified for a control, Skin Shortcuts will automatically set its label to the one shown in the table above. You can stop it doing this by calling the management dialog as follows:-
 
@@ -61,6 +61,8 @@ By default, if no label is specified for a control, Skin Shortcuts will automati
 It is common practice to use label2's to display additional information about the current shortcut the user has selected. The shortcuts in list 211 have most of the same properties as they will have when the menu is built. They also have the addition of 'path', which shows the currently selected action formatted for display.
 
 Note that if Skin Shortcuts is setting the labels itself, label2's will not work. The solution is to set the label yourself, to the string ID shown in the table above.
+
+It has been noted that in some situations, accessing the properties of the menu items directly can cause Kodi to hit an internal 'property limit' which causes unusual effects for the end user, such as artwork disappearing. As a workaround, Skin Shortcuts also makes the additional properties of the menu item currently selected available in window properties.
 
 ## Editing submenu/additional menu
 
@@ -84,19 +86,19 @@ You will likely also want to limit some controls to just the main menu. The visi
 
 If you wish to display a different label for control 500 when editing a submenu or additional menu, set the window property 'overrideName' before sending a click to 405-410
 
-#### Always reset shortcuts with GUI 308
+## Always reset shortcuts with GUI 308
 
 By default, GUI 308 offers the user the choice to either restore a default shortcut that the skin provides for the menu, or to reset all shortcuts in the currently edited menu to the skin defaults. You can choose to only provide one or the other of the options via [the skins overrides.xml file](../advanced/overrides.md) by including one of the following:-
 
 `<alwaysRestore>True</alwaysRestore>` - gui 308 will automatically show the restore a shortcut dialog
 `<alwaysReset>True</alwaysReset>` - gui 308 will automatically reset all shortcuts to skin defaults
 
-#### Custom focus on back
+## Custom focus on back
 
 By default, any attempt to go 'back' will close the management dialog. You may wish to override this behaviour on a control-by-control basis by including the following in the [the skins overrides.xml file](../advanced/overrides.md):-
 
-<onback to="[id to focus]">[id currently focused]</onback>
+`<onback to="[id to focus]">[id currently focused]</onback>`
 
-where [id currently focused] is the id of control you are specifying the onback behaviour for and [id to focus] is the id of the control that will be focused.
+where `[id currently focused]` is the id of control you are specifying the onback behaviour for and `[id to focus]` is the id of the control that will be focused.
 
 ***Quick links*** - [Readme](../../../README.md) - [Getting Started](./Getting Started.md) - [Advanced Usage](../advanced/Advanced Usage.md)

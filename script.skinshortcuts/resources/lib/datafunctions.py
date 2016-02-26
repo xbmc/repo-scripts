@@ -752,6 +752,10 @@ class DataFunctions():
         # Return whether mainmenu items should be displayed
         action = action.lower().replace( " ", "" )
 
+        # Catch-all for shortcuts to plugins
+        if "plugin://" in action:
+            return ""
+
         # Video node visibility
         if action.startswith( "activatewindow(videos,videodb://" ) or action.startswith( "activatewindow(10025,videodb://" ) or action.startswith( "activatewindow(videos,library://video/" ) or action.startswith( "activatewindow(10025,library://video/" ):
             path = action.split( "," )
@@ -773,24 +777,6 @@ class DataFunctions():
             if path[ 1 ].endswith( ")" ):
                 path[ 1 ] = path[ 1 ][:-1]
             return NODE.get_visibility( path[ 1 ] )
-
-        # Isengard and earlier music library
-        elif action.startswith( "activatewindow(musiclibrary,addons" ):
-            return ""
-        elif action.startswith( "activatewindow(musiclibrary,musicvideo" ):
-            return "Library.HasContent(MusicVideos)"
-        elif action.startswith( "activatewindow(musiclibrary," ):
-            return "Library.HasContent(Music)"
-
-        # Jarvis and later music library
-        elif action.startswith( "activatewindow(music,addons" ) or action.startswith( "activatewindow(music,files" ):
-            return ""
-        elif action.startswith( "activatewindow(music,musicvideo" ):
-            return "Library.HasContent(MusicVideos)"
-        elif action == "activatewindow(music)" or action.startswith( "activatewindow(music,root" ):
-            return ""
-        elif action.startswith( "activatewindow(music,"):
-            return "Library.HasContent(Music)"
 
         # Power menu visibilities
         elif action == "quit()" or action == "quit":

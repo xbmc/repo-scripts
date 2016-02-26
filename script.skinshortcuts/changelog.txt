@@ -1,3 +1,9 @@
+v1.0.7
+- Krypton support
+- More accurately display build progress
+- Additional properties available via window properties in management dialog
+- Fix for add-on shortcut visibility conditions
+
 v1.0.6
 - Option not to share menus between skins; never hide PVR shortcuts
 - Icons and thumbs are saved on a per-skin basis

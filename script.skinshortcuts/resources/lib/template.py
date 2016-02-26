@@ -25,10 +25,20 @@ class Template():
     def __init__( self ):
         # Load the skins template.xml file
         templatepath = os.path.join( __skinpath__ , "template.xml" )
+        self.otherTemplates = []
         try:
             self.tree = xmltree.parse( templatepath )
 
             log( "Loaded template.xml file")
+
+            # Pull out the names and includes of the 'other' templates - used to generate accurate progress
+            # and to build empty 'other' templates if necessary
+            for otherTemplate in self.tree.getroot().findall( "other" ):
+                includeName = "skinshortcuts-template"
+                if "include" in otherTemplate.attrib:
+                    includeName = "skinshortcuts-template-%s" %( otherTemplate.attrib.get( "include" ) )
+                if includeName not in self.otherTemplates:
+                    self.otherTemplates.append( includeName )
             
             # Add the template.xml to the hash file
             self._save_hash( templatepath, xbmcvfs.File( templatepath ).read() )
@@ -45,6 +55,11 @@ class Template():
             
         # Empty variable which will contain our base elementree (passed from buildxml)
         self.includes = None
+
+        # Empty progress which will contain the Kodi progress dialog gui (passed from buildxml)
+        self.progress = None
+        self.percent = None
+        self.current = None
         
         # List which will contain 'other' elements we will need to finalize (we won't have all the
         # visibility conditions until the end)
@@ -88,9 +103,13 @@ class Template():
                 includeTree.append( child )
             
         # Now we want to see if any of the main menu items match a template
-        if menuType != "mainmenu":
+        if menuType != "mainmenu" or len( self.otherTemplates ) == 0:
             return
+        progressCount = 0
+        numTemplates = 0
+        log( "Building templates")
         for item in items:
+            progressCount = progressCount + 1
             # First we need to build the visibilityCondition, based on the items
             # submenuVisibility element, and the mainmenuID
             visibilityName = ""
@@ -103,7 +122,9 @@ class Template():
             
             # Now find a matching template - if one matches, it will be saved to be processed
             # at the end (when we have all visibility conditions)
-            self.findOther( item, profile, profileVisibility, visibilityCondition )
+            numTemplates += self.findOther( item, profile, profileVisibility, visibilityCondition )
+            self.progress.update( int( self.current + ( ( float( self.percent ) / float( len( items ) ) ) * progressCount ) ) )
+        log( " - Built %d templates" %( numTemplates ) )
                     
     def writeOthers( self ):
         # This will write any 'other' elements we have into the includes file
@@ -121,7 +142,11 @@ class Template():
             # Get the group name
             name = "skinshortcuts-template"
             if "include" in template.attrib:
-                name += "-%s" %( template.attrib.get( "include" ) )
+                includeName = template.attrib.get( "include" )
+                name += "-%s" %( includeName )
+                # Remove the include from our list of other templates, as we don't need to build an empty one
+                if name in self.otherTemplates:
+                    self.otherTemplates.remove( name )
             
             # Loop through any profiles we have
             for profile in template.findall( "skinshortcuts-profile" ):
@@ -189,6 +214,12 @@ class Template():
                 valueElement.text = value
                 if condition != "":
                     valueElement.set( "condition", condition )
+
+        # If there are any 'other' templates that we haven't built, build an empty one
+        for otherTemplate in self.otherTemplates:
+            # Get the include this will be built in
+            root = self.getInclude( self.includes, otherTemplate, None, None )
+            xmltree.SubElement( root, "description" ).text = "This include was built automatically as the template didn't match any menu items"
 
     def parseVariables( self, variableName, allVariables ):
         # This function will return all condition/value elements for a given variable, including adding profile conditions
@@ -304,6 +335,7 @@ class Template():
     def findOther( self, item, profile, profileVisibility, visibilityCondition ):
         # Find a template matching the item we have been passed
         foundTemplateIncludes = []
+        numTemplates = 0
         for elem in self.tree.findall( "other" ):
             # Check that we don't already have a template for this include
             includeName = None
@@ -345,6 +377,8 @@ class Template():
             # If the conditions didn't match, we're done here
             if matched == False:
                 continue
+
+            numTemplates += 1
                 
             # All the rules matched, so next we'll get any properties
             properties = self.getProperties( template, item )
@@ -420,7 +454,7 @@ class Template():
                 # Add that we've found a template for this include
                 foundTemplateIncludes.append( includeName )
 
-                log( " - Other template found" )
+        return numTemplates
             
     def checkCondition( self, condition, items ):
         # Check if a particular condition is matched for an 'other' template
