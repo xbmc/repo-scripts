@@ -136,6 +136,10 @@ msgctxt "#32029"
 msgid "Custom Music Video Sub-Folder"
 msgstr "Sottocartella personalizzata musica e video"
 
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Aggiorna file advancedsettings.xml"
+
 msgctxt "#32033"
 msgid "Overlay Image"
 msgstr "Immagine Sovrapposta"
@@ -191,3 +195,15 @@ msgstr "Video Musicali"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Plot"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Impossibile aggiornare advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Controlla il log per ulteriori dettagli."
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "Aggiornamento di advancedsettings.xml completato"

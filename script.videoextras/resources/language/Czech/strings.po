@@ -172,6 +172,10 @@ msgctxt "#32036"
 msgid "Enable Vimeo Search Support"
 msgstr "Povolit podporu vyhledávání na Vimeo"
 
+msgctxt "#32037"
+msgid "Show VideoExtras On Context Menu (Restart Required)"
+msgstr "Ukázat Bonusy v kontextovém menu (vyžadován restart)"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Přehrát vše"

@@ -60,6 +60,10 @@ msgctxt "#32030"
 msgid "Update advancedsettings.xml File"
 msgstr "Обнови файлът advancedsettings.xml"
 
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Ползвай персонални изображения"
+
 msgctxt "#32101"
 msgid "Play All"
 msgstr "Play All"
@@ -78,11 +82,11 @@ msgstr "Започни отначало"
 
 msgctxt "#32106"
 msgid "Mark as watched"
-msgstr "Маркирай като гледан"
+msgstr "Маркирай като изгледан"
 
 msgctxt "#32107"
 msgid "Mark as unwatched"
-msgstr "Маркирай като негледан"
+msgstr "Маркирай като неизгледан"
 
 msgctxt "#32108"
 msgid "Edit title"
@@ -107,6 +111,10 @@ msgstr "Сюжет"
 msgctxt "#32151"
 msgid "Unable to update advancedsettings.xml"
 msgstr "advancedsettings.xml не може да бъде обновен"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Проверете журнала за подробности."
 
 msgctxt "#32153"
 msgid "Invalid advancedsettings.xml, unable to update"

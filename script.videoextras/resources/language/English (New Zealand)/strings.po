@@ -24,6 +24,10 @@ msgctxt "Addon Description"
 msgid "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
 msgstr "Provides a way to add Video Extras to your Video library. Look at the wiki for setup instructions."
 
+msgctxt "Addon Disclaimer"
+msgid "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+msgstr "Skinners, please see the wiki to know how to integrate it in your skin: http://wiki.kodi.tv/index.php?title=Add-on:VideoExtras"
+
 msgctxt "#32001"
 msgid "Extras"
 msgstr "Extras"
@@ -116,6 +120,10 @@ msgctxt "#32023"
 msgid "Operations"
 msgstr "Operations"
 
+msgctxt "#32024"
+msgid "Clean Database And Cache"
+msgstr "Clean Database And Cache"
+
 msgctxt "#32025"
 msgid "Use Detailed List Screen"
 msgstr "Use Detailed List Screen"
@@ -127,6 +135,46 @@ msgstr "Window to show after exiting detailed list"
 msgctxt "#32027"
 msgid "Allow caching of extras on startup"
 msgstr "Allow caching of extras on startup"
+
+msgctxt "#32028"
+msgid "Browse Extras"
+msgstr "Browse Extras"
+
+msgctxt "#32029"
+msgid "Custom Music Video Sub-Folder"
+msgstr "Custom Music Video Sub-Folder"
+
+msgctxt "#32030"
+msgid "Update advancedsettings.xml File"
+msgstr "Update advancedsettings.xml File"
+
+msgctxt "#32031"
+msgid "Update Confluence Skin"
+msgstr "Update Confluence Skin"
+
+msgctxt "#32032"
+msgid "Use Custom Images"
+msgstr "Use Custom Images"
+
+msgctxt "#32033"
+msgid "Overlay Image"
+msgstr "Overlay Image"
+
+msgctxt "#32034"
+msgid "List Image"
+msgstr "List Image"
+
+msgctxt "#32035"
+msgid "Enable YouTube Search Support"
+msgstr "Enable YouTube Search Support"
+
+msgctxt "#32036"
+msgid "Enable Vimeo Search Support"
+msgstr "Enable Vimeo Search Support"
+
+msgctxt "#32037"
+msgid "Show VideoExtras On Context Menu (Restart Required)"
+msgstr "Show VideoExtras On Context Menu (Restart Required)"
 
 msgctxt "#32101"
 msgid "Play All"
@@ -179,3 +227,87 @@ msgstr "Music Videos"
 msgctxt "#32113"
 msgid "Plot"
 msgstr "Plot"
+
+msgctxt "#32114"
+msgid "Edit plot"
+msgstr "Edit plot"
+
+msgctxt "#32115"
+msgid "Failed to update plot"
+msgstr "Failed to update plot"
+
+msgctxt "#32116"
+msgid "Search YouTube ..."
+msgstr "Search YouTube ..."
+
+msgctxt "#32117"
+msgid "Deleted Scenes"
+msgstr "Deleted Scenes"
+
+msgctxt "#32118"
+msgid "Special Features"
+msgstr "Special Features"
+
+msgctxt "#32119"
+msgid "Bloopers"
+msgstr "Bloopers"
+
+msgctxt "#32120"
+msgid "Interviews"
+msgstr "Interviews"
+
+msgctxt "#32121"
+msgid "VFX (Visual Effects)"
+msgstr "VFX (Visual Effects)"
+
+msgctxt "#32122"
+msgid "Search Vimeo ..."
+msgstr "Search Vimeo ..."
+
+msgctxt "#32150"
+msgid "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+msgstr "This action will update the file advancedsettings.xml to ensure the extras files are handled correctly. Make sure any changes are saved before running. Continue?"
+
+msgctxt "#32151"
+msgid "Unable to update advancedsettings.xml"
+msgstr "Unable to update advancedsettings.xml"
+
+msgctxt "#32152"
+msgid "Please check the log for more details"
+msgstr "Please check the log for more details"
+
+msgctxt "#32153"
+msgid "Invalid advancedsettings.xml, unable to update"
+msgstr "Invalid advancedsettings.xml, unable to update"
+
+msgctxt "#32154"
+msgid "advancedsettings.xml update complete"
+msgstr "advancedsettings.xml update complete"
+
+msgctxt "#32155"
+msgid "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+msgstr "This will update your Confluence Skin to include the VideoExtras features. Continue?"
+
+msgctxt "#32156"
+msgid "Unable to update the Confluence skin"
+msgstr "Unable to update the Confluence skin"
+
+msgctxt "#32157"
+msgid "Not all files were updated as expected"
+msgstr "Not all files were updated as expected"
+
+msgctxt "#32158"
+msgid "Confluence Skin Updated"
+msgstr "Confluence Skin Updated"
+
+msgctxt "#32159"
+msgid "It is recommended that you now restart Kodi"
+msgstr "It is recommended that you now restart Kodi"
+
+msgctxt "#32160"
+msgid "Unable to create files in the confluence skin directory."
+msgstr "Unable to create files in the confluence skin directory."
+
+msgctxt "#32161"
+msgid "Please make sure the directory is writable by the user running Kodi."
+msgstr "Please make sure the directory is writable by the user running Kodi."

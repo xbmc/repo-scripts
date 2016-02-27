@@ -195,7 +195,6 @@ class TSParser:
                     return timestamp
         except:
             self.log('exception in getPTS')
-            pass
 
         self.log('getPTS returning 0')
         return 0
