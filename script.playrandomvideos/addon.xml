@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.playrandomvideos" name="Play Random Videos" version="1.0.2" provider-name="rmrector">
+<addon id="script.playrandomvideos" name="Play Random Videos" version="1.0.3" provider-name="rmrector">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0" />
 		<import addon="script.module.simplejson" version="3.3.0"/>

@@ -1,3 +1,5 @@
+v1.0.3 (2016-02-23)
+- Fix issues on Android and Python 2.6
 v1.0.2 (2016-01-10)
 - Fix the default settings
 v1.0.1 (2015-12-22)
