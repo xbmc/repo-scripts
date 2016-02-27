@@ -1,3 +1,6 @@
+0.8.8b
+- Allow to add favourites to autostart (thanks to andpei  - pr#2)
+
 0.8.0b
 - Added volume control (thanks to gravewrought - pr#1)
 

@@ -21,3 +21,5 @@ Manual install service addon: [Download ZIP](https://github.com/elbowz/partymode
 
 ### Thanks
 * To [service.scrobbler.librefm](http://github.com/XBMC-Addons/service.scrobbler.librefm) and [XBMC-Partymode-Autostart](http://github.com/mindrunner/XBMC-Partymode-Autostart) for inspiration
+* To [script.favourites](https://github.com/ronie/script.favourites)
+* To all the contributors (pull requests): andpei, gravewrought 
