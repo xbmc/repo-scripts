@@ -32,8 +32,8 @@ class SelectDialog(xbmcgui.WindowXMLDialog):
             self.close()
 
     def onClick(self, control_id):
-        if control_id == 6 or control_id == 3:
-            self.index = int(self.list.getSelectedItem().getProperty("index"))
+        if control_id in [3, 6]:
+            self.index = int(self.list.getSelectedPosition())
             self.listitem = self.items[self.index]
             self.close()
 

@@ -1,3 +1,12 @@
+v4.5.2
+- fix filter stuff for python 2.6
+- fix some artwork downloader calls
+- skin cosmetics
+- removed depracated API calls to LastFMs
+- fix error message when cancelling actor selection
+- fix some bugs for data with non-ascii characters
+- fix bug when using filters
+
 v4.5.1
 - fix tmdb company info call
 - fix LastFM error for artists without mbid

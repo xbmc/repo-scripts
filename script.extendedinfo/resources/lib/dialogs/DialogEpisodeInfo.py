@@ -6,7 +6,7 @@
 import xbmc
 import xbmcgui
 from ..Utils import *
-from .. import TheMovieDB
+from .. import TheMovieDB as tmdb
 from .. import ImageTools
 from DialogBaseInfo import DialogBaseInfo
 from ..WindowManager import wm
@@ -25,9 +25,9 @@ def get_window(window_type):
             super(DialogEpisodeInfo, self).__init__(*args, **kwargs)
             self.type = "Episode"
             self.tvshow_id = kwargs.get('show_id')
-            data = TheMovieDB.extended_episode_info(tvshow_id=self.tvshow_id,
-                                                    season=kwargs.get('season'),
-                                                    episode=kwargs.get('episode'))
+            data = tmdb.extended_episode_info(tvshow_id=self.tvshow_id,
+                                              season=kwargs.get('season'),
+                                              episode=kwargs.get('episode'))
             if not data:
                 return None
             self.info, self.data, self.account_states = data
@@ -65,14 +65,14 @@ def get_window(window_type):
 
         @ch.click(6001)
         def set_rating_dialog(self):
-            if TheMovieDB.set_rating_prompt(media_type="episode",
-                                            media_id=[self.tvshow_id, self.info["season"], self.info["episode"]]):
+            if tmdb.set_rating_prompt(media_type="episode",
+                                      media_id=[self.tvshow_id, self.info["season"], self.info["episode"]]):
                 self.update_states()
 
         @ch.click(6006)
         def open_rating_list(self):
             xbmc.executebuiltin("ActivateWindow(busydialog)")
-            listitems = TheMovieDB.get_rated_media_items("tv/episodes")
+            listitems = tmdb.get_rated_media_items("tv/episodes")
             xbmc.executebuiltin("Dialog.Close(busydialog)")
             wm.open_video_list(prev_window=self,
                                listitems=listitems)
@@ -85,10 +85,10 @@ def get_window(window_type):
 
         def update_states(self):
             xbmc.sleep(2000)  # delay because MovieDB takes some time to update
-            _, __, self.account_states = TheMovieDB.extended_episode_info(tvshow_id=self.tvshow_id,
-                                                                          season=self.info["season"],
-                                                                          episode=self.info["episode"],
-                                                                          cache_time=0)
+            _, __, self.account_states = tmdb.extended_episode_info(tvshow_id=self.tvshow_id,
+                                                                    season=self.info["season"],
+                                                                    episode=self.info["episode"],
+                                                                    cache_time=0)
             super(DialogEpisodeInfo, self).update_states()
 
     return DialogEpisodeInfo

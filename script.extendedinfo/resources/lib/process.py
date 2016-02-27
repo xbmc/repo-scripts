@@ -2,7 +2,7 @@
 
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
-
+from __future__ import unicode_literals
 import time
 import LastFM
 import TheAudioDB as AudioDB
@@ -36,14 +36,8 @@ def start_info_actions(info, params):
         return AudioDB.get_most_loved_tracks(params["artistname"])
     elif info == 'trackdetails':
         return AudioDB.get_track_details(params.get("id", ""))
-    elif info == 'albumshouts':
-        return LastFM.get_album_shouts(params["artistname"], params["albumname"])
-    elif info == 'artistshouts':
-        return LastFM.get_artist_shouts(params["artistname"])
     elif info == 'topartists':
         return LastFM.get_top_artists()
-    elif info == 'hypedartists':
-        return LastFM.get_hyped_artists()
     elif info == 'latestdbmovies':
         return LocalDB.local_db.get_movies('"sort": {"order": "descending", "method": "dateadded"}',
                                            params.get("limit", 10))
@@ -208,28 +202,12 @@ def start_info_actions(info, params):
         return Trakt.get_trending_movies()
     elif info == 'similarartistsinlibrary':
         return LocalDB.local_db.get_similar_artists(params.get("artist_mbid"))
-    elif info == 'artistevents':
-        return LastFM.get_events(params.get("artist_mbid"))
-    elif info == 'nearevents':
-        return LastFM.get_near_events(tag=params.get("tag"),
-                                      festivals_only=params.get("festivalsonly"),
-                                      lat=params.get("lat"),
-                                      lon=params.get("lon"),
-                                      location=params.get("location"),
-                                      distance=params.get("distance"))
     elif info == 'trackinfo':
         HOME.clearProperty('%sSummary' % params.get("prefix", ""))
         if params["artistname"] and params["trackname"]:
             track_info = LastFM.get_track_info(artist_name=params["artistname"],
                                                track=params["trackname"])
             HOME.setProperty('%sSummary' % params.get("prefix", ""), track_info["summary"])
-    elif info == 'venueevents':
-        if params["location"]:
-            params["id"] = LastFM.get_venue_id(params["location"])
-        if params.get("id"):
-            return LastFM.get_venue_events(params.get("id"))
-        else:
-            notify("Error", "Could not find venue")
     elif info == 'topartistsnearevents':
         artists = LocalDB.local_db.get_artists()
         import BandsInTown

@@ -4,7 +4,7 @@
 # This program is Free Software see LICENSE file for details
 
 from ..Utils import *
-from .. import TheMovieDB
+from .. import TheMovieDB as tmdb
 from .. import ImageTools
 from DialogBaseInfo import DialogBaseInfo
 from ..WindowManager import wm
@@ -22,8 +22,8 @@ def get_window(window_type):
             super(DialogSeasonInfo, self).__init__(*args, **kwargs)
             self.type = "Season"
             self.tvshow_id = kwargs.get('id')
-            data = TheMovieDB.extended_season_info(tvshow_id=self.tvshow_id,
-                                                   season_number=kwargs.get('season'))
+            data = tmdb.extended_season_info(tvshow_id=self.tvshow_id,
+                                             season_number=kwargs.get('season'))
             if not data:
                 return None
             self.info, self.data = data

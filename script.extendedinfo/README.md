@@ -270,28 +270,11 @@ RunScript(script.extendedinfo,info=artistdetails) ???
 
 
 ### LastFM
-```
-RunScript(script.extendedinfo,info=albumshouts)
-```
-- fetches twitter shouts for given album
-  - required additional parameters: artistname=, albumname=
-```
-RunScript(script.extendedinfo,info=artistshouts)
-```
-- fetches twitter shouts for given artist
-  - required additional parameters: artistname=
-
-- 'comment':  Tweet Content
-- 'author':   Tweet Author
-- 'date':     Tweet Date
 
 ```
 RunScript(script.extendedinfo,info=topartists)
 ```
 - fetches a lists of the most popular artists
-```
-RunScript(script.extendedinfo,info=hypedartists)
-```
 
 Available Properties:
 
@@ -299,33 +282,6 @@ Available Properties:
 - 'mbid':         Artist MBID
 - 'Thumb':        Artist Thumb
 - 'Listeners':    actual Listeners
-
-```
-RunScript(script.extendedinfo,info=nearevents)       --> NearEvents.%d
-```
-  - optional parameters: lat=, lon=, location=, distance=, festivalsonly=, tag=
-
-Available Properties:
-
-- 'date':         Event Date
-- 'name':         Venue Name
-- 'venue_id':     Venue ID
-- 'event_id':     Event ID
-- 'street':       Venue Street
-- 'eventname':    Event Title
-- 'website':      Event Website
-- 'description':  Event description
-- 'postalcode':   Venue PostalCode
-- 'city':         Venue city
-- 'country':      Venue country
-- 'lat':          Venue latitude
-- 'lon':          Venue longitude
-- 'artists':      Event artists
-- 'headliner':    Event Headliner
-- 'googlemap':    GoogleMap of venue location
-- 'artist_image': Artist image
-- 'venue_image':  Venue image
-
 
 
 ### YouTube

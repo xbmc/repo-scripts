@@ -70,10 +70,6 @@ class Main:
                       }
 
             xbmcplugin.setContent(self.handle, '')
-
-            # url = 'plugin://script.extendedinfo?info=extendedinfo&&id=233'
-            # li = xbmcgui.ListItem('TheMovieDB database browser', iconImage='DefaultMovies.png')
-            # xbmcplugin.addDirectoryItem(handle=self.handle, url=url, listitem=li)
             items = merge_dicts(movie, tvshow)
             for key, value in items.iteritems():
                 li = xbmcgui.ListItem(value, iconImage='DefaultFolder.png')
@@ -88,8 +84,7 @@ class Main:
         self.handle = int(sys.argv[1])
         self.control = "plugin"
         self.infos = []
-        self.params = {"handle": self.handle,
-                       "control": self.control}
+        self.params = {"handle": self.handle}
         if args.startswith("---"):
             delimiter = "&"
             args = args[3:]

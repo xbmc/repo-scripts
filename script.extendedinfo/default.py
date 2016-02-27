@@ -30,8 +30,7 @@ class Main:
 
     def _parse_argv(self):
         self.infos = []
-        self.params = {"handle": None,
-                       "control": None}
+        self.params = {"handle": None}
         for arg in sys.argv[1:]:
             param = arg.replace('"', '').replace("'", " ")
             if param.startswith('info='):

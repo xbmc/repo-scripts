@@ -235,10 +235,7 @@ def remove_list(list_id):
 
 
 def change_list_status(list_id, movie_id, status):
-    if status:
-        method = "add_item"
-    else:
-        method = "remove_item"
+    method = "add_item" if status else "remove_item"
     results = send_request(url="list/%s/%s" % (list_id, method),
                            params={"session_id": Login.get_session_id()},
                            values={'media_id': movie_id})
@@ -311,10 +308,7 @@ def handle_movies(results, local_first=True, sortkey="year"):
     ids = [item["id"] for item in response["genres"]]
     labels = [item["name"] for item in response["genres"]]
     movies = []
-    if SETTING("infodialog_onclick") != "false":
-        path = PLUGIN_BASE + 'extendedinfo&&id=%s'
-    else:
-        path = PLUGIN_BASE + "playtrailer&&id=%s"
+    path = 'extendedinfo&&id=%s' if SETTING("infodialog_onclick") != "false" else "playtrailer&&id=%s"
     for movie in results:
         genres = [labels[ids.index(id_)] for id_ in movie.get("genre_ids", []) if id_ in ids]
         tmdb_id = str(fetch(movie, 'id'))
@@ -325,7 +319,7 @@ def handle_movies(results, local_first=True, sortkey="year"):
                     'Label': fetch(movie, 'title'),
                     'OriginalTitle': fetch(movie, 'original_title'),
                     'id': tmdb_id,
-                    'path': path % tmdb_id,
+                    'path': PLUGIN_BASE + path % tmdb_id,
                     'media_type': "movie",
                     'country': fetch(movie, 'original_language'),
                     'plot': fetch(movie, 'overview'),
@@ -444,10 +438,7 @@ def handle_seasons(results):
     for season in results:
         season_number = str(fetch(season, 'season_number'))
         artwork = get_image_urls(poster=season.get("poster_path"))
-        if season_number == "0":
-            title = LANG(20381)
-        else:
-            title = "%s %s" % (LANG(20373), season_number)
+        title = LANG(20381) if season_number == "0" else "%s %s" % (LANG(20373), season_number)
         listitem = {'media_type': "season",
                     'title': title,
                     'season': season_number,
@@ -490,7 +481,7 @@ def handle_people(results):
                   'character': fetch(item, 'character'),
                   'department': fetch(item, 'department'),
                   'job': fetch(item, 'job'),
-                  'media_type': "item",
+                  'media_type': "person",
                   'id': str(item['id']),
                   'cast_id': str(fetch(item, 'cast_id')),
                   'credit_id': str(fetch(item, 'credit_id')),
@@ -782,14 +773,8 @@ def extended_movie_info(movie_id=None, dbid=None, cache_time=14):
              'Studio': " / ".join(Studio),
              'year': get_year(fetch(response, 'release_date'))}
     movie.update(artwork)
-    if "videos" in response:
-        videos = handle_videos(response["videos"]["results"])
-    else:
-        videos = []
-    if "account_states" in response:
-        account_states = response["account_states"]
-    else:
-        account_states = None
+    videos = handle_videos(response["videos"]["results"]) if "videos" in response else []
+    account_states = response.get("account_states")
     if dbid:
         local_item = local_db.get_movie(dbid)
         movie.update(local_item)
@@ -824,13 +809,8 @@ def extended_tvshow_info(tvshow_id=None, cache_time=7, dbid=None):
                         cache_days=cache_time)
     if not response:
         return False
-    videos = []
-    if "account_states" in response:
-        account_states = response["account_states"]
-    else:
-        account_states = None
-    if "videos" in response:
-        videos = handle_videos(response["videos"]["results"])
+    account_states = response.get("account_states")
+    videos = handle_videos(response["videos"]["results"]) if "videos" in response else []
     tmdb_id = fetch(response, 'id')
     artwork = get_image_urls(poster=response.get("poster_path"),
                              fanart=response.get("backdrop_path"))
@@ -933,10 +913,7 @@ def extended_season_info(tvshow_id, season_number):
               'AirDate': response["air_date"]}
     artwork = get_image_urls(poster=response.get("poster_path"))
     season.update(artwork)
-    if "videos" in response:
-        videos = handle_videos(response["videos"]["results"])
-    else:
-        videos = []
+    videos = handle_videos(response["videos"]["results"]) if "videos" in response else []
     listitems = {"actors": handle_people(response["credits"]["cast"]),
                  "crew": handle_people(response["credits"]["crew"]),
                  "videos": videos,

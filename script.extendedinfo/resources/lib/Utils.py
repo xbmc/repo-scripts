@@ -96,16 +96,6 @@ def format_time(time, format=None):
         return minute + " min"
 
 
-def url_quote(input_string):
-    """
-    get url-quoted string
-    """
-    try:
-        return urllib.quote_plus(input_string.encode('utf8', 'ignore'))
-    except:
-        return urllib.quote_plus(unicode(input_string, "utf-8").encode("utf-8"))
-
-
 def merge_dicts(*dict_args):
     '''
     Given any number of dicts, shallow copy and merge into a new dict,
@@ -174,7 +164,6 @@ def widget_selectdialog(filter=None, prefix="widget"):
              }
 # popularpeople
     artist = {"topartists": "LastFM: Top artists",
-              "hypedartists": "LastFM: Hyped artists"
               }
     event = {}
     if True:
