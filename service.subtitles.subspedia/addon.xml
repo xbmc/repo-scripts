@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.subtitles.subspedia"
+       name="Subspedia.tv"
+       version="1.0.0"
+       provider-name="luivit">
+  <requires>
+    <import addon="xbmc.python" version="2.20.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Subspedia subtitle addon</summary>
+    <description lang="en">Find and download italian subtitles from subspedia.tv</description>
+    <summary lang="it">Addon sottotitoli Subspedia</summary>
+    <description lang="it">Trova e scarica sottotitoli da subspedia.tv</description>
+	<language>it</language>
+	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+	<website>http://www.subspedia.tv/</website>
+	<forum>http://forum.kodi.tv/showthread.php?tid=244195</forum>
+    <source>https://github.com/luivit/service.subtitles.subspedia</source> 
+	<email>luivit39@gmail.com</email>
+  </extension>
+</addon>
