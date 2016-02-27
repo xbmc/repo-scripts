@@ -1,0 +1,20 @@
+1.0.0 (2016-01-23)
+- updated xbmc.python version
+- updated layout language
+- general bugfix
+0.0.7 (2015-12-07)
+- fixed for some TV show
+0.0.6 (2015-11-05)
+- added new TV show exception
+- added forum link
+- bugfix
+0.0.5 (2015-11-02)
+- fixed for some TV show
+0.0.4 (2015-10-27)
+- added manual search (example: tvshowname 1x5)
+0.0.3 (2015-10-27)
+- bugfix
+0.0.2 (2015-10-26)
+- fixed for some TV show
+0.0.1 (2015-10-26)
+- initial release
