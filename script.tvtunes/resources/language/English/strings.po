@@ -445,7 +445,7 @@ msgid "Replace existing theme?"
 msgstr ""
 
 msgctxt "#32105"
-msgid "TVTunes"
+msgid "TvTunes"
 msgstr ""
 
 msgctxt "#32106"
@@ -560,7 +560,35 @@ msgctxt "#32133"
 msgid "Delay Video Theme Start (Seconds)"
 msgstr ""
 
-#empty strings from id 32134 to 32200
+msgctxt "#32134"
+msgid "This will update your Confluence Skin to include the TvTunes features. Continue?"
+msgstr ""
+
+msgctxt "#32135"
+msgid "Unable to update the Confluence skin"
+msgstr ""
+
+msgctxt "#32136"
+msgid "Please check the log for more details"
+msgstr ""
+
+msgctxt "#32137"
+msgid "Not all files were updated as expected"
+msgstr ""
+
+msgctxt "#32138"
+msgid "Confluence Skin Updated"
+msgstr ""
+
+msgctxt "#32139"
+msgid "It is recommended that you now restart Kodi"
+msgstr ""
+
+msgctxt "#32140"
+msgid "Update Confluence Skin"
+msgstr ""
+
+#empty strings from id 32141 to 32200
 
 msgctxt "#32201"
 msgid "Movies"

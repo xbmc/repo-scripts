@@ -1,3 +1,7 @@
+v6.2.0 (2016-02-23)
+- Fix error when playing music library themes
+- Add option for TV Tunes button on Video Info
+
 v6.1.4 (2016-02-21)
 - Add option to delay video themes at different rate than audio themes
 

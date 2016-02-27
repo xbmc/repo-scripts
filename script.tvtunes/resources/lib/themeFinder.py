@@ -611,7 +611,7 @@ class MusicThemeFiles():
 
     # Get the list of themes with their full paths
     def getThemeLocations(self):
-        return ""
+        return []
 
     # Returns the playlist for the themes
     def getThemePlaylist(self):

@@ -31,7 +31,11 @@ class DelayedStartTheme():
         self.anchorTime = 0
 
     def shouldStartPlaying(self, themes):
-        delaySeconds = Settings.getStartDelaySeconds(themes.getThemeLocations()[0])
+        # For Music Themes there will not be any locations
+        firstTheme = None
+        if len(themes.getThemeLocations()) > 0:
+            firstTheme = themes.getThemeLocations()[0]
+        delaySeconds = Settings.getStartDelaySeconds(firstTheme)
 
         # Check is the start playing should be delayed
         if delaySeconds < 1:
