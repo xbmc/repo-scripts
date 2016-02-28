@@ -1,0 +1,9 @@
+# Kodi Media Center language file
+# Addon Name: Skin Shortcuts - Add To Menu
+# Addon id: context.skinshortcuts.addtomenu
+msgid ""
+msgstr ""
+
+msgctxt "#32000"
+msgid "Add to home screen"
+msgstr ""
