@@ -354,20 +354,20 @@ class SyncEpisodes:
             updateKodiTraktShows = copy.deepcopy(traktShows)
             updateKodiKodiShows = copy.deepcopy(kodiShows)
 
-            kodiShowsUpadate = self.__compareEpisodes(updateKodiTraktShows, updateKodiKodiShows, watched=True, restrict=True, collected=kodiShowsCollected)
+            kodiShowsUpdate = self.__compareEpisodes(updateKodiTraktShows, updateKodiKodiShows, watched=True, restrict=True, collected=kodiShowsCollected)
 
-            if len(kodiShowsUpadate['shows']) == 0:
+            if len(kodiShowsUpdate['shows']) == 0:
                 self.sync.UpdateProgress(toPercent, line1=utilities.getString(32074), line2=utilities.getString(32107))
                 logger.debug("[Episodes Sync] Kodi episode playcounts are up to date.")
                 return
 
-            logger.debug("[Episodes Sync] %i show(s) shows are missing playcounts on Kodi" % len(kodiShowsUpadate['shows']))
-            for s in ["%s" % self.__getShowAsString(s, short=True) for s in kodiShowsUpadate['shows']]:
+            logger.debug("[Episodes Sync] %i show(s) shows are missing playcounts on Kodi" % len(kodiShowsUpdate['shows']))
+            for s in ["%s" % self.__getShowAsString(s, short=True) for s in kodiShowsUpdate['shows']]:
                 logger.debug("[Episodes Sync] Episodes updated: %s" % s)
 
-            # logger.debug("kodiShowsUpadate: %s" % kodiShowsUpadate)
+            # logger.debug("kodiShowsUpdate: %s" % kodiShowsUpdate)
             episodes = []
-            for show in kodiShowsUpadate['shows']:
+            for show in kodiShowsUpdate['shows']:
                 for season in show['seasons']:
                     for episode in season['episodes']:
                         episodes.append({'episodeid': episode['ids']['episodeid'], 'playcount': episode['plays'], "lastplayed": utilities.convertUtcToDateTime(episode['last_watched_at'])})
@@ -394,19 +394,19 @@ class SyncEpisodes:
         if utilities.getSettingAsBool('trakt_episode_playback') and traktShows and not self.sync.IsCanceled():
             updateKodiTraktShows = copy.deepcopy(traktShows)
             updateKodiKodiShows = copy.deepcopy(kodiShows)
-            kodiShowsUpadate = self.__compareEpisodes(updateKodiTraktShows, updateKodiKodiShows, restrict=True, playback=True)
+            kodiShowsUpdate = self.__compareEpisodes(updateKodiTraktShows, updateKodiKodiShows, restrict=True, playback=True)
 
-            if len(kodiShowsUpadate['shows']) == 0:
+            if len(kodiShowsUpdate['shows']) == 0:
                 self.sync.UpdateProgress(toPercent, line1=utilities.getString(1441), line2=utilities.getString(32129))
                 logger.debug("[Episodes Sync] Kodi episode playbacks are up to date.")
                 return
 
-            logger.debug("[Episodes Sync] %i show(s) shows are missing playbacks on Kodi" % len(kodiShowsUpadate['shows']))
-            for s in ["%s" % self.__getShowAsString(s, short=True) for s in kodiShowsUpadate['shows']]:
+            logger.debug("[Episodes Sync] %i show(s) shows are missing playbacks on Kodi" % len(kodiShowsUpdate['shows']))
+            for s in ["%s" % self.__getShowAsString(s, short=True) for s in kodiShowsUpdate['shows']]:
                 logger.debug("[Episodes Sync] Episodes updated: %s" % s)
 
             episodes = []
-            for show in kodiShowsUpadate['shows']:
+            for show in kodiShowsUpdate['shows']:
                 for season in show['seasons']:
                     for episode in season['episodes']:
                         episodes.append({'episodeid': episode['ids']['episodeid'], 'progress': episode['progress'], 'runtime': episode['runtime']})
@@ -444,17 +444,17 @@ class SyncEpisodes:
 
                 self.sync.traktapi.addRating(traktShowsToUpdate)
 
+            # needs to be restricted, because we can't add a rating to an episode which is not in our Kodi collection
+            kodiShowsUpdate = self.__compareShows(updateKodiTraktShows, updateKodiKodiShows, rating=True, restrict = True)
 
-            kodiShowsUpadate = self.__compareShows(updateKodiTraktShows, updateKodiKodiShows, rating=True)
-
-            if len(kodiShowsUpadate['shows']) == 0:
+            if len(kodiShowsUpdate['shows']) == 0:
                 self.sync.UpdateProgress(toPercent, line1='', line2=utilities.getString(32176))
                 logger.debug("[Episodes Sync] Kodi show ratings are up to date.")
             else:
-                logger.debug("[Episodes Sync] %i show(s) will have show ratings added in Kodi" % len(kodiShowsUpadate['shows']))
+                logger.debug("[Episodes Sync] %i show(s) will have show ratings added in Kodi" % len(kodiShowsUpdate['shows']))
 
                 shows = []
-                for show in kodiShowsUpadate['shows']:
+                for show in kodiShowsUpdate['shows']:
                     shows.append({'tvshowid': show['tvshowid'], 'rating': show['rating']})
 
                 # split episode list into chunks of 50
@@ -493,17 +493,17 @@ class SyncEpisodes:
                 self.sync.traktapi.addRating(traktShowsToUpdate)
 
 
-            kodiShowsUpadate = self.__compareEpisodes(updateKodiTraktShows, updateKodiKodiShows, restrict=True, rating=True)
-            if len(kodiShowsUpadate['shows']) == 0:
+            kodiShowsUpdate = self.__compareEpisodes(updateKodiTraktShows, updateKodiKodiShows, restrict=True, rating=True)
+            if len(kodiShowsUpdate['shows']) == 0:
                 self.sync.UpdateProgress(toPercent, line1='', line2=utilities.getString(32173))
                 logger.debug("[Episodes Sync] Kodi episode ratings are up to date.")
             else:
-                logger.debug("[Episodes Sync] %i show(s) will have episode ratings added in Kodi" % len(kodiShowsUpadate['shows']))
-                for s in ["%s" % self.__getShowAsString(s, short=True) for s in kodiShowsUpadate['shows']]:
+                logger.debug("[Episodes Sync] %i show(s) will have episode ratings added in Kodi" % len(kodiShowsUpdate['shows']))
+                for s in ["%s" % self.__getShowAsString(s, short=True) for s in kodiShowsUpdate['shows']]:
                     logger.debug("[Episodes Sync] Episodes updated: %s" % s)
 
                 episodes = []
-                for show in kodiShowsUpadate['shows']:
+                for show in kodiShowsUpdate['shows']:
                     for season in show['seasons']:
                         for episode in season['episodes']:
                             episodes.append({'episodeid': episode['ids']['episodeid'], 'rating': episode['rating']})
@@ -570,7 +570,7 @@ class SyncEpisodes:
 
         return data
 
-    def __compareShows(self, shows_col1, shows_col2, rating=False):
+    def __compareShows(self, shows_col1, shows_col2, rating=False, restrict=False):
         shows = []
         for show_col1 in shows_col1['shows']:
             if show_col1:
@@ -593,18 +593,16 @@ class SyncEpisodes:
                     elif not rating:
                         shows.append(show)
                 else:
-                    show = {'title': show_col1['title'], 'ids': {}, 'year': show_col1['year']}
-                    if 'tvdb' in show_col1['ids']:
-                        show['ids'] = {'tvdb': show_col1['ids']['tvdb']}
+                    if not restrict:
+                        show = {'title': show_col1['title'], 'ids': {}, 'year': show_col1['year']}
+                        if 'tvdb' in show_col1['ids']:
+                            show['ids'] = {'tvdb': show_col1['ids']['tvdb']}
 
-                    if 'tvshowid' in show_col1:
-                        del(show_col1['tvshowid'])
-
-                    if rating and 'rating' in show_col1 and show_col1['rating'] <> 0:
-                        show['rating'] = show_col1['rating']
-                        shows.append(show)
-                    elif not rating:
-                        shows.append(show)
+                        if rating and 'rating' in show_col1 and show_col1['rating'] <> 0:
+                            show['rating'] = show_col1['rating']
+                            shows.append(show)
+                        elif not rating:
+                            shows.append(show)
 
         result = {'shows': shows}
         return result
