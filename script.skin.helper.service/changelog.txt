@@ -1,3 +1,17 @@
+v.1.0.54
+- ADD support for artwork lookup for widgets/plugins
+- ADD extrafanart support for widgets
+- FIX colorpicker issues when used with skinshortcuts properties
+- FIX caching issues for widgets
+- FIX smart shortcuts for favourites
+- ADD support for Flix2Kodi smartshortcuts
+- FIX Google images search for PVR
+- FIX issues when multiple profiles are in used
+- ADD multiselect skinsettings feature
+- FIX for wall backgrounds
+- FIX several unicode issues
+
+
 v.1.0.23
 - ADD additional tmdb budget/revenuw window properties
 - FIX music widgets sort order

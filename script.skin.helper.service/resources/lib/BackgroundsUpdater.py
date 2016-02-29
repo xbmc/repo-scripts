@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import threading
+import threading, thread
 import random
 import io
 import base64
@@ -28,6 +28,7 @@ class BackgroundsUpdater(threading.Thread):
     manualWallsLoaded = list()
     manualWalls = {}
     skinShortcutsActive = False
+    delayedTaskInterval = 1795
     
     def __init__(self, *args):
         self.lastPicturesPath = xbmc.getInfoLabel("skin.string(SkinHelper.PicturesBackgroundPath)").decode("utf-8")
@@ -53,6 +54,7 @@ class BackgroundsUpdater(threading.Thread):
             self.getSkinConfig()
             self.UpdateBackgrounds()
             self.updateWallImages()
+            thread.start_new_thread(self.getNetflixNodes, ())
         except Exception as e:
             logMsg("ERROR in BackgroundsUpdater ! --> " + str(e), 0)
         
@@ -101,10 +103,16 @@ class BackgroundsUpdater(threading.Thread):
                         except Exception as e:
                             logMsg("ERROR in UpdateBackgrounds.updateWallImages ! --> " + str(e), 0)
                             
+                #do some background stuff every 30 minutes
+                if (self.delayedTaskInterval >= 1800):
+                    thread.start_new_thread(self.getNetflixNodes, ())
+                    self.delayedTaskInterval = 0
+                            
             self.monitor.waitForAbort(1)
             self.backgroundsTaskInterval += 1
             self.wallTaskInterval += 1
             self.daynightThemeTaskInterval += 1
+            self.delayedTaskInterval += 1
     
     def getSkinConfig(self):
         #gets the settings for the script as set by the skinner..
@@ -564,7 +572,7 @@ class BackgroundsUpdater(threading.Thread):
         #smart shortcuts --> playlists
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.playlists)"):
             logMsg("Processing smart shortcuts for playlists.... ")
-            if self.smartShortcuts.has_key("playlists") and not refreshSmartshortcuts:
+            if self.smartShortcuts.get("playlists") and not refreshSmartshortcuts:
                 logMsg("get playlist entries from cache.... ")
                 playlists = self.smartShortcuts["playlists"]
                 for playlist in playlists:
@@ -611,48 +619,48 @@ class BackgroundsUpdater(threading.Thread):
                                     allSmartShortcuts.append("playlist." + str(playlistCount) )
                                     playlists.append( (playlistCount, label, path, playlist, type ))
                                     playlistCount += 1
-                        except: logMsg("Error while processing smart shortcuts for playlist %s  --> "%label, 0)
+                        except: logMsg("Error while processing smart shortcuts for playlist %s  --> This file seems to be corrupted, please remove it from your system to prevent any further errors."%item["file"], 0)
                 self.smartShortcuts["playlists"] = playlists
                         
         #smart shortcuts --> favorites
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.favorites)"):
             logMsg("Processing smart shortcuts for favourites.... ")
             try:
-                if self.smartShortcuts.has_key("favourites") and not refreshSmartshortcuts:
+                if self.smartShortcuts.get("favourites") and not refreshSmartshortcuts:
                     logMsg("get favourites entries from cache.... ")
                     favourites = self.smartShortcuts["favourites"]
                     for favourite in favourites:
-                        favoritesCount = favourite[0]
-                        if self.setImageFromPath("favorite." + str(favoritesCount) + ".image",favourite[2]):
-                            WINDOW.setProperty("favorite." + str(favoritesCount) + ".label", favourite[1])
-                            WINDOW.setProperty("favorite." + str(favoritesCount) + ".title", favourite[1])
-                            WINDOW.setProperty("favorite." + str(favoritesCount) + ".action", favourite[2])
-                            WINDOW.setProperty("favorite." + str(favoritesCount) + ".path", favourite[2])
-                            WINDOW.setProperty("favorite." + str(favoritesCount) + ".content", favourite[3])
+                        WINDOW.setProperty("favorite." + str(favourite[0]) + ".label", favourite[1])
+                        WINDOW.setProperty("favorite." + str(favourite[0]) + ".title", favourite[1])
+                        WINDOW.setProperty("favorite." + str(favourite[0]) + ".action", favourite[2])
+                        WINDOW.setProperty("favorite." + str(favourite[0]) + ".path", favourite[2])
+                        WINDOW.setProperty("favorite." + str(favourite[0]) + ".content", favourite[3])
+                        if len(favourite) >= 5:
+                            WINDOW.setProperty("favorite." + str(favourite[0]) + ".type", favourite[4])
+                        self.setImageFromPath("favorite." + str(favourite[0]) + ".image",favourite[2])
                 else:
-                    logMsg("no cache - Get favourite entries from file.... ")
-                    favoritesCount = 0
+                    logMsg("no cache - Get favourite entries from json.... ")
                     favourites = []
-                    fav_file = xbmc.translatePath( 'special://profile/favourites.xml' ).decode("utf-8")
-                    if xbmcvfs.exists( fav_file ):
-                        doc = parse( fav_file )
-                        listing = doc.documentElement.getElementsByTagName( 'favourite' )
-                        
-                        for count, favourite in enumerate(listing):
-                            name = favourite.attributes[ 'name' ].nodeValue
-                            path = favourite.childNodes [ 0 ].nodeValue
-                            content = getContentPath(path).lower()
-                            if (path.startswith("activateWindow(videos") or path.startswith("activateWindow(10025") or path.startswith("activateWindow(videos") or path.startswith("activateWindow(music") or path.startswith("activateWindow(10502")) and not "script://" in path and not "mode=9" in path and not "search" in path and not "play" in path:
-                                if self.setImageFromPath("favorite." + str(favoritesCount) + ".image",path):
-                                    WINDOW.setProperty("favorite." + str(favoritesCount) + ".label", name)
-                                    WINDOW.setProperty("favorite." + str(favoritesCount) + ".title", name)
-                                    WINDOW.setProperty("favorite." + str(favoritesCount) + ".action", path)
-                                    WINDOW.setProperty("favorite." + str(favoritesCount) + ".path", path)
-                                    WINDOW.setProperty("favorite." + str(favoritesCount) + ".content", content)
-                                    allSmartShortcuts.append("favorite." + str(favoritesCount) )
-                                    favourites.append( (favoritesCount, name, path, content) )
-                                    favoritesCount += 1
-                                    
+                    json_result = getJSON('Favourites.GetFavourites', '{"type": null, "properties": ["path", "thumbnail", "window", "windowparameter"]}')
+                    for count, fav in enumerate(json_result):
+                        if "windowparameter" in fav:
+                            content = fav["windowparameter"] + "&widget=true"
+                            #check if this is a valid path with content
+                            if not "script://" in content.lower() and not "mode=9" in content.lower() and not "search" in content.lower() and not "play" in content.lower():
+                                window = fav["window"]
+                                label = fav["title"]
+                                path = "ActivateWindow(%s,%s,return)" %(window,content)
+                                type, image = detectPluginContent(content,False)
+                                if type and image:
+                                    WINDOW.setProperty("favorite." + str(count) + ".label", label)
+                                    WINDOW.setProperty("favorite." + str(count) + ".title", label)
+                                    WINDOW.setProperty("favorite." + str(count) + ".action", path)
+                                    WINDOW.setProperty("favorite." + str(count) + ".path", path)
+                                    WINDOW.setProperty("favorite." + str(count) + ".content", content)
+                                    WINDOW.setProperty("favorite." + str(count) + ".image", image)
+                                    WINDOW.setProperty("favorite." + str(count) + ".type", type)
+                                    allSmartShortcuts.append("favorite." + str(count) )
+                                    favourites.append( (count, label, path, content, type) )
                     self.smartShortcuts["favourites"] = favourites
             except Exception as e:
                 #something wrong so disable the smartshortcuts for this section for now
@@ -705,183 +713,39 @@ class BackgroundsUpdater(threading.Thread):
                             nodes.append( (key, plextitle, plexcontent ) )
                             self.setImageFromPath("plexbmc.channels.image",plexcontent)
                             allSmartShortcuts.append("plexbmc.channels")
-                            
-                    
                     self.smartShortcuts["plex"] = nodes
                  
         #smart shortcuts --> netflix nodes
-        if xbmc.getCondVisibility("System.HasAddon(plugin.video.netflixbmc) + Skin.HasSetting(SmartShortcuts.netflix)") and WINDOW.getProperty("netflixready") == "ready":
+        if xbmc.getCondVisibility("System.HasAddon(plugin.video.flix2kodi) + Skin.HasSetting(SmartShortcuts.netflix)"):
             
-            if self.smartShortcuts.has_key("netflix") and not refreshSmartshortcuts:
+            nodes = []
+            if self.smartShortcuts.get("netflix") and not refreshSmartshortcuts:
                 logMsg("get netflix entries from cache.... ")
                 nodes = self.smartShortcuts["netflix"]
-                for node in nodes:
-                    key = node[0]
-                    label = node[1]
-                    content = node[2]
-                    path = node[3]
-                    type = node[4]
-                    if len(node) == 6:
-                        imagespath = node[5]
-                    else:
-                        imagespath = content
-                    self.setImageFromPath(key + ".image",imagespath,"special://home/addons/plugin.video.netflixbmc/fanart.jpg")
-                    WINDOW.setProperty(key + ".title", label)
-                    WINDOW.setProperty(key + ".content", content)
-                    WINDOW.setProperty(key + ".path", path)
-          
-            
             else:
-                nodes = []
-                netflixAddon = xbmcaddon.Addon('plugin.video.netflixbmc')
-                logMsg("no cache - Generate netflix entries.... ")
+                nodes = self.getNetflixNodes()
+                if nodes:
+                    allSmartShortcuts.append("netflix.generic")
+                    allSmartShortcuts.append("netflix.generic.suggestions")
+                    allSmartShortcuts.append("netflix.movies")
+                    allSmartShortcuts.append("netflix.tvshows")
                 
-                #generic netflix shortcut
-                key = "netflix.generic"
-                label = netflixAddon.getAddonInfo('name')
-                content = "plugin://plugin.video.netflixbmc/?mode=main&widget=true&url"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                imagespath = "plugin://plugin.video.netflixbmc/?mode=listViewingActivity&thumb=&type=both&url&widget=true"
-                type = "media"
-                nodes.append( (key, label, content, path, type, imagespath ) )
-                createSmartShortcutSubmenu("netflix.generic","special://home/addons/plugin.video.netflixbmc/icon.png")
-                
-                #generic netflix mylist
-                key = "netflix.generic.mylist"
-                label = netflixAddon.getLocalizedString(30002)
-                content = "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_38"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "movies"
-                nodes.append( (key, label, content, type, path ) )
-                
-                #generic netflix suggestions
-                key = "netflix.generic.suggestions"
-                label = netflixAddon.getLocalizedString(30143)
-                content = "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_2"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "movies"
-                nodes.append( (key, label, content, type, path ) )
-                
-                #generic netflix inprogress
-                key = "netflix.generic.inprogress"
-                label = netflixAddon.getLocalizedString(30121)
-                content = "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=both&widget=true&url=slider_0"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "movies"
-                nodes.append( (key, label, content, type, path ) )
-                
-                #generic netflix recent
-                key = "netflix.generic.recent"
-                label = netflixAddon.getLocalizedString(30003)
-                content = "plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=both&widget=true&url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "movies"
-                nodes.append( (key, label, content, type, path ) )
-
-                #netflix movies
-                key = "netflix.movies"
-                label = netflixAddon.getAddonInfo('name') + " " + netflixAddon.getLocalizedString(30011)
-                content = "plugin://plugin.video.netflixbmc/?mode=main&thumb&type=movie&url&widget=true"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                imagespath = "plugin://plugin.video.netflixbmc/?mode=listViewingActivity&thumb=&type=movie&url&widget=true"
-                type = "movies"
-                nodes.append( (key, label, content, path, type, imagespath ) )
-                createSmartShortcutSubmenu("netflix.movies","special://home/addons/plugin.video.netflixbmc/icon.png")
-                
-                #netflix movies mylist
-                key = "netflix.movies.mylist"
-                label = netflixAddon.getLocalizedString(30011) + " - " + netflixAddon.getLocalizedString(30002)
-                content = "plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=movie&widget=true&url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "movies"
-                nodes.append( (key, label, content, type, path ) )
-                
-                #netflix movies suggestions
-                key = "netflix.movies.suggestions"
-                label = netflixAddon.getLocalizedString(30011) + " - " + netflixAddon.getLocalizedString(30143)
-                content = "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=movie&widget=true&url=slider_2"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "movies"
-                nodes.append( (key, label, content, type, path ) )
-
-                #netflix movies inprogress
-                key = "netflix.movies.inprogress"
-                label = netflixAddon.getLocalizedString(30011) + " - " + netflixAddon.getLocalizedString(30121)
-                content = "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=movie&widget=true&url=slider_4"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "movies"
-                nodes.append( (key, label, content, type, path ) )
-                
-                #netflix movies recent
-                key = "netflix.movies.recent"
-                label = netflixAddon.getLocalizedString(30011) + " - " + netflixAddon.getLocalizedString(30003)
-                content = "plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=movie&widget=true&url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "movies"
-                nodes.append( (key, label, content, type, path ) )
-                
-                #netflix tvshows
-                key = "netflix.tvshows"
-                label = netflixAddon.getAddonInfo('name') + " " + netflixAddon.getLocalizedString(30012)
-                content = "plugin://plugin.video.netflixbmc/?mode=main&thumb&type=tv&url"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                imagespath = "plugin://plugin.video.netflixbmc/?mode=listViewingActivity&thumb=&type=movie&url&widget=true"
-                type = "tvshows"
-                nodes.append( (key, label, content, path, type, imagespath ) )
-                createSmartShortcutSubmenu("netflix.tvshows","special://home/addons/plugin.video.netflixbmc/icon.png")
-                
-                #netflix tvshows mylist
-                key = "netflix.tvshows.mylist"
-                label = netflixAddon.getLocalizedString(30012) + " - " + netflixAddon.getLocalizedString(30002)
-                content = "plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=tv&widget=true&url=http%3a%2f%2fwww.netflix.com%2fMyList%3fleid%3d595%26link%3dseeall"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "tvshows"
-                nodes.append( (key, label, content, type, path ) )
-                
-                #netflix tvshows suggestions
-                key = "netflix.tvshows.suggestions"
-                label = netflixAddon.getLocalizedString(30012) + " - " + netflixAddon.getLocalizedString(30143)
-                content = "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=tv&widget=true&url=slider_2"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "tvshows"
-                nodes.append( (key, label, content, type, path ) )
-
-                #netflix tvshows inprogress
-                key = "netflix.tvshows.inprogress"
-                label = netflixAddon.getLocalizedString(30012) + " - " + netflixAddon.getLocalizedString(30121)
-                content = "plugin://plugin.video.netflixbmc/?mode=listSliderVideos&thumb&type=tv&widget=true&url=slider_4"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "tvshows"
-                nodes.append( (key, label, content, type, path ) )
-                
-                #netflix tvshows recent
-                key = "netflix.tvshows.recent"
-                label = netflixAddon.getLocalizedString(30012) + " - " + netflixAddon.getLocalizedString(30003)
-                content = "plugin://plugin.video.netflixbmc/?mode=listVideos&thumb&type=tv&widget=true&url=http%3a%2f%2fwww.netflix.com%2fWiRecentAdditionsGallery%3fnRR%3dreleaseDate%26nRT%3dall%26pn%3d1%26np%3d1%26actionMethod%3djson"
-                path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
-                type = "tvshows"
-                nodes.append( (key, label, content, type, path ) )
-                
-                for node in nodes:
-                    key = node[0]
-                    label = node[1]
-                    content = node[2]
-                    path = node[3]
-                    type = node[4]
-                    if len(node) == 6:
-                        imagespath = node[5]
-                    else:
-                        imagespath = content
-                    self.setImageFromPath(key + ".image",imagespath, "special://home/addons/plugin.video.netflixbmc/fanart.jpg")
-                    WINDOW.setProperty(key + ".title", label)
-                    WINDOW.setProperty(key + ".content", content)
-                    WINDOW.setProperty(key + ".path", path)
-                    WINDOW.setProperty(key + ".type", type) 
-                    
-                self.smartShortcuts["netflix"] = nodes
-                allSmartShortcuts.append("netflix.generic")
-                allSmartShortcuts.append("netflix.movies")
-                allSmartShortcuts.append("netflix.tvshows")
+            for node in nodes:
+                key = node[0]
+                label = node[1]
+                content = node[2]
+                path = node[4]
+                type = node[3]
+                if len(node) == 6:
+                    imagespath = node[5]
+                else:
+                    imagespath = content
+                self.setImageFromPath(key + ".image",imagespath,"special://home/addons/plugin.video.flix2kodi/fanart.jpg")
+                WINDOW.setProperty(key + ".title", label)
+                WINDOW.setProperty(key + ".content", content)
+                WINDOW.setProperty(key + ".path", path)
+                WINDOW.setProperty(key + ".type", type)
+          
                 
         if allSmartShortcuts:
             self.smartShortcuts["allSmartShortcuts"] = allSmartShortcuts
@@ -897,7 +761,191 @@ class BackgroundsUpdater(threading.Thread):
         self.setWallImageFromPath("SkinHelper.AllMusicSongsBackground.Wall","SkinHelper.AllMusicSongsBackground","thumbnail")
         self.setWallImageFromPath("SkinHelper.AllTvShowsBackground.Wall","SkinHelper.AllTvShowsBackground")
         self.setWallImageFromPath("SkinHelper.AllTvShowsBackground.Poster.Wall","SkinHelper.AllTvShowsBackground","poster")
-                
+    
+    def getNetflixNodes(self):
+        #build a listing of netflix nodes...
+        
+        if not xbmc.getCondVisibility("System.HasAddon(plugin.video.flix2kodi) + Skin.HasSetting(SmartShortcuts.netflix)"):
+            return
+        
+        nodes = []
+        netflixAddon = xbmcaddon.Addon('plugin.video.flix2kodi')
+        profilename = netflixAddon.getSetting('profile_name').decode("utf-8")
+        
+        if profilename and netflixAddon.getSetting("username") and netflixAddon.getSetting("authorization_url"):
+            logMsg("Generating netflix entries for profile %s .... "%profilename)
+            #generic netflix shortcut
+            key = "netflix.generic"
+            label = netflixAddon.getAddonInfo('name')
+            content = "plugin://plugin.video.flix2kodi/?mode=main&widget=true&url&widget=true"
+            path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
+            imagespath = "plugin://plugin.video.flix2kodi/?mode=list_videos&thumb&type=both&url=list%3f%26mylist&widget=true"
+            type = "media"
+            nodes.append( (key, label, content, type, path, imagespath ) )
+            createSmartShortcutSubmenu("netflix.generic","special://home/addons/plugin.video.flix2kodi/icon.png")
+            
+            #generic netflix mylist
+            key = "netflix.generic.mylist"
+            label = netflixAddon.getLocalizedString(30104)
+            content = "plugin://plugin.video.flix2kodi/?mode=list_videos&thumb&type=both&url=list%3f%26mylist&widget=true"
+            path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
+            type = "movies"
+            nodes.append( (key, label, content, type, path ) )
+            
+            #get mylist items...
+            mylist = []
+            media_array = getJSON('Files.GetDirectory','{ "properties": ["title"], "directory": "plugin://plugin.video.flix2kodi/?mode=list_videos&thumb&type=both&url=list%3f%26mylist&widget=true", "media": "files", "limits": {"end":50} }')
+            for item in media_array:
+                mylist.append(item["label"])
+            
+            #get dynamic entries...
+            media_array = getJSON('Files.GetDirectory','{ "properties": ["title"], "directory": "plugin://plugin.video.flix2kodi/?mode=main&type=dynamic&widget=true", "media": "files", "limits": {"end":50} }')
+            if media_array:
+                itemscount = 0
+                suggestionsNodefound = False
+                for item in media_array:
+                    if ("list_viewing_activity" in item["file"]) or ("mode=search" in item["file"]) or ("mylist" in item["file"]):
+                        continue
+                    elif profilename in item["label"] and not suggestionsNodefound: 
+                        #this is the suggestions node!
+                        suggestionsNodefound = True
+                        #generic suggestions node
+                        key = "netflix.generic.suggestions"
+                        content = item["file"] + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %item["file"]
+                        nodes.append( (key, item["label"], content, "movies", path ) )
+                        #movies suggestions node
+                        key = "netflix.movies.suggestions"
+                        newpath = item["file"].replace("type=both","type=movie")
+                        content = newpath + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %newpath
+                        nodes.append( (key, item["label"], content, "movies", path ) )
+                        #tvshows suggestions node
+                        key = "netflix.tvshows.suggestions"
+                        newpath = item["file"].replace("type=both","type=show")
+                        content = newpath + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %newpath
+                        nodes.append( (key, item["label"], content, "tvshows", path ) )
+                    elif profilename in item["label"] and suggestionsNodefound: 
+                        #this is the continue watching node!
+                        #generic inprogress node
+                        key = "netflix.generic.inprogress"
+                        content = item["file"] + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %item["file"]
+                        nodes.append( (key, item["label"], content, "movies", path ) )
+                        #movies inprogress node
+                        key = "netflix.movies.inprogress"
+                        newpath = item["file"].replace("type=both","type=movie")
+                        content = newpath + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %newpath
+                        nodes.append( (key, item["label"], content, "movies", path ) )
+                        #tvshows inprogress node
+                        key = "netflix.tvshows.inprogress"
+                        newpath = item["file"].replace("type=both","type=show")
+                        content = newpath + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %newpath
+                        nodes.append( (key, item["label"], content, "tvshows", path ) )
+                    elif item["label"].lower().endswith("releases"): 
+                        #this is the recent node!
+                        #generic recent node
+                        key = "netflix.generic.recent"
+                        content = item["file"] + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %item["file"]
+                        nodes.append( (key, item["label"], content, "movies", path ) )
+                        #movies recent node
+                        key = "netflix.movies.recent"
+                        newpath = item["file"].replace("type=both","type=movie")
+                        content = newpath + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %newpath
+                        nodes.append( (key, item["label"], content, "movies", path ) )
+                        #tvshows recent node
+                        key = "netflix.tvshows.recent"
+                        newpath = item["file"].replace("type=both","type=show")
+                        content = newpath + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %newpath
+                        nodes.append( (key, item["label"], content, "tvshows", path ) )
+                    elif item["label"] == "Trending": 
+                        #this is the trending node!
+                        key = "netflix.generic.trending"
+                        content = item["file"] + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %item["file"]
+                        nodes.append( (key, item["label"], content, "movies", path ) )
+                    else:
+                        key = "netflix.generic.suggestions.%s" %itemscount
+                        content = item["file"] + "&widget=true"
+                        path = "ActivateWindow(Videos,%s,return)" %item["file"]
+                        type = "movies"
+                        nodes.append( (key, item["label"], content, type, path ) )
+                        itemscount += 1
+                        
+                    #get recommended node...
+                    for mylist_item in mylist:
+                        if mylist_item in item["label"]:
+                            key = "netflix.generic.recommended"
+                            content = item["file"] + "&widget=true"
+                            path = "ActivateWindow(Videos,%s,return)" %item["file"]
+                            nodes.append( (key, item["label"], content, "movies", path ) )
+
+            #netflix movies
+            key = "netflix.movies"
+            label = netflixAddon.getAddonInfo('name') + " " + netflixAddon.getLocalizedString(30100)
+            content = "plugin://plugin.video.flix2kodi/?mode=main&thumb&type=movie&url&widget=true"
+            path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
+            imagespath = "plugin://plugin.video.flix2kodi/?mode=list_videos&thumb&type=movie&url=list%3f%26mylist&widget=true"
+            type = "movies"
+            nodes.append( (key, label, content, type, path, imagespath ) )
+            createSmartShortcutSubmenu("netflix.movies","special://home/addons/plugin.video.flix2kodi/icon.png")
+            
+            #netflix movies mylist
+            key = "netflix.movies.inprogress"
+            label = netflixAddon.getLocalizedString(30100) + " - " + netflixAddon.getLocalizedString(30104)
+            content = "plugin://plugin.video.flix2kodi/?mode=list_videos&thumb&type=movie&url=list%3f%26mylist&widget=true"
+            path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
+            type = "movies"
+            nodes.append( (key, label, content, type, path ) )
+                        
+            #netflix movies genres
+            key = "netflix.movies.genres"
+            label = netflixAddon.getLocalizedString(30100) + " - " + netflixAddon.getLocalizedString(30108)
+            content = "plugin://plugin.video.flix2kodi/?mode=list_genres&thumb&type=movie&url&widget=true"
+            path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
+            type = "genres"
+            nodes.append( (key, label, content, type, path ) )
+            
+            #netflix tvshows
+            key = "netflix.tvshows"
+            label = netflixAddon.getAddonInfo('name') + " " + netflixAddon.getLocalizedString(30101)
+            content = "plugin://plugin.video.flix2kodi/?mode=main&thumb&type=show&url&widget=true"
+            path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
+            imagespath = "plugin://plugin.video.flix2kodi/?mode=list_videos&thumb&type=show&url=list%3f%26mylist&widget=true"
+            type = "tvshows"
+            nodes.append( (key, label, content, type, path, imagespath ) )
+            createSmartShortcutSubmenu("netflix.tvshows","special://home/addons/plugin.video.flix2kodi/icon.png")
+            
+            #netflix tvshows mylist
+            key = "netflix.tvshows.inprogress"
+            label = netflixAddon.getLocalizedString(30101) + " - " + netflixAddon.getLocalizedString(30104)
+            content = "plugin://plugin.video.flix2kodi/?mode=list_videos&thumb&type=show&url=list%3f%26mylist&widget=true"
+            path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
+            type = "tvshows"
+            nodes.append( (key, label, content, type, path ) )
+            
+            #netflix tvshows genres
+            key = "netflix.tvshows.genres"
+            label = netflixAddon.getLocalizedString(30101) + " - " + netflixAddon.getLocalizedString(30108)
+            content = "plugin://plugin.video.flix2kodi/?mode=list_genres&thumb&type=show&url&widget=true"
+            path = "ActivateWindow(Videos,%s,return)" %content.replace("&widget=true","")
+            type = "genres"
+            nodes.append( (key, label, content, type, path ) )
+            
+            logMsg("DONE Generating netflix entries --> %s"%repr(nodes))
+            
+        else:
+            logMsg("SKIP Generating netflix entries - addon is not ready!")
+        
+        self.smartShortcuts["netflix"] = nodes
+        return nodes
+        
     def createImageWall(self,images,windowProp,type="fanart"):
         
         if SETTING("maxNumWallImages"):
@@ -1003,5 +1051,5 @@ class BackgroundsUpdater(threading.Thread):
                     #add our images to the dict
                     return_images.append({"wall": out_file, "wallbw": out_file_bw })
                 
-        logMsg("Building Wall background %s DONE" %windowProp,0)
+        logMsg("Building Wall background %s DONE" %windowProp)
         return return_images         

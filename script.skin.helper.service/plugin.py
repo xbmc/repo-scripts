@@ -1,20 +1,21 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import resources.lib.PluginContent as plugincontent
+import resources.lib.Utils as utils
 import resources.lib.SkinShortcutsIntegration as skinshortcuts
 import urlparse
-import xbmcgui,xbmcplugin
+import xbmc,xbmcgui,xbmcplugin
 enableProfiling = False
 
 class Main:
     
     def __init__(self):
         
-        plugincontent.logMsg('started loading pluginentry')
+        utils.logMsg('started loading pluginentry')
         
         #get params
         params = urlparse.parse_qs(sys.argv[2][1:].decode("utf-8"))
-        plugincontent.logMsg("Parameter string: %s" % sys.argv[2])
+        utils.logMsg("Parameter string: %s" % sys.argv[2])
         
         if params:        
             path=params.get("path",None)
@@ -31,7 +32,7 @@ class Main:
                     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
                 if action == "PLAYRECORDING":
                     #retrieve the recording and play as listitem to get resume working
-                    json_result = plugincontent.getJSON('PVR.GetRecordingDetails', '{"recordingid": %d, "properties": [ %s ]}' %(int(path),fields_pvrrecordings))
+                    json_result = utils.getJSON('PVR.GetRecordingDetails', '{"recordingid": %d, "properties": [ %s ]}' %(int(path),plugincontent.fields_pvrrecordings))
                     if json_result:
                         xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Player.Open", "params": { "item": { "recordingid": %d } }, "id": 1 }' % int(path))
                         if json_result["resume"].get("position"):
@@ -40,7 +41,6 @@ class Main:
                                     break
                                 xbmc.sleep(250)
                             xbmc.Player().seekTime(json_result["resume"].get("position"))
-
                     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=xbmcgui.ListItem())
                 elif action == "LAUNCH":
                     path = sys.argv[2].split("&path=")[1]
@@ -87,7 +87,10 @@ class Main:
                     if reversed: optionalParam = reversed[0]
                     name=params.get("name","")
                     if name: optionalParam = name[0]
-                    plugincontent.getPluginListing(action,limit,refresh,optionalParam)
+                    randomize=params.get("randomize","")
+                    if randomize: randomize = randomize[0]
+                    randomize = randomize == "true"
+                    plugincontent.getPluginListing(action,limit,refresh,optionalParam,randomize)
     
         else:
             #do plugin main listing...
@@ -95,7 +98,7 @@ class Main:
 
 if (__name__ == "__main__"):
     try:
-        if not plugincontent.WINDOW.getProperty("SkinHelper.KodiExit"):
+        if not xbmc.abortRequested:
             if enableProfiling:
                 import cProfile
                 import pstats
@@ -110,6 +113,8 @@ if (__name__ == "__main__"):
                 p.print_stats()
             else:
                 Main()
+        else:
+            utils.logMsg("plugin.py --> Not forfilling request: Kodi is exiting" ,0)
     except Exception as e:
-        plugincontent.logMsg("Error in plugin.py --> " + str(e),0)
-plugincontent.logMsg('finished loading pluginentry')
+        utils.logMsg("Error in plugin.py --> " + str(e),0)
+utils.logMsg('finished loading pluginentry')

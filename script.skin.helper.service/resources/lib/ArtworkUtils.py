@@ -8,6 +8,8 @@ import musicbrainzngs as m
 import BeautifulSoup
 import htmlentitydefs
 import urllib2, re
+from difflib import SequenceMatcher as SM
+
 
 tmdb_apiKey = base64.b64decode("NDc2N2I0YjJiYjk0YjEwNGZhNTUxNWM1ZmY0ZTFmZWM=")
 m.set_useragent("script.skin.helper.service", "1.0.0", "https://github.com/marcelveldt/script.skin.helper.service")
@@ -155,6 +157,8 @@ def getPVRThumbs(title,channel,type="channels",path="",genre="",ignoreCache=Fals
                 if WINDOW.getProperty("SkinHelper.useTMDBLookups") == "true" or manualLookup:
                     if "movie" in genre.lower():
                         artwork = getTmdbDetails(searchtitle,artwork,"movie")
+                    elif "tv" in genre.lower():
+                        artwork = getTmdbDetails(searchtitle,artwork,"tv")
                     else:
                         artwork = getTmdbDetails(searchtitle,artwork)
                 
@@ -189,7 +193,7 @@ def getPVRThumbs(title,channel,type="channels",path="",genre="",ignoreCache=Fals
                     else: artwork["extrafanart"] = "plugin://script.skin.helper.service/?action=EXTRAFANART&path=%s" %(single_urlencode(try_encode(cachefile)))
                 
                 #create persistant cache pvrdetails.xml file...
-                if title and channel:
+                if title:
                     artwork["title"] = title
                     artwork["channel"] = channel
                     artwork["date_scraped"] = "%s" %datetime.now()
@@ -209,6 +213,7 @@ def getPVRThumbs(title,channel,type="channels",path="",genre="",ignoreCache=Fals
 def getPvrThumbPath(channel,title):
     pvrThumbPath = ""
     comparetitle = getCompareString(title)
+    if not channel: channel = "unknown_channel"
     #lookup existing pvrthumbs paths - try to find a match in custom path
     #images will be looked up or stored to that path
     customlookuppath = WINDOW.getProperty("SkinHelper.customlookuppath").decode("utf-8")
@@ -583,37 +588,23 @@ def searchGoogleImage(searchphrase1, searchphrase2="",manualLookup=False):
         count = 0
         for img in results:
             count += 1
-            image = img.get("unescapedUrl")
-            if not manualLookup:
-                #the code to get the bigger image is not working, for now we just use the small thumb image provided by google
-                return image
+            if not manualLookup and xbmcvfs.exists(img):
+                #just return the first image found (assuming that will be the best match)
+                return img
             else:
-                #manual lookup, list results and get larger page result
-                listitem = xbmcgui.ListItem(label=image)
-                listitem.setProperty("icon",image)
-                listitem.setProperty("page",img.get("page"))
+                #manual lookup, list results and let user pick one
+                listitem = xbmcgui.ListItem(label=img)
+                listitem.setProperty("icon",img)
                 imagesList.append(listitem)
         
         if manualLookup and imagesList:
-            import Dialogs as dialogs                
+            import Dialogs as dialogs
             w = dialogs.DialogSelectBig( "DialogSelect.xml", ADDON_PATH, listing=imagesList, windowtitle="",multiselect=False )
             w.doModal()
             selectedItem = w.result
             if selectedItem != -1:
                 selectedItem = imagesList[selectedItem]
-                images2 = getGooglePageImages(selectedItem.getProperty("page"))
                 image = selectedItem.getProperty("icon")
-                for img2 in images2:
-                    listitem = xbmcgui.ListItem(label=img2.get("title"))
-                    listitem.setProperty("icon",img2.get("url"))
-                    imagesList2.append(listitem)
-            if imagesList2:
-                w = dialogs.DialogSelectBig( "DialogSelect.xml", ADDON_PATH, listing=imagesList2, windowtitle="",multiselect=False )
-                w.doModal()
-                selectedItem2 = w.result
-                if selectedItem2 != -1:
-                    selectedItem2 = imagesList2[selectedItem2]
-                    image = selectedItem2.getProperty("icon")
         
     except Exception as e:
         if "getaddrinfo failed" in str(e):
@@ -621,7 +612,8 @@ def searchGoogleImage(searchphrase1, searchphrase2="",manualLookup=False):
             logMsg("searchGoogleImage - no internet access, disabling internet lookups for now",0)
         else:
             logMsg("searchGoogleImage - ERROR in searchGoogleImage ! --> " + str(e),0)
-    if manualLookup: xbmc.executebuiltin( "Dialog.Close(busydialog)" )
+    if manualLookup: 
+        xbmc.executebuiltin( "Dialog.Close(busydialog)" )
     return image
 
 def getGoogleImages(terms,**kwargs):
@@ -636,46 +628,19 @@ def getGoogleImages(terms,**kwargs):
     if page > 1: start = '&start=%s' % ((page - 1) * 1)
     url = baseURL.format(start=start,query='&' + query)
     opener = urllib2.build_opener()
-    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+    opener.addheaders = [('User-agent', 'Mozilla/5.0 (Linux; Android 4.1.1; Nexus 7 Build/JRO03D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Safari/535.19')]
     html = opener.open(url).read()
     soup = BeautifulSoup.BeautifulSoup(html)
     results = []
-    for td in soup.findAll('td'):
-        if td.find('td'): continue
-        br = td.find('br')
-        if br: br.extract()
-        cite = td.find('cite')
-        site = ''
-        if cite:
-            site = cite.string
-            cite.extract()
-        i = td.find('a')
-        if not i: continue
-        if i.text or not '/url?q' in i.get('href',''): continue
-        for match in soup.findAll('b'):
-            match.string = '[COLOR FF00FF00][B]{0}[/B][/COLOR]'.format(str(match.string))
-            match.replaceWithChildren()
-        page = urllib.unquote(i.get('href','').split('q=',1)[-1].split('&',1)[0]).encode('utf-8')
-        tn = ''
-        img = i.find('img')
-        if img: tn = img.get('src')
-        image = tn
-        results.append({'unescapedUrl':image,'page':page})
-    return results
-
-def getGooglePageImages(url):
-    results = []
-    opener = urllib2.build_opener()
-    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-    try:
-        html = opener.open(url).read()
-        soup = BeautifulSoup.BeautifulSoup(html)
-        for img in soup.findAll('img'):
-            src = img.get('src')
-            if src: results.append({'title':src,'url':urlparse.urljoin(url,src),'file':src.split('/')[-1]})
-    except:
-        logMsg("getGooglePageImages - ERROR retrieving " + url)
-    
+    for div in soup.findAll('div'):
+        if div.get("class") == "rg_di rg_el ivg-i":
+            a = div.find("a")
+            if a:
+                page = a.get("href","")
+                params = urlparse.parse_qs(page)
+                image = params.get("/imgres?imgurl")
+                if image:
+                    results.append(image[0])
     return results
     
 def searchYoutubeImage(searchphrase, searchphrase2=""):
@@ -1031,7 +996,13 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
         for song in json_response2:
             if not trackName: trackName = song.get("label","")
             if song.get("album"):
-                if not path and normalize_string(artistName.lower().replace("_","")) in normalize_string(song["file"].lower().replace("_","")): path = song["file"]
+                if not path and song.get("file"):
+                    #get path from song - only if artist level matches...
+                    if "\\" in song.get("file"): delim = "\\"
+                    else: delim = "/"
+                    pathartist = song.get("file").split(delim)[-3]
+                    match =  SM(None, artistName, pathartist).ratio()
+                    if match >= 0.75: path = song.get("file")
                 if not albumName: albumName = song.get("album")
                 if song.get("musicbrainzartistid") and not artistartwork.get("musicbrainzartistid"): artistartwork["musicbrainzartistid"] = song["musicbrainzartistid"]
                 tracklist.append(song["title"])
@@ -1047,10 +1018,9 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
         artistartwork["songcount"] = "%s"%songcount
         if not albumartwork.get("artistname"): albumartwork["artistname"] = artistName
         if not albumartwork.get("albumname"): albumartwork["albumname"] = albumName
-     
+    
     #LOOKUP LOCAL ARTWORK PATH PASED ON SONG FILE PATH
     if path and enableLocalMusicArtLookup and (not artistCacheFound or (albumName and not albumCacheFound)) and localArtistMatch:
-        
         #only use existing path if the artistname is actually in the path 
         if "\\" in path:
             delim = "\\"
@@ -1065,7 +1035,8 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
             artistpath = path.rsplit(delim, 2)[0] + delim #artist level
 
             #lookup existing artwork in the paths (only if artistname in the path, to prevent lookups in various artists/compilations folders)
-            if not normalize_string(artistName.lower().replace("_","")) in normalize_string(artistpath.lower().replace("_","")):
+            match =  SM(None, artistName, artistpath.split(delim)[-2]).ratio()
+            if not match >= 0.75:
                 logMsg("getMusicArtwork - lookup on disk skipped for %s - not correct folder structure (artistname\albumname)" %artistartwork.get("artistname",""))
                 albumpath = ""
                 artistpath = ""
@@ -1090,7 +1061,7 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
                 else: albumpath = ""
        
     #online lookup for details
-    if enableMusicArtScraper and not artistCacheFound or (albumName and not albumCacheFound):
+    if enableMusicArtScraper and (not artistCacheFound or (albumName and not albumCacheFound)):
         #lookup details in musicbrainz
         #retrieve album id and artist id with a combined query of album name and artist name to get an accurate result
         if not albumartwork.get("musicbrainzalbumid") or not artistartwork.get("musicbrainzartistid"):
@@ -1119,7 +1090,7 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
                         downloadImage(fanart,efadir,"fanart%s.jpg"%count)
                         count += 1
                     artistartwork["extrafanart"] = efadir
-                else: artistartwork["extrafanart"] = "plugin://script.skin.helper.service/?action=EXTRAFANART&path=special://profile/addon_data/script.skin.helper.service/musicart/%s.xml" %normalize_string(artistName)
+                elif not artistartwork.get("extrafanart"): artistartwork["extrafanart"] = "plugin://script.skin.helper.service/?action=EXTRAFANART&path=special://profile/addon_data/script.skin.helper.service/musicart/%s.xml" %normalize_string(artistName)
             
         ######################################################### ALBUM LEVEL #########################################################    
         if albumName and albumartwork.get("musicbrainzalbumid") and not albumCacheFound:

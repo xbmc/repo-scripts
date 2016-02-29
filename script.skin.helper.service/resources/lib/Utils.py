@@ -255,17 +255,27 @@ def correctSkinSettings():
                         try: subdefault = item2.attributes[ 'default' ].nodeValue
                         except: subdefault = ""
                         #match in sublevel or default found in sublevel values
-                        if (item2.attributes[ 'value' ].nodeValue.lower() == curvalue.lower()) or (not curvalue and subdefault=="true"):
+                        if (item2.attributes[ 'value' ].nodeValue.lower() == curvalue.lower()) or (not curvalue and xbmc.getCondVisibility( subdefault )):
                             label = xbmc.getInfoLabel(item2.attributes[ 'label' ].nodeValue).decode("utf-8")
                             value = item2.attributes[ 'value' ].nodeValue
                             default = subdefault
                             additionalactions = item2.getElementsByTagName( 'onselect' )
                             break
+            #process any multiselects
+            if value.startswith("||MULTISELECT||"):
+                options = item.getElementsByTagName( 'option' )
+                for option in options:
+                    skinsetting = option.attributes[ 'id' ].nodeValue
+                    if not xbmc.getInfoLabel("Skin.String(defaultset_%s)" %skinsetting) and xbmc.getCondVisibility( option.attributes[ 'default' ].nodeValue ):
+                        xbmc.executebuiltin("Skin.SetBool(%s)" %skinsetting)
+                    #always set additional prop to define the defaults
+                    xbmc.executebuiltin("Skin.SetString(defaultset_%s,defaultset)" %skinsetting)
+                        
             #only correct the label
             if value and value.lower() == curvalue.lower():
                 xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(id.encode("utf-8"),label.encode("utf-8")))
             #set the default value if current value is empty
-            if not curvalue and default=="true":
+            if not curvalue and xbmc.getCondVisibility( default ):
                 xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(id.encode("utf-8"),label.encode("utf-8")))
                 xbmc.executebuiltin("Skin.SetString(%s,%s)" %(id.encode("utf-8"),value.encode("utf-8")))
                 #additional onselect actions

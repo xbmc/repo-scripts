@@ -99,4 +99,13 @@
 		<action>$INFO[Window(Home).Property(WINDOWPROP.recommended.path)]</action>
         <visible>!IsEmpty(Window(Home).Property(WINDOWPROP.recommended.path))</visible>
 	</shortcut>
+    <shortcut>
+		<defaultID>$INFO[Window(Home).Property(WINDOWPROP.genres.title)]</defaultID>
+		<label>$INFO[Window(Home).Property(WINDOWPROP.genres.title)]</label>
+		<label2>Video Add-ons</label2>
+        <icon>ICONIMAGE</icon>
+		<thumb>$INFO[Window(Home).Property(WINDOWPROP.genres.image)]</thumb>
+		<action>$INFO[Window(Home).Property(WINDOWPROP.genres.path)]</action>
+        <visible>!IsEmpty(Window(Home).Property(WINDOWPROP.genres.path))</visible>
+	</shortcut>
 </shortcuts>

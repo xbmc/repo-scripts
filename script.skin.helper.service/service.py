@@ -36,7 +36,6 @@ class Main:
         else:
             # Abort was requested while waiting. We should exit
             utils.logMsg('Shutdown requested !',0)
-            utils.WINDOW.setProperty("SkinHelper.KodiExit","True")
             #stop the extra threads
             backgroundsUpdater.stop()
             listItemMonitor.stop()

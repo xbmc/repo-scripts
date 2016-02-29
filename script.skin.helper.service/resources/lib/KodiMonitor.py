@@ -35,6 +35,7 @@ class Kodi_Monitor(xbmc.Monitor):
         if method == "Player.OnStop":
             utils.WINDOW.clearProperty("Skinhelper.PlayerPlaying")
             utils.WINDOW.clearProperty("TrailerPlaying")
+            if xbmc.getCondVisibility("Skin.String(videoinfo_traileraction,fullscreen) + !IsEmpty(Window(Home).Property(TrailerPlaying)) + !Window.IsActive(movieinformation)"): xbmc.executebuiltin("Action(info)")
             utils.resetPlayerWindowProps()
             utils.resetVideoWidgetWindowProps(data)
             utils.resetMusicWidgetWindowProps(data)
@@ -51,13 +52,13 @@ class Kodi_Monitor(xbmc.Monitor):
             if secondsToDisplay != 0:
                 tryCount = 0
                 if utils.WINDOW.getProperty("VideoScreensaverRunning") != "true":
-                    while tryCount !=50 and xbmc.getCondVisibility("!Window.IsActive(fullscreeninfo)"):
+                    while tryCount !=50 and xbmc.getCondVisibility("!Player.ShowInfo"):
                         xbmc.sleep(100)
-                        if xbmc.getCondVisibility("!Window.IsActive(fullscreeninfo) + Window.IsActive(fullscreenvideo)"):
+                        if xbmc.getCondVisibility("!Player.ShowInfo + Window.IsActive(fullscreenvideo)"):
                             xbmc.executebuiltin('Action(info)')
                         tryCount += 1
                     
                     # close info again
                     self.waitForAbort(secondsToDisplay)
-                    if xbmc.getCondVisibility("Window.IsActive(fullscreeninfo)"):
+                    if xbmc.getCondVisibility("Player.ShowInfo"):
                         xbmc.executebuiltin('Action(info)')

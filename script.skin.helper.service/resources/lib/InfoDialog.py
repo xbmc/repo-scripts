@@ -105,23 +105,30 @@ class BackgroundInfoThread(threading.Thread):
                 similarcontent = plugincontent.SIMILARSHOWS(25,list.getSelectedItem().getProperty("imdbnumber"))
             for item in similarcontent:
                 if not self.active: break
-                liz = createListItem(item)
+                item = plugincontent.prepareListItem(item)
+                liz = plugincontent.createListItem(item)
                 liz.setThumbnailImage(item["art"].get("poster"))
                 similarlist.addItem(liz)
-        except: pass
+        except Exception as e:
+            plugincontent.logMsg("ERROR in InfoDialog - getrecommendedmedia ! --> " + str(e), 0)
 
         try: #optional: cast list
             castlist = self.infoDialog.getControl( 998 )
-            json = list.getSelectedItem().getProperty("json").decode("utf-8")
-            castlst = eval(json).get("cast")
+            castitems = []
             downloadThumbs = xbmc.getInfoLabel("Skin.String(actorthumbslookup)").lower() == "true"
-            for cast in castlst:
-                if not self.active: break
-                if not cast.get("thumbnail") or not xbmcvfs.exists(cast.get("thumbnail")) and downloadThumbs: 
-                    artwork = artutils.getTmdbDetails(cast["name"],None,"person")
-                    cast["thumbnail"] = artwork.get("thumb","")
-                liz = xbmcgui.ListItem(label=cast["name"],label2=cast["role"],iconImage=cast.get("thumbnail"))
-                liz.setProperty('path', "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%cast["name"])
+            if self.infoDialog.content == 'movies':
+                castitems = plugincontent.getCast(movie=list.getSelectedItem().getLabel().decode("utf-8"),downloadThumbs=downloadThumbs,listOnly=True)
+            elif self.infoDialog.content == 'tvshows':
+                castitems = plugincontent.getCast(tvshow=list.getSelectedItem().getLabel().decode("utf-8"),downloadThumbs=downloadThumbs,listOnly=True)
+            elif self.infoDialog.content == 'episodes':
+                castitems = plugincontent.getCast(episode=list.getSelectedItem().getLabel().decode("utf-8"),downloadThumbs=downloadThumbs,listOnly=True)
+            for cast in castitems:
+                liz = xbmcgui.ListItem(label=cast.get("name"),label2=cast.get("role"),iconImage=cast.get("thumbnail"))
+                liz.setProperty('IsPlayable', 'false')
+                url = "RunScript(script.extendedinfo,info=extendedactorinfo,name=%s)"%cast.get("name")
+                path="plugin://script.skin.helper.service/?action=launch&path=" + url
                 liz.setThumbnailImage(cast.get("thumbnail"))
                 castlist.addItem(liz)
-        except: pass
+                    
+        except Exception as e:
+            plugincontent.logMsg("ERROR in InfoDialog - getcast ! --> " + str(e), 0)
