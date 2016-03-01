@@ -1,0 +1,171 @@
+v5.0.0
+- remove simplejson support
+- update skin
+- add another file naming template
+- fix for Artist/Album/Track - title.ext
+- also strip korean text
+
+v4.1.5
+- language update
+- cleanup
+
+v4.1.4
+- fix detection of flac lyrics
+
+v4.1.3
+- fix error when clicking on a txt based lyric
+
+v4.1.2
+- update mutagen library
+
+v4.1.1
+- option to remove chinese text from lyrics
+- fix only accept TXXX:lyrics tag
+
+v4.1.0
+- improve embedded mp3 lyrics support
+
+v4.0.2
+- added scraper for genius.com
+- removed lyricstime scraper
+
+v4.0.1
+- update menu action code for jarvis
+
+v3.2.0
+- remove broken lrc scrapers
+- fix unicodedecode crash in gomaudio
+
+v3.1.6
+- fix lyricwiki scraper
+
+v3.1.5
+- fix polish language file
+
+v3.1.4
+- add option to hide notifications
+
+v3.1.3
+- Update background media check to PlayingBackgroundMedia
+
+v3.1.2
+- Clean up the Monitor and Player classes on exit
+
+v3.1.1
+- Do not try and get lyrics if TvTunes is running
+
+v3.1.0
+- add support for mp4 files
+
+v3.0.11
+- properly handle lyrics in the uslt tag
+
+v3.0.10
+- add support for lrc lyrics inside the uslt tag
+
+v3.0.9
+- fix detection od osd key
+
+v3.0.8
+- allow codec info to be shown
+
+v3.0.7
+- better support for multiple artists
+
+v3.0.6
+- fixed missing string in language file
+
+v3.0.5
+- updated language files from Transifex
+
+v3.0.4
+- deprecate xbmc.abortRequested
+
+v3.0.3
+- re-label service setting
+
+v3.0.2
+- fix detection of text based Lyrics3 tags
+- fix some lrc lyrics did not work (time tag not recognised)
+
+v3.0.1
+- fix lyricwiki scraper
+
+v3.0.0
+- kodi name change
+
+v2.0.10
+- several fixes
+
+v2.0.9
+- additional addon tags
+
+v2.0.8
+- add support for flac tags
+- add do_not_analyze property for other addons
+
+v2.0.7
+- make music osd accesible
+- show gui when user clicks osd button
+
+v2.0.6
+- add xml header
+
+v2.0.5
+- fix encoding issue
+
+v2.0.4
+- gotham release
+
+v2.0.3
+- gui cleanup
+
+v2.0.2
+- fix crash when failing to read lyrics file
+- fixed update scraper list when settings change
+
+v2.0.1
+- fixed don't crash when trying to get embedded lyrics from online streams
+- add option to clean song title
+
+v2.0.0
+- convert script to a service
+- auto-hide window when no lyrics are found
+
+v1.0.7
+- fixed blank string in settings
+- changed txxx field now supports both synchronised and regular lyrics
+- fixed potential crash due to unhandled exceptions
+
+v1.0.6
+- fixed potential import of a third party scrapers module
+
+v1.0.5
+- fixed can't show lyric right after reselect in list, need reset control
+- handle encode error in scraper GomAudio
+- added option to save lyrics to song folder
+
+v1.0.4
+- fixed saving lyrics
+- add Korean scraper(Alsong, GomAudio), credit for hojel
+
+v1.0.3
+- language update
+
+v1.0.2
+- add a script running window property
+- added lyrics source as a window property
+- make lyrics available as a window property
+- fixed would fail for users with a special char in their username
+
+v1.0.1
+- fixed can't change lyric for track in cue/ape file
+- fixed decode error in scrape minilyrics
+- added requires for script.module.chardet
+
+v1.0.0
+- initial release
+
+v0.0.1
+- merge cu and lrc lyrics scripts
+

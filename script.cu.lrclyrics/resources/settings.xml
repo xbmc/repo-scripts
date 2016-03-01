@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="32150">
+		<setting id="search_embedded" type="bool" label="32152" default="true"/>
+		<setting type="sep" />
+		<setting id="search_file" type="bool" label="32153" default="true"/>
+		<setting type="sep" />
+		<setting label="32154" type="lsep"/>
+		<setting id="ttplayer" type="bool" label="TTPlayer" default="true"/>
+		<setting id="baidu" type="bool" label="Baidu" default="true"/>
+		<setting id="gomaudio" type="bool" label="GomAudio" default="true"/>
+		<setting type="sep" />
+		<setting label="32155" type="lsep"/>
+		<setting id="lyricwiki" type="bool" label="LyricWiki" default="true"/>
+		<setting id="genius" type="bool" label="Genius" default="true"/>
+		<setting id="lyricsmode" type="bool" label="Lyrics Mode" default="true"/>
+		<setting id="darklyrics" type="bool" label="Dark Lyrics" default="true"/>
+	</category>
+	<category label="32151">
+		<setting label="32115" type="lsep"/>
+		<setting id="service" type="bool" label="32156" default="true"/>
+		<setting id="silent" type="bool" label="32160" default="false"/>
+		<setting id="strip" type="bool" label="32161" default="false"/>
+		<setting type="sep" />
+		<setting label="32116" type="lsep"/>
+		<setting id="read_filename" type="bool" label="32106" default="false"/>
+		<setting id="read_filename_format" type="enum" label="32107" default="0" lvalues="32108|32109|32110|32104|32114" />
+		<setting id="clean_title" type="bool" label="32157" default="false"/>
+		<setting type="sep" />
+		<setting label="32117" type="lsep"/>
+		<setting id="save_lyrics1" type="bool" label="32101" default="true"/>
+		<setting id="save_lyrics_path" type="folder" enable="eq(-1,true)" source="files" label="32102" default="" />
+		<setting id="save_filename_format" type="enum" enable="eq(-2,true)" label="32103" default="0" lvalues="32105|32108"/>
+		<setting type="sep" />
+		<setting id="save_lyrics2" type="bool" label="32113" default="false"/>
+		<setting id="save_subfolder" type="bool" enable="eq(-1,true)" label="32111" default="false"/>
+		<setting id="save_subfolder_path" type="text" enable="eq(-1,true)" label="32112" default="lyrics"/>
+		<setting type="sep" />
+		<setting label="32118" type="lsep"/>
+		<setting id="log_enabled" type="bool" label="32159" default="false"/>
+	</category>
+</settings>
