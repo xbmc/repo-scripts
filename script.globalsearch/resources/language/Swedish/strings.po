@@ -1,0 +1,97 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Allmänna"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Sök filmer"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Sök TV-Serier"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Sök avsnitt"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Sök musikvideor"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Sök artister"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Sök album"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Sök låtar"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Sök skådespelare"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Ange söksträng"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Bläddra i album"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Säsongsinformation"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Spela trailer"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Hitta album"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Hitta alla säsonger"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Hitta alla avsnitt"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Hitta alla album"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Hitta alla låtar"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Filmer med"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "NY SÖKNING"

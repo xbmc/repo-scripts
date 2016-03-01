@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Greek (http://www.transifex.com/projects/p/xbmc-addons/language/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Γενικά"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Αναζήτηση Ταινιών"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Αναζήτηση Τηλ. Σειρών"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Αναζήτηση Επεισοδίων"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Αναζήτηση Μουσικών Βίντεο"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Αναζήτηση Καλλιτεχνών"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Αναζήτηση Άλμπουμ"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Αναζήτηση Τραγουδιών"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Αναζήτηση Ηθοποιών"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Αναζήτηση EPG"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Εισαγωγή κειμένου αναζήτησης"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Περιήγηση Άλμπουμ"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Πληροφορίες Κύκλου"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Διαφημιστικό"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Εύρεση άλμπουμ"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Εύρεση όλων των κύκλων"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Εύρεση όλων των επεισοδίων"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Εύρεση όλων των άλμπουμ"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Εύρεση όλων των τραγουδιών"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Ταινίες με πρωταγωνιστή"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "ΝΕΑ ΑΝΑΖΗΤΗΣΗ"

@@ -1,0 +1,1444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<coordinates>
+		<left>0</left>
+		<top>80</top>
+	</coordinates>
+	<controls>
+		<control type="list" id="100">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>1</width>
+			<height>1</height>
+			<itemlayout width="1" height="1"/>
+			<focusedlayout width="1" height="1"/>
+		</control>
+		<control type="button" id="192">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>1</width>
+			<height>1</height>
+			<onfocus>SetFocus(9000)</onfocus>
+		</control>
+		<control type="button" id="193">
+			<left>-1920</left>
+			<top>-1080</top>
+			<width>1</width>
+			<height>1</height>
+		</control>
+		<control type="group">
+			<top>100</top>
+			<left>106</left>
+			<animation type="WindowOpen">
+				<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+				<effect type="slide" start="-320" end="0" time="400" tween="cubic" easing="out" />
+			</animation>
+			<animation type="WindowClose">
+				<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+				<effect type="slide" start="0" end="-320" time="300" tween="cubic" easing="out" />
+			</animation>
+			<control type="image">
+				<top>-16</top>
+				<left>-16</left>
+				<width>506</width>
+				<height>741</height>
+				<texture colordiffuse="60FFFFFF">globalsearch-black.png</texture>
+				<bordertexture border="20">globalsearch-shadow.png</bordertexture>
+				<bordersize>20</bordersize>
+			</control>
+			<control type="image">
+				<top>-16</top>
+				<left>-16</left>
+				<width>506</width>
+				<height>741</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[Container(100).ListItem.Icon]</texture>
+				<bordertexture border="20">globalsearch-shadow.png</bordertexture>
+				<bordersize>20</bordersize>
+			</control>
+			<control type="image">
+				<left>1286</left>
+				<top>-18</top>
+				<width>506</width>
+				<height>616</height>
+				<texture border="40">globalsearch-button-nofocus.png</texture>
+			</control>
+			<control type="textbox">
+				<left>1326</left>
+				<top>19</top>
+				<width>406</width>
+				<height>546</height>
+				<label>$INFO[Container(100).ListItem.Property(Plot)]</label>
+				<autoscroll delay="10000" time="5000" repeat="10000">True</autoscroll>
+				<visible>![Control.IsVisible(130) | Control.IsVisible(160) | Control.IsVisible(170) | Control.IsVisible(180)]</visible>
+			</control>
+			<control type="textbox">
+				<left>1326</left>
+				<top>19</top>
+				<width>406</width>
+				<height>546</height>
+				<label>$INFO[Container(100).ListItem.Property(Artist_Description)]</label>
+				<autoscroll delay="10000" time="5000" repeat="10000">True</autoscroll>
+				<visible>Control.IsVisible(160)</visible>
+			</control>
+			<control type="textbox">
+				<left>1326</left>
+				<top>19</top>
+				<width>406</width>
+				<height>546</height>
+				<label>$INFO[Container(100).ListItem.Property(Album_Description)]</label>
+				<autoscroll delay="10000" time="5000" repeat="10000">True</autoscroll>
+				<visible>Control.IsVisible(170)</visible>
+			</control>
+			<control type="textbox">
+				<left>1326</left>
+				<top>19</top>
+				<width>406</width>
+				<height>546</height>
+				<label>$INFO[Container(100).ListItem.Property(Comment)]</label>
+				<autoscroll delay="10000" time="5000" repeat="10000">True</autoscroll>
+				<visible>Control.IsVisible(180)</visible>
+			</control>
+			<control type="grouplist" id="9000">
+				<top>585</top>
+				<left>1286</left>
+				<width>508</width>
+				<height>142</height>
+				<orientation>horizontal</orientation>
+				<itemgap>-16</itemgap>
+				<onup>900</onup>
+				<onleft>900</onleft>
+				<control type="radiobutton" id="9001">
+					<width>262</width>
+					<height>142</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<texturefocus border="40">globalsearch-button-focus.png</texturefocus>
+					<texturenofocus border="40">globalsearch-button-nofocus.png</texturenofocus>
+					<textoffsetx>35</textoffsetx>
+					<textoffsety>78</textoffsety>
+					<radioposx>108</radioposx>
+					<radioposy>13</radioposy>
+					<radiowidth>48</radiowidth>
+					<font>font12</font>
+					<label>$INFO[Control.GetLabel(192)]</label>
+					<textureradioonfocus colordiffuse="D0FFFFFF">globalsearch-button-play.png</textureradioonfocus>
+					<textureradioonnofocus colordiffuse="D0FFFFFF">globalsearch-button-play.png</textureradioonnofocus>
+					<textureradioofffocus colordiffuse="D0FFFFFF">globalsearch-button-play.png</textureradioofffocus>
+					<textureradiooffnofocus colordiffuse="D0FFFFFF">globalsearch-button-play.png</textureradiooffnofocus>
+					<visible>Control.IsVisible(192) + ![Control.IsVisible(120) | Control.IsVisible(130) | Control.IsVisible(160)]</visible>
+				</control>
+				<control type="radiobutton" id="9002">
+					<width>262</width>
+					<height>142</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<texturefocus border="40">globalsearch-button-focus.png</texturefocus>
+					<texturenofocus border="40">globalsearch-button-nofocus.png</texturenofocus>
+					<textoffsetx>35</textoffsetx>
+					<textoffsety>78</textoffsety>
+					<radioposx>108</radioposx>
+					<radioposy>13</radioposy>
+					<radiowidth>48</radiowidth>
+					<font>font12</font>
+					<label>$INFO[Control.GetLabel(192)]</label>
+					<textureradioonfocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioonfocus>
+					<textureradioonnofocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioonnofocus>
+					<textureradioofffocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioofffocus>
+					<textureradiooffnofocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradiooffnofocus>
+					<visible>Control.IsVisible(192) + [Control.IsVisible(120) | Control.IsVisible(130) | Control.IsVisible(160)]</visible>
+				</control>
+				<control type="radiobutton" id="9003">
+					<width>262</width>
+					<height>142</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<texturefocus border="40">globalsearch-button-focus.png</texturefocus>
+					<texturenofocus border="40">globalsearch-button-nofocus.png</texturenofocus>
+					<textoffsetx>35</textoffsetx>
+					<textoffsety>78</textoffsety>
+					<radioposx>108</radioposx>
+					<radioposy>13</radioposy>
+					<radiowidth>48</radiowidth>
+					<font>font12</font>
+					<label>$INFO[Control.GetLabel(193)]</label>
+					<textureradioonfocus colordiffuse="D0FFFFFF">globalsearch-button-trailer.png</textureradioonfocus>
+					<textureradioonnofocus colordiffuse="D0FFFFFF">globalsearch-button-trailer.png</textureradioonnofocus>
+					<textureradioofffocus colordiffuse="D0FFFFFF">globalsearch-button-trailer.png</textureradioofffocus>
+					<textureradiooffnofocus colordiffuse="D0FFFFFF">globalsearch-button-trailer.png</textureradiooffnofocus>
+					<visible>Control.IsVisible(193) + !Control.IsVisible(170)</visible>
+				</control>
+				<control type="radiobutton" id="9004">
+					<width>262</width>
+					<height>142</height>
+					<align>center</align>
+					<aligny>top</aligny>
+					<texturefocus border="40">globalsearch-button-focus.png</texturefocus>
+					<texturenofocus border="40">globalsearch-button-nofocus.png</texturenofocus>
+					<textoffsetx>35</textoffsetx>
+					<textoffsety>78</textoffsety>
+					<radioposx>108</radioposx>
+					<radioposy>13</radioposy>
+					<radiowidth>48</radiowidth>
+					<font>font12</font>
+					<label>$INFO[Control.GetLabel(193)]</label>
+					<textureradioonfocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioonfocus>
+					<textureradioonnofocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioonnofocus>
+					<textureradioofffocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradioofffocus>
+					<textureradiooffnofocus colordiffuse="D0FFFFFF">globalsearch-button-browse.png</textureradiooffnofocus>
+					<visible>Control.IsVisible(193) + Control.IsVisible(170)</visible>
+				</control>
+			</control>
+			<control type="group" id="900">
+				<control type="list" id="110">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(110)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(110)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[20339]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Director)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Director))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[572]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Studio)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Studio))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[515]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Genre)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Genre))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[562]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Year)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Year))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[2050]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Duration),, $LOCALIZE[12391]]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Duration)) + !SubString(Container(100).ListItem.Property(Duration),min)</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[2050]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Duration)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Duration)) + SubString(Container(100).ListItem.Property(Duration),min)</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[563]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Rating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Rating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[38018]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(UserRating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(UserRating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[202]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(TagLine)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(TagLine))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[203]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(PlotOutline)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(PlotOutline))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20074]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Mpaa)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Mpaa))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[567]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Playcount)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Playcount))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="list" id="120">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(120)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(120)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[20360]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Episode)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Episode))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20416]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Premiered)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Premiered))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[572]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Studio)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Studio))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[515]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Genre)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Genre))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[562]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Year)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Year))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[563]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Rating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Rating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[38018]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(UserRating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(UserRating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20074]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Mpaa)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Mpaa))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[567]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Playcount)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Playcount))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="list" id="130">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(130)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(130)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[20364]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(TVShowTitle)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(TVShowTitle))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20360]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Episode)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Episode))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[567]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Playcount)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Playcount))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="list" id="140">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(140)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(140)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[20364]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(TVShowTitle)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(TVShowTitle))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20373]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Season)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Season))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20360]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Episode)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Episode))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20339]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Director)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Director))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20416]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Premiered)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Premiered))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[2050]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Duration),, $LOCALIZE[12391]]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Duration)) + !SubString(Container(100).ListItem.Property(Duration),min)</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[2050]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Duration)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Duration)) + SubString(Container(100).ListItem.Property(Duration),min)</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[563]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Rating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Rating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[38018]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(UserRating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(UserRating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[567]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Playcount)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Playcount))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="list" id="150">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(150)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(150)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[557]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[558]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Album)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Album))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[515]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Genre)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Genre))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[572]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Studio)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Studio))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[20339]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Director)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Director))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[562]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Year)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Year))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[2050]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Duration)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Duration))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[563]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Rating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Rating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[38018]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(UserRating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(UserRating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[567]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Playcount)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Playcount))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="list" id="160">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(160)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(160)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[21893]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist_Born)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist_Born))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[21894]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist_Formed)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist_Formed))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[21897]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist_Died)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist_Died))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[21896]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist_Disbanded)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist_Disbanded))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[21898]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist_YearsActive)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist_YearsActive))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[175]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist_Mood)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist_Mood))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[176]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist_Style)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist_Style))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[515]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Genre)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Genre))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="list" id="170">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(170)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(170)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[557]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[515]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Genre)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Genre))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[563]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Album_Rating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Album_Rating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[38018]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(UserRating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(UserRating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[175]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Album_Mood)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Album_Mood))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[176]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Album_Style)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Album_Style))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[21895]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Album_Theme)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Album_Theme))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[146]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Album_Type)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Album_Type))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[21899]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Album_Label)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Album_Label))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[562]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Year)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Year))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="list" id="180">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(180)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(180)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[557]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Artist)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Artist))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[558]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Album)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Album))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[554]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Track)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Track))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[2050]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Duration),, $LOCALIZE[12391]]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Duration)) + !SubString(Container(100).ListItem.Property(Duration),min)</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[2050]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Duration)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Duration)) + SubString(Container(100).ListItem.Property(Duration),min)</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[563]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Rating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Rating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[38018]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(UserRating)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(UserRating))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[515]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Genre)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Genre))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[562]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Year)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Year))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[567]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Playcount)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Playcount))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="list" id="200">
+					<left>490</left>
+					<top>-18</top>
+					<width>800</width>
+					<height>741</height>
+					<onright>9000</onright>
+					<itemlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+						</control>
+					</itemlayout>
+					<focusedlayout width="800" height="81">
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-nofocus.png</texture>
+							<visible>!Control.HasFocus(200)</visible>
+						</control>
+						<control type="image">
+							<left>0</left>
+							<top>0</top>
+							<width>800</width>
+							<height>100</height>
+							<texture border="40">globalsearch-button-focus.png</texture>
+							<visible>Control.HasFocus(200)</visible>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>FF12B2E7</textcolor>
+						</control>
+						<control type="label">
+							<left>40</left>
+							<top>0</top>
+							<width>720</width>
+							<height>100</height>
+							<aligny>center</aligny>
+							<font>font12</font>
+							<label>$INFO[ListItem.Label2]</label>
+							<align>right</align>
+							<scroll>true</scroll>
+						</control>
+					</focusedlayout>
+					<content>
+						<item>
+							<label>$LOCALIZE[19080]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(StartTime)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(StartTime))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[19081]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(EndTime)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(EndTime))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[2050]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Duration),, $LOCALIZE[12391]]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Duration))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[515]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(Genre)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Genre))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[19148]:</label>
+							<label2>$INFO[Container(100).ListItem.Property(ChannelNumber)]. $INFO[Container(100).ListItem.Property(ChannelName)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(ChannelName))</visible>
+						</item>
+						<item>
+							<label>$LOCALIZE[15311]</label>
+							<label2>$INFO[Container(100).ListItem.Property(Path)]</label2>
+							<onclick>noop</onclick>
+							<visible>!IsEmpty(Container(100).ListItem.Property(Path))</visible>
+						</item>
+					</content>
+				</control>
+				<control type="grouplist">
+					<orientation>horizontal</orientation>
+					<left>505</left>
+					<top>750</top>
+					<width>767</width>
+					<align>center</align>
+					<itemgap>53</itemgap>
+					<visible>Control.IsVisible(110) | Control.IsVisible(140) | Control.IsVisible(150)</visible>
+					<control type="image">
+						<width>111</width>
+						<height>60</height>
+						<aspectratio align="center" aligny="top">keep</aspectratio>
+						<texture>$INFO[Container(100).ListItem.Property(AudioChannels),globalsearch-flags/audiochannel/,.png]</texture>
+					</control>
+					<control type="image">
+						<width>111</width>
+						<height>60</height>
+						<aspectratio align="center" aligny="top">keep</aspectratio>
+						<texture>$INFO[Container(100).ListItem.Property(AudioCodec),globalsearch-flags/audiocodec/,.png]</texture>
+					</control>
+					<control type="image">
+						<width>111</width>
+						<height>60</height>
+						<aspectratio align="center" aligny="top">keep</aspectratio>
+						<texture>$INFO[Container(100).ListItem.Property(VideoResolution),globalsearch-flags/videoresolution/,.png]</texture>
+					</control>
+					<control type="image">
+						<width>111</width>
+						<height>60</height>
+						<aspectratio align="center" aligny="top">keep</aspectratio>
+						<texture>$INFO[Container(100).ListItem.Property(VideoAspect),globalsearch-flags/aspectratio/,.png]</texture>
+					</control>
+					<control type="image">
+						<width>111</width>
+						<height>60</height>
+						<aspectratio align="center" aligny="top">keep</aspectratio>
+						<texture>$INFO[Container(100).ListItem.Property(VideoCodec),globalsearch-flags/videocodec/,.png]</texture>
+					</control>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

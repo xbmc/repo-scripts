@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/xbmc-addons/language/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "일반"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "영화 찾기"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "TV 쇼 찾기"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "에피소드 찾기"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "뮤직비디오 찾기"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "아티스트 찾기"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "앨범 찾기"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "노래 찾기"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "배우 검색"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "EPG 찾기"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "검색어 입력"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "앨범 탐색"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "시즌 정보"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "예고편 재생"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "앨범 찾기"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "모든 시즌 찾기"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "모든 에피소드 찾기"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "모든 앨범 찾기"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "모든 노래 찾기"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "영화 배역"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "새로 찾기"

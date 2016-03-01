@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/xbmc-addons/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Geral"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Pesquisar Filmes"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Pesquisar Séries de TV"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Pesquisar Episódios"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Pesquisar Videoclipes"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Pesquisar Artistas"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Pesquisar Álbuns"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Pesquisar Músicas"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Pesquisar Atores"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Pesquisar EPG"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Insira o texto a ser pesquisado"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Navegar no álbum"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Informações da temporada"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Reproduzir trailer"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Encontrar álbum"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Encontrar todas as temporadas"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Encontrar todas os episódios"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Encontrar todos os álbuns"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Encontrar todas as músicas"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Filmes estrelados"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "NOVA PESQUISA"

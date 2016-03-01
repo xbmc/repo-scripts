@@ -1,0 +1,101 @@
+# Kodi Media Center language file
+# Addon Name: Global Search
+# Addon id: script.globalsearch
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Italian (http://www.transifex.com/projects/p/xbmc-addons/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Generale"
+
+msgctxt "#32001"
+msgid "Search Movies"
+msgstr "Ricerca Film"
+
+msgctxt "#32002"
+msgid "Search TV Shows"
+msgstr "Ricerca Serie TV"
+
+msgctxt "#32003"
+msgid "Search Episodes"
+msgstr "Ricerca Episodi"
+
+msgctxt "#32004"
+msgid "Search Music Videos"
+msgstr "Ricerca Video Musicali"
+
+msgctxt "#32005"
+msgid "Search Artists"
+msgstr "Ricerca Artisti"
+
+msgctxt "#32006"
+msgid "Search Abums"
+msgstr "Ricerca Album"
+
+msgctxt "#32007"
+msgid "Search Songs"
+msgstr "Ricerca Canzoni"
+
+msgctxt "#32008"
+msgid "Search Actors"
+msgstr "Ricerca Attori"
+
+msgctxt "#32009"
+msgid "Search EPG"
+msgstr "Ricerca EPG"
+
+msgctxt "#32101"
+msgid "Enter search string"
+msgstr "Inserisci stringa di ricerca"
+
+msgctxt "#32203"
+msgid "Browse album"
+msgstr "Sfoglia Album"
+
+msgctxt "#32204"
+msgid "Season information"
+msgstr "Info Stagione"
+
+msgctxt "#32205"
+msgid "Play trailer"
+msgstr "Riproduci Trailer"
+
+msgctxt "#32206"
+msgid "Find album"
+msgstr "Trova Album"
+
+msgctxt "#32207"
+msgid "Find all seasons"
+msgstr "Trova tutte le Stagioni"
+
+msgctxt "#32208"
+msgid "Find all episodes"
+msgstr "Trova tutti gli Episodi"
+
+msgctxt "#32209"
+msgid "Find all albums"
+msgstr "Trova tutti gli Album"
+
+msgctxt "#32210"
+msgid "Find all songs"
+msgstr "Trova tutti i Brani"
+
+msgctxt "#32211"
+msgid "Movies starring"
+msgstr "Cast del Film"
+
+msgctxt "#32299"
+msgid "NEW SEARCH"
+msgstr "NUOVA RICERCA"
