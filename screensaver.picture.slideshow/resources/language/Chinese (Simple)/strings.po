@@ -1,0 +1,109 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Chinese (Simple) (http://www.transifex.com/projects/p/xbmc-addons/language/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "幻灯片图片来源"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "文件夹"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "视频同人画"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "音乐同人画"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "图片文件夹"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "变暗级别"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "特效"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "幻灯片"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "淡入淡出"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "平移缩放"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "图片显示时间"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "图片缩放为全屏"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "显示图片名"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "禁用"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "使用文件名"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "使用文件夹名"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "以随机顺序显示图片"
+
+msgctxt "#30018"
+msgid "Use folder- and filename"
+msgstr "使用文件夹和文件名"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "显示图片日期"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "显示附加图片标签"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "在音频播放时显示音乐信息"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "基本信息"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "附加的"

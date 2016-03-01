@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<zorder>6</zorder>
+	<controls>
+		<control type="group">
+			<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Splash),hide)">
+				<effect type="fade" start="0" end="100" time="500"/>
+			</animation>
+			<control type="group">
+				<visible>StringCompare(Window.Property(SlideView.Background),show)</visible>
+				<control type="group">
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade11),1)">
+						<effect type="fade" start="100" end="0" time="1000"/>
+					</animation>
+					<control type="largeimage" id="5">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1280</width>
+						<height>720</height>
+						<aspectratio>scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+				</control>
+				<control type="group">
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade12),1)">
+						<effect type="fade" start="100" end="0" time="1000"/>
+					</animation>
+					<control type="largeimage" id="6">
+						<posx>0</posx>
+						<posy>0</posy>
+						<width>1280</width>
+						<height>720</height>
+						<aspectratio>scale</aspectratio>
+						<fadetime>0</fadetime>
+					</control>
+				</control>
+				<control type="image">
+					<animation effect="fade" start="80" end="80" time="0" condition="true">Conditional</animation>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1280</width>
+					<height>720</height>
+					<texture>screensaver-black.png</texture>
+				</control>
+			</control>
+			<control type="group">
+				<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade1),1)">
+					<effect type="fade" start="100" end="0" time="1000"/>
+				</animation>
+				<control type="largeimage" id="1">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1280</width>
+					<height>720</height>
+					<aspectratio>keep</aspectratio>
+					<fadetime>0</fadetime>
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide1),0)" reversible="false">
+						<effect type="slide" tween="cubic" easing="inout" start="1280,0" end="0,0" time="500"/>
+					</animation>
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide1),1)" reversible="false">
+						<effect type="slide" tween="cubic" easing="inout" start="0,0" end="-1280,0" time="500"/>
+					</animation>
+				</control>
+			</control>
+			<control type="group">
+				<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade2),1)">
+					<effect type="fade" start="100" end="0" time="1000"/>
+				</animation>
+				<control type="largeimage" id="2">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1280</width>
+					<height>720</height>
+					<aspectratio>keep</aspectratio>
+					<fadetime>0</fadetime>
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide2),0)" reversible="false">
+						<effect type="slide" tween="cubic" easing="inout" start="1280,0" end="0,0" time="500"/>
+					</animation>
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide2),1)" reversible="false">
+						<effect type="slide" tween="cubic" easing="inout" start="0,0" end="-1280,0" time="500"/>
+					</animation>
+				</control>
+			</control>
+			<control type="group">
+				<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade1),1)">
+					<effect type="fade" start="100" end="0" time="1000"/>
+				</animation>
+				<control type="largeimage" id="3">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1280</width>
+					<height>720</height>
+					<aspectratio>scale</aspectratio>
+					<fadetime>0</fadetime>
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide1),0)" reversible="false">
+						<effect type="slide" tween="cubic" easing="inout" start="1280,0" end="0,0" time="500"/>
+					</animation>
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide1),1)" reversible="false">
+						<effect type="slide" tween="cubic" easing="inout" start="0,0" end="-1280,0" time="500"/>
+					</animation>
+				</control>
+			</control>
+			<control type="group">
+				<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Fade2),1)">
+					<effect type="fade" start="100" end="0" time="1000"/>
+				</animation>
+				<control type="largeimage" id="4">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1280</width>
+					<height>720</height>
+					<aspectratio>scale</aspectratio>
+					<fadetime>0</fadetime>
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide2),0)" reversible="false">
+						<effect type="slide" tween="cubic" easing="inout" start="1280,0" end="0,0" time="500"/>
+					</animation>
+					<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Slide2),1)" reversible="false">
+						<effect type="slide" tween="cubic" easing="inout" start="0,0" end="-1280,0" time="500"/>
+					</animation>
+				</control>
+			</control>
+			<control type="label" id="99">
+				<posx>1250</posx>
+				<posy>600</posy>
+				<width>600</width>
+				<height>20</height>
+				<font>font16</font>
+				<align>right</align>
+				<textcolor>F0FFFFFF</textcolor>
+				<shadowcolor>F0000000</shadowcolor>
+				<animation effect="slide" start="0,0" end="0,20" time="0" condition="!Control.IsVisible(100)">Conditional</animation>
+				<animation effect="slide" start="0,0" end="0,65" time="0" condition="!Control.IsVisible(101)">Conditional</animation>
+			</control>
+			<control type="label" id="100">
+				<posx>1250</posx>
+				<posy>625</posy>
+				<width>600</width>
+				<height>20</height>
+				<font>font12</font>
+				<align>right</align>
+				<textcolor>C0FFFFFF</textcolor>
+				<shadowcolor>F0000000</shadowcolor>
+				<animation effect="slide" start="0,0" end="0,65" time="0" condition="!Control.IsVisible(101)">Conditional</animation>
+			</control>
+			<control type="textbox" id="101">
+				<posx>660</posx>
+				<posy>650</posy>
+				<width>600</width>
+				<height>60</height>
+				<font>font12</font>
+				<align>left</align>
+				<textcolor>C0FFFFFF</textcolor>
+				<shadowcolor>C0000000</shadowcolor>
+			</control>
+			<control type="group">
+				<posx>20</posx>
+				<posy>575</posy>
+				<animation effect="fade" start="80" end="80" time="0" condition="true">Conditional</animation>
+				<visible>Player.HasAudio + StringCompare(Window.Property(SlideView.Music),show)</visible>
+				<control type="image">
+					<posx>0</posx>
+					<posy>-5</posy>
+					<width>140</width>
+					<height>140</height>
+					<texture fallback="DefaultAlbumCover.png">$INFO[MusicPlayer.Cover]</texture>
+					<aspectratio>scale</aspectratio>
+				</control>
+				<control type="label">
+					<posx>160</posx>
+					<posy>50</posy>
+					<width>600</width>
+					<height>25</height>
+					<align>left</align>
+					<font>font15</font>
+					<label>[B]$INFO[MusicPlayer.Title][/B]</label>
+					<textcolor>FFFFFFFF</textcolor>
+					<shadowcolor>FF000000</shadowcolor>
+				</control>
+				<control type="label">
+					<posx>160</posx>
+					<posy>72</posy>
+					<width>600</width>
+					<height>25</height>
+					<align>left</align>
+					<font>font13</font>
+					<label>$INFO[MusicPlayer.Artist]</label>
+					<textcolor>FFFFFFFF</textcolor>
+					<shadowcolor>FF000000</shadowcolor>
+				</control>
+				<control type="label">
+					<posx>160</posx>
+					<posy>94</posy>
+					<width>600</width>
+					<height>25</height>
+					<align>left</align>
+					<font>font12</font>
+					<label>$INFO[MusicPlayer.Album]</label>
+					<textcolor>FFFFFFFF</textcolor>
+					<shadowcolor>FF000000</shadowcolor>
+				</control>
+				<control type="group">
+					<posx>160</posx>
+					<posy>110</posy>
+					<control type="label">
+						<posx>0</posx>
+						<posy>8</posy>
+						<width>100</width>
+						<height>20</height>
+						<font>font12</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[Player.Time(hh:mm:ss)]</label>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+					</control>
+					<control type="progress">
+						<description>Progressbar</description>
+						<posx>85</posx>
+						<posy>12</posy>
+						<width>200</width>
+						<height>14</height>
+						<info>Player.Progress</info>
+						<texturebg border="3" colordiffuse="FFFFFFFF">screensaver-progress.png</texturebg>
+						<midtexture colordiffuse="FF12B2E7">screensaver-progress.png</midtexture>
+						<lefttexture>-</lefttexture>
+						<righttexture>-</righttexture>
+						<overlaytexture>-</overlaytexture>
+					</control>
+					<control type="label">
+						<posx>370</posx>
+						<posy>8</posy>
+						<width>100</width>
+						<height>20</height>
+						<font>font12</font>
+						<align>right</align>
+						<aligny>center</aligny>
+						<label>$INFO[Player.Duration(hh:mm:ss)]</label>
+						<textcolor>FFFFFFFF</textcolor>
+						<shadowcolor>FF000000</shadowcolor>
+					</control>
+				</control>
+			</control>
+		</control>
+		<control type="image">
+			<posx>409</posx>
+			<posy>129</posy>
+			<width>461</width>
+			<height>461</height>
+			<aspectratio>keep</aspectratio>
+			<fadetime>0</fadetime>
+			<texture>screensaver-splash.png</texture>
+			<animation effect="rotate" end="-360" center="auto" time="7000" loop="true" reversible="false" condition="True">Conditional</animation>
+			<animation type="WindowOpen">
+				<effect type="fade" start="0" end="100" time="1000" delay="500"/>
+			</animation>
+			<animation type="Conditional" condition="StringCompare(Window.Property(SlideView.Splash),hide)">
+				<effect type="fade" start="100" end="0" time="500"/>
+			</animation>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture>screensaver-black.png</texture>
+			<colordiffuse>$INFO[Window.Property(SlideView.Dim)]</colordiffuse>
+		</control>
+	</controls>
+</window>

@@ -1,0 +1,105 @@
+# Kodi Media Center language file
+# Addon Name: Picture Slideshow Screensaver
+# Addon id: screensaver.picture.slideshow
+# Addon Provider: Team-Kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Belarusian (http://www.transifex.com/projects/p/xbmc-addons/language/be/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: be\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "#30000"
+msgid "Source of slideshow images"
+msgstr "Крыніца выяў для слаўдаў"
+
+msgctxt "#30001"
+msgid "Folder"
+msgstr "Тэчка"
+
+msgctxt "#30002"
+msgid "Video Fanart"
+msgstr "Відэа Фанарт"
+
+msgctxt "#30003"
+msgid "Music Fanart"
+msgstr "Музычны Фанарт"
+
+msgctxt "#30004"
+msgid "Image Folder"
+msgstr "Каталог Выяў"
+
+msgctxt "#30005"
+msgid "Dim level"
+msgstr "Dim level"
+
+msgctxt "#30006"
+msgid "Effect"
+msgstr "Эфект"
+
+msgctxt "#30007"
+msgid "Slide"
+msgstr "Slide"
+
+msgctxt "#30008"
+msgid "Crossfade"
+msgstr "Перакрыццё"
+
+msgctxt "#30009"
+msgid "Pan and zoom"
+msgstr "Pan and zoom"
+
+msgctxt "#30010"
+msgid "Amount of seconds to display each image"
+msgstr "Колькасць секунд на кожную выяву"
+
+msgctxt "#30011"
+msgid "Scale images fullscreen"
+msgstr "Расцягнуць выявы на ўвесь экран"
+
+msgctxt "#30012"
+msgid "Display image name"
+msgstr "Паказваць імя выявы"
+
+msgctxt "#30013"
+msgid "Disabled"
+msgstr "Забаронена"
+
+msgctxt "#30014"
+msgid "Use filename"
+msgstr "Ужыць імя файла"
+
+msgctxt "#30015"
+msgid "Use foldername"
+msgstr "Ужыць імя тэчкі"
+
+msgctxt "#30016"
+msgid "Display images in random order"
+msgstr "Паказваць выявы ў выпадковым парадку"
+
+msgctxt "#30021"
+msgid "Display picture date"
+msgstr "Паказваць дату выявы"
+
+msgctxt "#30022"
+msgid "Display additional picture tags"
+msgstr "Паказваць дадатковыя тэгі выявы"
+
+msgctxt "#30023"
+msgid "Display music info during audio playback"
+msgstr "Паказваць звесткі музыкі падчас прайгравання"
+
+msgctxt "#30024"
+msgid "Basic"
+msgstr "Basic"
+
+msgctxt "#30025"
+msgid "Additional"
+msgstr "Дадатковы"
