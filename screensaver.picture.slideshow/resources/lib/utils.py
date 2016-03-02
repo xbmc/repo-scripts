@@ -41,12 +41,15 @@ def create_cache(path, hexfile):
 def get_excludes():
     regexes = []
     if xbmcvfs.exists(ASFILE):
-        tree = etree.parse(ASFILE)
-        root = tree.getroot()
-        excludes = root.find('pictureexcludes')
-        if excludes is not None:
-            for expr in excludes:
-                regexes.append(expr.text)
+        try:
+            tree = etree.parse(ASFILE)
+            root = tree.getroot()
+            excludes = root.find('pictureexcludes')
+            if excludes is not None:
+                for expr in excludes:
+                    regexes.append(expr.text)
+        except:
+            pass
     return regexes
 
 def walk(path):

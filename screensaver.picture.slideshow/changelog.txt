@@ -1,3 +1,6 @@
+v4.1.1
+- don't crash when advancedsettings.xml is corrupt
+
 v4.1.0
 - option to exclude dirs/files using pictureexcludes in advancedsettings.xml
 
