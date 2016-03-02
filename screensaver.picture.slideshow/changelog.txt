@@ -1,3 +1,6 @@
+v3.1.2
+-don't crash when advancedsettings.xml is corrupt
+
 v3.1.1
 - added random seed function
 
