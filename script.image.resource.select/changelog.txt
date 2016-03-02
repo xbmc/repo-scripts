@@ -1,3 +1,7 @@
+v0.1.1
+- display addon summary
+- fix broken window history when clickin "get more"
+
 v0.1.0
 - fix typo in readme
 
