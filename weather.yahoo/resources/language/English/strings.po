@@ -33,3 +33,11 @@ msgstr ""
 msgctxt "#32113"
 msgid "Location 3"
 msgstr ""
+
+msgctxt "#32114"
+msgid "Location 4"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Location 5"
+msgstr ""

@@ -36,7 +36,7 @@ def set_property(name, value):
 
 def refresh_locations():
     locations = 0
-    for count in range(1, 4):
+    for count in range(1, 6):
         loc_name = ADDON.getSetting('Location%s' % count)
         if loc_name != '':
             locations += 1

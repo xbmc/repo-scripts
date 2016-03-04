@@ -1,3 +1,6 @@
+v3.0.9
+- add option for 5 locations
+
 v3.0.8
 - cosmetics
 - language update
