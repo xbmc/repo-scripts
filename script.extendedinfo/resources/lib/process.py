@@ -294,8 +294,6 @@ def start_info_actions(infos, params):
             data = get_similar_movies_from_db(params["dbid"]), "SimilarLocalMovies"
         elif info == 'iconpanel':
             data = get_icon_panel(int(params["id"])), "IconPanel" + str(params["id"])
-        elif info == 'autocomplete':
-            data = get_autocomplete_items(params["id"]), "AutoComplete"
         elif info == 'weather':
             data = get_weather_images(), "WeatherImages"
         elif info == "sortletters":
@@ -445,17 +443,6 @@ def start_info_actions(infos, params):
             for builtin in params.get("id", "").split("$$"):
                 xbmc.executebuiltin(builtin)
             return None
-        elif info == 'selectautocomplete':
-            resolve_url(params.get("handle"))
-            try:
-                window_id = xbmcgui.getCurrentWindowDialogId()
-                window = xbmcgui.Window(window_id)
-            except:
-                return None
-            get_kodi_json(method="Input.SendText",
-                          params='{"text":"%s", "done":false}' % params.get("id"))
-            # xbmc.executebuiltin("SendClick(103,32)")
-            window.setFocusId(300)
         elif info == 'bounce':
             resolve_url(params.get("handle"))
             HOME.setProperty(params.get("name", ""), "True")
