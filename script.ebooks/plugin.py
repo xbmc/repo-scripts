@@ -143,6 +143,8 @@ class MenuNavigator():
             eBookFolder = directory
 
         dirs, files = xbmcvfs.listdir(eBookFolder)
+        dirs.sort()
+        files.sort()
 
         # For each directory list allow the user to navigate into it
         for dir in dirs:

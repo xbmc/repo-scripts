@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<window>
+<window id="3001">
     <defaultcontrol>203</defaultcontrol>
     <animation effect="fade" time="350">WindowOpen</animation>
     <animation effect="fade" time="350">WindowClose</animation>
@@ -36,6 +36,7 @@
             <width>800</width>
             <height>20</height>
             <aligny>center</aligny>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
         </control>
         <control type="image" id="104">
             <description>White Background</description>
@@ -100,6 +101,7 @@
             <texturenofocus border="5">button-nofocus.png</texturenofocus>
             <texturefocus border="5">button-focus.png</texturefocus>
             <colordiffuse>FF43C6DB</colordiffuse>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
             <onright>301</onright>
             <onleft>203</onleft>
             <onup>203</onup>
@@ -116,6 +118,7 @@
             <texturenofocus border="5">button-nofocus.png</texturenofocus>
             <texturefocus border="5">button-focus.png</texturefocus>
             <colordiffuse>FF43C6DB</colordiffuse>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
             <onright>302</onright>
             <onleft>305</onleft>
             <onup>203</onup>
@@ -131,6 +134,7 @@
             <label>$ADDON[script.ebooks 32010]</label>
             <texturenofocus border="5">button-nofocus.png</texturenofocus>
             <texturefocus border="5">button-focus.png</texturefocus>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
             <onright>304</onright>
             <onleft>301</onleft>
             <onup>203</onup>
@@ -146,6 +150,7 @@
             <label>&gt;</label>
             <texturenofocus border="5">button-nofocus.png</texturenofocus>
             <texturefocus border="5">button-focus.png</texturefocus>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
             <onright>203</onright>
             <onleft>302</onleft>
             <onup>203</onup>
