@@ -1,0 +1,82 @@
+# XBMC Media Center language file
+# Addon Name: MyEpisodeCalendar
+# Addon id: script.myepisodecalendar
+# Addon version: 1.0.1
+# Addon Provider: Connum
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-06-09 17:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: n1.0.0s=2; 1.0.0=(n > 1)\n"
+
+msgctxt "Addon Summary"
+msgid "MyEpisodeCalendar"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Automatically set watched episodes on MyEpisodeCalendar.com"
+msgstr ""
+
+msgctxt "#32901"
+msgid "General Settings"
+msgstr "Options Générales"
+
+msgctxt "#32902"
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgctxt "#32903"
+msgid "Password"
+msgstr "Mot de passe"
+
+msgctxt "#32904"
+msgid "Mark as watched from"
+msgstr "Marquer comme vu depuis"
+
+msgctxt "#32905"
+msgid "Automatically add shows"
+msgstr "Ajouter les séries automatiquement"
+
+msgctxt "#32911"
+msgid "connected"
+msgstr "connecté"
+
+msgctxt "#32912"
+msgid "Authentification failed"
+msgstr "Authentification impossible"
+
+msgctxt "#32923"
+msgid "not found."
+msgstr "non trouvé."
+
+msgctxt "#32924"
+msgid "marked as watched."
+msgstr "marqué comme vu."
+
+msgctxt "#32925"
+msgid "added."
+msgstr "ajouté."
+
+msgctxt "#32926"
+msgid "can not be added."
+msgstr "ne peut être ajouté."
+
+msgctxt "#32927"
+msgid "unable to retrieve your show lists."
+msgstr "impossible de récupérer votre liste de séries."
+
+msgctxt "#32928"
+msgid "Notifications"
+msgstr "Notifications"
+
+msgctxt "#32929"
+msgid "name of the series"
+msgstr "nom de la série"
