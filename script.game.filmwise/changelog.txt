@@ -1,2 +1,5 @@
-v1.0.0
+v1.0.1 (2016-03-05)
+- Set text colour on dialog
+
+v1.0.0 (2016-01-24)
 - Initial Version
