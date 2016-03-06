@@ -1,0 +1,6 @@
+1.6.6:
+  - Added GPLv3 license and this changelog
+1.6.5:
+  - Implemented Travis CI
+1.6.0:
+  - Adds support for list_item graphics processing according to Kodi Jarvis Python API chages.
