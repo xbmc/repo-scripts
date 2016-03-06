@@ -115,7 +115,7 @@ class ConfUpdate():
 \t\t\t\t\t\t<include>ButtonInfoDialogsCommonValues</include>
 \t\t\t\t\t\t<label>$ADDON[script.suitability 32001]</label>
 \t\t\t\t\t\t<onclick>RunScript(script.suitability)</onclick>
-\t\t\t\t\t\t<visible>System.HasAddon(script.suitability) + Container.Content(movies)</visible>'''
+\t\t\t\t\t\t<visible>System.HasAddon(script.suitability) + [Container.Content(movies) | Container.Content(tvshows)]</visible>'''
 
         insertTxt = previousButton + (DIALOG_VIDEO_INFO_BUTTON % idval)
         dialogXmlStr = dialogXmlStr.replace(previousButton, insertTxt)

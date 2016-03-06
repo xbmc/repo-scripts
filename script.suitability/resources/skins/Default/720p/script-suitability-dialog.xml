@@ -36,6 +36,7 @@
             <width>800</width>
             <height>20</height>
             <aligny>center</aligny>
+ 			<textcolor>ffffffff</textcolor>		<!-- white -->
         </control>
         <control type="textbox" id="202">
             <description>Rating Details</description>
@@ -74,6 +75,7 @@
             <height>40</height>
             <align>center</align>
             <label>$ADDON[script.suitability 32012]</label>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
             <texturenofocus border="5">button-nofocus.png</texturenofocus>
             <texturefocus border="5">button-focus.png</texturefocus>
             <onright>302</onright>
@@ -89,6 +91,7 @@
             <height>40</height>
             <align>center</align>
             <label>$ADDON[script.suitability 32006]</label>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
             <texturenofocus border="5">button-nofocus.png</texturenofocus>
             <texturefocus border="5">button-focus.png</texturefocus>
             <onright>303</onright>
@@ -104,6 +107,7 @@
             <height>40</height>
             <align>center</align>
             <label>$ADDON[script.suitability 32009]</label>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
             <texturenofocus border="5">button-nofocus.png</texturenofocus>
             <texturefocus border="5">button-focus.png</texturefocus>
             <onright>301</onright>

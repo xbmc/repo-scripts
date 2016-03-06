@@ -20,13 +20,35 @@ from settings import log
 from core import SuitabilityCore
 
 
+def getIsTvShow():
+    if xbmc.getCondVisibility("Container.Content(tvshows)"):
+        return True
+    if xbmc.getCondVisibility("Container.Content(Seasons)"):
+        return True
+    if xbmc.getCondVisibility("Container.Content(Episodes)"):
+        return True
+    if xbmc.getInfoLabel("container.folderpath") == "videodb://tvshows/titles/":
+        return True  # TvShowTitles
+
+    return False
+
+
 #########################
 # Main
 #########################
 if __name__ == '__main__':
     log("Suitability: Started")
 
-    videoName = xbmc.getInfoLabel("ListItem.Title")
+    videoName = None
+    isTvShow = getIsTvShow()
+
+    # First check to see if we have a TV Show of a Movie
+    if isTvShow:
+        videoName = xbmc.getInfoLabel("ListItem.TVShowTitle")
+
+    # If we do not have the title yet, get the default title
+    if videoName in [None, ""]:
+        videoName = xbmc.getInfoLabel("ListItem.Title")
 
     # If there is no video name available prompt for it
     if videoName in [None, ""]:
@@ -41,8 +63,8 @@ if __name__ == '__main__':
                 videoName = keyboard.getText()
 
     if videoName not in [None, ""]:
-        log("Suitability: Movie detected %s" % videoName)
-        SuitabilityCore.runForMovie(videoName)
+        log("Suitability: Video detected %s" % videoName)
+        SuitabilityCore.runForVideo(videoName, isTvShow)
     else:
         log("Suitability: Failed to detect selected video")
         xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32011))

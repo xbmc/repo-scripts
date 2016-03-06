@@ -16,8 +16,9 @@ from settings import log
 # Core Scraper class
 #################################
 class Scrapper():
-    def __init__(self, movieName):
-        self.movieTitle = movieName
+    def __init__(self, videoName, isTvShow=False):
+        self.videoTitle = videoName
+        self.isTvShow = isTvShow
 
     def getSelection(self):
         return []
@@ -63,7 +64,7 @@ class Scrapper():
         betterMatches = []
         for searchMatch in searchMatches:
             # Check if the whole name as an exact match is in the list
-            if self.movieTitle.lower() in searchMatch["name"].lower():
+            if self.videoTitle.lower() in searchMatch["name"].lower():
                 betterMatches.append(searchMatch)
                 log("Scrapper: Best Match: %s {%s}" % (searchMatch["name"], searchMatch["link"]))
 
@@ -187,7 +188,7 @@ class KidsInMindScraper(Scrapper):
     def getSelection(self, narrowSearch=True):
         # Generate the URL and get the page
         search_url = "http://www.kids-in-mind.com/cgi-bin/search/search.pl?q=%s"
-        url = search_url % urllib.quote_plus(self.movieTitle)
+        url = search_url % urllib.quote_plus(self.videoTitle)
         html = self._getHtmlSource(url)
 
         soup = BeautifulSoup(''.join(html))
@@ -200,20 +201,20 @@ class KidsInMindScraper(Scrapper):
         for entries in searchResults:
             for link in entries.findAll('a'):
                 # Get the link
-                movieName = self._convertHtmlIntoKodiText(link.string)
-                movieUrl = link['href']
-                searchMatches.append({"name": movieName, "link": movieUrl})
-                log("KidsInMindScraper: Initial Search Match: %s {%s}" % (movieName, movieUrl))
+                videoName = self._convertHtmlIntoKodiText(link.string)
+                videoUrl = link['href']
+                searchMatches.append({"name": videoName, "link": videoUrl})
+                log("KidsInMindScraper: Initial Search Match: %s {%s}" % (videoName, videoUrl))
 
         # The kids in mind search can often return lots of entries that do not
-        # contain the words in the requested movie, so we can try and narrow it down
+        # contain the words in the requested video, so we can try and narrow it down
         if narrowSearch:
             searchMatches = self._narrowDownSearch(searchMatches)
 
         return searchMatches
 
-    def getSuitabilityData(self, movieUrl):
-        html = self._getHtmlSource(movieUrl)
+    def getSuitabilityData(self, videoUrl):
+        html = self._getHtmlSource(videoUrl)
         soup = BeautifulSoup(''.join(html))
 
         ratings = soup.findAll('span', {"style": "border-bottom:1px dotted #3C3C3C; color:#3C3C3C; text-decoration:none; font-weight: bold"})
@@ -247,7 +248,7 @@ class KidsInMindScraper(Scrapper):
             details.append({"name": ratingPart[0], "score": int(ratingPart[1]), "description": description})
 
         fullDetails = {}
-        fullDetails["title"] = self.movieTitle
+        fullDetails["title"] = self.videoTitle
         fullDetails["details"] = details
 
         return fullDetails
@@ -258,9 +259,12 @@ class KidsInMindScraper(Scrapper):
 #################################
 class CommonSenseMediaScraper(Scrapper):
     def getSelection(self, narrowSearch=True):
+        typeFilter = 'movie'
+        if self.isTvShow:
+            typeFilter = 'tv'
         # Generate the URL and get the page
-        search_url = "https://www.commonsensemedia.org/search/%s?f[0]=field_reference_review_ent_prod%%253Atype%%3Acsm_movie"
-        url = search_url % urllib.quote_plus(self.movieTitle)
+        search_url = "https://www.commonsensemedia.org/search/%s?f[0]=field_reference_review_ent_prod%%253Atype%%3Acsm_" + typeFilter
+        url = search_url % urllib.quote_plus(self.videoTitle)
         html = self._getHtmlSource(url)
 
         soup = BeautifulSoup(''.join(html))
@@ -273,20 +277,20 @@ class CommonSenseMediaScraper(Scrapper):
         for entries in searchResults:
             for link in entries.findAll('a'):
                 # Get the link
-                movieName = self._convertHtmlIntoKodiText(link.string)
-                movieUrl = "https://www.commonsensemedia.org%s" % link['href']
-                searchMatches.append({"name": movieName, "link": movieUrl})
-                log("CommonSenseMediaScraper: Initial Search Match: %s {%s}" % (movieName, movieUrl))
+                videoName = self._convertHtmlIntoKodiText(link.string)
+                videoUrl = "https://www.commonsensemedia.org%s" % link['href']
+                searchMatches.append({"name": videoName, "link": videoUrl})
+                log("CommonSenseMediaScraper: Initial Search Match: %s {%s}" % (videoName, videoUrl))
 
         # The Common Sense Media search can often return lots of entries that do not
-        # contain the words in the requested movie, so we can try and narrow it down
+        # contain the words in the requested video, so we can try and narrow it down
         if narrowSearch:
             searchMatches = self._narrowDownSearch(searchMatches)
 
         return searchMatches
 
-    def getSuitabilityData(self, movieUrl):
-        html = self._getHtmlSource(movieUrl)
+    def getSuitabilityData(self, videoUrl):
+        html = self._getHtmlSource(videoUrl)
         soup = BeautifulSoup(''.join(html))
 
         sections = ["message", "role_model", "violence", "sex", "language", "consumerism", "drugs"]
@@ -298,15 +302,15 @@ class CommonSenseMediaScraper(Scrapper):
                 details.append(detail)
 
         fullDetails = {}
-        fullDetails["title"] = self.movieTitle
+        fullDetails["title"] = self.videoTitle
         fullDetails["details"] = details
 
-        # Get the summary for the movie
+        # Get the summary for the video
         summary = soup.find('meta', {"property": "description"})
         if summary is not None:
             fullDetails["summary"] = summary.get('content', "")
 
-        # Get the overview for the movie
+        # Get the overview for the video
         overview = soup.find('div', {"class": "field field-name-field-parents-need-to-know field-type-text-long field-label-hidden"})
         if overview not in [None, ""]:
             fullDetails["overview"] = str(overview)
@@ -366,7 +370,7 @@ class DoveFoundationScraper(Scrapper):
     def getSelection(self, narrowSearch=True):
         # Generate the URL and get the page
         search_url = "https://www.dove.org/?s=%s"
-        url = search_url % urllib.quote_plus(self.movieTitle)
+        url = search_url % urllib.quote_plus(self.videoTitle)
         html = self._getHtmlSource(url)
 
         soup = BeautifulSoup(''.join(html))
@@ -379,20 +383,20 @@ class DoveFoundationScraper(Scrapper):
         for entries in searchResults:
             for link in entries.findAll('a'):
                 # Get the link
-                movieName = self._convertHtmlIntoKodiText(link.string)
-                movieUrl = link['href']
-                searchMatches.append({"name": movieName, "link": movieUrl})
-                log("DoveFoundationScraper: Initial Search Match: %s {%s}" % (movieName, movieUrl))
+                videoName = self._convertHtmlIntoKodiText(link.string)
+                videoUrl = link['href']
+                searchMatches.append({"name": videoName, "link": videoUrl})
+                log("DoveFoundationScraper: Initial Search Match: %s {%s}" % (videoName, videoUrl))
 
         # The kids in mind search can often return lots of entries that do not
-        # contain the words in the requested movie, so we can try and narrow it down
+        # contain the words in the requested video, so we can try and narrow it down
         if narrowSearch:
             searchMatches = self._narrowDownSearch(searchMatches)
 
         return searchMatches
 
-    def getSuitabilityData(self, movieUrl):
-        html = self._getHtmlSource(movieUrl)
+    def getSuitabilityData(self, videoUrl):
+        html = self._getHtmlSource(videoUrl)
         soup = BeautifulSoup(''.join(html))
 
         ratingChart = soup.find('div', {"class": "rating-chart"})
@@ -464,7 +468,7 @@ class MovieGuideOrgScraper(Scrapper):
     def getSelection(self, narrowSearch=True):
         # Generate the URL and get the page
         search_url = "https://www.movieguide.org/?s=%s"
-        url = search_url % urllib.quote_plus(self.movieTitle)
+        url = search_url % urllib.quote_plus(self.videoTitle)
         html = self._getHtmlSource(url)
 
         soup = BeautifulSoup(''.join(html))
@@ -477,24 +481,24 @@ class MovieGuideOrgScraper(Scrapper):
         for entries in searchResults:
             for link in entries.findAll('a'):
                 # Get the link
-                movieName = self._convertHtmlIntoKodiText(link.string)
+                videoName = self._convertHtmlIntoKodiText(link.string)
                 try:
-                    movieName = movieName.encode('ascii', 'ignore')
+                    videoName = videoName.encode('ascii', 'ignore')
                 except:
                     pass
-                movieUrl = link['href']
-                searchMatches.append({"name": movieName, "link": movieUrl})
-                log("MovieGuideOrgScraper: Initial Search Match: %s {%s}" % (movieName, movieUrl))
+                videoUrl = link['href']
+                searchMatches.append({"name": videoName, "link": videoUrl})
+                log("MovieGuideOrgScraper: Initial Search Match: %s {%s}" % (videoName, videoUrl))
 
         # The kids in mind search can often return lots of entries that do not
-        # contain the words in the requested movie, so we can try and narrow it down
+        # contain the words in the requested video, so we can try and narrow it down
         if narrowSearch:
             searchMatches = self._narrowDownSearch(searchMatches)
 
         return searchMatches
 
-    def getSuitabilityData(self, movieUrl):
-        html = self._getHtmlSource(movieUrl)
+    def getSuitabilityData(self, videoUrl):
+        html = self._getHtmlSource(videoUrl)
         soup = BeautifulSoup(''.join(html))
 
         ratingTable = soup.find('table', {"class": "content-qual-tbl"})
@@ -534,10 +538,10 @@ class MovieGuideOrgScraper(Scrapper):
                     details.append({"name": ratingTitle.string, "score": rating, "description": ""})
 
         fullDetails = {}
-        fullDetails["title"] = self.movieTitle
+        fullDetails["title"] = self.videoTitle
         fullDetails["details"] = details
 
-        # Now get the details about the movie
+        # Now get the details about the video
         contentHeader = soup.find('div', {"class": "content-qual-header"})
 
         if contentHeader is not None:

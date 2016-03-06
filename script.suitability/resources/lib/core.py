@@ -31,8 +31,8 @@ from viewer import SummaryViewer
 #########################
 class SuitabilityCore():
     @staticmethod
-    def runForMovie(movieName):
-        log("SuitabilityCore: Movie Name = %s" % movieName)
+    def runForVideo(videoName, isTvShow=False):
+        log("SuitabilityCore: Video Name = %s" % videoName)
         # Get the initial Source to use
         searchSource = Settings.getDefaultSource()
 
@@ -42,13 +42,13 @@ class SuitabilityCore():
             xbmc.executebuiltin("ActivateWindow(busydialog)")
             dataScraper = None
             if searchSource == Settings.KIDS_IN_MIND:
-                dataScraper = KidsInMindScraper(movieName)
+                dataScraper = KidsInMindScraper(videoName, isTvShow)
             elif searchSource == Settings.DOVE_FOUNDATION:
-                dataScraper = DoveFoundationScraper(movieName)
+                dataScraper = DoveFoundationScraper(videoName, isTvShow)
             elif searchSource == Settings.MOVIE_GUIDE_ORG:
-                dataScraper = MovieGuideOrgScraper(movieName)
+                dataScraper = MovieGuideOrgScraper(videoName, isTvShow)
             else:
-                dataScraper = CommonSenseMediaScraper(movieName)
+                dataScraper = CommonSenseMediaScraper(videoName, isTvShow)
 
             searchMatches = dataScraper.getSelection()
             xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -60,7 +60,7 @@ class SuitabilityCore():
             if len(searchMatches) < 1:
                 # Offer searching by the other provider if there is one
                 if switchSource is not None:
-                    msg1 = "%s %s" % (__addon__.getLocalizedString(32005), movieName)
+                    msg1 = "%s %s" % (__addon__.getLocalizedString(32005), videoName)
                     msg2 = "%s %s" % (__addon__.getLocalizedString(32010), __addon__.getLocalizedString(switchSource))
                     switchSearch = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32001), msg1, msg2)
                     # If the user wants to switch the search then tidy up then loop again

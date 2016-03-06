@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.suitability" name="Suitability" version="1.0.1" provider-name="robwebset">
+<addon id="script.suitability" name="Suitability" version="1.1.0" provider-name="robwebset">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/>
@@ -11,12 +11,12 @@
 	<extension point="kodi.context.item" library="default.py">
 		<item>
 			<label>32001</label>
-			<visible>IsEmpty(Window(videos).Property("SuitabilityHideContextMenu")) + Container.Content(movies)</visible>
+			<visible>IsEmpty(Window(videos).Property("SuitabilityHideContextMenu")) + [Container.Content(movies) | Container.Content(tvshows)]</visible>
 		</item>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Check if a movie is family friendly</summary>
-		<description lang="en">Supplies details for how suitable a movie is for children.</description>
+		<summary lang="en">Check if a movie or TV show is family friendly</summary>
+		<description lang="en">Supplies details for how suitable a movie or TV show is for children.</description>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>

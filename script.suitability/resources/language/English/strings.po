@@ -17,11 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgctxt "Addon Summary"
-msgid "Check if a movie is family friendly"
+msgid "Check if a movie or TV show is family friendly"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Supplies details for how suitable a movie is for children."
+msgid "Supplies details for how suitable a movie or TV show is for children."
 msgstr ""
 
 msgctxt "#32001"
@@ -37,7 +37,7 @@ msgid "Enable debug logging"
 msgstr ""
 
 msgctxt "#32004"
-msgid "Select Correct Movie"
+msgid "Select Correct Movie / TV Show"
 msgstr ""
 
 msgctxt "#32005"
@@ -149,5 +149,5 @@ msgid "4th"
 msgstr ""
 
 msgctxt "#32032"
-msgid "Enter Movie Title"
+msgid "Enter Movie / TV Show Title"
 msgstr ""
