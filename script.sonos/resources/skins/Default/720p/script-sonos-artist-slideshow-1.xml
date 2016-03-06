@@ -126,6 +126,7 @@
 			<wrapmultiline>true</wrapmultiline>
 			<autoscroll time="2000" delay="10000" repeat="5000"></autoscroll>
 			<label>$INFO[Window.Property(ArtistSlideshow.ArtistBiography)]</label>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
 			<visible>!IsEmpty(Window.Property(ArtistSlideshow.ArtistBiography))</visible>
 		</control>
 
@@ -340,6 +341,7 @@
                         <align>left</align>
 						<wrapmultiline>true</wrapmultiline>
                         <info>ListItem.Label</info>
+						<textcolor>ffffffff</textcolor>		<!-- white -->
                 </control>
             </itemlayout>
 			<focusedlayout height="78" width="490">
@@ -361,6 +363,7 @@
                         <align>left</align>
 						<wrapmultiline>true</wrapmultiline>
                         <info>ListItem.Label</info>
+						<textcolor>ffffffff</textcolor>		<!-- white -->
                 </control>
 			</focusedlayout>
 		</control>

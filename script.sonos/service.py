@@ -175,6 +175,8 @@ class SonosVolumeRedirect():
         self.KEYMAPSOURCEFILE = os.path.join(self.KEYMAP_PATH, "sonos_volume_keymap.xml")
         self.KEYMAPDESTFILE = os.path.join(xbmc.translatePath('special://userdata/keymaps'), "sonos_volume_keymap.xml")
 
+        self.volumeChangeNotification = -1
+
         if Settings.redirectVolumeControls():
             self._enableKeymap()
         else:
@@ -185,20 +187,18 @@ class SonosVolumeRedirect():
         if not Settings.redirectVolumeControls():
             return
 
+        self.volumeChangeNotification = self.volumeChangeNotification - 1
         redirect = xbmcgui.Window(10000).getProperty("SonosVolumeRedirect")
 
         while redirect not in [None, ""]:
             xbmcgui.Window(10000).clearProperty("SonosVolumeRedirect")
 
             volumeChange = 0
-            volumeChangeDisplay = 32068
             isMute = False
             if redirect.lower() == "up":
                 volumeChange = Settings.getVolumeChangeIncrements()
-                volumeChangeDisplay = 32075
             elif redirect.lower() == "down":
                 volumeChange = Settings.getVolumeChangeIncrements() * -1
-                volumeChangeDisplay = 32076
             elif redirect.lower() == "mute":
                 isMute = True
 
@@ -206,20 +206,27 @@ class SonosVolumeRedirect():
 
             # Check to see if it has changed, and if we need to change the sonos value
             if isMute:
-                displayVal = 32077
                 # Check the current muted state
                 if sonosDevice.mute:
                     sonosDevice.mute = False
-                    displayVal = 32078
                 else:
                     sonosDevice.mute = True
-                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), __addon__.getLocalizedString(displayVal), __icon__, 500, False)
+                self.volumeChangeNotification = Settings.getChecksPerSecond() * 2
             elif volumeChange != 0:
                 sonosDevice.volume = sonosDevice.volume + volumeChange
-                displayMsg = "%s %d" % (__addon__.getLocalizedString(volumeChangeDisplay), sonosDevice.volume)
-                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), displayMsg, __icon__, 500 / Settings.getChecksPerSecond(), False)
+                self.volumeChangeNotification = Settings.getChecksPerSecond() * 2
 
             redirect = xbmcgui.Window(10000).getProperty("SonosVolumeRedirect")
+
+        # Check if we have started changing the volume and have now stopped
+        # for a little while
+        if self.volumeChangeNotification == 0:
+            self.volumeChangeNotification = -1
+            if sonosDevice.mute:
+                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), __addon__.getLocalizedString(32075), __icon__, 2000, False)
+            else:
+                displayMsg = "%d" % sonosDevice.volume
+                xbmcgui.Dialog().notification(__addon__.getLocalizedString(32074), displayMsg, __icon__, 2000, False)
 
     def cleanup(self):
         if Settings.redirectVolumeControls():
