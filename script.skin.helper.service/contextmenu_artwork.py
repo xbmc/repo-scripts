@@ -51,6 +51,7 @@ if __name__ == '__main__':
             
         #flush properties and set new ones (if any)
         if artwork or ret==2 or ret==3:
+            xbmc.sleep(150)
             WINDOW.setProperty("resetPvrArtCache","reset")
             WINDOW.clearProperty("SkinHelper.PVR.Thumb") 
             WINDOW.clearProperty("SkinHelper.PVR.FanArt") 
@@ -65,8 +66,7 @@ if __name__ == '__main__':
             WINDOW.clearProperty("SkinHelper.PVR.Plot")
             WINDOW.clearProperty("SkinHelper.PVR.Channel")
             WINDOW.clearProperty("SkinHelper.PVR.Genre")
-            WINDOW.setProperty("SkinHelper.PVR.ExtraFanArt","")
-
+            WINDOW.clearProperty("SkinHelper.PVR.ExtraFanArt")
             #set new properties
             for key, value in artwork.iteritems():
                 WINDOW.setProperty("SkinHelper.PVR." + key,value)

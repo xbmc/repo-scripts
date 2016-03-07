@@ -85,6 +85,8 @@ class Main:
                     if browse: optionalParam = browse[0]
                     reversed=params.get("reversed","")
                     if reversed: optionalParam = reversed[0]
+                    type=params.get("type","")
+                    if type: optionalParam = type[0]
                     name=params.get("name","")
                     if name: optionalParam = name[0]
                     randomize=params.get("randomize","")
@@ -98,7 +100,7 @@ class Main:
 
 if (__name__ == "__main__"):
     try:
-        if not xbmc.abortRequested:
+        if not utils.WINDOW.getProperty("SkinHelperShutdownRequested"):
             if enableProfiling:
                 import cProfile
                 import pstats

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import urlparse
-import xbmc,xbmcgui,xbmcplugin
+import xbmc,xbmcgui,xbmcplugin,xbmcvfs
 try:
     import resources.lib.MainModule as mainmodule
     import resources.lib.Utils as utils
@@ -63,6 +63,11 @@ class Main:
                 setting = params.get("SETTING","")
                 windowHeader = params.get("HEADER","")
                 mainmodule.setSkinSetting(setting,windowHeader)
+                
+            elif action == "SETSKINCONSTANT":
+                setting = params.get("SETTING","")
+                windowHeader = params.get("HEADER","")
+                mainmodule.setSkinConstant(setting,windowHeader)
                 
             elif action == "SETSKINSHORTCUTSPROPERTY":
                 setting = params.get("SETTING","")
@@ -182,7 +187,7 @@ class Main:
             elif action == "RESETCACHE":
                 path = params.get("PATH")
                 if path == "pvr":
-                    path = WINDOW.getProperty("SkinHelper.pvrthumbspath").decode("utf-8")
+                    path = utils.WINDOW.getProperty("SkinHelper.pvrthumbspath").decode("utf-8")
                     utils.WINDOW.setProperty("resetPvrArtCache","reset")
                 elif path == "music":
                     path = "special://profile/addon_data/script.skin.helper.service/musicart/"
@@ -194,15 +199,14 @@ class Main:
                 
                 if path:
                     success = True
-                    ret = xbmcgui.Dialog().yesno(heading=ADDON.getLocalizedString(32089), line1=ADDON.getLocalizedString(32090)+path)
+                    ret = xbmcgui.Dialog().yesno(heading=utils.ADDON.getLocalizedString(32089), line1=utils.ADDON.getLocalizedString(32090)+path)
                     if ret:
-                        success = recursiveDelete(path)
+                        success = utils.recursiveDelete(path)
                         if success:
-                            xbmcgui.Dialog().ok(heading=ADDON.getLocalizedString(32089), line1=ADDON.getLocalizedString(32091))
+                            xbmcgui.Dialog().ok(heading=utils.ADDON.getLocalizedString(32089), line1=utils.ADDON.getLocalizedString(32091))
                         else:
-                            xbmcgui.Dialog().ok(heading=ADDON.getLocalizedString(32089), line1=ADDON.getLocalizedString(32092))
+                            xbmcgui.Dialog().ok(heading=utils.ADDON.getLocalizedString(32089), line1=utils.ADDON.getLocalizedString(32092))
                     
-            
             elif action == "BACKUP":
                 import resources.lib.BackupRestore as backup
                 filter = params.get("FILTER","")
@@ -217,9 +221,11 @@ class Main:
             
             elif action == "RESET":
                 import resources.lib.BackupRestore as backup
-                backup.reset()
+                filter = params.get("FILTER","")
+                silent = params.get("SILENT","") == "true"
+                backup.reset(filter,silent)
                 xbmc.Monitor().waitForAbort(2)
-                utils.setSkinVersion()
+                mainmodule.correctSkinSettings()
             
             elif action == "DIALOGOK":
                 headerMsg = params.get("HEADER")
@@ -227,6 +233,16 @@ class Main:
                 if bodyMsg.startswith(" "): bodyMsg = bodyMsg[1:]
                 if headerMsg.startswith(" "): headerMsg = headerMsg[1:]
                 xbmcgui.Dialog().ok(heading=headerMsg, line1=bodyMsg)
+                
+            elif action == "DIALOGYESNO":
+                headerMsg = params.get("HEADER")
+                bodyMsg = params.get("MESSAGE")
+                actions = params.get("ACTION").split("|")
+                if bodyMsg.startswith(" "): bodyMsg = bodyMsg[1:]
+                if headerMsg.startswith(" "): headerMsg = headerMsg[1:]
+                if xbmcgui.Dialog().yesno(heading=headerMsg, line1=bodyMsg):
+                    for action in actions:
+                        xbmc.executebuiltin(action.encode("utf-8"))
                 
             elif action == "TEXTVIEWER":
                 headerMsg = params.get("HEADER","")
@@ -286,7 +302,7 @@ class Main:
 
 if (__name__ == "__main__"):
     xbmc.executebuiltin( "Dialog.Close(busydialog)" )
-    if not xbmc.abortRequested:
+    if not utils.WINDOW.getProperty("SkinHelperShutdownRequested"):
         Main()
     
 utils.logMsg('finished loading script entry')

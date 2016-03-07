@@ -83,11 +83,15 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
             else: command = "GET /"
             action = self.raw_requestline.split("&")[0].replace(command,"")
             temp_requestline = self.raw_requestline.replace(command,"").replace(" HTTP/1.1","").replace("\r\n","").replace(action,"")
-            parameters = temp_requestline.split("&")
-            paramstring = "&action=%s" %action
-            for param in parameters:
-                if param and len(param.split("=")) > 1:  paramstring += "&%s=%s" %(param.split("=")[0], single_urlencode(param.split("=")[1]))
-            self.raw_requestline = "%s%s%s HTTP/1.1" %(command,action,paramstring)
+            old_params = temp_requestline.split("&")
+            new_params = {"action": action}
+            for param in old_params:
+                if param and len(param.split("=")) > 1:
+                    key = param.split("=")[0]
+                    value = param.split("=")[1]
+                    new_params[key] = value
+            paramstring = urllib.urlencode(new_params)
+            self.raw_requestline = "%s%s&%s HTTP/1.1" %(command,action,paramstring)
         retval = SimpleHTTPServer.SimpleHTTPRequestHandler.parse_request(self)
         self.request = Request(self.path, self.headers, self.rfile)
         return retval
@@ -101,14 +105,18 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
         image = None
         images = None
         preferred_type = None
-        params = urlparse.parse_qs(self.path)
-        action = params.get("action","")[0]
+        org_params = urlparse.parse_qs(self.path)
+        params = {}
+        
+        for key, value in org_params.iteritems():
+            if value:
+                value = value[0]
+                if "%" in value: value = urllib.unquote(value)
+                params[key] = value.decode("utf-8")
+        action = params.get("action","")
         title = params.get("title","")
-        if title: title = title[0].decode("utf-8")
         fallback = params.get("fallback","")
-        if fallback: 
-            fallback = fallback[0].decode("utf-8")
-            if fallback.startswith("Default"): fallback = "special://skin/media/" + fallback
+        if fallback.startswith("Default"): fallback = u"special://skin/media/" + fallback
 
         if action == "getthumb":
             image = artutils.searchThumb(title)
@@ -126,8 +134,6 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
         elif action == "getpvrthumb":
             channel = params.get("channel","")
             preferred_type = params.get("type","")
-            if channel: channel = channel[0].decode("utf-8")
-            if preferred_type: preferred_type = preferred_type[0]
             if xbmc.getCondVisibility("Window.IsActive(MyPVRRecordings.xml)"): type = "recordings"
             else: type = "channels"
             artwork = artutils.getPVRThumbs(title, channel, type)
@@ -144,7 +150,6 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
 
         elif action == "getallpvrthumb":
             channel = params.get("channel","")
-            if channel: channel = channel[0].decode("utf-8")
             images = artutils.getPVRThumbs(title, channel, "recordings")
             # Ensure no unicode in images...
             for key, value in images.iteritems():
@@ -153,13 +158,9 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
         
         elif action == "getmusicart":
             preferred_type = params.get("type","")
-            if preferred_type: preferred_type = preferred_type[0]
             artist = params.get("artist","")
-            if artist: artist = artist[0]
             album = params.get("album","")
-            if album: album = album[0]
             track = params.get("track","")
-            if track: track = track[0]
             artwork = artutils.getMusicArtwork(artist, album, track)
             if preferred_type:
                 preferred_types = preferred_type.split(",")
@@ -170,6 +171,26 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
             else:
                 if artwork.get("thumb"): image = artwork.get("thumb")
                 if artwork.get("fanart"): image = artwork.get("fanart")
+        
+        elif action == "getmoviegenreimages" or action == "gettvshowgenreimages":
+            artwork = {}
+            cachestr = ("%s-%s" %(action,title)).encode("utf-8")
+            cache = WINDOW.getProperty(cachestr).decode("utf-8")
+            if cache: 
+                artwork = eval(cache)
+            else:
+                if action == "gettvshowgenreimages": 
+                    json_result = getJSON('VideoLibrary.GetTvshows', '{ "sort": { "order": "descending", "method": "random" }, "filter": {"operator":"is", "field":"genre", "value":"%s"}, "properties": [ %s ],"limits":{"end":%d} }' %(title,fields_tvshows,5))
+                else:
+                    json_result = getJSON('VideoLibrary.GetMovies', '{ "sort": { "order": "descending", "method": "random" }, "filter": {"operator":"is", "field":"genre", "value":"%s"}, "properties": [ %s ],"limits":{"end":%d} }' %(title,fields_movies,5))
+                for count, item in enumerate(json_result):
+                    artwork["poster.%s" %count] = item["art"].get("poster","")
+                    artwork["fanart.%s" %count] = item["art"].get("fanart","")
+                WINDOW.setProperty(cachestr,repr(artwork).encode("utf-8"))
+            if artwork:
+                preferred_type = params.get("type","")
+                if preferred_type: 
+                    image = artwork.get(preferred_type,"")
         
         #set fallback image if nothing else worked
         if not image and fallback: image = fallback

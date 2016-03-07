@@ -35,7 +35,17 @@ def getPluginListing(action,limit,refresh=None,optionalParam=None,randomize=Fals
     elif "SONG" in action: 
         type = "songs"
         refresh = WINDOW.getProperty("widgetreloadmusic")
+    elif "BROWSEGENRE" in action: 
+        type = "genres"
+        refresh = WINDOW.getProperty("widgetreload2")
+        xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
     else: type = "files"
+    if "RECENT" in action:
+        xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATEADDED)
+    elif "SIMILAR" in action:
+        xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_RATING)
+    else:
+        xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
     
     cacheStr = "skinhelper-%s-%s-%s-%s-%s" %(action,limit,optionalParam,refresh,randomize)
     
@@ -63,7 +73,8 @@ def getPluginListing(action,limit,refresh=None,optionalParam=None,randomize=Fals
     #fill that listing...
     for item in allItems:
         liz = createListItem(item)
-        xbmcplugin.addDirectoryItem(int(sys.argv[1]), item['file'], liz, False)
+        isFolder = item.get("isFolder",False)
+        xbmcplugin.addDirectoryItem(int(sys.argv[1]), item['file'], liz, isFolder)
         count += 1
         if count == limit:
             break
@@ -589,7 +600,32 @@ def MOVIESFORGENRE(limit,genretitle=""):
     for item in allItems:
         allItemsDef.append(item[1])
     return allItemsDef
+   
+def BROWSEGENRES(limit, type="movie"):
+    count = 0
+    allItems = []
 
+    #get all genres
+    json_result = getJSON('VideoLibrary.GetGenres', '{"type": "%s", "sort": { "order": "ascending", "method": "title" }}' %type)
+    for genre in json_result:
+        #for each genre we get 5 random items from the library
+        genre["art"] = {}
+        if type== "tvshow":
+            genre["file"] = "videodb://tvshows/genres/%s/"%genre["genreid"]
+            json_result = getJSON('VideoLibrary.GetTvshows', '{ "sort": { "order": "descending", "method": "random" }, "filter": {"operator":"is", "field":"genre", "value":"%s"}, "properties": [ %s ],"limits":{"end":%d} }' %(genre["label"],fields_tvshows,5))
+        else:
+            genre["file"] = "videodb://movies/genres/%s/"%genre["genreid"]
+            json_result = getJSON('VideoLibrary.GetMovies', '{ "sort": { "order": "descending", "method": "random" }, "filter": {"operator":"is", "field":"genre", "value":"%s"}, "properties": [ %s ],"limits":{"end":%d} }' %(genre["label"],fields_movies,5))
+        for count, item in enumerate(json_result):
+            genre["art"]["poster.%s" %count] = item["art"].get("poster","")
+            genre["art"]["fanart.%s" %count] = item["art"].get("fanart","")
+        genre["isFolder"] = True
+        genre["IsPlayable"] = "false"
+        genre["thumbnail"] = "DefaultGenre.png"
+        allItems.append(genre)
+
+    return allItems
+    
 def SIMILARSHOWS(limit,imdbid="",unSorted=False):
     count = 0
     allItems = []
@@ -972,18 +1008,26 @@ def FAVOURITEMEDIA(limit,AllKodiFavsOnly=False):
     return allItems
     
 def getExtraFanArt(path):
+    extrafanarts = []
+    #get extrafanarts from window property
+    if path.startswith("EFA_FROMWINDOWPROP_"):
+        extrafanarts = eval(WINDOW.getProperty(path).decode("utf-8"))
     #get extrafanarts by passing an artwork cache xml file
-    if not xbmcvfs.exists(path):
-        filepart = path.split("/")[-1]
-        path = path.replace(filepart,"") + normalize_string(filepart)
+    else:
         if not xbmcvfs.exists(path):
-            logMsg("getExtraFanArt FAILED for path: %s" %path,0)
-    artwork = artutils.getArtworkFromCacheFile(path)
-    if artwork.get("extrafanarts"):
-        extrafanart = eval( artwork.get("extrafanarts") )
-        for item in extrafanart:
-            li = xbmcgui.ListItem(item, path=item)
-            xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item, listitem=li)
+            filepart = path.split("/")[-1]
+            path = path.replace(filepart,"") + normalize_string(filepart)
+            if not xbmcvfs.exists(path):
+                logMsg("getExtraFanArt FAILED for path: %s" %path,0)
+        artwork = artutils.getArtworkFromCacheFile(path)
+        if artwork.get("extrafanarts"):
+            extrafanarts = eval( artwork.get("extrafanarts") )
+            
+    #process extrafanarts
+    for item in extrafanarts:
+        li = xbmcgui.ListItem(item, path=item)
+        li.setProperty('mimetype', 'image/jpeg')
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=item, listitem=li)
     xbmcplugin.endOfDirectory(handle=int(sys.argv[1]))
 
 def GETCASTMEDIA(limit,name=""):
@@ -1059,8 +1103,11 @@ def getCast(movie=None,tvshow=None,movieset=None,episode=None,downloadThumbs=Fal
                 json_result = getJSON('VideoLibrary.GetMovieSetDetails', '{ "setid": %d, "properties": [ "title" ] }' %itemId)
                 if json_result.has_key("movies"): moviesetmovies = json_result['movies']
             elif not itemId:
-                json_result = getJSON('VideoLibrary.GetMovieSets', '{ "filter": {"operator":"is", "field":"title", "value":"%s"}, "properties": [ "title" ] }' %movieset.encode("utf-8"))
-                if json_result: moviesetmovies = json_result[0]['movies']
+                json_result = getJSON('VideoLibrary.GetMovieSets', '{ "properties": [ "title" ] }')
+                for result in json_result:
+                    if result.get("title") == movieset:
+                        moviesetmovies = result['movies']
+                        break
             if moviesetmovies:
                 for setmovie in moviesetmovies:
                     json_result = getJSON('VideoLibrary.GetMovieDetails', '{ "movieid": %d, "properties": [ "title", "cast" ] }' %setmovie["movieid"])

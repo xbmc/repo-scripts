@@ -17,15 +17,15 @@ Important settings:
 |SkinHelper.AutoCloseVideoOSD	| Skin.SetNumeric(SkinHelper.AutoCloseVideoOSD)	| Auto close the Video OSD panel when activated by the user after number of seconds (0 or empty disables this) |
 |SkinHelper.AutoCloseMusicOSD	| Skin.SetNumeric(SkinHelper.AutoCloseMusicOSD)	| Auto close the Music OSD panel when activated by the user after number of seconds (0 or empty disables this) |
 |SkinHelper.RandomFanartDelay	| Skin.SetNumeric(SkinHelper.RandomFanartDelay)	| Sets the time in seconds for the interval of the rotating backgrounds provided by the script (0 or empty disable the backgrounds by this script completely) |
-|CustomPicturesBackgroundPath	| Skin.SetPath(CustomPicturesBackgroundPath)	| Sets a custom path from which the global pictures background should be pulled from. (when empty uses all picture sources) |
+|SkinHelper.CustomPicturesBackgroundPath	| Skin.SetPath(SkinHelper.CustomPicturesBackgroundPath)	| Sets a custom path from which the global pictures background should be pulled from. (when empty uses all picture sources) |
 |SmartShortcuts.playlists | Skin.SetBool(SmartShortcuts.playlists) | Enable smart shortcuts for Kodi playlists |
 |SmartShortcuts.favorites | Skin.SetBool(SmartShortcuts.favorites) | Enable smart shortcuts for Kodi favorites |
 |SmartShortcuts.plex | Skin.SetBool(SmartShortcuts.plex) | Enable smart shortcuts for plexbmc addon |
 |SmartShortcuts.emby | Skin.SetBool(SmartShortcuts.emby) | Enable smart shortcuts for emby addon |
 |SmartShortcuts.netflix | Skin.SetBool(SmartShortcuts.netflix) | Enable smart shortcuts for flix2kodi addon |
+|SkinHelper.EnableAddonsLookups	| Skin.ToggleSetting(SkinHelper.EnableAddonsLookups)	| enables the background scanner for addons artwork and additional properties |
+|SkinHelper.EnablePVRThumbs	| Skin.ToggleSetting(SkinHelper.EnablePVRThumbs)	| enables the background scanner for PVR artwork |
 
-Note about the AutoCloseVideo/MusicOSD: you need to make sure that you've set labels to the controls of your OSD (even if you don't use them). 
-The script tries to determine that the user is actually using the OSD and will than not close the OSD.
 ________________________________________________________________________________________________________
 ________________________________________________________________________________________________________
 
@@ -82,11 +82,24 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.ListItemAllAudioStreams) | Will return a formatted list of all audiostreams for the current listitem separated by / |
 |Window(Home).Property(SkinHelper.ListItemVideoHeight) | Will return the height of the video stream for the current listitem |
 |Window(Home).Property(SkinHelper.ListItemVideoWidth) | Will return the width of the video stream for the current listitem |
-|Window(Home).Property(SkinHelper.RottenTomatoesRating) | rating from rotten tomatoes |
+|Window(Home).Property(SkinHelper.RottenTomatoesRating) | rotten tomatoes rating |
+|Window(Home).Property(SkinHelper.RottenTomatoesMeter) | rotten tomatoes meter |
+|Window(Home).Property(SkinHelper.RottenTomatoesFresh) | rotten tomatoes fresh count |
+|Window(Home).Property(SkinHelper.RottenTomatoesRotten) | rotten tomatoes rotten count |
+|Window(Home).Property(SkinHelper.RottenTomatoesImage) | rotten tomatoes image description (e.g. certified) |
+|Window(Home).Property(SkinHelper.RottenTomatoesReviews) | number of official reviews on Rotten tomatoes |
 |Window(Home).Property(SkinHelper.RottenTomatoesConsensus) | critic consensus from rotten tomatoes |
-|Window(Home).Property(SkinHelper.RottenTomatoesAudienceRating) | metascore rating from rotten tomatoes |
+|Window(Home).Property(SkinHelper.RottenTomatoesAudienceMeter) | rotten tomatoes user meter |
+|Window(Home).Property(SkinHelper.RottenTomatoesAudienceRating) | user rating from rotten tomatoes |
+|Window(Home).Property(SkinHelper.RottenTomatoesAudienceReviews) | No. of user reviews on rotten tomatoes |
 |Window(Home).Property(SkinHelper.RottenTomatoesAwards) | awards for the movie |
 |Window(Home).Property(SkinHelper.RottenTomatoesBoxOffice) | amount the film made at box office |
+|Window(Home).Property(SkinHelper.RottenTomatoesDVDRelease) | date of DVD release |
+|Window(Home).Property(SkinHelper.MetaCritic.Rating) | rating from metacritic |
+|Window(Home).Property(SkinHelper.IMDB.Rating) | rating on IMDB |
+|Window(Home).Property(SkinHelper.IMDB.Votes) | No. of votes for rating on IMDB |
+|Window(Home).Property(SkinHelper.IMDB.MPAA) | MPAA rating on IMDB |
+|Window(Home).Property(SkinHelper.IMDB.Runtime) | Runtime on IMDB |
 |Window(Home).Property(SkinHelper.TMDB.Budget) | budget spent to this movie in dollars (from tmdb)|
 |Window(Home).Property(SkinHelper.TMDB.Budget.mln) | budget spent to this movie in millions of dollars|
 |Window(Home).Property(SkinHelper.TMDB.Budget.formatted) | Same as Budget.mln but formatted as $ 123 mln.|
@@ -97,8 +110,19 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.TMDB.Homepage) | homepage for this movie (from tmdb) |
 |Window(Home).Property(SkinHelper.TMDB.Status) | status for this movie, e.g. released (from tmdb) |
 |Window(Home).Property(SkinHelper.TMDB.Popularity) | popularity for this movie (from tmdb) |
-________________________________________________________________________________________________________
 
+
+________________________________________________________________________________________________________
+#### Animated Posters
+Provides animated poster in window property (cached locally)
+For info, see: http://forum.kodi.tv/showthread.php?tid=215727
+
+Only available when enabled as skin setting --> Skin.SetBool(SkinHelper.EnableAnimatedPosters)
+
+| property 			| description |
+|:-----------------------------	| :----------- |
+|Window(Home).Property(SkinHelper.AnimatedPoster) | Animated (gif) Movie poster image -if available-  |
+|Window(Home).Property(SkinHelper.AnimatedFanart) | Animated (gif) Movie fanart image -if available-  |
 
 ________________________________________________________________________________________________________
 #### Studio Logos
@@ -122,9 +146,6 @@ The script handles this logic to locate the fanart:
 |Window(Home).Property(SkinHelper.ListItemStudioLogoColor) | Will return the full image path of the coloured studio logo for the current selected item in a list. |
 |Window(Home).Property(SkinHelper.ListItemStudio) | Will just return the first studio of the listitem if you want to locate the images yourself. |
 |Window(Home).Property(SkinHelper.ListItemStudios) | Will return all studios seperated by [CR] |
-
-Note: If you also want to have the Studio logo and Duration Properties for your homescreen widgets, you need to set a Window Property "SkinHelper.WidgetContainer" with the ID of your widget container:
-For example in home.xml: <onload>SetProperty(SkinHelper.WidgetContainer,301)</onload>
 
 
 #### Movie sets window properties
@@ -186,7 +207,9 @@ The artwork is detected in the music paths automatically. Also in the addon sett
 | Window(Home).Property(SkinHelper.Music.ExtraFanArt) | Will return the ExtraFanArt path (if exists) for the current selected item in the list, to be used in a multiimage control. |
 | Window(Home).Property(SkinHelper.Music.Info) | Returns the album's description or if empty the artist info. Can be used at both album- and songlevel.  |
 | Window(Home).Property(SkinHelper.Music.TrackList) | Returns all tracks (in the library) for the selected album or artist, separated by [CR] in the format tracknumber - title  |
+| Window(Home).Property(SkinHelper.Music.TrackList.Formatted) | Same as Tracklist, but prefixed with a • character|
 | Window(Home).Property(SkinHelper.Music.Albums) | Returns all albums (in the library) for the selected artist, separated by [CR] |
+| Window(Home).Property(SkinHelper.Music.Albums.Formatted) | Same as Albums, but prefixed with a • character|
 | Window(Home).Property(SkinHelper.Music.SongCount) | Returns the number of songs for the selected artist or album |
 | Window(Home).Property(SkinHelper.Music.AlbumCount) | Returns the number of albums for the selected artist |
 
@@ -242,6 +265,24 @@ See below in this readme...
 
 ________________________________________________________________________________________________________
 
+#### window properties for Home widgets or custom containers
+All above described window props can also be used for a custom container, like widgets on the home screen.
+The script will automatically figure out what content is in your widget and provide the appropriate window props (e.g. pvr properties, music or video).
+What you need to do is set a window property with the ID of your widget container: SetProperty(SkinHelper.WidgetContainer,510,Home) (replace 510 with your container ID)
+For example set that in the onload of your home window if you only have 1 focusable widget control or set it as onfocus action on the widgetcontainer itself with the correct ID.
+
+
+________________________________________________________________________________________________________
+
+#### window properties for addons
+By default all additional window properties (TMDB info, rotten tomatoes etc.) will ONLY be returned for items in the library.
+If you want to use these properties for addon provided content too, like plexbmc or trailers, you will have to enable a skin setting:
+Skin.SetBool(SkinHelper.EnableAddonsLookups)
+
+If that bool is set, the script will also lookup any items provided by an addon, including artwork.
+For the artwork, the same mechanism is used as for the pvr artwork feature, so the artwork is returned in the pvr properties.
+
+________________________________________________________________________________________________________
 
 
 #### Backgrounds provided by the script
@@ -396,6 +437,14 @@ Note that ListItem.DBID and ListItem.DBTYPE can only be used for "real" library 
 
 ________________________________________________________________________________________________________
 
+#### Yes/No Dialog (dialogYesNo)
+```
+RunScript(script.skin.helper.service,action=dialogyesno,header[yourheadertext],message=[your message body],action=[your action])
+```
+This command will open Kodi's YesNo dialog with the text you supplied.
+If the user presses YES, the action will be executed you supplied. To provide multiple actions, seperate by | 
+________________________________________________________________________________________________________
+
 
 #### Message Dialog (dialogOK)
 ```
@@ -538,11 +587,28 @@ At the moment it is not possible to use this approach for the new resource image
 http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MyCustomPath)}/logo.png
 
 
+
+##### Genre images
+You can use this to create a custom view for movie/tvshow genres with posters/fanart from the genre
+
+```xml
+<texture background="true">http://localhost:52307/getmoviegenreimages&amp;title=$INFO[Listitem.Label]&amp;type=poster.0&amp;fallback=DefaultGenre.png</texture>
+<texture background="true">http://localhost:52307/gettvshowgenreimages&amp;title=$INFO[Listitem.Label]&amp;type=poster.0&amp;fallback=DefaultGenre.png</texture>
+<texture background="true">http://localhost:52307/getmoviegenreimages&amp;title=$INFO[Listitem.Label]&amp;type=fanart.0&amp;fallback=DefaultGenre.png</texture>
+<texture background="true">http://localhost:52307/gettvshowgenreimages&amp;title=$INFO[Listitem.Label]&amp;type=fanart.0&amp;fallback=DefaultGenre.png</texture>
+```
+Possible types are poster.X and fanart.X (replace X with count, only 0-4 are available)
+
+
+
+##### Webservice optional params
+
 Optional parameter: fallback --> Allows you to set a fallback image if no image was found.
 For example &amp;fallback=$INFO[ListItem.Thumb]
 
 Optional parameter: refresh --> By default the textures are cached by Kodi's texture cache which can be sticky when the underlying image was changed. Use an refresh param to force refresh.
-For example &amp;refresh=$INFO[System.Time(mm)]
+For example &amp;refresh=$INFO[System.Time(hh)]
+
 ________________________________________________________________________________________________________
 
 
@@ -723,7 +789,7 @@ label: label for the option (will also be written to setting.label), required at
 condition: any kodi condition syntax to make the option show up or not, optional but attribute must be present in the xml
 icon: icon to show in dialogselect, optional but attribute must be present in the xml
 description: description to show in dialogselect (label2), optional but attribute must be present in the xml
-default: if set to "true" this will be the default value for your skin (will be set at skin startup/change/update)
+default: if set to "true" this will be the default value for your skin (will be set at skin startup/change/update), you may use a visibility condition instead of true
 
 
 #### Working with sublevels
@@ -744,6 +810,24 @@ Syntax:
 
 </settings>
 ```
+
+#### Special values to use as the value argument
+
+Instead of a predefined value you can also have an option to let the user input the value himself.
+In that case you have to use a special syntax as the value:
+
+||PROMPTNUMERIC|| --> Asks the user for a numeric input
+
+||PROMPTSTRING|| --> Asks the user for a string input
+
+||PROMPTSTRINGASNUMERIC|| --> Asks the user for a string which must be numeric (allows having negative numbers)
+
+||BROWSEIMAGE|| --> Asks the user to select a single image or imagepath
+
+||BROWSESINGLEIMAGE|| --> Asks the user to select a single image
+
+||SKIPSTRING|| --> Do not write the results to a skin string (can be used if you only use the script with the onselect actions)
+
 
 #### Apply other actions when user selects a value
 
@@ -779,6 +863,18 @@ E.g. if you call the script with RunScript(script.skin.helper.service,action=set
 If the user enables the playbutton, the command Skin.SetBool(videoinfo_button_play) will be called, otherwise it will be reset.
 With the default attribute you can specify what the default value should be for the setting (applied at skin startup, change or update)
 
+
+#### Write constants to includes file
+You can use the above described approach for skin settings to write constants to an includes file.
+For this you can use the same settings file with the same xml elements etc.
+Only, instead of calling "setskinsetting", you should call "setskinconstant".
+Any value that is selected by the user will be written to an XML file in your skin directory called script-skin_helper_service-includes.xml
+
+```
+RunScript(script.skin.helper.service,action=setskinconstant,setting=PanelWidth,header=Width for Panel)
+```
+
+On your defined <skinsettings> you may use the additional attribute constantdefault="MyVisibilityCondition" to set your default value at skin install/update.
 ________________________________________________________________________________________________________
 
 
@@ -1060,7 +1156,8 @@ RunScript(script.skin.helper.service,action=restore,silent=mypath\backup.zip)
 ```
 RunScript(script.skin.helper.service,action=reset)             
 ```
-This will reset ALL skin settings
+This will reset ALL skin settings.
+Both the filter and silent arguments will also work with the reset feature.
 
 ________________________________________________________________________________________________________
 ________________________________________________________________________________________________________
@@ -1317,6 +1414,21 @@ You can use the name of the item or the DBID to perform the lookup.
 There will also a Window Property be set when you use the above query to the script: SkinHelper.ListItemCast --> It will return the cast list seperated by [CR]
 
 Optional parameter: downloadthumbs=true --> will auto download any missing actor thumbs from IMDB
+
+
+#####Browse Genres
+```
+plugin://script.skin.helper.service/?action=browsegenres&amp;type=movie&amp;limit=1000
+plugin://script.skin.helper.service/?action=browsegenres&amp;type=tvshow&amp;limit=1000
+```
+Provides the genres listing for movies or tvshows with artwork properties from movies/shows with the genre so you can build custom genre icons.
+
+ListItem.Art(poster.X) --> poster for movie/show X (start counting at 0) in the genre
+
+ListItem.Art(fanart.X) --> fanart for movie/show X (start counting at 0) in the genre
+
+
+For each genre, only 5 movies/tvshows are retrieved.
 ________________________________________________________________________________________________________
 ________________________________________________________________________________________________________
 

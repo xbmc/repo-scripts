@@ -1,3 +1,15 @@
+v.1.0.60
+- FIX TMDB artwork lookups
+- ADD Animated posters
+- ADD Special genres entrypoint
+- FIX plugin content sorting
+- FIX some unicode issues
+- Code cleanup and enhancements
+- FIX weather alerts
+- improvide skin change detection
+- ADD support for skin constants
+- several small bugfixes
+
 v.1.0.54
 - ADD support for artwork lookup for widgets/plugins
 - ADD extrafanart support for widgets

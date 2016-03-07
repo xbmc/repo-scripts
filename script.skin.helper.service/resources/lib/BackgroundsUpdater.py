@@ -54,7 +54,6 @@ class BackgroundsUpdater(threading.Thread):
             self.getSkinConfig()
             self.UpdateBackgrounds()
             self.updateWallImages()
-            thread.start_new_thread(self.getNetflixNodes, ())
         except Exception as e:
             logMsg("ERROR in BackgroundsUpdater ! --> " + str(e), 0)
         
@@ -472,7 +471,7 @@ class BackgroundsUpdater(threading.Thread):
         if self.allBackgrounds:
             #get images from the global cache...
             for key, value in self.allBackgrounds.iteritems():
-                if (key in keys or windowProp == "SkinHelper.GlobalFanartBackground") and not "wall" in key.lower():
+                if key in keys or (windowProp == "SkinHelper.GlobalFanartBackground" and not "wall" in key.lower() and not "pvr" in key.lower() and not "netflix" in key.lower() ):
                     images += value
             #pick a random image from the collection of images
             if images:  
@@ -531,6 +530,9 @@ class BackgroundsUpdater(threading.Thread):
         #pvr background 
         pvrbackground = self.setPvrBackground("SkinHelper.PvrBackground")
         
+        #stop if shutdown requested in the meanwhile
+        if self.exit: return
+        
         #smart shortcuts --> emby nodes
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.emby) + Skin.HasSetting(SmartShortcuts.emby)"):
             logMsg("Processing smart shortcuts for emby nodes.... ")
@@ -556,6 +558,8 @@ class BackgroundsUpdater(threading.Thread):
                     nodes = []
                     totalNodes = int(embyProperty)
                     for i in range(totalNodes):
+                        #stop if shutdown requested in the meanwhile
+                        if self.exit: return
                         for contentString in contentStrings:
                             key = "emby.nodes.%s%s"%(str(i),contentString)
                             path = WINDOW.getProperty("emby.nodes.%s%s.path"%(str(i),contentString))
@@ -621,7 +625,10 @@ class BackgroundsUpdater(threading.Thread):
                                     playlistCount += 1
                         except: logMsg("Error while processing smart shortcuts for playlist %s  --> This file seems to be corrupted, please remove it from your system to prevent any further errors."%item["file"], 0)
                 self.smartShortcuts["playlists"] = playlists
-                        
+        
+        #stop if shutdown requested in the meanwhile
+        if self.exit: return
+        
         #smart shortcuts --> favorites
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.favorites)"):
             logMsg("Processing smart shortcuts for favourites.... ")
@@ -668,6 +675,9 @@ class BackgroundsUpdater(threading.Thread):
                 logMsg("Error while processing smart shortcuts for favourites - set disabled.... ",0)
                 logMsg(str(e),0)                
                
+        #stop if shutdown requested in the meanwhile
+        if self.exit: return
+        
         #smart shortcuts --> plex nodes
         if xbmc.getCondVisibility("Skin.HasSetting(SmartShortcuts.plex)"):
             nodes = []
@@ -682,7 +692,7 @@ class BackgroundsUpdater(threading.Thread):
                     path = node[2]
                     self.setImageFromPath(key + ".background",node[2])
                     self.setImageFromPath(key + ".image",node[2])
-            elif WINDOW.getProperty("plexbmc.0.title"):
+            elif WINDOW.getProperty("plexbmc.0.content"):
                 logMsg("no cache - Get plex entries from file.... ")                      
                 contentStrings = ["", ".ondeck", ".recent", ".unwatched"]
                 if WINDOW.getProperty("plexbmc.0.title"):
@@ -714,7 +724,10 @@ class BackgroundsUpdater(threading.Thread):
                             self.setImageFromPath("plexbmc.channels.image",plexcontent)
                             allSmartShortcuts.append("plexbmc.channels")
                     self.smartShortcuts["plex"] = nodes
-                 
+        
+        #stop if shutdown requested in the meanwhile
+        if self.exit: return
+        
         #smart shortcuts --> netflix nodes
         if xbmc.getCondVisibility("System.HasAddon(plugin.video.flix2kodi) + Skin.HasSetting(SmartShortcuts.netflix)"):
             
@@ -745,8 +758,7 @@ class BackgroundsUpdater(threading.Thread):
                 WINDOW.setProperty(key + ".content", content)
                 WINDOW.setProperty(key + ".path", path)
                 WINDOW.setProperty(key + ".type", type)
-          
-                
+            
         if allSmartShortcuts:
             self.smartShortcuts["allSmartShortcuts"] = allSmartShortcuts
             WINDOW.setProperty("allSmartShortcuts", repr(allSmartShortcuts))

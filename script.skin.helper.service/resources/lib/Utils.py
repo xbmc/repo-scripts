@@ -20,11 +20,11 @@ except:
     import json
 
 ADDON = xbmcaddon.Addon()
-ADDON_ID = ADDON.getAddonInfo('id')
-ADDON_ICON = ADDON.getAddonInfo('icon')
-ADDON_NAME = ADDON.getAddonInfo('name')
+ADDON_ID = ADDON.getAddonInfo('id').decode("utf-8")
+ADDON_ICON = ADDON.getAddonInfo('icon').decode("utf-8")
+ADDON_NAME = ADDON.getAddonInfo('name').decode("utf-8")
 ADDON_PATH = ADDON.getAddonInfo('path').decode("utf-8")
-ADDON_VERSION = ADDON.getAddonInfo('version')
+ADDON_VERSION = ADDON.getAddonInfo('version').decode("utf-8")
 ADDON_DATA_PATH = xbmc.translatePath("special://profile/addon_data/%s" % ADDON_ID).decode("utf-8")
 KODI_VERSION  = int(xbmc.getInfoLabel( "System.BuildVersion" ).split(".")[0])
 WINDOW = xbmcgui.Window(10000)
@@ -211,85 +211,10 @@ def try_decode(text, encoding="utf-8"):
         return text.decode(encoding,"ignore")
     except:
         return text       
-         
-def setSkinVersion():
-    try:
-        skin = xbmc.getSkinDir()
-        skinLabel = xbmcaddon.Addon(id=skin).getAddonInfo('name')
-        skinVersion = xbmcaddon.Addon(id=skin).getAddonInfo('version')
-        WINDOW.setProperty("SkinHelper.skinTitle",skinLabel + " - " + xbmc.getLocalizedString(19114) + ": " + skinVersion)
-        WINDOW.setProperty("SkinHelper.skinVersion",xbmc.getLocalizedString(19114) + ": " + skinVersion)
-        WINDOW.setProperty("SkinHelper.Version",ADDON_VERSION.replace(".",""))
-        #auto correct labels for skin settings
-        correctSkinSettings()
-    except Exception as e:
-        logMsg("Error in setSkinVersion --> " + str(e), 0)
- 
-def correctSkinSettings():
-    #correct any special skin settings
-    settings_file = xbmc.translatePath( 'special://skin/extras/skinsettings.xml' ).decode("utf-8")
-    if xbmcvfs.exists( settings_file ):
-        doc = parse( settings_file )
-        listing = doc.documentElement.getElementsByTagName( 'setting' )
-        for count, item in enumerate(listing):
-            id = item.attributes[ 'id' ].nodeValue
-            value = item.attributes[ 'value' ].nodeValue
-            curvalue = xbmc.getInfoLabel("Skin.String(%s)" %id.encode("utf-8")).decode("utf-8")
-            label = xbmc.getInfoLabel(item.attributes[ 'label' ].nodeValue).decode("utf-8")
-            additionalactions = item.getElementsByTagName( 'onselect' )
-            try: default = item.attributes[ 'default' ].nodeValue
-            except: default = ""
-            
-            #skip submenu level itself, this happens when a setting id also exists as a submenu value for an item
-            skip = False
-            for count3, item3 in enumerate(listing):
-                if item3.attributes[ 'value' ].nodeValue == "||SUBLEVEL||" + id:
-                    skip = True
-            if skip: continue
-            
-            #enumerate sublevel if needed
-            if value.startswith("||SUBLEVEL||"):
-                sublevel = value.replace("||SUBLEVEL||","")
-                for count2, item2 in enumerate(listing):
-                    if item2.attributes[ 'id' ].nodeValue == sublevel:
-                        try: subdefault = item2.attributes[ 'default' ].nodeValue
-                        except: subdefault = ""
-                        #match in sublevel or default found in sublevel values
-                        if (item2.attributes[ 'value' ].nodeValue.lower() == curvalue.lower()) or (not curvalue and xbmc.getCondVisibility( subdefault )):
-                            label = xbmc.getInfoLabel(item2.attributes[ 'label' ].nodeValue).decode("utf-8")
-                            value = item2.attributes[ 'value' ].nodeValue
-                            default = subdefault
-                            additionalactions = item2.getElementsByTagName( 'onselect' )
-                            break
-            #process any multiselects
-            if value.startswith("||MULTISELECT||"):
-                options = item.getElementsByTagName( 'option' )
-                for option in options:
-                    skinsetting = option.attributes[ 'id' ].nodeValue
-                    if not xbmc.getInfoLabel("Skin.String(defaultset_%s)" %skinsetting) and xbmc.getCondVisibility( option.attributes[ 'default' ].nodeValue ):
-                        xbmc.executebuiltin("Skin.SetBool(%s)" %skinsetting)
-                    #always set additional prop to define the defaults
-                    xbmc.executebuiltin("Skin.SetString(defaultset_%s,defaultset)" %skinsetting)
-                        
-            #only correct the label
-            if value and value.lower() == curvalue.lower():
-                xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(id.encode("utf-8"),label.encode("utf-8")))
-            #set the default value if current value is empty
-            if not curvalue and xbmc.getCondVisibility( default ):
-                xbmc.executebuiltin("Skin.SetString(%s.label,%s)" %(id.encode("utf-8"),label.encode("utf-8")))
-                xbmc.executebuiltin("Skin.SetString(%s,%s)" %(id.encode("utf-8"),value.encode("utf-8")))
-                #additional onselect actions
-                for action in additionalactions:
-                    condition = action.attributes[ 'condition' ].nodeValue
-                    if condition and not xbmc.getCondVisibility(condition): continue
-                    command = action.firstChild.nodeValue
-                    if "$" in command: command = xbmc.getInfoLabel(command)
-                    xbmc.executebuiltin(command)
  
 def createListItem(item):
-
     liz = xbmcgui.ListItem(label=item.get("label",""),label2=item.get("label2",""))
-    liz.setProperty('IsPlayable', 'true')
+    liz.setProperty('IsPlayable', item.get('IsPlayable','true'))
     liz.setPath(item.get('file'))
     
     nodetype = "Video"
@@ -656,7 +581,7 @@ def createSmartShortcutSubmenu(windowProp,iconimage):
     except Exception as e:
         logMsg("ERROR in createSmartShortcutSubmenu ! --> " + str(e), 0)
 
-def getCurrentContentType():
+def getCurrentContentType(containerid=""):
     contenttype = ""
     
     if xbmc.getCondVisibility("Container.Content(episodes)"):
@@ -691,18 +616,29 @@ def getCurrentContentType():
         contenttype = "genres"
     elif xbmc.getCondVisibility("Container.Content(files)"):
         contenttype = "files"
-    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, movie) | StringCompare(ListItem.Property(DBTYPE), movie)"):
-        contenttype = "movies"
-    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, tvshow) | StringCompare(ListItem.Property(DBTYPE), tvshow)"):
-        contenttype = "tvshows"
-    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, episode) | StringCompare(ListItem.Property(DBTYPE), episode)"):
-        contenttype = "episodes"
-    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, musicvideo) | StringCompare(ListItem.Property(DBTYPE), musicvideo)"):
-        contenttype = "musicvideos"
-    elif xbmc.getCondVisibility("StringCompare(ListItem.DBTYPE, musicvideo) | StringCompare(ListItem.Property(DBTYPE), musicvideo)"):
-        contenttype = "musicvideos"
     elif xbmc.getCondVisibility("!IsEmpty(Container.Content)"):     
         contenttype = xbmc.getInfoLabel("Container.Content")
+    #try to determine type by the listitem properties
+    elif xbmc.getCondVisibility("!IsEmpty(Container(%s).ListItem(1).DBTYPE)" %containerid):
+        contenttype = xbmc.getInfoLabel("Container(%s).ListItem(1).DBTYPE" %containerid) + "s"
+    elif xbmc.getCondVisibility("!IsEmpty(Container(%s).ListItem(1).Property(DBTYPE))" %containerid):
+        contenttype = xbmc.getInfoLabel("Container(%s).ListItem(1).Property(DBTYPE)" %containerid) + "s"
+    elif xbmc.getCondVisibility("SubString(Container(%s).ListItem(1).FileNameAndPath,playrecording) | SubString(Container(%s).ListItem(1).FileNameAndPath,tvtimer)" %(containerid,containerid)):
+        contenttype = "tvrecordings"
+    elif xbmc.getCondVisibility("SubString(Container(%s).ListItem(1).FolderPath,pvr://channels)" %containerid):
+        contenttype = "tvchannels"
+    elif xbmc.getCondVisibility("StringCompare(Container(%s).ListItem(1).Label,Container(%s).ListItem(1).Artist)" %(containerid,containerid)):
+        contenttype = "artists"
+    elif xbmc.getCondVisibility("StringCompare(Container(%s).ListItem(1).Label,Container(%s).ListItem(1).Album)" %(containerid,containerid)):
+        contenttype = "albums"
+    elif xbmc.getCondVisibility("!IsEmpty(Container(%s).ListItem(1).Artist) + !IsEmpty(Container(%s).ListItem(1).Album)" %(containerid,containerid)):
+        contenttype = "songs"
+    elif xbmc.getCondVisibility("StringCompare(Container(%s).ListItem(1).Label,Container(%s).ListItem(1).TvShowTitle)" %(containerid,containerid)):
+        contenttype = "tvshows"
+    elif xbmc.getCondVisibility("SubString(Container(%s).ListItem(1).FolderPath,flix2kodi) + SubString(Container(%s).ListItem(1).Genre,Series)" %(containerid,containerid)):
+        contenttype = "tvshows"
+    elif xbmc.getCondVisibility("SubString(Container(%s).ListItem(1).FolderPath,flix2kodi)" %(containerid)):
+        contenttype = "movies"
     
     WINDOW.setProperty("contenttype",contenttype)
     return contenttype
@@ -870,8 +806,6 @@ def resetMusicWidgetWindowProps(data="",resetAll=False):
     
 def resetVideoWidgetWindowProps(data="",resetAll=False):
     #clear the cache for the video widgets
-    print "resetVideoWidgetWindowProps"
-    print data
     type = "unknown"
     if data:
         data = eval(data.replace("true","True").replace("false","False"))

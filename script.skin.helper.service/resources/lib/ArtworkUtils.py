@@ -10,9 +10,8 @@ import htmlentitydefs
 import urllib2, re
 from difflib import SequenceMatcher as SM
 
-
-tmdb_apiKey = base64.b64decode("NDc2N2I0YjJiYjk0YjEwNGZhNTUxNWM1ZmY0ZTFmZWM=")
 m.set_useragent("script.skin.helper.service", "1.0.0", "https://github.com/marcelveldt/script.skin.helper.service")
+tmdb_apiKey = "ae06df54334aa653354e9a010f4b81cb"
 
 def getPVRThumbs(title,channel,type="channels",path="",genre="",ignoreCache=False, manualLookup=False):
     cacheFound = False
@@ -688,7 +687,7 @@ def getMusicBrainzId(artist, album="", track=""):
             if not MBalbum and artist and album:
                 MBalbums = m.search_release_groups(query=single_urlencode(try_encode(album)),limit=1,offset=None, strict=False, artist=single_urlencode(try_encode(artist)))
                 if MBalbums and MBalbums.get("release-group-list"): MBalbum = MBalbums.get("release-group-list")[0]
-            elif not MBalbum and artist and track:
+            if not MBalbum and artist and track:
                 MBalbums = m.search_recordings(query=single_urlencode(try_encode(track)),limit=1,offset=None, strict=False, artist=single_urlencode(try_encode(artist)))
                 if MBalbums and MBalbums.get("recording-list"): MBalbum = MBalbums.get("recording-list")[0]
             if MBalbum:
@@ -846,7 +845,7 @@ def getAlbumArtwork(musicbrainzalbumid, artwork=None, allowoverwrite=True):
             if artwork.get("info"): artwork["info"] = normalize_string(artwork["info"]).replace('\n', ' ').replace('\r', '')
     
     #get lastFM info for artist  (and use as spare for artwork)
-    if not artwork.get("info") or not artwork.get("folder") and artwork.get("artistname") and artwork.get("albumname"):
+    if (not artwork.get("info") or not artwork.get("folder")) and artwork.get("artistname") and artwork.get("albumname"):
         try:
             lastfm_url = 'http://ws.audioscrobbler.com/2.0/?method=album.getInfo&format=json&api_key=1869cecbff11c2715934b45b721e6fb0&artist=%s&album=%s' %(artwork["artistname"],artwork["albumname"])
             response = requests.get(lastfm_url)
@@ -953,14 +952,17 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
                 for song in json_response2:
                     logMsg("getMusicArtwork found song for album --> " + repr(song))
                     if not path: path = song["file"]
-                    if song.get("track"): tracklist.append("%s - %s" %(song["track"], song["title"]))
+                    if song.get("track"): tracklist.append(u"%s - %s" %(song["track"], song["title"]))
                     else: tracklist.append(song["title"])
                     songcount += 1
             
             if not albumartwork.get("artistname"): albumartwork["artistname"] = artistName
             
             #make sure that our results are strings
-            albumartwork["tracklist"] = "[CR]".join(tracklist)
+            albumartwork["tracklist"] = u"[CR]".join(tracklist)
+            albumartwork["tracklist.formatted"] = ""
+            for trackitem in tracklist:
+                albumartwork["tracklist.formatted"] += u"• %s[CR]" %trackitem
             albumartwork["albumcount"] = "1"
             albumartwork["songcount"] = "%s"%songcount
    
@@ -1002,7 +1004,7 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
                     else: delim = "/"
                     pathartist = song.get("file").split(delim)[-3]
                     match =  SM(None, artistName, pathartist).ratio()
-                    if match >= 0.75: path = song.get("file")
+                    if match >= 0.50: path = song.get("file")
                 if not albumName: albumName = song.get("album")
                 if song.get("musicbrainzartistid") and not artistartwork.get("musicbrainzartistid"): artistartwork["musicbrainzartistid"] = song["musicbrainzartistid"]
                 tracklist.append(song["title"])
@@ -1012,8 +1014,14 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
                     albums.append(song["album"])
         
         #make sure that our results are strings
-        artistartwork["albums"] = "[CR]".join(albums)
-        artistartwork["tracklist"] = "[CR]".join(tracklist)
+        artistartwork["albums"] = u"[CR]".join(albums)
+        artistartwork["albums.formatted"] = ""
+        for albumitem in albums:
+            artistartwork["albums.formatted"] += u"• %s[CR]" %albumitem
+        artistartwork["tracklist.formatted"] = ""
+        for trackitem in tracklist:
+            artistartwork["tracklist.formatted"] += u"• %s[CR]" %trackitem
+        artistartwork["tracklist"] = u"[CR]".join(tracklist)
         artistartwork["albumcount"] = "%s"%albumcount
         artistartwork["songcount"] = "%s"%songcount
         if not albumartwork.get("artistname"): albumartwork["artistname"] = artistName
@@ -1036,7 +1044,7 @@ def getMusicArtwork(artistName, albumName="", trackName="", ignoreCache=False):
 
             #lookup existing artwork in the paths (only if artistname in the path, to prevent lookups in various artists/compilations folders)
             match =  SM(None, artistName, artistpath.split(delim)[-2]).ratio()
-            if not match >= 0.75:
+            if not match >= 0.50:
                 logMsg("getMusicArtwork - lookup on disk skipped for %s - not correct folder structure (artistname\albumname)" %artistartwork.get("artistname",""))
                 albumpath = ""
                 artistpath = ""
