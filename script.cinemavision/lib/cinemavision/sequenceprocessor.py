@@ -1,5 +1,6 @@
 import os
 import random
+import re
 import time
 import datetime
 import database as DB
@@ -948,6 +949,11 @@ class VideoBumperHandler:
     def __call__(self, caller, sItem):
         self.caller = caller
         util.DEBUG_LOG('[{0}] {1}'.format(sItem.typeChar, sItem.display()))
+
+        if not sItem.vtype:
+            util.DEBUG_LOG('    - {0}'.format('No bumper type - SKIPPING'))
+            return []
+
         playables = self.handlers[sItem.vtype](sItem)
         if playables:
             if sItem.vtype == 'dir':
@@ -1059,6 +1065,22 @@ class VideoBumperHandler:
 
 
 class AudioFormatHandler:
+    _atmosRegex = re.compile('[._ -]Atmos[._ -]', re.IGNORECASE)
+    _dtsxRegex = re.compile('[._ -]DTS[._ -]X[._ -]', re.IGNORECASE)
+
+    def _checkFileNameForFormat(self, feature):
+        featureFileName = os.path.basename(feature.path)
+        
+        if feature.audioFormat == 'Dolby TrueHD' and re.search(self._atmosRegex, featureFileName):
+            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(featureFileName, 'Dolby Atmos'))
+            return 'Dolby Atmos'
+        elif feature.audioFormat == 'DTS-HD Master Audio' and re.search(self._dtsxRegex, featureFileName):
+            util.DEBUG_LOG('    - Detect: Used file path {0} to determine audio format is {1}'.format(featureFileName, 'DTS-X'))
+            return 'DTS-X'
+        else:
+            util.DEBUG_LOG('    - Detect: Looked at the file path {0} and decided to keep audio format {1}'.format(featureFileName, repr(feature.audioFormat)))
+            return feature.audioFormat
+    
     @DB.session
     def __call__(self, caller, sItem):
         bumper = None
@@ -1072,11 +1094,12 @@ class AudioFormatHandler:
 
         if method == 'af.detect':
             util.DEBUG_LOG('    - Detect')
-            if caller.nextQueuedFeature.audioFormat:
+            audioFormat = self._checkFileNameForFormat(caller.nextQueuedFeature)
+            if audioFormat:
                 try:
                     bumper = random.choice(
                         [x for x in DB.AudioFormatBumpers.select().where(
-                            (DB.AudioFormatBumpers.format == caller.nextQueuedFeature.audioFormat) & (DB.AudioFormatBumpers.is3D == is3D)
+                            (DB.AudioFormatBumpers.format == audioFormat) & (DB.AudioFormatBumpers.is3D == is3D)
                         )]
                     )
                     util.DEBUG_LOG('    - Detect: Using bumper based on feature codec info ({0})'.format(repr(caller.nextQueuedFeature.title)))
@@ -1085,7 +1108,7 @@ class AudioFormatHandler:
                     if is3D and util.getSettingDefault('bumper.fallback2D'):
                         try:
                             bumper = random.choice(
-                                [x for x in DB.AudioFormatBumpers.select().where(DB.AudioFormatBumpers.format == caller.nextQueuedFeature.audioFormat)]
+                                [x for x in DB.AudioFormatBumpers.select().where(DB.AudioFormatBumpers.format == audioFormat)]
                             )
                             util.DEBUG_LOG(
                                 '    - Using bumper based on feature codec info and falling back to 2D ({0})'.format(repr(caller.nextQueuedFeature.title))

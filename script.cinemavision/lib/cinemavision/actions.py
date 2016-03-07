@@ -1,4 +1,5 @@
 import os
+import sys
 import util
 import threading
 import traceback
@@ -12,13 +13,20 @@ class ActionCommand:
         self.commandData = data
         self.args = []
         self.output = []
+        self.path = None
 
     def _addOutput(self, output):
         self.output += output.splitlines()
 
+    def _absolutizeCommand(self):
+        return os.path.normpath(os.path.join(os.path.dirname(self.path), self.commandData))
+
     def join(self):
         if self.thread:
             self.thread.join()
+
+    def setPath(self, path):
+        self.path = path
 
     def addArg(self, arg):
         self.args.append(arg)
@@ -62,19 +70,17 @@ class ModuleCommand(ActionCommand):
     importPath = os.path.join(util.STORAGE_PATH, 'import')
 
     def checkImportPath(self):
-        import os
         if not os.path.exists(self.importPath):
             os.makedirs(self.importPath)
 
     def copyModule(self):
         import shutil
-        shutil.copyfile(self.commandData, os.path.join(self.importPath, 'cinema_vision_command_module.py'))
+        shutil.copyfile(self._absolutizeCommand(), os.path.join(self.importPath, 'cinema_vision_command_module.py'))
 
     def execute(self):
         self.checkImportPath()
         self.copyModule()
 
-        import sys
         if self.importPath not in sys.path:
             sys.path.append(self.importPath)
 
@@ -82,32 +88,45 @@ class ModuleCommand(ActionCommand):
         cinema_vision_command_module.main(*self.args)
 
 
-class ScriptCommand(ActionCommand):
+class SubprocessActionCommand(ActionCommand):
+    def getStartupInfo(self):
+        import subprocess
+        if hasattr(subprocess, 'STARTUPINFO'):  # Windows
+            startupinfo = subprocess.STARTUPINFO()
+            try:
+                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW  # Suppress terminal window
+            except:
+                startupinfo.dwFlags |= 1
+            return startupinfo
+
+        return None
+
+
+class ScriptCommand(SubprocessActionCommand):
     type = 'SCRIPT'
 
     def execute(self):
-        command = ['python', self.commandData]
+        command = ['python', self._absolutizeCommand()]
         command += self.args
-
         import subprocess
 
         self.log('Action (Script) Command: {0}'.format(repr(' '.join(command)).lstrip('u').strip("'")))
 
-        subprocess.Popen(command)
+        subprocess.Popen(command, startupinfo=self.getStartupInfo())
 
 
-class CommandCommand(ActionCommand):
+class CommandCommand(SubprocessActionCommand):
     type = 'COMMAND'
 
     def execute(self):
-        command = [self.commandData]
+        command = [self._absolutizeCommand()]
         command += self.args
 
         import subprocess
 
         self.log('Action (Script) Command: {0}'.format(repr(' '.join(command)).lstrip('u').strip("'")))
 
-        subprocess.Popen(command)
+        subprocess.Popen(command, startupinfo=self.getStartupInfo())
 
 
 class AddonCommand(ActionCommand):
@@ -160,11 +179,11 @@ class HTTPCommand(ActionCommand):
                 else:
                     data = arg
                     method = method or requests.post
+
+        if method:
+            resp = method(self.commandData, headers=headers, data=data)
         else:
-            if method:
-                resp = method(self.commandData, headers=headers, data=data)
-            else:
-                resp = requests.get(self.commandData, headers=headers)
+            resp = requests.get(self.commandData, headers=headers)
 
         self.log('Action (HTTP) Response: {0}'.format(repr(resp.text).lstrip('u').strip("'")))
 
@@ -280,6 +299,7 @@ class ActionFileProcessor:
 
                     if name in self.commandClasses:
                         command = self.commandClasses[name](data)
+                        command.setPath(self.path)
                     else:
                         self.parseError(u'Unrecognized command protocol: {0}'.format(repr(name)), line, lineno)
                         return

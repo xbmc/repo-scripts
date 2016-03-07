@@ -468,9 +468,9 @@ class TriviaDirectoryHandler:
     _clueNA = ('clue', 'format')
     _answerNA = ('answer', 'format')
 
-    _defaultQRegEx = '_q\.jpg|png|gif|bmp'
-    _defaultCRegEx = '_c(\d)?\.jpg|png|gif|bmp'
-    _defaultARegEx = '_a\.jpg|png|gif|bmp'
+    _defaultQRegEx = '_q\.(?:jpg|png|gif|bmp)'
+    _defaultCRegEx = '_c(\d)?\.(?:jpg|png|gif|bmp)'
+    _defaultARegEx = '_a\.(?:jpg|png|gif|bmp)'
 
     def __init__(self, callback=None):
         self._callback = callback

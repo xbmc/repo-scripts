@@ -30,21 +30,24 @@ def _getTerminalCharset():
     # (1) Try locale.getpreferredencoding()
     try:
         charset = locale.getpreferredencoding()
+        unicode('test', charset)
         if charset:
             return charset
-    except (locale.Error, AttributeError):
+    except (locale.Error, AttributeError, LookupError):
         pass
 
     # (2) Try locale.nl_langinfo(CODESET)
     try:
         charset = locale.nl_langinfo(locale.CODESET)
+        unicode('test', charset)
         if charset:
             return charset
-    except (locale.Error, AttributeError):
+    except (locale.Error, AttributeError, LookupError):
         pass
 
     # (3) Try sys.stdout.encoding
     if hasattr(sys.stdout, "encoding") and sys.stdout.encoding:
+        unicode('test', sys.stdout.encoding, LookupError)
         return sys.stdout.encoding
 
     # (4) Otherwise, returns "ASCII"

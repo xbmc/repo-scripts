@@ -48,9 +48,14 @@ class ItemSettingsWindow(kodigui.BaseDialog):
             if not sItem.elementVisible(e):
                 continue
             attr = e['attr']
+            name = e['name']
+            if sItem._type == 'video' and attr == 'vtype' and not sItem.getSetting(attr):
+                name = '[COLOR FFFF0000]{0}[/COLOR]'.format(name)
+
             mli = kodigui.ManagedListItem(
-                e['name'], e['limits'] != cinemavision.sequence.LIMIT_ACTION and unicode(sItem.getSettingDisplay(attr)) or '', data_source=attr
+                name, e['limits'] != cinemavision.sequence.LIMIT_ACTION and unicode(sItem.getSettingDisplay(attr)) or '', data_source=attr
             )
+            mli.setProperty('name', e['name'])
             if sItem.getType(attr) == int:
                 mli.setProperty('type', 'integer')
             items.append(mli)
@@ -269,6 +274,14 @@ class ItemSettingsWindow(kodigui.BaseDialog):
             return False
 
         sItem.setSetting(attr, value)
+
+        if sItem._type == 'video' and attr == 'vtype':
+            if not sItem.getSetting(attr):
+                name = '[COLOR FFFF0000]{0}[/COLOR]'.format(item.getProperty('name'))
+            else:
+                name = item.getProperty('name')
+            item.setLabel(name)
+
         item.setLabel2(unicode(sItem.getSettingDisplay(attr)))
 
         self.modified = True
@@ -469,7 +482,8 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         mli.setProperty('type.name', sItem.displayName)
         mli.setProperty('enabled', sItem.enabled and '1' or '')
 
-        self.updateItemSettings(mli)
+        if not self.updateItemSettings(mli):
+            mli.setProperty('error', '1')
 
         self.sequenceControl.insertItem(pos, mli)
         self.sequenceControl.insertItem(pos, kodigui.ManagedListItem())
@@ -487,8 +501,8 @@ class SequenceEditorWindow(kodigui.BaseWindow):
             mli.setProperty('type.name', sItem.displayName)
             mli.setProperty('enabled', sItem.enabled and '1' or '')
 
-            self.updateItemSettings(mli)
-
+            if not self.updateItemSettings(mli):
+                mli.setProperty('error', '1')
             final.append(mli)
             final.append(kodigui.ManagedListItem())
 
@@ -666,6 +680,8 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         item.setProperty('setting{0}'.format(ct), sItem.enabled and T(32320, 'Yes') or T(32321, 'No'))
         item.setProperty('setting{0}_name'.format(ct), T(32538, 'Enabled'))
         ct += 1
+
+        error = False
         for e in sItem._elements:
             if not sItem.elementVisible(e):
                 continue
@@ -673,13 +689,22 @@ class SequenceEditorWindow(kodigui.BaseWindow):
             if e['limits'] == cinemavision.sequence.LIMIT_ACTION:
                 continue
 
+            name = e['name']
+            if sItem._type == 'video' and e['attr'] == 'vtype' and not sItem.getSetting(e['attr']):
+                error = True
+                name = '[COLOR FFFF0000]{0}[/COLOR]'.format(name)
+
             disp = sItem.getSettingDisplay(e['attr'])
             item.setProperty('setting{0}'.format(ct), disp)
-            item.setProperty('setting{0}_name'.format(ct), e['name'])
+            item.setProperty('setting{0}_name'.format(ct), name)
             ct += 1
         for i in range(ct, 8):
             item.setProperty('setting{0}'.format(i), '')
             item.setProperty('setting{0}_name'.format(i), '')
+
+        item.setProperty('error', error and '1' or '')
+
+        return not error
 
     def renameItem(self):
         item = self.sequenceControl.getSelectedItem()
@@ -841,6 +866,9 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         kodiutil.DEBUG_LOG('Saving to: {0}'.format(full_path))
 
         success = True
+        if cinemavision.util.vfs.exists(full_path):
+            cinemavision.util.vfs.delete(full_path)
+
         with cinemavision.util.vfs.File(full_path, 'w') as f:
             success = f.write(xmlString)
 
@@ -899,6 +927,7 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         f.close()
         sItems = cinemavision.sequence.getItemsFromString(xmlString)
         if sItems is None:
+            kodiutil.DEBUG_LOG(repr(xmlString))
             sItems = []
             xbmcgui.Dialog().ok(T(32601, 'ERROR'), T(32602, 'Error parsing sequence'))
         self.sequenceControl.reset()

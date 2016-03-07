@@ -185,8 +185,11 @@ class SettingControl:
         DEBUG_LOG('{0}: DISABLED'.format(self.logDisplay))
 
     def store(self):
-        self._originalMode = rpc.Settings.GetSettingValue(setting=self.setting).get('value')
-        DEBUG_LOG('{0}: Mode stored ({1})'.format(self.logDisplay, self._originalMode))
+        try:
+            self._originalMode = rpc.Settings.GetSettingValue(setting=self.setting).get('value')
+            DEBUG_LOG('{0}: Mode stored ({1})'.format(self.logDisplay, self._originalMode))
+        except:
+            kodiutil.ERROR()
 
     def restore(self):
         if not self._originalMode:

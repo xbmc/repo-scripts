@@ -1,5 +1,16 @@
 Changelog for CinemaVision
 
+[- 1.0.10 -]
+
+- fix:     Error playing sequence when video bumper type is not set
+- change:  Now highlights type setting and module title in red when video bumper type is not set
+- fix:     (Hopefully - untested) Hachoir module causing errors when charset is an unknown encoding
+- fix:     (Possible) - Error when playing sequence caused when storing a setting value
+- add:     Detect Atmos and DTS-X tags in filenames when determining audio format
+- fix:     Bad default regular expressions for slides causing issues with extensions other than .jpg
+- fix:     On Windows, python and command actions were causing Kodi to minimize
+- fix:     Possible fix for sequences being saved corrupted
+
 [- 1.0.9 -]
 
 - fix:     Trailers with source 'Directory' were not being filtered for video files only

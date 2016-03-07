@@ -77,7 +77,7 @@
                 <width>780</width>
                 <height>40</height>
                 <font>font20</font>
-                <textcolor>white</textcolor>
+                <textcolor>FFFFFFFF</textcolor>
                 <align>left</align>
                 <aligny>top</aligny>
                 <label>[B]$INFO[Container(201).ListItem.Property(type.name)][/B]</label>
@@ -91,7 +91,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting0_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting0)][/COLOR]</label>
@@ -100,7 +100,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting1_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting1)][/COLOR]</label>
@@ -109,7 +109,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting2_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting2)][/COLOR]</label>
@@ -118,7 +118,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting3_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting3)][/COLOR]</label>
@@ -127,7 +127,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting4_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting4)][/COLOR]</label>
@@ -136,7 +136,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting5_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting5)][/COLOR]</label>
@@ -145,7 +145,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting6_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting6)][/COLOR]</label>
@@ -154,7 +154,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting7_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting7)][/COLOR]</label>
@@ -163,7 +163,7 @@
                     <width>840</width>
                     <height>40</height>
                     <font>font20</font>
-                    <textcolor>white</textcolor>
+                    <textcolor>FFFFFFFF</textcolor>
                     <align>left</align>
                     <aligny>top</aligny>
                     <label>$INFO[Container(201).ListItem.Property(setting8_name),,: ][COLOR FFAAAAFF]$INFO[Container(201).ListItem.Property(setting8)][/COLOR]</label>
@@ -361,7 +361,7 @@
                                     <width>800</width>
                                     <height>80</height>
                                     <font>font20</font>
-                                    <textcolor>white</textcolor>
+                                    <textcolor>FFFFFFFF</textcolor>
                                     <align>left</align>
                                     <aligny>center</aligny>
                                     <label>$INFO[ListItem.Label]</label>
@@ -574,7 +574,7 @@
                                         <width>800</width>
                                         <height>80</height>
                                         <font>font20</font>
-                                        <textcolor>white</textcolor>
+                                        <textcolor>FFFFFFFF</textcolor>
                                         <align>left</align>
                                         <aligny>center</aligny>
                                         <label>$INFO[ListItem.Label]</label>
@@ -596,7 +596,7 @@
                                         <width>800</width>
                                         <height>80</height>
                                         <font>font20</font>
-                                        <textcolor>white</textcolor>
+                                        <textcolor>FFFFFFFF</textcolor>
                                         <align>left</align>
                                         <aligny>center</aligny>
                                         <label>$INFO[ListItem.Label2]</label>
@@ -624,18 +624,36 @@
 
                 <!-- ITEM LAYOUT ########################################## -->
                 <itemlayout width="80">
-                    <control type="label">
+                    <control type="group">
                         <visible>!IsEmpty(ListItem.Property(enabled))</visible>
                         <left>40</left>
                         <top>130</top>
-                        <width>400</width>
-                        <height>300</height>
-                        <angle>45</angle>
-                        <font>font20</font>
-                        <textcolor>white</textcolor>
-                        <align>left</align>
-                        <aligny>center</aligny>
-                        <label>[B]$INFO[ListItem.Label]$INFO[ListItem.Label2, ][/B]</label>
+                        <control type="label">
+                            <visible>!IsEmpty(ListItem.Property(error))</visible>
+                            <left>0</left>
+                            <top>0</top>
+                            <width>400</width>
+                            <height>300</height>
+                            <angle>45</angle>
+                            <font>font20</font>
+                            <textcolor>FFFF0000</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>[B]$INFO[ListItem.Label]$INFO[ListItem.Label2, ][/B]</label>
+                        </control>
+                        <control type="label">
+                            <visible>IsEmpty(ListItem.Property(error))</visible>
+                            <left>0</left>
+                            <top>0</top>
+                            <width>400</width>
+                            <height>300</height>
+                            <angle>45</angle>
+                            <font>font20</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>[B]$INFO[ListItem.Label]$INFO[ListItem.Label2, ][/B]</label>
+                        </control>
                     </control>
                     <control type="label">
                         <visible>IsEmpty(ListItem.Property(enabled))</visible>
@@ -811,18 +829,36 @@
 
                 <!-- FOCUSED LAYOUT ####################################### -->
                 <focusedlayout width="80">
-                    <control type="label">
+                    <control type="group">
                         <visible>!IsEmpty(ListItem.Property(enabled))</visible>
                         <left>40</left>
                         <top>130</top>
-                        <width>400</width>
-                        <height>300</height>
-                        <angle>45</angle>
-                        <font>font20</font>
-                        <textcolor>white</textcolor>
-                        <align>left</align>
-                        <aligny>center</aligny>
-                        <label>[B]$INFO[ListItem.Label]$INFO[ListItem.Label2, ][/B]</label>
+                        <control type="label">
+                            <visible>!IsEmpty(ListItem.Property(error))</visible>
+                            <left>0</left>
+                            <top>0</top>
+                            <width>400</width>
+                            <height>300</height>
+                            <angle>45</angle>
+                            <font>font20</font>
+                            <textcolor>FFFF0000</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>[B]$INFO[ListItem.Label]$INFO[ListItem.Label2, ][/B]</label>
+                        </control>
+                        <control type="label">
+                            <visible>IsEmpty(ListItem.Property(error))</visible>
+                            <left>0</left>
+                            <top>0</top>
+                            <width>400</width>
+                            <height>300</height>
+                            <angle>45</angle>
+                            <font>font20</font>
+                            <textcolor>FFFFFFFF</textcolor>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <label>[B]$INFO[ListItem.Label]$INFO[ListItem.Label2, ][/B]</label>
+                        </control>
                     </control>
                     <control type="label">
                         <visible>IsEmpty(ListItem.Property(enabled))</visible>
