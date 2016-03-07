@@ -254,7 +254,7 @@ msgid "Enter Search Terms"
 msgstr ""
 
 msgctxt "#32813"
-msgid "WATCH RECORDINGS"
+msgid "RECORDED"
 msgstr ""
 
 msgctxt "#32814"
@@ -278,11 +278,11 @@ msgid "Ep."
 msgstr ""
 
 msgctxt "#32819"
-msgid "GUIDE SEARCH"
+msgid "DISCOVER"
 msgstr ""
 
 msgctxt "#32820"
-msgid "RECORDING RULES"
+msgid "TASKS"
 msgstr ""
 
 msgctxt "#32821"

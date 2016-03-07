@@ -16,6 +16,7 @@ RULES_ADD_URL = RULES_URL + '&Cmd=add&SeriesID={seriesID}'
 RULES_CHANGE_RECENT_URL = RULES_URL + '&Cmd=change&RecordingRuleID={ruleID}&RecentOnly={recentOnly}'
 RULES_MOVE_URL = RULES_URL + '&Cmd=change&RecordingRuleID={ruleID}&AfterRecordingRuleID={afterRecordingRuleID}'
 RULES_DELETE_URL = RULES_URL + '&Cmd=delete&RecordingRuleID={ruleID}'
+RULES_CHANGE_URL = RULES_URL + '&Cmd=change&RecordingRuleID={ruleID}&'
 
 
 class RecordingRule(dict):
@@ -48,6 +49,30 @@ class RecordingRule(dict):
         return int(self.get('OriginalAirdate',0))
 
     @property
+    def startPadding(self):
+        return self.get('StartPadding') or 0
+
+    @startPadding.setter
+    def startPadding(self, val):
+        if self.get('StartPadding') == val:
+            return
+
+        self['StartPadding'] = val
+        self.change(StartPadding=val)
+
+    @property
+    def endPadding(self):
+        return self.get('EndPadding') or 0
+
+    @endPadding.setter
+    def endPadding(self, val):
+        if self.get('EndPadding') == val:
+            return
+
+        self['EndPadding'] = val
+        self.change(EndPadding=val)
+
+    @property
     def hidden(self):
         return False
 
@@ -61,9 +86,8 @@ class RecordingRule(dict):
         self['RecentOnly'] = val and 1 or 0
         self.changeRecentOnly()
 
-    def init(self,storage_server,add=False):
+    def init(self,storage_server):
         self['STORAGE_SERVER'] = storage_server
-        if add: return self.add()
         return self
 
     @property
@@ -85,11 +109,26 @@ class RecordingRule(dict):
 
         return req.json()
 
-    def add(self):
+    def add(self, **kwargs):
         url = RULES_ADD_URL.format(
             deviceAuth=urllib.quote(self['STORAGE_SERVER']._devices.apiAuthID(), ''),
             seriesID=self.seriesID,
         )
+
+        if kwargs:
+            url += '&' + urllib.urlencode(kwargs)
+
+        self.modify(url, 'add')
+
+        return self
+
+    def change(self, **kwargs):
+        url = RULES_CHANGE_URL.format(
+            deviceAuth=urllib.quote(self['STORAGE_SERVER']._devices.apiAuthID(), ''),
+            ruleID=self.ruleID
+        )
+
+        url += '&' + urllib.urlencode(kwargs)
 
         self.modify(url, 'add')
 
@@ -258,8 +297,8 @@ class StorageServers(object):
     def updateRules(self):
         self._getRules()
 
-    def addRule(self,result):
-        rule = RecordingRule(result).init(self,add=True)
+    def addRule(self, result, **kwargs):
+        rule = RecordingRule(result).init(self).add(**kwargs)
         self._rules.append(rule)
         result['RecordingRule'] = 1
         self.pingUpdateRules()

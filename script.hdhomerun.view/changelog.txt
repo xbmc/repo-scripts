@@ -1,3 +1,14 @@
+** 2016.03.07 **
+
+Make guide 5 wide
+Movie category now shows poster thumbnails
+Change 'WATCH RECORDINGS' to 'RECORDED'
+Change 'GUIDE SEARCH' to 'DISCOVER'
+Change 'RECORDING RULES' to 'TASKS'
+Change 'DELETE' to 'DELETE TASK' on recording dialog
+Added start/end padding options to recording dialog
+DELETE TASK now closes record dialog when opened from TASKS
+
 ** 2015.11.09 **
 
 Fix for errors caused by encoding issues

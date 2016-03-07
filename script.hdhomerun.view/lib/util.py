@@ -82,6 +82,27 @@ def showNotification(message,time_ms=3000,icon_path=None,header=ADDON.getAddonIn
 def videoIsPlaying():
     return xbmc.getCondVisibility('Player.HasVideo')
 
+def durationToShortText(seconds):
+    """
+    Converts seconds to a short user friendly string
+    Example: 143 -> 2m 23s
+    """
+    days = int(seconds/86400)
+    if days:
+        return '{0}d'.format(days)
+    left = seconds % 86400
+    hours = int(left/3600)
+    if hours:
+        return '{0}h'.format(hours)
+    left = left % 3600
+    mins = int(left/60)
+    if mins:
+        return '{0}m'.format(mins)
+    secs = int(left % 60)
+    if secs:
+        return '{0}s'.format(secs)
+    return '0s'
+
 def timeInDayLocalSeconds():
     now = datetime.datetime.now()
     sod = datetime.datetime(year=now.year,month=now.month,day=now.day)

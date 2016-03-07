@@ -145,13 +145,14 @@
             </control>
 
             <control type="grouplist" id="220">
-                <width>1540</width>
+                <width>1000</width>
                 <left>60</left>
-                <align>center</align>
+                <align>left</align>
                 <top>340</top>
                 <height>110</height>
                 <itemgap>10</itemgap>
                 <ondown>200</ondown>
+                <onright>217</onright>
                 <orientation>horizontal</orientation>
                 <control type="button" id="208">
                     <visible>!IsEmpty(Window.Property(show.watch))</visible>
@@ -197,7 +198,7 @@
                     <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
                     <width>300</width>
                     <height>70</height>
-                    <label>[B]DELETE[/B]</label>
+                    <label>[B]DELETE TASK[/B]</label>
                     <font>font13</font>
                     <align>center</align>
                     <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
@@ -213,6 +214,68 @@
                     <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
                     <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
                 </control>
+            </control>
+
+            <control type="group" id="217">
+                <defaultcontrol>215</defaultcontrol>
+                <width>520</width>
+                <left>1210</left>
+                <align>left</align>
+                <top>340</top>
+                <height>110</height>
+                <orientation>horizontal</orientation>
+                <onleft>220</onleft>
+                <control type="label">
+                    <left>0</left>
+                    <top>0</top>
+                    <width>100</width>
+                    <height>50</height>
+                    <font>font10</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <label>[B]START[/B]</label>
+                </control>
+                <control type="button" id="215">
+                    <left>110</left>
+                    <top>0</top>
+                    <width>100</width>
+                    <height>50</height>
+                    <onleft>220</onleft>
+                    <onright>216</onright>
+                    <label>30s</label>
+                    <font>font10</font>
+                    <align>left</align>
+                    <textoffsetx>15</textoffsetx>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
+                </control>
+
+                <control type="label">
+                    <left>220</left>
+                    <top>0</top>
+                    <width>100</width>
+                    <height>50</height>
+                    <font>font10</font>
+                    <align>right</align>
+                    <aligny>center</aligny>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <label>[B]END[/B]</label>
+                </control>
+                <control type="button" id="216">
+                    <left>330</left>
+                    <top>0</top>
+                    <width>100</width>
+                    <height>50</height>
+                    <onleft>215</onleft>
+                    <label>30s</label>
+                    <font>font10</font>
+                    <align>left</align>
+                    <textoffsetx>15</textoffsetx>
+                    <texturefocus border="6">script-hdhomerun-view-flat_button.png</texturefocus>
+                    <texturenofocus border="6">script-hdhomerun-view-flat_button_nf.png</texturenofocus>
+                </control>
+
             </control>
 
         </control>
