@@ -169,13 +169,9 @@ class WindowManager(object):
         from dialogs import DialogEpisodeInfo
         ep_class = DialogEpisodeInfo.get_window(self.window_type)
         if not tvshow_id and tvshow:
-            params = {"query": tvshow,
-                      "language": SETTING("language")}
-            response = TheMovieDB.get_data(url="search/tv",
-                                           params=params,
-                                           cache_days=30)
-            if response["results"]:
-                tvshow_id = str(response['results'][0]['id'])
+            tvshow_id = TheMovieDB.search_media(media_name=tvshow,
+                                                media_type="tv",
+                                                cache_days=7)
         dialog = ep_class(INFO_DIALOG_FILE,
                           ADDON_PATH,
                           show_id=tvshow_id,
@@ -297,7 +293,7 @@ class WindowManager(object):
             self.active_dialog = dialog
             if xbmc.getCondVisibility("Window.IsVisible(movieinformation)"):
                 self.reopen_window = True
-                self.last_control = xbmc.getInfoLabel("System.CurrentControlId")
+                self.last_control = get_infolabel("System.CurrentControlId")
                 xbmc.executebuiltin("Dialog.Close(movieinformation)")
             check_version()
             if prev_window:

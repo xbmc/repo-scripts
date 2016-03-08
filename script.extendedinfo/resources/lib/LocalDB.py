@@ -73,6 +73,7 @@ class LocalDB(object):
             return []
         quotalist = []
         for item in data['result']['movies']:
+            item["mediatype"] = "movie"
             diff = abs(int(item['year']) - int(comp_movie['year']))
             hit = 0.0
             miss = 0.00001
@@ -416,9 +417,8 @@ class LocalDB(object):
         data = get_kodi_json(method="VideoLibrary.GetEpisodeDetails",
                              params='{"properties": ["tvshowid"], "episodeid":%s }' % dbid)
         if "episodedetails" in data["result"]:
-            tvshow_dbid = str(data['result']['episodedetails']['tvshowid'])
             return self.get_imdb_id(media_type="tvshow",
-                                    dbid=tvshow_dbid)
+                                    dbid=str(data['result']['episodedetails']['tvshowid']))
         else:
             return None
 
