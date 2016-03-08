@@ -149,7 +149,8 @@ def get_window(window_type):
         @ch.click(6001)
         def set_rating(self):
             if tmdb.set_rating_prompt(media_type="tv",
-                                      media_id=self.info["id"]):
+                                      media_id=self.info["id"],
+                                      dbid=self.info.get("dbid")):
                 self.update_states()
 
         @ch.click(6002)

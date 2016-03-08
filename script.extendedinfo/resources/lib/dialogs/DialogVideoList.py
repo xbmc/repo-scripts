@@ -11,7 +11,7 @@ from DialogBaseList import DialogBaseList
 from ..WindowManager import wm
 from ActionHandler import ActionHandler
 
-C_MAIN_LIST = 500
+C_MAIN_LIST = [50, 51, 52, 53, 54, 55, 500]
 C_BUTTON_SORT = 5001
 C_BUTTON_ORDER = 5004
 C_BUTTON_ACCOUNT = 7000
@@ -87,7 +87,9 @@ def get_window(window_type):
             selection = xbmcgui.Dialog().select(heading=LANG(32151),
                                                 list=listitems)
             if selection == 0:
-                if tmdb.set_rating_prompt(self.type, item_id):
+                if tmdb.set_rating_prompt(media_type=self.type,
+                                          media_id=item_id,
+                                          dbid=self.listitem.getProperty("dbid")):
                     xbmc.sleep(2000)
                     self.update(force_update=True)
                     self.setCurrentListPosition(self.position)
@@ -298,15 +300,15 @@ def get_window(window_type):
         @ch.click(C_MAIN_LIST)
         def open_media(self):
             self.last_position = self.control.getSelectedPosition()
-            media_type = self.listitem.getProperty("media_type")
-            if media_type == "tv":
+            media_type = self.listitem.getProperty("mediatype")
+            if media_type == "tvshow":
                 wm.open_tvshow_info(prev_window=self,
                                     tmdb_id=self.listitem.getProperty("id"),
                                     dbid=self.listitem.getProperty("dbid"))
-            elif media_type == "person":
+            elif media_type == "actor":
                 wm.open_actor_info(prev_window=self,
                                    actor_id=self.listitem.getProperty("id"))
-            else:
+            elif media_type == "movie":
                 wm.open_movie_info(prev_window=self,
                                    movie_id=self.listitem.getProperty("id"),
                                    dbid=self.listitem.getProperty("dbid"))
