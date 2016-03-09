@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+    <backgroundcolor>FF000000</backgroundcolor>
+    <defaultcontrol always="true">101</defaultcontrol>
+    <allowoverlay>no</allowoverlay>
+    <controls>
+        <control id="111" type="button">
+            <left>-100</left>
+            <height>1</height>
+            <width>1</width>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <width>1920</width>
+            <height>1080</height>
+            <aspectratio>scale</aspectratio>
+            <fadetime>400</fadetime>
+            <animation effect="fade" time="200">VisibleChange</animation>
+            <texture>$INFO[Window.Property(streetview_image)]</texture>
+            <visible>!IsEmpty(Window.Property(streetview))</visible>
+        </control>
+        <control type="image">
+            <posx>0</posx>
+            <width>1920</width>
+            <height>1080</height>
+            <aspectratio>scale</aspectratio>
+            <fadetime>400</fadetime>
+            <animation effect="fade" time="200">VisibleChange</animation>
+            <visible>IsEmpty(Window.Property(streetview))</visible>
+            <texture>$INFO[Window.Property(map)]</texture>
+        </control>
+        <control type="group">
+            <visible>!IsEmpty(Window.Property(streetview))</visible>
+            <animation delay="0" effect="slide" end="0,0" start="400,0" time="360" tween="cubic" reversible="true">Visible</animation>
+            <posx>1500</posx>
+            <control type="image">
+                <posx>-5</posx>
+                <posy>40</posy>
+                <height>260</height>
+                <width>410</width>
+                <texture border="8" colordiffuse="FF000000">buttons/thumbnail_focused.png</texture>
+            </control>
+            <control type="image">
+                <posy>20</posy>
+                <height>300</height>
+                <width>400</width>
+                <aspectratio>keep</aspectratio>
+                <texture background="true">$INFO[Window.Property(streetview_map)]</texture>
+                <fadetime>150</fadetime>
+            </control>
+            <control type="image">
+                <posx>160</posx>
+                <posy>150</posy>
+                <width>35</width>
+                <height>35</height>
+                <texture>arrow.png</texture>
+                <animation center="200,167" condition="true" effect="rotate" end="-90" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),0)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),1)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),2)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),3)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),4)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),5)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),6)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),7)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),8)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),9)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),10)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),11)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),12)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),13)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),14)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),15)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),16)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),17)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),18)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),19)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <animation center="200,167" condition="IntegerGreaterThan(Window.Property(direction),20)" effect="rotate" end="-18" time="0">Conditional</animation>
+                <colordiffuse>red</colordiffuse>
+            </control>
+        </control>
+        <control type="group">
+            <visible>IsEmpty(Window.Property(streetview)) + IntegerGreaterThan(Container(200).NumItems,0)</visible>
+            <animation condition="Control.HasFocus(725)" effect="fade" end="0" start="100" time="280">Conditional</animation>
+            <control id="200" type="list">
+                <width>1920</width>
+                <posy>0</posy>
+                <height>980</height>
+                <orientation>horizontal</orientation>
+                <onup>651</onup>
+                <ondown>651</ondown>
+                <onleft>200</onleft>
+                <onright>200</onright>
+                <itemlayout height="280" width="384">
+                    <control type="image">
+                        <width>384</width>
+                        <height>240</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture>common/black.png</texture>
+                    </control>
+                    <control type="image">
+                        <posy>5</posy>
+                        <posx>3</posx>
+                        <width>378</width>
+                        <height>230</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture fallback="DefaultPicture.png">$INFO[ListItem.Art(thumb)]</texture>
+                    </control>
+                    <control type="image">
+                        <posx>3</posx>
+                        <posy>170</posy>
+                        <width>384</width>
+                        <height>70</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture colordiffuse="AAFFFFFF">common/black.png</texture>
+                    </control>
+                    <control type="image">
+                        <posx>3</posx>
+                        <posy>5</posy>
+                        <width>384</width>
+                        <height>32</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture colordiffuse="AAFFFFFF">common/black.png</texture>
+                    </control>
+                    <control type="label">
+                        <posy>185</posy>
+                        <posx>20</posx>
+                        <aligny>center</aligny>
+                        <width>344</width>
+                        <height>35</height>
+                        <font>font10</font>
+                        <textcolor>FFe5e5e5</textcolor>
+                        <label>$INFO[ListItem.Property(date),,[CR]][B][COLOR=FFa4a4a4]$INFO[ListItem.Property(letter),,:][/B] [/COLOR]$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <posy>5</posy>
+                        <posx>20</posx>
+                        <width>344</width>
+                        <height>81</height>
+                        <font>font10</font>
+                        <align>left</align>
+                        <aligny>bottom</aligny>
+                        <shadowcolor>FF000000</shadowcolor>
+                        <textcolor>FFe5e5e5</textcolor>
+                        <label>$INFO[ListItem.Property(eventname)]</label>
+                    </control>
+                </itemlayout>
+                <focusedlayout height="200" width="384">
+                    <control type="image">
+                        <width>384</width>
+                        <height>240</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture>common/black.png</texture>
+                    </control>
+                    <control type="image">
+                        <posy>5</posy>
+                        <posx>3</posx>
+                        <width>378</width>
+                        <height>230</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture fallback="DefaultPicture.png">$INFO[ListItem.Art(thumb)]</texture>
+                    </control>
+                    <control type="image">
+                        <posx>3</posx>
+                        <posy>170</posy>
+                        <width>378</width>
+                        <height>70</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture colordiffuse="AAFFFFFF">common/black.png</texture>
+                    </control>
+                    <control type="image">
+                        <posx>3</posx>
+                        <posy>5</posy>
+                        <width>378</width>
+                        <height>32</height>
+                        <aspectratio>scale</aspectratio>
+                        <texture colordiffuse="AAFFFFFF">common/black.png</texture>
+                    </control>
+                    <control type="label">
+                        <posy>185</posy>
+                        <posx>20</posx>
+                        <aligny>center</aligny>
+                        <width>344</width>
+                        <height>35</height>
+                        <font>font10</font>
+                        <textcolor>FFe5e5e5</textcolor>
+                        <label>$INFO[ListItem.Property(date),,[CR]][B][COLOR=FFa4a4a4]$INFO[ListItem.Property(letter),,:][/B] [/COLOR]$INFO[ListItem.Label]</label>
+                    </control>
+                    <control type="label">
+                        <posy>5</posy>
+                        <posx>20</posx>
+                        <width>344</width>
+                        <height>81</height>
+                        <font>font10</font>
+                        <align>left</align>
+                        <aligny>bottom</aligny>
+                        <shadowcolor>FF000000</shadowcolor>
+                        <textcolor>FFe5e5e5</textcolor>
+                        <label>$INFO[ListItem.Property(eventname)]</label>
+                    </control>
+                    <control type="image">
+                        <posx>0</posx>
+                        <posy>0</posy>
+                        <width>384</width>
+                        <height>240</height>
+                        <texture border="8" colordiffuse="FF12B2E7">buttons/thumbnail_focused.png</texture>
+                        <colordiffuse>FF0084ff</colordiffuse>
+                        <visible>Control.HasFocus(200)</visible>
+                    </control>
+                </focusedlayout>
+            </control>
+        </control>
+        <control type="group">
+            <posy>950</posy>
+            <animation condition="Control.HasFocus(725)" effect="slide" end="0,200" start="0,0" time="400" tween="quadratic">Conditional</animation>
+            <animation delay="300" effect="slide" end="0,0" start="0,200" time="400" tween="cubic">WindowOpen</animation>
+            <control type="image">
+                <posy>0</posy>
+                <width>1920</width>
+                <height>135</height>
+                <texture flipy="true">frame/InfoBar.png</texture>
+            </control>
+            <control id="650" type="grouplist">
+                <orientation>horizontal</orientation>
+                <posx>0</posx>
+                <itemgap>-20</itemgap>
+                <onup>200</onup>
+                <onleft>652</onleft>
+                <onright>102</onright>
+                <control type="radiobutton" id="112">
+                    <width>220</width>
+                    <height>142</height>
+                    <align>center</align>
+                    <aligny>top</aligny>
+                    <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                    <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                    <textoffsetx>35</textoffsetx>
+                    <textoffsety>78</textoffsety>
+                    <radioposx>86</radioposx>
+                    <radioposy>13</radioposy>
+                    <radiowidth>48</radiowidth>
+                    <font>font10</font>
+                    <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/Flag.png</textureradioonfocus>
+                    <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/Flag.png</textureradioonnofocus>
+                    <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/Flag.png</textureradioofffocus>
+                    <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/Flag.png</textureradiooffnofocus>
+                    <textureradiooffdisabled colordiffuse="disabled">googlemaps/Flag.png</textureradiooffdisabled>
+                    <textureradioondisabled colordiffuse="disabled">googlemaps/Flag.png</textureradioondisabled>
+                    <label>$ADDON[script.maps.browser 32124]</label>
+                </control>
+                <control type="radiobutton" id="101">
+                    <width>220</width>
+                    <height>142</height>
+                    <align>center</align>
+                    <aligny>top</aligny>
+                    <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                    <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                    <textoffsetx>35</textoffsetx>
+                    <textoffsety>78</textoffsety>
+                    <radioposx>86</radioposx>
+                    <radioposy>13</radioposy>
+                    <radiowidth>48</radiowidth>
+                    <font>font10</font>
+                    <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/search.png</textureradioonfocus>
+                    <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/search.png</textureradioonnofocus>
+                    <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/search.png</textureradioofffocus>
+                    <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/search.png</textureradiooffnofocus>
+                    <textureradiooffdisabled colordiffuse="disabled">googlemaps/search.png</textureradiooffdisabled>
+                    <textureradioondisabled colordiffuse="disabled">googlemaps/search.png</textureradioondisabled>
+                    <label>$LOCALIZE[137]</label>
+                </control>
+            </control>
+            <control id="651" type="grouplist">
+                <posx>0</posx>
+                <width>1920</width>
+                <orientation>horizontal</orientation>
+                <itemgap>-20</itemgap>
+                <onleft>101</onleft>
+                <onup>200</onup>
+                <onright>652</onright>
+                <align>center</align>
+                <control type="radiobutton" id="102">
+                    <width>220</width>
+                    <height>142</height>
+                    <align>center</align>
+                    <aligny>top</aligny>
+                    <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                    <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                    <textoffsetx>35</textoffsetx>
+                    <textoffsety>78</textoffsety>
+                    <radioposx>86</radioposx>
+                    <radioposy>13</radioposy>
+                    <radiowidth>48</radiowidth>
+                    <font>font10</font>
+                    <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/map.png</textureradioonfocus>
+                    <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/map.png</textureradioonnofocus>
+                    <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/streetview.png</textureradioofffocus>
+                    <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/streetview.png</textureradiooffnofocus>
+                    <textureradiooffdisabled colordiffuse="disabled">googlemaps/streetview.png</textureradiooffdisabled>
+                    <textureradioondisabled colordiffuse="disabled">googlemaps/map.png</textureradioondisabled>
+                    <label>$ADDON[script.maps.browser 32125]</label>
+                    <selected>!IsEmpty(Window.Property(streetview))</selected>
+                </control>
+                <control type="radiobutton" id="109">
+                    <width>220</width>
+                    <height>142</height>
+                    <align>center</align>
+                    <aligny>top</aligny>
+                    <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                    <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                    <textoffsetx>35</textoffsetx>
+                    <textoffsety>78</textoffsety>
+                    <radioposx>86</radioposx>
+                    <radioposy>13</radioposy>
+                    <radiowidth>48</radiowidth>
+                    <font>font10</font>
+                    <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/navigate.png</textureradioonfocus>
+                    <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/navigate.png</textureradioonnofocus>
+                    <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/navigate.png</textureradioofffocus>
+                    <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/navigate.png</textureradiooffnofocus>
+                    <textureradiooffdisabled colordiffuse="disabled">googlemaps/navigate.png</textureradiooffdisabled>
+                    <textureradioondisabled colordiffuse="disabled">googlemaps/navigate.png</textureradioondisabled>
+                    <label>Navigate</label>
+                </control>
+                <control type="grouplist" id="130">
+                    <itemgap>-30</itemgap>
+                    <height>150</height>
+                    <width>220</width>
+                    <control type="radiobutton" id="103">
+                        <width>220</width>
+                        <height>85</height>
+                        <align>left</align>
+                        <aligny>top</aligny>
+                        <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                        <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                        <textoffsetx>35</textoffsetx>
+                        <textwidth>200</textwidth>
+                        <textoffsety>28</textoffsety>
+                        <radioposx>145</radioposx>
+                        <radioposy>5</radioposy>
+                        <radiowidth>40</radiowidth>
+                        <font>font10</font>
+                        <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/zoomin.png</textureradioonfocus>
+                        <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/zoomin.png</textureradioonnofocus>
+                        <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/zoomin.png</textureradioofffocus>
+                        <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/zoomin.png</textureradiooffnofocus>
+                        <textureradiooffdisabled colordiffuse="disabled">googlemaps/zoomin.png</textureradiooffdisabled>
+                        <textureradioondisabled colordiffuse="disabled">googlemaps/zoomin.png</textureradioondisabled>
+                        <label>$ADDON[script.maps.browser 32126]</label>
+                    </control>
+                    <control type="radiobutton" id="104">
+                        <width>220</width>
+                        <height>85</height>
+                        <align>left</align>
+                        <aligny>top</aligny>
+                        <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                        <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                        <textoffsetx>35</textoffsetx>
+                        <textwidth>200</textwidth>
+                        <textoffsety>28</textoffsety>
+                        <radioposx>145</radioposx>
+                        <radioposy>5</radioposy>
+                        <radiowidth>40</radiowidth>
+                        <font>font10</font>
+                        <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/zoomout.png</textureradioonfocus>
+                        <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/zoomout.png</textureradioonnofocus>
+                        <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/zoomout.png</textureradioofffocus>
+                        <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/zoomout.png</textureradiooffnofocus>
+                        <textureradiooffdisabled colordiffuse="disabled">googlemaps/zoomout.png</textureradiooffdisabled>
+                        <textureradioondisabled colordiffuse="disabled">googlemaps/zoomout.png</textureradioondisabled>
+                        <label>$ADDON[script.maps.browser 32127]</label>
+                    </control>
+                </control>
+            </control>
+            <control id="652" type="grouplist">
+                <posx>1420</posx>
+                <width>500</width>
+                <orientation>horizontal</orientation>
+                <align>right</align>
+                <onleft>130</onleft>
+                <onup>200</onup>
+                <onright>112</onright>
+                <itemgap>-20</itemgap>
+                <control type="radiobutton" id="126">
+                    <width>220</width>
+                    <height>142</height>
+                    <align>center</align>
+                    <aligny>top</aligny>
+                    <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                    <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                    <textoffsetx>35</textoffsetx>
+                    <textoffsety>78</textoffsety>
+                    <radioposx>86</radioposx>
+                    <radioposy>13</radioposy>
+                    <radiowidth>48</radiowidth>
+                    <font>font10</font>
+                    <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/hybrid.png</textureradioonfocus>
+                    <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/hybrid.png</textureradioonnofocus>
+                    <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/hybrid.png</textureradioofffocus>
+                    <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/hybrid.png</textureradiooffnofocus>
+                    <textureradiooffdisabled colordiffuse="disabled">googlemaps/hybrid.png</textureradiooffdisabled>
+                    <textureradioondisabled colordiffuse="disabled">googlemaps/hybrid.png</textureradioondisabled>
+                    <label>$ADDON[script.maps.browser 32128]</label>
+                    <visible>IsEmpty(Window.Property(streetview))</visible>
+                </control>
+                <control type="radiobutton" id="124">
+                    <width>220</width>
+                    <height>142</height>
+                    <align>center</align>
+                    <aligny>top</aligny>
+                    <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                    <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                    <textoffsetx>35</textoffsetx>
+                    <textoffsety>78</textoffsety>
+                    <radioposx>86</radioposx>
+                    <radioposy>13</radioposy>
+                    <radiowidth>48</radiowidth>
+                    <font>font10</font>
+                    <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/arrowup.png</textureradioonfocus>
+                    <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/arrowup.png</textureradioonnofocus>
+                    <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/arrowup.png</textureradioofffocus>
+                    <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/arrowup.png</textureradiooffnofocus>
+                    <textureradiooffdisabled colordiffuse="disabled">googlemaps/arrowup.png</textureradiooffdisabled>
+                    <textureradioondisabled colordiffuse="disabled">googlemaps/arrowup.png</textureradioondisabled>
+                    <label>$ADDON[script.maps.browser 32129]</label>
+                    <visible>!IsEmpty(Window.Property(streetview))</visible>
+                </control>
+                <control type="radiobutton" id="125">
+                    <width>220</width>
+                    <height>142</height>
+                    <align>center</align>
+                    <aligny>top</aligny>
+                    <texturefocus border="40">buttons/button-theme-fo.png</texturefocus>
+                    <texturenofocus border="40">buttons/button-nofo.png</texturenofocus>
+                    <textoffsetx>35</textoffsetx>
+                    <textoffsety>78</textoffsety>
+                    <radioposx>86</radioposx>
+                    <radioposy>13</radioposy>
+                    <radiowidth>48</radiowidth>
+                    <font>font10</font>
+                    <textureradioonfocus colordiffuse="D0FFFFFF">googlemaps/arrowdown.png</textureradioonfocus>
+                    <textureradioonnofocus colordiffuse="D0FFFFFF">googlemaps/arrowdown.png</textureradioonnofocus>
+                    <textureradioofffocus colordiffuse="D0FFFFFF">googlemaps/arrowdown.png</textureradioofffocus>
+                    <textureradiooffnofocus colordiffuse="D0FFFFFF">googlemaps/arrowdown.png</textureradiooffnofocus>
+                    <textureradiooffdisabled colordiffuse="disabled">googlemaps/arrowdown.png</textureradiooffdisabled>
+                    <textureradioondisabled colordiffuse="disabled">googlemaps/arrowdown.png</textureradioondisabled>
+                    <label>$ADDON[script.maps.browser 32130]</label>
+                    <visible>!IsEmpty(Window.Property(streetview))</visible>
+                </control>
+            </control>
+        </control>
+        <control id="725" type="button">
+            <width>1</width>
+            <height>1</height>
+            <left>-2000</left>
+            <texturenofocus>-</texturenofocus>
+            <font>-</font>
+        </control>
+    </controls>
+</window>

@@ -1,0 +1,651 @@
+# XBMC Media Center language file
+# Addon Name: Maps Browser
+# Addon id: script.maps.browser
+# Addon version: 0.8.0
+# Addon Provider: phil65
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2014-10-26 17:04+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "Addon Summary"
+msgid "Google Maps Browser (including Street View)"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid ""
+"This Maps Browser Add-on allows you to explore the map with a remote. It can also show Places (Source: FourSquare), "
+"events (source: Eventful), geotagged images and much more on the map. Also offers skin integration."
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:17
+msgctxt "#32000"
+msgid "Accounting"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Welcome to Maps Browser add-on"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Press context menu button to toggle navigation mode"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Press \"info\" button to change map type"
+msgstr ""
+
+msgctxt "#32004"
+msgid "FourSquare Places Search"
+msgstr ""
+
+msgctxt "#32005"
+msgid "Top Picks"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:54
+msgctxt "#32006"
+msgid "Food"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Drinks"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Coffee"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Shops"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Arts"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Outdoors"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Sights"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Trending"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Specials"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Next venues"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:26
+msgctxt "#32016"
+msgid "Beauty salon"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:27
+msgctxt "#32017"
+msgid "Bicycle store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:28
+msgctxt "#32018"
+msgid "Book store"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Reset places"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Choose places to display"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Choose folder with geotagged images"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Enter location search terms"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:29
+msgctxt "#32023"
+msgid "Bowling alley"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Google maps search"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Choose search type"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Places from geotagged images"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Eventful events"
+msgstr ""
+
+msgctxt "#32029"
+msgid "FourSquare Explore"
+msgstr ""
+
+msgctxt "#32030"
+msgid "MapQuest traffic incidents (US only)"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Google Places"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Enter search string"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:30
+msgctxt "#32033"
+msgid "Bus station"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Click again to show info"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:18
+msgctxt "#32035"
+msgid "Airport"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:19
+msgctxt "#32036"
+msgid "Amusement park"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:20
+msgctxt "#32037"
+msgid "Aquarium"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:21
+msgctxt "#32038"
+msgid "Art gallery"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:22
+msgctxt "#32039"
+msgid "ATM"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:23
+msgctxt "#32040"
+msgid "Bakery"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:24
+msgctxt "#32041"
+msgid "Bank"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:25
+msgctxt "#32042"
+msgid "Bar"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:31
+msgctxt "#32043"
+msgid "Cafe"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:32
+msgctxt "#32044"
+msgid "Campground"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:33
+msgctxt "#32045"
+msgid "Car dealer"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:34
+msgctxt "#32046"
+msgid "Car rental"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:35
+msgctxt "#32047"
+msgid "Car repair"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:36
+msgctxt "#32048"
+msgid "Car wash"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:37
+msgctxt "#32049"
+msgid "Casino"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:38
+msgctxt "#32050"
+msgid "Cemetery"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:39
+msgctxt "#32051"
+msgid "Church"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:40
+msgctxt "#32052"
+msgid "City hall"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:41
+msgctxt "#32053"
+msgid "Clothing store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:42
+msgctxt "#32054"
+msgid "Convenience store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:43
+msgctxt "#32055"
+msgid "Courthouse"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:44
+msgctxt "#32056"
+msgid "Dentist"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:45
+msgctxt "#32057"
+msgid "Department store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:46
+msgctxt "#32058"
+msgid "Doctor"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:47
+msgctxt "#32059"
+msgid "Electrician"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:48
+msgctxt "#32060"
+msgid "Electronics store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:49
+msgctxt "#32061"
+msgid "Embassy"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:50
+msgctxt "#32062"
+msgid "Establishment"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:52
+msgctxt "#32063"
+msgid "Fire station"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:53
+msgctxt "#32064"
+msgid "Florist"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:55
+msgctxt "#32065"
+msgid "Funeral home"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:56
+msgctxt "#32066"
+msgid "Furniture store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:57
+msgctxt "#32067"
+msgid "Gas station"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:58
+msgctxt "#32068"
+msgid "General contractor"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:59
+msgctxt "#32069"
+msgid "Grocery or supermarket"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:61
+msgctxt "#32070"
+msgid "Gym"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:62
+msgctxt "#32071"
+msgid "Hair care"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:63
+msgctxt "#32072"
+msgid "Hardware store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:64
+msgctxt "#32073"
+msgid "Health"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:65
+msgctxt "#32074"
+msgid "Hindu temple"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:66
+msgctxt "#32075"
+msgid "Home goods store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:67
+msgctxt "#32076"
+msgid "Hospital"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:68
+msgctxt "#32077"
+msgid "Insurance agency"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:69
+msgctxt "#32078"
+msgid "Jewelry store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:70
+msgctxt "#32079"
+msgid "Laundry"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:71
+msgctxt "#32080"
+msgid "Lawyer"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:73
+msgctxt "#32081"
+msgid "Liquor store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:74
+msgctxt "#32082"
+msgid "Local government office"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:75
+msgctxt "#32083"
+msgid "Locksmith"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:76
+msgctxt "#32084"
+msgid "Lodging"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:77
+msgctxt "#32085"
+msgid "Meal delivery"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:78
+msgctxt "#32086"
+msgid "Meal takeaway"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:79
+msgctxt "#32087"
+msgid "Mosque"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:80
+msgctxt "#32088"
+msgid "Movie rental"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:81
+msgctxt "#32089"
+msgid "Movie theater"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:82
+msgctxt "#32090"
+msgid "Moving company"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:83
+msgctxt "#32091"
+msgid "Museum"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:84
+msgctxt "#32092"
+msgid "Night club"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:85
+msgctxt "#32093"
+msgid "Painter"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:86
+msgctxt "#32094"
+msgid "Park"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:87
+msgctxt "#32095"
+msgid "Parking"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:88
+msgctxt "#32096"
+msgid "Pet store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:89
+msgctxt "#32097"
+msgid "Pharmacy"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:90
+msgctxt "#32098"
+msgid "Physiotherapist"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:91
+msgctxt "#32099"
+msgid "Place of worship"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:92
+msgctxt "#32100"
+msgid "Plumber"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:93
+msgctxt "#32101"
+msgid "Police"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:94
+msgctxt "#32102"
+msgid "Post office"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:95
+msgctxt "#32103"
+msgid "Real estate agency"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:96
+msgctxt "#32104"
+msgid "Restaurant"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:97
+msgctxt "#32105"
+msgid "Roofing contractor"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:98
+msgctxt "#32106"
+msgid "Rv park"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:99
+msgctxt "#32107"
+msgid "School"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:100
+msgctxt "#32108"
+msgid "Shoe store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:101
+msgctxt "#32109"
+msgid "Spa"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:102
+msgctxt "#32110"
+msgid "Stadium"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:104
+msgctxt "#32111"
+msgid "Store"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:105
+msgctxt "#32112"
+msgid "Subway station"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:106
+msgctxt "#32113"
+msgid "Synagogue"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:107
+msgctxt "#32114"
+msgid "Taxi stand"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:108
+msgctxt "#32115"
+msgid "Train station"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:109
+msgctxt "#32116"
+msgid "Travel agency"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:110
+msgctxt "#32117"
+msgid "University"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:111
+msgctxt "#32118"
+msgid "Veterinary care"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:112
+msgctxt "#32119"
+msgid "zoo"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:114 /resources/lib/FourSquare.py:136
+msgctxt "#32120"
+msgid "All Sections"
+msgstr ""
+
+#: /resources/lib/GooglePlaces.py:116 /resources/lib/FourSquare.py:138
+msgctxt "#32121"
+msgid "Choose Section"
+msgstr ""
+
+#: /resources/lib/Eventful.py:23 /resources/lib/FourSquare.py:116
+msgctxt "#32122"
+msgid "All Categories"
+msgstr ""
+
+#: /resources/lib/Eventful.py:26 /resources/lib/FourSquare.py:118
+msgctxt "#32123"
+msgid "Choose Category"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-Maps Browser-main.xml:305
+msgctxt "#32124"
+msgid "Places"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-Maps Browser-main.xml:347
+msgctxt "#32125"
+msgid "Street view"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-Maps Browser-main.xml:377
+msgctxt "#32126"
+msgid "Zoom +"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-Maps Browser-main.xml:398
+msgctxt "#32127"
+msgid "Zoom -"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-Maps Browser-main.xml:429
+msgctxt "#32128"
+msgid "Map type"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-Maps Browser-main.xml:451
+msgctxt "#32129"
+msgid "Look up"
+msgstr ""
+
+#: /resources/skins/Default/1080i/script-Maps Browser-main.xml:473
+msgctxt "#32130"
+msgid "Look down"
+msgstr ""
