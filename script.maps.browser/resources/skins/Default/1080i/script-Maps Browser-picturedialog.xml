@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+    <defaultcontrol>1000</defaultcontrol>
+    <backgroundcolor>FF000000</backgroundcolor>
+    <coordinates>
+        <posx>0</posx>
+        <posy>0</posy>
+        <system>1</system>
+    </coordinates>
+    <zorder>2</zorder>
+    <animation effect="fade" end="100" time="560">WindowOpen</animation>
+    <animation effect="fade" start="100" end="0" time="240">WindowClose</animation>
+    <controls>
+        <control type="image">
+            <texture>common/black.png</texture>
+            <width>1920</width>
+            <height>1080</height>
+        </control>
+        <control type="image" id="100">
+            <width>1920</width>
+            <height>1080</height>
+            <aspectratio>keep</aspectratio>
+            <align>center</align>
+            <aligny>center</aligny>
+        </control>
+    </controls>
+</window>

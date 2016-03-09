@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="16000">
+        <setting id="ImageFormat" type="labelenum" label="Choose map image Format" values="png8|png32|gif|jpg|jpg-baseline"/>
+    </category>
+</settings>
