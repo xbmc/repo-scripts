@@ -132,7 +132,7 @@ class UserContent:
 
     def _addDirectory(self, current, tree):
         if not util.vfs.exists(current):
-            util.DEBUG_LOG('Creating: {0}'.format(repr(current)))
+            util.DEBUG_LOG('Creating: {0}'.format(util.strRepr(current)))
             util.vfs.mkdirs(current)
 
         for branch in tree:
@@ -245,6 +245,7 @@ class UserContent:
 
         self.createBumpers(basePath, DB.RatingsBumpers, 'system', 'style', 80, sub_default='Classic')
 
+    @DB.session
     def createBumpers(self, basePath, model, type_name, sub_name, pct_start, sub_default=''):
         paths = util.vfs.listdir(basePath)
         total = float(len(paths))
@@ -315,7 +316,6 @@ class UserContent:
                 defaults=defaults
             )
 
-    @DB.session
     def loadRatingSystem(self, path):
         import ratings
         with util.vfs.File(path, 'r') as f:
@@ -401,6 +401,7 @@ class MusicHandler:
     def __init__(self, owner=None):
         self.owner = owner
 
+    @DB.session
     def __call__(self, basePath):
         names = util.vfs.listdir(basePath)
 
@@ -411,7 +412,6 @@ class MusicHandler:
                 break
             self.addSongs(basePath, file)
 
-    @DB.session
     def addSongs(self, base, file, sub=None):
         path = util.pathJoin(base, file)
 
@@ -477,6 +477,9 @@ class TriviaDirectoryHandler:
 
     @DB.session
     def __call__(self, basePath, prefix=None):
+        self.doCall(basePath, prefix)
+
+    def doCall(self, basePath, prefix=None):
         hasSlidesXML = False
         slideXML = util.pathJoin(basePath, self._formatXML)
         if util.vfs.exists(slideXML):
@@ -522,7 +525,7 @@ class TriviaDirectoryHandler:
             path = util.pathJoin(basePath, c)
 
             if util.isDir(path):
-                self(path, prefix=prefix and (prefix + ':' + c) or c)
+                self.doCall(path, prefix=prefix and (prefix + ':' + c) or c)
                 continue
 
             base, ext = os.path.splitext(c)
@@ -535,14 +538,16 @@ class TriviaDirectoryHandler:
             ttype = ''
             clueCount = 0
 
+            ext = ext.lstrip('.')
+
             if re.search(questionRE, c):
-                name = re.split(questionRE, c)[0]
+                name = re.split(questionRE, c)[0] + ':{0}'.format(ext)
                 ttype = 'q'
             elif re.search(answerRE, c):
-                name = re.split(answerRE, c)[0]
+                name = re.split(answerRE, c)[0] + ':{0}'.format(ext)
                 ttype = 'a'
             elif re.search(clueRE, c):
-                name = re.split(clueRE, c)[0]
+                name = re.split(clueRE, c)[0] + ':{0}'.format(ext)
 
                 try:
                     clueCount = re.search(clueRE, c).group(1)
@@ -551,7 +556,8 @@ class TriviaDirectoryHandler:
 
                 ttype = 'c'
             else:  # A still
-                name, ext = os.path.splitext(c)
+                name, ext_ = os.path.splitext(c)
+                name += ':{0}'.format(ext)
                 # name = re.split(clueRE, c)[0]
                 ttype = 'a'
 
@@ -593,7 +599,8 @@ class TriviaDirectoryHandler:
                     defaults=defaults
                 )
             except:
-                print repr(data)
+                util.DEBUG_LOG(repr(data))
+                util.DEBUG_LOG(repr(defaults))
                 util.ERROR()
 
     @DB.session

@@ -30,8 +30,8 @@ def _getTerminalCharset():
     # (1) Try locale.getpreferredencoding()
     try:
         charset = locale.getpreferredencoding()
-        unicode('test', charset)
         if charset:
+            unicode('test', charset)
             return charset
     except (locale.Error, AttributeError, LookupError):
         pass

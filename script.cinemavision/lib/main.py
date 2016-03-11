@@ -927,7 +927,6 @@ class SequenceEditorWindow(kodigui.BaseWindow):
         f.close()
         sItems = cinemavision.sequence.getItemsFromString(xmlString)
         if sItems is None:
-            kodiutil.DEBUG_LOG(repr(xmlString))
             sItems = []
             xbmcgui.Dialog().ok(T(32601, 'ERROR'), T(32602, 'Error parsing sequence'))
         self.sequenceControl.reset()

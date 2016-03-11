@@ -1049,7 +1049,9 @@ def getSaveString(items):
     for i in items:
         data.append(i.toDict())
 
-    return json.dumps({'version': 1, 'items': data}, indent=1)
+    ret = json.dumps({'version': 1, 'items': data}, indent=1)
+    util.DEBUG_LOG(repr(ret))
+    return ret
 
 
 def getItemsFromString(dstring):
@@ -1058,13 +1060,13 @@ def getItemsFromString(dstring):
         return [Item.fromDict(ddict) for ddict in data['items']]
     except ValueError:
         if dstring and dstring.startswith('{'):
-            util.LOG(repr(dstring[:100]))
+            util.DEBUG_LOG(repr(dstring))
             util.ERROR()
         else:
             try:
                 return getItemsFromXMLString(dstring)
             except:
-                util.LOG(repr(dstring[:100]))
+                util.DEBUG_LOG(repr(dstring[:100]))
                 util.ERROR()
 
     return None

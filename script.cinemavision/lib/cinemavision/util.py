@@ -351,7 +351,8 @@ def listFilePaths(path):
 
 
 def strRepr(str_obj):
-    return repr(str_obj).lstrip('u').strip("'")
+    ret = repr(str_obj).lstrip('u')
+    return ret.endswith('"') and ret.strip('"') or ret.strip("'")
 
 
 def datetimeTotalSeconds(td):
