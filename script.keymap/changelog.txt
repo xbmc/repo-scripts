@@ -1,3 +1,6 @@
+[B]v1.0.10[/B]
+- Added support for v17 Krypton
+
 [B]v1.0.9[/B]
 - Fixed error in XML writer causing no keys to work
 

@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import xbmcaddon
 from threading import Timer
 from collections_backport import OrderedDict
 from xbmcgui import Dialog, WindowXMLDialog
@@ -93,7 +94,9 @@ class KeyListener(WindowXMLDialog):
     TIMEOUT = 5
 
     def __new__(cls):
-        return super(KeyListener, cls).__new__(cls, "DialogKaiToast.xml", "")
+        gui_api = tuple(map(int, xbmcaddon.Addon('xbmc.gui').getAddonInfo('version').split('.')))
+        file_name = "DialogNotification.xml" if gui_api >= (5, 11, 0) else "DialogKaiToast.xml"
+        return super(KeyListener, cls).__new__(cls, file_name, "")
 
     def __init__(self):
         self.key = None
