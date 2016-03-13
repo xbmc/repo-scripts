@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 
 import base64
+import random
+import string
+import time
 
 from .common import InfoExtractor
 from ..compat import (
@@ -141,6 +144,11 @@ class YoukuIE(InfoExtractor):
 
         return video_urls_dict
 
+    @staticmethod
+    def get_ysuid():
+        return '%d%s' % (int(time.time()), ''.join([
+            random.choice(string.ascii_letters) for i in range(3)]))
+
     def get_hd(self, fm):
         hd_id_dict = {
             '3gp': '0',
@@ -189,6 +197,8 @@ class YoukuIE(InfoExtractor):
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
+        self._set_cookie('youku.com', '__ysuid', self.get_ysuid())
+
         def retrieve_data(req_url, note):
             headers = {
                 'Referer': req_url,
@@ -204,10 +214,10 @@ class YoukuIE(InfoExtractor):
 
             return raw_data['data']
 
-        video_password = self._downloader.params.get('videopassword', None)
+        video_password = self._downloader.params.get('videopassword')
 
         # request basic data
-        basic_data_url = "http://play.youku.com/play/get.json?vid=%s&ct=12" % video_id
+        basic_data_url = 'http://play.youku.com/play/get.json?vid=%s&ct=12' % video_id
         if video_password:
             basic_data_url += '&pwd=%s' % video_password
 
@@ -219,6 +229,9 @@ class YoukuIE(InfoExtractor):
             if error_note is not None and '因版权原因无法观看此视频' in error_note:
                 raise ExtractorError(
                     'Youku said: Sorry, this video is available in China only', expected=True)
+            elif error_note and '该视频被设为私密' in error_note:
+                raise ExtractorError(
+                    'Youku said: Sorry, this video is private', expected=True)
             else:
                 msg = 'Youku server reported error %i' % error.get('code')
                 if error_note is not None:

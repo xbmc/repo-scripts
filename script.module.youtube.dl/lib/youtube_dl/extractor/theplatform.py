@@ -20,8 +20,9 @@ from ..utils import (
     int_or_none,
     sanitized_Request,
     unsmuggle_url,
-    url_basename,
     xpath_with_ns,
+    mimetype2ext,
+    find_xpath_attr,
 )
 
 default_ns = 'http://www.w3.org/2005/SMIL21/Language'
@@ -31,15 +32,11 @@ _x = lambda p: xpath_with_ns(p, {'smil': default_ns})
 class ThePlatformBaseIE(InfoExtractor):
     def _extract_theplatform_smil(self, smil_url, video_id, note='Downloading SMIL data'):
         meta = self._download_xml(smil_url, video_id, note=note)
-        try:
-            error_msg = next(
-                n.attrib['abstract']
-                for n in meta.findall(_x('.//smil:ref'))
-                if n.attrib.get('title') == 'Geographic Restriction' or n.attrib.get('title') == 'Expired')
-        except StopIteration:
-            pass
-        else:
-            raise ExtractorError(error_msg, expected=True)
+        error_element = find_xpath_attr(
+            meta, _x('.//smil:ref'), 'src',
+            'http://link.theplatform.com/s/errorFiles/Unavailable.mp4')
+        if error_element is not None:
+            raise ExtractorError(error_element.attrib['abstract'], expected=True)
 
         formats = self._parse_smil_formats(
             meta, smil_url, video_id, namespace=default_ns,
@@ -69,7 +66,7 @@ class ThePlatformBaseIE(InfoExtractor):
             for caption in captions:
                 lang, src, mime = caption.get('lang', 'en'), caption.get('src'), caption.get('type')
                 subtitles[lang] = [{
-                    'ext': 'srt' if mime == 'text/srt' else 'ttml',
+                    'ext': mimetype2ext(mime),
                     'url': src,
                 }]
 
@@ -85,7 +82,7 @@ class ThePlatformBaseIE(InfoExtractor):
 class ThePlatformIE(ThePlatformBaseIE):
     _VALID_URL = r'''(?x)
         (?:https?://(?:link|player)\.theplatform\.com/[sp]/(?P<provider_id>[^/]+)/
-           (?:(?P<media>(?:[^/]+/)+select/media/)|(?P<config>(?:[^/\?]+/(?:swf|config)|onsite)/select/))?
+           (?:(?P<media>(?:(?:[^/]+/)+select/)?media/)|(?P<config>(?:[^/\?]+/(?:swf|config)|onsite)/select/))?
          |theplatform:)(?P<id>[^/\?&]+)'''
 
     _TESTS = [{
@@ -283,8 +280,8 @@ class ThePlatformFeedIE(ThePlatformBaseIE):
         first_video_id = None
         duration = None
         for item in entry['media$content']:
-            smil_url = item['plfile$url'] + '&format=SMIL&Tracking=true&Embedded=true&formats=MPEG4,F4M'
-            cur_video_id = url_basename(smil_url)
+            smil_url = item['plfile$url'] + '&format=SMIL&mbr=true'
+            cur_video_id = ThePlatformIE._match_id(smil_url)
             if first_video_id is None:
                 first_video_id = cur_video_id
                 duration = float_or_none(item.get('plfile$duration'))

@@ -20,6 +20,7 @@ class VGTVIE(XstreamIE):
         'aftenbladet.no/tv': 'satv',
         'fvn.no/fvntv': 'fvntv',
         'aftenposten.no/webtv': 'aptv',
+        'ap.vgtv.no/webtv': 'aptv',
     }
 
     _APP_NAME_TO_VENDOR = {
@@ -35,7 +36,7 @@ class VGTVIE(XstreamIE):
                     (?P<host>
                         %s
                     )
-                    /
+                    /?
                     (?:
                         \#!/(?:video|live)/|
                         embed?.*id=
@@ -107,17 +108,25 @@ class VGTVIE(XstreamIE):
             'md5': 'fd828cd29774a729bf4d4425fe192972',
             'info_dict': {
                 'id': '21039',
-                'ext': 'mov',
+                'ext': 'mp4',
                 'title': 'TRAILER: «SWEATSHOP» - I can´t take any more',
                 'description': 'md5:21891f2b0dd7ec2f78d84a50e54f8238',
                 'duration': 66,
                 'timestamp': 1417002452,
                 'upload_date': '20141126',
                 'view_count': int,
-            }
+            },
+            'params': {
+                # m3u8 download
+                'skip_download': True,
+            },
         },
         {
             'url': 'http://www.bt.no/tv/#!/video/100250/norling-dette-er-forskjellen-paa-1-divisjon-og-eliteserien',
+            'only_matching': True,
+        },
+        {
+            'url': 'http://ap.vgtv.no/webtv#!/video/111084/de-nye-bysyklene-lettere-bedre-gir-stoerre-hjul-og-feste-til-mobil',
             'only_matching': True,
         },
     ]
@@ -144,8 +153,6 @@ class VGTVIE(XstreamIE):
         if len(video_id) == 5:
             if appname == 'bttv':
                 info = self._extract_video_info('btno', video_id)
-            elif appname == 'aptv':
-                info = self._extract_video_info('ap', video_id)
 
         streams = data['streamUrls']
         stream_type = data.get('streamType')
@@ -154,18 +161,19 @@ class VGTVIE(XstreamIE):
 
         hls_url = streams.get('hls')
         if hls_url:
-            m3u8_formats = self._extract_m3u8_formats(
-                hls_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
-            if m3u8_formats:
-                formats.extend(m3u8_formats)
+            formats.extend(self._extract_m3u8_formats(
+                hls_url, video_id, 'mp4', m3u8_id='hls', fatal=False))
 
         hds_url = streams.get('hds')
-        # wasLive hds are always 404
-        if hds_url and stream_type != 'wasLive':
+        if hds_url:
+            hdcore_sign = 'hdcore=3.7.0'
             f4m_formats = self._extract_f4m_formats(
-                hds_url + '?hdcore=3.2.0&plugin=aasp-3.2.0.77.18', video_id, f4m_id='hds', fatal=False)
+                hds_url + '?%s' % hdcore_sign, video_id, f4m_id='hds', fatal=False)
             if f4m_formats:
-                formats.extend(f4m_formats)
+                for entry in f4m_formats:
+                    # URLs without the extra param induce an 404 error
+                    entry.update({'extra_param_to_segment_url': hdcore_sign})
+                    formats.append(entry)
 
         mp4_urls = streams.get('pseudostreaming') or []
         mp4_url = streams.get('mp4')

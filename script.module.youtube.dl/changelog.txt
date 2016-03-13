@@ -1,3 +1,7 @@
+*** 16.306.0 ***
+
+Updated youtube-dl core to 2016.03.06
+
 *** 15.1223.0 ***
 
 Updated youtube-dl core to 2015.12.23

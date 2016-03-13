@@ -58,18 +58,28 @@ class CSpanIE(InfoExtractor):
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
+        video_type = None
         webpage = self._download_webpage(url, video_id)
-        matches = re.search(r'data-(prog|clip)id=\'([0-9]+)\'', webpage)
-        if matches:
+        # We first look for clipid, because clipprog always appears before
+        patterns = [r'id=\'clip(%s)\'\s*value=\'([0-9]+)\'' % t for t in ('id', 'prog')]
+        results = list(filter(None, (re.search(p, webpage) for p in patterns)))
+        if results:
+            matches = results[0]
             video_type, video_id = matches.groups()
-            if video_type == 'prog':
-                video_type = 'program'
+            video_type = 'clip' if video_type == 'id' else 'program'
         else:
-            senate_isvp_url = SenateISVPIE._search_iframe_url(webpage)
-            if senate_isvp_url:
-                title = self._og_search_title(webpage)
-                surl = smuggle_url(senate_isvp_url, {'force_title': title})
-                return self.url_result(surl, 'SenateISVP', video_id, title)
+            m = re.search(r'data-(?P<type>clip|prog)id=["\'](?P<id>\d+)', webpage)
+            if m:
+                video_id = m.group('id')
+                video_type = 'program' if m.group('type') == 'prog' else 'clip'
+            else:
+                senate_isvp_url = SenateISVPIE._search_iframe_url(webpage)
+                if senate_isvp_url:
+                    title = self._og_search_title(webpage)
+                    surl = smuggle_url(senate_isvp_url, {'force_title': title})
+                    return self.url_result(surl, 'SenateISVP', video_id, title)
+        if video_type is None or video_id is None:
+            raise ExtractorError('unable to find video id and type')
 
         def get_text_attr(d, attr):
             return d.get(attr, {}).get('#text')
@@ -102,6 +112,13 @@ class CSpanIE(InfoExtractor):
                     'height': int_or_none(get_text_attr(quality, 'height')),
                     'tbr': int_or_none(get_text_attr(quality, 'bitrate')),
                 })
+            if not formats:
+                path = unescapeHTML(get_text_attr(f, 'path'))
+                if not path:
+                    continue
+                formats = self._extract_m3u8_formats(
+                    path, video_id, 'mp4', entry_protocol='m3u8_native',
+                    m3u8_id='hls') if determine_ext(path) == 'm3u8' else [{'url': path, }]
             self._sort_formats(formats)
             entries.append({
                 'id': '%s_%d' % (video_id, partnum + 1),

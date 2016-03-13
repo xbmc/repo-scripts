@@ -12,7 +12,7 @@ from ..utils import (
 
 class AppleTrailersIE(InfoExtractor):
     IE_NAME = 'appletrailers'
-    _VALID_URL = r'https?://(?:www\.)?trailers\.apple\.com/(?:trailers|ca)/(?P<company>[^/]+)/(?P<movie>[^/]+)'
+    _VALID_URL = r'https?://(?:www\.|movie)?trailers\.apple\.com/(?:trailers|ca)/(?P<company>[^/]+)/(?P<movie>[^/]+)'
     _TESTS = [{
         'url': 'http://trailers.apple.com/trailers/wb/manofsteel/',
         'info_dict': {
@@ -65,7 +65,16 @@ class AppleTrailersIE(InfoExtractor):
             },
         ]
     }, {
+        'url': 'http://trailers.apple.com/trailers/magnolia/blackthorn/',
+        'info_dict': {
+            'id': 'blackthorn',
+        },
+        'playlist_mincount': 2,
+    }, {
         'url': 'http://trailers.apple.com/ca/metropole/autrui/',
+        'only_matching': True,
+    }, {
+        'url': 'http://movietrailers.apple.com/trailers/focus_features/kuboandthetwostrings/',
         'only_matching': True,
     }]
 
@@ -80,7 +89,7 @@ class AppleTrailersIE(InfoExtractor):
 
         def fix_html(s):
             s = re.sub(r'(?s)<script[^<]*?>.*?</script>', '', s)
-            s = re.sub(r'<img ([^<]*?)>', r'<img \1/>', s)
+            s = re.sub(r'<img ([^<]*?)/?>', r'<img \1/>', s)
             # The ' in the onClick attributes are not escaped, it couldn't be parsed
             # like: http://trailers.apple.com/trailers/wb/gravity/
 
@@ -97,6 +106,9 @@ class AppleTrailersIE(InfoExtractor):
             trailer_info_json = self._search_regex(self._JSON_RE,
                                                    on_click, 'trailer info')
             trailer_info = json.loads(trailer_info_json)
+            first_url = trailer_info.get('url')
+            if not first_url:
+                continue
             title = trailer_info['title']
             video_id = movie + '-' + re.sub(r'[^a-zA-Z0-9]', '', title).lower()
             thumbnail = li.find('.//img').attrib['src']
@@ -108,7 +120,6 @@ class AppleTrailersIE(InfoExtractor):
             if m:
                 duration = 60 * int(m.group('minutes')) + int(m.group('seconds'))
 
-            first_url = trailer_info['url']
             trailer_id = first_url.split('/')[-1].rpartition('_')[0].lower()
             settings_json_url = compat_urlparse.urljoin(url, 'includes/settings/%s.json' % trailer_id)
             settings = self._download_json(settings_json_url, trailer_id, 'Downloading settings json')
