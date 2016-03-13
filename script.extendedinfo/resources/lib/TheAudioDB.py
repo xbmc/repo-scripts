@@ -32,6 +32,7 @@ def handle_albums(results):
                  'audiodb_id': album['idAlbum'],
                  'Description': desc,
                  'path': "",
+                 'mediatype': "album",
                  'Plot': desc,
                  'genre': album['strGenre'],
                  'Mood': album['strMood'],
@@ -63,6 +64,7 @@ def handle_tracks(results):
         youtube_id = extract_youtube_id(item.get('strMusicVid', ''))
         track = {'Track': item['strTrack'],
                  'Artist': item['strArtist'],
+                 'mediatype': "song",
                  'mbid': item['strMusicBrainzID'],
                  'Album': item['strAlbum'],
                  'thumb': "http://i.ytimg.com/vi/" + youtube_id + "/0.jpg",
@@ -81,6 +83,7 @@ def handle_musicvideos(results):
         mvid = {'Track': item['strTrack'],
                 'Description': item['strDescriptionEN'],
                 'id': item['idTrack'],
+                'mediatype': "musicvideo",
                 'thumb': "http://i.ytimg.com/vi/" + youtube_id + "/0.jpg",
                 'path': convert_youtube_url(item['strMusicVid']),
                 'Label': item['strTrack']}
@@ -109,6 +112,7 @@ def extended_artist_info(results):
         artist = {'artist': fetch(artist, 'strArtist'),
                   'mbid': fetch(artist, 'strMusicBrainzID'),
                   'Banner': banner,
+                  'mediatype': "artist",
                   'Logo': fetch(artist, 'strArtistLogo'),
                   'fanart': fetch(artist, 'strArtistFanart'),
                   'fanart2': fetch(artist, 'strArtistFanart2'),

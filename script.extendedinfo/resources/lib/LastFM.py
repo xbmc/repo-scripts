@@ -19,6 +19,7 @@ def handle_albums(results):
         for album in results['topalbums']['album']:
             album = {'artist': album['artist']['name'],
                      'mbid': album.get('mbid', ""),
+                     'mediatype': "album",
                      'thumb': album['image'][-1]['#text'],
                      'name': album['name']}
             albums.append(album)
@@ -34,6 +35,7 @@ def handle_artists(results):
             continue
         artist = {'title': artist['name'],
                   'name': artist['name'],
+                  'mediatype': "artist",
                   'mbid': artist.get('mbid'),
                   'thumb': artist['image'][-1]['#text'],
                   'Listeners': format(int(artist.get('listeners', 0)), ",d")}

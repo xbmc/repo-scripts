@@ -75,6 +75,10 @@ def dictfind(lst, key, value):
     return ""
 
 
+def get_infolabel(name):
+    return xbmc.getInfoLabel(name).decode("utf-8")
+
+
 def format_time(time, format=None):
     """
     get formatted time
@@ -127,17 +131,17 @@ def widget_selectdialog(filter=None, prefix="widget"):
     show dialog including all video media lists (for widget selection)
     and set strings PREFIX.path and PREFIX.label with chosen values
     """
-    movie = {"intheaters": "%s [I](RottenTomatoes)[/I]" % LANG(32042),
-             "boxoffice": "%s [I](RottenTomatoes)[/I]" % LANG(32055),
-             "opening": "%s [I](RottenTomatoes)[/I]" % LANG(32048),
-             "comingsoon": "%s [I](RottenTomatoes)[/I]" % LANG(32043),
-             "toprentals": "%s [I](RottenTomatoes)[/I]" % LANG(32056),
-             "currentdvdreleases": "%s [I](RottenTomatoes)[/I]" % LANG(32049),
-             "newdvdreleases": "%s [I](RottenTomatoes)[/I]" % LANG(32053),
-             "upcomingdvds": "%s [I](RottenTomatoes)[/I]" % LANG(32054),
+    movie = {"intheatermovies": "%s [I](RottenTomatoes)[/I]" % LANG(32042),
+             "boxofficemovies": "%s [I](RottenTomatoes)[/I]" % LANG(32055),
+             "openingmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32048),
+             "comingsoonmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32043),
+             "toprentalmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32056),
+             "currentdvdmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32049),
+             "newdvdmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32053),
+             "upcomingdvdmovies": "%s [I](RottenTomatoes)[/I]" % LANG(32054),
              # tmdb
-             "incinemas": "%s [I](TheMovieDB)[/I]" % LANG(32042),
-             "upcoming": "%s [I](TheMovieDB)[/I]" % LANG(32043),
+             "incinemamovies": "%s [I](TheMovieDB)[/I]" % LANG(32042),
+             "upcomingmovies": "%s [I](TheMovieDB)[/I]" % LANG(32043),
              "topratedmovies": "%s [I](TheMovieDB)[/I]" % LANG(32046),
              "popularmovies": "%s [I](TheMovieDB)[/I]" % LANG(32044),
              "accountlists": "%s [I](TheMovieDB)[/I]" % LANG(32045),
@@ -356,7 +360,7 @@ def fetch_musicbrainz_id(artist, artist_id=-1):
                                 cache_days=30,
                                 folder="MusicBrainz")
     if results and len(results["artists"]) > 0:
-        log("found artist id for %s: %s" % (artist.decode("utf-8"), results["artists"][0]["id"]))
+        log("found artist id for %s: %s" % (artist, results["artists"][0]["id"]))
         return results["artists"][0]["id"]
     else:
         return None
@@ -540,7 +544,7 @@ def get_icon_panel(number):
     for i in range(1, 6):
         infopanel_path = get_skin_string("IconPanelItem%i.Path" % (i + offset))
         items.append({'Label': get_skin_string("IconPanelItem%i.Label" % (i + offset)),
-                      'path': "plugin://script.extendedinfo/?info=action&&id=" + infopanel_path.decode("utf-8"),
+                      'path': "plugin://script.extendedinfo/?info=action&&id=" + infopanel_path,
                       'thumb': get_skin_string("IconPanelItem%i.Icon" % (i + offset)),
                       'id': "IconPanelitem%i" % (i + offset),
                       'Type': get_skin_string("IconPanelItem%i.Type" % (i + offset))})
@@ -558,11 +562,11 @@ def set_skin_string(name, value):
 def get_weather_images():
     items = []
     for i in range(1, 6):
-        items.append({'Label': "bla",
+        items.append({'Label': str(i),
                       'path': "plugin://script.extendedinfo/?info=action&&id=SetFocus(22222)",
-                      'thumb': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Area)" % i),
-                      'Layer': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Layer)" % i),
-                      'Legend': xbmc.getInfoLabel("Window(weather).Property(Map.%i.Legend)" % i)})
+                      'thumb': get_infolabel("Window(weather).Property(Map.%i.Area)" % i),
+                      'Layer': get_infolabel("Window(weather).Property(Map.%i.Layer)" % i),
+                      'Legend': get_infolabel("Window(weather).Property(Map.%i.Legend)" % i)})
     return items
 
 
@@ -737,7 +741,7 @@ def create_listitems(data=None, preload_images=0):
     FLOAT_INFOLABELS = ["rating"]
     STRING_INFOLABELS = ["genre", "director", "mpaa", "plot", "plotoutline", "title", "originaltitle",
                          "sorttitle", "duration", "studio", "tagline", "writer", "tvshowtitle", "premiered",
-                         "status", "code", "aired", "credits", "lastplayed", "album", "votes", "trailer", "dateadded"]
+                         "status", "code", "aired", "credits", "lastplayed", "album", "votes", "trailer", "dateadded", "mediatype"]
     if not data:
         return []
     itemlist = []

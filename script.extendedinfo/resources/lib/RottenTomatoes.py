@@ -10,6 +10,7 @@ RT_KEY = '63sbsudx936yedd2wdmt6tkn'
 BASE_URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/"
 PLUGIN_BASE = "plugin://script.extendedinfo/?info="
 
+
 def get_movies(movie_type):
     movies = []
     url = '%s.json?apikey=%s' % (movie_type, RT_KEY)
@@ -24,11 +25,12 @@ def get_movies(movie_type):
         if SETTING("infodialog_onclick") != "false":
             path = PLUGIN_BASE + 'extendedinfo&&imdb_id=%s' % imdb_id
         else:
-            search_string = "%s %s trailer" % (item["title"], str(item["year"]))
+            search_string = "%s %s trailer" % (item["title"], item["year"])
             path = PLUGIN_BASE + "playtrailer&&title=%s&&imdb_id=%s" % (search_string, imdb_id)
         movies.append({'title': item["title"],
                        'imdb_id': imdb_id,
                        'thumb': poster,
+                       'mediatype': "movie",
                        'poster': poster,
                        'Runtime': item["runtime"],
                        'duration': item["runtime"],

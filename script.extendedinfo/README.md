@@ -13,28 +13,28 @@ Example:
 ### Rotten Tomatoes
 
 ```
-RunScript(script.extendedinfo,info=intheaters)          --> InTheatersMovies.%d.xxx
+RunScript(script.extendedinfo,info=intheatermovies)
 ```
 ```
-RunScript(script.extendedinfo,info=comingsoon)          --> ComingSoonMovies.%d.xxx
+RunScript(script.extendedinfo,info=comingsoonmovies)
 ```
 ```
-RunScript(script.extendedinfo,info=opening)             --> Opening.%d.xxx
+RunScript(script.extendedinfo,info=openingmovies)
 ```
 ```
-RunScript(script.extendedinfo,info=boxoffice)           --> BoxOffice.%d.xxx
+RunScript(script.extendedinfo,info=boxofficemovies)
 ```
 ```
-RunScript(script.extendedinfo,info=toprentals)          --> TopRentals.%d.xxx
+RunScript(script.extendedinfo,info=toprentalmovies)
 ```
 ```
-RunScript(script.extendedinfo,info=currentdvdreleases)  --> CurrentDVDs.%d.xxx
+RunScript(script.extendedinfo,info=currentdvdmovies)
 ```
 ```
-RunScript(script.extendedinfo,info=newdvdreleases)      --> NewDVDs.%d.xxx
+RunScript(script.extendedinfo,info=newdvdmovies)
 ```
 ```
-RunScript(script.extendedinfo,info=upcomingdvds)        --> UpcomingDVDs.%d.xxx
+RunScript(script.extendedinfo,info=upcomingdvdmovies)
 ```
 
 Available Properties:
@@ -55,10 +55,10 @@ Available Art:
 ### TheMovieDB
 
 ```
-RunScript(script.extendedinfo,info=incinemas)           --> InCinemasMovies.%d
+RunScript(script.extendedinfo,info=incinemamovies)           --> InCinemasMovies.%d
 ```
 ```
-RunScript(script.extendedinfo,info=upcoming)            --> UpcomingMovies.%d
+RunScript(script.extendedinfo,info=upcomingmovies)            --> UpcomingMovies.%d
 ```
 ```
 RunScript(script.extendedinfo,info=popularmovies)       --> PopularMovies.%d
@@ -140,7 +140,7 @@ Available Art:
 RunScript(script.extendedinfo,info=trendingmovies)  --> TrendingMovies.%d
 ```
 ```
-RunScript(script.extendedinfo,info=similarmoviestrakt)     --> SimilarMovies.%d
+RunScript(script.extendedinfo,info=traktsimilarmovies)     --> SimilarMovies.%d
 ```
   - required additional parameters: dbid= (database id) or id= (imdb id)
 
@@ -167,7 +167,7 @@ Available Art:
 RunScript(script.extendedinfo,info=trendingshows)           --> TrendingShows.%d
 ```
 ```
-RunScript(script.extendedinfo,info=similartvshowstrakt)     --> SimilarTVShows.%d
+RunScript(script.extendedinfo,info=traktsimilartvshows)     --> SimilarTVShows.%d
 ```
   - required additional parameters: dbid= (database id) or id= (tvdb id)
 
@@ -315,12 +315,7 @@ RunScript(script.extendedinfo,info=xkcd)          --> XKCD.%d
 RunScript(script.extendedinfo,info=cyanide)       --> CyanideHappiness.%d
 ```
 - fetches a daily random list of Cyanide & Happiness webcomics
-```
-RunScript(script.extendedinfo,info=dailybabe)     --> DailyBabe.%d
-```
-```
-RunScript(script.extendedinfo,info=dailybabes)    --> DailyBabes.%d
-```
+
 
 Available Properties:
 
@@ -330,8 +325,7 @@ Available Properties:
 
 
 
-info=similarlocal
-    Property Prefix: SimilarLocalMovies
+info=similarlocalmovies
     needed parameters:
     -dbid: DBID of any movie in your library
 
