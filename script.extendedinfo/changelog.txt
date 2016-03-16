@@ -1,3 +1,6 @@
+v3.1.5
+- fix duration values for RT / Trakt
+
 v3.1.4
 - remove AutoCompletion part
 
