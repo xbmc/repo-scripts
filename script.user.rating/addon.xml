@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.user.rating"
+    name="User Rating"
+    version="1.0.0"
+    provider-name="Regss">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.service" library="service.py" start="login" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Easy rate media using star rating system</summary>
+        <summary lang="pl">Łatwo oceniaj swoje zasoby za pomocą systemu gwiazdek</summary>
+        <description lang="en">Help rate your media showing box with star rating system</description>
+        <description lang="pl">Pomaga oceniać posiadane zasoby za pomocą systemu gwiazdek</description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+        <forum>http://forum.kodi.tv/showthread.php?tid=264729</forum>
+        <source>https://github.com/Regss/script.user.rating</source>
+        <email>regss84@gmail.com</email>
+    </extension>
+</addon>
