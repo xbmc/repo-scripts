@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+    <setting label="32000" type="bool" id="onWatched" default="true" />
+    <setting label="32001" type="bool" id="onlyNotRated" default="false" enable="eq(-1,true)" />
+    <setting type="sep" />
+    <setting label="32010" type="bool" id="debug" default="false" />
+</settings>

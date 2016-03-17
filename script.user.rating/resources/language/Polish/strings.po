@@ -1,0 +1,26 @@
+# script.filmweb.oceny language file
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+
+#: Settings
+msgctxt "#32000"
+msgid "Show rating box when marked as watched"
+msgstr "Pokaż okno oceny po oznaczeniu jako oglądany"
+
+#: Settings
+msgctxt "#32001"
+msgid "Show only for not rated media"
+msgstr "Pokaż tylko dla pozycji nieocenionych"
+
+#: Settings
+msgctxt "#32010"
+msgid "Debuging"
+msgstr "Debugowanie"
+
+#: GUI
+msgctxt "#32100"
+msgid "Your rating"
+msgstr "Twoja ocena"
