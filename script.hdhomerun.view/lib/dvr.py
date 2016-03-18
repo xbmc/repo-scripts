@@ -117,8 +117,11 @@ class RecordDialog(kodigui.BaseDialog):
             return
 
         self.ruleAdded = True
-        self.parent.fillRules(update=True)
-        self.parent.delayedUpdateRecordings()
+        if self.parent:
+            self.parent.fillRules(update=True)
+            self.parent.delayedUpdateRecordings()
+        else:
+            self.series['RecordingRule'] = 1
 
         xbmcgui.Dialog().ok(T(32800),T(32801),'',self.series.title)
 
@@ -153,15 +156,24 @@ class RecordDialog(kodigui.BaseDialog):
         if not self.rule:
             util.LOG('RecordDialog.deleteRule(): No rule to modify')
             return
-        self.parent.deleteRule(self.rule)
+
+        if self.parent:
+            self.parent.deleteRule(self.rule)
+        else:
+            self.storageServer.deleteRule(self.rule)
+            self.series['RecordingRule'] = 0
+
         self.setProperty('show.hasRule', '')
 
-        self.showHideButton()
+        self.showHideButton(self.showHide)
 
         if self.dialogSource == 'RULES':
             self.doClose()
 
     def watch(self):
+        if not self.parent:
+            return
+
         self.parent.playShow(self.onNow)
         self.doClose()
 
@@ -1082,32 +1094,35 @@ class DVRBase(util.CronReceiver):
                 else:
                     self.setFocusId(self.SEARCH_PANEL_ID)
 
-    def openRecordDialog(self, source, item=None):
+    def openRecordDialog(self, source, item=None, series=None):
         rule = None
-        if source == 'SEARCH':
-            if self.category == 'movie':
-                item = item or self.moviePanel.getSelectedItem()
-            else:
-                item = item or self.searchPanel.getSelectedItem()
+        if not series:
+            if source == 'SEARCH':
+                if self.category == 'movie':
+                    item = item or self.moviePanel.getSelectedItem()
+                else:
+                    item = item or self.searchPanel.getSelectedItem()
 
-            for ritem in self.ruleList:
-                if ritem.dataSource.ID == item.dataSource.ID:
-                    rule = ritem.dataSource
-                    break
-        elif source == 'RULES':
-            item = item or self.ruleList.getSelectedItem()
-            rule = item.dataSource
-        elif source == 'NOWSHOWING':
-            panel = self.currentNowShowingPanel()
-            item = item or panel.getSelectedItem()
-            for ritem in self.ruleList:
-                if ritem.dataSource.ID == item.dataSource.ID:
-                    rule = ritem.dataSource
-                    break
+                for ritem in self.ruleList:
+                    if ritem.dataSource.ID == item.dataSource.ID:
+                        rule = ritem.dataSource
+                        break
+            elif source == 'RULES':
+                item = item or self.ruleList.getSelectedItem()
+                rule = item.dataSource
+            elif source == 'NOWSHOWING':
+                panel = self.currentNowShowingPanel()
+                item = item or panel.getSelectedItem()
+                for ritem in self.ruleList:
+                    if ritem.dataSource.ID == item.dataSource.ID:
+                        rule = ritem.dataSource
+                        break
 
-        if not item: return
+            if not item: return
+
         path = skin.getSkinPath()
-        series = item.dataSource
+        series = series or item.dataSource
+
         try:
             d = RecordDialog(
                 skin.DVR_RECORD_DIALOG,
@@ -1124,19 +1139,20 @@ class DVRBase(util.CronReceiver):
 
             d.doModal()
 
-            if d.setPriority:
-                self.setMode('RULES')
-                item = self.ruleList.getListItemByProperty('seriesID', series.ID)
-                if not item or not rule:
-                    util.LOG('openRecordDialog() - setPriority: No item or no rule')
-                    return
-                self.ruleList.selectItem(item.pos())
-                self.moveRule()
-            elif d.ruleAdded:
-                if source == 'SEARCH' or source == 'NOWSHOWING':
-                    item.setProperty('has.rule','1')
+            if item:
+                if d.setPriority:
+                    self.setMode('RULES')
+                    item = self.ruleList.getListItemByProperty('seriesID', series.ID)
+                    if not item or not rule:
+                        util.LOG('openRecordDialog() - setPriority: No item or no rule')
+                        return
+                    self.ruleList.selectItem(item.pos())
+                    self.moveRule()
+                elif d.ruleAdded:
+                    if source == 'SEARCH' or source == 'NOWSHOWING':
+                        item.setProperty('has.rule','1')
 
-            self.removeSeries(series)
+                self.removeSeries(series)
 
         finally:
             del d

@@ -335,3 +335,10 @@ class StorageServers(object):
                 d.syncRules()
             except:
                 util.ERROR()
+
+    def getSeriesRule(self, ID):
+        for rule in self.rules:
+            if rule.ID == ID:
+                return rule
+
+        return None

@@ -15,6 +15,7 @@ from lib import util
 import errors
 
 GUIDE_URL = 'http://my.hdhomerun.com/api/guide.php?DeviceAuth={0}'
+SLICE_URL = 'http://my.hdhomerun.com/api/guide.php?DeviceAuth={deviceAuth}&Channel={channel}{start}'
 SEARCH_URL = 'http://my.hdhomerun.com/api/search?DeviceAuth={deviceAuth}&Search={search}'
 EPISODES_URL = 'http://my.hdhomerun.com/api/episodes?DeviceAuth={deviceAuth}&SeriesID={seriesID}'
 SUGGEST_URL = 'http://my.hdhomerun.com/api/suggest?DeviceAuth={deviceAuth}&Category={category}'
@@ -188,6 +189,10 @@ class Episode(dict):
         return self.get('EpisodeTitle','')
 
     @property
+    def showTitle(self):
+        return self.get('Title','')
+
+    @property
     def synopsis(self):
         return self.get('Synopsis','')
 
@@ -292,6 +297,27 @@ def nowShowing(deviceAuth, utcUnixtime=None):
         util.ERROR()
 
     return None
+
+def slice(deviceAuth, channel, utcUnixtime=None):
+    start = ''
+    if utcUnixtime:
+        start = NOW_SHOWING_START.format(utcUnixtime=int(utcUnixtime))
+
+    url = SLICE_URL.format(deviceAuth=urllib.quote(deviceAuth,''), channel=channel.number, start=start)
+
+    util.DEBUG_LOG('Slice URL: {0}'.format(url))
+
+    req = requests.get(url)
+
+    try:
+        results = req.json()
+        if not results: return []
+        return [Episode(r) for r in results[0]['Guide']]
+    except:
+        util.ERROR()
+
+    return None
+
 
 class EndOfNowShowingException(Exception): pass
 
