@@ -1,3 +1,8 @@
+v1.3.0 (2016-03-19)
+- Add French classifications
+- Add screensaver option that triggers a prompt for the pin
+- Allow the pin to be prompted for on startup
+
 v1.2.0 (2016-01-27)
 - Fix character encoding issue for file source section
 - Add option to block system settings with a pin

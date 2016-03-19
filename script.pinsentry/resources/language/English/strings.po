@@ -168,7 +168,11 @@ msgctxt "#32036"
 msgid "User"
 msgstr ""
 
-#empty strings from id 32037 to 32100
+msgctxt "#32037"
+msgid "Prompt For Pin On Startup"
+msgstr ""
+
+#empty strings from id 32038 to 32100
 
 msgctxt "#32101"
 msgid "Backspace"
@@ -360,7 +364,11 @@ msgctxt "#32212"
 msgid "Remove Classification Restriction"
 msgstr ""
 
-#empty strings from id 32213 to 32300
+msgctxt "#32213"
+msgid "Force Pin Entry"
+msgstr ""
+
+#empty strings from id 32214 to 32300
 
 msgctxt "#32301"
 msgid "UK"
@@ -416,4 +424,8 @@ msgstr ""
 
 msgctxt "#32314"
 msgid "Quebec"
+msgstr ""
+
+msgctxt "#32315"
+msgid "France"
 msgstr ""
