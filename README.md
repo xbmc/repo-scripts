@@ -27,7 +27,7 @@ After you have read the repository guidelines and made sure your addon is compli
 * Create pull request
 * Await commments if any changes are deemed necessary
 
-A short guide on forking and creating a pull request can be found here: [contributing] (https://github.com/xbmc/repo-scripts/CONTRIBUTING.md).
+A short guide on forking and creating a pull request can be found here: [contributing] (https://github.com/xbmc/repo-scripts/blob/master/CONTRIBUTING.md).
 
 Keep in mind that add-ons in the official repository should be considered stable. This means that they should be well-tested before you submit them for inclusion. Because they are for stable users, they should avoid being updated too often. Too often is of course subjective. If your add-on is in rapid development, and features are constantly being added, hold off until you have hit a good stopping point and tested the current version.
 This means that you should not submit a request every time you change your code. If you are submitting updates more than once per week something is wrong. Once or twice per month is probably a better goal, barring unforeseen conditions (like a content source changing its paths). With good reasons provided we will of course make exceptions as we strive to prove the best user experience.
