@@ -69,6 +69,8 @@ class MenuNavigator():
             audioBookFolder = directory
 
         dirs, files = xbmcvfs.listdir(audioBookFolder)
+        files.sort()
+        dirs.sort()
 
         bookDirs = []
         # For each directory list allow the user to navigate into it
@@ -114,11 +116,19 @@ class MenuNavigator():
         # Get all the audiobook in a nicely sorted order
         allAudioBooks = sorted(bookDirs + m4bAudioBooks)
 
+        audioBookHandlers = []
         # Now list all of the books
         for audioBookFile in allAudioBooks:
-            log("AudioBooksPlugin: Processing audiobook %s" % audioBookFile)
+            log("AudioBooksPlugin: Adding audiobook %s" % audioBookFile)
 
-            audioBookHandler = AudioBookHandler.createHandler(audioBookFile)
+            audioBookHandlers.append(AudioBookHandler.createHandler(audioBookFile))
+
+        # Now sort the list by title
+        audioBookHandlers.sort()
+
+        # Now list all of the books
+        for audioBookHandler in audioBookHandlers:
+            log("AudioBooksPlugin: Processing audiobook %s" % audioBookHandler.getFile())
 
             title = audioBookHandler.getTitle()
             coverTargetName = audioBookHandler.getCoverImage(True)

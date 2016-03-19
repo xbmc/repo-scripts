@@ -1,3 +1,9 @@
+v1.4.0 (2016-03-19)
+- Order Books by title if available, otherwise file name
+- Support folder.jpg and cover.jpg files
+- Improve end of book detection for multiple file books
+- Prevent the lyrics being searched for audiobooks
+
 v1.3.0 (2016-01-28)
 - Support running ffmpeg on older python versions
 

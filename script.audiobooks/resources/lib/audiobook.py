@@ -38,6 +38,9 @@ class AudioBookHandler():
         self.totalDuration = -1
         self.isComplete = None
 
+    def __lt__(self, other):
+        return self.getTitle() < other.getTitle()
+
     @staticmethod
     def createHandler(audioBookFilePath):
         audiobookType = None
@@ -180,16 +183,41 @@ class AudioBookHandler():
         if startPoint > 0:
             listitem.setProperty('StartOffset', str(startPoint))
 
+        # Stop the Lyrics addon trying to get lyrics for audiobooks
+        listitem.setProperty('do_not_analyze', 'true')
+
         return listitem
 
     def _getExistingCoverImage(self):
         # Check if there is a cached version, or a local one on the drive
         fullpathLocalImage, bookExt = os.path.splitext(self.filePath)
-        fullpathLocalImage = "%s.jpg" % fullpathLocalImage
 
-        if xbmcvfs.exists(fullpathLocalImage):
-            log("AudioBookHandler: Found local cached image %s" % fullpathLocalImage)
-            return fullpathLocalImage
+        # Store the directory that the file is in, default the the current path
+        parentPath = self.filePath
+
+        # Check to see if this is actually a file with an extension
+        if (bookExt not in [None, ""]) and (len(bookExt) < 5):
+            fullpathLocalImage1 = "%s.jpg" % fullpathLocalImage
+            fullpathLocalImage2 = "%s.JPG" % fullpathLocalImage
+
+            if xbmcvfs.exists(fullpathLocalImage1):
+                log("AudioBookHandler: Found local cached image %s" % fullpathLocalImage1)
+                return fullpathLocalImage1
+            if xbmcvfs.exists(fullpathLocalImage2):
+                log("AudioBookHandler: Found local cached image %s" % fullpathLocalImage2)
+                return fullpathLocalImage2
+
+            # If we reach here, then we were a file, so get the directory part
+            parentPath = (os_path_split(self.filePath))[0]
+
+        # Check for a file in the same directory but with the name
+        # "cover.jpg" or "folder.jpg
+        dirs, files = xbmcvfs.listdir(parentPath)
+        for file in files:
+            if file.lower() in ['folder.jpg', 'cover.jpg']:
+                fullpathLocalImage = os_path_join(parentPath, file)
+                log("AudioBookHandler: Found local directory cover %s" % fullpathLocalImage)
+                return fullpathLocalImage
 
         # Check for a cached cover
         return self._getCachedCover(self.fileName)
@@ -486,7 +514,7 @@ class AudioBookHandler():
         return totalInSeconds
 
     def getChapterStart(self, chapterNum):
-        # Work out at what time the given chapter starts, this will be part wat through a file
+        # Work out at what time the given chapter starts, this will be part way through a file
         idx = chapterNum - 1
         if (idx > -1) and (len(self.chapters) > idx):
             chapterDetails = self.chapters[idx]
@@ -537,6 +565,7 @@ class FolderHandler(AudioBookHandler):
     def _loadSpecificDetails(self, includeCover=True):
         # List all the files in the directory, as that will be the chapters
         dirs, files = xbmcvfs.listdir(self.filePath)
+        files.sort()
 
         # Check if the cover image is required
         coverTargetName = None
