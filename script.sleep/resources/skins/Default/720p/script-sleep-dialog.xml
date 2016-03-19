@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="3003">
+	<defaultcontrol always="true">302</defaultcontrol>
+	<coordinates>
+		<left>435</left>
+		<top>220</top>
+	</coordinates>
+	<controls>
+        <control type="image" id="101">
+            <description>Background</description>
+            <width>410</width>
+            <height>260</height>
+            <visible>true</visible>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <texture border="40">DialogBack.png</texture>
+        </control>
+		<control type="textbox" id="102">
+			<description>text</description>
+			<left>30</left>
+			<top>25</top>
+			<width>350</width>
+			<height>78</height>
+			<align>center</align>
+			<label></label>
+			<font>font12</font>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
+			<autoscroll time="3000" delay="4000" repeat="5000">true</autoscroll>
+		</control>
+		<control type="progress" id="201">
+			<description>Progressbar</description>
+			<left>30</left>
+			<top>65</top>
+			<width>350</width>
+			<height>16</height>
+			<info></info>
+		</control>
+        <control type="button" id="301">
+            <description>Decrease Button</description>
+			<left>40</left>
+			<top>100</top>
+            <width>150</width>
+            <height>40</height>
+            <align>center</align>
+            <label>-10</label>
+			<font>font12</font>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>302</onright>
+            <onleft>302</onleft>
+            <onup>304</onup>
+            <ondown>303</ondown>
+        </control>
+        <control type="button" id="302">
+            <description>Increase Button</description>
+			<left>210</left>
+			<top>100</top>
+            <width>150</width>
+            <height>40</height>
+            <align>center</align>
+            <label>+10</label>
+			<font>font12</font>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>301</onright>
+            <onleft>301</onleft>
+            <onup>304</onup>
+            <ondown>303</ondown>
+        </control>
+        <control type="button" id="303">
+            <description>Video Ends Button</description>
+			<left>40</left>
+			<top>150</top>
+            <width>320</width>
+            <height>40</height>
+            <align>center</align>
+            <label>$ADDON[script.sleep 32107]</label>
+			<font>font12</font>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>303</onright>
+            <onleft>303</onleft>
+            <onup>302</onup>
+            <ondown>304</ondown>
+        </control>
+        <control type="button" id="304">
+            <description>Cancel Button</description>
+			<left>40</left>
+			<top>200</top>
+            <width>320</width>
+            <height>40</height>
+            <align>center</align>
+            <label>$ADDON[script.sleep 32105]</label>
+			<font>font12</font>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>304</onright>
+            <onleft>304</onleft>
+            <onup>303</onup>
+            <ondown>302</ondown>
+        </control>
+	</controls>
+</window>

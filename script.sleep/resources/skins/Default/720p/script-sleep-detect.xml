@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="3001">
+	<defaultcontrol always="true">104</defaultcontrol>
+	<controls>
+		<control type="image" id="101">
+			<description>Backgroup Image</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
+			<texture></texture>
+		</control>
+        <control type="image" id="102">
+            <description>Background</description>
+			<left>435</left>
+			<top>220</top>
+            <width>410</width>
+            <height>220</height>
+            <visible>true</visible>
+            <colordiffuse>FFFFFFFF</colordiffuse>
+            <texture border="40">DialogBack.png</texture>
+        </control>
+		<control type="textbox" id="103">
+			<description>text</description>
+			<left>465</left>
+			<top>290</top>
+			<width>350</width>
+			<height>78</height>
+			<align>center</align>
+			<label>$ADDON[script.sleep 32102]</label>
+			<font>font12</font>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
+			<autoscroll time="3000" delay="4000" repeat="5000">true</autoscroll>
+		</control>
+        <control type="button" id="104">
+            <description>Cancel Button</description>
+			<left>475</left>
+			<top>370</top>
+            <width>320</width>
+            <height>40</height>
+            <align>center</align>
+            <label>$ADDON[script.sleep 32105]</label>
+			<font>font12</font>
+			<textcolor>ffffffff</textcolor>		<!-- white -->
+            <texturenofocus border="5">button-nofocus.png</texturenofocus>
+            <texturefocus border="5">button-focus.png</texturefocus>
+            <onright>303</onright>
+            <onleft>303</onleft>
+            <onup>302</onup>
+            <ondown>304</ondown>
+        </control>
+	</controls>
+</window>
