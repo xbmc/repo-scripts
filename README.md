@@ -34,8 +34,8 @@ This means that you should not submit a request every time you change your code.
 
 ## Compatibility
 
-This branch is used for add-ons that are coded for Kodi v16.0 Jarvis builds and higher only. From these code repositories and branches our back-end uploades .zip files of the compatible add-ons to our main mirror server.
-* [Mirror of Jarvis compatible add-ons] (http://mirrors.kodi.tv/addons/jarvis/)
+This branch is used for add-ons that are coded for Kodi v16 Jarvis builds and higher only. From these code repositories and branches our back-end uploades .zip files of the compatible add-ons to our main mirror server.
+* [Mirror of Kodi v16 Jarvis compatible add-ons] (http://mirrors.kodi.tv/addons/jarvis/)
 
 ## Status
 
