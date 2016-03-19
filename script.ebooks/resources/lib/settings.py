@@ -167,3 +167,23 @@ class Settings():
             if opdsLoc.endswith('/opds'):
                 opdsLoc = opdsLoc[:-5]
         return opdsLoc
+
+    @staticmethod
+    def getOPDSPreferredBook(bookUrl1, bookUrl2):
+        log("Checking book preference for %s and %s" % (bookUrl1, bookUrl2))
+        book1Idx = Settings._getOPDSPreferredBookOrder(bookUrl1)
+        book2Idx = Settings._getOPDSPreferredBookOrder(bookUrl2)
+        if book2Idx < book1Idx:
+            return bookUrl2
+        return bookUrl1
+
+    @staticmethod
+    def _getOPDSPreferredBookOrder(bookUrl):
+        orderId = 0
+        if '/epub/' in bookUrl:
+            orderId = int(__addon__.getSetting("epubPreferenceOrder"))
+        elif '/mobi/' in bookUrl:
+            orderId = int(__addon__.getSetting("mobiPreferenceOrder"))
+        elif '/pdf/' in bookUrl:
+            orderId = int(__addon__.getSetting("pdfPreferenceOrder"))
+        return orderId

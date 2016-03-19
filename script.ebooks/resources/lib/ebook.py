@@ -45,6 +45,11 @@ class EBookBase():
         self.fileName = os_path_split(eBookFilePath)[-1]
         self.isTempBookFile = removeFileWhenComplete
 
+        try:
+            self.filePath = self.filePath.decode("utf-8")
+        except:
+            pass
+
     @staticmethod
     def createEBookObject(filePath):
         localFilePath = filePath
@@ -68,8 +73,10 @@ class EBookBase():
             log("EBookBase: Book source is %s" % filePath)
             try:
                 justFileName = 'opds.epub'
-                if 'mobi' in filePath:
+                if '/mobi/' in filePath:
                     justFileName = 'opds.mobi'
+                elif '/pdf/' in filePath:
+                    justFileName = 'opds.pdf'
                 copiedFile = os_path_join(Settings.getTempLocation(), justFileName)
                 fp, h = urllib.urlretrieve(filePath, copiedFile)
                 log(h)
@@ -163,19 +170,26 @@ class EBookBase():
     def convertHtmlIntoKodiText(self, htmlText):
         # Remove the header section of the page
         plainText = re.sub("<head>.*?</head>", "", htmlText, flags=re.DOTALL)
+
+        # Remove random spaces in epub files
+        plainText = re.sub('\s+', ' ', plainText, flags=re.DOTALL)
+
         # Replace the bold tags
         plainText = plainText.replace('<br></br><br></br>', '<p></p>')
-        plainText = plainText.replace('<b>', '[B]')
-        plainText = plainText.replace('</b>', '[/B]')
-        plainText = plainText.replace('<B>', '[B]')
-        plainText = plainText.replace('</B>', '[/B]')
+        plainText = plainText.replace('<b>', '[B]<b>')
+        plainText = plainText.replace('<b class=', '[B]<b class=')
+        plainText = plainText.replace('</b>', '</b>[/B]')
+        plainText = plainText.replace('<B>', '[B]<B>')
+        plainText = plainText.replace('</B>', '</B>[/B]')
         # Replace italic tags
-        plainText = plainText.replace('<i>', '[I]')
-        plainText = plainText.replace('</i>', '[/I]')
-        plainText = plainText.replace('<I>', '[I]')
-        plainText = plainText.replace('</I>', '[/I]')
+        plainText = plainText.replace('<i>', '[I]<i>')
+        plainText = plainText.replace('</i>', '</i>[/I]')
+        plainText = plainText.replace('<I>', '[I]<I>')
+        plainText = plainText.replace('</I>', '</I>[/I]')
         # Add an extra line for paragraphs
         plainText = plainText.replace('</p>', '</p>\n')
+        plainText = plainText.replace('<p>', '\n<p>')
+        plainText = plainText.replace('<p ', '\n<p ')
         # The html &nbsp; is not handle s well by ElementTree, so replace
         # it with a space before we start
         plainText = plainText.replace('&nbsp;', ' ')
@@ -269,7 +283,10 @@ class MobiEBook(EBookBase):
         if title in [None, ""]:
             title = self.getFallbackTitle()
 
-        log("MobiEBook: Title is %s for book %s" % (title, self.filePath))
+        try:
+            log("MobiEBook: Title is %s for book %s" % (title.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return title
 
     def getAuthor(self):
@@ -289,7 +306,10 @@ class MobiEBook(EBookBase):
                 except:
                     log("MobiEBook: Failed to get author using fallback mobi %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
-        log("MobiEBook: Author is %s for book %s" % (author, self.filePath))
+        try:
+            log("MobiEBook: Author is %s for book %s" % (author.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return author
 
     def extractCoverImage(self):
@@ -599,7 +619,10 @@ class EPubEBook(EBookBase):
             except:
                 log("EPubEBook: Failed to get title for epub %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
-        log("EPubEBook: Title is %s for book %s" % (title, self.filePath))
+        try:
+            log("EPubEBook: Title is %s for book %s" % (title.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return title
 
     def getAuthor(self):
@@ -611,11 +634,17 @@ class EPubEBook(EBookBase):
             except:
                 log("EPubEBook: Failed to get author for epub %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
-        log("EPubEBook: Author is %s for book %s" % (author, self.filePath))
+        try:
+            log("EPubEBook: Author is %s for book %s" % (author.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return author
 
     # Gets the cover for a given eBook
     def extractCoverImage(self):
+        if self.book is None:
+            return None
+
         coverTargetName = None
         try:
             # Get the cover for the book from the eBook file
@@ -652,6 +681,9 @@ class EPubEBook(EBookBase):
 
     # Gets a list of the chapters and a link to the contents
     def getChapterDetails(self):
+        if self.book is None:
+            return []
+
         # Keeping at the moment in comments as may be useful later
         # for chapter in book.chapters:
         #    log("*** ROB ***: Chanter Identifier %s" % str(chapter.identifier))
@@ -748,7 +780,10 @@ class PdfEBook(EBookBase):
         if title in [None, ""]:
             title = self.getFallbackTitle()
 
-        log("PdfEBook: Title is %s for book %s" % (title.decode('utf-8', 'ignore'), self.filePath))
+        try:
+            log("PdfEBook: Title is %s for book %s" % (title.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return title
 
     def getAuthor(self):
@@ -765,7 +800,10 @@ class PdfEBook(EBookBase):
             except:
                 log("PdfEBook: Failed to get author for pdf %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
-        log("PdfEBook: Author is %s for book %s" % (author.decode('utf-8', 'ignore'), self.filePath))
+        try:
+            log("PdfEBook: Author is %s for book %s" % (author.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return author
 
     # Gets a list of the chapters and a link to the contents

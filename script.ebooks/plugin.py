@@ -156,6 +156,15 @@ class MenuNavigator():
             nextDir = os_path_join(eBookFolder, dir)
             displayName = "[%s]" % dir
 
+            try:
+                displayName = "[%s]" % dir.encode("utf-8")
+            except:
+                displayName = "[%s]" % dir
+            try:
+                nextDir = nextDir.encode("utf-8")
+            except:
+                pass
+
             url = self._build_url({'mode': 'directory', 'directory': nextDir})
             li = xbmcgui.ListItem(displayName, iconImage='DefaultFolder.png')
             li.setProperty("Fanart_Image", __fanart__)
@@ -197,17 +206,40 @@ class MenuNavigator():
 
             del bookDB
 
-            displayString = title
+            displayString = eBookFile
+            try:
+                displayString = title.encode("utf-8")
+            except:
+                displayString = title
             if author not in [None, ""]:
-                displayString = "%s - %s" % (author, displayString)
-            log("EBookBase: Display title is %s for %s" % (displayString, fullpath))
+                try:
+                    author = author.encode("utf-8")
+                except:
+                    pass
+                try:
+                    displayString = "%s - %s" % (author, displayString)
+                except:
+                    pass
+            try:
+                # With some text, logging is causing issues
+                log("EBookBase: Display title is %s for %s" % (displayString, fullpath))
+            except:
+                pass
 
             if isRead:
-                displayString = '* %s' % displayString
+                try:
+                    displayString = '* %s' % displayString
+                except:
+                    log("EBookBase: Unable to mark as read")
 
             coverTargetName = EBookBase.getCoverImage(fullpath, eBookFile)
             if coverTargetName in [None, ""]:
                 coverTargetName = Settings.getFallbackCoverImage()
+
+            try:
+                fullpath = fullpath.encode("utf-8")
+            except:
+                pass
 
             url = self._build_url({'mode': 'chapters', 'filename': fullpath, 'cover': coverTargetName})
             li = xbmcgui.ListItem(displayString, iconImage=coverTargetName)
@@ -389,7 +421,7 @@ class MenuNavigator():
         del readerWindow
 
     def _getChapters(self, fullpath, eBook):
-        log("EBooksPlugin: Listing chapters for %s" % fullpath)
+        log("EBooksPlugin: Getting chapters for %s" % fullpath)
         # Get the chapters for this book
         chapters = eBook.getChapterDetails()
 
