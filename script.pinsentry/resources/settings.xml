@@ -37,6 +37,7 @@
 		<setting id="startTime" visible="eq(-1,true)" subsetting="true" type="time" label="32117" default="06:00"/>
 		<setting id="endTime" visible="eq(-2,true)" subsetting="true" type="time" label="32118" default="20:00"/>
 		<setting id="highlightClassificationUnprotectedVideos" type="bool" label="32019" default="false" />
+		<setting id="promptForPinOnStartup" type="bool" label="32037" default="false" />
     	<setting label="32003" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32004" default="false"/>
 	</category>

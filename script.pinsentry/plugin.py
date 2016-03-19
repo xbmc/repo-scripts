@@ -109,6 +109,24 @@ class MenuNavigator():
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
+        # Add a blank line before the Operations
+        li = xbmcgui.ListItem("", iconImage=__icon__)
+        li.setProperty("Fanart_Image", __fanart__)
+        li.addContextMenuItems([], replaceItems=True)
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url="", listitem=li, isFolder=False)
+
+        # Force Pin Entry
+        url = self._build_url({'mode': 'forcepin', 'foldername': 'none'})
+        menuItemName = __addon__.getLocalizedString(32213)
+        try:
+            menuItemName = "[%s]" % menuItemName
+        except:
+            pass
+        li = xbmcgui.ListItem(menuItemName, iconImage=__icon__)
+        li.setProperty("Fanart_Image", __fanart__)
+        li.addContextMenuItems([], replaceItems=True)
+        xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
+
         xbmcplugin.endOfDirectory(self.addon_handle)
 
     # Show the list of videos in a given set
@@ -683,6 +701,10 @@ if __name__ == '__main__':
             menuNav = MenuNavigator(base_url, addon_handle)
             menuNav.setSecurity(type[0], secTitle, dbid, secLevel, classBlocked, forceLevelVal)
             del menuNav
+
+    elif mode[0] == 'forcepin':
+        log("PinSentryPlugin: Mode is FORCE PIN")
+        xbmcgui.Window(10000).setProperty("PinSentryPrompt", "true")
 
     elif mode[0] == 'setclassification':
         log("PinSentryPlugin: Mode is SET CLASSIFICATION")

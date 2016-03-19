@@ -57,7 +57,8 @@ class Settings():
              {'lang': 32310, 'icon': 'Norway/Norway-flag.png'},
              {'lang': 32311, 'icon': 'Sweden/Sweden-flag.png'},
              {'lang': 32312, 'icon': 'Finland/Finland-flag.png'},
-             {'lang': 32313, 'icon': 'Canada/Canada-flag.png'}]
+             {'lang': 32313, 'icon': 'Canada/Canada-flag.png'},
+             {'lang': 32315, 'icon': 'France/France-flag.png'}]
 
     # http://en.wikipedia.org/wiki/Motion_picture_rating_system
     movieCassificationsNames = [{'id': 1, 'name': '%s - U', 'lang': 32301, 'match': 'U', 'icon': 'UK/UK-U.png'},  # UK
@@ -153,7 +154,12 @@ class Settings():
                                 {'id': 75, 'name': '%%s (%s) - G' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-Quebec-G.png'},
                                 {'id': 76, 'name': '%%s (%s) - 13+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '13+', 'icon': 'Canada/Canada-Quebec-13.png'},
                                 {'id': 77, 'name': '%%s (%s) - 16+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '16+', 'icon': 'Canada/Canada-Quebec-16.png'},
-                                {'id': 78, 'name': '%%s (%s) - 18+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'}]
+                                {'id': 78, 'name': '%%s (%s) - 18+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'},
+                                # France
+                                {'id': 79, 'name': '%s - U', 'lang': 32315, 'match': 'U', 'icon': None},
+                                {'id': 80, 'name': '%s - 12', 'lang': 32315, 'match': '12', 'icon': None},
+                                {'id': 81, 'name': '%s - 16', 'lang': 32315, 'match': '16', 'icon': None},
+                                {'id': 82, 'name': '%s - 18', 'lang': 32315, 'match': '18', 'icon': None}]
 
     # http://en.wikipedia.org/wiki/Television_content_rating_systems
     tvCassificationsNames = [{'id': 1, 'name': '%s - TV-Y', 'lang': 32302, 'match': 'TV-Y', 'icon': 'USA/USA-TV-Y.png'},  # USA
@@ -206,7 +212,12 @@ class Settings():
                              {'id': 42, 'name': '%%s (%s) - G' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': 'G', 'icon': 'Canada/Canada-Quebec-G.png'},
                              {'id': 43, 'name': '%%s (%s) - 13+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '13+', 'icon': 'Canada/Canada-Quebec-13.png'},
                              {'id': 44, 'name': '%%s (%s) - 16+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '16+', 'icon': 'Canada/Canada-Quebec-16.png'},
-                             {'id': 45, 'name': '%%s (%s) - 18+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'}]
+                             {'id': 45, 'name': '%%s (%s) - 18+' % __addon__.getLocalizedString(32314), 'lang': 32313, 'match': '18+', 'icon': 'Canada/Canada-Quebec-18.png'},
+                             # Finland
+                             {'id': 46, 'name': '%s - 10', 'lang': 32315, 'match': '10', 'icon': 'France/France-TV-10.png'},
+                             {'id': 47, 'name': '%s - 12', 'lang': 32315, 'match': '12', 'icon': 'France/France-TV-12.png'},
+                             {'id': 48, 'name': '%s - 16', 'lang': 32315, 'match': '16', 'icon': 'France/France-TV-16.png'},
+                             {'id': 49, 'name': '%s - 18', 'lang': 32315, 'match': '18', 'icon': 'France/France-TV-18.png'}]
 
     @staticmethod
     def reloadSettings():
@@ -538,6 +549,10 @@ class Settings():
     @staticmethod
     def isHighlightClassificationUnprotectedVideos():
         return __addon__.getSetting("highlightClassificationUnprotectedVideos") == 'true'
+
+    @staticmethod
+    def isPromptForPinOnStartup():
+        return __addon__.getSetting("promptForPinOnStartup") == 'true'
 
     @staticmethod
     def getNumberOfLevels():

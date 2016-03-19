@@ -124,7 +124,7 @@ class PinSentry():
         # Remaining option is to not show any error
 
 
-# Class to detect shen something in the system has changed
+# Class to detect when something in the system has changed
 class PinSentryMonitor(xbmc.Monitor):
     def onSettingsChanged(self):
         log("PinSentryMonitor: Notification of settings change received")
@@ -682,6 +682,28 @@ class NavigationRestrictions():
             self.lastFileSource = ""
             PinSentry.displayInvalidPinMessage(securityLevel)
 
+    # Checks to see if the PinSentry is being requested to be shown
+    def checkForcedDisplay(self):
+        # Check if the property is set
+        if xbmcgui.Window(10000).getProperty("PinSentryPrompt") != 'true':
+            return
+
+        # Set the lowest security level for the forced display
+        securityLevel = 1
+
+        # Before we prompt the user we need to close the dialog, otherwise the pin
+        # dialog will appear behind it
+        xbmc.executebuiltin("Dialog.Close(all, true)", True)
+        xbmc.executebuiltin("ActivateWindow(home)", True)
+
+        # Prompt the user for the pin, returns True if they knew it
+        if PinSentry.promptUserForPin(securityLevel):
+            log("NavigationRestrictions: Forced Pin Display Unlocked")
+            xbmcgui.Window(10000).clearProperty("PinSentryPrompt")
+        else:
+            log("NavigationRestrictions: Not allowed access after forced lock at security level %d" % securityLevel)
+            # The pin dalog will be automatically re-opened as the window property has not been cleared
+
 
 # Class the handle user control
 class UserPinControl():
@@ -907,6 +929,11 @@ if __name__ == '__main__':
     systemMonitor = PinSentryMonitor()
     navRestrictions = NavigationRestrictions()
 
+    # Check if we need to prompt for the pin when the system starts
+    if Settings.isPromptForPinOnStartup():
+        log("PinSentry: Prompting for pin on startup")
+        xbmcgui.Window(10000).setProperty("PinSentryPrompt", "true")
+
     loopsUntilUserControlCheck = 0
     while (not xbmc.abortRequested):
         # No need to perform the user control check every fraction of a second
@@ -935,6 +962,8 @@ if __name__ == '__main__':
             navRestrictions.checkPlugins()
             navRestrictions.checkSettings()
             navRestrictions.checkSystemSettings()
+            # Check if the dialog is being forced to display
+            navRestrictions.checkForcedDisplay()
 
     log("Stopping Pin Sentry Service")
     del userCtrl
