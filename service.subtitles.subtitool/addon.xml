@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><addon id="service.subtitles.subtitool" name="SubTiTool" version="1.1.0" provider-name="KianMax">
+    <requires>
+        <import addon="xbmc.python" version="2.14.0"/>
+    </requires>
+    <extension point="xbmc.subtitle.module" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+		<summary lang="en">SubTiTool</summary>
+		<description lang="en">Search and Download subtitles from SubTiTool.com</description>
+		<source>https://github.com/KianMax/service.subtitles.subtitool</source>
+		<language> </language>
+		<email> </email>
+		<forum> </forum>
+		<website> </website>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    </extension>
+</addon>
