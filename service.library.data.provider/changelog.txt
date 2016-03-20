@@ -1,0 +1,44 @@
+[B]0.1.6[/B]
+- Enable context menu/info
+
+[B]0.1.5[/B]
+ - Fix circular reference warnings on shutdown. 
+ 
+[B]0.1.4[/B]
+- Added missing 'director" property for recommended episodes.
+
+[B]0.1.3[/B]
+- Fixed bug in recommended episodes.
+
+[B]0.1.2[/B]
+- Added Music Videos.
+- Added IMDB Number as property (imdbnumer)
+
+[B]0.1.1[/B]
+- Fixed playing albums.
+
+[B]0.1.0[/B]
+- Fix refreshing bug where things were being cached forever without updating - thx SumnerH
+- Added option to hide specials from episode views - thx Razzeee
+- Added duration fallback for cases where the streamInfo can't be read - thx Razzeee
+- Fix for wrong loop handling - thx Razzeee
+- Cleanup, added some missing checks - thx phil65
+- Additional check for lib stats - thx phil65
+
+[B]0.0.9[/B]
+- Fix error when no tvshow library present.
+- Fix playlist statistics when playlist are used that have been added by favourites.
+
+[B]0.0.8[/B]
+- Add favorite episodes - thx SumnerH.
+
+[B]0.0.7[/B]
+- Add support to return multiple types in single list
+
+[B]0.0.6[/B]
+- Add support for video playlist count.
+
+[B]0.0.5[/B]
+- Add recent videos option.
+- Add writer and cast to video list items.
+- Add limit parameter to plugin element.
