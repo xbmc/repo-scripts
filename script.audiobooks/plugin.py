@@ -74,23 +74,23 @@ class MenuNavigator():
 
         bookDirs = []
         # For each directory list allow the user to navigate into it
-        for dir in dirs:
-            if dir.startswith('.'):
+        for adir in dirs:
+            if adir.startswith('.'):
                 continue
 
-            fullDir = os_path_join(audioBookFolder, dir)
+            fullDir = os_path_join(audioBookFolder, adir)
 
             # Check if this directory is a book directory
             if self._isAudioBookDir(fullDir):
                 bookDirs.append(fullDir)
                 continue
 
-            log("AudioBooksPlugin: Adding directory %s" % dir)
+            log("AudioBooksPlugin: Adding directory %s" % adir)
 
             try:
-                displayName = "[%s]" % dir.encode("utf-8")
+                displayName = "[%s]" % adir.encode("utf-8")
             except:
-                displayName = "[%s]" % dir
+                displayName = "[%s]" % adir
             try:
                 fullDir = fullDir.encode("utf-8")
             except:
