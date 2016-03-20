@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.dropbox"
-       name="dropbox"
-       version="2.2.0"
+       name="Dropbox API"
+       version="2.2.1"
        provider-name="micah">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.3.0"/>
+    <import addon="script.module.qrcode" version="5.2"/> <!-- For QR Code display for Dropbox API authentication -->    
   </requires>
-  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.python.library" library="authenticate.py"> <!-- entry to start the authentification script from the settings dialog of other addons -->
+    <provides> </provides> <!-- Addon should not be shown anywhere -->
+  </extension>
+  <extension point="xbmc.python.module" library="lib" /> <!-- entry to import this in other addons -->
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Provide Dropbox Python API support</summary>
     <description>Provide Dropbox Python API support</description>

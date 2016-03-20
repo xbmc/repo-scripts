@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <!-- Notification headers -->
+    <string id="32101">Dropbox</string>
+    <string id="32102">Dropbox: Error</string>
+    <string id="32103">Dropbox: Setup</string>
+
+    <!-- Error messages-->
+    <string id="32201">Python Image Library for QR code not available</string>
+    <string id="32202">Wrong input arguments</string>
+
+    <!-- Info messages -->
+    <string id="32703">Dropbox authorization Code</string>
+    <string id="32704">Open the following URL by scanning the QR-Code or by typing it manually</string>
+    <string id="32705">Press any key to close the QR-Code and continue to enter your the authorization code</string>
+    <string id="32706">Unable to authorize with Dropbox</string>
+    <string id="32707">Dropbox successfully authorized</string>
+</strings>
