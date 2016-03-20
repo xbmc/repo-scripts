@@ -41,6 +41,6 @@
 		<setting id="imagetimer" type="select" label="32230" subsetting="true" visible="eq(-4,true)" default="0" lvalues="32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242"/>
 	</category>
     <category label="32300">
-        <setting id="zoomlevel" type="select" label="32310" default="100" values="100|110|120|130|140|150" />		
+        <setting id="zoomlevel" type="select" label="32310" default="100" values="100|110|120|130|140|150|160|170|180|190|200" />		
 	</category>		
 </settings>
