@@ -38,6 +38,7 @@ class BookPlayer(xbmc.Player):
 
         currentTime = 0
         currentFile = ''
+        totalTrackTime = 0
 
         waitingForComplete = 0
         # Wait for the player to stop
@@ -49,13 +50,14 @@ class BookPlayer(xbmc.Player):
                 # Keep track of where the current track is up to
                 currentTime = int(bookPlayer.getTime())
                 currentFile = bookPlayer.getPlayingFile()
+                totalTrackTime = bookPlayer.getTotalTime()
                 waitingForComplete = 0
             else:
                 waitingForComplete += 1
             xbmc.sleep(10)
 
         # Record the time that the player actually stopped
-        log("BookPlayer: Played to time = %d, file = %s" % (currentTime, currentFile))
+        log("BookPlayer: Played to time = %d, file = %s, totalTime = %s" % (currentTime, currentFile, totalTrackTime))
 
         # Get the chapter number that was playing
         chapterPosition = audioBookHandler.getChapterPosition(currentFile)
@@ -67,6 +69,14 @@ class BookPlayer(xbmc.Player):
             log("BookPlayer: Total book duration is %d" % duration)
             if duration > 1:
                 if currentTime > (duration - 60):
+                    log("BookPlayer: Marking entire book as complete")
+                    bookComplete = True
+
+            # If dealing with multiple files for a single book, need to check if the entire
+            # book is complete
+            if chapterPosition == len(audioBookHandler.getChapterDetails()):
+                if (currentTime + 60) > totalTrackTime:
+                    log("BookPlayer: Marking book as complete")
                     bookComplete = True
 
             audiobookDB = AudioBooksDB()

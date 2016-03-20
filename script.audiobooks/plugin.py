@@ -69,26 +69,28 @@ class MenuNavigator():
             audioBookFolder = directory
 
         dirs, files = xbmcvfs.listdir(audioBookFolder)
+        files.sort()
+        dirs.sort()
 
         bookDirs = []
         # For each directory list allow the user to navigate into it
-        for dir in dirs:
-            if dir.startswith('.'):
+        for adir in dirs:
+            if adir.startswith('.'):
                 continue
 
-            fullDir = os_path_join(audioBookFolder, dir)
+            fullDir = os_path_join(audioBookFolder, adir)
 
             # Check if this directory is a book directory
             if self._isAudioBookDir(fullDir):
                 bookDirs.append(fullDir)
                 continue
 
-            log("AudioBooksPlugin: Adding directory %s" % dir)
+            log("AudioBooksPlugin: Adding directory %s" % adir)
 
             try:
-                displayName = "[%s]" % dir.encode("utf-8")
+                displayName = "[%s]" % adir.encode("utf-8")
             except:
-                displayName = "[%s]" % dir
+                displayName = "[%s]" % adir
             try:
                 fullDir = fullDir.encode("utf-8")
             except:
@@ -114,11 +116,19 @@ class MenuNavigator():
         # Get all the audiobook in a nicely sorted order
         allAudioBooks = sorted(bookDirs + m4bAudioBooks)
 
+        audioBookHandlers = []
         # Now list all of the books
         for audioBookFile in allAudioBooks:
-            log("AudioBooksPlugin: Processing audiobook %s" % audioBookFile)
+            log("AudioBooksPlugin: Adding audiobook %s" % audioBookFile)
 
-            audioBookHandler = AudioBookHandler.createHandler(audioBookFile)
+            audioBookHandlers.append(AudioBookHandler.createHandler(audioBookFile))
+
+        # Now sort the list by title
+        audioBookHandlers.sort()
+
+        # Now list all of the books
+        for audioBookHandler in audioBookHandlers:
+            log("AudioBooksPlugin: Processing audiobook %s" % audioBookHandler.getFile())
 
             title = audioBookHandler.getTitle()
             coverTargetName = audioBookHandler.getCoverImage(True)
