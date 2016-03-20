@@ -1,3 +1,6 @@
+[B]3.6.0[/B]
+- Added more zoom values and removed unnecessary weather updating
+
 [B]3.5.0[/B]
 - Added zoom effect for increasing text and icons
 
