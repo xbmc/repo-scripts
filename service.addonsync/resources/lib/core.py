@@ -98,7 +98,7 @@ class AddonData():
         addonDetails = {}
 
         # Now loop each of the addons to get the details required
-        for addonName in activeAddons:
+        for addonName in activeAddons.keys():
             settingsDir = self._getAddonSettingsDirectory(addonName)
 
             # If there are no settings available then we have it installed
@@ -116,11 +116,12 @@ class AddonData():
                 log("AddonData: addon: %s path: %s hash: %s" % (addonName, settingsDir, str(hashVal)))
                 addonDetail['hash'] = hashVal
                 addonDetails[addonName] = addonDetail
+                addonDetail['version'] = activeAddons[addonName]
         return addonDetails
 
     # Perform and filter the user has set up
     def _filterAddons(self, installedAddons):
-        filteredAddons = []
+        filteredAddons = {}
         # Find out what the setting for filtering is
         filterType = Settings.getFilterType()
 
@@ -129,17 +130,20 @@ class AddonData():
             includeValue = Settings.getIncludedAddons()
             log("AddonData: Include filter is %s" % includeValue)
             if includeValue not in [None, ""]:
-                filteredAddons = includeValue.split(' ')
+                for incValue in includeValue.split(' '):
+                    # Make sure the addon is still installed
+                    if incValue in installedAddons.keys():
+                        filteredAddons[incValue] = installedAddons[incValue]
         elif filterType == Settings.FILTER_EXCLUDE:
             excludeValue = Settings.getExcludedAddons()
             log("AddonData: Exclude filter is %s" % excludeValue)
             if excludeValue not in [None, ""]:
                 excludedAddons = excludeValue.split(' ')
-                for addon in installedAddons:
-                    if addon not in excludedAddons:
-                        filteredAddons.append(addon)
+                for addonName in installedAddons.keys():
+                    if addonName not in excludedAddons:
+                        filteredAddons[addonName] = installedAddons[addonName]
                     else:
-                        log("AddonData: Skipping excluded addon %s" % addon)
+                        log("AddonData: Skipping excluded addon %s" % addonName)
             else:
                 filteredAddons = installedAddons
         else:
@@ -151,10 +155,10 @@ class AddonData():
     # Method to get all the addons that are installed and not marked as broken
     def _getInstalledAddons(self):
         # Make the call to find out all the addons that are installed
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": { "enabled": true, "properties": ["broken"] }, "id": 1}')
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": { "enabled": true, "properties": ["version", "broken"] }, "id": 1}')
         json_response = json.loads(json_query)
 
-        addons = []
+        addons = {}
 
         if ("result" in json_response) and ('addons' in json_response['result']):
             # Check each of the screensavers that are installed on the system
@@ -175,8 +179,11 @@ class AddonData():
                 if addonName.startswith('repository'):
                     log("AddonData: Skipping repository addon: %s" % addonName)
                     continue
+                if addonName.startswith('skin'):
+                    log("AddonData: Skipping skin addon: %s" % addonName)
+                    continue
 
-                # Skip ourselves as we don't want to random a random!
+                # Skip ourselves as we don't want to update a slave with a master
                 if addonName in ['service.addonsync']:
                     log("AddonData: Detected ourself: %s" % addonName)
                     continue
@@ -188,7 +195,7 @@ class AddonData():
 
                 # Now we are left with only the working addon
                 log("AddonData: Detected Addon: %s" % addonName)
-                addons.append(addonName)
+                addons[addonName] = addonItem['version']
 
         return addons
 
@@ -224,8 +231,8 @@ class AddonData():
         hashFile = os_path_join(centralStoreLocation, 'hashdata.xml')
 
         # <addonsync>
-        #    <addon name='service.addonsync'>hashValue</addon>
-        # </tvtunesUpload>
+        #    <addon name='service.addonsync' version ='1.0.0'>hashValue</addon>
+        # </addonsync>
         try:
             root = ET.Element('addonsync')
             for addonName in addonDetails.keys():
@@ -240,6 +247,7 @@ class AddonData():
 
                 addonElem = ET.SubElement(root, 'addon')
                 addonElem.attrib['name'] = addonName
+                addonElem.attrib['version'] = addonDetail['version']
                 addonElem.text = addonDetail['hash']
 
             # Save the XML file to disk
@@ -274,10 +282,13 @@ class AddonData():
             hashRecord = ET.ElementTree(ET.fromstring(recordFileStr))
 
             for elemItem in hashRecord.findall('addon'):
-                entryName = elemItem.attrib['name']
-                entryHash = elemItem.text
-                log("AddonData: Processing entry %s with hash %s" % (entryName, entryHash))
-                addonList[entryName] = entryHash
+                hashDetails = {}
+                addonName = elemItem.attrib['name']
+                hashDetails['name'] = addonName
+                hashDetails['version'] = elemItem.attrib['version']
+                hashDetails['hash'] = elemItem.text
+                log("AddonData: Processing entry %s (%s) with hash %s" % (hashDetails['name'], hashDetails['version'], hashDetails['hash']))
+                addonList[addonName] = hashDetails
         except:
             log("AddonData: Failed to read in file %s" % hashFile, xbmc.LOGERROR)
             log("AddonData: %s" % traceback.format_exc(), xbmc.LOGERROR)
@@ -308,9 +319,9 @@ class AddonData():
 
             # Check if this addon already exists on the target location
             # If it does not already exist then we need to copy it
-            if addonName in backedUpHashValues:
+            if addonName in backedUpHashValues.keys():
                 # Only copy the items with different hash values
-                if addonDetail['hash'] == backedUpHashValues[addonName]:
+                if addonDetail['hash'] == backedUpHashValues[addonName]['hash']:
                     log("AddonSync: Backup for addon %s already up to date with hash %s" % (addonName, addonDetail['hash']))
                     continue
 
@@ -347,14 +358,20 @@ class AddonData():
 
         for addonName in localAddonDetails.keys():
             # Check if this addon already exists on the source location
-            if addonName not in backedUpHashValues:
+            if addonName not in backedUpHashValues.keys():
                 log("AddonSync: Local addon %s not in remote location" % addonName)
                 continue
 
             # Only copy the items with different hash values
             addonDetail = localAddonDetails[addonName]
-            if addonDetail['hash'] == backedUpHashValues[addonName]:
+            backedUpDetails = backedUpHashValues[addonName]
+            if addonDetail['hash'] == backedUpDetails['hash']:
                 log("AddonSync: Backup for addon %s already has matching hash %s" % (addonName, addonDetail['hash']))
+                continue
+
+            # Make sure the verson number is the same
+            if addonDetail['version'] != backedUpDetails['version']:
+                log("AddonSync: Version numbers of addon %s are different (%s, %s)" % (addonName, addonDetail['version'], backedUpDetails['version']))
                 continue
 
             log("AddonSync: Performing copy for %s" % addonName)

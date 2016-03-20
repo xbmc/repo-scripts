@@ -62,8 +62,11 @@ if __name__ == '__main__':
                 if addonName.startswith('repository'):
                     log("AddonData: Skipping repository addon: %s" % addonName)
                     continue
+                if addonName.startswith('skin'):
+                    log("AddonData: Skipping skin addon: %s" % addonName)
+                    continue
 
-                # Skip ourselves as we don't want to random a random!
+                # Skip ourselves as we don't want to update a slave with a master
                 if addonName in ['service.addonsync']:
                     log("AddonFilter: Detected ourself: %s" % addonName)
                     continue
