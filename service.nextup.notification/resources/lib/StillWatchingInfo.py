@@ -27,7 +27,7 @@ class StillWatchingInfo(xbmcgui.WindowXMLDialog):
         fanartimage = self.item['art'].get('tvshow.fanart', '')
         clearartimage = self.item['art'].get('tvshow.clearart', '')
         name = self.item['label']
-        rating = str(round(float(self.item['rating'])))
+        rating = str(round(float(self.item['rating']),1))
         year = self.item['firstaired']
         overview = self.item['plot']
         season = self.item['season']

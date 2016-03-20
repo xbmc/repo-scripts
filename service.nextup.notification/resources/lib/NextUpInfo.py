@@ -33,13 +33,13 @@ class NextUpInfo(xbmcgui.WindowXMLDialog):
         episodeNum = self.item['episode']
         episodeInfo = str(season) + 'x' + str(episodeNum) + '.'
 
-        rating = str(round(float(self.item['rating'])))
+        rating = str(round(float(self.item['rating']),1))
         year = self.item['firstaired']
         info = year
 
         # set the dialog data
         self.getControl(3000).setLabel(name)
-        self.getControl(3001).setText(overview)
+        self.getControl(3001).setLabel(overview)
         self.getControl(3002).setLabel(episodeInfo)
         self.getControl(3004).setLabel(info)
 

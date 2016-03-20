@@ -22,7 +22,7 @@ class UnwatchedInfo(xbmcgui.WindowXMLDialog):
         overview = self.item['plot']
         name = self.item['title']
 
-        rating = str(round(float(self.item['rating'])))
+        rating = str(round(float(self.item['rating']),1))
 
         season = self.item['season']
         episodeNum = self.item['episode']

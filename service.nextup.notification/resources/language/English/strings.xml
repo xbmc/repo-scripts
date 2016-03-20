@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
     <string id="30001">The number of seconds before the end to show the notification</string>
     <string id="30002">Log Level:</string>
@@ -15,4 +15,7 @@
     <string id="30014">Disable NextUp (restart required)</string>
     <string id="30015">The number of seconds before displaying random unwatched notification</string>
     <string id="30016">Display random unwatched notification</string>
+    <string id="30017">Automatically play short videos</string>
+    <string id="30018">Maximum length for automatic short video play (in minutes)</string>
+    <string id="30019">Show on-screen notification during short video autoplay</string>
 </strings>

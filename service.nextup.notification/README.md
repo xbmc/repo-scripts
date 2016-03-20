@@ -47,3 +47,10 @@ Skinners:
           - 4013 - Cancel Button
           - 4014 - TV Show ClearArt
           - 4018 - Play Count
+
+      - script-nextup-notification-UnwatchedInfo.xml
+          - 5000 - Label
+          - 5001 - Plot
+          - 5002 - Season/Episode
+          - 5003 - Rating
+          - 5004 - Clear Logo

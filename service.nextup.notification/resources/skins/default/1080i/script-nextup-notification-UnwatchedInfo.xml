@@ -8,6 +8,16 @@
 			<width>600</width>
 			<height>339</height>
 			<control type="group">
+				<animation type="WindowOpen" reversible="false">
+					<effect type="slide" start="0,-1000" end="0,0" delay="0" tween="sine" time="1000" />
+					<effect type="fade" start="0" end="100" delay="0" tween="sine" time="2000" />
+					<effect type="zoom" start="20" end="100" delay="0" tween="sine" time="2000" />
+				</animation>
+				<animation type="WindowClose" reversible="false">
+					<effect type="fade" start="100" end="0" delay="0" tween="sine" time="3000" />
+					<effect type="zoom" start="100" end="20" delay="0" tween="sine" time="2500" />
+					<effect type="slide" start="0,0" end="0,-1000" delay="0" tween="sine" time="1000" />
+				</animation>
 				<control type="image">
 					<animation effect="fade" start="100" end="97" time="200" condition="true">Conditional</animation>
 					<texture border="5" colordiffuse="ff000000">box.png</texture>

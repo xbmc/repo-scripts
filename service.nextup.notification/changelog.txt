@@ -1,6 +1,9 @@
 [B]1.0.9[/B]
 - Merge razzee changes
 - New default next up dialog
+[B] 1.0.16 [/B]
+- Trakt integration for signalling watched episodes
+- merge zang74 shortepisodes tidy up
 
 [B]1.0.8[/B]
 - Merge bigpanda changes
