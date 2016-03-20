@@ -4,12 +4,8 @@
 		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
 	</requires>
-	<extension point="xbmc.python.script" library="default.py">
-		<provides>executable</provides>
-	</extension>
-	<extension point="xbmc.service" library="service.py" start="login">
-		<provides>executable</provides>
-	</extension>
+	<extension point="xbmc.python.script" library="default.py"/>
+	<extension point="xbmc.service" library="service.py" start="login"/>
 	<extension point="xbmc.ui.screensaver" library="screensaver.py"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">A TV like sleep timer</summary>
