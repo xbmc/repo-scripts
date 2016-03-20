@@ -1,0 +1,11 @@
+v1.0.0
+- initial version
+
+v1.0.1
+- Added support for maps, text forecasts, hourly forecast etc
+
+v1.0.2
+- updated for Jarvis
+- Use forecast location as the displayed location
+- removed non responsive geoip providers
+- provided graceful fail for non-responsive geoip providers

@@ -1,0 +1,34 @@
+{
+  "Locations": {
+    "Location": [
+      {
+        "elevation": "933.0", 
+        "name": "Cairnwell", 
+        "region": "ta", 
+        "longitude": "-3.42", 
+        "nationalPark": "Cairngorms National Park", 
+        "latitude": "56.879", 
+        "unitaryAuthArea": "Perth and Kinross", 
+        "id": "3072"
+      }, 
+      {
+        "elevation": "134.0", 
+        "name": "Inverbervie", 
+        "region": "gr", 
+        "longitude": "-2.264", 
+        "latitude": "56.852", 
+        "unitaryAuthArea": "Aberdeenshire", 
+        "id": "3088"
+      }, 
+      {
+        "elevation": "4.0", 
+        "name": "Rosehearty Samos", 
+        "region": "gr", 
+        "longitude": "-2.121", 
+        "latitude": "57.698", 
+        "unitaryAuthArea": "Aberdeenshire", 
+        "id": "3094"
+      }
+    ]
+  }
+}
