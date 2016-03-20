@@ -1,5 +1,9 @@
+[B]Version 1.1.7[/B]
+- Minor code refactoring
+[B]Version 1.1.6[/B]
+- Minor code refactoring
 [B]Version 1.1.5[/B]
-- Added a package-level import.
+- Added package-level imports.
 - Changed doctsrings to Sphinx-compatible
 - Private methods now start with _
 [B]Version 1.1.4[/B]

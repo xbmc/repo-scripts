@@ -9,3 +9,41 @@ Licence: GPL v.3 http://www.gnu.org/licenses/gpl.html
 """
 
 from addonwindow import *
+
+version = '1.1.7'
+
+__all__ = [
+    'version',
+    'ALIGN_LEFT',
+    'ALIGN_RIGHT',
+    'ALIGN_CENTER_X',
+    'ALIGN_CENTER_Y',
+    'ALIGN_CENTER',
+    'ALIGN_TRUNCATED',
+    'ALIGN_JUSTIFY',
+    'ACTION_PREVIOUS_MENU',
+    'ACTION_NAV_BACK',
+    'ACTION_MOVE_LEFT',
+    'ACTION_MOVE_RIGHT',
+    'ACTION_MOVE_UP',
+    'ACTION_MOVE_DOWN',
+    'ACTION_MOUSE_WHEEL_UP',
+    'ACTION_MOUSE_WHEEL_DOWN',
+    'ACTION_MOUSE_DRAG',
+    'ACTION_MOUSE_MOVE',
+    'ACTION_MOUSE_LEFT_CLICK',
+    'AddonWindowError',
+    'Label',
+    'FadeLabel',
+    'TextBox',
+    'Image',
+    'Button',
+    'RadioButton',
+    'Edit',
+    'List',
+    'Slider',
+    'BlankFullWindow',
+    'BlankDialogWindow',
+    'AddonDialogWindow',
+    'AddonFullWindow',
+]

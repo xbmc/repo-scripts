@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-## @package addonwindow
 # PyXBMCt framework module
 #
 # PyXBMCt is a mini-framework for creating Kodi (XBMC) Python addons
@@ -14,26 +13,25 @@
 import os
 import xbmc
 import xbmcgui
-import xbmcaddon
+from xbmcaddon import Addon
 
-_ADDON_NAME = 'script.module.pyxbmct'
-_addon = xbmcaddon.Addon(id=_ADDON_NAME)
-_addon_path = _addon.getAddonInfo('path')
-try:
-    _images = os.path.join(_addon_path, 'lib', 'pyxbmct', 'textures', 'default')
-except TypeError:
-    # Needed for unit testing with xbmcstubs
-    _images = os.path.join(os.path.dirname(__file__), 'textures', 'default')
-
+_images = os.path.join(Addon('script.module.pyxbmct').getAddonInfo('path'), 'lib', 'pyxbmct', 'textures', 'default')
 
 # Text alighnment constants. Mixed variants are obtained by bit OR (|)
 ALIGN_LEFT = 0
+"""Align left"""
 ALIGN_RIGHT = 1
+"""Align right"""
 ALIGN_CENTER_X = 2
+"""Align center horisontally"""
 ALIGN_CENTER_Y = 4
+"""Align center vertically"""
 ALIGN_CENTER = 6
+"""Align center by both axis"""
 ALIGN_TRUNCATED = 8
+"""Align truncated"""
 ALIGN_JUSTIFY = 10
+"""Align justify"""
 
 # Kodi key action codes.
 # More codes available in xbmcgui module
@@ -92,8 +90,8 @@ class Label(xbmcgui.ControlLabel):
     .. note:: After you create the control, you need to add it to the window with placeControl().
     
     Example::
-    
-     self.label = Label('Status', angle=45)
+
+        self.label = Label('Status', angle=45)
     """
     def __new__(cls, *args, **kwargs):
         return super(Label, cls).__new__(cls, -10, -10, 1, 1, *args, **kwargs)
@@ -344,21 +342,20 @@ class Slider(xbmcgui.ControlSlider):
         return super(Slider, cls).__new__(cls, -10, -10, 1, 1, *args, **kwargs)
 
 
-class _AbstractWindow(object):
+class AbstractWindow(object):
 
     """
     Top-level control window.
     
     The control windows serves as a parent widget for other XBMC UI controls
     much like Tkinter.Tk or PyQt QWidget class.
-    This is an abstract class which is not supposed to be instantiated directly
-    and will raise exeptions.
     
     This class is a basic "skeleton" for a control window.
+
+    .. warning:: This is an abstract class and is not supposed to be instantiated directly!
     """
 
     def __init__(self):
-        """Constructor method."""
         self.actions_connected = []
         self.controls_connected = []
 
@@ -491,26 +488,26 @@ class _AbstractWindow(object):
         Connect an event to a function.
 
         :param event: event to be connected.
-        :param callable: callable object (a function or a method) the event is being connected to.
+        :param callable: callable object the event is connected to.
 
         An event can be an inctance of a Control object or an integer key action code.
-        Several basic key action codes are provided by PyXBMCt. `xbmcgui`_ module
+        Several basic key action codes are provided by PyXBMCt. ``xbmcgui`` module
         provides more action codes.
 
         You can connect the following Controls: :class:`Button`, :class:`RadioButton`
         and :class:`List`. Other Controls do not generate any control events when activated
-        so their connections won't have any effect.
+        so their connections won't work.
 
-        To monitor the state of :class:`Slider` Control you need to connect the following key actions:
+        To catch :class:`Slider` events you need to connect the following key actions:
         ``ACTION_MOVE_LEFT``, ``ACTION_MOVE_RIGHT`` and ``ACTION_MOUSE_DRAG``, and do a check
-        whether the :class:`Slider` instance is focused.
+        whether the ``Slider`` instance is focused.
 
-        ``callable`` parameter is a function or a method to be executed when the event is fired.
+        ``callable`` parameter is a function or a method to be executed on when the event is fired.
 
         .. warning:: For connection you must provide a function object without brackets ``()``,
             not a function call!
 
-        ``lambda`` can be used to call another function or method with parameters known at runtime.
+        ``lambda`` can be used as to call another function or method with parameters known at runtime.
 
         Examples::
 
@@ -519,8 +516,6 @@ class _AbstractWindow(object):
         or::
 
             self.connect(ACTION_NAV_BACK, self.close)
-
-        .. _xbmcgui: http://romanvm.github.io/xbmcstubs/docs/xbmcgui-module.html
         """
         try:
             self.disconnect(event)
@@ -534,7 +529,7 @@ class _AbstractWindow(object):
         """
         Connect a list of controls/action codes to a function.
 
-        See :func:`connect` docstring for more info.
+        See :meth:`connect` docstring for more info.
         """
         [self.connect(event, function) for event in events]
 
@@ -597,12 +592,12 @@ class _AbstractWindow(object):
         :param control: control for which animation is set.
 
         This method is called automatically to set animation properties for all controls
-        added to the current addon window instance - both for built-in controls
-        (window background, title bar etc.) and for controls added with :func:`placeControl()`.
+        added to the current addon window instance -- both for built-in controls
+        (window background, title bar etc.) and for controls added with :meth:`placeControl`.
 
         It receives a control instance as the 2nd positional argument (besides ``self``).
         By default the method does nothing, i.e. no animation is set for controls.
-        To add animation you need to re-implement this menthod in your child class.
+        To add animation you need to re-implement this method in your child class.
 
         E.g::
 
@@ -613,7 +608,7 @@ class _AbstractWindow(object):
         pass
 
 
-class _AddonWindow(_AbstractWindow):
+class AddonWindow(AbstractWindow):
 
     """
     Top-level control window.
@@ -627,11 +622,13 @@ class _AddonWindow(_AbstractWindow):
 
     This class provides a control window with a background and a header
     similar to top-level widgets of desktop UI frameworks.
+
+    .. warning:: This is an abstract class and is not supposed to be instantiated directly!
     """
 
     def __init__(self, title=''):
         """Constructor method."""
-        super(_AddonWindow, self).__init__()
+        super(AddonWindow, self).__init__()
         self._setFrame(title)
 
     def _setFrame(self, title):
@@ -692,7 +689,7 @@ class _AddonWindow(_AbstractWindow):
             self.setGeometry(400, 500, 5, 4)
         """
         self.win_padding = padding
-        super(_AddonWindow, self).setGeometry(width_, height_, rows_, columns_, pos_x, pos_y)
+        super(AddonWindow, self).setGeometry(width_, height_, rows_, columns_, pos_x, pos_y)
         self.background.setPosition(self.x, self.y)
         self.background.setWidth(self.width)
         self.background.setHeight(self.height)
@@ -720,7 +717,7 @@ class _AddonWindow(_AbstractWindow):
         """
         Set window title.
 
-        .. warning:: This method must be called **AFTER** (!!!) :func:`setGeometry`,
+        .. warning:: This method must be called **AFTER** (!!!) :meth:`setGeometry`,
             otherwise there is some werid bug with all skin text labels set to the ``title`` text.
 
         Example::
@@ -733,7 +730,8 @@ class _AddonWindow(_AbstractWindow):
         """Get window title."""
         return self.title_bar.getLabel()
 
-class _FullWindow(xbmcgui.Window):
+
+class FullWindowMixin(xbmcgui.Window):
 
     """An abstract class to define window event processing."""
 
@@ -741,8 +739,7 @@ class _FullWindow(xbmcgui.Window):
         """
         Catch button actions.
 
-        Note that, despite being compared to an integer,
-        ``action`` is an instance of ``xbmcgui.Action`` class.
+        ``action`` is an instance of :class:`xbmcgui.Action` class.
         """
         if action == ACTION_PREVIOUS_MENU:
             self.close()
@@ -753,7 +750,7 @@ class _FullWindow(xbmcgui.Window):
         """
         Catch activated controls.
 
-        ``control`` is an instance of ``xbmcgui.Control`` class.
+        ``control`` is an instance of :class:`xbmcgui.Control` class.
         """
         if control == self.window_close_button:
             self.close()
@@ -761,7 +758,7 @@ class _FullWindow(xbmcgui.Window):
             self._executeConnected(control, self.controls_connected)
 
 
-class _DialogWindow(xbmcgui.WindowDialog):
+class DialogWindowMixin(xbmcgui.WindowDialog):
 
     """An abstract class to define window event processing."""
 
@@ -769,8 +766,7 @@ class _DialogWindow(xbmcgui.WindowDialog):
         """
         Catch button actions.
 
-        Note that, despite being compared to an integer,
-        ``action`` is an instance of ``xbmcgui.Action`` class.
+        ``action`` is an instance of class:`xbmcgui.Action` class.
         """
         if action == ACTION_PREVIOUS_MENU:
             self.close()
@@ -781,7 +777,7 @@ class _DialogWindow(xbmcgui.WindowDialog):
         """
         Catch activated controls.
 
-        ``control`` is an instance of ``xbmcgui.Control`` class.
+        ``control`` is an instance of :class:`xbmcgui.Control` class.
         """
         if control == self.window_close_button:
             self.close()
@@ -789,7 +785,7 @@ class _DialogWindow(xbmcgui.WindowDialog):
             self._executeConnected(control, self.controls_connected)
 
 
-class BlankFullWindow(_FullWindow, _AbstractWindow):
+class BlankFullWindow(FullWindowMixin, AbstractWindow):
     """
     BlankFullWindow()
 
@@ -802,7 +798,7 @@ class BlankFullWindow(_FullWindow, _AbstractWindow):
     pass
 
 
-class BlankDialogWindow(_DialogWindow, _AbstractWindow):
+class BlankDialogWindow(DialogWindowMixin, AbstractWindow):
     """
     BlankDialogWindow()
 
@@ -814,7 +810,8 @@ class BlankDialogWindow(_DialogWindow, _AbstractWindow):
     """
     pass
 
-class AddonFullWindow(_FullWindow, _AddonWindow):
+
+class AddonFullWindow(FullWindowMixin, AddonWindow):
 
     """
     AddonFullWindow(title='')
@@ -858,7 +855,7 @@ class AddonFullWindow(_FullWindow, _AddonWindow):
         self.main_bg.setImage(image)
 
 
-class AddonDialogWindow(_DialogWindow, _AddonWindow):
+class AddonDialogWindow(DialogWindowMixin, AddonWindow):
     """
     AddonDialogWindow(title='')
 

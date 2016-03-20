@@ -6,7 +6,7 @@ It was inspired by PyQt GUI framework (hence the name) and provides a main windo
 The main windows serves as a parent widget for the controls much like QtGui.QWidget class and provides a grid layout
 manager to place the controls.
 
-PyXBMCt developer's documentation: http://romanvm.github.io/PyXBMCt/docs.
+PyXBMCt developer's documentation: http://romanvm.github.io/PyXBMCt
 
 Support thread on Kodi forum: http://forum.xbmc.org/showthread.php?tid=174859
 
