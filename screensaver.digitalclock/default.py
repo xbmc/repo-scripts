@@ -33,6 +33,10 @@ __scriptname__ = __location__ + '.xml'
 
 class Screensaver(xbmcgui.WindowXMLDialog):
 
+	#setting up zoom
+    window = xbmcgui.Window(12900)	
+    window.setProperty("zoomamount",Addon.getSetting('zoomlevel'))
+	
     class ExitMonitor(xbmc.Monitor):
 
         def __init__(self, exit_callback):
@@ -91,7 +95,8 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.campm = int(Addon.getSetting('ampmcolor'))
         self.cd = int(Addon.getSetting('datecolor'))
         self.ci = int(Addon.getSetting('informationcolor'))
-        self.cw = int(Addon.getSetting('weathericoncolor'))			
+        self.cw = int(Addon.getSetting('weathericoncolor'))
+        self.zoom = float(Addon.getSetting('zoomlevel'))
         self.hour_colorcontrol = self.getControl(30105)
         self.colon_colorcontrol = self.getControl(30106)
         self.minute_colorcontrol = self.getControl(30107)
@@ -112,6 +117,7 @@ class Screensaver(xbmcgui.WindowXMLDialog):
             self.number = len(os.walk(self.folder).next()[2])-1
             self.slideshowcounter = 0
             self.files = os.walk(self.folder).next()[2]
+            self.files.sort()
             self.nextfile = 0
             if self.randomimages =='true':
                 self.nextfile = random.randint(0,self.number)
@@ -216,15 +222,20 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         if self.movementtype == 0:
             self.waittimer = 0.5
             self.multiplier = 2
-        else:
+        elif self.movementtype == 1:
             self.waittimer = 0.02
             self.multiplier = 50
             self.dx = random.choice([-(self.movementspeed+1),(self.movementspeed+1)])
             self.dy = random.choice([-(self.movementspeed+1),(self.movementspeed+1)])
+        else:
+            self.waittimer = 0.5
+            self.multiplier = 2
 		
 		#setting up the screen size
-        self.screeny = 720 - self.container.getHeight()
-        self.screenx = 1280 - self.container.getWidth()	
+        self.height = self.container.getHeight()
+        self.width = self.container.getWidth()
+        self.screeny = 720 - self.height * self.zoom / 100
+        self.screenx = 1280 - self.width * self.zoom / 100
 		
 		#combining transparency and color
         self.setCTR()
@@ -251,20 +262,20 @@ class Screensaver(xbmcgui.WindowXMLDialog):
                 #random movement
                 self.waitcounter += 1			
                 if self.waitcounter == (self.multiplier*self.stayinplace):
-                    new_x = random.randint(0,self.screenx)
-                    new_y = random.randint(0,self.screeny)
+                    new_x = random.randint(int(self.width * (self.zoom / 100 - 1)),self.screenx)
+                    new_y = random.randint(int(self.height * (self.zoom / 100 - 1)),self.screeny)
                     self.container.setPosition(new_x,new_y)
                     self.waitcounter = 0
                     self.setCTR()
-            else:
+            elif self.movementtype == 1:
                 #bounce
                 self.currentposition = self.container.getPosition()
-                new_x = self.currentposition[0]+self.dx
-                new_y = self.currentposition[1]+self.dy
-                if new_x >= self.screenx or new_x <= 0:
+                new_x = self.currentposition[0] + self.dx
+                new_y = self.currentposition[1] + self.dy
+                if new_x >= self.screenx or new_x <= int(self.width * (self.zoom / 100 - 1)):
                     self.dx = self.dx*-1
                     self.setCTR()					
-                if new_y >= self.screeny or new_y <= 0:
+                if new_y >= self.screeny or new_y <= int(self.height * (self.zoom / 100 - 1)):
                     self.dy = self.dy*-1
                     self.setCTR()					
                 self.container.setPosition(new_x,new_y)
@@ -432,19 +443,19 @@ class Screensaver(xbmcgui.WindowXMLDialog):
 
 if __name__ == '__main__':
     if(os.path.isfile(xbmc.translatePath('special://skin/1080i/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver("script-screensaver-digitalclock-custom.xml", xbmc.translatePath('special://skin/1080i/'), 'default')
+        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/1080i/'), 'default')
     elif(os.path.isfile(xbmc.translatePath('special://skin/720p/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver("script-screensaver-digitalclock-custom.xml", xbmc.translatePath('special://skin/720p/'), 'default')
+        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/720p/'), 'default')
     elif(os.path.isfile(xbmc.translatePath('special://skin/21x9/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver("script-screensaver-digitalclock-custom.xml", xbmc.translatePath('special://skin/21x9/'), 'default')
+        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/21x9/'), 'default')
     elif(os.path.isfile(xbmc.translatePath('special://skin/16x9/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver("script-screensaver-digitalclock-custom.xml", xbmc.translatePath('special://skin/16x9/'), 'default')
+        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/16x9/'), 'default')
     elif(os.path.isfile(xbmc.translatePath('special://skin/4x3Hirez/script-screensaver-digitalclock-custom.xml'))):
-        screensaver = Screensaver("script-screensaver-digitalclock-custom.xml", xbmc.translatePath('special://skin/4x3Hirez/'), 'default')
+        screensaver = Screensaver('script-screensaver-digitalclock-custom.xml', xbmc.translatePath('special://skin/4x3Hirez/'), 'default')
     elif(os.path.isfile(os.path.join(__path__,"resources/skins/default/720p/",__scriptname__))):
         screensaver = Screensaver(__scriptname__, __path__, 'default')
     else:
-        screensaver = Screensaver("skin.default.xml", __path__, 'default')	
+        screensaver = Screensaver('skin.default.xml', __path__, 'default')	
     screensaver.doModal()
     del screensaver
     sys.modules.clear()

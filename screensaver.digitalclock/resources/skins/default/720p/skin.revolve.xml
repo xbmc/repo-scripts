@@ -33,7 +33,7 @@
 				<aligny>center</aligny>				
 				<aspectratio>keep</aspectratio>
 				<visible>true</visible>
-			</control>			
+			</control>						
 			<control type="label" id="30101">
 				<description>Hour</description>
 				<posx>60</posx>
@@ -46,7 +46,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>Clock</font>
+				<font>HomeMenuOptionFont</font>
 			</control>
 			<control type="label" id="30102">
 				<description>Colon</description>
@@ -60,7 +60,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>Clock</font>
+				<font>HomeMenuOptionFont</font>
 				</control>
 			<control type="label" id="30103">
 				<description>Minute</description>
@@ -74,7 +74,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>Clock</font>
+				<font>HomeMenuOptionFont</font>
 			</control>
 			<control type="label" id="30104">
 				<description>AMPM</description>
@@ -88,7 +88,7 @@
 				<align>center</align>
 				<aligny>center</aligny>				
 				<label></label>
-				<font>light_Dialog</font>
+				<font>MediumViewFont</font>
 			</control>			
 			<control type="label" id="30100">
 				<description>Date</description>
@@ -102,7 +102,7 @@
 				<align>center</align>
 				<aligny>center</aligny>
 				<label></label>
-				<font>light_Settings</font>
+				<font>MediumViewFont</font>
 			</control>		
 			<control type="label" id="30110">
 				<description>Information</description>
@@ -116,7 +116,7 @@
 				<align>center</align>
 				<aligny>center</aligny>
 				<label></label>
-				<font>light_Settings</font>
+				<font>MediumViewFont</font>
 			</control>				
 			<control type="label" id="30105">
 				<description>Hour color control</description>
@@ -172,7 +172,7 @@
 				<label></label>
 				<font>font14</font>
 				<visible>false</visible>
-			</control>		
+			</control>	
 			<control type="label" id="30111">
 				<description>Information color control</description>
 				<posx>0</posx>
@@ -183,7 +183,7 @@
 				<label></label>
 				<font>font14</font>
 				<visible>false</visible>
-			</control>	
+			</control>					
 			<control type="label" id="30112">
 				<description>Shadow color control</description>
 				<posx>0</posx>

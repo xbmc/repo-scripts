@@ -45,6 +45,9 @@ Background
 - Random images (Screensaver chooses a random image from the folder for the background)
 - Background image (Users can select one colored background image from the list)
 
+Element size increase (Users can increase the size of text and icons)
+- Size (%)
+
 This screensaver is configured for every skin separately since it has to use Fonts defined by the skin!
 
 Skin developers have an option to use script-screensaver-digitalclock-custom.xml in their skins 1080i,720p... folder.
@@ -71,6 +74,8 @@ If the skin is not on the list screensaver will use default font names from conf
 - Confluence
 - Conq
 - Eminence (Works but it still doesn't have the proper font - contacted the developer)
+- Eunique
+- KOver
 - Maximinimalism (Works, we're just waiting for the skin update)
 - Metropolis
 - Mimic
@@ -80,6 +85,7 @@ If the skin is not on the list screensaver will use default font names from conf
 - Rapier
 - Refocus (Works but it still doesn't have the proper font - contacted the developer)
 - Retouched
+- Revolve
 - Sio2 (Works, we're just waiting for the skin update)
 - Titan (Has additional options!)
 - Transparency

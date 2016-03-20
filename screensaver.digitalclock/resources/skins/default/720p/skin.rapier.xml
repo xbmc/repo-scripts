@@ -13,6 +13,11 @@
 		</control>
 		<control type="group" id="30002">
 			<description>Clock and Date</description>
+			<animation effect="zoom" end="110" center="auto" time="" condition="StringCompare(Window(12900).Property(zoomamount),110)">WindowOpen</animation>
+			<animation effect="zoom" end="120" center="auto" time="" condition="StringCompare(Window(12900).Property(zoomamount),120)">WindowOpen</animation>
+			<animation effect="zoom" end="130" center="auto" time="" condition="StringCompare(Window(12900).Property(zoomamount),130)">WindowOpen</animation>
+			<animation effect="zoom" end="140" center="auto" time="" condition="StringCompare(Window(12900).Property(zoomamount),140)">WindowOpen</animation>
+			<animation effect="zoom" end="150" center="auto" time="" condition="StringCompare(Window(12900).Property(zoomamount),150)">WindowOpen</animation>			
 			<posx>460</posx>
 			<posy>290</posy>
 			<width>360</width>

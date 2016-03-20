@@ -34,6 +34,10 @@ msgctxt "#32012"
 msgid "Bounce"
 msgstr ""
 
+msgctxt "#32013"
+msgid "Fixed in the center - Warning!"
+msgstr ""
+
 msgctxt "#32020"
 msgid "Movement speed"
 msgstr ""
@@ -360,4 +364,12 @@ msgstr ""
 
 msgctxt "#32242"
 msgid "10 min"
+msgstr ""
+
+msgctxt "#32300"
+msgid "Element size increase"
+msgstr ""
+
+msgctxt "#32310"
+msgid "Size (%)"
 msgstr ""

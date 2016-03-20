@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="32000">
-        <setting label="32010" type="enum" id="movementtype" default="1" lvalues="32011|32012"/>
+        <setting label="32010" type="enum" id="movementtype" default="1" lvalues="32011|32012|32013"/>
 		<setting label="32020" type="enum" id="movementspeed" subsetting="true" visible="eq(-1,1)" default="1" lvalues="32021|32022|32023"/>
 		<setting label="32030" type="slider" id="stayinplace" subsetting="true" visible="eq(-2,0)" default="10" range="5,5,60" option="int"/>
 		<setting id="timeformat" type="select" label="32040" default="0" lvalues="32041|32042|32043"/>
@@ -39,5 +39,8 @@
 		<setting label="32222" type="folder" id="folder" subsetting="true" visible="eq(-2,true)" default="images" source="pictures"/>
 		<setting label="32223" type="bool" id="randomimages" subsetting="true" visible="eq(-3,true)" default="false"/>
 		<setting id="imagetimer" type="select" label="32230" subsetting="true" visible="eq(-4,true)" default="0" lvalues="32231|32232|32233|32234|32235|32236|32237|32238|32239|32240|32241|32242"/>
-		</category>			
+	</category>
+    <category label="32300">
+        <setting id="zoomlevel" type="select" label="32310" default="100" values="100|110|120|130|140|150" />		
+	</category>		
 </settings>
