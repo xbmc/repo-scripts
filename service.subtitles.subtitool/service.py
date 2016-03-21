@@ -3,7 +3,6 @@
 import os
 import sys
 import urllib
-import shutil
 import unicodedata
 import xbmc
 import xbmcvfs
@@ -27,7 +26,7 @@ __language__ = __addon__.getLocalizedString
 __cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
 __profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
 __resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode("utf-8")
-__temp__ = xbmc.translatePath(os.path.join(__profile__, 'temp', '')).decode("utf-8")
+TEMP_FOLDER = xbmc.translatePath(os.path.join(__profile__, 'temp', '')).decode("utf-8")
 
 sys.path.append(__resource__)
 
@@ -104,7 +103,7 @@ def Search(item,langs):
         sRate = node.getElementsByTagName('RATE')[0].firstChild.data
         if sLang == "Farsi/Persian": sLang = "Persian"
 
-        listitem = xbmcgui.ListItem(label=xbmc.convertLanguage(sLang, xbmc.ENGLISH_NAME),
+        listitem = xbmcgui.ListItem(label=sLang,
                                     # language name for the found subtitle
                                     label2=sTitle,  # file name for the found subtitle
                                     iconImage=sRate,  # rating for the subtitle, string 0-5
@@ -128,12 +127,12 @@ def Download(language, hash, filename, dlLink):
     subtitle_list = []
     ## Cleanup temp dir, we recomend you download/unzip your subs in temp folder and
     ## pass that to XBMC to copy and activate
-    if xbmcvfs.exists(__temp__):
-        shutil.rmtree(__temp__)
-    xbmcvfs.mkdirs(__temp__)
+    if xbmcvfs.exists(TEMP_FOLDER):
+        xbmcvfs.rmdir(TEMP_FOLDER,True)
+    xbmcvfs.mkdirs(TEMP_FOLDER)
     filename = os.path.basename(xbmc.Player().getPlayingFile().decode('utf-8'))
     filename = filename[:filename.rfind(".")] + ".srt"
-    filename = os.path.join(__temp__, filename)
+    filename = os.path.join(TEMP_FOLDER, filename)
     napiHelper = SubTiToolHelper(filename, hash)
     filename = napiHelper.download(dlLink,language)
     subtitle_list.append(filename)  # this can be url, local path or network path.

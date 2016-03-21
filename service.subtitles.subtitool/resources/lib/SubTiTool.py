@@ -15,20 +15,20 @@ class SubTiToolHelper:
 
         fulllang = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ENGLISH_NAME)
         if fulllang == "Persian": fulllang = "Farsi/Persian"
-        xbmc.executebuiltin("Notification(Title," + fulllang + ")")
+        #xbmc.executebuiltin("Notification(Title," + fulllang + ")")
         url = "http://www.subtitool.com/api/?query=" + self.filename + "&Lang=" + langs
         subs = urllib.urlopen(url).read()
         DOMTree = minidom.parseString(subs)
         if DOMTree.getElementsByTagName('Subtitle').length == 0:
            try:
-            url = "http://www.subtitool.com/api/?query=" + self.filename + "&Lang=" + fulllang + "&OR=1"
+            url = "http://www.subtitool.com/api/?query=" + self.filename + "&Lang=" + langs + "&OR=1"
             subs = urllib.urlopen(url).read()
             DOMTree = minidom.parseString(subs)
            except Exception, e:
                 log("Subtitool","Not Found OR")
 
            try:
-            url = "http://www.subtitool.com/api/?query=" + self.filename + "&Lang=" + fulllang
+            url = "http://www.subtitool.com/api/?query=" + self.filename + "&Lang=" + langs
             subs = urllib.urlopen(url).read()
             DOMTree = minidom.parseString(subs)
            except Exception, e:
@@ -36,7 +36,7 @@ class SubTiToolHelper:
 
         return DOMTree
 
-    def download(self, dllink, language="PL"):
+    def download(self, dllink, language="EN"):
 
         try:
             response = urllib.urlopen(dllink)
@@ -46,7 +46,9 @@ class SubTiToolHelper:
 
         try:
             srtdata = response.read()
-            open(self.filename, "w").write(srtdata)
+            with open(self.filename, "w") as file:
+             file.write(srtdata)
+
             return self.filename
 
         except Exception, e:
