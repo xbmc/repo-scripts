@@ -17,18 +17,18 @@ except ImportError:
     # Python 2.5 and earlier
     from md5 import new as md5
 
-__addon__ = xbmcaddon.Addon()
-__scriptid__ = __addon__.getAddonInfo('id')
-__scriptname__ = __addon__.getAddonInfo('name')
-__version__ = __addon__.getAddonInfo('version')
-__language__ = __addon__.getLocalizedString
+_ADDON = xbmcaddon.Addon()
+_SCRIPTID = _ADDON.getAddonInfo('id')
+_SCRIPTNAME = _ADDON.getAddonInfo('name')
+_VERSION = _ADDON.getAddonInfo('version')
+_LANGUAGE = _ADDON.getLocalizedString
 
-__cwd__ = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib')).decode("utf-8")
-TEMP_FOLDER = xbmc.translatePath(os.path.join(__profile__, 'temp', '')).decode("utf-8")
+_CWD = xbmc.translatePath(_ADDON.getAddonInfo('path')).decode("utf-8")
+_PROFILE = xbmc.translatePath(_ADDON.getAddonInfo('profile')).decode("utf-8")
+_RESOURCE = xbmc.translatePath(os.path.join(_CWD, 'resources', 'lib')).decode("utf-8")
+TEMP_FOLDER = xbmc.translatePath(os.path.join(_PROFILE, 'temp', '')).decode("utf-8")
 
-sys.path.append(__resource__)
+sys.path.append(_RESOURCE)
 
 from SubTiTool import SubTiToolHelper
 
@@ -118,7 +118,7 @@ def Search(item,langs):
         ## below arguments are optional, it can be used to pass any info needed in download function
         ## anything after "action=download&" will be sent to addon once user clicks listed subtitle to download
         url = "plugin://%s/?action=download&l=%s&f=%s&filename=%s&dllink=%s" % (
-            __scriptid__, sLang, md5hash, filename, sDlLink)
+            _SCRIPTID, sLang, md5hash, filename, sDlLink)
         ## add it to list, this can be done as many times as needed for all subtitles found
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem, isFolder=False)
 
