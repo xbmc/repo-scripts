@@ -54,6 +54,7 @@ from .arte import (
 from .atresplayer import AtresPlayerIE
 from .atttechchannel import ATTTechChannelIE
 from .audimedia import AudiMediaIE
+from .audioboom import AudioBoomIE
 from .audiomack import AudiomackIE, AudiomackAlbumIE
 from .azubu import AzubuIE, AzubuLiveIE
 from .baidu import BaiduVideoIE
@@ -80,6 +81,7 @@ from .bloomberg import BloombergIE
 from .bokecc import BokeCCIE
 from .bpb import BpbIE
 from .br import BRIE
+from .bravotv import BravoTVIE
 from .breakcom import BreakIE
 from .brightcove import (
     BrightcoveLegacyIE,
@@ -188,6 +190,10 @@ from .dumpert import DumpertIE
 from .defense import DefenseGouvFrIE
 from .discovery import DiscoveryIE
 from .dropbox import DropboxIE
+from .dw import (
+    DWIE,
+    DWArticleIE,
+)
 from .eagleplatform import EaglePlatformIE
 from .ebaumsworld import EbaumsWorldIE
 from .echomsk import EchoMskIE
@@ -212,10 +218,7 @@ from .everyonesmixtape import EveryonesMixtapeIE
 from .exfm import ExfmIE
 from .expotv import ExpoTVIE
 from .extremetube import ExtremeTubeIE
-from .facebook import (
-    FacebookIE,
-    FacebookPostIE,
-)
+from .facebook import FacebookIE
 from .faz import FazIE
 from .fc2 import FC2IE
 from .fczenit import FczenitIE
@@ -387,6 +390,7 @@ from .lynda import (
 from .m6 import M6IE
 from .macgamestore import MacGameStoreIE
 from .mailru import MailRuIE
+from .makerschannel import MakersChannelIE
 from .makertv import MakerTVIE
 from .malemotion import MalemotionIE
 from .matchtv import MatchTVIE
@@ -396,6 +400,7 @@ from .metacritic import MetacriticIE
 from .mgoon import MgoonIE
 from .minhateca import MinhatecaIE
 from .ministrygrid import MinistryGridIE
+from .minoto import MinotoIE
 from .miomio import MioMioIE
 from .mit import TechTVMITIE, MITIE, OCWMITIE
 from .mitele import MiTeleIE
@@ -594,6 +599,7 @@ from .regiotv import RegioTVIE
 from .restudy import RestudyIE
 from .reverbnation import ReverbNationIE
 from .revision3 import Revision3IE
+from .rice import RICEIE
 from .ringtv import RingTVIE
 from .ro220 import Ro220IE
 from .rottentomatoes import RottenTomatoesIE
@@ -732,6 +738,7 @@ from .theplatform import (
     ThePlatformFeedIE,
 )
 from .thesixtyone import TheSixtyOneIE
+from .thestar import TheStarIE
 from .thisamericanlife import ThisAmericanLifeIE
 from .thisav import ThisAVIE
 from .tinypic import TinyPicIE
@@ -778,6 +785,7 @@ from .tv2 import (
     TV2IE,
     TV2ArticleIE,
 )
+from .tv3 import TV3IE
 from .tv4 import TV4IE
 from .tvc import (
     TVCIE,
@@ -817,6 +825,7 @@ from .udn import UDNEmbedIE
 from .digiteka import DigitekaIE
 from .unistra import UnistraIE
 from .urort import UrortIE
+from .usatoday import USATodayIE
 from .ustream import UstreamIE, UstreamChannelIE
 from .ustudio import UstudioIE
 from .varzesh3 import Varzesh3IE
@@ -832,7 +841,10 @@ from .vgtv import (
     VGTVIE,
 )
 from .vh1 import VH1IE
-from .vice import ViceIE
+from .vice import (
+    ViceIE,
+    ViceShowIE,
+)
 from .viddler import ViddlerIE
 from .videodetective import VideoDetectiveIE
 from .videofyme import VideofyMeIE
@@ -859,6 +871,7 @@ from .vimeo import (
     VimeoChannelIE,
     VimeoGroupsIE,
     VimeoLikesIE,
+    VimeoOndemandIE,
     VimeoReviewIE,
     VimeoUserIE,
     VimeoWatchLaterIE,

@@ -252,6 +252,7 @@ class TwitchVodIE(TwitchItemBaseIE):
                 self._USHER_BASE, item_id,
                 compat_urllib_parse.urlencode({
                     'allow_source': 'true',
+                    'allow_audio_only': 'true',
                     'allow_spectre': 'true',
                     'player': 'twitchweb',
                     'nauth': access_token['token'],
@@ -298,9 +299,10 @@ class TwitchPlaylistBaseIE(TwitchBaseIE):
             # is completely broken on the twitch side. It simply ignores
             # a limit and returns the whole offset number of videos.
             # Working around by just requesting all videos at once.
+            # Upd: pagination bug was fixed by twitch on 15.03.2016.
             if not broken_paging_detected and total and len(page_entries) > limit:
                 self.report_warning(
-                    'Twitch paging is broken on twitch side, requesting all videos at once',
+                    'Twitch pagination is broken on twitch side, requesting all videos at once',
                     channel_id)
                 broken_paging_detected = True
                 offset = total
@@ -431,6 +433,7 @@ class TwitchStreamIE(TwitchBaseIE):
 
         query = {
             'allow_source': 'true',
+            'allow_audio_only': 'true',
             'p': random.randint(1000000, 10000000),
             'player': 'twitchweb',
             'segment_preference': '4',

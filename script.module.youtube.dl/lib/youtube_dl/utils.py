@@ -35,6 +35,7 @@ import xml.etree.ElementTree
 import zlib
 
 from .compat import (
+    compat_HTMLParser,
     compat_basestring,
     compat_chr,
     compat_etree_fromstring,
@@ -49,6 +50,7 @@ from .compat import (
     compat_urllib_parse_urlparse,
     compat_urllib_request,
     compat_urlparse,
+    compat_xpath,
     shlex_quote,
 )
 
@@ -164,12 +166,7 @@ if sys.version_info >= (2, 7):
         return node.find(expr)
 else:
     def find_xpath_attr(node, xpath, key, val=None):
-        # Here comes the crazy part: In 2.6, if the xpath is a unicode,
-        # .//node does not match if a node is a direct child of . !
-        if isinstance(xpath, compat_str):
-            xpath = xpath.encode('ascii')
-
-        for f in node.findall(xpath):
+        for f in node.findall(compat_xpath(xpath)):
             if key not in f.attrib:
                 continue
             if val is None or f.attrib.get(key) == val:
@@ -194,9 +191,7 @@ def xpath_with_ns(path, ns_map):
 
 def xpath_element(node, xpath, name=None, fatal=False, default=NO_DEFAULT):
     def _find_xpath(xpath):
-        if sys.version_info < (2, 7):  # Crazy 2.6
-            xpath = xpath.encode('ascii')
-        return node.find(xpath)
+        return node.find(compat_xpath(xpath))
 
     if isinstance(xpath, (str, compat_str)):
         n = _find_xpath(xpath)
@@ -271,6 +266,38 @@ def get_element_by_attribute(attribute, value, html):
         res = res[1:-1]
 
     return unescapeHTML(res)
+
+
+class HTMLAttributeParser(compat_HTMLParser):
+    """Trivial HTML parser to gather the attributes for a single element"""
+    def __init__(self):
+        self.attrs = {}
+        compat_HTMLParser.__init__(self)
+
+    def handle_starttag(self, tag, attrs):
+        self.attrs = dict(attrs)
+
+
+def extract_attributes(html_element):
+    """Given a string for an HTML element such as
+    <el
+         a="foo" B="bar" c="&98;az" d=boz
+         empty= noval entity="&amp;"
+         sq='"' dq="'"
+    >
+    Decode and return a dictionary of attributes.
+    {
+        'a': 'foo', 'b': 'bar', c: 'baz', d: 'boz',
+        'empty': '', 'noval': None, 'entity': '&',
+        'sq': '"', 'dq': '\''
+    }.
+    NB HTMLParser is stricter in Python 2.6 & 3.2 than in later versions,
+    but the cases in the unit test will work for all of 2.6, 2.7, 3.2-3.5.
+    """
+    parser = HTMLAttributeParser()
+    parser.feed(html_element)
+    parser.close()
+    return parser.attrs
 
 
 def clean_html(html):
@@ -1316,6 +1343,17 @@ def format_bytes(bytes):
     return '%.2f%s' % (converted, suffix)
 
 
+def lookup_unit_table(unit_table, s):
+    units_re = '|'.join(re.escape(u) for u in unit_table)
+    m = re.match(
+        r'(?P<num>[0-9]+(?:[,.][0-9]*)?)\s*(?P<unit>%s)' % units_re, s)
+    if not m:
+        return None
+    num_str = m.group('num').replace(',', '.')
+    mult = unit_table[m.group('unit')]
+    return int(float(num_str) * mult)
+
+
 def parse_filesize(s):
     if s is None:
         return None
@@ -1359,15 +1397,28 @@ def parse_filesize(s):
         'Yb': 1000 ** 8,
     }
 
-    units_re = '|'.join(re.escape(u) for u in _UNIT_TABLE)
-    m = re.match(
-        r'(?P<num>[0-9]+(?:[,.][0-9]*)?)\s*(?P<unit>%s)' % units_re, s)
-    if not m:
+    return lookup_unit_table(_UNIT_TABLE, s)
+
+
+def parse_count(s):
+    if s is None:
         return None
 
-    num_str = m.group('num').replace(',', '.')
-    mult = _UNIT_TABLE[m.group('unit')]
-    return int(float(num_str) * mult)
+    s = s.strip()
+
+    if re.match(r'^[\d,.]+$', s):
+        return str_to_int(s)
+
+    _UNIT_TABLE = {
+        'k': 1000,
+        'K': 1000,
+        'm': 1000 ** 2,
+        'M': 1000 ** 2,
+        'kk': 1000 ** 2,
+        'KK': 1000 ** 2,
+    }
+
+    return lookup_unit_table(_UNIT_TABLE, s)
 
 
 def month_by_name(name):
