@@ -1,3 +1,7 @@
+v.1.0.68
+- FIX Kodi crashing issue in certain situations
+- General stability fixes
+
 v.1.0.60
 - FIX TMDB artwork lookups
 - ADD Animated posters

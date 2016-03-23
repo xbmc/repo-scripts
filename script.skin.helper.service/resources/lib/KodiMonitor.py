@@ -19,7 +19,7 @@ class Kodi_Monitor(xbmc.Monitor):
             utils.resetVideoWidgetWindowProps("",True)
         if database == "music" :
             utils.resetMusicWidgetWindowProps("",True)
-           
+    
     def onNotification(self,sender,method,data):
         
         utils.logMsg("Kodi_Monitor: sender %s - method: %s  - data: %s"%(sender,method,data))
@@ -30,7 +30,7 @@ class Kodi_Monitor(xbmc.Monitor):
 
         if method == "AudioLibrary.OnUpdate":
             if not xbmc.getCondVisibility("Library.IsScanningMusic"):
-                utils.resetMusicWidgetWindowProps()
+                utils.resetMusicWidgetWindowProps(data)
         
         if method == "Player.OnStop":
             utils.WINDOW.clearProperty("Skinhelper.PlayerPlaying")

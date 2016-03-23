@@ -346,7 +346,6 @@ def writeSkinConstants(listing):
                 indentXML( tree.getroot() )
                 xmlstring = xmltree.tostring(tree.getroot(), encoding="utf-8")
                 f = xbmcvfs.File(includes_file, 'w')
-                print includes_file
                 f.write(xmlstring)
                 f.close()
     xbmc.executebuiltin("ReloadSkin()")
@@ -578,7 +577,6 @@ def correctSkinSettings():
                     if "$" in command: command = xbmc.getInfoLabel(command)
                     xbmc.executebuiltin(command)
     if skinconstants:
-        print skinconstants
         updateSkinConstants(skinconstants)
                             
 def toggleKodiSetting(settingname):

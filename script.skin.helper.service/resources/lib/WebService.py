@@ -36,8 +36,6 @@ class WebService(threading.Thread):
             server.serve_forever()
         except Exception as e: logMsg("WebServer exception occurred " + str(e),0)
             
-
-
 class Request(object):
     # attributes from urlsplit that this class also sets
     uri_attrs = ('scheme', 'netloc', 'path', 'query', 'fragment')
@@ -103,7 +101,6 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
     
     def send_headers(self):
         image = None
-        images = None
         preferred_type = None
         org_params = urlparse.parse_qs(self.path)
         params = {}
@@ -120,6 +117,11 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
 
         if action == "getthumb":
             image = artutils.searchThumb(title)
+            
+        elif action == "getanimatedposter":
+            imdbid = params.get("imdbid","")
+            if imdbid:
+                image = artutils.getAnimatedPosters(imdbid).get("animated_poster","")
         
         elif action == "getvarimage":
             title = title.replace("{","[").replace("}","]")
@@ -155,6 +157,22 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
             for key, value in images.iteritems():
                 images[key] = unicode(value).encode('utf-8')
             images = urllib.urlencode(images)
+            self.send_response(200)
+            self.send_header('Content-type','text/plaintext')
+            self.send_header('Content-Length',len(images))
+            self.end_headers()
+            return images, True
+            
+        elif action == "getartwork":
+            year = params.get("year","")
+            arttype = params.get("type","")
+            artwork = artutils.getAddonArtwork(title,year,arttype)
+            jsonstr = json.dumps(artwork)
+            self.send_response(200)
+            self.send_header('Content-type','application/json')
+            self.send_header('Content-Length',len(jsonstr))
+            self.end_headers()
+            return jsonstr, True
         
         elif action == "getmusicart":
             preferred_type = params.get("type","")
@@ -172,17 +190,21 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
                 if artwork.get("thumb"): image = artwork.get("thumb")
                 if artwork.get("fanart"): image = artwork.get("fanart")
         
-        elif action == "getmoviegenreimages" or action == "gettvshowgenreimages":
+        elif "getmoviegenreimages" in action or "gettvshowgenreimages" in action:
             artwork = {}
             cachestr = ("%s-%s" %(action,title)).encode("utf-8")
             cache = WINDOW.getProperty(cachestr).decode("utf-8")
             if cache: 
                 artwork = eval(cache)
             else:
+                sort = '"order": "ascending", "method": "sorttitle", "ignorearticle": true'
+                if "random" in action:
+                    sort = '"order": "descending", "method": "random"'
+                    action = action.replace("random","")
                 if action == "gettvshowgenreimages": 
-                    json_result = getJSON('VideoLibrary.GetTvshows', '{ "sort": { "order": "descending", "method": "random" }, "filter": {"operator":"is", "field":"genre", "value":"%s"}, "properties": [ %s ],"limits":{"end":%d} }' %(title,fields_tvshows,5))
+                    json_result = getJSON('VideoLibrary.GetTvshows', '{ "sort": { %s }, "filter": {"operator":"is", "field":"genre", "value":"%s"}, "properties": [ %s ],"limits":{"end":%d} }' %(sort,title,fields_tvshows,5))
                 else:
-                    json_result = getJSON('VideoLibrary.GetMovies', '{ "sort": { "order": "descending", "method": "random" }, "filter": {"operator":"is", "field":"genre", "value":"%s"}, "properties": [ %s ],"limits":{"end":%d} }' %(title,fields_movies,5))
+                    json_result = getJSON('VideoLibrary.GetMovies', '{ "sort": { %s }, "filter": {"operator":"is", "field":"genre", "value":"%s"}, "properties": [ %s ],"limits":{"end":%d} }' %(sort,title,fields_movies,5))
                 for count, item in enumerate(json_result):
                     artwork["poster.%s" %count] = item["art"].get("poster","")
                     artwork["fanart.%s" %count] = item["art"].get("fanart","")
@@ -191,19 +213,16 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
                 preferred_type = params.get("type","")
                 if preferred_type: 
                     image = artwork.get(preferred_type,"")
+                else:
+                    image = artwork.get("poster","")
         
         #set fallback image if nothing else worked
         if not image and fallback: image = fallback
         
-        if images:
+        if image:
             self.send_response(200)
-            self.send_header('Content-type','text/plaintext')
-            self.send_header('Content-Length',len(images))
-            self.end_headers()
-            return images, True
-        elif image:
-            self.send_response(200)
-            if ".jpg" in image: self.send_header('Content-type','image/jpeg')
+            if ".jpg" in image: self.send_header('Content-type','image/jpg')
+            elif image.lower().endswith(".gif"): self.send_header('Content-type','image/gif')
             else: self.send_header('Content-type','image/png')
             logMsg("found image for request %s  --> %s" %(try_encode(self.path),try_encode(image)))
             st = xbmcvfs.Stat(image)
@@ -218,16 +237,16 @@ class StoppableHttpRequestHandler (SimpleHTTPServer.SimpleHTTPRequestHandler):
         return image, None
 
     def do_GET(self):
-        image, multi = self.send_headers()
-        if image and not multi:
+        result, multi = self.send_headers()
+        if result and not multi:
             #send the image to the client
             logMsg("WebService -- sending image for --> " + try_encode(self.path))
-            self.wfile.write(image.readBytes())
-            image.close()
-        elif image:
+            self.wfile.write(result.readBytes())
+            result.close()
+        elif result:
             #send multiple images to the client (plaintext)
-            logMsg("WebService -- sending multiple images for --> " + try_encode(self.path))
-            self.wfile.write(image)
+            logMsg("WebService -- sending multiple images or json for --> " + try_encode(self.path))
+            self.wfile.write(result)
         return
 
 class StoppableHttpServer (BaseHTTPServer.HTTPServer):

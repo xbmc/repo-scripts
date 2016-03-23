@@ -667,3 +667,40 @@ msgstr ""
 msgctxt "#32162"
 msgid "Similar Media"
 msgstr ""
+
+msgctxt "#32163"
+msgid "Widgets"
+msgstr ""
+
+msgctxt "#32164"
+msgid "Enable artwork lookups for music/pvr widgets"
+msgstr ""
+
+msgctxt "#32165"
+msgid "Show specials in episode widgets"
+msgstr ""
+
+msgctxt "#32166"
+msgid "Browse albums instead of playing for album widgets"
+msgstr ""
+
+msgctxt "#32167"
+msgid "In-progress episodes"
+msgstr ""
+
+msgctxt "#32168"
+msgid "In-progress movies"
+msgstr ""
+
+msgctxt "#32169"
+msgid "In-progress and recommended movies"
+msgstr ""
+
+msgctxt "#32170"
+msgid "PVR - TV Channels (with artwork)"
+msgstr ""
+
+msgctxt "#32171"
+msgid "PVR - Next unwatched recordings (reversed)"
+msgstr ""
+

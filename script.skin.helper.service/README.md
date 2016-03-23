@@ -1,6 +1,7 @@
 # script.skin.helper.service
 a helper service for Kodi skins
 
+This product uses the TMDb API but is not endorsed or certified by TMDb.
 ________________________________________________________________________________________________________
 
 ### Settings for the script
@@ -25,7 +26,7 @@ Important settings:
 |SmartShortcuts.netflix | Skin.SetBool(SmartShortcuts.netflix) | Enable smart shortcuts for flix2kodi addon |
 |SkinHelper.EnableAddonsLookups	| Skin.ToggleSetting(SkinHelper.EnableAddonsLookups)	| enables the background scanner for addons artwork and additional properties |
 |SkinHelper.EnablePVRThumbs	| Skin.ToggleSetting(SkinHelper.EnablePVRThumbs)	| enables the background scanner for PVR artwork |
-
+|SkinHelper.DisableScreenSaverOnFullScreenMusic	| Skin.ToggleSetting(SkinHelper.DisableScreenSaverOnFullScreenMusic)	| will temporary disable the Kodi screensaver on fullscreen music playback |
 ________________________________________________________________________________________________________
 ________________________________________________________________________________________________________
 
@@ -100,6 +101,7 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.IMDB.Votes) | No. of votes for rating on IMDB |
 |Window(Home).Property(SkinHelper.IMDB.MPAA) | MPAA rating on IMDB |
 |Window(Home).Property(SkinHelper.IMDB.Runtime) | Runtime on IMDB |
+|Window(Home).Property(SkinHelper.IMDB.Top250) | Position of the movie in the IMDB Top250 |
 |Window(Home).Property(SkinHelper.TMDB.Budget) | budget spent to this movie in dollars (from tmdb)|
 |Window(Home).Property(SkinHelper.TMDB.Budget.mln) | budget spent to this movie in millions of dollars|
 |Window(Home).Property(SkinHelper.TMDB.Budget.formatted) | Same as Budget.mln but formatted as $ 123 mln.|
@@ -112,7 +114,25 @@ Some additional window properties that can be used in the video library.
 |Window(Home).Property(SkinHelper.TMDB.Popularity) | popularity for this movie (from tmdb) |
 
 
-________________________________________________________________________________________________________
+#### Widget reload properties
+If you need to refresh a widget automatically after the library is changed or after playback stop you can append these to the widget path.
+
+For example:
+
+```
+plugin://myvideoplugin/movies/?latest&amp;reload=$INFO[Window(Home).Property(widgetreload-episodes)]
+```
+
+| property 			| description |
+|:-----------------------------	| :----------- |
+|Window(Home).Property(widgetreload) | will change if any video content is added/changed in the library or after playback stop of any video content (in- or outside of library) |
+|Window(Home).Property(widgetreload-episodes) | will change if episodes content is added/changed in the library or after playback stop of episodes content (in- or outside of library) |
+|Window(Home).Property(widgetreload-movies) | will change if movies content is added/changed in the library or after playback stop of movies content (in- or outside of library) |
+|Window(Home).Property(widgetreload-tvshows) | will change if tvshows content is added/changed in the library |
+|Window(Home).Property(widgetreload-music) | will change if any music content is added/changed in the library or after playback stop of music (in- or outside of library) |
+|Window(Home).Property(widgetreload2) | will change every 10 minutes (e.g. for pvr widgets or favourites) |
+
+_____________________________________________________________________________________________________
 #### Animated Posters
 Provides animated poster in window property (cached locally)
 For info, see: http://forum.kodi.tv/showthread.php?tid=215727
@@ -417,20 +437,24 @@ ________________________________________________________________________________
 
 
 #### Video library search (extended)
+
 ```
 RunScript(script.skin.helper.service,action=videosearch)
 ```
+
 This command will open the special search window in the script. It has a onscreen keyboard to quickly search for movies, tvshows and episodes. You can customize the look and feel of this search dialog. To do that include the files script-skin_helper_service-CustomSearch.xml and script-skin_helper_service-CustomInfo.xml in your skin and skin it to your needs.
 
 ________________________________________________________________________________________________________
 
 
 #### Special Info Dialog
+
 ```
 RunScript(script.skin.helper.service,action=showinfo,movieid=&amp;INFO[ListItem.DBID])
 RunScript(script.skin.helper.service,action=showinfo,tvshowid=&amp;INFO[ListItem.DBID])
 RunScript(script.skin.helper.service,action=showinfo,episodeid=&amp;INFO[ListItem.DBID])
 ```
+
 It is possible to show the infodialog provided by the script (see video library search command), for example if you want to call that info screen from your widgets.
 In that case run the command above. In the info dialog will also all special properties be available from the script.
 Note that ListItem.DBID and ListItem.DBTYPE can only be used for "real" library items, for widgets provided by this script, use ListItem.Property(DBID) and ListItem.Property(type) instead.
@@ -438,11 +462,14 @@ Note that ListItem.DBID and ListItem.DBTYPE can only be used for "real" library 
 ________________________________________________________________________________________________________
 
 #### Yes/No Dialog (dialogYesNo)
+
 ```
-RunScript(script.skin.helper.service,action=dialogyesno,header[yourheadertext],message=[your message body],action=[your action])
+RunScript(script.skin.helper.service,action=dialogyesno,header[yourheadertext],message=[your message body],yesaction=[action for yes],noaction=[optional action for no])
 ```
+
 This command will open Kodi's YesNo dialog with the text you supplied.
-If the user presses YES, the action will be executed you supplied. To provide multiple actions, seperate by | 
+If the user presses YES, the action will be executed you supplied. To provide multiple actions, seperate by |
+You can use any Kodi permitted action. If you also want to specify action(s) when the user presses NO, also supplu the NOACTION argument.
 ________________________________________________________________________________________________________
 
 
@@ -592,13 +619,31 @@ http://localhost:52307/getvarimage&amp;title=$INFO{Skin.String(MyCustomPath)}/lo
 You can use this to create a custom view for movie/tvshow genres with posters/fanart from the genre
 
 ```xml
-<texture background="true">http://localhost:52307/getmoviegenreimages&amp;title=$INFO[Listitem.Label]&amp;type=poster.0&amp;fallback=DefaultGenre.png</texture>
-<texture background="true">http://localhost:52307/gettvshowgenreimages&amp;title=$INFO[Listitem.Label]&amp;type=poster.0&amp;fallback=DefaultGenre.png</texture>
-<texture background="true">http://localhost:52307/getmoviegenreimages&amp;title=$INFO[Listitem.Label]&amp;type=fanart.0&amp;fallback=DefaultGenre.png</texture>
-<texture background="true">http://localhost:52307/gettvshowgenreimages&amp;title=$INFO[Listitem.Label]&amp;type=fanart.0&amp;fallback=DefaultGenre.png</texture>
+poster 1 for movies in genre X:
+http://localhost:52307/getmoviegenreimages&amp;title=$INFO[Listitem.Label]&amp;type=poster.0&amp;fallback=DefaultGenre.png
+
+poster 1 for tvshows in genre X:
+http://localhost:52307/gettvshowgenreimages&amp;title=$INFO[Listitem.Label]&amp;type=poster.0&amp;fallback=DefaultGenre.png
+
+
+fanart 1 for movies in genre X:
+http://localhost:52307/getmoviegenreimages&amp;title=$INFO[Listitem.Label]&amp;type=fanart.0&amp;fallback=DefaultGenre.png</texture>
+
+
+fanart 1 for tvshows in genre X:
+http://localhost:52307/gettvshowgenreimages&amp;title=$INFO[Listitem.Label]&amp;type=fanart.0&amp;fallback=DefaultGenre.png
 ```
 Possible types are poster.X and fanart.X (replace X with count, only 0-4 are available)
+Replace getmoviegenreimages with getmoviegenreimagesrandom to have the artwork items be randomly pulled from the db instead of sorted alphabetically.
 
+
+##### Animated poster
+You can use this to retrieve the animated poster for a movie (if exists)
+Note: movies only and you must supply the imdbid of the movie.
+
+```
+http://localhost:52307/getanimatedposter&amp;imdbid=$INFO[Listitem.IMDBID]&amp;fallback=$INFO[Listitem.Art(poster)]
+```
 
 
 ##### Webservice optional params
@@ -618,7 +663,9 @@ Shows a selectdialog with all searchresults found by the Youtube plugin, for exa
 The benefit of that is that user stays in the same window and is not moved away from the library to the youtube plugin.
 You can supply a searchphrase to the script and optionally provide a label for the header in the DialogSelect.
 
+```
 RunScript(script.skin.helper.service,action=searchyoutube,title=[SEARCHPHRASE],header=[HEADER FOR THE DIALOGSELECT]
+```
 
 TIP: The results of the script displayed in DialogSelect.xml will have the label2 of the ListItem set to the description.
 
@@ -633,6 +680,7 @@ example 1: Search for trailers in DialogVideoInfo.xml
            
 ```
 example 2: Search for artist videos in DialogAlbumInfo.xml
+
 ```
 RunScript(script.skin.helper.service,action=searchyoutube,title=$INFO[ListItem.Artist], header=Videos for $INFO[ListItem.Artist])             
 ```
@@ -1429,6 +1477,8 @@ ListItem.Art(fanart.X) --> fanart for movie/show X (start counting at 0) in the 
 
 
 For each genre, only 5 movies/tvshows are retrieved.
+Supported types: movie, tvshow (will return 5 items from the library for each genre)
+If you use randommovie or randomtvshow as type the library items will be randomized 
 ________________________________________________________________________________________________________
 ________________________________________________________________________________________________________
 
@@ -1481,22 +1531,22 @@ Note that the plexbmc addon must be present on the system for this to function.
 | Window(Home).Property(plexbmc.X.title) | Title of the Plex collection|
 | Window(Home).Property(plexbmc.X.path) | Path of the Plex collection|
 | Window(Home).Property(plexbmc.X.content) | Contentpath (without activatewindow) of the Plex collection, to display it's content in widgets.|
-| Window(Home).Property(plexbmc.X.background) | Rotating fanart of the Plex collection|
+| Window(Home).Property(plexbmc.X.image) | Rotating fanart of the Plex collection|
 | Window(Home).Property(plexbmc.X.type) | Type of the Plex collection (e.g. movies, tvshows)|
 | Window(Home).Property(plexbmc.X.recent) | Path to the recently added items node of the Plex collection|
 | Window(Home).Property(plexbmc.X.recent.content) | Contentpath to the recently added items node of the Plex collection (for widgets)|
-| Window(Home).Property(plexbmc.X.recent.background) | Rotating fanart of the recently added items node|
+| Window(Home).Property(plexbmc.X.recent.image) | Rotating fanart of the recently added items node|
 | Window(Home).Property(plexbmc.X.ondeck) | Path to the in progress items node of the Plex collection|
 | Window(Home).Property(plexbmc.X.ondeck.content) | Contentpath to the in progress items node of the Plex collection (for widgets)|
-| Window(Home).Property(plexbmc.X.ondeck.background) | Rotating fanart of the in progress items node|
+| Window(Home).Property(plexbmc.X.ondeck.image) | Rotating fanart of the in progress items node|
 | Window(Home).Property(plexbmc.X.unwatched) | Path to the in unwatched items node of the Plex collection|
 | Window(Home).Property(plexbmc.X.unwatched.content) | Contentpath to the unwatched items node of the Plex collection (for widgets)|
-| Window(Home).Property(plexbmc.X.unwatched.background) | Rotating fanart of the unwatched items node|
+| Window(Home).Property(plexbmc.X.unwatched.image) | Rotating fanart of the unwatched items node|
 | |
 | Window(Home).Property(plexbmc.channels.title) | Title of the Plex Channels collection|
 | Window(Home).Property(plexbmc.channels.path) | Path to the Plex Channels|
 | Window(Home).Property(plexbmc.channels.content) | Contentpath to the Plex Channels (for widgets)|
-| Window(Home).Property(plexbmc.channels.background) | Rotating fanart of the Plex Channels|
+| Window(Home).Property(plexbmc.channels.image) | Rotating fanart of the Plex Channels|
 | |
 | Window(Home).Property(plexfanartbg) | A global fanart background from plex sources|
 --> replace X with the item count, starting at 0.

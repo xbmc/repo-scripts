@@ -33,6 +33,10 @@
         <setting label="32126" type="action" action="RunScript(script.skin.helper.service,action=RESETCACHE,path=music)"/>
         <setting label="Precache all artwork" type="action" action="RunScript(script.skin.helper.service,action=CACHEALLMUSICART)" option="close"/>
     </category>
+    <category label="32163">
+        <setting id="enableWidgetsArtworkLookups" type="bool" label="32164" default="true"/>
+        <setting id="enableSpecialsInWidgets" type="bool" label="32165" default="false"/>
+    </category>
     <category label="32134">
         <setting id="enableDebugLog" type="bool" label="32135" default="false"/>
         <setting id="maxNumFanArts" type="number" label="32136" default="10"/>

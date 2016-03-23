@@ -237,11 +237,15 @@ class Main:
             elif action == "DIALOGYESNO":
                 headerMsg = params.get("HEADER")
                 bodyMsg = params.get("MESSAGE")
-                actions = params.get("ACTION").split("|")
+                yesactions = params.get("YESACTION","").split("|")
+                noactions = params.get("NOACTION","").split("|")
                 if bodyMsg.startswith(" "): bodyMsg = bodyMsg[1:]
                 if headerMsg.startswith(" "): headerMsg = headerMsg[1:]
                 if xbmcgui.Dialog().yesno(heading=headerMsg, line1=bodyMsg):
-                    for action in actions:
+                    for action in yesactions:
+                        xbmc.executebuiltin(action.encode("utf-8"))
+                else:
+                    for action in noactions:
                         xbmc.executebuiltin(action.encode("utf-8"))
                 
             elif action == "TEXTVIEWER":

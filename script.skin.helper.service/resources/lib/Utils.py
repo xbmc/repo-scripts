@@ -13,6 +13,11 @@ import unicodedata
 import urlparse
 import xml.etree.ElementTree as xmltree
 from xml.dom.minidom import parse
+from operator import itemgetter
+try:
+    from multiprocessing.pool import ThreadPool as Pool
+    supportsPool = True
+except: supportsPool = False
 
 try:
     import simplejson as json
@@ -38,7 +43,7 @@ fields_movies = fields_file + '"plotoutline", "sorttitle", "cast", "votes", "sho
 fields_tvshows = fields_base + '"sorttitle", "mpaa", "premiered", "year", "episode", "watchedepisodes", "votes", "rating", "studio", "season", "genre", "cast", "episodeguide", "tag", "originaltitle", "imdbnumber"'
 fields_episodes = fields_file + '"cast", "productioncode", "rating", "votes", "episode", "showtitle", "tvshowid", "season", "firstaired", "writer", "originaltitle"'
 fields_musicvideos = fields_file + '"genre", "artist", "tag", "album", "track", "studio", "year"'
-fields_files = fields_file + fields_movies + ", " + fields_tvshows + ", " + fields_episodes
+fields_files = fields_file + '"plotoutline", "sorttitle", "cast", "votes", "trailer", "year", "country", "studio", "genre", "mpaa", "rating", "tagline", "writer", "originaltitle", "imdbnumber", "premiered","episode", "showtitle","firstaired","watchedepisodes","duration" '
 fields_songs = '"artist","displayartist", "title", "rating", "fanart", "thumbnail", "duration", "playcount", "comment", "file", "album", "lastplayed", "genre", "musicbrainzartistid", "track"'
 fields_albums = '"title", "fanart", "thumbnail", "genre", "displayartist", "artist", "genreid", "musicbrainzalbumartistid", "year", "rating", "artistid", "musicbrainzalbumid", "theme", "description", "type", "style", "playcount", "albumlabel", "mood"'
 fields_pvrrecordings = '"art", "channel", "directory", "endtime", "file", "genre", "icon", "playcount", "plot", "plotoutline", "resume", "runtime", "starttime", "streamurl", "title"'
@@ -84,6 +89,11 @@ def getContentPath(libPath):
         libPath = libPath.split("&reload=")[0]
     return libPath
 
+def setJSON(method,params):
+    json_response = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method" : "%s", "params": %s, "id":1 }' %(method, try_encode(params)))
+    jsonobject = json.loads(json_response.decode('utf-8','replace'))
+    return jsonobject
+    
 def getJSON(method,params):
     json_response = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method" : "%s", "params": %s, "id":1 }' %(method, try_encode(params)))
     jsonobject = json.loads(json_response.decode('utf-8','replace'))
@@ -147,8 +157,10 @@ def getJSON(method,params):
             return jsonobject['item']
         elif jsonobject.has_key('genres'):
             return jsonobject['genres']
+        elif jsonobject.has_key('value'):
+            return jsonobject['value']
         else:
-            logMsg("getJson - invalid result for Method %s - params: %s - response: %s" %(method,params, str(jsonobject))) 
+            logMsg("getJson %s - response: %s" %(method,str(jsonobject))) 
             return {}
     else:
         logMsg("getJson - empty result for Method %s - params: %s - response: %s" %(method,params, str(jsonobject))) 
@@ -184,6 +196,9 @@ def setAddonsettings():
     WINDOW.setProperty("SkinHelper.splittitlechar",SETTING("splittitlechar"))
     WINDOW.setProperty("SkinHelper.enablePVRThumbsRecordingsOnly",SETTING("enablePVRThumbsRecordingsOnly"))
     WINDOW.setProperty("SkinHelper.preferOnlineMusicArt",SETTING("preferOnlineMusicArt"))
+    WINDOW.setProperty("SkinHelper.enableWidgetsArtworkLookups",SETTING("enableWidgetsArtworkLookups"))
+    WINDOW.setProperty("SkinHelper.enableSpecialsInWidgets",SETTING("enableSpecialsInWidgets"))
+    WINDOW.setProperty("SkinHelper.enableWidgetsAlbumBrowse",SETTING("enableWidgetsAlbumBrowse"))
     
 def indentXML( elem, level=0 ):
     i = "\n" + level*"\t"
@@ -301,14 +316,19 @@ def createListItem(item):
         liz.setIconImage(item.get('icon'))
     if item.get("thumbnail"):
         liz.setThumbnailImage(item.get('thumbnail'))
-
     return liz
 
 def prepareListItems(items):
-    newlist = []
-    for item in items:
-        newlist.append(prepareListItem(item))
-    return newlist
+    listitems = []
+    if supportsPool:
+        pool = Pool()
+        listitems = pool.map(prepareListItem, items)
+        pool.close()
+        pool.join()
+    else:
+        for item in items:
+            listitems.append(prepareListItem(item))
+    return listitems
     
 def prepareListItem(item):
     #fix values returned from json to be used as listitem values
@@ -411,10 +431,13 @@ def prepareListItem(item):
         properties["EndDate"] = endtime[0]
         fulldate = starttime[0] + " " + starttime[1] + "-" + endtime[1]
         properties["Date"] = fulldate
+        properties["StartDateTime"] = starttime[0] + " " + starttime[1]
+        item["date"] = starttime[0]
     if item.get("channellogo"): properties["channellogo"] = item.get("channellogo","")
     if item.get("channellogo"): properties["channelicon"] = item.get("channellogo","")
     if item.get("episodename"): properties["episodename"] = item.get("episodename","")
     if item.get("channel"): properties["channel"] = item.get("channel","")
+    if item.get("channel"): properties["channelname"] = item.get("channel","")
     if item.get("channel"): item["label2"] = item.get("channel","")
     
     #artwork
@@ -429,52 +452,60 @@ def prepareListItem(item):
         if not art.get("landscape") and art.get("tvshow.landscape"):
             art["landscape"] = art.get("tvshow.landscape")
     if not art.get("fanart") and item.get('fanart'): art["fanart"] = item.get('fanart')
-    if not art.get("thumb") and item.get('thumbnail'): art["thumb"] = item.get('thumbnail')
-    if not art.get("thumb") and item.get('icon'): art["thumb"] = item.get('icon')
+    if not art.get("thumb") and item.get('thumbnail'): art["thumb"] = getCleanImage(item.get('thumbnail'))
+    if not art.get("thumb") and item.get('icon'): art["thumb"] = getCleanImage(item.get('icon'))
     
     #return the result
     item["extraproperties"] = properties
     return item
     
-def detectPluginContent(plugin,skipscan=False):
+def detectPluginContent(plugin):
     #based on the properties in the listitem we try to detect the content
-    logMsg("detectPluginContent processing: " + plugin)
-    image = None
-    contentType = None
+    
     #load from cache first
-    cache = WINDOW.getProperty("skinhelper-widgetcontenttype").decode("utf-8")
-    if cache:
-        cache = eval(cache)
-        if cache and cache.get(plugin):
-            contentType = cache[plugin][0]
-            image = cache[plugin][1]
-            logMsg("detectPluginContent cache found for: " + plugin)
-            return (contentType, image)
-    else: cache = {}
-        
-    #probe path to determine content
+    cacheStr = "skinhelper-widgetcontenttype-%s" %plugin
+    contentType = WINDOW.getProperty(cacheStr).decode("utf-8")
+
+    #no cache, we need to detect the contenttype
     if not contentType:
-        logMsg("detectPluginContent cache NOT found for: " + plugin)
-        #safety check: check if no library windows are active to prevent any addons setting the view
-        curWindow = xbmc.getInfoLabel("$INFO[Window.Property(xmlfile)]")
-        if curWindow.endswith("Nav.xml") or curWindow == "AddonBrowser.xml" or curWindow.startswith("MyPVR"):
-            skipScan = True
-        
-        if not skipscan:
+        #detect content based on the path
+        if not contentType:
+            if ("movie" in plugin.lower() or 
+                "box" in plugin.lower() or 
+                "dvd" in plugin.lower() or 
+                "rentals" in plugin.lower() or 
+                "incinemas" in plugin.lower() or 
+                "comingsoon" in plugin.lower() or 
+                "upcoming" in plugin.lower() or 
+                "opening" in plugin.lower() or 
+                "intheaters" in plugin.lower()):
+                    contentType = "movies"
+            elif "album" in plugin.lower():
+                contentType = "albums"
+            elif "show" in plugin.lower():
+                contentType = "tvshows"
+            elif "episode" in plugin.lower():
+                contentType = "episodes"
+            elif "media" in plugin.lower():
+                contentType = "movies"
+            elif "favourites" in plugin.lower():
+                contentType = "movies"
+            elif "song" in plugin.lower():
+                contentType = "songs"
+            elif "musicvideo" in plugin.lower():
+                contentType = "musicvideos"
+            elif "type=dynamic" in plugin.lower():
+                contentType = "movies"
+            elif "videos" in plugin.lower():
+                contentType = "movies"
+            elif "type=both" in plugin.lower():
+                contentType = "movies"
+
+        #if we didn't get the content based on the path, we need to probe the addon...
+        if not contentType and not xbmc.getCondVisibility("Window.IsMedia"): #safety check: check if no library windows are active to prevent any addons setting the view
+            logMsg("detectPluginContent probing contenttype for: " + plugin)
             media_array = getJSON('Files.GetDirectory','{ "directory": "%s", "media": "files", "properties": ["title", "file", "thumbnail", "episode", "showtitle", "season", "album", "artist", "imdbnumber", "firstaired", "mpaa", "trailer", "studio", "art"], "limits": {"end":1} }' %plugin)
-            if not media_array: contentType="empty"
             for item in media_array:
-                if item.has_key("art") and not image:
-                    if item["art"].has_key("fanart") and not image:
-                        image = item["art"]["fanart"]
-                    elif item["art"].has_key("tvshow.fanart") and not image:
-                        image = item["art"]["tvshow.fanart"]
-                    elif item["art"].has_key("thumb") and not image:
-                        image = item["art"]["thumb"]
-                    elif item.has_key("fanart_image") and not image:
-                        image = item["fanart_image"]
-                    elif item.has_key("thumbnail") and not image:
-                        image = item["thumbnail"]
                 if not item.has_key("showtitle") and not item.has_key("artist"):
                     #these properties are only returned in the json response if we're looking at actual file content...
                     # if it's missing it means this is a main directory listing and no need to scan the underlying listitems.
@@ -514,31 +545,12 @@ def detectPluginContent(plugin,skipscan=False):
                     elif item["type"] == "movie" or item["imdbnumber"] or item["mpaa"] or item["trailer"] or item["studio"]:
                         contentType = "movies"
                         break
-    
-        #last resort or skipscan chosen - detect content based on the path
-        if not contentType:
-            if "movie" in plugin or "box" in plugin or "dvd" in plugin or "rentals" in plugin:
-                contentType = "movies"
-            elif "album" in plugin:
-                contentType = "albums"
-            elif "show" in plugin:
-                contentType = "tvshows"
-            elif "song" in plugin:
-                contentType = "songs"
-            elif "musicvideo" in plugin:
-                contentType = "musicvideos"
-            else:
-                contentType = "unknown"
-            
+        
         #save to cache
-        logMsg("detectPluginContent detected type for: %s is: %s " %(plugin,contentType))
-        cache[plugin] = (contentType,image)
-        cache = repr(cache)
-        if contentType != "empty": 
-            WINDOW.setProperty("skinhelper-widgetcontenttype",cache)
+        WINDOW.setProperty(cacheStr,contentType)
     
-    #return the values
-    return (contentType, getCleanImage(image))
+    #return the value
+    return contentType
 
 def getLocalDateTimeFromUtc(timestring):
     try:
@@ -581,71 +593,92 @@ def createSmartShortcutSubmenu(windowProp,iconimage):
     except Exception as e:
         logMsg("ERROR in createSmartShortcutSubmenu ! --> " + str(e), 0)
 
-def getCurrentContentType(containerid=""):
+def getCurrentContentType(containerprefix=""):
     contenttype = ""
-    
-    if xbmc.getCondVisibility("Container.Content(episodes)"):
-        contenttype = "episodes"
-    elif xbmc.getCondVisibility("Container.Content(movies) + !substring(Container.FolderPath,setid=)"):
-        contenttype = "movies"  
-    elif xbmc.getCondVisibility("[Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + !substring(Container.FolderPath,setid=)"):
-        contenttype = "sets"
-    elif xbmc.getCondVisibility("substring(Container.FolderPath,setid=)"):
-        contenttype = "setmovies" 
-    elif xbmc.getCondVisibility("Container.Content(tvshows)"):
-        contenttype = "tvshows"
-    elif xbmc.getCondVisibility("Container.Content(seasons)"):
-        contenttype = "seasons"
-    elif xbmc.getCondVisibility("Container.Content(musicvideos)"):
-        contenttype = "musicvideos"
-    elif xbmc.getCondVisibility("Container.Content(songs) | StringCompare(Container.FolderPath,musicdb://singles/)"):
-        contenttype = "songs"
-    elif xbmc.getCondVisibility("Container.Content(artists)"):
-        contenttype = "artists"
-    elif xbmc.getCondVisibility("Container.Content(albums)"):
-        contenttype = "albums"
-    elif xbmc.getCondVisibility("Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRSearch.xml)"):
-        contenttype = "tvchannels"
-    elif xbmc.getCondVisibility("Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml)"):
-        contenttype = "tvrecordings"
-    elif xbmc.getCondVisibility("Window.IsActive(programs) | Window.IsActive(addonbrowser)"):
-        contenttype = "programs"
-    elif xbmc.getCondVisibility("Window.IsActive(pictures)"):
-        contenttype = "pictures"
-    elif xbmc.getCondVisibility("Container.Content(genres)"):
-        contenttype = "genres"
-    elif xbmc.getCondVisibility("Container.Content(files)"):
-        contenttype = "files"
-    elif xbmc.getCondVisibility("!IsEmpty(Container.Content)"):     
-        contenttype = xbmc.getInfoLabel("Container.Content")
-    #try to determine type by the listitem properties
-    elif xbmc.getCondVisibility("!IsEmpty(Container(%s).ListItem(1).DBTYPE)" %containerid):
-        contenttype = xbmc.getInfoLabel("Container(%s).ListItem(1).DBTYPE" %containerid) + "s"
-    elif xbmc.getCondVisibility("!IsEmpty(Container(%s).ListItem(1).Property(DBTYPE))" %containerid):
-        contenttype = xbmc.getInfoLabel("Container(%s).ListItem(1).Property(DBTYPE)" %containerid) + "s"
-    elif xbmc.getCondVisibility("SubString(Container(%s).ListItem(1).FileNameAndPath,playrecording) | SubString(Container(%s).ListItem(1).FileNameAndPath,tvtimer)" %(containerid,containerid)):
-        contenttype = "tvrecordings"
-    elif xbmc.getCondVisibility("SubString(Container(%s).ListItem(1).FolderPath,pvr://channels)" %containerid):
-        contenttype = "tvchannels"
-    elif xbmc.getCondVisibility("StringCompare(Container(%s).ListItem(1).Label,Container(%s).ListItem(1).Artist)" %(containerid,containerid)):
-        contenttype = "artists"
-    elif xbmc.getCondVisibility("StringCompare(Container(%s).ListItem(1).Label,Container(%s).ListItem(1).Album)" %(containerid,containerid)):
-        contenttype = "albums"
-    elif xbmc.getCondVisibility("!IsEmpty(Container(%s).ListItem(1).Artist) + !IsEmpty(Container(%s).ListItem(1).Album)" %(containerid,containerid)):
-        contenttype = "songs"
-    elif xbmc.getCondVisibility("StringCompare(Container(%s).ListItem(1).Label,Container(%s).ListItem(1).TvShowTitle)" %(containerid,containerid)):
-        contenttype = "tvshows"
-    elif xbmc.getCondVisibility("SubString(Container(%s).ListItem(1).FolderPath,flix2kodi) + SubString(Container(%s).ListItem(1).Genre,Series)" %(containerid,containerid)):
-        contenttype = "tvshows"
-    elif xbmc.getCondVisibility("SubString(Container(%s).ListItem(1).FolderPath,flix2kodi)" %(containerid)):
-        contenttype = "movies"
+    if not containerprefix:
+        if xbmc.getCondVisibility("Container.Content(episodes)"):
+            contenttype = "episodes"
+        elif xbmc.getCondVisibility("Container.Content(movies) + !substring(Container.FolderPath,setid=)"):
+            contenttype = "movies"  
+        elif xbmc.getCondVisibility("[Container.Content(sets) | StringCompare(Container.Folderpath,videodb://movies/sets/)] + !substring(Container.FolderPath,setid=)"):
+            contenttype = "sets"
+        elif xbmc.getCondVisibility("substring(Container.FolderPath,setid=)"):
+            contenttype = "setmovies"
+        elif xbmc.getCondVisibility("!IsEmpty(Container.Content)"):     
+            contenttype = xbmc.getInfoLabel("Container.Content")
+        elif xbmc.getCondVisibility("Container.Content(tvshows)"):
+            contenttype = "tvshows"
+        elif xbmc.getCondVisibility("Container.Content(seasons)"):
+            contenttype = "seasons"
+        elif xbmc.getCondVisibility("Container.Content(musicvideos)"):
+            contenttype = "musicvideos"
+        elif xbmc.getCondVisibility("Container.Content(songs) | StringCompare(Container.FolderPath,musicdb://singles/)"):
+            contenttype = "songs"
+        elif xbmc.getCondVisibility("Container.Content(artists)"):
+            contenttype = "artists"
+        elif xbmc.getCondVisibility("Container.Content(albums)"):
+            contenttype = "albums"
+        elif xbmc.getCondVisibility("Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml) | Window.IsActive(MyPVRSearch.xml) | Window.IsActive(pvrguideinfo)"):
+            contenttype = "tvchannels"
+        elif xbmc.getCondVisibility("Window.IsActive(MyPVRRecordings.xml) | Window.IsActive(MyPVRTimers.xml) | Window.IsActive(pvrrecordinginfo)"):
+            contenttype = "tvrecordings"
+        elif xbmc.getCondVisibility("Window.IsActive(programs) | Window.IsActive(addonbrowser)"):
+            contenttype = "programs"
+        elif xbmc.getCondVisibility("Window.IsActive(pictures)"):
+            contenttype = "pictures"
+        elif xbmc.getCondVisibility("Container.Content(genres)"):
+            contenttype = "genres"
+        elif xbmc.getCondVisibility("Container.Content(files)"):
+            contenttype = "files"
+    #last resort: try to determine type by the listitem properties
+    if not contenttype:
+        if xbmc.getCondVisibility("!IsEmpty(%sListItem.DBTYPE)" %containerprefix):
+            contenttype = xbmc.getInfoLabel("%sListItem.DBTYPE" %containerprefix) + "s"
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.Property(DBTYPE))" %containerprefix):
+            contenttype = xbmc.getInfoLabel("%sListItem.Property(DBTYPE)" %containerprefix) + "s"
+        elif xbmc.getCondVisibility("SubString(%sListItem.FileNameAndPath,playrecording) | SubString(%sListItem.FileNameAndPath,tvtimer)" %(containerprefix,containerprefix)):
+            contenttype = "tvrecordings"
+        elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,pvr://channels)" %containerprefix):
+            contenttype = "tvchannels"
+        elif xbmc.getCondVisibility("StringCompare(%sListItem.Label,%sListItem.Artist)" %(containerprefix,containerprefix)):
+            contenttype = "artists"
+        elif xbmc.getCondVisibility("StringCompare(%sListItem.Label,%sListItem.Album)" %(containerprefix,containerprefix)):
+            contenttype = "albums"
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem.Artist) + !IsEmpty(%sListItem.Album)" %(containerprefix,containerprefix)):
+            contenttype = "songs"
+        elif xbmc.getCondVisibility("StringCompare(%sListItem.Label,%sListItem.TvShowTitle)" %(containerprefix,containerprefix)):
+            contenttype = "tvshows"
+        elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,flix2kodi) + SubString(%sListItem.Genre,Series)" %(containerprefix,containerprefix)):
+            contenttype = "tvshows"
+        elif xbmc.getCondVisibility("SubString(%sListItem.FolderPath,flix2kodi)" %(containerprefix)):
+            contenttype = "movies"
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem(1).DBTYPE)" %containerprefix):
+            contenttype = xbmc.getInfoLabel("%sListItem(1).DBTYPE" %containerprefix) + "s"
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem(1).Property(DBTYPE))" %containerprefix):
+            contenttype = xbmc.getInfoLabel("%sListItem(1).Property(DBTYPE)" %containerprefix) + "s"
+        elif xbmc.getCondVisibility("SubString(%sListItem(1).FileNameAndPath,playrecording) | SubString(%sListItem(1).FileNameAndPath,tvtimer)" %(containerprefix,containerprefix)):
+            contenttype = "tvrecordings"
+        elif xbmc.getCondVisibility("SubString(%sListItem(1).FolderPath,pvr://channels)" %containerprefix):
+            contenttype = "tvchannels"
+        elif xbmc.getCondVisibility("StringCompare(%sListItem(1).Label,%sListItem(1).Artist)" %(containerprefix,containerprefix)):
+            contenttype = "artists"
+        elif xbmc.getCondVisibility("StringCompare(%sListItem(1).Label,%sListItem(1).Album)" %(containerprefix,containerprefix)):
+            contenttype = "albums"
+        elif xbmc.getCondVisibility("!IsEmpty(%sListItem(1).Artist) + !IsEmpty(%sListItem(1).Album)" %(containerprefix,containerprefix)):
+            contenttype = "songs"
+        elif xbmc.getCondVisibility("StringCompare(%sListItem(1).Label,%sListItem(1).TvShowTitle)" %(containerprefix,containerprefix)):
+            contenttype = "tvshows"
+        elif xbmc.getCondVisibility("SubString(%sListItem(1).FolderPath,flix2kodi) + SubString(%sListItem(1).Genre,Series)" %(containerprefix,containerprefix)):
+            contenttype = "tvshows"
+        elif xbmc.getCondVisibility("SubString(%sListItem(1).FolderPath,flix2kodi)" %(containerprefix)):
+            contenttype = "movies"
     
     WINDOW.setProperty("contenttype",contenttype)
     return contenttype
          
 def getCleanImage(image):
     if image and "image://" in image:
-        image = image.replace("image://","")
+        image = image.replace("image://","").replace("music@","")
         image=urllib.unquote(image.encode("utf-8"))
         if image.endswith("/"):
             image = image[:-1]
@@ -785,25 +818,18 @@ def resetPlayerWindowProps():
     
 def resetMusicWidgetWindowProps(data="",resetAll=False):
     #clear the cache for the music widgets
-    WINDOW.setProperty("resetMusicArtCache","reset")
-    WINDOW.setProperty("widgetreloadmusic", time.strftime("%Y%m%d%H%M%S", time.gmtime()))
-    
-    #clear the cache for the music widgets
     type = "unknown"
     if data:
         data = eval(data.replace("true","True").replace("false","False"))
-        type = data["item"]["type"]
+        type = data.get("type","")
 
     if (type in ["song","artist","album"] or resetAll) and not WINDOW.getProperty("skinhelper-refreshmusicwidgetsbusy"):
         logMsg("Music database changed - type: %s - resetAll: %s, refreshing widgets...." %(type,resetAll))
-        WINDOW.setProperty("skinhelper-refreshmusicwidgetsbusy","busy")
         if resetAll: WINDOW.setProperty("resetMusicArtCache","reset")
         timestr = time.strftime("%Y%m%d%H%M%S", time.gmtime())
         WINDOW.setProperty("widgetreloadmusic", timestr)
-        #add sleep to prevent same action within time period
-        xbmc.Monitor().waitForAbort(2)
         WINDOW.clearProperty("skinhelper-refreshmusicwidgetsbusy")
-    
+        
 def resetVideoWidgetWindowProps(data="",resetAll=False):
     #clear the cache for the video widgets
     type = "unknown"
@@ -812,11 +838,10 @@ def resetVideoWidgetWindowProps(data="",resetAll=False):
         type = data["item"]["type"]
 
     if (type in ["movie","tvshow","episode"] and not WINDOW.getProperty("skinhelper-refreshvideowidgetsbusy")) or resetAll:
-        logMsg("Video database changed - type: %s - resetAll: %s, refreshing widgets...." %(type,resetAll),0)
+        logMsg("Video database changed - type: %s - resetAll: %s, refreshing widgets...." %(type,resetAll))
         WINDOW.setProperty("skinhelper-refreshvideowidgetsbusy","busy")
         if resetAll: WINDOW.setProperty("resetVideoDbCache","reset")
         timestr = time.strftime("%Y%m%d%H%M%S", time.gmtime())
-        WINDOW.setProperty("widgetreload", timestr)
         #reset specific widgets, based on item that is updated
         if resetAll or type=="movie":
             WINDOW.setProperty("widgetreload-movies", timestr)
@@ -824,8 +849,7 @@ def resetVideoWidgetWindowProps(data="",resetAll=False):
             WINDOW.setProperty("widgetreload-episodes", timestr)
         if resetAll or type=="tvshow":
             WINDOW.setProperty("widgetreload-tvshows", timestr)
-        #add sleep to prevent same action within time period
-        xbmc.Monitor().waitForAbort(2)
+        WINDOW.setProperty("widgetreload", timestr)
         WINDOW.clearProperty("skinhelper-refreshvideowidgetsbusy")
 
 def getResourceAddonFiles(addonName,allFilesList=None):

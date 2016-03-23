@@ -22,13 +22,14 @@ if __name__ == '__main__':
         channel = xbmc.getInfoLabel("ListItem.ChannelName").decode('utf-8')
         path = xbmc.getInfoLabel("ListItem.FileNameAndPath").decode('utf-8')
         genre = xbmc.getInfoLabel("ListItem.Genre").decode('utf-8')
+        year = xbmc.getInfoLabel("ListItem.Year").decode('utf-8')
         ret = xbmcgui.Dialog().select(header, options)
         if ret == 0:
             #Refresh item (auto lookup)
-            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
+            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,year,ignoreCache=True, manualLookup=False)
         elif ret == 1:
             #Refresh item (manual lookup)
-            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=True)
+            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,year,ignoreCache=True, manualLookup=True)
         elif ret == 2:
             #Add channel to ignore list
             ignorechannels = WINDOW.getProperty("SkinHelper.ignorechannels").decode("utf-8")
@@ -36,7 +37,7 @@ if __name__ == '__main__':
             ignorechannels += channel
             ADDON.setSetting("ignorechannels",ignorechannels)
             WINDOW.setProperty("SkinHelper.ignorechannels",ignorechannels)
-            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
+            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,year,ignoreCache=True, manualLookup=False)
         elif ret == 3:
             #Add title to ignore list
             ignoretitles = WINDOW.getProperty("SkinHelper.ignoretitles").decode("utf-8")
@@ -44,7 +45,7 @@ if __name__ == '__main__':
             ignoretitles += title
             ADDON.setSetting("ignoretitles",ignoretitles)
             WINDOW.setProperty("SkinHelper.ignoretitles",ignoretitles)
-            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,ignoreCache=True, manualLookup=False)
+            artwork = artworkutils.getPVRThumbs(title,channel,type,path,genre,year,ignoreCache=True, manualLookup=False)
         elif ret == 4:
             #Open addon settings
             xbmc.executebuiltin("Addon.OpenSettings(script.skin.helper.service)")

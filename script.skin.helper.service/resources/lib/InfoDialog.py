@@ -2,6 +2,7 @@ import sys, re
 import xbmc, xbmcgui, xbmcvfs
 import ArtworkUtils as artutils
 import PluginContent as plugincontent
+from Utils import *
 import threading
 
 CANCEL_DIALOG  = ( 9, 10, 92, 216, 247, 257, 275, 61467, 61448, )
@@ -12,6 +13,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
         xbmcgui.WindowXMLDialog.__init__( self )
         self.listitem = kwargs[ "listitem" ]
         self.content = kwargs[ "content" ]
+        WINDOW.setProperty("SkinHelper.WidgetContainer","999")
 
     def onInit( self ):
         self._hide_controls()
@@ -47,6 +49,7 @@ class GUI( xbmcgui.WindowXMLDialog ):
     def _close_dialog( self, action=None ):
         self.action = action
         self.bginfoThread.stopRunning()
+        WINDOW.clearProperty("SkinHelper.WidgetContainer")
         self.close()
 
     def onClick( self, controlId ):
