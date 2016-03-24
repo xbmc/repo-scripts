@@ -1,3 +1,9 @@
+** 2016.03.24 **
+
+Added 'None' to padding options (0 seconds)
+Fix 'Delete Task' button not showing properly when too many buttons were visible
+Channel slice now works for non DVR subscribers
+
 ** 2016.03.18 **
 
 Add 'Channel Slice' to live TV

@@ -307,9 +307,6 @@ class GuideOverlay(util.CronReceiver):
         self._BASE.onAction(self,action)
 
     def onListItemFocus(self, mli):
-        if not self.hasDVR():
-            return
-
         if self.lastItem:
             self.lastItem.setProperty('slice.offset', '0')
             self.lastItem.dataSource['sliceOffset'] = 0
@@ -422,6 +419,8 @@ class GuideOverlay(util.CronReceiver):
             elif ep.startTimestamp > self.sliceTimestamp:
                 mli.dataSource['sliceOffset'] = o
                 break
+        else:
+            mli.dataSource['sliceOffset'] = o
 
         self.updateSlice(mli)
 
@@ -455,23 +454,25 @@ class GuideOverlay(util.CronReceiver):
             if timestamp:
                 if not mli.dataSource['slice']:
                     mli.setProperty('loading', '1')
-                    mli.dataSource['slice'] = hdhr.guide.slice(self.devices.apiAuthID(), channel)[1:]
-
-                while mli.dataSource['slice'][-1].startTimestamp < timestamp and not self.abort and self.channelList.itemIsSelected(mli):
-                    mli.setProperty('loading', '1')
-                    mli.dataSource['slice'] += hdhr.guide.slice(self.devices.apiAuthID(), channel, mli.dataSource['slice'][-1].endTimestamp)
+                    mli.dataSource['slice'] = channel.initialSlice()
+                if self.hasDVR():
+                    while mli.dataSource['slice'][-1].startTimestamp < timestamp and not self.abort and self.channelList.itemIsSelected(mli):
+                        mli.setProperty('loading', '1')
+                        mli.dataSource['slice'] += hdhr.guide.slice(self.devices.apiAuthID(), channel, mli.dataSource['slice'][-1].endTimestamp)
             else:
-                mli.setProperty('loading', '1')
                 if mli.dataSource['slice']:
-                    mli.dataSource['slice'] += hdhr.guide.slice(self.devices.apiAuthID(), channel, mli.dataSource['slice'][-1].endTimestamp)
+                    if self.hasDVR():
+                        mli.setProperty('loading', '1')
+                        mli.dataSource['slice'] += hdhr.guide.slice(self.devices.apiAuthID(), channel, mli.dataSource['slice'][-1].endTimestamp)
                 else:
-                    mli.dataSource['slice'] = hdhr.guide.slice(self.devices.apiAuthID(), channel)[1:]
+                    mli.setProperty('loading', '1')
+                    mli.dataSource['slice'] = channel.initialSlice()
 
-            if False:
-                for i in range(min(6, len(mli.dataSource['slice']))):
-                    ep = mli.dataSource['slice'][i]
-                    mli.setProperty('slice{0}.thumb'.format(i), ep.icon)
-                    mli.setProperty('slice{0}.time'.format(i), ep.startTimestamp and self.timeDisplay(ep.startTimestamp) or '')
+            # if False:
+            #     for i in range(min(6, len(mli.dataSource['slice']))):
+            #         ep = mli.dataSource['slice'][i]
+            #         mli.setProperty('slice{0}.thumb'.format(i), ep.icon)
+            #         mli.setProperty('slice{0}.time'.format(i), ep.startTimestamp and self.timeDisplay(ep.startTimestamp) or '')
         finally:
             mli.setProperty('loading', '')
 
@@ -484,9 +485,6 @@ class GuideOverlay(util.CronReceiver):
         mli.dataSource['thread'].start()
 
     def _sliceRight(self, mli):
-        if not self.hasDVR():
-            return
-
         mli.dataSource['sliceOffset'] += 1
 
         self.updateSlice(mli)
@@ -496,9 +494,6 @@ class GuideOverlay(util.CronReceiver):
         mli.setProperty('slice.offset', str(min(mli.dataSource['sliceOffset'], 6)))
 
     def sliceLeft(self):
-        if not self.hasDVR():
-            return
-
         mli = self.channelList.getSelectedItem()
 
         mli.dataSource['sliceOffset'] -= 1
@@ -631,6 +626,9 @@ class GuideOverlay(util.CronReceiver):
 
     @util.busyDialog('BUSY')
     def openRecordDialog(self, ep):
+        if not self.hasDVR():
+            return
+
         if not ep:
             return
 

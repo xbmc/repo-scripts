@@ -98,6 +98,15 @@ class GuideChannel(dict):
 
         return Show()
 
+    def initialSlice(self):
+        shows = self.get('Guide')
+        if not shows:
+            return []
+
+        now = time.time()
+
+        return [Episode(r) for r in shows if r.get('StartTime') > now]
+
 '''
 {
         "SeriesID": "11942433",

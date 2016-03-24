@@ -44,6 +44,9 @@ class Channel(object):
         else:
             return filter_ in self.name.lower() or filter_ in self.guide.affiliate.lower() or filter_ == self.number
 
+    def initialSlice(self):
+        return self.guide.initialSlice()
+
 class LineUp(object):
     def __init__(self,devices):
         self.channels = OrderedDict()

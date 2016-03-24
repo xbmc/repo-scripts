@@ -20,7 +20,7 @@ class RecordDialog(kodigui.BaseDialog):
     START_BUTTON = 215
     END_BUTTON = 216
 
-    PADDING_OPTIONS = (('30s', 30), ('1m', 60), ('5m', 300), ('15m', 900), ('30m', 1800), ('1h', 3600))
+    PADDING_OPTIONS = (('None', 0), ('30s', 30), ('1m', 60), ('5m', 300), ('15m', 900), ('30m', 1800), ('1h', 3600))
 
     def __init__(self,*args,**kwargs):
         kodigui.BaseDialog.__init__(self,*args,**kwargs)
@@ -186,7 +186,7 @@ class RecordDialog(kodigui.BaseDialog):
             self.startPadding = choice[1]
             self.rule.startPadding = choice[1]
         else:
-            label = util.durationToShortText(value)
+            label = value and util.durationToShortText(value) or self.PADDING_OPTIONS[0][0]
             self.startPadding = value
 
 
@@ -201,7 +201,7 @@ class RecordDialog(kodigui.BaseDialog):
             self.endPadding = choice[1]
             self.rule.endPadding = choice[1]
         else:
-            label = util.durationToShortText(value)
+            label = value and util.durationToShortText(value) or self.PADDING_OPTIONS[0][0]
             self.endPadding = value
 
         self.getControl(self.END_BUTTON).setLabel(label)

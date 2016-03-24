@@ -145,7 +145,7 @@
             </control>
 
             <control type="grouplist" id="220">
-                <width>1000</width>
+                <width>1120</width>
                 <left>60</left>
                 <align>left</align>
                 <top>340</top>
@@ -156,7 +156,7 @@
                 <orientation>horizontal</orientation>
                 <control type="button" id="208">
                     <visible>!IsEmpty(Window.Property(show.watch))</visible>
-                    <width>300</width>
+                    <width>240</width>
                     <height>70</height>
                     <label>[B]WATCH[/B]</label>
                     <font>font13</font>
@@ -166,7 +166,7 @@
                 </control>
                 <control type="button" id="206">
                     <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
-                    <width>300</width>
+                    <width>250</width>
                     <height>70</height>
                     <label>[B]PRIORITY[/B]</label>
                     <font>font13</font>
@@ -176,7 +176,7 @@
                 </control>
                 <control type="button" id="205">
                     <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
-                    <width>300</width>
+                    <width>250</width>
                     <height>70</height>
                     <label>[B]$INFO[Window.Property(record.always)][/B]</label>
                     <font>font13</font>
@@ -186,7 +186,7 @@
                 </control>
                 <control type="button" id="203">
                     <visible>IsEmpty(Window.Property(show.hasRule))</visible>
-                    <width>300</width>
+                    <width>250</width>
                     <height>70</height>
                     <label>[B]$ADDON[script.hdhomerun.view 32824][/B]</label>
                     <font>font13</font>
@@ -196,7 +196,7 @@
                 </control>
                 <control type="button" id="207">
                     <visible>!IsEmpty(Window.Property(show.hasRule))</visible>
-                    <width>300</width>
+                    <width>280</width>
                     <height>70</height>
                     <label>[B]DELETE TASK[/B]</label>
                     <font>font13</font>
@@ -206,7 +206,7 @@
                 </control>
                 <control type="button" id="204">
                     <visible>!IsEmpty(Window.Property(show.hide))</visible>
-                    <width>300</width>
+                    <width>250</width>
                     <height>70</height>
                     <label>[B]$INFO[Window.Property(show.hide)][/B]</label>
                     <font>font13</font>
