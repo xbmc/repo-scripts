@@ -6,6 +6,7 @@
 		<setting id="centralStoreLocation" type="folder" label="32004" default="" />
 		<setting id="runOnStartup" type="bool" label="32018" default="true" />
         <setting id="checkInterval" label="32010" visible="eq(-1,true)" type="slider" default="0" range="0,1,10" option="int"/>
+		<setting id="restartUpdatedServiceAddons" type="bool" label="32023" visible="eq(-4,1)" default="false" />
 		<setting label="32002" type="lsep"/>
 		<setting id="logEnabled" type="bool" label="32003" default="false"/>
 		<setting label="32021" type="lsep"/>

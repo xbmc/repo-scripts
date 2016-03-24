@@ -356,6 +356,12 @@ class AddonData():
         # Load the hash values from the central storage location
         backedUpHashValues = self._loadHashRecord(sourceLocation)
 
+        # Get the set of service addons, these are the ones that will need to be restarted
+        # if the user has that option enabled
+        restartAddons = []
+        if Settings.isRestartUpdatedServiceAddons():
+            restartAddons = self._getServiceAddons()
+
         for addonName in localAddonDetails.keys():
             # Check if this addon already exists on the source location
             if addonName not in backedUpHashValues.keys():
@@ -385,6 +391,74 @@ class AddonData():
             except:
                 log("AddonSync: Failed to copy from %s to %s" % (sourceDir, addonDetail['dir']), xbmc.LOGERROR)
                 log("AddonSync: %s" % traceback.format_exc(), xbmc.LOGERROR)
+
+            # Check if we need to restart the addon.
+            if addonName in restartAddons:
+                self._restartAddon(addonName)
+
+    def _getServiceAddons(self):
+        # Make the call to find out all the service addons that are installed
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddons", "params": { "type": "xbmc.service", "enabled": true, "properties": ["broken"] }, "id": 1}')
+
+        json_response = json.loads(json_query)
+
+        serviceAddons = []
+
+        if ("result" in json_response) and ('addons' in json_response['result']):
+            # Check each of the service addons that are installed on the system
+            for addonItem in json_response['result']['addons']:
+                addonName = addonItem['addonid']
+
+                # Skip ourselves
+                if addonName in ['service.addonsync']:
+                    log("AddonSync: Detected ourself: %s" % addonName)
+                    continue
+
+                # Need to ensure we skip any addon that are flagged as broken
+                if addonItem['broken']:
+                    log("AddonSync: Skipping broken service addon: %s" % addonName)
+                    continue
+
+                # Now we are left with only the addon screensavers
+                log("AddonSync: Detected Service Addon: %s" % addonName)
+                serviceAddons.append(addonName)
+
+        return serviceAddons
+
+    def _restartAddon(self, addonName):
+        log("AddonSync: Restarting addon %s" % addonName)
+
+        # To restart the addon, first disable it, then enable it
+        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.SetAddonEnabled", "params": { "addonid": "%s", "enabled": "toggle" }, "id": 1}' % addonName)
+
+        # Wait until the operation has completed (wait at most 10 seconds)
+        monitor = xbmc.Monitor()
+        maxWaitTime = 10
+        while maxWaitTime > 0:
+            maxWaitTime = maxWaitTime - 1
+            if monitor.waitForAbort(1):
+                # Abort was requested while waiting
+                maxWaitTime = 0
+                break
+
+            # Get the current state of the addon
+            log("AddonSync: Disabling addon %s" % addonName)
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.GetAddonDetails", "params": { "addonid": "%s", "properties": ["enabled"] }, "id": 1}' % addonName)
+
+            json_response = json.loads(json_query)
+
+            if ("result" in json_response) and ('addon' in json_response['result']):
+                addonDetail = json_response['result']['addon']
+                isEnabled = addonDetail['enabled']
+
+                if not isEnabled:
+                    log("AddonSync: Addon %s stopped, ready to restart" % addonName)
+                    maxWaitTime = 0
+                    break
+
+        # Now enable the addon
+        log("AddonSync: Enabling addon %s" % addonName)
+        xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Addons.SetAddonEnabled", "params": { "addonid": "%s", "enabled": "toggle" }, "id": 1}' % addonName)
 
 
 # Main class to perform the sync

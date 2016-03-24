@@ -76,13 +76,13 @@ def nestedCopy(rootSourceDir, rootTargetDir):
         log("nestedCopy: Copy file %s to %s" % (sourceFile, targetFile))
         xbmcvfs.copy(sourceFile, targetFile)
 
-    for dir in dirs:
+    for adir in dirs:
         try:
-            dir = dir.decode("utf-8")
+            adir = adir.decode("utf-8")
         except:
             pass
-        sourceDir = "%s%s/" % (rootSourceDir, dir)
-        targetDir = "%s%s/" % (rootTargetDir, dir)
+        sourceDir = "%s%s/" % (rootSourceDir, adir)
+        targetDir = "%s%s/" % (rootTargetDir, adir)
         log("nestedCopy: Copy directory %s to %s" % (sourceDir, targetDir))
         nestedCopy(sourceDir, targetDir)
 
@@ -93,8 +93,8 @@ def nestedDelete(rootDir):
         # Remove the png files in the directory first
         dirs, files = xbmcvfs.listdir(rootDir)
         # Remove nested directories first
-        for dir in dirs:
-            nestedDelete(os_path_join(rootDir, dir))
+        for adir in dirs:
+            nestedDelete(os_path_join(rootDir, adir))
         # If there are any nested files remove them
         for aFile in files:
             xbmcvfs.delete(os_path_join(rootDir, aFile))
@@ -148,6 +148,10 @@ class Settings():
         if not Settings.isRunOnStartup():
             return 0
         return int(float(__addon__.getSetting('checkInterval')))
+
+    @staticmethod
+    def isRestartUpdatedServiceAddons():
+        return __addon__.getSetting('restartUpdatedServiceAddons') == 'true'
 
     @staticmethod
     def getFilterType():

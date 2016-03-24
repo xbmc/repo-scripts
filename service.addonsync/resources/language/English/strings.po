@@ -111,3 +111,7 @@ msgstr ""
 msgctxt "#32022"
 msgid "Run Synchronisation Now"
 msgstr ""
+
+msgctxt "#32023"
+msgid "Restart Updated Service Addons"
+msgstr ""
