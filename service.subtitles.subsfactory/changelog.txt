@@ -1,3 +1,9 @@
+1.0.2 (2016-03-23)
+- bugfix download link
+1.0.1 (2016-03-12)
+- added support for automatic search of videos without title metadata (thx emavgl)
+- fixed to show files in subdirectory in zip file downloaded
+- general bugfix
 1.0.0 (2016-01-23)
 - updated xbmc.python version
 - updated layout language
