@@ -93,9 +93,11 @@ def Search(item,langs):
     helper = SubTiToolHelper(filename, md5hash)
     results = helper.search(item, t, langs)
 
+    if results is None:
+        return
+
     results = results.getElementsByTagName('Subtitle')
     for node in results:
-
         sTitle = node.getElementsByTagName('TITLE')[0].firstChild.data
         sLang = node.getElementsByTagName('LANGUAGE')[0].firstChild.data
         sTitle = node.getElementsByTagName('TITLE')[0].firstChild.data
@@ -167,8 +169,15 @@ def get_params():
 
 params = get_params()
 
-if params['action'] == 'search':
+if params['action'] == 'search' or params['action'] == 'manualsearch':
     item = {}
+    if 'searchstring' in params:
+        item['mansearch'] = True
+        item['mansearchstr'] = params['searchstring']
+    else:
+        item['mansearch'] = False
+        item['mansearchstr'] = ''
+
     item['temp'] = False
     item['rar'] = False
     item['year'] = xbmc.getInfoLabel("VideoPlayer.Year")  # Year
