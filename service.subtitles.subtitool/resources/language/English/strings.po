@@ -17,3 +17,11 @@ msgstr ""
 msgctxt "#32001"
 msgid "Some Error Msg"
 msgstr ""
+
+msgctxt "#32002"
+msgid "Search string is too short!"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Error"
+msgstr ""

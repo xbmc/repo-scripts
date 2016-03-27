@@ -1,6 +1,6 @@
 # *-* coding: utf-8 *-*
 
-import urllib, urllib2, base64, StringIO, sys, xbmc
+import urllib, urllib2, base64, StringIO, sys, xbmc, xbmcaddon
 from xml.dom import minidom
 
 
@@ -15,20 +15,31 @@ class SubTiToolHelper:
 
         fulllang = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ENGLISH_NAME)
         if fulllang == "Persian": fulllang = "Farsi/Persian"
-        #xbmc.executebuiltin("Notification(Title," + fulllang + ")")
-        url = "http://www.subtitool.com/api/?query=" + self.filename + "&Lang=" + langs
+        #xbmc.executebuiltin("Notification(Title," + item['mansearchstr'] + ")")
+        QueryString = self.filename;
+
+        if item['mansearch']:
+            QueryString = item['mansearchstr'];
+
+        addon = xbmcaddon.Addon();
+
+        if len(QueryString) < 6:
+            xbmc.executebuiltin("Notification(" + addon.getLocalizedString(32003) + "," + addon.getLocalizedString(32002) + ")")
+            return
+
+        url = "http://www.subtitool.com/api/?query=" + QueryString + "&Lang=" + langs
         subs = urllib.urlopen(url).read()
         DOMTree = minidom.parseString(subs)
         if DOMTree.getElementsByTagName('Subtitle').length == 0:
            try:
-            url = "http://www.subtitool.com/api/?query=" + self.filename + "&Lang=" + langs + "&OR=1"
+            url = "http://www.subtitool.com/api/?query=" + QueryString + "&Lang=" + langs + "&OR=1"
             subs = urllib.urlopen(url).read()
             DOMTree = minidom.parseString(subs)
            except Exception, e:
                 log("Subtitool","Not Found OR")
 
            try:
-            url = "http://www.subtitool.com/api/?query=" + self.filename + "&Lang=" + langs
+            url = "http://www.subtitool.com/api/?query=" + QueryString + "&Lang=" + langs
             subs = urllib.urlopen(url).read()
             DOMTree = minidom.parseString(subs)
            except Exception, e:

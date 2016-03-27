@@ -4,3 +4,7 @@
 1.1.1 - by KianMax 21/03/2016
 - Small bugfixes
 - Some improvements in the search functionality when you have selected multiple languages
+
+1.1.2 - by KianMax 26/03/2016
+- Manual Search Added
+
