@@ -19,7 +19,7 @@ from utilities import *
 
 LOC_URL          = 'http://query.yahooapis.com/v1/public/yql?q=%s&format=json'
 LOC_QUERY        = 'select * from geo.places where text="%s"'
-API_URL          = 'http://weather.yahooapis.com/forecastrss?w=%s&u=c'
+API_URL          = 'http://xml.weather.yahoo.com/forecastrss?w=%s&u=c'
 WEATHER_ICON     = xbmc.translatePath('special://temp/weather/%s.png').decode("utf-8")
 WEATHER_WINDOW   = xbmcgui.Window(12600)
 

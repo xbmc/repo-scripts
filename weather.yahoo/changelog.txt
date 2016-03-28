@@ -1,3 +1,6 @@
+v3.1.0
+- change url due to api changes
+
 v3.0.9
 - add option for 5 locations
 
