@@ -39,7 +39,7 @@ class NextUpInfo(xbmcgui.WindowXMLDialog):
 
         # set the dialog data
         self.getControl(3000).setLabel(name)
-        self.getControl(3001).setLabel(overview)
+        self.getControl(3001).setText(overview)
         self.getControl(3002).setLabel(episodeInfo)
         self.getControl(3004).setLabel(info)
 
