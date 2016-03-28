@@ -1,0 +1,33 @@
+# Kodi Media Center language file
+# Addon Name: Yahoo! Weather
+# Addon id: weather.yahoo
+# Addon Provider: ronie
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/xbmc-addons/language/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "#32101"
+msgid "Location setup"
+msgstr "地域の設定"
+
+msgctxt "#32111"
+msgid "Location 1"
+msgstr "地域1"
+
+msgctxt "#32112"
+msgid "Location 2"
+msgstr "地域2"
+
+msgctxt "#32113"
+msgid "Location 3"
+msgstr "地域3"
