@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="context.extendedinfo.ratemedia" name="ExtendedInfo Script - Rate media items" version="1.0.1" provider-name="phil65">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="script.extendedinfo" version="4.5.0"/>
+  </requires>
+  <extension point="kodi.context.item">
+    <menu id="kodi.core.main">
+      <item library="addon.py">
+        <label>32000</label>
+        <visible>StringCompare(ListItem.dbtype,movie) | StringCompare(ListItem.dbtype,tvshow) | StringCompare(ListItem.dbtype,episode)</visible>
+      </item>
+    </menu>
+  </extension>
+  <extension point="kodi.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Rate media at TheMovieDB from context menu in library</summary>
+    <description lang="en">Rate media at TheMovieDB from context menu in library. Needs script.extendedinfo installed and activated. Available for movies, tv shows and episodes currently.</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+    <forum></forum>
+    <source>https://github.com/phil65/context.extendedinfo.ratemedia</source>
+  </extension>
+</addon>
