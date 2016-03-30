@@ -200,6 +200,13 @@ def _completeInfo(info):
 
 
 def _getExtension(info):
+    ext = _actualGetExtension(info)
+    if ext == 'm3u8':
+        return 'mp4'
+    return ext
+
+
+def _actualGetExtension(info):
     url = info['url']
     initialURLExt = url.rsplit('.', 1)[-1]
     resolvedURLExt = None

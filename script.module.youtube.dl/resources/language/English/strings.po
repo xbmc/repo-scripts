@@ -148,3 +148,7 @@ msgstr ""
 msgctxt "#32034"
 msgid "Settings"
 msgstr ""
+
+msgctxt "#32035"
+msgid "Message"
+msgstr ""

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import sys, time
+import sys
+import time
+import datetime
 import xbmc
 from yd_private_libs import util, updater
 import YDStreamUtils as StreamUtils
@@ -8,7 +10,10 @@ updater.updateCore()
 
 updater.set_youtube_dl_importPath()
 
-from youtube_dl.utils import std_headers, DownloadError #analysis:ignore
+from youtube_dl.utils import std_headers, DownloadError  # noqa E402
+
+DownloadError  # Hides IDE warnings
+
 
 ###############################################################################
 # FIX: xbmcout instance in sys.stderr does not have isatty(), so we add it
@@ -33,6 +38,9 @@ util.LOG('youtube_dl core version: {0}'.format(coreVersion))
 # FIXES: datetime.datetime.strptime evaluating as None?
 ###############################################################################
 _utils_unified_strdate = youtube_dl.utils.unified_strdate
+_utils_date_from_str = youtube_dl.utils.date_from_str
+
+
 def _unified_strdate_wrap(date_str):
     try:
         return _utils_unified_strdate(date_str)
@@ -40,8 +48,7 @@ def _unified_strdate_wrap(date_str):
         return '00000000'
 youtube_dl.utils.unified_strdate = _unified_strdate_wrap
 
-import datetime
-_utils_date_from_str = youtube_dl.utils.date_from_str
+
 def _date_from_str_wrap(date_str):
     try:
         return _utils_date_from_str(date_str)
@@ -51,14 +58,15 @@ youtube_dl.utils.date_from_str = _date_from_str_wrap
 ###############################################################################
 
 _YTDL = None
-_DISABLE_DASH_VIDEO = util.getSetting('disable_dash_video',True)
+_DISABLE_DASH_VIDEO = util.getSetting('disable_dash_video', True)
 _CALLBACK = None
-#_BLACKLIST = ['youtube:playlist', 'youtube:toplist', 'youtube:channel', 'youtube:user', 'youtube:search', 'youtube:show', 'youtube:favorites', 'youtube:truncated_url','vimeo:channel', 'vimeo:user', 'vimeo:album', 'vimeo:group', 'vimeo:review','dailymotion:playlist', 'dailymotion:user','generic']
+# BLACKLIST = ['youtube:playlist', 'youtube:toplist', 'youtube:channel', 'youtube:user', 'youtube:search', 'youtube:show', 'youtube:favorites', 'youtube:truncated_url','vimeo:channel', 'vimeo:user', 'vimeo:album', 'vimeo:group', 'vimeo:review','dailymotion:playlist', 'dailymotion:user','generic'] # noqa E501
 _BLACKLIST = []
 _OVERRIDE_PARAMS = {}
 _DOWNLOAD_CANCEL = False
 _DOWNLOAD_START = None
 _DOWNLOAD_DURATION = None
+
 
 class VideoInfo:
     """
@@ -66,7 +74,8 @@ class VideoInfo:
     Has the properties title, description, thumbnail and webpage
     The info property contains the original youtube-dl info
     """
-    def __init__(self,ID=None):
+
+    def __init__(self, ID=None):
         self.ID = ID
         self.title = ''
         self.description = ''
@@ -102,15 +111,17 @@ class VideoInfo:
         """
         Return True if there is more than one stream
         """
-        if not self._streams: return False
-        if len(self._streams) > 1: return True
+        if not self._streams:
+            return False
+        if len(self._streams) > 1:
+            return True
         return False
 
-    def selectStream(self,idx):
+    def selectStream(self, idx):
         """
         Select the default stream by index or by passing the stream dict
         """
-        if isinstance(idx,dict):
+        if isinstance(idx, dict):
             self._selection = idx['idx']
         else:
             self._selection = idx
@@ -119,10 +130,14 @@ class VideoInfo:
         """
         Returns the info of the currently selected stream
         """
-        if self._selection == None: return self._streams[0]
+        if self._selection is None:
+            return self._streams[0]
         return self._streams[self._selection]
 
-class DownloadCanceledException(Exception): pass
+
+class DownloadCanceledException(Exception):
+    pass
+
 
 class CallbackMessage(str):
     """
@@ -133,6 +148,7 @@ class CallbackMessage(str):
         speedStr    <- Speed string ex: 35 KBs
         info        <- dict of the youtube-dl progress info
     """
+
     def __new__(self, value, pct=0, eta_str='', speed_str='', info=None):
         return str.__new__(self, value)
 
@@ -142,17 +158,19 @@ class CallbackMessage(str):
         self.speedStr = speed_str
         self.info = info
 
+
 class YoutubeDLWrapper(youtube_dl.YoutubeDL):
     """
     A wrapper for youtube_dl.YoutubeDL providing message handling and
     progress callback.
     It also overrides XBMC environment error causing methods.
     """
-    def __init__(self,*args,**kwargs):
+
+    def __init__(self, *args, **kwargs):
         self._lastDownloadedFilePath = ''
         self._overrideParams = {}
 
-        youtube_dl.YoutubeDL.__init__(self,*args,**kwargs)
+        youtube_dl.YoutubeDL.__init__(self, *args, **kwargs)
 
     def showMessage(self, msg):
         global _CALLBACK
@@ -163,11 +181,12 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
                 util.ERROR('Error in callback. Removing.')
                 _CALLBACK = None
         else:
-            if xbmc.abortRequested: raise Exception('abortRequested')
-            #print msg.encode('ascii','replace')
+            if xbmc.abortRequested:
+                raise Exception('abortRequested')
+            # print msg.encode('ascii','replace')
         return True
 
-    def progressCallback(self,info):
+    def progressCallback(self, info):
         global _DOWNLOAD_CANCEL
         if xbmc.abortRequested or _DOWNLOAD_CANCEL:
             _DOWNLOAD_CANCEL = False
@@ -175,27 +194,29 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
         if _DOWNLOAD_DURATION:
             if time.time() - _DOWNLOAD_START > _DOWNLOAD_DURATION:
                 raise DownloadCanceledException('duration_reached')
-        if not _CALLBACK: return
-        #'downloaded_bytes': byte_counter,
-        #'total_bytes': data_len,
-        #'tmpfilename': tmpfilename,
-        #'filename': filename,
-        #'status': 'downloading',
-        #'eta': eta,
-        #'speed': speed
+        if not _CALLBACK:
+            return
+        # 'downloaded_bytes': byte_counter,
+        # 'total_bytes': data_len,
+        # 'tmpfilename': tmpfilename,
+        # 'filename': filename,
+        # 'status': 'downloading',
+        # 'eta': eta,
+        # 'speed': speed
         sofar = info.get('downloaded_bytes')
         total = info.get('total_bytes')
-        if info.get('filename'): self._lastDownloadedFilePath = info.get('filename')
+        if info.get('filename'):
+            self._lastDownloadedFilePath = info.get('filename')
         pct = ''
         pct_val = 0
         eta = None
-        if sofar != None and total:
-            pct_val = int((float(sofar)/total) * 100)
+        if sofar is not None and total:
+            pct_val = int((float(sofar) / total) * 100)
             pct = ' (%s%%)' % pct_val
         elif _DOWNLOAD_DURATION:
             sofar = time.time() - _DOWNLOAD_START
             eta = _DOWNLOAD_DURATION - sofar
-            pct_val = int((float(sofar)/_DOWNLOAD_DURATION) * 100)
+            pct_val = int((float(sofar) / _DOWNLOAD_DURATION) * 100)
         eta = eta or info.get('eta') or ''
         eta_str = ''
         if eta:
@@ -206,7 +227,7 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
         if speed:
             speed_str = StreamUtils.simpleSize(speed) + 's'
             speed = '  ' + speed_str
-        status = '%s%s:' % (info.get('status','?').title(),pct)
+        status = '%s%s:' % (info.get('status', '?').title(), pct)
         text = CallbackMessage(status + eta + speed, pct_val, eta_str, speed_str, info)
         ok = self.showMessage(text)
         if not ok:
@@ -223,12 +244,15 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
         self._progress_hooks = []
 
     def add_info_extractor(self, ie):
-        if ie.IE_NAME in _BLACKLIST: return
+        if ie.IE_NAME in _BLACKLIST:
+            return
         # Fix ##################################################################
         module = sys.modules.get(ie.__module__)
         if module:
-            if hasattr(module,'unified_strdate'): module.unified_strdate = _unified_strdate_wrap
-            if hasattr(module,'date_from_str'): module.date_from_str = _date_from_str_wrap
+            if hasattr(module, 'unified_strdate'):
+                module.unified_strdate = _unified_strdate_wrap
+            if hasattr(module, 'date_from_str'):
+                module.date_from_str = _date_from_str_wrap
         ########################################################################
         youtube_dl.YoutubeDL.add_info_extractor(self, ie)
 
@@ -244,7 +268,7 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
 
     def to_stderr(self, message):
         """Print message to stderr."""
-        assert type(message) == type('') or type(message) == type(u'')
+        assert isinstance(message, basestring)
         if self.params.get('logger'):
             self.params['logger'].error(message)
         else:
@@ -253,34 +277,38 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
             self.showMessage(output)
 
     def report_warning(self, message):
-        #overidden to get around error on missing stderr.isatty attribute
+        # overidden to get around error on missing stderr.isatty attribute
         _msg_header = 'WARNING:'
         warning_message = '%s %s' % (_msg_header, message)
         self.to_stderr(warning_message)
 
     def report_error(self, message, tb=None):
-        #overidden to get around error on missing stderr.isatty attribute
+        # overidden to get around error on missing stderr.isatty attribute
         _msg_header = 'ERROR:'
         error_message = '%s %s' % (_msg_header, message)
         self.trouble(error_message, tb)
 
+
 def _getYTDL():
     global _YTDL
-    if _YTDL: return _YTDL
-    if util.DEBUG and util.getSetting('ytdl_debug',False):
-        _YTDL = YoutubeDLWrapper({'verbose':True})
+    if _YTDL:
+        return _YTDL
+    if util.DEBUG and util.getSetting('ytdl_debug', False):
+        _YTDL = YoutubeDLWrapper({'verbose': True})
     else:
         _YTDL = YoutubeDLWrapper()
     _YTDL.add_progress_hook(_YTDL.progressCallback)
     _YTDL.add_default_info_extractors()
     return _YTDL
 
+
 def download(info):
     from youtube_dl import downloader
     ytdl = _getYTDL()
     name = ytdl.prepare_filename(info)
+    if 'http_headers' not in info:
+        info['http_headers'] = std_headers
     fd = downloader.get_suitable_downloader(info)(ytdl, ytdl.params)
     for ph in ytdl._progress_hooks:
         fd.add_progress_hook(ph)
     return fd.download(name, info)
-

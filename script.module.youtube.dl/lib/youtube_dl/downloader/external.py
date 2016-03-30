@@ -4,6 +4,7 @@ import os.path
 import subprocess
 import sys
 import re
+import time
 
 from .common import FileDownloader
 from ..postprocessor.ffmpeg import FFmpegPostProcessor, EXT_TO_OUT_FORMATS
@@ -24,7 +25,7 @@ class ExternalFD(FileDownloader):
         self.report_destination(filename)
         tmpfilename = self.temp_name(filename)
 
-        retval = self._call_downloader(tmpfilename, info_dict)
+        retval = self._call_downloader(tmpfilename, filename, info_dict)
         if retval == 0:
             fsize = os.path.getsize(encodeFilename(tmpfilename))
             self.to_screen('\r[%s] Downloaded %s bytes' % (self.get_basename(), fsize))
@@ -74,7 +75,7 @@ class ExternalFD(FileDownloader):
     def _configuration_args(self, default=[]):
         return cli_configuration_args(self.params, 'external_downloader_args', default)
 
-    def _call_downloader(self, tmpfilename, info_dict):
+    def _call_downloader(self, tmpfilename, filename, info_dict):
         """ Either overwrite this or implement _make_cmd """
         cmd = [encodeArgument(a) for a in self._make_cmd(tmpfilename, info_dict)]
 
@@ -171,7 +172,7 @@ class FFmpegFD(ExternalFD):
     def available(cls):
         return FFmpegPostProcessor().available
 
-    def _call_downloader(self, tmpfilename, info_dict):
+    def _call_downloader(self, tmpfilename, filename, info_dict):
         url = info_dict['url']
         ffpp = FFmpegPostProcessor(downloader=self)
         if not ffpp.available:
@@ -240,8 +241,27 @@ class FFmpegFD(ExternalFD):
         self._debug_cmd(args)
 
         proc = subprocess.Popen(args, stdin=subprocess.PIPE)
+        start = time.time()
         try:
-            retval = proc.wait()
+            while proc.poll() is None:
+                try:
+                    size = os.path.getsize(tmpfilename)
+                    now = time.time()
+                    speed = self.calc_speed(start, now, size)
+                    self._hook_progress({
+                        'status': 'downloading',
+                        'downloaded_bytes': size,
+                        'tmpfilename': tmpfilename,
+                        'filename': filename,
+                        'speed': speed,
+                        'elapsed': now - start
+                    })
+                except OSError:
+                    # File does not exist yet
+                    pass
+                time.sleep(0.2)
+
+            retval = proc.poll()
         except KeyboardInterrupt:
             # subprocces.run would send the SIGKILL signal to ffmpeg and the
             # mp4 file couldn't be played, but if we ask ffmpeg to quit it
