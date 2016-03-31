@@ -54,9 +54,10 @@ class SettingsMonitor(xbmc.Monitor):
         global Login
         Login = LoginProvider(username=xbmcaddon.Addon().getSetting("tmdb_username"),
                               password=xbmcaddon.Addon().getSetting("tmdb_password"))
-        wm.active_dialog.close()
-        wm.active_dialog.logged_in = Login.check_login(cache_days=0)
-        wm.active_dialog.doModal()
+        if wm.active_dialog:
+            wm.active_dialog.close()
+            wm.active_dialog.logged_in = Login.check_login(cache_days=0)
+            wm.active_dialog.doModal()
 
 
 class LoginProvider(object):
@@ -302,9 +303,9 @@ def merge_with_cert_desc(input_list, media_type):
 def handle_multi_search(results):
     listitems = []
     for item in results:
-        if item["mediatype"] == "movie":
+        if item["media_type"] == "movie":
             listitems.append(handle_movies([item])[0])
-        elif item["mediatype"] == "tvshow":
+        elif item["media_type"] == "tvshow":
             listitems.append(handle_tvshows([item])[0])
         else:
             listitems.append(handle_people([item])[0])
@@ -321,6 +322,7 @@ def handle_movies(results, local_first=True, sortkey="year"):
     path = 'extendedinfo&&id=%s' if SETTING("infodialog_onclick") != "false" else "playtrailer&&id=%s"
     for movie in results:
         genres = [labels[ids.index(id_)] for id_ in movie.get("genre_ids", []) if id_ in ids]
+        genres = [i for i in genres if i]
         tmdb_id = str(fetch(movie, 'id'))
         artwork = get_image_urls(poster=movie.get("poster_path"),
                                  fanart=movie.get("backdrop_path"))
@@ -364,6 +366,7 @@ def handle_tvshows(results, local_first=True, sortkey="year"):
         artwork = get_image_urls(poster=tv.get("poster_path"),
                                  fanart=tv.get("backdrop_path"))
         genres = [labels[ids.index(id_)] for id_ in tv.get("genre_ids", []) if id_ in ids]
+        genres = [i for i in genres if i]
         duration = ""
         if "episode_run_time" in tv:
             if len(tv["episode_run_time"]) > 1:
@@ -612,7 +615,8 @@ def get_set_id(set_name):
     return response["results"][0]["id"]
 
 
-def get_data(url="", params={}, cache_days=14):
+def get_data(url="", params=None, cache_days=14):
+    params = params if params else {}
     params["api_key"] = TMDB_KEY
     params = dict((k, v) for (k, v) in params.iteritems() if v)
     params = dict((k, unicode(v).encode('utf-8')) for (k, v) in params.iteritems())

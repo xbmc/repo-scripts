@@ -41,8 +41,8 @@ def get_calendar_shows(content):
                     'id': episode["show"]["ids"]["tvdb"],
                     'imdb_id': episode["show"]["ids"]["imdb"],
                     'path': PLUGIN_BASE + 'extendedtvinfo&&tvdb_id=%s' % episode["show"]["ids"]["tvdb"],
-                    'Runtime': episode["show"]["runtime"],
-                    'duration': episode["show"]["runtime"],
+                    'Runtime': episode["show"]["runtime"] * 60,
+                    'duration': episode["show"]["runtime"] * 60,
                     'duration(h)': format_time(episode["show"]["runtime"], "h"),
                     'duration(m)': format_time(episode["show"]["runtime"], "m"),
                     'year': fetch(episode["show"], "year"),
@@ -66,8 +66,8 @@ def handle_movies(results):
     path = 'extendedinfo&&id=%s' if SETTING("infodialog_onclick") != "false" else "playtrailer&&id=%s"
     for movie in results:
         movie = {'title': movie["movie"]["title"],
-                 'Runtime': movie["movie"]["runtime"],
-                 'duration': movie["movie"]["runtime"],
+                 'Runtime': movie["movie"]["runtime"] * 60,
+                 'duration': movie["movie"]["runtime"] * 60,
                  'duration(h)': format_time(movie["movie"]["runtime"], "h"),
                  'duration(m)': format_time(movie["movie"]["runtime"], "m"),
                  'Tagline': movie["movie"]["tagline"],
@@ -101,8 +101,8 @@ def handle_tvshows(results):
         show = {'title': tvshow['show']["title"],
                 'Label': tvshow['show']["title"],
                 'TVShowTitle': tvshow['show']["title"],
-                'Runtime': tvshow['show']["runtime"],
-                'duration': tvshow['show']["runtime"],
+                'Runtime': tvshow['show']["runtime"] * 60,
+                'duration': tvshow['show']["runtime"] * 60,
                 'duration(h)': format_time(tvshow['show']["runtime"], "h"),
                 'duration(m)': format_time(tvshow['show']["runtime"], "m"),
                 'year': tvshow['show']["year"],
@@ -170,7 +170,8 @@ def get_similar(media_type, imdb_id):
         return handle_movies(results)
 
 
-def get_data(url, params={}, cache_days=10):
+def get_data(url, params=None, cache_days=10):
+    params = params if params else {}
     url = "%s%s?%s" % (BASE_URL, url, urllib.urlencode(params))
     return get_JSON_response(url=url,
                              folder="Trakt",
