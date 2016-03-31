@@ -28,6 +28,7 @@ class DialogBaseList(object):
         self.filters = kwargs.get('filters', [])
         self.color = kwargs.get('color', "FFAAAAAA")
         self.page = 1
+        self.listitems = None
         self.column = None
         self.last_position = 0
         self.total_pages = 1

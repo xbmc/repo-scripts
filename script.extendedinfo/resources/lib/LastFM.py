@@ -83,7 +83,8 @@ def get_track_info(artist_name="", track=""):
             'summary': Utils.clean_text(summary)}
 
 
-def get_data(method, params={}, cache_days=0.5):
+def get_data(method, params=None, cache_days=0.5):
+    params = params if params else {}
     params["method"] = method
     # params = {k: v for k, v in params.items() if v}
     params = dict((k, v) for (k, v) in params.iteritems() if v)

@@ -79,10 +79,10 @@ def get_infolabel(name):
     return xbmc.getInfoLabel(name).decode("utf-8")
 
 
-def format_time(time, format=None):
+def format_time(time, time_format=None):
     """
     get formatted time
-    format = h, m or None
+    time_format = h, m or None
     """
     try:
         intTime = int(time)
@@ -90,9 +90,9 @@ def format_time(time, format=None):
         return time
     hour = str(intTime / 60)
     minute = str(intTime % 60).zfill(2)
-    if format == "h":
+    if time_format == "h":
         return hour
-    elif format == "m":
+    elif time_format == "m":
         return minute
     elif intTime >= 60:
         return hour + " h " + minute + " min"
@@ -699,7 +699,7 @@ def merge_dict_lists(items, key="job"):
     return crews
 
 
-def pass_list_to_skin(name="", data=[], prefix="", handle=None, limit=False):
+def pass_list_to_skin(name, data, prefix="", handle=None, limit=False):
     if data and limit and int(limit) < len(data):
         data = data[:int(limit)]
     if not handle:

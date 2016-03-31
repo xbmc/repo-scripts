@@ -121,7 +121,8 @@ def handle_channels(results):
     return channels
 
 
-def get_data(method, params={}, cache_days=0.5):
+def get_data(method, params=None, cache_days=0.5):
+    params = params if params else {}
     params["key"] = YT_KEY
     # params = {k: v for k, v in params.items() if v}
     params = dict((k, v) for (k, v) in params.iteritems() if v)
@@ -134,7 +135,7 @@ def get_data(method, params={}, cache_days=0.5):
                              folder="YouTube")
 
 
-def search(search_str="", hd="", orderby="relevance", limit=40, extended=True, page="", filters={}, media_type="video"):
+def search(search_str="", hd="", orderby="relevance", limit=40, extended=True, page="", filters=None, media_type="video"):
     params = {"part": "id,snippet",
               "maxResults": int(limit),
               "type": media_type,
@@ -142,7 +143,7 @@ def search(search_str="", hd="", orderby="relevance", limit=40, extended=True, p
               "pageToken": page,
               "hd": str(hd and not hd == "false"),
               "q": search_str.replace('"', '')}
-    params = merge_dicts(params, filters)
+    params = merge_dicts(params, filters if filters else {})
     results = get_data(method="search",
                        params=params)
     if media_type == "video":

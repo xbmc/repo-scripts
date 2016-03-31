@@ -20,7 +20,8 @@ def send_text(text, close_keyboard=True):
                   params='{"text":"%s", "done":%s}' % (text, "true" if close_keyboard else "false"))
 
 
-def get_artists(properties=[]):
+def get_artists(properties=None):
+    properties = [] if not properties else properties
     data = get_kodi_json(method="AudioLibrary.GetArtists",
                          params='{"properties": ["%s"]}' % '","'.join(properties))
     return data["result"]["artists"]
