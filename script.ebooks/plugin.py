@@ -9,17 +9,13 @@ import xbmcplugin
 import xbmcaddon
 import xbmcvfs
 
-__addon__ = xbmcaddon.Addon(id='script.ebooks')
-__addonid__ = __addon__.getAddonInfo('id')
-__fanart__ = __addon__.getAddonInfo('fanart')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
+ADDON = xbmcaddon.Addon(id='script.ebooks')
+FANART = ADDON.getAddonInfo('fanart')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
+LIB_DIR = xbmc.translatePath(os.path.join(RES_DIR, 'lib').encode("utf-8")).decode("utf-8")
 
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
+sys.path.append(LIB_DIR)
 
 # Import the common settings
 from settings import Settings
@@ -65,8 +61,8 @@ class MenuNavigator():
 
         # Both OPDS and local directory is enabled, so give the user the choice
         url = self._build_url({'mode': 'directory', 'directory': ' '})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32005), iconImage='DefaultFolder.png')
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32005), iconImage='DefaultFolder.png')
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -74,8 +70,8 @@ class MenuNavigator():
         iconImage = opds.getRootImage()
         del opds
         url = self._build_url({'mode': 'opds', 'href': ' '})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32023), iconImage=iconImage)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32023), iconImage=iconImage)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -91,7 +87,7 @@ class MenuNavigator():
         for title in menuContents:
             url = self._build_url({'mode': 'opds2', 'href': menuContents[title]})
             li = xbmcgui.ListItem(title, iconImage=iconImage)
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -110,7 +106,7 @@ class MenuNavigator():
             for entry in contentList:
                 url = self._build_url({'mode': 'opds2', 'href': entry['link']})
                 li = xbmcgui.ListItem(entry['title'], iconImage=opds.getRootImage())
-                li.setProperty("Fanart_Image", __fanart__)
+                li.setProperty("Fanart_Image", FANART)
                 li.addContextMenuItems([], replaceItems=True)
                 xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -127,11 +123,11 @@ class MenuNavigator():
 
         if eBookFolder in [None, ""]:
             # Prompt the user to set the eBooks Folder
-            eBookFolder = xbmcgui.Dialog().browseSingle(0, __addon__.getLocalizedString(32005), 'files')
+            eBookFolder = xbmcgui.Dialog().browseSingle(0, ADDON.getLocalizedString(32005), 'files')
 
             # Check to make sure the directory is set now
             if eBookFolder in [None, ""]:
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32006))
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32006))
                 return
 
             # Save the directory in settings for future use
@@ -147,19 +143,19 @@ class MenuNavigator():
         files.sort()
 
         # For each directory list allow the user to navigate into it
-        for dir in dirs:
-            if dir.startswith('.'):
+        for adir in dirs:
+            if adir.startswith('.'):
                 continue
 
-            log("EBooksPlugin: Adding directory %s" % dir)
+            log("EBooksPlugin: Adding directory %s" % adir)
 
-            nextDir = os_path_join(eBookFolder, dir)
-            displayName = "[%s]" % dir
+            nextDir = os_path_join(eBookFolder, adir)
+            displayName = "[%s]" % adir
 
             try:
-                displayName = "[%s]" % dir.encode("utf-8")
+                displayName = "[%s]" % adir.encode("utf-8")
             except:
-                displayName = "[%s]" % dir
+                displayName = "[%s]" % adir
             try:
                 nextDir = nextDir.encode("utf-8")
             except:
@@ -167,7 +163,7 @@ class MenuNavigator():
 
             url = self._build_url({'mode': 'directory', 'directory': nextDir})
             li = xbmcgui.ListItem(displayName, iconImage='DefaultFolder.png')
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -243,7 +239,7 @@ class MenuNavigator():
 
             url = self._build_url({'mode': 'chapters', 'filename': fullpath, 'cover': coverTargetName})
             li = xbmcgui.ListItem(displayString, iconImage=coverTargetName)
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems(self._getContextMenu(fullpath), replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -282,7 +278,7 @@ class MenuNavigator():
 
             url = self._build_url({'mode': 'chapters', 'filename': bookDetails['link'], 'cover': coverTargetName})
             li = xbmcgui.ListItem(displayString, iconImage=coverTargetName)
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems(self._getContextMenu(bookDetails['link']), replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -335,7 +331,7 @@ class MenuNavigator():
                 foundMatchedReadChapter = True
 
             li = xbmcgui.ListItem(displaytitle, iconImage=defaultImage)
-            li.setProperty("Fanart_Image", __fanart__)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems(self._getContextMenu(fullpath, chapter['link'], chapter['previousLink'], chapter['lastChapter']), replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -460,13 +456,13 @@ class MenuNavigator():
 
         # Mark as Read
         cmd = self._build_url({'mode': 'markReadStatus', 'filename': filepath, 'link': chapterLink, 'read': readFlag})
-        ctxtMenu.append((__addon__.getLocalizedString(32011), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32011), 'RunPlugin(%s)' % cmd))
 
         # Mark as Not Read
         # Note, marking a chapter as "Not Read" will result in the previous chapter being
         # marked as the last chapter that was read
         cmd = self._build_url({'mode': 'markReadStatus', 'filename': filepath, 'link': previousChapterLink, 'read': 'false'})
-        ctxtMenu.append((__addon__.getLocalizedString(32012), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32012), 'RunPlugin(%s)' % cmd))
 
         return ctxtMenu
 

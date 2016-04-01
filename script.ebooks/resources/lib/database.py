@@ -4,7 +4,7 @@ import xbmcaddon
 import xbmcvfs
 import sqlite3
 
-__addon__ = xbmcaddon.Addon(id='script.ebooks')
+ADDON = xbmcaddon.Addon(id='script.ebooks')
 
 # Import the common settings
 from settings import log
@@ -17,7 +17,7 @@ from settings import os_path_join
 class EbooksDB():
     def __init__(self):
         # Start by getting the database location
-        self.configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+        self.configPath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
         self.databasefile = os_path_join(self.configPath, "ebooks_database.db")
         log("EbooksDB: Database file location = %s" % self.databasefile)
         # Check to make sure the DB has been created

@@ -4,17 +4,17 @@ import xbmc
 import xbmcaddon
 import xbmcvfs
 
-__addon__ = xbmcaddon.Addon(id='script.ebooks')
-__addonid__ = __addon__.getAddonInfo('id')
-__icon__ = __addon__.getAddonInfo('icon')
+ADDON = xbmcaddon.Addon(id='script.ebooks')
+ADDON_ID = ADDON.getAddonInfo('id')
+ICON = ADDON.getAddonInfo('icon')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -94,37 +94,37 @@ class Settings():
     @staticmethod
     def getEbookFolder():
         eBookFolder = None
-        if __addon__.getSetting("useEBookFolder") == 'true':
-            eBookFolder = __addon__.getSetting("eBooksFolder")
+        if ADDON.getSetting("useEBookFolder") == 'true':
+            eBookFolder = ADDON.getSetting("eBooksFolder")
         return eBookFolder
 
     @staticmethod
     def setEbookFolder(eBooksFolder):
-        __addon__.setSetting("useEBookFolder", 'true')
-        __addon__.setSetting("eBooksFolder", eBooksFolder)
+        ADDON.setSetting("useEBookFolder", 'true')
+        ADDON.setSetting("eBooksFolder", eBooksFolder)
 
     @staticmethod
     def getFallbackCoverImage():
-        fallbackCover = __addon__.getSetting("fallbackCoverImage")
+        fallbackCover = ADDON.getSetting("fallbackCoverImage")
         if fallbackCover in [None, ""]:
-            fallbackCover = __icon__
+            fallbackCover = ICON
         return fallbackCover
 
     @staticmethod
     def onlyShowWholeBookIfChapters():
-        return __addon__.getSetting("onlyShowWholeBookIfChapters") == 'true'
+        return ADDON.getSetting("onlyShowWholeBookIfChapters") == 'true'
 
     @staticmethod
     def isMarkReadWhenNavToNextChapter():
-        return __addon__.getSetting("markReadWhenNavToNextChapter") == 'true'
+        return ADDON.getSetting("markReadWhenNavToNextChapter") == 'true'
 
     @staticmethod
     def usePageNumbersForPdf():
-        return __addon__.getSetting("usePageNumbersForPdf") == 'true'
+        return ADDON.getSetting("usePageNumbersForPdf") == 'true'
 
     @staticmethod
     def useWhiteBackground():
-        return __addon__.getSetting("useWhiteBackground") == 'true'
+        return ADDON.getSetting("useWhiteBackground") == 'true'
 
     @staticmethod
     def isEbookFormat(filename):
@@ -135,22 +135,22 @@ class Settings():
 
     @staticmethod
     def getCoverCacheLocation():
-        coverCache = xbmc.translatePath('special://profile/addon_data/%s/covers' % __addonid__).decode("utf-8")
+        coverCache = xbmc.translatePath('special://profile/addon_data/%s/covers' % ADDON_ID).decode("utf-8")
 
         # Make sure the directory to cache the covers exists
-        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")):
-            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8"))
+        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8")):
+            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8"))
         if not dir_exists(coverCache):
             xbmcvfs.mkdir(coverCache)
         return coverCache
 
     @staticmethod
     def getTempLocation():
-        tmpdestination = xbmc.translatePath('special://profile/addon_data/%s/temp' % __addonid__).decode("utf-8")
+        tmpdestination = xbmc.translatePath('special://profile/addon_data/%s/temp' % ADDON_ID).decode("utf-8")
 
         # Make sure the directory to cache the covers exists
-        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")):
-            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8"))
+        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8")):
+            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8"))
         if not dir_exists(tmpdestination):
             xbmcvfs.mkdir(tmpdestination)
         return tmpdestination
@@ -158,8 +158,8 @@ class Settings():
     @staticmethod
     def getOPDSLocation():
         opdsLoc = None
-        if __addon__.getSetting("useOPDS") == 'true':
-            opdsLoc = __addon__.getSetting("opdsUrl")
+        if ADDON.getSetting("useOPDS") == 'true':
+            opdsLoc = ADDON.getSetting("opdsUrl")
             if not opdsLoc.startswith('http'):
                 opdsLoc = "http://%s" % opdsLoc
             if opdsLoc.endswith('/'):
@@ -181,9 +181,9 @@ class Settings():
     def _getOPDSPreferredBookOrder(bookUrl):
         orderId = 0
         if '/epub/' in bookUrl:
-            orderId = int(__addon__.getSetting("epubPreferenceOrder"))
+            orderId = int(ADDON.getSetting("epubPreferenceOrder"))
         elif '/mobi/' in bookUrl:
-            orderId = int(__addon__.getSetting("mobiPreferenceOrder"))
+            orderId = int(ADDON.getSetting("mobiPreferenceOrder"))
         elif '/pdf/' in bookUrl:
-            orderId = int(__addon__.getSetting("pdfPreferenceOrder"))
+            orderId = int(ADDON.getSetting("pdfPreferenceOrder"))
         return orderId

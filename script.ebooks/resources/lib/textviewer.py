@@ -2,8 +2,8 @@
 import xbmcgui
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.ebooks')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
+ADDON = xbmcaddon.Addon(id='script.ebooks')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
 
 
 # Import the common settings
@@ -36,7 +36,7 @@ class TextViewer(xbmcgui.WindowXMLDialog):
 
     @staticmethod
     def createTextViewer(title, content, isFirstChapter, isLastChapter):
-        return TextViewer("script-ebook-text-window.xml", __cwd__, title=title, content=content, firstChapter=isFirstChapter, lastChapter=isLastChapter)
+        return TextViewer("script-ebook-text-window.xml", CWD, title=title, content=content, firstChapter=isFirstChapter, lastChapter=isLastChapter)
 
     # Called when setting up the window
     def onInit(self):

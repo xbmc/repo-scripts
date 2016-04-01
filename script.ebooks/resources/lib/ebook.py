@@ -9,10 +9,10 @@ import xbmc
 import xbmcvfs
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.ebooks')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__media__ = xbmc.translatePath(os.path.join(__resource__, 'media').encode("utf-8")).decode("utf-8")
+ADDON = xbmcaddon.Addon(id='script.ebooks')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
+MEDIA_DIR = xbmc.translatePath(os.path.join(RES_DIR, 'media').encode("utf-8")).decode("utf-8")
 
 # Import the common settings
 from settings import Settings
@@ -152,7 +152,7 @@ class EBookBase():
 
         # There is a special case for PDF files that we have a default image
         if (cachedCover is None) and fileName.endswith('.pdf'):
-            cachedCover = os.path.join(__media__, 'pdf_icon.png')
+            cachedCover = os.path.join(MEDIA_DIR, 'pdf_icon.png')
 
         return cachedCover
 
@@ -443,7 +443,7 @@ class MobiEBook(EBookBase):
                     if keyHtmlFile is None:
                         keyHtmlFile = htmlFiles[0]
 
-                    detail = {'title': __addon__.getLocalizedString(32016), 'link': keyHtmlFile}
+                    detail = {'title': ADDON.getLocalizedString(32016), 'link': keyHtmlFile}
                     chapterDetails.insert(0, detail)
 
             # Now tidy up the extracted data
@@ -715,7 +715,7 @@ class EPubEBook(EBookBase):
         # chapters into one record, so we use a special key for that
         if len(chapterDetails) > 0:
             if not Settings.onlyShowWholeBookIfChapters():
-                detail = {'title': __addon__.getLocalizedString(32016), 'link': 'ENTIRE_BOOK'}
+                detail = {'title': ADDON.getLocalizedString(32016), 'link': 'ENTIRE_BOOK'}
                 chapterDetails.insert(0, detail)
 
         return chapterDetails
@@ -886,7 +886,7 @@ class PdfEBook(EBookBase):
                 if startPage == endPage:
                     pageRange = "%d" % startPage
                     pageLang = 32019
-                title = "%s %s" % (__addon__.getLocalizedString(pageLang), pageRange)
+                title = "%s %s" % (ADDON.getLocalizedString(pageLang), pageRange)
                 detail = {'title': title, 'link': pageRange}
                 chapterDetails.append(detail)
 
@@ -895,7 +895,7 @@ class PdfEBook(EBookBase):
             log("PdfEBook: Adding chapter %s with src %s" % (chapter['title'], chapter['link']))
 
         if (not Settings.onlyShowWholeBookIfChapters()) or (numPages < 1):
-            detail = {'title': __addon__.getLocalizedString(32016), 'link': 'ENTIRE_BOOK'}
+            detail = {'title': ADDON.getLocalizedString(32016), 'link': 'ENTIRE_BOOK'}
             chapterDetails.insert(0, detail)
 
         return chapterDetails
