@@ -146,13 +146,30 @@ class Opds():
                             log("Opds: Listing is books")
                             # Get the link to the book
                             if 'acquisition' in relAttrib:
-                                bookDetails['link'] = "%s%s" % (Settings.getOPDSLocation(), linkElem['href'])
+                                bookLink = "%s%s" % (Settings.getOPDSLocation(), linkElem['href'])
+                                # Check if we already have a book
+                                if bookDetails.get('link', None) not in [None, '']:
+                                    bookLink = Settings.getOPDSPreferredBook(bookDetails['link'], bookLink)
+
+                                bookDetails['link'] = bookLink
                                 self.isBookList = True
                             # Get the cover image for the book
                             elif 'cover' in relAttrib:
                                 bookDetails['cover'] = "%s%s" % (Settings.getOPDSLocation(), linkElem['href'])
 
                     booklist.append(bookDetails)
+
+                # Now check to see if there are any more books, as by default it will be paged
+                # there is no way to request all books in one go
+                nextElem = soup.find('link', {"rel": "next"})
+                if nextElem not in [None, ""]:
+                    nextPage = nextElem.get('href', None)
+                    if nextPage not in [None, ""]:
+                        log("Opds: Getting Next page: %s" % nextPage)
+                        # Call ourselves again to process the next page
+                        nextPageList = self.getList(nextPage)
+                        if nextPageList not in [None, ""]:
+                            booklist = booklist + nextPageList
             except:
                 log("Opds: %s" % traceback.format_exc(), xbmc.LOGERROR)
 

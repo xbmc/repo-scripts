@@ -17,4 +17,9 @@
     	<setting label="32003" type="lsep"/>
     	<setting id="logEnabled" type="bool" label="32004" default="false"/>
 	</category>
+	<category label="32027">
+		<setting id="epubPreferenceOrder" type="enum" label="32028" lvalues="32031|32032|32033" default="0" />
+		<setting id="mobiPreferenceOrder" type="enum" label="32029" lvalues="32031|32032|32033" default="1" />
+		<setting id="pdfPreferenceOrder" type="enum" label="32030" lvalues="32031|32032|32033" default="2" />
+	</category>
 </settings>

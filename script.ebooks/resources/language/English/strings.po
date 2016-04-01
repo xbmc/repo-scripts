@@ -128,3 +128,30 @@ msgctxt "#32026"
 msgid "OPDS URL"
 msgstr ""
 
+msgctxt "#32027"
+msgid "OPDS Book Order"
+msgstr ""
+
+msgctxt "#32028"
+msgid "EPub"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Mobi"
+msgstr ""
+
+msgctxt "#32030"
+msgid "PDF"
+msgstr ""
+
+msgctxt "#32031"
+msgid "1st"
+msgstr ""
+
+msgctxt "#32032"
+msgid "2nd"
+msgstr ""
+
+msgctxt "#32033"
+msgid "3rd"
+msgstr ""

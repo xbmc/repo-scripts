@@ -8,14 +8,12 @@ import xbmcvfs
 import xbmcgui
 
 
-__addon__ = xbmcaddon.Addon(id='script.ebooks')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
+ADDON = xbmcaddon.Addon(id='script.ebooks')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
+LIB_DIR = xbmc.translatePath(os.path.join(RES_DIR, 'lib').encode("utf-8")).decode("utf-8")
 
-sys.path.append(__resource__)
-sys.path.append(__lib__)
+sys.path.append(LIB_DIR)
 
 # Import the common settings
 from settings import Settings
@@ -28,7 +26,7 @@ from settings import os_path_join
 # Main
 #########################
 if __name__ == '__main__':
-    log("EBookCoverCleanup: Cover cache cleanup called (version %s)" % __version__)
+    log("EBookCoverCleanup: Cover cache cleanup called (version %s)" % ADDON.getAddonInfo('version'))
 
     coverCache = Settings.getCoverCacheLocation()
 
@@ -49,4 +47,4 @@ if __name__ == '__main__':
         except:
             log("EBookCoverCleanup: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
-    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32009))
+    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32009))

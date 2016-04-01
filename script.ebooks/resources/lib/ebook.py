@@ -9,10 +9,10 @@ import xbmc
 import xbmcvfs
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.ebooks')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__media__ = xbmc.translatePath(os.path.join(__resource__, 'media').encode("utf-8")).decode("utf-8")
+ADDON = xbmcaddon.Addon(id='script.ebooks')
+CWD = ADDON.getAddonInfo('path').decode("utf-8")
+RES_DIR = xbmc.translatePath(os.path.join(CWD, 'resources').encode("utf-8")).decode("utf-8")
+MEDIA_DIR = xbmc.translatePath(os.path.join(RES_DIR, 'media').encode("utf-8")).decode("utf-8")
 
 # Import the common settings
 from settings import Settings
@@ -45,6 +45,11 @@ class EBookBase():
         self.fileName = os_path_split(eBookFilePath)[-1]
         self.isTempBookFile = removeFileWhenComplete
 
+        try:
+            self.filePath = self.filePath.decode("utf-8")
+        except:
+            pass
+
     @staticmethod
     def createEBookObject(filePath):
         localFilePath = filePath
@@ -68,8 +73,10 @@ class EBookBase():
             log("EBookBase: Book source is %s" % filePath)
             try:
                 justFileName = 'opds.epub'
-                if 'mobi' in filePath:
+                if '/mobi/' in filePath:
                     justFileName = 'opds.mobi'
+                elif '/pdf/' in filePath:
+                    justFileName = 'opds.pdf'
                 copiedFile = os_path_join(Settings.getTempLocation(), justFileName)
                 fp, h = urllib.urlretrieve(filePath, copiedFile)
                 log(h)
@@ -145,7 +152,7 @@ class EBookBase():
 
         # There is a special case for PDF files that we have a default image
         if (cachedCover is None) and fileName.endswith('.pdf'):
-            cachedCover = os.path.join(__media__, 'pdf_icon.png')
+            cachedCover = os.path.join(MEDIA_DIR, 'pdf_icon.png')
 
         return cachedCover
 
@@ -163,19 +170,26 @@ class EBookBase():
     def convertHtmlIntoKodiText(self, htmlText):
         # Remove the header section of the page
         plainText = re.sub("<head>.*?</head>", "", htmlText, flags=re.DOTALL)
+
+        # Remove random spaces in epub files
+        plainText = re.sub('\s+', ' ', plainText, flags=re.DOTALL)
+
         # Replace the bold tags
         plainText = plainText.replace('<br></br><br></br>', '<p></p>')
-        plainText = plainText.replace('<b>', '[B]')
-        plainText = plainText.replace('</b>', '[/B]')
-        plainText = plainText.replace('<B>', '[B]')
-        plainText = plainText.replace('</B>', '[/B]')
+        plainText = plainText.replace('<b>', '[B]<b>')
+        plainText = plainText.replace('<b class=', '[B]<b class=')
+        plainText = plainText.replace('</b>', '</b>[/B]')
+        plainText = plainText.replace('<B>', '[B]<B>')
+        plainText = plainText.replace('</B>', '</B>[/B]')
         # Replace italic tags
-        plainText = plainText.replace('<i>', '[I]')
-        plainText = plainText.replace('</i>', '[/I]')
-        plainText = plainText.replace('<I>', '[I]')
-        plainText = plainText.replace('</I>', '[/I]')
+        plainText = plainText.replace('<i>', '[I]<i>')
+        plainText = plainText.replace('</i>', '</i>[/I]')
+        plainText = plainText.replace('<I>', '[I]<I>')
+        plainText = plainText.replace('</I>', '</I>[/I]')
         # Add an extra line for paragraphs
         plainText = plainText.replace('</p>', '</p>\n')
+        plainText = plainText.replace('<p>', '\n<p>')
+        plainText = plainText.replace('<p ', '\n<p ')
         # The html &nbsp; is not handle s well by ElementTree, so replace
         # it with a space before we start
         plainText = plainText.replace('&nbsp;', ' ')
@@ -269,7 +283,10 @@ class MobiEBook(EBookBase):
         if title in [None, ""]:
             title = self.getFallbackTitle()
 
-        log("MobiEBook: Title is %s for book %s" % (title, self.filePath))
+        try:
+            log("MobiEBook: Title is %s for book %s" % (title.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return title
 
     def getAuthor(self):
@@ -289,7 +306,10 @@ class MobiEBook(EBookBase):
                 except:
                     log("MobiEBook: Failed to get author using fallback mobi %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
-        log("MobiEBook: Author is %s for book %s" % (author, self.filePath))
+        try:
+            log("MobiEBook: Author is %s for book %s" % (author.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return author
 
     def extractCoverImage(self):
@@ -423,7 +443,7 @@ class MobiEBook(EBookBase):
                     if keyHtmlFile is None:
                         keyHtmlFile = htmlFiles[0]
 
-                    detail = {'title': __addon__.getLocalizedString(32016), 'link': keyHtmlFile}
+                    detail = {'title': ADDON.getLocalizedString(32016), 'link': keyHtmlFile}
                     chapterDetails.insert(0, detail)
 
             # Now tidy up the extracted data
@@ -599,7 +619,10 @@ class EPubEBook(EBookBase):
             except:
                 log("EPubEBook: Failed to get title for epub %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
-        log("EPubEBook: Title is %s for book %s" % (title, self.filePath))
+        try:
+            log("EPubEBook: Title is %s for book %s" % (title.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return title
 
     def getAuthor(self):
@@ -611,11 +634,17 @@ class EPubEBook(EBookBase):
             except:
                 log("EPubEBook: Failed to get author for epub %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
-        log("EPubEBook: Author is %s for book %s" % (author, self.filePath))
+        try:
+            log("EPubEBook: Author is %s for book %s" % (author.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return author
 
     # Gets the cover for a given eBook
     def extractCoverImage(self):
+        if self.book is None:
+            return None
+
         coverTargetName = None
         try:
             # Get the cover for the book from the eBook file
@@ -652,6 +681,9 @@ class EPubEBook(EBookBase):
 
     # Gets a list of the chapters and a link to the contents
     def getChapterDetails(self):
+        if self.book is None:
+            return []
+
         # Keeping at the moment in comments as may be useful later
         # for chapter in book.chapters:
         #    log("*** ROB ***: Chanter Identifier %s" % str(chapter.identifier))
@@ -683,7 +715,7 @@ class EPubEBook(EBookBase):
         # chapters into one record, so we use a special key for that
         if len(chapterDetails) > 0:
             if not Settings.onlyShowWholeBookIfChapters():
-                detail = {'title': __addon__.getLocalizedString(32016), 'link': 'ENTIRE_BOOK'}
+                detail = {'title': ADDON.getLocalizedString(32016), 'link': 'ENTIRE_BOOK'}
                 chapterDetails.insert(0, detail)
 
         return chapterDetails
@@ -748,7 +780,10 @@ class PdfEBook(EBookBase):
         if title in [None, ""]:
             title = self.getFallbackTitle()
 
-        log("PdfEBook: Title is %s for book %s" % (title.decode('utf-8', 'ignore'), self.filePath))
+        try:
+            log("PdfEBook: Title is %s for book %s" % (title.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return title
 
     def getAuthor(self):
@@ -765,7 +800,10 @@ class PdfEBook(EBookBase):
             except:
                 log("PdfEBook: Failed to get author for pdf %s with error: %s" % (self.filePath, traceback.format_exc()), xbmc.LOGERROR)
 
-        log("PdfEBook: Author is %s for book %s" % (author.decode('utf-8', 'ignore'), self.filePath))
+        try:
+            log("PdfEBook: Author is %s for book %s" % (author.decode('utf-8', 'ignore'), self.filePath))
+        except:
+            pass
         return author
 
     # Gets a list of the chapters and a link to the contents
@@ -848,7 +886,7 @@ class PdfEBook(EBookBase):
                 if startPage == endPage:
                     pageRange = "%d" % startPage
                     pageLang = 32019
-                title = "%s %s" % (__addon__.getLocalizedString(pageLang), pageRange)
+                title = "%s %s" % (ADDON.getLocalizedString(pageLang), pageRange)
                 detail = {'title': title, 'link': pageRange}
                 chapterDetails.append(detail)
 
@@ -857,7 +895,7 @@ class PdfEBook(EBookBase):
             log("PdfEBook: Adding chapter %s with src %s" % (chapter['title'], chapter['link']))
 
         if (not Settings.onlyShowWholeBookIfChapters()) or (numPages < 1):
-            detail = {'title': __addon__.getLocalizedString(32016), 'link': 'ENTIRE_BOOK'}
+            detail = {'title': ADDON.getLocalizedString(32016), 'link': 'ENTIRE_BOOK'}
             chapterDetails.insert(0, detail)
 
         return chapterDetails

@@ -1,3 +1,9 @@
+v1.2.0 (2016-03-12)
+- Protect against character encoding issues in PDF files
+- Support PDF over OPDS interface
+- List more than 30 books when using OPDS
+- OPDS support for preference of multiple book formats
+
 v1.1.1 (2016-03-05)
 - Ensure books are listed alphabetically by filename
 - Set text colour on dialog
