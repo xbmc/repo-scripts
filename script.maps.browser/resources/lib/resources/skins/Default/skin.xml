@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<skin>
+    <defaultresolution>720p</defaultresolution>
+    <defaultresolutionwide>720p</defaultresolutionwide>
+    <version>1.0</version>
+
+    <zoom>0</zoom>
+
+    <credits>
+        <skinname>Default</skinname>
+        <name>Anthirian</name>
+    </credits>
+</skin>
