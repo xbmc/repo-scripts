@@ -1,0 +1,8 @@
+/.idea
+*.db
+*.py[co]
+*.url
+*.exe
+*.txt
+*.bak
+xbmc*.py
