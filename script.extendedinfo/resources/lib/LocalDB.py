@@ -234,7 +234,7 @@ class LocalDB(object):
         else:
             return False
 
-    def merge_with_local_movie_info(self, online_list=[], library_first=True, sortkey=False):
+    def merge_with_local_movie_info(self, online_list, library_first=True, sortkey=False):
         if not self.movie_titles:
             now = time.time()
             self.movie_ids = HOME.getProperty("movie_ids.JSON")
@@ -297,7 +297,7 @@ class LocalDB(object):
             remote_items = sorted(remote_items, key=lambda k: k[sortkey], reverse=True)
         return local_items + remote_items
 
-    def merge_with_local_tvshow_info(self, online_list=[], library_first=True, sortkey=False):
+    def merge_with_local_tvshow_info(self, online_list, library_first=True, sortkey=False):
         if not self.tvshow_titles:
             now = time.time()
             self.tvshow_ids = HOME.getProperty("tvshow_ids.JSON")
