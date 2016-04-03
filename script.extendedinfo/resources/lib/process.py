@@ -202,9 +202,9 @@ def start_info_actions(info, params):
                 tvshow_id = params["id"]
             return Trakt.get_similar("show", tvshow_id)
     elif info == 'airingepisodes':
-        return Trakt.get_calendar_shows("shows")
+        return Trakt.get_episodes("shows")
     elif info == 'premiereepisodes':
-        return Trakt.get_calendar_shows("premieres")
+        return Trakt.get_episodes("premieres")
     elif info == 'trendingshows':
         return Trakt.get_shows("trending")
     elif info == 'popularshows':

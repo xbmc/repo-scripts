@@ -16,27 +16,25 @@ from LocalDB import local_db
 import TheMovieDB
 import addon
 
-INFO_DIALOG_FILE_CLASSIC = u'script-%s-DialogVideoInfo.xml' % (addon.NAME)
-LIST_DIALOG_FILE_CLASSIC = u'script-%s-VideoList.xml' % (addon.NAME)
-ACTOR_DIALOG_FILE_CLASSIC = u'script-%s-DialogInfo.xml' % (addon.NAME)
-if addon.bool_setting("force_native_layout"):
-    INFO_DIALOG_FILE = u'script-%s-DialogVideoInfo-classic.xml' % (addon.NAME)
-    LIST_DIALOG_FILE = u'script-%s-VideoList-classic.xml' % (addon.NAME)
-    ACTOR_DIALOG_FILE = u'script-%s-DialogInfo-classic.xml' % (addon.NAME)
+INFO_XML_CLASSIC = u'script-%s-DialogVideoInfo.xml' % (addon.NAME)
+LIST_XML_CLASSIC = u'script-%s-VideoList.xml' % (addon.NAME)
+ACTOR_XML_CLASSIC = u'script-%s-DialogInfo.xml' % (addon.NAME)
+if addon.bool_setting("force_native_layout") and addon.setting("xml_version") != addon.VERSION:
+    addon.set_setting("xml_version", addon.VERSION)
+    INFO_XML = u'script-%s-DialogVideoInfo-classic.xml' % (addon.NAME)
+    LIST_XML = u'script-%s-VideoList-classic.xml' % (addon.NAME)
+    ACTOR_XML = u'script-%s-DialogInfo-classic.xml' % (addon.NAME)
     path = os.path.join(addon.PATH, "resources", "skins", "Default", "1080i")
-    if not xbmcvfs.exists(os.path.join(path, INFO_DIALOG_FILE)):
-        xbmcvfs.copy(strSource=os.path.join(path, INFO_DIALOG_FILE_CLASSIC),
-                     strDestnation=os.path.join(path, INFO_DIALOG_FILE))
-    if not xbmcvfs.exists(os.path.join(path, LIST_DIALOG_FILE)):
-        xbmcvfs.copy(strSource=os.path.join(path, LIST_DIALOG_FILE_CLASSIC),
-                     strDestnation=os.path.join(path, LIST_DIALOG_FILE))
-    if not xbmcvfs.exists(os.path.join(path, ACTOR_DIALOG_FILE)):
-        xbmcvfs.copy(strSource=os.path.join(path, ACTOR_DIALOG_FILE_CLASSIC),
-                     strDestnation=os.path.join(path, ACTOR_DIALOG_FILE))
+    xbmcvfs.copy(strSource=os.path.join(path, INFO_XML_CLASSIC),
+                 strDestnation=os.path.join(path, INFO_XML))
+    xbmcvfs.copy(strSource=os.path.join(path, LIST_XML_CLASSIC),
+                 strDestnation=os.path.join(path, LIST_XML))
+    xbmcvfs.copy(strSource=os.path.join(path, ACTOR_XML_CLASSIC),
+                 strDestnation=os.path.join(path, ACTOR_XML))
 else:
-    INFO_DIALOG_FILE = INFO_DIALOG_FILE_CLASSIC
-    LIST_DIALOG_FILE = LIST_DIALOG_FILE_CLASSIC
-    ACTOR_DIALOG_FILE = ACTOR_DIALOG_FILE_CLASSIC
+    INFO_XML = INFO_XML_CLASSIC
+    LIST_XML = LIST_XML_CLASSIC
+    ACTOR_XML = ACTOR_XML_CLASSIC
 
 
 class WindowManager(object):
@@ -80,7 +78,7 @@ class WindowManager(object):
                                                     dbid=dbid,
                                                     name=name)
         movie_class = DialogMovieInfo.get_window(BaseClasses.DialogXML)
-        dialog = movie_class(INFO_DIALOG_FILE,
+        dialog = movie_class(INFO_XML,
                              addon.PATH,
                              id=movie_id,
                              dbid=dbid)
@@ -112,7 +110,7 @@ class WindowManager(object):
                                               year="",
                                               media_type="tv")
         tvshow_class = DialogTVShowInfo.get_window(BaseClasses.DialogXML)
-        dialog = tvshow_class(INFO_DIALOG_FILE,
+        dialog = tvshow_class(INFO_XML,
                               addon.PATH,
                               tmdb_id=tmdb_id,
                               dbid=dbid)
@@ -146,7 +144,7 @@ class WindowManager(object):
                     tvshow_id = str(response['results'][0]['id'])
 
         season_class = DialogSeasonInfo.get_window(BaseClasses.DialogXML)
-        dialog = season_class(INFO_DIALOG_FILE,
+        dialog = season_class(INFO_XML,
                               addon.PATH,
                               id=tvshow_id,
                               season=season,
@@ -167,7 +165,7 @@ class WindowManager(object):
             tvshow_id = TheMovieDB.search_media(media_name=tvshow,
                                                 media_type="tv",
                                                 cache_days=7)
-        dialog = ep_class(INFO_DIALOG_FILE,
+        dialog = ep_class(INFO_XML,
                           addon.PATH,
                           show_id=tvshow_id,
                           season=season,
@@ -200,7 +198,7 @@ class WindowManager(object):
         else:
             xbmc.executebuiltin("ActivateWindow(busydialog)")
         actor_class = DialogActorInfo.get_window(BaseClasses.DialogXML)
-        dialog = actor_class(ACTOR_DIALOG_FILE,
+        dialog = actor_class(ACTOR_XML,
                              addon.PATH,
                              id=actor_id)
         xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -222,7 +220,7 @@ class WindowManager(object):
             color = "FFFFFFFF"
         Utils.check_version()
         browser_class = DialogVideoList.get_window(BaseClasses.DialogXML)
-        dialog = browser_class(LIST_DIALOG_FILE,
+        dialog = browser_class(LIST_XML,
                                addon.PATH,
                                listitems=listitems,
                                color=color,
