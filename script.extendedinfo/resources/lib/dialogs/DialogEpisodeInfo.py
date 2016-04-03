@@ -5,7 +5,7 @@
 
 import xbmc
 import xbmcgui
-import Utils
+from .. import Utils
 from .. import TheMovieDB as tmdb
 from .. import ImageTools
 from .. import addon
@@ -49,8 +49,6 @@ def get_window(window_type):
         def onInit(self):
             super(DialogEpisodeInfo, self).onInit()
             Utils.pass_dict_to_skin(data=self.info,
-                                    debug=False,
-                                    precache=False,
                                     window_id=self.window_id)
             super(DialogEpisodeInfo, self).update_states()
             self.get_youtube_vids("%s tv" % (self.info['title']))
