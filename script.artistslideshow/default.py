@@ -1214,7 +1214,7 @@ class Main:
         imagelist = []
         for source in sourcelist:
             lw.log( ['checking the source %s with a value of %s.' % (source[0], source[1])] )
-            if source[1] == "true":
+            if source[1] == "true" and not cached_image_info:
                 imagelist.extend( self._get_images(source[0]) )
         lw.log( ['downloading images'] )
         folders, cachelist = xbmcvfs.listdir( self.CacheDir )
