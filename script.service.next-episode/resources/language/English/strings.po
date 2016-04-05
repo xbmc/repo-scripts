@@ -1,0 +1,100 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+
+msgctxt "#32000"
+msgid "General"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Login to next-episode.net"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Send video library data to next-episode.net"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Username:"
+msgstr ""
+
+msgctxt "#32004"
+msgid "Password:"
+msgstr ""
+
+msgctxt "#32005"
+msgid "OK"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Login failed!"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Data update error. See log for more details."
+msgstr ""
+
+msgctxt "#32009"
+msgid "Data updated"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Check login/password and try again."
+msgstr ""
+
+msgctxt "#32011"
+msgid "Successful login"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Login required!"
+msgstr ""
+
+msgctxt "#32013"
+msgid "You need to login to next-episode.net"
+msgstr ""
+
+msgctxt "#32014"
+msgid "to synchronize your video library data."
+msgstr ""
+
+msgctxt "#32015"
+msgid "Login now?"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Library synchronization"
+msgstr ""
+
+msgctxt "#32017"
+msgid "You need to synchronize your video library data."
+msgstr ""
+
+msgctxt "#32018"
+msgid "Synchronize now?"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Disable notification dialogs for update errors"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Data update error! Please report it to next-episode.net."
+msgstr ""
+
+msgctxt "#32021"
+msgid "Failed movies: {0}"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Failed TV shows: {0}"
+msgstr ""
