@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Service LegendasDivx.com version 0.2.4
+# Service LegendasDivx.com version 0.2.5
 # Code based on Undertext (FRODO) service
 # Coded by HiGhLaNdR@OLDSCHOOL
 # Ported to Gotham by HiGhLaNdR@OLDSCHOOL
@@ -37,8 +37,12 @@ __language__   = __addon__.getLocalizedString
 
 __cwd__        = xbmc.translatePath(__addon__.getAddonInfo('path')).decode("utf-8")
 __profile__    = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__   = xbmc.translatePath(pjoin(__cwd__, 'resources', 'lib' ) ).decode("utf-8")
-__temp__       = xbmc.translatePath(pjoin(__profile__, 'temp'))
+__resource__   = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'lib' )).decode("utf-8")
+__temp__       = xbmc.translatePath(os.path.join(__profile__, 'temp')).decode("utf-8")
+
+if os.path.isdir(__temp__):shutil.rmtree(__temp__)
+xbmcvfs.mkdirs(__temp__)
+if not os.path.isdir(__temp__):xbmcvfs.mkdir(__temp__)
 
 sys.path.append (__resource__)
 
@@ -95,11 +99,11 @@ HTTP_USER_AGENT = "User-Agent=Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv
 Release: The.Dark.Knight.2008.720p.BluRay.DTS.x264-ESiR</td>
 """
 
-subtitle_pattern = "<div\sclass=\"sub_box\">.+?<div\sclass=\"sub_header\">.+?<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?</div>.+?<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">.+?<tr>.+?<th>CDs:</th>.+?<td>(.+?)</td>.+?<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">.+?<th\sclass=\"color2\">Hits:</th>.+?<td>(.+?)</td>.+?<td>(.+?)</td>.+?<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">(.*?)</td>.+?<td\sclass"
+subtitle_pattern = "<div\sclass=\"sub_box\">.+?<div\sclass=\"sub_header\">.+?<b>(.+?)</b>\s\((\d\d\d\d)\)\s.+?name=User_Info&username=(.+?)'><b>.+?</div>.+?<table\sclass=\"sub_main\scolor1\"\scellspacing=\"0\">.+?<tr>.+?<th>CDs:</th>.+?<td>(.+?)</td>.+?<a\shref=\"\?name=Downloads&d_op=ratedownload&lid=(.+?)\">.+?<th\sclass=\"color2\">Hits:</th>.+?<td>(.+?)</td>.+?<td>(.+?)</td>.+?<td\scolspan=\"5\"\sclass=\"td_desc\sbrd_up\">(.*?)</td>.+?<td\sclass"
 release_pattern = "([^\W][\w\.]{1,}\w{1,}[\.]{1,1}[^\.|^\ |^\.org|^\.com|^\.net][^\Ws|^\.org|^\.com|^\.net][\w{1,}\.|\-|\(\d\d\d\d\)|\[\d\d\d\d\]]{3,}[^\Ws|^\.org|^\.com|^\.net][\w{3,}\-|\.{1,1}]\w{2,})"
 release_pattern1 = "([^\W][\w\ |\]|[]{4,}[^\Ws][x264|xvid|ac3]{1,}-[\w\[\]]{1,})"
 year_pattern = "(19|20)\d{2}$"
-# group(1) = Name, group(2) = Year, group(3) = Number Files, group(4) = ID, group(5) = Hits, group(6) = Requests, group(7) = Description
+# group(1) = Name, group(2) = Year, group(3) = Uploader, group (4) = Number Files, group(5) = ID, group(6) = Hits, group(7) = Requests, group(8) = Description
 #==========
 # Functions
 #==========
@@ -144,16 +148,17 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
     log(u"getallsubs: LanguageShort = '%s'" % languageshort)
     while re.search(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.MULTILINE) and page < 6:
         for matches in re.finditer(subtitle_pattern, content, re.IGNORECASE | re.DOTALL | re.X):
-            hits = matches.group(5)
-            id = matches.group(4)
+            uploader = matches.group(3)
+            hits = matches.group(6)
+            id = matches.group(5)
             id = string.split(id, '"')
             id = id[0]
             movieyear = matches.group(2)
-            no_files = matches.group(3)
-            downloads = int(matches.group(5)) / 200
+            no_files = matches.group(4)
+            downloads = int(matches.group(6)) / 200
             if (downloads > 5): downloads=5
             filename = string.strip(matches.group(1))
-            desc_ori = string.strip(matches.group(7))
+            desc_ori = string.strip(matches.group(8))
             desc_ori = re.sub('www.legendasdivx.com','',desc_ori)
             log(u"getallsubs: Original Decription = '%s'" % desc_ori.decode('utf8', 'ignore'))
             #Remove new lines on the commentaries
@@ -212,9 +217,9 @@ def getallsubs(searchstring, languageshort, languagelong, file_original_path, se
                             if re.search(filesearch[1][:len(filesearch[1])-4], desc) or re.search(dirsearch[-1], desc, re.IGNORECASE): sync = True
                         else:
                             if re.search(filesearch[1][:len(filesearch[1])-4], desc, re.IGNORECASE): sync = True
-            if __filenameon__ == "false": filename = desc + "  " + "hits: " + hits
-            else: filename = filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
-            subtitles_list.append({'rating': str(downloads), 'filename': filename, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
+            if __filenameon__ == "false": filename = "From: " + uploader + " - "  + desc + "  " + "hits: " + hits
+            else: filename = "From: " + uploader + " - "  + filename + " " + "(" + movieyear + ")" + "  " + "hits: " + hits + " - " + desc
+            subtitles_list.append({'rating': str(downloads), 'filename': filename, 'uploader': uploader, 'desc': desc, 'sync': sync, 'hits' : hits, 'id': id, 'language_short': languageshort, 'language_name': languagelong})
             log(u"getallsubs: SUBS LIST = '%s'" % subtitles_list)
         page = page + 1
         
@@ -398,6 +403,11 @@ def Download(id, filename):
     if os.path.isdir(__temp__):shutil.rmtree(__temp__)
     xbmcvfs.mkdirs(__temp__)
     if not os.path.isdir(__temp__):xbmcvfs.mkdir(__temp__)
+    unpacked = str(uuid.uuid4())
+    unpacked = unpacked.replace("-","")
+    unpacked = unpacked[0:6]
+    xbmcvfs.mkdirs(__temp__ + "/" + unpacked)
+    __newtemp__ = xbmc.translatePath(os.path.join(__temp__, unpacked))
 
     subtitles_list = []
     username = __addon__.getSetting( 'LDuser' )
@@ -418,55 +428,74 @@ def Download(id, filename):
     if content is not None:
         header = content[:4]
         if header == 'Rar!':
-            local_tmp_file = pjoin(__temp__, str(uuid.uuid4())+".rar")
+            local_tmp_file = pjoin(__newtemp__, str(uuid.uuid4())+".rar")
             packed = True
         elif header == 'PK':
-            local_tmp_file = pjoin(__temp__, str(uuid.uuid4())+".zip")
+            local_tmp_file = pjoin(__newtemp__, str(uuid.uuid4())+".zip")
             packed = True
         else:
             # never found/downloaded an unpacked subtitles file, but just to be sure ...
             # assume unpacked sub file is an '.srt'
-            local_tmp_file = pjoin(__temp__, "ldivx.srt")
+            local_tmp_file = pjoin(__newtemp__, "ldivx.srt")
             subs_file = local_tmp_file
             packed = False
         log(u"Saving subtitles to '%s'" % (local_tmp_file,))
         try:
-            local_file_handle = open(local_tmp_file, "wb")
-            local_file_handle.write(content)
+            with open(local_tmp_file, "wb") as local_file_handle:
+
+                local_file_handle.write(content)
             local_file_handle.close()
+            xbmc.sleep(500)
         except: log(u"Failed to save subtitles to '%s'" % (local_tmp_file,))
         if packed:
-            xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (local_tmp_file.encode("utf-8"), __temp__))
+            xbmc.executebuiltin("XBMC.Extract(%s, %s)" % (local_tmp_file.encode("utf-8"), __newtemp__))
             xbmc.sleep(1000)
 
             ## IF EXTRACTION FAILS, WHICH HAPPENS SOMETIMES ... BUG?? ... WE WILL BROWSE THE RAR FILE FOR MANUAL EXTRACTION ##
-            searchsubs = recursive_glob(__temp__, SUB_EXTS)
+            searchsubs = recursive_glob(__newtemp__, SUB_EXTS)
             searchsubscount = len(searchsubs)
             if searchsubscount == 0:
                 dialog = xbmcgui.Dialog()
-                subs_file = dialog.browse(1, __language__(32024).encode('utf8'), 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, True, __temp__+'/')
+                subs_file = dialog.browse(1, __language__(32024).encode('utf8'), 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, True, __newtemp__+'/').decode('utf-8')
                 subtitles_list.append(subs_file)
             ## ELSE WE WILL GO WITH THE NORMAL PROCEDURE ##
             else:
-                log(u"Unpacked files in '%s'" % (__temp__,))
-                searchsubs = recursive_glob(__temp__, SUB_EXTS)
+                log(u"Unpacked files in '%s'" % (__newtemp__,))
+                os.remove(local_tmp_file)
+                searchsubs = recursive_glob(__newtemp__, SUB_EXTS)
                 searchsubscount = len(searchsubs)
+                log(u"count: '%s'" % (searchsubscount,))
                 for file in searchsubs:
                     # There could be more subtitle files in __temp__, so make
                     # sure we get the newly created subtitle file
                     if searchsubscount == 1:
                         # unpacked file is a newly created subtitle file
                         log(u"Unpacked subtitles file '%s'" % (file.decode('utf-8'),))
-                        try: subs_file = pjoin(__temp__, file.decode("utf-8"))
-                        except: subs_file = pjoin(__temp__, file.decode("latin1"))
+                        try: subs_file = pjoin(__newtemp__, file.decode("utf-8"))
+                        except: subs_file = pjoin(__newtemp__, file.decode("latin1"))
                         subtitles_list.append(subs_file)
                         break
                     else:
                     # If there are more than one subtitle in the temp dir, launch a browse dialog
                     # so user can choose. If only one subtitle is found, parse it to the addon.
-                        if len(__temp__) > 1:
+
+                        dirs = os.walk(os.path.join(__newtemp__,'.')).next()[1]
+                        dircount = len(dirs)
+                        if dircount == 0:
+                            filelist = os.listdir(__newtemp__)
+                            for subfile in filelist:
+                                shutil.move(os.path.join(__newtemp__, subfile), __temp__+'/')
+                            os.rmdir(__newtemp__)
                             dialog = xbmcgui.Dialog()
-                            subs_file = dialog.browse(1, __language__(32024).encode('utf8'), 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, __temp__+'/')
+                            subs_file = dialog.browse(1, __language__(32024).encode('utf8'), 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, __temp__+'/').decode("utf-8")
+                            subtitles_list.append(subs_file)
+                            break
+                        else:
+                            for dir in dirs:
+                                shutil.move(os.path.join(__newtemp__, dir), __temp__+'/')
+                            os.rmdir(__newtemp__)
+                            dialog = xbmcgui.Dialog()
+                            subs_file = dialog.browse(1, __language__(32024).encode('utf8'), 'files', '.srt|.sub|.aas|.ssa|.smi|.txt', False, False, __temp__+'/').decode("utf-8")
                             subtitles_list.append(subs_file)
                             break
         else: subtitles_list.append(subs_file)

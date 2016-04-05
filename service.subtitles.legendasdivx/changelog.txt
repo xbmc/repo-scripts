@@ -1,3 +1,6 @@
+0.2.5
+- RAR download\extraction bug hopefully fixed.
+- REQUEST: added uploader to the display.
 0.2.4
 - Changes to the new authorization system.
 - Changed domain to legendasdivx.pt.
