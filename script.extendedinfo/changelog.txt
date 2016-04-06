@@ -1,3 +1,6 @@
+v4.6.1
+- several bugfixes
+
 v4.6.0
 - fix character encoding issues for actor names
 - tmdb multisearch fix

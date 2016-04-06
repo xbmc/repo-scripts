@@ -148,15 +148,16 @@ def set_rating_prompt(media_type, media_id, dbid=None):
     if rating == -1:
         return False
     if dbid:
+        db_rating = round((rating + 1) / 2)
         if media_type == "movie":
             get_kodi_json(method="VideoLibrary.SetMovieDetails",
-                          params='{"movieid":%s,"userrating":%d}' % (dbid, round(rating)))
+                          params='{"movieid":%s,"userrating":%d}' % (dbid, db_rating))
         elif media_type == "tv":
             get_kodi_json(method="VideoLibrary.SetTVShowDetails",
-                          params='{"tvshowid":%s,"userrating":%d}' % (dbid, round(rating)))
+                          params='{"tvshowid":%s,"userrating":%d}' % (dbid, db_rating))
         elif media_type == "episode":
             get_kodi_json(method="VideoLibrary.SetEpisodeDetails",
-                          params='{"episodeid":%s,"userrating":%d}' % (dbid, round(rating)))
+                          params='{"episodeid":%s,"userrating":%d}' % (dbid, db_rating))
     set_rating(media_type=media_type,
                media_id=media_id,
                rating=(float(rating) * 0.5) + 0.5)
@@ -183,7 +184,7 @@ def set_rating(media_type, media_id, rating):
     # request.get_method = lambda: 'DELETE'
     results = send_request(url=url,
                            params=params,
-                           values='{"value": %.1f}' % rating)
+                           values={"value": "%.1f" % rating})
     if results:
         notify(ADDON_NAME, results["status_message"])
 
@@ -195,7 +196,7 @@ def send_request(url, params, values, delete=False):
     url = "%s%s?%s" % (URL_BASE, url, urllib.urlencode(params))
     log(url)
     request = urllib2.Request(url=url,
-                              data=values,
+                              data=json.dumps(values),
                               headers=HEADERS)
     if delete:
         request.get_method = lambda: 'DELETE'
@@ -337,7 +338,7 @@ def handle_movies(results, local_first=True, sortkey="year"):
                     'plot': fetch(movie, 'overview'),
                     'Trailer': trailer,
                     'Popularity': fetch(movie, 'popularity'),
-                    'Rating': fetch(movie, 'vote_average'),
+                    'Rating': round(movie['vote_average'], 1) if movie.get('vote_average') else "",
                     'credit_id': fetch(movie, 'credit_id'),
                     'character': fetch(movie, 'character'),
                     'job': fetch(movie, 'job'),
@@ -387,7 +388,7 @@ def handle_tvshows(results, local_first=True, sortkey="year"):
                  'mediatype': "tvshow",
                  'character': fetch(tv, 'character'),
                  'path': PLUGIN_BASE + 'extendedtvinfo&&id=%s' % tmdb_id,
-                 'Rating': fetch(tv, 'vote_average'),
+                 'Rating': round(tv['vote_average'], 1) if tv.get('vote_average') else "",
                  'User_Rating': str(fetch(tv, 'rating')),
                  'Votes': fetch(tv, 'vote_count'),
                  'TotalEpisodes': fetch(tv, 'number_of_episodes'),
@@ -413,7 +414,7 @@ def handle_episodes(results):
                     'episode': fetch(item, 'episode_number'),
                     'production_code': fetch(item, 'production_code'),
                     'season': fetch(item, 'season_number'),
-                    'Rating': fetch(item, 'vote_average'),
+                    'Rating': round(item['vote_average'], 1) if item.get('vote_average') else "",
                     'Votes': fetch(item, 'vote_count'),
                     'id': fetch(item, 'id'),
                     'Description': clean_text(fetch(item, 'overview'))}
@@ -512,7 +513,7 @@ def handle_images(results):
     for item in results:
         artwork = get_image_urls(poster=item.get("file_path"))
         image = {'aspectratio': item['aspect_ratio'],
-                 'vote_average': fetch(item, "vote_average"),
+                 'vote_average': round(item['vote_average'], 1) if item.get('vote_average') else "",
                  'iso_639_1': fetch(item, "iso_639_1")}
         if item.get("media"):
             image['title'] = fetch(item["media"], "title")
@@ -690,9 +691,10 @@ def get_image_urls(poster=None, still=None, fanart=None, profile=None):
 def get_movie_tmdb_id(imdb_id=None, name=None, dbid=None):
     if dbid and (int(dbid) > 0):
         movie_id = local_db.get_imdb_id("movie", dbid)
-        log("IMDB Id from local DB: %s" % (movie_id))
-        return movie_id
-    elif imdb_id:
+        if movie_id:
+            log("IMDB Id from local DB: %s" % (movie_id))
+            return movie_id
+    if imdb_id:
         params = {"external_source": "imdb_id",
                   "language": SETTING("LanguageID")}
         response = get_data(url="find/tt%s" % (imdb_id.replace("tt", "")),
@@ -778,7 +780,7 @@ def extended_movie_info(movie_id=None, dbid=None, cache_time=14):
              'OriginalTitle': fetch(response, 'original_title'),
              'Country': fetch(response, 'original_language'),
              'genre': " / ".join(genres),
-             'Rating': fetch(response, 'vote_average'),
+             'Rating': round(response['vote_average'], 1) if response.get('vote_average') else "",
              'Votes': fetch(response, 'vote_count'),
              'Adult': str(fetch(response, 'adult')),
              'Popularity': fetch(response, 'popularity'),
@@ -796,7 +798,7 @@ def extended_movie_info(movie_id=None, dbid=None, cache_time=14):
         movie.update(local_item)
     else:
         movie = local_db.merge_with_local_movie_info([movie])[0]
-    movie['Rating'] = fetch(response, 'vote_average')  # hack to get tmdb rating instead of local one
+    movie['Rating'] = round(response['vote_average'], 1) if response.get('vote_average') else "",
     listitems = {"actors": handle_people(response["credits"]["cast"]),
                  "similar": handle_movies(response["similar"]["results"]),
                  "lists": handle_misc(response["lists"]["results"]),
@@ -859,7 +861,7 @@ def extended_tvshow_info(tvshow_id=None, cache_time=7, dbid=None):
               'mediatype': "tvshow",
               'path': PLUGIN_BASE + 'extendedtvinfo&&id=%s' % tmdb_id,
               'Popularity': fetch(response, 'popularity'),
-              'Rating': fetch(response, 'vote_average'),
+              'Rating': round(response['vote_average'], 1) if response.get('vote_average') else "",
               'country': fetch(response, 'original_language'),
               'User_Rating': str(fetch(response, 'rating')),
               'Votes': fetch(response, 'vote_count'),
@@ -879,7 +881,7 @@ def extended_tvshow_info(tvshow_id=None, cache_time=7, dbid=None):
         tvshow.update(local_item)
     else:
         tvshow = local_db.merge_with_local_tvshow_info([tvshow])[0]
-    tvshow['Rating'] = fetch(response, 'vote_average')  # hack to get tmdb rating instead of local one
+    tvshow['Rating'] = round(response['vote_average'], 1) if response.get('vote_average') else ""
     listitems = {"actors": handle_people(response["credits"]["cast"]),
                  "similar": handle_tvshows(response["similar"]["results"]),
                  "studios": handle_misc(response["production_companies"]),

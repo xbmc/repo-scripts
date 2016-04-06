@@ -154,6 +154,7 @@ class LocalDB(object):
                     'OriginalTitle': movie.get('originaltitle', ""),
                     'imdb_id': movie.get('imdbnumber', ""),
                     'path': path,
+                    'mediatype': "movie",
                     'plot': movie.get('plot', ""),
                     'director': " / ".join(movie.get('director')),
                     'writer': " / ".join(movie.get('writer')),
@@ -199,6 +200,7 @@ class LocalDB(object):
                      'OriginalTitle': tvshow.get('originaltitle', ""),
                      'imdb_id': tvshow.get('imdbnumber', ""),
                      'path': path,
+                     'mediatype': "tvshow",
                      'Play': "",
                      'dbid': str(tvshow['tvshowid']),
                      'Rating': str(round(float(tvshow['rating']), 1))}
