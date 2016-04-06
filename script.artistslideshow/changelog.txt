@@ -1,3 +1,6 @@
+v.1.8.8
+- updated cache logic to reduce API calls to external sites
+
 v.1.8.7
 - updated author id separator to comma to conform properly the addon.xml spec
 

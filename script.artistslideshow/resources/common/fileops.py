@@ -1,4 +1,4 @@
-# v.0.3.3
+# v.0.3.4
 
 try:
     import xbmcvfs
@@ -11,11 +11,13 @@ if isXBMC:
     _mkdirs = xbmcvfs.mkdirs
     _exists = xbmcvfs.exists
     _delete = xbmcvfs.delete
+    _rename = xbmcvfs.rename
     _file = xbmcvfs.File
 else:
     _mkdirs = os.makedirs
     _exists = os.path.exists
     _delete = os.remove
+    _rename = os.rename
 
 
 def checkPath( path, create=True ):
@@ -72,6 +74,26 @@ def readFile( filename ):
     else:
         log_lines.append( '%s does not exist' % filename )
         return log_lines, ''
+
+
+def renameFile ( filename, newfilename ):
+    log_lines = []
+    if _exists( filename ):
+        try:
+            _rename( filename, newfilename )
+            log_lines.append( 'renaming %s to %s' % (filename, newfilename) )
+        except IOError:
+            log_lines.append( 'unable to rename %s' % filename )
+            return False, log_lines
+        except Exception, e:
+            log_lines.append( 'unknown error while attempting to rename %s' % filename )
+            log_lines.append( e )
+            return False, log_lines
+        return True, log_lines
+    else:
+        log_lines.append( '%s does not exist' % filename )
+        return False, log_lines
+
 
 def writeFile( data, filename ):
     log_lines = []
