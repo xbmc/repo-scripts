@@ -15,11 +15,23 @@ class SubTiToolHelper:
 
         fulllang = xbmc.convertLanguage(item['preferredlanguage'], xbmc.ENGLISH_NAME)
         if fulllang == "Persian": fulllang = "Farsi/Persian"
-        #xbmc.executebuiltin("Notification(Title," + item['mansearchstr'] + ")")
-        QueryString = self.filename;
+        MainQueryString = self.filename;
 
         if item['mansearch']:
             QueryString = item['mansearchstr'];
+        else:
+            if len(item['tvshow']) > 0:
+                QueryString = ("%s S%.2dE%.2d" % (item['tvshow'],int(item['season']),int(item['episode']),)).replace(" ","+")
+            else:
+                if str(item['year']) == "":
+                   QueryStringTemp = xbmc.getCleanMovieTitle(item['title'])
+                   QueryString = QueryStringTemp[0] + " " + QueryStringTemp[1]
+                else:
+                   QueryString = (item['title'] + " " + item['year']).replace(" ","+")
+            if len(QueryString) < 6:
+                QueryString = MainQueryString
+
+        #xbmc.executebuiltin("Notification(Title," + QueryString + ")")
 
         addon = xbmcaddon.Addon();
 
