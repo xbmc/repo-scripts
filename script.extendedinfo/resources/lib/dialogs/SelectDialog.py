@@ -4,18 +4,18 @@
 # This program is Free Software see LICENSE file for details
 
 import xbmcgui
-from ..Utils import *
+from .. import Utils
 
 
 # TODO: extend and use this for ContextMenu to get proper closing behaviour
 class SelectDialog(xbmcgui.WindowXMLDialog):
     ACTION_PREVIOUS_MENU = [9, 92, 10]
 
-    @busy_dialog
+    @Utils.busy_dialog
     def __init__(self, *args, **kwargs):
         xbmcgui.WindowXMLDialog.__init__(self)
         self.items = kwargs.get('listing')
-        self.listitems = create_listitems(self.items)
+        self.listitems = Utils.create_listitems(self.items)
         self.listitem = None
         self.index = -1
 
@@ -23,7 +23,7 @@ class SelectDialog(xbmcgui.WindowXMLDialog):
         self.list = self.getControl(6)
         self.getControl(3).setVisible(False)
         self.getControl(5).setVisible(False)
-        self.getControl(1).setLabel(LANG(32151))
+        self.getControl(1).setLabel(Utils.LANG(32151))
         self.list.addItems(self.listitems)
         self.setFocus(self.list)
 

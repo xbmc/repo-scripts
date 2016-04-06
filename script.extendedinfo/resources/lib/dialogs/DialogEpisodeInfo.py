@@ -77,6 +77,7 @@ def get_window(window_type):
             wm.open_video_list(prev_window=self,
                                listitems=listitems)
 
+        @ch.click(350)
         @ch.click(1150)
         def play_youtube_video(self):
             PLAYER.play_youtube_video(youtube_id=self.listitem.getProperty("youtube_id"),
