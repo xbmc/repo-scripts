@@ -15,15 +15,15 @@ if sys.version_info >= (2, 7):
 else:
     import simplejson as json
 
-__addon__ = xbmcaddon.Addon(id='service.addonsync')
-__icon__ = __addon__.getAddonInfo('icon')
-
 # Import the common settings
 from settings import log
 from settings import Settings
 from settings import nestedCopy
 from settings import nestedDelete
 from settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='service.addonsync')
+ICON = ADDON.getAddonInfo('icon')
 
 
 # Class that will generate hash values for each plugin data section
@@ -469,11 +469,11 @@ class AddonSync():
 
         # On the first use we need to inform the user what the addon does
         if Settings.isFirstUse():
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32005).encode('utf-8'))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32005).encode('utf-8'))
             Settings.setFirstUse()
 
             # On first use we will open up the settings so the user can configure them
-            __addon__.openSettings()
+            ADDON.openSettings()
 
         # Get the location that the addons are to be synced with
         centralStoreLocation = Settings.getCentralStoreLocation()
@@ -510,7 +510,7 @@ class AddonSync():
             del addonData
         else:
             log("AddonSync: Central store not set")
-            xbmcgui.Dialog().notification(__addon__.getLocalizedString(32001).encode('utf-8'), __addon__.getLocalizedString(32006).encode('utf-8'), __icon__, 5000, False)
+            xbmcgui.Dialog().notification(ADDON.getLocalizedString(32001).encode('utf-8'), ADDON.getLocalizedString(32006).encode('utf-8'), ICON, 5000, False)
             return False
 
         log("AddonSync: Sync Ended")

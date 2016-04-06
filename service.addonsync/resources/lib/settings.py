@@ -4,16 +4,16 @@ import xbmc
 import xbmcaddon
 import xbmcvfs
 
-__addon__ = xbmcaddon.Addon(id='service.addonsync')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='service.addonsync')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -114,15 +114,15 @@ class Settings():
 
     @staticmethod
     def isFirstUse():
-        return __addon__.getSetting("isFirstUse") == 'true'
+        return ADDON.getSetting("isFirstUse") == 'true'
 
     @staticmethod
     def setFirstUse(useValue='false'):
-        __addon__.setSetting("isFirstUse", useValue)
+        ADDON.setSetting("isFirstUse", useValue)
 
     @staticmethod
     def getCentralStoreLocation():
-        centralStoreLocation = __addon__.getSetting("centralStoreLocation")
+        centralStoreLocation = ADDON.getSetting("centralStoreLocation")
         # Make sure the location ends with a slash
         if ('/' in centralStoreLocation) and (not centralStoreLocation.endswith('/')):
             centralStoreLocation = "%s/" % centralStoreLocation
@@ -133,13 +133,13 @@ class Settings():
     @staticmethod
     def isMasterInstallation():
         # Safer to check for slave type, as master will not overwrite
-        if int(__addon__.getSetting("installationType")) == 1:
+        if int(ADDON.getSetting("installationType")) == 1:
             return False
         return True
 
     @staticmethod
     def isRunOnStartup():
-        return __addon__.getSetting('runOnStartup') == 'true'
+        return ADDON.getSetting('runOnStartup') == 'true'
 
     @staticmethod
     def getCheckInterval():
@@ -147,15 +147,15 @@ class Settings():
         # just the once
         if not Settings.isRunOnStartup():
             return 0
-        return int(float(__addon__.getSetting('checkInterval')))
+        return int(float(ADDON.getSetting('checkInterval')))
 
     @staticmethod
     def isRestartUpdatedServiceAddons():
-        return __addon__.getSetting('restartUpdatedServiceAddons') == 'true'
+        return ADDON.getSetting('restartUpdatedServiceAddons') == 'true'
 
     @staticmethod
     def getFilterType():
-        index = int(__addon__.getSetting("filterType"))
+        index = int(ADDON.getSetting("filterType"))
         filterType = Settings.FILTER_ALL
         if index == 1:
             filterType = Settings.FILTER_INCLUDE
@@ -166,16 +166,16 @@ class Settings():
 
     @staticmethod
     def getExcludedAddons():
-        return __addon__.getSetting('excludedAddons')
+        return ADDON.getSetting('excludedAddons')
 
     @staticmethod
     def getIncludedAddons():
-        return __addon__.getSetting('includedAddons')
+        return ADDON.getSetting('includedAddons')
 
     @staticmethod
     def setExcludedAddons(value=""):
-        __addon__.setSetting('excludedAddons', value)
+        ADDON.setSetting('excludedAddons', value)
 
     @staticmethod
     def setIncludedAddons(value=""):
-        __addon__.setSetting('includedAddons', value)
+        ADDON.setSetting('includedAddons', value)

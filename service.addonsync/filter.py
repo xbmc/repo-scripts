@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -10,26 +9,18 @@ if sys.version_info >= (2, 7):
 else:
     import simplejson as json
 
-
-__addon__ = xbmcaddon.Addon(id='service.addonsync')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+
+ADDON = xbmcaddon.Addon(id='service.addonsync')
 
 
 #########################
 # Main
 #########################
 if __name__ == '__main__':
-    log("AddonFilter: Include / Exclude Filter (version %s)" % __version__)
+    log("AddonFilter: Include / Exclude Filter (version %s)" % ADDON.getAddonInfo('version'))
 
     # Get the type of filter that is being applied
     filterType = Settings.getFilterType()
@@ -82,18 +73,18 @@ if __name__ == '__main__':
 
         if len(addons) < 1:
             log("AddonFilter: No Addons installed")
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32011).encode('utf-8'))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32011).encode('utf-8'))
         else:
             # Get the names of the addons and order them
             addonNames = list(addons.keys())
             addonNames.sort()
             selection = None
             try:
-                selection = xbmcgui.Dialog().multiselect(__addon__.getLocalizedString(32001), addonNames)
+                selection = xbmcgui.Dialog().multiselect(ADDON.getLocalizedString(32001), addonNames)
             except:
                 # Multi select is only available for releases v16 onwards, fall back to single select
                 log("AddonFilter: Multi Select Not Supported, using single select")
-                tempSelection = xbmcgui.Dialog().select(__addon__.getLocalizedString(32001), addonNames)
+                tempSelection = xbmcgui.Dialog().select(ADDON.getLocalizedString(32001), addonNames)
                 if tempSelection > -1:
                     selection = []
                     selection.append(tempSelection)
