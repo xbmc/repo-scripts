@@ -244,7 +244,8 @@
 									<textoffsetx>0</textoffsetx>
 									<textoffsety>0</textoffsety>
 									<font>font30_title</font>
-									<textcolor>FF999999</textcolor>
+									<textcolor>FFFAFAFA</textcolor>
+									<animation effect="fade" start="100" end="70" time="0" condition="!Control.HasFocus(6001)">Conditional</animation>
 									<label>$INFO[Window.Property(rated)]</label>
 								</control>
 							</control>
