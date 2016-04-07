@@ -10,18 +10,14 @@ import xbmcvfs
 import xbmcgui
 import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.audiobooks')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__media__ = xbmc.translatePath(os.path.join(__resource__, 'media').encode("utf-8")).decode("utf-8")
-
 # Import the common settings
 from settings import Settings
 from settings import log
 from settings import os_path_join
 from settings import os_path_split
-
 from database import AudioBooksDB
+
+ADDON = xbmcaddon.Addon(id='script.audiobooks')
 
 
 # Generic class for handling audiobook details
@@ -171,7 +167,7 @@ class AudioBookHandler():
         # the thumbnail
         coverImage = self.getCoverImage()
         if coverImage in [None, ""]:
-            coverImage = __addon__.getAddonInfo('icon')
+            coverImage = ADDON.getAddonInfo('icon')
 
         listitem.setIconImage(coverImage)
         listitem.setThumbnailImage(coverImage)
@@ -459,7 +455,7 @@ class AudioBookHandler():
                 chapterTitle = title_match.group(1)
 
             if chapterTitle in [None, ""]:
-                chapterTitle = "%s %d" % (__addon__.getLocalizedString(32017), chapterNum)
+                chapterTitle = "%s %d" % (ADDON.getLocalizedString(32017), chapterNum)
 
             chapterNum += 1
             log("AudioBookHandler: Chapter details. Title: %s, start_time: %s, end_time: %s, duration: %d" % (chapterTitle, start_time, end_time, chapterDuration))

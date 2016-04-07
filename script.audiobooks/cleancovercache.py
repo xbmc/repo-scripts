@@ -1,34 +1,24 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import traceback
 import xbmc
 import xbmcaddon
 import xbmcvfs
 import xbmcgui
 
-
-__addon__ = xbmcaddon.Addon(id='script.audiobooks')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-from settings import dir_exists
-from settings import os_path_join
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import dir_exists
+from resources.lib.settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='script.audiobooks')
 
 
 #########################
 # Main
 #########################
 if __name__ == '__main__':
-    log("AudioBookCoverCleanup: Cover cache cleanup called (version %s)" % __version__)
+    log("AudioBookCoverCleanup: Cover cache cleanup called (version %s)" % ADDON.getAddonInfo('version'))
 
     coverCache = Settings.getCoverCacheLocation()
 
@@ -49,4 +39,4 @@ if __name__ == '__main__':
         except:
             log("AudioBookCoverCleanup: %s" % traceback.format_exc(), xbmc.LOGERROR)
 
-    xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32009))
+    xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32009))
