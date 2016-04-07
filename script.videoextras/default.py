@@ -1,37 +1,24 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import urllib
 import traceback
 import xbmc
 import xbmcgui
 import xbmcaddon
 
-
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-__addonid__ = __addon__.getAddonInfo('id')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-
+from resources.lib.settings import Settings
+from resources.lib.settings import log
 # Load the database interface
-from database import ExtrasDB
-
+from resources.lib.database import ExtrasDB
 # Load the core Video Extras classes
-from core import VideoExtrasBase
-
+from resources.lib.core import VideoExtrasBase
 # Load the Video Extras Player that handles playing the extras files
-from ExtrasPlayer import ExtrasPlayer
-
+from resources.lib.ExtrasPlayer import ExtrasPlayer
 # Load any common dialogs
-from dialogs import VideoExtrasResumeWindow
+from resources.lib.dialogs import VideoExtrasResumeWindow
+
+ADDON = xbmcaddon.Addon(id='script.videoextras')
 
 
 ##################################################
@@ -141,24 +128,24 @@ class VideoExtrasDialog(xbmcgui.Window):
         vimeoPosition = -4
         if Settings.isVimeoSearchSupportEnabled():
             vimeoPosition = 0
-            displayNameList.insert(0, __addon__.getLocalizedString(32122))
+            displayNameList.insert(0, ADDON.getLocalizedString(32122))
 
         # Check if we are supporting YouTube Search
         youtubePosition = -3
         if Settings.isYouTubeSearchSupportEnabled():
             youtubePosition = 0
             vimeoPosition = vimeoPosition + 1
-            displayNameList.insert(0, __addon__.getLocalizedString(32116))
+            displayNameList.insert(0, ADDON.getLocalizedString(32116))
 
         addPlayAll = (len(exList) > 1)
         if addPlayAll:
             youtubePosition = youtubePosition + 1
             vimeoPosition = vimeoPosition + 1
             # Play All Selection Option
-            displayNameList.insert(0, __addon__.getLocalizedString(32101))
+            displayNameList.insert(0, ADDON.getLocalizedString(32101))
 
         # Show the list to the user
-        select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32001), displayNameList)
+        select = xbmcgui.Dialog().select(ADDON.getLocalizedString(32001), displayNameList)
 
         # User has made a selection, -1 is exit
         if select != -1:
@@ -236,7 +223,7 @@ class VideoExtras(VideoExtrasBase):
         # All the files have been retrieved, now need to display them
         if not files and not Settings.isYouTubeSearchSupportEnabled() and not Settings.isVimeoSearchSupportEnabled():
             # "Info", "No extras found"
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32103))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32102), ADDON.getLocalizedString(32103))
         else:
             isTvTunesAlreadySet = True
             needsWindowReset = True
@@ -311,7 +298,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
     # Static method to create the Window class
     @staticmethod
     def createVideoExtrasWindow(files):
-        return VideoExtrasWindow("script-videoextras-main.xml", __addon__.getAddonInfo('path').decode("utf-8"), files=files)
+        return VideoExtrasWindow("script-videoextras-main.xml", ADDON.getAddonInfo('path').decode("utf-8"), files=files)
 
     def onInit(self):
         # Need to clear the list of the default items
@@ -319,7 +306,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
 
         # Start by adding an option to Play All
         if len(self.files) > 0:
-            anItem = xbmcgui.ListItem(__addon__.getLocalizedString(32101), path=SourceDetails.getFilenameAndPath())
+            anItem = xbmcgui.ListItem(ADDON.getLocalizedString(32101), path=SourceDetails.getFilenameAndPath())
             # Get the first items fanart for the play all option
             anItem.setProperty("Fanart_Image", self.files[0].getFanArt())
 
@@ -334,7 +321,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         # Check if we want to have YouTube Extra Support
         if Settings.isYouTubeSearchSupportEnabled():
             # Create the message to the YouTube Plugin
-            li = xbmcgui.ListItem(__addon__.getLocalizedString(32116))
+            li = xbmcgui.ListItem(ADDON.getLocalizedString(32116))
             # Need to set the title to get it in the header
             if SourceDetails.getTvShowTitle() != "":
                 li.setInfo('video', {'TvShowTitle': SourceDetails.getTvShowTitle()})
@@ -348,7 +335,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
         # Check if we want to have Vimeo Extra Support
         if Settings.isVimeoSearchSupportEnabled():
             # Create the message to the Vimeo Plugin
-            li = xbmcgui.ListItem(__addon__.getLocalizedString(32122))
+            li = xbmcgui.ListItem(ADDON.getLocalizedString(32122))
             # Need to set the title to get it in the header
             if SourceDetails.getTvShowTitle() != "":
                 li.setInfo('video', {'TvShowTitle': SourceDetails.getTvShowTitle()})
@@ -459,7 +446,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
                     if (newtitle != extraItem.getDisplayName()) and (len(newtitle) > 0):
                         result = extraItem.setTitle(newtitle, isTV=SourceDetails.isTv())
                         if not result:
-                            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32109))
+                            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32102), ADDON.getLocalizedString(32109))
                         else:
                             self.onInit()
 
@@ -479,7 +466,7 @@ class VideoExtrasWindow(xbmcgui.WindowXML):
                     if (newplot != extraItem.getPlot()) and ((len(newplot) > 0) or (extraItem.getPlot() is not None)):
                         result = extraItem.setPlot(newplot, isTV=SourceDetails.isTv())
                         if not result:
-                            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32115))
+                            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32102), ADDON.getLocalizedString(32115))
                         else:
                             self.onInit()
 
@@ -587,7 +574,7 @@ class VideoExtrasContextMenu(xbmcgui.WindowXMLDialog):
     @staticmethod
     def createVideoExtrasContextMenu(extraItem):
         # Pull out the resume time as this will be processed by the base class
-        return VideoExtrasContextMenu("script-videoextras-context.xml", __addon__.getAddonInfo('path').decode("utf-8"), extraItem=extraItem)
+        return VideoExtrasContextMenu("script-videoextras-context.xml", ADDON.getAddonInfo('path').decode("utf-8"), extraItem=extraItem)
 
     def onInit(self):
         # Need to populate the resume point
@@ -654,32 +641,32 @@ class VideoPluginContextMenu(xbmcgui.WindowXMLDialog):
     # Static method to create the Window Dialog class
     @staticmethod
     def createYouTubeContextMenu(title):
-        return VideoPluginContextMenu("script-videoextras-context.xml", __addon__.getAddonInfo('path').decode("utf-8"), pluginName='plugin.video.youtube', title=title)
+        return VideoPluginContextMenu("script-videoextras-context.xml", ADDON.getAddonInfo('path').decode("utf-8"), pluginName='plugin.video.youtube', title=title)
 
     # Static method to create the Window Dialog class
     @staticmethod
     def createVimeoContextMenu(title):
-        return VideoPluginContextMenu("script-videoextras-context.xml", __addon__.getAddonInfo('path').decode("utf-8"), pluginName='plugin.video.vimeo', title=title)
+        return VideoPluginContextMenu("script-videoextras-context.xml", ADDON.getAddonInfo('path').decode("utf-8"), pluginName='plugin.video.vimeo', title=title)
 
     def onInit(self):
         # Reset all the labels for the Context Menu
         ctxButton = self.getControl(VideoPluginContextMenu.RESUME__EXTRAS)
-        ctxButton.setLabel(__addon__.getLocalizedString(32001))
+        ctxButton.setLabel(ADDON.getLocalizedString(32001))
 
         ctxButton = self.getControl(VideoPluginContextMenu.RESTART__DELETED_SCENES)
-        ctxButton.setLabel(__addon__.getLocalizedString(32117))
+        ctxButton.setLabel(ADDON.getLocalizedString(32117))
 
         ctxButton = self.getControl(VideoPluginContextMenu.MARK_WATCHED__SPECIAL_FEATURES)
-        ctxButton.setLabel(__addon__.getLocalizedString(32118))
+        ctxButton.setLabel(ADDON.getLocalizedString(32118))
 
         ctxButton = self.getControl(VideoPluginContextMenu.MARK_UNWATCHED__BLOOPERS)
-        ctxButton.setLabel(__addon__.getLocalizedString(32119))
+        ctxButton.setLabel(ADDON.getLocalizedString(32119))
 
         ctxButton = self.getControl(VideoPluginContextMenu.EDIT_TITLE__INTERVIEW)
-        ctxButton.setLabel(__addon__.getLocalizedString(32120))
+        ctxButton.setLabel(ADDON.getLocalizedString(32120))
 
         ctxButton = self.getControl(VideoPluginContextMenu.EDIT_PLOT__VFX)
-        ctxButton.setLabel(__addon__.getLocalizedString(32121))
+        ctxButton.setLabel(ADDON.getLocalizedString(32121))
 
         xbmcgui.WindowXMLDialog.onInit(self)
 
@@ -714,7 +701,7 @@ class VideoPluginContextMenu(xbmcgui.WindowXMLDialog):
 # Main
 #########################
 if __name__ == '__main__':
-    log("Starting VideoExtras %s" % __addon__.getAddonInfo('version'))
+    log("Starting VideoExtras %s" % ADDON.getAddonInfo('version'))
 
     try:
         if len(sys.argv) > 2:

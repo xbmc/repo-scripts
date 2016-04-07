@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
+import os
 import unicodedata
 import xbmc
 import xbmcaddon
-import os
 import xbmcvfs
 
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='script.videoextras')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -104,76 +104,76 @@ class Settings():
 
     @staticmethod
     def getExcludeFiles():
-        return __addon__.getSetting("excludeFilesRegex")
+        return ADDON.getSetting("excludeFilesRegex")
 
     @staticmethod
     def getExtrasDirName():
-        return __addon__.getSetting("extrasDirName")
+        return ADDON.getSetting("extrasDirName")
 
     @staticmethod
     def getExtrasFileTag():
-        if __addon__.getSetting("enableFileTag") != "true":
+        if ADDON.getSetting("enableFileTag") != "true":
             return ""
-        return __addon__.getSetting("extrasFileTag")
+        return ADDON.getSetting("extrasFileTag")
 
     @staticmethod
     def isSearchNested():
-        return __addon__.getSetting("searchNested") == "true"
+        return ADDON.getSetting("searchNested") == "true"
 
     @staticmethod
     def isDetailedListScreen():
-        return __addon__.getSetting("detailedList") == "true"
+        return ADDON.getSetting("detailedList") == "true"
 
     @staticmethod
     def isMenuReturnVideoSelection():
         settingsSelect = "extrasReturn"
         if Settings.isDetailedListScreen():
             settingsSelect = "detailedReturn"
-        return __addon__.getSetting(settingsSelect) == __addon__.getLocalizedString(32007)
+        return ADDON.getSetting(settingsSelect) == ADDON.getLocalizedString(32007)
 
     @staticmethod
     def isMenuReturnHome():
         settingsSelect = "extrasReturn"
         if Settings.isDetailedListScreen():
             settingsSelect = "detailedReturn"
-        return __addon__.getSetting(settingsSelect) == __addon__.getLocalizedString(32009)
+        return ADDON.getSetting(settingsSelect) == ADDON.getLocalizedString(32009)
 
     @staticmethod
     def isMenuReturnInformation():
         settingsSelect = "extrasReturn"
         if Settings.isDetailedListScreen():
             settingsSelect = "detailedReturn"
-        return __addon__.getSetting(settingsSelect) == __addon__.getLocalizedString(32008)
+        return ADDON.getSetting(settingsSelect) == ADDON.getLocalizedString(32008)
 
     @staticmethod
     def isMenuReturnExtras():
         if Settings.isDetailedListScreen():
             return False
-        return __addon__.getSetting("extrasReturn") == __addon__.getLocalizedString(32001)
+        return ADDON.getSetting("extrasReturn") == ADDON.getLocalizedString(32001)
 
     @staticmethod
     def isForceButtonDisplay():
-        return __addon__.getSetting("forceButtonDisplay") == "true"
+        return ADDON.getSetting("forceButtonDisplay") == "true"
 
     @staticmethod
     def showOnContextMenu():
-        return __addon__.getSetting("showOnContextMenu") == "true"
+        return ADDON.getSetting("showOnContextMenu") == "true"
 
     @staticmethod
     def isServiceEnabled():
-        return __addon__.getSetting("serviceEnabled") == "true"
+        return ADDON.getSetting("serviceEnabled") == "true"
 
     @staticmethod
     def getAddonVersion():
-        return __addon__.getAddonInfo('version')
+        return ADDON.getAddonInfo('version')
 
     @staticmethod
     def isDatabaseEnabled():
-        return __addon__.getSetting("enableDB") == "true"
+        return ADDON.getSetting("enableDB") == "true"
 
     @staticmethod
     def isCustomPathEnabled():
-        return __addon__.getSetting("custom_path_enable") == 'true'
+        return ADDON.getSetting("custom_path_enable") == 'true'
 
     @staticmethod
     def getCustomPath(subtype=None):
@@ -181,40 +181,40 @@ class Settings():
             subTypeDir = ""
             if subtype is not None:
                 if subtype == Settings.MOVIES:
-                    subTypeDir = __addon__.getSetting("custom_path_movies")
+                    subTypeDir = ADDON.getSetting("custom_path_movies")
                 elif subtype == Settings.TVSHOWS:
-                    subTypeDir = __addon__.getSetting("custom_path_tvshows")
+                    subTypeDir = ADDON.getSetting("custom_path_tvshows")
                 elif subtype == Settings.MUSICVIDEOS:
-                    subTypeDir = __addon__.getSetting("custom_path_musicvideos")
+                    subTypeDir = ADDON.getSetting("custom_path_musicvideos")
 
-            return os_path_join(__addon__.getSetting("custom_path"), subTypeDir)
+            return os_path_join(ADDON.getSetting("custom_path"), subTypeDir)
         else:
             return None
 
     @staticmethod
     def getCustomOverlayImage():
-        if __addon__.getSetting("useCustomImages") != "true":
+        if ADDON.getSetting("useCustomImages") != "true":
             return None
-        return __addon__.getSetting('overlayImage')
+        return ADDON.getSetting('overlayImage')
 
     @staticmethod
     def getCustomListImage():
-        if __addon__.getSetting("useCustomImages") != "true":
+        if ADDON.getSetting("useCustomImages") != "true":
             return None
-        return __addon__.getSetting('listImage')
+        return ADDON.getSetting('listImage')
 
     @staticmethod
     def isYouTubeSearchSupportEnabled():
-        return __addon__.getSetting("enableYouTubeSearchSupport") == 'true'
+        return ADDON.getSetting("enableYouTubeSearchSupport") == 'true'
 
     @staticmethod
     def disableYouTubeSearchSupport():
-        __addon__.setSetting("enableYouTubeSearchSupport", "false")
+        ADDON.setSetting("enableYouTubeSearchSupport", "false")
 
     @staticmethod
     def isVimeoSearchSupportEnabled():
-        return __addon__.getSetting("enableVimeoSearchSupport") == 'true'
+        return ADDON.getSetting("enableVimeoSearchSupport") == 'true'
 
     @staticmethod
     def disableVimeoSearchSupport():
-        __addon__.setSetting("enableVimeoSearchSupport", "false")
+        ADDON.setSetting("enableVimeoSearchSupport", "false")

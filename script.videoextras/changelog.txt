@@ -1,3 +1,6 @@
+v2.1.1 (2016-04-05)
+- Tidy up import, globals and plugin provides
+
 v2.1.0 (2016-02-23)
 - Update to support Extras button in Jarvis Confluence
 

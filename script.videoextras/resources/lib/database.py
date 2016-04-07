@@ -5,11 +5,11 @@ import xbmcvfs
 import sqlite3
 import xbmcgui
 
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-
 # Import the common settings
 from settings import log
 from settings import os_path_join
+
+ADDON = xbmcaddon.Addon(id='script.videoextras')
 
 
 #################################
@@ -18,14 +18,14 @@ from settings import os_path_join
 class ExtrasDB():
     def __init__(self):
         # Start by getting the database location
-        self.configPath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+        self.configPath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
         self.databasefile = os_path_join(self.configPath, "extras_database.db")
         log("ExtrasDB: Database file location = %s" % self.databasefile)
         # Make sure that the database exists if this is the first time
         self.createDatabase()
 
     def cleanDatabase(self):
-        isYes = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32024) + "?")
+        isYes = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32102), ADDON.getLocalizedString(32024) + "?")
         if isYes:
             # If the database file exists, delete it
             if xbmcvfs.exists(self.databasefile):

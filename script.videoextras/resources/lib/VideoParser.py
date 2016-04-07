@@ -4,26 +4,14 @@
 # On 21st January 2014
 #   https://github.com/Lunatixz/script.pseudotv.live/tree/master/resources/lib/parsers
 
-import sys
-import xbmc
 import os
-import xbmcaddon
 
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib', 'parsers').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
-import MP4Parser as MP4Parser
-import AVIParser as AVIParser
-import MKVParser as MKVParser
-import FLVParser as FLVParser
-import TSParser as TSParser
-
-from FileAccess import FileAccess
+import parsers.MP4Parser as MP4Parser
+import parsers.AVIParser as AVIParser
+import parsers.MKVParser as MKVParser
+import parsers.FLVParser as FLVParser
+import parsers.TSParser as TSParser
+from parsers.FileAccess import FileAccess
 
 
 class VideoParser:

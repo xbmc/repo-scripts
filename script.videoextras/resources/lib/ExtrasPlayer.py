@@ -1,22 +1,13 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import traceback
 import xbmc
 import xbmcaddon
 import xbmcgui
 
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-__addonid__ = __addon__.getAddonInfo('id')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
 from settings import log
+
+ADDON = xbmcaddon.Addon(id='script.videoextras')
 
 
 ###################################
@@ -159,7 +150,7 @@ class ExtrasPlayer(xbmc.Player):
     def _getListItem(self, extrasItem, ignoreResume=False):
         listitem = xbmcgui.ListItem()
         # Set the display title on the video play overlay
-        listitem.setInfo('video', {'studio': __addon__.getLocalizedString(32001) + " - " + self.parentTitle})
+        listitem.setInfo('video', {'studio': ADDON.getLocalizedString(32001) + " - " + self.parentTitle})
         listitem.setInfo('video', {'Title': extrasItem.getDisplayName()})
 
         # If both the Icon and Thumbnail is set, the list screen will choose to show
@@ -170,7 +161,7 @@ class ExtrasPlayer(xbmc.Player):
         if extrasItem.getThumbnailImage() != "":
             listitem.setThumbnailImage(extrasItem.getThumbnailImage())
         else:
-            listitem.setThumbnailImage(__addon__.getAddonInfo('icon'))
+            listitem.setThumbnailImage(ADDON.getAddonInfo('icon'))
 
         # Check if the plot is set, if so we want to set it on the player
         plotDetails = extrasItem.getPlot()

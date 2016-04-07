@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
 import urllib
 import urlparse
 import xbmc
@@ -14,36 +13,24 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-
-__addon__ = xbmcaddon.Addon(id='script.videoextras')
-__icon__ = __addon__.getAddonInfo('icon')
-__fanart__ = __addon__.getAddonInfo('fanart')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__profile__ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-from settings import os_path_join
-from settings import dir_exists
-
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+from resources.lib.settings import dir_exists
 # Load the database interface
-from database import ExtrasDB
-
+from resources.lib.database import ExtrasDB
 # Load the core Video Extras classes
-from core import VideoExtrasBase
-
+from resources.lib.core import VideoExtrasBase
 # Load the Video Extras Player that handles playing the extras files
-from ExtrasPlayer import ExtrasPlayer
-
+from resources.lib.ExtrasPlayer import ExtrasPlayer
 # Load any common dialogs
-from dialogs import VideoExtrasResumeWindow
+from resources.lib.dialogs import VideoExtrasResumeWindow
+
+ADDON = xbmcaddon.Addon(id='script.videoextras')
+ICON = ADDON.getAddonInfo('icon')
+FANART = ADDON.getAddonInfo('fanart')
+PROFILE_DIR = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode("utf-8")
 
 
 ###################################################################
@@ -66,22 +53,22 @@ class MenuNavigator():
     def showRootMenu(self):
         # Movies
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MOVIES})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32110), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32110), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # TV Shows
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.TVSHOWS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32111), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32111), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Music Videos
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MUSICVIDEOS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32112), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32112), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
@@ -165,7 +152,7 @@ class MenuNavigator():
         # If the service is on, then we can just check to see if the overlay image exists
         if Settings.isServiceEnabled():
             # Get the path where the file exists
-            rootPath = os_path_join(__profile__, target)
+            rootPath = os_path_join(PROFILE_DIR, target)
             if not dir_exists(rootPath):
                 # Directory does not exist yet, so can't have extras
                 return False
@@ -208,7 +195,7 @@ class MenuNavigator():
 
         if len(files) > 0:
             # Start by adding an option to Play All
-            anItem = xbmcgui.ListItem(__addon__.getLocalizedString(32101), path=path)
+            anItem = xbmcgui.ListItem(ADDON.getLocalizedString(32101), path=path)
             # Get the first items fanart for the play all option
             anItem.setProperty("Fanart_Image", files[0].getFanArt())
 
@@ -379,7 +366,7 @@ class MenuNavigator():
                         isTv = (target == MenuNavigator.TVSHOWS)
                         result = anExtra.setTitle(newtitle, isTV=isTv)
                         if not result:
-                            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32109))
+                            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32102), ADDON.getLocalizedString(32109))
                         else:
                             # Update the display
                             xbmc.executebuiltin("Container.Refresh")
@@ -413,7 +400,7 @@ class MenuNavigator():
                         isTv = (target == MenuNavigator.TVSHOWS)
                         result = anExtra.setPlot(newplot, isTV=isTv)
                         if not result:
-                            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32102), __addon__.getLocalizedString(32115))
+                            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32102), ADDON.getLocalizedString(32115))
                         else:
                             # Update the display
                             xbmc.executebuiltin("Container.Refresh")
@@ -423,29 +410,29 @@ class MenuNavigator():
         # Resume
         if extraItem.getResumePoint() > 0:
             cmd = self._build_url({'mode': 'resumeextra', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8"), 'parentTitle': extrasParentTitle})
-            ctxtMenu.append(("%s %s" % (__addon__.getLocalizedString(32104), extraItem.getDisplayResumePoint()), 'RunPlugin(%s)' % cmd))
+            ctxtMenu.append(("%s %s" % (ADDON.getLocalizedString(32104), extraItem.getDisplayResumePoint()), 'RunPlugin(%s)' % cmd))
 
         # Play Now
         cmd = self._build_url({'mode': 'beginextra', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8"), 'parentTitle': extrasParentTitle})
-        ctxtMenu.append((__addon__.getLocalizedString(32105), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32105), 'RunPlugin(%s)' % cmd))
 
         # Mark As Watched
         if (extraItem.getWatched() == 0) or (extraItem.getResumePoint() > 0):
             cmd = self._build_url({'mode': 'markwatched', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
-            ctxtMenu.append((__addon__.getLocalizedString(32106), 'RunPlugin(%s)' % cmd))
+            ctxtMenu.append((ADDON.getLocalizedString(32106), 'RunPlugin(%s)' % cmd))
 
         # Mark As Unwatched
         if (extraItem.getWatched() != 0) or (extraItem.getResumePoint() > 0):
             cmd = self._build_url({'mode': 'markunwatched', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
-            ctxtMenu.append((__addon__.getLocalizedString(32107), 'RunPlugin(%s)' % cmd))
+            ctxtMenu.append((ADDON.getLocalizedString(32107), 'RunPlugin(%s)' % cmd))
 
         # Edit Title
         cmd = self._build_url({'mode': 'edittitle', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
-        ctxtMenu.append((__addon__.getLocalizedString(32108), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32108), 'RunPlugin(%s)' % cmd))
 
         # Edit Plot
         cmd = self._build_url({'mode': 'editplot', 'foldername': target, 'path': path, 'filename': extraItem.getFilename().encode("utf-8")})
-        ctxtMenu.append((__addon__.getLocalizedString(32114), 'RunPlugin(%s)' % cmd))
+        ctxtMenu.append((ADDON.getLocalizedString(32114), 'RunPlugin(%s)' % cmd))
 
         return ctxtMenu
 
@@ -454,7 +441,7 @@ class MenuNavigator():
         title = urllib.quote_plus(parentTitle)
         # Create the message to the Plugin
         url = "plugin://%s/search/?q=%s+Extras" % (pluginName, title)
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(langId))
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(langId))
         icon = None
         try:
             icon = xbmcaddon.Addon(id=pluginName).getAddonInfo('icon')
@@ -474,27 +461,27 @@ class MenuNavigator():
 
         # Extras
         cmd = "/search/?q=%s+Extras" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32001), 'RunAddon(%s,%s)' % (pluginName, cmd)))
+        ctxtMenu.append((ADDON.getLocalizedString(32001), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # Deleted Scenes
         cmd = "/search/?q=%s+Deleted+Scene" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32117), 'RunAddon(%s,%s)' % (pluginName, cmd)))
+        ctxtMenu.append((ADDON.getLocalizedString(32117), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # Special Features
         cmd = "/search/?q=%s+Special+Features" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32118), 'RunAddon(%s,%s)' % (pluginName, cmd)))
+        ctxtMenu.append((ADDON.getLocalizedString(32118), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # Bloopers
         cmd = "/search/?q=%s+Blooper" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32119), 'RunAddon(%s,%s)' % (pluginName, cmd)))
+        ctxtMenu.append((ADDON.getLocalizedString(32119), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # Interviews
         cmd = "/search/?q=%s+Interview" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32120), 'RunAddon(%s,%s)' % (pluginName, cmd)))
+        ctxtMenu.append((ADDON.getLocalizedString(32120), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         # VFX (Visual Effects)
         cmd = "/search/?q=%s+VFX" % title
-        ctxtMenu.append((__addon__.getLocalizedString(32121), 'RunAddon(%s,%s)' % (pluginName, cmd)))
+        ctxtMenu.append((ADDON.getLocalizedString(32121), 'RunAddon(%s,%s)' % (pluginName, cmd)))
 
         li.addContextMenuItems(ctxtMenu, replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
