@@ -1,0 +1,65 @@
+# Kodi Media Center language file
+# Addon Name: RandomScreensaver
+# Addon id: screensaver.random
+# Addon Provider: robwebset
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: English (US) (http://www.transifex.com/projects/p/xbmc-addons/language/en_US/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Random Screensaver"
+msgstr "Random Screensaver"
+
+msgctxt "Addon Description"
+msgid "Screensaver that selects an installed screensaver at random to be used."
+msgstr "Screensaver that selects an installed screensaver at random to be used."
+
+msgctxt "#32001"
+msgid "Random Screensaver"
+msgstr "Random Screensaver"
+
+msgctxt "#32002"
+msgid "Screensaver"
+msgstr "Screensaver"
+
+msgctxt "#32003"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#32004"
+msgid "Enable debug logging"
+msgstr "Enable debug logging"
+
+msgctxt "#32005"
+msgid "Operations"
+msgstr "Operations"
+
+msgctxt "#32006"
+msgid "Check Supported Screensavers"
+msgstr "Check Supported Screensavers"
+
+msgctxt "#32007"
+msgid "Excluded Screensavers"
+msgstr "Excluded Screensavers"
+
+msgctxt "#32101"
+msgid "No Supported Screensavers Installed"
+msgstr "No Supported Screensavers Installed"
+
+msgctxt "#32102"
+msgid "All installed screensavers are supported by Random Screensaver"
+msgstr "All installed screensavers are supported by Random Screensaver"
+
+msgctxt "#32103"
+msgid "The following screensavers require updating for Random Screensaver support"
+msgstr "The following screensavers require updating for Random Screensaver support"
