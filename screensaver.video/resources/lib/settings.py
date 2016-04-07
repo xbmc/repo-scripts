@@ -5,16 +5,16 @@ import xbmc
 import xbmcaddon
 import xbmcvfs
 
-__addon__ = xbmcaddon.Addon(id='screensaver.video')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='screensaver.video')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, loglevel=xbmc.LOGDEBUG):
-    if (__addon__.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
+    if (ADDON.getSetting("logEnabled") == "true") or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -83,7 +83,7 @@ def os_path_isfile(workingPath,):
 def dir_exists(dirpath):
     directoryPath = dirpath
     # The xbmcvfs exists interface require that directories end in a slash
-    # It used to be OK not to have the slash in Gotham, but it is now required
+    # It used to be OK not to have the slash in Gothan, but it is now required
     if (not directoryPath.endswith("/")) and (not directoryPath.endswith("\\")):
         dirSep = "/"
         if "\\" in directoryPath:
@@ -119,75 +119,6 @@ class Settings():
     FRIDAY = 4
     SATURDAY = 5
     SUNDAY = 6
-
-    # Locations:
-    # ozibox.com
-    #    Aquarium001.mkv
-    #    Aquarium004-720p.mp4
-    #    Beach002-720p.mp4
-    #    Christmas001-1080p.mp4
-    #    Clock001-720p.mp4
-    #    Clock002-360p.mp4
-    #    Fireplace001-720p.mkv
-    #    Fireplace002.mkv
-    #    JohnnyCastaway001-480.mp4
-    #    Matrix001-720.mp4
-    #    Ocean001-720p.mp4
-    #    RetroSciFi-001-1080p.mp4
-    #    Snow001-720p.mp4
-    #    Snow002-1080p.mp4
-    #    Snow003-1080p.mp4
-    #    Space001-720p.mp4
-    #    Space002-1080p.mp4
-    #    StarTrekTNG-001-720p.mp4
-    #    Woodland001-720p.mp4
-    #    Waterfall001-720p.mp4
-    #    Waterfall002-720p.mp4
-    #    Watermill001-1080p.mp4
-    #
-    # copy.com
-    #    Aquarium002-720p.mkv
-    #    Aquarium003-720p.mp4
-    #    Aquarium005-720p.mkv
-    #    Beach001-720p.mp4
-    #    Beach003-720p.mp4
-    #    Fireplace003-1080p.mkv
-    #    Fireplace004-720p.mp4
-    #    Space003-720p.mkv
-    #    Waterfall003-720p.mp4
-    PRESET_VIDEOS = (
-        [32101, "Aquarium001.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD03QTcyNTkyQTNBNUE0QTVRUVdFMjAxMTY2N0VXUVM="],
-        [32102, "Aquarium002-720p.mkv", "aHR0cDovL2NvcHkuY29tL2NlbXZGQ213M016SVhOMU8/ZG93bmxvYWQ9MQ=="],
-        [32106, "Aquarium003-720p.mp4", "aHR0cDovL2NvcHkuY29tLzFkaUJkN3Z6SWt3ZFpDdVQ/ZG93bmxvYWQ9MQ=="],
-        [32124, "Aquarium004-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQ0NCNDY2NDEzQTVBNEE1UVFXRTEzMDY2OTlFV1FTL0FxdWFyaXVtMDA0LTcyMHAubXA0"],
-        [32128, "Aquarium005-720p.mkv", "aHR0cDovL2NvcHkuY29tL0Y4NnRrUU9kR3hRVEVBR1Q/ZG93bmxvYWQ9MQ=="],
-        [32109, "Beach001-720p.mp4", "aHR0cDovL2NvcHkuY29tL1VvRE1OZ0JWajBmTVFxeFY/ZG93bmxvYWQ9MQ=="],
-        [32110, "Beach002-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1CN0U5RjZDRTNBNUE0QTVRUVdFMjEwMzI1MUVXUVM="],
-        [32119, "Beach003-720p.mp4", "aHR0cDovL2NvcHkuY29tL0t0OVFsNlVlVEVLR09vZXU/ZG93bmxvYWQ9MQ=="],
-        [32125, "Christmas001-1080p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjE0NEQ1MDIzQTVBNEE1UVFXRTEzMDY3MDJFV1FTL0NocmlzdG1hczAwMS0xMDgwcC5tcDQ="],
-        [32130, "Clock001-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvRDZBRjc2MEEzQTVBNEE1UVFXRTE1MDM1OTRFV1FTL0Nsb2NrMDAxLTcyMHAubXA0"],
-        [32131, "Clock002-360p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjFDMjJCNTMzQTVBNEE1UVFXRTE1MDM1OThFV1FTL0Nsb2NrMDAyLTM2MHAubXA0"],
-        [32103, "Fireplace001-720p.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1ENzMwODE2OTNBNUE0QTVRUVdFMjAxMTcyOUVXUVM="],
-        [32104, "Fireplace002.mkv", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05QkRBRDdDODNBNUE0QTVRUVdFMjAxMTY4OUVXUVM="],
-        [32105, "Fireplace003-1080p.mkv", "aHR0cDovL2NvcHkuY29tL1dzZEcwdmZ0cWl2V3NqWUQ/ZG93bmxvYWQ9MQ=="],
-        [32107, "Fireplace004-720p.mp4", "aHR0cDovL2NvcHkuY29tL2I2VlJ6UTFYeEVmSXhwU0g/ZG93bmxvYWQ9MQ=="],
-        [32126, "JohnnyCastaway001-480.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvODU1RDlBMDQzQTVBNEE1UVFXRTEzMDY2ODhFV1FTL0pvaG5ueUNhc3Rhd2F5MDAxLTQ4MC5tcDQ="],
-        [32111, "Matrix001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD05RTczMTM0QjNBNUE0QTVRUVdFMjEwMzMyN0VXUVM="],
-        [32127, "Ocean001-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvMjI2NzJBNzczQTVBNEE1UVFXRTEzMTg1NDlFV1FTL09jZWFuMDAxLTcyMHAubXA0"],
-        [32115, "RetroSciFi-001-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD02QjVCNzREQzNBNUE0QTVRUVdFMjEwNDA4N0VXUVM="],
-        [32120, "Snow001-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvRjI5QkZFQzIzQTVBNEE1UVFXRTk0MTMzN0VXUVMvU25vdzAwMS03MjBwLm1wNA=="],
-        [32121, "Snow002-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlSGFzaC85MEE1NjhDRDNBNUE0QTVRUVdFMjc3ODg4N0VXUVMvU25vdzAwMi0xMDgwcC5tcDQ="],
-        [32122, "Snow003-720p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQjE0RUE1NDYzQTVBNEE1UVFXRTk0MTQ3MkVXUVMvU25vdzAwMy03MjBwLm1wNA=="],
-        [32108, "Space001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1EQ0E4OTFEMTNBNUE0QTVRUVdFMjAxMTc3NkVXUVM="],
-        [32112, "Space002-1080p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD00NDQxQ0JCNTNBNUE0QTVRUVdFMjEwMzA4OUVXUVM="],
-        [32129, "Space003-720p.mp4", "aHR0cDovL2NvcHkuY29tL3NEZDByM0gxRldZVGptUjk/ZG93bmxvYWQ9MQ=="],
-        [32114, "StarTrekTNG-001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD1FM0VFRTkyNzNBNUE0QTVRUVdFMjEwNDA4NEVXUVM="],
-        [32116, "Waterfall001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD0wNDk1NDU5RTNBNUE0QTVRUVdFMjExNTk2N0VXUVM="],
-        [32117, "Waterfall002-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD0wQTRGQjAxMjNBNUE0QTVRUVdFMjExNTk4NUVXUVM="],
-        [32118, "Waterfall003-720p.mp4", "aHR0cDovL2NvcHkuY29tL20xcnNFVXhjVXlBTWVOaGM/ZG93bmxvYWQ9MQ=="],
-        [32123, "Watermill001-1080p.mp4", "aHR0cDovLzE3OC4zMy42My42OC9wdXRzdG9yYWdlL0Rvd25sb2FkRmlsZUhhc2gvQTRDNzMxNkYzQTVBNEE1UVFXRTk0MTQ0OEVXUVMvV2F0ZXJtaWxsMDAxLTEwODBwLm1wNA=="],
-        [32113, "Woodland001-720p.mp4", "aHR0cDovLzE3OC4zMy42MS42L3B1dHN0b3JhZ2UvRG93bmxvYWRGaWxlLmFzaHg/RG93bmxvYWRGaWxlSGFzaD0xODFDMjE1QjNBNUE0QTVRUVdFMjEwMzMyOUVXUVM="]
-    )
 
     DIM_LEVEL = (
         '00000000',
@@ -231,54 +162,70 @@ class Settings():
     )
 
     @staticmethod
-    def getScreensaverVideo():
-        return __addon__.getSetting("screensaverFile").decode("utf-8")
+    def isFolderSelection():
+        return ADDON.getSetting("useFolder") == "true"
 
     @staticmethod
-    def setScreensaverVideo(screensaverFile):
-        __addon__.setSetting("useFolder", "false")
-        __addon__.setSetting("screensaverFile", screensaverFile)
-        __addon__.setSetting("screensaverFolder", "")
+    def getScreensaverVideo():
+        return ADDON.getSetting("screensaverFile").decode("utf-8")
 
     @staticmethod
     def getScreensaverFolder():
-        return __addon__.getSetting("screensaverFolder").decode("utf-8")
+        screenFolder = ADDON.getSetting("screensaverFolder").decode("utf-8")
+
+        # If the screensaver folder has not been set yet, then set it to default
+        if screenFolder in [None, ""]:
+            addonRootDir = xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8")
+            screenFolder = os_path_join(addonRootDir, 'videos')
+            ADDON.setSetting("screensaverFolder", screenFolder)
+
+            # Make sure the screensaver folder exists, if not, createe it
+            if not dir_exists(addonRootDir):
+                xbmcvfs.mkdir(addonRootDir)
+            if not dir_exists(screenFolder):
+                xbmcvfs.mkdir(screenFolder)
+
+        return screenFolder
 
     @staticmethod
-    def setScreensaverFolder(screensaverFolder):
-        __addon__.setSetting("useFolder", "true")
-        __addon__.setSetting("screensaverFolder", screensaverFolder)
-        __addon__.setSetting("screensaverFile", "")
+    def getTempFolder():
+        addonRootDir = xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8")
+        tempDir = os_path_join(addonRootDir, 'temp')
+
+        # Make sure the screensaver folder exists, if not, createe it
+        if not dir_exists(addonRootDir):
+            xbmcvfs.mkdir(addonRootDir)
+        if not dir_exists(tempDir):
+            xbmcvfs.mkdir(tempDir)
+
+        return tempDir
 
     @staticmethod
-    def isFolderSelection():
-        return __addon__.getSetting("useFolder") == "true"
+    def getCustomFolder():
+        addonRootDir = xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8")
+        customDir = os_path_join(addonRootDir, 'custom')
+
+        # Make sure the screensaver folder exists, if not, createe it
+        if not dir_exists(addonRootDir):
+            xbmcvfs.mkdir(addonRootDir)
+        if not dir_exists(customDir):
+            xbmcvfs.mkdir(customDir)
+
+        return customDir
 
     @staticmethod
     def isFolderNested():
         nested = False
         if Settings.isFolderSelection():
-            nested = __addon__.getSetting("screensaverFolderNested") == "true"
+            nested = ADDON.getSetting("screensaverFolderNested") == "true"
         return nested
 
     @staticmethod
-    def setVideoSelectionPredefined():
-        __addon__.setSetting("videoSelection", "0")
-
-    @staticmethod
     def cleanAddonSettings():
-        # We do this because this is a display field and if a user
-        # 1) Selects the "Manual Define"
-        # 2) Select a custom video
-        # 3) Returns to "Built in Videos"
-        # Then it will show the last built in video, which is not accurate
-        if __addon__.getSetting("videoSelection") == "1":
-            __addon__.setSetting("displaySelected", "")
-
         # Set the default values for the schedule screensaver folders
         defaultFolder = Settings.getScreensaverFolder()
         if defaultFolder not in [None, ""]:
-            # Make sure the directory path ends with a seperator, otherwise it
+            # Make sure the directory path ends with a separator, otherwise it
             # will show the parent path
             if (not defaultFolder.endswith("/")) and (not defaultFolder.endswith("\\")):
                 dirSep = "/"
@@ -288,39 +235,31 @@ class Settings():
             ruleNum = 1
             while ruleNum < 6:
                 videoFileTag = "rule%dVideoFile" % ruleNum
-                if __addon__.getSetting(videoFileTag) in [None, ""]:
-                    __addon__.setSetting(videoFileTag, defaultFolder)
+                if ADDON.getSetting(videoFileTag) in [None, ""]:
+                    ADDON.setSetting(videoFileTag, defaultFolder)
                 ruleNum = ruleNum + 1
 
     @staticmethod
-    def setPresetVideoSelected(id):
-        if id is not None:
-            if id != -1:
-                __addon__.setSetting("displaySelected", __addon__.getLocalizedString(Settings.PRESET_VIDEOS[id][0]))
-            else:
-                __addon__.setSetting("displaySelected", __addon__.getLocalizedString(32100))
-
-    @staticmethod
     def isShowTime():
-        return __addon__.getSetting("showTime") == "true"
+        return ADDON.getSetting("showTime") == "true"
 
     @staticmethod
     def isRandomStart():
-        return __addon__.getSetting("randomStart") == 'true'
+        return ADDON.getSetting("randomStart") == 'true'
 
     @staticmethod
     def isBlockScreensaverIfMediaPlaying():
-        return __addon__.getSetting("mediaPlayingBlock") == 'true'
+        return ADDON.getSetting("mediaPlayingBlock") == 'true'
 
     @staticmethod
     def isLaunchOnStartup():
-        return __addon__.getSetting("launchOnStartup") == 'true'
+        return ADDON.getSetting("launchOnStartup") == 'true'
 
     @staticmethod
     def getVolume():
-        if __addon__.getSetting("alterVolume") == 'false':
+        if ADDON.getSetting("alterVolume") == 'false':
             return -1
-        return int(float(__addon__.getSetting("screensaverVolume")))
+        return int(float(ADDON.getSetting("screensaverVolume")))
 
     @staticmethod
     def getDimValue():
@@ -328,37 +267,37 @@ class Settings():
         # Where 00000000 is not changed
         # So that is a total of 15 different options
         # FF000000 would be completely black, so we do not use that one
-        if __addon__.getSetting("dimLevel"):
-            return Settings.DIM_LEVEL[int(__addon__.getSetting("dimLevel"))]
+        if ADDON.getSetting("dimLevel"):
+            return Settings.DIM_LEVEL[int(ADDON.getSetting("dimLevel"))]
         else:
             return '00000000'
 
     @staticmethod
     def screensaverTimeout():
         timoutSetting = 0
-        if __addon__.getSetting("stopAutomatic") == 'true':
-            timoutSetting = int(float(__addon__.getSetting("stopAfter")))
+        if ADDON.getSetting("stopAutomatic") == 'true':
+            timoutSetting = int(float(ADDON.getSetting("stopAfter")))
         return timoutSetting
 
     @staticmethod
     def isShutdownAfterTimeout():
-        return __addon__.getSetting("stopAutomaticShutdown") == 'true'
+        return ADDON.getSetting("stopAutomaticShutdown") == 'true'
 
     @staticmethod
     def getFolderRepeatType():
         repeatType = Settings.REPEAT_TYPE[0]
-        if __addon__.getSetting("videoSelection") == "1":
-            if Settings.isFolderSelection() and __addon__.getSetting("folderRepeatType"):
-                repeatType = Settings.REPEAT_TYPE[int(__addon__.getSetting("folderRepeatType"))]
+        if ADDON.getSetting("videoSelection") == "1":
+            if Settings.isFolderSelection() and ADDON.getSetting("folderRepeatType"):
+                repeatType = Settings.REPEAT_TYPE[int(ADDON.getSetting("folderRepeatType"))]
         return repeatType
 
     @staticmethod
     def getOverlayImage():
-        if __addon__.getSetting("overlayImage"):
-            overlayId = int(__addon__.getSetting("overlayImage"))
+        if ADDON.getSetting("overlayImage"):
+            overlayId = int(ADDON.getSetting("overlayImage"))
             # Check if this is is the manual defined option, so the last in the selection
             if overlayId >= len(Settings.OVERLAY_IMAGES):
-                return __addon__.getSetting("overlayImageFile").decode("utf-8")
+                return ADDON.getSetting("overlayImageFile").decode("utf-8")
             else:
                 return Settings.OVERLAY_IMAGES[overlayId]
         else:
@@ -367,14 +306,14 @@ class Settings():
     @staticmethod
     def getStartupVolume():
         # Check to see if the volume needs to be changed when the system starts
-        if __addon__.getSetting("resetVolumeOnStartup") == 'true':
-            return int(float(__addon__.getSetting("resetStartupVolumeValue")))
+        if ADDON.getSetting("resetVolumeOnStartup") == 'true':
+            return int(float(ADDON.getSetting("resetStartupVolumeValue")))
         return -1
 
     @staticmethod
     def isUseAudioSuspend():
         if Settings.getVolume() == 0:
-            return __addon__.getSetting("useAudioSuspend") == 'true'
+            return ADDON.getSetting("useAudioSuspend") == 'true'
         return False
 
     @staticmethod
@@ -405,35 +344,35 @@ class Settings():
 
     @staticmethod
     def getScheduleSetting():
-        return int(__addon__.getSetting("scheduleSource"))
+        return int(ADDON.getSetting("scheduleSource"))
 
     @staticmethod
     def getScheduleFile():
         if Settings.getScheduleSetting() == Settings.SCHEDULE_FILE:
-            return __addon__.getSetting("scheduleFile")
+            return ADDON.getSetting("scheduleFile")
         return None
 
     @staticmethod
     def getNumberOfScheduleRules():
         if Settings.getScheduleSetting() == Settings.SCHEDULE_SETTINGS:
-            return int(__addon__.getSetting("numberOfSchuleRules"))
+            return int(ADDON.getSetting("numberOfSchuleRules"))
         return 0
 
     @staticmethod
     def getRuleVideoFile(ruleId):
         videoFileTag = "rule%dVideoFile" % ruleId
-        return __addon__.getSetting(videoFileTag)
+        return ADDON.getSetting(videoFileTag)
 
     @staticmethod
     def getRuleOverlayFile(ruleId):
         overlayImageTag = "rule%dOverlayImage" % ruleId
 
-        if __addon__.getSetting(overlayImageTag):
-            overlayId = int(__addon__.getSetting(overlayImageTag))
+        if ADDON.getSetting(overlayImageTag):
+            overlayId = int(ADDON.getSetting(overlayImageTag))
             # Check if this is is the manual defined option, so the last in the selection
             if overlayId >= len(Settings.OVERLAY_IMAGES):
                 overlayFileTag = "rule%dOverlayFile" % ruleId
-                return __addon__.getSetting(overlayFileTag).decode("utf-8")
+                return ADDON.getSetting(overlayFileTag).decode("utf-8")
             else:
                 return Settings.OVERLAY_IMAGES[overlayId]
         return None
@@ -442,7 +381,7 @@ class Settings():
     def getRuleStartTime(ruleId):
         startTimeTag = "rule%dStartTime" % ruleId
         # Get the start time
-        startTimeStr = __addon__.getSetting(startTimeTag)
+        startTimeStr = ADDON.getSetting(startTimeTag)
         startTimeSplit = startTimeStr.split(':')
         startTime = (int(startTimeSplit[0]) * 60) + int(startTimeSplit[1])
         return startTime
@@ -451,7 +390,7 @@ class Settings():
     def getRuleEndTime(ruleId):
         endTimeTag = "rule%dEndTime" % ruleId
         # Get the end time
-        endTimeStr = __addon__.getSetting(endTimeTag)
+        endTimeStr = ADDON.getSetting(endTimeTag)
         endTimeSplit = endTimeStr.split(':')
         endTime = (int(endTimeSplit[0]) * 60) + int(endTimeSplit[1])
         return endTime
@@ -460,8 +399,8 @@ class Settings():
     def getRuleDay(ruleId):
         dayTag = "rule%dDay" % ruleId
 
-        if __addon__.getSetting(dayTag):
-            dayId = int(__addon__.getSetting(dayTag))
+        if ADDON.getSetting(dayTag):
+            dayId = int(ADDON.getSetting(dayTag))
             if dayId >= len(Settings.DAY_TYPE):
                 return Settings.EVERY_DAY
             else:

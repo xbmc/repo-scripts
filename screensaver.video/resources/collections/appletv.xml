@@ -1,0 +1,208 @@
+<videoscreensaver>
+	<collection>Apple TV</collection>
+	<encoded>false</encoded>
+	<video>
+		<name>China (Day) 1</name>
+		<filename>appletv-b2-1.mov</filename>
+		<duration>239</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-1.mov</primary>
+	</video>
+	<video>
+		<name>China (Day) 2</name>
+		<filename>appletv-b5-1.mov</filename>
+		<duration>144</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b5-1.mov</primary>
+	</video>
+	<video>
+		<name>China (Day) 3</name>
+		<filename>appletv-b6-1.mov</filename>
+		<duration>240</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b6-1.mov</primary>
+	</video>
+	<video>
+		<name>Hawaii (Day) 1</name>
+		<filename>appletv-b1-1.mov</filename>
+		<duration>191</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b1-1.mov</primary>
+	</video>
+	<video>
+		<name>Hawaii (Day) 2</name>
+		<filename>appletv-b2-2.mov</filename>
+		<duration>432</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-2.mov</primary>
+	</video>
+	<video>
+		<name>Hawaii (Day) 3</name>
+		<filename>appletv-b4-1.mov</filename>
+		<duration>144</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b4-1.mov</primary>
+	</video>
+	<video>
+		<name>Hawaii (Day) 4</name>
+		<filename>appletv-b7-1.mov</filename>
+		<duration>335</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b7-1.mov</primary>
+	</video>
+	<video>
+		<name>Hawaii (Day) 5</name>
+		<filename>appletv-b9-1.mov</filename>
+		<duration>432</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b9-1.mov</primary>
+	</video>
+	<video>
+		<name>Hawaii (Day) 6</name>
+		<filename>appletv-b10-1.mov</filename>
+		<duration>191</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-1.mov</primary>
+	</video>
+	<video>
+		<name>Hawaii (Night) 1</name>
+		<filename>appletv-b6-2.mov</filename>
+		<duration>192</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b6-2.mov</primary>
+	</video>
+	<video>
+		<name>Hawaii (Night) 2</name>
+		<filename>appletv-b8-1.mov</filename>
+		<duration>143</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b8-1.mov</primary>
+	</video>
+	<video>
+		<name>London (Day) 1</name>
+		<filename>appletv-b5-2.mov</filename>
+		<duration>335</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b5-2.mov</primary>
+	</video>
+	<video>
+		<name>London (Day) 2</name>
+		<filename>appletv-b6-3.mov</filename>
+		<duration>240</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b6-3.mov</primary>
+	</video>
+	<video>
+		<name>London (Night) 1</name>
+		<filename>appletv-b1-2.mov</filename>
+		<duration>239</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b1-2.mov</primary>
+	</video>
+	<video>
+		<name>London (Night) 2</name>
+		<filename>appletv-b3-1.mov</filename>
+		<duration>335</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b3-1.mov</primary>
+	</video>
+	<video>
+		<name>London (Night) 3</name>
+		<filename>appletv-b9-2.mov</filename>
+		<duration>335</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b9-2.mov</primary>
+	</video>
+	<video>
+		<name>New York City (Day) 1</name>
+		<filename>appletv-b1-3.mov</filename>
+		<duration>191</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b1-3.mov</primary>
+	</video>
+	<video>
+		<name>New York City (Day) 2</name>
+		<filename>appletv-b3-2.mov</filename>
+		<duration>239</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b3-2.mov</primary>
+	</video>
+	<video>
+		<name>New York City (Day) 3</name>
+		<filename>appletv-b7-2.mov</filename>
+		<duration>288</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b7-2.mov</primary>
+	</video>
+	<video>
+		<name>New York City (Night) 1</name>
+		<filename>appletv-b2-3.mov</filename>
+		<duration>192</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-3.mov</primary>
+	</video>
+	<video>
+		<name>New York City (Night) 2</name>
+		<filename>appletv-b4-2.mov</filename>
+		<duration>239</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b4-2.mov</primary>
+	</video>
+	<video>
+		<name>New York City (Night) 3</name>
+		<filename>appletv-b10-2.mov</filename>
+		<duration>192</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-2.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Day) 1</name>
+		<filename>appletv-b3-3.mov</filename>
+		<duration>336</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b3-3.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Day) 2</name>
+		<filename>appletv-b4-3.mov</filename>
+		<duration>527</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b4-3.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Day) 3</name>
+		<filename>appletv-b8-2.mov</filename>
+		<duration>432</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b8-2.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Day) 4</name>
+		<filename>appletv-b8-3.mov</filename>
+		<duration>287</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b8-3.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Day) 5</name>
+		<filename>appletv-b9-3.mov</filename>
+		<duration>144</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b9-3.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Day) 6</name>
+		<filename>appletv-b10-3.mov</filename>
+		<duration>335</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-3.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Night) 1</name>
+		<filename>appletv-b1-4.mov</filename>
+		<duration>143</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b1-4.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Night) 2</name>
+		<filename>appletv-b2-4.mov</filename>
+		<duration>96</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b2-4.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Night) 3</name>
+		<filename>appletv-b5-3.mov</filename>
+		<duration>383</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b5-3.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Night) 4</name>
+		<filename>appletv-b6-4.mov</filename>
+		<duration>192</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b6-4.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Night) 5</name>
+		<filename>appletv-b7-3.mov</filename>
+		<duration>191</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b7-3.mov</primary>
+	</video>
+	<video>
+		<name>San Francisco (Night) 6</name>
+		<filename>appletv-b10-4.mov</filename>
+		<duration>96</duration>
+		<primary>http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/b10-4.mov</primary>
+	</video>
+</videoscreensaver>
