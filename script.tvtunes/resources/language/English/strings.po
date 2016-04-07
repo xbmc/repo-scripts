@@ -465,12 +465,10 @@ msgid "Operation canceled by user."
 msgstr ""
 
 msgctxt "#32110"
-msgid "Downloading:"
+msgid "Downloading to"
 msgstr ""
 
-msgctxt "#32111"
-msgid "to:"
-msgstr ""
+#empty strings from id 32111 to 32111
 
 msgctxt "#32112"
 msgid "Choose for"

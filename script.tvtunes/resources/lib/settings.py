@@ -7,16 +7,16 @@ import xbmcaddon
 import xbmcvfs
 import xbmcgui
 
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__addonid__ = __addon__.getAddonInfo('id')
+ADDON = xbmcaddon.Addon(id='script.tvtunes')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Common logging module
 def log(txt, debug_logging_enabled=True, loglevel=xbmc.LOGDEBUG):
-    if ((__addon__.getSetting("logEnabled") == "true") and debug_logging_enabled) or (loglevel != xbmc.LOGDEBUG):
+    if ((ADDON.getSetting("logEnabled") == "true") and debug_logging_enabled) or (loglevel != xbmc.LOGDEBUG):
         if isinstance(txt, str):
             txt = txt.decode("utf-8")
-        message = u'%s: %s' % (__addonid__, txt)
+        message = u'%s: %s' % (ADDON_ID, txt)
         xbmc.log(msg=message.encode("utf-8"), level=loglevel)
 
 
@@ -317,8 +317,8 @@ class Settings():
     @staticmethod
     def reloadSettings():
         # Force the reload of the settings to pick up any new values
-        global __addon__
-        __addon__ = xbmcaddon.Addon(id='script.tvtunes')
+        global ADDON
+        ADDON = xbmcaddon.Addon(id='script.tvtunes')
         # The user may have change the display settings to show or hide the info button
         # so make sure we update it
         WindowShowing.updateHideVideoInfoButton()
@@ -343,47 +343,47 @@ class Settings():
 
     @staticmethod
     def isThemePlayingEnabled():
-        return __addon__.getSetting("enableThemePlaying") == 'true'
+        return ADDON.getSetting("enableThemePlaying") == 'true'
 
     @staticmethod
     def isCustomPathEnabled():
-        return __addon__.getSetting("custom_path_enable") == 'true'
+        return ADDON.getSetting("custom_path_enable") == 'true'
 
     @staticmethod
     def getCustomPath():
-        return __addon__.getSetting("custom_path").decode("utf-8")
+        return ADDON.getSetting("custom_path").decode("utf-8")
 
     @staticmethod
     def getThemeVolume():
-        return int(float(__addon__.getSetting("volume")))
+        return int(float(ADDON.getSetting("volume")))
 
     @staticmethod
     def isLoop():
-        return __addon__.getSetting("loop") == 'true'
+        return ADDON.getSetting("loop") == 'true'
 
     @staticmethod
     def isFadeOut():
-        return __addon__.getSetting("fadeOut") == 'true'
+        return ADDON.getSetting("fadeOut") == 'true'
 
     @staticmethod
     def isFadeIn():
-        return __addon__.getSetting("fadeIn") == 'true'
+        return ADDON.getSetting("fadeIn") == 'true'
 
     @staticmethod
     def isSmbEnabled():
-        return __addon__.getSetting("smb_share") == 'true'
+        return ADDON.getSetting("smb_share") == 'true'
 
     @staticmethod
     def getSmbUser():
-        if __addon__.getSetting("smb_login"):
-            return __addon__.getSetting("smb_login")
+        if ADDON.getSetting("smb_login"):
+            return ADDON.getSetting("smb_login")
         else:
             return "guest"
 
     @staticmethod
     def getSmbPassword():
-        if __addon__.getSetting("smb_psw"):
-            return __addon__.getSetting("smb_psw")
+        if ADDON.getSetting("smb_psw"):
+            return ADDON.getSetting("smb_psw")
         else:
             return "guest"
 
@@ -393,15 +393,15 @@ class Settings():
         fileTypes = ""
         if not videoOnly:
             fileTypes = "mp3"  # mp3 is the default that is always supported
-            if(__addon__.getSetting("wma") == 'true'):
+            if(ADDON.getSetting("wma") == 'true'):
                 fileTypes = fileTypes + "|wma"
-            if(__addon__.getSetting("flac") == 'true'):
+            if(ADDON.getSetting("flac") == 'true'):
                 fileTypes = fileTypes + "|flac"
-            if(__addon__.getSetting("m4a") == 'true'):
+            if(ADDON.getSetting("m4a") == 'true'):
                 fileTypes = fileTypes + "|m4a"
-            if(__addon__.getSetting("wav") == 'true'):
+            if(ADDON.getSetting("wav") == 'true'):
                 fileTypes = fileTypes + "|wav"
-            if(__addon__.getSetting("wav") == 'true'):
+            if(ADDON.getSetting("wav") == 'true'):
                 fileTypes = fileTypes + "|wav"
         if not audioOnly:
             videoFileTypes = Settings.getVideoThemeFileExtensions()
@@ -423,106 +423,106 @@ class Settings():
     @staticmethod
     def getVideoThemeFileExtensions():
         fileTypes = []
-        if(__addon__.getSetting("mp4") == 'true'):
+        if(ADDON.getSetting("mp4") == 'true'):
             fileTypes.append("mp4")
-        if(__addon__.getSetting("mkv") == 'true'):
+        if(ADDON.getSetting("mkv") == 'true'):
             fileTypes.append("mkv")
-        if(__addon__.getSetting("avi") == 'true'):
+        if(ADDON.getSetting("avi") == 'true'):
             fileTypes.append("avi")
-        if(__addon__.getSetting("mov") == 'true'):
+        if(ADDON.getSetting("mov") == 'true'):
             fileTypes.append("mov")
-        if(__addon__.getSetting("m2ts") == 'true'):
+        if(ADDON.getSetting("m2ts") == 'true'):
             fileTypes.append("m2ts")
         return '|'.join(fileTypes)
 
     @staticmethod
     def isShuffleThemes():
-        return __addon__.getSetting("shuffle") == 'true'
+        return ADDON.getSetting("shuffle") == 'true'
 
     @staticmethod
     def isRandomStart():
-        return __addon__.getSetting("random") == 'true'
+        return ADDON.getSetting("random") == 'true'
 
     @staticmethod
     def isPlayMovieList():
-        return __addon__.getSetting("movielist") == 'true'
+        return ADDON.getSetting("movielist") == 'true'
 
     @staticmethod
     def isPlayTvShowList():
-        return __addon__.getSetting("tvlist") == 'true'
+        return ADDON.getSetting("tvlist") == 'true'
 
     @staticmethod
     def isPlayMusicVideoList():
-        return __addon__.getSetting("musicvideolist") == 'true'
+        return ADDON.getSetting("musicvideolist") == 'true'
 
     @staticmethod
     def isPlayVideoInformation():
-        return __addon__.getSetting("videoInformation") == 'true'
+        return ADDON.getSetting("videoInformation") == 'true'
 
     @staticmethod
     def isPlayTvShowSeasons():
-        return __addon__.getSetting("tvShowSeasons") == 'true'
+        return ADDON.getSetting("tvShowSeasons") == 'true'
 
     @staticmethod
     def isPlayTvShowEpisodes():
-        return __addon__.getSetting("tvShowEpisodes") == 'true'
+        return ADDON.getSetting("tvShowEpisodes") == 'true'
 
     @staticmethod
     def isPlayMusicList():
-        return __addon__.getSetting("musiclist") == 'true'
+        return ADDON.getSetting("musiclist") == 'true'
 
     @staticmethod
     def getPlayDurationLimit():
-        return int(float(__addon__.getSetting("endafter")))
+        return int(float(ADDON.getSetting("endafter")))
 
     @staticmethod
     def getTrackLengthLimit():
-        return int(float(__addon__.getSetting("trackLengthLimit")))
+        return int(float(ADDON.getSetting("trackLengthLimit")))
 
     # Check if the video info button should be hidden
     @staticmethod
     def hideVideoInfoButton():
-        return __addon__.getSetting("showVideoInfoButton") != 'true'
+        return ADDON.getSetting("showVideoInfoButton") != 'true'
 
     # Check the delay start value
     @staticmethod
     def getStartDelaySeconds(themeFile=None):
         # check if this is a video file as the delay may be different
         if Settings.isVideoFile(themeFile):
-            return int(float(__addon__.getSetting("delayVideoStart")))
-        return int(float(__addon__.getSetting("delayStart")))
+            return int(float(ADDON.getSetting("delayVideoStart")))
+        return int(float(ADDON.getSetting("delayStart")))
 
     @staticmethod
     def isThemeDirEnabled():
         # Theme sub directory only supported when not using a custom path
         if Settings.isCustomPathEnabled():
             return False
-        return __addon__.getSetting("searchSubDir") == 'true'
+        return ADDON.getSetting("searchSubDir") == 'true'
 
     @staticmethod
     def getThemeDirectory():
         # Load the information about storing themes in sub-directories
         # Only use the Theme dir if custom path is not used
-        return __addon__.getSetting("subDirName")
+        return ADDON.getSetting("subDirName")
 
     @staticmethod
     def getAutoDownloadSetting():
-        return int(__addon__.getSetting("auto_download"))
+        return int(ADDON.getSetting("auto_download"))
 
     @staticmethod
     def isAutoDownloadPromptUser():
         # If no auto select is set, then always prompt the user
         if Settings.getAutoDownloadSetting() == 0:
             return True
-        return __addon__.getSetting("auto_prompt_user_if_required") == 'true'
+        return ADDON.getSetting("auto_prompt_user_if_required") == 'true'
 
     @staticmethod
     def isMultiThemesSupported():
-        return __addon__.getSetting("multiThemeDownload") == 'true'
+        return ADDON.getSetting("multiThemeDownload") == 'true'
 
     @staticmethod
     def getSearchEngine():
-        index = int(__addon__.getSetting("searchSource"))
+        index = int(ADDON.getSetting("searchSource"))
         if index == 0:
             return Settings.ALL_ENGINES
         elif index == 1:
@@ -542,46 +542,46 @@ class Settings():
     @staticmethod
     def getStartupVolume():
         # Check to see if the volume needs to be changed when the system starts
-        if __addon__.getSetting("resetVolumeOnStartup") == 'true':
-            return int(float(__addon__.getSetting("resetStartupVolumeValue")))
+        if ADDON.getSetting("resetVolumeOnStartup") == 'true':
+            return int(float(ADDON.getSetting("resetStartupVolumeValue")))
         return -1
 
     @staticmethod
     def isVideoThemesOnlyIfOneExists():
-        index = int(__addon__.getSetting("playVideoThemeRules"))
+        index = int(ADDON.getSetting("playVideoThemeRules"))
         if index == 2:
             return True
         return False
 
     @staticmethod
     def isVideoThemesFirst():
-        index = int(__addon__.getSetting("playVideoThemeRules"))
+        index = int(ADDON.getSetting("playVideoThemeRules"))
         if index == 1:
             return True
         return False
 
     @staticmethod
     def onlyPlaySingleTheme():
-        return __addon__.getSetting("singleThemeOnly") == 'true'
+        return ADDON.getSetting("singleThemeOnly") == 'true'
 
     @staticmethod
     def isRepeatSingleAudioAfterVideo():
-        if __addon__.getSetting("repeatSingleAudioAfterVideo") == 'true':
+        if ADDON.getSetting("repeatSingleAudioAfterVideo") == 'true':
             if Settings.isVideoThemesFirst():
                 return True
         return False
 
     @staticmethod
     def showOnContextMenu():
-        return __addon__.getSetting("showOnContextMenu") == "true"
+        return ADDON.getSetting("showOnContextMenu") == "true"
 
     @staticmethod
     def blockRefreshRateChange():
-        return __addon__.getSetting("blockChangeInRefreshRate") == "true"
+        return ADDON.getSetting("blockChangeInRefreshRate") == "true"
 
     @staticmethod
     def isUploadEnabled():
-        return __addon__.getSetting("enableUploads") == "true"
+        return ADDON.getSetting("enableUploads") == "true"
 
     @staticmethod
     def getUploadSettings():
@@ -594,7 +594,7 @@ class Settings():
 
     @staticmethod
     def setTvTunesId():
-        __addon__.setSetting("tvtunesId", Settings.getTvTunesId())
+        ADDON.setSetting("tvtunesId", Settings.getTvTunesId())
 
 
 # Class to handle all the screen saver settings
@@ -650,14 +650,14 @@ class ScreensaverSettings():
 
     @staticmethod
     def getMode():
-        if __addon__.getSetting("screensaver_mode"):
-            return ScreensaverSettings.MODES[int(__addon__.getSetting("screensaver_mode"))]
+        if ADDON.getSetting("screensaver_mode"):
+            return ScreensaverSettings.MODES[int(ADDON.getSetting("screensaver_mode"))]
         else:
             return 'Random'
 
     @staticmethod
     def getSource():
-        selectedSource = __addon__.getSetting("screensaver_source")
+        selectedSource = ADDON.getSetting("screensaver_source")
         sourceId = 0
         if selectedSource:
             sourceId = int(selectedSource)
@@ -665,7 +665,7 @@ class ScreensaverSettings():
 
     @staticmethod
     def getImageTypes():
-        imageTypes = __addon__.getSetting("screensaver_image_type")
+        imageTypes = ADDON.getSetting("screensaver_image_type")
         # If dealing with a custom folder, then no image type defined
         if ScreensaverSettings.getSource() == ['image_folder']:
             return []
@@ -676,51 +676,51 @@ class ScreensaverSettings():
 
     @staticmethod
     def getImagePath():
-        return __addon__.getSetting("screensaver_image_path").decode("utf-8")
+        return ADDON.getSetting("screensaver_image_path").decode("utf-8")
 
     @staticmethod
     def isRecursive():
-        return __addon__.getSetting("screensaver_recursive") == 'true'
+        return ADDON.getSetting("screensaver_recursive") == 'true'
 
     @staticmethod
     def getWaitTime():
-        return int(float(__addon__.getSetting('screensaver_wait_time')) * 1000)
+        return int(float(ADDON.getSetting('screensaver_wait_time')) * 1000)
 
     @staticmethod
     def getSpeed():
-        return float(__addon__.getSetting('screensaver_speed'))
+        return float(ADDON.getSetting('screensaver_speed'))
 
     @staticmethod
     def getEffectTime():
-        return int(float(__addon__.getSetting('screensaver_effect_time')) * 1000)
+        return int(float(ADDON.getSetting('screensaver_effect_time')) * 1000)
 
     @staticmethod
     def getAppletvlikeConcurrency():
-        return float(__addon__.getSetting('screensaver_appletvlike_concurrency'))
+        return float(ADDON.getSetting('screensaver_appletvlike_concurrency'))
 
     @staticmethod
     def getGridswitchRowsColumns():
-        return int(__addon__.getSetting('screensaver_gridswitch_columns'))
+        return int(ADDON.getSetting('screensaver_gridswitch_columns'))
 
     @staticmethod
     def isGridswitchRandom():
-        return __addon__.getSetting("screensaver_gridswitch_random") == 'true'
+        return ADDON.getSetting("screensaver_gridswitch_random") == 'true'
 
     @staticmethod
     def isPlayThemes():
-        return __addon__.getSetting("screensaver_playthemes") == 'true'
+        return ADDON.getSetting("screensaver_playthemes") == 'true'
 
     @staticmethod
     def isOnlyIfThemes():
-        return __addon__.getSetting("screensaver_onlyifthemes") == 'true'
+        return ADDON.getSetting("screensaver_onlyifthemes") == 'true'
 
     @staticmethod
     def isRepeatTheme():
-        return __addon__.getSetting("screensaver_themeControl") == '1'
+        return ADDON.getSetting("screensaver_themeControl") == '1'
 
     @staticmethod
     def isSkipAfterThemeOnce():
-        return __addon__.getSetting("screensaver_themeControl") == '2'
+        return ADDON.getSetting("screensaver_themeControl") == '2'
 
     @staticmethod
     def getDimValue():
@@ -728,14 +728,14 @@ class ScreensaverSettings():
         # FF111111, FF222222 ... FFEEEEEE, FFFFFFFF
         # Where FFFFFFFF is not changed
         # So that is a total of 15 different options
-        if __addon__.getSetting("screensaver_dimlevel"):
-            return ScreensaverSettings.DIM_LEVEL[int(__addon__.getSetting("screensaver_dimlevel"))]
+        if ADDON.getSetting("screensaver_dimlevel"):
+            return ScreensaverSettings.DIM_LEVEL[int(ADDON.getSetting("screensaver_dimlevel"))]
         else:
             return 'FFFFFFFF'
 
     @staticmethod
     def getSlideFromOrigin():
-        selectedOrigin = __addon__.getSetting("screensaver_slide_from")
+        selectedOrigin = ADDON.getSetting("screensaver_slide_from")
         originId = 0
         if selectedOrigin:
             originId = int(selectedOrigin)
@@ -746,6 +746,6 @@ class ScreensaverSettings():
         # Make sure that the fanart is actually selected to be used, otherwise there is no
         # point in searching for it
         if 'fanart' in ScreensaverSettings.getImageTypes():
-            return __addon__.getSetting("screensaver_artworkdownloader") == 'true'
+            return ADDON.getSetting("screensaver_artworkdownloader") == 'true'
         else:
             return False

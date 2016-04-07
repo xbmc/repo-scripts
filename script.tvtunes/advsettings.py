@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
 import re
 import traceback
 import xbmc
@@ -9,19 +7,11 @@ import xbmcvfs
 import xbmcgui
 import datetime
 
-
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__version__ = __addon__.getAddonInfo('version')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import log
-from settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import Settings
+
+ADDON = xbmcaddon.Addon(id='script.tvtunes')
 
 
 # This class reads the advancedsettings.xml file like it was a text file
@@ -61,7 +51,7 @@ class AdvSettings():
             xmlFile.close()
 
             # The file has now been read so we need to see if
-            # there is already a video extras section in it
+            # there is already a tv tunes section in it
             if AdvSettings.HEADER in xmlFileStr:
                 log("Updating existing TvTunes setting")
                 # need to strip out the existing contents and replace it with
@@ -93,7 +83,7 @@ class AdvSettings():
                 log("Invalid advancedsettings.xml detected")
                 xmlFileStr = None
                 # Show Error Dialog
-                xbmcgui.Dialog().ok(__addon__.getLocalizedString(32001), __addon__.getLocalizedString(32153))
+                xbmcgui.Dialog().ok(ADDON.getLocalizedString(32001), ADDON.getLocalizedString(32153))
 
             # Make a backup of the file as we are going to change it
             if xmlFileStr is not None:
@@ -118,7 +108,7 @@ class AdvSettings():
             xmlFile.write(xmlFileStr)
             xmlFile.close()
 
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32095))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32095))
             log("New advancedsettings.xml content: %s" % xmlFileStr)
         else:
             log("advancedsettings.xml has been left unchanged")
@@ -136,7 +126,7 @@ class AdvSettings():
         # Put together the list of file endings
         videoFileTypes = Settings.getVideoThemeFileExtensions()
         if videoFileTypes not in [None, ""]:
-            regexSection += AdvSettings.REGEX_SECTION.format('theme\.(' + videoFileTypes.lower() + '|' + videoFileTypes.upper() + ')$')
+            regexSection += AdvSettings.REGEX_SECTION.format('theme([0-9]*)\.(' + videoFileTypes.lower() + '|' + videoFileTypes.upper() + ')$')
 
         # Now put together the ignore section
         ignoreSection = AdvSettings.IGNORE_SECTION.format(regexSection)
@@ -147,9 +137,9 @@ class AdvSettings():
 # Main
 #########################
 if __name__ == '__main__':
-    log("TvTunes: Updating Advanced Settings (version %s)" % __version__)
+    log("TvTunes: Updating Advanced Settings (version %s)" % ADDON.getAddonInfo('version'))
 
-    doUpdate = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32092))
+    doUpdate = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32092))
 
     if doUpdate:
         try:
@@ -158,4 +148,4 @@ if __name__ == '__main__':
             del advSet
         except:
             log("TvTunes: %s" % traceback.format_exc(), xbmc.LOGERROR)
-            xbmcgui.Dialog().ok(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32093), __addon__.getLocalizedString(32094))
+            xbmcgui.Dialog().ok(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32093), ADDON.getLocalizedString(32094))

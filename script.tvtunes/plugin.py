@@ -15,30 +15,21 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__icon__ = __addon__.getAddonInfo('icon')
-__fanart__ = __addon__.getAddonInfo('fanart')
-__cwd__ = __addon__.getAddonInfo('path').decode("utf-8")
-__resource__ = xbmc.translatePath(os.path.join(__cwd__, 'resources').encode("utf-8")).decode("utf-8")
-__lib__ = xbmc.translatePath(os.path.join(__resource__, 'lib').encode("utf-8")).decode("utf-8")
-
-
-sys.path.append(__resource__)
-sys.path.append(__lib__)
-
 # Import the common settings
-from settings import Settings
-from settings import log
-from settings import os_path_join
-from settings import os_path_split
-from settings import list_dir
-from settings import normalize_string
-from settings import dir_exists
+from resources.lib.settings import Settings
+from resources.lib.settings import log
+from resources.lib.settings import os_path_join
+from resources.lib.settings import os_path_split
+from resources.lib.settings import list_dir
+from resources.lib.settings import normalize_string
+from resources.lib.settings import dir_exists
+from resources.lib.themeFetcher import TvTunesFetcher
+from resources.lib.themeFinder import ThemeFiles
+from resources.lib.screensaver import launchScreensaver
 
-from themeFetcher import TvTunesFetcher
-from themeFinder import ThemeFiles
-from screensaver import launchScreensaver
+ADDON = xbmcaddon.Addon(id='script.tvtunes')
+ICON = ADDON.getAddonInfo('icon')
+FANART = ADDON.getAddonInfo('fanart')
 
 
 ###################################################################
@@ -68,45 +59,45 @@ class MenuNavigator():
     def showRootMenu(self):
         # Movies
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MOVIES})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32201), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32201), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # TV Shows
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.TVSHOWS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32202), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32202), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Music Videos
         url = self._build_url({'mode': 'folder', 'foldername': MenuNavigator.MUSICVIDEOS})
-        li = xbmcgui.ListItem(__addon__.getLocalizedString(32203), iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem(ADDON.getLocalizedString(32203), iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=True)
 
         # Add a blank line before the filters
-        li = xbmcgui.ListItem("", iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        li = xbmcgui.ListItem("", iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url="", listitem=li, isFolder=False)
 
         # Filter: Show only missing themes
         url = self._build_url({'mode': 'filter', 'filtertype': 'MissingThemesOnly'})
-        filterTitle = "  %s" % __addon__.getLocalizedString(32204)
-        li = xbmcgui.ListItem(filterTitle, iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        filterTitle = "  %s" % ADDON.getLocalizedString(32204)
+        li = xbmcgui.ListItem(filterTitle, iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.setInfo('video', {'PlayCount': self.missingThemesOnly})
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         # Action: Retrieve missing themes
         url = self._build_url({'mode': 'action', 'actiontype': 'RetrieveMissingAudioThemes'})
-        filterTitle = "  %s" % __addon__.getLocalizedString(32205)
-        li = xbmcgui.ListItem(filterTitle, iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        filterTitle = "  %s" % ADDON.getLocalizedString(32205)
+        li = xbmcgui.ListItem(filterTitle, iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -114,17 +105,17 @@ class MenuNavigator():
         # Add the moment only the Theme Library supports videos
         if Settings.getSearchEngine() in [Settings.ALL_ENGINES, Settings.THEMELIBRARY]:
             url = self._build_url({'mode': 'action', 'actiontype': 'RetrieveMissingVideoThemes'})
-            filterTitle = "  %s" % __addon__.getLocalizedString(32209)
-            li = xbmcgui.ListItem(filterTitle, iconImage=__icon__)
-            li.setProperty("Fanart_Image", __fanart__)
+            filterTitle = "  %s" % ADDON.getLocalizedString(32209)
+            li = xbmcgui.ListItem(filterTitle, iconImage=ICON)
+            li.setProperty("Fanart_Image", FANART)
             li.addContextMenuItems([], replaceItems=True)
             xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
         # Action: Start Screensaver
         url = self._build_url({'mode': 'screensaver', 'actiontype': 'StartScreensaver'})
-        filterTitle = "  %s" % __addon__.getLocalizedString(32208)
-        li = xbmcgui.ListItem(filterTitle, iconImage=__icon__)
-        li.setProperty("Fanart_Image", __fanart__)
+        filterTitle = "  %s" % ADDON.getLocalizedString(32208)
+        li = xbmcgui.ListItem(filterTitle, iconImage=ICON)
+        li.setProperty("Fanart_Image", FANART)
         li.addContextMenuItems([], replaceItems=True)
         xbmcplugin.addDirectoryItem(handle=self.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -279,7 +270,7 @@ class MenuNavigator():
         if Settings.isThemeDirEnabled() and self._doesThemeExist(path, True):
             # Prompt user if we should move themes in the parent
             # directory into the theme directory
-            moveExistingThemes = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32206), __addon__.getLocalizedString(32207))
+            moveExistingThemes = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32206), ADDON.getLocalizedString(32207))
 
             # Check if we need to move a theme file
             if moveExistingThemes:
@@ -332,13 +323,13 @@ class MenuNavigator():
         # Prompt the user to see if they want all the themes or just some
         # of them
         displayList = []
-        displayList.append(__addon__.getLocalizedString(32210))
-        displayList.append(__addon__.getLocalizedString(32211))
-        displayList.append(__addon__.getLocalizedString(32212))
-        displayList.append(__addon__.getLocalizedString(32213))
+        displayList.append(ADDON.getLocalizedString(32210))
+        displayList.append(ADDON.getLocalizedString(32211))
+        displayList.append(ADDON.getLocalizedString(32212))
+        displayList.append(ADDON.getLocalizedString(32213))
 
         # Show the list to the user
-        select = xbmcgui.Dialog().select(__addon__.getLocalizedString(32105), displayList)
+        select = xbmcgui.Dialog().select(ADDON.getLocalizedString(32105), displayList)
         if select < 0:
             log("fetchMissingThemes: Cancelled by user")
             return
@@ -375,7 +366,7 @@ class MenuNavigator():
                     xbmc.executebuiltin("Dialog.Close(busydialog)")
                     # Prompt user if we should move themes in the parent
                     # directory into the theme directory
-                    moveExistingThemes = xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32105), __addon__.getLocalizedString(32206), __addon__.getLocalizedString(32207))
+                    moveExistingThemes = xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32105), ADDON.getLocalizedString(32206), ADDON.getLocalizedString(32207))
                     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
                 # Check if we need to move a theme file
@@ -489,14 +480,17 @@ if __name__ == '__main__':
         title = args.get('title', None)
         path = args.get('path', None)
         originaltitle = args.get('originaltitle', None)
-        isTvShow = args.get('isTvShow', None)
+        isTvShow = args.get('isTvShow', False)
         year = args.get('year', None)
         imdb = args.get('imdb', None)
 
         if originaltitle is not None:
             originaltitle = originaltitle[0]
         if isTvShow is not None:
-            isTvShow = isTvShow[0]
+            if isTvShow[0] in [False, 'False']:
+                isTvShow = False
+            else:
+                isTvShow = True
         if year is not None:
             year = year[0]
         if imdb is not None:

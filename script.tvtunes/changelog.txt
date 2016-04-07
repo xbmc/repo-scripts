@@ -1,3 +1,10 @@
+v6.3.0 (2016-04-05)
+- Support multiple video themes being excluded from scan
+- Remove dependency on metahandler
+- Fix Plex Theme Preview
+- Support cancel downloads part way through
+- Tidy up import, globals and plugin provides
+
 v6.2.0 (2016-02-23)
 - Fix error when playing music library themes
 - Add option for TV Tunes button on Video Info

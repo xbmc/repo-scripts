@@ -2,6 +2,7 @@
 import os
 import sys
 import base64
+import random
 import xml.etree.ElementTree as ET
 import traceback
 import urllib2
@@ -15,32 +16,27 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
-__addonid__ = __addon__.getAddonInfo('id')
-
-
 from settings import Settings
 from settings import log
 from settings import dir_exists
-from settings import os_path_join
-
 from themeFinder import ThemeFiles
+from idLookup import IdLookup
+from library import ThemeLibrary
 
-try:
-    from metahandler import metahandlers
-except Exception:
-    log("UploadThemes: metahandler Import Failed %s" % traceback.format_exc(), xbmc.LOGERROR)
+ADDON = xbmcaddon.Addon(id='script.tvtunes')
+ADDON_ID = ADDON.getAddonInfo('id')
 
 
 # Class to handle the uploading of themes
-class UploadThemes():
+class UploadThemes(ThemeLibrary):
     def __init__(self):
-        # Set up the addon directories if they do not already exist
-        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8")):
-            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % __addonid__).decode("utf-8"))
+        ThemeLibrary.__init__(self)
 
-        self.tvtunesUploadRecord = xbmc.translatePath('special://profile/addon_data/%s/tvtunesUpload.xml' % __addonid__).decode("utf-8")
+        # Set up the addon directories if they do not already exist
+        if not dir_exists(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8")):
+            xbmcvfs.mkdir(xbmc.translatePath('special://profile/addon_data/%s' % ADDON_ID).decode("utf-8"))
+
+        self.tvtunesUploadRecord = xbmc.translatePath('special://profile/addon_data/%s/tvtunesUpload.xml' % ADDON_ID).decode("utf-8")
 
         # Records if the entire upload system is disabled
         self.uploadsDisabled = False
@@ -52,16 +48,82 @@ class UploadThemes():
         self.ftpArg = None
         self.userArg = None
         self.passArg = None
+
         self.tvShowAudioExcludes = []
         self.movieAudioExcludes = []
         self.tvShowVideoExcludes = []
         self.movieVideoExcludes = []
 
-        # Load all of the config settings
-        self.loadUploadConfig()
-
         self.uploadRecord = None
-        # Check if the file exists, if it does read it in
+
+    # Loads all of the configuration settings
+    def loadConfig(self):
+        log("UploadThemes: Loading Upload Config")
+        try:
+            remoteSettings = urllib2.urlopen(base64.b64decode(Settings.getUploadSettings()))
+            uploadSetting = remoteSettings.read()
+            # Closes the connection after we have read the remote settings
+            try:
+                remoteSettings.close()
+            except:
+                log("UploadThemes: Failed to close connection for upload settings", xbmc.LOGERROR)
+
+            # Check all of the settings
+            uploadSettingET = ET.ElementTree(ET.fromstring(base64.b64decode(uploadSetting)))
+
+            # First check to see if uploads are actually enabled
+            isEnabled = uploadSettingET.find('enabled')
+            if (isEnabled is None) or (isEnabled.text != 'true'):
+                log("UploadThemes: Uploads disabled via online settings")
+                self.uploadsDisabled = True
+                return
+
+            # Check if audio uploads are enabled
+            isAudioElem = uploadSettingET.find('audio')
+            if (isAudioElem is None) or (isAudioElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for audio via online settings")
+                self.isAudioEnabled = False
+
+            # Check if video uploads are enabled
+            isVideoElem = uploadSettingET.find('video')
+            if (isVideoElem is None) or (isVideoElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for videos via online settings")
+                self.isVideoEnabled = False
+
+            # Check if tv show uploads are enabled
+            isTvShowsElem = uploadSettingET.find('tvshows')
+            if (isTvShowsElem is None) or (isTvShowsElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for tvshows via online settings")
+                self.isTvShowsEnabled = False
+
+            # Check if movie uploads are enabled
+            isMoviesElem = uploadSettingET.find('movies')
+            if (isMoviesElem is None) or (isMoviesElem.text != 'true'):
+                log("UploadThemes: Uploads disabled for movies via online settings")
+                self.isMoviesEnabled = False
+
+            # Get the details for where themes are uploaded to
+            ftpArgElem = uploadSettingET.find('ftp')
+            userArgElem = uploadSettingET.find('username')
+            passArgElem = uploadSettingET.find('password')
+            if (ftpArgElem in ["", None]) or (userArgElem in ["", None]) or (passArgElem in ["", None]):
+                log("UploadThemes: Online settings not correct")
+                self.uploadsDisabled = True
+                return
+
+            # Save off the values we have now read from the config file
+            self.ftpArg = ftpArgElem.text
+            self.userArg = userArgElem.text
+            self.passArg = passArgElem.text
+        except:
+            log("UploadThemes: Failed to read upload settings %s" % traceback.format_exc(), xbmc.LOGERROR)
+            # If we have had an error, stop trying to do any uploads
+            self.uploadsDisabled = True
+
+        # Now also load the existing elements that are in the library
+        self.loadLibraryContents()
+
+        # Check if the upload record file exists, if it does read it in
         if xbmcvfs.exists(self.tvtunesUploadRecord):
             try:
                 recordFile = xbmcvfs.File(self.tvtunesUploadRecord, 'r')
@@ -121,15 +183,98 @@ class UploadThemes():
             lastFileUploaded = self.uploadThemeItem(videoItem)
 
             # Check if all uploads were disabled
-            if self.uploadsDisabled:
+            if self.uploadsDisabled or xbmc.abortRequested:
                 return
+
+    # Do a lookup in the database for the given type of videos
+    def getVideos(self, jsonGet, target):
+        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "file", "imdbnumber", "year"], "sort": { "method": "title" } }, "id": 1}' % jsonGet)
+        json_query = unicode(json_query, 'utf-8', errors='ignore')
+        json_response = simplejson.loads(json_query)
+        log(json_response)
+        videolist = []
+        if ("result" in json_response) and (target in json_response['result']):
+            for item in json_response['result'][target]:
+                # Before we process anything make sure we are not due to shut down
+                if xbmc.abortRequested:
+                    return []
+
+                videoItem = {}
+                # Record if this is tvshows or movies
+                videoItem['type'] = target
+                videoItem['title'] = item['title'].encode("utf-8")
+                videoItem['year'] = item['year']
+                # The file is actually the path for a TV Show, the video file for movies
+                videoItem['file'] = item['file']
+                # The name is a bit misleading, it's the ID for whatever scanner was used
+                videoItem['imdbnumber'] = str(item['imdbnumber'])
+
+                # Not sure why there would be a video in the library without an ID, but check just in case
+                if videoItem['imdbnumber'] in ["", None]:
+                    continue
+
+                isTvShow = False
+                if target == 'tvshows':
+                    isTvShow = True
+
+                # We have an ID for the video, check to see if we already have
+                # something uploaded with this ID
+                matchedThemeIds = self._getThemes(videoItem['imdbnumber'], isTvShow)
+
+                if matchedThemeIds not in [None, ""]:
+                    log("UploadThemes: Theme for target %s and id %s already in library" % (target, videoItem['imdbnumber']))
+                    continue
+
+                # Get the themes if they exist
+                themeFileMgr = ThemeFiles(videoItem['file'], videotitle=item['title'])
+
+                # Make sure there are themes
+                if not themeFileMgr.hasThemes():
+                    continue
+
+                # Check if any of the themes available as suitable for upload
+                requiredThemes = self._getThemesToUpload(target, videoItem['imdbnumber'], themeFileMgr.getThemeLocations())
+                if len(requiredThemes) < 1:
+                    log("UploadThemes: No Required themes found")
+
+                # This video have themes that are needed
+                videoItem['themes'] = requiredThemes
+
+                # Also check our local record of things that have already been uploaded
+                if self.isThemeAlreadyUploaded(videoItem):
+                    log("UploadThemes: Theme %s already uploaded" % videoItem['imdbnumber'])
+                    continue
+
+                videolist.append(videoItem)
+
+        # Before returning the list, randonise it so that things are not always in the same order
+        random.shuffle(videolist)
+
+        return videolist
 
     # Will upload the details for a given file
     def uploadThemeItem(self, videoItem):
-        # Check to see if this theme has already been uploaded
-        if self.isThemeAlreadyUploaded(videoItem):
-            log("UploadThemes: Theme %s already uploaded" % videoItem['imdbnumber'])
+        isTvShow = False
+        if videoItem['type'] == 'tvshows':
+            isTvShow = True
+
+        # Use the details of this video to find the ID we need
+        idLookup = IdLookup()
+        checkedIdDetails = idLookup.getIds(videoItem['title'], videoItem['year'], isTvShow)
+        del idLookup
+
+        # The Id we use is either the imdb for movies or the tvdb for TV Shows
+        masterId = checkedIdDetails['imdb']
+        if isTvShow:
+            masterId = checkedIdDetails['tvdb']
+
+        if masterId in [None, ""]:
+            log("UploadThemes: No suitable Id found for %s" % videoItem['imdbnumber'])
             return False
+
+        # Now set the mast id to the one we have just found
+        # that will be used from now on
+        videoItem['masterId'] = masterId
 
         # Perform the upload
         result = self.uploadFile(videoItem)
@@ -142,9 +287,6 @@ class UploadThemes():
         if result:
             # Update the local record file
             self.recordUploadedFile(videoItem)
-
-            # Upload the XML file containing all the videos that this user has uploaded
-            self.uploadRecordFile()
 
         return result
 
@@ -222,52 +364,6 @@ class UploadThemes():
             log("UploadThemes: %s" % traceback.format_exc(), xbmc.LOGERROR)
         recordFile.close()
 
-    # Do a lookup in the database for the given type of videos
-    def getVideos(self, jsonGet, target):
-        json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.%s", "params": {"properties": ["title", "file", "imdbnumber", "year"], "sort": { "method": "title" } }, "id": 1}' % jsonGet)
-        json_query = unicode(json_query, 'utf-8', errors='ignore')
-        json_response = simplejson.loads(json_query)
-        log(json_response)
-        videolist = []
-        if ("result" in json_response) and (target in json_response['result']):
-            for item in json_response['result'][target]:
-                # Before we process anything make sure we are not due to shut down
-                if xbmc.abortRequested:
-                    return videolist
-
-                videoItem = {}
-                # Record if this is tvshows or movies
-                videoItem['type'] = target
-                videoItem['title'] = item['title'].encode("utf-8")
-                # The file is actually the path for a TV Show, the video file for movies
-                videoItem['file'] = item['file']
-                # The name is a bit misleading, it's the ID for whatever scanner was used
-                videoItem['imdbnumber'] = item['imdbnumber']
-
-                # Get the themes if they exist
-                themeFileMgr = ThemeFiles(videoItem['file'], videotitle=item['title'])
-
-                # Make sure there are themes
-                if not themeFileMgr.hasThemes():
-                    continue
-
-                checkedId = self.getMetaHandlersID(target, videoItem['title'], item['year'])
-
-                # Not sure why there would be a video in the library without an ID, but check just in case
-                if videoItem['imdbnumber'] in ["", None]:
-                    videoItem['imdbnumber'] = checkedId
-                elif (checkedId not in [None, ""]) and (videoItem['imdbnumber'] != checkedId):
-                    log("UploadThemes: ID comparison, Original = %s, checked = %s ... Skipping" % (videoItem['imdbnumber'], checkedId))
-                    continue
-
-                # Make sure there are themes and the ID is set
-                if videoItem['imdbnumber'] not in ["", None]:
-                    requiredThemes = self._getThemesToUpload(target, videoItem['imdbnumber'], themeFileMgr.getThemeLocations())
-                    if len(requiredThemes) > 0:
-                        videoItem['themes'] = requiredThemes
-                        videolist.append(videoItem)
-        return videolist
-
     # Filters the theme to work out which are needed
     def _getThemesToUpload(self, target, id, themes):
         themeList = []
@@ -323,7 +419,7 @@ class UploadThemes():
     def uploadFile(self, videoItem):
         fileUploaded = False
         # Get the name of the folder to store this theme in
-        remoteDirName = videoItem['imdbnumber']
+        remoteDirName = videoItem['masterId']
 
         log("UploadThemes: Checking upload for theme directory %s" % remoteDirName)
 
@@ -452,243 +548,6 @@ class UploadThemes():
 
         return fileUploaded
 
-    # Handles the uploading of the machines record file
-    def uploadRecordFile(self):
-        log("UploadThemes: Uploading record")
-
-        ftp = None
-        try:
-            # Connect to the ftp server
-            ftp = ftplib.FTP(self.ftpArg, self.userArg, self.passArg)
-
-            if xbmc.abortRequested:
-                ftp.quit()
-                return False
-
-            # Now we are connected go into the uploads directory, this should always exist
-            ftp.cwd('uploads')
-
-            if xbmc.abortRequested:
-                ftp.quit()
-                return False
-
-            # Check if uploads were enabled, if there is a file called enabled.txt then it
-            # means the server is configured to receive uploads
-            if 'enabled.txt' not in ftp.nlst():
-                # Uploads are disabled if the file does not exist
-                log("UploadThemes: Uploads are disabled")
-                self.uploadsDisabled = True
-                ftp.quit()
-                return False
-
-            # Then into whichever type we are uploading, again this is pre-created
-            ftp.cwd('records')
-
-            if xbmc.abortRequested:
-                ftp.quit()
-                return False
-
-            # Name the file using the machine it comes from
-            fileToCreate = Settings.getTvTunesId()
-            # Now add the extension to it
-            fileToCreate = fileToCreate + ".xml"
-
-            log("UploadThemes: Uploading record file %s" % fileToCreate)
-
-            # Transfer the file in binary mode
-            srcFile = xbmcvfs.File(self.tvtunesUploadRecord, 'rb')
-            ftp.storbinary("STOR " + fileToCreate, srcFile)
-            srcFile.close()
-
-            log("UploadThemes: Uploading record file %s complete" % fileToCreate)
-
-            # Exit the ftp session
-            ftp.quit()
-
-        except:
-            log("UploadThemes: Failed to upload file %s" % traceback.format_exc(), xbmc.LOGERROR)
-            # If we have had an error, stop trying to do any uploads
-            self.uploadsDisabled = True
-            if ftp is not None:
-                # Do a forced close to ensure the connection is no longer active
-                try:
-                    ftp.close()
-                except:
-                    pass
-            return False
-
-        return True
-
-    # Handles the uploading of the machines record file
-    def loadUploadConfig(self):
-        log("UploadThemes: Loading Upload Config")
-        try:
-            # <tvtunesUploadConfig>
-            #    <enabled>true</enabled>
-            #    <tvshows>
-            #        <skip id="75565">Blakes 7</skip>
-            #    </tvshows>
-            #    <movies>
-            #        <skip id="tt0112442">Bad Boys</skip>
-            #    </movies>
-            # </tvtunesUploadConfig>
-            remoteSettings = urllib2.urlopen(base64.b64decode(Settings.getUploadSettings()))
-            uploadSetting = remoteSettings.read()
-            # Closes the connection after we have read the remote settings
-            try:
-                remoteSettings.close()
-            except:
-                log("UploadThemes: Failed to close connection for upload settings", xbmc.LOGERROR)
-
-            # Check all of the settings
-            uploadSettingET = ET.ElementTree(ET.fromstring(base64.b64decode(uploadSetting)))
-
-            # First check to see if uploads are actually enabled
-            isEnabled = uploadSettingET.find('enabled')
-            if (isEnabled is None) or (isEnabled.text != 'true'):
-                log("UploadThemes: Uploads disabled via online settings")
-                self.uploadsDisabled = True
-                return
-
-            # Check if audio uploads are enabled
-            isAudioElem = uploadSettingET.find('audio')
-            if (isAudioElem is None) or (isAudioElem.text != 'true'):
-                log("UploadThemes: Uploads disabled for audio via online settings")
-                self.isAudioEnabled = False
-
-            # Check if video uploads are enabled
-            isVideoElem = uploadSettingET.find('video')
-            if (isVideoElem is None) or (isVideoElem.text != 'true'):
-                log("UploadThemes: Uploads disabled for videos via online settings")
-                self.isVideoEnabled = False
-
-            # Check if tv show uploads are enabled
-            isTvShowsElem = uploadSettingET.find('tvshows')
-            if (isTvShowsElem is None) or (isTvShowsElem.text != 'true'):
-                log("UploadThemes: Uploads disabled for tvshows via online settings")
-                self.isTvShowsEnabled = False
-
-            # Check if movie uploads are enabled
-            isMoviesElem = uploadSettingET.find('movies')
-            if (isMoviesElem is None) or (isMoviesElem.text != 'true'):
-                log("UploadThemes: Uploads disabled for movies via online settings")
-                self.isMoviesEnabled = False
-
-            # Get the details for where themes are uploaded to
-            ftpArgElem = uploadSettingET.find('ftp')
-            userArgElem = uploadSettingET.find('username')
-            passArgElem = uploadSettingET.find('password')
-            storeArgElem = uploadSettingET.find('storecontent')
-            if (ftpArgElem in ["", None]) or (userArgElem in ["", None]) or (passArgElem in ["", None]) or (storeArgElem in ["", None]):
-                log("UploadThemes: Online settings not correct")
-                self.uploadsDisabled = True
-                return
-
-            self.ftpArg = ftpArgElem.text
-            self.userArg = userArgElem.text
-            self.passArg = passArgElem.text
-
-            # Get the library contents
-            remoteLibrary = urllib2.urlopen(storeArgElem.text)
-            libraryContentStr = remoteLibrary.read()
-            # Closes the connection after we have read the remote settings
-            try:
-                remoteLibrary.close()
-            except:
-                log("UploadThemes: Failed to close connection for remote library", xbmc.LOGERROR)
-
-            libraryET = ET.ElementTree(ET.fromstring(libraryContentStr))
-
-            # The global flag has been checks and uploads are enabled, so now get the list
-            # of TV-Shows and Movies that we do not want themes for, most probably because
-            # they are already in the library
-            tvshowsElem = libraryET.find('tvshows')
-            if tvshowsElem is not None:
-                # Check all of the TV Shows in the library
-                for tvshowElem in tvshowsElem.findall('tvshow'):
-                    if tvshowElem is not None:
-                        # Check if there is an audio theme in the library
-                        if tvshowElem.find('audiotheme') is not None:
-                            self.tvShowAudioExcludes.append(tvshowElem.attrib['id'])
-                            log("UploadThemes: Excluding TV Audio %s" % tvshowElem.attrib['id'])
-                        if tvshowElem.find('videotheme') is not None:
-                            self.tvShowVideoExcludes.append(tvshowElem.attrib['id'])
-                            log("UploadThemes: Excluding TV Video %s" % tvshowElem.attrib['id'])
-
-            moviesElem = libraryET.find('movies')
-            if moviesElem is not None:
-                # Check all of the TV Shows in the library
-                for movieElem in moviesElem.findall('movie'):
-                    if movieElem is not None:
-                        # Check if there is an audio theme in the library
-                        if movieElem.find('audiotheme') is not None:
-                            self.movieAudioExcludes.append(movieElem.attrib['id'])
-                            log("UploadThemes: Excluding Movie Audio %s" % movieElem.attrib['id'])
-                        if movieElem.find('videotheme') is not None:
-                            self.movieVideoExcludes.append(movieElem.attrib['id'])
-                            log("UploadThemes: Excluding Movie Video %s" % movieElem.attrib['id'])
-        except:
-            log("UploadThemes: Failed to upload file %s" % traceback.format_exc(), xbmc.LOGERROR)
-            # If we have had an error, stop trying to do any uploads
-            self.uploadsDisabled = True
-
-    # Uses metahandlers to get the TV ID
-    def getMetaHandlersID(self, typeTag, title, year=""):
-        idValue = ""
-        if year in [None, 0, "0"]:
-            year = ""
-        # Does not seem to work correctly with the year at the moment
-        year = ""
-        metaget = None
-        try:
-            metaget = metahandlers.MetaData(preparezip=False)
-            if typeTag == 'tvshows':
-                idValue = metaget.get_meta('tvshow', title, year=str(year))['tvdb_id']
-            else:
-                idValue = metaget.get_meta('movie', title, year=str(year))['imdb_id']
-
-            # Check if we have no id returned, and we added in a year
-            if (idValue in [None, ""]) and (year not in [None, ""]):
-                if typeTag == 'tvshows':
-                    idValue = metaget.get_meta('tvshow', title)['tvdb_id']
-                else:
-                    idValue = metaget.get_meta('movie', title)['imdb_id']
-
-            if not idValue:
-                idValue = ""
-        except Exception:
-            idValue = ""
-            log("UploadThemes: Failed to get Metahandlers ID %s" % traceback.format_exc())
-
-        if metaget is not None:
-            del metaget
-
-        return idValue
-
-
-def cleanMetaHandlerDb():
-    log("UploadThemes: Cleaning Metahandler DB")
-    try:
-        metaAddon = xbmcaddon.Addon(id='script.module.metahandler')
-        metaFolder = metaAddon.getSetting('meta_folder_location')
-        metaFolder = xbmc.translatePath(metaFolder)
-        if not metaFolder:
-            metaFolder = xbmc.translatePath("special://profile/addon_data/script.module.metahandler/")
-        metaFolder = os_path_join(metaFolder, 'meta_cache')
-
-        dbLocation = os_path_join(metaFolder, 'video_cache.db')
-
-        try:
-            if xbmcvfs.exists(dbLocation):
-                log("UploadThemes: Removing %s" % dbLocation)
-                xbmcvfs.delete(dbLocation)
-        except:
-            log("UploadThemes: Failed to remove metadata DB using xbmcvfs")
-            if os.path.exists(dbLocation):
-                os.remove(dbLocation)
-    except:
-        log("UploadThemes: Failed to remove metadata DB")
-
 
 #########################
 # Main
@@ -696,15 +555,13 @@ def cleanMetaHandlerDb():
 if __name__ == '__main__':
     log("UploadThemes: Upload themes called")
 
-    # Clear the metahandler DB - if we do not, then we do not seem to find most
-    # of the items we request IDs for
-    cleanMetaHandlerDb()
-    xbmc.sleep(1000)
-
     # We want to avoid and errors appearing on the screen, not the end of the world
     # if it fails to upload the themes
     try:
         uploadMgr = UploadThemes()
+
+        # Load all of the config settings
+        uploadMgr.loadConfig()
 
         # We want to process all the Videos (TV and Movies) but no need to get them all at
         # once, so start with TV and then move onto Movies later

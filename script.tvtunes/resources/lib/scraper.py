@@ -13,10 +13,9 @@ from settings import os_path_split
 from settings import list_dir
 from settings import normalize_string
 from settings import dir_exists
-
 from themeFetcher import TvTunesFetcher
 
-__addon__ = xbmcaddon.Addon(id='script.tvtunes')
+ADDON = xbmcaddon.Addon(id='script.tvtunes')
 
 
 #################################
@@ -32,7 +31,7 @@ class TvTunesScraper():
             # Check if a theme already exists
             if self._doesThemeExist(videoItem['path']):
                 # Prompt the user to see if we should overwrite the theme
-                if not xbmcgui.Dialog().yesno(__addon__.getLocalizedString(32103), __addon__.getLocalizedString(32104)):
+                if not xbmcgui.Dialog().yesno(ADDON.getLocalizedString(32103), ADDON.getLocalizedString(32104)):
                     # No not want to overwrite, so quit
                     log("TvTunesScraper: %s already exists" % (os_path_join(videoItem['path'], "theme.*")))
                     return
